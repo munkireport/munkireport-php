@@ -1,10 +1,15 @@
 <?php
 class show extends Controller
 {
+	function __construct()
+	{
+		check_db();
+	} 
+	
 	function index()
 	{
 		$client = new Client();
-		
+				
 		$order = " ORDER BY name ASC";
 		
         $data['error_clients'] = $client->retrieve_many('errors > 0'.$order);

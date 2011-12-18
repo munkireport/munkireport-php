@@ -1,31 +1,21 @@
 <?php
 class admin extends Controller
 {
+	function __construct()
+	{
+		check_db();
+		die("authentication needed"); // TODO: implement auth
+	} 
+	
+	
 	//===============================================================
 	
 	function index()
 	{
-		$client = new Client();
-		$data['objects'] = $client->retrieve_many();
-		
-		$obj = new View();
-		$obj->view('client_list',$data);
-		
+		echo 'Admin';
 	}
 	
-	//===============================================================
 	
-	function test( $msg='Hello World!' )
-	{
-		
-		$client = new Client();
-		$data['objects'] = $client->retrieve_many();
-		
-		$obj = new View();
-		$obj->view('overview',$data);
-		
-	}
-
 	//===============================================================
 	
 	function resetdb()
@@ -34,7 +24,7 @@ class admin extends Controller
 		
 		reset_db();
 		
-		redirect('main','Database Initialized!');
+		redirect();
 	}
 	
 }

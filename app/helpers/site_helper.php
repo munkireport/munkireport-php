@@ -24,3 +24,18 @@ if ( ! function_exists('redirect'))
 		exit;
 	}
 }
+
+function check_db()
+{
+	// Check if Client table exists
+	$dbh = getdbh();
+	if( ! $dbh->prepare( "SELECT * FROM 'client' LIMIT 1" ))
+	{
+		require(APP_PATH.'helpers/db_helper'.EXT);
+		if( reset_db() === FALSE )
+		{
+			die('Could not intialize database');
+		}
+	}
+	
+}

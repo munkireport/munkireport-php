@@ -21,7 +21,7 @@
 		  `report_plist` BLOB  
 		) ";
 
-			$dbh->exec($sql);
+			return $dbh->exec($sql);
 		
 	}
 	
