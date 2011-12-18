@@ -1,0 +1,17 @@
+#!/bin/bash
+# Setup munki client
+# Arjen van Bochoven
+# 14 dec 2011
+
+# Install munkitools + app
+installer -pkg /usr/local/installers/munki/munkitools_app-3.2.1342.pkg -target /
+installer -pkg /usr/local/installers/munki/munkitools_launchd-0.8.0.1.pkg -target /
+
+# Set prefs for FEW
+defaults write /Library/Preferences/ManagedInstalls AppleSoftwareUpdatesOnly -bool false
+defaults write /Library/Preferences/ManagedInstalls InstallAppleSoftwareUpdates -bool true
+defaults write /Library/Preferences/ManagedInstalls SoftwareRepoURL http://munki.few.vu.nl
+defaults write /Library/Preferences/ManagedInstalls ClientIdentifier few-production
+
+# One time run
+/usr/local/munki/managedsoftwareupdate --auto

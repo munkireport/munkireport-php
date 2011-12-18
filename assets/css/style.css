@@ -1,0 +1,533 @@
+html {
+	background: #555555 url('../images/pagebg.png') top left repeat-x;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	text-align: left;
+	width: 960px;
+	margin: 0 auto;
+	padding: 0;
+	font-size: 12px;
+	font-family:"Lucida Grande","Lucida Sans Unicode",geneva,verdana,sans-serif;
+}
+
+a {
+	color: #286571;
+}
+
+#header {
+	height: 52px;
+	margin: 10px 10px 0 10px;
+	background: url('../images/headerbg.png') top left no-repeat;
+}
+
+#header h1 {
+	padding: 0;
+	margin: 0;
+	padding-top: 4px;
+	padding-left: 12px;
+	color: #fff;
+	position: relative;
+	font-size: 36px;
+}
+
+#header h1 .subtitle {
+	font-size: 60%;
+	position: absolute;
+	left: 240px;
+	top: 70px;
+}
+
+ul#mainmenu {
+	margin: 0;
+	padding: 0 10px;
+	background: url('../images/menubg.png') top left no-repeat;
+	height: 38px;
+}
+
+ul#mainmenu li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	display: inline;
+	float: left;
+}
+
+ul#mainmenu li a {
+	color: #fff;
+	float: left;
+	height: 31px;
+	display: block;
+	line-height: 30px;
+	vertical-align: middle;
+	padding: 0 10px;
+	font-size: 12px;
+	text-decoration: none;
+	background: url('../images/menu-item-border.png') left top no-repeat;
+}
+
+ul#mainmenu li a:hover, ul#mainmenu li a.active {
+	background: url('../images/menu-item-actibg.png') left top no-repeat;
+}
+
+ul#mainmenu li.first a {
+	background: none;
+}
+
+ul#mainmenu li.first a:hover, ul#mainmenu li.first a.active {
+	background: url('../images/menu-item-actibg-first.png') left top no-repeat;
+}
+
+ul#mainmenu li.loginlogout
+{
+    float: right;
+    right: 10px;
+}
+
+ul#mainmenu li.loginlogout a:hover
+{
+    background: url('../images/menu-item-border.png') left top no-repeat;
+}
+
+#content {
+	background: #fff url('../images/contentbg.png') left bottom no-repeat;
+	margin : 0 10px 10px 10px;
+	padding: 0 10px;
+	overflow: hidden;
+}
+
+#content .currentpage {
+	margin-top: 0;
+}
+
+/* Login form*/
+
+#loginform
+{
+    text-align: center;
+}
+
+form.loginfields
+{
+    text-align: left;
+    width: 270px;
+    background: url('../images/loginbg.png') top left no-repeat;
+    padding: 0;
+    margin: 0 auto;
+    border: 0;
+}
+
+form.loginfields h2
+{
+    font-size: 16px;
+    float: left;
+    padding: 0;
+    margin: 5px;
+    margin-top: 0;
+    background: url('../images/loginheader-left.png') top left no-repeat;
+}
+
+* html form.loginfields h2
+{
+    margin-left: 3px;
+    width: 80px;
+    text-align: center;
+}
+
+form.loginfields h2 span
+{
+    background: url('../images/loginheader-right.png') right top no-repeat;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    font-size: 100%;
+    font-weight: normal;
+    color: #fff;
+    padding: 0 10px;
+}
+
+*+html form.loginfields h2 span
+{
+    padding: 0 20px;
+}
+
+form.loginfields label
+{
+    clear: left;
+    float: left;
+    margin-top: 5px;
+    margin-left: 10px;
+    width: 65px;
+    line-height: 31px;
+    vertical-align: middle;
+}
+
+form.loginfields input.text
+{
+    float: left;
+    margin-left: 10px;
+    margin-top: 5px;
+    width: 165px;
+    height: 21px;
+    padding: 5px;
+    border: 0;
+    background: url('../images/inputbg.png') top left no-repeat;
+    color: #fff;
+}
+
+form.loginfields input#submit
+{
+    background: url('../images/loginbottombg.png') bottom left no-repeat;
+    width: 270px;
+    height: 61px;
+    border: 0;
+    margin-top: 10px;
+    color: #fff;
+    padding: 10px 140px 20px 10px;
+}
+
+* html form.loginfields input#submit
+{
+    clear: both;
+    margin-left: -10px;
+}
+
+/* Sidebar */
+.sidebar {
+  border: 1px solid #cce;
+  background-color: #eee;
+  margin: 0.5em;
+  margin-left: 1.5em;
+  padding: 1em;
+  float: right;
+  width: 200px;
+  font-size: 88%;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  color: black;
+}
+
+.sidebar ul {
+  margin-left: 1.5em;
+  padding-left: 0;
+}
+
+
+
+#sb_top {
+  clear: right;
+}
+
+#sb_bottom {
+  clear: right;
+}
+
+#getting_started {
+  margin-left: 20px;
+}
+
+#getting_started_steps a {
+  text-decoration: none;
+}
+
+#getting_started_steps a:hover {
+  text-decoration: underline;
+}
+
+#getting_started_steps li {
+  margin-bottom: 0.5em;
+}
+
+/* Other and footer */
+#footer {
+	background: #fff;
+	padding: 10px;
+	color:#888888;
+	font-size:90%;
+}
+.flogo {
+	float:left;
+	margin-bottom:0px;
+	padding-left:20px;
+	padding-right:20px;
+	padding-top:0px;
+}
+.foottext p {
+	margin: 0; padding: 0;
+}
+.code {
+font-family:monospace;
+font-size:127%;
+}
+span.code {
+background:#EEEEEE none repeat scroll 0% 0%;
+font-weight:bold;
+}
+#flash, .notice {
+font-size:120%;
+font-weight:bolder;
+margin:0pt auto 0.5em;
+width:680px;
+}
+#flash div, .notice {
+padding:20px 15px 20px 65px;
+}
+#flash .ok {
+background:#d8ecd8 url(../images/ok.png) no-repeat scroll 10px center;
+}
+#flash .warning {
+background:#fff483 url(../images/warning.png) no-repeat scroll 10px center;
+}
+#flash .error {
+background:#f9c5c1 url(../images/error.png) no-repeat scroll 10px center;
+}
+#flash .alert,
+#flash .info {
+background:#EEEEFF url(../images/info.png) no-repeat scroll 10px center;
+}
+.notice {
+background:#EEEEFF url(../images/info.png) no-repeat scroll 10px center;
+}
+.fielderror {
+color:red;
+font-weight:bold;
+}
+div.clearingdiv {
+clear:both;
+}
+
+table.clientlist {
+    border-collapse: collapse;
+    border: 1px solid #888;
+	width: 100%;
+}
+
+.clientlist th {
+    padding: 2px 4px;
+    border: 1px solid #888;
+    background-color: #fff;
+	cursor: pointer;
+}
+
+.clientlist td {
+    border-left: 1px solid #888;
+    border-right: 1px solid #888;
+    padding: 2px 4px;
+}
+
+.clientlist tr:nth-child(even) {
+    background-color: #eee;
+}
+
+.clientlist tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+table.twocol {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+table.twocol > tbody > tr > td {
+    vertical-align: top;
+}
+
+.twocol td > tbody > td {
+    padding: 0;
+    width: 50%;
+}
+
+table.client_info {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.client_info td, .client_info th {
+    border: none;
+}
+.client_info thead th {
+    border-bottom: 1px solid black;
+}
+
+.client_info tbody th {
+    margin: 0;
+    padding: 0;
+}
+
+.client_info th + td, .client_info td + td, .client_info th + th {
+    margin: 0;
+    padding: 0 0 0 1em;
+}
+
+.ip, .mac {
+    font-family: monospace;
+}
+
+.error, .error a {
+    color: red;
+    font-weight: bold;
+    text-decoration: none;
+}
+.warning, .warning a {
+    color: #c70;
+    font-weight: bold;
+    text-decoration: none;
+}
+.error a:hover, .warning a:hover {
+    text-decoration: underline;
+}
+
+a.sortheader {
+    color: black;
+    text-decoration: none;
+}
+
+a.sortheader:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables features
+ */
+
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+    zoom: 1; /* Feeling sorry for IE */
+}
+
+.dataTables_processing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 30px;
+    margin-left: -125px;
+    margin-top: -15px;
+    padding: 14px 0 2px 0;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    background-color: white;
+}
+
+.dataTables_length {
+    width: 40%;
+    float: left;
+}
+
+.dataTables_filter {
+    width: 50%;
+    float: right;
+    text-align: right;
+}
+
+.dataTables_info {
+    width: 60%;
+    float: left;
+}
+
+.dataTables_paginate {
+    width: 44px;
+    * width: 50px;
+    float: right;
+    text-align: right;
+}
+
+/* Pagination nested */
+.paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next {
+    height: 19px;
+    width: 19px;
+    margin-left: 3px;
+    float: left;
+}
+
+.paginate_disabled_previous {
+    background-image: url('../images/back_disabled.jpg');
+}
+
+.paginate_enabled_previous {
+    background-image: url('../images/back_enabled.jpg');
+}
+
+.paginate_disabled_next {
+    background-image: url('../images/forward_disabled.jpg');
+}
+
+.paginate_enabled_next {
+    background-image: url('../images/forward_enabled.jpg');
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables sorting
+ */
+
+.sorting_asc {
+    background: url('../images/sort_asc.png') no-repeat center right;
+}
+
+.sorting_desc {
+    background: url('../images/sort_desc.png') no-repeat center right;
+}
+
+.sorting {
+    background: url('../images/sort_both.png') no-repeat center right;
+}
+
+.sorting_asc_disabled {
+    background: url('../images/sort_asc_disabled.png') no-repeat center right;
+}
+
+.sorting_desc_disabled {
+    background: url('../images/sort_desc_disabled.png') no-repeat center right;
+}
+
+.paging_full_numbers {
+    width: 400px;
+    height: 22px;
+    line-height: 22px;
+}
+
+.paging_full_numbers span.paginate_button,
+    .paging_full_numbers span.paginate_active {
+    border: 1px solid #aaa;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 2px 5px;
+    margin: 0 3px;
+    cursor: pointer;
+    *cursor: hand;
+}
+
+.paging_full_numbers span.paginate_button {
+    background-color: #ddd;
+}
+
+.paging_full_numbers span.paginate_button:hover {
+    background-color: #ccc;
+}
+
+.paging_full_numbers span.paginate_active {
+    background-color: #99B3FF;
+}
+
+table.display tr.even.row_selected td {
+    background-color: #B0BED9;
+}
+
+table.display tr.odd.row_selected td {
+    background-color: #9FAFD1;
+}
+
+
