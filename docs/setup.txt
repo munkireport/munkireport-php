@@ -1,0 +1,19 @@
+Setup instructions for munkireport_php
+
+On the server:
+1 - Put all files in the root directory of your website (at the moment subdirs are not supported). Make sure you also copy the .htaccess file.
+2 - Make sure yoursite/app/db/ is writeable by the webserver
+
+You're done with the server and should be able to see a webpage with an empty table.
+
+On a mac client:
+
+1 - Copy the scripts directory to the client
+2 - Open Terminal.app
+3 - cd to the scripts directory
+4 - ./make_script_dmg.sh http://your-report-php-server 1.0
+5 - copy the resulting dmg and pkginfo files to your munki repository
+
+Distribute the dmg to your munki fleet.
+
+NOTE: This will overwrite any preflight, postflight and report_broken_client scripts you might have installed.
