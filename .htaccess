@@ -4,4 +4,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ /index.php/$1 [L]
 
 # Protect app files
-RewriteRule ^(app|system|scripts.*)$ /index.php/$1 [L]
+RewriteRule ^((app|system|scripts).*)$ /index.php/$1 [L]
