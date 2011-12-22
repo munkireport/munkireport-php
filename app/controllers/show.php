@@ -67,6 +67,19 @@ class show extends Controller
 			}
 			
 		}
+		// Move install results to managed installs
+		if(isset($report['ManagedInstalls']))
+		{
+			foreach($report['ManagedInstalls'] as $key => &$item)
+			{
+				$dversion = $item["display_name"].'-'.$item["version_to_install"];
+				if(isset($install_results[$dversion]) && $install_results[$dversion]['result'] == 'Installed')
+				{
+					$item['installed'] = TRUE;
+				}
+			}
+			
+		}
 		if(isset($report['AppleUpdates']))
 		{
 			foreach($report['AppleUpdates'] as $key => $item)
