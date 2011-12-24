@@ -6,7 +6,10 @@ NAME="$(echo `systemsetup -getcomputername | cut -d: -f2-`)"
 BASEURL="REPLACE_BASEURL"
 SUBMITURL="${BASEURL}/update"
 
-curl --max-time 5 --silent \
+# Application paths
+CURL="/usr/bin/curl"
+
+$CURL --max-time 5 --silent \
     -d runtype="$RUNTYPE" \
     -d serial="$SERIAL" \
     -d name="$NAME" \

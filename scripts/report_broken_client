@@ -8,7 +8,10 @@ SERIAL=`ioreg -l | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
 NAME="$(echo `systemsetup -getcomputername | cut -d: -f2-`)"
 SUBMITURL="REPLACE_BASEURL/update"
 
-curl --max-time 5 --silent \
+# Application paths
+CURL="/usr/bin/curl"
+
+$CURL --max-time 5 --silent \
     -d runtype="$RUNTYPE" \
     -d serial="$SERIAL" \
     -d name="$NAME" \

@@ -72,10 +72,13 @@ class show extends Controller
 		{
 			foreach($report['ManagedInstalls'] as $key => &$item)
 			{
-				$dversion = $item["display_name"].'-'.$item["version_to_install"];
-				if(isset($install_results[$dversion]) && $install_results[$dversion]['result'] == 'Installed')
+				if(isset($item["version_to_install"]))
 				{
-					$item['installed'] = TRUE;
+					$dversion = $item["display_name"].'-'.$item["version_to_install"];
+					if(isset($install_results[$dversion]) && $install_results[$dversion]['result'] == 'Installed')
+					{
+						$item['installed'] = TRUE;
+					}
 				}
 			}
 			

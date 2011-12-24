@@ -5,7 +5,15 @@ SERIAL=`ioreg -l | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
 NAME="$(echo `systemsetup -getcomputername | cut -d: -f2-`)"
 REPORTPATH="/Library/Managed Installs/ManagedInstallReport.plist"
 SUBMITURL="REPLACE_BASEURL/update"
+
+# Application paths
 PLISTBUDDY="/usr/libexec/PlistBuddy"
+PERL="/usr/bin/perl"
+BZIP2="/usr/bin/bzip2"
+OPENSSL="/usr/bin/openssl"
+CURL="/usr/bin/curl"
+MKTEMP="/usr/bin/mktemp"
+SYSTEM_PROFILER="/usr/sbin/system_profiler"
 
 # Copy the report to a temporary file.
 TMPPLIST=/tmp/`head -c10 /dev/urandom | md5`.plist
@@ -13,18 +21,18 @@ cp "$REPORTPATH" "$TMPPLIST"
 
 # Generate a system_profiler report.
 PROFILEPLIST=/tmp/`head -c10 /dev/urandom | md5`.plist
-/usr/sbin/system_profiler -xml SPNetworkDataType SPHardwareDataType > "$PROFILEPLIST"
+$SYSTEM_PROFILER -xml SPNetworkDataType SPHardwareDataType > "$PROFILEPLIST"
 
 # Merge system profiler report with munki report.
 $PLISTBUDDY -c "Add :MachineInfo:SystemProfile array" "$TMPPLIST"
 $PLISTBUDDY -c "Merge $PROFILEPLIST :MachineInfo:SystemProfile" "$TMPPLIST"
 
 # Compress and encode report.
-TMP=`mktemp -t postflight`
-bzip2 --best < "$TMPPLIST" | openssl base64 | perl -MURI::Escape -e 'while(<>){print uri_escape($_)}' > "$TMP"
+TMP=`$MKTEMP -t postflight`
+$BZIP2 --best < "$TMPPLIST" | $OPENSSL base64 | $PERL -MURI::Escape -e 'while(<>){print uri_escape($_)}' > "$TMP"
 
 # Submit to server.
-curl --max-time 30 --silent \
+$CURL --max-time 30 --silent \
     -d runtype="$RUNTYPE" \
     -d serial="$SERIAL" \
     -d name="$NAME" \
