@@ -22,6 +22,18 @@
 		<td><?=$client->console_user?></td>
 		<td><?=$client->remote_ip?></td>
 		<?
+			$failed_installs = 0;
+			// Check results for failed installs
+			if(isset($client->activity['InstallResults']))
+			{
+				foreach($client->activity['InstallResults'] as $result)
+				{
+					if($result["status"])
+					{
+						$failed_installs++;
+					}
+				}
+			}
 			$install_items = isset($client->activity['ItemsToInstall']) ? count($client->activity['ItemsToInstall']) : 0;
 			$install_results = isset($client->activity['InstallResults']) ? count($client->activity['InstallResults']) : 0;
 			$removal_items = isset($client->activity['ItemsToRemove']) ? count($client->activity['ItemsToRemove']) : 0;
@@ -29,6 +41,7 @@
 			$apple_updates = isset($client->activity['AppleUpdateList']) ? count($client->activity['AppleUpdateList']) : 0;
 			$pending_installs = max(($install_items + $apple_updates) - $install_results, 0);
             $pending_removals = $removal_items - $removal_results;
+			$install_results -= $failed_installs;
 		?>
         <td>
 			<?=$client->timestamp?>
@@ -41,6 +54,9 @@
 			<?endif?>
 			<?if($install_results):?>
 				<?=$install_results?> package<?=$install_results > 1 ? 's' : ''?> installed
+       		<?endif?>
+			<?if($failed_installs):?>
+				<span class="error"><?=$failed_installs?> package<?=$failed_installs > 1 ? 's' : ''?> failed</span>
        		<?endif?>
 			<?if($pending_removals):?>
 				<?=$pending_removals?> pending removal<?=$pending_removals > 1 ? 's' : ''?>
