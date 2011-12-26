@@ -51,7 +51,7 @@ class show extends Controller
 			foreach($report['InstallResults'] as $result)
 			{
 				$install_results[$result["name"] . '-' .$result["version"]] = 
-					array('result' => $result["status"] == 0 ? 'Installed' : 'error '. $result['status']);
+					array('result' => $result["status"] == 0 ? 'Installed' : 'error');
 			}
 		}
 		if(isset($report['ItemsToInstall']))
@@ -91,47 +91,40 @@ class show extends Controller
 				$dversion = $item["display_name"].'-'.$item["version_to_install"];
 				if(isset($install_results[$dversion]))
 				{
-					$report['AppleUpdates'][$key]['install_result'] = $install_results[$dversion]['result']; 
+					$item['install_result'] = $install_results[$dversion]['result']; 
 				}
 			}
 			
 		}
-        
-		/* todo: removal results: see below
-        
-        # Move removal results over to their removal items.
-        removal_results = dict()
-        if "RemovalResults" in report:
-            for result in report["RemovalResults"]:
-                m = re_result.search(result)
-                if m:
-                    removal_results[m.group("dname")] = {
-                        "result": "Removed" if m.group("result") == "SUCCESSFUL" else m.group("result")
-                    }
-        if "ItemsToRemove" in report:
-            for item in report["ItemsToRemove"]:
-                item["removal_result"] = "Pending"
-                dversion = item["display_name"]
-                if dversion in removal_results:
-                    res = removal_results[dversion]
-                    item["removal_result"] = res["result"]
-        
-        return dict(
-            page="reports",
-            client=client,
-            report=report,
-            install_results=install_results,
-            removal_results=removal_results
-        */
+		
+		// Move removal results over to their removal items.
+		$removal_results = array();
+		if(isset($report['RemovalResults']))
+		{
+			foreach($report['RemovalResults'] as $result)
+			{
+				if(is_string($result) && preg_match('/^Removal of (.+): (.+)$/', $result, $matches))
+				{
+					$removal_results[$matches[1]]['result'] = $matches[2] == 'SUCCESSFUL' ? 'Removed' : $matches[2];
+				}
+			}
+		}
+		if(isset($report['ItemsToRemove']))
+		{
+			foreach($report['ItemsToRemove'] as $key => &$item)
+			{
+				$item['install_result'] = 'Pending';
+				$dversion = $item["display_name"];
+				if(isset($removal_results[$dversion]))
+				{
+					$item['install_result'] = $removal_results[$dversion]['result'];
+				}
+			}
+			
+		}
 		
 		$data['client'] = $client;
 		$data['report'] = $report;
-		$data['install_results'] = $install_results;
-		
-		//echo '<pre>';
-		
-		//print_r($install_results);
-		
 		
 		$obj = new View();
 		$obj->view('report',$data);
