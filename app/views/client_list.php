@@ -19,6 +19,7 @@
         <th>Client    </th>
         <th>User      </th>
         <th>IP        </th>
+		<th>OS        </th>
         <th>Latest Run</th>
 		<th>Manifest</th>
       </tr>
@@ -36,6 +37,7 @@
 		</td>
 		<td><?=$client->console_user?></td>
 		<td><?=$client->remote_ip?></td>
+		<td><?=isset($client->report_plist['MachineInfo']['os_vers']) ? $client->report_plist['MachineInfo']['os_vers'] : '?'?> <?=isset($client->report_plist['MachineInfo']['arch']) ? $client->report_plist['MachineInfo']['arch'] : '?'?></td>
 		<td>
 			<?=$client->timestamp?>
 			<?=$client->runtype?>

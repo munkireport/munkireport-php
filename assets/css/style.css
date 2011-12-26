@@ -384,6 +384,10 @@ table.client_info {
 .error a:hover, .warning a:hover {
     text-decoration: underline;
 }
+pre.error, pre.warning
+{
+	white-space: pre-wrap;
+}
 
 a.sortheader {
     color: black;

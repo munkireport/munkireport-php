@@ -11,7 +11,7 @@
       <table class="client_info">
         <tbody>
           <tr>
-            <th>SERIAL:</th>
+            <th>Serial:</th>
             <td><?=$client->serial?></td>
           </tr>
           <tr>
@@ -116,7 +116,7 @@
 			<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
           </td>
           <td style="text-align: right;"><?=isset($item['installed_size']) ? $item['installed_size'] /1000 : '?'?> MB</td>
-          <td><?=isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) ? 'installed' : "not installed")?></td>
+          <td><?=isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed")?></td>
         </tr>
 		<?endforeach?>
       </tbody>
