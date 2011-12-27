@@ -7,11 +7,11 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
     <title>MunkiReport</title>
-	<link rel="stylesheet" type="text/css" media="screen" href="/assets/css/style.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/assets/css/admin.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/admin.css" />
 	
-	<script type="text/javascript" language="javascript" src="/assets/js/jquery.js"></script>
-	<script type="text/javascript" language="javascript" src="/assets/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="<?=WEB_FOLDER?>assets/js/jquery.js"></script>
+	<script type="text/javascript" language="javascript" src="<?=WEB_FOLDER?>assets/js/jquery.dataTables.min.js"></script>
 	
 </head>
 
@@ -21,8 +21,8 @@
   </div>
   
   <ul id="mainmenu">
-    <li class="first"><a href="/" class="${('', 'active')[defined('page') and page=='index']}">Start</a></li>
-    <li><a href="/show/reports" class="${('', 'active')[defined('page') and page=='reports']}">Reports</a></li>
+    <li class="first"><a href="<?=WEB_FOLDER?>" class="${('', 'active')[defined('page') and page=='index']}">Start</a></li>
+    <li><a href="<?=WEB_FOLDER?>show/reports" class="${('', 'active')[defined('page') and page=='reports']}">Reports</a></li>
     <!--!
         <li><a href="${tg.url('/about')}" class="${('', 'active')[defined('page') and page=='about']}">About</a></li>
         <li py:if="tg.auth_stack_enabled"><a href="${tg.url('/auth')}" class="${('', 'active')[defined('page') and page=='auth']}">Authentication</a></li>

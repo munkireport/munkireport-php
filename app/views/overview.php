@@ -41,7 +41,7 @@
 <h2>Client List</h2>
 
 <ul>
-  <li><a href="/show/client_list">View all clients</a></li>
+  <li><a href="<?=WEB_FOLDER?>show/client_list">View all clients</a></li>
 </ul>
 
 <?$obj = new View();$obj->view('partials/foot')?>
