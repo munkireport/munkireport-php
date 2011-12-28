@@ -148,7 +148,19 @@ abstract class KISS_View
 		if (is_array($vars))
 			$this->vars=array_merge($this->vars,$vars);
 		extract($this->vars);
-		require(VIEW_PATH.$file.EXT);
+		if ((bool) @ini_get('short_open_tag') === FALSE)
+		{
+			echo eval($this->short_open(VIEW_PATH.$file.EXT));
+		}
+		else
+		{
+			require(VIEW_PATH.$file.EXT);
+		}
+	}
+	
+	protected function short_open($file)
+	{
+		return '?>'.str_replace('<?php =', '<?php echo ', str_replace('<?', '<?php ', file_get_contents($file)));
 	}
 
 	function fetch( $vars='' ) 
