@@ -1,44 +1,40 @@
-<?php
-	
-	if ( !defined( 'KISS' ) ) exit;
+<?php if ( !defined( 'KISS' ) ) exit;
 	
 	//===============================================
-	// Mandatory Settings (please configure)
+	// Default settings.
 	//===============================================
-	define('WEB_FOLDER','/'); //USED AS RELATIVE WEB-PATH, with trailing slash pls
-	define('WEB_HOST', 'http://'.$_SERVER[ 'HTTP_HOST' ] ); //NO SLASH (SO CAN BE CONCATENATED WITH WEB_FOLDER)
-	
-	define('APP_ROOT', dirname( __FILE__ ).'/' );//WHERE index.php RESIDES
-	define('SYS_PATH', dirname( __FILE__ ).'/system/'); //with trailing slash pls
-	define('APP_PATH', dirname( __FILE__ ).'/app/' ); //with trailing slash pls
+
+	// Path to system folder, with trailing slash
+	$system_path = APP_ROOT.'/system/'; 
+
+	// Path to app folder, with trailing slash
+	$application_folder = APP_ROOT.'/app/';
+
+	// Path to view directory, with trailing slash
+	$view_path = $application_folder.'views/';
+
+	// Path to controller directory, with trailing slash
+	$controller_path = $application_folder.'controllers/';
+
+	// Relative to the webroot, with trailing slash
+	$subdirectory = '/';
+
+	// HTTP host, no trailing slash
+	$webhost = 'http://'.$_SERVER[ 'HTTP_HOST' ];
+
+	// Routes
+	$routes = array();
+
+	// PDO Datasource name
+	$pdo_dsn = 'sqlite:'.$application_folder.'db/db.sqlite';
+
+	// Timezone See http://www.php.net/manual/en/timezones.php for valid values
+	$timezone = 'Europe/Brussels';
 	
 	//===============================================
 	// Globals
 	//===============================================
 	$GLOBALS['sitename']='Default Site';
 	$GLOBALS['version'] = '0.7.0';
-
-	//===============================================
-	// Other Settings
-	//===============================================
-	define('VIEW_PATH',APP_PATH.'views/'); //with trailing slash pls
-	define('CONTROLLER_PATH',APP_PATH.'controllers/'); //with trailing slash pls
-	define('EXT', '.php'); // Default extension
 	
-	//===============================================
-	// Routes
-	//===============================================
-	$routes = array();
-	
-	//TODO: Define default controller and default method here
-	
-	//===============================================
-	// Default includes
-	//===============================================
-	
-	
-	
-	//===============================================
-	// Debug
-	//===============================================
 	define('_DEBUG', FALSE );

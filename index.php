@@ -1,10 +1,24 @@
 <?php
 
+define( 'KISS', 1 );
+define('APP_ROOT', dirname( __FILE__ ).'/' );
+
 //===============================================
 // Include config
 //===============================================
-define( 'KISS', 1 );
 require( 'config.php' );
+
+//===============================================
+// Defines
+//===============================================
+define('WEB_HOST', $webhost); 
+define('WEB_FOLDER', $subdirectory);
+define('SYS_PATH', $system_path);
+define('APP_PATH', $application_folder );
+define('VIEW_PATH', $view_path); 
+define('CONTROLLER_PATH', $controller_path); 
+define('EXT', '.php'); // Default extension
+define('DSN', $pdo_dsn);
 
 //===============================================
 // Debug
@@ -17,13 +31,14 @@ error_reporting( _DEBUG ? E_ALL : 0 );
 //===============================================
 require( SYS_PATH.'kissmvc.php' );
 require(APP_PATH.'helpers/site_helper'.EXT);
+
 //===============================================
 // Session
 //===============================================
 ini_set('session.use_cookies', 1);
 ini_set('session.use_only_cookies', 1);
 session_start();
-date_default_timezone_set( 'Europe/Brussels' );	
+date_default_timezone_set( $timezone );	
 
 //===============================================
 // Uncaught Exception Handling
@@ -50,7 +65,7 @@ function getdbh()
 {
 	if ( ! isset($GLOBALS['dbh']))
 		try {
-		$GLOBALS['dbh'] = new PDO('sqlite:'.APP_PATH.'db/db.sqlite');
+		$GLOBALS['dbh'] = new PDO(DSN);
 		$GLOBALS['dbh']->exec("PRAGMA foreign_keys = ON"); // Turn on FK support
 		//$GLOBALS['dbh'] = new PDO('mysql:host=localhost;dbname=dbname', 'username', 'password');
 		} catch (PDOException $e) {
