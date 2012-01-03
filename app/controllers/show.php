@@ -5,7 +5,7 @@ class show extends Controller
 	{
 		check_db();
 	} 
-	
+
 	function index()
 	{
 		$client = new Client();
@@ -62,7 +62,7 @@ class show extends Controller
 				$dversion = $item["display_name"].'-'.$item["version_to_install"];
 				if(isset($install_results[$dversion]))
 				{
-					$report['ItemsToInstall'][$key]['install_result'] = $install_results[$dversion]['result'];
+					$item['install_result'] = $install_results[$dversion]['result'];
 				}
 			}
 			
@@ -85,13 +85,14 @@ class show extends Controller
 		}
 		if(isset($report['AppleUpdates']))
 		{
-			foreach($report['AppleUpdates'] as $key => $item)
+			foreach($report['AppleUpdates'] as $key => &$item)
 			{
 				$item['install_result'] = 'Pending';
 				$dversion = $item["display_name"].'-'.$item["version_to_install"];
+				
 				if(isset($install_results[$dversion]))
 				{
-					$item['install_result'] = $install_results[$dversion]['result']; 
+					$item['install_result'] = $install_results[$dversion]['result'];
 				}
 			}
 			
