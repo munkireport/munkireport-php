@@ -164,7 +164,7 @@
     </td>
     <td>
     
-<?if(isset($report['RemovedItems'])):?>
+<?if(isset($report['managed_uninstalls_list'])):?>
   <h2>Managed Uninstalls</h2>
 
   <table class="client_info">
@@ -174,7 +174,7 @@
       </tr>
     </thead>
     <tbody>
-	<?foreach($report['RemovedItems'] AS $item):?>
+	<?foreach($report['managed_uninstalls_list'] AS $item):?>
       <tr>
         <td>
           <?=$item?>
@@ -226,6 +226,6 @@
 
   <h2>Debug</h2>
   <pre py:content="pretty_report">
-    <?// print_r($report)?>
+    <? print_r($report)?>
   </pre>
 <?$obj = new View();$obj->view('partials/foot')?>
