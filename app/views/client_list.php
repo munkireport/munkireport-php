@@ -5,7 +5,9 @@
 		$('.clientlist').dataTable({
 			"iDisplayLength": 25,
 			"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-			"sPaginationType": "full_numbers"
+			"sPaginationType": "full_numbers",
+			"bStateSave": true,
+			"aaSorting": [[4,'desc']]
 		});
 	} );
 </script>

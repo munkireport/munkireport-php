@@ -5,7 +5,9 @@
 		$('.clientlist').dataTable({
 			"bFilter": false,
 			"bInfo": false,
-			"bPaginate": false
+			"bPaginate": false,
+			"bStateSave": true,
+			"aaSorting": [[3,'desc']]
 		});
 	} );
 </script>
