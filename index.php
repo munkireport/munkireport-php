@@ -3,6 +3,9 @@
 define( 'KISS', 1 );
 define('APP_ROOT', dirname( __FILE__ ).'/' );
 
+// Set default uri protocol override in config.php
+$uri_protocol = 'AUTO';
+
 //===============================================
 // Include config
 //===============================================
@@ -50,7 +53,7 @@ function uncaught_exception_handler($e)
   die(View::do_fetch(APP_PATH.'errors/exception_uncaught.php',$vars));
 }
 
-set_exception_handler('uncaught_exception_handler');
+//set_exception_handler('uncaught_exception_handler');
 
 function custom_error($msg='') 
 {
@@ -88,7 +91,7 @@ function __autoload( $classname )
 //===============================================
 // Start the controller
 //===============================================
-$GLOBALS[ 'engine' ] = new Engine( $routes, 'show', 'index' );
+$GLOBALS[ 'engine' ] = new Engine( $routes, 'show', 'index', $uri_protocol );
 
 
 

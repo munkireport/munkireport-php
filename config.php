@@ -21,6 +21,11 @@
 
 	// HTTP host, no trailing slash
 	$webhost = 'http://'.$_SERVER[ 'HTTP_HOST' ];
+	
+	// Uri protocol $_SERVER variable that contains the correct request path, 
+	// e.g. 'REQUEST_URI', 'QUERY_STRING', 'PATH_INFO', etc.
+	// defaults to AUTO
+	//$uri_protocol = 'AUTO';
 
 	// Routes
 	$routes = array();
