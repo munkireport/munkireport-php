@@ -40,15 +40,24 @@ class update extends Controller
 			$_POST['timestamp'] = date('Y-m-d H:i:s');
 			$_POST['remote_ip'] = $_SERVER['REMOTE_ADDR'];
 			$_POST['runstate'] = 'done';
-						
+									
 			$client = new Client($_POST['serial']);
 			
 			$client->merge($_POST);
 									
-			if( isset($_POST['base64bz2report']))
+			if(isset($_POST['report']))
+			{
+				$client->update_report($_POST['report']);
+			}
+			elseif(isset($_POST['base64report']))
+			{
+				$client->update_report(base64_decode($_POST['base64report']));
+			}
+			elseif(isset($_POST['base64bz2report']))
 			{
 				$client->update_report(bzdecompress(base64_decode($_POST['base64bz2report'])));
 			}
+			
 			
 			if($client->id == '')
 			{

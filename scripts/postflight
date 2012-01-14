@@ -4,13 +4,11 @@ RUNTYPE="$1"
 SERIAL=`ioreg -l | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
 NAME="$(echo `systemsetup -getcomputername | cut -d: -f2-`)"
 REPORTPATH="/Library/Managed Installs/ManagedInstallReport.plist"
-SUBMITURL="REPLACE_BASEURL/update"
+SUBMITURL="http://munkireport.bluebus/update"
 
 # Application paths
 PLISTBUDDY="/usr/libexec/PlistBuddy"
 PERL="/usr/bin/perl"
-BZIP2="/usr/bin/bzip2"
-OPENSSL="/usr/bin/openssl"
 CURL="/usr/bin/curl"
 MKTEMP="/usr/bin/mktemp"
 SYSTEM_PROFILER="/usr/sbin/system_profiler"
@@ -21,22 +19,26 @@ cp "$REPORTPATH" "$TMPPLIST"
 
 # Generate a system_profiler report.
 PROFILEPLIST=/tmp/`head -c10 /dev/urandom | md5`.plist
-$SYSTEM_PROFILER -xml SPNetworkDataType SPHardwareDataType > "$PROFILEPLIST"
+$SYSTEM_PROFILER -xml SPSoftwareDataType SPHardwareDataType > "$PROFILEPLIST"
 
 # Merge system profiler report with munki report.
 $PLISTBUDDY -c "Add :MachineInfo:SystemProfile array" "$TMPPLIST"
 $PLISTBUDDY -c "Merge $PROFILEPLIST :MachineInfo:SystemProfile" "$TMPPLIST"
 
-# Compress and encode report.
+# Create temp file for encoded report.
 TMP=`$MKTEMP -t postflight`
-$BZIP2 --best < "$TMPPLIST" | $OPENSSL base64 | $PERL -MURI::Escape -e 'while(<>){print uri_escape($_)}' > "$TMP"
+
+echo 'report=' > "$TMP";
+
+# We need perl to urlencode the file because older versions of OSX don't have curl with --data-urlencode.
+$PERL -MURI::Escape -e 'while(<>){print uri_escape($_)}' "$TMPPLIST" >> "$TMP"
 
 # Submit to server.
 $CURL --max-time 30 --silent \
-    -d runtype="$RUNTYPE" \
-    -d serial="$SERIAL" \
-    -d name="$NAME" \
-    -d base64bz2report="`cat $TMP`" \
+    -d "runtype=$RUNTYPE" \
+    -d "serial=$SERIAL" \
+    -d "name=$NAME" \
+    -d @"$TMP" \
     "$SUBMITURL/postflight"
 
 # Clean up.
