@@ -2,7 +2,8 @@ Setup instructions for munkireport_php
 
 On the server:
 1 - Put all files in the root directory of your website (for subdirs, see below). Make sure you also copy the .htaccess file.
-2 - Check if yoursite/app/db/ is writeable by the webserver
+2 - Copy config_default.php to config.php
+3 - Check if yoursite/app/db/ is writeable by the webserver
 
 If you want to run munkireport from a subdirectory, change RewriteBase in .htaccess and $subdirectory in config.php. So if want to run munkireport from http://munki.mysite.org/report/ change the following:
 
