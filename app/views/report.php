@@ -1,5 +1,21 @@
 <?$obj = new View();$obj->view('partials/head')?>
 
+<? // Extract system_profile info
+$machine_info = array('cpu_type' => '?', 'machine_model' => '?', 'physical_memory' => '?', 'current_processor_speed' => '?');
+if(isset($report['MachineInfo']['SystemProfile']))
+{
+	
+	foreach($report['MachineInfo']['SystemProfile'] AS $part)
+	{
+		if(isset($part['_items'][0]) && is_array($part['_items'][0]))
+		{
+			$machine_info = array_merge($machine_info, $part['_items'][0]);
+		}
+	}
+}
+$machine_info = (object) $machine_info;
+?>
+
 <h1><?=$client->name?></h1>
 
 
@@ -10,6 +26,15 @@
 
       <table class="client_info">
         <tbody>
+			<tr>
+				<th>Model:</th>
+				<td><?=$machine_info->machine_model?> <?=$machine_info->cpu_type?> <?=$machine_info->current_processor_speed?></td>
+			</tr>
+			<tr>
+				<th>Memory:</th>
+				<td><?=$machine_info->physical_memory?></td>
+			</tr>
+			
           <tr>
             <th>Serial:</th>
             <td><?=$client->serial?></td>
@@ -226,6 +251,6 @@
 
   <h2>Debug</h2>
   <pre py:content="pretty_report">
-    <? print_r($report)?>
+    <?//print_r($report)?>
   </pre>
 <?$obj = new View();$obj->view('partials/foot')?>
