@@ -11,7 +11,7 @@
   <tbody>
 	<?foreach($clients AS $client):?>
     <tr>
-      	<?$url = WEB_FOLDER."show/report/$client->serial"?>
+      	<?$url = url("show/report/$client->serial")?>
         <td>
 			<?if($client->report_plist):?>
 			<a href="<?=$url?>"><?=$client->name?></a>

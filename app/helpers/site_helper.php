@@ -1,7 +1,8 @@
 <?php
-function url($url='',$fullurl=false) {
-  $s=$fullurl ? WEB_DOMAIN : '';
-  $s.=WEB_FOLDER.$url;
+function url($url='', $fullurl = FALSE)
+{
+  $s = $fullurl ? WEB_HOST : '';
+  $s .= WEB_FOLDER.($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE).$url;
   return $s;
 }
 

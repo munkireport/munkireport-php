@@ -306,6 +306,7 @@ table.clientlist {
     border-collapse: collapse;
     border: 1px solid #888;
 	width: 100%;
+	clear: left; /* Firefox */
 }
 
 .clientlist th {

@@ -50,7 +50,7 @@ $machine_info = (object) $machine_info;
             </tr>
             <tr>
               <th>OS:</th>
-              <td><?=isset($report['MachineInfo']['os_vers']) ? $report['MachineInfo']['os_vers'] : '?'?> <?=isset($report['MachineInfo']['arch']) ? $report['MachineInfo']['arch'] : '?'?></td>
+              <td><?=isset($report['MachineInfo']['os_vers']) ? $report['MachineInfo']['os_vers'] : '?'?> (<?=isset($report['MachineInfo']['arch']) ? $report['MachineInfo']['arch'] : '?'?>)</td>
             </tr>
           <?endif?>
           <tr>

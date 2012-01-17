@@ -1,8 +1,8 @@
-Setup instructions for munkireport_php
+Setup instructions for munkireport-php
 
 On the server:
 1 - Put all files in the root directory of your website (for subdirs, see below). Make sure you also copy the .htaccess file.
-2 - Copy config_default.php to config.php
+2 - Copy config_default.php to config.php and make modifications if necessary
 3 - Check if yoursite/app/db/ is writeable by the webserver
 
 If you want to run munkireport from a subdirectory, change RewriteBase in .htaccess and $subdirectory in config.php. So if want to run munkireport from http://munki.mysite.org/report/ change the following:
@@ -23,3 +23,11 @@ On a mac client:
 Distribute the dmg to your munki fleet.
 
 NOTE: This will overwrite any preflight, postflight and report_broken_client scripts you might have installed.
+
+Run munkireport without mod_rewrite
+
+If you can't use mod_rewrite, you can run munkireport without it. You'll have to change the following:
+
+1 - Add $index_page = 'index.php'; to your config file, this will fix the in-app links
+2 - Create new clientside scripts *with* index.php: ./make_script_dmg.sh http://your-report-php-server/index.php 1.1
+

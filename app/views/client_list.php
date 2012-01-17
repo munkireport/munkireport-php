@@ -1,4 +1,4 @@
-<?$obj = new View(); $obj->view('partials/head')?>
+<?$this->view('partials/head')?>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
@@ -29,7 +29,7 @@
     <tbody>
 	<?foreach($objects as $client):?>
       <tr>
-        <?$url = WEB_FOLDER . "show/report/$client->serial"?>
+        <?$url = url("show/report/$client->serial")?>
         <td>
 			<?if($client->report_plist):?>
 			<a href="<?=$url?>"><?=$client->name?></a>
@@ -70,4 +70,4 @@
 	<?endforeach?>
     </tbody>
   </table>
-<?$obj = new View();$obj->view('partials/foot')?>
+<?$this->view('partials/foot')?>

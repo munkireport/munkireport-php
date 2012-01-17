@@ -1,4 +1,4 @@
-<?php if ( !defined( 'KISS' ) ) exit;
+<?php if ( ! defined( 'KISS' ) ) exit;
 	
 	//===============================================
 	// Default settings.
@@ -18,6 +18,10 @@
 
 	// Relative to the webroot, with trailing slash
 	$subdirectory = '/';
+	
+	// Index page (leave blank if .htaccess is used, otherwise use index.php)
+	// defaults to ''
+	//$index_page = '';
 
 	// HTTP host, no trailing slash
 	$webhost = 'http://'.$_SERVER[ 'HTTP_HOST' ];

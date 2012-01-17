@@ -21,8 +21,8 @@
   </div>
   
   <ul id="mainmenu">
-    <li class="first"><a href="<?=WEB_FOLDER?>" class="${('', 'active')[defined('page') and page=='index']}">Start</a></li>
-    <li><a href="<?=WEB_FOLDER?>show/reports" class="${('', 'active')[defined('page') and page=='reports']}">Reports</a></li>
+    <li class="first"><a href="<?=url()?>" <?=isset($page) && $page=='index'?'class="active"':''?>>Start</a></li>
+    <li><a href="<?=url('show/reports')?>" <?=isset($page) && $page=='reports'?'class="active"':''?>>Reports</a></li>
     <!--!
         <li><a href="${tg.url('/about')}" class="${('', 'active')[defined('page') and page=='about']}">About</a></li>
         <li py:if="tg.auth_stack_enabled"><a href="${tg.url('/auth')}" class="${('', 'active')[defined('page') and page=='auth']}">Authentication</a></li>

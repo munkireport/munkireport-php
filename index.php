@@ -6,6 +6,9 @@ define('APP_ROOT', dirname( __FILE__ ).'/' );
 // Set default uri protocol override in config.php
 $uri_protocol = 'AUTO';
 
+// Index page, override in config.php
+$index_page = '';
+
 //===============================================
 // Include config
 //===============================================
@@ -16,6 +19,7 @@ require( 'config.php' );
 //===============================================
 define('WEB_HOST', $webhost); 
 define('WEB_FOLDER', $subdirectory);
+define('INDEX_PAGE', $index_page);
 define('SYS_PATH', $system_path);
 define('APP_PATH', $application_folder );
 define('VIEW_PATH', $view_path); 

@@ -15,9 +15,10 @@ class show extends Controller
         $data['error_clients'] = $client->retrieve_many('errors > 0'.$order);
 		$data['warning_clients'] = $client->retrieve_many('warnings > 0'.$order);
         $data['activity_clients'] = $client->retrieve_many('activity != ""'.$order);
+		$data['page'] = 'index';
 
 		$obj = new View();
-		$obj->view('overview',$data);
+		$obj->view('overview', $data);
 
 	}
 	
@@ -26,9 +27,10 @@ class show extends Controller
 		$client = new Client();
 		
 		$data['objects'] = $client->retrieve_many('id > 0 ORDER BY name ASC');
+		$data['page'] = 'reports';
 		
 		$obj = new View();
-		$obj->view('client_list',$data);
+		$obj->view('client_list', $data);
 		
 	}
 	
@@ -126,6 +128,7 @@ class show extends Controller
 		
 		$data['client'] = $client;
 		$data['report'] = $report;
+		$data['page'] = 'report';
 		
 		$obj = new View();
 		$obj->view('report',$data);

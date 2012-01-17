@@ -1,4 +1,4 @@
-<?$obj = new View();$obj->view('partials/head')?>
+<?$this->view('partials/head')?>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
@@ -43,7 +43,7 @@
 <h2>Client List</h2>
 
 <ul>
-  <li><a href="<?=WEB_FOLDER?>show/client_list">View all clients</a></li>
+  <li><a href="<?=url('show/client_list')?>">View all clients</a></li>
 </ul>
 
-<?$obj = new View();$obj->view('partials/foot')?>
+<?$this->view('partials/foot')?>
