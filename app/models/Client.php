@@ -45,10 +45,20 @@ class Client extends Model {
             $this->console_user = '';
             return $this;
 		}
-		
-		include(APP_PATH .'lib/plistparser.php');
-		$parser = new plistParser();
-		$mylist = $parser->parseString($plist);
+
+		if(class_exists('XMLReader', FALSE))
+		{
+			include(APP_PATH .'lib/plistparser.php');
+			$parser = new plistParser();
+			$mylist = $parser->parseString($plist);
+		}
+		else
+		{
+			require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+			$parser = new CFPropertyList();
+			$parser->parse($plist, CFPropertyList::FORMAT_XML);
+			$mylist = $parser->toArray();
+		}
 		
 		# Save plist
 		$this->report_plist = $mylist;
