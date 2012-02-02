@@ -48,6 +48,8 @@ cat > "${fname-}-${version}${EXTENSION}" <<EOF
 	</array>
 	<key>forced_install</key>
 	<true/>
+	<key>unattended_install</key>
+	<true/>
 	<key>installer_item_hash</key>
 	<string>${sha256_dmg}</string>
 	<key>installer_item_location</key>
