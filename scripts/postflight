@@ -4,7 +4,7 @@ RUNTYPE="$1"
 SERIAL=`ioreg -l | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
 NAME="$(echo `systemsetup -getcomputername | cut -d: -f2-`)"
 REPORTPATH="/Library/Managed Installs/ManagedInstallReport.plist"
-SUBMITURL="http://munkireport.bluebus/update"
+SUBMITURL="REPLACE_BASEURL/update"
 
 # Application paths
 PLISTBUDDY="/usr/libexec/PlistBuddy"
