@@ -3,7 +3,7 @@ class inventory extends Controller
 {
 
     function hash($serial=NULL) {
-        $hash = 'HASH';
+        $hash = '';
         if (!is_null($serial))
         {
             $inventory = new InventoryReport($serial);
@@ -12,7 +12,7 @@ class inventory extends Controller
                 $hash = $inventory->get('sha256hash');
             }
         } else {
-            ErrorPage::error404();
+            Engine::request_not_found();
         }
         echo $hash;
     }
@@ -21,7 +21,7 @@ class inventory extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST')
         {
-            ErrorPage::error404();
+            Engine::request_not_found();
         }
     
         //list of bundleids to ignore

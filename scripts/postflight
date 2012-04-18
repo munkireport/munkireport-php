@@ -6,8 +6,7 @@ NAME=`scutil --get ComputerName`
 REPORTPATH="/Library/Managed Installs/ManagedInstallReport.plist"
 INVENTORYPATH="/Library/Managed Installs/ApplicationInventory.plist"
 
-# Change the BASEURL to match your installation
-BASEURL="http://localhost/munkireport-php"
+BASEURL="REPLACE_BASEURL"
 REPORTSUBMITURL="${BASEURL}/update"
 INVENTORYHASHURL="${BASEURL}/inventory/hash"
 INVENTORYSUBMITURL="${BASEURL}/inventory/submit"
@@ -16,6 +15,8 @@ INVENTORYSUBMITURL="${BASEURL}/inventory/submit"
 PLISTBUDDY="/usr/libexec/PlistBuddy"
 PERL="/usr/bin/perl"
 CURL="/usr/bin/curl"
+MKTEMP="/usr/bin/mktemp"
+SYSTEM_PROFILER="/usr/sbin/system_profiler"
 
 # Copy the report to a temporary file.
 TMPPLIST=/tmp/`head -c10 /dev/urandom | md5`.plist
@@ -24,14 +25,14 @@ cp "$REPORTPATH" "$TMPPLIST"
 echo "Generating a system_profiler report."
 # Generate a system_profiler report.
 PROFILEPLIST=/tmp/`head -c10 /dev/urandom | md5`.plist
-/usr/sbin/system_profiler -xml SPNetworkDataType SPHardwareDataType > "$PROFILEPLIST"
+$SYSTEM_PROFILER -xml SPNetworkDataType SPHardwareDataType > "$PROFILEPLIST"
 
 # Merge system profiler report with munki report.
 $PLISTBUDDY -c "Add :MachineInfo:SystemProfile array" "$TMPPLIST"
 $PLISTBUDDY -c "Merge $PROFILEPLIST :MachineInfo:SystemProfile" "$TMPPLIST"
 
 # Encode report.
-REPORTTMP=`mktemp -t postflight`
+REPORTTMP=`$MKTEMP -t postflight`
 echo -n 'report=' > "$REPORTTMP"
 echo "Urlencoding Munki report"
 # We need perl to urlencode the file because older versions of OSX don't have curl with --data-urlencode.
@@ -54,7 +55,7 @@ if [ -e "$INVENTORYPATH" ] ; then
         echo "Inventory changed"
         # inventory changed, sumbit to server
         # Compress and encode inventory.
-        INVENTORYTMP=`mktemp -t inventory`
+        INVENTORYTMP=`$MKTEMP -t inventory`
         echo -n "inventory_report=" > "$INVENTORYTMP"
         echo "Urlencoding inventory report"
         # We need perl to urlencode the file because older versions of OSX don't have curl with --data-urlencode.

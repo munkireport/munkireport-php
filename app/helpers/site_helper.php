@@ -55,27 +55,3 @@ function humanreadablesize($kbytes) {
     }
 }
 
-class ErrorPage {
-    // Some functions for displaying error pages
-    
-    static function error400($msg='') {
-        header("HTTP/1.0 400 Bad Request");
-        die('<html><head><title>400 Bad Request</title></head><body><h1>Bad Request</h1><p>'.$msg.'<hr /></body></html>');
-    }
-    
-    static function error401($msg='') {
-        header("HTTP/1.0 401 Unauthorized");
-        die('<html><head><title>401 Unauthorized</title></head><body><h1>Unauthorized</h1><p>'.$msg.'<hr /></body></html>');
-    }
-    
-    static function error403($msg='') {
-        header("HTTP/1.0 403 Forbidden");
-        die('<html><head><title>403 Forbidden</title></head><body><h1>Forbidden</h1><p>'.$msg.'<hr /></body></html>');
-    }
-    
-    static function error404($msg='') {
-        header("HTTP/1.0 404 Not Found");
-        die('<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>'.$msg.'<p>The requested URL was not found on this server.</p><hr /></html>');
-    }
-    
-}
