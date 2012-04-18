@@ -43,7 +43,7 @@
 	//===============================================
 	// Globals
 	//===============================================
-	$GLOBALS['sitename']='Default Site';
-	$GLOBALS['version'] = '0.7.0';
+	$GLOBALS['sitename']='MunkiReport';
+	$GLOBALS['version'] = '0.8.2';
 	
 	define('_DEBUG', FALSE );

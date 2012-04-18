@@ -5,8 +5,11 @@ if [ -z "$RUNTYPE" ]; then
     RUNTYPE="reportbrokenclient"
 fi
 SERIAL=`ioreg -l | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
-NAME="$(echo `systemsetup -getcomputername | cut -d: -f2-`)"
-SUBMITURL="REPLACE_BASEURL/update"
+NAME=`scutil --get ComputerName`
+
+# Change the BASEURL to match your installation
+BASEURL="http://localhost/munkireport-php"
+SUBMITURL="${BASEURL}/update"
 
 # Application paths
 CURL="/usr/bin/curl"

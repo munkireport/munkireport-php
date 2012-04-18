@@ -23,6 +23,9 @@
   <ul id="mainmenu">
     <li class="first"><a href="<?=url()?>" <?=isset($page) && $page=='index'?'class="active"':''?>>Start</a></li>
     <li><a href="<?=url('show/reports')?>" <?=isset($page) && $page=='reports'?'class="active"':''?>>Reports</a></li>
+    <li><a href="<?=url('inventory')?>" <?=isset($page) && $page=='inventory'?'class="active"':''?>>Inventory</a></li>
+    <li><a href="<?=url('inventory/items')?>" <?=isset($page) && $page=='inventory_items'?'class="active"':''?>>Inventory Items</a></li>
+    
     <!--!
         <li><a href="${tg.url('/about')}" class="${('', 'active')[defined('page') and page=='about']}">About</a></li>
         <li py:if="tg.auth_stack_enabled"><a href="${tg.url('/auth')}" class="${('', 'active')[defined('page') and page=='auth']}">Authentication</a></li>

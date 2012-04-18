@@ -2,46 +2,78 @@
 
 RUNTYPE="$1"
 SERIAL=`ioreg -l | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
-NAME="$(echo `systemsetup -getcomputername | cut -d: -f2-`)"
+NAME=`scutil --get ComputerName`
 REPORTPATH="/Library/Managed Installs/ManagedInstallReport.plist"
-SUBMITURL="REPLACE_BASEURL/update"
+INVENTORYPATH="/Library/Managed Installs/ApplicationInventory.plist"
+
+# Change the BASEURL to match your installation
+BASEURL="http://localhost/munkireport-php"
+REPORTSUBMITURL="${BASEURL}/update"
+INVENTORYHASHURL="${BASEURL}/inventory/hash"
+INVENTORYSUBMITURL="${BASEURL}/inventory/submit"
 
 # Application paths
 PLISTBUDDY="/usr/libexec/PlistBuddy"
 PERL="/usr/bin/perl"
 CURL="/usr/bin/curl"
-MKTEMP="/usr/bin/mktemp"
-SYSTEM_PROFILER="/usr/sbin/system_profiler"
 
 # Copy the report to a temporary file.
 TMPPLIST=/tmp/`head -c10 /dev/urandom | md5`.plist
 cp "$REPORTPATH" "$TMPPLIST"
 
+echo "Generating a system_profiler report."
 # Generate a system_profiler report.
 PROFILEPLIST=/tmp/`head -c10 /dev/urandom | md5`.plist
-$SYSTEM_PROFILER -xml SPSoftwareDataType SPHardwareDataType > "$PROFILEPLIST"
+/usr/sbin/system_profiler -xml SPNetworkDataType SPHardwareDataType > "$PROFILEPLIST"
 
 # Merge system profiler report with munki report.
 $PLISTBUDDY -c "Add :MachineInfo:SystemProfile array" "$TMPPLIST"
 $PLISTBUDDY -c "Merge $PROFILEPLIST :MachineInfo:SystemProfile" "$TMPPLIST"
 
-# Create temp file for encoded report.
-TMP=`$MKTEMP -t postflight`
-
-echo 'report=' > "$TMP";
-
+# Encode report.
+REPORTTMP=`mktemp -t postflight`
+echo -n 'report=' > "$REPORTTMP"
+echo "Urlencoding Munki report"
 # We need perl to urlencode the file because older versions of OSX don't have curl with --data-urlencode.
-$PERL -MURI::Escape -e 'while(<>){print uri_escape($_)}' "$TMPPLIST" >> "$TMP"
+$PERL -MURI::Escape -e 'while(<>){print uri_escape($_)}' "$TMPPLIST" >> "$REPORTTMP"
 
-# Submit to server.
+echo "Submitting Munki report"
+# Submit Munki report inventory to server.
 $CURL --max-time 30 --silent \
-    -d "runtype=$RUNTYPE" \
-    -d "serial=$SERIAL" \
-    -d "name=$NAME" \
-    -d @"$TMP" \
-    "$SUBMITURL/postflight"
+    -d runtype="$RUNTYPE" \
+    -d serial="$SERIAL" \
+    -d name="$NAME" \
+    -d "@$REPORTTMP" \
+    "$REPORTSUBMITURL/postflight"
 
-# Clean up.
-rm -f "$TMP" "$TMPPLIST" "$PROFILEPLIST"
+echo "Checking stored inventory"
+if [ -e "$INVENTORYPATH" ] ; then
+    INVENTORY_CHECKSUM=`cat /Library/Managed\ Installs/ApplicationInventory.plist | openssl dgst -sha256`
+    STORED_CHECKSUM=`$CURL --max-time 30 --silent "$INVENTORYHASHURL/$SERIAL"`
+    if [ "$INVENTORY_CHECKSUM" != "$STORED_CHECKSUM" ]; then 
+        echo "Inventory changed"
+        # inventory changed, sumbit to server
+        # Compress and encode inventory.
+        INVENTORYTMP=`mktemp -t inventory`
+        echo -n "inventory_report=" > "$INVENTORYTMP"
+        echo "Urlencoding inventory report"
+        # We need perl to urlencode the file because older versions of OSX don't have curl with --data-urlencode.
+        $PERL -MURI::Escape -e 'while(<>){print uri_escape($_)}' "$INVENTORYPATH" >> "$INVENTORYTMP"
+        echo "Submitting inventory"
+        # Submit inventory to server.
+        $CURL --max-time 30 --silent \
+            -d runtype="$RUNTYPE" \
+            -d serial="$SERIAL" \
+            -d name="$HOSTNAME" \
+            -d "@$INVENTORYTMP" \
+            "$INVENTORYSUBMITURL"
+        # clean up
+        rm -f "$INVENTORYTMP"
+    else
+        echo "No change in inventory."
+    fi
+fi
 
+# Clean up and exit
+rm -f "$REPORTTMP" "$TMPPLIST" "$PROFILEPLIST"
 exit 0
