@@ -2,7 +2,7 @@
 function url($url='', $fullurl = FALSE)
 {
   $s = $fullurl ? WEB_HOST : '';
-  $s .= WEB_FOLDER.($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE).$url;
+  $s .= WEB_FOLDER.($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
   return $s;
 }
 
