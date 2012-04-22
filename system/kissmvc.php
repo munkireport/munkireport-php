@@ -28,7 +28,19 @@ class Controller extends KISS_Controller
 //===============================================================
 class Model extends KISS_Model
 {
-
+    function save() {
+        // one function to either create or update!
+        if ($this->rs[$this->pkname] == '')
+        {
+            //primary key is empty, so create
+            $this->create();
+        }
+        else
+        {
+            //primary key exists, so update
+            $this->update();
+        }
+    }
 }
 
 //===============================================================
