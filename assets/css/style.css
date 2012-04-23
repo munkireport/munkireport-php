@@ -310,7 +310,7 @@ table.clientlist {
 }
 
 .clientlist th {
-    padding: 2px 4px;
+    padding: 2px 20px 2px 4px;
     border: 1px solid #888;
     background-color: #fff;
 	cursor: pointer;
