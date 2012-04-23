@@ -7,7 +7,6 @@ html {
 
 body {
 	text-align: left;
-	width: 960px;
 	margin: 0 auto;
 	padding: 0;
 	font-size: 12px;
@@ -19,15 +18,26 @@ a {
 }
 
 #header {
-	height: 52px;
+    border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-color: rgb(133,195,203);
+	border-width: 1px 0 0 0;
+	border-style: solid;
+    height: 51px;
 	margin: 10px 10px 0 10px;
-	background: url('../images/headerbg.png') top left no-repeat;
+	background: #3fa2ad;
+	background: -moz-linear-gradient(top, #3fa2ad 0%, #265f69 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3fa2ad), color-stop(100%,#265f69));
+	background: -webkit-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: -o-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: -ms-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: linear-gradient(top, #3fa2ad 0%,#265f69 100%);
 }
 
 #header h1 {
 	padding: 0;
 	margin: 0;
-	padding-top: 4px;
+	padding-top: 3px;
 	padding-left: 12px;
 	color: #fff;
 	position: relative;
@@ -42,10 +52,16 @@ a {
 }
 
 ul#mainmenu {
-	margin: 0;
-	padding: 0 10px;
-	background: url('../images/menubg.png') top left no-repeat;
-	height: 38px;
+	padding: 0;
+	margin: 0 10px;
+	background: #555555;
+	background: -moz-linear-gradient(top, #555555 0%, #2d2d2d 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#555555), color-stop(100%,#2d2d2d));
+	background: -webkit-linear-gradient(top, #555555 0%,#2d2d2d 100%);
+	background: -o-linear-gradient(top, #555555 0%,#2d2d2d 100%);
+	background: -ms-linear-gradient(top, #555555 0%,#2d2d2d 100%);
+	background: linear-gradient(top, #555555 0%,#2d2d2d 100%);
+	border-top: 1px solid #636363;
 }
 
 ul#mainmenu li {
@@ -54,32 +70,34 @@ ul#mainmenu li {
 	padding: 0;
 	position: relative;
 	display: inline;
-	float: left;
 }
 
 ul#mainmenu li a {
 	color: #fff;
-	float: left;
-	height: 31px;
-	display: block;
-	line-height: 30px;
+	line-height: 12px;
 	vertical-align: middle;
-	padding: 0 10px;
+	padding: 10px 10px;
 	font-size: 12px;
 	text-decoration: none;
-	background: url('../images/menu-item-border.png') left top no-repeat;
+	border-left: 1px solid #636363;
+	float: left;
 }
 
 ul#mainmenu li a:hover, ul#mainmenu li a.active {
-	background: url('../images/menu-item-actibg.png') left top no-repeat;
+	background: #3fa2ad;
+	background: -moz-linear-gradient(top, #3fa2ad 0%, #265f69 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3fa2ad), color-stop(100%,#265f69));
+	background: -webkit-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: -o-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: -ms-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+
 }
 
 ul#mainmenu li.first a {
-	background: none;
 }
 
 ul#mainmenu li.first a:hover, ul#mainmenu li.first a.active {
-	background: url('../images/menu-item-actibg-first.png') left top no-repeat;
 }
 
 ul#mainmenu li.loginlogout
@@ -98,6 +116,7 @@ ul#mainmenu li.loginlogout a:hover
 	margin : 0 10px 10px 10px;
 	padding: 0 10px;
 	overflow: hidden;
+	clear: left;
 }
 
 #content .currentpage {
