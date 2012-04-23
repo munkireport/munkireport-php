@@ -65,7 +65,7 @@ if [ -e "$INVENTORYPATH" ] ; then
         $CURL --max-time 30 --silent \
             -d runtype="$RUNTYPE" \
             -d serial="$SERIAL" \
-            -d name="$HOSTNAME" \
+            -d name="$NAME" \
             -d "@$INVENTORYTMP" \
             "$INVENTORYSUBMITURL"
         # clean up
