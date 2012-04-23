@@ -309,7 +309,7 @@ abstract class KISS_View
 	
 	protected function short_open($file)
 	{
-		return '?>'.str_replace('<?php =', '<?php echo ', str_replace('<?', '<?php ', file_get_contents($file)));
+		return '?>'.str_replace('<?php =', '<?php echo ', preg_replace('/<\?(?!php|xml)/i', '<?php ', file_get_contents($file)));	    
 	}
 
 	function fetch( $vars='' ) 
