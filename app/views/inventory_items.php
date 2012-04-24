@@ -7,7 +7,7 @@
             "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
             "sPaginationType": "full_numbers",
             "bStateSave": true,
-            "aaSorting": [[1,'asc']]
+            "aaSorting": [[0,'asc']]
         });
     } );
 </script>
