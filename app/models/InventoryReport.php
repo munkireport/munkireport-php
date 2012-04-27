@@ -2,32 +2,17 @@
 
 class InventoryReport extends Model {
     
-    function create_table_if_missing() {
-        $dbh = getdbh();
-        if( ! $dbh->prepare( "SELECT * FROM 'inventory' LIMIT 1" ))
-        {
-            $dbh->exec('DROP TABLE "inventory"');
-            $dbh->exec('VACUUM');
-
-            $sql = "CREATE TABLE `inventory` (
-                `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                `serial` varchar(255) NOT NULL,
-                `timestamp` INTEGER NULL,
-                `sha256hash` varchar(255) NULL
-            ) ";
-            $rowsaffected = $dbh->exec($sql);
-        }
-        return ($dbh->errorCode() == '00000');
-    }
-
     function __construct($serial='')
     {
         parent::__construct('id','inventory'); //primary key = id; tablename = inventory
         $this->rs['id'] = '';
-        $this->rs['serial'] = $serial;
+        $this->rs['serial'] = $serial; $this->rt['serial'] = 'TEXT UNIQUE';
         $this->rs['timestamp'] = time();
         $this->rs['sha256hash'] = '';
-        $this->create_table_if_missing();
+				
+		// Create table if it does not exist
+        $this->create_table();
+
         if ($serial)
           $this->retrieve($serial);
     }       

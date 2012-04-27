@@ -3,7 +3,7 @@ class update extends Controller
 {
 	function __construct()
 	{
-		check_db();
+
 	} 
 	
 	//===============================================================

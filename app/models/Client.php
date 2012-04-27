@@ -3,10 +3,10 @@ class Client extends Model {
 
 	function __construct($serial='')
 	{
-		parent::__construct('id','client'); //primary key = uid; tablename = users
-		$this->rs['id'] = '';
+		parent::__construct('id','client'); //primary key, tablename
+		$this->rs['id'] = 0;
 		$this->rs['name'] = '';
-		$this->rs['serial'] = $serial;
+		$this->rs['serial'] = $serial; $this->rs['serial'] = 'TEXT UNIQUE';
 		$this->rs['remote_ip'] = '';
 		$this->rs['timestamp'] = '';
 		$this->rs['runtype'] = '';
@@ -16,6 +16,10 @@ class Client extends Model {
 		$this->rs['warnings'] = 0;
 		$this->rs['activity'] = array();
 		$this->rs['report_plist'] = array();
+		
+		// Create table if it does not exist
+        $this->create_table();
+		
 		if ($serial)
 		  $this->retrieve($serial);
 	}		
@@ -75,4 +79,4 @@ class Client extends Model {
 		
 		return $this;
 	}	
-}    
+}

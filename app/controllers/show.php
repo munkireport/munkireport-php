@@ -3,7 +3,7 @@ class show extends Controller
 {
 	function __construct()
 	{
-		check_db();
+
 	} 
 
 	function index()
