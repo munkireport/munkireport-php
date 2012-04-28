@@ -6,7 +6,7 @@
       py:strip="">
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-    <title>MunkiReport</title>
+    <title><?=$GLOBALS['sitename']?></title>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/admin.css" />
 	
@@ -17,7 +17,7 @@
 
 <body py:match="body" py:attrs="select('@*')">
   <div id="header">
-  	<h1>MunkiReport</h1>
+  	<h1><?=$GLOBALS['sitename']?></h1>
   </div>
   
   <ul id="mainmenu">
