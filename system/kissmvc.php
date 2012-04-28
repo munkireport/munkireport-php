@@ -61,24 +61,33 @@ class Model extends KISS_Model
 	{
 		$dbh = $this->getdbh();
 		
+		$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false); 
+		
         if( ! $dbh->prepare( "SELECT * FROM ".$this->enquote($this->tablename)." LIMIT 1" ))
         {
-            $dbh->exec('DROP TABLE '.$this->enquote($this->tablename));
-            $dbh->exec('VACUUM');
-			
 			// Get columns
 			$columns = array();
 			foreach($this->rs as $name => $val)
 			{
 				// Determine type automagically
-				$type = is_int($val) ? 'INTEGER' : (is_string($val) ? 'TEXT' : (is_float($val) ? 'REAL' : 'BLOB'));
+				$type = is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
 				
 				// Or set type from type array
 				$columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
 			}
 			
 			// Set primary key
-			$columns[$this->pkname] = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+			$columns[$this->pkname] = 'INTEGER PRIMARY KEY';
+			
+			// Set autoincrement per db engine
+			switch($dbh->getAttribute(constant("PDO::ATTR_DRIVER_NAME")))
+			{
+				case 'sqlite':
+					$columns[$this->pkname] .= ' AUTOINCREMENT';
+					break;
+				case 'mysql':
+					$columns[$this->pkname] .= ' AUTO_INCREMENT';
+			}
 			
 			// Compile columns sql
             $sql = '';
@@ -89,11 +98,12 @@ class Model extends KISS_Model
 			$sql = rtrim($sql, ',');
 
             $rowsaffected = $dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
-			
+
 			// Set indexes
 			$this->set_indexes();
 			
         }
+		//print_r($dbh->errorInfo());
         return ($dbh->errorCode() == '00000');
 	}
 	
@@ -113,6 +123,7 @@ class Model extends KISS_Model
 		{
 			$dbh->exec(sprintf("CREATE INDEX '%s' ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
 		}
+		
 		
 		return ($dbh->errorCode() == '00000');
 	}

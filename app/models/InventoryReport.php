@@ -6,7 +6,7 @@ class InventoryReport extends Model {
     {
         parent::__construct('id','inventory'); //primary key = id; tablename = inventory
         $this->rs['id'] = '';
-        $this->rs['serial'] = $serial; $this->rt['serial'] = 'TEXT UNIQUE';
+        $this->rs['serial'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
         $this->rs['timestamp'] = time();
         $this->rs['sha256hash'] = '';
 				

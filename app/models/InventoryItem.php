@@ -6,7 +6,7 @@ class InventoryItem extends Model {
     {
         parent::__construct('id','inventoryitem'); //primary key = id; tablename = inventoryitem
         $this->rs['id'] = 0;
-        $this->rs['serial'] = $serial;
+        $this->rs['serial'] = (string) $serial;
         $this->rs['name'] = '';
         $this->rs['version'] = '';
         $this->rs['bundleid'] = '';

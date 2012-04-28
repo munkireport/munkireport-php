@@ -34,8 +34,18 @@
 	// Routes
 	$routes = array();
 
-	// PDO Datasource name
+	// PDO Datasource
+	// Specify dsn, username, password and options
+	// Supported engines: sqlite and mysql
+	// Mysql example:
+	//$pdo_dsn = 'mysql:host=localhost;dbname=munkireport';
+	//$pdo_user = 'munki';
+	//$pdo_pass = 'munki';
+	//$pdo_opts = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
 	$pdo_dsn = 'sqlite:'.$application_folder.'db/db.sqlite';
+	$pdo_user = '';
+	$pdo_pass = '';
+	$pdo_opts = array();
 
 	// Timezone See http://www.php.net/manual/en/timezones.php for valid values
 	$timezone = 'Europe/Brussels';
@@ -43,7 +53,6 @@
 	//===============================================
 	// Globals
 	//===============================================
-	$GLOBALS['sitename']='MunkiReport';
-	$GLOBALS['version'] = '0.8.2';
+	$GLOBALS['sitename'] = 'MunkiReport';
 	
 	define('_DEBUG', FALSE );
