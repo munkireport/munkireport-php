@@ -49,7 +49,7 @@ class inventory extends Controller
                 if (count($inventory_list))
                 {
                     // clear existing inventory items
-                    $inventoryitem = new InventoryItem();
+                    $inventoryitem = new InventoryItem($serial);
                     $inventoryitem->delete_set($serial);
                     // insert current inventory items
                     foreach ($inventory_list as $item)
@@ -58,7 +58,7 @@ class inventory extends Controller
                         {
                             $item['bundlename'] = isset($item['CFBundleName']) ? $item['CFBundleName'] : '';
                         
-                            $inventoryitem = new InventoryItem($serial);
+                            $inventoryitem->id = 0;
                             $inventoryitem->merge($item)->save();
                         }
                     }
