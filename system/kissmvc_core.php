@@ -397,7 +397,7 @@ abstract class KISS_Model
 		$this->tablename=$tablename; //Corresponding table in database
 		$this->dbhfnname=$dbhfnname; //dbh function name
 		$this->QUOTE_STYLE=$quote_style;
-		$this->COMPRESS_ARRAY=$compress_array;
+		$this->COMPRESS_ARRAY=function_exists('gzdeflate') && $compress_array;
 	}
 
 	function get( $key ) 
