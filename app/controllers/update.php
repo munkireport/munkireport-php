@@ -10,7 +10,7 @@ class update extends Controller
 	
 	function preflight()
 	{
-		if($_POST)
+		if(isset($_POST['serial']))
 		{
 			$_POST['req'] = 'preflight';
 			$_POST['timestamp'] = date('Y-m-d H:i:s');
@@ -34,7 +34,7 @@ class update extends Controller
 	
 	function postflight()
 	{
-		if($_POST)
+		if(isset($_POST['serial']))
 		{
 			$_POST['req'] = 'postflight';
 			$_POST['timestamp'] = date('Y-m-d H:i:s');
@@ -78,7 +78,7 @@ class update extends Controller
 	
 	function report_broken_client()
 	{
-		if($_POST)
+		if(isset($_POST['serial']))
 		{
 			$_POST['req'] = 'report_broken_client';
 			$_POST['timestamp'] = date('Y-m-d H:i:s');
