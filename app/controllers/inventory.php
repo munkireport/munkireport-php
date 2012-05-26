@@ -35,7 +35,6 @@ class inventory extends Controller
             $client->merge($_POST)->save();
             
             $_POST['timestamp'] = time();
-            $_POST['sha256hash'] = isset($_POST['inventory_report']) ? hash('sha256', $_POST['inventory_report']) : '';
             $inventory = new InventoryReport($serial);
             $inventory->merge($_POST)->save();
             

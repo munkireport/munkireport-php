@@ -49,7 +49,7 @@ $CURL --max-time 30 --silent \
 
 echo "Checking stored inventory"
 if [ -e "$INVENTORYPATH" ] ; then
-    INVENTORY_CHECKSUM=`cat /Library/Managed\ Installs/ApplicationInventory.plist | openssl dgst -sha256`
+    INVENTORY_CHECKSUM=`cat /Library/Managed\ Installs/ApplicationInventory.plist | md5`
     STORED_CHECKSUM=`$CURL --max-time 30 --silent "$INVENTORYHASHURL/$SERIAL"`
     if [ "$INVENTORY_CHECKSUM" != "$STORED_CHECKSUM" ]; then 
         echo "Inventory changed"
@@ -63,11 +63,12 @@ if [ -e "$INVENTORYPATH" ] ; then
         echo "Submitting inventory"
         # Submit inventory to server.
         $CURL --max-time 30 --silent \
-            -d runtype="$RUNTYPE" \
-            -d serial="$SERIAL" \
-            -d name="$NAME" \
-            -d "@$INVENTORYTMP" \
-            "$INVENTORYSUBMITURL"
+			-d runtype="$RUNTYPE" \
+			-d serial="$SERIAL" \
+			-d name="$NAME" \
+			-d sha256hash="$INVENTORY_CHECKSUM" \
+			-d "@$INVENTORYTMP" \
+			"$INVENTORYSUBMITURL"
         # clean up
         rm -f "$INVENTORYTMP"
     else
