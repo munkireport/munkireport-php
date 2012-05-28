@@ -25,7 +25,10 @@ class inventory extends Controller
         }
     
         //list of bundleids to ignore
-        $bundleid_ignorelist = array('com.apple.print.PrinterProxy');
+        $bundleid_ignorelist = isset($GLOBALS['bundleid_ignorelist']) ? $GLOBALS['bundleid_ignorelist'] : array('com.apple.print.PrinterProxy');
+
+		// Compile regex
+		$regex = '/^'.implode('|', $bundleid_ignorelist).'$/';
     
         $serial = isset($_POST['serial']) ? $_POST['serial'] : FALSE;
         if ($serial)
@@ -53,7 +56,7 @@ class inventory extends Controller
                     // insert current inventory items
                     foreach ($inventory_list as $item)
                     {
-                        if (!in_array($item['bundleid'], $bundleid_ignorelist))
+                        if ( ! preg_match($regex, $item['bundleid']))
                         {
                             $item['bundlename'] = isset($item['CFBundleName']) ? $item['CFBundleName'] : '';
                         
