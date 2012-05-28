@@ -82,6 +82,32 @@
 	
 	/*
 	|===============================================
+	| App settings
+	|===============================================
+	|
+	| If the webapp is in a different directory as index.php, adjust
+	| the variables below. For enhanced security it is advised to put the
+	| webapp in a directory that is not visible to the internet.
+	*/
+	
+	// Path to system folder, with trailing slash
+	$system_path = APP_ROOT.'/system/'; 
+
+	// Path to app folder, with trailing slash
+	$application_folder = APP_ROOT.'/app/';
+
+	// Path to view directory, with trailing slash
+	$view_path = $application_folder.'views/';
+
+	// Path to controller directory, with trailing slash
+	$controller_path = $application_folder.'controllers/';
+	
+	// Routes
+	$routes = array();
+	
+	
+	/*
+	|===============================================
 	| PDO Datasource
 	|===============================================
 	|
@@ -120,28 +146,4 @@
 	*/
 	define('_DEBUG', FALSE );
 	
-	/*
-	|===============================================
-	| App settings
-	|===============================================
-	|
-	| If the webapp is in a different directory as index.php, adjust
-	| the variables below. For enhanced security it is advised to put the
-	| webapp in a directory that is not visible to the internet.
-	*/
-	
-	// Path to system folder, with trailing slash
-	$system_path = APP_ROOT.'/system/'; 
-
-	// Path to app folder, with trailing slash
-	$application_folder = APP_ROOT.'/app/';
-
-	// Path to view directory, with trailing slash
-	$view_path = $application_folder.'views/';
-
-	// Path to controller directory, with trailing slash
-	$controller_path = $application_folder.'controllers/';
-	
-	// Routes
-	$routes = array();
 	
