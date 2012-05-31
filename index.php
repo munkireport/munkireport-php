@@ -59,6 +59,32 @@ date_default_timezone_set( $timezone );
 //set_exception_handler('uncaught_exception_handler');
 
 //===============================================
+// Quick permissions check for sqlite operations
+//===============================================
+if (strpos($pdo_dsn, "sqlite") === 0) {
+	$dsnParts = explode(":", $pdo_dsn);
+	$dbPath = $dsnParts[1];
+	$dbDir = dirname($dbPath);
+	$errors = FALSE;
+	if (!is_writable($dbDir)) {
+		echo "Database directory isn't writable by the webserver";
+		if (_DEBUG == TRUE)
+			echo " - " . $dbDir;
+		echo "<br />";
+		$errors = TRUE;
+	}
+	if (file_exists($dbPath) && !is_writable($dbPath)) {
+		echo "Database isn't writable by the webserver";
+		if (_DEBUG)
+			echo " - " . $dbPath;
+		echo "<br />";
+		$errors = TRUE;
+	}
+	if ($errors == TRUE)
+		exit;
+}
+
+//===============================================
 // Start the controller
 //===============================================
 $GLOBALS[ 'engine' ] = new Engine( $routes, 'show', 'index', $uri_protocol );
