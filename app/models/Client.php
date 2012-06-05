@@ -6,7 +6,7 @@ class Client extends Model {
 		parent::__construct('id','client'); //primary key, tablename
 		$this->rs['id'] = 0;
 		$this->rs['name'] = '';
-		$this->rs['serial'] = $serial; $this->rs['serial'] = 'TEXT UNIQUE';
+		$this->rs['serial'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['remote_ip'] = '';
 		$this->rs['timestamp'] = '';
 		$this->rs['runtype'] = '';
@@ -67,7 +67,7 @@ class Client extends Model {
 		
 		# Check activity
 		$activity = array();
-		foreach(array("ItemsToInstall", "InstallResults", "ItemsToRemove", "RemovalResults", "AppleUpdateList") AS $section)
+		foreach(array("ItemsToInstall", "InstallResults", "ItemsToRemove", "RemovalResults", "AppleUpdates") AS $section)
 		{
 			if(isset($mylist[$section]) && $mylist[$section])
 			{
