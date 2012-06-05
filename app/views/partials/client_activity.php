@@ -38,7 +38,7 @@
 			$install_results = isset($client->activity['InstallResults']) ? count($client->activity['InstallResults']) : 0;
 			$removal_items = isset($client->activity['ItemsToRemove']) ? count($client->activity['ItemsToRemove']) : 0;
 			$removal_results = isset($client->activity['RemovalResults']) ? count($client->activity['RemovalResults']) : 0;
-			$apple_updates = isset($client->activity['AppleUpdateList']) ? count($client->activity['AppleUpdateList']) : 0;
+			$apple_updates = isset($client->activity['AppleUpdates']) ? count($client->activity['AppleUpdates']) : 0;
 			$pending_installs = max(($install_items + $apple_updates) - $install_results, 0);
             $pending_removals = $removal_items - $removal_results;
 			$install_results -= $failed_installs;
