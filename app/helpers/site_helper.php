@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '0.8.2.53';
+$GLOBALS['version'] = '0.8.2.54';
 
 //===============================================
 // Uncaught Exception Handling
@@ -81,5 +81,5 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
 function humanreadablesize($bytes, $decimals = 2) {
 	$sz = 'BKMGTP';
 	$factor = floor((strlen($bytes) - 1) / 3);
-	return sprintf("%.{$decimals}f%s", $bytes / pow(1024, $factor), @$sz[$factor]);
+	return sprintf("%.{$decimals}f %sB", $bytes / pow(1024, $factor), $factor?@$sz[$factor]:' ');
 }

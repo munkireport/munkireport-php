@@ -176,7 +176,7 @@ $machine_info = (object) $machine_info;
 					<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
 					<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
 		          </td>
-		          <td style="text-align: right;"><?=isset($item['installed_size']) ? $item['installed_size'] /1000 : '?'?> MB</td>
+		          <td style="text-align: right;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
 		          <td><?=$item['installed'] ? 'installed' : "not installed"?></td>
 		        </tr>
 				<?endforeach?>
