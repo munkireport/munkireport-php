@@ -55,7 +55,7 @@ $machine_info = (object) $machine_info;
           <?endif?>
           <tr>
             <th>Free Disk Space:</th>
-            <td><?=$report['AvailableDiskSpace'] / 1000000?> GB</td>
+            <td><?=humanreadablesize($report['AvailableDiskSpace'] * 1024)?></td>
           </tr>
           <tr>
             <th>Console User:</th>
@@ -140,7 +140,7 @@ $machine_info = (object) $machine_info;
 			<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
 			<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
           </td>
-          <td style="text-align: right;"><?=isset($item['installed_size']) ? $item['installed_size'] /1000 : '?'?> MB</td>
+          <td style="text-align: right;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
           <td><?=isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed")?></td>
         </tr>
 		<?endforeach?>
@@ -236,7 +236,7 @@ $machine_info = (object) $machine_info;
                   "ManagedInstalls",
                   "RemovedItems",
                   "ProblemInstalls",
-                  'AppleUpdateList',
+                  'AppleUpdates',
                   'InstalledItems',
                   'RestartRequired',
                   'managed_installs_list',

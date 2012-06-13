@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '0.8.2.52';
+$GLOBALS['version'] = '0.8.2.53';
 
 //===============================================
 // Uncaught Exception Handling
@@ -78,17 +78,8 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
 	exit;
 }
 
-function humanreadablesize($kbytes) {
-    $units['KB'] = pow(2,10);
-    $units['MB'] = pow(2,20);
-    $units['GB'] = pow(2,30);
-    $units['TB'] = pow(2,40);
-    foreach ($units as $suffix => $limit)
-    {
-        if ($kbytes <= $limit)
-        {
-            return strval(round($kbytes/($limit/pow(2,10)), 1)) . ' ' . $suffix;
-        }
-    }
+function humanreadablesize($bytes, $decimals = 2) {
+	$sz = 'BKMGTP';
+	$factor = floor((strlen($bytes) - 1) / 3);
+	return sprintf("%.{$decimals}f%s", $bytes / pow(1024, $factor), @$sz[$factor]);
 }
-

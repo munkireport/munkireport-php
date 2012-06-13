@@ -64,7 +64,7 @@
             <tr>
               <th>Free Disk Space:</th>
               <td><?=humanreadablesize(
-                  $machine_info->available_disk_space)?></td>
+                  $machine_info->available_disk_space * 1024)?></td>
             </tr>
           </tbody>
         </table>
