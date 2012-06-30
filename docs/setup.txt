@@ -17,7 +17,7 @@ On a mac client:
 1 - Copy the scripts directory to the client
 2 - Open Terminal.app
 3 - cd to the scripts directory
-4 - ./make_script_dmg.sh http://your-report-php-server 1.0
+4 - ./make_script_dmg.sh http://your-report-php-server/index.php 1.0
 5 - copy the resulting dmg and pkginfo files to your munki repository
 
 Distribute the dmg to your munki fleet.
