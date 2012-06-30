@@ -47,7 +47,7 @@
 	| If you're running munkireport from a subdirectory of a website,
 	| enter subdir path here. E.g. if munkireport is accessible here:
 	| http://mysite/munkireport/ you should set subdirectory to
-	| 'munkireport/'
+	| '/munkireport/'
 	| If you're using .htaccess to rewrite urls, you should change that too
 	|
 	*/
