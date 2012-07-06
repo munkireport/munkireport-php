@@ -8,8 +8,7 @@ class show extends Controller
 
 	function index()
 	{
-		$client = new Client();
-				
+		$client = new Munkireport();
 		$order = " ORDER BY name ASC";
 		
         $data['error_clients'] = $client->retrieve_many('errors > 0'.$order);
@@ -24,7 +23,7 @@ class show extends Controller
 	
 	function reports()
 	{
-		$client = new Client();
+		$client = new Munkireport();
 		
 		$data['objects'] = $client->retrieve_many('id > 0 ORDER BY name ASC');
 		$data['page'] = 'reports';
@@ -42,7 +41,7 @@ class show extends Controller
 
 	function report($serial = '')
 	{
-		$client = new Client($serial);
+		$client = new Munkireport($serial);
 		
 		$report = $client->report_plist;
 		

@@ -12,65 +12,8 @@
     } );
 </script>
 
-<h1><?=$client->name?></h1>
+<?$this->view('partials/machine_info')?>
 
-<table class="twocol">
-  <tbody>
-    <td>
-      <h2>Machine info</h2>
-
-      <table class="client_info">
-        <tbody>
-        <tr>
-          <th>Hostname:</th>
-          <td><?=$machine_info->hostname?></td>
-        </tr>
-          <tr>
-            <th>Username:</th>
-            <td><?=$client->console_user?></td>
-          </tr>
-          <tr>
-            <th>Last inventory date:</th>
-            <td><?=date(
-                'Y-M-d H:i:s', $machine_info->last_inventory_date)?></td>
-          </tr>
-          <tr>
-            <th>Remote IP:</th>
-            <td><?=$client->remote_ip?></td>
-          </tr>
-        </tbody>
-      </table>
-    </td>
-    <td>
-      <h2>&nbsp;</h2>
-      <table class="client_info">
-          <tbody>
-            <tr>
-              <th>Model:</th>
-              <td><?=$machine_info->machine_model?> <?=$machine_info->cpu_type?> <?=$machine_info->current_processor_speed?></td>
-            </tr>
-            <tr>
-              <th>Memory:</th>
-              <td><?=$machine_info->physical_memory?></td>
-            </tr>
-            <tr>
-              <th>Serial:</th>
-              <td><?=$client->serial?></td>
-            </tr>
-              <tr>
-                <th>OS:</th>
-                <td><?=$machine_info->os_vers.' ('.$machine_info->arch.')'?></td>
-              </tr>
-            <tr>
-              <th>Free Disk Space:</th>
-              <td><?=humanreadablesize(
-                  $machine_info->available_disk_space * 1024)?></td>
-            </tr>
-          </tbody>
-        </table>
-    </td>
-  </tbody>
-</table>
 
 <? if (count($inventory_items)): ?>
     <h2>Inventory Items (<?=count($inventory_items)?>)</h2>

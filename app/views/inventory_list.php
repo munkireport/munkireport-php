@@ -12,7 +12,12 @@
     } );
 </script>
 
-<h1>Inventory Clients (<?=count($all_machines)?>)</h1>
+<?
+$hash = new Hash();
+$order = " ORDER BY timestamp DESC";
+?>
+
+<h1>Inventory Clients (<?=$hash->count('Inventoryitems')?>)</h1>
 
 <table class="clientlist">
 <thead>
@@ -25,17 +30,21 @@
   </tr>
 </thead>
 <tbody>
-<?foreach($all_machines as $machine):?>
-  <?$url = url("inventory/detail/" . $machine->serial)?>
+
+<?foreach($hash->retrieve_many('name =? '.$order, 'Inventoryitems') as $inventory):?>
+  <?
+	$machine = new Machine($inventory->serial);
+	$reportdata = new Reportdata($inventory->serial);
+?>
   <tr>
     <td>
-        <a href="<?=$url?>"><?=$machine->name?></a>
+        <a href="<?=url("inventory/detail/$inventory->serial")?>"><?=$machine->computer_name?></a>
     </td>
-    <td><?=$machine->console_user?></td>
-    <td><?=$machine->remote_ip?></td>
-    <td><?='?'?></td>
+    <td><?=$reportdata->console_user?></td>
+    <td><?=$reportdata->remote_ip?></td>
+    <td><?=$machine->os_version?></td>
     <td>
-        <?=date('Y-M-d H:i:s', $machine->last_inventory_update)?>
+        <?=date('Y-M-d H:i:s', $inventory->timestamp)?>
     </td>
   </tr>
 <?endforeach?>

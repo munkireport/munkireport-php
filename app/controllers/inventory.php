@@ -2,93 +2,8 @@
 class inventory extends Controller
 {
 
-    function hash($serial=NULL) {
-        $hash = '';
-        if (!is_null($serial))
-        {
-            $inventory = new InventoryReport($serial);
-            if ($inventory->exists())
-            {
-                $hash = $inventory->get('sha256hash');
-            }
-        } else {
-            Engine::request_not_found();
-        }
-        echo $hash;
-    }
-
-    function submit()
-    {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST')
-        {
-            Engine::request_not_found();
-        }
-    
-        //list of bundleids to ignore
-        $bundleid_ignorelist = isset($GLOBALS['bundleid_ignorelist']) ? $GLOBALS['bundleid_ignorelist'] : array('com.apple.print.PrinterProxy');
-
-		// Compile regex
-		$regex = '/^'.implode('|', $bundleid_ignorelist).'$/';
-    
-        $serial = isset($_POST['serial']) ? $_POST['serial'] : FALSE;
-        if ($serial)
-        {
-            $_POST['remote_ip'] = $_SERVER['REMOTE_ADDR'];
-            $client = new Client($serial);
-            $client->merge($_POST)->save();
-            
-            $_POST['timestamp'] = time();
-            $inventory = new InventoryReport($serial);
-            $inventory->merge($_POST)->save();
-            
-            if(isset($_POST['inventory_report']))
-            {
-                require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-                $parser = new CFPropertyList();
-                $parser->parse(
-                    $_POST['inventory_report'], CFPropertyList::FORMAT_XML);
-                $inventory_list = $parser->toArray();
-                if (count($inventory_list))
-                {
-                    // clear existing inventory items
-                    $inventoryitem = new InventoryItem($serial);
-                    $inventoryitem->delete_set($serial);
-                    // insert current inventory items
-                    foreach ($inventory_list as $item)
-                    {
-                        if ( ! preg_match($regex, $item['bundleid']))
-                        {
-                            $item['bundlename'] = isset($item['CFBundleName']) ? $item['CFBundleName'] : '';
-                        
-                            $inventoryitem->id = 0;
-                            $inventoryitem->merge($item)->save();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     function index() {
-        $inventory = new InventoryReport();
-        $order = " ORDER BY timestamp DESC";
-        $all_inventories = $inventory->retrieve_many('id > 0'.$order);
-        $all_machines = array();
-        foreach($all_inventories as $inventory)
-        {
-            $machine = array();
-            $machine['serial'] = $inventory->get('serial');
-            $machine['last_inventory_update'] = $inventory->get('timestamp');
-            $client = new Client($inventory->get('serial'));
-            $machine['name'] = $client->get('name');
-            $machine['console_user'] = $client->get('console_user');
-            $machine['remote_ip'] = $client->get('remote_ip');
-            #$machine['os_version'] = $client->get('os_version');
-            #$machine['cpu_arch'] = $client->get('cpu_arch');
-            $all_machines[] = (object) $machine;
-        }
-    
-        $data['all_machines'] = $all_machines;
+        
         $data['page'] = 'inventory';
 
         $obj = new View();
@@ -98,45 +13,13 @@ class inventory extends Controller
 
 
     function detail($serial) {
-        $client = new Client($serial);
-        $report = $client->report_plist;
-        
-        $machine_info = array('cpu_type' => '?', 'machine_model' => '?',
-         'physical_memory' => '?', 'current_processor_speed' => '?',
-         'os_vers' => '?', 'arch' => '?', 'hostname' => '?',
-         'available_disk_space' => '?');
-        if (isset($report['AvailableDiskSpace']))
-        {
-            $machine_info['available_disk_space'] =
-                    $report['AvailableDiskSpace'];
-        }
-        if (isset($report['MachineInfo']))
-        {
-            $machine_info = array_merge($machine_info, $report['MachineInfo']);
-            if(isset($report['MachineInfo']['SystemProfile']))
-            {
-                foreach($report['MachineInfo']['SystemProfile'] AS $part)
-                {
-                    if(isset($part['_items'][0]) &&
-                       is_array($part['_items'][0]))
-                    {
-                        $machine_info = array_merge(
-                            $machine_info, $part['_items'][0]);
-                    }
-                }
-            }
-        }
-        $inventory = new InventoryReport($serial);
-        $machine_info['last_inventory_date'] = $inventory->timestamp;
-        $machine_info = (object) $machine_info;
-        
-        $data['client'] = $client;
-        $data['machine_info'] = $machine_info;
-        $inventoryitemobj = new InventoryItem();
+
+        $inventoryitemobj = new InventoryItems();
         $data['inventory_items'] = $inventoryitemobj->retrieve_many(
                                         'serial=?', array($serial));
         $data['page'] = 'inventory';
-    
+    	$data['serial'] = $serial;
+
         $obj = new View();
         $obj->view('inventory_detail', $data);
     }
@@ -145,7 +28,7 @@ class inventory extends Controller
         if ($name)
         {
             $name = rawurldecode($name);
-            $inventory_item_obj = new InventoryItem();
+            $inventory_item_obj = new InventoryItems();
             $data['name'] = $name;
             if ($version)
             {
@@ -159,7 +42,7 @@ class inventory extends Controller
             $data['inventory_items'] = array();
             foreach ($items as $item)
             {
-                $client = new Client($item->serial);
+                $client = new Munkireport($item->serial);
                 $instance['serial'] = $item->serial;
                 $instance['hostname'] = $client->name;
                 $instance['username'] = $client->console_user;
@@ -172,7 +55,7 @@ class inventory extends Controller
             $obj = new View();
             $obj->view('inventoryitem_detail', $data);
         } else {
-            $inventory_item_obj = new InventoryItem();
+            $inventory_item_obj = new InventoryItems();
             $items = $inventory_item_obj->select(
                 'DISTINCT serial, name, version');
             $inventory = array();

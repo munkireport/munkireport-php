@@ -251,6 +251,6 @@ $machine_info = (object) $machine_info;
 
   <h2>Debug</h2>
   <pre py:content="pretty_report">
-    <?//print_r($report)?>
+    <?print_r($report)?>
   </pre>
 <?$obj = new View();$obj->view('partials/foot')?>
