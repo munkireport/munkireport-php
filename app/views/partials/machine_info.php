@@ -1,6 +1,6 @@
 <?
 	$machine = new Machine($serial);
-	$hash = new Hash($serial, 'InventoryItems');
+	$hash = new Hash($serial, $report_type->name);
 	$reportdata = new Reportdata($serial);
 	//print_r($machine);
 ?>
@@ -21,7 +21,7 @@
 				<td><?=$reportdata->console_user?></td>
 			</tr>
 			<tr>
-				<th>Last inventory date:</th>
+				<th>Last <?=$report_type->desc?> date:</th>
 				<td><?=date('Y-M-d H:i:s', $hash->timestamp)?></td>
 			</tr>
 			<tr>

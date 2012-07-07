@@ -5,7 +5,6 @@ class Munkireport extends Model {
 	{
 		parent::__construct('id','client'); //primary key, tablename
 		$this->rs['id'] = 0;
-		$this->rs['name'] = '';
 		$this->rs['serial'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['remote_ip'] = '';
 		$this->rs['timestamp'] = '';
@@ -54,7 +53,6 @@ class Munkireport extends Model {
 		$this->timestamp = date('Y-m-d H:i:s');
 		$this->remote_ip = $_SERVER['REMOTE_ADDR'];
 		$this->runstate = 'done';
-		$this->name = 'unnamed';
 		
 		if ( ! $plist)
 		{

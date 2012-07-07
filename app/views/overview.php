@@ -11,7 +11,7 @@
 		});
 	} );
 </script>
-
+<h1>Munkireport</h1>
 <h2>Errors</h2>
 
 <?if ( ! $error_clients):?>
@@ -37,13 +37,5 @@
 	<?$this->view('partials/client_activity', array('clients' => $activity_clients))?>
 <?endif?>
 
-<p><i>No active packages.</i></p>
-
-
-<h2>Client List</h2>
-
-<ul>
-  <li><a href="<?=url('show/client_list')?>">View all clients</a></li>
-</ul>
 
 <?$this->view('partials/foot')?>

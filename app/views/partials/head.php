@@ -1,11 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:py="http://genshi.edgewall.org/"
-      xmlns:xi="http://www.w3.org/2001/XInclude"
-      py:strip="">
+<!doctype html>
+<html>
 <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<meta charset="utf-8">
+
+	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+	More info: h5bp.com/i/378 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
     <title><?=$GLOBALS['sitename']?></title>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/admin.css" />
@@ -30,7 +31,6 @@
         <li><a href="${tg.url('/about')}" class="${('', 'active')[defined('page') and page=='about']}">About</a></li>
         <li py:if="tg.auth_stack_enabled"><a href="${tg.url('/auth')}" class="${('', 'active')[defined('page') and page=='auth']}">Authentication</a></li>
         <li><a href="${tg.url('/environ')}" class="${('', 'active')[defined('page') and page=='environ']}">WSGI Environment</a></li>
-        <li><a href="http://groups.google.com/group/turbogears">Contact</a></li>
     -->
 	<?if(FALSE):?>
     <span py:if="tg.auth_stack_enabled" py:strip="True">

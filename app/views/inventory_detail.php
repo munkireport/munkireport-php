@@ -12,7 +12,8 @@
     } );
 </script>
 
-<?$this->view('partials/machine_info')?>
+<?$report_type = (object) array('name'=>'InventoryItems', 'desc' => 'inventory')?>
+<?$this->view('partials/machine_info', array('report_type' => $report_type))?>
 
 
 <? if (count($inventory_items)): ?>

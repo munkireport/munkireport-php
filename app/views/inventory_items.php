@@ -12,7 +12,7 @@
     } );
 </script>
 
-<h2>Inventory items (<?=count($inventory)?>)</h2>
+<h1>Inventory items (<?=count($inventory)?>)</h1>
 <table class='clientlist'>
 <thead>
   <tr>

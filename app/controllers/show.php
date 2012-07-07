@@ -127,6 +127,7 @@ class show extends Controller
 		
 		$data['client'] = $client;
 		$data['report'] = $report;
+		$data['serial'] = $serial;
 		$data['page'] = 'report';
 		
 		$obj = new View();

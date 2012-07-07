@@ -13,7 +13,7 @@
 </script>
 
 
-  <h1>Munki Clients <?=count($objects)?></h1>
+  <h1>Munki Clients (<?=count($objects)?>)</h1>
   
   <table class="clientlist">
     <thead>
@@ -30,11 +30,12 @@
 	<?foreach($objects as $client):?>
       <tr>
         <?$url = url("show/report/$client->serial")?>
+		<?$machine = new Machine($client->serial)?>
         <td>
 			<?if($client->report_plist):?>
-			<a href="<?=$url?>"><?=$client->name?></a>
+			<a href="<?=$url?>"><?=$machine->computer_name?></a>
 			<?else:?>
-			<?=$client->name?>
+			<?=$machine->computer_name?>
 			<?endif?>
 		</td>
 		<td><?=$client->console_user?></td>
