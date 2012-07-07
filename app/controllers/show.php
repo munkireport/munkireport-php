@@ -9,11 +9,9 @@ class show extends Controller
 	function index()
 	{
 		$client = new Munkireport();
-		$order = " ORDER BY name ASC";
-		
-        $data['error_clients'] = $client->retrieve_many('errors > 0'.$order);
-		$data['warning_clients'] = $client->retrieve_many('warnings > 0'.$order);
-        $data['activity_clients'] = $client->retrieve_many('activity != ""'.$order);
+        $data['error_clients'] = $client->retrieve_many('errors > 0');
+		$data['warning_clients'] = $client->retrieve_many('warnings > 0');
+        $data['activity_clients'] = $client->retrieve_many('activity != ""');
 		$data['page'] = 'index';
 
 		$obj = new View();
@@ -25,7 +23,7 @@ class show extends Controller
 	{
 		$client = new Munkireport();
 		
-		$data['objects'] = $client->retrieve_many('id > 0 ORDER BY name ASC');
+		$data['objects'] = $client->retrieve_many('id > 0');
 		$data['page'] = 'reports';
 		
 		$obj = new View();

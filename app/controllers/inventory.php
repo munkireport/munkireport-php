@@ -14,7 +14,7 @@ class inventory extends Controller
 
     function detail($serial) {
 
-        $inventoryitemobj = new InventoryItems();
+        $inventoryitemobj = new InventoryItem();
         $data['inventory_items'] = $inventoryitemobj->retrieve_many(
                                         'serial=?', array($serial));
         $data['page'] = 'inventory';
@@ -28,7 +28,7 @@ class inventory extends Controller
         if ($name)
         {
             $name = rawurldecode($name);
-            $inventory_item_obj = new InventoryItems();
+            $inventory_item_obj = new InventoryItem();
             $data['name'] = $name;
             if ($version)
             {
@@ -42,10 +42,11 @@ class inventory extends Controller
             $data['inventory_items'] = array();
             foreach ($items as $item)
             {
-                $client = new Munkireport($item->serial);
+                $machine = new Machine($item->serial);
+				$reportdata = new Reportdata($item->serial);
                 $instance['serial'] = $item->serial;
-                $instance['hostname'] = $client->name;
-                $instance['username'] = $client->console_user;
+                $instance['hostname'] = $machine->computer_name;
+                $instance['username'] = $reportdata->console_user;
                 $instance['version'] = $item->version;
                 $instance['bundleid'] = $item->bundleid;
                 $instance['bundlename'] = $item->bundlename;
@@ -55,7 +56,7 @@ class inventory extends Controller
             $obj = new View();
             $obj->view('inventoryitem_detail', $data);
         } else {
-            $inventory_item_obj = new InventoryItems();
+            $inventory_item_obj = new InventoryItem();
             $items = $inventory_item_obj->select(
                 'DISTINCT serial, name, version');
             $inventory = array();

@@ -4,7 +4,7 @@ class Hash extends Model {
     
     function __construct($serial='', $name='')
     {
-        parent::__construct('id','hash'); //primary key, tablename
+		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial'] = '';
         $this->rs['name'] = '';

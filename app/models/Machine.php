@@ -3,7 +3,7 @@ class Machine extends Model {
 
 	function __construct($serial='')
 	{
-		parent::__construct('id','machine'); //primary key, tablename
+		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['hostname'] = '';

@@ -3,7 +3,7 @@ class Munkireport extends Model {
 
 	function __construct($serial='')
 	{
-		parent::__construct('id','client'); //primary key, tablename
+		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
 		$this->rs['id'] = 0;
 		$this->rs['serial'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['remote_ip'] = '';
