@@ -17,7 +17,7 @@ $hash = new Hash();
 $order = " ORDER BY timestamp DESC";
 ?>
 
-<h1>Inventory Clients (<?=$hash->count('Inventoryitems')?>)</h1>
+<h1>Inventory Clients (<?=$hash->count('Inventoryitem')?>)</h1>
 
 <table class="clientlist">
 <thead>
@@ -31,7 +31,7 @@ $order = " ORDER BY timestamp DESC";
 </thead>
 <tbody>
 
-<?foreach($hash->retrieve_many('name =? '.$order, 'Inventoryitems') as $inventory):?>
+<?foreach($hash->retrieve_many('name =? '.$order, 'Inventoryitem') as $inventory):?>
   <?
 	$machine = new Machine($inventory->serial);
 	$reportdata = new Reportdata($inventory->serial);
