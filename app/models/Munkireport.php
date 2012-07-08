@@ -8,7 +8,6 @@ class Munkireport extends Model {
 		$this->rs['serial'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['remote_ip'] = '';
 		$this->rs['timestamp'] = '';
-		$this->rs['runtype'] = '';
 		$this->rs['runstate'] = '';
 		$this->rs['console_user'] = '';
 		$this->rs['errors'] = 0;
@@ -52,7 +51,6 @@ class Munkireport extends Model {
 		$this->req = 'postflight';
 		$this->timestamp = date('Y-m-d H:i:s');
 		$this->remote_ip = $_SERVER['REMOTE_ADDR'];
-		$this->runstate = 'done';
 		
 		if ( ! $plist)
 		{

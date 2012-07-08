@@ -9,6 +9,8 @@ class Reportdata extends Model {
         $this->rs['serial'] = ''; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
         $this->rs['console_user'] = '';
         $this->rs['remote_ip'] = '';
+		$this->rs['runtype'] = '';
+		$this->rs['runstate'] = '';
         $this->rs['timestamp'] = time();
 				
 		// Create table if it does not exist

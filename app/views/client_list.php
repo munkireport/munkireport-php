@@ -31,6 +31,7 @@
       <tr>
         <?$url = url("show/report/$client->serial")?>
 		<?$machine = new Machine($client->serial)?>
+		<?$reportdata = new Reportdata($client->serial)?>
         <td>
 			<?if($client->report_plist):?>
 			<a href="<?=$url?>"><?=$machine->computer_name?></a>
@@ -43,8 +44,8 @@
 		<td><?=isset($client->report_plist['MachineInfo']['os_vers']) ? $client->report_plist['MachineInfo']['os_vers'] : '?'?> <?=isset($client->report_plist['MachineInfo']['arch']) ? $client->report_plist['MachineInfo']['arch'] : '?'?></td>
 		<td>
 			<?=$client->timestamp?>
-			<?=$client->runtype?>
-			<?=$client->runstate?>
+			<?=$reportdata->runtype?>
+			<?=$reportdata->runstate?>
 			<?if($client->errors):?>
             <span class="error">
               <a href="<?=$url?>#errors">

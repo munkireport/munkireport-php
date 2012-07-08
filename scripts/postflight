@@ -72,6 +72,11 @@ def pref(pref_name):
 
 def main():
     
+    runype = 'custom'
+    # get runtype
+    if (len(sys.argv) > 1):
+        runtype = sys.argv[1]
+    print runtype
     # Get prefs
     baseurl = pref('BaseUrl') or \
               munkicommon.pref('SoftwareRepoURL') + '/report'
