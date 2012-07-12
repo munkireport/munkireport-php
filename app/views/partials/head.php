@@ -23,6 +23,7 @@
   
   <ul id="mainmenu">
     <li class="first"><a href="<?=url()?>" <?=isset($page) && $page=='index'?'class="active"':''?>>Start</a></li>
+	<li><a href="<?=url('clients')?>" <?=isset($page) && $page=='clients'?'class="active"':''?>>Clients</a></li>
     <li><a href="<?=url('show/reports')?>" <?=isset($page) && $page=='reports'?'class="active"':''?>>Reports</a></li>
     <li><a href="<?=url('inventory')?>" <?=isset($page) && $page=='inventory'?'class="active"':''?>>Inventory</a></li>
     <li><a href="<?=url('inventory/items')?>" <?=isset($page) && $page=='inventory_items'?'class="active"':''?>>Inventory Items</a></li>

@@ -12,61 +12,41 @@
 	} );
 </script>
 
+<?$machine = new Machine()?>
+<?$hash = new Hash()?>
 
-  <h1>Munki Clients (<?=count($objects)?>)</h1>
+  <h1>Machines (<?=$machine->count()?>)</h1>
   
   <table class="clientlist">
     <thead>
       <tr>
         <th>Client    </th>
-        <th>User      </th>
+        <th>Serial    </th>
+        <th>Hostname   </th>
         <th>IP        </th>
 		<th>OS        </th>
-        <th>Latest Run</th>
-		<th>Manifest</th>
+        <th>Machine_name</th>
+		<th>Available disk space</th>
+		<th>Modules</th>
       </tr>
     </thead>
     <tbody>
-	<?foreach($objects as $client):?>
+	<?foreach($machine->retrieve_many() as $client):?>
       <tr>
-        <?$url = url("show/report/$client->serial")?>
-		<?$machine = new Machine($client->serial)?>
-		<?$reportdata = new Reportdata($client->serial)?>
+		<?$reportdata = new Reportdata($client->serial_number)?>
         <td>
-			<?if($client->report_plist):?>
-			<a href="<?=$url?>"><?=$machine->computer_name?></a>
-			<?else:?>
-			<?=$machine->computer_name?>
-			<?endif?>
+			<a href="<?=url("clients/detail/$client->serial_number")?>"><?=$client->computer_name?></a>
 		</td>
-		<td><?=$client->console_user?></td>
-		<td><?=$client->remote_ip?></td>
-		<td><?=isset($client->report_plist['MachineInfo']['os_vers']) ? $client->report_plist['MachineInfo']['os_vers'] : '?'?> <?=isset($client->report_plist['MachineInfo']['arch']) ? $client->report_plist['MachineInfo']['arch'] : '?'?></td>
+		<td><?=$client->serial_number?></td>
+		<td><?=$client->hostname?></td>
+		<td><?=$reportdata->remote_ip?></td>
+		<td><?=$client->os_version?></td>
+		<td><?=$client->machine_name?></td>
+		<td><?=humanreadablesize($client->available_disk_space * 1024)?></td>
 		<td>
-			<?=$client->timestamp?>
-			<?=$reportdata->runtype?>
-			<?=$reportdata->runstate?>
-			<?if($client->errors):?>
-            <span class="error">
-              <a href="<?=$url?>#errors">
-                <?=count($client->errors) . 'error' . (count($client->errors) > 1 ? 's' : '')?>
-              </a>
-            </span>
-			<?endif?>
-			<?if($client->warnings):?>
-            <span class="warning">
-              <a href="<?=$url?>#errors">
-                <?=count($client->warnings) . 'warning' . (count($client->warnings) > 1 ? 's' : '')?>
-              </a>
-            </span>
-			<?endif?>
-		</td>
-		<td>
-			<?if($client->report_plist && isset($client->report_plist['ManifestName'])):?>
-			<?=$client->report_plist['ManifestName']?>
-			<?else:?>
-			?
-			<?endif?>
+			<?foreach($hash->retrieve_many('serial=?', $client->serial_number) AS $item):?>
+				<?=$item->name?>
+			<?endforeach?>
 		</td>
       </tr>
 	<?endforeach?>

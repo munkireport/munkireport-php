@@ -1,4 +1,4 @@
-<?$obj = new View();$obj->view('partials/head')?>
+<?$this->view('partials/head')?>
 
 <?$report_type = (object) array('name'=>'Munkireport', 'desc' => 'munkireport')?>
 <?$this->view('partials/machine_info', array('report_type' => $report_type))?>
@@ -119,43 +119,15 @@
   </tbody>
 </table>
 
-<!--! test code below -->
 
-<?/*
-    import pprint
-    if True:
-        for k in ("MachineInfo",
-                  "ConsoleUser",
-                  "AvailableDiskSpace",
-                  "ManagedInstallVersion",
-                  "ManifestName",
-                  "RunType",
-                  "StartTime",
-                  "EndTime",
-                  "Errors",
-                  "Warnings",
-                  "InstallResults",
-                  "ItemsToInstall",
-                  "ItemsToRemove",
-                  "RemovalResults",
-                  "ManagedInstalls",
-                  "RemovedItems",
-                  "ProblemInstalls",
-                  'AppleUpdates',
-                  'InstalledItems',
-                  'RestartRequired',
-                  'managed_installs_list',
-                  'managed_uninstalls_list',
-                  'managed_updates_list'):
-            try:
-                del report[k]
-            except:
-                pass
-    pretty_report = pprint.pformat(report)
-*/?>
+	<h2>Installed Apple Software</h2>
+	<?$this->view('partials/install_history', array('apple'=> TRUE))?>
+
+	 <h2>Installed Third-Party Software</h2>
+	<?$this->view('partials/install_history', array('apple'=> FALSE))?>
 
   <h2>Debug</h2>
-  <pre py:content="pretty_report">
+  <pre>
     <?print_r($report)?>
   </pre>
-<?$obj = new View();$obj->view('partials/foot')?>
+<?$this->view('partials/foot')?>

@@ -52,4 +52,30 @@ class Machine extends Model {
 		
 		$this->merge($mylist)->save();
 	}
+	
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Count records
+	 *
+	 * @param string where
+	 * @param mixed bindings
+	 * @return void
+	 * @author abn290
+	 **/
+	function count( $wherewhat='', $bindings='' )
+	{
+		$dbh = $this->getdbh();
+		if ( is_scalar( $bindings ) ) $bindings = $bindings ? array( $bindings ) : array();
+		$sql = 'SELECT COUNT(*) AS count FROM '.$this->tablename;
+		if ( $wherewhat ) $sql .= ' WHERE '.$wherewhat;
+		$stmt = $dbh->prepare( $sql );
+		$stmt->execute( $bindings );
+		if ( $rs = $stmt->fetch( PDO::FETCH_OBJ ) ) 
+		{
+			return $rs->count;
+		}
+		return 0;
+		
+	}
 }

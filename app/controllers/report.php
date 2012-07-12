@@ -5,7 +5,7 @@ class report extends Controller
 	{
 		// Check if we have a serial and data
 		if( ! isset($_POST['serial'])) die('Serial is missing');
-		if( ! isset($_POST['data'])) die('Data is missing');
+		if( ! isset($_POST['items'])) die('Items are missing');
 
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		
@@ -13,9 +13,9 @@ class report extends Controller
 		$out = new CFPropertyList();
 		$out->add( $itemarr = new CFArray() );
 		
-		// Parse data
+		// Parse items
 		$parser = new CFPropertyList();
-		$parser->parse($_POST['data'], CFPropertyList::FORMAT_XML);
+		$parser->parse($_POST['items'], CFPropertyList::FORMAT_XML);
 		
 		// Get stored hashes from db
 		$hash = new Hash();
@@ -38,13 +38,13 @@ class report extends Controller
 	{
 	    require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
-		$parser->parse($_POST['data'], CFPropertyList::FORMAT_XML);
+		$parser->parse($_POST['items'], CFPropertyList::FORMAT_XML);
 		$arr = $parser->toArray();
 		
 		foreach($arr as $key => $val)
 		{
-		    // Skip items without data
-		    if ( ! isset($val['file'])) continue;
+			// Skip items without data
+		    if ( ! isset($val['data'])) continue;
 		    
 		    // Todo: prevent admin and user models, sanitize $key
 		    if(file_exists(APP_PATH . 'models/' . $key . '.php'))
@@ -52,12 +52,11 @@ class report extends Controller
 		        // Load model
 		        $class = new $key($_POST['serial']);
 		        // Process data
-		        $class->process($val['file']);
+		        $class->process($val['data']);
 		        // Store hash
 		        $hash = new Hash($_POST['serial'], $key);
 		        $hash->hash = $val['hash'];
 		        $hash->save();
-        		
 		    }
 		    else
 		    {
