@@ -48,6 +48,31 @@ class Model extends KISS_Model
 	// ------------------------------------------------------------------------
 
 	/**
+	 * Count records
+	 *
+	 * @param string where
+	 * @param mixed bindings
+	 * @return void
+	 * @author abn290
+	 **/
+	function count( $wherewhat='', $bindings='' )
+	{
+		$dbh = $this->getdbh();
+		if ( is_scalar( $bindings ) ) $bindings = $bindings ? array( $bindings ) : array();
+		$sql = 'SELECT COUNT(*) AS count FROM '.$this->tablename;
+		if ( $wherewhat ) $sql .= ' WHERE '.$wherewhat;
+		$stmt = $dbh->prepare( $sql );
+		$stmt->execute( $bindings );
+		if ( $rs = $stmt->fetch( PDO::FETCH_OBJ ) ) 
+		{
+			return $rs->count;
+		}
+		return 0;
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
 	 * Create table
 	 * 
 	 * Create table based on $this->rs array
@@ -123,7 +148,6 @@ class Model extends KISS_Model
 		{
 			$dbh->exec(sprintf("CREATE INDEX '%s' ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
 		}
-		
 		
 		return ($dbh->errorCode() == '00000');
 	}

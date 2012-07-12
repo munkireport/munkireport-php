@@ -1,0 +1,60 @@
+<?php
+class InstallHistory extends Model {
+
+	function __construct($serial_number='')
+	{
+		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+		$this->rs['id'] = '';
+		$this->rs['serial_number'] = $serial_number;
+		$this->rs['date'] = 0;
+		$this->rs['displayName'] = '';
+		$this->rs['displayVersion'] = '';
+		$this->rs['packageIdentifiers'] = array();
+		$this->rs['processName'] = '';
+		
+		// Create table if it does not exist
+		$this->create_table();
+		  
+	}
+	
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Delete all items with serialnumber
+	 *
+	 * @author abn290
+	 **/
+	function delete_set() 
+	{
+		$dbh=$this->getdbh();
+		$sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial_number' ).'=?';
+		$stmt = $dbh->prepare( $sql );
+		$stmt->bindValue( 1, $this->serial_number );
+		$stmt->execute();
+		return $this;
+	}
+		
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Process data sent by postflight
+	 *
+	 * @param string data
+	 * @author abn290
+	 **/
+	function process($plist)
+	{
+		// Delete old data
+		$this->delete_set();
+		
+		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+		$parser = new CFPropertyList();
+		$parser->parse($plist, CFPropertyList::FORMAT_XML);
+		$mylist = $parser->toArray();
+		foreach($mylist as $item)
+		{
+			$this->id = 0;
+			$this->merge($item)->save();
+		}
+	}
+}
