@@ -8,7 +8,7 @@ class Machine extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['hostname'] = '';
 		$this->rs['machine_model'] = '';
-		$this->rd['img_url'];
+		$this->rs['img_url'] = '';
 		$this->rs['current_processor_speed'] = '';
 		$this->rs['cpu_arch'] = '';
 		$this->rs['os_version'] = '';

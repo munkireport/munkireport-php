@@ -27,7 +27,7 @@ class show extends Controller
 		$data['page'] = 'reports';
 		
 		$obj = new View();
-		$obj->view('client_list', $data);
+		$obj->view('munki_list', $data);
 		
 	}
 	

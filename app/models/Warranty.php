@@ -50,6 +50,11 @@ class Warranty extends Model {
 		{
 			$this->nextcheck = time() + 60 * 60 * 24 * 30;//Todo: make exp time config item
 			$this->merge((array)$json_obj)->save();
+			
+			// Save img_url
+			$machine = new Machine($this->sn);
+			$machine->img_url = $json_obj->PROD_IMAGE_URL;
+			$machine->save();
 		}
 		return $this;
 	}

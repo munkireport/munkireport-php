@@ -111,6 +111,72 @@ ul#mainmenu li.loginlogout a:hover
     background: url('../images/menu-item-border.png') left top no-repeat;
 }
 
+#tabs ul
+{
+    padding: 0 0 0 8px;
+	margin: 0;
+	-moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #ffffff;
+    background: #464646;
+    color: #ffffff;
+    font-weight: bold;
+    outline: 0;
+    line-height: 1.3;
+    text-decoration: none;
+    font-size: 100%;
+    list-style: none;
+}
+#tabs ul li
+{
+    list-style-type: none;
+	margin: 0;
+	margin: 5px 5px 0 0;
+	-moz-border-radius-topleft: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -webkit-border-top-right-radius: 4px;
+    border: 1px solid #666666;
+    background: #555555 url(images/555555_40x100_textures_03_highlight_soft_75.png) 50% 50% repeat-x;
+    font-weight: normal;
+    color: #ffffff;
+    outline: none;
+    list-style: none;
+    float: left;
+    position: relative;
+    top: 1px;
+    border-bottom: 0 !important;
+    padding: 0;
+    white-space: nowrap;
+    background: #3fa2ad;
+	background: -moz-linear-gradient(top, #3fa2ad 0%, #265f69 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3fa2ad), color-stop(100%,#265f69));
+	background: -webkit-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: -o-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: -ms-linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+	background: linear-gradient(top, #3fa2ad 0%,#265f69 100%);
+}
+#tabs ul li a
+{
+    font-size: 14px;
+    padding: 4px 1.2em 3px;
+    color: #fff;
+    float: left;
+    text-decoration: none;
+    outline: none;
+    margin-bottom:-1px;
+}
+#tabs ul li.active
+{
+    background: #fff;
+}
+
+#tabs ul li.active a
+{
+    color: #e6820E;
+    margin-bottom: 0;
+}
 #content {
 	background: #fff url('../images/contentbg.png') left bottom no-repeat;
 	margin : 0 10px 10px 10px;
@@ -553,5 +619,9 @@ table.display tr.even.row_selected td {
 table.display tr.odd.row_selected td {
     background-color: #9FAFD1;
 }
+
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
 
 

@@ -5,10 +5,7 @@
 	//print_r($machine);
 ?>
 
-<h1><?=$machine->computer_name?></h1>
-
-<div>
-	<h2>Machine info</h2>
+<h2>Machine info</h2>
 
 	<table class="client_info" style="float: left; margin-right: 20px">
 		<tbody>
@@ -54,4 +51,3 @@
 			</tr>
 		</tbody>
 	</table>
-</div>
