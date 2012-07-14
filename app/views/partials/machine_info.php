@@ -18,6 +18,10 @@
 				<td><?=$reportdata->console_user?></td>
 			</tr>
 			<tr>
+				<th>Fulll username:</th>
+				<td><?=$reportdata->long_username?></td>
+			</tr>
+			<tr>
 				<th>Last <?=$report_type->desc?> date:</th>
 				<td><?=date('Y-M-d H:i:s', $hash->timestamp)?></td>
 			</tr>

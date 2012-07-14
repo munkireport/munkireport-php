@@ -1,6 +1,8 @@
 <?php
 class Warranty extends Model {
-
+	
+	protected $error = '';
+	
 	function __construct($serial='')
 	{
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
@@ -37,11 +39,16 @@ class Warranty extends Model {
 		
 		// Update needed, check with apple
 		$url = 'https://selfsolve.apple.com/warrantyChecker.do?sn='.$this->sn;
-
-		$json = file_get_contents($url);
+		
+		// Check if we got something
+		if( ! $json = file_get_contents($url))
+		{
+			$this->error = 'Could not fetch warranty info';
+			return;
+		}
 		$json = substr($json, 5, -1);
 		$json_obj = json_decode($json);
-
+		
 		if(isset($json_obj->ERROR_CODE))
 		{
 			return $json_obj->ERROR_DESC;

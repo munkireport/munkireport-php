@@ -1,6 +1,11 @@
 <?$client = new Munkireport($serial)?>
 <?$report = $client->report_plist?>
 
+<?if( ! $report):?>
+	<p><i>No Munkireport data</i></p>
+	<?return?>
+<?endif?>
+
 <table class="client_info">
 	<tr>
 		<th>Version:</th>

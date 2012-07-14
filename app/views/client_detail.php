@@ -2,7 +2,7 @@
 
 <?$machine = new Machine($serial);?>
 
-<h1><?if($machine->img_url):?><img src="<?=$machine->img_url?>" alt=""><?endif?><?=$machine->computer_name?></h1>
+<h1><?if($machine->img_url):?><img style="vertical-align:middle" src="<?=$machine->img_url?>" alt=""><?endif?><?=$machine->computer_name?></h1>
 
 <div id="tabs">
 	<ul class="clearfix">
