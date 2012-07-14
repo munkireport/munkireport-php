@@ -1,170 +1,44 @@
 #!/usr/bin/python
 # encoding: utf-8
+'''Postflight script'''
 
 from munkilib import munkicommon
+from munkilib import reportcommon
 from munkilib import FoundationPlist
-import subprocess
-import urllib
-import urllib2
 import hashlib
-import os
-from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate, NSRunLoop, NSDictionary
-from Foundation import CFPreferencesAppSynchronize
-from Foundation import CFPreferencesCopyAppValue
-from Foundation import CFPreferencesCopyKeyList
-from Foundation import CFPreferencesSetValue
-from Foundation import kCFPreferencesAnyUser
-from Foundation import kCFPreferencesCurrentUser
-from Foundation import kCFPreferencesCurrentHost
-
-
-# our preferences "bundle_id"
-BUNDLE_ID = 'MunkiReport'
-
-def curl(url, values):
-    req = urllib2.Request(url, urllib.urlencode(values))
-    try:
-        response = urllib2.urlopen(req)
-    except urllib2.URLError, e:
-        if hasattr(e, 'reason'):
-            print 'We failed to reach a server.'
-            print 'Reason: ', e.reason
-        elif hasattr(e, 'code'):
-            print 'The server couldn\'t fulfill the request.'
-            print 'Error code: ', e.code
-        exit(-1)
-    return response
-    
-def get_computername():
-    cmd = ['/usr/sbin/scutil', '--get', 'ComputerName']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-    return output.strip()
-
-def set_pref(pref_name, pref_value):
-    """Sets a preference, See munkicommon.py for details"""
-    CFPreferencesSetValue(
-        pref_name, pref_value, BUNDLE_ID,
-        kCFPreferencesAnyUser, kCFPreferencesCurrentHost)
-    CFPreferencesAppSynchronize(BUNDLE_ID)
-    print "set pref"
-    try:
-        CFPreferencesSetValue(
-            pref_name, pref_value, BUNDLE_ID,
-            kCFPreferencesAnyUser, kCFPreferencesCurrentHost)
-        CFPreferencesAppSynchronize(BUNDLE_ID)
-    except Exception:
-        pass
-
-   
-def pref(pref_name):
-    """Return a preference. See munkicommon.py for details
-    """
-    pref_value = CFPreferencesCopyAppValue(pref_name, BUNDLE_ID)
-    if pref_value == None:
-        pref_value = default_prefs.get(pref_name)
-#        set_pref(pref_name, pref_value)
-    return pref_value
-
-
+import sys
 
 def main():
-    
-    runype = 'custom'
+    '''Main'''
     # get runtype
     if (len(sys.argv) > 1):
         runtype = sys.argv[1]
-    print runtype
-    # Get prefs
-    baseurl = pref('BaseUrl') or \
-              munkicommon.pref('SoftwareRepoURL') + '/report'
-    
-    hashurl = baseurl + "/index.php/report/hash_check"
-    checkurl = baseurl + "/index.php/report/check_in"
-    
-    # Collect some hardware info
+    else:
+        runtype = 'custom'
+        
+    # Get serial
     hardware_info = munkicommon.get_hardware_info()
-    hardware_info['computer_name'] = get_computername()
-    hardware_info['cpu_arch'] = os.uname()[4]
-    hardware_info['hostname'] = os.uname()[1]
-    hardware_info['os_version'] = munkicommon.getOsVersion(only_major_minor=False)
-    hardware_info['available_disk_space'] = munkicommon.getAvailableDiskSpace()
     serial = hardware_info.get('serial_number', 'NO_SERIAL')
-    hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
-    
-    # Collect some report info
-    report_info = {}
-    report_info['console_user'] = munkicommon.getconsoleuser();
-    report_info['ipv4_addresses'] = munkicommon.get_ipv4_addresses();
-    report_info_plist = FoundationPlist.writePlistToString(report_info)
     
     items = {} # item list
-    # Add hardware hash
-    items['Machine'] = {'hash':hashlib.md5(hw_info_plist).hexdigest()}
-    
-    # Add report hash
-    items['Reportdata'] = {'hash':hashlib.md5(report_info_plist).hexdigest()}
-    
+    report_info = {}
+    report_info['console_user'] = munkicommon.getconsoleuser()
+    report_info['runtype'] = runtype
+    report_info['runstate'] = 'done'
+    report_info_plist = FoundationPlist.writePlistToString(report_info)
+    items = {'Reportdata':{'hash':hashlib.md5(report_info_plist).hexdigest(), \
+        'data':report_info_plist}}
     
     # Read config file /Library/Preferences/Munkireport.plist
-    config_items = pref('ReportItems') or {}
+    config_items = reportcommon.pref('ReportItems') or {}
     
     for key, val in config_items.items():
-        print "Adding %s" % key 
+        print "Requesting %s" % key 
         items[key] = {'path':val}
         
-    # Get hashes for all scripts
-    for key, i in items.items():
-        if i.get('path'):
-            i['hash'] = munkicommon.getmd5hash(i.get('path'))
-        
-    # Send hashes to server
-    values = {'serial': serial, 'data': FoundationPlist.writePlistToString(items)}
-    response = curl(hashurl, values)
-    server_data = response.read();
-    # Decode response
-    try:
-        result = FoundationPlist.readPlistFromString(server_data)
-    except:
-        print 'Illegal response from the server: %s' % server_data 
-        exit(-1)
-    
-    # Check if we need to upload hardware info
-    if 'Machine' in result:
-        items['Machine']['file'] = hw_info_plist
-        
-    if 'Reportdata' in result:
-        items['Reportdata']['file'] = report_info_plist
-    
-    # Retrieve hashes that need updating
-    for i in result:
-        if i in items.keys():
-            print 'preparing ' + i
-            if items[i].get('path'):
-                try:
-                    f = open(items[i]['path'], "r")
-                    items[i]['file'] = f.read()
-                except:
-                    print "ERROR: Can't open %s" % items[i]['path']
-    
-    # delete items that don't have to be uploaded
-    for i in items.keys():
-        if not items[i].get('file'):
-            del items[i]
-        
-    
-    # Send new files with hashes
-    if len(items):
-        print 'sending data'
-        response = curl(checkurl, {'serial': serial, 'data': FoundationPlist.writePlistToString(items)})
-        print response.read()
-    else:
-        print 'nothing to do'
-    exit(0)
+    reportcommon.process(serial, items)    
 
-    
+    exit(0)
 
 if __name__ == '__main__':
     main()

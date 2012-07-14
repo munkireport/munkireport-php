@@ -1,0 +1,129 @@
+#!/usr/bin/python
+# encoding: utf-8
+
+from munkilib import munkicommon
+from munkilib import FoundationPlist
+import subprocess
+import pwd
+import urllib
+import urllib2
+from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
+from Foundation import CFPreferencesAppSynchronize
+from Foundation import CFPreferencesCopyAppValue
+from Foundation import CFPreferencesCopyKeyList
+from Foundation import CFPreferencesSetValue
+from Foundation import kCFPreferencesAnyUser
+from Foundation import kCFPreferencesCurrentUser
+from Foundation import kCFPreferencesCurrentHost
+
+
+# our preferences "bundle_id"
+BUNDLE_ID = 'MunkiReport'
+
+def curl(url, values):
+    req = urllib2.Request(url, urllib.urlencode(values))
+    try:
+        response = urllib2.urlopen(req)
+    except urllib2.URLError, e:
+        if hasattr(e, 'reason'):
+            print 'We failed to reach a server.'
+            print 'Reason: ', e.reason
+        elif hasattr(e, 'code'):
+            print 'The server couldn\'t fulfill the request.'
+            print 'Error code: ', e.code
+        exit(-1)
+    return response
+
+def get_long_username(username):
+    try:
+        long_name = pwd.getpwnam(username)[4]
+    except:
+        long_name = ''
+    return long_name.decode('utf-8')
+    
+def get_computername():
+    cmd = ['/usr/sbin/scutil', '--get', 'ComputerName']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    return output.strip()
+
+def set_pref(pref_name, pref_value):
+    """Sets a preference, See munkicommon.py for details"""
+    CFPreferencesSetValue(
+        pref_name, pref_value, BUNDLE_ID,
+        kCFPreferencesAnyUser, kCFPreferencesCurrentHost)
+    CFPreferencesAppSynchronize(BUNDLE_ID)
+    print "set pref"
+    try:
+        CFPreferencesSetValue(
+            pref_name, pref_value, BUNDLE_ID,
+            kCFPreferencesAnyUser, kCFPreferencesCurrentHost)
+        CFPreferencesAppSynchronize(BUNDLE_ID)
+    except Exception:
+        pass
+
+   
+def pref(pref_name):
+    """Return a preference. See munkicommon.py for details
+    """
+    pref_value = CFPreferencesCopyAppValue(pref_name, BUNDLE_ID)
+    return pref_value
+    
+def process(serial,items):
+    """Process receives a list of items, checks if they need updating and updates them
+    if necessary"""
+    
+    # Get prefs
+    baseurl = pref('BaseUrl') or \
+              munkicommon.pref('SoftwareRepoURL') + '/report'
+    
+    hashurl = baseurl + "/index.php/report/hash_check"
+    checkurl = baseurl + "/index.php/report/check_in"
+    
+    # Get hashes for all scripts
+    for key, i in items.items():
+        if i.get('path'):
+            i['hash'] = munkicommon.getmd5hash(i.get('path'))
+            
+    # Check dict
+    check = {}
+    for key, i in items.items():
+        if i.get('hash'):
+            check[key] = {'hash': i.get('hash')}
+    
+    # Send hashes to server
+    values = {'serial': serial, 'items': FoundationPlist.writePlistToString(check)}
+    response = curl(hashurl, values)
+    server_data = response.read();
+
+    # Decode response
+    try:
+        result = FoundationPlist.readPlistFromString(server_data)
+    except:
+        print 'Illegal response from the server: %s' % server_data 
+        return -1
+    
+    # Retrieve hashes that need updating
+    for i in items.keys():
+        if i in result:
+            print 'Need to update ' + i
+            if items[i].get('path'):
+                try:
+                    f = open(items[i]['path'], "r")
+                    items[i]['data'] = f.read()
+                except:
+                    print "ERROR: Can't open %s" % items[i]['path']
+                    
+        else: # delete items that don't have to be uploaded
+            del items[i]
+
+    # Send new files with hashes
+    if len(items):
+        print 'Sending items'
+        response = curl(checkurl, {'serial': serial, 'items': FoundationPlist.writePlistToString(items)})
+        print response.read()
+    else:
+        print 'No changes'
+
