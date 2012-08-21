@@ -8,6 +8,7 @@ class Machine extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['hostname'] = '';
 		$this->rs['machine_model'] = '';
+		$this->rs['machine_desc'] = '';
 		$this->rs['img_url'] = '';
 		$this->rs['current_processor_speed'] = '';
 		$this->rs['cpu_arch'] = '';
@@ -22,7 +23,7 @@ class Machine extends Model {
 		$this->rs['computer_name'] = '';
 		$this->rs['l2_cache'] = '';
 		$this->rs['machine_name'] = '';
-		$this->rs['packages'] = '';		   
+		$this->rs['packages'] = '';	   
 		
 		// Create table if it does not exist
 		$this->create_table();

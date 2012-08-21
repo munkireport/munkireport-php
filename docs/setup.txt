@@ -1,5 +1,26 @@
 Setup instructions for munkireport-php
 
+##### Munkireport 2 #####
+
+# Add baseurl
+sudo defaults write MunkiReport BaseUrl "http://yourserver/munkireport-php/"
+
+# Add munkireport
+sudo defaults write MunkiReport ReportItems -dict-add Munkireport "/Library/Managed\ Installs/ManagedInstallReport.plist"
+
+# Add InstallHistory
+if [[ `uname -r` < '10.0.0' ]]; then 
+	IPATH="/Library/Logs/Software Update.log"
+else
+	IPATH="/Library/Receipts/InstallHistory.plist"
+fi
+sudo defaults write MunkiReport ReportItems -dict-add InstallHistory "$IPATH"
+
+# Add inventory
+sudo defaults write MunkiReport ReportItems -dict-add InventoryItem "/Library/Managed\ Installs/ApplicationInventory.plist"
+
+
+
 On the server:
 1 - Put all files in the root directory of your website (for subdirs, see below). Make sure you also copy the .htaccess file.
 2 - Copy config_default.php to config.php and make modifications if necessary

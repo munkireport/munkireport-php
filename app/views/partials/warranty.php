@@ -4,17 +4,15 @@
 <table class="client_info">
 	<thead>
 		<tr>
-			<th>Description</th>
+			<th>Status</th>
 			<th>Coverage end date</th>
-			<th>Coverage description</th>
 			<th>Next check</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td><?=$warranty->PROD_DESCR?></td>
-			<td><?=$warranty->COV_END_DATE?></td>
-			<td><?=$warranty->HW_COVERAGE_DESC?></td>
+			<td><?=$warranty->status?></td>
+			<td><?=$warranty->end_date?></td>
 			<td><?=date('Y-m-d G:i:s',$warranty->nextcheck)?></td>
 		</tr>
 	</tbody>

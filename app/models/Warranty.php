@@ -8,10 +8,8 @@ class Warranty extends Model {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['sn'] = $serial; $this->rt['sn'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['COV_END_DATE'] = '';
-		$this->rs['HW_COVERAGE_DESC'] = '';
-		$this->rs['PROD_IMAGE_URL'] = ''; // Todo: move to machine
-		$this->rs['PROD_DESCR'] = '';
+		$this->rs['end_date'] = '';
+		$this->rs['status'] = '';
 		$this->rs['nextcheck'] = 0;
 		
 		
@@ -23,7 +21,6 @@ class Warranty extends Model {
 			$this->retrieve_one('sn=?', $serial);
 			$this->check_status();
 		}
-			
 		
 		$this->sn = $serial;
 		  
@@ -38,32 +35,74 @@ class Warranty extends Model {
 		}
 		
 		// Update needed, check with apple
-		$url = 'https://selfsolve.apple.com/warrantyChecker.do?sn='.$this->sn;
 		
-		// Check if we got something
-		if( ! $json = file_get_contents($url))
+		// Unfortunately we have to scrape the page as Apple discontinued the json api
+		$url = 'https://selfsolve.apple.com/wcResults.do';
+		$data = array ('sn' => $this->sn, 'num' => '0');
+		$data = http_build_query($data);
+
+		$context_options = array (
+		        'http' => array (
+		            'method' => 'POST',
+		            'header'=> "Content-type: application/x-www-form-urlencoded\r\n"
+		                . "Content-Length: " . strlen($data) . "\r\n",
+		            'content' => $data
+		            )
+		        );
+
+		$context = stream_context_create($context_options);
+		$result = file_get_contents($url, FALSE, $context);
+		
+		
+		if(preg_match('/invalidserialnumber/', $result))
 		{
-			$this->error = 'Could not fetch warranty info';
-			return;
+			// Check invalid serial
+			$this->status = 'Invalid serial number';
 		}
-		$json = substr($json, 5, -1);
-		$json_obj = json_decode($json);
-		
-		if(isset($json_obj->ERROR_CODE))
+		elseif(preg_match("/window.location.href='\/RegisterProduct.do\?productRegister=Y/", $result))
 		{
-			return $json_obj->ERROR_DESC;
+			// Check registration
+			$this->status = 'Unregistered serialnumber';
+		}
+		elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(false/', $result))
+		{
+			// Get expired status
+			$this->status = 'Expired';
+			$this->end_date = '0000-00-00';
+		}
+		elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(true/', $result))
+		{
+			// Get support status
+			$this->status = 'Supported';
+			
+			// Get estimated exp date
+			if(preg_match('/Estimated Expiration Date: ([^<]+)</', $result, $matches))
+			{
+				$this->end_date = date('Y-m-d', strtotime($matches[1]));
+			}	
 		}
 		else
 		{
-			$this->nextcheck = time() + 60 * 60 * 24 * 30;//Todo: make exp time config item
-			$this->merge((array)$json_obj)->save();
-			
+			$this->status = 'No information found';
+		}
+		
+		// Get info
+		if(preg_match("/warrantyPage.warrantycheck.displayProductInfo\('([^\']+)', '([^\']+)'/", $result, $matches))
+		{
 			// Save img_url
 			$machine = new Machine($this->sn);
-			$machine->img_url = $json_obj->PROD_IMAGE_URL;
+			$machine->img_url = $matches[1];
+			$machine->machine_desc = $matches[2];
 			$machine->save();
 		}
+		
+		
+		$this->nextcheck = time() + 60 * 60 * 24 * 30;//Todo: make exp time config item
+		$this->save();
+		
 		return $this;
 	}
+	
+	
 	
 }
