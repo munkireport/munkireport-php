@@ -2,7 +2,7 @@
 
 <?$machine = new Machine($serial);?>
 
-<h1><?if($machine->img_url):?><img style="vertical-align:middle; width: 36px; height:auto" src="<?=$machine->img_url?>" alt=""><?endif?><?=$machine->computer_name?></h1>
+<h1><img style="vertical-align:middle;" src="<?printf('https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=%s&size=72x72', substr($serial, -4))?>" alt=""><?=$machine->computer_name?></h1>
 
 <div id="tabs">
 	<ul class="clearfix">
