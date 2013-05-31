@@ -1,5 +1,9 @@
 <?$this->view('partials/head')?>
 
+<div class="container">
+
+  <div class="row">
+
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.clientlist').dataTable({
@@ -38,5 +42,9 @@
   <?endforeach?>
 </tbody>
 </table>
+
+</div> <!-- /row -->
+
+</div>  <!-- /container -->
 
 <?$this->view('partials/foot')?>

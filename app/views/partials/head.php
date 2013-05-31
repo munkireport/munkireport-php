@@ -1,45 +1,51 @@
 <!doctype html>
-<html>
-<head>
-	<meta charset="utf-8">
+<html class="no-js" lang="en">
 
-	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
-	More info: h5bp.com/i/378 -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  
-    <title><?=$GLOBALS['sitename']?></title>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/admin.css" />
-	
-	<script type="text/javascript" language="javascript" src="<?=WEB_FOLDER?>assets/js/jquery.js"></script>
-	<script type="text/javascript" language="javascript" src="<?=WEB_FOLDER?>assets/js/jquery.dataTables.min.js"></script>
-	
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+  <title><?=$GLOBALS['sitename']?></title>
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/bootstrap-responsive.min.css" />
+  <link href="<?=WEB_FOLDER?>assets/css/font-awesome.css" rel="stylesheet">
+
 </head>
 
-<body py:match="body" py:attrs="select('@*')">
-  <div id="header">
-  	<h1><?=$GLOBALS['sitename']?></h1>
-  </div>
-  
-  <ul id="mainmenu">
-    <li class="first"><a href="<?=url()?>" <?=isset($page) && $page=='index'?'class="active"':''?>>Start</a></li>
-	<li><a href="<?=url('clients')?>" <?=isset($page) && $page=='clients'?'class="active"':''?>>Clients</a></li>
-    <li><a href="<?=url('show/reports')?>" <?=isset($page) && $page=='reports'?'class="active"':''?>>Reports</a></li>
-    <li><a href="<?=url('inventory')?>" <?=isset($page) && $page=='inventory'?'class="active"':''?>>Inventory</a></li>
-    <li><a href="<?=url('inventory/items')?>" <?=isset($page) && $page=='inventory_items'?'class="active"':''?>>Inventory Items</a></li>
-    
-    <!--!
-        <li><a href="${tg.url('/about')}" class="${('', 'active')[defined('page') and page=='about']}">About</a></li>
-        <li py:if="tg.auth_stack_enabled"><a href="${tg.url('/auth')}" class="${('', 'active')[defined('page') and page=='auth']}">Authentication</a></li>
-        <li><a href="${tg.url('/environ')}" class="${('', 'active')[defined('page') and page=='environ']}">WSGI Environment</a></li>
-    -->
-	<?if(FALSE):?>
-    <span py:if="tg.auth_stack_enabled" py:strip="True">
-        <li py:if="not request.identity" id="login" class="loginlogout"><a href="${tg.url('/login')}">Login</a></li>
-        <li py:if="request.identity" id="login" class="loginlogout"><a href="${tg.url('/logout_handler')}">Logout</a></li>
-        <li py:if="request.identity" id="admin" class="loginlogout"><a href="${tg.url('/admin')}">Admin</a></li>
-    </span>
-	<?endif?>
-  </ul>
-  <div id="content">
-    <div>
+<body>
+
+  <?if( isset($_SESSION['user'])):?>
+
+
+      <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="<?=url('')?>">Localized Munkireport</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <?$page = $GLOBALS[ 'engine' ]->get_uri_string(); $navlist = array( 
+                '' => (object) array('icon' => 'th-large', 'title' => 'Dashboard'), 
+                'clients' => (object) array('icon' => 'group', 'title' => 'Clients'), 
+                'show/reports' => (object) array('icon' => 'bar-chart', 'title' => 'Reports'),
+                'inventory' => (object) array('icon' => 'credit-card', 'title' => 'Inventory'),
+                'inventory/items' => (object) array('icon' => 'info-sign', 'title' => 'Inventory Items')
+                )?>
+                <?foreach($navlist as $url => $obj):?>
+              <li <?=$page==$url?'class="active"':''?>>
+                <a href="<?=url($url)?>"><i class="icon-<?=$obj->icon?>"></i> <?=$obj->title?></a>
+              </li>
+                <?endforeach?>
+            </ul>
+            <form class="navbar-form pull-right">
+              <a class="btn" href="<?=url('auth/logout')?>">Logout</a>
+            </form>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+  <?endif?>

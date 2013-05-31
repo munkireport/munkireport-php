@@ -7,7 +7,7 @@ class inventory extends Controller
         $data['page'] = 'inventory';
 
         $obj = new View();
-        $obj->view('inventory_list', $data);
+        $obj->view('inventory/inventory_list', $data);
     
     }
 
@@ -21,7 +21,7 @@ class inventory extends Controller
     	$data['serial'] = $serial;
 
         $obj = new View();
-        $obj->view('inventory_detail', $data);
+        $obj->view('inventory/inventory_detail', $data);
     }
 
     function items($name='', $version='') {
@@ -54,7 +54,7 @@ class inventory extends Controller
                 $data['inventory_items'][] = $instance;
             }
             $obj = new View();
-            $obj->view('inventoryitem_detail', $data);
+            $obj->view('inventory/inventoryitem_detail', $data);
         } else {
             $inventory_item_obj = new InventoryItem();
             $items = $inventory_item_obj->select(
@@ -72,7 +72,7 @@ class inventory extends Controller
             $data['inventory'] = $inventory;
             $data['page'] = 'inventory_items';
             $obj = new View();
-            $obj->view('inventory_items', $data);
+            $obj->view('inventory/inventory_items', $data);
         }
     }
 

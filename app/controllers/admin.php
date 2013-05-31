@@ -3,7 +3,6 @@ class admin extends Controller
 {
 	function __construct()
 	{
-		check_db();
 		die("authentication needed"); // TODO: implement auth
 	} 
 	

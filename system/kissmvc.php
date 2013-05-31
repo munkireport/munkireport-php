@@ -6,12 +6,25 @@ require('kissmvc_core.php');
 //===============================================================
 class Engine extends KISS_Engine
 {
+	function __construct( &$routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
+    {
+        $GLOBALS[ 'engine' ] = $this;
+
+        parent::__construct( $routes, $default_controller, $default_action, $uri_protocol);
+
+    }
+
 	function request_not_found( $msg='' ) 
 	{
 		header( "HTTP/1.0 404 Not Found" );
 				
 		die( '<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p><p>Please go <a href="javascript: history.back( 1 )">back</a> and try again.</p><hr /><p>Powered By: <a href="http://kissmvc.com">KISSMVC</a></p></body></html>' );
 	}
+
+	function get_uri_string()
+    {
+        return $this->uri_string;
+    }
 	
 }
 

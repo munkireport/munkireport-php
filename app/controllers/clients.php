@@ -1,6 +1,13 @@
 <?php
 class clients extends Controller
 {
+	function __construct()
+	{
+		if( ! isset($_SESSION['user']))
+		{
+			redirect('auth/login/clients');
+		}
+	} 
 
     function index() {
         
