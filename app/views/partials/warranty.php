@@ -1,7 +1,7 @@
 <?$warranty = new Warranty($serial)?>
 <?if($warranty->id):?>
 
-<table class="client_info">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Status</th>

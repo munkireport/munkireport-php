@@ -14,7 +14,7 @@ class clients extends Controller
         $data['page'] = 'clients';
 
         $obj = new View();
-        $obj->view('client_list', $data);
+        $obj->view('client/client_list', $data);
     
     }
 	
@@ -33,7 +33,7 @@ class clients extends Controller
 		$data['serial'] = $sn;
 
         $obj = new View();
-        $obj->view('client_detail', $data);
+        $obj->view('client/client_detail', $data);
 	}
 
 }

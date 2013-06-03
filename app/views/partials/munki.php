@@ -6,7 +6,7 @@
 	<?return?>
 <?endif?>
 
-<table class="client_info">
+<table class="table table-striped">
 	<tr>
 		<th>Version:</th>
 		<td><?=$report['MachineInfo']['munki_version']?></td>
@@ -130,7 +130,7 @@ if(isset($report['ItemsToRemove']))
   <h2><?=$title?></h2>
   
 	<?if(isset($report[$report_key]) && $report[$report_key]):?>
-	<table class="client_info">
+	<table class="table table-striped">
       <thead>
         <tr>
           <th>Name</th>
@@ -159,14 +159,13 @@ if(isset($report['ItemsToRemove']))
 
 <?$package_tables = array(	'Managed Installs' =>'ManagedInstalls')?>
 
-<table class="twocol">
-  <tbody>
-    <td>
+<div class="row">
+	<div class="span6">
 		<?foreach($package_tables AS $title => $report_key):?>
 		  <h2><?=$title?></h2>
 
 			<?if(isset($report[$report_key]) && $report[$report_key]):?>
-			<table class="client_info">
+			<table class="table table-striped">
 		      <thead>
 		        <tr>
 		          <th>Name</th>
@@ -192,13 +191,13 @@ if(isset($report['ItemsToRemove']))
 		      <p><i>No <?=strtolower($title)?></i></p>
 			<?endif?>
 		<?endforeach?>
-    </td>
-    <td>
+    </div>
+    <div class="span6">
     
 <?if(isset($report['managed_uninstalls_list'])):?>
   <h2>Managed Uninstalls</h2>
 
-  <table class="client_info">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Name</th>
@@ -216,8 +215,7 @@ if(isset($report['ItemsToRemove']))
   </table>
 <?endif?>
 
-    </td>
-  </tbody>
-</table>
+    </div>
+  </div>
 
 <pre><?//print_r($client->rs)?></pre>

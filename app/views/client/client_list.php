@@ -1,5 +1,9 @@
 <?$this->view('partials/head')?>
 
+<div class="container">
+
+  <div class="row">
+
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
 		$('.clientlist').dataTable({
@@ -17,7 +21,7 @@
 
   <h1>Machines (<?=$machine->count()?>)</h1>
   
-  <table class="clientlist">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>Client    </th>
@@ -52,4 +56,8 @@
 	<?endforeach?>
     </tbody>
   </table>
+</div> <!-- /row -->
+
+</div>  <!-- /container -->
+
 <?$this->view('partials/foot')?>

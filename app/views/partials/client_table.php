@@ -1,5 +1,5 @@
 <?if(! isset($clients)) return?>
-<table class="clientlist">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Client     </th>

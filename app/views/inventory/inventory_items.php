@@ -6,10 +6,9 @@
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        $('.clientlist').dataTable({
+        $('.table').dataTable({
             "iDisplayLength": 25,
             "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-            "sPaginationType": "full_numbers",
             "bStateSave": true,
             "aaSorting": [[0,'asc']]
         });
@@ -17,7 +16,7 @@
 </script>
 
 <h1>Inventory items (<?=count($inventory)?>)</h1>
-<table class='clientlist'>
+<table class='table table-striped'>
 <thead>
   <tr>
     <th>Name</th>

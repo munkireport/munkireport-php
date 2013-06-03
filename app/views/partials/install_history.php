@@ -1,7 +1,7 @@
 <?$history = new InstallHistory()?>
 <?if($history->retrieve_one('serial_number=?', $serial)):?>
 
-<table class="client_info">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Name</th>

@@ -6,10 +6,9 @@
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        $('.clientlist').dataTable({
+        $('.inventory').dataTable({
             "iDisplayLength": 25,
             "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-            "sPaginationType": "full_numbers",
             "bStateSave": true,
             "aaSorting": [[4,'desc']]
         });
@@ -21,9 +20,9 @@ $hash = new Hash();
 $order = " ORDER BY timestamp DESC";
 ?>
 
-<h1>Inventory Clients (<?=$hash->count('Inventoryitem')?>)</h1>
+<h1>Inventory Clients (<?=$hash->count('InventoryItem')?>)</h1>
 
-<table class="clientlist">
+<table class="table table-striped inventory">
 <thead>
   <tr>
     <th>Hostname    </th>
@@ -35,7 +34,7 @@ $order = " ORDER BY timestamp DESC";
 </thead>
 <tbody>
 
-<?foreach($hash->retrieve_many('name =? '.$order, 'Inventoryitem') as $inventory):?>
+<?foreach($hash->retrieve_many('name =? '.$order, 'InventoryItem') as $inventory):?>
   <?
 	$machine = new Machine($inventory->serial);
 	$reportdata = new Reportdata($inventory->serial);
