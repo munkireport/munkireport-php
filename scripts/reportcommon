@@ -26,9 +26,11 @@ def curl(url, values):
         response = urllib2.urlopen(req)
     except urllib2.URLError, e:
         if hasattr(e, 'reason'):
+            print url
             print 'We failed to reach a server.'
             print 'Reason: ', e.reason
         elif hasattr(e, 'code'):
+            print url
             print 'The server couldn\'t fulfill the request.'
             print 'Error code: ', e.code
         exit(-1)
@@ -77,10 +79,10 @@ def process(serial,items):
     
     # Get prefs
     baseurl = pref('BaseUrl') or \
-              munkicommon.pref('SoftwareRepoURL') + '/report'
+              munkicommon.pref('SoftwareRepoURL') + '/report/'
     
-    hashurl = baseurl + "/index.php/report/hash_check"
-    checkurl = baseurl + "/index.php/report/check_in"
+    hashurl = baseurl + "index.php/report/hash_check"
+    checkurl = baseurl + "index.php/report/check_in"
     
     # Get hashes for all scripts
     for key, i in items.items():
