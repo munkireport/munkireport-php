@@ -11,14 +11,9 @@ class show extends Controller
 
 	function index()
 	{
-		$client = new Munkireport();
-        $data['error_clients'] = $client->retrieve_many('errors > 0');
-		$data['warning_clients'] = $client->retrieve_many('warnings > 0');
-        $data['activity_clients'] = $client->retrieve_many('activity != ""');
-		$data['page'] = 'index';
-
+		$data = array();
 		$obj = new View();
-		$obj->view('overview', $data);
+		$obj->view('dashboard/dashboard', $data);
 
 	}
 	
