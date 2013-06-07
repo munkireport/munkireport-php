@@ -34,7 +34,7 @@
 "`<?php echo
   (isset($_SERVER['HTTPS']) ? 'https://' : 'http://')
 	  . $_SERVER['HTTP_HOST']
-		. WEB_FOLDER; ?>"install`"</string>
+		. WEB_FOLDER; ?>install`"</string>
   <key>minimum_os_version</key>
   <string>10.4.0</string>
   <key>uninstallable</key>
