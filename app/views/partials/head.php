@@ -35,7 +35,7 @@
                   ''                => array('th-large', 'Dashboard'), 
                   'clients'         => array('group', 'Clients'), 
                   'show/reports'    => array('bar-chart', 'Reports'),
-                  'inventory'       => array('credit-card', 'Clients'),
+                  'inventory'       => array('credit-card', 'Inventory'),
                   'inventory/items' => array('info-sign', 'Bundles'),
                   'munki/manifests' => array('edit', 'Manifests'),
                   'munki/catalogs'  => array('list-alt', 'Catalogs')
