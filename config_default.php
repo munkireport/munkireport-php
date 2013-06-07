@@ -51,7 +51,7 @@
 	| If you're using .htaccess to rewrite urls, you should change that too
 	|
 	*/
-	$subdirectory = '/';
+	$subdirectory = dirname($_SERVER['SCRIPT_NAME']) . "/";
 	
 	/*
 	|===============================================
