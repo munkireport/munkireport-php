@@ -28,11 +28,12 @@ class auth extends Controller
 		
 		// Check if there's a valid auth mechanism in config
 		$auth_mechanisms = array();
+		$authSettings = Config::get('auth');
 		foreach($this->mechanisms as $mech)
 		{
-			if (isset($GLOBALS["auth_$mech"]) && is_array($GLOBALS["auth_$mech"]))
+			if (isset($authSettings["auth_$mech"]) && is_array($authSettings["auth_$mech"]))
 			{
-				$auth_mechanisms[$mech] = $GLOBALS["auth_$mech"];
+				$auth_mechanisms[$mech] = $authSettings["auth_$mech"];
 			}
 		}
 		

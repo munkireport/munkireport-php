@@ -16,7 +16,11 @@ class ConfigDefaults
 		$this->_settings['siteName'] = "MunkiReport";
 		$this->_settings['bundleidIgnoreList']
 			= array("com.apple.print.PrinterProxy");
-		$this->_settings['auth'] = array();
+		$this->_settings['auth'] = array(
+			"auth_config" => array(
+				'admin' => '$P$BrBM9FGh3.jOt4nEVRXfMBRuiRyJu01'
+			)
+		);
 		$this->_settings['routes'] = array();
 		$this->_settings['paths']
 			= array(
