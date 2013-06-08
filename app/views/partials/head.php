@@ -3,7 +3,7 @@
 
 <head>
   <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-  <title><?=$GLOBALS['sitename']?></title>
+  <title><?=Config::get('siteName')?></title>
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/bootstrap-responsive.min.css" />
@@ -26,7 +26,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="<?=url('')?>">Localized Munkireport</a>
+          <a class="brand" href="<?=url('')?>"><?=Config::get('siteName')?></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <?

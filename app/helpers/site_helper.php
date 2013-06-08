@@ -29,10 +29,10 @@ function getdbh()
 		try
 		{
 			$GLOBALS['dbh'] = new PDO(
-				$GLOBALS['db']['dsn'], 
-				$GLOBALS['db']['user'], 
-				$GLOBALS['db']['pass'], 
-				$GLOBALS['db']['opts']
+				Config::get('pdo.dsn'),
+				Config::get('pdo.user'),
+				Config::get('pdo.pass'),
+				Config::get('pdo.opts')
 				);
 		}
 		catch (PDOException $e)

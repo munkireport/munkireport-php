@@ -1,7 +1,27 @@
 <?php
-
 define( 'KISS', 1 );
-define('APP_ROOT', dirname( __FILE__ ).'/' );
+define('APP_ROOT', __DIR__ .'/' );
+
+
+//===============================================
+// Include config
+//===============================================
+require_once(APP_ROOT . "app/models/Config.php");
+
+
+/*
+	A simple debug logger that mutes output when debugModeEnabled is FALSE.
+ */
+function debug($message)
+{
+	if (Config::get('debugModeEnabled'))
+	{
+		echo "<span class='debug'>[DEBUG] "
+			. is_string($message) ? $message : var_export($message, TRUE)
+			. "</span>";
+	}
+}
+
 
 // Set default uri protocol override in config.php
 $uri_protocol = 'AUTO';
@@ -9,10 +29,6 @@ $uri_protocol = 'AUTO';
 // Index page, override in config.php
 $index_page = '';
 
-//===============================================
-// Include config
-//===============================================
-require( 'config.php' );
 
 //===============================================
 // Database
@@ -27,26 +43,26 @@ $GLOBALS['db'] = array(
 //===============================================
 // Defines
 //===============================================
-define('WEB_HOST', $webhost); 
-define('WEB_FOLDER', $subdirectory);
-define('INDEX_PAGE', $index_page);
-define('SYS_PATH', $system_path);
-define('APP_PATH', $application_folder );
-define('VIEW_PATH', $view_path); 
-define('CONTROLLER_PATH', $controller_path); 
+define('WEB_HOST', Config::get('webHost')); 
+define('WEB_FOLDER', Config::get('subdirectory'));
+define('INDEX_PAGE', Config::get('indexPage'));
+define('SYS_PATH', Config::get('paths.system') );
+define('APP_PATH', Config::get('paths.application') );
+define('VIEW_PATH', Config::get('paths.view')); 
+define('CONTROLLER_PATH', Config::get('paths.controller')); 
 define('EXT', '.php'); // Default extension
 
 //===============================================
 // Debug
 //===============================================
-ini_set('display_errors', _DEBUG ? 'On' : 'Off' );
-error_reporting( _DEBUG ? E_ALL : 0 );
+ini_set('display_errors', Config::get('debugModeEnabled') ? 'On' : 'Off' );
+error_reporting( Config::get('debugModeEnabled') ? E_ALL : 0 );
 
 //===============================================
 // Includes
 //===============================================
 require( SYS_PATH.'kissmvc.php' );
-require(APP_PATH.'helpers/site_helper'.EXT);
+require( APP_PATH.'helpers/site_helper'.EXT );
 
 //===============================================
 // Session
@@ -54,30 +70,27 @@ require(APP_PATH.'helpers/site_helper'.EXT);
 ini_set('session.use_cookies', 1);
 ini_set('session.use_only_cookies', 1);
 session_start();
-date_default_timezone_set( $timezone );
+date_default_timezone_set( Config::get('timezone') );
 
 //set_exception_handler('uncaught_exception_handler');
 
 //===============================================
 // Quick permissions check for sqlite operations
 //===============================================
-if (strpos($pdo_dsn, "sqlite") === 0) {
-	$dsnParts = explode(":", $pdo_dsn);
+if (strpos( Config::get('pdo.dsn'), "sqlite") === 0) {
+	$dsnParts = explode(":", Config::get('pdo.dsn'));
 	$dbPath = $dsnParts[1];
 	$dbDir = dirname($dbPath);
 	$errors = FALSE;
 	if (!is_writable($dbDir)) {
 		echo "Database directory isn't writable by the webserver";
-		if (_DEBUG == TRUE)
-			echo " - " . $dbDir;
+		debug(" - " . $dbDir);
 		echo "<br />";
 		$errors = TRUE;
 	}
 	if (file_exists($dbPath) && !is_writable($dbPath)) {
 		echo "Database isn't writable by the webserver";
-		if (_DEBUG)
-			echo " - " . $dbPath;
-		echo "<br />";
+		debug(" - " . $dbPath);
 		$errors = TRUE;
 	}
 	if ($errors == TRUE)
@@ -87,5 +100,9 @@ if (strpos($pdo_dsn, "sqlite") === 0) {
 //===============================================
 // Start the controller
 //===============================================
-$GLOBALS[ 'engine' ] = new Engine( $routes, 'show', 'index', $uri_protocol );
-
+$GLOBALS[ 'engine' ] = new Engine(
+	Config::get('routes'),
+	'show',
+	'index',
+	Config::get('uriProtocol')
+);
