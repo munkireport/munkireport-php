@@ -1,0 +1,22 @@
+#!/bin/bash
+
+RUNTYPE="$1"
+if [ -z "$RUNTYPE" ]; then
+    RUNTYPE="reportbrokenclient"
+fi
+SERIAL=`ioreg -c IOPlatformExpertDevice | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
+NAME=`scutil --get ComputerName`
+
+BASEURL="REPLACE_BASEURL"
+SUBMITURL="${BASEURL}/update"
+
+# Application paths
+CURL="/usr/bin/curl"
+
+$CURL --max-time 5 --silent \
+    -d runtype="$RUNTYPE" \
+    -d serial="$SERIAL" \
+    -d name="$NAME" \
+    "$SUBMITURL/report_broken_client"
+
+exit 0
