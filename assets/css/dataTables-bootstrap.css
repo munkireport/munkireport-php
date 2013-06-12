@@ -36,12 +36,12 @@ table.table thead .sorting_desc_disabled {
 }
 
 table.table thead .sorting { background: none center right; }
-table.table thead .sorting_asc { background: url('../img/arrow-up.gif') no-repeat center right; }
-table.table thead .sorting_desc { background: url('../img/arrow-down.gif') no-repeat center right; }
-
-table.table thead .sorting_asc_disabled { background: none no-repeat center right; }
-table.table thead .sorting_desc_disabled { background: none no-repeat center right; }
-
+table.table thead .sorting { background: url('../images/sort_both.png') no-repeat center right; }
+table.table thead .sorting_asc { background: url('../images/sort_asc.png') no-repeat center right; }
+table.table thead .sorting_desc { background: url('../images/sort_desc.png') no-repeat center right; }
+ 
+table.table thead .sorting_asc_disabled { background: url('../images/sort_asc_disabled.png') no-repeat center right; }
+table.table thead .sorting_desc_disabled { background: url('../images/sort_desc_disabled.png') no-repeat center right; }
 table.dataTable th:active {
     outline: none;
 }
