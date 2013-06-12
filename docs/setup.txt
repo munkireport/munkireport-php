@@ -2,53 +2,42 @@ Setup instructions for munkireport-php
 
 ##### Munkireport 2 #####
 
-# Add baseurl
-sudo defaults write MunkiReport BaseUrl "http://yourserver/munkireport-php/"
+ON THE SERVER
+---
+ 1. Put all files in the root directory of your website (for subdirs,
+    see below). Make sure you also copy the .htaccess file.
+ 2. Copy config_default.php to config.php and make modifications if
+    necessary.
+ 3. Check if yoursite/app/db/ is writeable by the webserver
 
-# Add munkireport
-sudo defaults write MunkiReport ReportItems -dict-add Munkireport "/Library/Managed\ Installs/ManagedInstallReport.plist"
+If you want to run munkireport from a subdirectory, change $subdirectory in
+config.php, So if want to run munkireport from http://munki.mysite.org/report/
+change the following:
 
-# Add InstallHistory
-if [[ `uname -r` < '10.0.0' ]]; then 
-	IPATH="/Library/Logs/Software Update.log"
-else
-	IPATH="/Library/Receipts/InstallHistory.plist"
-fi
-sudo defaults write MunkiReport ReportItems -dict-add InstallHistory "$IPATH"
-
-# Add inventory
-sudo defaults write MunkiReport ReportItems -dict-add InventoryItem "/Library/Managed\ Installs/ApplicationInventory.plist"
-
-
-
-On the server:
-1 - Put all files in the root directory of your website (for subdirs, see below). Make sure you also copy the .htaccess file.
-2 - Copy config_default.php to config.php and make modifications if necessary
-3 - Check if yoursite/app/db/ is writeable by the webserver
-
-If you want to run munkireport from a subdirectory, change RewriteBase in .htaccess and $subdirectory in config.php. So if want to run munkireport from http://munki.mysite.org/report/ change the following:
-
-.htaccess - RewriteBase /report/
 config.php - $subdirectory = '/report/';
 
-You're done with the server and should be able to see a webpage with an empty table when you visit the website with a browser.
+You're done with the server and should be able to see a webpage with an empty
+table when you visit the website with a browser.
 
-On a mac client:
 
-1 - Copy the scripts directory to the client
-2 - Open Terminal.app
-3 - cd to the scripts directory
-4 - ./make_script_dmg.sh http://your-report-php-server/index.php 1.0
-5 - copy the resulting dmg and pkginfo files to your munki repository
+SETTING UP CLIENTS MANUALLY
+---
+ 1. Open Terminal.app
+ 2. Type:
+		sudo /bin/bash -c "`http://example.com/munkireport-php/install`"
 
-Distribute the dmg to your munki fleet.
 
-NOTE: This will overwrite any preflight, postflight and report_broken_client scripts you might have installed.
+SETTING UP CLIENTS WITH MUNKI
+---
+ 1. Download the pkginfo file
+		- curl http://example.com/munkireport-php/install/plist -o MunkiReport.plist
+ 2. Copy MunkiReport.plist into your Munki repository
+ 3. Run /usr/local/munki/makecatalogs
 
-Run munkireport without mod_rewrite
 
-If you can't use mod_rewrite, you can run munkireport without it. You'll have to change the following:
 
-1 - Add $index_page = 'index.php'; to your config file, this will fix the in-app links
-2 - Create new clientside scripts *with* index.php: ./make_script_dmg.sh http://your-report-php-server/index.php 1.1
-
+RUNNING MUNKI REPORT WITHOUT MOD_REWRITE
+---
+If you can't use mod_rewrite, you can run munkireport without it. You'll have
+to change the following:
+ 1. Set $index_page = 'index.php'; to your config file

@@ -28,18 +28,22 @@ class auth extends Controller
 		
 		// Check if there's a valid auth mechanism in config
 		$auth_mechanisms = array();
+		$authSettings = Config::get('auth');
 		foreach($this->mechanisms as $mech)
 		{
-			if (isset($GLOBALS["auth_$mech"]) && is_array($GLOBALS["auth_$mech"]))
+			if (isset($authSettings["auth_$mech"]) && is_array($authSettings["auth_$mech"]))
 			{
-				$auth_mechanisms[$mech] = $GLOBALS["auth_$mech"];
+				$auth_mechanisms[$mech] = $authSettings["auth_$mech"];
 			}
 		}
 		
 		// No valid mechanisms found, bail
 		if ( ! $auth_mechanisms)
 		{
-			die('Error: No authentication mechanism set in config file'); // TODO: make this nicer
+			redirect('auth/generate');
+			//die('Error: No authentication mechanism set in config file');
+			// TODO: make this nicer
+			// EDIT (joe.wollard) - is redirecting nicer?
 		}
 		
 		if ($login && $password)

@@ -3,7 +3,7 @@
 
 <head>
   <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-  <title><?=$GLOBALS['sitename']?></title>
+  <title><?=Config::get('siteName')?></title>
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/bootstrap-responsive.min.css" />
@@ -26,19 +26,23 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="<?=url('')?>">Localized Munkireport</a>
+          <a class="brand" href="<?=url('')?>"><?=Config::get('siteName')?></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <?$page = $GLOBALS[ 'engine' ]->get_uri_string(); $navlist = array( 
-                '' => (object) array('icon' => 'th-large', 'title' => 'Dashboard'), 
-                'clients' => (object) array('icon' => 'group', 'title' => 'Clients'), 
-                'show/reports' => (object) array('icon' => 'bar-chart', 'title' => 'Reports'),
-                'inventory' => (object) array('icon' => 'credit-card', 'title' => 'Inventory'),
-                'inventory/items' => (object) array('icon' => 'info-sign', 'title' => 'Inventory Items')
+              <?
+                $page = $GLOBALS[ 'engine' ]->get_uri_string();
+                $navlist = array( 
+                  ''                => array('th-large', 'Dashboard'), 
+                  'clients'         => array('group', 'Clients'), 
+                  'show/reports'    => array('bar-chart', 'Reports'),
+                  'inventory'       => array('credit-card', 'Inventory'),
+                  'inventory/items' => array('info-sign', 'Bundles'),
+                  'munki/manifests' => array('edit', 'Manifests'),
+                  'munki/catalogs'  => array('list-alt', 'Catalogs')
                 )?>
                 <?foreach($navlist as $url => $obj):?>
               <li <?=$page==$url?'class="active"':''?>>
-                <a href="<?=url($url)?>"><i class="icon-<?=$obj->icon?>"></i> <?=$obj->title?></a>
+                <a href="<?=url($url)?>"><i class="icon-<?=$obj[0]?>"></i> <?=$obj[1]?></a>
               </li>
                 <?endforeach?>
             </ul>
