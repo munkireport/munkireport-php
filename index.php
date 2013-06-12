@@ -1,7 +1,10 @@
 <?php
 define( 'KISS', 1 );
-define('APP_ROOT', __DIR__ .'/' );
 
+// Front controller
+define('FC', __FILE__ .'/' );
+
+define('APP_ROOT', __DIR__ .'/' );
 
 //===============================================
 // Include config

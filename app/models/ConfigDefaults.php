@@ -6,12 +6,17 @@ class ConfigDefaults
 
 	public function __construct()
 	{
-		$this->_settings['indexPage'] = "";
+		$this->_settings['indexPage'] = "index.php";
 		$this->_settings['uriProtocol'] = "AUTO";
 		$this->_settings['webHost'] = '//'.$_SERVER[ 'HTTP_HOST' ];
-
+		echo __FILE__;
 		$this->_settings['subdirectory']
-			= str_replace("index.php", "", $_SERVER['PHP_SELF']);
+			= substr(
+					    $_SERVER['PHP_SELF'],
+					    0,
+					    strpos($_SERVER['PHP_SELF'], basename(FC))  
+				    );
+		//	= str_replace("index.php", "", $_SERVER['PHP_SELF']);
 
 		$this->_settings['siteName'] = "MunkiReport";
 		$this->_settings['bundleidIgnoreList']
