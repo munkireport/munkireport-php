@@ -20,7 +20,7 @@ $hash = new Hash();
 $order = " ORDER BY timestamp DESC";
 ?>
 
-<h1>Inventory Clients (<?=$hash->count('InventoryItem')?>)</h1>
+<h1>Inventory Clients (<?=$hash->count('name=?','InventoryItem')?>)</h1>
 
 <table class="table table-striped inventory">
 <thead>

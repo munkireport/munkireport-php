@@ -45,27 +45,4 @@ class Hash extends Model {
         
     }
 
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Count items with name
-	 *
-	 * @param string name
-	 * @return int
-	 * @author abn290
-	 **/
-	function count($name)
-	{
-		$dbh=$this->getdbh();
-		$sql = 'SELECT count(*) as count FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'name' ).'=?';
-        $stmt = $dbh->prepare( $sql );
-        $stmt->bindValue( 1, $name );
-        $stmt->execute();
-        if($rs = $stmt->fetch( PDO::FETCH_OBJ ))
-		{
-			return $rs->count;
-		}
-		return 0;
-	}
-
 }
