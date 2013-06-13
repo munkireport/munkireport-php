@@ -34,16 +34,6 @@ $index_page = '';
 
 
 //===============================================
-// Database
-//===============================================
-$GLOBALS['db'] = array(
-	'dsn' => $pdo_dsn, 
-	'user' => isset($pdo_user) ? $pdo_user : '',
-	'pass' => isset($pdo_pass) ? $pdo_pass : '',
-	'opts' => isset($pdo_opts) ? $pdo_opts : array()
-	);
-
-//===============================================
 // Defines
 //===============================================
 define('WEB_HOST', Config::get('webHost')); 
