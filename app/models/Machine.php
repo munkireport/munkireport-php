@@ -54,5 +54,26 @@ class Machine extends Model {
 		
 		$this->merge($mylist)->save();
 	}
+
+	/**
+	 * Retrieve distinct records
+	 *
+	 * @return array
+	 * @author 
+	 **/
+	function query($sql, $bindings=array())
+	{
+		$dbh=$this->getdbh();
+		if ( is_scalar( $bindings ) )
+			$bindings=$bindings ? array( $bindings ) : array();
+		$stmt = $dbh->prepare( $sql );
+		$stmt->execute( $bindings );
+		$arr=array();
+		while ( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
+		{
+			$arr[] = $rs;
+		}
+		return $arr;
+	}
 	
 }
