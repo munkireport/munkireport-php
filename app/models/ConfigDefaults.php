@@ -9,7 +9,6 @@ class ConfigDefaults
 		$this->_settings['indexPage'] = "index.php";
 		$this->_settings['uriProtocol'] = "AUTO";
 		$this->_settings['webHost'] = '//'.$_SERVER[ 'HTTP_HOST' ];
-		echo __FILE__;
 		$this->_settings['subdirectory']
 			= substr(
 					    $_SERVER['PHP_SELF'],
