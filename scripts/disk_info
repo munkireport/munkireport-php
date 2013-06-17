@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DIR=$(dirname $0)
+
+echo 'Collect disk info'
+
+mkdir -p "$DIR/cache"
+diskutil info -plist disk0s2 > "$DIR/cache/disk.plist"

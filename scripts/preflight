@@ -1,0 +1,79 @@
+#!/usr/bin/python
+# encoding: utf-8
+''' Preflight script'''
+import sys
+import os
+
+pid = os.fork()
+
+if pid > 0:
+    exit(0)
+
+def main():
+    '''Main'''
+    # Munkireport submit script TODO: make config item
+    submitscript = 'submit.preflight'
+
+    # get runtype
+    if (len(sys.argv) > 1):
+        runtype = sys.argv[1]
+    else:
+        runtype = 'custom'
+    
+    # define path to directory with preflight scripts
+    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
+    preflightscriptdir = os.path.join(scriptdir, "preflight.d")
+
+    if os.path.exists(preflightscriptdir):
+        from munkilib import utils
+        # Get all files in preflight.d
+        files = os.listdir(preflightscriptdir)
+        # Get munkireport submit script
+        try:
+            sub = files.pop(files.index(submitscript))
+        except Exception, e:
+            print '%s not found in preflight.d' % submitscript
+            exit(-1)
+        
+        # Sort list
+        files.sort()
+        # Append submitscript
+        files.append(sub)
+        for preflightscript in files:
+            if preflightscript.startswith('.'):
+                # Skip files that start with a period
+                continue
+            preflightscriptpath = os.path.join(
+                preflightscriptdir, preflightscript)
+            if os.path.isdir(preflightscriptpath):
+                # Skip directories in preflight.d directory
+                continue
+            try:
+                # Attempt to execute script
+                print 'Running %s' % preflightscript
+                result, stdout, stderr = utils.runExternalScript(
+                    preflightscriptpath, allow_insecure=False, script_args=[runtype])
+                if stdout:
+                        print(stdout)
+                if stderr:
+                    print('%s Error: %s' 
+                        % (preflightscript, stderr))
+                if result:
+                    print('preflight.d/%s return code: %d'
+                                            % (preflightscript, result))
+                    exit(-1)
+
+            except utils.ScriptNotFoundError:
+                pass  # Script has disappeared? Well, it is not required, so pass
+            except utils.RunExternalScriptError, e:
+                print >> sys.stderr, str(e)
+                # Skip this script
+    else:
+        # /usr/local/munki/preflight.d does not exist
+        pass
+
+    
+    exit(0)
+
+if __name__ == '__main__':
+    main()
