@@ -14,36 +14,35 @@
         });
     } );
 </script>
-
-<h1>Inventory items (<?=count($inventory)?>)</h1>
-<table class='table table-striped'>
-<thead>
-  <tr>
-    <th>Name</th>
-    <th>Version</th>
-  </tr>
-</thead>
-<tbody>
-  <?foreach($inventory as $name => $value):?>
-    <?php $name_url=url('/inventory/items/'. rawurlencode($name)); ?>
-    <tr>
-      <td>
-        <a href='<?=$name_url?>'><?=$name?></a>
-      </td>
-      <td>
-        <?foreach($value as $version => $count):?>
-            <?php $vers_url=$name_url . '/' . rawurlencode($version); ?>
-            <a href='<?=$vers_url?>'><?=$version?></a>
-            <?='&nbsp;&nbsp;' . $count . (($count != 1) ? ' machines' : ' machine')?><br/>
+    <div class="span12">
+      <h1>Inventory items (<?=count($inventory)?>)</h1>
+      <table class='table table-striped'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Version</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?foreach($inventory as $name => $value):?>
+          <?php $name_url=url('/inventory/items/'. rawurlencode($name)); ?>
+          <tr>
+            <td>
+              <a href='<?=$name_url?>'><?=$name?></a>
+            </td>
+            <td>
+              <?foreach($value as $version => $count):?>
+                  <?php $vers_url=$name_url . '/' . rawurlencode($version); ?>
+                  <a href='<?=$vers_url?>'><?=$version?></a>
+                  <?='&nbsp;&nbsp;' . $count . (($count != 1) ? ' machines' : ' machine')?><br/>
+              <?endforeach?>
+            </td>
+          </tr>
         <?endforeach?>
-      </td>
-    </tr>
-  <?endforeach?>
-</tbody>
-</table>
-
-</div> <!-- /row -->
-
+      </tbody>
+      </table>
+    </div> <!-- /span 12 -->
+  </div> <!-- /row -->
 </div>  <!-- /container -->
 
 <?$this->view('partials/foot')?>

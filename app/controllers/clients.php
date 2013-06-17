@@ -36,4 +36,22 @@ class clients extends Controller
         $obj->view('client/client_detail', $data);
 	}
 
+	// ------------------------------------------------------------------------
+
+	/**
+	 * List of machines
+	 *
+	 * @param string name of view
+	 * @return void
+	 * @author abn290
+	 **/
+	function show($view='')
+	{
+		$data['page'] = 'clients';
+		// TODO: Check if view exists
+        $obj = new View();
+        $obj->view('client/'.$view, $data);
+	}
+
+
 }

@@ -11,6 +11,10 @@
   <link href="<?=WEB_FOLDER?>assets/css/font-awesome.css" rel="stylesheet">
   <script src="<?=WEB_FOLDER?>assets/js/jquery.js"></script>
 
+  <style type="text/css">
+  .progress{margin-bottom: 0}
+  </style>
+
 </head>
 
 <body>

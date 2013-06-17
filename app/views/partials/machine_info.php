@@ -19,12 +19,12 @@
 					<td><?=$reportdata->console_user?></td>
 				</tr>
 				<tr>
-					<th>Fulll username:</th>
+					<th>Full username:</th>
 					<td><?=$reportdata->long_username?></td>
 				</tr>
 				<tr>
 					<th>Last <?=$report_type->desc?> date:</th>
-					<td><?=date('Y-M-d H:i:s', $hash->timestamp)?></td>
+					<td><?=RelativeTime(time()-$hash->timestamp)?> ago</td>
 				</tr>
 				<tr>
 					<th>Remote IP:</th>

@@ -4,6 +4,7 @@
 
   <div class="row">
 
+  	<div class="span12">
 <?$machine = new Machine($serial);?>
 
 <h1><img style="vertical-align:middle;" src="<?printf('https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=%s&size=72x72', substr($serial, -4))?>" alt=""><?=$machine->computer_name?></h1>
@@ -19,7 +20,7 @@
 <div class="tab-content">
 	
 	<div class="tab-pane active" id='machine'>
-		<?$report_type = (object) array('name'=>'Munkireport', 'desc' => 'munkireport')?>
+		<?$report_type = (object) array('name'=>'Machine', 'desc' => 'machine')?>
 		<?$this->view('partials/machine_info', array('report_type' => $report_type))?>
 	</div>
 	
@@ -72,8 +73,8 @@
 </script>
 
 
-</div> <!-- /row -->
-
+    </div> <!-- /span 12 -->
+  </div> <!-- /row -->
 </div>  <!-- /container -->
 
 <?$this->view('partials/foot')?>

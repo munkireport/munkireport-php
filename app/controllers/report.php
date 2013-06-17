@@ -45,13 +45,36 @@ class report extends Controller
 		{
 			// Skip items without data
 		    if ( ! isset($val['data'])) continue;
+
+		   	printf("Starting: %s\n", $key);
+
 		    
 		    // Todo: prevent admin and user models, sanitize $key
-		    if(file_exists(APP_PATH . 'models/' . $key . '.php'))
+		    if( ! file_exists(APP_PATH . 'models/' . $key . '.php'))
 		    {
-		        // Load model
-		        $class = new $key($_POST['serial']);
-		        // Process data (todo: why do we have to convert to iso-8859?)
+		    	printf("Model not found: %s\n", $key);
+		    	continue;
+		    }
+		    require_once(APP_PATH . 'models/' . $key . '.php');
+
+		    if ( ! class_exists( $key, false ) )
+		    {
+		    	printf("Class not found: %s\n", $key);
+		    	continue;
+		    }
+
+		   	// Load model
+	        $class = new $key($_POST['serial']);
+
+        	
+	        if( ! method_exists($class, 'process'))
+	        {
+	        	printf("No process method in: %s\n", $key);
+		    	continue;
+	        }
+
+	       	try {
+	       		// Process data (todo: why do we have to convert to iso-8859?)
 		        $class->process(iconv('UTF-8', 'ISO-8859-1//IGNORE',$val['data']));
 				//$class->process($val['data']);
 		
@@ -59,11 +82,14 @@ class report extends Controller
 		        $hash = new Hash($_POST['serial'], $key);
 		        $hash->hash = $val['hash'];
 		        $hash->save();
-		    }
-		    else
-		    {
-		        printf("Model not found: %s\n", $key);
-		    }
+	       		
+	       	} catch (Exception $e) {
+	       		printf('An error occurred while processing: %s', $key);
+	       		
+	       	}
+	        		
 		}
 	}
+
+	
 }	
