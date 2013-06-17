@@ -37,7 +37,7 @@ abstract class KISS_Engine
 	protected $params=array();
 	protected $uri_string='';
 	
-	function __construct( &$routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
+	function __construct( $routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
 	{
 		if ( $_POST and get_magic_quotes_gpc() )
 		{
