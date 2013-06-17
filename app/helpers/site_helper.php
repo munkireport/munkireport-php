@@ -83,3 +83,35 @@ function humanreadablesize($bytes, $decimals = 2) {
 	$factor = floor((strlen($bytes) - 1) / 3);
 	return sprintf("%.{$decimals}f %sB", $bytes / pow(1024, $factor), $factor?@$sz[$factor]:' ');
 }
+
+function RelativeTime($time) 
+{ 
+    $points = array(
+            'year'     => 31556926,
+            'month'    => 2629743,
+            'week'     => 604800,
+            'day'      => 86400,
+            'hour'     => 3600,
+            'minute'   => 60,
+            'second'   => 1
+        );
+    $plurals = array( 
+    		'year'		=> 'years',
+    		'month'		=> 'months',
+    		'week'		=> 'weeks',
+    		'day'		=> 'days',
+    		'hour'		=> 'hours',
+    		'minute'	=> 'minutes',
+    		'second'	=> 'seconds'
+    		);
+        
+        foreach($points as $point => $value)
+        {
+            $elapsed = floor($time/$value);
+            if($elapsed > 0)
+            {
+                $point = $elapsed > 1 ? $plurals[$point] : $point;
+                return "$elapsed $point";
+            }
+        }
+}
