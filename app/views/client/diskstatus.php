@@ -46,7 +46,6 @@
 		    </thead>
 		    <tbody>
 			<?foreach($diskreport->retrieve_many() as $client):?>
-			<?for($i=1; $i < 10; $i++):?>
 		      <tr>
 				<?$machine = new Machine($client->serial_number)?>
 		        <td>
@@ -58,15 +57,14 @@
 				<td><?=$client->SolidState?></td>
 
 				<td>
-					<?$pct = rand (1, 100); //$client->Percentage;
-					$label = $pct > 85 ? 'danger' : ($pct > 80 ? 'warning' : 'success');?>
+					<?$pct = $client->Percentage;
+					$label = $pct > 90 ? 'danger' : ($pct > 80 ? 'warning' : 'success');?>
 					<div class="progress progress-<?=$label?>">
 						<div class="bar" style="width: <?=$pct?>%;"><?=$pct?>%</div>
 					</div>
 				</td>
 				<td><?=$pct?></td>
 		      </tr>
-		      <?endfor?>
 			<?endforeach?>
 		    </tbody>
 		  </table>
