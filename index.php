@@ -93,9 +93,11 @@ if (strpos( Config::get('pdo.dsn'), "sqlite") === 0) {
 //===============================================
 // Start the controller
 //===============================================
+$routes = Config::get('routes');
+$uri_protocol = Config::get('uriProtocol');
 $GLOBALS[ 'engine' ] = new Engine(
-	Config::get('routes'),
+	$routes,
 	'show',
 	'index',
-	Config::get('uriProtocol')
+	$uri_protocol
 );
