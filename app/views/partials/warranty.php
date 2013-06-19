@@ -11,9 +11,16 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><?=$warranty->status?></td>
+			<td>
+				<?=$warranty->status?>
+				<?if($warranty->status == 'Unregistered serialnumber'):?>
+				<a href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&country=USA&id=<?=$serial?>">Register</a>
+				<?endif?>
+			</td>
 			<td><?=$warranty->end_date?></td>
-			<td><?=date('Y-m-d G:i:s',$warranty->nextcheck)?></td>
+			<td><?=date('Y-m-d G:i:s',$warranty->nextcheck)?>
+				<a class="btn btn-small" href="<?=url("clients/recheck_warranty/$serial")?>">Check now</a>
+			</td>
 		</tr>
 	</tbody>
 </table>

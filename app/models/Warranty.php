@@ -70,13 +70,21 @@ class Warranty extends Model {
 			$this->status = 'Expired';
 			$this->end_date = '0000-00-00';
 		}
-		elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(true/', $result))
+		elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(true([^\)])+/', $result, $matches))
 		{
 			// Get support status
-			$this->status = 'Supported';
-			
+
+			if(preg_match('/Limited Warranty\./', $matches[0]))
+			{
+				$this->status = 'No Applecare';
+			}
+			else
+			{
+				$this->status = 'Supported';
+			}
+						
 			// Get estimated exp date
-			if(preg_match('/Estimated Expiration Date: ([^<]+)</', $result, $matches))
+			if(preg_match('/Estimated Expiration Date: ([^<]+)</', $matches[0], $matches))
 			{
 				$this->end_date = date('Y-m-d', strtotime($matches[1]));
 			}	

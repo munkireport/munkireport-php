@@ -4,7 +4,7 @@
 
 	<div class="row">
 		<div class="span4">
-			<h2>Activity</h2>
+			<h2>Errors</h2>
 
 		</div>
 		<div class="span4">
@@ -34,7 +34,7 @@
 	<div class="row">
 		<div class="span4">
 			<h2>OS breakdown</h2>
-			<? $sql = "select count(id) as count, os_version from machine group by machine_desc";
+			<? $sql = "select count(id) as count, os_version from machine group by os_version ORDER BY os_version";
 				?>
 			<table class="table table-striped">
 				<?foreach($machine->query($sql) as $obj):?>
@@ -62,6 +62,29 @@
 		<div class="row">
 		<div class="span4">
 			<h2>Warranty status</h2>
+			<?$warranty = new Warranty();
+				$sql = "select count(id) as count, status from warranty group by status ORDER BY status";
+				?>
+			<table class="table table-striped">
+				<?foreach($warranty->query($sql) as $obj):?>
+				<tr>
+					<td><?=$obj->status?></td>
+					<td><span class="badge"><?=$obj->count?></span></td>
+				</tr>
+				<?endforeach?>
+			</table>
+			<?	$thirtydays = date('Y-m-d', strtotime('+30days'));
+				$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY status";
+			?>
+			<table class="table table-striped">
+				<?foreach($warranty->query($sql) as $obj):?>
+				<tr class="warning">
+					<td>Expires in 30 days</td>
+					<td><span class="badge"><?=$obj->count?></span></td>
+				</tr>
+				<?endforeach?>
+			</table>
+
 
 		</div>
 		<div class="span4">
