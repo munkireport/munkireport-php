@@ -12,6 +12,19 @@
 		            "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
 					"bStateSave": true,
 		            "aaSorting": [[3,'desc']],
+				    "aoColumns": [ 
+						/* Client */			null,
+						/* Serial */			null,
+						/* Hostname */			null,
+						/* Status */			null,
+						/* Expires in */		null,
+						/* Timediff */	{ "bVisible":    false }
+					],
+		            "aoColumnDefs": [
+				      { "iDataSort": 5, "aTargets": [ 4 ] }
+				    ]
+
+
 				});
 			} );
 		</script>
@@ -27,12 +40,16 @@
 		        <th>Serial    </th>
 		        <th>Hostname   </th>
 		        <th>Status</th>
-				<th>End date</th>
+				<th>Expires in</th>
+				<th>Timediff</th>
 		      </tr>
 		    </thead>
 		    <tbody>
+		    <?$thirty = 60 * 60 * 24 * 30?>
 			<?foreach($warranty->retrieve_many() as $client):?>
-			<?$class = $client->status == 'Expired' ? 'error' : ($client->status == 'Supported' ? 'success' : 'warning')?>
+			<?$class = $client->status == 'Expired' ? 'error' : ($client->status == 'Supported' ? 'success' : 'warning');
+			$timediff = strtotime($client->end_date) - time(); 
+			if($timediff < $thirty){ $class = 'error';}?>
 		      <tr class="<?=$class?>">
 				<?$machine = new Machine($client->sn)?>
 		        <td>
@@ -41,8 +58,8 @@
 				<td><?=$machine->serial_number?></td>
 				<td><?=$machine->hostname?></td>
 				<td><?=$client->status?></td>
-				<td><?=$client->end_date?></td>
-
+				<td><?=RelativeTime($timediff)?></td>
+				<td><?=$timediff?>
 		      </tr>
 			<?endforeach?>
 		    </tbody>
