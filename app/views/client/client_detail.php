@@ -7,7 +7,7 @@
   	<div class="span12">
 <?$machine = new Machine($serial);?>
 
-<h1><img style="vertical-align:middle;" src="<?printf('https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=%s&size=72x72', substr($serial, -4))?>" alt=""><?=$machine->computer_name?></h1>
+<h1><img style="vertical-align:middle; width:60px" src="<?printf('https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=%s&size=120x120', substr($serial, 8))?>" alt=""><?=$machine->computer_name?></h1>
 
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#machine" data-toggle="tab">Machine info</a></li>
