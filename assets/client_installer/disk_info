@@ -5,4 +5,12 @@ DIR=$(dirname $0)
 echo 'Collect disk info'
 
 mkdir -p "$DIR/cache"
-diskutil info -plist disk0s2 > "$DIR/cache/disk.plist"
+
+# Get system disk (the one that ends with space-slash)
+SYSTEM=$(df -lk | sed -n 's#^\(/dev/disk[0-9a-z]*\).* /$#\1#p')
+
+echo "Selected system disk: ${SYSTEM}"
+
+# Get info with diskutil
+# Convert integer to string due to limitations of integer size in php
+diskutil info -plist $SYSTEM | sed 's/integer>/string>/g' > "$DIR/cache/disk.plist"

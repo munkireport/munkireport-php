@@ -22,7 +22,7 @@ def main():
     
     items = {} # item list
     report_info = {}
-    report_info['console_user'] = munkicommon.getconsoleuser()
+    report_info['console_user'] = "%s" % munkicommon.getconsoleuser()
     report_info['runtype'] = runtype
     report_info['runstate'] = 'done'
     report_info_plist = FoundationPlist.writePlistToString(report_info)
