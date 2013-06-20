@@ -92,7 +92,7 @@
 				</tr>
 				<?endforeach?>
 			</table>
-
+			<a href="<?=url('clients/show/warranty_status')?>">Show all clients</a>
 
 		</div>
 		<div class="span4">
