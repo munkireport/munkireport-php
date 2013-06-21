@@ -1,10 +1,3 @@
-<?
-	$machine = new Machine($serial);
-	$hash = new Hash($serial, $report_type->name);
-	$reportdata = new Reportdata($serial);
-	//print_r($machine);
-?>
-
 <h2>Machine info</h2>
 <div class="row">
 	<div class="span6">
@@ -12,23 +5,23 @@
 			<tbody>
 				<tr>
 					<th>Hostname:</th>
-					<td><?=$machine->hostname?></td>
+					<td><?=$machine['hostname']?></td>
 				</tr>
 				<tr>
 					<th>Username:</th>
-					<td><?=$reportdata->console_user?></td>
+					<td><?=$meta['console_user']?></td>
 				</tr>
 				<tr>
 					<th>Full username:</th>
-					<td><?=$reportdata->long_username?></td>
+					<td><?=$meta['long_username']?></td>
 				</tr>
 				<tr>
-					<th>Last <?=$report_type->desc?> date:</th>
-					<td><?=RelativeTime(time()-$hash->timestamp)?> ago</td>
+					<th>Last machine date:</th>
+					<td><?=$meta['checkin-date-relative']?></td>
 				</tr>
 				<tr>
 					<th>Remote IP:</th>
-					<td><?=$reportdata->remote_ip?></td>
+					<td><?=$meta['remote_ip']?></td>
 				</tr>
 			</tbody>
 		</table>
@@ -38,23 +31,27 @@
 			<tbody>
 				<tr>
 					<th>Model:</th>
-					<td><?=$machine->machine_model?> <?=$machine->machine_name?> <?=$machine->current_processor_speed?></td>
+					<td><?=$machine['machine_model']
+						. ' '
+						. $machine['machine_name']
+						. ' '
+						. $machine['current_processor_speed']?></td>
 				</tr>
 				<tr>
 					<th>Memory:</th>
-					<td><?=$machine->physical_memory?></td>
+					<td><?=$machine['physical_memory']?></td>
 				</tr>
 				<tr>
 					<th>Serial:</th>
-					<td><?=$serial?></td>
+					<td><?=$machine['serial_number']?></td>
 				</tr>
 				<tr>
 					<th>OS:</th>
-					<td><?=$machine->os_version.' ('.$machine->cpu_arch.')'?></td>
+					<td>OS X <?=$machine['os_version'].' ('.$machine['cpu_arch'].')'?></td>
 				</tr>
 				<tr>
 					<th>Free Disk Space:</th>
-					<td><?=humanreadablesize($machine->available_disk_space * 1024)?></td>
+					<td><?=$machine['formatted_available_disk_space']?></td>
 				</tr>
 			</tbody>
 		</table>

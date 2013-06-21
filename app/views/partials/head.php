@@ -14,7 +14,11 @@
   <style type="text/css">
   .progress{margin-bottom: 0}
   </style>
-
+<?php
+  if (isset($scripts))
+    foreach($scripts as $script): ?>
+  <script src="<?=WEB_FOLDER?>assets/js/<?=$script?>" type="text/javascript"></script>
+<?php endforeach; ?>
 </head>
 
 <body>

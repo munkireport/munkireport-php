@@ -1,5 +1,4 @@
-<?$history = new InstallHistory()?>
-<?if($history->retrieve_one('serial_number=?', $serial)):?>
+<?if(isset($installHistory) && count($installHistory) > 1):?>
 
 <table class="table table-striped">
 	<thead>
@@ -11,7 +10,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?foreach($history->retrieve_many('serial_number=?', $serial) AS $item):?>
+	<?foreach($installHistory as $item):?>
 	<?if($apple == (strpos($item->packageIdentifiers[0],'com.apple.') === 0)):?>
 		<tr>
 			<td><?=$item->displayName?></td>

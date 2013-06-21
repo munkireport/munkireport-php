@@ -1,4 +1,8 @@
-<?$this->view('partials/head')?>
+<?$this->view('partials/head', array(
+	"scripts" => array(
+		"clients/client_list.js"
+	)
+))?>
 
 <div class="container">
 
@@ -22,7 +26,7 @@
 
 		  <h1>Machines (<?=$machine->count()?>)</h1>
 		  
-		  <table class="table table-striped">
+		  <table class="table table-striped table-condensed">
 		    <thead>
 		      <tr>
 		        <th>Client    </th>
@@ -40,7 +44,10 @@
 		      <tr>
 				<?$reportdata = new Reportdata($client->serial_number)?>
 		        <td>
-					<a href="<?=url("clients/detail/$client->serial_number")?>"><?=$client->computer_name?></a>
+		        	<div class="btn-group">
+		        		<span class="btn" data-serialnumber="<?=$client->serial_number?>"><i class="icon-info-sign"></i></span>
+		        		<a class="btn" href="<?=url("clients/detail/$client->serial_number")?>"><?=$client->computer_name?></a>
+		        	</div>
 				</td>
 				<td><?=$client->serial_number?></td>
 				<td><?=$client->hostname?></td>

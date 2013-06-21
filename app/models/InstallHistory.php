@@ -57,4 +57,15 @@ class InstallHistory extends Model {
 			$this->merge($item)->save();
 		}
 	}
+
+
+
+
+	/**
+	 * Return all install items for the given serial number
+	 */
+	public function itemsBySerialNumber($aSerialNumber)
+	{
+		return $this->retrieve_many('serial_number=?', $aSerialNumber);
+	}
 }
