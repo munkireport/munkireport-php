@@ -50,8 +50,19 @@ function getdbh()
 function __autoload( $classname )
 {
 	$a=$classname[0];
-	if ( $a >= 'A' && $a <='Z' ) require_once( APP_PATH.'models/'.$classname.'.php' );
-	else require_once( APP_PATH.'libraries/'.$classname.'.php' );  
+	if(substr($classname, -4) == '_api')
+	{
+		require_once( APP_PATH.'modules/'.substr($classname, 0, -4).'/api'.EXT );
+	}
+	elseif(substr($classname, -6) == '_model')
+	{
+		require_once( APP_PATH.'modules/'.substr($classname, 0, -6).'/model'.EXT );
+	}
+	elseif ( $a >= 'A' && $a <='Z' )
+	{
+		require_once( APP_PATH.'models/'.$classname.EXT );
+	}
+	else require_once( APP_PATH.'libraries/'.$classname.EXT );  
 }
 
 function url($url='', $fullurl = FALSE)
