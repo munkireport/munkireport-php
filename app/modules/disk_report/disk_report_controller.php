@@ -1,12 +1,12 @@
 <?php 
 
 /**
- * Disk report module class
+ * Disk report controller class
  *
  * @package munkireport
  * @author AvB
  **/
-class disk_report_module
+class Disk_report_controller
 {
 	function get_list($listname = '')
 	{

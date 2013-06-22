@@ -6,7 +6,7 @@
  * @package munkireport
  * @author 
  **/
-class default_module
+class Default_controller
 {
 	/**
 	 * Default method

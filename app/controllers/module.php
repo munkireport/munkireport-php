@@ -9,7 +9,7 @@
  * @package munkireport
  * @author AvB
  **/
-class module extends Controller
+class Module extends Controller
 {
 	public $module = 'default';
 	public $action = 'index';
@@ -38,23 +38,21 @@ class module extends Controller
 		if ( isset( $p[2] ) ) $this->params=array_slice( $p, 2 );
 		
 		//Route request to correct controller/action
-		$module_file = MODULE_PATH.$this->module.'/module.php'; //CONTROLLER CLASS FILE
+		$module_file = MODULE_PATH.$this->module.'/'.$this->module.'_controller.php'; //CONTROLLER CLASS FILE
 		if ( ! preg_match( '#^[A-Za-z0-9_-]+$#', $this->module ) or ! file_exists( $module_file ) )
 			$this->request_not_found( 'Module file not found: '.$module_file );
 		
 		//Create module obj
 		require( $module_file );
-		$this->module_classname = $this->module.'_module';
+		$this->module_classname = $this->module.'_controller';
 		if ( ! class_exists( $this->module_classname, false ) )
 			$this->request_not_found( 'Module class not found: '.$this->module_classname );
 		$this->module_obj = new $this->module_classname;
-		
+
 		//call controller function
 		if ( ! preg_match( '#^[A-Za-z_][A-Za-z0-9_-]*$#', $this->action ) or ! method_exists( $this->module_obj, $this->action ) )
 			$this->request_not_found( 'Invalid function name: '.$this->action );
-		call_user_func_array( array( $this->module_obj, $this->action ), $this->params );
-
-		
+		call_user_func_array( array( $this->module_obj, $this->action ), $this->params );		
 	}
 
 	//Override this function for your own custom 404 page
