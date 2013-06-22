@@ -8,8 +8,10 @@
  **/
 class Disk_report_controller
 {
-	function get_list($listname = '')
+	function get_errors($listname = '')
 	{
-		printf("listname = %s", $listname);
+		$data = array('slap', 'joop');
+		$obj = new View();
+		$obj->view('json', array('msg' => $data));
 	}
 } // END class disk_report_module
