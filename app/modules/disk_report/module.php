@@ -4,18 +4,12 @@
  * Disk report module class
  *
  * @package munkireport
- * @author 
+ * @author AvB
  **/
 class disk_report_module
 {
-	/**
-	 * Get available widgets
-	 *
-	 * @return array widget array
-	 * @author arjen@bochoven.net
-	 **/
-	function get_widgets()
+	function get_list($listname = '')
 	{
-		return $this->widgets;
+		printf("listname = %s", $listname);
 	}
 } // END class disk_report_module

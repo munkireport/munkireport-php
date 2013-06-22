@@ -42,6 +42,7 @@ define('INDEX_PAGE', Config::get('indexPage'));
 define('SYS_PATH', Config::get('paths.system') );
 define('APP_PATH', Config::get('paths.application') );
 define('VIEW_PATH', Config::get('paths.view')); 
+define('MODULE_PATH', Config::get('paths.module')); 
 define('CONTROLLER_PATH', Config::get('paths.controller')); 
 define('EXT', '.php'); // Default extension
 

@@ -26,12 +26,14 @@ class ConfigDefaults
 			)
 		);
 		$this->_settings['routes'] = array();
+		$this->_settings['routes']['module(/.*)?']	= "module/load$1";
 		$this->_settings['paths']
 			= array(
 				"system"      => APP_ROOT . "system/",
 				"application" => APP_ROOT . "app/",
 				"view"        => APP_ROOT . "app/views/",
-				"controller"  => APP_ROOT . "app/controllers/"
+				"controller"  => APP_ROOT . "app/controllers/",
+				"module"      => APP_ROOT . "app/modules/"
 			);
 		$this->_settings['pdo']
 			= array(
