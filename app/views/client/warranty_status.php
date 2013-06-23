@@ -47,17 +47,17 @@
 		    <tbody>
 		    <?$thirty = 60 * 60 * 24 * 30?>
 			<?foreach($warranty->retrieve_many() as $client):?>
-			<?$class = $client->status == 'Expired' ? 'error' : ($client->status == 'Supported' ? 'success' : 'warning');
+			<?$class = $client->status == 'Expired' ? 'important' : ($client->status == 'Supported' ? 'success' : 'warning');
 			$timediff = strtotime($client->end_date) - time(); 
-			if($timediff < $thirty){ $class = 'error';}?>
-		      <tr class="<?=$class?>">
+			if($timediff < $thirty){ $class = 'important';}?>
+		      <tr>
 				<?$machine = new Machine($client->sn)?>
 		        <td>
 					<a href="<?=url("clients/detail/$client->sn")?>"><?=$machine->computer_name?></a>
 				</td>
 				<td><?=$machine->serial_number?></td>
 				<td><?=$machine->hostname?></td>
-				<td><?=$client->status?></td>
+				<td><span class="label label-<?=$class?>"><?=$client->status?></span></td>
 				<td><?=RelativeTime($timediff)?></td>
 				<td><?=$timediff?>
 		      </tr>
