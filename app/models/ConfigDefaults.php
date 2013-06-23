@@ -18,6 +18,7 @@ class ConfigDefaults
 		//	= str_replace("index.php", "", $_SERVER['PHP_SELF']);
 
 		$this->_settings['siteName'] = "MunkiReport";
+		$this->_settings['vnc_link'] = "vnc://%s:59000";
 		$this->_settings['bundleidIgnoreList']
 			= array("com.apple.print.PrinterProxy");
 		$this->_settings['auth'] = array(
