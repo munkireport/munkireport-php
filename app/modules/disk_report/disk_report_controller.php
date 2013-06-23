@@ -10,7 +10,9 @@ class Disk_report_controller
 {
 	function get_errors($listname = '')
 	{
-		$data = array('slap', 'joop');
+		$diskreport = new Disk_report_model();
+		$errors = count($diskreport->retrieve_many('percentage > 80'));
+		$data = array('diskfull' => $errors);
 		$obj = new View();
 		$obj->view('json', array('msg' => $data));
 	}

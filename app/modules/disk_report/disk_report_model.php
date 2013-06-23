@@ -1,9 +1,9 @@
 <?php
-class DiskReport extends Model {
+class Disk_report_model extends Model {
 
 	function __construct($serial='')
 	{
-		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+		parent::__construct('id', 'diskreport'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['TotalSize'] = 0;

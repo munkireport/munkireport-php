@@ -56,7 +56,8 @@ function __autoload( $classname )
 	}
 	elseif(substr($classname, -6) == '_model')
 	{
-		require_once( APP_PATH.'modules/'.substr($classname, 0, -6).'/model'.EXT );
+		$module = substr($classname, 0, -6);
+		require_once( APP_PATH."modules/${module}/${module}_model".EXT );
 	}
 	elseif ( $a >= 'A' && $a <='Z' )
 	{

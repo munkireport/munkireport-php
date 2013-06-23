@@ -36,30 +36,38 @@ class report extends Controller
 	
 	function check_in()
 	{
+	    if( ! isset($_POST['items']))
+	    {
+	    	$this->msg("No items in POST", TRUE);
+	    }
 	    require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
-		$parser->parse($_POST['items'], CFPropertyList::FORMAT_XML);
-		$arr = $parser->toArray();
+		try {
+			$parser->parse($_POST['items'], CFPropertyList::FORMAT_XML);
+			$arr = $parser->toArray();
+		} catch (Exception $e) {
+			$this->msg("Could not parse items, not a proper plist file", TRUE);
+		}
 		
 		foreach($arr as $key => $val)
 		{
 			// Skip items without data
 		    if ( ! isset($val['data'])) continue;
 
-		   	printf("Starting: %s\n", $key);
+		   	$this->msg("Starting: $key");
 
 		    
 		    // Todo: prevent admin and user models, sanitize $key
 		    if( ! file_exists(APP_PATH . 'models/' . $key . '.php'))
 		    {
-		    	printf("Model not found: %s\n", $key);
+		    	$this->msg("Model not found: $key");
 		    	continue;
 		    }
 		    require_once(APP_PATH . 'models/' . $key . '.php');
 
 		    if ( ! class_exists( $key, false ) )
 		    {
-		    	printf("Class not found: %s\n", $key);
+		    	$this->msg("Class not found: $key");
 		    	continue;
 		    }
 
@@ -69,7 +77,7 @@ class report extends Controller
         	
 	        if( ! method_exists($class, 'process'))
 	        {
-	        	printf("No process method in: %s\n", $key);
+	        	$this->msg("No process method in: $key");
 		    	continue;
 	        }
 
@@ -84,10 +92,25 @@ class report extends Controller
 		        $hash->save();
 	       		
 	       	} catch (Exception $e) {
-	       		printf('An error occurred while processing: %s', $key);
+	       		$this->msg("An error occurred while processing: $key");
 	       		
 	       	}
 	        		
+		}
+	}
+
+	/**
+	 *
+	 * @param string message
+	 * @param boolean exit or not
+	 * @author AvB
+	 **/
+	function msg($msg = 'No message', $exit = FALSE)
+	{
+		echo('Server: '.$msg."\n");
+		if($exit)
+		{
+			exit();
 		}
 	}
 
