@@ -89,6 +89,7 @@ class report extends Controller
 		        // Store hash
 		        $hash = new Hash($_POST['serial'], $key);
 		        $hash->hash = $val['hash'];
+				$hash->timestamp = time();
 		        $hash->save();
 	       		
 	       	} catch (Exception $e) {
@@ -115,4 +116,4 @@ class report extends Controller
 	}
 
 	
-}	
+}
