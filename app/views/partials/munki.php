@@ -1,4 +1,4 @@
-<?$client = new Munkireport($serial)?>
+<?$client = new Munkireport($machine['serial_number'])?>
 <?$report = $client->report_plist?>
 
 <?if( ! $report):?>
