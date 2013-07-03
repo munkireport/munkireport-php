@@ -28,7 +28,7 @@
 			} );
 		</script>
 
-		<?$diskreport = new DiskReport()?>
+		<?$diskreport = new Disk_report_model()?>
 
 		  <h1>Disk Reports (<?=$diskreport->count()?>)</h1>
 		  
@@ -54,7 +54,7 @@
 				<td><?=$client->serial_number?></td>
 				<td><?=$machine->hostname?></td>
 				<td><?=$client->SMARTStatus?></td>
-				<td><?=$client->SolidState?></td>
+				<td><?=$client->SolidState ? 'SSD' :''?></td>
 
 				<td>
 					<?$pct = $client->Percentage;

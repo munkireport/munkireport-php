@@ -136,7 +136,7 @@
 	<div class="row">
 		<div class="span4">
 			<h3>Disk status</h3>
-			<?$diskreport = new DiskReport();
+			<?$diskreport = new Disk_report_model();
 				$sql = "select count(id) as count from diskreport where Percentage > 85";
 				?>
 			<table class="table table-condensed">
