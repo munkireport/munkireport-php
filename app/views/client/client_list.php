@@ -9,59 +9,54 @@
   <div class="row">
 
   	<div class="span12">
-		<script type="text/javascript" charset="utf-8">
-			$(document).ready(function() {
-				$('.clientlist').dataTable({
-					"iDisplayLength": 25,
-					"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-					"sPaginationType": "full_numbers",
-					"bStateSave": true,
-					"aaSorting": [[4,'desc']]
+		<script type="text/javascript">
+		$(document).ready(function() {
+
+				// Get column names from data attribute
+				var myCols = [];
+				$('.table th').map(function(){
+					  myCols.push({'mData' : $(this).data('colname')});
 				});
+			    $('.table').dataTable( {
+			        "bProcessing": true,
+			        "bServerSide": true,
+			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+			        "sPaginationType": "bootstrap",
+			        "bStateSave": true,
+			        "aoColumns": myCols,
+			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+			        	var sn=$('td:eq(0)', nRow).html();
+			        	var link = '<a class="btn btn-small" href="<?=url('clients/detail/')?>'+sn+'">'+sn+'</a>';
+			        	$('td:eq(0)', nRow).html(link);
+
+			        	var date = new Date($('td:eq(6)', nRow).html() * 1000);
+			        	$('td:eq(6)', nRow).html(date.toLocaleDateString());
+				    }
+			    } );
 			} );
 		</script>
 
 		<?$machine = new Machine()?>
-		<?$hash = new Hash()?>
 
 		  <h1>Machines (<?=$machine->count()?>)</h1>
 		  
 		  <table class="table table-striped table-condensed">
 		    <thead>
 		      <tr>
-		        <th>Client    </th>
-		        <th>Serial    </th>
-		        <th>Hostname   </th>
-		        <th>IP        </th>
-				<th>OS        </th>
-		        <th>Machine_name</th>
-				<th>Available disk space</th>
-				<th>Modules</th>
+		        <th data-colname='machine#serial_number'>Serial</th>
+		        <th data-colname='machine#hostname'>Hostname</th>
+				<th data-colname='machine#os_version'>OS</th>
+		        <th data-colname='machine#machine_name'>Machine_name</th>
+		        <th data-colname='warranty#status'>Warranty status</th>
+		        <th data-colname='reportdata#long_username'>Username</th>
+		        <th data-colname='reportdata#timestamp'>Check-in</th>
 		      </tr>
 		    </thead>
 		    <tbody>
-			<?foreach($machine->retrieve_many() as $client):?>
-		      <tr>
-				<?$reportdata = new Reportdata($client->serial_number)?>
-		        <td>
-		        	<div class="btn-group">
-		        		<span class="btn" data-serialnumber="<?=$client->serial_number?>"><i class="icon-info-sign"></i></span>
-		        		<a class="btn" href="<?=url("clients/detail/$client->serial_number")?>"><?=$client->computer_name?></a>
-		        	</div>
-				</td>
-				<td><?=$client->serial_number?></td>
-				<td><?=$client->hostname?></td>
-				<td><?=$reportdata->remote_ip?></td>
-				<td><?=$client->os_version?></td>
-				<td><?=$client->machine_name?></td>
-				<td><?=humanreadablesize($client->available_disk_space * 1024)?></td>
-				<td>
-					<?foreach($hash->retrieve_many('serial=?', $client->serial_number) AS $item):?>
-						<?=$item->name?>
-					<?endforeach?>
-				</td>
-		      </tr>
-			<?endforeach?>
+		    	<tr>
+					<td colspan="5" class="dataTables_empty">Loading data from server</td>
+				</tr>
 		    </tbody>
 		  </table>
     </div> <!-- /span 12 -->
