@@ -6,7 +6,7 @@ class InventoryReport extends Model {
     {
         parent::__construct('id','inventory'); //primary key = id; tablename = inventory
         $this->rs['id'] = '';
-        $this->rs['serial'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['timestamp'] = time();
         $this->rs['sha256hash'] = '';
 				
@@ -20,7 +20,7 @@ class InventoryReport extends Model {
     function retrieve( $serial ) 
     {
         $dbh=$this->getdbh();
-        $sql = 'SELECT * FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial' ).'=?';
+        $sql = 'SELECT * FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial_number' ).'=?';
         $stmt = $dbh->prepare( $sql );
         $stmt->bindValue( 1, $serial );
         $stmt->execute();

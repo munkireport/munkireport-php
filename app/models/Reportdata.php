@@ -6,7 +6,7 @@ class Reportdata extends Model {
     {
         parent::__construct('id','reportdata'); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial'] = ''; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = ''; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['console_user'] = '';
 		$this->rs['long_username'] = '';
 		$this->rs['remote_ip'] = '';
@@ -19,8 +19,8 @@ class Reportdata extends Model {
         
         if($serial)
         {
-            $this->retrieve_one('serial=?', $serial);
-            $this->serial = $serial;
+            $this->retrieve_one('serial_number=?', $serial);
+            $this->serial_number = $serial;
         }
         
         return $this;

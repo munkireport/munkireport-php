@@ -7,7 +7,7 @@ class Warranty extends Model {
 	{
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['sn'] = $serial; $this->rt['sn'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['end_date'] = '';
 		$this->rs['status'] = '';
 		$this->rs['nextcheck'] = 0;
@@ -18,11 +18,11 @@ class Warranty extends Model {
 		
 		if ($serial)
 		{
-			$this->retrieve_one('sn=?', $serial);
+			$this->retrieve_one('serial_number=?', $serial);
 			$this->check_status();
 		}
 		
-		$this->sn = $serial;
+		$this->serial_number = $serial;
 		  
 	}
 	
@@ -38,7 +38,7 @@ class Warranty extends Model {
 		
 		// Unfortunately we have to scrape the page as Apple discontinued the json api
 		$url = 'https://selfsolve.apple.com/wcResults.do';
-		$data = array ('sn' => $this->sn, 'num' => '0');
+		$data = array ('sn' => $this->serial_number, 'num' => '0');
 		$data = http_build_query($data);
 
 		$context_options = array (
@@ -98,7 +98,7 @@ class Warranty extends Model {
 		if(preg_match("/warrantyPage.warrantycheck.displayProductInfo\('([^\']+)', '([^\']+)'/", $result, $matches))
 		{
 			// Save img_url
-			$machine = new Machine($this->sn);
+			$machine = new Machine($this->serial_number);
 			$machine->img_url = $matches[1];
 			$machine->machine_desc = $matches[2];
 			$machine->save();
