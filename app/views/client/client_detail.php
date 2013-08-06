@@ -2,12 +2,12 @@
 
 <div class="container">
 	<div class="row">
-		<div class="span12">
+		<div class="col-lg-12">
 			<h1>
 				<img style="vertical-align:middle; width:75px" src="<?=$meta['iconURL']?>" alt="">
 				<?=$machine['computer_name']?>
 				<?if(Config::get('vnc_link')):?>
-				<a class="btn" href="<?printf(Config::get('vnc_link'), $meta['remote_ip'])?>">VNC</a>
+				<a class="btn btn-default" href="<?printf(Config::get('vnc_link'), $meta['remote_ip'])?>">VNC</a>
 				<?endif?>
 			</h1>
 

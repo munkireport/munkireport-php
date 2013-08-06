@@ -4,7 +4,7 @@
 
   <div class="row">
 
-  	<div class="span12">
+  	<div class="col-lg-12">
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
 				$('.table').dataTable({
@@ -47,13 +47,13 @@
 		    <tbody>
 		    <?$thirty = 60 * 60 * 24 * 30?>
 			<?foreach($warranty->retrieve_many() as $client):?>
-			<?$class = $client->status == 'Expired' ? 'important' : ($client->status == 'Supported' ? 'success' : 'warning');
+			<?$class = $client->status == 'Expired' ? 'danger' : ($client->status == 'Supported' ? 'success' : 'warning');
 			$timediff = strtotime($client->end_date) - time(); 
-			if($timediff < $thirty){ $class = 'important';}?>
+			if($timediff < $thirty){ $class = 'danger';}?>
 		      <tr>
-				<?$machine = new Machine($client->sn)?>
+				<?$machine = new Machine($client->serial_number)?>
 		        <td>
-					<a href="<?=url("clients/detail/$client->sn")?>"><?=$machine->computer_name?></a>
+					<a href="<?=url("clients/detail/$client->serial_number")?>"><?=$machine->computer_name?></a>
 				</td>
 				<td><?=$machine->serial_number?></td>
 				<td><?=$machine->hostname?></td>

@@ -8,7 +8,7 @@
 
   <div class="row">
 
-  	<div class="span12">
+  	<div class="col-lg-12">
 		<script type="text/javascript">
 		$(document).ready(function() {
 
@@ -21,13 +21,13 @@
 			        "bProcessing": true,
 			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
-			        "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+			        "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
 			        "sPaginationType": "bootstrap",
 			        "bStateSave": true,
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	var sn=$('td:eq(0)', nRow).html();
-			        	var link = '<a class="btn btn-small" href="<?=url('clients/detail/')?>'+sn+'">'+sn+'</a>';
+			        	var link = '<a class="" href="<?=url('clients/detail/')?>'+sn+'">'+sn+'</a>';
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	var date = new Date($('td:eq(6)', nRow).html() * 1000);
@@ -39,7 +39,7 @@
 
 		<?$machine = new Machine()?>
 
-		  <h1>Machines (<?=$machine->count()?>)</h1>
+		  <h1>Machines <span class="label"><?=$machine->count()?></span></h1>
 		  
 		  <table class="table table-striped table-condensed">
 		    <thead>

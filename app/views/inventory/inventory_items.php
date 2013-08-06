@@ -14,7 +14,7 @@
         });
     } );
 </script>
-    <div class="span12">
+    <div class="col-lg-12">
       <h1>Inventory items (<?=count($inventory)?>)</h1>
       <table class='table table-striped'>
       <thead>

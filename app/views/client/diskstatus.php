@@ -4,7 +4,7 @@
 
   <div class="row">
 
-  	<div class="span12">
+  	<div class="col-lg-12">
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
 				$('.table').dataTable({
@@ -59,8 +59,8 @@
 				<td>
 					<?$pct = $client->Percentage;
 					$label = $pct > 90 ? 'danger' : ($pct > 80 ? 'warning' : 'success');?>
-					<div class="progress progress-<?=$label?>">
-						<div class="bar" style="width: <?=$pct?>%;"><?=$pct?>%</div>
+					<div class="progress">
+						<div class="progress-bar progress-bar-<?=$label?>" style="width: <?=$pct?>%;"><?=$pct?>%</div>
 					</div>
 				</td>
 				<td><?=$pct?></td>
