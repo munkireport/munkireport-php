@@ -7,31 +7,23 @@ class report extends Controller
 		if( ! isset($_POST['serial'])) die('Serial is missing');
 		if( ! isset($_POST['items'])) die('Items are missing');
 
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-		
-		// Create return object
-		$out = new CFPropertyList();
-		$out->add( $itemarr = new CFArray() );
-		
-		// Parse items
-		$parser = new CFPropertyList();
-		$parser->parse($_POST['items'], CFPropertyList::FORMAT_XML);
-		
+		$req_items = unserialize($_POST['items']); //Todo: check if array
+
 		// Get stored hashes from db
 		$hash = new Hash();
 		$hashes = $hash->all($_POST['serial']);
-		
+
 		// Compare sent hashes with stored hashes
-		foreach($parser->toArray() as $key => $val)
+		foreach($req_items as $key => $val)
 		{
 		    if( ! (isset($hashes[$key]) && $hashes[$key] == $val['hash']))
 		    {
-		        $itemarr->add( new CFString( $key ) );
+		        $itemarr[$key] = 1;
 		    }
 		}
 		
 		// Return list of changed hashes
-		echo $out->toXML();
+		echo serialize($itemarr);
 	}
 	
 	function check_in()
@@ -40,13 +32,11 @@ class report extends Controller
 	    {
 	    	$this->msg("No items in POST", TRUE);
 	    }
-	    require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-		$parser = new CFPropertyList();
+
 		try {
-			$parser->parse($_POST['items'], CFPropertyList::FORMAT_XML);
-			$arr = $parser->toArray();
+			$arr = unserialize($_POST['items']);
 		} catch (Exception $e) {
-			$this->msg("Could not parse items, not a proper plist file", TRUE);
+			$this->msg("Could not parse items, not a proper serialized file", TRUE);
 		}
 		
 		foreach($arr as $key => $val)
@@ -83,8 +73,9 @@ class report extends Controller
 
 	       	try {
 	       		// Process data (todo: why do we have to convert to iso-8859?)
-		        $class->process(iconv('UTF-8', 'ISO-8859-1//IGNORE',$val['data']));
-				//$class->process($val['data']);
+		        //$class->process(iconv('UTF-8', 'ISO-8859-1//IGNORE',$val['data']));
+				$class->process($val['data']);
+				print_r($val['data']);
 		
 		        // Store hash
 		        $hash = new Hash($_POST['serial'], $key);

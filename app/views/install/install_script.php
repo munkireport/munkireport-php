@@ -16,7 +16,8 @@ echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
 curl --fail --silent "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
-	&& curl --fail --silent "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py"
+	&& curl --fail --silent "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
+	&& curl --fail --silent "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
 
 if [ "${?}" != 0 ]
 then

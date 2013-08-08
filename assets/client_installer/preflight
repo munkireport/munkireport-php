@@ -54,7 +54,7 @@ def main():
                 result, stdout, stderr = utils.runExternalScript(
                     preflightscriptpath, allow_insecure=False, script_args=[runtype])
                 if stdout:
-                        print(stdout)
+                        print(stdout.encode('UTF-8'))
                 if stderr:
                     print('%s Error: %s' 
                         % (preflightscript, stderr))

@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 from munkilib import munkicommon
-from munkilib import FoundationPlist
+from munkilib.phpserialize import *
 import subprocess
 import pwd
 import urllib
@@ -49,7 +49,8 @@ def get_computername():
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (output, unused_error) = proc.communicate()
-    return output.strip()
+    output = output.strip()
+    return output.decode('utf-8')
 
 def set_pref(pref_name, pref_value):
     """Sets a preference, See munkicommon.py for details"""
@@ -96,13 +97,13 @@ def process(serial,items):
             check[key] = {'hash': i.get('hash')}
     
     # Send hashes to server
-    values = {'serial': serial, 'items': FoundationPlist.writePlistToString(check)}
+    values = {'serial': serial, 'items': dumps(check)}
     response = curl(hashurl, values)
     server_data = response.read();
 
     # Decode response
     try:
-        result = FoundationPlist.readPlistFromString(server_data)
+        result = loads(server_data)
     except:
         print 'Illegal response from the server: %s' % server_data 
         return -1
@@ -124,7 +125,7 @@ def process(serial,items):
     # Send new files with hashes
     if len(items):
         print 'Sending items'
-        response = curl(checkurl, {'serial': serial, 'items': FoundationPlist.writePlistToString(items)})
+        response = curl(checkurl, {'serial': serial, 'items': dumps(items)})
         print response.read()
     else:
         print 'No changes'
