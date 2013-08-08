@@ -72,10 +72,8 @@ class report extends Controller
 	        }
 
 	       	try {
-	       		// Process data (todo: why do we have to convert to iso-8859?)
-		        //$class->process(iconv('UTF-8', 'ISO-8859-1//IGNORE',$val['data']));
+				
 				$class->process($val['data']);
-				print_r($val['data']);
 		
 		        // Store hash
 		        $hash = new Hash($_POST['serial'], $key);
