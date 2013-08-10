@@ -18,7 +18,7 @@ class inventory extends Controller
         $data['inventory_items'] = $inventoryitemobj->retrieve_many(
                                         'serial=?', array($serial));
         $data['page'] = 'inventory';
-    	$data['serial'] = $serial;
+    	$data['serial_number'] = $serial;
 
         $obj = new View();
         $obj->view('inventory/inventory_detail', $data);

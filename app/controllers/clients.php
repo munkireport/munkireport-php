@@ -66,7 +66,8 @@ class clients extends Controller
 			),
 			"machine" => $machineArray,
 			"warranty" => $warrantyArray,
-			"installHistory" => $installArray
+			"installHistory" => $installArray,
+			'serial_number' => $sn
 		);
 
         $obj = new View();
