@@ -17,7 +17,8 @@ class datatables extends Controller
 			'iDisplayLength' => 0, // Length
 			'sEcho' => 0, // Identifier, just return
 			'iColumns' => 0, // Number of columns
-			'iSortingCols' => 0 // Amount of sort columns
+			'iSortingCols' => 0, // Amount of sort columns
+			'sSearch' => '' // Search query
 		);
 
 		// Process $_GET array

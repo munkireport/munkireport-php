@@ -24,6 +24,8 @@ class Tablequery {
         $ref_obj = new Machine();
         $iTotal = $ref_obj->count();
 
+        $dbh = getdbh();
+
         // Get tables from column names
         $tables = array('machine' => 1);
         $formatted_columns = array();
@@ -47,28 +49,17 @@ class Tablequery {
         // Select
         $select = "SELECT ".implode(',', $formatted_columns);
 
+        $tbl_list = array_keys($tables);
+
         // From
-        $from = 'FROM ' . implode(',', array_keys($tables));
+        $from = 'FROM ' . array_shift($tbl_list);
 
-        // Where
-        if(count($tables) > 1)
+        // Join
+        foreach($tbl_list as $name)
         {
-            $where_arr = array();
-            foreach($tables as $name => $val)
-            {
-                if($name != 'machine')
-                {
-                    $where_arr[] = "`$name`.`serial_number` = `machine`.`serial_number`";
-                }
-
-            }
-            $sWhere = 'WHERE ' . implode(' AND ', $where_arr);
+            $from .= " LEFT JOIN $name USING (serial_number)";
         }
-        else
-        {
-            $sWhere = "";
-        }
-
+    
         // Paging
         $sLimit = sprintf(' LIMIT %d,%d', 
             $cfg['iDisplayStart'], $cfg['iDisplayLength']);
@@ -87,28 +78,36 @@ class Tablequery {
         }
 
         // Search
-       // if ( isset($_GET['sSearch']) && $_GET['sSearch'] != "" )
-       // {
-       //     $sWhere = "(";
-       //     for ( $i=0 ; $i<count($aColumns) ; $i++ )
-       //     {
-       //         $sWhere .= "`".$aColumns[$i]."` LIKE '%".( $_GET['sSearch'] )."%' OR ";
-       //     }
-       //     $sWhere = substr_replace( $sWhere, "", -3 );
-       //     $sWhere .= ')';
-       // }
+        $sWhere = "";
+        if($cfg['sSearch'])
+        {
+            $sWhere = "WHERE (";
+            foreach($formatted_columns AS $col)
+            {
+                $sWhere .= $col." LIKE '%".( $cfg['sSearch'] )."%' OR ";
+            }
+            $sWhere = substr_replace( $sWhere, "", -3 );
+            $sWhere .= ')';
+        }
 
         // Get filtered results count
-        //if( $sWhere)
-        //{
-        //    $iFilteredTotal = $ref_obj->count($sWhere);;
-        //}
-        //else
-        //{
-        //    $iFilteredTotal = $iTotal;
-        //}
         $iFilteredTotal = $iTotal;
-        
+        if( $sWhere)
+        {
+            $sql = "
+                SELECT COUNT(*) as count
+                $from
+                $sWhere";
+            if(! $stmt = $dbh->prepare( $sql ))
+            {
+                exit('Failed statement: '.$sql);
+            }
+            $stmt->execute();// $bindings );
+            if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
+            {
+                $iFilteredTotal = $rs->count;
+            }   
+        }
         
         $output = array(
             "sEcho" => intval($cfg['sEcho']),
@@ -128,13 +127,15 @@ class Tablequery {
         ";
         //echo $sql;
         //return;
-        $dbh = getdbh();
-        $stmt = $dbh->prepare( $sql );
+        
+        if(! $stmt = $dbh->prepare( $sql ))
+        {
+            exit('Failed statement: '.$sql);
+        }
         $stmt->execute();// $bindings );
         $arr=array();
         while ( $rs = $stmt->fetch( PDO::FETCH_NUM ) )
         {
-            
             $output['aaData'][] = array_combine($cfg['cols'], $rs);
         }        
 
