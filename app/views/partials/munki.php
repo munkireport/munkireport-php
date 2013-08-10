@@ -1,4 +1,5 @@
-<?$client = new Munkireport($machine['serial_number'])?>
+<?$client = new Munkireport($serial_number)?>
+
 <?$report = $client->report_plist?>
 
 <?if( ! $report):?>
@@ -6,48 +7,59 @@
 	<?return?>
 <?endif?>
 
-<table class="table table-striped">
-	<tr>
-		<th>Version:</th>
-		<td><?=$report['MachineInfo']['munki_version']?></td>
-	</tr>
-	<tr>
-		<th>Manifest:</th>
-		<td><?=$report['ManifestName']?></td>
-	</tr>
-	<tr>
-		<th>Run Type:</th>
-		<td><?=$report['RunType']?></td>
-	</tr>
-	<tr>
-		<th>Console User:</th>
-		<td><?=$client->console_user?></td>
-	</tr>
-	<tr>
-		<th>Start:</th>
-		<td><?=$report['StartTime']?></td>
-	</tr>
-	<tr>
-		<th>End:</th>
-		<td><?=$report['EndTime']?></td>
-	</tr>
-</table>
+<div class="row">
 
-<h2 id="errors">Errors &amp; Warnings</h2>
+		<div class="col-lg-6">
 
-<?if($client->report_plist['Errors'] OR $client->report_plist['Warnings']):?>
-  
-	<?if($client->report_plist['Errors']):?>
-		<pre class="error"><?=implode("\n", $client->report_plist['Errors'])?></pre>
-	<?endif?>
-	
-	<?if($client->report_plist['Warnings']):?>
-		<pre class="warning"><?=implode("\n", $client->report_plist['Warnings'])?></pre>
-	<?endif?>
-	
-<?else:?>    
-	<p><i>No errors or warnings</i></p>
-<?endif?>
+		<h2 id="errors">Errors &amp; Warnings</h2>
+
+		<?if($client->report_plist['Errors'] OR $client->report_plist['Warnings']):?>
+		  
+			<?if($client->report_plist['Errors']):?>
+				<pre class="error"><?=implode("\n", $client->report_plist['Errors'])?></pre>
+			<?endif?>
+			
+			<?if($client->report_plist['Warnings']):?>
+				<pre class="warning"><?=implode("\n", $client->report_plist['Warnings'])?></pre>
+			<?endif?>
+			
+		<?else:?>    
+			<p><i>No errors or warnings</i></p>
+		<?endif?>
+
+	</div><!-- </div class="col-lg-6"> -->
+
+	<div class="col-lg-6">
+
+		<h2>Munki</h2>
+		<table class="table table-striped">
+			<tr>
+				<th>Version:</th>
+				<td><?=$report['MachineInfo']['munki_version']?></td>
+			</tr>
+			<tr>
+				<th>Manifest:</th>
+				<td><?=$report['ManifestName']?></td>
+			</tr>
+			<tr>
+				<th>Run Type:</th>
+				<td><?=$report['RunType']?></td>
+			</tr>
+			<tr>
+				<th>Console User:</th>
+				<td><?=$client->console_user?></td>
+			</tr>
+			<tr>
+				<th>Start:</th>
+				<td><?=$report['StartTime']?></td>
+			</tr>
+			<tr>
+				<th>End:</th>
+				<td><?=$report['EndTime']?></td>
+			</tr>
+		</table>
+
+	</div><!-- </div class="col-lg-6"> -->
 
 <?// Move install results over to their install items.
 $install_results = array();
@@ -127,40 +139,45 @@ if(isset($report['ItemsToRemove']))
 
 <!--! Package tables -->
 <?foreach($package_tables AS $title => $report_key):?>
-  <h2><?=$title?></h2>
-  
-	<?if(isset($report[$report_key]) && $report[$report_key]):?>
-	<table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Size</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-		<?foreach($report[$report_key] AS $item):?>
-        <tr>
-          <td>
-			<?=isset($item['display_name']) ? $item['display_name'] : $item['name']?>
-			<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
-			<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
-          </td>
-          <td style="text-align: right;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
-          <td><?=isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed")?></td>
-        </tr>
-		<?endforeach?>
-      </tbody>
-    </table>
-    <?else:?>
-      <p><i>No <?=strtolower($title)?></i></p>
-	<?endif?>
+	<div class="col-lg-6">
+		  <h2><?=$title?></h2>
+		  
+			<?if(isset($report[$report_key]) && $report[$report_key]):?>
+			<table class="table table-striped">
+		      <thead>
+		        <tr>
+		          <th>Name</th>
+		          <th>Size</th>
+		          <th>Status</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+				<?foreach($report[$report_key] AS $item):?>
+		        <tr>
+		          <td>
+					<?=isset($item['display_name']) ? $item['display_name'] : $item['name']?>
+					<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
+					<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
+		          </td>
+		          <td style="text-align: right;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
+		          <td><?=isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed")?></td>
+		        </tr>
+				<?endforeach?>
+		      </tbody>
+		    </table>
+		    <?else:?>
+		      <p><i>No <?=strtolower($title)?></i></p>
+			<?endif?>
+	</div><!-- </div class="col-lg-6"> -->
 <?endforeach?>
+
+  </div><!-- </div class="row"> -->
+  
+  <div class="row">
 
 <?$package_tables = array(	'Managed Installs' =>'ManagedInstalls')?>
 
-<div class="row">
-	<div class="span6">
+	<div class="col-lg-6">
 		<?foreach($package_tables AS $title => $report_key):?>
 		  <h2><?=$title?></h2>
 
@@ -191,31 +208,33 @@ if(isset($report['ItemsToRemove']))
 		      <p><i>No <?=strtolower($title)?></i></p>
 			<?endif?>
 		<?endforeach?>
-    </div>
-    <div class="span6">
+    </div><!-- </div class="col-lg-6"> -->
+
+    <div class="col-lg-6">
     
-<?if(isset($report['managed_uninstalls_list'])):?>
-  <h2>Managed Uninstalls</h2>
+		<?if(isset($report['managed_uninstalls_list'])):?>
+		  <h2>Managed Uninstalls</h2>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-	<?foreach($report['managed_uninstalls_list'] AS $item):?>
-      <tr>
-        <td>
-          <?=$item?>
-        </td>
-      </tr>
-	<?endforeach?>
-    </tbody>
-  </table>
-<?endif?>
+		  <table class="table table-striped">
+		    <thead>
+		      <tr>
+		        <th>Name</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+			<?foreach($report['managed_uninstalls_list'] AS $item):?>
+		      <tr>
+		        <td>
+		          <?=$item?>
+		        </td>
+		      </tr>
+			<?endforeach?>
+		    </tbody>
+		  </table>
+		<?endif?>
 
-    </div>
-  </div>
+    </div><!-- </div class="col-lg-6"> -->
+
+  </div><!-- </div class="row"> -->
 
 <pre><?//print_r($client->rs)?></pre>

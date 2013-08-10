@@ -10,6 +10,12 @@
 
   	<div class="col-lg-12">
 		<script type="text/javascript">
+		function fileSize(size, decimals) {
+			if(decimals == undefined){decimals = 2};
+			var i = Math.floor( Math.log(size) / Math.log(1024) );
+			return ( size / Math.pow(1024, i) ).toFixed(decimals) * 1 + ['B', 'K', 'M', 'G', 'T'][i];
+		}
+
 		$(document).ready(function() {
 
 				// Get column names from data attribute
@@ -26,12 +32,25 @@
 			        "bStateSave": true,
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-			        	var sn=$('td:eq(0)', nRow).html();
-			        	var link = '<a class="" href="<?=url('clients/detail/')?>'+sn+'">'+sn+'</a>';
+			        	// Update name in first column to link
+			        	var name=$('td:eq(0)', nRow).html();
+			        	if(name == ''){name = "No Name"};
+			        	var sn=$('td:eq(1)', nRow).html();
+			        	var link = '<a class="btn btn-default btn-xs" href="<?=url('clients/detail/')?>'+sn+'">'+name+'</a>';
 			        	$('td:eq(0)', nRow).html(link);
 
-			        	var date = new Date($('td:eq(6)', nRow).html() * 1000);
-			        	$('td:eq(6)', nRow).html(date.toLocaleDateString());
+			        	// Format disk usage
+			        	var disk=$('td:eq(5)', nRow).html();
+			        	var cls = disk > 90 ? 'danger' : (disk > 80 ? 'warning' : 'success');
+			        	$('td:eq(5)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
+
+			        	// Format date
+			        	var date = new Date($('td:eq(7)', nRow).html() * 1000);
+			        	$('td:eq(7)', nRow).html(date.toLocaleDateString());
+
+			        	// Format filesize
+			        	var fs=$('td:eq(8)', nRow).html();
+			        	$('td:eq(8)', nRow).addClass('text-right').html(fileSize(fs, 0));
 				    }
 			    } );
 			} );
@@ -44,13 +63,16 @@
 		  <table class="table table-striped table-condensed">
 		    <thead>
 		      <tr>
+		      	<th data-colname='machine#computer_name'>Name</th>
 		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='machine#hostname'>Hostname</th>
 				<th data-colname='machine#os_version'>OS</th>
-		        <th data-colname='machine#machine_name'>Machine_name</th>
+		        <th data-colname='machine#machine_name'>Type</th>
 		        <th data-colname='warranty#status'>Warranty status</th>
+		        <th data-colname='diskreport#Percentage'>Disk</th>
 		        <th data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='reportdata#timestamp'>Check-in</th>
+		        <th data-colname='diskreport#FreeSpace'>Free</th>
+
 		      </tr>
 		    </thead>
 		    <tbody>
