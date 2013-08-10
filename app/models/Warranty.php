@@ -53,13 +53,12 @@ class Warranty extends Model {
 		$context = stream_context_create($context_options);
 		$result = file_get_contents($url, FALSE, $context);
 		
-		
 		if(preg_match('/invalidserialnumber/', $result))
 		{
 			// Check invalid serial
 			$this->status = 'Invalid serial number';
 		}
-		elseif(preg_match("/window.location.href='\/RegisterProduct.do\?productRegister=Y/", $result))
+		elseif(preg_match("/RegisterProduct.do\?productRegister=Y/", $result))
 		{
 			// Check registration
 			$this->status = 'Unregistered serialnumber';
