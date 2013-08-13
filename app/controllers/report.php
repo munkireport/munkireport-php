@@ -45,15 +45,25 @@ class report extends Controller
 		    if ( ! isset($val['data'])) continue;
 
 		   	$this->msg("Starting: $key");
-
+			
+			// Check if this is a module-model
+			if(substr($key, -6) == '_model')
+			{
+				$module = substr($key, 0, -6);
+				$model_path = APP_PATH."modules/${module}/";
+			}
+			else
+			{
+				$model_path = APP_PATH . 'models/';
+			}
 		    
 		    // Todo: prevent admin and user models, sanitize $key
-		    if( ! file_exists(APP_PATH . 'models/' . $key . '.php'))
+		    if( ! file_exists($model_path . $key . '.php'))
 		    {
 		    	$this->msg("Model not found: $key");
 		    	continue;
 		    }
-		    require_once(APP_PATH . 'models/' . $key . '.php');
+		    require_once($model_path . $key . '.php');
 
 		    if ( ! class_exists( $key, false ) )
 		    {
