@@ -5,7 +5,7 @@ class Munkireport extends Model {
 	{
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
 		$this->rs['id'] = 0;
-		$this->rs['serial'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['remote_ip'] = '';
 		$this->rs['timestamp'] = '';
 		$this->rs['runstate'] = '';
@@ -13,6 +13,7 @@ class Munkireport extends Model {
 		$this->rs['errors'] = 0;
 		$this->rs['warnings'] = 0;
 		$this->rs['activity'] = array();
+		$this->rs['manifest'] = ''; $this->idx['munkireport_manifest'] = 'munkireport.manifest';
 		$this->rs['report_plist'] = array();
 		
 		// Create table if it does not exist
@@ -21,7 +22,7 @@ class Munkireport extends Model {
 		if ($serial)
 		{
 		    $this->retrieve($serial);
-            if(!$this->rs['serial'])
+            if(!$this->rs['serial_number'])
             {
                 $this->serial = $serial;
             }
@@ -33,7 +34,7 @@ class Munkireport extends Model {
 	function retrieve( $serial ) 
 	{
 		$dbh=$this->getdbh();
-		$sql = 'SELECT * FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial' ).'=?';
+		$sql = 'SELECT * FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial_number' ).'=?';
 		$stmt = $dbh->prepare( $sql );
 		$stmt->bindValue( 1, $serial );
 		$stmt->execute();
@@ -69,6 +70,12 @@ class Munkireport extends Model {
 				
 		# Save plist
 		$this->report_plist = $mylist;
+		
+		# Check manifest
+		if(isset($mylist['ManifestName']))
+		{
+			$this->manifest = $mylist['ManifestName'];
+		}
 		
 		# Check console user
 		$this->console_user = isset($mylist['ConsoleUser']) ? $mylist['ConsoleUser'] : '';

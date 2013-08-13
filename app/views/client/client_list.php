@@ -72,7 +72,7 @@
 		        <th data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='reportdata#timestamp'>Check-in</th>
 		        <th data-colname='diskreport#FreeSpace'>Free</th>
-
+				<th data-colname='munkireport#manifest'>Manifest</th>
 		      </tr>
 		    </thead>
 		    <tbody>
