@@ -60,7 +60,6 @@ class Munkireport extends Model {
 			$this->activity = '';
             $this->errors = 0;
             $this->warnings = 0;
-            $this->console_user = '';
             return $this;
 		}
 		
