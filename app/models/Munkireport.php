@@ -6,15 +6,17 @@ class Munkireport extends Model {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
 		$this->rs['id'] = 0;
 		$this->rs['serial_number'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['remote_ip'] = '';
 		$this->rs['timestamp'] = '';
 		$this->rs['runstate'] = '';
-		$this->rs['console_user'] = '';
+		$this->rs['runtype'] = '';
 		$this->rs['errors'] = 0;
 		$this->rs['warnings'] = 0;
 		$this->rs['activity'] = array();
-		$this->rs['manifest'] = ''; $this->idx['munkireport_manifest'] = 'munkireport.manifest';
+		$this->rs['manifest'] = '';
 		$this->rs['report_plist'] = array();
+
+		// Add indexes
+		$this->idx['manifest'] = array('manifest');
 		
 		// Create table if it does not exist
         $this->create_table();
@@ -42,7 +44,7 @@ class Munkireport extends Model {
 		if ( $rs )
 			foreach ( $rs as $key => $val )
 				if ( isset( $this->rs[$key] ) )
-					$this->rs[$key] = is_scalar( $this->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
+					$this->rs[$key] = is_scalar( $this->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? @gzinflate( $val ) : $val );
 		return $this;
 	}
 	
@@ -76,10 +78,7 @@ class Munkireport extends Model {
 		{
 			$this->manifest = $mylist['ManifestName'];
 		}
-		
-		# Check console user
-		$this->console_user = isset($mylist['ConsoleUser']) ? $mylist['ConsoleUser'] : '';
-        
+		        
         # Check errors and warnings
 		$this->errors = isset($mylist['Errors']) ? count($mylist['Errors']) : 0;
 		$this->warnings = isset($mylist['Warnings']) ? count($mylist['Warnings']) : 0;
