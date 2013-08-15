@@ -67,7 +67,7 @@ class Warranty extends Model {
 		{
 			// Get expired status
 			$this->status = 'Expired';
-			$this->end_date = '0000-00-00';
+			//$this->end_date = '0000-00-00';
 		}
 		elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(true([^\)])+/', $result, $matches))
 		{
