@@ -64,7 +64,7 @@ defaults write "${PREFPATH}" ReportItems -dict-add InstallHistory "${IPATH}"
 defaults write "${PREFPATH}" ReportItems -dict-add InventoryItem "/Library/Managed Installs/ApplicationInventory.plist"
 
 # Add disk_info
-defaults write "${PREFPATH}" ReportItems -dict-add DiskReport "${MUNKIPATH}preflight.d/cache/disk.plist"
+defaults write "${PREFPATH}" ReportItems -dict-add disk_report_model "${MUNKIPATH}preflight.d/cache/disk.plist"
 
 echo "Installation of MunkiReport v${VERSION} complete."
 exit 0
