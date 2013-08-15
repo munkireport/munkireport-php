@@ -13,6 +13,14 @@
 
   <style type="text/css">
   .progress{margin-bottom: 0}
+  h2 {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 40px;
+    color: #333;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5
+}
   </style>
 <?php
   if (isset($scripts))
@@ -27,31 +35,43 @@
 
   <div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
     <div class="container">
-      <a class="navbar-brand" href="<?=url('')?>"><?=Config::get('siteName')?></a>
+      <div class="navbar-header">
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <a class="navbar-brand" href="<?=url('')?>"><?=Config::get('siteName')?></a>
+    </div>
       <div class="nav-collapse collapse bs-navbar-collapse">
-        <ul class="nav navbar-nav">            <?
+        <ul class="nav navbar-nav">      
+              <?
               $page = $GLOBALS[ 'engine' ]->get_uri_string();
               $navlist = array( 
-                ''                => array('th-large', 'Dashboard'), 
-                'clients'         => array('group', 'Clients'), 
-                'show/reports'    => array('bar-chart', 'Reports'),
-                'inventory/items' => array('info-sign', 'Bundles'),
-                'munki/manifests' => array('edit', 'Manifests'),
-                'munki/catalogs'  => array('list-alt', 'Catalogs')
-              )?>
+                '' => (object) array('icon' => 'th-large', 'title' => 'Dashboard'), 
+                'show/reports' => (object) array('icon' => 'bar-chart', 'title' => 'Reports'),
+                'inventory/items' => (object) array('icon' => 'info-sign', 'title' => 'Bundles'),
+                );
+
+                ?>
               <?foreach($navlist as $url => $obj):?>
             <li <?=$page==$url?'class="active"':''?>>
-              <a href="<?=url($url)?>"><i class="icon-<?=$obj[0]?>"></i> <?=$obj[1]?></a>
+              <a href="<?=url($url)?>"><i class="icon-<?=$obj->icon?>"></i> <?=$obj->title?></a>
             </li>
               <?endforeach?>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Listings <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?=url('show/listing/clients')?>">Clients</a></li>
+                  <li><a href="<?=url('show/listing/munki')?>">Munkireport</a></li>
+                  <li><a href="<?=url('show/listing/disk')?>">Disk</a></li>
+                  <li><a href="<?=url('show/listing/warranty')?>">Warranty</a></li>
+                </ul>
+              </li>
           </ul>
           <form class="navbar-form pull-right">
-            <a class="btn" href="<?=url('auth/logout')?>">Logout</a>
+            <a class="btn btn-default btn-sm" href="<?=url('auth/logout')?>">Logout</a>
           </form>
       </div>
     </div>
