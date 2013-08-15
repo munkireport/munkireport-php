@@ -59,8 +59,8 @@
 
 		<?$machine = new Machine()?>
 
-		  <h1>Disk report <span class="label label-info"><?=$machine->count()?></span></h1>
-		  
+		  <h3>Disk report <span class="label label-default"><?=$machine->count()?></span></h3>
+
 		  <table class="table table-striped table-condensed">
 		    <thead>
 		      <tr>

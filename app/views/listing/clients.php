@@ -58,7 +58,7 @@
 
 		<?$machine = new Machine()?>
 
-		  <h1>Machines <span class="label"><?=$machine->count()?></span></h1>
+		  <h3>Machines <span class="label label-default"><?=$machine->count()?></span></h3>
 		  
 		  <table class="table table-striped table-condensed">
 		    <thead>

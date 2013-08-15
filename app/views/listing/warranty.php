@@ -59,7 +59,7 @@
 
 		<?$machine = new Machine()?>
 
-		  <h1>Warranty <span class="label label-info"><?=$machine->count()?></span></h1>
+		  <h3>Warranty <span class="label label-default"><?=$machine->count()?></span></h3>
 		  
 		  <table class="table table-striped table-condensed">
 		    <thead>
