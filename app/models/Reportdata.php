@@ -32,7 +32,15 @@ class Reportdata extends Model {
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
-		$this->remote_ip = $_SERVER['REMOTE_ADDR'];
+		// Test for proxy
+		if(isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+		{
+			$this->remote_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+		}
+		else
+		{
+			$this->remote_ip = $_SERVER['REMOTE_ADDR'];
+		}
 		$this->merge($mylist)->save();
 	}
 }
