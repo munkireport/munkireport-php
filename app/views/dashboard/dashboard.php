@@ -74,7 +74,7 @@
 				<tr>
 					<td>
 						<?=$obj->status?>
-						<span class="label pull-right"><?=$obj->count?></span>
+						<span class="label label-default pull-right"><?=$obj->count?></span>
 					</td>
 				</tr>
 				<?endforeach?>
@@ -87,12 +87,12 @@
 				<tr class="warning">
 					<td>
 						Expires in 30 days
-						<span class="label pull-right"><?=$obj->count?></span>
+						<span class="label label-danger pull-right"><?=$obj->count?></span>
 					</td>
 				</tr>
 				<?endforeach?>
 			</table>
-			<a href="<?=url('clients/show/warranty_status')?>">Show all clients</a>
+			<a href="<?=url('show/listing/warranty')?>">Show all clients</a>
 
 		</div>
 		<div class="col-lg-4">
@@ -149,7 +149,7 @@
 				</tr>
 				<?endforeach?>
 			</table>
-			<a href="<?=url('clients/show/diskstatus')?>">Show all clients</a>
+			<a href="<?=url('show/listing/disk')?>">Show all clients</a>
 		</div>
 		<div class="col-lg-4">
 			<h2>..</h2>
