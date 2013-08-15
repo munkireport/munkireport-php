@@ -91,14 +91,14 @@ foreach(array('ItemsToInstall', 'AppleUpdates') AS $r_item)
 // Move install results to managed installs
 if(isset($report['ManagedInstalls']))
 {
-	foreach($report['ManagedInstalls'] as $key => &$item)
+	foreach($report['ManagedInstalls'] as $key => $item)
 	{
 		if(isset($item["version_to_install"]))
 		{
 			$dversion = $item["display_name"].'-'.$item["version_to_install"];
 			if(isset($install_results[$dversion]) && $install_results[$dversion]['result'] == 'Installed')
 			{
-				$item['installed'] = TRUE;
+				$report['ManagedInstalls'][$key]['installed'] = TRUE;
 			}
 		}
 	}
