@@ -46,10 +46,6 @@
 				<td><?=$report['RunType']?></td>
 			</tr>
 			<tr>
-				<th>Console User:</th>
-				<td><?=$client->console_user?></td>
-			</tr>
-			<tr>
 				<th>Start:</th>
 				<td><?=$report['StartTime']?></td>
 			</tr>
