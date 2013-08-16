@@ -31,6 +31,9 @@
 			        "sPaginationType": "bootstrap",
 			        "bStateSave": true,
 			        "aoColumns": myCols,
+			        "fnDrawCallback": function( oSettings ) {
+						$('#total-count').html(oSettings.fnRecordsTotal());
+					},
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
@@ -56,9 +59,7 @@
 			} );
 		</script>
 
-		<?$machine = new Machine()?>
-
-		  <h3>Machines <span class="label label-default"><?=$machine->count()?></span></h3>
+		  <h3>Machines <span id="total-count" class='label label-primary'>…</span></h3>
 		  
 		  <table class="table table-striped table-condensed">
 		    <thead>
@@ -77,7 +78,7 @@
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="5" class="dataTables_empty">Loading data from server</td>
+					<td colspan="10" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>

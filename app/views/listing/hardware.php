@@ -40,36 +40,24 @@
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
 			        	var link = '<a class="btn btn-default btn-xs" href="<?=url('clients/detail/')?>'+sn+'">'+name+'</a>';
-			        	$('td:eq(0)', nRow).html(link);
-
-			        	// Format warranty status
-			        	var status=$('td:eq(3)', nRow).html();
-			        	var cls = status == 'Expired' ? 'danger' : (status == 'Supported' ? 'success' : 'warning');
-			        	$('td:eq(3)', nRow).html('<span class="label label-'+cls+'">'+status+'</span>');
-			        	
-			        	// Format filesize
-			        	var fs=$('td:eq(6)', nRow).html();
-			        	$('td:eq(6)', nRow).addClass('text-right').html(fileSize(fs, 0));
-
-			        	// Format filesize
-			        	var fs=$('td:eq(7)', nRow).html();
-			        	$('td:eq(7)', nRow).addClass('text-right').html(fileSize(fs, 0));
-
-				    }
+			        	$('td:eq(0)', nRow).html(link);				    }
 			    } );
 			} );
 		</script>
 
-		  <h3>Warranty <span id="total-count" class='label label-primary'>…</span></span></h3>
+		  <h3>Machines <span id="total-count" class='label label-primary'>…</span></h3>
 		  
 		  <table class="table table-striped table-condensed">
 		    <thead>
 		      <tr>
 		      	<th data-colname='machine#computer_name'>Name</th>
 		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='warranty#status'>Warranty status</th>
-		        <th data-colname='warranty#end_date'>End date</th>
+		        <th data-colname='machine#machine_desc'>Description</th>
+		        <th data-colname='machine#physical_memory'>Memory</th>
+		        <th data-colname='machine#number_processors'>Processors</th>
+		        <th data-colname='machine#cpu_arch'>CPU</th>
+		        <th data-colname='machine#current_processor_speed'>Speed</th>
+		        <th data-colname='machine#boot_rom_version'>Boot ROM</th>
 		      </tr>
 		    </thead>
 		    <tbody>

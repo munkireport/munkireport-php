@@ -31,6 +31,9 @@
 			        "sPaginationType": "bootstrap",
 			        "bStateSave": true,
 			        "aoColumns": myCols,
+			        "fnDrawCallback": function( oSettings ) {
+						$('#total-count').html(oSettings.fnRecordsTotal());
+					},
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
@@ -45,9 +48,7 @@
 			} );
 		</script>
 
-		<?$machine = new Machine()?>
-
-		  <h3>Munki <span class="label label-default"><?=$machine->count()?></span></h3>
+		  <h3>Munki <span id="total-count" class='label label-primary'>…</span></h3>
 		  
 		  <table class="table table-striped table-condensed">
 		    <thead>
