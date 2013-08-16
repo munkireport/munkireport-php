@@ -1,20 +1,30 @@
 <div class="well well-small">
 	<?$machine = new Machine($serial_number)?>
+	<?$report   = new Reportdata($serial_number)?>
 	<div class="row">
 		<div class="col-lg-1">
 			<img width="72" height="72" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=<?=substr($serial_number, 8)?>&amp;size=120x120" />
 		</div>
 		<div class="col-lg-5">
 			<h4>
-				<?=$machine->hostname?><br />
+				<?=$machine->computer_name?><br />
 			</h4>
 			<small class="muted">
 				<?=$machine->machine_desc?>
 				<?=$machine->machine_model?>
 				<br />
+				<?=$report->long_username?>
+				<?if($report->console_user):?>
+				(<?=$report->console_user?>)
+				<?endif?>
+				<br />
 				Warranty Coverage: 
 				<?if ($warranty['status'] == "Supported"):?>
 					<span class='text-success'>Supported until 
+						<?=$warranty['end_date']?>
+					</span>
+				<?elseif ($warranty['status'] == "No Applecare"):?>
+					<span class='text-warning'>No Applecare until 
 						<?=$warranty['end_date']?>
 					</span>
 				<?else:?>
