@@ -33,9 +33,9 @@
 
   <?if( isset($_SESSION['user'])):?>
 
-  <div class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
-    <div class="container">
-      <div class="navbar-header">
+<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+  <div class="container">
+    <div class="navbar-header">
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -44,14 +44,13 @@
       </button>
       <a class="navbar-brand" href="<?=url('')?>"><?=Config::get('siteName')?></a>
     </div>
-      <div class="nav-collapse collapse bs-navbar-collapse">
-        <ul class="nav navbar-nav">      
-              <?
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <?
               $page = $GLOBALS[ 'engine' ]->get_uri_string();
               $navlist = array( 
                 '' => (object) array('icon' => 'th-large', 'title' => 'Dashboard'), 
-                'show/reports' => (object) array('icon' => 'bar-chart', 'title' => 'Reports'),
-                'inventory/items' => (object) array('icon' => 'info-sign', 'title' => 'Bundles'),
+                'show/reports' => (object) array('icon' => 'bar-chart', 'title' => 'Reports')
                 );
 
                 ?>
@@ -67,14 +66,16 @@
                   <li><a href="<?=url('show/listing/munki')?>">Munkireport</a></li>
                   <li><a href="<?=url('show/listing/disk')?>">Disk</a></li>
                   <li><a href="<?=url('show/listing/warranty')?>">Warranty</a></li>
+                  <li><a href="<?=url('show/listing/hardware')?>">Hardware</a></li>
+                  <li><a href="<?=url('show/listing/inventory')?>">Inventory</a></li>
                 </ul>
               </li>
           </ul>
-          <form class="navbar-form pull-right">
+          <div class="navbar-form pull-right">
             <a class="btn btn-default btn-sm" href="<?=url('auth/logout')?>">Logout</a>
-          </form>
-      </div>
-    </div>
+          </div>
+    </nav>
   </div>
+</header>
 
   <?endif?>
