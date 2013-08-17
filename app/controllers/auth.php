@@ -86,7 +86,7 @@ class auth extends Controller
 	function logout()
 	{
 		session_destroy();
-		redirect('admin');
+		redirect('');
 	}
 	
 	function generate()
