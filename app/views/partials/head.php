@@ -59,7 +59,8 @@
               <a href="<?=url($url)?>"><i class="icon-<?=$obj->icon?>"></i> <?=$obj->title?></a>
             </li>
               <?endforeach?>
-              <li class="dropdown">
+              <?$url = 'show/listing'?>
+              <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Listings <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="<?=url('show/listing/clients')?>">Clients</a></li>
