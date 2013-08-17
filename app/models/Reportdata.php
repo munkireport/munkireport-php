@@ -10,8 +10,6 @@ class Reportdata extends Model {
 		$this->rs['console_user'] = '';
 		$this->rs['long_username'] = '';
 		$this->rs['remote_ip'] = '';
-		$this->rs['runtype'] = '';
-		$this->rs['runstate'] = '';
 		$this->rs['timestamp'] = time();
 				
 		// Create table if it does not exist
@@ -32,6 +30,18 @@ class Reportdata extends Model {
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
+		
+		$this->merge($mylist)->register()->save();
+	}
+
+	/**
+	 * Register IP and time
+	 *
+	 * @return object this
+	 * @author AvB
+	 **/
+	function register()
+	{
 		// Test for proxy
 		if(isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
 		{
@@ -41,6 +51,9 @@ class Reportdata extends Model {
 		{
 			$this->remote_ip = $_SERVER['REMOTE_ADDR'];
 		}
-		$this->merge($mylist)->save();
+		
+		$this->timestamp = time();
+
+		return $this;
 	}
 }

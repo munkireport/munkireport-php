@@ -7,7 +7,13 @@ class report extends Controller
 		if( ! isset($_POST['serial'])) die('Serial is missing');
 		if( ! isset($_POST['items'])) die('Items are missing');
 
+		// Register check in reportdata
+		$report = new Reportdata($_POST['serial']);
+		$report->register()->save();
+
 		$req_items = unserialize($_POST['items']); //Todo: check if array
+
+		$itemarr = array();
 
 		// Get stored hashes from db
 		$hash = new Hash();
