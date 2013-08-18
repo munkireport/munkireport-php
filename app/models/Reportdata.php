@@ -10,6 +10,7 @@ class Reportdata extends Model {
 		$this->rs['console_user'] = '';
 		$this->rs['long_username'] = '';
 		$this->rs['remote_ip'] = '';
+		$this->rs['reg_timestamp'] = time(); // Registration date
 		$this->rs['timestamp'] = time();
 				
 		// Create table if it does not exist
