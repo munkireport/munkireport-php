@@ -13,6 +13,7 @@
   <script src="<?=WEB_FOLDER?>assets/js/bootstrap.min.js"></script>
   <script src="<?=WEB_FOLDER?>assets/js/jquery.dataTables.min.js"></script>
   <script src="<?=WEB_FOLDER?>assets/js/datatables.bootstrap.js"></script>
+  <script src="<?=WEB_FOLDER?>assets/js/moment.min.js"></script>
 
 </body>
 </html>

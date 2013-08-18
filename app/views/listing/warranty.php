@@ -47,6 +47,11 @@
 			        	var cls = status == 'Expired' ? 'danger' : (status == 'Supported' ? 'success' : 'warning');
 			        	$('td:eq(3)', nRow).html('<span class="label label-'+cls+'">'+status+'</span>');
 			        	
+			        	var date=$('td:eq(4)', nRow).html();
+			        	if(date){
+			        		$('td:eq(4)', nRow).addClass('text-right').html(moment(date).fromNow());
+			        	}
+
 			        	// Format filesize
 			        	var fs=$('td:eq(6)', nRow).html();
 			        	$('td:eq(6)', nRow).addClass('text-right').html(fileSize(fs, 0));

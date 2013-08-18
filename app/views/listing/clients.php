@@ -49,7 +49,7 @@
 
 			        	// Format date
 			        	var date = new Date($('td:eq(7)', nRow).html() * 1000);
-			        	$('td:eq(7)', nRow).html(date.toLocaleDateString());
+			        	$('td:eq(7)', nRow).html(moment(date).fromNow());
 
 			        	// Format filesize
 			        	var fs=$('td:eq(8)', nRow).html();
