@@ -12,6 +12,15 @@
 
 
   <style type="text/css">
+
+	/* Stretch to 98% for large screens */
+	@media (min-width: 1200px)
+	{
+		.container {
+		max-width: 98%;
+		}
+	}
+	
   .progress{margin-bottom: 0}
   h2 {
     margin-bottom: 20px;
