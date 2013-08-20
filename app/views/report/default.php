@@ -13,7 +13,7 @@
 
 		<?$machine = new Machine()?>
 
-		  <h1>Clients <span class="label label-default"><?=$machine->count()?></span></h1>
+		  <h3>Clients <span class='label label-primary'><?=$machine->count()?></span></h3>
 		  
 		  <p>Reports are coming soon..</p>
 

@@ -58,7 +58,7 @@
 		        <th data-colname='reportdata#long_username'>User</th>
 		        <th data-colname='reportdata#remote_ip'>IP</th>
 				<th data-colname='machine#os_version'>OS</th>
-		        <th data-colname='machine#machine_name'>Munki</th>
+		        <th data-colname='munkireport#version'>Munki</th>
 		        <th data-colname='munkireport#timestamp'>Latest Run</th>
 		        <th data-colname='munkireport#runstate'>Runstate</th>
 		        <th data-colname='munkireport#errors'>Errors</th>

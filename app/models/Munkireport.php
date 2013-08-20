@@ -9,6 +9,7 @@ class Munkireport extends Model {
 		$this->rs['timestamp'] = '';
 		$this->rs['runstate'] = '';
 		$this->rs['runtype'] = '';
+		$this->rs['version'] = '';
 		$this->rs['errors'] = 0;
 		$this->rs['warnings'] = 0;
 		$this->rs['activity'] = array();
@@ -76,6 +77,12 @@ class Munkireport extends Model {
 		if(isset($mylist['ManifestName']))
 		{
 			$this->manifest = $mylist['ManifestName'];
+		}
+
+		# Check version
+		if(isset($mylist['MachineInfo']['munki_version']))
+		{
+			$this->version = $mylist['MachineInfo']['munki_version'];
 		}
 		        
         # Check errors and warnings

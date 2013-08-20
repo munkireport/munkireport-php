@@ -36,8 +36,15 @@ class Inventoryitem extends Model {
         //list of bundleids to ignore
         $bundleid_ignorelist = isset($GLOBALS['bundleid_ignorelist']) ? $GLOBALS['bundleid_ignorelist'] : array('com.apple.print.PrinterProxy');
 
-		// Compile regex
-		$regex = '/^'.implode('|', $bundleid_ignorelist).'$/';
+        // Compile regex
+        $regex = '/^'.implode('|', $bundleid_ignorelist).'$/';
+
+        // List of paths to ignore
+        $bundlepath_ignorelist = isset($GLOBALS['bundlepath_ignorelist']) ? $GLOBALS['bundlepath_ignorelist'] : array('/System/Library/.*', '/Library/.*', '.*/Scripting.localized/.*', '.*\.app\/.*\.app');
+
+        // Compile regex
+        $path_regex = ':^'.implode('|', $bundlepath_ignorelist).'$:';
+        echo $path_regex;
     
         if (! $this->serial) die('Serial missing');
                 
@@ -53,13 +60,20 @@ class Inventoryitem extends Model {
             // insert current inventory items
             foreach ($inventory_list as $item)
             {
-                if ( ! preg_match($regex, $item['bundleid']))
+                if (preg_match($regex, $item['bundleid']))
                 {
-                    $item['bundlename'] = isset($item['CFBundleName']) ? $item['CFBundleName'] : '';
-                
-                    $this->id = 0;
-                    $this->merge($item)->save();
+                    continue;
                 }
+                if (preg_match($path_regex, $item['path']))
+                {
+                    echo 'Skipping '.$item['path'];
+                    continue;
+                }
+
+                $item['bundlename'] = isset($item['CFBundleName']) ? $item['CFBundleName'] : '';
+            
+                $this->id = 0;
+                $this->merge($item)->save();
             }
         }
     }

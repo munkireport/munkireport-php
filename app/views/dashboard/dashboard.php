@@ -4,6 +4,31 @@
 
 	<div class="row">
 		<div class="col-lg-4">
+			<h2>Clients</h2>
+			<?$rdata = new Reportdata();
+				$hour_ago = time() - 3600;
+				$sql = "select COUNT(id) as count from reportdata WHERE timestamp > $hour_ago";
+				?>
+			<?foreach($rdata->query($sql) as $obj):?>
+			<p>Requests per hour = <?=$obj->count?>
+			<?endforeach?>
+		</div>
+
+		<div class="col-lg-4">
+			<h2>Last additions</h2>
+		</div>
+
+		
+		<div class="col-lg-4">
+			<h2>IP</h2>
+			
+			<p>Differentiate between onsite and offsite</p>
+		</div>
+		
+	</div> <!-- /row -->
+
+	<div class="row">
+		<div class="col-lg-4">
 			<h2>Warranty status <a class="btn btn-default btn-xs" href="<?=url('show/listing/warranty')?>">View list</a></h2>
 			<?$warranty = new Warranty();
 				$sql = "select count(id) as count, status from warranty group by status ORDER BY status";
@@ -77,9 +102,7 @@
 					</td>
 				</tr>
 				<?endforeach?>
-			</table>
-			<p>Error, warnings, activity</p>
-			
+			</table>			
 		</div>
 		
 	</div> <!-- /row -->

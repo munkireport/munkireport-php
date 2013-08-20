@@ -50,10 +50,6 @@
 			        	// Format date
 			        	var date = new Date($('td:eq(7)', nRow).html() * 1000);
 			        	$('td:eq(7)', nRow).html(moment(date).fromNow());
-
-			        	// Format filesize
-			        	var fs=$('td:eq(8)', nRow).html();
-			        	$('td:eq(8)', nRow).addClass('text-right').html(fileSize(fs, 0));
 				    }
 			    } );
 			} );
@@ -72,7 +68,6 @@
 		        <th data-colname='diskreport#Percentage'>Disk</th>
 		        <th data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='reportdata#timestamp'>Check-in</th>
-		        <th data-colname='diskreport#FreeSpace'>Free</th>
 				<th data-colname='munkireport#manifest'>Manifest</th>
 		      </tr>
 		    </thead>
