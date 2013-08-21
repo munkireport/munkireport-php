@@ -10,6 +10,10 @@ class Hash extends Model {
         $this->rs['name'] = '';
         $this->rs['hash'] = '';
         $this->rs['timestamp'] = time();
+
+        $this->idx[] = array('serial');
+        $this->idx[] = array('serial', 'name');
+
 				
 		// Create table if it does not exist
         $this->create_table();

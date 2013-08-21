@@ -5,7 +5,7 @@ class datatables extends Controller
 	{
 		if( ! isset($_SESSION['user']))
 		{
-			redirect('auth/login/clients');
+			die('Authenticate first.'); // Todo: return json?
 		}
 	} 
 

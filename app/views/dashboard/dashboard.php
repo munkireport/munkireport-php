@@ -102,7 +102,7 @@
 
 
 		<div class="col-lg-4">
-			<h2>Last additions</h2>
+			<h2>New clients</h2>
 			<?$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) ORDER BY reg_timestamp LIMIT 5";
 				?>
 			<table class="table">

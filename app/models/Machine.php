@@ -51,6 +51,7 @@ class Machine extends Model {
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
 		
+		$this->timestamp = time();
 		$this->merge($mylist)->save();
 	}
 
