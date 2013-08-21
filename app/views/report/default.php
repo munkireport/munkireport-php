@@ -56,6 +56,22 @@
 		</table>
 	</div><!-- /span 4 -->
 
+	<div class="col-lg-4">
+		<h2>Manifests</h2>
+		<? $sql = "select count(1) as count, manifestname from munkireport group by manifestname ORDER BY count";
+			?>
+		<table class="table table-striped table-condensed">
+			<?foreach($machine->query($sql) as $obj):?>
+			<tr>
+				<td>
+					<?=$obj->manifestname?>
+					<span class="badge pull-right"><?=$obj->count?></span>
+				</td>
+			</tr>
+			<?endforeach?>
+		</table>
+	</div><!-- /span 4 -->
+
 
   </div> <!-- /row -->
 </div>  <!-- /container -->

@@ -9,15 +9,26 @@ class Munkireport extends Model {
 		$this->rs['timestamp'] = '';
 		$this->rs['runstate'] = '';
 		$this->rs['runtype'] = '';
+		$this->rs['starttime'] = '';
+		$this->rs['endtime'] = '';
 		$this->rs['version'] = '';
 		$this->rs['errors'] = 0;
 		$this->rs['warnings'] = 0;
-		$this->rs['activity'] = array();
-		$this->rs['manifest'] = '';
+		$this->rs['manifestname'] = '';
+		$this->rs['managedinstalls'] = 0; // Total packages
+		$this->rs['pendinginstalls'] = 0; // To be installed
+		$this->rs['installresults'] = 0; // Installed
+		$this->rs['removalresults'] = 0; // Removed
+		$this->rs['failedinstalls'] = 0; // Failed to install
+		$this->rs['pendingremovals'] = 0; // To be removed
+		$this->rs['itemstoinstall'] = 0; // Munki items
+		$this->rs['appleupdates'] = 0; // Apple updates
 		$this->rs['report_plist'] = array();
 
+
 		// Add indexes
-		$this->idx['manifest'] = array('manifest');
+		$this->idx[] = array('manifest');
+		$this->idx[] = array('runtype');
 		
 		// Create table if it does not exist
         $this->create_table();
@@ -52,54 +63,76 @@ class Munkireport extends Model {
 	
 	function process($plist)
 	{		
-		$this->req = 'postflight';
 		$this->timestamp = date('Y-m-d H:i:s');
-		$this->remote_ip = $_SERVER['REMOTE_ADDR'];
 		
+		// Todo: why this check?
 		if ( ! $plist)
 		{
-			$this->activity = '';
             $this->errors = 0;
             $this->warnings = 0;
             return $this;
 		}
 		
-
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
-				
-		# Save plist
-		$this->report_plist = $mylist;
-		
-		# Check manifest
-		if(isset($mylist['ManifestName']))
-		{
-			$this->manifest = $mylist['ManifestName'];
-		}
 
-		# Check version
+		# Check munki version
 		if(isset($mylist['MachineInfo']['munki_version']))
 		{
 			$this->version = $mylist['MachineInfo']['munki_version'];
 		}
-		        
-        # Check errors and warnings
-		$this->errors = isset($mylist['Errors']) ? count($mylist['Errors']) : 0;
-		$this->warnings = isset($mylist['Warnings']) ? count($mylist['Warnings']) : 0;
-		
-		# Check activity
-		$activity = array();
-		foreach(array("ItemsToInstall", "InstallResults", "ItemsToRemove", "RemovalResults", "AppleUpdates") AS $section)
+
+		# Copy items
+		$strings = array('ManifestName', 'RunType', 'RunState', 'StartTime', 'EndTime');
+		foreach($strings as $str)
 		{
-			if(isset($mylist[$section]) && $mylist[$section])
+			if(isset($mylist[$str]))
 			{
-				$activity[$section] = $mylist[$section];
+				$lcname = strtolower($str);
+				$this->$lcname = $mylist[$str];
+				unset($mylist[$str]);
 			}
 		}
-		
-		$this->activity = $activity ? $activity : '';
+
+		# Count items
+		$strings = array('Errors', 'Warnings', 'ManagedInstalls', 'InstallResults', 'ItemsToInstall', 'AppleUpdates', 'RemovalResults');
+		foreach($strings as $str)
+		{
+			$lcname = strtolower($str);
+			$this->$lcname = 0;
+			if(isset($mylist[$str]))
+			{
+				$this->$lcname = count($mylist[$str]);
+			}
+		}
+
+		// Calculate pending installs
+		$this->pendinginstalls = max(($this->itemstoinstall + $this->appleupdates) - $this->installresults, 0);
+
+		// Calculate pending removals
+		$removal_items = isset($mylist['ItemsToRemove']) ? count($mylist['ItemsToRemove']) : 0;
+        $this->pendingremovals = max($removal_items - $this->removal_results, 0);
+
+		// Check results for failed installs
+		$this->failedinstalls = 0;
+		if($this->installresults)
+		{
+			foreach($mylist['InstallResults'] as $result)
+			{
+				if($result["status"])
+				{
+					$this->failedinstalls++;
+				}
+			}
+		}
+
+		// Adjust installed items
+		$this->installresults -= $this->failed_installs;
+
+		# Save plist todo: remove all cruft from plist
+		$this->report_plist = $mylist;
 				
 		$this->save();
 		

@@ -35,23 +35,23 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Version:</th>
-				<td><?=$report['MachineInfo']['munki_version']?></td>
+				<td><?=$client->version?></td>
 			</tr>
 			<tr>
 				<th>Manifest:</th>
-				<td><?=$report['ManifestName']?></td>
+				<td><?=$client->manifestname?></td>
 			</tr>
 			<tr>
 				<th>Run Type:</th>
-				<td><?=$report['RunType']?></td>
+				<td><?=$client->runtype?></td>
 			</tr>
 			<tr>
 				<th>Start:</th>
-				<td><?=$report['StartTime']?></td>
+				<td><?=$client->starttime?></td>
 			</tr>
 			<tr>
 				<th>End:</th>
-				<td><?=$report['EndTime']?></td>
+				<td><?=$client->endtime?></td>
 			</tr>
 		</table>
 

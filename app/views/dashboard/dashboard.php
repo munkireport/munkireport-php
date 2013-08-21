@@ -1,155 +1,126 @@
 <?$this->view('partials/head')?>
 
+<?$queryobj = new Machine();// Generic queryobject?>
+
 <div class="container">
 
 	<div class="row">
 		<div class="col-lg-4">
 			<h2>Clients</h2>
-			<?$rdata = new Reportdata();
-				$hour_ago = time() - 3600;
-				$sql = "select COUNT(id) as count from reportdata WHERE timestamp > $hour_ago";
-				?>
-			<?foreach($rdata->query($sql) as $obj):?>
-			<p>Requests per hour = <?=$obj->count?>
-			<?endforeach?>
+			<span class="btn btn-info">
+			<?$sql = "select COUNT(id) as count from machine"?>
+			<?if($obj = current($queryobj->query($sql))):?>
+				<span class="bigger-150"> <?=$obj->count?> </span>
+				<br>
+				Clients
+			<?endif?>
+			</span>
+			<span class="btn btn-success">
+			<?$hour_ago = time() - 3600;
+				$sql = "select COUNT(id) as count from reportdata WHERE timestamp > $hour_ago";?>
+			<?if($obj = current($queryobj->query($sql))):?>
+				<span class="bigger-150"> <?=$obj->count?> </span>
+				<br>
+				Req/hour
+			<?endif?>
+			</span>
 		</div>
 
 		<div class="col-lg-4">
-			<h2>Last additions</h2>
+			
+			<h2>Munki</h2>
+			<?$munkireport = new Munkireport();
+				$sql = "select sum(errors > 0) as errors, sum(warnings>0) as warnings, sum(pendinginstalls != 0) as activity from munkireport;";
+				?>
+				<?foreach($munkireport->query($sql) as $obj):?>
+				<a href="<?=url('show/listing/munki')?>" class="btn btn-danger">
+					<span class="bigger-150"> <?=$obj->errors?> </span><br>
+					Errors
+				</a>
+				<a href="<?=url('show/listing/munki')?>" class="btn btn-warning">
+					<span class="bigger-150"> <?=$obj->warnings?> </span><br>
+					Warnings
+				</a>
+				<a href="<?=url('show/listing/munki')?>" class="btn btn-info">
+					<span class="bigger-150"> <?=$obj->activity?> </span><br>
+					Activiy
+				</a>
+				<?endforeach?>
+		</div>
+
+
+		<div class="col-lg-4">
+			<h2>Disk status</h2>
+			<?$sql = "select COUNT(CASE WHEN Percentage > 80 THEN 1 END) AS warning, 
+				COUNT(CASE WHEN Percentage > 90 THEN 1 END) AS danger FROM diskreport";
+				?>
+				<?if($obj = current($queryobj->query($sql))):?>
+				<a href="<?=url('show/listing/disk')?>" class="btn btn-warning">
+					<span class="bigger-150"> <?=$obj->warning - $obj->danger?> </span><br>
+					Over 80%
+				</a>
+				<a href="<?=url('show/listing/disk')?>" class="btn btn-danger">
+					<span class="bigger-150"> <?=$obj->danger?> </span><br>
+					Over 90%
+				</a>
+				<?endif?>
 		</div>
 
 		
+		
+	</div> <!-- /row -->
+
+	<div class="row">
+
 		<div class="col-lg-4">
 			<h2>IP</h2>
 			
 			<p>Differentiate between onsite and offsite</p>
 		</div>
-		
-	</div> <!-- /row -->
 
-	<div class="row">
 		<div class="col-lg-4">
-			<h2>Warranty status <a class="btn btn-default btn-xs" href="<?=url('show/listing/warranty')?>">View list</a></h2>
+			<h2>Warranty status </h2>
 			<?$warranty = new Warranty();
 				$sql = "select count(id) as count, status from warranty group by status ORDER BY status";
 				?>
-			<table class="table table-striped table-condensed table-bordered">
 				<?foreach($warranty->query($sql) as $obj):?>
-				<tr>
-					<td>
-						<?=$obj->status?>
-						<span class="label label-default pull-right"><?=$obj->count?></span>
-					</td>
-				</tr>
+				<a href="<?=url('show/listing/warranty')?>" class="btn btn-default">
+					<span class="bigger-150"> <?=$obj->count?> </span><br>
+					<?=$obj->status?>
+				</a>
 				<?endforeach?>
-			</table>
 			<?	$thirtydays = date('Y-m-d', strtotime('+30days'));
 				$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY status";
 			?>
-			<table class="table table-striped table-condensed">
 				<?foreach($warranty->query($sql) as $obj):?>
-				<tr class="warning">
-					<td>
-						Expires in 30 days (<?=$obj->status?>)
-						<span class="label label-danger pull-right"><?=$obj->count?></span>
-					</td>
+				<a href="<?=url('show/listing/warranty')?>" class="btn btn-default">
+					<span class="bigger-150"> <?=$obj->count?> </span><br>
+					Expires in 30 days (<?=$obj->status?>)
+				</a>
+				<?endforeach?>
+		</div>
+
+
+		<div class="col-lg-4">
+			<h2>Last additions</h2>
+			<?$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) ORDER BY reg_timestamp LIMIT 5";
+				?>
+			<table class="table">
+				<?foreach($queryobj->query($sql) as $obj):?> 
+				<tr>
+					<td><a class="btn btn-xs btn-default" href="<?=url('clients/detail/'.$obj->serial_number)?>"><?=$obj->computer_name?></a></td>
+					<td class="text-right"><time datetime="<?=$obj->reg_timestamp?>">...</time></td>
 				</tr>
 				<?endforeach?>
 			</table>
-		</div>
-
-		<div class="col-lg-4">
-			<h2>Disk status <a class="btn btn-default btn-xs" href="<?=url('show/listing/disk')?>">View list</a></h2>
-			<?$machine = new Machine(); $diskreport = new Disk_report_model();
-				$sql = "select count(id) as count from diskreport where Percentage > 85";
-				?>
-			<table class="table table-condensed">
-				<?foreach($machine->query($sql) as $obj):?>
-				<tr>
-					<td>
-						Over 85%
-						<span class="label label-danger pull-right"><?=$obj->count?></span>
-					</td>
-				</tr>
-				<?endforeach?>
-			</table>
-		</div>
-
-		<div class="col-lg-4">
-			<h2>Munki <a class="btn btn-default btn-xs" href="<?=url('show/listing/munki')?>">View list</a></h2>
-			<?$munkireport = new Munkireport();
-				$sql = "select sum(errors > 0) as errors, sum(warnings>0) as warnings, sum(activity != '') as activity from munkireport;";
-				?>
-			<table class="table table-striped table-condensed">
-				<?foreach($munkireport->query($sql) as $obj):?>
-				<tr>
-					<td>
-						Clients with errors
-						<span class="label label-danger pull-right"><?=$obj->errors?></span>
-					</td>
-				</tr>
-
-				<tr class="warning">
-					<td>
-						Clients with warnings
-						<span class="label label-warning pull-right"><?=$obj->warnings?></span>
-					</td>
-				</tr>
-				<tr class="info">
-					<td>
-						Clients with activiy
-						<span class="label label-info pull-right"><?=$obj->activity?></span>
-					</td>
-				</tr>
-				<?endforeach?>
-			</table>			
-		</div>
-		
-	</div> <!-- /row -->
-
-	<div class="row">
-		<div class="col-lg-4">
-			<h2>Errors</h2>
-		</div>
-
-		<div class="col-lg-4">
-			<h2>Manifest names</h2>
-		</div>
-
-		
-		<div class="col-lg-4">
-			<h2>Network breakdown</h2>
-			
-			<p>Differentiate between onsite and offsite</p>
-		</div>
-		
-	</div> <!-- /row -->
-	<div class="row">
-
-		<div class="col-lg-4">
-			<h2>Filevault status</h2>
-
-			
-		</div>
-		<div class="col-lg-4">
-			<h2>Battery status</h2>
-			
-			<p>Replace, ok, etc.</p>
-			
-		</div>
-		
-	</div> <!-- /row -->
-
-
-	<div class="row">
-		
-		<div class="col-lg-4">
-			<h2>..</h2>
-
-		</div>
-		<div class="col-lg-4">
-			<h2>..</h2>
-						
+			<script>
+			$(document).ready(function() {
+				$( "time" ).each(function( index ) {
+					var date = new Date($(this).attr('datetime') * 1000);
+					$(this).html(moment(date).fromNow());
+				});
+			});
+			</script>
 		</div>
 		
 	</div> <!-- /row -->

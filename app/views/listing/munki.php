@@ -60,10 +60,12 @@
 				<th data-colname='machine#os_version'>OS</th>
 		        <th data-colname='munkireport#version'>Munki</th>
 		        <th data-colname='munkireport#timestamp'>Latest Run</th>
-		        <th data-colname='munkireport#runstate'>Runstate</th>
+		        <th data-colname='munkireport#runtype'>Runtype</th>
 		        <th data-colname='munkireport#errors'>Errors</th>
 		        <th data-colname='munkireport#warnings'>Warnings</th>
-				<th data-colname='munkireport#manifest'>Manifest</th>
+		        <th data-colname='munkireport#pendinginstalls'>Pending</th>
+		        <th data-colname='munkireport#installresults'>Installed</th>
+				<th data-colname='munkireport#manifestname'>Manifest</th>
 		      </tr>
 		    </thead>
 		    <tbody>

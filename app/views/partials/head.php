@@ -29,7 +29,11 @@
     color: #333;
     border: 0;
     border-bottom: 1px solid #e5e5e5
-}
+  }
+  .bigger-150
+  {
+    font-size:150%
+  }
   </style>
 <?php
   if (isset($scripts))
