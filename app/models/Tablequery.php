@@ -98,9 +98,9 @@ class Tablequery {
                 SELECT COUNT(*) as count
                 $from
                 $sWhere";
-            if(! $stmt = $dbh->prepare( $sql ))
+            if( ! $stmt = $dbh->prepare( $sql ))
             {
-                exit('Failed statement: '.$sql);
+                echo $dbh->errorInfo()[2];
             }
             $stmt->execute();// $bindings );
             if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
@@ -128,9 +128,9 @@ class Tablequery {
         //echo $sql;
         //return;
         
-        if(! $stmt = $dbh->prepare( $sql ))
+        if( ! $stmt = $dbh->prepare( $sql ))
         {
-            exit('Failed statement: '.$sql);
+            die($dbh->errorInfo()[2]);
         }
         $stmt->execute();// $bindings );
         $arr=array();
