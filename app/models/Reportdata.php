@@ -12,6 +12,13 @@ class Reportdata extends Model {
 		$this->rs['remote_ip'] = '';
 		$this->rs['reg_timestamp'] = time(); // Registration date
 		$this->rs['timestamp'] = time();
+
+        $this->idx[] = array('console_user');
+        $this->idx[] = array('long_username');
+        $this->idx[] = array('remote_ip');
+        $this->idx[] = array('reg_timestamp');
+        $this->idx[] = array('timestamp');
+
 				
 		// Create table if it does not exist
         $this->create_table();
