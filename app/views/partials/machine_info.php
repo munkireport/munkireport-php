@@ -1,11 +1,12 @@
 <div class="well well-small">
 	<?$machine = new Machine($serial_number)?>
 	<?$report   = new Reportdata($serial_number)?>
+	<?$disk   = new disk_report_model($serial_number)?>
 	<div class="row">
 		<div class="col-lg-1">
 			<img width="72" height="72" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=<?=substr($serial_number, 8)?>&amp;size=120x120" />
 		</div>
-		<div class="col-lg-5">
+		<div class="col-lg-3">
 			<h4>
 				<?=$machine->computer_name?><br />
 			</h4>
@@ -27,6 +28,9 @@
 					<span class='text-warning'>No Applecare until 
 						<?=$warranty['end_date']?>
 					</span>
+				<?elseif ($warranty['status'] == "Unregistered serialnumber"):?>
+					<span class='text-warning'>Unregistered</span>
+					<a target="_blank" href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&amp;country=USA&amp;id=<?=$serial_number?>">Register</a>
 				<?else:?>
 					<span class='text-danger'><?=$warranty['status']?></span>
 				<?endif?>
@@ -41,7 +45,7 @@
 				<a class="btn btn-default btn-xs" href="<?printf(Config::get('vnc_link'), $meta['remote_ip'])?>">Remote Control (vnc)</a>
 				<?endif?>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-lg-4">
 			<small>
 				<dl class="dl-horizontal">
 					<dt>Software</dt>
@@ -60,8 +64,28 @@
 					<dt>Hardware UUID</dt>
 					<dd><?=$machine->platform_UUID?>&nbsp;</dd>
 					<dt>Remote IP Address</dt>
-					<dd><?php echo $meta['remote_ip'];?>&nbsp;</dd>
+					<dd><?=$report->remote_ip;?>&nbsp;</dd>
 				</dl>
+			</small>
+		</div>
+		<div class="col-lg-4">
+			<small>
+				<dl class="dl-horizontal">
+					<dt>Disk size</dt>
+					<dd><?=humanreadablesize($disk->TotalSize)?></dd>
+					<dt>Used</dt>
+					<dd><?=humanreadablesize($disk->TotalSize - $disk->FreeSpace)?></dd>
+					<dt>Free</dt>
+					<dd><?=humanreadablesize($disk->FreeSpace)?></dd>
+					<dt>SMART Status</dt>
+					<dd><?=$disk->SMARTStatus?></dd>
+				</dl>
+				<?require_once(APP_ROOT . "app/helpers/warranty_helper.php")?>
+				<dl class="dl-horizontal">
+					<dt>Est Manufacture date</dt>
+					<dd><?=estimate_manufactured_date($serial_number)?></dd>
+				</dl>
+				
 			</small>
 		</div>
 	</div>
