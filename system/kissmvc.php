@@ -182,8 +182,10 @@ class Model extends KISS_Model
 	{
 		$dbh = $this->getdbh();
 		
-		foreach($this->idx as $idx_name => $idx_data)
+		foreach($this->idx as $idx_data)
 		{
+			// Create name
+			$idx_name = $this->tablename . '_' . join('_', $idx_data);
 			$dbh->exec(sprintf("CREATE INDEX '%s' ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
 		}
 		
