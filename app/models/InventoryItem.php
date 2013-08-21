@@ -44,7 +44,6 @@ class Inventoryitem extends Model {
 
         // Compile regex
         $path_regex = ':^'.implode('|', $bundlepath_ignorelist).'$:';
-        echo $path_regex;
     
         if (! $this->serial) die('Serial missing');
                 
@@ -66,7 +65,6 @@ class Inventoryitem extends Model {
                 }
                 if (preg_match($path_regex, $item['path']))
                 {
-                    echo 'Skipping '.$item['path'];
                     continue;
                 }
 
