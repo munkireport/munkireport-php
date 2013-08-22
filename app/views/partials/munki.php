@@ -16,11 +16,11 @@
 		<?if($client->report_plist['Errors'] OR $client->report_plist['Warnings']):?>
 		  
 			<?if($client->report_plist['Errors']):?>
-				<pre class="error"><?=implode("\n", $client->report_plist['Errors'])?></pre>
+				<pre class="alert alert-danger">• <?=implode("\n• ", $client->report_plist['Errors'])?></pre>
 			<?endif?>
 			
 			<?if($client->report_plist['Warnings']):?>
-				<pre class="warning"><?=implode("\n", $client->report_plist['Warnings'])?></pre>
+				<pre class="alert alert-warning"><?=implode("\n", $client->report_plist['Warnings'])?></pre>
 			<?endif?>
 			
 		<?else:?>    
@@ -71,10 +71,10 @@ foreach(array('ItemsToInstall', 'AppleUpdates') AS $r_item)
 {
 	if(isset($report[$r_item]))
 	{
-		foreach($report[$r_item] as $key => &$item)
+		foreach($report[$r_item] as $key => $item)
 		{
 			$item['install_result'] = 'Pending';
-			$dversion = $item["display_name"].'-'.$item["version_to_install"];
+			$dversion = $report[$r_item][$key]["display_name"].'-'.$report[$r_item][$key]["version_to_install"];
 			if(isset($install_results[$dversion]))
 			{
 				$item['install_result'] = $install_results[$dversion]['result'];
@@ -115,10 +115,10 @@ if(isset($report['RemovalResults']))
 }
 if(isset($report['ItemsToRemove']))
 {
-	foreach($report['ItemsToRemove'] as $key => &$item)
+	foreach($report['ItemsToRemove'] as $key => $item)
 	{
 		$item['install_result'] = 'Pending';
-		$dversion = $item["display_name"];
+		$dversion = $report['ItemsToRemove'][$key]["display_name"];
 		if(isset($removal_results[$dversion]))
 		{
 			$item['install_result'] = $removal_results[$dversion]['result'];
