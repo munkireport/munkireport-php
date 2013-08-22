@@ -9,9 +9,6 @@
 					<a href="#munki" data-toggle="tab">Munki</a>
 				</li>
 				<li>
-					<a href="#warranty" data-toggle="tab">Warranty</a>
-				</li>
-				<li>
 					<a href="#apple-software" data-toggle="tab">Apple Software</a>
 				</li>
 				<li>
@@ -27,11 +24,6 @@
 
 				<div class="tab-pane active" id='munki'>
 					<?$this->view('partials/munki')?>
-				</div>
-	
-				<div class="tab-pane" id='warranty'>
-					<h2>Warranty</h2>
-					<?$this->view('partials/warranty')?>
 				</div>
 	
 				<div class="tab-pane" id='apple-software'>
