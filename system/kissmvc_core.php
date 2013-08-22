@@ -402,7 +402,7 @@ abstract class KISS_Model
 
 	function get( $key ) 
 	{
-		return isset($this->rs[$key]) ? $this->rs[$key] : $key.' not found in '.$this->tablename.' model';
+		return array_key_exists($key, $this->rs) ? $this->rs[$key] : $key.' not found in '.$this->tablename.' model';
 	}
 
 	function set( $key, $val ) 
