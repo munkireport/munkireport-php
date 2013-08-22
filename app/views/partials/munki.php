@@ -20,7 +20,7 @@
 			<?endif?>
 			
 			<?if($client->report_plist['Warnings']):?>
-				<pre class="alert alert-warning"><?=implode("\n", $client->report_plist['Warnings'])?></pre>
+				<pre class="alert alert-warning">• <?=implode("\n• ", $client->report_plist['Warnings'])?></pre>
 			<?endif?>
 			
 		<?else:?>    
@@ -47,15 +47,24 @@
 			</tr>
 			<tr>
 				<th>Start:</th>
-				<td><?=$client->starttime?></td>
+				<td><time datetime="<?=$client->starttime?>"></time></td>
 			</tr>
 			<tr>
-				<th>End:</th>
-				<td><?=$client->endtime?></td>
+				<?$duration = strtotime($client->endtime) - strtotime($client->starttime);?>
+				<th>Duration:</th>
+				<td><?=$duration?> seconds</td>
 			</tr>
 		</table>
 
 	</div><!-- </div class="col-lg-6"> -->
+
+	<script>
+			$(document).ready(function() {
+				$( "table time" ).each(function( index ) {
+					$(this).html(moment($(this).attr('datetime')).fromNow());
+				});
+			});
+	</script>
 
 <?// Move install results over to their install items.
 $install_results = array();
