@@ -100,7 +100,8 @@ class Tablequery {
                 $sWhere";
             if( ! $stmt = $dbh->prepare( $sql ))
             {
-                echo $dbh->errorInfo()[2];
+                $err = $dbh->errorInfo();
+				die($err[2]);
             }
             $stmt->execute();// $bindings );
             if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
@@ -130,7 +131,8 @@ class Tablequery {
         
         if( ! $stmt = $dbh->prepare( $sql ))
         {
-            die($dbh->errorInfo()[2]);
+            $err = $dbh->errorInfo();
+			die($err[2]);
         }
         $stmt->execute();// $bindings );
         $arr=array();
