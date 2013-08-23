@@ -41,7 +41,7 @@ $order = " ORDER BY timestamp DESC";
 ?>
   <tr>
     <td>
-        <a href="<?=url("inventory/detail/$inventory->serial")?>"><?=$machine->computer_name?></a>
+        <a href="<?=url("clients/detail/$inventory->serial#inventory-items")?>"><?=$machine->computer_name?></a>
     </td>
     <td><?=$reportdata->console_user?></td>
     <td><?=$reportdata->remote_ip?></td>
