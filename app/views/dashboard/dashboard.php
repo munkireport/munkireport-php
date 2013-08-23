@@ -144,7 +144,7 @@
 						$sql = "SELECT count(id) as count, status from warranty group by status ORDER BY status";
 					?>
 					<?foreach($warranty->query($sql) as $obj):?> 
-					<a href="<?=url('show/listing/warranty')?>" class="list-group-item">
+					<a href="<?=url('show/listing/warranty#'.$obj->status)?>" class="list-group-item">
 						<span class="badge"><?=$obj->count?></span>
 						<?=$obj->status?>
 					</a>

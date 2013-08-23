@@ -18,14 +18,18 @@
 
 		$(document).ready(function() {
 
+				// Use hash as searchquery
+				hash = window.location.hash.substring(1);
+
 				// Get column names from data attribute
 				var myCols = [];
 				$('.table th').map(function(){
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
-			    $('.table').dataTable( {
+			    oTable = $('.table').dataTable( {
 			        "bProcessing": true,
 			        "bServerSide": true,
+			        "oSearch": {"sSearch": hash},
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
 			        "sPaginationType": "bootstrap",
@@ -62,6 +66,7 @@
 
 				    }
 			    } );
+				oTable.fnFilter( hash );
 			} );
 		</script>
 
