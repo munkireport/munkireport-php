@@ -41,6 +41,28 @@
 				</div>
 
 			</div>
+
+			<script>
+			$(document).ready(function() {
+
+				// Activate correct tab depending on hash
+				var hash = window.location.hash.slice(5);
+				$('.nav-tabs a[href="#'+hash+'"]').tab('show');
+
+				// Update hash depending on tab
+				$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+					var url = String(e.target)
+					if(url.indexOf("#") != -1)
+					{
+						var hash = url.substring(url.indexOf("#"));
+						// Save scroll position
+						var yScroll=document.body.scrollTop;
+						window.location.hash = '#tab_'+hash.slice(1);
+						document.body.scrollTop=yScroll;
+					}
+				})
+			});
+			</script>
 	    </div> <!-- /span 12 -->
 	</div> <!-- /row -->
 </div>  <!-- /container -->

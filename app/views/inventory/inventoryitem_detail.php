@@ -32,7 +32,7 @@
         </thead>
         <tbody>
         <? foreach($inventory_items as $item): ?>
-        <? $url=url('clients/detail/' . $item['serial'] . '#inventory-items') ?>
+        <? $url=url('clients/detail/' . $item['serial'] . '#tab_inventory-items') ?>
             <tr>
                 <td>
                   <a href='<?= $url ?>'>
