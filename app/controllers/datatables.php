@@ -21,6 +21,8 @@ class datatables extends Controller
 			'sSearch' => '' // Search query
 		);
 
+		$sortcols = array();
+
 		// Process $_GET array
 		foreach($_GET as $k => $v)
 		{
