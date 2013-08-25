@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/dataTables-bootstrap.css" />
-  <link href="<?=WEB_FOLDER?>assets/css/font-awesome.css" rel="stylesheet">
+  <link href="<?=WEB_FOLDER?>assets/css/font-awesome.min.css" rel="stylesheet">
   <script src="<?=WEB_FOLDER?>assets/js/jquery.js"></script>
 
 
