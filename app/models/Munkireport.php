@@ -7,7 +7,7 @@ class Munkireport extends Model {
 		$this->rs['id'] = 0;
 		$this->rs['serial_number'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['timestamp'] = '';
-		$this->rs['runstate'] = '';
+		$this->rs['runstate'] = 'done';
 		$this->rs['runtype'] = '';
 		$this->rs['starttime'] = '';
 		$this->rs['endtime'] = '';
@@ -79,21 +79,30 @@ class Munkireport extends Model {
 		$mylist = $parser->toArray();
 
 		# Check munki version
-		if(isset($mylist['MachineInfo']['munki_version']))
+		if(array_key_exists('ManagedInstallVersion', $mylist))
 		{
-			$this->version = $mylist['MachineInfo']['munki_version'];
+			$this->version = $mylist['ManagedInstallVersion'];
 		}
 
 		# Copy items
 		$strings = array('ManifestName', 'RunType', 'RunState', 'StartTime', 'EndTime');
 		foreach($strings as $str)
 		{
-			if(isset($mylist[$str]))
+			if(array_key_exists($str, $mylist))
 			{
 				$lcname = strtolower($str);
 				$this->$lcname = $mylist[$str];
 				unset($mylist[$str]);
 			}
+		}
+
+		// If there's an error downloading the manifest, we don't get a ManagedInstalls
+		// array. We retain the old ManagedInstalls array and only store the new
+		// Errors, Warnings, StartTime, EndTime
+		if(! array_key_exists('ManagedInstalls', $mylist))
+		{
+			$this->save();
+			return $this;
 		}
 
 		# Count items
@@ -102,7 +111,7 @@ class Munkireport extends Model {
 		{
 			$lcname = strtolower($str);
 			$this->$lcname = 0;
-			if(isset($mylist[$str]))
+			if(array_key_exists($str, $mylist))
 			{
 				$this->$lcname = count($mylist[$str]);
 			}
