@@ -80,7 +80,7 @@ foreach(array('ItemsToInstall', 'AppleUpdates') AS $r_item)
 {
 	if(isset($report[$r_item]))
 	{
-		foreach($report[$r_item] as $key => $item)
+		foreach($report[$r_item] as $key => &$item)
 		{
 			$item['install_result'] = 'Pending';
 			$dversion = $report[$r_item][$key]["display_name"].'-'.$report[$r_item][$key]["version_to_install"];
@@ -89,7 +89,7 @@ foreach(array('ItemsToInstall', 'AppleUpdates') AS $r_item)
 				$item['install_result'] = $install_results[$dversion]['result'];
 			}
 		}
-	
+		unset($item);
 	}
 }		
 
@@ -107,7 +107,6 @@ if(isset($report['ManagedInstalls']))
 			}
 		}
 	}
-	
 }
 
 // Move removal results over to their removal items.
@@ -124,7 +123,7 @@ if(isset($report['RemovalResults']))
 }
 if(isset($report['ItemsToRemove']))
 {
-	foreach($report['ItemsToRemove'] as $key => $item)
+	foreach($report['ItemsToRemove'] as $key => &$item)
 	{
 		$item['install_result'] = 'Pending';
 		$dversion = $report['ItemsToRemove'][$key]["display_name"];
@@ -133,7 +132,7 @@ if(isset($report['ItemsToRemove']))
 			$item['install_result'] = $removal_results[$dversion]['result'];
 		}
 	}
-	
+	unset($item);
 }
 ?>
 
