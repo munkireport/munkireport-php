@@ -64,7 +64,7 @@
 			<?foreach($machine->query($sql) as $obj):?>
 			<tr>
 				<td>
-					<?=$obj->manifestname?>
+					<a class="btn btn-default btn-xs" href="<?=url('show/listing/munki/#'.$obj->manifestname)?>"><?=$obj->manifestname?></a>
 					<span class="badge pull-right"><?=$obj->count?></span>
 				</td>
 			</tr>
