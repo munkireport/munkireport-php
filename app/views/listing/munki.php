@@ -30,9 +30,6 @@
 			        "bProcessing": true,
 			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
-			        "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
-			        "sPaginationType": "bootstrap",
-			        "bStateSave": true,
 			        "aoColumns": myCols,
 			        "fnDrawCallback": function( oSettings ) {
 						$('#total-count').html(oSettings.fnRecordsTotal());

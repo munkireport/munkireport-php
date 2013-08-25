@@ -11,10 +11,6 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.table').dataTable({
-            "iDisplayLength": 25,
-            "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-            "sDom": "<'row'<'col-lg-6'l r><'col-lg-6'f>>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
-            "bStateSave": true,
             "aaSorting": [[0,'asc']],
             "fnDrawCallback": function( oSettings ) {
 				$('#total-count').html(oSettings.fnRecordsTotal());

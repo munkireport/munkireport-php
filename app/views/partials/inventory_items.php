@@ -1,3 +1,4 @@
+<p>
 <table class="inventory table table-striped">
 	<thead>
 		<tr>
@@ -26,10 +27,10 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.inventory').dataTable({
-            "iDisplayLength": 25,
-            "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-            "bStateSave": true,
-            "aaSorting": [[1,'asc']]
+            "aaSorting": [[1,'asc']],
+            "fnDrawCallback": function( oSettings ) {
+            $('#inventory-cnt').html(oSettings.fnRecordsTotal());
+          }
         });
     } );
 </script>

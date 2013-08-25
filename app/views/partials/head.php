@@ -10,6 +10,17 @@
   <link href="<?=WEB_FOLDER?>assets/css/font-awesome.min.css" rel="stylesheet">
   <script src="<?=WEB_FOLDER?>assets/js/jquery.js"></script>
 
+  <script type="text/javascript">
+  // Datatables defaults
+  $(document).ready(function() {
+      $.extend( $.fn.dataTable.defaults, {
+        "sDom": "<'row'<'col-lg-6'l r><'col-lg-6'f>>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+        "bStateSave": true,
+        "sPaginationType": "bootstrap"
+      } );
+  } );
+  </script>
+
 
   <style type="text/css">
 

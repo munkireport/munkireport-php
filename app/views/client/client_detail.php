@@ -15,7 +15,7 @@
 					<a href="#third-party-software" data-toggle="tab">Third Party Software</a>
 				</li>
 				<li>
-					<a href="#inventory-items" data-toggle="tab">Inventory Items</a>
+					<a href="#inventory-items" data-toggle="tab">Inventory Items <span id="inventory-cnt" class="badge">.</span></a>
 				</li>
 
 			</ul>
@@ -36,7 +36,6 @@
 					<?$this->view('partials/install_history', array('apple'=> FALSE))?>
 				</div>
 				<div class="tab-pane" id='inventory-items'>
-					<h2>Inventory Items</h2>
 					<?$this->view('partials/inventory_items')?>
 				</div>
 
