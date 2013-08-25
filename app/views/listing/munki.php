@@ -18,12 +18,15 @@
 
 		$(document).ready(function() {
 
+
+
+
 				// Get column names from data attribute
 				var myCols = [];
 				$('.table th').map(function(){
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
-			    $('.table').dataTable( {
+			    oTable = $('.table').dataTable( {
 			        "bProcessing": true,
 			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
@@ -45,6 +48,8 @@
 			     
 				    }
 			    } );
+			    // Use hash as searchquery
+			    oTable.fnFilter( window.location.hash.substring(1) );
 			} );
 		</script>
 
