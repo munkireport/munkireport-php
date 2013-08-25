@@ -10,7 +10,6 @@ class Warranty extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['end_date'] = '';
 		$this->rs['status'] = '';
-		$this->rs['nextcheck'] = 0;
 		
 		
 		// Create table if it does not exist
@@ -28,8 +27,8 @@ class Warranty extends Model {
 	
 	function check_status($force = FALSE)
 	{
-		// Check if record exists and not older than 30 days
-		if( ! $force && $this->id && $this->nextcheck > time()) //Todo: make exp time config item
+		// Check if record exists
+		if( ! $force && $this->id)
 		{
 			return $this;
 		}
@@ -104,7 +103,6 @@ class Warranty extends Model {
 		}
 		
 		
-		$this->nextcheck = time() + 60 * 60 * 24 * 30;//Todo: make exp time config item
 		$this->save();
 		
 		return $this;
