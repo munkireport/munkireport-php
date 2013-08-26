@@ -4,7 +4,7 @@
 BASEURL="<?php echo
 	(isset($_SERVER['HTTPS']) ? 'https://' : 'http://')
 	. $_SERVER['HTTP_HOST']
-	. WEB_FOLDER; ?>"
+	. conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 PREFPATH="/Library/Preferences/MunkiReport"

@@ -3,12 +3,12 @@
 
 <head>
   <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-  <title><?=Config::get('siteName')?></title>
-  <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/style.css" />
-  <link rel="stylesheet" type="text/css" media="screen" href="<?=WEB_FOLDER?>assets/css/dataTables-bootstrap.css" />
-  <link href="<?=WEB_FOLDER?>assets/css/font-awesome.min.css" rel="stylesheet">
-  <script src="<?=WEB_FOLDER?>assets/js/jquery.js"></script>
+  <title><?=conf('sitename')?></title>
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/style.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/dataTables-bootstrap.css" />
+  <link href="<?=conf('subdirectory')?>assets/css/font-awesome.min.css" rel="stylesheet">
+  <script src="<?=conf('subdirectory')?>assets/js/jquery.js"></script>
 
   <script type="text/javascript">
   // Datatables defaults
@@ -49,7 +49,7 @@
 <?php
   if (isset($scripts))
     foreach($scripts as $script): ?>
-  <script src="<?=WEB_FOLDER?>assets/js/<?=$script?>" type="text/javascript"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/<?=$script?>" type="text/javascript"></script>
 <?php endforeach; ?>
 </head>
 
@@ -66,7 +66,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?=url('')?>"><?=Config::get('siteName')?></a>
+      <a class="navbar-brand" href="<?=url('')?>"><?=conf('sitename')?></a>
     </div>
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">

@@ -40,9 +40,9 @@
 				<a class="btn btn-default btn-xs" href="<?php echo url('clients/recheck_warranty/' . $serial_number);?>">
 					Recheck Warranty Status
 				</a>
-				<?if(Config::get('vnc_link')):?>
+				<?if(conf('vnc_link')):?>
 
-				<a class="btn btn-default btn-xs" href="<?printf(Config::get('vnc_link'), $meta['remote_ip'])?>">Remote Control (vnc)</a>
+				<a class="btn btn-default btn-xs" href="<?printf(conf('vnc_link'), $meta['remote_ip'])?>">Remote Control (vnc)</a>
 				<?endif?>
 		</div>
 		<div class="col-lg-4">

@@ -10,10 +10,10 @@
 	<i>MunkiReport version <?=$GLOBALS['version']?></i>
   </div>
 
-  <script src="<?=WEB_FOLDER?>assets/js/bootstrap.min.js"></script>
-  <script src="<?=WEB_FOLDER?>assets/js/jquery.dataTables.min.js"></script>
-  <script src="<?=WEB_FOLDER?>assets/js/datatables.bootstrap.js"></script>
-  <script src="<?=WEB_FOLDER?>assets/js/moment.min.js"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/bootstrap.min.js"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/jquery.dataTables.min.js"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/datatables.bootstrap.js"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/moment.min.js"></script>
 
 </body>
 </html>

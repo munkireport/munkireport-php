@@ -29,10 +29,10 @@ function getdbh()
 		try
 		{
 			$GLOBALS['dbh'] = new PDO(
-				Config::get('pdo.dsn'),
-				Config::get('pdo.user'),
-				Config::get('pdo.pass'),
-				Config::get('pdo.opts')
+				conf('pdo_dsn'),
+				conf('pdo_user'),
+				conf('pdo_pass'),
+				conf('pdo_opts')
 				);
 		}
 		catch (PDOException $e)
@@ -68,8 +68,8 @@ function __autoload( $classname )
 
 function url($url='', $fullurl = FALSE)
 {
-  $s = $fullurl ? WEB_HOST : '';
-  $s .= WEB_FOLDER.($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
+  $s = $fullurl ? conf('webhost') : '';
+  $s .= conf('subdirectory').($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
   return $s;
 }
 

@@ -9,15 +9,25 @@ define('APP_ROOT', __DIR__ .'/' );
 //===============================================
 // Include config
 //===============================================
-require_once(APP_ROOT . "app/models/Config.php");
+require_once(APP_ROOT . "config_default.php");
+require_once(APP_ROOT . "config.php");
 
+
+// Make config part of global array
+$GLOBALS['conf'] =& $conf;
+
+// Config getter
+function conf($cf_item)
+{
+	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : '';
+}
 
 /*
-	A simple debug logger that mutes output when debugModeEnabled is FALSE.
+	A simple debug logger that mutes output when debug is FALSE.
  */
 function debug($message)
 {
-	if (Config::get('debugModeEnabled'))
+	if (conf('debug'))
 	{
 		echo "<span class='debug'>[DEBUG] "
 			. is_string($message) ? $message : var_export($message, TRUE)
@@ -26,31 +36,22 @@ function debug($message)
 }
 
 
-// Set default uri protocol override in config.php
-$uri_protocol = 'AUTO';
-
-// Index page, override in config.php
-$index_page = '';
-
-
 //===============================================
 // Defines
 //===============================================
-define('WEB_HOST', Config::get('webHost')); 
-define('WEB_FOLDER', Config::get('subdirectory'));
-define('INDEX_PAGE', Config::get('indexPage'));
-define('SYS_PATH', Config::get('paths.system') );
-define('APP_PATH', Config::get('paths.application') );
-define('VIEW_PATH', Config::get('paths.view')); 
-define('MODULE_PATH', Config::get('paths.module')); 
-define('CONTROLLER_PATH', Config::get('paths.controller')); 
+define('INDEX_PAGE', conf('index_page'));
+define('SYS_PATH', conf('system_path') );
+define('APP_PATH', conf('application_path') );
+define('VIEW_PATH', conf('view_path')); 
+define('MODULE_PATH', conf('module_path')); 
+define('CONTROLLER_PATH', conf('controller_path')); 
 define('EXT', '.php'); // Default extension
 
 //===============================================
 // Debug
 //===============================================
-ini_set('display_errors', Config::get('debugModeEnabled') ? 'On' : 'Off' );
-error_reporting( Config::get('debugModeEnabled') ? E_ALL : 0 );
+ini_set('display_errors', conf('debug') ? 'On' : 'Off' );
+error_reporting( conf('debug') ? E_ALL : 0 );
 
 //===============================================
 // Includes
@@ -64,15 +65,15 @@ require( APP_PATH.'helpers/site_helper'.EXT );
 ini_set('session.use_cookies', 1);
 ini_set('session.use_only_cookies', 1);
 session_start();
-date_default_timezone_set( Config::get('timezone') );
+date_default_timezone_set( conf('timezone') );
 
 //set_exception_handler('uncaught_exception_handler');
 
 //===============================================
 // Quick permissions check for sqlite operations
 //===============================================
-if (strpos( Config::get('pdo.dsn'), "sqlite") === 0) {
-	$dsnParts = explode(":", Config::get('pdo.dsn'));
+if (strpos( conf('pdo_dsn'), "sqlite") === 0) {
+	$dsnParts = explode(":", conf('pdo_dsn'));
 	$dbPath = $dsnParts[1];
 	$dbDir = dirname($dbPath);
 	$errors = FALSE;
@@ -94,11 +95,5 @@ if (strpos( Config::get('pdo.dsn'), "sqlite") === 0) {
 //===============================================
 // Start the controller
 //===============================================
-$routes = Config::get('routes');
-$uri_protocol = Config::get('uriProtocol');
-$GLOBALS[ 'engine' ] = new Engine(
-	$routes,
-	'show',
-	'index',
-	$uri_protocol
-);
+$uri_protocol = conf('uriProtocol');
+new Engine($conf['routes'],'show','index',$conf['uri_protocol']);
