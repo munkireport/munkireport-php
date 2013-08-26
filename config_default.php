@@ -86,14 +86,33 @@
 	| The list is processed using regex, examples:
 	| 
 	| Skip  all virtual windows apps created by parallels
-	| $GLOBALS['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
+	| $conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
 	| 
 	| Skip all Apple apps, except iLife, iWork and Server
 	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
 	|
 	*/
-	$conf['bundleid_ignorelist'] = array('com.apple.print.PrinterProxy');
-	
+	$conf['bundleid_ignorelist'][] = 'com.apple.print.PrinterProxy';
+
+	/*
+	|===============================================
+	| Inventory - path ignore list
+	|===============================================
+	| 
+	| List of bundle-paths to be ignored when processing inventory
+	| The list is processed using regex, examples:
+	| 
+	| Skip all apps in /System/Library
+	| $conf['bundlepath_ignorelist'][] = '/System/Library/.*';
+	| 
+	| Skip all apps that are contained in an app bundle
+	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
+	|
+	*/
+    $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+
+    $conf['onsite_ip_range'] = array('145.108.', '130.37.');
+
 	/*
 	|===============================================
 	| App settings

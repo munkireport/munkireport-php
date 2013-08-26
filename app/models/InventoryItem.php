@@ -34,15 +34,11 @@ class Inventoryitem extends Model {
     function process($data)
     {    
         //list of bundleids to ignore
-        $bundleid_ignorelist = isset($GLOBALS['bundleid_ignorelist']) ? $GLOBALS['bundleid_ignorelist'] : array('com.apple.print.PrinterProxy');
-
-        // Compile regex
+        $bundleid_ignorelist = is_array(conf('bundleid_ignorelist')) ? conf('bundleid_ignorelist') : array();
         $regex = '/^'.implode('|', $bundleid_ignorelist).'$/';
 
         // List of paths to ignore
-        $bundlepath_ignorelist = isset($GLOBALS['bundlepath_ignorelist']) ? $GLOBALS['bundlepath_ignorelist'] : array('/System/Library/.*', '/Library/.*', '.*/Scripting.localized/.*', '.*\.app\/.*\.app');
-
-        // Compile regex
+        $bundlepath_ignorelist = is_array(conf('bundlepath_ignorelist')) ? conf('bundlepath_ignorelist') : array();
         $path_regex = ':^'.implode('|', $bundlepath_ignorelist).'$:';
     
         if (! $this->serial) die('Serial missing');
