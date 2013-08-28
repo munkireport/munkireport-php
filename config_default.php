@@ -111,7 +111,20 @@
 	*/
     $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
-    $conf['onsite_ip_range'] = array('145.108.', '130.37.');
+ 	/*
+	|===============================================
+	| Dashboard - IP Ranges
+	|===============================================
+	| 
+	| Plot IP ranges by providing an array with labels and 
+	| a partial IP address
+	| The IP adress part is queried with SQL LIKE
+	| Examples:
+	| $conf['ip_ranges']['MyOrg'] = '100.99.'
+	| $conf['ip_ranges']['AltLocation'] = '211.88.12.'
+	|
+	*/   
+    $conf['ip_ranges'] = array();
 
 	/*
 	|===============================================
