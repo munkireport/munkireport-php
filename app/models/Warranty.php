@@ -33,10 +33,11 @@ class Warranty extends Model {
 		{
 			return $this;
 		}
-		
+
 		// Load warranty helper
 		require_once(conf('application_path').'helpers/warranty_helper.php');
-
+		
+		// Update needed, check with apple
 		check_warranty_status($this);
 		
 		$this->save();

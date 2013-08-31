@@ -86,9 +86,26 @@
 				</dl>
 				<?require_once(APP_ROOT . "app/helpers/warranty_helper.php")?>
 				<dl class="dl-horizontal">
-					<dt>Est Manufacture date</dt>
+					<dt>Est. Manufacture date</dt>
 					<dd><?=estimate_manufactured_date($serial_number)?></dd>
+					<dt>Est. Purchase date</dt>
+					<dd><?=$warranty['purchase_date']?></dd>
 				</dl>
+
+				<dl class="dl-horizontal">
+					<dt>Registration date</dt>
+					<dd><time datetime="<?=$report->reg_timestamp?>">..</time></dd>
+					<dt>Last checkin</dt>
+					<dd><time datetime="<?=$report->timestamp?>">..</time></dd>
+				</dl>
+
+				<script>
+					$(document).ready(function() {
+						$( "dd time" ).each(function( index ) {
+							$(this).html(moment($(this).attr('datetime') * 1000).fromNow());
+						});
+					});
+				</script>
 				
 			</small>
 		</div>

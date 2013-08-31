@@ -18,14 +18,14 @@
 
 				<div class="panel-body text-center">
 
-					<span class="btn btn-info">
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
 					<?$sql = "select COUNT(id) as count from machine"?>
 					<?if($obj = current($queryobj->query($sql))):?>
-						<span class="bigger-150"> <?=$obj->count?> </span>
+						<span class="bigger-150"> <?=$client_total = $obj->count?> </span>
 						<br>
 						Clients
 					<?endif?>
-					</span>
+					</a>
 					<span class="btn btn-success">
 					<?$hour_ago = time() - 3600;
 						$sql = "select COUNT(id) as count from reportdata WHERE timestamp > $hour_ago";?>
@@ -114,13 +114,14 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="icon-globe"></i> IP</h3>
+					<h3 class="panel-title"><i class="icon-globe"></i> Network locations</h3>
 				
 				</div>
 
 				<div class="panel-body">
+					
 
-					<p>Differentiate between onsite and offsite</p>
+					<div style="height: 200px" id="ip-plot"></div>
 
 				</div>
 
@@ -193,6 +194,8 @@
 				</div>
 			<script>
 			$(document).ready(function() {
+				
+				// New clients + relative time
 				var cnt=0;
 				$( "time" ).each(function( index ) {
 					var date = new Date($(this).attr('datetime') * 1000);
@@ -200,6 +203,39 @@
 					cnt++;
 				});
 				$('#new-clients').html(cnt);
+
+
+				var parms = { 
+					"Campus": ["145.108.", "130.37."]
+				};
+
+				// IP Plot
+				$.getJSON("<?=url('flot/ip')?>", {'req':JSON.stringify(parms)}, function(data) {
+					$.plot("#ip-plot", data,{
+					    series: {
+					        pie: {
+					            show: true,
+					            radius: 1,
+					            label: {
+					                show: true,
+					                radius: 2/3,
+					                formatter: labelFormatter,
+					                threshold: 0.1,
+					                background: {
+					                    opacity: 0.8
+					                }
+					            }
+					        }
+					    },
+					    colors: ["#00CDCD", "#0278D3", "#FFC700", "#FF7400"]
+				    });
+				});
+
+				function labelFormatter(label, series) {
+					return "<div style='font-size:150%; text-align:center; padding:2px; color:white;'>" + series.data[0][1] + "</div>";
+				}
+
+				
 			});
 			</script>
 
@@ -207,7 +243,6 @@
 
 		</div><!-- /col -->
 
-		
 	</div> <!-- /row -->
 
 </div>	<!-- /container -->

@@ -48,19 +48,27 @@
 			        	var cls = status == 'Expired' ? 'danger' : (status == 'Supported' ? 'success' : 'warning');
 			        	$('td:eq(3)', nRow).html('<span class="label label-'+cls+'">'+status+'</span>');
 			        	
+			        	// Format purchase date
 			        	var date=$('td:eq(4)', nRow).html();
 			        	if(date){
+			        		a = moment(date)
+			        		b = a.diff(moment(), 'years', true)
+			        		if(a.diff(moment(), 'years', true) < -4)
+			        		{
+			        			$('td:eq(4)', nRow).addClass('danger')
+			        		}
+			        		if(Math.round(b) == 4)
+			        		{
+			        			
+			        		}
 			        		$('td:eq(4)', nRow).addClass('text-right').html(moment(date).fromNow());
 			        	}
 
-			        	// Format filesize
-			        	var fs=$('td:eq(6)', nRow).html();
-			        	$('td:eq(6)', nRow).addClass('text-right').html(fileSize(fs, 0));
-
-			        	// Format filesize
-			        	var fs=$('td:eq(7)', nRow).html();
-			        	$('td:eq(7)', nRow).addClass('text-right').html(fileSize(fs, 0));
-
+			        	// Format expiration date
+			        	var date=$('td:eq(5)', nRow).html();
+			        	if(date){
+			        		$('td:eq(5)', nRow).addClass('text-right').html(moment(date).fromNow());
+			        	}
 				    }
 			    } );
 				oTable.fnFilter( hash );
@@ -76,7 +84,8 @@
 		        <th data-colname='machine#serial_number'>Serial</th>
 		        <th data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='warranty#status'>Warranty status</th>
-		        <th data-colname='warranty#end_date'>End date</th>
+		        <th data-colname='warranty#purchase_date'>Purchased</th>
+		        <th data-colname='warranty#end_date'>Warranty Expires</th>
 		      </tr>
 		    </thead>
 		    <tbody>
