@@ -24,7 +24,7 @@ function check_warranty_status(&$warranty_model)
 
 	$context = stream_context_create($context_options);
 	$result = file_get_contents($url, FALSE, $context);
-	
+
 	if(preg_match('/invalidserialnumber/', $result))
 	{
 		// Check invalid serial
@@ -60,7 +60,7 @@ function check_warranty_status(&$warranty_model)
 			$exp_time = strtotime($matches[1]);
 			$warranty_model->end_date = date('Y-m-d', $exp_time);
 
-			if($warranty_model->status = 'Supported')
+			if($warranty_model->status == 'Supported')
 			{
 				$warranty_model->purchase_date = date('Y-m-d', strtotime('-3 years', $exp_time));
 			}
