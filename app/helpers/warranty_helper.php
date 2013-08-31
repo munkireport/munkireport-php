@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * Unfortunately we have to scrape the page as Apple discontinued the json api
+ *
+ * @param object warranty model instance
+ * @author AvB
+ **/
 function check_warranty_status(&$warranty_model)
 {
-	// Update needed, check with apple
 	
-	// Unfortunately we have to scrape the page as Apple discontinued the json api
 	$url = 'https://selfsolve.apple.com/wcResults.do';
 	$data = array ('sn' => $warranty_model->serial_number, 'num' => '0');
 	$data = http_build_query($data);
@@ -71,8 +75,9 @@ function check_warranty_status(&$warranty_model)
 		$warranty_model->status = 'No information found';
 	}
 
-	// No purchase date, use the estimated manufacture date
-	if( ! $warranty_model->purchase_date)
+	// No valid purchase date, use the estimated manufacture date
+	if( ! $warranty_model->purchase_date OR 
+		! preg_match('/\d{4}-\d{2}-\d{2}/', $warranty_model->purchase_date))
 	{
 		// Get est. manufacture date
 		$warranty_model->purchase_date = estimate_manufactured_date($warranty_model->serial_number);
