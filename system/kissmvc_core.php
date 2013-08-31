@@ -407,7 +407,7 @@ abstract class KISS_Model
 
 	function set( $key, $val ) 
 	{
-		if ( isset( $this->rs[$key] ) )
+		if ( array_key_exists($key, $this->rs) )
 			$this->rs[$key] = $val;
 		return $this;
 	}
