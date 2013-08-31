@@ -31,6 +31,10 @@
 				<?elseif ($warranty['status'] == "Unregistered serialnumber"):?>
 					<span class='text-warning'>Unregistered</span>
 					<a target="_blank" href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&amp;country=USA&amp;id=<?=$serial_number?>">Register</a>
+				<?elseif ($warranty['status'] == "Expired"):?>
+					<span class='text-danger'>Expired on 
+						<?=$warranty['end_date']?>
+					</span>
 				<?else:?>
 					<span class='text-danger'><?=$warranty['status']?></span>
 				<?endif?>
