@@ -76,7 +76,10 @@ def pref(pref_name):
     
 def process(serial,items):
     """Process receives a list of items, checks if they need updating and updates them
-    if necessary"""
+    if necessary"""\
+
+    # Sanitize serial
+    serial = ''.join([c for c in serial if c.isalnum()])
     
     # Get prefs
     baseurl = pref('BaseUrl') or \

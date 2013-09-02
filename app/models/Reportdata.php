@@ -39,6 +39,9 @@ class Reportdata extends Model {
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
 		
+		// Remove serial_number from mylist, use the cleaned serial that was provided in the constructor.
+		unset($mylist['serial_number']);
+		
 		$this->merge($mylist)->register()->save();
 	}
 
