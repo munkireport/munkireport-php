@@ -15,7 +15,7 @@ class Machine extends Model {
 		$this->rs['os_version'] = '';
 		$this->rs['physical_memory'] = '';
 		$this->rs['platform_UUID'] = '';
-		$this->rs['number_processors'] = '';
+		$this->rs['number_processors'] = 0;
 		$this->rs['SMC_version_system'] = '';
 		$this->rs['boot_rom_version'] = '';
 		$this->rs['bus_speed'] = '';
