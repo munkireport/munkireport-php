@@ -30,7 +30,7 @@
 			<?foreach($machine->query($sql) as $obj):?>
 			<tr>
 				<td>
-					<?=$obj->machine_desc?>
+					<a href="<?=url('show/listing/hardware/#'.rawurlencode($obj->machine_desc))?>"><?=$obj->machine_desc?></a>
 					<span class="badge pull-right"><?=$obj->count?></span>
 				</td>
 			</tr>

@@ -23,7 +23,7 @@
 				$('.table th').map(function(){
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
-			    $('.table').dataTable( {
+			    oTable = $('.table').dataTable( {
 			        "bProcessing": true,
 			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
@@ -39,6 +39,14 @@
 			        	var link = '<a class="btn btn-default btn-xs" href="<?=url('clients/detail/')?>'+sn+'">'+name+'</a>';
 			        	$('td:eq(0)', nRow).html(link);				    }
 			    } );
+
+			    // Use hash as searchquery
+			    if(window.location.hash.substring(1))
+			    {
+					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
+			    }
+
+			    
 			} );
 		</script>
 
