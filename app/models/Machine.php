@@ -53,6 +53,12 @@ class Machine extends Model {
 		
 		// Remove serial_number from mylist, use the cleaned serial that was provided in the constructor.
 		unset($mylist['serial_number']);
+
+		// Set default computer_name
+		if( ! isset($mylist['computer_name']) OR trim($mylist['computer_name']) == '')
+		{
+			$mylist['computer_name'] = 'No name';
+		}
 		
 		$this->timestamp = time();
 		$this->merge($mylist)->save();
