@@ -13,6 +13,7 @@ class Reportdata extends Model {
 		$this->rs['reg_timestamp'] = time(); // Registration date
 		$this->rs['timestamp'] = time();
 
+		// Create indexes
         $this->idx[] = array('console_user');
         $this->idx[] = array('long_username');
         $this->idx[] = array('remote_ip');
@@ -41,6 +42,18 @@ class Reportdata extends Model {
 		
 		// Remove serial_number from mylist, use the cleaned serial that was provided in the constructor.
 		unset($mylist['serial_number']);
+
+		// If console_user is empty, retain previous entry
+		if( ! $mylist['console_user'])
+		{
+			unset($mylist['console_user']);
+		}
+
+		// If long_username is empty, retain previous entry
+		if( ! $mylist['long_username'])
+		{
+			unset($mylist['long_username']);
+		}
 		
 		$this->merge($mylist)->register()->save();
 	}
