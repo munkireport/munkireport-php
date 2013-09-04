@@ -11,6 +11,10 @@
   <script src="<?=conf('subdirectory')?>assets/js/jquery.js"></script>
 
   <script type="text/javascript">
+  function dumpj(obj)
+  {
+    alert(JSON.stringify(obj));
+  }
   // Datatables defaults
   $(document).ready(function() {
       $.extend( $.fn.dataTable.defaults, {

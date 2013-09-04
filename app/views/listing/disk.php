@@ -18,16 +18,38 @@
 
 		$(document).ready(function() {
 
-				// Get column names from data attribute
-				var myCols = [];
+				// Get modifiers from data attribute
+				var myCols = [], // Colnames
+					mySort = [], // Initial sort
+					hideThese = [], // Hidden columns
+					col = 0; // Column counter
+
 				$('.table th').map(function(){
+
 					  myCols.push({'mData' : $(this).data('colname')});
+
+					  if($(this).data('sort'))
+					  {
+					  	mySort.push([col, $(this).data('sort')])
+					  }
+
+					  if($(this).data('hide'))
+					  {
+					  	hideThese.push(col);
+					  }
+
+					  col++
 				});
+
 			    $('.table').dataTable( {
 			        "bProcessing": true,
 			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "aaSorting": mySort,
 			        "aoColumns": myCols,
+			        "aoColumnDefs": [
+			        	{ 'bVisible': false, "aTargets": hideThese }
+					],
 			        "fnDrawCallback": function( oSettings ) {
 						$('#total-count').html(oSettings.fnRecordsTotal());
 					},
@@ -67,7 +89,7 @@
 		        <th data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='machine#machine_name'>Type</th>
 		        <th data-colname='diskreport#SolidState'>Solid state</th>
-		        <th data-colname='diskreport#Percentage'>Disk</th>
+		        <th data-sort='desc' data-colname='diskreport#Percentage'>Disk</th>
 		        <th data-colname='diskreport#FreeSpace'>Free</th>
 		        <th data-colname='diskreport#TotalSize'>Size</th>
 		    	<th data-colname='diskreport#SMARTStatus'>SMART</th>

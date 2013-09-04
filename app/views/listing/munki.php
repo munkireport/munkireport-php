@@ -18,11 +18,6 @@
 
 		$(document).ready(function() {
 
-			function dump(obj)
-			{
-				alert(JSON.stringify(obj));
-			}
-
 			String.prototype.pluralize = function(count, plural)
 			{
 			  if (plural == null)
@@ -32,18 +27,29 @@
 			}
 
 
-				// Get column names from data attribute
-				var myCols = [],
-					hideThese = [],
-					col = 0;
+				// Get modifiers from data attribute
+				var myCols = [], // Colnames
+					mySort = [], // Initial sort
+					hideThese = [], // Hidden columns
+					col = 0; // Column counter
+
 				$('.table th').map(function(){
+
 					  myCols.push({'mData' : $(this).data('colname')});
+
+					  if($(this).data('sort'))
+					  {
+					  	mySort.push([col, $(this).data('sort')])
+					  }
+
 					  if($(this).data('hide'))
 					  {
 					  	hideThese.push(col);
 					  }
-					  col++;
+
+					  col++
 				});
+
 			    oTable = $('.table').dataTable( {
 			        "bProcessing": true,
 			        "bServerSide": true,
@@ -52,6 +58,7 @@
 			        	{ 'bVisible': false, "aTargets": hideThese }
 					],
 			        "aoColumns": myCols,
+			        "aaSorting": mySort,
 			        "fnDrawCallback": function( oSettings ) {
 						$('#total-count').html(oSettings.fnRecordsTotal());
 					},
@@ -117,7 +124,7 @@
 		        <th data-colname='reportdata#remote_ip'>IP</th>
 				<th data-colname='machine#os_version'>OS</th>
 		        <th data-colname='munkireport#version'>Munki</th>
-		        <th data-colname='munkireport#timestamp'>Latest Run</th>
+		        <th data-sort="desc" data-colname='munkireport#timestamp'>Latest Run</th>
 		        <th data-colname='munkireport#runtype'>Runtype</th>
 		        <th data-hide="1" data-colname='munkireport#errors'>Errors</th>
 		        <th data-hide="1" data-colname='munkireport#warnings'>Warnings</th>

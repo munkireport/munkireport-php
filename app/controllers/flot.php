@@ -63,5 +63,23 @@ class flot extends Controller
 		echo json_encode($out);
 
 	}
+
+	function hw()
+	{
+		$out = array();
+		$machine = new Machine();
+		$sql = 'SELECT machine_name, count(1) as count 
+			FROM machine 
+			GROUP BY machine_name 
+			ORDER BY count DESC';
+		$cnt = 0;
+		foreach ($machine->query($sql) as $obj)
+		{
+			$out[] = array('label' => $obj->machine_name, 'data' => array(array($cnt++, intval($obj->count))));
+		}
+
+		echo json_encode($out);//TODO: run through view
+	}
+
 	
 }
