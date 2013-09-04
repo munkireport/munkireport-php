@@ -18,18 +18,39 @@
 
 		$(document).ready(function() {
 
+			function dump(obj)
+			{
+				alert(JSON.stringify(obj));
+			}
 
+			String.prototype.pluralize = function(count, plural)
+			{
+			  if (plural == null)
+			    plural = this + 's';
+
+			  return (count == 1 ? this : plural) 
+			}
 
 
 				// Get column names from data attribute
-				var myCols = [];
+				var myCols = [],
+					hideThese = [],
+					col = 0;
 				$('.table th').map(function(){
 					  myCols.push({'mData' : $(this).data('colname')});
+					  if($(this).data('hide'))
+					  {
+					  	hideThese.push(col);
+					  }
+					  col++;
 				});
 			    oTable = $('.table').dataTable( {
 			        "bProcessing": true,
 			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "aoColumnDefs": [
+			        	{ 'bVisible': false, "aTargets": hideThese }
+					],
 			        "aoColumns": myCols,
 			        "fnDrawCallback": function( oSettings ) {
 						$('#total-count').html(oSettings.fnRecordsTotal());
@@ -42,11 +63,46 @@
 			        	var link = '<a class="btn btn-default btn-xs" href="<?=url('clients/detail/')?>'+sn+'#tab_munki">'+name+'</a>';
 			        	$('td:eq(0)', nRow).html(link);
 
-			     
+			        	// Format date
+			        	date = aData['munkireport#timestamp'];
+			        	if(date)
+			        	{
+			              	$('td:eq(6)', nRow).html(moment(date).fromNow());
+			        	}
+			        	else
+			        	{
+			        		$('td:eq(6)', nRow).html('never');
+			        	}
+
+			        	var runtype = $('td:eq(7)', nRow).html(),
+				        	cols = [
+				        		{name:'errors', flag: 'danger', desc: 'error%s'},
+				        		{name:'warnings', flag: 'warning', desc: 'warning%s'},
+				        		{name:'pendinginstalls', flag: 'info', desc: 'pending install%s'},
+				        		{name:'pendingremovals', flag: 'info', desc: 'pending removal%s'},
+				        		{name:'installresults', flag: 'success', desc: 'package%s installed'},
+				        		{name:'removalresults', flag: 'success', desc: 'package%s removed'}
+				        	], 
+			        		count = 0
+
+			        	cols.map( function(col) {
+			        		count = aData['munkireport#' + col.name]
+				        	if(count > 0)
+				        	{
+				        		runtype += ' <span class="text-'+col.flag+'">' + 
+					        		count + ' ' + col.desc.replace('%s', ''.pluralize(count)) + '</span>'
+				        	}
+						})
+
+			        	$('td:eq(7)', nRow).html(runtype)
+
 				    }
 			    } );
 			    // Use hash as searchquery
-			    oTable.fnFilter( window.location.hash.substring(1) );
+			    if(window.location.hash.substring(1))
+			    {
+					oTable.fnFilter( window.location.hash.substring(1) );
+			    }
 			} );
 		</script>
 
@@ -63,10 +119,12 @@
 		        <th data-colname='munkireport#version'>Munki</th>
 		        <th data-colname='munkireport#timestamp'>Latest Run</th>
 		        <th data-colname='munkireport#runtype'>Runtype</th>
-		        <th data-colname='munkireport#errors'>Errors</th>
-		        <th data-colname='munkireport#warnings'>Warnings</th>
-		        <th data-colname='munkireport#pendinginstalls'>Pending</th>
-		        <th data-colname='munkireport#installresults'>Installed</th>
+		        <th data-hide="1" data-colname='munkireport#errors'>Errors</th>
+		        <th data-hide="1" data-colname='munkireport#warnings'>Warnings</th>
+		        <th data-hide="1" data-colname='munkireport#pendinginstalls'>Pending</th>
+		        <th data-hide="1" data-colname='munkireport#installresults'>Installed</th>
+		        <th data-hide="1" data-colname='munkireport#removalresults'>Removed</th>
+		        <th data-hide="1" data-colname='munkireport#pendingremovals'>Removed</th>
 				<th data-colname='munkireport#manifestname'>Manifest</th>
 		      </tr>
 		    </thead>
