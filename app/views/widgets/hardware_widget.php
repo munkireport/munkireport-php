@@ -1,10 +1,10 @@
-<div class="col-lg-4">
+<div class="col-lg-6">
 
 	<div class="panel panel-default">
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="icon-globe"></i> Hardware breakdown</h3>
+			<h3 class="panel-title"><i class="icon-desktop"></i> Hardware breakdown</h3>
 		
 		</div>
 
@@ -22,28 +22,32 @@
 <script>
 $(document).ready(function() {
 	var parms = {}
-	// IP Plot
+	// HW Plot
 	$.getJSON("<?=url('flot/hw')?>", {'req':JSON.stringify(parms)}, function(data) {
 		$.plot("#hw-plot", data,{
 		    series: {
-		    	pie: {
+		    	bars: {
 		            show: true,
-		            radius: 1,
-		            label: {
-		                show: true,
-		                radius: 2/3,
-		                formatter: hwLabelFormatter,
-		                threshold: 0.1,
-		                background: {
-		                    opacity: 0.8
-		                }
-		            }
+		            lineWidth: 0,
+		            fill: 0.8,
+		            barWidth: 0.9
 				}
 			},
 			xaxis:
 			{
 				show: false
+			},
+			grid:
+			{
+				borderColor: '#eee'
+			},
+			legend: {
+				labelFormatter: function(label, series) {
+				// series is the series object for the label
+				return '<a href="<?=url('show/listing/hardware')?>#' + label + '">' + label + '</a>';
+				}
 			}
+			
 	    });
 	});
 
