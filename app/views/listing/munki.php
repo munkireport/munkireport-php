@@ -10,23 +10,10 @@
 
   	<div class="col-lg-12">
 		<script type="text/javascript">
-		function fileSize(size, decimals) {
-			if(decimals == undefined){decimals = 0};
-			var i = Math.floor( Math.log(size) / Math.log(1024) );
-			return ( size / Math.pow(1024, i) ).toFixed(decimals) * 1 + ' ' + ['', 'K', 'M', 'G', 'T'][i] + 'B';
-		}
 
 		$(document).ready(function() {
 
-			String.prototype.pluralize = function(count, plural)
-			{
-			  if (plural == null)
-			    plural = this + 's';
-
-			  return (count == 1 ? this : plural) 
-			}
-
-
+			
 				// Get modifiers from data attribute
 				var myCols = [], // Colnames
 					mySort = [], // Initial sort
@@ -105,10 +92,22 @@
 
 				    }
 			    } );
-			    // Use hash as searchquery
+			    // Use hash as sort column for hidden cols
 			    if(window.location.hash.substring(1))
 			    {
-					oTable.fnFilter( window.location.hash.substring(1) );
+					sortcol = window.location.hash.substring(1);
+					// Detect correct column here
+					var col = 0,
+						sortarr = []
+					myCols.map(function(item){
+						if(item.mData.indexOf(sortcol) > 0)
+						{
+							sortarr.push([col, 'desc']);
+						}
+						col++;
+					});
+					//oTable.fnFilter( window.location.hash.substring(1) );
+					 oTable.fnSort( sortarr );
 			    }
 			} );
 		</script>
