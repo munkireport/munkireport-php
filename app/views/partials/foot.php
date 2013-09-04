@@ -17,6 +17,7 @@
   <script src="<?=conf('subdirectory')?>assets/js/jquery.flot.min.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/jquery.flot.pie.min.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/jquery.flot.resize.min.js"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/munkireport.js"></script>
 
 </body>
 </html>
