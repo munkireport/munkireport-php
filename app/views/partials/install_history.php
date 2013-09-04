@@ -15,7 +15,7 @@
 		<tr>
 			<td><?=$item->displayName?></td>
 			<td><?=$item->displayVersion?></td>
-			<td><?=date('Y-m-d G:i:s',$item->date)?></td>
+			<td><time datetime="<?=date('Y-m-d G:i:s',$item->date)?>"><?=date('Y-m-d G:i:s',$item->date)?></time></td>
 			<td><?=$item->processName?></td>
 		</tr>
 	<?endif?>
