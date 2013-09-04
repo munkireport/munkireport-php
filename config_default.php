@@ -117,11 +117,12 @@
 	|===============================================
 	| 
 	| Plot IP ranges by providing an array with labels and 
-	| a partial IP address
+	| a partial IP address. Specify multiple partials in array
+	| if you want to group them together.
 	| The IP adress part is queried with SQL LIKE
 	| Examples:
-	| $conf['ip_ranges']['MyOrg'] = '100.99.'
-	| $conf['ip_ranges']['AltLocation'] = '211.88.12.'
+	| $conf['ip_ranges']['MyOrg'] = '100.99.';
+	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
 	*/   
     $conf['ip_ranges'] = array();
@@ -196,6 +197,6 @@
 	| If set to TRUE, will deliver debugging messages in the page. Set to
 	| FALSE in a production environment
 	*/
-	$conf['debug'] = TRUE;
+	$conf['debug'] = FALSE;
 	
 	
