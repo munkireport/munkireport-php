@@ -122,7 +122,7 @@ class Munkireport extends Model {
 
 		// Calculate pending removals
 		$removal_items = isset($mylist['ItemsToRemove']) ? count($mylist['ItemsToRemove']) : 0;
-        $this->pendingremovals = max($removal_items - $this->removal_results, 0);
+        $this->pendingremovals = max($removal_items - $this->removalresults, 0);
 
 		// Check results for failed installs
 		$this->failedinstalls = 0;
