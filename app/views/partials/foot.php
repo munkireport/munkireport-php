@@ -14,9 +14,8 @@
   <script src="<?=conf('subdirectory')?>assets/js/jquery.dataTables.min.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/datatables.bootstrap.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/moment.min.js"></script>
-  <script src="<?=conf('subdirectory')?>assets/js/jquery.flot.min.js"></script>
-  <script src="<?=conf('subdirectory')?>assets/js/jquery.flot.pie.min.js"></script>
-  <script src="<?=conf('subdirectory')?>assets/js/jquery.flot.resize.min.js"></script>
+   <script src="<?=conf('subdirectory')?>assets/js/flotr2.js"></script>
+
   <script src="<?=conf('subdirectory')?>assets/js/munkireport.js"></script>
 
 </body>

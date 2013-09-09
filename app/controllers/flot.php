@@ -16,7 +16,8 @@ class flot extends Controller
 		{
 			$ip_arr = json_decode($_GET['req']);
 		}
-		else // Fall back on default ip ranges
+
+		if( is_scalar($ip_arr)) // No array or obj, all back on default ip ranges
 		{
 			$ip_arr = conf('ip_ranges');
 		}
@@ -50,13 +51,13 @@ class flot extends Controller
 			{
 				$col = 'r' . $cnt++;
 
-				$out[] = array('label' => $key, 'data' => $obj->$col);
+				$out[] = array('label' => $key, 'data' => array(array(0,intval($obj->$col))));
 
 				$total += $obj->$col;
 			}
 
 			// Add Remaining IP's as other
-			$out[] = array('label' => 'Other', 'data' => $obj->count - $total);
+			$out[] = array('label' => 'Other', 'data' => array(array(0,intval($obj->count - $total))));
 				
 		}
 
@@ -79,6 +80,26 @@ class flot extends Controller
 		}
 
 		echo json_encode($out);//TODO: run through view
+	}
+
+	function os()
+	{
+		$out = array();
+		$machine = new Machine();
+		$sql = "SELECT count(1) as count, os_version 
+				FROM machine
+				group by os_version 
+				ORDER BY os_version DESC";
+
+		$cnt = 0;
+		foreach ($machine->query($sql) as $obj)
+		{
+			$obj->os_version = $obj->os_version ? $obj->os_version : 'Unknown';
+			$out[] = array('label' => $obj->os_version, 'data' => array(array(intval($obj->count), $cnt--)));
+		}
+
+		echo json_encode($out);//TODO: run through view
+
 	}
 
 	

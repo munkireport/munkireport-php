@@ -21,6 +21,8 @@
 
     </div> <!-- /span 12 -->
 
+    <?$this->view('widgets/os_widget')?>
+
     <div class="col-lg-4">
 		<h2>Hardware breakdown</h2>
 		<?$machine = new Machine();

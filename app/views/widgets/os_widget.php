@@ -1,17 +1,17 @@
-<div class="col-lg-6">
+<div class="col-lg-12">
 
 	<div class="panel panel-default">
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="icon-desktop"></i> Hardware breakdown</h3>
+			<h3 class="panel-title"><i class="icon-desktop"></i> OS breakdown</h3>
 		
 		</div>
 
 		<div class="panel-body">
 			
 
-			<div style="height: 200px" id="hw-plot"></div>
+			<div style="height: 300px" id="os-plot"></div>
 
 		</div>
 
@@ -23,15 +23,16 @@
 $(document).ready(function() {
 
 	// Copy barOptions
-    myOptions = barOptions
+    myOptions = horBarOptions
+
     myOptions.legend.labelFormatter = function(label, series) {
 			// series is the series object for the label
-			return '<a href="<?=url('show/listing/hardware')?>#' + label + '">' + label + '</a>';
+			return '<a href="<?=url('show/listing/clients')?>#' + label + '">' + label + '</a>';
 			}
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?=url('flot/hw')?>", '#hw-plot', myOptions, parms);
+	drawGraph("<?=url('flot/os')?>", '#os-plot', myOptions, parms);
 
 });
 </script>
