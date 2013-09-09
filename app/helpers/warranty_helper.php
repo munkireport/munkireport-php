@@ -118,15 +118,22 @@ function check_warranty_status(&$warranty_model)
 
 	}
 	
-	// Get info
+	// Get machine model from warrantycheck page or do a lookup
+	$machine = new Machine($warranty_model->serial_number);
 	if(preg_match("/warrantyPage.warrantycheck.displayProductInfo\('([^\']+)', '([^\']+)'/", $result, $matches))
 	{
 		// Save img_url
-		$machine = new Machine($warranty_model->serial_number);
+		
 		$machine->img_url = $matches[1];
-		$machine->machine_desc = $matches[2];
-		$machine->save();
+		$model = $matches[2];
 	}
+	else
+	{
+		$model = model_description_lookup($warranty_model->serial_number);
+	}
+	$machine->machine_desc = $model;
+	$machine->save();
+
 }
 
 /**
