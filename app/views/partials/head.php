@@ -3,6 +3,8 @@
 
 <head>
   <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title><?=conf('sitename')?></title>
   <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/style.css" />
@@ -11,10 +13,7 @@
   <script src="<?=conf('subdirectory')?>assets/js/jquery.js"></script>
 
   <script type="text/javascript">
-  function dumpj(obj)
-  {
-    alert(JSON.stringify(obj));
-  }
+
   // Datatables defaults
   $(document).ready(function() {
       $.extend( $.fn.dataTable.defaults, {
