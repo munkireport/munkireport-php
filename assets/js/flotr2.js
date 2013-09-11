@@ -4786,10 +4786,11 @@ Flotr.addType('pie', {
     fillColor: null,       // => fill color
     fillOpacity: 0.6,      // => opacity of the fill color, set to 1 for a solid fill, 0 hides the fill
     explode: 6,            // => the number of pixels the splices will be far from the center
+    labelRadius: 1,        // => 0-1 for percentage of fullsize, or a specified pixel length
     sizeRatio: 0.6,        // => the size ratio of the pie relative to the plot 
     startAngle: Math.PI/4, // => the first slice start angle
     labelFormatter: Flotr.defaultPieLabelFormatter,
-    pie3D: false,          // => whether to draw the pie in 3 dimenstions or not (ineffective) 
+    pie3D: false,          // => whether to draw the pie in 3 dimensions or not (ineffective) 
     pie3DviewAngle: (Math.PI/2 * 0.8),
     pie3DspliceThickness: 20,
     epsilon: 0.1           // => how close do you have to get to hit empty slice
@@ -4822,7 +4823,7 @@ Flotr.addType('pie', {
       bisection     = startAngle + measure / 2,
       label         = options.labelFormatter(this.total, value),
       //plotTickness  = Math.sin(series.pie.viewAngle)*series.pie.spliceThickness / vScale;
-      explodeCoeff  = explode + radius + 4,
+      explodeCoeff  = explode + radius * options.labelRadius,
       distX         = Math.cos(bisection) * explodeCoeff,
       distY         = Math.sin(bisection) * explodeCoeff,
       textAlign     = distX < 0 ? 'right' : 'left',
