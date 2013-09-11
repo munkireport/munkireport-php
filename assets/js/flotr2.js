@@ -1665,6 +1665,7 @@ Flotr.defaultOptions = {
   },
   grid: {
     color: '#545454',      // => primary color used for outline and labels
+    outlineColor: '#EEEEEE',// => primary color used for outline and labels
     backgroundColor: null, // => null for transparent, else color
     backgroundImage: null, // => background image. String or object with src, left and top
     watermarkAlpha: 0.4,   // => 
@@ -5589,7 +5590,7 @@ Flotr.addPlugin('graphGrid', {
       // Draw axis/grid border.
       ctx.beginPath();
       ctx.lineWidth = grid.outlineWidth;
-      ctx.strokeStyle = grid.color;
+      ctx.strokeStyle = grid.outlineColor;
       ctx.lineJoin = 'round';
       
       for(i = 0; i <= sides; ++i){
@@ -5608,7 +5609,7 @@ Flotr.addPlugin('graphGrid', {
           lineTo = 'lineTo',
           moveTo = 'moveTo';
       ctx.lineWidth = lw;
-      ctx.strokeStyle = grid.color;
+      ctx.strokeStyle = grid.outlineColor;
       ctx.lineJoin = 'miter';
       ctx.beginPath();
       ctx.moveTo(orig, orig);
@@ -6545,6 +6546,7 @@ Flotr.addPlugin('legend', {
     noColumns: 1,          // => number of colums in legend table // @todo: doesn't work for HtmlText = false
     labelFormatter: function(v){return v;}, // => fn: string -> string
     labelBoxBorderColor: '#CCCCCC', // => border color for the little label boxes
+    outlineColor: '#CCCCCC', // Color of the border around the legend
     labelBoxWidth: 14,
     labelBoxHeight: 10,
     labelBoxMargin: 5,
@@ -6639,7 +6641,7 @@ Flotr.addPlugin('legend', {
           ctx.fillStyle = series[i].color;
           ctx.fillRect(x, y, lbw-1, lbh-1);
           
-          ctx.strokeStyle = legend.labelBoxBorderColor;
+          ctx.strokeStyle = legend.outlineColor;
           ctx.lineWidth = 1;
           ctx.strokeRect(Math.ceil(x)-1.5, Math.ceil(y)-1.5, lbw+2, lbh+2);
           
@@ -6686,7 +6688,7 @@ Flotr.addPlugin('legend', {
             D.insert(legend.container, table);
           }
           else {
-            var styles = {position: 'absolute', 'zIndex': '2', 'border' : '1px solid ' + legend.labelBoxBorderColor};
+            var styles = {position: 'absolute', 'zIndex': '2', 'border' : '1px solid ' + legend.outlineColor};
 
                  if(p.charAt(0) == 'n') { styles.top = (m + plotOffset.top) + 'px'; styles.bottom = 'auto'; }
             else if(p.charAt(0) == 'c') { styles.top = (m + (this.plotHeight - legendHeight) / 2) + 'px'; styles.bottom = 'auto'; }
