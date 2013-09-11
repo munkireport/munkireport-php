@@ -26,3 +26,7 @@ body {
   margin-bottom: 15px;
   padding: 7px 9px;
 }
+.flotr-legend-color-box *
+{
+  box-sizing: content-box;
+}
