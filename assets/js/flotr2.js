@@ -1631,7 +1631,7 @@ Flotr.defaultOptions = {
     mode: 'normal',        // => can be 'time' or 'normal'
     timeFormat: null,
     timeMode:'UTC',        // => For UTC time ('local' for local time).
-    timeUnit:'millisecond',// => Unit for time (millisecond, second, minute, hour, day, month, year)
+    timeUnit:'millisecond',// => Unit for time (millisecond, second, minute, hour, day, month, year)
     scaling: 'linear',     // => Scaling, can be 'linear' or 'logarithmic'
     base: Math.E,
     titleAlign: 'center',
@@ -1665,7 +1665,6 @@ Flotr.defaultOptions = {
   },
   grid: {
     color: '#545454',      // => primary color used for outline and labels
-    outlineColor: '#EEEEEE',// => primary color used for outline and labels
     backgroundColor: null, // => null for transparent, else color
     backgroundImage: null, // => background image. String or object with src, left and top
     watermarkAlpha: 0.4,   // => 
@@ -4785,11 +4784,10 @@ Flotr.addType('pie', {
     fillColor: null,       // => fill color
     fillOpacity: 0.6,      // => opacity of the fill color, set to 1 for a solid fill, 0 hides the fill
     explode: 6,            // => the number of pixels the splices will be far from the center
-    labelRadius: 1,        // => 0-1 for percentage of fullsize, or a specified pixel length
     sizeRatio: 0.6,        // => the size ratio of the pie relative to the plot 
     startAngle: Math.PI/4, // => the first slice start angle
     labelFormatter: Flotr.defaultPieLabelFormatter,
-    pie3D: false,          // => whether to draw the pie in 3 dimensions or not (ineffective) 
+    pie3D: false,          // => whether to draw the pie in 3 dimenstions or not (ineffective) 
     pie3DviewAngle: (Math.PI/2 * 0.8),
     pie3DspliceThickness: 20,
     epsilon: 0.1           // => how close do you have to get to hit empty slice
@@ -4822,7 +4820,7 @@ Flotr.addType('pie', {
       bisection     = startAngle + measure / 2,
       label         = options.labelFormatter(this.total, value),
       //plotTickness  = Math.sin(series.pie.viewAngle)*series.pie.spliceThickness / vScale;
-      explodeCoeff  = explode + radius * options.labelRadius,
+      explodeCoeff  = explode + radius + 4,
       distX         = Math.cos(bisection) * explodeCoeff,
       distY         = Math.sin(bisection) * explodeCoeff,
       textAlign     = distX < 0 ? 'right' : 'left',
@@ -5591,7 +5589,7 @@ Flotr.addPlugin('graphGrid', {
       // Draw axis/grid border.
       ctx.beginPath();
       ctx.lineWidth = grid.outlineWidth;
-      ctx.strokeStyle = grid.outlineColor;
+      ctx.strokeStyle = grid.color;
       ctx.lineJoin = 'round';
       
       for(i = 0; i <= sides; ++i){
@@ -5610,7 +5608,7 @@ Flotr.addPlugin('graphGrid', {
           lineTo = 'lineTo',
           moveTo = 'moveTo';
       ctx.lineWidth = lw;
-      ctx.strokeStyle = grid.outlineColor;
+      ctx.strokeStyle = grid.color;
       ctx.lineJoin = 'miter';
       ctx.beginPath();
       ctx.moveTo(orig, orig);
@@ -6547,7 +6545,6 @@ Flotr.addPlugin('legend', {
     noColumns: 1,          // => number of colums in legend table // @todo: doesn't work for HtmlText = false
     labelFormatter: function(v){return v;}, // => fn: string -> string
     labelBoxBorderColor: '#CCCCCC', // => border color for the little label boxes
-    outlineColor: '#CCCCCC', // Color of the border around the legend
     labelBoxWidth: 14,
     labelBoxHeight: 10,
     labelBoxMargin: 5,
@@ -6642,7 +6639,7 @@ Flotr.addPlugin('legend', {
           ctx.fillStyle = series[i].color;
           ctx.fillRect(x, y, lbw-1, lbh-1);
           
-          ctx.strokeStyle = legend.outlineColor;
+          ctx.strokeStyle = legend.labelBoxBorderColor;
           ctx.lineWidth = 1;
           ctx.strokeRect(Math.ceil(x)-1.5, Math.ceil(y)-1.5, lbw+2, lbh+2);
           
@@ -6672,7 +6669,7 @@ Flotr.addPlugin('legend', {
             '<td class="flotr-legend-color-box">',
               '<div style="border:1px solid ', legend.labelBoxBorderColor, ';padding:1px">',
                 '<div style="width:', (boxWidth-1), 'px;height:', (boxHeight-1), 'px;border:1px solid ', series[i].color, '">', // Border
-                  '<div style="width:', (boxWidth-2), 'px;height:', (boxHeight-2), 'px;', color, '"></div>', // Background
+                  '<div style="width:', boxWidth, 'px;height:', boxHeight, 'px;', color, '"></div>', // Background
                 '</div>',
               '</div>',
             '</td>',
@@ -6689,7 +6686,7 @@ Flotr.addPlugin('legend', {
             D.insert(legend.container, table);
           }
           else {
-            var styles = {position: 'absolute', 'zIndex': '2', 'border' : '1px solid ' + legend.outlineColor};
+            var styles = {position: 'absolute', 'zIndex': '2', 'border' : '1px solid ' + legend.labelBoxBorderColor};
 
                  if(p.charAt(0) == 'n') { styles.top = (m + plotOffset.top) + 'px'; styles.bottom = 'auto'; }
             else if(p.charAt(0) == 'c') { styles.top = (m + (this.plotHeight - legendHeight) / 2) + 'px'; styles.bottom = 'auto'; }

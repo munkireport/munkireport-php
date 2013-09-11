@@ -24,11 +24,11 @@ $(document).ready(function() {
 
 	// Copy barOptions
     myOptions = horBarOptions
-
-    myOptions.legend.labelFormatter = function(label, series) {
-			// series is the series object for the label
-			return '<a href="<?=url('show/listing/clients')?>#' + label + '">' + label + '</a>';
-			}
+	myOptions.legend = {show: false}
+    myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
+		//label = obj.data[v].label
+		//return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/clients')?>#' + label + '">' + label + '</a>';
+	}
 
 	var parms = {}
 	// HW Plot

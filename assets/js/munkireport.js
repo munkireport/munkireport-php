@@ -49,6 +49,18 @@ String.prototype.pluralize = function(count, plural)
 function drawGraph(url, id, options, parms)
 {
 	$.getJSON(url, {'req':JSON.stringify(parms)}, function(data) {
+
+		// Create a tick array to get labels on ticks
+		// (a modification to flotr2.js)
+		if(options.yaxis && options.yaxis.tickFormatter)
+		{
+			options.yaxis.ticks = data.map(function(x){
+				return [x.data[0][1]]
+			})
+		}
+		options.colors = makeColorGradient(data.length);
+		options.resolution = getScale();
+		//dumpj(options.colors)
 		Flotr.draw($(id)[0], data, options);
 		var myWidth = $(id).width()
 		// Bind resize
@@ -62,6 +74,54 @@ function drawGraph(url, id, options, parms)
 	});
 }
 
+// Get correct scale for screen resolution
+// Adapted from http://www.html5rocks.com/en/tutorials/canvas/hidpi/
+var scale = 0;
+function getScale()
+{
+	if( scale == 0)
+	{
+		var canvas = document.createElement('canvas'),
+		context = canvas.getContext('2d'),
+
+		devicePixelRatio = window.devicePixelRatio || 1,
+	    backingStoreRatio = context.webkitBackingStorePixelRatio ||
+	                        context.mozBackingStorePixelRatio ||
+	                        context.msBackingStorePixelRatio ||
+	                        context.oBackingStorePixelRatio ||
+	                        context.backingStorePixelRatio || 1;
+
+	    scale = devicePixelRatio / backingStoreRatio;                    		
+	}
+
+	return scale
+
+}
+
+// Generate nice colors
+// Adapted from http://krazydad.com/tutorials/makecolors.php
+function makeColorGradient(len)
+  {
+    var center = 128,
+		width = 127,
+		frequency1 = .4,
+		frequency2 = frequency1,
+		frequency3 = frequency1,
+		phase1 = -2,
+		phase2 = phase1 + 2,
+		phase3 = phase1 + 4;
+    var out = []
+    for (var i = 0; i < len; ++i)
+    {
+       var red = Math.round(Math.sin(frequency1*i + phase1) * width + center);
+       var grn = Math.round(Math.sin(frequency2*i + phase2) * width + center);
+       var blu = Math.round(Math.sin(frequency3*i + phase3) * width + center);
+       out.push('rgb('+red+','+grn+','+blu+')')
+    }
+
+    return out
+  }
+
 // Global variables
 var barOptions = {
 		    
@@ -69,7 +129,8 @@ var barOptions = {
 	            show: true,
 	            lineWidth: 0,
 	            fillOpacity: 0.8,
-	            barWidth: 0.9
+	            barWidth: 0.9,
+	            lineWidth: 0
 			},
 			markers: {
 				show: true,
@@ -107,16 +168,10 @@ var barOptions = {
 					return (Math.round(obj.x*100)/100)+'';
 				}
 			},
-			yaxis:
-			{
-				noticks: 1,
-				tickFormatter: function (y) {
-        			return y;
-			      }
-			},
+			yaxis: {},
 			grid:
 			{
-				verticalLines : false,
+		      horizontalLines : false,
 			},
 		    legend: {
 				position : 'ne',
@@ -131,7 +186,7 @@ var barOptions = {
 	        pie: {
 	            show: true,
 	            explode: 5,
-	            sizeRatio: .9,
+	            sizeRatio: .9 / getScale(), // Bug in flotr2
 	            labelRadius: 1/3,
 	            labelFormatter: function(total, value) {
 					return "<div style='font-size:150%; text-align:center; padding:2px; color:white;'>" + value + "</div>";

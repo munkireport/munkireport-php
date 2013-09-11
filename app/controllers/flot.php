@@ -89,13 +89,13 @@ class flot extends Controller
 		$sql = "SELECT count(1) as count, os_version 
 				FROM machine
 				group by os_version 
-				ORDER BY os_version DESC";
+				ORDER BY os_version ASC";
 
 		$cnt = 0;
 		foreach ($machine->query($sql) as $obj)
 		{
 			$obj->os_version = $obj->os_version ? $obj->os_version : 'Unknown';
-			$out[] = array('label' => $obj->os_version, 'data' => array(array(intval($obj->count), $cnt--)));
+			$out[] = array('label' => $obj->os_version, 'data' => array(array(intval($obj->count), $cnt++)));
 		}
 
 		echo json_encode($out);//TODO: run through view
