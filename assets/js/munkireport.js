@@ -58,10 +58,13 @@ function drawGraph(url, id, options, parms)
 				return [x.data[0][1]]
 			})
 		}
+		if(options.callBack){options.callBack(data)}
+
 		options.colors = makeColorGradient(data.length);
 		options.resolution = getScale();
 		//dumpj(options.colors)
-		Flotr.draw($(id)[0], data, options);
+		chartObjects[id] = Flotr.draw($(id)[0], data, options);
+
 		var myWidth = $(id).width()
 		// Bind resize
 		$(window).resize(function() {
@@ -123,7 +126,8 @@ function makeColorGradient(len)
   }
 
 // Global variables
-var barOptions = {
+var chartObjects = {}, // Holds instantiated chart objects
+	barOptions = {
 		    
 	    	bars: {
 	            show: true,
@@ -134,15 +138,19 @@ var barOptions = {
 			},
 			markers: {
 				show: true,
+				fontSize: 9,
 				position: 'ct'
 			},
 			xaxis:
 			{
 				showLabels: false
 			},
+			yaxis: {
+				min: 0
+			},
 			grid:
 			{
-				verticalLines : false,
+				verticalLines : false
 			},
 		    legend: {
 				position : 'ne',
@@ -163,12 +171,16 @@ var barOptions = {
 			},
 			markers: {
 				show: true,
+				fontSize: 10,
 				position: 'm',
 				labelFormatter: function(obj){
 					return (Math.round(obj.x*100)/100)+'';
 				}
 			},
 			yaxis: {},
+			xaxis: {
+				min: 0
+			},
 			grid:
 			{
 		      horizontalLines : false,

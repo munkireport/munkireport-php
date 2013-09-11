@@ -11,7 +11,7 @@
 		<div class="panel-body">
 			
 
-			<div style="height: 300px" id="os-plot"></div>
+			<div style="border: 1px solid #ddd; height: 200px" id="os-plot"></div>
 
 		</div>
 
@@ -23,11 +23,17 @@
 $(document).ready(function() {
 
 	// Copy barOptions
-    myOptions = horBarOptions
+    var myOptions = horBarOptions
 	myOptions.legend = {show: false}
+	myOptions.callBack = resizeBox;
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
 		label = obj.data[v].label
 		return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/clients')?>#' + label + '">' + label + '</a>';
+	}
+
+	function resizeBox(obj)
+	{
+		$('#os-plot').height(obj.length * 25 + 50);
 	}
 
 	var parms = {}
