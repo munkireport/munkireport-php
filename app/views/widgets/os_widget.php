@@ -26,8 +26,8 @@ $(document).ready(function() {
     myOptions = horBarOptions
 	myOptions.legend = {show: false}
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
-		//label = obj.data[v].label
-		//return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/clients')?>#' + label + '">' + label + '</a>';
+		label = obj.data[v].label
+		return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/clients')?>#' + label + '">' + label + '</a>';
 	}
 
 	var parms = {}

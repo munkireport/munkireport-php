@@ -2997,7 +2997,7 @@ Graph.prototype = {
 
     E.fire(this.el, 'flotr:afterinitoptions', [this]);
 
-    this.axes = flotr.Axis.getAxes(this.options);
+    this.axes = flotr.Axis.getAxes(this);
 
     // Initialize some variables used throughout this function.
     var assignedColors = [],
@@ -3286,7 +3286,7 @@ Axis.prototype = {
       tick = ticks[i];
       if(typeof(tick) === 'object'){
         v = tick[0];
-        label = (tick.length > 1) ? tick[1] : options.tickFormatter(v, {min : axis.min, max : axis.max});
+        label = (tick.length > 1) ? tick[1] : options.tickFormatter(v, this.obj);
       } else {
         v = tick;
         label = options.tickFormatter(v, {min : this.min, max : this.max});
@@ -3371,12 +3371,13 @@ Axis.prototype = {
 
 // Static Methods
 _.extend(Axis, {
-  getAxes : function (options) {
+  getAxes : function (obj) {
+    options = obj.options
     return {
-      x:  new Axis({options: options.xaxis,  n: 1, length: this.plotWidth}),
-      x2: new Axis({options: options.x2axis, n: 2, length: this.plotWidth}),
-      y:  new Axis({options: options.yaxis,  n: 1, length: this.plotHeight, offset: this.plotHeight, orientation: -1}),
-      y2: new Axis({options: options.y2axis, n: 2, length: this.plotHeight, offset: this.plotHeight, orientation: -1})
+      x:  new Axis({obj: obj, options: options.xaxis,  n: 1, length: this.plotWidth}),
+      x2: new Axis({obj: obj, options: options.x2axis, n: 2, length: this.plotWidth}),
+      y:  new Axis({obj: obj, options: options.yaxis,  n: 1, length: this.plotHeight, offset: this.plotHeight, orientation: -1}),
+      y2: new Axis({obj: obj, options: options.y2axis, n: 2, length: this.plotHeight, offset: this.plotHeight, orientation: -1})
     };
   }
 });
