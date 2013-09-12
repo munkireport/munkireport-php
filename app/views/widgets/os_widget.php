@@ -11,7 +11,7 @@
 		<div class="panel-body">
 			
 
-			<div style="border: 1px solid #ddd; height: 200px" id="os-plot"></div>
+			<div style="height: 200px" id="os-plot"></div>
 
 		</div>
 
