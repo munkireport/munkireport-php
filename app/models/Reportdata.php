@@ -50,7 +50,7 @@ class Reportdata extends Model {
 		}
 
 		// If long_username is empty, retain previous entry
-		if( ! $mylist['long_username'])
+		if( array_key_exists('long_username', $mylist) && empty($mylist['long_username']))
 		{
 			unset($mylist['long_username']);
 		}
