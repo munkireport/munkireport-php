@@ -1,4 +1,4 @@
-<div class="col-lg-6">
+<div class="col-lg-12">
 
 	<div class="panel panel-default">
 
@@ -10,7 +10,6 @@
 
 		<div class="panel-body">
 			
-
 			<div id="os-plot"></div>
 
 		</div>
@@ -31,6 +30,7 @@ $(document).ready(function() {
 		return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/clients')?>#' + label + '">' + label + '</a>';
 	}
 
+	// Resize the container after we know how many items we have
 	function resizeBox(obj)
 	{
 		$('#os-plot').height(obj.length * 25 + 50);

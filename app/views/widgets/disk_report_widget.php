@@ -11,10 +11,14 @@
 				<div class="panel-body text-center">
 
 				<?$queryobj = new Disk_report_model();
-				$sql = "select COUNT(CASE WHEN Percentage > 80 THEN 1 END) AS warning, 
+				$sql = "select COUNT(1) as total, COUNT(CASE WHEN Percentage > 80 THEN 1 END) AS warning, 
 					COUNT(CASE WHEN Percentage > 90 THEN 1 END) AS danger FROM diskreport";
 					?>
 					<?if($obj = current($queryobj->query($sql))):?>
+					<a href="<?=url('show/listing/disk')?>" class="btn btn-success">
+						<span class="bigger-150"> <?=$obj->total - $obj->warning - $obj->danger?> </span><br>
+						Under 80%
+					</a>
 					<a href="<?=url('show/listing/disk')?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->warning - $obj->danger?> </span><br>
 						Over 80%

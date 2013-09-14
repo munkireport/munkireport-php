@@ -40,6 +40,12 @@ a.list-group-item-danger > .badge
   background-color: #d9534f;
 }
 
+/* Scroll box for list widgets */
+.scroll-box
+{
+  height: 200px; overflow-y: scroll;
+}
+
 /* Fix bleeding in legend color box */
 .flotr-legend-color-box *
 {
