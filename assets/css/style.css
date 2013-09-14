@@ -27,6 +27,14 @@ body {
   padding: 7px 9px;
 }
 /* color for list group items */
+a.list-group-item-success > .badge
+{
+  background-color: #5cb85c;
+}
+a.list-group-item-warning > .badge
+{
+  background-color: #f0ad4e;
+}
 a.list-group-item-danger > .badge
 {
   background-color: #d9534f;
