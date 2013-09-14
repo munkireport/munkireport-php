@@ -85,8 +85,8 @@ def process(serial,items):
     baseurl = pref('BaseUrl') or \
               munkicommon.pref('SoftwareRepoURL') + '/report/'
     
-    hashurl = baseurl + "index.php/report/hash_check"
-    checkurl = baseurl + "index.php/report/check_in"
+    hashurl = baseurl + "index.php?/report/hash_check"
+    checkurl = baseurl + "index.php?/report/check_in"
     
     # Get hashes for all scripts
     for key, i in items.items():
