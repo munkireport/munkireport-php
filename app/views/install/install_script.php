@@ -2,7 +2,7 @@
 ?>#!/bin/sh
 
 BASEURL="<?php echo
-	(isset($_SERVER['HTTPS']) ? 'https://' : 'http://')
+	(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://')
 	. $_SERVER['HTTP_HOST']
 	. conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
