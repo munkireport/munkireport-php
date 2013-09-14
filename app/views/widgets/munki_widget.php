@@ -1,9 +1,14 @@
-		<div class="col-lg-4 col-md-4">
+		<div class="col-lg-4 col-md-6">
+
 			<div class="panel panel-default">
+
 			  <div class="panel-heading">
+
 			    <h3 class="panel-title"><i class="icon-smile"></i> Munki</h3>
+
 			  </div>
-			  <div class="panel-body">
+
+			  <div class="panel-body text-center">
 			  	<?$munkireport = new Munkireport();
 				$sql = "select 
 					sum(errors > 0) as errors, 
@@ -30,6 +35,7 @@
 					Installed
 				</a>
 				<?endforeach?>
+
 			  </div>
 
 			</div><!-- /panel -->

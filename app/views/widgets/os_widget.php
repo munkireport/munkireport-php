@@ -1,4 +1,4 @@
-<div class="col-lg-12">
+<div class="col-lg-6">
 
 	<div class="panel panel-default">
 
@@ -11,7 +11,7 @@
 		<div class="panel-body">
 			
 
-			<div style="height: 200px" id="os-plot"></div>
+			<div id="os-plot"></div>
 
 		</div>
 

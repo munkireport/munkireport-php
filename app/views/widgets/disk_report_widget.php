@@ -1,4 +1,4 @@
-		<div class="col-lg-4 col-md-4">
+		<div class="col-lg-4 col-md-6">
 
 			<div class="panel panel-default">
 
@@ -8,7 +8,7 @@
 				
 				</div>
 
-				<div class="panel-body">
+				<div class="panel-body text-center">
 
 				<?$queryobj = new Disk_report_model();
 				$sql = "select COUNT(CASE WHEN Percentage > 80 THEN 1 END) AS warning, 

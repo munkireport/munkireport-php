@@ -6,10 +6,9 @@
 
 		<?$this->view('widgets/client_widget')?>
 
-		<?$this->view('widgets/munki_widget')?>
-
 		<?$this->view('widgets/disk_report_widget')?>
 
+		<?$this->view('widgets/munki_widget')?>
 
 	</div> <!-- /row -->
 
