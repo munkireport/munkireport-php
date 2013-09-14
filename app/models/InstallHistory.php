@@ -5,11 +5,11 @@ class InstallHistory extends Model {
 	{
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial_number;
+		$this->rs['serial_number'] = $serial_number; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['date'] = 0;
 		$this->rs['displayName'] = '';
 		$this->rs['displayVersion'] = '';
-		$this->rs['packageIdentifiers'] = array();
+		$this->rs['packageIdentifiers'] = '';
 		$this->rs['processName'] = '';
 		
 		// Create table if it does not exist
@@ -51,8 +51,16 @@ class InstallHistory extends Model {
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
+
 		foreach($mylist as $item)
 		{
+			// PackageIdentifiers is an array, so we only retain one
+			// packageidentifier so we can differentiate between
+			// Apple and third party tools
+			if(array_key_exists('packageIdentifiers', $item))
+			{
+				$item['packageIdentifiers'] = array_pop($item['packageIdentifiers']);
+			}
 			$this->id = 0;
 			$this->merge($item)->save();
 		}
