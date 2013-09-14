@@ -8,8 +8,11 @@
  **/
 function check_warranty_status(&$warranty_model)
 {
-	// Check if virtual machine
-	if(strpos($warranty_model->serial_number, 'VMWV') === 0)
+	// Check if virtual machine 
+	// We assume vmware serials contain upper and lower chars
+	// There are actual macs with a serial starting with VM
+	// Todo: make this check more robust/support other VMs
+	if(strtoupper($warranty_model->serial_number) != $warranty_model->serial_number)
 	{
 		$warranty_model->status = "Virtual Machine";
 		
