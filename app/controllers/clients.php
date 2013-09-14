@@ -29,52 +29,11 @@ class clients extends Controller
 	 **/
 	function detail($sn='')
 	{
-		$format = $ext = pathinfo($sn, PATHINFO_EXTENSION);
-		$sn = basename($sn, "." . $format);
-
-		$hash     = new Hash($sn, "Machine");
-		$report   = new Reportdata($sn);
-		$machine  = new Machine($sn);
-		$warranty = new Warranty($sn);
-		$installHistory = new InstallHistory($sn);
-		$installArray = array();
-		$warrantyArray = array();
-		$machineArray = array( "formatted_available_disk_space"
-			=> humanreadablesize($machine->available_disk_space * 1024)
-		);
-
-		foreach($machine->rs as $key => $val)
-			$machineArray[$key] = $val;
-		foreach($warranty->rs as $key => $val)
-			$warrantyArray[$key] = $val;
-		foreach($installHistory->itemsBySerialNumber($sn) as $key => $val)
-			$installArray[$key] = $val;
-
-
-		$data = array(
-			"meta" => array(
-				"iconURL" => "https://km.support.apple.com.edgekey.net"
-								. "/kb/securedImage.jsp?configcode="
-								. substr($sn, 8)
-								. "&size=120x120",
-				"hostname" => $machine->computer_name,
-				"checkin-date-relative" => RelativeTime(time()-$hash->timestamp) . " ago",
-				"checkin-date" => $hash->timestamp,
-				"remote_ip" => $report->remote_ip,
-				"console_user" => $report->console_user,
-				"long_username" => $report->long_username
-			),
-			"machine" => $machineArray,
-			"warranty" => $warrantyArray,
-			"installHistory" => $installArray,
-			'serial_number' => $sn
-		);
+		
+		$data = array('serial_number' => $sn);
 
         $obj = new View();
-        if ($format == "json")
-	        $obj->view('client/client_detail.json', $data);
-	    else
-	    	$obj->view("client/client_detail", $data);
+    	$obj->view("client/client_detail", $data);
 	}
 
 	// ------------------------------------------------------------------------

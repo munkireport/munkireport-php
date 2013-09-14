@@ -2,6 +2,8 @@
 	<?$machine = new Machine($serial_number)?>
 	<?$report   = new Reportdata($serial_number)?>
 	<?$disk   = new disk_report_model($serial_number)?>
+	<?$warranty   = new Warranty($serial_number)?>
+	<?//todo: make 1 query?>
 	<div class="row">
 		<div class="col-lg-1">
 			<img width="72" height="72" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=<?=substr($serial_number, 8)?>&amp;size=120x120" />
@@ -20,23 +22,23 @@
 				<?endif?>
 				<br />
 				Warranty Coverage: 
-				<?if ($warranty['status'] == "Supported"):?>
+				<?if ($warranty->status == "Supported"):?>
 					<span class='text-success'>Supported until 
-						<?=$warranty['end_date']?>
+						<?=$warranty->end_date?>
 					</span>
-				<?elseif ($warranty['status'] == "No Applecare"):?>
+				<?elseif ($warranty->status == "No Applecare"):?>
 					<span class='text-warning'>No Applecare until 
-						<?=$warranty['end_date']?>
+						<?=$warranty->end_date?>
 					</span>
-				<?elseif ($warranty['status'] == "Unregistered serialnumber"):?>
+				<?elseif ($warranty->status == "Unregistered serialnumber"):?>
 					<span class='text-warning'>Unregistered</span>
 					<a target="_blank" href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&amp;country=USA&amp;id=<?=$serial_number?>">Register</a>
-				<?elseif ($warranty['status'] == "Expired"):?>
+				<?elseif ($warranty->status == "Expired"):?>
 					<span class='text-danger'>Expired on 
-						<?=$warranty['end_date']?>
+						<?=$warranty->end_date?>
 					</span>
 				<?else:?>
-					<span class='text-danger'><?=$warranty['status']?></span>
+					<span class='text-danger'><?=$warranty->status?></span>
 				<?endif?>
 
 				</small>
@@ -89,7 +91,7 @@
 					<dt>Est. Manufacture date</dt>
 					<dd><?=estimate_manufactured_date($serial_number)?></dd>
 					<dt>Est. Purchase date</dt>
-					<dd><?=$warranty['purchase_date']?></dd>
+					<dd><?=$warranty->purchase_date?></dd>
 				</dl>
 
 				<dl class="dl-horizontal">
