@@ -7,19 +7,17 @@
 					<h3 class="panel-title"><i class="icon-star-empty"></i> New clients <span id="new-clients" class="badge pull-right"></span></h3>
 
 				</div>
-				<div style="height: 200px; overflow-y: scroll">
+
+				<div class="list-group scroll-box">
 				  	<?$queryobj = new Machine();// Generic queryobject?>
 
 				  	<?	$lastweek = time() - 60 * 60 * 24 * 7;
 				  		$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) WHERE reg_timestamp > $lastweek ORDER BY reg_timestamp DESC"?>
-					<table class="table">
-						<?foreach($queryobj->query($sql) as $obj):?> 
-						<tr>
-							<td><a class="btn btn-xs btn-default" href="<?=url('clients/detail/'.$obj->serial_number)?>"><?=$obj->computer_name?></a></td>
-							<td class="text-right"><time datetime="<?=$obj->reg_timestamp?>">...</time></td>
-						</tr>
-						<?endforeach?>
-					</table>
+					<?foreach($queryobj->query($sql) as $obj):?> 
+					<a class="list-group-item" href="<?=url('clients/detail/'.$obj->serial_number)?>"><?=$obj->computer_name?>
+						<span class="pull-right"><time datetime="<?=$obj->reg_timestamp?>">...</time></span>
+					</a>
+					<?endforeach?>
 				</div>
 			<script>
 			$(document).ready(function() {

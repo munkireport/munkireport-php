@@ -10,7 +10,6 @@
 
 				<div class="panel-body">
 					
-
 					<div style="height: 200px" id="ip-plot"></div>
 
 				</div>
