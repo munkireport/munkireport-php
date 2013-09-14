@@ -1,0 +1,17 @@
+Hacking instructions for munkireport-php
+
+##### Munkireport 2 #####
+
+Munkireport relies on:
+
+Serverside:
+---
+php
+
+ClientSide:
+---
+jQuery
+Datatables
+Flotr2
+
+For persistent storage (sorting and search in datatables) you need a browser that supports localStorage
