@@ -26,7 +26,7 @@
             return state(oSettings.sTableId);
         },
         "fnInitComplete": function(oSettings, json) {
-          $('table').wrap('<div class="table-responsive" />'); // Wrap table in responsive div
+          $(this).wrap('<div class="table-responsive" />'); // Wrap table in responsive div
         },
         "sPaginationType": "bootstrap"
       } );
