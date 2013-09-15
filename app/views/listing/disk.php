@@ -79,9 +79,12 @@
 			} );
 		</script>
 
-		  <h3>Disk report <span id="total-count" class='label label-primary'>…</span></h3>
+	  <h3>Disk report <span id="total-count" class='label label-primary'>…</span></h3>
+
+	  <div class="table-responsive">
 
 		  <table class="table table-striped table-condensed">
+
 		    <thead>
 		      <tr>
 		      	<th data-colname='machine#computer_name'>Name</th>
@@ -95,14 +98,21 @@
 		    	<th data-colname='diskreport#SMARTStatus'>SMART</th>
 		      </tr>
 		    </thead>
+		    
 		    <tbody>
 		    	<tr>
 					<td colspan="5" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
+
 		  </table>
+
+		</div> <!-- /table-responsive -->
+
     </div> <!-- /span 12 -->
+
   </div> <!-- /row -->
+
 </div>  <!-- /container -->
 
 <?$this->view('partials/foot')?>

@@ -9,6 +9,7 @@
   <div class="row">
 
   	<div class="col-lg-12">
+  		
 		<script type="text/javascript">
 
 		$(document).ready(function() {
@@ -112,8 +113,10 @@
 			} );
 		</script>
 
-		  <h3>Munki <span id="total-count" class='label label-primary'>…</span></h3>
-		  
+	  <h3>Munki <span id="total-count" class='label label-primary'>…</span></h3>
+
+	   <div class="table-responsive">
+ 
 		  <table class="table table-striped table-condensed">
 		    <thead>
 		      <tr>
@@ -139,9 +142,15 @@
 					<td colspan="5" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
+
 		  </table>
+
+		</div> <!-- /table-responsive -->     
+
     </div> <!-- /span 12 -->
+
   </div> <!-- /row -->
+
 </div>  <!-- /container -->
 
 <?$this->view('partials/foot')?>
