@@ -50,10 +50,8 @@
 			} );
 		</script>
 
-	  <h3>Machines <span id="total-count" class='label label-primary'>…</span></h3>
-
-	  <div class="table-responsive">
-
+		  <h3>Machines <span id="total-count" class='label label-primary'>…</span></h3>
+		  
 		  <table class="table table-striped table-condensed">
 		    <thead>
 		      <tr>
@@ -73,13 +71,8 @@
 				</tr>
 		    </tbody>
 		  </table>
-
-		</div> <!-- /table-responsive -->		  
-
     </div> <!-- /span 12 -->
-
   </div> <!-- /row -->
-
 </div>  <!-- /container -->
 
 <?$this->view('partials/foot')?>

@@ -17,13 +17,16 @@
   // Datatables defaults
   $(document).ready(function() {
       $.extend( $.fn.dataTable.defaults, {
-        "sDom": "<'row'<'col-lg-6'l r><'col-lg-6'f>>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+        "sDom": "<'row'<'col-lg-6 col-md-6'l r><'col-lg-6 col-md-6'f>>t<'row'<'col-lg-6 col-md-6'i><'col-lg-6 col-md-6'p>>",
         "bStateSave": true,
         "fnStateSave": function (oSettings, oData) {
             state( oSettings.sTableId, oData);
         },
         "fnStateLoad": function (oSettings) {
             return state(oSettings.sTableId);
+        },
+        "fnInitComplete": function(oSettings, json) {
+          $('table').wrap('<div class="table-responsive" />'); // Wrap table in responsive div
         },
         "sPaginationType": "bootstrap"
       } );
