@@ -57,3 +57,10 @@ a.list-group-item-danger > .badge
 {
   margin-top: 0;
 }
+
+/* DataTables processing */
+.dataTables_processing
+{
+  padding: 4px;
+  float: left;
+}

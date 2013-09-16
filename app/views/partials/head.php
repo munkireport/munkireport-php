@@ -16,8 +16,8 @@
 
   // Datatables defaults
   $(document).ready(function() {
-      $.extend( $.fn.dataTable.defaults, {
-        "sDom": "<'row'<'col-lg-6 col-md-6'l r><'col-lg-6 col-md-6'f>>t<'row'<'col-lg-6 col-md-6'i><'col-lg-6 col-md-6'p>>",
+      $.extend( true, $.fn.dataTable.defaults, {
+        "sDom": "<'row'<'col-xs-6'l r><'col-xs-6'f>>t<'row'<'col-lg-6 col-md-6'i><'col-lg-6 col-md-6'p>>",
         "bStateSave": true,
         "fnStateSave": function (oSettings, oData) {
             state( oSettings.sTableId, oData);
@@ -27,8 +27,18 @@
         },
         "fnInitComplete": function(oSettings, json) {
           $(this).wrap('<div class="table-responsive" />'); // Wrap table in responsive div
+
+          // Customize search box and select
+          $('.dataTables_filter label').contents().filter(function(){
+            return this.nodeType === 3;
+          }).remove();
+          $('.dataTables_filter input').addClass('form-control input-sm').attr('placeholder', 'Search');
+          $('select').addClass('form-control input-sm');
         },
-        "sPaginationType": "bootstrap"
+        "sPaginationType": "bootstrap",
+       "oLanguage": {
+         "sProcessing": ' <i class="icon-refresh icon-spin"></i>'
+       } 
       } );
 
       // Set/retrieve state data in localStorage
