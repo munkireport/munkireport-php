@@ -51,3 +51,9 @@ a.list-group-item-danger > .badge
 {
   box-sizing: content-box;
 }
+
+/* Fix paging */
+.paging_bootstrap ul.pagination
+{
+  margin-top: 0;
+}
