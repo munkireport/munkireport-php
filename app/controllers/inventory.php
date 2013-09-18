@@ -1,6 +1,14 @@
 <?php
 class inventory extends Controller
 {
+    // Require authentication
+    function __construct()
+    {
+        if( ! isset($_SESSION['user']))
+        {
+            redirect('auth/login');
+        }
+    } 
 
     function index() {
         

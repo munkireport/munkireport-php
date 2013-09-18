@@ -5,7 +5,7 @@ class clients extends Controller
 	{
 		if( ! isset($_SESSION['user']))
 		{
-			redirect('auth/login/clients');
+			redirect('auth/login');
 		}
 	} 
 
