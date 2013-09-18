@@ -40,7 +40,7 @@ class auth extends Controller
 		// No valid mechanisms found, bail
 		if ( ! $auth_mechanisms)
 		{
-			redirect('auth/generate');
+			redirect('auth/generate/noauth');
 			//die('Error: No authentication mechanism set in config file');
 			// TODO: make this nicer
 			// EDIT (joe.wollard) - is redirecting nicer?
@@ -89,9 +89,9 @@ class auth extends Controller
 		redirect('');
 	}
 	
-	function generate()
+	function generate($why = '')
 	{
-		$data = array();
+		$data = array('reason' => $why);
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
 		$data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
 		

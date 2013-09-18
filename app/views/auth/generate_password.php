@@ -1,21 +1,39 @@
 <?$this->view('partials/head')?>
 
-<div>
-<form action="" method="post" accept-charset="UTF-8" >
-    <h2><span>Generate password hash</span></h2>
-<?php if(isset($generated_pwd)):?>
-	<label for="genpwd">Add this line to config.php:</label><input type="text" id="genpwd" name="genpwd" class="text" value="$GLOBALS['auth_config']['<?php echo $login?>'] = '<?php echo $generated_pwd?>';"></input><br/>
-	<input type="submit" id="submit" value="Start over" />
-<?php else:?>
-	<label for="loginusername">Username:</label><input type="text" id="loginusername" name="login" class="text" value="<?php echo $login?>"></input><br/>
-	<label for="loginpassword">Password:</label><input type="password" id="loginpassword" name="password" class="text"></input>
-	<input type="submit" id="submit" value="Generate" />
-<?php endif?>
-</form>
-<form method="post" action="/login/">
-<div style='display:none'><input type='hidden' name='csrfmiddlewaretoken' value='02d2a8353c8aa6461bcd921ac90417ee' /></div>
-</form>
+<div class="container">
 
+	<div style="margin: auto" class="loginform">
+		<form action="" method="post" accept-charset="UTF-8" >
+		    <h2><span>Generate password hash</span></h2>
+		    <?if($reason == 'noauth'):?>
+		    <div class="alert alert-danger">No authentication information found, please add an account to the config file.</div>
+		    <?endif?>
+		<?php if(isset($generated_pwd)):?>
+			<!-- Modal -->
+			<div class="modal" role="dialog" aria-labelledby="myModalLabel" style="display: block">
+				<div class="modal-dialog">
+				  <div class="modal-content">
+				    <div class="modal-header">
+				      <h4 class="modal-title">Generated hash</h4>
+				    </div>
+				    <div class="modal-body">
+				      	<label for="genpwd">Add this line to config.php:</label>
+						<input type="text" id="genpwd" name="genpwd" class="form-control" value="$auth_config['<?php echo $login?>'] = '<?php echo $generated_pwd?>';"></input><br/>
+				    </div>
+				    <div class="modal-footer">
+				      <button type="submit" class="btn btn-default">Start over</button>
+				      <a href="<?=url()?>" class="btn btn-default" data-dismiss="modal">Back to site</a>
+				    </div>
+				  </div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+		<?php else:?>
+			<label for="loginusername">Username:</label><input type="text" id="loginusername" name="login" class="text" value="<?php echo $login?>"></input><br/>
+			<label for="loginpassword">Password:</label><input type="password" id="loginpassword" name="password" class="text"></input>
+			<button type="submit" class="btn btn-default">Generate</button>
+		<?php endif?>
+		</form>
+	</div>
 
 </div>
 

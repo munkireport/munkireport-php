@@ -10,7 +10,18 @@ define('APP_ROOT', __DIR__ .'/' );
 // Include config
 //===============================================
 require_once(APP_ROOT . "config_default.php");
-require_once(APP_ROOT . "config.php");
+
+if ((include_once APP_ROOT . "config.php") !== 1)
+{
+	fatal(APP_ROOT. "config.php is missing!<br>
+Unfortunately, Munkireport does not work without it</p>");
+}
+
+// Convert auth_config to config item
+if(isset($auth_config))
+{
+	$conf['auth']['auth_config'] = $auth_config;
+}
 
 
 // Make config part of global array
@@ -33,6 +44,17 @@ function debug($message)
 			. is_string($message) ? $message : var_export($message, TRUE)
 			. "</span>";
 	}
+}
+
+/**
+ * Fatal error, show message and die
+ *
+ * @author AvB
+ **/
+function fatal($msg)
+{
+	include('assets/html/fatal_error.html');
+	exit(1);
 }
 
 
