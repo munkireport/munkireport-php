@@ -3,10 +3,22 @@ class auth extends Controller
 {
 	// Authentication mechanisms we handle
 	public $mechanisms = array('config');
+
+	// Authentication mechanisms available
+	public $auth_mechanisms = array();
 	
 	function __construct()
 	{
-
+		// Check if there's a valid auth mechanism in config
+		$auth_mechanisms = array();
+		$authSettings = conf('auth');
+		foreach($this->mechanisms as $mech)
+		{
+			if (isset($authSettings["auth_$mech"]) && is_array($authSettings["auth_$mech"]))
+			{
+				$this->auth_mechanisms[$mech] = $authSettings["auth_$mech"];
+			}
+		}
 	} 
 	
 	
@@ -26,21 +38,12 @@ class auth extends Controller
 		
 		$data = array('login' => $login, 'url' => url("auth/login/$return"));
 		
-		// Check if there's a valid auth mechanism in config
-		$auth_mechanisms = array();
-		$authSettings = conf('auth');
-		foreach($this->mechanisms as $mech)
-		{
-			if (isset($authSettings["auth_$mech"]) && is_array($authSettings["auth_$mech"]))
-			{
-				$auth_mechanisms[$mech] = $authSettings["auth_$mech"];
-			}
-		}
+		
 		
 		// No valid mechanisms found, bail
-		if ( ! $auth_mechanisms)
+		if ( ! $this->auth_mechanisms)
 		{
-			redirect('auth/generate/noauth');
+			redirect('auth/generate');
 			//die('Error: No authentication mechanism set in config file');
 			// TODO: make this nicer
 			// EDIT (joe.wollard) - is redirecting nicer?
@@ -52,7 +55,7 @@ class auth extends Controller
 			// Get hasher object
 			$t_hasher = $this->load_phpass();
 			
-			foreach($auth_mechanisms as $mechanism => $auth_data)
+			foreach($this->auth_mechanisms as $mechanism => $auth_data)
 			{
 				// Local is just a username => hash array
 				if($mechanism == 'config')
@@ -89,9 +92,11 @@ class auth extends Controller
 		redirect('');
 	}
 	
-	function generate($why = '')
+	function generate()
 	{
-		$data = array('reason' => $why);
+		// Add a reason why generate is called
+		$data = array('reason' => empty($this->auth_mechanisms) ? 'noauth' : 'none');
+
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
 		$data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
 		

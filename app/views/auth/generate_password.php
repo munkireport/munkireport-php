@@ -16,12 +16,12 @@
 				    <div class="modal-header">
 				      <h4 class="modal-title">Generated hash</h4>
 				    </div>
-				    <div class="modal-body">
-				      	<label for="genpwd">Add this line to config.php:</label>
+				    <div class="modal-body has-success">
+				      	<label class="control-label" for="genpwd">Add this line to config.php:</label>
 						<input type="text" id="genpwd" name="genpwd" class="form-control" value="$auth_config['<?php echo $login?>'] = '<?php echo $generated_pwd?>';"></input><br/>
 				    </div>
 				    <div class="modal-footer">
-				      <button type="submit" class="btn btn-default">Start over</button>
+				      <button type="submit" class="btn btn-default">Generate another</button>
 				      <a href="<?=url()?>" class="btn btn-default" data-dismiss="modal">Back to site</a>
 				    </div>
 				  </div><!-- /.modal-content -->
@@ -30,7 +30,8 @@
 		<?php else:?>
 			<label for="loginusername">Username:</label><input type="text" id="loginusername" name="login" class="text" value="<?php echo $login?>"></input><br/>
 			<label for="loginpassword">Password:</label><input type="password" id="loginpassword" name="password" class="text"></input>
-			<button type="submit" class="btn btn-default">Generate</button>
+			<button type="submit" class="btn btn-primary">Generate</button>
+			<a href="<?=url()?>" class="btn btn-default" data-dismiss="modal">Back to site</a>
 		<?php endif?>
 		</form>
 	</div>
