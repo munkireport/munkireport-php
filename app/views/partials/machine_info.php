@@ -48,7 +48,7 @@
 				</a>
 				<?if(conf('vnc_link')):?>
 
-				<a class="btn btn-default btn-xs" href="<?printf(conf('vnc_link'), $meta['remote_ip'])?>">Remote Control (vnc)</a>
+				<a class="btn btn-default btn-xs" href="<?printf(conf('vnc_link'), $report->remote_ip)?>">Remote Control (vnc)</a>
 				<?endif?>
 		</div>
 		<div class="col-lg-4">
