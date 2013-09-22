@@ -1,14 +1,9 @@
-	</div>
-    <!-- End of main_content -->
+  <div class="container">
+    <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
+      <i>MunkiReport version <?=$GLOBALS['version']?></i>
+    </div>
+  </div>
 
-    <div id="footer">
-	  <div class="clearingdiv"></div>
-	</div>
-	
-  </div>
-  <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
-	<i>MunkiReport version <?=$GLOBALS['version']?></i>
-  </div>
 
   <script src="<?=conf('subdirectory')?>assets/js/bootstrap.min.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/jquery.dataTables.min.js"></script>
