@@ -1,4 +1,15 @@
 <?php if ( ! defined( 'KISS' ) ) exit;
+
+	/*
+	|===============================================
+	| Default settings DON'T CHANGE!
+	|===============================================
+	|  
+	| Please don't edit this file, it will get overwritten 
+	| when a new version gets out. Just add the items you
+	| want to change to config.php and change them there.
+	|
+	*/
 	
 	/*
 	|===============================================
@@ -49,6 +60,9 @@
 	| http://mysite/munkireport/ you should set subdirectory to
 	| '/munkireport/'
 	| If you're using .htaccess to rewrite urls, you should change that too
+	| The code below is for automagically deterimining your subdirectory,
+	| if it fails, just add $conf['subdirectory'] = '/your_sub_dir/' in
+	| config.php
 	|
 	*/
 	$conf['subdirectory'] = substr(
@@ -72,7 +86,9 @@
 	| VNC link, optional link in the client detail view
 	|===============================================
 	| 
-	| Will appear in the title bar of your browser and as heading on each webpage
+	| If you want to have a link that opens a screensharing connection
+	| to a client, enable this setting. If you don't want the link
+	| set it to an empty string: $conf['vnc_link'] = "";
 	|
 	*/
 	$conf['vnc_link'] = "vnc://%s:5900";
@@ -92,7 +108,7 @@
 	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
 	|
 	*/
-	$conf['bundleid_ignorelist'][] = 'com.apple.print.PrinterProxy';
+	$conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
 
 	/*
 	|===============================================
