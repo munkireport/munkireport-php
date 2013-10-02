@@ -9,18 +9,18 @@ Munkireport relies on:
 
 Serverside:
 ---
-php
+* php
 
 ClientSide:
 ---
-jQuery
-Datatables
-Flotr2
-Moment.js
+* jQuery
+* Datatables
+* Flotr2
+* Moment.js
 
 User interface:
 ---
-Bootstrap 3.0
-Font Awesome
+* Bootstrap 3.0
+* Font Awesome
 
 For persistent storage (sorting and search in datatables) you need a browser that supports localStorage
