@@ -8,8 +8,10 @@ I moved the project to github because I like the way you can branch and merge (a
 
 This project is still a work-in-progress, although I'm using it in a production environment for quite some time now.
 
-Installation
+Setup
 ---
+
+Setup is easy, you could be running your own reportingserver within minutes! 
 
 Please read the [install manual](docs/setup.md)
 
