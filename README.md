@@ -6,7 +6,9 @@ munkireport-php
 This is version 2 of munkireport-php, a reporting client for [munki](https://code.google.com/p/munki/). The previous version of munkireport is still available on googlecode: [munkireport-php](https://code.google.com/p/munkireport-php/).
 I moved the project to github because I like the way you can branch and merge (and it does not hurt my eyes so bad).
 
-This project is still a work-in-progress, although I'm using it in a production environment for quite some time now.
+This project is a complete rewrite from the previous version, which was a quick-and-dirty port from the original python based munkireport [https://code.google.com/p/munkireport/]. 
+
+The project is still a work-in-progress, although I'm using it in a production environment for quite some time now.
 
 Setup
 ---
