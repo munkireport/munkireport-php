@@ -39,7 +39,7 @@ curl --fail --silent "${TPL_BASE}{submit.preflight,disk_info}" --remote-name --r
 if [ "${?}" != 0 ]
 then
 	echo "Failed to download preflight scripts!"
-	rm "${MUNKIPATH}preflight.d/"{submit.preflight,disk_info}
+	rm -f "${MUNKIPATH}preflight.d/"{submit.preflight,disk_info}
 else
 	chmod a+x "${MUNKIPATH}preflight.d/"{submit.preflight,disk_info}
 fi
@@ -65,6 +65,13 @@ defaults write "${PREFPATH}" ReportItems -dict-add InventoryItem "/Library/Manag
 
 # Add disk_info
 defaults write "${PREFPATH}" ReportItems -dict-add disk_report_model "${MUNKIPATH}preflight.d/cache/disk.plist"
+
+<?foreach($scripts AS $scriptname => $code):?>
+
+<?="## $scriptname ##"?> 
+<?=file_get_contents($code)?>
+
+<?endforeach?>
 
 echo "Installation of MunkiReport v${VERSION} complete."
 exit 0

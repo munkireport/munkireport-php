@@ -16,10 +16,7 @@ class Module extends Controller
 
 	function __construct()
 	{
-		if( ! isset($_SESSION['user']))
-		{
-			redirect('auth/login/modules');
-		}
+		
 	} 
 
 	function index()
