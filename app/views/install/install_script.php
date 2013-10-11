@@ -34,14 +34,14 @@ touch "${MUNKIPATH}munkireport-${VERSION}"
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"
 cd "${MUNKIPATH}preflight.d"
-curl --fail --silent "${TPL_BASE}{submit.preflight,disk_info}" --remote-name --remote-name
+curl --fail --silent "${TPL_BASE}submit.preflight" --remote-name
 
 if [ "${?}" != 0 ]
 then
 	echo "Failed to download preflight scripts!"
-	rm -f "${MUNKIPATH}preflight.d/"{submit.preflight,disk_info}
+	rm -f "${MUNKIPATH}preflight.d/submit.preflight"
 else
-	chmod a+x "${MUNKIPATH}preflight.d/"{submit.preflight,disk_info}
+	chmod a+x "${MUNKIPATH}preflight.d/submit.preflight"
 fi
 
 echo "Configuring munkireport"
@@ -52,19 +52,8 @@ defaults delete "${PREFPATH}" ReportItems
 # Add munkireport
 defaults write "${PREFPATH}" ReportItems -dict-add Munkireport "/Library/Managed Installs/ManagedInstallReport.plist"
 
-# Add InstallHistory (in 10.5 you need SWU.log)
-if [[ `uname -r` < '10.0.0' ]]; then 
-	IPATH="/Library/Logs/Software Update.log"
-else
-	IPATH="/Library/Receipts/InstallHistory.plist"
-fi
-defaults write "${PREFPATH}" ReportItems -dict-add InstallHistory "${IPATH}"
-
 # Add inventory
 defaults write "${PREFPATH}" ReportItems -dict-add InventoryItem "/Library/Managed Installs/ApplicationInventory.plist"
-
-# Add disk_info
-defaults write "${PREFPATH}" ReportItems -dict-add disk_report_model "${MUNKIPATH}preflight.d/cache/disk.plist"
 
 <?foreach($scripts AS $scriptname => $code):?>
 
