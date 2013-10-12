@@ -17,7 +17,7 @@ Features
 * Get reports on many features (hardware types, disk usage, etc)
 * Lightweight: only sends reports when facts have changed
 * Responsive webdesign (looks good on large and small screens)
-* [more features](/munkireport/munkireport-php/wiki/Features)
+* [more features](https://github.com/munkireport/munkireport-php/wiki/Features)
 
 Setup
 ---
