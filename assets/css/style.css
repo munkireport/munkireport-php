@@ -19,7 +19,7 @@ a.list-group-item-danger > .badge
 /* Scroll box for list widgets */
 .scroll-box
 {
-  height: 200px; overflow-y: scroll;
+  max-height: 200px; overflow-y: scroll;
 }
 
 /* Fix bleeding in legend color box */
