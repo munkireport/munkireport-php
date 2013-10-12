@@ -16,7 +16,7 @@
 					?>
 					<?if($obj = current($queryobj->query($sql))):?>
 					<a href="<?=url('show/listing/disk')?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->total - $obj->warning - $obj->danger?> </span><br>
+						<span class="bigger-150"> <?=$obj->total - $obj->warning?> </span><br>
 						Under 80%
 					</a>
 					<a href="<?=url('show/listing/disk')?>" class="btn btn-warning">
