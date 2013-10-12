@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Autoversion updater for munkireport
+# $GLOBALS['version'] = '2.0.0.275';
+
+VERSION_FILE=$(git rev-parse --show-toplevel)"/app/helpers/site_helper.php"
+COMMIT_COUNT=$(git rev-list HEAD --count)
+
+# This is a post_commit hook, so we up the count with one
+COMMIT_COUNT=$(( $COMMIT_COUNT + 1 ))
+
+# Replace last part of the version number with the commit count
+sed -i .bak "s/\(\$GLOBALS\['version'\] = '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.\)[0-9][0-9]*/\1$COMMIT_COUNT/" $VERSION_FILE
