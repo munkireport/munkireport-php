@@ -10,6 +10,15 @@ This project is a complete rewrite from the previous version, which was a quick-
 
 The project is still a work-in-progress, although I'm using it in a production environment for quite some time now.
 
+Features
+---
+
+* Quick overview of your mac fleet with a dashboard
+* Get reports on many features (hardware types, disk usage, etc)
+* Lightweight: only sends reports when facts have changed
+* Responsive webdesign (looks good on large and small screens)
+* [more features](wiki/Features)
+
 Setup
 ---
 
