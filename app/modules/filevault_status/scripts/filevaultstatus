@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Create cache dir if it does not exist
+DIR=$(dirname $0)
+mkdir -p "$DIR/cache"
+
+echo 'Get filevault status'
+
+# Store filevault status in filevaultstatus.txt
+/usr/local/bin/filevault_2_status_check.sh > "$DIR/cache/filevaultstatus.txt"

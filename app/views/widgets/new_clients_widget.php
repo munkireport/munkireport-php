@@ -11,13 +11,17 @@
 				<div class="list-group scroll-box">
 				  	<?$queryobj = new Machine();// Generic queryobject?>
 
-				  	<?	$lastweek = time() - 60 * 60 * 24 * 7;
+				  	<?	$lastweek = time() - 60 * 60 * 24 * 7;$cnt=0;
 				  		$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) WHERE reg_timestamp > $lastweek ORDER BY reg_timestamp DESC"?>
 					<?foreach($queryobj->query($sql) as $obj):?> 
 					<a class="list-group-item" href="<?=url('clients/detail/'.$obj->serial_number)?>"><?=$obj->computer_name?>
 						<span class="pull-right"><time datetime="<?=$obj->reg_timestamp?>">...</time></span>
 					</a>
+					<?$cnt++?>
 					<?endforeach?>
+					<?if( ! $cnt):?>
+					<span class="list-group-item">No new clients</span>
+					<?endif?>
 				</div>
 			<script>
 			$(document).ready(function() {

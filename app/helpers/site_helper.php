@@ -1,7 +1,11 @@
 <?php
 
 // Munkireport version (last number is number of commits)
+<<<<<<< HEAD
 $GLOBALS['version'] = '2.0.0.280';
+=======
+$GLOBALS['version'] = '2.0.0.277';
+>>>>>>> modularize
 
 //===============================================
 // Uncaught Exception Handling

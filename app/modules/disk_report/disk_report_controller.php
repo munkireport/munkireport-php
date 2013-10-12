@@ -6,8 +6,24 @@
  * @package munkireport
  * @author AvB
  **/
-class Disk_report_controller
+class Disk_report_controller extends Module_controller
 {
+	function __construct()
+	{
+		$this->module_path = dirname(__FILE__);
+	}
+
+	/**
+	 * Default method
+	 *
+	 * @author AvB
+	 **/
+	function index()
+	{
+		echo "You've loaded the disk report module!";
+	}
+
+
 	function get_errors($listname = '')
 	{
 		$diskreport = new Disk_report_model();
