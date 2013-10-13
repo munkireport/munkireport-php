@@ -1,5 +1,5 @@
 <p>
-<table class="inventory table table-striped">
+<table class="inventory table table-striped table-bordered">
 	<thead>
 		<tr>
           <th>Name</th>

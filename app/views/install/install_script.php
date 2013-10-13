@@ -28,6 +28,8 @@ then
 fi
 
 chmod a+x "${MUNKIPATH}"{preflight,postflight,report_broken_client}
+
+# Set munkireport version
 rm "${MUNKIPATH}munkireport-"* 2>/dev/null
 touch "${MUNKIPATH}munkireport-${VERSION}"
 
@@ -55,10 +57,11 @@ defaults write "${PREFPATH}" ReportItems -dict-add Munkireport "/Library/Managed
 # Add inventory
 defaults write "${PREFPATH}" ReportItems -dict-add InventoryItem "/Library/Managed Installs/ApplicationInventory.plist"
 
-<?foreach($scripts AS $scriptname => $code):?>
+# Include module scripts
+<?foreach($scripts AS $scriptname => $filepath):?>
 
 <?="## $scriptname ##"?> 
-<?=file_get_contents($code)?>
+<?=file_get_contents($filepath)?>
 
 <?endforeach?>
 
