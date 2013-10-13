@@ -54,9 +54,6 @@ defaults delete "${PREFPATH}" ReportItems
 # Add munkireport
 defaults write "${PREFPATH}" ReportItems -dict-add Munkireport "/Library/Managed Installs/ManagedInstallReport.plist"
 
-# Add inventory
-defaults write "${PREFPATH}" ReportItems -dict-add InventoryItem "/Library/Managed Installs/ApplicationInventory.plist"
-
 # Include module scripts
 <?foreach($scripts AS $scriptname => $filepath):?>
 
