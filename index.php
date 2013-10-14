@@ -88,6 +88,8 @@ ini_set('session.use_cookies', 1);
 ini_set('session.use_only_cookies', 1);
 session_start();
 date_default_timezone_set( conf('timezone') );
+setlocale(LC_ALL, conf('locale'));
+
 
 //set_exception_handler('uncaught_exception_handler');
 

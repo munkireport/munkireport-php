@@ -83,6 +83,17 @@
 
 	/*
 	|===============================================
+	| Locale
+	|===============================================
+	| 
+	| You can set the locale string here, this will render certain strings
+	| according to locale specific settings
+	|
+	*/
+	$conf['locale'] = 'en_US';
+
+	/*
+	|===============================================
 	| VNC link, optional link in the client detail view
 	|===============================================
 	| 
