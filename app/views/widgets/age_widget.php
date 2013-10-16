@@ -1,10 +1,10 @@
-<div class="col-lg-12">
+<div class="col-sm-6">
 
 	<div class="panel panel-default">
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="icon-desktop"></i> Year of purchase</h3>
+			<h3 class="panel-title"><i class="icon-time"></i> Age</h3>
 		
 		</div>
 
@@ -22,12 +22,12 @@
 $(document).ready(function() {
 
 	// Clone barOptions
-    var myOptions = jQuery.extend({}, horBarOptions);
+    var myOptions = jQuery.extend(true, {}, horBarOptions);
 	myOptions.legend = {show: false}
 	myOptions.callBack = resizeAgeBox;
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
 		label = obj.data[v].label
-		return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/warranty')?>#' + label + '">' + label + '</a>';
+		return '<a class = "btn btn-default btn-xs" href="">' + label + ' year</a>';
 	}
 
 	// Resize the container after we know how many items we have

@@ -10,7 +10,6 @@
 
 		<div class="panel-body">
 			
-
 			<div style="height: 200px" id="hw-plot"></div>
 
 		</div>
@@ -23,7 +22,7 @@
 $(document).ready(function() {
 
 	// Copy barOptions
-    myOptions = barOptions
+    myOptions = jQuery.extend({}, barOptions);
     myOptions.legend.labelFormatter = function(label, series) {
 			// series is the series object for the label
 			return '<a href="<?=url('show/listing/hardware')?>#' + label + '">' + label + '</a>';

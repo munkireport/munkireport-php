@@ -1,10 +1,10 @@
-<div class="col-lg-12">
+<div class="col-sm-6">
 
 	<div class="panel panel-default">
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="icon-desktop"></i> OS breakdown</h3>
+			<h3 class="panel-title"><i class="icon-apple"></i> OS breakdown</h3>
 		
 		</div>
 
@@ -22,7 +22,7 @@
 $(document).ready(function() {
 
 	// Clone barOptions
-    var myOptions = jQuery.extend({}, horBarOptions);
+    var myOptions = jQuery.extend(true, {}, horBarOptions);
 	myOptions.legend = {show: false}
 	myOptions.callBack = resizeBox;
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})

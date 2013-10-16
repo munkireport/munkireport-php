@@ -111,22 +111,26 @@ class flot extends Controller
 	{
 		$out = array();
 		$warranty = new Warranty();
-		$sql = "SELECT count(1) as count, substr(purchase_date, 1, 4) AS purchase_year 
+
+		// Time calculations differ between sql implementations
+		//"TIMESTAMPDIFF(YEAR,purchase_date,CURDATE()) AS age"
+
+		$sql = "SELECT count(1) as count, 
+				CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', purchase_date) AS INT) AS age 
 				FROM warranty
-				GROUP by purchase_year 
-				ORDER BY purchase_year ASC";
+				GROUP by age 
+				ORDER BY age DESC";
 
 		$cnt = 0;
 		foreach ($warranty->query($sql) as $obj)
 		{
-			$obj->purchase_year = $obj->purchase_year ? $obj->purchase_year : 'Unknown';
-			$out[] = array('label' => $obj->purchase_year, 'data' => array(array(intval($obj->count), $cnt++)));
+			$obj->age = $obj->age ? $obj->age : '<1';
+			$out[] = array('label' => $obj->age, 'data' => array(array(intval($obj->count), $cnt++)));
 		}
 
-		echo json_encode($out);//TODO: run through view
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
 
 	}
 
-
-	
 }
