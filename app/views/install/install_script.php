@@ -40,7 +40,7 @@ curl --fail --silent "${TPL_BASE}submit.preflight" --remote-name
 
 if [ "${?}" != 0 ]
 then
-	echo "Failed to download preflight scripts!"
+	echo "Failed to download preflight script!"
 	rm -f "${MUNKIPATH}preflight.d/submit.preflight"
 else
 	chmod a+x "${MUNKIPATH}preflight.d/submit.preflight"
@@ -50,9 +50,9 @@ echo "Configuring munkireport"
 #### Configure Munkireport ####
 
 defaults write "${PREFPATH}" BaseUrl "${BASEURL}"
+
+# Reset ReportItems array
 defaults delete "${PREFPATH}" ReportItems
-# Add munkireport
-defaults write "${PREFPATH}" ReportItems -dict-add Munkireport "/Library/Managed Installs/ManagedInstallReport.plist"
 
 # Include module scripts
 <?foreach($scripts AS $scriptname => $filepath):?>
