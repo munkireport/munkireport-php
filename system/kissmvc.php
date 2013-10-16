@@ -58,6 +58,17 @@ class Model extends KISS_Model
         }
     }
 
+    /**
+     * Get PDO driver name
+     *
+     * @return string driver
+     * @author AvB
+     **/
+    function get_driver()
+    {
+    	return $this->getdbh()->getAttribute(PDO::ATTR_DRIVER_NAME);
+    }
+
 	// ------------------------------------------------------------------------
 
 

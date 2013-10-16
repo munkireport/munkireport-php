@@ -113,14 +113,23 @@ class flot extends Controller
 		$warranty = new Warranty();
 
 		// Time calculations differ between sql implementations
-		//"TIMESTAMPDIFF(YEAR,purchase_date,CURDATE()) AS age"
+		switch($warranty->get_driver())
+		{
+			case 'sqlite':
+				$agesql = "CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', purchase_date) AS INT)";
+				break;
+			case 'mysql':
+				$agesql = "TIMESTAMPDIFF(YEAR,purchase_date,CURDATE())";
+				break;
+			default: // FIXME for other DB engines
+				$agesql = "SUBSTR(purchase_date, 1, 4)";
+		}
 
 		$sql = "SELECT count(1) as count, 
-				CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', purchase_date) AS INT) AS age 
+				$agesql AS age 
 				FROM warranty
 				GROUP by age 
 				ORDER BY age DESC";
-
 		$cnt = 0;
 		foreach ($warranty->query($sql) as $obj)
 		{
