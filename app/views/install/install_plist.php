@@ -43,12 +43,13 @@
   <string>uninstall_script</string>
   <key>uninstall_script</key>
   <string>#!/bin/sh
-rm /usr/local/munki/preflight
-rm /usr/local/munki/postflight
-rm /usr/local/munki/report_broken_client
-rm /usr/local/munkilib/reportcommon.py
-rm /usr/local/munki/munkireport-*
-rm /Library/Preferences/MunkiReport.plist
+rm -rf /usr/local/munki/preflight \
+  /usr/local/munki/preflight.d \
+  /usr/local/munki/postflight \
+  /usr/local/munki/report_broken_client \
+  /usr/local/munkilib/reportcommon.py \
+  /usr/local/munki/munkireport-* \
+  /Library/Preferences/MunkiReport.plist
 exit 0</string>
   <key>version</key>
   <string><?php echo $version; ?></string>
