@@ -10,7 +10,7 @@
 
 				<div class="panel-body text-center">
 
-					<?$queryobj = new Machine();// Generic queryobject?>
+					<?$queryobj = new Machine(); new Reportdata()// Generic queryobject?>
 
 					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
 					<?$sql = "select COUNT(id) as count from machine"?>
