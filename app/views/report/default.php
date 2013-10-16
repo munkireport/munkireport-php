@@ -10,6 +10,9 @@
 
     <?$this->view('widgets/os_widget')?>
 
+    <?$this->view('widgets/age_widget')?>
+
+
   </div> <!-- /row -->
 
   <div class="row">

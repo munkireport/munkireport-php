@@ -15,7 +15,6 @@ class Filevault_status_model extends Model {
 			$this->retrieve_one('serial_number=?', $serial);
 		
 		$this->serial = $serial;
-		echo 'Filevault_status_model initialized';
 	}
 	
 	// ------------------------------------------------------------------------

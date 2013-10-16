@@ -4,13 +4,13 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="icon-desktop"></i> OS breakdown</h3>
+			<h3 class="panel-title"><i class="icon-desktop"></i> Year of purchase</h3>
 		
 		</div>
 
 		<div class="panel-body">
 			
-			<div id="os-plot"></div>
+			<div id="age-plot"></div>
 
 		</div>
 
@@ -24,21 +24,21 @@ $(document).ready(function() {
 	// Clone barOptions
     var myOptions = jQuery.extend({}, horBarOptions);
 	myOptions.legend = {show: false}
-	myOptions.callBack = resizeBox;
+	myOptions.callBack = resizeAgeBox;
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
 		label = obj.data[v].label
-		return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/clients')?>#' + label + '">' + label + '</a>';
+		return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/warranty')?>#' + label + '">' + label + '</a>';
 	}
 
 	// Resize the container after we know how many items we have
-	function resizeBox(obj)
+	function resizeAgeBox(obj)
 	{
-		$('#os-plot').height(obj.length * 25 + 50);
+		$('#age-plot').height(obj.length * 25 + 50);
 	}
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?=url('flot/os')?>", '#os-plot', myOptions, parms);
+	drawGraph("<?=url('flot/age')?>", '#age-plot', myOptions, parms);
 
 });
 </script>
