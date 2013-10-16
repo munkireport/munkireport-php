@@ -102,5 +102,31 @@ class flot extends Controller
 
 	}
 
+	/**
+	 * Generate age data for age widget
+	 *
+	 * @author AvB
+	 **/
+	function age()
+	{
+		$out = array();
+		$warranty = new Warranty();
+		$sql = "SELECT count(1) as count, substr(purchase_date, 1, 4) AS purchase_year 
+				FROM warranty
+				GROUP by purchase_year 
+				ORDER BY purchase_year ASC";
+
+		$cnt = 0;
+		foreach ($warranty->query($sql) as $obj)
+		{
+			$obj->purchase_year = $obj->purchase_year ? $obj->purchase_year : 'Unknown';
+			$out[] = array('label' => $obj->purchase_year, 'data' => array(array(intval($obj->count), $cnt++)));
+		}
+
+		echo json_encode($out);//TODO: run through view
+
+	}
+
+
 	
 }
