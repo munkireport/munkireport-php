@@ -24,7 +24,7 @@ SETTING UP CLIENTS MANUALLY
 ---
  1. Open Terminal.app
  2. Type:
-		sudo /bin/bash -c "`http://example.com/munkireport-php/install`"
+		sudo /bin/bash -c "`curl http://example.com/munkireport-php/install`"
 
 
 SETTING UP CLIENTS WITH MUNKI
