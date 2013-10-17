@@ -11,13 +11,15 @@ class flot extends Controller
 
 	function ip()
 	{
+		$ip_arr = array();
+		
 		// See if we're being parsed a request object
 		if(array_key_exists('req', $_GET))
 		{
-			$ip_arr = json_decode($_GET['req']);
+			$ip_arr = (array) json_decode($_GET['req']);
 		}
 
-		if( is_scalar($ip_arr)) // No array or obj, all back on default ip ranges
+		if( ! $ip_arr ) // Empty array, fall back on default ip ranges
 		{
 			$ip_arr = conf('ip_ranges');
 		}
