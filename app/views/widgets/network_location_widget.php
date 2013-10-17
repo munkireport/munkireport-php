@@ -20,9 +20,7 @@
 
 		<script>
 		$(function(){
-			var parms = { 
-				"Campus": ["145.108.", "130.37."]
-			};
+			var parms = {}; // Override network settings in config.php
 
 			drawGraph("<?=url('flot/ip')?>", '#ip-plot', pieOptions, parms);
 
