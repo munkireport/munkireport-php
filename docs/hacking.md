@@ -4,6 +4,18 @@ Hacking instructions for munkireport-php (at the moment just a braindump)
 
 If you want to contribute to munkireport2, please fork the repository and send a pull request for your changes.
 
+## Views
+
+All views are in the views folder, if you want to modify the views you can override the view path by adding
+
+	$conf['view_path']
+  
+to config.php and point it to a different location outside the munkireport app directory.
+
+If you just want to change de dashboard, you can add a custom dashboard:
+
+	app/views/dashboard/custom_dashboard.php
+
 ## Modules
 
 To add new data to munkireport2 you can set up a module. A module is a directory that contains 
