@@ -4,20 +4,32 @@ Hacking instructions for munkireport-php (at the moment just a braindump)
 
 If you want to contribute to munkireport2, please fork the repository and send a pull request for your changes.
 
-## Modules
+## Views
+
+All views are in the views folder, if you want to modify the views you can override the view path by adding
+
+	$conf['view_path']
+  
+to config.php and point it to a different location outside the munkireport app directory.
+
+If you just want to change de dashboard, you can add a custom dashboard:
+
+	app/views/dashboard/custom_dashboard.php
+
+## Add more data
 
 To add new data to munkireport2 you can set up a module. A module is a directory that contains 
 * an install script for the client (which will gather the appropriate data and point munkireport to it)
 * a model (which describes how the data is represented in the database)
 * optionally a controller (which you can use to download additional files)
 
-If you want to understand how modules work, take a look at the modules directory.
+If you want to understand how modules work, take a look at some modules in the modules directory.
 
 ## Graphs
 
 Munkireport comes with a bundled graphing library: flotr2.
 
-There is a wrapper function around flotr2 that retrieves graph data and plots a graph called DrawGraph()
+Munkireport comes with a wrapper function around flotr2 that retrieves graph data and plots a graph. The wrapper is called DrawGraph()
 
 ### Network pie graph
 
