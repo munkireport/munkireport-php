@@ -31,7 +31,7 @@
   </array>
   <key>preinstall_script</key>
   <string>#!/bin/bash -c
-"`curl <?php echo
+"`curl --max-time 10 <?php echo
   (isset($_SERVER['HTTPS']) ? 'https://' : 'http://')
 	  . $_SERVER['HTTP_HOST']
 		. conf('subdirectory'); ?>index.php?/install`"</string>
