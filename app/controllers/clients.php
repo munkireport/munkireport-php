@@ -33,7 +33,18 @@ class clients extends Controller
 		$data = array('serial_number' => $sn);
 
         $obj = new View();
-    	$obj->view("client/client_detail", $data);
+
+        $machine = new Machine($sn);
+
+        if($machine->id)
+        {
+        	$obj->view("client/client_detail", $data);
+        }
+        else
+        {
+        	$obj->view("client/client_dont_exist", $data);
+        }
+    	
 	}
 
 	// ------------------------------------------------------------------------
