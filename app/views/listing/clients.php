@@ -30,7 +30,9 @@
 			        "aoColumns": myCols,
 			        "fnDrawCallback": function( oSettings ) {
 						$('#total-count').html(oSettings.fnRecordsTotal());
-						$('#edit').removeClass('btn-danger');
+						if($('#edit.btn-danger').length > 0){
+							$('div.machine').addClass('edit');
+						}
 
 						// Add callback to remove machine buttons
 						$('div.machine a.btn-danger').click(function (e) {
@@ -39,10 +41,12 @@
 							$.getJSON( $(this).attr('href'), function( data ) {
 								if(data.status == 'success')
 								{
-									row.hide(600);
+									row.hide(600, function(){
+										oTable.fnDraw();
+									});
 									// adjust counter
-									var newcnt = $('#total-count').html() - 1;
-									$('#total-count').html(newcnt);
+									//var newcnt = $('#total-count').html() - 1;
+									//$('#total-count').html(newcnt);
 								}
 							  	else
 							  	{
