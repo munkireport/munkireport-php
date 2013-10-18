@@ -10,7 +10,7 @@ On the server
  2. Create config.php in the root directory of your website. This file overrides the settings in config_default.php
  3. Check if the directory /app/db/ is writeable by the webserver.
 
-Munkireport is able to detect if it is running from a subdirectory. If that does not work, you can also specify the subdirectory in config.php.
+Munkireport is able to detect if it is running from a subdirectory. If automatic detection fails, you can also specify the subdirectory in config.php.
 So if you want to run munkireport from http://munki.mysite.org/report/
 add the following to config.php:
 
@@ -23,8 +23,7 @@ table when you visit the website with a browser.
 Setting up a client manually
 ---
  1. Open Terminal.app
- 2. Type:
-		`sudo /bin/bash -c "$(curl -s http://example.com/munkireport-php/index.php?/install)"`
+ 2. Type: `sudo /bin/bash -c "$(curl -s http://example.com/munkireport-php/index.php?/install)"`
 
 
 Setting up clients with munki
