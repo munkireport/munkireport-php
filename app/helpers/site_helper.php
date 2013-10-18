@@ -39,6 +39,12 @@ function getdbh()
 		{
 			die('Connection failed: '.$e->getMessage());
 		}
+		
+		// Store database name in config array
+		if(preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result))
+		{
+			$GLOBALS['conf']['dbname'] = $result[1];
+		}
 	}
 	return $GLOBALS['dbh'];
 }
