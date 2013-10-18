@@ -30,13 +30,34 @@
 			        "aoColumns": myCols,
 			        "fnDrawCallback": function( oSettings ) {
 						$('#total-count').html(oSettings.fnRecordsTotal());
+						$('#edit').removeClass('btn-danger');
+
+						// Add callback to remove machine buttons
+						$('div.machine a.btn-danger').click(function (e) {
+							e.preventDefault();
+							var row = $(this).parents('tr');
+							$.getJSON( $(this).attr('href'), function( data ) {
+								if(data.status == 'success')
+								{
+									row.hide(600);
+									// adjust counter
+									var newcnt = $('#total-count').html() - 1;
+									$('#total-count').html(newcnt);
+								}
+							  	else
+							  	{
+							  		alert('remove failed')
+							  	}
+							});
+							
+						});
 					},
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = '<a class="btn btn-default btn-xs" href="<?=url('clients/detail/')?>'+sn+'">'+name+'</a>';
+			        	var link = '<div class="btn-group machine"><a class="btn btn-default btn-xs" href="<?=url('clients/detail/')?>'+sn+'">'+name+'</a><a href="<?=url('admin/delete_machine/')?>'+sn+'" class="btn btn-xs btn-danger"><i class="icon-remove"></i></a></div>';
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format disk usage
@@ -55,6 +76,15 @@
 			    {
 					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
 			    }
+
+			    // Add edit button
+			    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">edit</a>');
+
+			    $('#edit').click(function(event){
+			    	event.preventDefault()
+			    	$(this).toggleClass('btn-danger');
+			    	$('.machine').toggleClass('edit');
+			    });
 			    
 			} );
 		</script>

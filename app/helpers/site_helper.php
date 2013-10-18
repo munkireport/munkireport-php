@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.0.0.314';
+$GLOBALS['version'] = '2.0.0.320';
 
 //===============================================
 // Uncaught Exception Handling
@@ -38,6 +38,12 @@ function getdbh()
 		catch (PDOException $e)
 		{
 			die('Connection failed: '.$e->getMessage());
+		}
+		
+		// Store database name in config array
+		if(preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result))
+		{
+			$GLOBALS['conf']['dbname'] = $result[1];
 		}
 	}
 	return $GLOBALS['dbh'];

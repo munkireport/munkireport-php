@@ -40,3 +40,30 @@ a.list-group-item-danger > .badge
   padding: 4px;
   float: left;
 }
+
+/* Machine button */
+.machine
+{
+  width: 131px;
+}
+.machine a.btn-default
+{
+  width: 130px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.machine a.btn-danger
+{
+  width: 20px;
+  display:none;
+}
+.edit a.btn-default
+{
+  width: 110px;
+}
+.edit a.btn-danger
+{
+  width: 20px;
+  display:block;
+}
