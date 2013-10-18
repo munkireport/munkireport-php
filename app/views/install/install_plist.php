@@ -34,7 +34,7 @@
 "`curl <?php echo
   (isset($_SERVER['HTTPS']) ? 'https://' : 'http://')
 	  . $_SERVER['HTTP_HOST']
-		. conf('subdirectory'); ?>install`"</string>
+		. conf('subdirectory'); ?>index.php?/install`"</string>
   <key>minimum_os_version</key>
   <string>10.4.0</string>
   <key>uninstallable</key>
