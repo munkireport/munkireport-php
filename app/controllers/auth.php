@@ -72,6 +72,7 @@ class auth extends Controller
 			{
 				$_SESSION['user'] = $login;
 				$_SESSION['auth'] = $mechanism;
+				session_regenerate_id();
 				redirect($return);
 			}
 			

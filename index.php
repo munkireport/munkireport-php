@@ -86,6 +86,7 @@ require( APP_PATH.'helpers/site_helper'.EXT );
 //===============================================
 ini_set('session.use_cookies', 1);
 ini_set('session.use_only_cookies', 1);
+ini_set('session.cookie_path', conf('subdirectory'));
 session_start();
 date_default_timezone_set( conf('timezone') );
 setlocale(LC_ALL, conf('locale'));
