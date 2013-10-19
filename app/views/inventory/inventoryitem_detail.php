@@ -1,4 +1,8 @@
-<?$this->view('partials/head')?>
+<?$this->view('partials/head', array(
+  "scripts" => array(
+    "clients/client_list.js"
+  )
+))?>
 
 <div class="container">
 
@@ -19,7 +23,7 @@
 
 <? if (count($inventory_items)): ?>
     <h2>Machines (<?=count($inventory_items)?>)</h2>
-    <table class='table table-striped'>
+    <table class='table table-striped table-condensed table-bordered'>
         <thead>
             <tr>
               <th>Hostname</th>

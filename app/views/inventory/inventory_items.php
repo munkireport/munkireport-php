@@ -1,4 +1,8 @@
-<?$this->view('partials/head')?>
+<?$this->view('partials/head', array(
+  "scripts" => array(
+    "clients/client_list.js"
+  )
+))?>
 
 <div class="container">
 
@@ -16,7 +20,8 @@
 </script>
     <div class="col-lg-12">
       <h1>Inventory items (<?=count($inventory)?>)</h1>
-      <table class='table table-striped'>
+
+      <table class='table table-striped table-condensed table-bordered'>
       <thead>
         <tr>
           <th>Name</th>
