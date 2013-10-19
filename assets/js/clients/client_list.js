@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
-		"sDom": "<'row'<'col-xs-6'l r><'col-xs-6'f>>t<'row'<'col-lg-6 col-md-6'i><'col-lg-6 col-md-6'p>>",
+		"sDom": "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-lg-6 col-md-6'i><'col-lg-6 col-md-6'p>>",
 		"bStateSave": true,
 		"fnStateSave": function (oSettings, oData) {
 		    state( oSettings.sTableId, oData);
@@ -12,12 +12,20 @@ $(document).ready(function() {
 		},
 		"fnInitComplete": function(oSettings, json) {
 		  $(this).wrap('<div class="table-responsive" />'); // Wrap table in responsive div
-
-		  // Customize search box and select
-		  $('.dataTables_filter label').contents().filter(function(){
+		  var oTable = $(this);
+		  // Customize search box
+		  $('.dataTables_filter label').addClass('input-group').contents().filter(function(){
 		    return this.nodeType === 3;
 		  }).remove();
-		  $('.dataTables_filter input').addClass('form-control input-sm').attr('placeholder', 'Search');
+		  $('.dataTables_filter input').addClass('form-control input-sm')
+		  	.attr('placeholder', 'Search')
+		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="icon-remove"></i></span>')
+		  	.click(function(e){
+		  		$('.dataTables_filter input').val('').keyup();
+		  		// Force a table redraw?
+		  	}));
+
+		  // Customize select
 		  $('select').addClass('form-control input-sm');
 		},
 		"sPaginationType": "bootstrap",

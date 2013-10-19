@@ -10,11 +10,6 @@
 
   	<div class="col-lg-12">
 		<script type="text/javascript">
-		function fileSize(size, decimals) {
-			if(decimals == undefined){decimals = 0};
-			var i = Math.floor( Math.log(size) / Math.log(1024) );
-			return ( size / Math.pow(1024, i) ).toFixed(decimals) * 1 + ' ' + ['', 'K', 'M', 'G', 'T'][i] + 'B';
-		}
 
 		$(document).ready(function() {
 
