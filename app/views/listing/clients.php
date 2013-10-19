@@ -30,6 +30,8 @@
 			        "aoColumns": myCols,
 			        "fnDrawCallback": function( oSettings ) {
 						$('#total-count').html(oSettings.fnRecordsTotal());
+
+						// If the edit button is active, show the remove machine buttons
 						if($('#edit.btn-danger').length > 0){
 							$('div.machine').addClass('edit');
 						}
@@ -41,12 +43,17 @@
 							$.getJSON( $(this).attr('href'), function( data ) {
 								if(data.status == 'success')
 								{
-									row.hide(600, function(){
+									// Animate slide up
+									row.find('td')
+									.animate({'padding-top': '0px', 'padding-bottom': '0px'}, {duration: 100})
+									.wrapInner('<div style="display: block;" />')
+									.parent()
+									.find('td > div')
+									.slideUp(600,function(){
+									// After hide animation is done, redraw table
 										oTable.fnDraw();
 									});
-									// adjust counter
-									//var newcnt = $('#total-count').html() - 1;
-									//$('#total-count').html(newcnt);
+
 								}
 							  	else
 							  	{
