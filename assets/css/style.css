@@ -67,3 +67,27 @@ a.list-group-item-danger > .badge
   width: 20px;
   display:block;
 }
+
+/* Stretch to 98% for large screens */
+@media (min-width: 1200px)
+{
+  .container {
+  max-width: 98%;
+  }
+}
+
+.progress{margin-bottom: 0}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 21px;
+  line-height: 40px;
+  color: #333;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5
+}
+
+.bigger-150
+{
+  font-size:150%
+}

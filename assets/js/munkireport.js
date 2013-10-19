@@ -1,5 +1,38 @@
 // Global functions
 
+// Set/retrieve state data in localStorage
+// This function is used by datatables
+function state(id, data)
+{
+	// Create unique id for this page
+	path = location.pathname + location.search
+
+	// Strip host information and index.php
+	path = path.replace(/.*index\.php\??/, '')
+
+	// Strip serial number from detail page, we don't want to store
+	// sorting information for every unique client
+	path = path.replace(/(.*\/clients\/detail\/).+$/, '$1')
+
+	// Strip inventory item from page, no unique sort per item
+	path = path.replace(/(.*\/inventory\/items\/).+$/, '$1')
+
+	// Append id to page path
+	id = path + id
+
+	if( data == undefined)
+	{
+	  // Get data
+	  return JSON.parse( localStorage.getItem(id) );
+
+	}
+	else
+	{
+	  // Set data
+	  localStorage.setItem( id, JSON.stringify(data) );
+	}
+}
+
 // Debug function to dump js objects
 function dumpj(obj)
   {

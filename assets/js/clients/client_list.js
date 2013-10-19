@@ -1,3 +1,32 @@
+$(document).ready(function() {
+
+	// Datatables defaults
+	$.extend( true, $.fn.dataTable.defaults, {
+		"sDom": "<'row'<'col-xs-6'l r><'col-xs-6'f>>t<'row'<'col-lg-6 col-md-6'i><'col-lg-6 col-md-6'p>>",
+		"bStateSave": true,
+		"fnStateSave": function (oSettings, oData) {
+		    state( oSettings.sTableId, oData);
+		},
+		"fnStateLoad": function (oSettings) {
+		    return state(oSettings.sTableId);
+		},
+		"fnInitComplete": function(oSettings, json) {
+		  $(this).wrap('<div class="table-responsive" />'); // Wrap table in responsive div
+
+		  // Customize search box and select
+		  $('.dataTables_filter label').contents().filter(function(){
+		    return this.nodeType === 3;
+		  }).remove();
+		  $('.dataTables_filter input').addClass('form-control input-sm').attr('placeholder', 'Search');
+		  $('select').addClass('form-control input-sm');
+		},
+		"sPaginationType": "bootstrap",
+		"oLanguage": {
+		 "sProcessing": ' <i class="icon-refresh icon-spin"></i>'
+		} 
+	});
+} );
+
 $(function(){
 	var clientInfoPopovers = [],
 		popoverOptions = {
