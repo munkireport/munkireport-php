@@ -1,9 +1,5 @@
 Hacking instructions for munkireport-php (at the moment just a braindump)
 
-# Munkireport 2
-
-If you want to contribute to munkireport2, please fork the repository and send a pull request for your changes.
-
 ## Views
 
 All views are in the views folder, if you want to modify the views you can override the view path by adding
