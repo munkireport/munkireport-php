@@ -52,6 +52,12 @@ For developers who want to contribute to the project:
 
 http://groups.google.com/group/munkireport-dev
 
+Contributing
+---
+
+If you want to contribute to munkireport2, please fork the repository, create a feature branch and send a pull request with your changes.
+
+
 External projects
 ---
 
