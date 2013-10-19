@@ -17,12 +17,12 @@
         $('.table').dataTable({
             "aaSorting": [[0,'asc']],
             "fnDrawCallback": function( oSettings ) {
-				$('#total-count').html(oSettings.fnRecordsTotal());
+				$('#inv-count').html(oSettings.fnRecordsTotal());
 			}
         });
     } );
 </script>
-<h3>Inventory items <span id="total-count" class='label label-primary'>…</span></h3>
+<h3>Inventory items <span id="inv-count" class='label label-primary'>…</span></h3>
 <table class='table table-striped table-condensed table-bordered'>
   <thead>
     <tr>

@@ -11,9 +11,11 @@ $(document).ready(function() {
 		    return state(oSettings.sTableId);
 		},
 		"fnInitComplete": function(oSettings, json) {
-		  $(this).wrap('<div class="table-responsive" />'); // Wrap table in responsive div
-		  var oTable = $(this);
-		  // Customize search box
+
+		  // Wrap table in responsive div
+		  $(this).wrap('<div class="table-responsive" />'); 
+
+		  // Customize search box (add clear search field button)
 		  $('.dataTables_filter label').addClass('input-group').contents().filter(function(){
 		    return this.nodeType === 3;
 		  }).remove();
@@ -22,17 +24,41 @@ $(document).ready(function() {
 		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="icon-remove"></i></span>')
 		  	.click(function(e){
 		  		$('.dataTables_filter input').val('').keyup();
-		  		// Force a table redraw?
 		  	}));
 
 		  // Customize select
 		  $('select').addClass('form-control input-sm');
+
+		},
+        "fnDrawCallback": function( oSettings ) {
+			$('#total-count').html(oSettings.fnRecordsTotal());
+
+			// If the edit button is active, show the remove machine buttons
+			if($('#edit.btn-danger').length > 0){
+				$('div.machine').addClass('edit');
+			}
+
+			// Add callback to remove machine button
+			$('div.machine a.btn-danger').click(function (e) {
+				e.preventDefault();
+				delete_machine($(this));
+			});
 		},
 		"sPaginationType": "bootstrap",
 		"oLanguage": {
 		 "sProcessing": ' <i class="icon-refresh icon-spin"></i>'
 		} 
 	});
+
+    // Add edit button in list view
+    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">edit</a>');
+
+    $('#edit').click(function(event){
+    	event.preventDefault()
+    	$(this).toggleClass('btn-danger');
+    	$('.machine').toggleClass('edit');
+    });
+
 } );
 
 $(function(){

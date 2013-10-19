@@ -27,15 +27,12 @@
 			        "oSearch": {"sSearch": hash},
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumns": myCols,
-			        "fnDrawCallback": function( oSettings ) {
-						$('#total-count').html(oSettings.fnRecordsTotal());
-					},
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = '<a class="btn btn-default btn-xs" href="<?=url('clients/detail/')?>'+sn+'">'+name+'</a>';
+			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format warranty status

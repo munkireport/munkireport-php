@@ -1,5 +1,39 @@
 // Global functions
 
+// Get client detail link
+function get_client_detail_link(name, sn, baseurl)
+{
+	return '<div class="btn-group machine">\
+    		<a class="btn btn-default btn-xs" href="'+baseurl+'clients/detail/'+sn+'">'+name+'</a>\
+    		<a href="'+baseurl+'admin/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
+    		<i class="icon-remove"></i></a></div>';
+}
+
+// Delete machine ajax call
+function delete_machine(obj)
+{
+	var row = obj.parents('tr');
+	$.getJSON( obj.attr('href'), function( data ) {
+		if(data.status == 'success')
+		{
+			// Animate slide up
+			row.find('td')
+			.animate({'padding-top': '0px', 'padding-bottom': '0px'}, {duration: 100})
+			.wrapInner('<div style="display: block;" />')
+			.parent()
+			.find('td > div')
+			.slideUp(600,function(){
+				// After hide animation is done, redraw table
+				oTable.fnDraw();
+			});
+		}
+	  	else
+	  	{
+	  		alert('remove failed')
+	  	}
+	});
+}
+
 // Set/retrieve state data in localStorage
 // This function is used by datatables
 function state(id, data)
