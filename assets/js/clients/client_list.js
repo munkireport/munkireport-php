@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
-		"sDom": "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-lg-6 col-md-6'i><'col-lg-6 col-md-6'p>>",
+		"sDom": "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
 		"bStateSave": true,
 		"fnStateSave": function (oSettings, oData) {
 		    state( oSettings.sTableId, oData);
