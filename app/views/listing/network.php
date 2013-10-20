@@ -55,8 +55,8 @@
 
 			        	// Status
 			        	var status=$('td:eq(2)', nRow).html();
-			        	status = status == 1 ? '<span class="btn btn-xs btn-success">Enabled</span>' : 
-			        		(status === '0' ? '<span class="btn btn-xs btn-danger">Disabled</span>' : '')
+			        	status = status == 1 ? '<span class="label label-success">Enabled</span>' : 
+			        		(status === '0' ? '<span class="label label-danger">Disabled</span>' : '')
 			        	$('td:eq(2)', nRow).html(status)
 
 				    }
