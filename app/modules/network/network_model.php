@@ -118,7 +118,7 @@ class Network_model extends Model {
         // Now only store entries with a valid ethernet address
         foreach( $services as $service => $data)
         {
-        	if( true or $data['ethernet'] && $data['ethernet'] != '(null)')
+        	if( $data['ethernet'] && $data['ethernet'] != '(null)')
         	{
         		$this->id = '';
         		$this->service = $service;
