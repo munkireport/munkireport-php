@@ -75,6 +75,7 @@
 		        <th data-colname='network#ethernet'>Ethernet</th>
 		        <th data-colname='network#ipv4ip'>IP Address</th>
 		        <th data-colname='network#ipv4router'>Router</th>
+		        <th data-colname='network#ipv4mask'>Mask</th>
 		      </tr>
 		    </thead>
 		    <tbody>

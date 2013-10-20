@@ -13,7 +13,7 @@ class Network_model extends Model {
         $this->rs['clientid'] = ''; // Client id
         $this->rs['ipv4conf'] = ''; // IPv4 configuration (automatic, manual)
         $this->rs['ipv4ip'] = ''; // IPv4 address
-        $this->rs['ipv4mask'] = 0; // IPv4 network mask as int
+        $this->rs['ipv4mask'] = ''; // IPv4 network mask as string
         $this->rs['ipv4router'] = 0;  // IPv4 router address as int
         $this->rs['ipv6conf'] = ''; // IPv6 configuration (automatic, manual)
         $this->rs['ipv6ip'] = ''; // IPv6 address as string
