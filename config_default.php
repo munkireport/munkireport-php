@@ -16,12 +16,13 @@
 	| Index page
 	|===============================================
 	|  
-	| Index page. Leave blank if .htaccess or another server rewrite method
-	| is used. On some servers a question mark has to be added:
-	| $index_page = 'index.php?';
+	| Default is index.php? which is the most compatible form.
+	| You can leave it blank if you want nicer looking urls.
+	| You will need a server which honors .htaccess (apache) or 
+	| figure out how to rewrite urls in the server of your choice. 
 	|
 	*/
-	$conf['index_page'] = 'index.php';
+	$conf['index_page'] = 'index.php?';
 	
 	/*
 	|===============================================
