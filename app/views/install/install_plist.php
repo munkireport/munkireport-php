@@ -1,9 +1,9 @@
 <?php 
-	header("Content-Type: application/xml");
-	$version = "1.0.0";
+  header("Content-Type: application/xml");
+  $version = "1.0.0";
 
-	// We're echoing the header so the '<?' doesn't turn on the PHP interpreter
-	echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+  // We're echoing the header so the '<?' doesn't turn on the PHP interpreter
+  echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 ?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -30,11 +30,11 @@
     </dict>
   </array>
   <key>preinstall_script</key>
-  <string>#!/bin/bash -c
-"`curl --max-time 10 <?php echo
+  <string>#!/bin/bash 
+/bin/bash -c "$(curl -s --max-time 10 <?php echo
   (isset($_SERVER['HTTPS']) ? 'https://' : 'http://')
-	  . $_SERVER['HTTP_HOST']
-		. conf('subdirectory'); ?>index.php?/install`"</string>
+    . $_SERVER['HTTP_HOST']
+    . conf('subdirectory'); ?>index.php?/install)"</string>
   <key>minimum_os_version</key>
   <string>10.4.0</string>
   <key>uninstallable</key>
