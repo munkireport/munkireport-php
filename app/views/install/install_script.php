@@ -72,7 +72,9 @@ if [ $ERR = 0 ]; then
 	touch "${MUNKIPATH}munkireport-${VERSION}"
 
 	echo "Installation of MunkiReport v${VERSION} complete."
-
+	echo 'Running the preflight script for initialization'
+	${MUNKIPATH}preflight
+	
 else
 	echo "! Installation of MunkiReport v${VERSION} incomplete."
 fi
