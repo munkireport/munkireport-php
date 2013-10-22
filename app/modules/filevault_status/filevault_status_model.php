@@ -8,6 +8,9 @@ class Filevault_status_model extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['filevault_status'] = '';		   
 		
+		// Add index
+		$this->idx[] = array('filevault_status');
+
 		// Create table if it does not exist
 		$this->create_table();
 		

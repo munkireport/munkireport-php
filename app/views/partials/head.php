@@ -50,18 +50,25 @@
               <a href="<?=url($url)?>"><i class="icon-<?=$obj->icon?>"></i> <?=$obj->title?></a>
             </li>
               <?endforeach?>
-              <?$url = 'show/listing'?>
+              <?$url = 'show/listing/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Listings <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="<?=url('show/listing/clients')?>">Clients</a></li>
-                  <li><a href="<?=url('show/listing/munki')?>">Munkireport</a></li>
-                  <li><a href="<?=url('show/listing/disk')?>">Disk</a></li>
-                  <li><a href="<?=url('show/listing/warranty')?>">Warranty</a></li>
-                  <li><a href="<?=url('show/listing/hardware')?>">Hardware</a></li>
-                  <li><a href="<?=url('show/listing/inventory')?>">Inventory</a></li>
+
+                  <?foreach(scandir(conf('view_path').'listing') AS $list_url):?>
+
+                    <?if( strpos($list_url, 'php')):?>
+
+                    <li><a href="<?=url($url.strtok($list_url, '.'))?>"><?=ucfirst(strtok($list_url, '.'))?></a></li>
+
+                    <?endif?>
+
+                  <?endforeach?>
+
                 </ul>
+
               </li>
+
           </ul>
           <div class="navbar-form pull-right">
             <a class="btn btn-default btn-sm" href="<?=url('auth/logout')?>">Logout</a>
@@ -69,5 +76,7 @@
     </nav>
   </div>
 </header>
+
+
 
   <?endif?>
