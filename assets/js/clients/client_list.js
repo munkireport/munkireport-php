@@ -23,7 +23,18 @@ $(document).ready(function() {
 		  	.attr('placeholder', 'Search')
 		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="icon-remove"></i></span>')
 		  	.click(function(e){
+		  		
+		  		// Clear hash
+		  		var loc = window.location;
+		  		if ("replaceState" in history)
+			        history.replaceState("", document.title, loc.pathname + loc.search);
+			    else {
+			  		window.location.hash = ''
+			  	}
+
+		  		// Trigger datatables filter
 		  		$('.dataTables_filter input').val('').keyup();
+
 		  	}));
 
 		  // Customize select
