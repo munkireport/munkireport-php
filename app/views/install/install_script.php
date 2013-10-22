@@ -8,6 +8,9 @@ BASEURL="<?php echo
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 PREFPATH="/Library/Preferences/MunkiReport"
+CURL="/usr/bin/curl --fail --silent  --show-error"
+# Exit status
+ERR=0
 VERSION="1.0.0"
 
 echo "BaseURL is ${BASEURL}"
@@ -15,9 +18,9 @@ echo "BaseURL is ${BASEURL}"
 echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
-curl --fail --silent "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
-	&& curl --fail --silent "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
-	&& curl --fail --silent "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
+$CURL "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
+	&& $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
+	&& $CURL "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
 
 if [ "${?}" != 0 ]
 then
@@ -29,14 +32,10 @@ fi
 
 chmod a+x "${MUNKIPATH}"{preflight,postflight,report_broken_client}
 
-# Set munkireport version
-rm "${MUNKIPATH}munkireport-"* 2>/dev/null
-touch "${MUNKIPATH}munkireport-${VERSION}"
-
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"
 cd "${MUNKIPATH}preflight.d"
-curl --fail --silent "${TPL_BASE}submit.preflight" --remote-name
+${CURL} "${TPL_BASE}submit.preflight" --remote-name
 
 if [ "${?}" != 0 ]
 then
@@ -58,9 +57,24 @@ defaults delete "${PREFPATH}" ReportItems
 <?foreach($scripts AS $scriptname => $filepath):?>
 
 <?="## $scriptname ##"?> 
+echo 'Installing <?=$scriptname?>'
+
 <?=file_get_contents($filepath)?>
 
 <?endforeach?>
 
-echo "Installation of MunkiReport v${VERSION} complete."
-exit 0
+# Remove munkireport version file
+rm -f "${MUNKIPATH}munkireport-"*
+
+if [ $ERR = 0 ]; then
+
+	# Set munkireport version file
+	touch "${MUNKIPATH}munkireport-${VERSION}"
+
+	echo "Installation of MunkiReport v${VERSION} complete."
+
+else
+	echo "! Installation of MunkiReport v${VERSION} incomplete."
+fi
+
+exit $ERR
