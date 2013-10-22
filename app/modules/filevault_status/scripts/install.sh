@@ -3,6 +3,9 @@
 # filevault_status_controller
 FV_CTL="${BASEURL}/index.php?/module/filevault_status/"
 
+# Create /usr/local/bin if missing
+mkdir -p /usr/local/bin || ERR=1
+
 # Get the scripts in the proper directories
 ${CURL}  "${FV_CTL}get_script/filevault_2_status_check.sh" -o "/usr/local/bin/filevault_2_status_check.sh" \
 	&& ${CURL}  "${FV_CTL}get_script/filevaultstatus" -o "${MUNKIPATH}preflight.d/filevaultstatus" \
