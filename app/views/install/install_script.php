@@ -51,7 +51,7 @@ echo "Configuring munkireport"
 defaults write "${PREFPATH}" BaseUrl "${BASEURL}"
 
 # Reset ReportItems array
-defaults delete "${PREFPATH}" ReportItems
+defaults write "${PREFPATH}" ReportItems -dict
 
 # Include module scripts
 <?foreach($scripts AS $scriptname => $filepath):?>
