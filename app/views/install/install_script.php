@@ -11,7 +11,7 @@ PREFPATH="/Library/Preferences/MunkiReport"
 CURL="/usr/bin/curl --fail --silent  --show-error"
 # Exit status
 ERR=0
-VERSION="1.0.0"
+VERSION="<?=get_version()?>"
 
 echo "BaseURL is ${BASEURL}"
 

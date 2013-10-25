@@ -1,6 +1,6 @@
 <?php 
   header("Content-Type: application/xml");
-  $version = "1.0.0";
+  $version = get_version();
 
   // We're echoing the header so the '<?' doesn't turn on the PHP interpreter
   echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
