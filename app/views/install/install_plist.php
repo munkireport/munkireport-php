@@ -37,6 +37,8 @@
     . conf('subdirectory'); ?>index.php?/install)"</string>
   <key>minimum_os_version</key>
   <string>10.4.0</string>
+  <key>unattended_install</key>
+  <true/> 
   <key>uninstallable</key>
   <true/>
   <key>uninstall_method</key>
