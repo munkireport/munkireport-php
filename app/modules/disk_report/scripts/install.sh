@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # disk_report controller
-DR_CTL="${BASEURL}/index.php?/module/disk_report/"
+DR_CTL="${BASEURL}index.php?/module/disk_report/"
 
 # Get the scripts in the proper directories
 ${CURL} "${DR_CTL}get_script/disk_info" -o "${MUNKIPATH}preflight.d/disk_info"
