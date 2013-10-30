@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # localadmin controller
-CTL="${BASEURL}/index.php?/module/localadmin/"
+CTL="${BASEURL}index.php?/module/localadmin/"
 
 # Get the scripts in the proper directories
 ${CURL} "${CTL}get_script/localadmin" -o "${MUNKIPATH}preflight.d/localadmin"

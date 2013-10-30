@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # filevault_status_controller
-FV_CTL="${BASEURL}/index.php?/module/filevault_status/"
+FV_CTL="${BASEURL}index.php?/module/filevault_status/"
 
 # Create /usr/local/bin if missing
 mkdir -p /usr/local/bin || ERR=1
