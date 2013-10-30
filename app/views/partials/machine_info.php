@@ -3,6 +3,7 @@
 	<?$report   = new Reportdata($serial_number)?>
 	<?$disk   = new disk_report_model($serial_number)?>
 	<?$warranty   = new Warranty($serial_number)?>
+	<?$localadmin   = new Localadmin_model($serial_number)?>
 	<?//todo: make 1 query?>
 	<div class="row">
 		<div class="col-lg-1">
@@ -71,6 +72,9 @@
 					<dd><?=$machine->platform_UUID?>&nbsp;</dd>
 					<dt>Remote IP Address</dt>
 					<dd><?=$report->remote_ip;?>&nbsp;</dd>
+					<dt>Local admin</dt>
+					<dd><?=$localadmin->users;?>&nbsp;</dd>
+
 				</dl>
 			</small>
 		</div>

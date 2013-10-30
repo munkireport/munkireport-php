@@ -51,6 +51,12 @@ class report extends Controller
 		    if ( ! isset($val['data'])) continue;
 
 		   	$this->msg("Starting: $key");
+
+		   	// Preserve classname
+		   	$classname = $key;
+
+		   	// All models are lowercase
+		   	$key = strtolower($key);
 			
 			// Check if this is a module-model
 			if(substr($key, -6) == '_model')
@@ -71,19 +77,19 @@ class report extends Controller
 		    }
 		    require_once($model_path . $key . '.php');
 
-		    if ( ! class_exists( $key, false ) )
+		    if ( ! class_exists( $classname, false ) )
 		    {
-		    	$this->msg("Class not found: $key");
+		    	$this->msg("Class not found: $classname");
 		    	continue;
 		    }
 
 		   	// Load model
-	        $class = new $key($_POST['serial']);
+	        $class = new $classname($_POST['serial']);
 
         	
 	        if( ! method_exists($class, 'process'))
 	        {
-	        	$this->msg("No process method in: $key");
+	        	$this->msg("No process method in: $classname");
 		    	continue;
 	        }
 
@@ -98,7 +104,7 @@ class report extends Controller
 		        $hash->save();
 	       		
 	       	} catch (Exception $e) {
-	       		$this->msg("An error occurred while processing: $key");
+	       		$this->msg("An error occurred while processing: $classname");
 	       		
 	       	}
 	        		

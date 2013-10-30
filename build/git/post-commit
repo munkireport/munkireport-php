@@ -10,4 +10,4 @@ COMMIT_COUNT=$(git rev-list HEAD --count)
 COMMIT_COUNT=$(( $COMMIT_COUNT + 1 ))
 
 # Replace last part of the version number with the commit count
-sed -i .bak "s/\(\$GLOBALS\['version'\] = '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.\)[0-9][0-9]*/\1$COMMIT_COUNT/" $VERSION_FILE
+sed -i .bak "s/\(\$GLOBALS\['version'\] = '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.\)[0-9][0-9]*/\1$COMMIT_COUNT/" "$VERSION_FILE"

@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.0.1.358';
+$GLOBALS['version'] = '2.0.2.371';
 
 // Return version without commit count
 function get_version()
@@ -58,10 +58,12 @@ function getdbh()
 //===============================================
 // Autoloading for Business Classes
 //===============================================
-// Assumes Model Classes start with capital letters and Libraries start with lower case letters
+// module classes end with _model
 function __autoload( $classname )
 {
-	$a=$classname[0];
+	// Switch to lowercase filename for models
+	$classname = strtolower($classname);
+
 	if(substr($classname, -4) == '_api')
 	{
 		require_once( APP_PATH.'modules/'.substr($classname, 0, -4).'/api'.EXT );
@@ -71,11 +73,10 @@ function __autoload( $classname )
 		$module = substr($classname, 0, -6);
 		require_once( APP_PATH."modules/${module}/${module}_model".EXT );
 	}
-	elseif ( $a >= 'A' && $a <='Z' )
+	else
 	{
 		require_once( APP_PATH.'models/'.$classname.EXT );
 	}
-	else require_once( APP_PATH.'libraries/'.$classname.EXT );  
 }
 
 function url($url='', $fullurl = FALSE)
