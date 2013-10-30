@@ -11,6 +11,7 @@ DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
 
 admin_users=''
+root_user=(root)
 
 for user in $(dscl . -list /Users | grep -v "^_") ; do
 	ismember=$(dsmemberutil checkmembership -U $user -G admin)
@@ -18,5 +19,14 @@ for user in $(dscl . -list /Users | grep -v "^_") ; do
 		*'user is a member of the group'*) admin_users+=( $user );;
 	esac
 done
+
+index=0
+for root_user in ${admin_users[@]}; do
+      if [ "$root_user" = "root" ]; then
+           unset admin_users[$index]
+           break
+      fi
+      let index++
+ done
 
 echo ${admin_users[@]} > "$DIR/cache/localadmins.txt"

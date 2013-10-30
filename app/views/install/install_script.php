@@ -2,9 +2,9 @@
 ?>#!/bin/sh
 
 BASEURL="<?php echo
-	(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://')
-	. $_SERVER['HTTP_HOST']
-	. conf('subdirectory'); ?>"
+        (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://')
+        . $_SERVER['HTTP_HOST']
+        . conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 PREFPATH="/Library/Preferences/MunkiReport"
@@ -19,15 +19,15 @@ echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
 $CURL "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
-	&& $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
-	&& $CURL "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
+        && $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
+        && $CURL "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
 
 if [ "${?}" != 0 ]
 then
-	echo "Failed to download all required components!"
-	rm -f "${MUNKIPATH}"{preflight,postflight,report_broken_client} \
-		"${MUNKIPATH}"munkilib/reportcommon.py
-	exit 1
+        echo "Failed to download all required components!"
+        rm -f "${MUNKIPATH}"{preflight,postflight,report_broken_client} \
+                "${MUNKIPATH}"munkilib/reportcommon.py
+        exit 1
 fi
 
 chmod a+x "${MUNKIPATH}"{preflight,postflight,report_broken_client}
@@ -39,10 +39,10 @@ ${CURL} "${TPL_BASE}submit.preflight" --remote-name
 
 if [ "${?}" != 0 ]
 then
-	echo "Failed to download preflight script!"
-	rm -f "${MUNKIPATH}preflight.d/submit.preflight"
+        echo "Failed to download preflight script!"
+        rm -f "${MUNKIPATH}preflight.d/submit.preflight"
 else
-	chmod a+x "${MUNKIPATH}preflight.d/submit.preflight"
+        chmod a+x "${MUNKIPATH}preflight.d/submit.preflight"
 fi
 
 echo "Configuring munkireport"
@@ -68,15 +68,15 @@ rm -f "${MUNKIPATH}munkireport-"*
 
 if [ $ERR = 0 ]; then
 
-	# Set munkireport version file
-	touch "${MUNKIPATH}munkireport-${VERSION}"
+        # Set munkireport version file
+        touch "${MUNKIPATH}munkireport-${VERSION}"
 
-	echo "Installation of MunkiReport v${VERSION} complete."
-	echo 'Running the preflight script for initialization'
-	${MUNKIPATH}preflight
-	
+        echo "Installation of MunkiReport v${VERSION} complete."
+        echo 'Running the preflight script for initialization'
+        ${MUNKIPATH}preflight
+        
 else
-	echo "! Installation of MunkiReport v${VERSION} incomplete."
+        echo "! Installation of MunkiReport v${VERSION} incomplete."
 fi
 
 exit $ERR
