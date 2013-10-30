@@ -53,9 +53,9 @@ table when you visit the website with a browser.
 #### A simple Apache .vhost config to get you started
 
     <VirtualHost *:80>
-      ServerAdmin webmaster@onehealth.com
-      ServerName  munkibusiness.onehealth.com
-      ServerAlias munkibusiness.onehealth.com
+      ServerAdmin webmaster@example.com
+      ServerName  munkireport-php.example.com
+      ServerAlias munkireport-php.example.com
 	  
       AddDefaultCharset utf-8    
       DocumentRoot /srv/munkireportphp
@@ -63,8 +63,8 @@ table when you visit the website with a browser.
             Options FollowSymLinks
         </Directory>
       LogLevel warn
-      CustomLog /var/log/apache2/munkibusiness.onehealth.com-access.log combined
-      ErrorLog /var/log/apache2/munkibusiness.onehealth.com-error.log
+      CustomLog /var/log/apache2/munkireport-php.example.com-access.log combined
+      ErrorLog /var/log/apache2/munkireport-php.example.com-error.log
     </VirtualHost>
 
 #### Running MunkiReport with mod_rewrite
