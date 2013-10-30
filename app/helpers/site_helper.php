@@ -68,6 +68,8 @@ function __autoload( $classname )
 	}
 	elseif(substr($classname, -6) == '_model')
 	{
+		// Switch to lowercase filename for models in modules
+		$classname = strtolower($classname);
 		$module = substr($classname, 0, -6);
 		require_once( APP_PATH."modules/${module}/${module}_model".EXT );
 	}
