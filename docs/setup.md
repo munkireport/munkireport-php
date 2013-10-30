@@ -20,6 +20,24 @@ Create the first user
  2. Append the generated hash line to config.php
  3. Now refresh the page in your browser, and you should be able to log in with the credentials you just created.
 
+Setting up a client manually
+---
+
+Now you can setup a client to test if all is ok:
+
+1. Open Terminal.app
+2. Type: `sudo /bin/bash -c "$(curl -s http://example.com/index.php?/install)"`
+
+
+Setting up clients with munki
+---
+
+When the client reporting goes well, you can add a pkginfo file to munki:
+
+1. Download the pkginfo file
+    `curl -s http://example.com/index.php?/install/plist -o MunkiReport.plist`
+2. Copy MunkiReport.plist into your Munki repository (in your pkgsinfo directory)
+3. Run makecatalogs, and be sure to add it to a manifest as well.
 
 Advanced server setup
 ---
@@ -61,18 +79,3 @@ to change the following:
 
  1. Add `$conf['index_page'] = '';` to config.php
 
-
-Setting up a client manually
----
-
-1. Open Terminal.app
-2. Type: `sudo /bin/bash -c "$(curl -s http://example.com/index.php?/install)"`
-
-
-Setting up clients with munki
----
-
-1. Download the pkginfo file
-    `curl -s http://example.com/index.php?/install/plist -o MunkiReport.plist`
-2. Copy MunkiReport.plist into your Munki repository (in your pkgsinfo directory)
-3. Run makecatalogs, and be sure to add it to a manifest as well.
