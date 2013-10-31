@@ -64,6 +64,12 @@ class Tablequery {
         $sLimit = sprintf(' LIMIT %d,%d', 
             $cfg['iDisplayStart'], $cfg['iDisplayLength']);
 
+        // Show all
+        if( $cfg['iDisplayLength'] == -1 )
+        {
+            $sLimit = '';
+        }
+
         // Ordering
         $sOrder = "";
         if(count($cfg['sort_cols']) > 0)
