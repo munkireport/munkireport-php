@@ -16,7 +16,7 @@
 				?>
 					<?foreach($fv->query($sql) as $obj):?>
 					<?//$status = array_key_exists($obj->status, $class_list) ? $class_list[$obj->status] : 'danger'?>
-					<a href="" class="list-group-item list-group-item-<?//=$status?>">
+					<a href="<?=url('show/listing/security#'.$obj->filevault_status)?>" class="list-group-item list-group-item-<?//=$status?>">
 						<span class="badge"><?=$obj->count?></span>
 						<?=$obj->filevault_status?>
 					<?$cnt++?>

@@ -133,6 +133,12 @@ class Model extends KISS_Model
 	 **/
 	function create_table()
 	{
+		// Check if we instantiated this table before
+		if(isset($GLOBALS['tables'][$this->tablename]))
+		{
+			return TRUE;
+		}
+
 		$dbh = $this->getdbh();
 		
 		$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false); 
@@ -177,6 +183,10 @@ class Model extends KISS_Model
 			$this->set_indexes();
 			
         }
+
+        // Store this table in the instantiated tables array
+        $GLOBALS['tables'][$this->tablename] = TRUE;
+
 		//print_r($dbh->errorInfo());
         return ($dbh->errorCode() == '00000');
 	}

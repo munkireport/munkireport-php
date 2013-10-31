@@ -4,11 +4,6 @@
 import sys
 import os
 
-pid = os.fork()
-
-if pid > 0:
-    exit(0)
-
 def main():
     '''Main'''
     # Munkireport submit script TODO: make config item
