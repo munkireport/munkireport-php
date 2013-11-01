@@ -6,8 +6,8 @@ class Disk_report_model extends Model {
 		parent::__construct('id', 'diskreport'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['TotalSize'] = 0;
-		$this->rs['FreeSpace'] = 0;
+		$this->rs['TotalSize'] = 0; $this->rt['TotalSize'] = 'BIGINT';
+		$this->rs['FreeSpace'] = 0; $this->rt['FreeSpace'] = 'BIGINT';
 		$this->rs['Percentage'] = 0;
 		$this->rs['SMARTStatus'] = '';
 		$this->rs['SolidState'] = 0;
