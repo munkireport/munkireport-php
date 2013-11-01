@@ -2,7 +2,7 @@
 class auth extends Controller
 {
 	// Authentication mechanisms we handle
-	public $mechanisms = array('config');
+	public $mechanisms = array('noauth', 'config');
 
 	// Authentication mechanisms available
 	public $auth_mechanisms = array();
@@ -32,51 +32,53 @@ class auth extends Controller
 	function login($return = '')
 	{
 		$check = FALSE;
-		
-		$login = isset($_POST['login']) ? $_POST['login'] : '';
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
-		
-		$data = array('login' => $login, 'url' => url("auth/login/$return"));
-		
-		
-		
-		// No valid mechanisms found, bail
+
+		// If no valid mechanisms found, bail
 		if ( ! $this->auth_mechanisms)
 		{
 			redirect('auth/generate');
-			//die('Error: No authentication mechanism set in config file');
-			// TODO: make this nicer
-			// EDIT (joe.wollard) - is redirecting nicer?
 		}
 		
-		if ($login && $password)
+		$login = isset($_POST['login']) ? $_POST['login'] : '';
+		$password = isset($_POST['password']) ? $_POST['password'] : '';
+
+		// Loop through authentication mechanisms
+		// Break when we have a match
+		foreach($this->auth_mechanisms as $mechanism => $auth_data)
 		{
-			
-			// Get hasher object
-			$t_hasher = $this->load_phpass();
-			
-			foreach($this->auth_mechanisms as $mechanism => $auth_data)
+			// Local is just a username => hash array
+			switch ($mechanism)
 			{
-				// Local is just a username => hash array
-				if($mechanism == 'config')
-				{
+				case 'noauth': // No authentication
+					$check = TRUE;
+					$login = 'noauth';
+					break 2;
+
+				case 'config': // Config authentication
 					if(isset($auth_data[$login]))
 					{
+						$t_hasher = $this->load_phpass();
 						$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
-						break;
+						break 2;
 					}
-				}
+					break;
+				
+				default:
+					die( 'Unknown authentication mechanism: '.$mechanism);
+					break;
 			}
-			
-			if($check)
-			{
-				$_SESSION['user'] = $login;
-				$_SESSION['auth'] = $mechanism;
-				session_regenerate_id();
-				redirect($return);
-			}
-			
 		}
+
+		// If authentication succeeded, create sessionz
+		if($check)
+		{
+			$_SESSION['user'] = $login;
+			$_SESSION['auth'] = $mechanism;
+			session_regenerate_id();
+			redirect($return);
+		}
+		
+		$data = array('login' => $login, 'url' => url("auth/login/$return"));
 		
 		if($_POST)
 		{
