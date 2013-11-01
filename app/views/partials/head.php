@@ -70,9 +70,12 @@
               </li>
 
           </ul>
+          <?$auth = conf('auth'); // Hide logout button if auth_noauth
+            if( ! array_key_exists('auth_noauth', $auth)):?>
           <div class="navbar-form pull-right">
             <a class="btn btn-default btn-sm" href="<?=url('auth/logout')?>">Logout</a>
           </div>
+          <?endif?>
     </nav>
   </div>
 </header>
