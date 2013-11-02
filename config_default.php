@@ -114,7 +114,7 @@
 	| The list is processed using regex, examples:
 	| 
 	| Skip  all virtual windows apps created by parallels and VMware
-	| $conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*', 'com.vmware.proxyApp.*';
+	| $conf['bundleid_ignorelist'][] = array('com.parallels.winapp.*', 'com.vmware.proxyApp.*');
 	| 
 	| Skip all Apple apps, except iLife, iWork and Server
 	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
