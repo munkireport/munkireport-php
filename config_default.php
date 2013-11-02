@@ -113,14 +113,17 @@
 	| List of bundle-id's to be ignored when processing inventory
 	| The list is processed using regex, examples:
 	| 
-	| Skip  all virtual windows apps created by parallels
-	| $conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
+	| Skip  all virtual windows apps created by parallels and VMware
+	| $conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*', 'com.vmware.proxyApp.*';
 	| 
 	| Skip all Apple apps, except iLife, iWork and Server
 	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
 	|
+	| Skip all apps with empty bundle-id's
+	| '^$'
+	|
 	*/
-	$conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
+	$conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*', 'com.vmware.proxyApp.*';
 
 	/*
 	|===============================================
