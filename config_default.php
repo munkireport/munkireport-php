@@ -195,10 +195,10 @@
 	| Specify dsn, username, password and options
 	| Supported engines: sqlite and mysql
 	| Mysql example:
-	| pdo_dsn = 'mysql:host=localhost;dbname=munkireport';
-	| pdo_user = 'munki';
-	| pdo_pass = 'munki';
-	| pdo_opts = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
+	| 	$conf['pdo_dsn'] = 'mysql:host=localhost;dbname=munkireport';
+	| 	$conf['pdo_user'] = 'munki';
+	| 	$conf['pdo_pass'] = 'munki';
+	| 	$conf['pdo_opts'] = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
 	|
 	*/
 	$conf['pdo_dsn'] = 'sqlite:'.$conf['application_path'].'db/db.sqlite';
