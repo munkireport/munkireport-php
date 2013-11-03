@@ -20,6 +20,11 @@ Create the first user
  2. Append the generated hash line to config.php
  3. Now refresh the page in your browser, and you should be able to log in with the credentials you just created.
 
+#### No authentication
+
+If you want to deploy munkireport without authentication (because you run your own authentication method), add the following line to config.php
+`$conf['auth']['auth_noauth'] = array();`
+
 Setting up a client manually
 ---
 

@@ -113,14 +113,17 @@
 	| List of bundle-id's to be ignored when processing inventory
 	| The list is processed using regex, examples:
 	| 
-	| Skip  all virtual windows apps created by parallels
-	| $conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
+	| Skip  all virtual windows apps created by parallels and VMware
+	| $conf['bundleid_ignorelist'][] = array('com.parallels.winapp.*', 'com.vmware.proxyApp.*');
 	| 
 	| Skip all Apple apps, except iLife, iWork and Server
 	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
 	|
+	| Skip all apps with empty bundle-id's
+	| '^$'
+	|
 	*/
-	$conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
+	$conf['bundleid_ignorelist'][] = array('com.parallels.winapp.*', 'com.vmware.proxyApp.*');
 
 	/*
 	|===============================================
@@ -195,10 +198,10 @@
 	| Specify dsn, username, password and options
 	| Supported engines: sqlite and mysql
 	| Mysql example:
-	| pdo_dsn = 'mysql:host=localhost;dbname=munkireport';
-	| pdo_user = 'munki';
-	| pdo_pass = 'munki';
-	| pdo_opts = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
+	| 	$conf['pdo_dsn'] = 'mysql:host=localhost;dbname=munkireport';
+	| 	$conf['pdo_user'] = 'munki';
+	| 	$conf['pdo_pass'] = 'munki';
+	| 	$conf['pdo_opts'] = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
 	|
 	*/
 	$conf['pdo_dsn'] = 'sqlite:'.$conf['application_path'].'db/db.sqlite';

@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.0.2.372';
+$GLOBALS['version'] = '2.0.2.388';
 
 // Return version without commit count
 function get_version()
@@ -107,36 +107,4 @@ function humanreadablesize($bytes, $decimals = 2) {
 	$sz = 'BKMGTP';
 	$factor = floor((strlen($bytes) - 1) / 3);
 	return sprintf("%.{$decimals}f %sB", $bytes / pow(1024, $factor), $factor?@$sz[$factor]:' ');
-}
-
-function RelativeTime($time) 
-{ 
-    $points = array(
-            'year'     => 31556926,
-            'month'    => 2629743,
-            'week'     => 604800,
-            'day'      => 86400,
-            'hour'     => 3600,
-            'minute'   => 60,
-            'second'   => 1
-        );
-    $plurals = array( 
-    		'year'		=> 'years',
-    		'month'		=> 'months',
-    		'week'		=> 'weeks',
-    		'day'		=> 'days',
-    		'hour'		=> 'hours',
-    		'minute'	=> 'minutes',
-    		'second'	=> 'seconds'
-    		);
-        
-        foreach($points as $point => $value)
-        {
-            $elapsed = floor($time/$value);
-            if($elapsed > 0)
-            {
-                $point = $elapsed > 1 ? $plurals[$point] : $point;
-                return "$elapsed $point";
-            }
-        }
 }

@@ -1,34 +1,98 @@
+<?
+$queryobj = new Reportdata();
+$now = time();
+$hour_ago = $now - 3600;
+$today = strtotime('today');
+$week_ago = $now - 3600 * 24 * 7;
+$month_ago = $now - 3600 * 24 * 30;
+$three_month_ago = $now - 3600 * 24 * 90;
+$sql = "SELECT COUNT(1) as total, 
+	COUNT(CASE WHEN timestamp > $hour_ago THEN 1 END) AS lasthour, 
+	COUNT(CASE WHEN timestamp > $today THEN 1 END) AS today, 
+	COUNT(CASE WHEN timestamp > $week_ago THEN 1 END) AS lastweek,
+	COUNT(CASE WHEN timestamp > $month_ago THEN 1 END) AS lastmonth,
+	COUNT(CASE WHEN timestamp BETWEEN $month_ago AND $week_ago THEN 1 END) AS inactive_week,
+	COUNT(CASE WHEN timestamp BETWEEN $three_month_ago AND $month_ago THEN 1 END) AS inactive_month,
+	COUNT(CASE WHEN timestamp < $three_month_ago THEN 1 END) AS inactive_three_month
+	FROM reportdata";
+
+$obj = current($queryobj->query($sql));
+?>
 		<div class="col-lg-4 col-md-6">
 
 			<div class="panel panel-default">
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="icon-group"></i> Clients</h3>
+					<h3 class="panel-title"><i class="icon-group"></i> Active clients</h3>
 				
 				</div>
 
 				<div class="panel-body text-center">
 
-					<?$queryobj = new Machine(); new Reportdata()// Generic queryobject?>
+					
+				<?if($obj):?>
 
 					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
-					<?$sql = "select COUNT(id) as count from machine"?>
-					<?if($obj = current($queryobj->query($sql))):?>
-						<span class="bigger-150"> <?=$client_total = $obj->count?> </span>
+						<span class="bigger-150"> <?=$obj->lastmonth?> </span>
 						<br>
-						Clients
-					<?endif?>
+						This mo
 					</a>
-					<span class="btn btn-success">
-					<?$hour_ago = time() - 3600;
-						$sql = "select COUNT(id) as count from reportdata WHERE timestamp > $hour_ago";?>
-					<?if($obj = current($queryobj->query($sql))):?>
-						<span class="bigger-150"> <?=$obj->count?> </span>
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
+						<span class="bigger-150"> <?=$obj->lastweek?> </span>
 						<br>
-						Req/hour
-					<?endif?>
-					</span>
+						This wk
+					</a>
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
+						<span class="bigger-150"> <?=$obj->today?> </span>
+						<br>
+						Today
+					</a>
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
+						<span class="bigger-150"> <?=$obj->lasthour?> </span>
+						<br>
+						Last hour
+					</a>
+
+				<?endif?>
+
+				</div>
+
+			</div><!-- /panel -->
+
+		</div><!-- /col -->
+		<div class="col-lg-4 col-md-6">
+
+			<div class="panel panel-default">
+
+				<div class="panel-heading">
+
+					<h3 class="panel-title"><i class="icon-group"></i> Inactive clients</h3>
+				
+				</div>
+
+				<div class="panel-body text-center">
+
+					
+				<?if($obj):?>
+
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-danger">
+						<span class="bigger-150"> <?=$obj->inactive_month?> </span>
+						<br>
+						> 3 months
+					</a>
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-warning">
+						<span class="bigger-150"> <?=$obj->inactive_month?> </span>
+						<br>
+						Last mo
+					</a>
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
+						<span class="bigger-150"> <?=$obj->inactive_week?> </span>
+						<br>
+						Last wk
+					</a>
+
+				<?endif?>
 
 				</div>
 
