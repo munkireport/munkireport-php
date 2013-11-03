@@ -14,14 +14,6 @@
 
 	<div class="row">
 
-		<?$this->view('widgets/hardware_widget')?>
-
-		<?$this->view('widgets/network_location_widget')?>
-
-	</div> <!-- /row -->
-
-	<div class="row">
-
 		<?$this->view('widgets/new_clients_widget')?>
 
 		<?$this->view('widgets/warranty_widget')?>
