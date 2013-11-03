@@ -17,6 +17,9 @@
 				<li>
 					<a href="#inventory-items" data-toggle="tab">Inventory Items <span id="inventory-cnt" class="badge">.</span></a>
 				</li>
+				<li>
+					<a href="#network-tab" data-toggle="tab">Network <span id="network-cnt" class="badge">0</span></a>
+				</li>
 
 			</ul>
 
@@ -35,8 +38,13 @@
 					<h2>Installed Third-Party Software</h2>
 					<?$this->view('partials/install_history', array('apple'=> FALSE))?>
 				</div>
+
 				<div class="tab-pane" id='inventory-items'>
 					<?$this->view('partials/inventory_items')?>
+				</div>
+
+				<div class="tab-pane" id='network-tab'>
+					<?$this->view('client/network_tab')?>
 				</div>
 
 			</div>

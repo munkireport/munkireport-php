@@ -120,9 +120,10 @@ class Network_model extends Model {
         {
         	if( $data['ethernet'] && $data['ethernet'] != '(null)')
         	{
-        		$this->id = '';
+        		$this->merge($data);
+                $this->id = '';
         		$this->service = $service;
-        		$this->merge($data)->save();
+        		$this->save();
         	}
         }
     }

@@ -2,7 +2,9 @@
 	"scripts" => array(
 		"clients/client_list.js"
 	)
-))?>
+));
+//Initialize network model
+new Network_model?>
 
 <div class="container">
 
