@@ -123,7 +123,8 @@
 	| '^$'
 	|
 	*/
-	$conf['bundleid_ignorelist'][] = array('com.parallels.winapp.*', 'com.vmware.proxyApp.*');
+	$conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
+	$conf['bundleid_ignorelist'][] = 'com.vmware.proxyApp.*';
 
 	/*
 	|===============================================
