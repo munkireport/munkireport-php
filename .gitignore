@@ -3,3 +3,5 @@ app/db/*
 *.bak
 
 app/views/dashboard/custom_dashboard.php
+
+config.php
