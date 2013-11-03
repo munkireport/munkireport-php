@@ -56,10 +56,10 @@ new Network_model?>
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Status
-			        	var status=$('td:eq(2)', nRow).html();
+			        	var status=$('td:eq(3)', nRow).html();
 			        	status = status == 1 ? '<span class="label label-success">Enabled</span>' : 
 			        		(status === '0' ? '<span class="label label-danger">Disabled</span>' : '')
-			        	$('td:eq(2)', nRow).html(status)
+			        	$('td:eq(3)', nRow).html(status)
 
 				    }
 			    } );
@@ -73,6 +73,7 @@ new Network_model?>
 		      <tr>
 		      	<th data-colname='machine#computer_name'>Name</th>
 		        <th data-colname='machine#serial_number'>Serial</th>
+		        <th data-colname='network#service'>Service</th>
 		        <th data-colname='network#status'>Status</th>
 		        <th data-colname='network#ethernet'>Ethernet</th>
 		        <th data-colname='network#ipv4ip'>IP Address</th>
