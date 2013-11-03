@@ -8,6 +8,7 @@ class Network_model extends Model {
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial_number;
         $this->rs['service'] = ''; // Service name
+        $this->rs['order'] = 0; // Service order
         $this->rs['status'] = 1; // Active = 1, Inactive = 0
         $this->rs['ethernet'] = ''; // Ethernet address
         $this->rs['clientid'] = ''; // Client id
@@ -63,6 +64,7 @@ class Network_model extends Model {
         	'Manual Configuration' => 'manual');
         
         $services = array();
+        $order = 1; // Service order
 
         // Parse network data
         foreach(explode("\n", $data) as $line)
@@ -71,6 +73,7 @@ class Network_model extends Model {
             {
             	$service = $result[1];
             	$services[$service] = $this->rs; // Copy db fields
+                $services[$service]['order'] = $order++;
             	continue;
             }
 

@@ -18,7 +18,7 @@
 					<a href="#inventory-items" data-toggle="tab">Inventory Items <span id="inventory-cnt" class="badge">.</span></a>
 				</li>
 				<li>
-					<a href="#network-tab" data-toggle="tab">Network <span id="network-cnt" class="badge">0</span></a>
+					<a href="#network-tab" data-toggle="tab">Network interfaces <span id="network-cnt" class="badge">0</span></a>
 				</li>
 
 			</ul>

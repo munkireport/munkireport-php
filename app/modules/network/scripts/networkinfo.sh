@@ -12,7 +12,7 @@ networkfile="$DIR/cache/networkinfo.txt"
 
 echo "Storing network information in $networkfile"
 
-# Store network information in network.txt
+# Store network information in networkinfo.txt
 networkservices=$(networksetup -listallnetworkservices | grep -v asterisk)
 
 # Truncate file
