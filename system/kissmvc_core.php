@@ -179,6 +179,10 @@ abstract class KISS_Engine
 		}
 
 		$uri = $_SERVER['REQUEST_URI'];
+
+		// Remove multiple slashes
+		$uri = preg_replace('#/+#', '/', $uri);
+
 		if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
 		{
 			$uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
