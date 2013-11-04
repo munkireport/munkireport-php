@@ -3,7 +3,7 @@
 echo 'Install network report'
 
 # filevault_status_controller
-NW_CTL="${BASEURL}/index.php?/module/network/"
+NW_CTL="${BASEURL}index.php?/module/network/"
 
 # Get the script in the proper directory
 curl --fail --silent "${NW_CTL}get_script/networkinfo.sh" -o "${MUNKIPATH}preflight.d/networkinfo.sh"
