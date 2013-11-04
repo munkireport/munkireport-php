@@ -14,7 +14,7 @@ $nw = new Network_model();?>
 
 </h2>
 
-<div class="col-sm-6">
+<div class="col-lg-6">
 
 	<div class="table-responsive">
 
@@ -41,7 +41,7 @@ $nw = new Network_model();?>
 
 </div>
 
-<div class="col-sm-6">
+<div class="col-lg-6">
 
 	<div class="table-responsive">
 
