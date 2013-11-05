@@ -33,7 +33,8 @@ def curl(url, values):
             print url
             print 'The server couldn\'t fulfill the request.'
             print 'Error code: ', e.code
-        exit(-1)
+        # Reportserver error, exit clean so munki keeps running
+        exit(0)
     return response
 
 def get_long_username(username):
