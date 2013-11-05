@@ -67,7 +67,7 @@
 			} );
 		</script>
 
-		  <h3>Warranty <span id="total-count" class='label label-primary'>…</span></span></h3>
+		  <h3>Warranty report <span id="total-count" class='label label-primary'>…</span></span></h3>
 		  
 		  <table class="table table-striped table-condensed">
 		    <thead>

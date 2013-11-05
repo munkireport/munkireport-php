@@ -50,7 +50,7 @@
 			} );
 		</script>
 
-	  <h3>Machines <span id="total-count" class='label label-primary'>…</span></h3>
+	  <h3>Clients report <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 
