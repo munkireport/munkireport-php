@@ -70,7 +70,7 @@ $(document).ready(function() {
     $('#edit').click(function(event){
     	event.preventDefault()
     	$(this).toggleClass('btn-danger');
-    	$('.machine').toggleClass('edit');
+    	$('.machine').toggleClass('edit btn-group');
     });
 
 } );
