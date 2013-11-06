@@ -72,7 +72,7 @@ a.list-group-item-danger > .badge
 @media (min-width: 1200px)
 {
   .container {
-  max-width: 98%;
+  width: 98%;
   }
 }
 
