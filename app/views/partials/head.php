@@ -72,9 +72,13 @@
           </ul>
           <?$auth = conf('auth'); // Hide logout button if auth_noauth
             if( ! array_key_exists('auth_noauth', $auth)):?>
-          <div class="navbar-form pull-right">
-            <a class="btn btn-default btn-sm" href="<?=url('auth/logout')?>">Logout <?=$_SESSION['user']?></a>
-          </div>
+
+          <form action="<?=url('auth/logout', true)?>" method="post" class="navbar-form navbar-right">
+            <button type="submit" class="btn btn-sm btn-default">
+              <i class="icon-signout"></i> Logout <?=$_SESSION['user']?>
+            </button>
+          </form>
+
           <?endif?>
     </nav>
   </div>

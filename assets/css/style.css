@@ -68,11 +68,11 @@ a.list-group-item-danger > .badge
   display:block;
 }
 
-/* Stretch to 98% for large screens */
+/* Stretch to screen width for large screens */
 @media (min-width: 1200px)
 {
   .container {
-  width: 98%;
+  width: auto;
   }
 }
 
