@@ -5,6 +5,7 @@ from munkilib import munkicommon
 from munkilib.phpserialize import *
 import subprocess
 import pwd
+import sys
 import urllib
 import urllib2
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
