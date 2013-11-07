@@ -5,6 +5,7 @@ from munkilib import munkicommon
 from munkilib.phpserialize import *
 import subprocess
 import pwd
+import sys
 import urllib
 import urllib2
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
@@ -33,7 +34,11 @@ def curl(url, values):
             print url
             print 'The server couldn\'t fulfill the request.'
             print 'Error code: ', e.code
-        exit(-1)
+        # Reportserver error, exit clean so munki keeps running
+        exit(0)
+    except:
+        print 'A server error occurred:', sys.exc_info()[0]
+        exit(0)
     return response
 
 def get_long_username(username):

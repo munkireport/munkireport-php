@@ -90,7 +90,7 @@
 					<dt>SMART Status</dt>
 					<dd><?=$disk->SMARTStatus?></dd>
 				</dl>
-				<?require_once(APP_ROOT . "app/helpers/warranty_helper.php")?>
+				<?require_once(conf('application_path') . "helpers/warranty_helper.php")?>
 				<dl class="dl-horizontal">
 					<dt>Est. Manufacture date</dt>
 					<dd><?=estimate_manufactured_date($serial_number)?></dd>

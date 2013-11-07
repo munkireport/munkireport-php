@@ -178,14 +178,17 @@ abstract class KISS_Engine
 			return '';
 		}
 
-		$uri = $_SERVER['REQUEST_URI'];
-		if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
+		// Remove multiple slashes
+		$uri = preg_replace('#/+#', '/', $_SERVER['REQUEST_URI']);
+		$script = preg_replace('#/+#', '/', $_SERVER['SCRIPT_NAME']);
+
+		if (strpos($uri, $script) === 0)
 		{
-			$uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+			$uri = substr($uri, strlen($script));
 		}
-		elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
+		elseif (strpos($uri, dirname($script)) === 0)
 		{
-			$uri = substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+			$uri = substr($uri, strlen(dirname($script)));
 		}
 
 		// This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
