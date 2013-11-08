@@ -34,7 +34,7 @@ Apart from munki clients doing reporting, Munkireport relies on:
 ### Serverside:
 
 * A webserver (runs fine with Apache, IIS and nginx)
-* php version 5 with pdo-sqlite3
+* php version 5 with pdo-sqlite3 and libxml
 
 ### Clientside
 
