@@ -52,6 +52,12 @@
 			        	var sn=$('td:eq(1)', nRow).html();
 			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
 			        	$('td:eq(0)', nRow).html(link);
+			        	
+			        	// is SSD ?
+			        	var status=$('td:eq(4)', nRow).html();
+			        	status = status == 1 ? '<span class="label label-success">Yes</span>' : 
+			        		(status === '0' ? 'No' : '')
+			        	$('td:eq(4)', nRow).html(status)
 
 			        	// Format disk usage
 			        	var disk=$('td:eq(5)', nRow).html();
