@@ -9,9 +9,6 @@ define('APP_ROOT', __DIR__ .'/' );
 // Load config
 load_conf();
 
-// Load language file todo: don't load on xhr?
-load_file('lang', conf('application_path') . 'lang/' . conf('lang', 'en') . '/lang.php');
-
 // Load conf (keeps variables out of global space)
 function load_conf()
 {
@@ -33,41 +30,27 @@ function load_conf()
 	$GLOBALS['conf'] =& $conf;
 }
 
-// Load file (used for lang)
-function load_file($type, $path)
-{
-	if ((include_once $path) === 1)
-	{
-		$GLOBALS[$type] =& $$type;
-	}
-	else
-	{
-		debug('failed to load '.$path);
-	}
-}
 
-// Config getter
+/**
+ * Get config item
+ * @param string config item
+ * @param string default value (optional)
+ * @author AvB
+ **/
 function conf($cf_item, $default = '')
 {
 	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
 }
 
-// Language getter
-function lang($str)
-{
-	return array_key_exists($str, $GLOBALS['lang']) ? $GLOBALS['lang'][$str] : $str;
-}
-
 /*
 	A simple debug logger that mutes output when debug is FALSE.
  */
-function debug($message)
+function debug($msg)
 {
 	if (conf('debug'))
 	{
-		echo "<span class='debug'>[DEBUG] "
-			. is_string($message) ? $message : var_export($message, TRUE)
-			. "</span>";
+		printf('<span class="debug">[DEBUG] %s </span>', 
+			is_string($msg) ? $msg : var_export($msg, TRUE));
 	}
 }
 
@@ -122,24 +105,19 @@ setlocale(LC_ALL, conf('locale'));
 //===============================================
 // Quick permissions check for sqlite operations
 //===============================================
-if (strpos( conf('pdo_dsn'), "sqlite") === 0) {
-	$dsnParts = explode(":", conf('pdo_dsn'));
-	$dbPath = $dsnParts[1];
-	$dbDir = dirname($dbPath);
-	$errors = FALSE;
-	if (!is_writable($dbDir)) {
-		echo "Database directory isn't writable by the webserver";
-		debug(" - " . $dbDir);
-		echo "<br />";
-		$errors = TRUE;
+if (strpos( conf('pdo_dsn'), "sqlite") === 0)
+{
+	$dbh = getdbh();
+	
+	if( $dbh->exec( 'CREATE TABLE `tmp` (id)' ) === FALSE )
+	{
+		if($dbh->exec( 'DROP TABLE `tmp`' ) === FALSE )
+		{
+			$err = $dbh->errorInfo();
+			fatal('sqlite: '.$err[2]);
+		}
 	}
-	if (file_exists($dbPath) && !is_writable($dbPath)) {
-		echo "Database isn't writable by the webserver";
-		debug(" - " . $dbPath);
-		$errors = TRUE;
-	}
-	if ($errors == TRUE)
-		exit;
+	$dbh->exec( 'DROP TABLE `tmp`' );
 }
 
 //===============================================
