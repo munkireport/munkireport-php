@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 			// If the edit button is active, show the remove machine buttons
 			if($('#edit.btn-danger').length > 0){
-				$('div.machine').addClass('edit');
+				$('div.machine').addClass('edit btn-group');
 			}
 
 			// Add callback to remove machine button
