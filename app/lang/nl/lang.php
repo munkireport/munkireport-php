@@ -20,3 +20,6 @@ $lang['hours']		= 'uren';
 $lang['minutes']	= 'minuten';
 $lang['seconds']	= 'seconden';
 
+$lang['username']	= 'Gebruikersnaam';
+$lang['password']	= 'Wachtwoord';
+$lang['version']	= 'versie';

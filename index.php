@@ -6,31 +6,56 @@ define('FC', __FILE__ .'/' );
 
 define('APP_ROOT', __DIR__ .'/' );
 
-//===============================================
-// Include config
-//===============================================
-require_once(APP_ROOT . "config_default.php");
+// Load config
+load_conf();
 
-if ((include_once APP_ROOT . "config.php") !== 1)
+// Load language file todo: don't load on xhr?
+load_file('lang', conf('application_path') . 'lang/' . conf('lang', 'en') . '/lang.php');
+
+// Load conf (keeps variables out of global space)
+function load_conf()
 {
-	fatal(APP_ROOT. "config.php is missing!<br>
-Unfortunately, Munkireport does not work without it</p>");
+	// Load default configuration
+	require_once(APP_ROOT . "config_default.php");
+
+	if ((include_once APP_ROOT . "config.php") !== 1)
+	{
+		fatal(APP_ROOT. "config.php is missing!<br>
+	Unfortunately, Munkireport does not work without it</p>");
+	}
+
+	// Convert auth_config to config item
+	if(isset($auth_config))
+	{
+		$conf['auth']['auth_config'] = $auth_config;
+	}
+
+	$GLOBALS['conf'] =& $conf;
 }
 
-// Convert auth_config to config item
-if(isset($auth_config))
+// Load file (used for lang)
+function load_file($type, $path)
 {
-	$conf['auth']['auth_config'] = $auth_config;
+	if ((include_once $path) === 1)
+	{
+		$GLOBALS[$type] =& $$type;
+	}
+	else
+	{
+		debug('failed to load '.$path);
+	}
 }
-
-
-// Make config part of global array
-$GLOBALS['conf'] =& $conf;
 
 // Config getter
-function conf($cf_item)
+function conf($cf_item, $default = '')
 {
-	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : '';
+	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
+}
+
+// Language getter
+function lang($str)
+{
+	return array_key_exists($str, $GLOBALS['lang']) ? $GLOBALS['lang'][$str] : $str;
 }
 
 /*
