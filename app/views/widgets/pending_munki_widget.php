@@ -2,7 +2,7 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading" title="Pending installs for this week">
+				<div class="panel-heading" data-container="body" title="Pending installs for this week">
 
 					<h3 class="panel-title"><i class="icon-shopping-cart"></i> Pending Installs</h3>
 				
