@@ -130,6 +130,10 @@ function drawGraph(url, id, options, parms)
 
 		options.colors = makeColorGradient(data.length);
 		options.resolution = getScale();
+
+		// preventDefault by default for mobile events.  Turn off to enable scroll.
+		options.preventDefault = false;
+		
 		//dumpj(options.colors)
 		chartObjects[id] = Flotr.draw($(id)[0], data, options);
 
