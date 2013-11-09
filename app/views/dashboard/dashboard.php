@@ -9,6 +9,10 @@
 		<?$this->view('widgets/disk_report_widget')?>
 
 		<?$this->view('widgets/munki_widget')?>
+		
+		<?$this->view('widgets/pending_apple_widget')?>
+		
+		<?$this->view('widgets/pending_3rd_widget')?>
 
 	</div> <!-- /row -->
 

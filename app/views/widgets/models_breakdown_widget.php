@@ -4,7 +4,7 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="icon-laptop"></i> Hardware breakdown</h3>
+					<h3 class="panel-title"><i class="icon-laptop"></i> Models breakdown</h3>
 				
 				</div>
 

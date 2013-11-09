@@ -10,14 +10,14 @@
 
     <?$this->view('widgets/os_widget')?>
 
-    <?$this->view('widgets/age_widget')?>
+    <?$this->view('widgets/hardware_age_widget')?>
 
 
   </div> <!-- /row -->
 
   <div class="row">
 
-    <?$this->view('widgets/hardware_widget')?>
+    <?$this->view('widgets/computer_type_widget')?>
 
     <?$this->view('widgets/network_location_widget')?>
 
@@ -26,7 +26,7 @@
 
   <div class="row">
 
-    <?$this->view('widgets/extended_hardware_widget')?>
+    <?$this->view('widgets/models_breakdown_widget')?>
 
     <?$this->view('widgets/manifests_widget')?>
 

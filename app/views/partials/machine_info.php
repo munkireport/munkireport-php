@@ -100,9 +100,9 @@
 
 				<dl class="dl-horizontal">
 					<dt>Registration date</dt>
-					<dd><time title="<?=strftime('%x', $report->reg_timestamp)?>" datetime="<?=$report->reg_timestamp?>"><?=strftime('%x', $report->reg_timestamp)?></time></dd>
+					<dd><time title="<?=strftime('%c', $report->reg_timestamp)?>" datetime="<?=$report->reg_timestamp?>"><?=strftime('%x', $report->reg_timestamp)?></time></dd>
 					<dt>Last checkin</dt>
-					<dd><time title="<?=strftime('%x', $report->timestamp)?>" datetime="<?=$report->timestamp?>"><?=strftime('%x', $report->timestamp)?></time></dd>
+					<dd><time title="<?=strftime('%c', $report->timestamp)?>" datetime="<?=$report->timestamp?>"><?=strftime('%x', $report->timestamp)?></time></dd>
 				</dl>
 
 				<script>

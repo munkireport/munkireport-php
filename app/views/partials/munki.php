@@ -163,7 +163,7 @@ if(isset($report['ItemsToRemove']))
 					<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
 					<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
 		          </td>
-		          <td style="text-align: right;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
+		          <td style="text-align: left;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
 		          <td><?=isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed")?></td>
 		        </tr>
 				<?endforeach?>
@@ -202,7 +202,7 @@ if(isset($report['ItemsToRemove']))
 					<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
 					<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
 		          </td>
-		          <td style="text-align: right;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
+		          <td style="text-align: left;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
 		          <td><?=$item['installed'] ? 'installed' : "not installed"?></td>
 		        </tr>
 				<?endforeach?>

@@ -54,6 +54,13 @@ class Machine extends Model {
 		// Remove serial_number from mylist, use the cleaned serial that was provided in the constructor.
 		unset($mylist['serial_number']);
 
+		// Set machine_name for vms TODO: test/add virtualbox and ESXi
+		if (strpos($mylist['machine_model'],'VMware') !== false)
+		{
+			$mylist['machine_desc'] = "Virtual Machine";
+			$mylist['machine_name'] = "Virtual Machine";
+		}
+
 		// Set default computer_name
 		if( ! isset($mylist['computer_name']) OR trim($mylist['computer_name']) == '')
 		{
