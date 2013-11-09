@@ -31,13 +31,12 @@
 					$pendinginstalls_array = array_count_values($pendinginstalls_array);
 					arsort($pendinginstalls_array);
 				?> 
-				<?foreach(array_keys($pendinginstalls_array) as $obj):?>
-
+				<?foreach($pendinginstalls_array as $installname => $pendingtimes):?>
 
 					<a href="<?=url('show/listing/munki#pendinginstalls')?>" class="list-group-item">
 					<!--//echo first the key names (update name) and then their values (count) -->
-                	<?=$obj?>
-                	<span class="badge pull-right"><?=$pendinginstalls_array[$obj]?></span>
+                	<?=$installname?>
+                	<span class="badge pull-right"><?=$pendingtimes?></span>
             		</a>
 
 				<?endforeach?>
