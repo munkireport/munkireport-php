@@ -2,17 +2,21 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading">
+				<div class="panel-heading" title="Pending installs for this week">
 
-					<h3 class="panel-title"><i class="icon-shopping-cart"></i> Pending 3rd Party Installations</h3>
+					<h3 class="panel-title"><i class="icon-shopping-cart"></i> Pending Installs</h3>
 				
 				</div>
 
 				<div class="list-group scroll-box">
 
 				<?php
-					$mr = new Munkireport; 
-					$sql = "SELECT serial_number, report_plist FROM munkireport where itemstoinstall > 0";
+					$mr = new Munkireport;
+					$pendinginstalls_array = array();
+					$week_ago = time() - 3600 * 24 * 7;
+					$sql = "SELECT serial_number, report_plist 
+							FROM munkireport WHERE itemstoinstall > 0
+							AND timestamp > $week_ago";
 					// Get compression (fixme: we should be able to read this from the model) 
 					$compress = function_exists('gzdeflate');
 					
@@ -30,7 +34,10 @@
 					//group the updates by count now that the loops are done
 					$pendinginstalls_array = array_count_values($pendinginstalls_array);
 					arsort($pendinginstalls_array);
-				?> 
+				?>
+				<?if( ! $pendinginstalls_array):?>
+					<span class="list-group-item">No updates pending</span>
+				<?endif?>
 				<?foreach(array_keys($pendinginstalls_array) as $obj):?>
 
 

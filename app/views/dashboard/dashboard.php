@@ -12,7 +12,7 @@
 		
 		<?$this->view('widgets/pending_apple_widget')?>
 		
-		<?$this->view('widgets/pending_3rd_widget')?>
+		<?$this->view('widgets/pending_munki_widget')?>
 
 	</div> <!-- /row -->
 
@@ -27,5 +27,13 @@
 	</div> <!-- /row -->
 
 </div>	<!-- /container -->
+
+<script>
+	// Add tooltips
+	$(document).ready(function() {
+		$('[title]').tooltip();
+	});
+
+</script>
 
 <?$this->view('partials/foot')?>
