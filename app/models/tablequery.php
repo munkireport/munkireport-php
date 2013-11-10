@@ -20,10 +20,6 @@ class Tablequery {
 	 **/
     function fetch($cfg)
     {
-		// Get total records
-        $ref_obj = new Machine();
-        $iTotal = $ref_obj->count();
-
         $dbh = getdbh();
 
         // Get tables from column names
@@ -59,7 +55,22 @@ class Tablequery {
         {
             $from .= " LEFT JOIN $name USING (serial_number)";
         }
-    
+
+        // Get total records
+        $sql = "
+            SELECT COUNT(1) as count
+            $from";
+        if( ! $stmt = $dbh->prepare( $sql ))
+        {
+            $err = $dbh->errorInfo();
+            die($err[2]);
+        }
+        $stmt->execute();// $bindings );
+        if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
+        {
+            $iTotal = $rs->count;
+        }   
+
         // Paging
         $sLimit = sprintf(' LIMIT %d,%d', 
             $cfg['iDisplayStart'], $cfg['iDisplayLength']);
