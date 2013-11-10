@@ -15,7 +15,7 @@
 					$pendinginstalls_array = array();
 					$week_ago = time() - 3600 * 24 * 7;
 					$sql = "SELECT serial_number, report_plist 
-							FROM munkireport WHERE itemstoinstall > 0
+							FROM munkireport WHERE pendinginstalls > 0
 							AND timestamp > $week_ago";
 					// Get compression (fixme: we should be able to read this from the model) 
 					$compress = function_exists('gzdeflate');
@@ -41,7 +41,7 @@
 				<?foreach(array_keys($pendinginstalls_array) as $obj):?>
 
 
-					<a href="<?=url('show/listing/munki#pendinginstalls')?>" class="list-group-item">
+					<a href="<?=url('module/munkireport/pending#'.$obj)?>" class="list-group-item">
 					<!--//echo first the key names (update name) and then their values (count) -->
                 	<?=$obj?>
                 	<span class="badge pull-right"><?=$pendinginstalls_array[$obj]?></span>

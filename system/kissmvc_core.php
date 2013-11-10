@@ -307,17 +307,17 @@ abstract class KISS_View
 		$this->vars[$key][]=$var;
 	}
 
-	function view($file='', $vars='') { //Bluebus addition
+	function view($file='', $vars='', $view_path = VIEW_PATH) { //Bluebus addition
 		if (is_array($vars))
 			$this->vars=array_merge($this->vars,$vars);
 		extract($this->vars);
 		if ((bool) @ini_get('short_open_tag') === FALSE)
 		{
-			echo eval($this->short_open(VIEW_PATH.$file.EXT));
+			echo eval($this->short_open($view_path.$file.EXT));
 		}
 		else
 		{
-			require(VIEW_PATH.$file.EXT);
+			require($view_path.$file.EXT);
 		}
 	}
 	
