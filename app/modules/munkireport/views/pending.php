@@ -20,7 +20,7 @@
 			        "fnDrawCallback": function( oSettings ) {
 						$('#pen-count').html(oSettings.fnRecordsTotal());
 					},
-			        ",fnCreatedRow": function( nRow, aData, iDataIndex ) {
+			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
