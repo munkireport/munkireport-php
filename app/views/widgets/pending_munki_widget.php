@@ -15,7 +15,7 @@
 					$pendinginstalls_array = array();
 					$week_ago = time() - 3600 * 24 * 7;
 					$sql = "SELECT serial_number, report_plist 
-							FROM munkireport WHERE itemstoinstall > 0
+							FROM munkireport WHERE pendinginstalls > 0
 							AND timestamp > $week_ago";
 					// Get compression (fixme: we should be able to read this from the model) 
 					$compress = function_exists('gzdeflate');

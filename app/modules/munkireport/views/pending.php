@@ -25,14 +25,16 @@
 			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
 			        	$('td:eq(0)', nRow).html(link);
 
-			        	// Format disk usage
-			        	var disk=$('td:eq(5)', nRow).html();
-			        	var cls = disk > 90 ? 'danger' : (disk > 80 ? 'warning' : 'success');
-			        	$('td:eq(5)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
-
 			        	// Format date
-			        	var date = new Date($('td:eq(7)', nRow).html() * 1000);
-			        	$('td:eq(7)', nRow).html(moment(date).fromNow());
+			        	date = aData[4];
+			        	if(date)
+			        	{
+			              	$('td:eq(4)', nRow).html(moment(date).fromNow());
+			        	}
+			        	else
+			        	{
+			        		$('td:eq(4)', nRow).html('never');
+			        	}
 				    }
 			    } );
 
@@ -52,16 +54,23 @@
 
 			<thead>
 			  <tr>
-			  	<th data-colname='machine#computer_name'>Client</th>
-			  	<th data-colname='machine#computer_name'>Serial</th>
-			  	<th data-colname='machine#computer_name'>User</th>
-			    <th data-colname='machine#serial_number'>Name</th>
-				<th data-colname='machine#os_version'>Type</th>
+			  	<th>Client</th>
+			  	<th>Serial</th>
+			  	<th>User</th>
+			  	<th>IP</th>
+			  	<th>Latest run</th>
+			    <th>Name</th>
+				<th>Type</th>
 			  </tr>
 			</thead>
 
 			<tbody>
-				<?$sql = "SELECT computer_name, m.serial_number, report_plist, long_username
+				<?$sql = "SELECT computer_name, 
+							m.serial_number,
+							long_username,
+							m.timestamp,
+							remote_ip,
+							report_plist
 						FROM munkireport m
 						LEFT JOIN machine USING (serial_number)
 						LEFT JOIN reportdata USING (serial_number)
@@ -78,6 +87,8 @@
 					<td><?=$obj->computer_name?></td>
 					<td><?=$obj->serial_number?></td>
 					<td><?=$obj->long_username?></td>
+					<td><?=$obj->remote_ip?></td>
+					<td><?=$obj->timestamp?></td>
 					<td>
 						<?=$update['apple_product_name']?>
 						<?=$update['version_to_install']?>
@@ -94,6 +105,8 @@
 					<td><?=$obj->computer_name?></td>
 					<td><?=$obj->serial_number?></td>
 					<td><?=$obj->long_username?></td>
+					<td><?=$obj->remote_ip?></td>
+					<td><?=$obj->timestamp?></td>
 					<td>
 						<?=$update['display_name']?>
 						<?=$update['version_to_install']?>
