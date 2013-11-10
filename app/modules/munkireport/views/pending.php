@@ -17,7 +17,10 @@
 			    oTable = $('.table').dataTable( {
 			        "bProcessing": true,
 			        "bDeferRender": true,
-			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+			        "fnDrawCallback": function( oSettings ) {
+						$('#pen-count').html(oSettings.fnRecordsTotal());
+					},
+			        ",fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
@@ -46,7 +49,7 @@
 			} );
 		</script>
 
-		<h3>Pending Updates</h3>
+		<h3>Pending Updates <span id="pen-count" class='label label-primary'>…</span></h3>
 
 <?// Select pending, loop, check if item create table?>
 
