@@ -41,7 +41,7 @@
 				<?foreach(array_keys($pendinginstalls_array) as $obj):?>
 
 
-					<a href="<?=url('show/listing/munki#pendinginstalls')?>" class="list-group-item">
+					<a href="<?=url('module/munkireport/pending#'.$obj)?>" class="list-group-item">
 					<!--//echo first the key names (update name) and then their values (count) -->
                 	<?=$obj?>
                 	<span class="badge pull-right"><?=$pendinginstalls_array[$obj]?></span>
