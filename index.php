@@ -6,43 +6,51 @@ define('FC', __FILE__ .'/' );
 
 define('APP_ROOT', __DIR__ .'/' );
 
-//===============================================
-// Include config
-//===============================================
-require_once(APP_ROOT . "config_default.php");
+// Load config
+load_conf();
 
-if ((include_once APP_ROOT . "config.php") !== 1)
+// Load conf (keeps variables out of global space)
+function load_conf()
 {
-	fatal(APP_ROOT. "config.php is missing!<br>
-Unfortunately, Munkireport does not work without it</p>");
+	// Load default configuration
+	require_once(APP_ROOT . "config_default.php");
+
+	if ((include_once APP_ROOT . "config.php") !== 1)
+	{
+		fatal(APP_ROOT. "config.php is missing!<br>
+	Unfortunately, Munkireport does not work without it</p>");
+	}
+
+	// Convert auth_config to config item
+	if(isset($auth_config))
+	{
+		$conf['auth']['auth_config'] = $auth_config;
+	}
+
+	$GLOBALS['conf'] =& $conf;
 }
 
-// Convert auth_config to config item
-if(isset($auth_config))
+
+/**
+ * Get config item
+ * @param string config item
+ * @param string default value (optional)
+ * @author AvB
+ **/
+function conf($cf_item, $default = '')
 {
-	$conf['auth']['auth_config'] = $auth_config;
-}
-
-
-// Make config part of global array
-$GLOBALS['conf'] =& $conf;
-
-// Config getter
-function conf($cf_item)
-{
-	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : '';
+	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
 }
 
 /*
 	A simple debug logger that mutes output when debug is FALSE.
  */
-function debug($message)
+function debug($msg)
 {
 	if (conf('debug'))
 	{
-		echo "<span class='debug'>[DEBUG] "
-			. is_string($message) ? $message : var_export($message, TRUE)
-			. "</span>";
+		printf('<span class="debug">[DEBUG] %s </span>', 
+			is_string($msg) ? $msg : var_export($msg, TRUE));
 	}
 }
 
@@ -97,24 +105,19 @@ setlocale(LC_ALL, conf('locale'));
 //===============================================
 // Quick permissions check for sqlite operations
 //===============================================
-if (strpos( conf('pdo_dsn'), "sqlite") === 0) {
-	$dsnParts = explode(":", conf('pdo_dsn'));
-	$dbPath = $dsnParts[1];
-	$dbDir = dirname($dbPath);
-	$errors = FALSE;
-	if (!is_writable($dbDir)) {
-		echo "Database directory isn't writable by the webserver";
-		debug(" - " . $dbDir);
-		echo "<br />";
-		$errors = TRUE;
+if (conf('check_sqlite_perms') && strpos( conf('pdo_dsn'), "sqlite") === 0)
+{
+	$dbh = getdbh();
+	
+	if( $dbh->exec( 'CREATE TABLE `tmp` (id)' ) === FALSE )
+	{
+		if($dbh->exec( 'DROP TABLE `tmp`' ) === FALSE )
+		{
+			$err = $dbh->errorInfo();
+			fatal('sqlite: '.$err[2]);
+		}
 	}
-	if (file_exists($dbPath) && !is_writable($dbPath)) {
-		echo "Database isn't writable by the webserver";
-		debug(" - " . $dbPath);
-		$errors = TRUE;
-	}
-	if ($errors == TRUE)
-		exit;
+	$dbh->exec( 'DROP TABLE `tmp`' );
 }
 
 //===============================================

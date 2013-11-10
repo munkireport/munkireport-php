@@ -11,14 +11,14 @@
 							<p class="text-danger"><?php echo $error?></p>
 							<?php endif?>
 							<div class="form-group">
-								<label for="loginusername" class="col-lg-3 control-label">Username</label>
-								<div class="col-lg-9">
-									<input type="text" id="loginusername" name="login" class="form-control" value="<?php echo $login?>" placeholder="Username">
+								<label for="loginusername" class="col-md-5 control-label"><?=lang('username')?></label>
+								<div class="col-md-7">
+									<input type="text" id="loginusername" name="login" class="form-control" value="<?php echo $login?>" placeholder="<?=lang('username')?>">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="loginpassword" class="col-lg-3 control-label">Password</label>
-								<div class="col-lg-9">
+								<label for="loginpassword" class="col-md-5 control-label"><?=lang('password')?></label>
+								<div class="col-md-7">
 									<input type="password" id="loginpassword" name="password" class="form-control">
 								</div>
 							</div>
@@ -28,7 +28,7 @@
 								</div>
 							</div>
 			            </fieldset>
-			            <p class="text-right text-muted"><small>MunkiReport version <?=$GLOBALS['version']?></small></p>
+			            <p class="text-right text-muted"><small>MunkiReport <?=lang('version')?> <?=$GLOBALS['version']?></small></p>
 					</form>
 				</div>
 			</div>

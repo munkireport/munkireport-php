@@ -19,3 +19,7 @@ $lang['days']		= 'days';
 $lang['hours']		= 'hours';
 $lang['minutes']	= 'minutes';
 $lang['seconds']	= 'seconds';
+
+$lang['username']	= 'Username';
+$lang['password']	= 'Password';
+$lang['version']	= 'version';

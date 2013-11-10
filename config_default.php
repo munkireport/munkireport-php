@@ -209,6 +209,17 @@
 	$conf['pdo_user'] = '';
 	$conf['pdo_pass'] = '';
 	$conf['pdo_opts'] = array();
+
+	/*
+	|===============================================
+	| Check sqlite permissions
+	|===============================================
+	|
+	| Checks if sqlite database is writeable
+	| Turn off to speed up sqlite
+	|
+	*/
+	$conf['check_sqlite_perms'] = TRUE;
 	
 	/*
 	|===============================================
