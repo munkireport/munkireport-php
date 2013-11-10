@@ -95,6 +95,17 @@
 
 	/*
 	|===============================================
+	| Language
+	|===============================================
+	| 
+	| You can set the language here, this will change the user interface
+	| language. See for possible values the 'lang' directory
+	|
+	*/
+	$conf['lang'] = 'en';
+
+	/*
+	|===============================================
 	| VNC link, optional link in the client detail view
 	|===============================================
 	| 

@@ -6,7 +6,7 @@
 		        <div class="well">
 		        	<form action="<?php echo $url?>" method="post" accept-charset="UTF-8" class="form-horizontal">
 						<fieldset>
-							<legend>Login</legend>
+							<legend><?=lang('auth_login')?></legend>
 					    	<?php if (isset($error)):?>
 							<p class="text-danger"><?php echo $error?></p>
 							<?php endif?>
@@ -24,7 +24,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary">Sign in</button> 
+								<button type="submit" class="btn btn-primary"><?=lang('auth_signin')?></button> 
 								</div>
 							</div>
 			            </fieldset>
