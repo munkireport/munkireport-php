@@ -105,7 +105,7 @@ setlocale(LC_ALL, conf('locale'));
 //===============================================
 // Quick permissions check for sqlite operations
 //===============================================
-if (strpos( conf('pdo_dsn'), "sqlite") === 0)
+if (conf('check_sqlite_perms') && strpos( conf('pdo_dsn'), "sqlite") === 0)
 {
 	$dbh = getdbh();
 	
