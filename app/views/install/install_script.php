@@ -8,7 +8,7 @@ BASEURL="<?php echo
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 PREFPATH="/Library/Preferences/MunkiReport"
-CURL="/usr/bin/curl --fail --silent  --show-error"
+CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
 ERR=0
 VERSION="<?=get_version()?>"
