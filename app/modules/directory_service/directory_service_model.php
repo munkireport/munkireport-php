@@ -8,6 +8,10 @@ class Directory_service_model extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['which_directory_service'] = '';
 		$this->rs['directory_service_comments'] = '';   
+
+		$this->idx[] = array('which_directory_service');
+		$this->idx[] = array('directory_service_comments');
+
 		
 		// Create table if it does not exist
 		$this->create_table();
