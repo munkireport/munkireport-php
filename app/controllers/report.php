@@ -22,6 +22,9 @@ class report extends Controller
 		// Compare sent hashes with stored hashes
 		foreach($req_items as $key => $val)
 		{
+		    // All models are lowercase
+		    $key = strtolower($key);
+		    
 		    if( ! (isset($hashes[$key]) && $hashes[$key] == $val['hash']))
 		    {
 		        $itemarr[$key] = 1;
