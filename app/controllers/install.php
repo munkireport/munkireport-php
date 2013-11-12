@@ -7,7 +7,11 @@ class install extends Controller
 
     function index()
     {
-    	$data['scripts'] = array();
+        $data['install_scripts'] = array();
+        $data['uninstall_scripts'] = array();
+
+        // Get required modules from config
+        $use_modules = conf('modules');
 
         // Collect install scripts from modules
         foreach(scandir(conf('module_path')) AS $module)
@@ -18,10 +22,22 @@ class install extends Controller
                 continue;
             }
 
+            // Check if we need to uninstall this module
+            if( $use_modules && ! in_array($module, $use_modules))
+            {
+                // Check if there is an uninstall script
+                if(is_file(conf('module_path').$module.'/scripts/uninstall.sh'))
+                {
+                    $data['uninstall_scripts'][$module] = conf('module_path').$module.'/scripts/uninstall.sh';
+                }
+
+                continue;
+            }
+
             // Check if there is a install script
             if(is_file(conf('module_path').$module.'/scripts/install.sh'))
             {
-                $data['scripts'][$module] = conf('module_path').$module.'/scripts/install.sh';
+                $data['install_scripts'][$module] = conf('module_path').$module.'/scripts/install.sh';
             }
         }
 
