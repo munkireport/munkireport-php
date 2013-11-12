@@ -25,7 +25,7 @@ class Directory_service_model extends Model {
 	 * Process data sent by postflight
 	 *
 	 * @param string data
-	 * @author AvB
+	 * @author gmarnin
 	 **/
 	function process($data)
 	{		

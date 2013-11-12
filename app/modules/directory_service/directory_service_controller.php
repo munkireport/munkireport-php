@@ -19,7 +19,7 @@ class Directory_service_controller extends Module_controller
 	/**
 	 * Default method
 	 *
-	 * @author AvB
+	 * @author gmarnin
 	 **/
 	function index()
 	{
