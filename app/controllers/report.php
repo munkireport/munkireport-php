@@ -23,9 +23,9 @@ class report extends Controller
 		foreach($req_items as $key => $val)
 		{
 		    // All models are lowercase
-		    $key = strtolower($key);
-		    
-		    if( ! (isset($hashes[$key]) && $hashes[$key] == $val['hash']))
+		    $lkey = strtolower($key);
+
+		    if( ! (isset($hashes[$lkey]) && $hashes[$lkey] == $val['hash']))
 		    {
 		        $itemarr[$key] = 1;
 		    }
