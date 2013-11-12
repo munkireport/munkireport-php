@@ -48,24 +48,47 @@ class InstallHistory extends Model {
 	{
 		// Delete old data
 		$this->delete_set();
-		
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-		$parser = new CFPropertyList();
-		$parser->parse($plist, CFPropertyList::FORMAT_XML);
-		$mylist = $parser->toArray();
 
-		foreach($mylist as $item)
+		// Check if we're passed a plist (10.6 and higher)
+		if(strpos($plist, '<?xml version="1.0" encoding="UTF-8"?>') === 0)
 		{
-			// PackageIdentifiers is an array, so we only retain one
-			// packageidentifier so we can differentiate between
-			// Apple and third party tools
-			if(array_key_exists('packageIdentifiers', $item))
+			require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+			$parser = new CFPropertyList();
+			$parser->parse($plist, CFPropertyList::FORMAT_XML);
+			$mylist = $parser->toArray();
+
+			foreach($mylist as $item)
 			{
-				$item['packageIdentifiers'] = array_pop($item['packageIdentifiers']);
+				// PackageIdentifiers is an array, so we only retain one
+				// packageidentifier so we can differentiate between
+				// Apple and third party tools
+				if(array_key_exists('packageIdentifiers', $item))
+				{
+					$item['packageIdentifiers'] = array_pop($item['packageIdentifiers']);
+				}
+				$this->id = 0;
+				$this->merge($item)->save();
 			}
-			$this->id = 0;
-			$this->merge($item)->save();
 		}
+		else // 10.5 Software Update Log
+		{
+			//2007-12-14 12:40:47 +0100: Installed "GarageBand Update" (4.1.1)
+			$pattern = '/^(.*): .*"(.+)"\s+\((.+)\)/m';
+			if(preg_match_all($pattern, $plist, $result, PREG_SET_ORDER))
+			{
+				$this->packageIdentifiers = 'com.apple.fake';
+				$this->processName = 'installer';
+
+				foreach ($result as $row)
+				{
+					$this->date = strtotime($row[1]);
+					$this->displayName = $row[2];
+					$this->displayVersion = $row[3];
+					$this->id = 0;
+					$this->save();
+				}
+			}			
+		}	
 	}
 
 
