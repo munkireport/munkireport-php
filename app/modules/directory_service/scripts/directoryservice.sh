@@ -34,8 +34,6 @@ fi
 	else
 	if [ "${osvers}" = 6 ]; then
 		AD_COMMENTS=`dscl /Active\ Directory/All\ Domains/ -read Computers/$localhostname$ Comment | tr -d '\n' | awk '{$1 =""; print }'`	
-		else
-		AD_COMMENTS="Unable to Read AD Comments"
 	fi
 fi
 
