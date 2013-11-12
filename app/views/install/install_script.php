@@ -54,10 +54,19 @@ defaults write "${PREFPATH}" BaseUrl "${BASEURL}"
 defaults write "${PREFPATH}" ReportItems -dict
 
 # Include module scripts
-<?foreach($scripts AS $scriptname => $filepath):?>
+<?foreach($install_scripts AS $scriptname => $filepath):?>
 
 <?="## $scriptname ##"?> 
-echo 'Installing <?=$scriptname?>'
+echo '+ Installing <?=$scriptname?>'
+
+<?=file_get_contents($filepath)?>
+
+<?endforeach?>
+
+<?foreach($uninstall_scripts AS $scriptname => $filepath):?>
+
+<?="## $scriptname ##"?> 
+echo '- Uninstalling <?=$scriptname?>'
 
 <?=file_get_contents($filepath)?>
 
