@@ -23,6 +23,8 @@
 		<?$this->view('widgets/warranty_widget')?>
 
 		<?$this->view('widgets/filevault_widget')?>
+		
+		<?$this->view('widgets/installed_memory_widget')?>
 
 	</div> <!-- /row -->
 
