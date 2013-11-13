@@ -9,7 +9,14 @@
 		<?$this->view('widgets/disk_report_widget')?>
 
 		<?$this->view('widgets/munki_widget')?>
+
+		<?$this->view('widgets/installed_memory_widget')?>
+
+	</div> <!-- /row -->
+	<div class="row">
 		
+		<?$this->view('widgets/new_clients_widget')?>
+
 		<?$this->view('widgets/pending_apple_widget')?>
 		
 		<?$this->view('widgets/pending_munki_widget')?>
@@ -18,12 +25,11 @@
 
 	<div class="row">
 
-		<?$this->view('widgets/new_clients_widget')?>
 
 		<?$this->view('widgets/warranty_widget')?>
 
 		<?$this->view('widgets/filevault_widget')?>
-
+		
 	</div> <!-- /row -->
 
 </div>	<!-- /container -->
