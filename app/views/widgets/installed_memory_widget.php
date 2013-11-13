@@ -12,6 +12,9 @@
 					
 					<?php
 						$machine = new Machine();
+						$in_green = 0;
+						$in_yellow = 0;
+						$in_red = 0;
 						$sql = "SELECT physical_memory, count(1) as count
 							FROM machine 
 							GROUP BY physical_memory
