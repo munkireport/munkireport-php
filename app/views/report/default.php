@@ -19,6 +19,9 @@
 
     <?$this->view('widgets/hardware_widget')?>
 
+    <?$this->view('widgets/memory_widget')?>
+
+
     <?$this->view('widgets/network_location_widget')?>
 
   </div> <!-- /row -->

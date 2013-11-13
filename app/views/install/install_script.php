@@ -8,7 +8,7 @@ BASEURL="<?php echo
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 PREFPATH="/Library/Preferences/MunkiReport"
-CURL="/usr/bin/curl --fail --silent  --show-error"
+CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
 ERR=0
 VERSION="<?=get_version()?>"
@@ -54,10 +54,19 @@ defaults write "${PREFPATH}" BaseUrl "${BASEURL}"
 defaults write "${PREFPATH}" ReportItems -dict
 
 # Include module scripts
-<?foreach($scripts AS $scriptname => $filepath):?>
+<?foreach($install_scripts AS $scriptname => $filepath):?>
 
 <?="## $scriptname ##"?> 
-echo 'Installing <?=$scriptname?>'
+echo '+ Installing <?=$scriptname?>'
+
+<?=file_get_contents($filepath)?>
+
+<?endforeach?>
+
+<?foreach($uninstall_scripts AS $scriptname => $filepath):?>
+
+<?="## $scriptname ##"?> 
+echo '- Uninstalling <?=$scriptname?>'
 
 <?=file_get_contents($filepath)?>
 

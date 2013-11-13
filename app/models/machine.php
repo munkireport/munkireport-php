@@ -13,7 +13,7 @@ class Machine extends Model {
 		$this->rs['current_processor_speed'] = '';
 		$this->rs['cpu_arch'] = '';
 		$this->rs['os_version'] = '';
-		$this->rs['physical_memory'] = '';
+		$this->rs['physical_memory'] = 0;
 		$this->rs['platform_UUID'] = '';
 		$this->rs['number_processors'] = 0;
 		$this->rs['SMC_version_system'] = '';
@@ -24,6 +24,8 @@ class Machine extends Model {
 		$this->rs['machine_name'] = '';
 		$this->rs['packages'] = '';	   
 		
+		// FIXME: add indexes
+
 		// Create table if it does not exist
 		$this->create_table();
 		
@@ -58,6 +60,12 @@ class Machine extends Model {
 		if( ! isset($mylist['computer_name']) OR trim($mylist['computer_name']) == '')
 		{
 			$mylist['computer_name'] = 'No name';
+		}
+
+		// Convert memory string (4 GB) to int
+		if( isset($mylist['physical_memory']))
+		{
+			$mylist['physical_memory'] = intval($mylist['physical_memory']);
 		}
 		
 		$this->timestamp = time();
