@@ -108,7 +108,7 @@ class report extends Controller
 	       		
 	       	} catch (Exception $e) {
 	       		$this->msg("An error occurred while processing: $classname");
-	       		
+	       		$this->msg("Error: " . $e->getMessage());	       		
 	       	}
 	        		
 		}
