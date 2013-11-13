@@ -52,7 +52,16 @@ class Hardware_controller extends Module_controller
 		{
 			// Convert string to intval
 			$obj->physical_memory = intval($obj->physical_memory);
-			$tmp[$obj->physical_memory] = $obj->count;
+
+			// Take care of mixed entries
+			if (isset($tmp[$obj->physical_memory]))
+			{
+				$tmp[$obj->physical_memory] += $obj->count;
+			}
+			else
+			{
+				$tmp[$obj->physical_memory] = $obj->count;
+			}
 		}
 		krsort($tmp);
 
