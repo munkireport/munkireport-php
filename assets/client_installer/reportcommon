@@ -105,13 +105,13 @@ def process(serial,items):
             check[key] = {'hash': i.get('hash')}
     
     # Send hashes to server
-    values = {'serial': serial, 'items': dumps(check)}
+    values = {'serial': serial, 'items': serialize(check)}
     response = curl(hashurl, values)
     server_data = response.read();
 
     # Decode response
     try:
-        result = loads(server_data)
+        result = unserialize(server_data)
     except:
         print 'Illegal response from the server: %s' % server_data 
         return -1
@@ -133,7 +133,7 @@ def process(serial,items):
     # Send new files with hashes
     if len(items):
         print 'Sending items'
-        response = curl(checkurl, {'serial': serial, 'items': dumps(items)})
+        response = curl(checkurl, {'serial': serial, 'items': serialize(items)})
         print response.read()
     else:
         print 'No changes'

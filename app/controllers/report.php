@@ -22,7 +22,10 @@ class report extends Controller
 		// Compare sent hashes with stored hashes
 		foreach($req_items as $key => $val)
 		{
-		    if( ! (isset($hashes[$key]) && $hashes[$key] == $val['hash']))
+		    // All models are lowercase
+		    $lkey = strtolower($key);
+
+		    if( ! (isset($hashes[$lkey]) && $hashes[$lkey] == $val['hash']))
 		    {
 		        $itemarr[$key] = 1;
 		    }
@@ -105,7 +108,7 @@ class report extends Controller
 	       		
 	       	} catch (Exception $e) {
 	       		$this->msg("An error occurred while processing: $classname");
-	       		
+	       		$this->msg("Error: " . $e->getMessage());	       		
 	       	}
 	        		
 		}

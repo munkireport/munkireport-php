@@ -67,7 +67,7 @@
 					<dt>Boot ROM</dt>
 					<dd><?=$machine->boot_rom_version?>&nbsp;</dd>
 					<dt>Memory</dt>
-					<dd><?=$machine->physical_memory?>&nbsp;</dd>
+					<dd><?=intval($machine->physical_memory)?> GB&nbsp;</dd>
 					<dt>Hardware UUID</dt>
 					<dd><?=$machine->platform_UUID?>&nbsp;</dd>
 					<dt>Remote IP Address</dt>

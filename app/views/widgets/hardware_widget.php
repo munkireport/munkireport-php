@@ -30,7 +30,7 @@ $(document).ready(function() {
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?=url('flot/hw')?>", '#hw-plot', myOptions, parms);
+	drawGraph("<?=url('module/hardware/hw')?>", '#hw-plot', myOptions, parms);
 
 });
 </script>

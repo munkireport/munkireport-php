@@ -154,6 +154,24 @@
 	*/
     $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
+    /*
+	|===============================================
+	| Modules
+	|===============================================
+	| 
+	| List of modules that have to be installed on the client
+	| See for possible values the names of the directories
+	| in app/modules/
+	| e.g. $conf['modules'] = array('disk_report', 'inventory');
+	|
+	| An empty list installs only the basic reporting modules:
+	| Machine and Reportdata
+	| 
+	| If you don't set this item, all available modules are installed (default)
+	*/
+    //$conf['modules'];
+
+
  	/*
 	|===============================================
 	| Dashboard - IP Ranges
