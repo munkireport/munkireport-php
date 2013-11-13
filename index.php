@@ -4,7 +4,7 @@ define( 'KISS', 1 );
 // Front controller
 define('FC', __FILE__ .'/' );
 
-define('APP_ROOT', __DIR__ .'/' );
+define('APP_ROOT', dirname(__FILE__) .'/' );
 
 // Load config
 load_conf();
