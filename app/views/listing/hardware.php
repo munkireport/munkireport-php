@@ -1,8 +1,9 @@
-<?$this->view('partials/head', array(
-	"scripts" => array(
-		"clients/client_list.js"
-	)
-))?>
+<?$this->view('partials/head')?>
+
+<? //Initialize models needed for the table
+new Machine;
+new Reportdata;
+?>
 
 <div class="container">
 
@@ -49,6 +50,7 @@
 		      <tr>
 		      	<th data-colname='machine#computer_name'>Name</th>
 		        <th data-colname='machine#serial_number'>Serial</th>
+		        <th data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='machine#machine_desc'>Description</th>
 		        <th data-colname='machine#physical_memory'>Memory</th>
 		        <th data-colname='machine#number_processors'>Processors</th>

@@ -1,8 +1,12 @@
-<?$this->view('partials/head', array(
-	"scripts" => array(
-		"clients/client_list.js"
-	)
-))?>
+<?$this->view('partials/head')?>
+
+<? //Initialize models needed for the table
+new Machine;
+new Warranty;
+new Disk_report_model;
+new Reportdata;
+new Munkireport;
+?>
 
 <div class="container">
 
@@ -32,9 +36,9 @@
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format disk usage
-			        	var disk=$('td:eq(5)', nRow).html();
+			        	var disk=$('td:eq(6)', nRow).html();
 			        	var cls = disk > 90 ? 'danger' : (disk > 80 ? 'warning' : 'success');
-			        	$('td:eq(5)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
+			        	$('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
 
 			        	// Format date
 			        	var date = new Date($('td:eq(7)', nRow).html() * 1000);
@@ -58,11 +62,11 @@
 	      <tr>
 	      	<th data-colname='machine#computer_name'>Name</th>
 	        <th data-colname='machine#serial_number'>Serial</th>
+	        <th data-colname='reportdata#long_username'>Username</th>
 			<th data-colname='machine#os_version'>OS</th>
 	        <th data-colname='machine#machine_name'>Type</th>
 	        <th data-colname='warranty#status'>Warranty status</th>
 	        <th data-colname='diskreport#Percentage'>Disk</th>
-	        <th data-colname='reportdata#long_username'>Username</th>
 	        <th data-colname='reportdata#timestamp'>Check-in</th>
 			<th data-colname='munkireport#manifestname'>Manifest</th>
 	      </tr>

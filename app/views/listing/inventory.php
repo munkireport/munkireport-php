@@ -1,8 +1,4 @@
-<?$this->view('partials/head', array(
-  "scripts" => array(
-    "clients/client_list.js"
-  )
-))?>
+<?$this->view('partials/head')?>
 
 <div class="container">
 

@@ -29,6 +29,7 @@ class show extends Controller
 	function listing($which)
 	{
 		$data['page'] = 'clients';
+		$data['scripts'] = array("clients/client_list.js");
 		$obj = new View();
 		$obj->view('listing/'.$which, $data);
 	}
