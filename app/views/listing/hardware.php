@@ -30,7 +30,11 @@ new Reportdata;
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
 			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
-			        	$('td:eq(0)', nRow).html(link);				    }
+			        	$('td:eq(0)', nRow).html(link);
+
+			        	var mem=$('td:eq(4)', nRow).html();
+			        	$('td:eq(4)', nRow).html(parseInt(mem) + ' GB');
+			        }
 			    } );
 
 			    // Use hash as searchquery
