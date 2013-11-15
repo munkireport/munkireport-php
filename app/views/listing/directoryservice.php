@@ -77,6 +77,28 @@ new Directory_service_model;
 		        <th data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='directoryservice#which_directory_service'>Bound Status</th>
 		        <th data-colname='directoryservice#directory_service_comments'>AD Comments</th>
+				<th data-colname='directoryservice#adforest'>Active Directory Forest</th>
+				<th data-colname='addomain'>Active Directory Domain</th>
+				<th data-colname='computeraccount'>Computer Account</th>
+				<th data-colname='createmobileaccount'>Create mobile account at login</th>
+				<th data-colname='requireconfirmation'>Require confirmation</th>
+				<th data-colname='forcehomeinstartup'>Force home to startup disk</th>
+				<th data-colname='mounthomeassharepoint'>Mount home as sharepoint</th>
+				<th data-colname='usewindowsuncpathforhome'>Use Windows UNC path for home</th>
+				<th data-colname='networkprotocoltobeused'>Network protocol to be used</th>
+				<th data-colname='defaultusershell'>Default user Shell</th>
+				<th data-colname='mappinguidtoattribute'>Mapping UID to attribute</th>
+				<th data-colname='mappingusergidtoattribute'>Mapping user GID to attribute</th>
+				<th data-colname='mappinggroupgidtoattr'>Mapping group GID to attribute</th>
+				<th data-colname='generatekerberosauth'>Generate Kerberos authority</th>
+				<th data-colname='preferreddomaincontroller'>Preferred Domain controller</th>
+				<th data-colname='allowedadmingroups'>Allowed admin groups</th>
+				<th data-colname='authenticationfromanydomain'>Authentication from any domain</th>
+				<th data-colname='packetsigning'>Packet signing</th>
+				<th data-colname='packetencryption'>Packet encryption</th>
+				<th data-colname='passwordchangeinterval'>Password change interval</th>
+				<th data-colname='restrictdynamicdnsupdates'>Restrict Dynamic DNS updates</th>
+				<th data-colname='namespacemode'>Namespace mode</th>
 		      </tr>
 		    </thead>
 		    <tbody>
