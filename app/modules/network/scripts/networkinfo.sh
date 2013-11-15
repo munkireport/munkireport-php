@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ '$1' = 'manualcheck' ]; then
+if [ "$1" = 'manualcheck' ]; then
 	echo 'Manual check: skipping'
 	exit 0
 fi
