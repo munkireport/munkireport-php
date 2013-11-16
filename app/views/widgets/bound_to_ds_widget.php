@@ -12,8 +12,8 @@
 			  	<?php
 			  	$queryobj = new Reportdata();
 				$sql = "SELECT COUNT(1) as total,
-						COUNT(CASE WHEN addomain = '' THEN 1 END) AS notbound
-						FROM directoryservice WHERE 1;";
+						COUNT(CASE WHEN which_directory_service LIKE '%Not bound%' THEN 1 END) AS notbound
+						FROM directoryservice;";
 				$obj = current($queryobj->query($sql));
 				?>
 				<?if($obj):?>
