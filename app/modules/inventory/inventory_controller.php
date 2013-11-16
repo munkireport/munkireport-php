@@ -1,5 +1,5 @@
 <?php
-class inventory extends Controller
+class Inventory_controller extends Module_controller
 {
     // Require authentication
     function __construct()
@@ -19,19 +19,7 @@ class inventory extends Controller
     
     }
 
-
-    function detail($serial) {
-
-        $inventoryitemobj = new InventoryItem();
-        $data['inventory_items'] = $inventoryitemobj->retrieve_many(
-                                        'serial=?', array($serial));
-        $data['page'] = 'inventory';
-    	$data['serial_number'] = $serial;
-
-        $obj = new View();
-        $obj->view('inventory/inventory_detail', $data);
-    }
-
+    // Todo: move expensive data objects to view
     function items($name='', $version='') {
         if ($name)
         {

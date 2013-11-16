@@ -41,7 +41,7 @@
 	}
 ?>
     <?foreach($inventory as $name => $value):?>
-    <?php $name_url=url('inventory/items/'. rawurlencode($name)); ?>
+    <?php $name_url=url('module/inventory/items/'. rawurlencode($name)); ?>
     <tr>
       <td>
         <a href='<?=$name_url?>'><?=$name?></a>

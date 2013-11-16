@@ -12,7 +12,7 @@
 	<?$inventoryitemobj = new Inventoryitem()?>
 	<?foreach($inventoryitemobj->retrieve_many(
 		'serial=?', array($serial_number)) as $item):?>
-		      <?php $name_url=url('/inventory/items/'. rawurlencode($item->name)); ?>
+		      <?php $name_url=url('module/inventory/items/'. rawurlencode($item->name)); ?>
       <?php $vers_url=$name_url . '/' . rawurlencode($item->version); ?>
         <tr>
           <td><a href='<?=$name_url?>'><?=$item->name?></a></td>
