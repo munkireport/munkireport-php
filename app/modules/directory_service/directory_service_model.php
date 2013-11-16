@@ -82,7 +82,10 @@ class Directory_service_model extends Model {
 								'Restrict Dynamic DNS updates = ' => 'restrictdynamicdnsupdates',
 								'Namespace mode = ' => 'namespacemode');
 
-		//var_dump($translate);
+		//clear any previous data we had
+		foreach($translate as $search => $field) {
+			$this->$field = '';
+		}
 		// Parse data
 		foreach(explode("\n", $data) as $line) {
 		    // Translate standard entries
