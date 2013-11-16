@@ -38,7 +38,7 @@ $(document).ready(function() {
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?=url('flot/age')?>", '#age-plot', myOptions, parms);
+	drawGraph("<?=url('module/warranty/age')?>", '#age-plot', myOptions, parms);
 
 });
 </script>

@@ -1,5 +1,12 @@
-<?php
-class flot extends Controller
+<?php 
+
+/**
+ * Reportdata module class
+ *
+ * @package munkireport
+ * @author AvB
+ **/
+class Reportdata_controller extends Module_controller
 {
 	function __construct()
 	{
@@ -7,8 +14,21 @@ class flot extends Controller
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}
-	} 
+	}
 
+	function index()
+	{
+		echo "You've loaded the Reportdata module!";
+	}
+
+	/**
+	 * Flotr2 interface, returns json with ip address ranges
+	 * defined in conf('ip_ranges')
+	 * or passed with GET request
+	 *
+	 * @return void
+	 * @author AvB
+	 **/
 	function ip()
 	{
 		$ip_arr = array();
@@ -63,68 +83,9 @@ class flot extends Controller
 				
 		}
 
-		echo json_encode($out);
-
-	}
-
-	function os()
-	{
-		$out = array();
-		$machine = new Machine();
-		$sql = "SELECT count(1) as count, os_version 
-				FROM machine
-				group by os_version 
-				ORDER BY os_version ASC";
-
-		$cnt = 0;
-		foreach ($machine->query($sql) as $obj)
-		{
-			$obj->os_version = $obj->os_version ? $obj->os_version : 'Unknown';
-			$out[] = array('label' => $obj->os_version, 'data' => array(array(intval($obj->count), $cnt++)));
-		}
-
-		echo json_encode($out);//TODO: run through view
-
-	}
-
-	/**
-	 * Generate age data for age widget
-	 *
-	 * @author AvB
-	 **/
-	function age()
-	{
-		$out = array();
-		$warranty = new Warranty();
-
-		// Time calculations differ between sql implementations
-		switch($warranty->get_driver())
-		{
-			case 'sqlite':
-				$agesql = "CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', purchase_date) AS INT)";
-				break;
-			case 'mysql':
-				$agesql = "TIMESTAMPDIFF(YEAR,purchase_date,CURDATE())";
-				break;
-			default: // FIXME for other DB engines
-				$agesql = "SUBSTR(purchase_date, 1, 4)";
-		}
-
-		$sql = "SELECT count(1) as count, 
-				$agesql AS age 
-				FROM warranty
-				GROUP by age 
-				ORDER BY age DESC";
-		$cnt = 0;
-		foreach ($warranty->query($sql) as $obj)
-		{
-			$obj->age = $obj->age ? $obj->age : '<1';
-			$out[] = array('label' => $obj->age, 'data' => array(array(intval($obj->count), $cnt++)));
-		}
-
 		$obj = new View();
 		$obj->view('json', array('msg' => $out));
 
 	}
-
-}
+	
+} // END class Reportdata_controller

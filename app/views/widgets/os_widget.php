@@ -38,7 +38,7 @@ $(document).ready(function() {
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?=url('flot/os')?>", '#os-plot', myOptions, parms);
+	drawGraph("<?=url('module/hardware/os')?>", '#os-plot', myOptions, parms);
 
 });
 </script>

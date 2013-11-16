@@ -98,6 +98,29 @@ class Hardware_controller extends Module_controller
 		$obj->view('json', array('msg' => $out));
 	}
 
+	/**
+	 * Return json array with os breakdown
+	 *
+	 * @author AvB
+	 **/	
+	function os()
+	{
+		$out = array();
+		$machine = new Machine();
+		$sql = "SELECT count(1) as count, os_version 
+				FROM machine
+				group by os_version 
+				ORDER BY os_version ASC";
 
+		$cnt = 0;
+		foreach ($machine->query($sql) as $obj)
+		{
+			$obj->os_version = $obj->os_version ? $obj->os_version : 'Unknown';
+			$out[] = array('label' => $obj->os_version, 'data' => array(array(intval($obj->count), $cnt++)));
+		}
+
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+	}
 	
 } // END class hardware module

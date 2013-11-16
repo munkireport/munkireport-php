@@ -37,7 +37,7 @@ If you want to use those, just add an empty parameter object (parms = {}).
 				"Campus": ["145.108.", "130.37."]
 			};
 
-			drawGraph("<?=url('flot/ip')?>", '#ip-plot', pieOptions, parms);
+			drawGraph("<?=url('module/reportdata/ip')?>", '#ip-plot', pieOptions, parms);
 
 
 

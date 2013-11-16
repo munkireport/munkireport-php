@@ -22,7 +22,7 @@
 		$(function(){
 			var parms = {}; // Override network settings in config.php
 
-			drawGraph("<?=url('flot/ip')?>", '#ip-plot', pieOptions, parms);
+			drawGraph("<?=url('module/reportdata/ip')?>", '#ip-plot', pieOptions, parms);
 
 		});
 		</script>
