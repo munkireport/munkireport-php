@@ -38,7 +38,7 @@ $(document).ready(function() {
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?=url('module/hardware/memory')?>", '#memory-plot', myOptions, parms);
+	drawGraph("<?=url('module/machine/memory')?>", '#memory-plot', myOptions, parms);
 
 });
 </script>

@@ -1,12 +1,12 @@
 <?php 
 
 /**
- * Hardware module class
+ * Machine module class
  *
  * @package munkireport
  * @author 
  **/
-class Hardware_controller extends Module_controller
+class Machine_controller extends Module_controller
 {
 	
 	/*** Protect methods with auth! ****/
@@ -123,4 +123,4 @@ class Hardware_controller extends Module_controller
 		$obj->view('json', array('msg' => $out));
 	}
 	
-} // END class hardware module
+} // END class Machine_controller
