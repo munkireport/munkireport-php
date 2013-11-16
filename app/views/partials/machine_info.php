@@ -45,7 +45,7 @@
 
 				</small>
 				<hr />
-				<a class="btn btn-default btn-xs" href="<?php echo url('clients/recheck_warranty/' . $serial_number);?>">
+				<a class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>">
 					Recheck Warranty Status
 				</a>
 				<?if(conf('vnc_link')):?>

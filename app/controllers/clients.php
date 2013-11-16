@@ -63,19 +63,4 @@ class clients extends Controller
         $obj = new View();
         $obj->view('client/'.$view, $data);
 	}
-
-	/**
-	 * Force recheck warranty TODO: maybe move somewhere else?
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	function recheck_warranty($serial='')
-	{
-		$warranty = new Warranty($serial);
-		$warranty->check_status($force=TRUE);
-		redirect("clients/detail/$serial");
-	}
-
-
 }
