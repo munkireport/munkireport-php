@@ -77,7 +77,7 @@ $obj = current($queryobj->query($sql));
 				<?if($obj):?>
 
 					<a href="<?=url('show/listing/clients')?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->inactive_month?> </span>
+						<span class="bigger-150"> <?=$obj->inactive_three_month?> </span>
 						<br>
 						> 3 months
 					</a>
