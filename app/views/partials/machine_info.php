@@ -4,7 +4,6 @@
 	<?$disk   = new disk_report_model($serial_number)?>
 	<?$warranty   = new Warranty($serial_number)?>
 	<?$localadmin   = new Localadmin_model($serial_number)?>
-	<?$directoryservice   = new Directory_service_model($serial_number)?>
 	<?//todo: make 1 query?>
 	<div class="row">
 		<div class="col-lg-1">
@@ -75,10 +74,6 @@
 					<dd><?=$report->remote_ip;?>&nbsp;</dd>
 					<dt>Local admin</dt>
 					<dd><?=$localadmin->users;?>&nbsp;</dd>
-					<dt>Directory Service Status</dt>
-					<dd><?=$directoryservice->which_directory_service;?>&nbsp;</dd>
-					<dt>Directory Services Info</dt>
-					<dd><?=$directoryservice->directory_service_comments;?>&nbsp;</dd>
 
 				</dl>
 			</small>
