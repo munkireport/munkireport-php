@@ -93,7 +93,7 @@
 					<dt>Free</dt>
 					<dd><?=humanreadablesize($disk->FreeSpace)?></dd>
 					<dt>SMART Status</dt>
-					<dd><?=$disk->SMARTStatus?></dd>
+					<dd><?=($disk->SMARTStatus == 'Failing') ? '<span class=text-danger>Failing</span>' : $disk->SMARTStatus ?></dd>
 				</dl>
 				<?require_once(conf('application_path') . "helpers/warranty_helper.php")?>
 				<dl class="dl-horizontal">
