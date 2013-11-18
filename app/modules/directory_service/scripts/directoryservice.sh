@@ -37,8 +37,8 @@ else
 	fi
 fi
 
-echo "Directory Service = " "${DS}" > "$DIR/cache/directoryservice.txt"
-echo "Active Directory Comments = " "${AD_COMMENTS}" >> "$DIR/cache/directoryservice.txt"
+echo "Directory Service = ${DS}" > "$DIR/cache/directoryservice.txt"
+echo "Active Directory Comments = ${AD_COMMENTS}" >> "$DIR/cache/directoryservice.txt"
 #dsconfigad always exits with 0; trim spaces at beginning of the line and consecutive white spaces
 /usr/sbin/dsconfigad -show | grep "=" | sed 's/^[ \t]*//;s/  */ /g' >> "$DIR/cache/directoryservice.txt"
 
