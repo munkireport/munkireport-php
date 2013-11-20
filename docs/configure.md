@@ -23,7 +23,7 @@ $conf['client_passphrases'] = array('mysecretpassphrase')
 On each client you need to add the passphrase to `MunkiReport.plist`:
 
 ```sh
-defaults write /Library/Preferences/MunkiReport.plist Passphrase 'mysecretpassphrase'
+defaults write /Library/Preferences/MunkiReport Passphrase 'mysecretpassphrase'
 ```
 
 Now when you run /usr/local/munki/postflight on the client, you should see that the update server can be contacted normally.
