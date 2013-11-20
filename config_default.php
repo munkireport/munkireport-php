@@ -171,6 +171,24 @@
 	*/
     //$conf['modules'];
 
+	/*
+	|===============================================
+	| Client passphrases
+	|===============================================
+	| 
+	| List of passphrases that the client can use to authenticate
+	| 
+	| On the client:
+	| defaults write /Library/Preferences/MunkiReport.plist Passphrase 'secret1'
+	|
+	| On the server:
+	| $conf['client_passphrases'] = array('secret1', 'secret2');
+	| 
+	| 
+	*/
+    $conf['client_passphrases'] = array();
+
+
 
  	/*
 	|===============================================

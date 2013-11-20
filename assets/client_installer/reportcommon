@@ -92,7 +92,10 @@ def process(serial,items):
     
     hashurl = baseurl + "index.php?/report/hash_check"
     checkurl = baseurl + "index.php?/report/check_in"
-    
+
+    # Get passphrase
+    passphrase = pref('Passphrase')
+
     # Get hashes for all scripts
     for key, i in items.items():
         if i.get('path'):
@@ -105,7 +108,7 @@ def process(serial,items):
             check[key] = {'hash': i.get('hash')}
     
     # Send hashes to server
-    values = {'serial': serial, 'items': serialize(check)}
+    values = {'serial': serial, 'items': serialize(check), 'passphrase' : passphrase}
     response = curl(hashurl, values)
     server_data = response.read();
 
@@ -116,6 +119,10 @@ def process(serial,items):
         print 'Illegal response from the server: %s' % server_data 
         return -1
     
+    if result.get('error') != '':
+        print 'Server error: %s' % result['error']
+        return -1
+
     # Retrieve hashes that need updating
     for i in items.keys():
         if i in result:
@@ -133,7 +140,7 @@ def process(serial,items):
     # Send new files with hashes
     if len(items):
         print 'Sending items'
-        response = curl(checkurl, {'serial': serial, 'items': serialize(items)})
+        response = curl(checkurl, {'serial': serial, 'items': serialize(items), 'passphrase': passphrase})
         print response.read()
     else:
         print 'No changes'

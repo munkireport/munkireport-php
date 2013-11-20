@@ -1,11 +1,45 @@
 <?php
 class report extends Controller
 {
+    /**
+     * Constructor: test if authentication is needed
+     * and check if the client has the proper credentials
+     *
+     * @author AvB
+     **/
+    function __construct()
+	{
+		if ($auth_list = conf('client_passphrases'))
+		{
+			if( ! is_array($auth_list))
+			{
+				$this->error("conf['client_passphrases'] should be an array");
+			}
+
+			if( ! isset($_POST['passphrase']))
+			{
+				$this->error("passphrase is required but missing");
+			}
+
+			if( ! in_array($_POST['passphrase'], $auth_list))
+			{
+				$this->error('passphrase "'.$_POST['passphrase'].'" not accepted');
+			}
+		}
+	} 
+
     function hash_check()
 	{
 		// Check if we have a serial and data
-		if( ! isset($_POST['serial'])) die('Serial is missing');
-		if( ! isset($_POST['items'])) die('Items are missing');
+		if( ! isset($_POST['serial']))
+		{
+			$this->error("Serial is missing");
+		}
+
+		if( ! isset($_POST['items']))
+		{
+			$this->error("Items are missing");
+		}
 
 		// Register check in reportdata
 		$report = new Reportdata($_POST['serial']);
@@ -13,7 +47,7 @@ class report extends Controller
 
 		$req_items = unserialize($_POST['items']); //Todo: check if array
 
-		$itemarr = array();
+		$itemarr = array('error' => '');
 
 		// Get stored hashes from db
 		$hash = new Hash();
@@ -39,13 +73,13 @@ class report extends Controller
 	{
 	    if( ! isset($_POST['items']))
 	    {
-	    	$this->msg("No items in POST", TRUE);
+	    	$this->error("No items in POST");
 	    }
 
 		try {
 			$arr = unserialize($_POST['items']);
 		} catch (Exception $e) {
-			$this->msg("Could not parse items, not a proper serialized file", TRUE);
+			$this->error("Could not parse items, not a proper serialized file");
 		}
 		
 		foreach($arr as $key => $val)
@@ -129,5 +163,16 @@ class report extends Controller
 		}
 	}
 
+	/**
+	 * Echo serialized array with error
+	 * and exit
+	 *
+	 * @author AvB
+	 **/
+	function error($msg)
+	{
+		echo serialize(array('error' =>$msg));
+		exit();
+	}
 	
 }
