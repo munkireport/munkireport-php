@@ -21,7 +21,7 @@ class datatables extends Controller
 			'sSearch' => '' // Search query
 		);
 
-		$sortcols = array();
+		$sortcols = $searchcols = array();
 
 		// Process $_GET array
 		foreach($_GET as $k => $v)
@@ -53,11 +53,23 @@ class datatables extends Controller
                     }
                 }
             }
+            elseif(preg_match('/^sSearch_(\d+)/', $k, $matches))
+            {
+            	$col = $matches[1];
+				if( ! isset($_GET["bSearchable_$col"]))
+					continue;
+
+				if($_GET["bSearchable_$col"] == "true" && $v)
+                {
+                    $searchcols[$col] = $v;
+                }
+            }
 		}
 
 		// Add columns to config
 		$cfg['cols'] = $cols;
 		$cfg['sort_cols'] = $sortcols;
+		$cfg['search_cols'] = $searchcols;
 
 		//print_r($cfg);
 

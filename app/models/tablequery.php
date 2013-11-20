@@ -107,6 +107,18 @@ class Tablequery {
             $sWhere .= ')';
         }
 
+        // Search columns
+        if($cfg['search_cols'])
+        {
+            $sWhere = "WHERE (";
+            foreach ($cfg['search_cols'] as $pos => $val)
+            {
+                $sWhere .= $formatted_columns[$pos]." = '".( $val )."' OR ";
+            }
+            $sWhere = substr_replace( $sWhere, "", -3 );
+            $sWhere .= ')';
+        }
+
         // Get filtered results count
         $iFilteredTotal = $iTotal;
         if( $sWhere)
