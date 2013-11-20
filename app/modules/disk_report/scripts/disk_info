@@ -7,15 +7,21 @@ fi
 
 DIR=$(dirname $0)
 
-echo 'Collect disk info'
-
-mkdir -p "$DIR/cache"
-
-# Get system disk (the one that ends with space-slash)
-SYSTEM=$(df -lk | sed -n 's#^\(/dev/disk[0-9a-z]*\).* /$#\1#p')
-
-echo "Selected system disk: ${SYSTEM}"
-
-# Get info with diskutil
-# Convert integer to string due to limitations of integer size in php
-diskutil info -plist $SYSTEM | sed 's/integer>/string>/g' > "$DIR/cache/disk.plist"
+# Get info for / with diskutil
+# Convert integer to string
+# and truncate the integer to .5GB (1024**2.5)
+diskutil info -plist / | awk '
+BEGIN{
+	divider=1024**2.5;
+}
+{
+	if (index($1, "<integer>"))
+	{
+		gsub(/<\/*integer>/,"")
+		printf("	<string>%d</string>\n", int($1 / divider) * divider);
+	}
+	else
+	{
+		print;
+	}
+}' > "$DIR/cache/disk.plist"

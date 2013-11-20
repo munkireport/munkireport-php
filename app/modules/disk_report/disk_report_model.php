@@ -42,7 +42,7 @@ class Disk_report_model extends Model {
 		if(isset($mylist['TotalSize']) && isset($mylist['FreeSpace']))
 		{
 			$mylist['Percentage'] = round(($mylist['TotalSize'] - $mylist['FreeSpace']) /
-				$mylist['TotalSize'] * 100);
+				max($mylist['TotalSize'], 1) * 100);
 		}
 		$this->merge($mylist)->save();
 	}
