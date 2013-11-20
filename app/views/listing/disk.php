@@ -73,6 +73,12 @@ new Reportdata;
 			        	// Format filesize
 			        	var fs=$('td:eq(7)', nRow).html();
 			        	$('td:eq(7)', nRow).addClass('text-right').html(fileSize(fs, 0));
+			        	
+			        	// Alert on SMART failures
+			        	var smartstatus=$('td:eq(8)', nRow).html();
+			        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">Failing</span>' : 
+			        		(smartstatus)
+			        	$('td:eq(8)', nRow).html(smartstatus)
 
 				    }
 			    } );
