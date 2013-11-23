@@ -34,7 +34,27 @@ new Reportdata;
 
 			        	var mem=$('td:eq(4)', nRow).html();
 			        	$('td:eq(4)', nRow).html(parseInt(mem) + ' GB');
-			        }
+			        },
+			         "fnServerParams": function ( aoData ) {
+				      //aoData.push( { "name": "more_data", "value": "my_value" } );
+				      	// Hook in serverparams to change search
+				      	// Convert array to dict
+				      	var out = {}
+						for (var i = 0; i < aoData.length; i++) {
+							out[aoData[i]['name']] =  aoData[i]['value']
+						}
+
+						// Look for a GB search string
+						if(out.sSearch.match(/^\d+ GB$/))
+						{
+							// Clear global search
+							aoData.push( { "name": "sSearch", "value": "" } );
+
+							// Add column specific search
+							aoData.push( { "name": "sSearch_4", "value": parseInt(out.sSearch) } );
+							//dumpj(out)
+						}
+				    }
 			    } );
 
 			    // Use hash as searchquery

@@ -89,24 +89,33 @@ new Munkireport;
 
 			        	$('td:eq(7)', nRow).html(runtype)
 
+				    },
+				    "fnServerParams": function ( aoData ) {
+				      	// Hook in serverparams to change search
+				      	// Convert array to dict
+				      	var out = {}
+						for (var i = 0; i < aoData.length; i++) {
+							out[aoData[i]['name']] =  aoData[i]['value']
+						}
+
+						sortcol = out.sSearch;
+						// Detect correct column here
+						var col = 0,
+							sortarr = []
+						myCols.map(function(item){
+							if(item.mData == 'munkireport#' + sortcol)
+							{
+								aoData.push({ "name": "sSearch_" + col, "value": '> 0'});
+							}
+							col++;
+						});
 				    }
 			    } );
-			    // Use hash as sort column for hidden cols
+
+			    // Use hash as searchquery
 			    if(window.location.hash.substring(1))
 			    {
-					sortcol = window.location.hash.substring(1);
-					// Detect correct column here
-					var col = 0,
-						sortarr = []
-					myCols.map(function(item){
-						if(item.mData.indexOf(sortcol) > 0)
-						{
-							sortarr.push([col, 'desc']);
-						}
-						col++;
-					});
-					//oTable.fnFilter( window.location.hash.substring(1) );
-					 oTable.fnSort( sortarr );
+					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
 			    }
 			} );
 		</script>

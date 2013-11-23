@@ -27,8 +27,20 @@ class Munkireport extends Model {
 
 
 		// Add indexes
-		$this->idx[] = array('manifest');
+		$this->idx[] = array('timestamp');
 		$this->idx[] = array('runtype');
+		$this->idx[] = array('version');
+		$this->idx[] = array('errors');
+		$this->idx[] = array('warnings');
+		$this->idx[] = array('manifestname');
+		$this->idx[] = array('managedinstalls');
+		$this->idx[] = array('pendinginstalls');
+		$this->idx[] = array('installresults');
+		$this->idx[] = array('removalresults');
+		$this->idx[] = array('failedinstalls');
+		$this->idx[] = array('pendingremovals');
+		$this->idx[] = array('itemstoinstall');
+		$this->idx[] = array('appleupdates');
 		
 		// Create table if it does not exist
         $this->create_table();
