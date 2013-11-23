@@ -9,10 +9,10 @@ DIR=$(dirname $0)
 
 # Get info for / with diskutil
 # Convert integer to string
-# and truncate the integer to .5GB (1024**2.5)
+# and truncate the integer to .5GB (1024*1024*512)
 diskutil info -plist / | awk '
 BEGIN{
-	divider=1024**2.5;
+	divider=1024*1024*512;
 }
 {
 	if (index($1, "<integer>"))
