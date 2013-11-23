@@ -113,7 +113,24 @@ class Tablequery {
             $sWhere = "WHERE (";
             foreach ($cfg['search_cols'] as $pos => $val)
             {
-                $sWhere .= $formatted_columns[$pos]." = '".( $val )."' OR ";
+                if(is_string($val))
+                {
+                    if(preg_match('/(<|>)\s*\d+/', $val))
+                    {
+                        // Special case, use unquoted
+                        $compstr = $val;
+                    }
+                    else
+                    {
+                        // Regular string, quote
+                        $compstr = " = '$val'";
+                    }
+                }
+                else // Integer or boolean
+                {
+                    $compstr = " = $val";
+                }
+                $sWhere .= $formatted_columns[$pos].$compstr." OR ";
             }
             $sWhere = substr_replace( $sWhere, "", -3 );
             $sWhere .= ')';
