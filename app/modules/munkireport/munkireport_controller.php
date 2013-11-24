@@ -34,6 +34,11 @@ class Munkireport_controller extends Module_controller
 	 **/
 	function pending()
 	{
+		if( ! isset($_SESSION['user']))
+		{
+			redirect('auth/login');
+		}
+		
 		$data['page'] = '';
 		$obj = new View();
 		$obj->view('pending', $data, $this->view_path);
