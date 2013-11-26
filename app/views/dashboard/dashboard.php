@@ -9,6 +9,8 @@
 		<?$this->view('widgets/disk_report_widget')?>
 
 		<?$this->view('widgets/munki_widget')?>
+		
+		<?$this->view('widgets/munki_versions_widget')?>
 
 		<?$this->view('widgets/installed_memory_widget')?>
 
