@@ -44,6 +44,9 @@ class Model extends KISS_Model
     protected $rt = array(); // Array holding types
     protected $idx = array(); // Array holding indexes
 
+	// Schema version, increment in child model when creating a db migration
+    protected $schema_version = 0;
+
 	function save() {
         // one function to either create or update!
         if ($this->rs[$this->pkname] == '')
@@ -56,6 +59,26 @@ class Model extends KISS_Model
             //primary key exists, so update
             $this->update();
         }
+    }
+
+    /**
+     * Get schema version
+     *
+     * @return integer schema version number
+     **/
+    function get_version()
+    {
+    	return $schema_version;
+    }
+
+    /**
+     * Accessor for tablename
+     *
+     * @return string table name
+     **/
+    function get_table_name()
+    {
+    	return $this->tablename;
     }
 
     /**
@@ -83,7 +106,11 @@ class Model extends KISS_Model
 		$dbh=$this->getdbh();
 		if ( is_scalar( $bindings ) )
 			$bindings=$bindings ? array( $bindings ) : array();
-		$stmt = $dbh->prepare( $sql );
+		if( ! $stmt = $dbh->prepare( $sql ))
+        {
+            $err = $dbh->errorInfo();
+            die($err[2]);
+        }
 		$stmt->execute( $bindings );
 		$arr=array();
 		while ( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
@@ -181,11 +208,25 @@ class Model extends KISS_Model
 
 			// Set indexes
 			$this->set_indexes();
+
+			// Store schema version in migration table
+			$migration = new Migration($this->tablename);
+			$migration->save();
 			
+        }
+        else // Existing table, is it up-to date?
+        {
+        	if($this->schema_version > 0)
+        	{
+        		if($this->get_schema_version() !== $this->schema_version)
+        		{
+        			echo('We need to migrate');
+        		}
+        	}
         }
 
         // Store this table in the instantiated tables array
-        $GLOBALS['tables'][$this->tablename] = TRUE;
+        $GLOBALS['tables'][$this->tablename] = $this->tablename;
 
 		//print_r($dbh->errorInfo());
         return ($dbh->errorCode() == '00000');
@@ -211,6 +252,31 @@ class Model extends KISS_Model
 		}
 		
 		return ($dbh->errorCode() == '00000');
+	}
+
+	/**
+	 * Get schema version in the database
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function get_schema_version()
+	{
+		// Get schema versions
+		if( ! isset($GLOBALS['schema_versions']))
+		{
+			// Store schema versions in global, other models may need it too
+			$GLOBALS['schema_versions'] = array();
+
+			$migration = new Migration;
+			foreach( $migration->query('SELECT table_name, version FROM migration') AS $obj)
+			{
+				$GLOBALS['schema_versions'][$obj->table_name] = $obj->version;
+			}
+		}
+
+		return array_key_exists($this->tablename, $GLOBALS['schema_versions']) ?
+			intval($GLOBALS['schema_versions'][$this->tablename]) : 0;
 	}
 }
 
