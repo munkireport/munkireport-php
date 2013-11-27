@@ -27,7 +27,7 @@ class Migration_convert_physical_memory extends Model
 					// Unfortunately this is not very simple
 					$sql = "CREATE TABLE machine_temp (
 								id INTEGER PRIMARY KEY, 
-								serial_number VARCHAR(255), 
+								serial_number VARCHAR(255) UNIQUE, 
 								hostname VARCHAR(255), 
 								machine_model VARCHAR(255), 
 								machine_desc VARCHAR(255), 
@@ -94,7 +94,7 @@ class Migration_convert_physical_memory extends Model
 				// Convert physical_memory column to VARCHAR
 				$sql = "CREATE TABLE machine_temp (
 							id INTEGER PRIMARY KEY, 
-							serial_number VARCHAR(255), 
+							serial_number VARCHAR(255) UNIQUE, 
 							hostname VARCHAR(255), 
 							machine_model VARCHAR(255), 
 							machine_desc VARCHAR(255), 
