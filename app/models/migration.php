@@ -27,30 +27,4 @@ class Migration extends Model
         return $this;
     }
 
-    /**
-     * Migrate to current schema version
-     *
-     * @param		string		tablename
-     * @param		int			requested version
-     * @return		mixed
-     **/
-    public function current($model_name)
-    {
-    	$model = new $model_name;
-
-    	// Check if model uses the same table
-    	if($model->get_table_name() != $this->table_name)
-    	{
-    		die('Migrate error: model '.$model_name.
-    			' does not reference '.$this->table_name);
-    	}
-
-    	// Get model version
-    	$model_version = $model->get_version();
-
-    	if($req_version == $cur_version)
-    	{
-    		return TRUE;
-    	}
-    }
 } // END class 

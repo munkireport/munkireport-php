@@ -47,7 +47,12 @@ class Model extends KISS_Model
 	// Schema version, increment in child model when creating a db migration
     protected $schema_version = 0;
 
-	function save() {
+    // Errors
+    protected $errors = '';
+
+
+	function save()
+	{
         // one function to either create or update!
         if ($this->rs[$this->pkname] == '')
         {
@@ -68,7 +73,7 @@ class Model extends KISS_Model
      **/
     function get_version()
     {
-    	return $schema_version;
+    	return $this->schema_version;
     }
 
     /**
@@ -85,11 +90,20 @@ class Model extends KISS_Model
      * Get PDO driver name
      *
      * @return string driver
-     * @author AvB
      **/
     function get_driver()
     {
     	return $this->getdbh()->getAttribute(PDO::ATTR_DRIVER_NAME);
+    }
+
+    /**
+     * Get errors
+     *
+     * @return string errors
+     **/
+    function get_errors()
+    {
+    	return $this->errors;
     }
 
 	// ------------------------------------------------------------------------
@@ -212,15 +226,15 @@ class Model extends KISS_Model
 			// Store schema version in migration table
 			$migration = new Migration($this->tablename);
 			$migration->save();
-			
-        }
+			        }
         else // Existing table, is it up-to date?
         {
-        	if($this->schema_version > 0)
+        	if (conf('allow_migrations'))
         	{
-        		if($this->get_schema_version() !== $this->schema_version)
+        		if ($this->get_schema_version() !== $this->schema_version)
         		{
-        			echo('We need to migrate');
+        			require_once(conf('application_path').'helpers/database_helper.php');
+        			migrate($this);
         		}
         	}
         }
