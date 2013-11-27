@@ -26,8 +26,36 @@ function custom_error($msg='')
 }
 
 //===============================================
+// Alerts
+//===============================================s
+
+$GLOBALS['alerts'] = array();
+
+/**
+ * Add Alert
+ *
+ * @param string alert message
+ * @param string type (danger, warning, success, info)
+ **/
+function alert($msg, $type="info")
+{
+	$GLOBALS['alerts'][$type][] = $msg;
+}
+
+/**
+ * Add error message
+ *
+ * @param string message
+ **/
+function error($msg)
+{
+	alert($msg, 'danger');
+}
+
+//===============================================
 // Database
 //===============================================
+
 function getdbh()
 {
 	if ( ! isset($GLOBALS['dbh']))
@@ -82,6 +110,7 @@ function __autoload( $classname )
 //===============================================
 // Language getter, lazy loading
 //===============================================
+
 function lang($str)
 {
 	static $lang = '';

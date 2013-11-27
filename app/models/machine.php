@@ -26,6 +26,9 @@ class Machine extends Model {
 		
 		// FIXME: add indexes
 
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 1;
+
 		// Create table if it does not exist
 		$this->create_table();
 		
