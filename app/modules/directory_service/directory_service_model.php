@@ -35,6 +35,9 @@ class Directory_service_model extends Model {
 		$this->idx[] = array('directory_service_comments');			
 		$this->idx[] = array('allowedadmingroups');
 		
+		// Table version. Increment when creating a db migration
+		$this->schema_version = 1;
+		
 		// Create table if it does not exist
 		$this->create_table();
 		
