@@ -7,7 +7,9 @@
 			if (strcasecmp($directoryservice->which_directory_service,'LDAPv3') == 0) {
 				echo '<span class="label label-success nw-dsenabled"> LDAPv3</span>';
 			}
-			if ($directoryservice->addomain) {
+			if (strcasecmp($directoryservice->which_directory_service,'Active Directory') == 0)  {
+				echo '<span class="label label-success nw-dsenabled"> Active Directory</span>';
+			} elseif ($directoryservice->addomain) {
 				echo '<span class="label label-success nw-dsenabled"> Active Directory</span>';
 			}
 		?>
