@@ -20,6 +20,9 @@
 				<li>
 					<a href="#network-tab" data-toggle="tab">Network interfaces <span id="network-cnt" class="badge">0</span></a>
 				</li>
+				<li>
+					<a href="#directory-tab" data-toggle="tab">Directory services <span id="directory-cnt" class="badge">0</span></a>
+				</li>
 
 			</ul>
 
@@ -45,6 +48,10 @@
 
 				<div class="tab-pane" id='network-tab'>
 					<?$this->view('client/network_tab')?>
+				</div>
+				
+				<div class="tab-pane" id='directory-tab'>
+					<?$this->view('client/directory_tab')?>
 				</div>
 
 			</div>

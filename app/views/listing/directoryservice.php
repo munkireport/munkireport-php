@@ -52,8 +52,14 @@ new Directory_service_model;
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
+			        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_directory-tab');
 			        	$('td:eq(0)', nRow).html(link);
+			        	
+			        	// Translate bool. todo function for any bool we find
+                        var status=$('td:eq(7)', nRow).html();
+                        status = status == 1 ? 'Yes' : 
+                        (status === '0' ? 'No' : '')
+                        $('td:eq(7)', nRow).html(status)
 
 				    }
 			    } );
@@ -75,8 +81,13 @@ new Directory_service_model;
 		      	<th data-colname='machine#computer_name'>Name</th>
 		        <th data-colname='machine#serial_number'>Serial</th>
 		        <th data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='directoryservice#which_directory_service'>Bound Status</th>
+		        <th data-colname='directoryservice#which_directory_service'>Bound Status</th> 
+		        <th data-colname='directoryservice#addomain'>AD Domain</th>
+		        <th data-colname='directoryservice#computeraccount'>Computer Account</th>
 		        <th data-colname='directoryservice#directory_service_comments'>AD Comments</th>
+				<th data-colname='directoryservice#createmobileaccount'>Mobile account</th>
+				<th data-colname='directoryservice#networkprotocoltobeused'>Network protocol</th>
+				<th data-colname='directoryservice#allowedadmingroups'>Allowed admin groups</th>
 		      </tr>
 		    </thead>
 		    <tbody>
