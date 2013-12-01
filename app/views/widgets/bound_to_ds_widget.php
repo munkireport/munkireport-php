@@ -10,7 +10,7 @@
 
 			  <div class="panel-body text-center">
 			  	<?php
-			  	$queryobj = new Reportdata();
+			  	$queryobj = new directory_service_model();
 				$sql = "SELECT COUNT(1) as total,
 						COUNT(CASE WHEN which_directory_service LIKE '%Not bound%' THEN 1 END) AS notbound
 						FROM directoryservice;";
