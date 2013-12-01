@@ -21,18 +21,19 @@ fi
 	
 # If AD, read Comments Field in AD
 if [ "${DS}" = "Active Directory" ]; then
-	#todo: os version check needed? any method to fit all OS ?
-	osversionlong=`sw_vers -productVersion`
-	osvers=${osversionlong:3:1}
+	# Get major OS version (uses uname -r and bash substitution)
+	# osvers is 10 for 10.6, 11 for 10.7, 12 for 10.8, etc.
+	osversionlong=$(uname -r)
+	osvers=${osversionlong/.*/}
 	localhostname=`/usr/sbin/scutil --get LocalHostName`
 	# Set variable for Domain
 	# domain=`dscl localhost -list /Active\ Directory`
 
-	if [[ ${osvers} -ge 7 ]]; then
+	if [[ ${osvers} -ge 11 ]]; then
 		AD_COMMENTS=`dscl /Search -read Computers/"${localhostname}"$ Comment 2>/dev/null | tr -d '\n' | awk '{$1 =""; print }'`
 	fi
 else
-	if [ "${osvers}" = 6 ]; then
+	if [ "${osvers}" = 10 ]; then
 		AD_COMMENTS=`dscl /Active\ Directory/All\ Domains/ -read Computers/"${localhostname}"$ Comment 2>/dev/null | tr -d '\n' | awk '{$1 =""; print }'`	
 	fi
 fi
