@@ -12,15 +12,16 @@ class Inventory_controller extends Module_controller
 
     function index() {
         
-        $data['page'] = 'inventory';
-
-        $obj = new View();
-        $obj->view('inventory/inventory_list', $data);
+        echo "You've loaded the inventory module!";
     
     }
 
     // Todo: move expensive data objects to view
-    function items($name='', $version='') {
+    function items($name='', $version='') 
+    {
+        $data['inventory_items'] = array();
+        $data['name'] = 'No item';
+
         if ($name)
         {
             $name = rawurldecode($name);
@@ -35,7 +36,7 @@ class Inventory_controller extends Module_controller
                 $items = $inventory_item_obj->retrieve_many(
                     'name = ?', array($name));
             }
-            $data['inventory_items'] = array();
+            
             foreach ($items as $item)
             {
                 $machine = new Machine($item->serial);
@@ -49,27 +50,11 @@ class Inventory_controller extends Module_controller
                 $instance['path'] = $item->path;
                 $data['inventory_items'][] = $instance;
             }
-            $obj = new View();
-            $obj->view('inventory/inventoryitem_detail', $data);
-        } else {
-            $inventory_item_obj = new Inventory_model();
-            $items = $inventory_item_obj->select(
-                'DISTINCT serial, name, version');
-            $inventory = array();
-            foreach($items as $item)
-            {
-                if(!isset($inventory[$item['name']][$item['version']]))
-                {
-                    $inventory[$item['name']][$item['version']] = 1;
-                } else {
-                    $inventory[$item['name']][$item['version']]++;
-                }
-            }
-            $data['inventory'] = $inventory;
-            $data['page'] = 'inventory_items';
-            $obj = new View();
-            $obj->view('inventory/inventory_items', $data);
+            
         }
+
+        $obj = new View();
+        $obj->view('inventory/inventoryitem_detail', $data);
     }
 
 }
