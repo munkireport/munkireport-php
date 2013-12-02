@@ -27,7 +27,7 @@
     </tr>
   </thead>
   <tbody>
-  	<?	$inventory_item_obj = new InventoryItem();
+  	<?	$inventory_item_obj = new Inventory_model();
 	$items = $inventory_item_obj->select('name, version, COUNT(id) AS num_installs', '1 GROUP BY name, version');
 
 	$inventory = array();

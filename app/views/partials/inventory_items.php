@@ -9,7 +9,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?$inventoryitemobj = new Inventoryitem()?>
+	<?$inventoryitemobj = new Inventory_model()?>
 	<?foreach($inventoryitemobj->retrieve_many(
 		'serial=?', array($serial_number)) as $item):?>
 		      <?php $name_url=url('module/inventory/items/'. rawurlencode($item->name)); ?>

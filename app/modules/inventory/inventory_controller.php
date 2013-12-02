@@ -24,7 +24,7 @@ class Inventory_controller extends Module_controller
         if ($name)
         {
             $name = rawurldecode($name);
-            $inventory_item_obj = new InventoryItem();
+            $inventory_item_obj = new Inventory_model();
             $data['name'] = $name;
             if ($version)
             {
@@ -52,7 +52,7 @@ class Inventory_controller extends Module_controller
             $obj = new View();
             $obj->view('inventory/inventoryitem_detail', $data);
         } else {
-            $inventory_item_obj = new InventoryItem();
+            $inventory_item_obj = new Inventory_model();
             $items = $inventory_item_obj->select(
                 'DISTINCT serial, name, version');
             $inventory = array();

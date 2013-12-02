@@ -1,10 +1,10 @@
 <?php
 
-class Inventoryitem extends Model {
+class Inventory_model extends Model {
     
     function __construct($serial='')
     {
-		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+		parent::__construct('id', 'inventoryitem'); //primary key, tablename
         $this->rs['id'] = 0;
         $this->rs['serial'] = (string) $serial;
         $this->rs['name'] = '';
