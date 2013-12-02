@@ -1,9 +1,9 @@
 <?php
-class InstallHistory extends Model {
+class Installhistory_model extends Model {
 
 	function __construct($serial_number='')
 	{
-		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+		parent::__construct('id', 'installhistory'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial_number;
 		$this->rs['date'] = 0;
