@@ -10,7 +10,7 @@
 
 				<div class="list-group scroll-box">
 
-					<?	$warranty = new Warranty();
+					<?	$warranty = new Warranty_model();
 						$sql = "SELECT count(id) as count, status from warranty group by status ORDER BY status";
 						$class_list = array('Expired' => 'danger');
 					?>

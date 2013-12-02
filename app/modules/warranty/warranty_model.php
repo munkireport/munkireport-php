@@ -1,5 +1,5 @@
 <?php
-class Warranty extends Model {
+class Warranty_model extends Model {
 	
 	protected $error = '';
 	

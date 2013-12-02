@@ -2,7 +2,7 @@
 	<?$machine = new Machine($serial_number)?>
 	<?$report   = new Reportdata($serial_number)?>
 	<?$disk   = new disk_report_model($serial_number)?>
-	<?$warranty   = new Warranty($serial_number)?>
+	<?$warranty   = new Warranty_model($serial_number)?>
 	<?$localadmin   = new Localadmin_model($serial_number)?>
 	<?//todo: make 1 query?>
 	<div class="row">

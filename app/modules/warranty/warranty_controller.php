@@ -29,7 +29,7 @@ class Warranty_controller extends Module_controller
 	 **/
 	function recheck_warranty($serial='')
 	{
-		$warranty = new Warranty($serial);
+		$warranty = new Warranty_model($serial);
 		$warranty->check_status($force=TRUE);
 		redirect("clients/detail/$serial");
 	}
@@ -42,7 +42,7 @@ class Warranty_controller extends Module_controller
 	function age()
 	{
 		$out = array();
-		$warranty = new Warranty();
+		$warranty = new Warranty_model();
 
 		// Time calculations differ between sql implementations
 		switch($warranty->get_driver())

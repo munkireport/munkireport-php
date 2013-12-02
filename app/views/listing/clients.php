@@ -2,7 +2,7 @@
 
 <? //Initialize models needed for the table
 new Machine;
-new Warranty;
+new Warranty_model;
 new Disk_report_model;
 new Reportdata;
 new Munkireport;
