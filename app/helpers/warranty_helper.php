@@ -17,7 +17,7 @@ function check_warranty_status(&$warranty_model)
 		$warranty_model->status = "Virtual Machine";
 		
 		// Use reg_timestamp as purchase_date
-		$report = new Reportdata($warranty_model->serial_number);
+		$report = new Reportdata_model($warranty_model->serial_number);
 		$warranty_model->purchase_date = date('Y-m-d', $report->reg_timestamp);
 		$warranty_model->end_date = date('Y-m-d', strtotime('+10 year'));
 		

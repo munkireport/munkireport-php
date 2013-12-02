@@ -4,7 +4,7 @@
 new Machine_model;
 new Warranty_model;
 new Disk_report_model;
-new Reportdata;
+new Reportdata_model;
 new Munkireport_model;
 ?>
 

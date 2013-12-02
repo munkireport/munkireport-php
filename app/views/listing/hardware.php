@@ -2,7 +2,7 @@
 
 <? //Initialize models needed for the table
 new Machine_model;
-new Reportdata;
+new Reportdata_model;
 ?>
 
 <div class="container">

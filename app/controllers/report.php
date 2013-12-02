@@ -42,7 +42,7 @@ class report extends Controller
 		}
 
 		// Register check in reportdata
-		$report = new Reportdata($_POST['serial']);
+		$report = new Reportdata_model($_POST['serial']);
 		$report->register()->save();
 
 		$req_items = unserialize($_POST['items']); //Todo: check if array

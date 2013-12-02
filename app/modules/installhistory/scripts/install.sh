@@ -13,4 +13,4 @@ else
 	IPATH="/Library/Receipts/InstallHistory.plist"
 fi
 
-defaults write "${PREFPATH}" ReportItems -dict-add Installhistory_model "${IPATH}"
+defaults write "${PREFPATH}" ReportItems -dict-add installhistory_model "${IPATH}"

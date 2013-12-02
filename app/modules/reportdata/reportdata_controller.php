@@ -45,7 +45,7 @@ class Reportdata_controller extends Module_controller
 		}
 		
 		$out = array();
-		$reportdata = new Reportdata();
+		$reportdata = new Reportdata_model();
 
 		// Compile SQL
 		$cnt = 0;
