@@ -10,7 +10,7 @@
 				<div class="list-group scroll-box">
 
 					<?php
-						$munkireport = new Munkireport();
+						$munkireport = new Munkireport_model();
 						$sql = "SELECT version, COUNT(1) AS count
 								FROM munkireport
 								GROUP BY version

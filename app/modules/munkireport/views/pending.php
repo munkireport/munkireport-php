@@ -79,7 +79,7 @@
 						LEFT JOIN reportdata USING (serial_number)
 						WHERE pendinginstalls > 0";
 				$compress = function_exists('gzdeflate');
-					$mr = new Munkireport;
+					$mr = new Munkireport_model;
 					?>
 				<?foreach($mr->query($sql) as $obj):?>
 					<?$report_plist = unserialize( $compress ? gzinflate( $obj->report_plist ) : $obj->report_plist )?>

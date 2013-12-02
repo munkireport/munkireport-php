@@ -1,9 +1,9 @@
 <?php
-class Munkireport extends Model {
+class Munkireport_model extends Model {
 
 	function __construct($serial='')
 	{
-		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+		parent::__construct('id', 'munkireport'); //primary key, tablename
 		$this->rs['id'] = 0;
 		$this->rs['serial_number'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['timestamp'] = '';

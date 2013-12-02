@@ -11,7 +11,7 @@
 				<div class="list-group scroll-box">
 
 				<?php
-					$mr = new Munkireport;
+					$mr = new Munkireport_model;
 					$week_ago = date('Y-m-d H:i:s', time() - 3600 * 24 * 7);
 					$updates_array = array();
 					$sql = "SELECT serial_number, report_plist 

@@ -10,7 +10,7 @@
 
 				<div class="list-group scroll-box">
 
-				<?	$munkireport = new Munkireport();
+				<?	$munkireport = new Munkireport_model();
 					$sql = "SELECT count(1) AS count, manifestname FROM munkireport GROUP BY manifestname ORDER BY count DESC";
 				?>
 					<?foreach($munkireport->query($sql) as $obj):?>

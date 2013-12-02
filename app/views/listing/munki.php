@@ -3,7 +3,7 @@
 <? //Initialize models needed for the table
 new Machine_model;
 new Reportdata;
-new Munkireport;
+new Munkireport_model;
 ?>
 
 <div class="container">

@@ -9,7 +9,7 @@
 			  </div>
 
 			  <div class="panel-body text-center">
-			  	<?$munkireport = new Munkireport();
+			  	<?$munkireport = new Munkireport_model();
 				$sql = "select 
 					sum(errors > 0) as errors, 
 					sum(warnings > 0) as warnings, 
