@@ -38,7 +38,7 @@ def main():
     report_info['runstate'] = 'done'
     report_info_plist = FoundationPlist.writePlistToString(report_info)
     
-    items = {'Machine': \
+    items = {'Machine_model': \
         {'hash':hashlib.md5(hw_info_plist).hexdigest(), 'data':hw_info_plist}, \
             'Reportdata': \
         {'hash':hashlib.md5(report_info_plist).hexdigest(), \
