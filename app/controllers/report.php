@@ -11,17 +11,17 @@ class report extends Controller
 	{
 		if ($auth_list = conf('client_passphrases'))
 		{
-			if( ! is_array($auth_list))
+			if ( ! is_array($auth_list))
 			{
 				$this->error("conf['client_passphrases'] should be an array");
 			}
 
-			if( ! isset($_POST['passphrase']))
+			if ( ! isset($_POST['passphrase']))
 			{
 				$this->error("passphrase is required but missing");
 			}
 
-			if( ! in_array($_POST['passphrase'], $auth_list))
+			if ( ! in_array($_POST['passphrase'], $auth_list))
 			{
 				$this->error('passphrase "'.$_POST['passphrase'].'" not accepted');
 			}
@@ -31,12 +31,12 @@ class report extends Controller
     function hash_check()
 	{
 		// Check if we have a serial and data
-		if( ! isset($_POST['serial']))
+		if ( ! isset($_POST['serial']))
 		{
 			$this->error("Serial is missing");
 		}
 
-		if( ! isset($_POST['items']))
+		if ( ! isset($_POST['items']))
 		{
 			$this->error("Items are missing");
 		}
@@ -54,14 +54,20 @@ class report extends Controller
 		$hashes = $hash->all($_POST['serial']);
 
 		// Compare sent hashes with stored hashes
-		foreach($req_items as $key => $val)
+		foreach($req_items as $name => $val)
 		{
 		    // All models are lowercase
-		    $lkey = strtolower($key);
+		    $lkey = strtolower($name);
+
+		    // Remove _model legacy
+		    if(substr($lkey, -6) == '_model')
+			{
+				$lkey = substr($lkey, 0, -6);
+			}
 
 		    if( ! (isset($hashes[$lkey]) && $hashes[$lkey] == $val['hash']))
 		    {
-		        $itemarr[$key] = 1;
+		        $itemarr[$name] = 1;
 		    }
 		}
 		
@@ -82,37 +88,46 @@ class report extends Controller
 			$this->error("Could not parse items, not a proper serialized file");
 		}
 		
-		foreach($arr as $key => $val)
+		foreach($arr as $name => $val)
 		{
 			// Skip items without data
 		    if ( ! isset($val['data'])) continue;
 
-		   	$this->msg("Starting: $key");
-
-		   	// Preserve classname
-		   	$classname = $key;
+		   	$this->msg("Starting: $name");
 
 		   	// All models are lowercase
-		   	$key = strtolower($key);
+		   	$name = strtolower($name);
+
+		   	if(preg_match('/[^\da-z_]/', $name))
+		   	{
+		   		$this->msg("Model has an illegal name: $name");
+		    	continue;
+		   	}
 			
-			// Check if this is a module-model
-			if(substr($key, -6) == '_model')
+			// All models should be part of a module
+			if(substr($name, -6) == '_model')
 			{
-				$module = substr($key, 0, -6);
-				$model_path = APP_PATH."modules/${module}/";
+				$module = substr($name, 0, -6);
+				
 			}
-			else
+			else // Legacy clients
 			{
-				$model_path = APP_PATH . 'models/';
+				$module = $name;
+				$name = $module . '_model';
 			}
+
+			$model_path = APP_PATH."modules/${module}/";
+
+			// Capitalize classname
+		   	$classname = ucfirst($name);
 		    
-		    // Todo: prevent admin and user models, sanitize $key
-		    if( ! file_exists($model_path . $key . '.php'))
+		    // Todo: prevent admin and user models, sanitize $name
+		    if( ! file_exists($model_path . $name . '.php'))
 		    {
-		    	$this->msg("Model not found: $key");
+		    	$this->msg("Model not found: $name");
 		    	continue;
 		    }
-		    require_once($model_path . $key . '.php');
+		    require_once($model_path . $name . '.php');
 
 		    if ( ! class_exists( $classname, false ) )
 		    {
@@ -135,7 +150,7 @@ class report extends Controller
 				$class->process($val['data']);
 		
 		        // Store hash
-		        $hash = new Hash($_POST['serial'], $key);
+		        $hash = new Hash($_POST['serial'], $module);
 		        $hash->hash = $val['hash'];
 				$hash->timestamp = time();
 		        $hash->save();
