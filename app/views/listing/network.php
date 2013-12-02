@@ -2,7 +2,7 @@
 
 <?
 //Initialize models needed for the table
-new Machine;
+new Machine_model;
 new Reportdata;
 new Network_model;
 ?>

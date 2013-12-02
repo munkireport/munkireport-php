@@ -12,7 +12,7 @@
 	<?foreach($clients AS $client):?>
     <tr>
       	<?$url = url("show/report/$client->serial")?>
-		<?$machine = new Machine($client->serial)?>
+		<?$machine = new Machine_model($client->serial)?>
         <td>
 			<?if($client->report_plist):?>
 			<a href="<?=$url?>"><?=$machine->computer_name?></a>

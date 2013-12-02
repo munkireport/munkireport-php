@@ -39,7 +39,7 @@ class Inventory_controller extends Module_controller
             
             foreach ($items as $item)
             {
-                $machine = new Machine($item->serial);
+                $machine = new Machine_model($item->serial);
 				$reportdata = new Reportdata($item->serial);
                 $instance['serial'] = $item->serial;
                 $instance['hostname'] = $machine->computer_name;

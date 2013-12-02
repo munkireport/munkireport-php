@@ -21,7 +21,7 @@ function check_warranty_status(&$warranty_model)
 		$warranty_model->purchase_date = date('Y-m-d', $report->reg_timestamp);
 		$warranty_model->end_date = date('Y-m-d', strtotime('+10 year'));
 		
-		$machine = new Machine($warranty_model->serial_number);
+		$machine = new Machine_model($warranty_model->serial_number);
 		//$machine->img_url = $matches[1]; Todo: get image url for VM
 		$machine->machine_desc = 'VMware virtual machine';
 		$machine->save();
@@ -122,7 +122,7 @@ function check_warranty_status(&$warranty_model)
 	}
 	
 	// Get machine model from apple
-	$machine = new Machine($warranty_model->serial_number);
+	$machine = new Machine_model($warranty_model->serial_number);
 	$machine->machine_desc = model_description_lookup($warranty_model->serial_number);
 	$machine->save();
 

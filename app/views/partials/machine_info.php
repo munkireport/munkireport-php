@@ -1,5 +1,5 @@
 <div class="well well-small">
-	<?$machine = new Machine($serial_number)?>
+	<?$machine = new Machine_model($serial_number)?>
 	<?$report   = new Reportdata($serial_number)?>
 	<?$disk   = new disk_report_model($serial_number)?>
 	<?$warranty   = new Warranty_model($serial_number)?>

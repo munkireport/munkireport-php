@@ -10,7 +10,7 @@
 
 				<div class="list-group scroll-box">
 
-				<?	$machine = new Machine();
+				<?	$machine = new Machine_model();
 					$sql = "SELECT count(id) AS count, machine_desc FROM machine GROUP BY machine_desc ORDER BY count DESC";
 				?>
 					<?foreach($machine->query($sql) as $obj):?>

@@ -1,7 +1,7 @@
 <?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
-new Machine;
+new Machine_model;
 new Disk_report_model;
 new Reportdata;
 ?>

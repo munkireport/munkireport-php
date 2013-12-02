@@ -9,7 +9,7 @@
 				</div>
 
 				<div class="list-group scroll-box">
-				  	<?$queryobj = new Machine();// Generic queryobject?>
+				  	<?$queryobj = new Machine_model();// Generic queryobject?>
 
 				  	<?	$lastweek = time() - 60 * 60 * 24 * 7;$cnt=0;
 				  		$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) WHERE reg_timestamp > $lastweek ORDER BY reg_timestamp DESC"?>
