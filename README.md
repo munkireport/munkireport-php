@@ -55,7 +55,11 @@ http://groups.google.com/group/munkireport-dev
 Contributing
 ---
 
-If you want to contribute to munkireport2, please fork the repository, create a feature branch and send a pull request with your changes.
+If you want to contribute to munkireport2, please 
+
+* fork the [development branch of repository](https://github.com/munkireport/munkireport-php/tree/development)
+* create a feature branch
+* send a pull request with your changes.
 
 
 External projects
