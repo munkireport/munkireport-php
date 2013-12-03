@@ -28,7 +28,16 @@ class report extends Controller
 		}
 	} 
 
-    function hash_check()
+	/**
+	 * Hash check script for clients
+	 *
+	 * Clients check in hashes using $_POST
+	 * This script returns a JSON array with
+	 * hashes that are different
+	 *
+	 * @author AvB
+	 **/    
+	function hash_check()
 	{
 		// Check if we have a serial and data
 		if ( ! isset($_POST['serial']))
@@ -56,8 +65,12 @@ class report extends Controller
 		// Compare sent hashes with stored hashes
 		foreach($req_items as $name => $val)
 		{
+		    
 		    // All models are lowercase
 		    $lkey = strtolower($name);
+
+		    // Rename legacy InventoryItem to inventory
+			$lkey = str_replace('inventoryitem', 'inventory', $lkey);
 
 		    // Remove _model legacy
 		    if(substr($lkey, -6) == '_model')
@@ -70,11 +83,27 @@ class report extends Controller
 		        $itemarr[$name] = 1;
 		    }
 		}
+
+		// Handle errors
+		foreach($GLOBALS['alerts'] AS $type => $list)
+		{
+			foreach ($list AS $msg)
+			{
+				$itemarr['error'] .= "$type : $msg\n";
+			}
+		}
 		
 		// Return list of changed hashes
 		echo serialize($itemarr);
 	}
 	
+	/**
+	 * Check in script for clients
+	 *
+	 * Clients check in client data using $_POST
+	 *
+	 * @author AvB
+	 **/
 	function check_in()
 	{
 	    if( ! isset($_POST['items']))
@@ -92,6 +121,9 @@ class report extends Controller
 		{
 			// Skip items without data
 		    if ( ! isset($val['data'])) continue;
+
+		    // Rename legacy InventoryItem to inventory
+			$name = str_ireplace('InventoryItem', 'inventory', $name);
 
 		   	$this->msg("Starting: $name");
 
@@ -159,7 +191,6 @@ class report extends Controller
 	       		$this->msg("An error occurred while processing: $classname");
 	       		$this->msg("Error: " . $e->getMessage());	       		
 	       	}
-	        		
 		}
 	}
 
@@ -182,6 +213,7 @@ class report extends Controller
 	 * Echo serialized array with error
 	 * and exit
 	 *
+	 * @param string message
 	 * @author AvB
 	 **/
 	function error($msg)
