@@ -69,8 +69,7 @@ a.list-group-item-danger > .badge
 }
 
 /* Stretch to screen width for large screens */
-@media (min-width: 1200px)
-{
+@media (min-width: 1200px){
   .container {
   width: auto;
   }
@@ -133,3 +132,21 @@ h2 {
 .table-responsive>.table-bordered>tbody>tr:last-child>td, .table-responsive>.table-bordered>tfoot>tr:last-child>td {
     border-bottom: 0
 }
+
+@media print{
+  
+  a[href]:after {
+    content: "";
+  }
+
+  .scroll-box
+  {
+    max-height: inherit;
+    overflow: auto;
+  }
+
+  .panel {
+    page-break-inside: avoid;
+  }
+}
+

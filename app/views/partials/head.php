@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title><?=conf('sitename')?></title>
-  <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="<?=conf('subdirectory')?>assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="<?=conf('subdirectory')?>assets/css/style.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/dataTables-bootstrap.css" />
   <link href="<?=conf('subdirectory')?>assets/css/font-awesome.min.css" rel="stylesheet">
   <script src="<?=conf('subdirectory')?>assets/js/jquery.js"></script>
