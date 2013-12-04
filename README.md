@@ -57,7 +57,7 @@ Contributing
 
 If you want to contribute to munkireport2, please 
 
-* fork the [development branch of repository](https://github.com/munkireport/munkireport-php/tree/development)
+* fork the [wip branch of repository](https://github.com/munkireport/munkireport-php/tree/wip)
 * create a feature branch
 * send a pull request with your changes.
 
