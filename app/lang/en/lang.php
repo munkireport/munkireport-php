@@ -34,3 +34,10 @@ $lang['auth_addtoconfig'] = 'Add this line to config.php:';
 $lang['auth_gen_other'] = 'Generate another';
 
 $lang['back_to_site'] = 'Back to site';
+
+// Errors
+
+$lang['error'] = 'Error';
+$lang['error_403'] = 'You are not allowed to view this page';
+$lang['error_404'] = 'Page not found';
+
