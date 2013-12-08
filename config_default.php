@@ -169,7 +169,7 @@
 	| 
 	| If you don't set this item, all available modules are installed (default)
 	*/
-    //$conf['modules'];
+    //$conf['modules'] = array();
 
     /*
 	|===============================================
@@ -206,6 +206,36 @@
 	*/
     $conf['client_passphrases'] = array();
 
+	/*
+	|===============================================
+	| Proxy settings
+	|===============================================
+	| 
+	| If you are behind a proxy, MunkiReport may be unable to 
+	| retrieve warranty and model information from Apple.
+	|
+	| Note that there is only authenticated proxy support for
+	| basic authentication
+	| 
+	| $conf['proxy']['server'] = 'proxy.yoursite.org'; // Required
+	| $conf['proxy']['username'] = 'proxyuser'; // Optional
+	| $conf['proxy']['password'] = 'proxypassword'; Optional
+	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
+	| 
+	*/
+    //$conf['proxy']['server'] = 'proxy.yoursite.org';
+
+    /*
+	|===============================================
+	| Request timeout
+	|===============================================
+	| 
+	| Timeout for retrieving warranty and model information from Apple.
+	|
+	| Timeout in seconds
+	| 
+	*/
+    $conf['request_timeout'] = 5;
 
 
  	/*

@@ -22,6 +22,8 @@ $lang['seconds']	= 'seconds';
 
 $lang['version']	= 'version';
 
+// Authentication
+
 $lang['username']	= 'Username';
 $lang['password']	= 'Password';
 $lang['auth_login']	= 'Login';
@@ -40,4 +42,9 @@ $lang['back_to_site'] = 'Back to site';
 $lang['error'] = 'Error';
 $lang['error_403'] = 'You are not allowed to view this page';
 $lang['error_404'] = 'Page not found';
+
+// Warranty lookup
+
+$lang['model_lookup_failed'] = 'Model lookup failed';
+$lang['lookup_failed'] = 'Lookup failed';
 
