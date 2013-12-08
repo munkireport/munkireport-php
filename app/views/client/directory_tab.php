@@ -42,23 +42,23 @@
 				<td><h4>Advanced Options - User Experience</h4></td><td></td>
 				<tr>
 					<td>Create mobile account at login</td>
-					<td><?=($directoryservice->createmobileaccount == 1) ? 'Enabled' : 'Disabled' ?></td>
+					<td><?=($directoryservice->createmobileaccount == 1) ? Enabled : 'Disabled' ?></td>
 				</tr>
 				<tr>
 					<td>Require confirmation</td>
-					<td><?=($directoryservice->requireconfirmation == 1) ? 'Enabled' : 'Disabled' ?></td>
+					<td><?=($directoryservice->requireconfirmation == 1) ? Enabled : 'Disabled' ?></td>
 				</tr>
 				<tr>
 					<td>Force home to startup disk</td>
-					<td><?=($directoryservice->forcehomeinstartup == 1) ? 'Enabled' : 'Disabled' ?></td>
+					<td><?=($directoryservice->forcehomeinstartup == 1) ? Enabled : 'Disabled' ?></td>
 				</tr>
 				<tr>
 					<td>Mount home as sharepoint</td>
-					<td><?=($directoryservice->mounthomeassharepoint == 1) ? 'Enabled' : 'Disabled' ?></td>
+					<td><?=($directoryservice->mounthomeassharepoint == 1) ? Enabled : 'Disabled' ?></td>
 				</tr>
 				<tr>
 					<td>Use Windows UNC path for home</td>
-					<td><?=($directoryservice->usewindowsuncpathforhome == 1) ? 'Enabled' : 'Disabled' ?></td>
+					<td><?=($directoryservice->usewindowsuncpathforhome == 1) ? Enabled : 'Disabled' ?></td>
 				</tr>
 				<tr>
 					<td>Network protocol to be used</td>
@@ -83,7 +83,7 @@
 				</tr>
 				<tr>
 					<td>Generate Kerberos authority</td>
-					<td><?=($directoryservice->generatekerberosauth == 1) ? 'Enabled' : 'Disabled' ?></td>
+					<td><?=($directoryservice->generatekerberosauth == 1) ? Enabled : 'Disabled' ?></td>
 				</tr>
 				<td><h4>Advanced Options - Administrative</h4></td><td></td>
 				<tr>
@@ -96,7 +96,7 @@
 				</tr>
 				<tr>
 					<td>Authentication from any domain</td>
-					<td><?=($directoryservice->authenticationfromanydomain == 1) ? 'Enabled' : 'Disabled' ?></td>
+					<td><?=($directoryservice->authenticationfromanydomain == 1) ? Enabled : 'Disabled' ?></td>
 				</tr>
 				<tr>
 					<td>Packet signing</td>
