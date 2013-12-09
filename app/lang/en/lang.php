@@ -37,6 +37,10 @@ $lang['auth_gen_other'] = 'Generate another';
 
 $lang['back_to_site'] = 'Back to site';
 
+// Client
+
+$lang['client_nonexistent'] = 'Client with serial number "%s" does not exist';
+
 // Errors
 
 $lang['error'] = 'Error';
