@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
-			<?$this->view('partials/machine_info')?>
+			<?$this->view('client/machine_info')?>
 
 			<ul class="nav nav-tabs">
 				<li class="active">
@@ -29,21 +29,21 @@
 			<div class="tab-content">
 
 				<div class="tab-pane active" id='munki'>
-					<?$this->view('partials/munki')?>
+					<?$this->view('client/munki_tab')?>
 				</div>
 	
 				<div class="tab-pane" id='apple-software'>
 					<h2>Installed Apple Software</h2>
-					<?$this->view('partials/install_history', array('apple'=> TRUE))?>
+					<?$this->view('client/install_history_tab', array('apple'=> TRUE))?>
 				</div>
 	
 				<div class="tab-pane" id='third-party-software'>
 					<h2>Installed Third-Party Software</h2>
-					<?$this->view('partials/install_history', array('apple'=> FALSE))?>
+					<?$this->view('client/install_history_tab', array('apple'=> FALSE))?>
 				</div>
 
 				<div class="tab-pane" id='inventory-items'>
-					<?$this->view('partials/inventory_items')?>
+					<?$this->view('client/inventory_items_tab')?>
 				</div>
 
 				<div class="tab-pane" id='network-tab'>
