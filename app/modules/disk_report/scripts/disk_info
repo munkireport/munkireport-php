@@ -5,7 +5,9 @@ if [ "$1" = 'manualcheck' ]; then
 	exit 0
 fi
 
+# Create cache dir if it does not exist
 DIR=$(dirname $0)
+mkdir -p "$DIR/cache"
 
 # Get info for / with diskutil
 # Convert integer to string
