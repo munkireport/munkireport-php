@@ -1,4 +1,17 @@
-<?$this->view('partials/head')?>
+<?php
+  //when not already https
+  if (empty($_SERVER['HTTPS'])) {
+    //try to open an ssl socket to the server itself giving up after 2
+    $SSL_Check = @fsockopen('ssl://' . $_SERVER['HTTP_HOST'], 443, $errno, $errstr, 2);
+    //if success re-direct
+    if ($SSL_Check) { 
+        header('Location: https://' . $_SERVER['HTTP_HOST']);
+    } else {
+    	error('Web traffic not encrypted');
+    }
+  }
+?>
+ <?$this->view('partials/head')?>
 
 	<div class="container">
 		<div class="row">
