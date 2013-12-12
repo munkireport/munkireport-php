@@ -2,7 +2,7 @@
 class auth extends Controller
 {
 	// Authentication mechanisms we handle
-	public $mechanisms = array('noauth', 'config');
+	public $mechanisms = array('noauth', 'config', 'AD');
 
 	// Authentication mechanisms available
 	public $auth_mechanisms = array();
@@ -62,6 +62,35 @@ class auth extends Controller
 						break 2;
 					}
 					break;
+					
+				case 'AD': // Active Directory authentication
+					//prevent null bind
+					if ($login != NULL && $password != NULL){
+						//include the class and create a connection
+						//TODO wrap this require somewhere else?
+						require (APP_PATH . '/lib/adLDAP/adLDAP.php');
+						try {
+							$adldap = new adLDAP(array('base_dn'=> $auth_data['baseDn'],
+											//TODO do people need more options?
+											'account_suffix'=>$auth_data['accountSuffix'],
+											'domainControllers' => $auth_data['domainControllers'],
+											'adminUsername' => $auth_data['adminUsername'],
+											'adminPassword' => $auth_data['adminPassword']));
+						}
+						catch (adLDAPException $e) {
+							echo $e; 
+							//TODO this break should throw the error somewhere. $data['error'] as variable?
+							break 2;   
+						}
+						//authenticate the user
+						if ($adldap->authenticate($login, $password)){
+							//TODO dude! now that you know is valid do a user match against config file
+							//TODO implement group membership
+							$check = TRUE;
+							break 2;
+						}
+					}
+					break;
 				
 				default:
 					die( 'Unknown authentication mechanism: '.$mechanism);
@@ -69,7 +98,7 @@ class auth extends Controller
 			}
 		}
 
-		// If authentication succeeded, create sessionz
+		// If authentication succeeded, create session(z???)
 		if($check)
 		{
 			$_SESSION['user'] = $login;
@@ -82,7 +111,8 @@ class auth extends Controller
 		
 		if($_POST)
 		{
-			$data['error'] = "Your username and password didn't match. Please try again";
+			//TODO set this to a variable with some useful info
+			$data['error'] = "Incorrect username or password.";
 		}
 				
 		$obj = new View();
