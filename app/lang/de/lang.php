@@ -33,4 +33,19 @@ $lang['auth_noauth_found'] = 'Keine Informationen zur Authentifizierung gefunden
 $lang['auth_addtoconfig'] = 'Diese Zeile zur config.php hinzufuegen:';
 $lang['auth_gen_other'] = 'Noch eine generieren';
 
-$lang['back_to_site'] = 'Zurueck zur site';
+$lang['back_to_site'] = 'Zurueck zur Site';
+
+// Client
+
+$lang['client_nonexistent'] = 'Client mit der Seriennummer "%s" existiert nicht';
+
+// Errors
+
+$lang['error'] = 'Fehler';
+$lang['error_403'] = 'Sie sind nicht berechtigt, diese Seite zu sehen';
+$lang['error_404'] = 'Seite nicht gefunden';
+
+// Warranty lookup
+
+$lang['model_lookup_failed'] = 'Fehler beim Nachschlagen des Modellnamens';
+$lang['lookup_failed'] = 'Fehler beim Nachschlagen';
