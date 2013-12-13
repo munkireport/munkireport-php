@@ -64,10 +64,10 @@ class auth extends Controller
 					break;
 					
 				case 'AD': // Active Directory authentication
-					//prevent null bind
+					//prevent empty values
 					if ($login != NULL && $password != NULL){
 						//include the class and create a connection
-						//TODO wrap this require somewhere else?
+						//TODO wrap this include somewhere else?
 						include_once (APP_PATH . '/lib/adLDAP/adLDAP.php');
 						try {
 							$adldap = new adLDAP(array('base_dn' => $auth_data['baseDn'],
@@ -77,18 +77,24 @@ class auth extends Controller
 											'adminPassword' => $auth_data['adminPassword']));
 						}
 						catch (adLDAPException $e) {
-							echo $e; 
-							//TODO this break should throw the error somewhere. $data['error'] as variable?
+							//echo $e; 
+							//Error connection failed
 							break 2;   
 						}
-						//authenticate the user
+						//authenticate user
 						if ($adldap->authenticate($login, $password)){
-							//TODO dude! now that you know is valid do a user match against config file
-							//TODO implement group membership
-							$check = TRUE;
-							break 2;
+							//check user against user list
+							if (in_array(strtolower($login),array_map('strtolower', $auth_data['allowedUsers']))) {
+								$check = TRUE;
+								break 2;
+							} else { //check against group list
+								//TODO group membership check should go here
+							}
+							//Error not authorized
 						}
-					}
+						//Error wrong password
+					} 
+					//Error empty value
 					break;
 				
 				default:

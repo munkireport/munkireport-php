@@ -102,6 +102,7 @@
 	|			$conf['auth']['auth_AD']['domainControllers'] = array('dc01.mydomain.local'); //can be an array of servers
 	|			$conf['auth']['auth_AD']['adminUsername'] = NULL; //if needed to perform the search
 	|			$conf['auth']['auth_AD']['adminPassword'] = NULL; //if needed to perform the search
+	|			$conf['auth']['auth_AD']['allowedUsers'] = array('macadmin','bossman');
 =>				//TODO do people need more options? ports? ldaps?
 =>				//TODO a custom message telling users to use AD credentials would be nice
 	|
