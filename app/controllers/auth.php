@@ -68,12 +68,11 @@ class auth extends Controller
 					if ($login != NULL && $password != NULL){
 						//include the class and create a connection
 						//TODO wrap this require somewhere else?
-						require (APP_PATH . '/lib/adLDAP/adLDAP.php');
+						include_once (APP_PATH . '/lib/adLDAP/adLDAP.php');
 						try {
-							$adldap = new adLDAP(array('base_dn'=> $auth_data['baseDn'],
-											//TODO do people need more options?
-											'account_suffix'=>$auth_data['accountSuffix'],
-											'domainControllers' => $auth_data['domainControllers'],
+							$adldap = new adLDAP(array('base_dn' => $auth_data['baseDn'],
+											'account_suffix' => $auth_data['accountSuffix'],
+											'domain_controllers' => $auth_data['domainControllers'],
 											'adminUsername' => $auth_data['adminUsername'],
 											'adminPassword' => $auth_data['adminPassword']));
 						}
