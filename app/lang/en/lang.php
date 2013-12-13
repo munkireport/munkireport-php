@@ -34,6 +34,10 @@ $lang['auth_generate'] = 'Generate';
 $lang['auth_noauth_found'] = 'No authentication information found, please add an account to the config file.';
 $lang['auth_addtoconfig'] = 'Add this line to config.php:';
 $lang['auth_gen_other'] = 'Generate another';
+$lang['wrong_user_or_pass'] = 'Wrong username or password';
+$lang['error_contacting_AD'] = 'An error ocurred while contacting AD';
+$lang['not_authorized'] = 'Not authorized';
+$lang['empty_not_allowed'] = 'Empty values are not allowed';
 
 $lang['back_to_site'] = 'Back to site';
 

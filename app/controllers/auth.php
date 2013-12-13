@@ -61,6 +61,7 @@ class auth extends Controller
 						$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
 						break 2;
 					}
+					$_SESSION['autherror'] = lang('wrong_user_or_pass');
 					break;
 					
 				case 'AD': // Active Directory authentication
@@ -77,24 +78,30 @@ class auth extends Controller
 											'adminPassword' => $auth_data['adminPassword']));
 						}
 						catch (adLDAPException $e) {
-							//echo $e; 
-							//Error connection failed
+							$_SESSION['autherror'] = lang('error_contacting_AD');
+							//helpful for troubleshooting connections
+							//$_SESSION['autherror'] = $e;
 							break 2;   
 						}
 						//authenticate user
 						if ($adldap->authenticate($login, $password)){
-							//check user against user list
+							//check user against users list
 							if (in_array(strtolower($login),array_map('strtolower', $auth_data['allowedUsers']))) {
 								$check = TRUE;
 								break 2;
-							} else { //check against group list
-								//TODO group membership check should go here
+							} else { //check user against group list
+								if ($adldap->user()->inGroup($login,"Domain Users")) {
+									$check = TRUE;
+									break 2;
+								}
 							}
-							//Error not authorized
+							$_SESSION['autherror'] = lang('not_authorized');
+							break;
 						}
-						//Error wrong password
-					} 
-					//Error empty value
+						$_SESSION['autherror'] = lang('wrong_user_or_pass');
+						break;
+					}
+					$_SESSION['autherror'] = lang('empty_not_allowed');
 					break;
 				
 				default:
@@ -103,7 +110,7 @@ class auth extends Controller
 			}
 		}
 
-		// If authentication succeeded, create session(z???)
+		// If authentication succeeded, create session
 		if($check)
 		{
 			$_SESSION['user'] = $login;
@@ -116,8 +123,7 @@ class auth extends Controller
 		
 		if($_POST)
 		{
-			//TODO set this to a variable with some useful info
-			$data['error'] = "Incorrect username or password.";
+			$data['error'] = $_SESSION['autherror'];
 		}
 				
 		$obj = new View();
