@@ -65,6 +65,34 @@ class adLDAPUsers {
     }
 
     /**
+    * Groups the user is a member of
+    * 
+    * @param string $username The username to query
+    * @param bool $recursive Recursive list of groups
+    * @param bool $isGUID Is the username passed a GUID or a samAccountName
+    * @return array
+    */
+    public function groups($username, $recursive = NULL, $isGUID = false)
+    {
+        if ($username === NULL) { return false; }
+        if ($recursive === NULL) { $recursive = $this->adldap->getRecursiveGroups(); } // Use the default option if they haven't set it
+        if (!$this->adldap->getLdapBind()) { return false; }
+        
+        // Search the directory for their information
+        $info = @$this->info($username, array("memberof", "primarygroupid"), $isGUID);
+        $groups = $this->adldap->utilities()->niceNames($info[0]["memberof"]); // Presuming the entry returned is our guy (unique usernames)
+
+        if ($recursive === true){
+            foreach ($groups as $id => $groupName){
+                $extraGroups = $this->adldap->group()->recursiveGroups($groupName);
+                $groups = array_merge($groups, $extraGroups);
+            }
+        }
+        
+        return $groups;
+    }
+
+    /**
     * Determine if a user is in a specific group
     * 
     * @param string $username The username to query
