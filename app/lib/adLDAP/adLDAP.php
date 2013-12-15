@@ -49,6 +49,11 @@
 require_once(dirname(__FILE__) . '/collections/adLDAPCollection.php');
 require_once(dirname(__FILE__) . '/classes/adLDAPGroups.php');
 require_once(dirname(__FILE__) . '/classes/adLDAPUsers.php');
+require_once(dirname(__FILE__) . '/classes/adLDAPFolders.php');
+require_once(dirname(__FILE__) . '/classes/adLDAPUtils.php');
+require_once(dirname(__FILE__) . '/classes/adLDAPContacts.php');
+require_once(dirname(__FILE__) . '/classes/adLDAPExchange.php');
+require_once(dirname(__FILE__) . '/classes/adLDAPComputers.php');
 
 class adLDAP {
     
