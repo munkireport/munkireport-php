@@ -90,9 +90,11 @@ class auth extends Controller
 								$check = TRUE;
 								break 2;
 							} else { //check user against group list
-								if ($adldap->user()->inGroup($login,"Domain Users")) {
-									$check = TRUE;
-									break 2;
+								foreach ($auth_data['allowedGroups'] as $key => $group) {
+									if ($adldap->user()->inGroup($login,$group,false,false)) {
+										$check = TRUE;
+										break 2;
+									}
 								}
 							}
 							$_SESSION['autherror'] = lang('not_authorized');

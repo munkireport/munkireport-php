@@ -103,6 +103,7 @@
 	|			$conf['auth']['auth_AD']['adminUsername'] = NULL; //if needed to perform the search
 	|			$conf['auth']['auth_AD']['adminPassword'] = NULL; //if needed to perform the search
 	|			$conf['auth']['auth_AD']['allowedUsers'] = array('macadmin','bossman');
+	|			$conf['auth']['auth_AD']['allowedGroups'] = array('AD Group 1','AD Group 2'); //case sensitive
 =>				//TODO do people need more options? ports? ldaps?
 =>				//TODO a custom message telling users to use AD credentials would be nice
 	|
