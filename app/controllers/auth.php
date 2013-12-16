@@ -2,7 +2,7 @@
 class auth extends Controller
 {
 	// Authentication mechanisms we handle
-	public $mechanisms = array('noauth', 'config');
+	public $mechanisms = array('noauth', 'config', 'AD');
 
 	// Authentication mechanisms available
 	public $auth_mechanisms = array();
@@ -61,6 +61,57 @@ class auth extends Controller
 						$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
 						break 2;
 					}
+					$error_msg = lang('wrong_user_or_pass');
+					break;
+					
+				case 'AD': // Active Directory authentication
+					//prevent empty values
+					if ($login != NULL && $password != NULL){
+						//include the class and create a connection
+						//TODO wrap this include somewhere else?
+						include_once (APP_PATH . '/lib/adLDAP/adLDAP.php');
+						try {
+							$adldap = new adLDAP($auth_data);
+						}
+						catch (adLDAPException $e) {
+							$error_msg = lang('error_contacting_AD');
+							//helpful for troubleshooting connections
+							//$error_msg = $e;
+							break 2;   
+						}
+						//authenticate user
+						if ($adldap->authenticate($login, $password)){
+							//check user against users list
+							if (in_array(strtolower($login),array_map('strtolower', $auth_data['mr_allowed_users']))) {
+								$check = TRUE;
+								break 2;
+							}
+							//check user against group list
+                            if(isset($auth_data['mr_allowed_groups']))
+                            { 
+                                // Set mr_allowed_groups to array
+                                $admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
+
+                                // Get groups from AD
+                                $groups = $adldap->user()->groups($login);
+
+                                foreach ($groups as $group)
+                                {
+                                    if (in_array($group, $admin_groups)) 
+                                    {
+                                        $check = TRUE;
+                                        break 3;
+                                    }
+                                }
+
+                            }//end group list check
+							$error_msg = lang('not_authorized');
+							break;
+						}
+						$error_msg = lang('wrong_user_or_pass');
+						break;
+					}
+					$error_msg = lang('empty_not_allowed');
 					break;
 				
 				default:
@@ -69,7 +120,7 @@ class auth extends Controller
 			}
 		}
 
-		// If authentication succeeded, create sessionz
+		// If authentication succeeded, create session
 		if($check)
 		{
 			$_SESSION['user'] = $login;
@@ -82,7 +133,7 @@ class auth extends Controller
 		
 		if($_POST)
 		{
-			$data['error'] = "Your username and password didn't match. Please try again";
+			$data['error'] = $error_msg;
 		}
 				
 		$obj = new View();
