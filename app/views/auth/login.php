@@ -5,7 +5,7 @@
     $SSL_Check = @fsockopen('ssl://' . $_SERVER['HTTP_HOST'], 443, $errno, $errstr, 2);
     //if success re-direct
     if ($SSL_Check) { 
-        header('Location: https://' . $_SERVER['HTTP_HOST']);
+        header('Location: https://' . $_SERVER['HTTP_HOST'] . conf('subdirectory'));
     } else {
     	error('Web traffic not encrypted');
     }
