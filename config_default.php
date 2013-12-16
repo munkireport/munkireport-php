@@ -97,9 +97,9 @@
 	|
 	|	3) Active Directory: fill the needed and include the lines in your config.php.
 	|		 e.g.
-	|			$conf['auth']['auth_AD']['accountSuffix'] = '@mydomain.local';
-	|			$conf['auth']['auth_AD']['baseDn'] = 'DC=mydomain,DC=local'; //set to NULL to auto-detect
-	|			$conf['auth']['auth_AD']['domainControllers'] = array('dc01.mydomain.local'); //can be an array of servers
+	|			$conf['auth']['auth_AD']['account_suffix'] = '@mydomain.local';
+	|			$conf['auth']['auth_AD']['base_dn'] = 'DC=mydomain,DC=local'; //set to NULL to auto-detect
+	|			$conf['auth']['auth_AD']['domain_controllers'] = array('dc01.mydomain.local'); //can be an array of servers
 	|			$conf['auth']['auth_AD']['adminUsername'] = NULL; //if needed to perform the search
 	|			$conf['auth']['auth_AD']['adminPassword'] = NULL; //if needed to perform the search
 	|			$conf['auth']['auth_AD']['mr_allowedUsers'] = array('macadmin','bossman');

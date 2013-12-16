@@ -61,7 +61,7 @@ class auth extends Controller
 						$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
 						break 2;
 					}
-					$_SESSION['autherror'] = lang('wrong_user_or_pass');
+					$error_msg = lang('wrong_user_or_pass');
 					break;
 					
 				case 'AD': // Active Directory authentication
@@ -71,16 +71,12 @@ class auth extends Controller
 						//TODO wrap this include somewhere else?
 						include_once (APP_PATH . '/lib/adLDAP/adLDAP.php');
 						try {
-							$adldap = new adLDAP(array('base_dn' => $auth_data['baseDn'],
-											'account_suffix' => $auth_data['accountSuffix'],
-											'domain_controllers' => $auth_data['domainControllers'],
-											'adminUsername' => $auth_data['adminUsername'],
-											'adminPassword' => $auth_data['adminPassword']));
+							$adldap = new adLDAP($auth_data);
 						}
 						catch (adLDAPException $e) {
-							$_SESSION['autherror'] = lang('error_contacting_AD');
+							$error_msg = lang('error_contacting_AD');
 							//helpful for troubleshooting connections
-							//$_SESSION['autherror'] = $e;
+							//$error_msg = $e;
 							break 2;   
 						}
 						//authenticate user
@@ -89,21 +85,33 @@ class auth extends Controller
 							if (in_array(strtolower($login),array_map('strtolower', $auth_data['mr_allowedUsers']))) {
 								$check = TRUE;
 								break 2;
-							} else { //check user against group list
-								foreach ($auth_data['mr_allowedGroups'] as $key => $group) {
-									if ($adldap->user()->inGroup($login,$group,false,false)) {
-										$check = TRUE;
-										break 2;
-									}
-								}
 							}
-							$_SESSION['autherror'] = lang('not_authorized');
+							//check user against group list
+                            if(isset($auth_data['mr_allowedGroups']))
+                            { 
+                                // Set mr_allowedGroups to array
+                                $admin_groups = is_array($auth_data['mr_allowedGroups']) ? $auth_data['mr_allowedGroups'] : array($auth_data['mr_allowedGroups']);
+
+                                // Get groups from AD
+                                $groups = $adldap->user()->groups($login);
+
+                                foreach ($groups as $group)
+                                {
+                                    if (in_array($group, $admin_groups)) 
+                                    {
+                                        $check = TRUE;
+                                        break 3;
+                                    }
+                                }
+
+                            }//end group list check
+							$error_msg = lang('not_authorized');
 							break;
 						}
-						$_SESSION['autherror'] = lang('wrong_user_or_pass');
+						$error_msg = lang('wrong_user_or_pass');
 						break;
 					}
-					$_SESSION['autherror'] = lang('empty_not_allowed');
+					$error_msg = lang('empty_not_allowed');
 					break;
 				
 				default:
@@ -125,7 +133,7 @@ class auth extends Controller
 		
 		if($_POST)
 		{
-			$data['error'] = $_SESSION['autherror'];
+			$data['error'] = $error_msg;
 		}
 				
 		$obj = new View();
