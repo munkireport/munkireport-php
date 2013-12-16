@@ -82,15 +82,15 @@ class auth extends Controller
 						//authenticate user
 						if ($adldap->authenticate($login, $password)){
 							//check user against users list
-							if (in_array(strtolower($login),array_map('strtolower', $auth_data['mr_allowedUsers']))) {
+							if (in_array(strtolower($login),array_map('strtolower', $auth_data['mr_allowed_users']))) {
 								$check = TRUE;
 								break 2;
 							}
 							//check user against group list
-                            if(isset($auth_data['mr_allowedGroups']))
+                            if(isset($auth_data['mr_allowed_groups']))
                             { 
-                                // Set mr_allowedGroups to array
-                                $admin_groups = is_array($auth_data['mr_allowedGroups']) ? $auth_data['mr_allowedGroups'] : array($auth_data['mr_allowedGroups']);
+                                // Set mr_allowed_groups to array
+                                $admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
 
                                 // Get groups from AD
                                 $groups = $adldap->user()->groups($login);

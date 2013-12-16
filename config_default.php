@@ -100,10 +100,10 @@
 	|			$conf['auth']['auth_AD']['account_suffix'] = '@mydomain.local';
 	|			$conf['auth']['auth_AD']['base_dn'] = 'DC=mydomain,DC=local'; //set to NULL to auto-detect
 	|			$conf['auth']['auth_AD']['domain_controllers'] = array('dc01.mydomain.local'); //can be an array of servers
-	|			$conf['auth']['auth_AD']['adminUsername'] = NULL; //if needed to perform the search
-	|			$conf['auth']['auth_AD']['adminPassword'] = NULL; //if needed to perform the search
-	|			$conf['auth']['auth_AD']['mr_allowedUsers'] = array('macadmin','bossman');
-	|			$conf['auth']['auth_AD']['mr_allowedGroups'] = array('AD Group 1','AD Group 2'); //case sensitive
+	|			$conf['auth']['auth_AD']['admin_username'] = NULL; //if needed to perform the search
+	|			$conf['auth']['auth_AD']['admin_password'] = NULL; //if needed to perform the search
+	|			$conf['auth']['auth_AD']['mr_allowed_users'] = array('macadmin','bossman');
+	|			$conf['auth']['auth_AD']['mr_allowed_groups'] = array('AD Group 1','AD Group 2'); //case sensitive
 	|
 	| They are checked in the order that they appear above. Not in the order of your
 	| config.php!. You can combine methods 2 and 3
