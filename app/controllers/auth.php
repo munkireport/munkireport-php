@@ -86,11 +86,11 @@ class auth extends Controller
 						//authenticate user
 						if ($adldap->authenticate($login, $password)){
 							//check user against users list
-							if (in_array(strtolower($login),array_map('strtolower', $auth_data['allowedUsers']))) {
+							if (in_array(strtolower($login),array_map('strtolower', $auth_data['mr_allowedUsers']))) {
 								$check = TRUE;
 								break 2;
 							} else { //check user against group list
-								foreach ($auth_data['allowedGroups'] as $key => $group) {
+								foreach ($auth_data['mr_allowedGroups'] as $key => $group) {
 									if ($adldap->user()->inGroup($login,$group,false,false)) {
 										$check = TRUE;
 										break 2;
