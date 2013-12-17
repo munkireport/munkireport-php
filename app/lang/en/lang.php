@@ -38,6 +38,8 @@ $lang['wrong_user_or_pass'] = 'Wrong username or password';
 $lang['error_contacting_AD'] = 'An error ocurred while contacting AD';
 $lang['not_authorized'] = 'Not authorized';
 $lang['empty_not_allowed'] = 'Empty values are not allowed';
+$lang['auth_insecure'] = 'You\'re using an insecure connection';
+$lang['auth_secure'] = 'You\'re using a secure connection';
 
 $lang['back_to_site'] = 'Back to site';
 

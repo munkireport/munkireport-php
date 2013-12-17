@@ -50,43 +50,56 @@ class auth extends Controller
 			switch ($mechanism)
 			{
 				case 'noauth': // No authentication
+
 					$check = TRUE;
 					$login = 'noauth';
+
 					break 2;
 
 				case 'config': // Config authentication
-					if(isset($auth_data[$login]))
+
+					if($_POST && isset($auth_data[$login]))
 					{
 						$t_hasher = $this->load_phpass();
 						$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
 						break 2;
 					}
-					$error_msg = lang('wrong_user_or_pass');
+					
 					break;
 					
 				case 'AD': // Active Directory authentication
-					//prevent empty values
-					if ($login != NULL && $password != NULL){
+
+					// Prevent empty values
+					if ($_POST && $login && $password)
+					{
 						//include the class and create a connection
 						//TODO wrap this include somewhere else?
 						include_once (APP_PATH . '/lib/adLDAP/adLDAP.php');
-						try {
+						try
+						{
 							$adldap = new adLDAP($auth_data);
 						}
-						catch (adLDAPException $e) {
-							$error_msg = lang('error_contacting_AD');
-							//helpful for troubleshooting connections
-							//$error_msg = $e;
+						catch (adLDAPException $e)
+						{
+							// When in debug mode, show additional info
+							$msg = conf('debug') ? ":<br>".$e->getMessage() : '';
+
+							error(lang('error_contacting_AD').$msg);
+
 							break 2;   
 						}
-						//authenticate user
-						if ($adldap->authenticate($login, $password)){
-							//check user against users list
-							if (in_array(strtolower($login),array_map('strtolower', $auth_data['mr_allowed_users']))) {
+
+						// Authenticate user
+						if ($adldap->authenticate($login, $password))
+						{
+							// Check user against users list
+							if (in_array(strtolower($login),array_map('strtolower', $auth_data['mr_allowed_users'])))
+							{
 								$check = TRUE;
 								break 2;
 							}
-							//check user against group list
+
+							// Check user against group list
                             if(isset($auth_data['mr_allowed_groups']))
                             { 
                                 // Set mr_allowed_groups to array
@@ -105,13 +118,14 @@ class auth extends Controller
                                 }
 
                             }//end group list check
-							$error_msg = lang('not_authorized');
+
+							// Not in users list or group list
+							error(lang('not_authorized'));
+
 							break;
 						}
-						$error_msg = lang('wrong_user_or_pass');
 						break;
 					}
-					$error_msg = lang('empty_not_allowed');
 					break;
 				
 				default:
@@ -128,13 +142,21 @@ class auth extends Controller
 			session_regenerate_id();
 			redirect($return);
 		}
+
+		// If POST and no other alerts, auth has failed
+		if($_POST && ! $GLOBALS['alerts'])
+		{
+			if( ! $login OR ! $password)
+			{
+				error(lang('empty_not_allowed'));
+			}
+			else
+			{
+				error(lang('wrong_user_or_pass'));
+			}
+		}
 		
 		$data = array('login' => $login, 'url' => url("auth/login/$return"));
-		
-		if($_POST)
-		{
-			$data['error'] = $error_msg;
-		}
 				
 		$obj = new View();
 		$obj->view('auth/login', $data);
