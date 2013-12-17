@@ -15,13 +15,16 @@
 								FROM munkireport
 								GROUP BY version
 								ORDER BY version ASC";
+
+						foreach($munkireport->query($sql) as $obj) {
+							if (empty($obj->version)) {
+								echo '<a class="list-group-item">' . lang('unknown') . '<span class="badge pull-right">' .$obj->count . '</span></a>';
+							} else {
+								echo '<a href=' . url('show/listing/munki/#'.$obj->version) . ' class="list-group-item">' . $obj->version .
+									 '<span class="badge pull-right">' . $obj->count . '</span></a>';
+							}
+						}
 					?>
-					
-					<?foreach($munkireport->query($sql) as $obj):?>
-						<a href="<?=url('show/listing/munki/#'.$obj->version)?>" class="list-group-item"><?=$obj->version?>
-							<span class="badge pull-right"><?=$obj->count?></span>
-						</a>
-					<?endforeach?>
 
 				</div><!-- /scroll-box -->
 
