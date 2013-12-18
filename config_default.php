@@ -43,11 +43,10 @@
 	|
 	| The hostname of the webserver, default automatically
 	| determined. no trailing slash
-	| Syntax below with protocol relative url
-	| http://paulirish.com/2010/the-protocol-relative-url/
 	| 
 	*/
-	$conf['webhost'] = '//'.$_SERVER[ 'HTTP_HOST' ];
+	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
+		. '://'.$_SERVER[ 'HTTP_HOST' ];
 	
 	
 	/*
