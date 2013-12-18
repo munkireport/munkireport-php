@@ -1,7 +1,5 @@
 <?$this->view('partials/head')?>
 
-<?$secure_url = 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']?>
-
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4">
@@ -12,8 +10,8 @@
 								<?=lang('auth_login')?>
 
 								<?if(empty($_SERVER['HTTPS'])):?>
-									
-									<a href="<?=$secure_url?>"><i title="<?=lang('auth_insecure')?>" class="text-danger icon-unlock-alt pull-right"></i></a>
+
+									<a href="<?=secure_url()?>"><i title="<?=lang('auth_insecure')?>" class="text-danger icon-unlock-alt pull-right"></i></a>
 
 								<?else:?>
 

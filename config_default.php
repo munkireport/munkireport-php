@@ -111,6 +111,17 @@
 
 	/*
 	|===============================================
+	| Force secure connection when authorizing
+	|===============================================
+	| 
+	| Set this value to TRUE to force https when logging in.
+	| This is useful for sites that serve MR both via http and https
+	|
+	*/
+	$conf['auth_secure'] = FALSE;
+
+	/*
+	|===============================================
 	| Locale
 	|===============================================
 	| 

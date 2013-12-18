@@ -16,16 +16,28 @@
 		</div>
 
 		<div class="panel-body">
-			
-			<?if(isset($msg) && $msg):?>
 
-			<?=$msg?>
 
-			<?else:?>
+			<p>
 
-			<p><?=lang('error_'.$status_code)?></p>
+			<?switch($status_code)
+			{
+				case 426:
+				
+					printf(lang('error_'.$status_code), secure_url());
 
-			<?endif?>
+					break;
+
+				default:
+
+					echo lang('error_'.$status_code);
+			}
+			?>
+
+
+			</p>
+
+		
 
 		</div>
 

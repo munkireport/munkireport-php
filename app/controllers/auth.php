@@ -9,6 +9,11 @@ class auth extends Controller
 	
 	function __construct()
 	{
+		if(conf('auth_secure') && empty($_SERVER['HTTPS']))
+		{
+			redirect('error/client_error/426'); // Switch protocol
+		}
+
 		// Check if there's a valid auth mechanism in config
 		$auth_mechanisms = array();
 		$authSettings = conf('auth');

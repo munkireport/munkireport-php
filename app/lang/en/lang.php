@@ -52,6 +52,8 @@ $lang['client_nonexistent'] = 'Client with serial number "%s" does not exist';
 $lang['error'] = 'Error';
 $lang['error_403'] = 'You are not allowed to view this page';
 $lang['error_404'] = 'Page not found';
+$lang['error_426'] = 'You have to visit this site with a secure connection. 
+<a href="%s">Switch to secure site</a>';
 
 // Warranty lookup
 

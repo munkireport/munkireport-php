@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.0.5.611';
+$GLOBALS['version'] = '2.0.5.612';
 
 // Return version without commit count
 function get_version()
@@ -133,6 +133,30 @@ function url($url='', $fullurl = FALSE)
   $s = $fullurl ? conf('webhost') : '';
   $s .= conf('subdirectory').($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
   return $s;
+}
+
+/**
+ * Return a secure url
+ *
+ * @param string url
+ * @return string secure url
+ * @author 
+ **/
+function secure_url($url = '')
+{
+	$parse_url = parse_url(url($url, TRUE));
+	$parse_url['scheme'] = 'https';
+
+	return 
+		 ((isset($parse_url['scheme'])) ? $parse_url['scheme'] . '://' : '')
+		.((isset($parse_url['user'])) ? $parse_url['user'] 
+		.((isset($parse_url['pass'])) ? ':' . $parse_url['pass'] : '') .'@' : '')
+		.((isset($parse_url['host'])) ? $parse_url['host'] : '')
+		.((isset($parse_url['port'])) ? ':' . $parse_url['port'] : '')
+		.((isset($parse_url['path'])) ? $parse_url['path'] : '')
+		.((isset($parse_url['query'])) ? '?' . $parse_url['query'] : '')
+		.((isset($parse_url['fragment'])) ? '#' . $parse_url['fragment'] : '')
+        ;
 }
 
 function redirect($uri = '', $method = 'location', $http_response_code = 302)
