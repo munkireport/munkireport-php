@@ -1,18 +1,6 @@
-<?php
-  //when not already https
-	$secure = TRUE;
-  if (empty($_SERVER['HTTPS'])) {
-    //try to open an ssl socket to the server itself giving up after 2
-    $SSL_Check = @fsockopen('ssl://' . $_SERVER['HTTP_HOST'], 443, $errno, $errstr, 2);
-    //if success re-direct
-    if ($SSL_Check) { 
-        header('Location: https://' . $_SERVER['HTTP_HOST'] . conf('subdirectory'));
-    } else {
-    	$secure = FALSE;
-    }
-  }
-?>
- <?$this->view('partials/head')?>
+<?$this->view('partials/head')?>
+
+<?$secure_url = 'https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']?>
 
 	<div class="container">
 		<div class="row">
@@ -22,11 +10,17 @@
 						<fieldset>
 							<legend>
 								<?=lang('auth_login')?>
-								<?if($secure):?>
-								<i title="<?=lang('auth_secure')?>" class="text-success icon-lock pull-right"></i>
+
+								<?if(empty($_SERVER['HTTPS'])):?>
+									
+									<a href="<?=$secure_url?>"><i title="<?=lang('auth_insecure')?>" class="text-danger icon-unlock-alt pull-right"></i></a>
+
 								<?else:?>
-								<i title="<?=lang('auth_insecure')?>" class="text-danger icon-unlock-alt pull-right"></i>
+
+									<i title="<?=lang('auth_secure')?>" class="text-success icon-lock pull-right"></i>
+
 								<?endif?>
+
 							</legend>
 
 					    	<?foreach($GLOBALS['alerts'] AS $type => $list):?>

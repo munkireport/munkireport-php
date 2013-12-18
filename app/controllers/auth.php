@@ -64,7 +64,7 @@ class auth extends Controller
 						$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
 						break 2;
 					}
-					
+
 					break;
 					
 				case 'AD': // Active Directory authentication
@@ -93,10 +93,16 @@ class auth extends Controller
 						if ($adldap->authenticate($login, $password))
 						{
 							// Check user against users list
-							if (in_array(strtolower($login),array_map('strtolower', $auth_data['mr_allowed_users'])))
+							if(isset($auth_data['mr_allowed_users']))
 							{
-								$check = TRUE;
-								break 2;
+                                //
+                                $admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
+
+								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
+								{
+									$check = TRUE;
+									break 2;
+								}
 							}
 
 							// Check user against group list
