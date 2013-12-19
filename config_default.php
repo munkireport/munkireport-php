@@ -43,11 +43,10 @@
 	|
 	| The hostname of the webserver, default automatically
 	| determined. no trailing slash
-	| Syntax below with protocol relative url
-	| http://paulirish.com/2010/the-protocol-relative-url/
 	| 
 	*/
-	$conf['webhost'] = '//'.$_SERVER[ 'HTTP_HOST' ];
+	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
+		. '://'.$_SERVER[ 'HTTP_HOST' ];
 	
 	
 	/*
@@ -81,6 +80,45 @@
 	|
 	*/
 	$conf['sitename'] = 'MunkiReport';
+	
+	/*
+	|===============================================
+	| Authentication
+	|===============================================
+	| 
+	| Currently three authentication method are supported:
+	|
+	|	1) Don't require any authentication: paste the following line in your config.php
+	|			$conf['auth']['auth_noauth'] = array();
+	|
+	|	2) (default) Local accounts: visit /index.php?/auth/generate and paste
+	|	   the result in your config.php
+	|
+	|	3) Active Directory: fill the needed and include the lines in your config.php.
+	|		 e.g.
+	|			$conf['auth']['auth_AD']['account_suffix'] = '@mydomain.local';
+	|			$conf['auth']['auth_AD']['base_dn'] = 'DC=mydomain,DC=local'; //set to NULL to auto-detect
+	|			$conf['auth']['auth_AD']['domain_controllers'] = array('dc01.mydomain.local'); //can be an array of servers
+	|			$conf['auth']['auth_AD']['admin_username'] = NULL; //if needed to perform the search
+	|			$conf['auth']['auth_AD']['admin_password'] = NULL; //if needed to perform the search
+	|			$conf['auth']['auth_AD']['mr_allowed_users'] = array('macadmin','bossman');
+	|			$conf['auth']['auth_AD']['mr_allowed_groups'] = array('AD Group 1','AD Group 2'); //case sensitive
+	|
+	| They are checked in the order that they appear above. Not in the order of your
+	| config.php!. You can combine methods 2 and 3
+	|
+	*/
+
+	/*
+	|===============================================
+	| Force secure connection when authorizing
+	|===============================================
+	| 
+	| Set this value to TRUE to force https when logging in.
+	| This is useful for sites that serve MR both via http and https
+	|
+	*/
+	$conf['auth_secure'] = FALSE;
 
 	/*
 	|===============================================

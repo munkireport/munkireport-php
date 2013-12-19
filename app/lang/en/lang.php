@@ -34,6 +34,12 @@ $lang['auth_generate'] = 'Generate';
 $lang['auth_noauth_found'] = 'No authentication information found, please add an account to the config file.';
 $lang['auth_addtoconfig'] = 'Add this line to config.php:';
 $lang['auth_gen_other'] = 'Generate another';
+$lang['wrong_user_or_pass'] = 'Wrong username or password';
+$lang['error_contacting_AD'] = 'An error ocurred while contacting AD';
+$lang['not_authorized'] = 'Not authorized';
+$lang['empty_not_allowed'] = 'Empty values are not allowed';
+$lang['auth_insecure'] = 'Insecure connection, switch to secure';
+$lang['auth_secure'] = 'You\'re using a secure connection';
 
 $lang['back_to_site'] = 'Back to site';
 
@@ -46,6 +52,8 @@ $lang['client_nonexistent'] = 'Client with serial number "%s" does not exist';
 $lang['error'] = 'Error';
 $lang['error_403'] = 'You are not allowed to view this page';
 $lang['error_404'] = 'Page not found';
+$lang['error_426'] = 'You have to visit this site with a secure connection. 
+<a href="%s">Switch to secure site</a>';
 
 // Warranty lookup
 
