@@ -21,6 +21,7 @@ $lang['minutes']	= 'minutes';
 $lang['seconds']	= 'seconds';
 
 $lang['version']	= 'version';
+$lang['unknown']	= 'Unknown';
 
 // Authentication
 
