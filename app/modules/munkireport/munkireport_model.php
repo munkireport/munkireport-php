@@ -111,8 +111,22 @@ class Munkireport_model extends Model {
 		// If there's an error downloading the manifest, we don't get a ManagedInstalls
 		// array. We retain the old ManagedInstalls array and only store the new
 		// Errors, Warnings, StartTime, EndTime
-		if(! array_key_exists('ManagedInstalls', $mylist))
+		if( ! array_key_exists('ManagedInstalls', $mylist))
 		{
+			$strings = array('Errors', 'Warnings');
+			foreach($strings as $str)
+			{
+				$lcname = strtolower($str);
+				$this->$lcname = 0;
+				if(array_key_exists($str, $mylist))
+				{
+					$this->rs[$lcname] = count($mylist[$str]);
+
+					// Store errors and warnings
+					$this->rs['report_plist'][$str] = $mylist[$str];
+				}
+			}
+
 			$this->save();
 			return $this;
 		}
@@ -125,7 +139,7 @@ class Munkireport_model extends Model {
 			$this->$lcname = 0;
 			if(array_key_exists($str, $mylist))
 			{
-				$this->$lcname = count($mylist[$str]);
+				$this->rs[$lcname] = count($mylist[$str]);
 			}
 		}
 
