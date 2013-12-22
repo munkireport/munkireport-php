@@ -15,15 +15,15 @@
 					COUNT(CASE WHEN Percentage > 90 THEN 1 END) AS danger FROM diskreport";
 					?>
 					<?if($obj = current($queryobj->query($sql))):?>
-					<a href="<?=url('show/listing/disk')?>" class="btn btn-success">
+					<a href="<?=url('show/listing/disk#'.rawurlencode('percentage < 80'))?>" class="btn btn-success">
 						<span class="bigger-150"> <?=$obj->total - $obj->warning?> </span><br>
 						Under 80%
 					</a>
-					<a href="<?=url('show/listing/disk')?>" class="btn btn-warning">
+					<a href="<?=url('show/listing/disk#'.rawurlencode('80 percentage 90'))?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->warning - $obj->danger?> </span><br>
 						Over 80%
 					</a>
-					<a href="<?=url('show/listing/disk')?>" class="btn btn-danger">
+					<a href="<?=url('show/listing/disk#'.rawurlencode('percentage > 90'))?>" class="btn btn-danger">
 						<span class="bigger-150"> <?=$obj->danger?> </span><br>
 						Over 90%
 					</a>
