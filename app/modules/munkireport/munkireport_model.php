@@ -103,7 +103,7 @@ class Munkireport_model extends Model {
 			if(array_key_exists($str, $mylist))
 			{
 				$lcname = strtolower($str);
-				$this->$lcname = $mylist[$str];
+				$this->rs[$lcname] = $mylist[$str];
 				unset($mylist[$str]);
 			}
 		}
@@ -117,7 +117,7 @@ class Munkireport_model extends Model {
 			foreach($strings as $str)
 			{
 				$lcname = strtolower($str);
-				$this->$lcname = 0;
+				$this->rs[$lcname] = 0;
 				if(array_key_exists($str, $mylist))
 				{
 					$this->rs[$lcname] = count($mylist[$str]);
@@ -136,7 +136,7 @@ class Munkireport_model extends Model {
 		foreach($strings as $str)
 		{
 			$lcname = strtolower($str);
-			$this->$lcname = 0;
+			$this->rs[$lcname] = 0;
 			if(array_key_exists($str, $mylist))
 			{
 				$this->rs[$lcname] = count($mylist[$str]);
