@@ -115,7 +115,7 @@ class Tablequery {
             {
                 if(is_string($val))
                 {
-                    if(preg_match('/(<|>)\s*\d+/', $val))
+                    if(preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val))
                     {
                         // Special case, use unquoted
                         $compstr = $val;
