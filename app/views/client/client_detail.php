@@ -5,23 +5,29 @@
 			<?$this->view('client/machine_info')?>
 
 			<ul class="nav nav-tabs">
+
 				<li class="active">
-					<a href="#munki" data-toggle="tab">Munki</a>
+					<a href="#munki" data-toggle="tab"><?=lang('tab_munki')?></a>
 				</li>
+
 				<li>
-					<a href="#apple-software" data-toggle="tab">Apple Software</a>
+					<a href="#apple-software" data-toggle="tab"><?=lang('tab_apple_software')?></a>
 				</li>
+
 				<li>
-					<a href="#third-party-software" data-toggle="tab">Third Party Software</a>
+					<a href="#third-party-software" data-toggle="tab"><?=lang('tab_third_party_software')?></a>
 				</li>
+
 				<li>
-					<a href="#inventory-items" data-toggle="tab">Inventory Items <span id="inventory-cnt" class="badge">.</span></a>
+					<a href="#inventory-items" data-toggle="tab"><?=lang('tab_inventory_items')?> <span id="inventory-cnt" class="badge">.</span></a>
 				</li>
+
 				<li>
-					<a href="#network-tab" data-toggle="tab">Network interfaces <span id="network-cnt" class="badge">0</span></a>
+					<a href="#network-tab" data-toggle="tab"><?=lang('tab_network_interfaces')?> <span id="network-cnt" class="badge">0</span></a>
 				</li>
+				
 				<li>
-					<a href="#directory-tab" data-toggle="tab">Directory services <span id="directory-cnt" class="badge">0</span></a>
+					<a href="#directory-tab" data-toggle="tab"><?=lang('tab_directory_services')?> <span id="directory-cnt" class="badge">0</span></a>
 				</li>
 
 			</ul>
@@ -33,12 +39,12 @@
 				</div>
 	
 				<div class="tab-pane" id='apple-software'>
-					<h2>Installed Apple Software</h2>
+					<h2><?=lang('installed_apple_software')?></h2>
 					<?$this->view('client/install_history_tab', array('apple'=> TRUE))?>
 				</div>
 	
 				<div class="tab-pane" id='third-party-software'>
-					<h2>Installed Third-Party Software</h2>
+					<h2><?=lang('installed_third_party_software')?></h2>
 					<?$this->view('client/install_history_tab', array('apple'=> FALSE))?>
 				</div>
 
@@ -63,7 +69,7 @@
 				var hash = window.location.hash.slice(5);
 				$('.nav-tabs a[href="#'+hash+'"]').tab('show');
 
-				// Update hash depending on tab
+				// Update hash when changing tab
 				$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 					var url = String(e.target)
 					if(url.indexOf("#") != -1)
