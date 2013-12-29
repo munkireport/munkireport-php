@@ -26,6 +26,8 @@ $lang['munkireport_version'] = 'Munkireport version %s';
 $lang['version']		= 'Version';
 $lang['unknown']		= 'Unknown';
 $lang['name']			= 'Name';
+$lang['enabled']		= 'Enabled';
+$lang['disabled']		= 'Disabled';
 
 // Authentication
 
@@ -55,16 +57,24 @@ $lang['tab_munki'] = 'Managed Software Update';
 $lang['tab_apple_software'] = 'Apple Software';
 $lang['tab_third_party_software'] = 'Third Party Software';
 $lang['tab_inventory_items'] = 'Inventory Items';
-$lang['tab_network_interfaces'] = 'Network interfaces';
-$lang['tab_directory_services'] = 'Directory services';
+$lang['tab_network_interfaces'] = 'Network Interfaces';
+$lang['tab_directory_services'] = 'Directory Services';
 $lang['installed_apple_software'] = 'Installed Apple Software';
 $lang['installed_third_party_software'] = 'Installed Third-Party Software';
-$lang['install_date'] = 'Install date';
-$lang['process_name'] = 'Process name';
+$lang['install_date'] = 'Install Date';
+$lang['process_name'] = 'Process Name';
 $lang['no_install_history'] = 'No Install History';
 $lang['bundle_id'] = 'BundleID';
 $lang['path'] = 'Path';
 
+// Network
+
+$lang['ethernet'] = 'Ethernet';
+$lang['ip_address'] = 'IP address';
+$lang['network_mask'] = 'Mask';
+$lang['prefix_length'] = 'Prefix length';
+$lang['router'] = 'Router';
+$lang['configuration'] = 'Configuration';
 
 // Errors
 
