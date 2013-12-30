@@ -20,7 +20,14 @@ $lang['hours']		= 'Stunden';
 $lang['minutes']	= 'Minuten';
 $lang['seconds']	= 'Sekunden';
 
-$lang['version']	= 'version';
+// Miscellaneous
+
+$lang['munkireport_version'] = 'Munkireport version %s';
+$lang['version']		= 'Version';
+$lang['unknown']		= 'Unknown';
+$lang['name']			= 'Name';
+$lang['enabled']		= 'Enabled';
+$lang['disabled']		= 'Disabled';
 
 // Authentication
 
@@ -46,6 +53,28 @@ $lang['back_to_site'] = 'Zurueck zur Site';
 // Client
 
 $lang['client_nonexistent'] = 'Client mit der Seriennummer "%s" existiert nicht';
+$lang['tab_munki'] = 'Managed Software Update';
+$lang['tab_apple_software'] = 'Apple Software';
+$lang['tab_third_party_software'] = 'Drittanbieter-Software';
+$lang['tab_inventory_items'] = 'Inventory Items';
+$lang['tab_network_interfaces'] = 'Netzwerk-Interfaces';
+$lang['tab_directory_services'] = 'Directory Services';
+$lang['installed_apple_software'] = 'Installierte Apple Software';
+$lang['installed_third_party_software'] = 'Installierte Drittanbieter-Software';
+$lang['install_date'] = 'Installationsdatum';
+$lang['process_name'] = 'Prozessname';
+$lang['no_install_history'] = 'Keine Install History';
+$lang['bundle_id'] = 'BundleID';
+$lang['path'] = 'Pfad';
+
+// Network
+
+$lang['ethernet'] = 'Ethernet';
+$lang['ip_address'] = 'IP Adresse';
+$lang['network_mask'] = 'Netzmaske';
+$lang['prefix_length'] = 'Prefix Laenge';
+$lang['router'] = 'Router';
+$lang['configuration'] = 'Konfiguration';
 
 // Errors
 
