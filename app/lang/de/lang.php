@@ -56,14 +56,14 @@ $lang['client_nonexistent'] = 'Client mit der Seriennummer "%s" existiert nicht'
 $lang['tab_munki'] = 'Managed Software Update';
 $lang['tab_apple_software'] = 'Apple Software';
 $lang['tab_third_party_software'] = 'Drittanbieter-Software';
-$lang['tab_inventory_items'] = 'Inventory Items';
+$lang['tab_inventory_items'] = 'Inventar';
 $lang['tab_network_interfaces'] = 'Netzwerk-Interfaces';
 $lang['tab_directory_services'] = 'Directory Services';
 $lang['installed_apple_software'] = 'Installierte Apple Software';
 $lang['installed_third_party_software'] = 'Installierte Drittanbieter-Software';
 $lang['install_date'] = 'Installationsdatum';
 $lang['process_name'] = 'Prozessname';
-$lang['no_install_history'] = 'Keine Install History';
+$lang['no_install_history'] = 'Kein Installationsverlauf';
 $lang['bundle_id'] = 'BundleID';
 $lang['path'] = 'Pfad';
 
