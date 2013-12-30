@@ -32,6 +32,9 @@ function check_warranty_status(&$warranty_model)
 	$opts['data'] = array ('sn' => $warranty_model->serial_number, 'num' => '0');
 	$opts['method'] = 'POST';
 
+	// Get est. manufacture date
+	$est_manufacture_date = estimate_manufactured_date($warranty_model->serial_number);
+
 	// Get data
 	$result = get_url($url, $opts);
 
@@ -76,7 +79,16 @@ function check_warranty_status(&$warranty_model)
 
 			if($warranty_model->status == 'Supported')
 			{
-				$warranty_model->purchase_date = date('Y-m-d', strtotime('-3 years', $exp_time));
+				// There are 3, 4 and 5 year AppleCare contracts
+				// We're checking how many years there are
+				// between exp date and manufacture date
+				$est_man_time = strtotime($est_manufacture_date);
+
+				// Get difference between exp and manu divided by year seconds
+				$years = sprintf('%d', intval($exp_time - $est_man_time) / (60*60*24*365));
+
+				// Estimated purchase date
+				$warranty_model->purchase_date = date('Y-m-d', strtotime("-$years years", $exp_time));
 			}
 			else
 			{
@@ -93,9 +105,7 @@ function check_warranty_status(&$warranty_model)
 	if( ! $warranty_model->purchase_date OR 
 		! preg_match('/\d{4}-\d{2}-\d{2}/', $warranty_model->purchase_date))
 	{
-		// Get est. manufacture date
-		$warranty_model->purchase_date = estimate_manufactured_date($warranty_model->serial_number);
-		
+		$warranty_model->purchase_date = $est_manufacture_date;
 	}
 
 	// No expiration date, use the estimated manufacture date + n year
@@ -109,7 +119,7 @@ function check_warranty_status(&$warranty_model)
 		{
 			$warranty_model->end_date = date('Y-m-d', strtotime('+1 year', $man_time));
 		}
-		else // end_date = man_date + 3 yrs (assume we had applecare)
+		else // end_date = man_date + 3 yrs (assume we had 3 yrs of AppleCare)
 		{
 			$warranty_model->end_date = date('Y-m-d', strtotime('+3 years', $man_time));
 		}
