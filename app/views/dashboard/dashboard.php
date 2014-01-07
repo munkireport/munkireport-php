@@ -29,11 +29,12 @@
 
 	<div class="row">
 
+		<?$this->view('widgets/duplicated_computernames')?>
 
 		<?$this->view('widgets/warranty_widget')?>
 
 		<?$this->view('widgets/filevault_widget')?>
-		
+
 	</div> <!-- /row -->
 
 </div>	<!-- /container -->
