@@ -1,6 +1,6 @@
 <?php
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
+// must be run within App
+if(!defined('KISS')) die();
 
 /**
  * LDAP authentication backend
@@ -9,8 +9,10 @@ if(!defined('DOKU_INC')) die();
  * @author    Andreas Gohr <andi@splitbrain.org>
  * @author    Chris Smith <chris@jalakaic.co.uk>
  * @author    Jan Schumann <js@schumann-it.com>
+ * @author    Arjen van Bochoven (adaptation for munkireport)
  */
-class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
+class Auth_ldap
+{
     /* @var resource $con holds the LDAP connection*/
     protected $con = null;
 
@@ -23,21 +25,61 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
     /* @var array $_pattern User filter pattern */
     protected $_pattern = null;
 
+    // Configuration array
+    protected $conf = array();
+
     /**
      * Constructor
      */
-    public function __construct() {
-        parent::__construct();
-
+    public function __construct($conf = array())
+    {
         // ldap extension is needed
-        if(!function_exists('ldap_connect')) {
-            $this->_debug("LDAP err: PHP LDAP extension not found.", -1, __LINE__, __FILE__);
-            $this->success = false;
-            return;
+        if ( ! function_exists('ldap_connect'))
+        {
+            fatal("To use the LDAP authenticator, you need PHP with LDAP support.");
         }
 
-        // auth_ldap currently just handles authentication, so no
-        // capabilities are set
+        // Defaults, override in config
+        $default_conf['server']      = '';
+        $default_conf['port']        = 389;
+        $default_conf['usertree']    = '';
+        $default_conf['grouptree']   = '';
+        $default_conf['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))';
+        $default_conf['groupfilter'] = '(&(objectClass=posixGroup)(memberUID=%{uid}))';
+        $default_conf['version']     = 3;
+        $default_conf['starttls']    = 0;
+        $default_conf['referrals']   = 0;
+        $default_conf['deref']       = LDAP_DEREF_NEVER;
+        $default_conf['binddn']      = '';
+        $default_conf['bindpw']      = '';
+        $default_conf['userscope']  = 'sub';
+        $default_conf['groupscope'] = 'sub';
+        $default_conf['groupkey']   = 'cn';
+        $default_conf['debug']      = 0;
+
+        foreach ($conf as $key => $val)
+        {
+            if(array_key_exists($key, $default_conf))
+            {
+                $default_conf[$key] = $val;
+            }
+        }
+
+        // Set configuration
+        $this->conf = $default_conf;
+
+    }
+
+    /**
+     * Get config item
+     *
+     * @param string config key
+     * @return mixed string value or FALSE
+     * @author AvB
+     **/
+    public function getConf($value='')
+    {
+        return isset($this->conf[$value]) ? $this->conf[$value] : FALSE;
     }
 
     /**
@@ -52,7 +94,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @param string $pass
      * @return  bool
      */
-    public function checkPass($user, $pass) {
+    public function authenticate($user, $pass) 
+    {
         // reject empty password
         if(empty($pass)) return false;
         if(!$this->_openLDAP()) return false;
@@ -85,7 +128,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         } else {
             // Anonymous bind
             if(!@ldap_bind($this->con)) {
-                msg("LDAP: can not bind anonymously", -1);
+                error("LDAP: can not bind anonymously", -1);
                 $this->_debug('LDAP anonymous bind: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 return false;
             }
@@ -149,7 +192,6 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      * @return  array containing user data or false
      */
     public function getUserData($user, $inbind = false) {
-        global $conf;
         if(!$this->_openLDAP()) return false;
 
         // force superuser bind if wanted and not bound as superuser yet
@@ -166,8 +208,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             // be accessible anonymously, so we try to rebind the current user here
             list($loginuser, $loginsticky, $loginpass) = auth_getCookie();
             if($loginuser && $loginpass) {
-                $loginpass = PMA_blowfish_decrypt($loginpass, auth_cookiesalt(!$loginsticky));
-                $this->checkPass($loginuser, $loginpass);
+                $loginpass = auth_decrypt($loginpass, auth_cookiesalt(!$loginsticky, true));
+                $this->authenticate($loginuser, $loginpass);
             }
         }
 
@@ -208,8 +250,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                 if(is_array($key)) {
                     // use regexp to clean up user_result
                     list($key, $regexp) = each($key);
-                    if($user_result[$key]) foreach($user_result[$key] as $grp) {
-                        if(preg_match($regexp, $grp, $match)) {
+                    if($user_result[$key]) foreach($user_result[$key] as $grpkey => $grp) {
+                        if($grpkey !== 'count' && preg_match($regexp, $grp, $match)) {
                             if($localkey == 'grps') {
                                 $info[$localkey][] = $match[1];
                             } else {
@@ -233,7 +275,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             $this->_debug('LDAP search at: '.htmlspecialchars($base.' '.$filter), 0, __LINE__, __FILE__);
 
             if(!$sr) {
-                msg("LDAP: Reading group memberships failed", -1);
+                error("LDAP: Reading group memberships failed", -1);
                 return false;
             }
             $result = ldap_get_entries($this->con, $sr);
@@ -247,10 +289,6 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             }
         }
 
-        // always add the default group to the list of groups
-        if(!$info['grps'] or !in_array($conf['defaultgroup'], $info['grps'])) {
-            $info['grps'][] = $conf['defaultgroup'];
-        }
         return $info;
     }
 
@@ -430,13 +468,13 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                     $this->getConf('version')
                 )
                 ) {
-                    msg('Setting LDAP Protocol version '.$this->getConf('version').' failed', -1);
+                    error('Setting LDAP Protocol version '.$this->getConf('version').' failed', -1);
                     $this->_debug('LDAP version set: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 } else {
                     //use TLS (needs version 3)
                     if($this->getConf('starttls')) {
                         if(!@ldap_start_tls($this->con)) {
-                            msg('Starting TLS failed', -1);
+                            error('Starting TLS failed', -1);
                             $this->_debug('LDAP TLS set: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                         }
                     }
@@ -447,7 +485,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
                             $this->getConf('referrals')
                         )
                         ) {
-                            msg('Setting LDAP referrals to off failed', -1);
+                            error('Setting LDAP referrals to off failed', -1);
                             $this->_debug('LDAP referal set: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                         }
                     }
@@ -457,7 +495,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
             //set deref mode
             if($this->getConf('deref')) {
                 if(!@ldap_set_option($this->con, LDAP_OPT_DEREF, $this->getConf('deref'))) {
-                    msg('Setting LDAP Deref mode '.$this->getConf('deref').' failed', -1);
+                    error('Setting LDAP Deref mode '.$this->getConf('deref').' failed', -1);
                     $this->_debug('LDAP deref set: '.htmlspecialchars(ldap_error($this->con)), 0, __LINE__, __FILE__);
                 }
             }
@@ -478,7 +516,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
         }
 
         if(!$bound) {
-            msg("LDAP: couldn't connect to LDAP server", -1);
+            error("LDAP: couldn't connect to LDAP server", -1);
             return false;
         }
 
@@ -524,7 +562,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
     }
 
     /**
-     * Wrapper around msg() but outputs only when debug is enabled
+     * Wrapper around error() but outputs only when debug is enabled
      *
      * @param string $message
      * @param int    $err
@@ -534,7 +572,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin {
      */
     protected function _debug($message, $err, $line, $file) {
         if(!$this->getConf('debug')) return;
-        msg($message, $err, $line, $file);
+        error($message, $err, $line, $file);
     }
 
 }
