@@ -2,7 +2,7 @@
 class auth extends Controller
 {
 	// Authentication mechanisms we handle
-	public $mechanisms = array('noauth', 'config', 'AD');
+	public $mechanisms = array('noauth', 'config', 'ldap', 'AD');
 
 	// Authentication mechanisms available
 	public $auth_mechanisms = array();
@@ -71,7 +71,61 @@ class auth extends Controller
 					}
 
 					break;
-					
+				
+				case 'ldap': // LDAP authentication
+
+					if ($login && $password)
+					{
+						include_once (APP_PATH . '/lib/authLDAP/authLDAP.php');
+
+						$ldap_auth_obj = new Auth_ldap($auth_data);
+
+						if ($ldap_auth_obj->authenticate($login, $password))
+						{
+							//alert('Authenticated');
+							// Check user against users list
+							if(isset($auth_data['mr_allowed_users']))
+							{
+                                //
+                                $admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
+
+								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
+								{
+									$check = TRUE;
+									break 2;
+								}
+							}
+
+							// Check user against group list
+                            if(isset($auth_data['mr_allowed_groups']))
+                            { 
+                                // Set mr_allowed_groups to array
+                                $admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
+
+                                // Get groups from AD
+                                if( $user_data = $ldap_auth_obj->getUserData($login))
+                                {
+	                                foreach ($user_data['grps'] as $group)
+	                                {
+	                                    if (in_array($group, $admin_groups)) 
+	                                    {
+	                                        $check = TRUE;
+	                                        break 3;
+	                                    }
+	                                }
+                                }
+
+                            }//end group list check
+
+							// Not in users list or group list
+							error(lang('not_authorized'));
+
+							break;
+
+						}
+						
+					}
+				
 				case 'AD': // Active Directory authentication
 
 					// Prevent empty values
@@ -97,7 +151,7 @@ class auth extends Controller
 						// Authenticate user
 						if ($adldap->authenticate($login, $password))
 						{
-							// Check user against users list
+							// Check user against userlist
 							if(isset($auth_data['mr_allowed_users']))
 							{
                                 //
