@@ -14,8 +14,6 @@
 
 		<?$this->view('widgets/installed_memory_widget')?>
 		
-		<?$this->view('widgets/bound_to_ds_widget')?>
-
 	</div> <!-- /row -->
 	<div class="row">
 		
@@ -33,7 +31,7 @@
 		<?$this->view('widgets/warranty_widget')?>
 
 		<?$this->view('widgets/filevault_widget')?>
-		
+
 	</div> <!-- /row -->
 
 </div>	<!-- /container -->
