@@ -12,7 +12,7 @@
 
 				<?	$machine = new Machine_model();
 					$sql = "SELECT computer_name,
-							COUNT(*) count
+							COUNT(*) AS count
 							FROM machine
 							GROUP BY computer_name
 							HAVING count > 1

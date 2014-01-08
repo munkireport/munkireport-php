@@ -14,8 +14,6 @@
 
 		<?$this->view('widgets/installed_memory_widget')?>
 		
-		<?$this->view('widgets/bound_to_ds_widget')?>
-
 	</div> <!-- /row -->
 	<div class="row">
 		
@@ -29,7 +27,6 @@
 
 	<div class="row">
 
-		<?$this->view('widgets/duplicated_computernames')?>
 
 		<?$this->view('widgets/warranty_widget')?>
 

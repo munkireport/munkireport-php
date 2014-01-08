@@ -40,8 +40,7 @@
         <?
               $page = $GLOBALS[ 'engine' ]->get_uri_string();
               $navlist = array( 
-                '' => (object) array('icon' => 'th-large', 'title' => 'Dashboard'), 
-                'show/reports' => (object) array('icon' => 'bar-chart', 'title' => 'Reports')
+                '' => (object) array('icon' => 'th-large', 'title' => 'Dashboard')
                 );
 
                 ?>
@@ -50,6 +49,26 @@
               <a href="<?=url($url)?>"><i class="icon-<?=$obj->icon?>"></i> <?=$obj->title?></a>
             </li>
               <?endforeach?>
+
+              <?$url = 'show/reports/'?>
+              <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Reports <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+
+                  <?foreach(scandir(conf('view_path').'report') AS $list_url):?>
+
+                    <?if( strpos($list_url, 'php')):?>
+
+                    <li><a href="<?=url($url.strtok($list_url, '.'))?>"><?=ucfirst(strtok($list_url, '.'))?></a></li>
+
+                    <?endif?>
+
+                  <?endforeach?>
+
+                </ul>
+
+              </li>
+
               <?$url = 'show/listing/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Listings <b class="caret"></b></a>
