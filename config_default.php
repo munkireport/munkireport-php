@@ -317,6 +317,21 @@
 
 	/*
 	|===============================================
+	| Dashboard - Layout
+	|===============================================
+	| 
+	| Dashboard layout is an array of rows that contain
+	| an array of widgets. Omit the _widget postfix
+	|
+	*/
+    $conf['dashboard_layout'] = array(
+		array('client', 'munki', 'disk_report', 'installed_memory', 'bound_to_ds'),
+		array('new_clients', 'pending_apple', 'pending_munki'),
+		array('munki_versions', 'warranty', 'filevault')
+	);
+
+	/*
+	|===============================================
 	| App settings
 	|===============================================
 	|
