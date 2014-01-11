@@ -84,8 +84,14 @@ function check_warranty_status(&$warranty_model)
 				// between exp date and manufacture date
 				$est_man_time = strtotime($est_manufacture_date);
 
-				// Get difference between exp and manu divided by year seconds
-				$years = sprintf('%d', intval($exp_time - $est_man_time) / (60*60*24*365));
+				// For the next calculation take manufacture time minus half year
+				// to fix an issue where the est_man_time is later than
+				// the est_purchase date (a half year should be enough to compensate for the
+				// estimation)
+				$adjusted_man_time = $est_man_time - (60*60*24*180);
+
+				// Get difference between expiration time and manufacture time divided by year seconds
+				$years = sprintf('%d', intval($exp_time - $adjusted_man_time) / (60*60*24*365));
 
 				// Estimated purchase date
 				$warranty_model->purchase_date = date('Y-m-d', strtotime("-$years years", $exp_time));
