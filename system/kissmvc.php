@@ -232,6 +232,7 @@ class Model extends KISS_Model
 
 			// Store schema version in migration table
 			$migration = new Migration($this->tablename);
+			$migration->version = $this->schema_version;
 			$migration->save();
 			        }
         else // Existing table, is it up-to date?
