@@ -11,38 +11,47 @@ class report extends Controller
 	{
 		if ($auth_list = conf('client_passphrases'))
 		{
-			if( ! is_array($auth_list))
+			if ( ! is_array($auth_list))
 			{
 				$this->error("conf['client_passphrases'] should be an array");
 			}
 
-			if( ! isset($_POST['passphrase']))
+			if ( ! isset($_POST['passphrase']))
 			{
 				$this->error("passphrase is required but missing");
 			}
 
-			if( ! in_array($_POST['passphrase'], $auth_list))
+			if ( ! in_array($_POST['passphrase'], $auth_list))
 			{
 				$this->error('passphrase "'.$_POST['passphrase'].'" not accepted');
 			}
 		}
 	} 
 
-    function hash_check()
+	/**
+	 * Hash check script for clients
+	 *
+	 * Clients check in hashes using $_POST
+	 * This script returns a JSON array with
+	 * hashes that are different
+	 *
+	 * @author AvB
+	 **/    
+	function hash_check()
 	{
 		// Check if we have a serial and data
-		if( ! isset($_POST['serial']))
+		if ( ! isset($_POST['serial']))
 		{
 			$this->error("Serial is missing");
 		}
 
-		if( ! isset($_POST['items']))
+		if ( ! isset($_POST['items']))
 		{
 			$this->error("Items are missing");
 		}
 
 		// Register check in reportdata
-		$report = new Reportdata($_POST['serial']);
+		$report = new Reportdata_model($_POST['serial']);
 		$report->register()->save();
 
 		$req_items = unserialize($_POST['items']); //Todo: check if array
@@ -54,21 +63,47 @@ class report extends Controller
 		$hashes = $hash->all($_POST['serial']);
 
 		// Compare sent hashes with stored hashes
-		foreach($req_items as $key => $val)
+		foreach($req_items as $name => $val)
 		{
+		    
 		    // All models are lowercase
-		    $lkey = strtolower($key);
+		    $lkey = strtolower($name);
+
+		    // Rename legacy InventoryItem to inventory
+			$lkey = str_replace('inventoryitem', 'inventory', $lkey);
+
+		    // Remove _model legacy
+		    if(substr($lkey, -6) == '_model')
+			{
+				$lkey = substr($lkey, 0, -6);
+			}
 
 		    if( ! (isset($hashes[$lkey]) && $hashes[$lkey] == $val['hash']))
 		    {
-		        $itemarr[$key] = 1;
+		        $itemarr[$name] = 1;
 		    }
+		}
+
+		// Handle errors
+		foreach($GLOBALS['alerts'] AS $type => $list)
+		{
+			foreach ($list AS $msg)
+			{
+				$itemarr['error'] .= "$type : $msg\n";
+			}
 		}
 		
 		// Return list of changed hashes
 		echo serialize($itemarr);
 	}
 	
+	/**
+	 * Check in script for clients
+	 *
+	 * Clients check in client data using $_POST
+	 *
+	 * @author AvB
+	 **/
 	function check_in()
 	{
 	    if( ! isset($_POST['items']))
@@ -82,37 +117,49 @@ class report extends Controller
 			$this->error("Could not parse items, not a proper serialized file");
 		}
 		
-		foreach($arr as $key => $val)
+		foreach($arr as $name => $val)
 		{
 			// Skip items without data
 		    if ( ! isset($val['data'])) continue;
 
-		   	$this->msg("Starting: $key");
+		    // Rename legacy InventoryItem to inventory
+			$name = str_ireplace('InventoryItem', 'inventory', $name);
 
-		   	// Preserve classname
-		   	$classname = $key;
+		   	$this->msg("Starting: $name");
 
 		   	// All models are lowercase
-		   	$key = strtolower($key);
+		   	$name = strtolower($name);
+
+		   	if(preg_match('/[^\da-z_]/', $name))
+		   	{
+		   		$this->msg("Model has an illegal name: $name");
+		    	continue;
+		   	}
 			
-			// Check if this is a module-model
-			if(substr($key, -6) == '_model')
+			// All models should be part of a module
+			if(substr($name, -6) == '_model')
 			{
-				$module = substr($key, 0, -6);
-				$model_path = APP_PATH."modules/${module}/";
+				$module = substr($name, 0, -6);
+				
 			}
-			else
+			else // Legacy clients
 			{
-				$model_path = APP_PATH . 'models/';
+				$module = $name;
+				$name = $module . '_model';
 			}
+
+			$model_path = APP_PATH."modules/${module}/";
+
+			// Capitalize classname
+		   	$classname = ucfirst($name);
 		    
-		    // Todo: prevent admin and user models, sanitize $key
-		    if( ! file_exists($model_path . $key . '.php'))
+		    // Todo: prevent admin and user models, sanitize $name
+		    if( ! file_exists($model_path . $name . '.php'))
 		    {
-		    	$this->msg("Model not found: $key");
+		    	$this->msg("Model not found: $name");
 		    	continue;
 		    }
-		    require_once($model_path . $key . '.php');
+		    require_once($model_path . $name . '.php');
 
 		    if ( ! class_exists( $classname, false ) )
 		    {
@@ -135,7 +182,7 @@ class report extends Controller
 				$class->process($val['data']);
 		
 		        // Store hash
-		        $hash = new Hash($_POST['serial'], $key);
+		        $hash = new Hash($_POST['serial'], $module);
 		        $hash->hash = $val['hash'];
 				$hash->timestamp = time();
 		        $hash->save();
@@ -144,7 +191,6 @@ class report extends Controller
 	       		$this->msg("An error occurred while processing: $classname");
 	       		$this->msg("Error: " . $e->getMessage());	       		
 	       	}
-	        		
 		}
 	}
 
@@ -167,6 +213,7 @@ class report extends Controller
 	 * Echo serialized array with error
 	 * and exit
 	 *
+	 * @param string message
 	 * @author AvB
 	 **/
 	function error($msg)

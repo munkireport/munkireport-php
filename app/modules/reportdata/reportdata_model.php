@@ -1,6 +1,6 @@
 <?php
 
-class Reportdata extends Model {
+class Reportdata_model extends Model {
     
     function __construct($serial='')
     {

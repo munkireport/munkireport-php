@@ -1,9 +1,9 @@
 <?php
-class Munkireport extends Model {
+class Munkireport_model extends Model {
 
 	function __construct($serial='')
 	{
-		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+		parent::__construct('id', 'munkireport'); //primary key, tablename
 		$this->rs['id'] = 0;
 		$this->rs['serial_number'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['timestamp'] = '';
@@ -103,7 +103,7 @@ class Munkireport extends Model {
 			if(array_key_exists($str, $mylist))
 			{
 				$lcname = strtolower($str);
-				$this->$lcname = $mylist[$str];
+				$this->rs[$lcname] = $mylist[$str];
 				unset($mylist[$str]);
 			}
 		}
@@ -111,8 +111,22 @@ class Munkireport extends Model {
 		// If there's an error downloading the manifest, we don't get a ManagedInstalls
 		// array. We retain the old ManagedInstalls array and only store the new
 		// Errors, Warnings, StartTime, EndTime
-		if(! array_key_exists('ManagedInstalls', $mylist))
+		if( ! array_key_exists('ManagedInstalls', $mylist))
 		{
+			$strings = array('Errors', 'Warnings');
+			foreach($strings as $str)
+			{
+				$lcname = strtolower($str);
+				$this->rs[$lcname] = 0;
+				if(array_key_exists($str, $mylist))
+				{
+					$this->rs[$lcname] = count($mylist[$str]);
+
+					// Store errors and warnings
+					$this->rs['report_plist'][$str] = $mylist[$str];
+				}
+			}
+
 			$this->save();
 			return $this;
 		}
@@ -122,10 +136,10 @@ class Munkireport extends Model {
 		foreach($strings as $str)
 		{
 			$lcname = strtolower($str);
-			$this->$lcname = 0;
+			$this->rs[$lcname] = 0;
 			if(array_key_exists($str, $mylist))
 			{
-				$this->$lcname = count($mylist[$str]);
+				$this->rs[$lcname] = count($mylist[$str]);
 			}
 		}
 

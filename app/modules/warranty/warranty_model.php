@@ -1,11 +1,11 @@
 <?php
-class Warranty extends Model {
+class Warranty_model extends Model {
 	
 	protected $error = '';
 	
 	function __construct($serial='')
 	{
-		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+		parent::__construct('id', 'warranty'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['purchase_date'] = '';

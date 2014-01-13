@@ -7,9 +7,9 @@ $nw = new Network_model();?>
 <h2><?=$item->service?> (<?=$item->order?>)
 
 <?if($item->status):?>
-<span class="label label-success nw-enabled">Enabled</span>
+<span class="label label-success nw-enabled"><?=lang('enabled')?></span>
 <?else:?>
-<span class="label label-danger nw-disabled">Disabled</span>
+<span class="label label-danger nw-disabled"><?=lang('disabled')?></span>
 <?endif?>
 
 </h2>
@@ -21,11 +21,11 @@ $nw = new Network_model();?>
 		<table class="table table-bordered">
 			<caption>IPv4</caption>
 			<tr>
-				<th>ethernet</th>
-				<th>IP address</th>
-				<th>Mask</th>
-				<th>Router</th>
-				<th>Configuration</th>
+				<th><?=lang('ethernet')?></th>
+				<th><?=lang('ip_address')?></th>
+				<th><?=lang('network_mask')?></th>
+				<th><?=lang('router')?></th>
+				<th><?=lang('configuration')?></th>
 			</tr>
 			<tr>
 				<td><?=$item->ethernet?></td>
@@ -49,11 +49,11 @@ $nw = new Network_model();?>
 
 			<caption>IPv6</caption>
 			<tr>
-				<th>ethernet</th>
-				<th>IP address</th>
-				<th>Prefix length</th>
-				<th>Router</th>
-				<th>Configuration</th>
+				<th><?=lang('ethernet')?></th>
+				<th><?=lang('ip_address')?></th>
+				<th><?=lang('prefix_length')?></th>
+				<th><?=lang('router')?></th>
+				<th><?=lang('configuration')?></th>
 			</tr>
 			<tr>
 				<td><?=$item->ethernet?></td>

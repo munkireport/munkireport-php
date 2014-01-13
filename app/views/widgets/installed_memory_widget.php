@@ -11,7 +11,7 @@
 				<div class="panel-body text-center">
 					
 					<?php
-						$machine = new Machine();
+						$machine = new Machine_model();
 						$in_green = 0;
 						$in_yellow = 0;
 						$in_red = 0;

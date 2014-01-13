@@ -2,7 +2,7 @@
 
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
 
-      <i>MunkiReport version <?=$GLOBALS['version']?></i>
+      <i><?printf(lang('munkireport_version'), $GLOBALS['version'])?></i>
 
     </div>
 

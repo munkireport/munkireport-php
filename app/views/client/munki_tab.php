@@ -1,4 +1,4 @@
-<?$client = new Munkireport($serial_number)?>
+<?$client = new Munkireport_model($serial_number)?>
 
 <?$report = $client->report_plist?>
 

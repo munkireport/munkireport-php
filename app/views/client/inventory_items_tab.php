@@ -2,14 +2,14 @@
 <table class="inventory table table-striped table-bordered">
 	<thead>
 		<tr>
-          <th>Name</th>
-          <th>Version</th>
-          <th>BundleID</th>
-          <th>Path</th>
+          <th><?=lang('name')?></th>
+          <th><?=lang('version')?></th>
+          <th><?=lang('bundle_id')?></th>
+          <th><?=lang('path')?></th>
 		</tr>
 	</thead>
 	<tbody>
-	<?$inventoryitemobj = new Inventoryitem()?>
+	<?$inventoryitemobj = new Inventory_model()?>
 	<?foreach($inventoryitemobj->retrieve_many(
 		'serial=?', array($serial_number)) as $item):?>
 		      <?php $name_url=url('module/inventory/items/'. rawurlencode($item->name)); ?>

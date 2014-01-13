@@ -26,19 +26,39 @@ class show extends Controller
 		
 	}
 
-	function listing($which)
+	function listing($which = '')
 	{
-		$data['page'] = 'clients';
-		$data['scripts'] = array("clients/client_list.js");
+		if($which)
+		{
+			$data['page'] = 'clients';
+			$data['scripts'] = array("clients/client_list.js");
+			$view = 'listing/'.$which;
+		}
+		else
+		{
+			$data = array('status_code' => 404);
+			$view = 'error/client_error';
+		}
+
 		$obj = new View();
-		$obj->view('listing/'.$which, $data);
+		$obj->view($view, $data);
 	}
-	
+
 	function reports($which = 'default')
-	{		
-		$data['page'] = 'reports';
+	{
+		if($which)
+		{
+			$data['page'] = 'clients';
+			$view = 'report/'.$which;
+		}
+		else
+		{
+			$data = array('status_code' => 404);
+			$view = 'error/client_error';
+		}
+
 		$obj = new View();
-		$obj->view('report/'.$which, $data);
+		$obj->view($view, $data);
 	}
-	
+		
 }

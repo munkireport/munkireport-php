@@ -10,7 +10,7 @@
 
 				<div class="list-group">
 
-				<?	$warranty = new Warranty(); 
+				<?	$warranty = new Warranty_model(); 
 					$thirtydays = date('Y-m-d', strtotime('+30days'));
 					$class_list = array('Supported' => 'warning');
 					$cnt = 0;

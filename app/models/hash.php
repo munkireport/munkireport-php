@@ -14,7 +14,9 @@ class Hash extends Model {
         $this->idx[] = array('serial');
         $this->idx[] = array('serial', 'name');
 
-				
+        // Table version. Increment when creating a db migration
+        $this->schema_version = 1;
+
 		// Create table if it does not exist
         $this->create_table();
         

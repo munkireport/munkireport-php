@@ -40,7 +40,7 @@ class Machine_controller extends Module_controller
 	function memory()
 	{
 		$out = array();
-		$machine = new Machine();
+		$machine = new Machine_model();
 		$sql = "SELECT physical_memory, count(1) as count
 			FROM machine 
 			GROUP BY physical_memory
@@ -83,7 +83,7 @@ class Machine_controller extends Module_controller
 	function hw()
 	{
 		$out = array();
-		$machine = new Machine();
+		$machine = new Machine_model();
 		$sql = 'SELECT machine_name, count(1) as count 
 			FROM machine 
 			GROUP BY machine_name 
@@ -106,7 +106,7 @@ class Machine_controller extends Module_controller
 	function os()
 	{
 		$out = array();
-		$machine = new Machine();
+		$machine = new Machine_model();
 		$sql = "SELECT count(1) as count, os_version 
 				FROM machine
 				group by os_version 

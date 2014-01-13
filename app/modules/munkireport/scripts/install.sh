@@ -1,3 +1,3 @@
 #!/bin/bash
 
-defaults write "${PREFPATH}" ReportItems -dict-add Munkireport "/Library/Managed Installs/ManagedInstallReport.plist"
+defaults write "${PREFPATH}" ReportItems -dict-add munkireport "/Library/Managed Installs/ManagedInstallReport.plist"

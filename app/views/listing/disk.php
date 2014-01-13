@@ -1,9 +1,9 @@
 <?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
-new Machine;
+new Machine_model;
 new Disk_report_model;
-new Reportdata;
+new Reportdata_model;
 ?>
 
 <div class="container">
@@ -80,8 +80,46 @@ new Reportdata;
 			        		(smartstatus)
 			        	$('td:eq(8)', nRow).html(smartstatus)
 
+				    },
+				    "fnServerParams": function ( aoData ) {
+
+				      	// Hook in serverparams to change search
+				      	// Convert array to dict
+				      	var out = {}
+						for (var i = 0; i < aoData.length; i++) {
+							out[aoData[i]['name']] =  aoData[i]['value']
+						}
+
+						// Look for 'between' statement todo: make generic
+						if(out.sSearch.match(/^\d+ percentage \d+$/))
+						{
+							// Clear global search
+							aoData.push( { "name": "sSearch", "value": "" } );
+
+							// Add column specific search
+							aoData.push( { "name": "sSearch_5", "value": out.sSearch.replace(/(\d+) percentage (\d+)/, 'BETWEEN $1 AND $2') } );
+							//dumpj(out)
+						}
+
+						// Look for a bigger/smaller/equal statement
+						if(out.sSearch.match(/^percentage [<>=] \d+$/))
+						{
+							// Clear global search
+							aoData.push( { "name": "sSearch", "value": "" } );
+
+							// Add column specific search
+							aoData.push( { "name": "sSearch_5", "value": out.sSearch.replace(/.*([<>=] \d+)$/, '$1') } );
+							//dumpj(out)
+						}
 				    }
 			    } );
+
+			    // Use hash as searchquery
+			    if(window.location.hash.substring(1))
+			    {
+					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
+			    }
+
 			} );
 		</script>
 

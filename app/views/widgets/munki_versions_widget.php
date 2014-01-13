@@ -9,19 +9,23 @@
 				</div>
 				<div class="list-group scroll-box">
 
-					<?php
-						$munkireport = new Munkireport();
+					<?	$munkireport = new Munkireport_model();
 						$sql = "SELECT version, COUNT(1) AS count
 								FROM munkireport
 								GROUP BY version
 								ORDER BY version ASC";
 					?>
-					
-					<?foreach($munkireport->query($sql) as $obj):?>
-						<a href="<?=url('show/listing/munki/#'.$obj->version)?>" class="list-group-item"><?=$obj->version?>
-							<span class="badge pull-right"><?=$obj->count?></span>
-						</a>
-					<?endforeach?>
+						<?foreach($munkireport->query($sql) as $obj):?>
+							<?if (empty($obj->version)):?>
+								<a class="list-group-item"><?=lang('unknown')?>
+									<span class="badge pull-right"><?=$obj->count?></span>
+								</a>
+							<?else:?>
+								<a href="<?=url('show/listing/munki/#'.$obj->version)?>" class="list-group-item"><?=$obj->version?>
+									<span class="badge pull-right"><?=$obj->count?></span>
+								</a>
+							<?endif?>
+						<?endforeach?>
 
 				</div><!-- /scroll-box -->
 

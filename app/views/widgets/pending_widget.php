@@ -1,5 +1,5 @@
 <? 
-$machine = new Machine(); new Munkireport;
+$machine = new Machine_model(); new Munkireport_model;
 $sql = "SELECT computer_name, pendinginstalls, machine.serial_number
     FROM machine
     LEFT JOIN munkireport USING(serial_number)

@@ -6,10 +6,31 @@
 		        <div class="well">
 		        	<form action="<?php echo $url?>" method="post" accept-charset="UTF-8" class="form-horizontal">
 						<fieldset>
-							<legend><?=lang('auth_login')?></legend>
-					    	<?php if (isset($error)):?>
-							<p class="text-danger"><?php echo $error?></p>
-							<?php endif?>
+							<legend>
+								<?=lang('auth_login')?>
+
+								<?if(empty($_SERVER['HTTPS'])):?>
+
+									<a href="<?=secure_url()?>"><i title="<?=lang('auth_insecure')?>" class="text-danger icon-unlock-alt pull-right"></i></a>
+
+								<?else:?>
+
+									<i title="<?=lang('auth_secure')?>" class="text-success icon-lock pull-right"></i>
+
+								<?endif?>
+
+							</legend>
+
+					    	<?foreach($GLOBALS['alerts'] AS $type => $list):?>
+
+						    	<?foreach ($list AS $msg):?>
+
+								<p class="text-<?=$type?>"><?=$msg?></p>
+
+								<?endforeach?>
+
+							<?php endforeach?>
+
 							<div class="form-group">
 								<label for="loginusername" class="col-md-5 control-label"><?=lang('username')?></label>
 								<div class="col-md-7">
@@ -34,6 +55,16 @@
 			</div>
 		</div>
 	</div><!-- /container -->
+  <script src="<?=conf('subdirectory')?>assets/js/bootstrap.min.js"></script>
+
+	<script>
+
+	// Add tooltips
+	$(document).ready(function() {
+		$('[title]').tooltip();
+	});
+
+</script>
 
 </body>
 </html>

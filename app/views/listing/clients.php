@@ -1,11 +1,11 @@
 <?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
-new Machine;
-new Warranty;
+new Machine_model;
+new Warranty_model;
 new Disk_report_model;
-new Reportdata;
-new Munkireport;
+new Reportdata_model;
+new Munkireport_model;
 ?>
 
 <div class="container">

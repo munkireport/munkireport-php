@@ -23,7 +23,7 @@ class admin extends Controller
 	function delete_machine($serial_number='')
 	{
 		// Delete machine entry from all tables
-		$machine = new Machine();
+		$machine = new Machine_model();
 
 		// List tables (unfortunately this is not db-agnostic)
 		switch($machine->get_driver())

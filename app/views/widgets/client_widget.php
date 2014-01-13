@@ -1,5 +1,5 @@
 <?
-$queryobj = new Reportdata();
+$queryobj = new Reportdata_model();
 $now = time();
 $hour_ago = $now - 3600;
 $today = strtotime('today');

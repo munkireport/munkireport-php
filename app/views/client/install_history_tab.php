@@ -1,4 +1,4 @@
-<?$hist_obj = new InstallHistory();
+<?$hist_obj = new Installhistory_model();
 
 $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
 <?if(isset($installHistory) && count($installHistory) > 1):?>
@@ -6,10 +6,10 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Name</th>
-			<th>Version</th>
-			<th>Install Date</th>
-			<th>ProcessName</th>
+			<th><?=lang('name')?></th>
+			<th><?=lang('version')?></th>
+			<th><?=lang('install_date')?></th>
+			<th><?=lang('process_name')?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -26,5 +26,5 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
 	</tbody>
 </table>
 <?else:?>
-<p><i>No Install History</i></p>
+<p><i><?=lang('no_install_history')?></i></p>
 <?endif?>

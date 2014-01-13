@@ -1,9 +1,9 @@
 <?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
-new Machine;
-new Warranty;
-new Reportdata;
+new Machine_model;
+new Warranty_model;
+new Reportdata_model;
 ?>
 
 <div class="container">

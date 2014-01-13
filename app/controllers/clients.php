@@ -33,7 +33,7 @@ class clients extends Controller
 
         $obj = new View();
 
-        $machine = new Machine($sn);
+        $machine = new Machine_model($sn);
 
         // Check if this is an existing entry
         if($machine->id)
