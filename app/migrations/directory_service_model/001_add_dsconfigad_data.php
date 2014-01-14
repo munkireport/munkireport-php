@@ -8,6 +8,14 @@ class Migration_add_dsconfigad_data extends Model
 		// Get database handle
 		$dbh = $this->getdbh();
 
+		// Check if database is already migrated 
+		// (to fix issue with failed migration init)
+		$sql = "SELECT adforest FROM directoryservice";
+		if($dbh->query($sql))
+		{
+			return TRUE;
+		}
+
 		switch ($this->get_driver())
 		{
 			case 'sqlite':
