@@ -324,9 +324,17 @@ class Module_controller
 
 	function get_script($name='')
 	{
-		// Get scriptnames in module scripts dir (just to be safe)
-		$scripts = array_diff(scandir($this->module_path . '/scripts/'), array('..', '.'));
-
+		// Check if script dir exists
+		if( is_readable($this->module_path . '/scripts/'))
+		{
+			// Get scriptnames in module scripts dir (just to be safe)
+			$scripts = array_diff(scandir($this->module_path . '/scripts/'), array('..', '.'));
+		}
+		else
+		{
+			$scripts = array();
+		}
+		
 		$script_path = $this->module_path . '/scripts/' . basename($name);
 
 		if( ! in_array($name, $scripts) OR ! is_readable($script_path))
