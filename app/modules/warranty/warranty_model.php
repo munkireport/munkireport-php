@@ -25,6 +25,48 @@ class Warranty_model extends Model {
 		$this->serial_number = $serial;
 		  
 	}
+
+	/**
+	 * Process method, is called by the client
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function process()
+	{
+		$this->msg(sprintf("Old status: %s", $this->status));
+
+		switch($this->status)
+		{
+			case 'Supported':
+				// If not expired, return;
+				if(strtotime($this->rs['end_date']) > time())
+				{
+					return;
+				}
+				break;
+			case 'No Applecare':
+				break;
+			case 'Unregistered serialnumber':
+				break;
+			case 'Expired':
+				// Don't check
+				return;
+			case 'No information found':
+				break;
+			case 'Virtual Machine':
+				// Don't check
+				return;
+			default:
+				// Unknown status
+				$this->msg('Unknown status: '.$this->status);
+
+		}
+		$this->check_status($force = TRUE);
+
+		$this->msg(sprintf("New status: %s", $this->status));
+	}
+
 	
 	function check_status($force = FALSE)
 	{
@@ -45,6 +87,10 @@ class Warranty_model extends Model {
 		return $this;
 	}
 	
-	
+	function msg($msg = 'No message', $exit = FALSE)
+	{
+		echo "Server: warranty: $msg \n";
+		$exit && exit;
+	}
 	
 }
