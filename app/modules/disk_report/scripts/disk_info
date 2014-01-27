@@ -1,29 +1,33 @@
-#!/bin/bash
+#!/usr/bin/python
 
-if [ "$1" = 'manualcheck' ]; then
-	echo 'Manual check: skipping'
-	exit 0
-fi
+import re
+import os
+import subprocess
+import sys
+
+# Replace integer with string
+# Round to .5GB precision (29 bit)
+def repl(m):
+    contents = int(m.group(1)) >> 29 << 29
+    return '<string>%d</string>' % contents 
+
+# Skip manual check
+if len(sys.argv) > 1:
+	if sys.argv[1] == 'manualcheck':
+		print 'Manual check: skipping'
+		exit(0)
 
 # Create cache dir if it does not exist
-DIR=$(dirname $0)
-mkdir -p "$DIR/cache"
+cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+if not os.path.exists(cachedir):
+    os.makedirs(cachedir)
 
-# Get info for / with diskutil
-# Convert integer to string
-# and truncate the integer to .5GB (1024*1024*512)
-diskutil info -plist / | awk '
-BEGIN{
-	divider=1024*1024*512;
-}
-{
-	if (index($1, "<integer>"))
-	{
-		gsub(/<\/*integer>/,"")
-		printf("	<string>%d</string>\n", int($1 / divider) * divider);
-	}
-	else
-	{
-		print;
-	}
-}' > "$DIR/cache/disk.plist"
+# Get output from diskutil
+p = subprocess.Popen(["/usr/sbin/diskutil", "info", "-plist", "/"], stdout=subprocess.PIPE)
+out, err = p.communicate()
+
+# Convert and write to disk
+fo = open("%s/disk.plist" % cachedir, "w")
+fo.write(re.sub('<integer>(\d+)</integer>', repl, out))
+fo.close()
+
