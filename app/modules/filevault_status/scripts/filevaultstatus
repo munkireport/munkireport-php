@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 if [ "$1" = 'manualcheck' ]; then
 	echo 'Manual check: skipping'
@@ -9,7 +9,7 @@ fi
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
 
-echo 'Get FileVault status'
+echo 'Getting FileVault status'
 
 # Store results status in filevaultstatus.txt
 
