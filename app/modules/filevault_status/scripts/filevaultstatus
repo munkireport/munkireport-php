@@ -9,7 +9,11 @@ fi
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
 
-echo 'Get filevault status'
+echo 'Get FileVault status'
 
-# Store filevault status in filevaultstatus.txt
-/usr/local/bin/filevault_2_status_check.sh > "$DIR/cache/filevaultstatus.txt"
+# Store results status in filevaultstatus.txt
+
+fv_status=`/usr/local/bin/filevault_2_status_check.sh`
+fv_users=`fdesetup list | cut -d "," -f 1 | awk '{print}' ORS=' '`
+
+echo -e "fv_status = ${fv_status}"'\n'"fv_users = ${fv_users}" > "$DIR/cache/filevaultstatus.txt"
