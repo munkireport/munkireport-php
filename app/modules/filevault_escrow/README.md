@@ -32,6 +32,9 @@ This file will automatically be deleted when the Mac is rebooted
 
  * Sets a filevault_escrow key to the MunkiReport.plist preference and removes the key after the escrow data is uploaded   
 
+ * Uploads the escrow data by running /usr/local/munki/postflight
+ 
+
 2. Reboot the Mac to start the encryption  
     * FileVault status and the account name(s) of the enabled users will not be collected until the next munki run after the reboot
 
