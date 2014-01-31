@@ -38,10 +38,6 @@ $report   = new Reportdata_model($serial_number);
 					<td><?=$filevault_escrow->RecoveryKey?></td>
 				</tr>
 					<tr>
-					<td>HardWare UUID</td>
-					<td><?=$filevault_escrow->HardwareUUID?></td>
-				</tr>
-					<tr>
 					<td>Logical Volume Group UUID</td>
 					<td><?=$filevault_escrow->LVGUUID?></td>
 				</tr>
@@ -52,10 +48,6 @@ $report   = new Reportdata_model($serial_number);
 					<tr>
 					<td>Physical Volume UUID</td>
 					<td><?=$filevault_escrow->PVUUID?></td>
-				</tr>
-					<tr>
-					<td>Computer Serial Number</td>
-					<td><?=$filevault_escrow->SerialNumber?></td>
 				</tr>
 					<tr>
 					<td>Hard Drive Serial Number</td>

@@ -10,12 +10,10 @@ class Filevault_escrow_model extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['EnabledDate'] = '';
 		$this->rs['EnabledUser'] = '';
-		$this->rs['HardwareUUID'] = '';
 		$this->rs['LVGUUID'] = '';
 		$this->rs['LVUUID'] = '';
 		$this->rs['PVUUID'] = '';
-		$this->rs['RecoveryKey'] = '';
-		$this->rs['SerialNumber'] = '';		   
+		$this->rs['RecoveryKey'] = '';	   
 		$this->rs['HddSerial'] = '';
 		
 		// Create table if it does not exist
@@ -38,7 +36,7 @@ function process($data)
 		
 		$plist = $parser->toArray();
 
-		foreach(array('EnabledDate', 'EnabledUser', 'HardwareUUID', 'LVGUUID', 'LVUUID', 'PVUUID', 'RecoveryKey', 'SerialNumber', 'HddSerial') AS $item)
+		foreach(array('EnabledDate', 'EnabledUser', 'LVGUUID', 'LVUUID', 'PVUUID', 'RecoveryKey', 'HddSerial') AS $item)
 		{
 			if (isset($plist[$item]))
 			{
