@@ -6,15 +6,13 @@ The table provides the following information per client:
 
 + EnabledDate - The data FileVault was enabled
 + EnabledUser - Users added to the EFI login (authorized to unlock the drive)
-+ HardwareUUID - The hardware UUID
 + LVGUUID - (CoreStorage) Logical Volume Group UUID
 + LVUUID - (CoreStorage) Logical Volume UUID
 + PVUUID - (CoreStorage) Physical Volume UUID
 + RecoveryKey -  The personal recovery key
-+ SerialNumber - The serial number of the Mac
 + Also added is HddSerial - The serial number of the hard drive 
 
-#Remarks
+# Remarks
 
 The workflow:
 
@@ -38,6 +36,9 @@ This file will automatically be deleted when the Mac is rebooted
 2. Reboot the Mac to start the encryption  
     * FileVault status and the account name(s) of the enabled users will not be collected until the next munki run after the reboot
 
+# Dependencies
+
+This module is dependent on the filevault_status model to provide the current status of FileVault and to list the user accounts who are authorized to unlock the drive
 
 # To do
 
