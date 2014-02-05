@@ -397,7 +397,7 @@ function getdbh()
 //===============================================================
 abstract class KISS_Model 
 {
-
+	protected $dbh = ''; // Database handle
 	protected $pkname;
 	protected $tablename;
 	protected $dbhfnname;
@@ -436,9 +436,18 @@ abstract class KISS_Model
 		return $this->set( $key, $val );
 	}
 
+	/**
+	 * Get database handle
+	 *
+	 * @return object PDO instance
+	 **/
 	protected function getdbh() 
 	{
-		return call_user_func( $this->dbhfnname );
+		if ( ! $this->dbh)
+		{
+			$this->dbh = call_user_func( $this->dbhfnname );
+		}
+		return $this->dbh;
 	}
 
 	protected function enquote( $name ) 
@@ -449,6 +458,44 @@ abstract class KISS_Model
 			return '['.$name.']';
 		else
 			return '"'.$name.'"';
+	}
+
+	/**
+	 * Prepare statement with error handling
+	 *
+	 * @return PDOStatement PDO statement object
+	 * @author AvB
+	 **/
+	function prepare($sql, $driver_options = array())
+	{
+		$dbh = $this->getdbh();
+
+		if( ! $stmt = $dbh->prepare($sql, $driver_options))
+        {
+            $err = $dbh->errorInfo();
+            throw new Exception($sql.' failed with the following error: '.$err[2]);
+        }
+
+        return $stmt;
+	}
+
+	/**
+	 * Execute statement with error handling
+	 *
+	 * @author AvB
+	 **/
+	function execute(&$stmt, $params = array())
+	{
+		// Only execute with params if params passed
+		$result = empty($params) ? $stmt->execute() : $stmt->execute($params);
+
+		if( ! $result)
+		{
+			$err = $stmt->errorInfo();
+	        throw new Exception('database error: '.$err[2]);
+		}
+
+		return TRUE;
 	}
 
 	//Inserts record into database with a new auto-incremented primary key
@@ -465,14 +512,19 @@ abstract class KISS_Model
 				$s2 .= ', ?';
 			}
 		$sql = 'INSERT INTO '.$this->enquote( $this->tablename ).' ( '.substr( $s1, 1 ).' ) VALUES ( '.substr( $s2, 1 ).' )';
-		$stmt = $dbh->prepare( $sql );
+		$stmt = $this->prepare( $sql );
 		$i=0;
 		foreach ( $this->rs as $k => $v )
 			if ( $k!=$pkname or $v )
 				$stmt->bindValue( ++$i, is_scalar( $v ) ? $v : ( $this->COMPRESS_ARRAY ? gzdeflate( serialize( $v ) ) : serialize( $v ) ) );
-		$stmt->execute();
-		if ( !$stmt->rowCount() )
+		
+		$this->execute($stmt);
+
+		if ( ! $stmt->rowCount() )
+		{
 			return false;
+		}
+			
 		$this->set( $pkname, $dbh->lastInsertId() );
 		return $this;
 	}
@@ -481,9 +533,9 @@ abstract class KISS_Model
 	{
 		$dbh=$this->getdbh();
 		$sql = 'SELECT * FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( $this->pkname ).'=?';
-		$stmt = $dbh->prepare( $sql );
+		$stmt = $this->prepare( $sql );
 		$stmt->bindValue( 1, ( int )$pkvalue );
-		$stmt->execute();
+		$this->execute($stmt);
 		$rs = $stmt->fetch( PDO::FETCH_ASSOC );
 		if ( $rs )
 			foreach ( $rs as $key => $val )
@@ -500,21 +552,21 @@ abstract class KISS_Model
 			$s .= ', '.$this->enquote( $k ).'=?';
 		$s = substr( $s, 1 );
 		$sql = 'UPDATE '.$this->enquote( $this->tablename ).' SET '.$s.' WHERE '.$this->enquote( $this->pkname ).'=?';
-		$stmt = $dbh->prepare( $sql );
+		$stmt = $this->prepare( $sql );
 		$i=0;
 		foreach ( $this->rs as $k => $v )
 			$stmt->bindValue( ++$i, is_scalar( $v ) ? $v : ( $this->COMPRESS_ARRAY ? gzdeflate( serialize( $v ) ) : serialize( $v ) ) );
 		$stmt->bindValue( ++$i, $this->rs[$this->pkname] );
-		return $stmt->execute();
+		return $this->execute($stmt);
 	}
 
 	function delete() 
 	{
 		$dbh=$this->getdbh();
 		$sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( $this->pkname ).'=?';
-		$stmt = $dbh->prepare( $sql );
+		$stmt = $this->prepare( $sql );
 		$stmt->bindValue( 1, $this->rs[$this->pkname] );
-		return $stmt->execute();
+		return $this->execute($stmt);
 	}
 
 	//returns true if primary key is a positive integer
@@ -546,8 +598,8 @@ abstract class KISS_Model
 		if ( isset( $wherewhat ) && isset( $bindings ) )
 			$sql .= ' WHERE '.$wherewhat;
 		$sql .= ' LIMIT 1';
-		$stmt = $dbh->prepare( $sql );
-		$stmt->execute( $bindings );
+		$stmt = $this->prepare( $sql );
+		$this->execute( $stmt, $bindings );
 		$rs = $stmt->fetch( PDO::FETCH_ASSOC );
 		if ( !$rs )
 			return false;
@@ -563,8 +615,8 @@ abstract class KISS_Model
 		if ( is_scalar( $bindings ) ) $bindings = $bindings ? array( $bindings ) : array();
 		$sql = 'SELECT * FROM '.$this->tablename;
 		if ( $wherewhat ) $sql .= ' WHERE '.$wherewhat;
-		$stmt = $dbh->prepare( $sql );
-		$stmt->execute( $bindings );
+		$stmt = $this->prepare( $sql );
+		$this->execute($stmt, $bindings);
 		$arr=array();
 		$class=get_class( $this );
 		while ( $rs = $stmt->fetch( PDO::FETCH_ASSOC ) ) 
@@ -586,8 +638,8 @@ abstract class KISS_Model
 		$sql = 'SELECT '.$selectwhat.' FROM '.$this->tablename;
 		if ( $wherewhat )
 			$sql .= ' WHERE '.$wherewhat;
-		$stmt = $dbh->prepare( $sql );
-		$stmt->execute( $bindings );
+		$stmt = $this->prepare( $sql );
+		$this->execute( $stmt, $bindings );
 		return $stmt->fetchAll( $pdo_fetch_mode );
 	}
 }
