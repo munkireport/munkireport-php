@@ -10,7 +10,7 @@ class auth extends Controller
 	function __construct()
 	{
 		// Check if we can store sessions
-		if ( ! is_writable(session_save_path()))
+		if ( ! empty(session_save_path()) && ! is_writable(session_save_path()))
 		{
 			fatal('Session path "'.session_save_path().'" is not writable for PHP!');
 		}
