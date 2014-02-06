@@ -124,21 +124,34 @@ class Model extends KISS_Model
 	 **/
 	function query($sql, $bindings=array())
 	{
-		$dbh=$this->getdbh();
 		if ( is_scalar( $bindings ) )
 			$bindings=$bindings ? array( $bindings ) : array();
-		if( ! $stmt = $dbh->prepare( $sql ))
-        {
-            $err = $dbh->errorInfo();
-            die($err[2]);
-        }
-		$stmt->execute( $bindings );
+		$stmt = $this->prepare( $sql );
+		$this->execute( $stmt, $bindings );
 		$arr=array();
 		while ( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
 		{
 			$arr[] = $rs;
 		}
 		return $arr;
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Exec statement with error handling
+	 *
+	 * @author AvB
+	 **/
+	function exec($sql)
+	{
+		$dbh = $this->getdbh();
+
+		if( $dbh->exec($sql) === FALSE)
+		{
+			$err = $dbh->errorInfo();
+	        throw new Exception('database error: '.$err[2]);
+		}
 	}
 
 
@@ -241,8 +254,23 @@ class Model extends KISS_Model
         	{
         		if ($this->get_schema_version() !== $this->schema_version)
         		{
-        			require_once(conf('application_path').'helpers/database_helper.php');
-        			migrate($this);
+        			try
+        			{
+        				require_once(conf('application_path').'helpers/database_helper.php');
+
+	        			migrate($this);
+
+	        			$model_name = get_class($this);
+	        			alert('Migrated '.$model_name.' to version '.$this->schema_version);
+        			}
+        			catch(Exception $e)
+        			{
+        				error("Migration error: ".$e->getMessage());
+
+        				// Rollback any open transaction
+        				try { $dbh->rollBack(); } catch (Exception $e2) {}
+        			}
+        			
         		}
         	}
         }
