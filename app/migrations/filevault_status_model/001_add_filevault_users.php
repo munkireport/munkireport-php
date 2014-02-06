@@ -12,6 +12,12 @@ class Migration_add_filevault_users extends Model
 
 	public function up()
 	{
+		// Get database handle
+		$dbh = $this->getdbh();
+
+		// Wrap in transaction
+		$dbh->beginTransaction();
+
 		// Adding a column is simple...
 		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s VARCHAR(255)', 
 			$this->enquote($this->tablename), $this->enquote($this->columname));
@@ -24,6 +30,8 @@ class Migration_add_filevault_users extends Model
 			$idx_name, $this->enquote($this->tablename), $this->columname);
 
 		$this->exec($sql);
+
+		$dbh->commit();
 	}
 
 	public function down()
