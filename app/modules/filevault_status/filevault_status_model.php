@@ -7,10 +7,14 @@ class Filevault_status_model extends Model {
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['filevault_status'] = '';	
-		$this->rs['filevault_users'] = '';	   
+		$this->rs['filevault_users'] = '';
+
+		$this->schema_version = 1;
+  
 		
-		// Add index
+		// Add indexes
 		$this->idx[] = array('filevault_status');
+		$this->idx[] = array('filevault_users');
 
 		// Create table if it does not exist
 		$this->create_table();
