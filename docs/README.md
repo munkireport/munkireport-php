@@ -8,6 +8,11 @@ Installation
 
 The installation is covered in setup.md
 
+Performance
+---
+
+Running munkireport with up to 400 (300 daily active) clients with the SQLite backend should be ok. If you're adding more clients you'll need a database backend that allows for more concurrency like MySQL.
+
 Security
 ---
 
