@@ -15,12 +15,16 @@ class Network_model extends Model {
         $this->rs['ipv4conf'] = ''; // IPv4 configuration (automatic, manual)
         $this->rs['ipv4ip'] = ''; // IPv4 address
         $this->rs['ipv4mask'] = ''; // IPv4 network mask as string
-        $this->rs['ipv4router'] = 0;  // IPv4 router address as int
+        $this->rs['ipv4router'] = '';  // IPv4 router address as string
         $this->rs['ipv6conf'] = ''; // IPv6 configuration (automatic, manual)
         $this->rs['ipv6ip'] = ''; // IPv6 address as string
         $this->rs['ipv6prefixlen'] = 0; // IPv6 prefix length as int
         $this->rs['ipv6router'] = '';  // IPv6 router address as string
         $this->rs['timestamp'] = time();
+
+        // Schema version, increment when creating a db migration
+        $this->schema_version = 1;
+
 
         $this->idx[] = array('serial_number');
         $this->idx[] = array('serial_number', 'service');
