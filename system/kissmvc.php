@@ -298,7 +298,7 @@ class Model extends KISS_Model
 		{
 			// Create name
 			$idx_name = $this->tablename . '_' . join('_', $idx_data);
-			$this->exec(sprintf("CREATE INDEX '%s' ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
+			$this->exec(sprintf("CREATE INDEX %s ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
 		}
 		
 		return ($dbh->errorCode() == '00000');
