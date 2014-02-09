@@ -100,7 +100,7 @@ date_default_timezone_set( conf('timezone') );
 setlocale(LC_ALL, conf('locale'));
 
 
-//set_exception_handler('uncaught_exception_handler');
+set_exception_handler('uncaught_exception_handler');
 
 //===============================================
 // Quick permissions check for sqlite operations
