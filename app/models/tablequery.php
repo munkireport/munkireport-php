@@ -22,6 +22,9 @@ class Tablequery {
     {
         $dbh = getdbh();
 
+        // Initial value
+        $iTotal = 0;
+
         // Get tables from column names
         $tables = array('machine' => 1);
         $formatted_columns = array();

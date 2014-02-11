@@ -38,13 +38,26 @@ class Disk_report_model extends Model {
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
 
+		// Reset values
+		$this->SolidState = 0;
+		$this->TotalSize = 0;
+		$this->FreeSpace = 0;
+		$this->Percentage = 0;
+		$this->SMARTStatus = '';
+
 		// Calculate percentage
 		if(isset($mylist['TotalSize']) && isset($mylist['FreeSpace']))
 		{
 			$mylist['Percentage'] = round(($mylist['TotalSize'] - $mylist['FreeSpace']) /
 				max($mylist['TotalSize'], 1) * 100);
 		}
-		$this->merge($mylist)->save();
+
+		$this->merge($mylist);
+
+		// Set type on SolidState (booleans don't translate well)
+		$this->SolidState = (int) $this->SolidState;
+
+		$this->save();
 	}
 
 	

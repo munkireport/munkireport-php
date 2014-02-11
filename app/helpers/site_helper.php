@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.0.5.643';
+$GLOBALS['version'] = '2.0.7.674';
 
 // Return version without commit count
 function get_version()
@@ -14,9 +14,14 @@ function get_version()
 //===============================================s
 function uncaught_exception_handler($e)
 {
-  ob_end_clean(); //dump out remaining buffered text
-  $vars['message']=$e;
-  die(View::do_fetch(APP_PATH.'errors/exception_uncaught.php',$vars));
+  // Dump out remaining buffered text
+  ob_end_clean();
+
+  // Get error message
+  error($e->getMessage());
+
+  // Write footer
+  die(View::do_fetch(conf('view_path').'partials/foot.php'));
 }
 
 function custom_error($msg='') 

@@ -167,16 +167,18 @@
 
 	/*
 	|===============================================
-	| VNC link, optional link in the client detail view
+	| VNC and SSH links, optional links in the client detail view
 	|===============================================
 	| 
-	| If you want to have a link that opens a screensharing connection
-	| to a client, enable this setting. If you don't want the link
-	| set it to an empty string: $conf['vnc_link'] = "";
+	| If you want to have link that opens a screensharing or SSH
+	| connection to a client, enable these settings. If you don't
+	| want the links, set either to an empty string, eg:
+	| $conf['vnc_link'] = "";
 	|
 	*/
 	$conf['vnc_link'] = "vnc://%s:5900";
-	
+	$conf['ssh_link'] = "ssh://adminuser@%s";
+
 	/*
 	|===============================================
 	| Inventory - bundle ignore list
