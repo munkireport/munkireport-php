@@ -40,7 +40,22 @@ class Engine extends KISS_Engine
 //===============================================================
 class Controller extends KISS_Controller 
 {
-	
+	/**
+	 * Check if there is a valid session
+	 * TODO: check authorization
+	 *
+	 * @return boolean TRUE on authorized
+	 * @author AvB
+	 **/
+	function authorized()
+	{
+		ini_set('session.use_cookies', 1);
+		ini_set('session.use_only_cookies', 1);
+		ini_set('session.cookie_path', conf('subdirectory'));
+		session_start();
+
+		return isset($_SESSION['user']);
+	}
 }
 
 //===============================================================
@@ -344,7 +359,7 @@ class View extends KISS_View
  * @package munkireport
  * @author AvB
  **/
-class Module_controller
+class Module_controller extends Controller
 {
 	
 	// Module, override in child object

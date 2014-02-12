@@ -3,7 +3,7 @@ class clients extends Controller
 {
 	function __construct()
 	{
-		if( ! isset($_SESSION['user']))
+		if( ! $this->authorized())
 		{
 			redirect('auth/login');
 		}

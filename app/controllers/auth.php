@@ -42,6 +42,12 @@ class auth extends Controller
 	
 	function login($return = '')
 	{
+		
+		if($this->authorized())
+		{
+			redirect($return);
+		}
+
 		$check = FALSE;
 
 		// If no valid mechanisms found, bail
@@ -235,6 +241,10 @@ class auth extends Controller
 	
 	function logout()
 	{
+		// Initialize session
+		$this->authorized();
+
+		// Destroy session;
 		session_destroy();
 		redirect('');
 	}
