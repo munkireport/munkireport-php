@@ -31,7 +31,7 @@ class Warranty_controller extends Module_controller
 	function recheck_warranty($serial='')
 	{
 		// Authenticate
-		if( ! isset($_SESSION['user']))
+		if( ! $this->authorized())
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}
@@ -49,7 +49,7 @@ class Warranty_controller extends Module_controller
 	function age()
 	{
 		// Authenticate
-		if( ! isset($_SESSION['user']))
+		if( ! $this->authorized())
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}
