@@ -4,7 +4,7 @@
 
 				<div class="panel-heading" data-container="body" title="Pending Apple Updates for this week">
 
-					<h3 class="panel-title"><i class="icon-apple"></i> Pending Apple Updates</h3>
+					<h3 class="panel-title"><i class="fa fa-apple"></i> Pending Apple Updates</h3>
 				
 				</div>
 

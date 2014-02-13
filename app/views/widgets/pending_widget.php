@@ -9,7 +9,7 @@ $sql = "SELECT computer_name, pendinginstalls, machine.serial_number
 <div class="col-lg-4 col-md-6">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><i class="icon-moon"></i> Clients with pending installs</h3>
+            <h3 class="panel-title"><i class="fa fa-moon"></i> Clients with pending installs</h3>
         </div>
         <div class="list-group scroll-box">
             <?foreach($machine->query($sql) as $obj):?>
