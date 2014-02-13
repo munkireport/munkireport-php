@@ -4,7 +4,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="icon-apple"></i> OS breakdown</h3>
+			<h3 class="panel-title"><i class="fa fa-apple"></i> OS breakdown</h3>
 		
 		</div>
 

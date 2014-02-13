@@ -11,7 +11,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="icon-exclamation-sign"></i> <?=lang('error')?></h3>
+			<h3 class="panel-title"><i class="fa fa-exclamation-sign"></i> <?=lang('error')?></h3>
 		
 		</div>
 

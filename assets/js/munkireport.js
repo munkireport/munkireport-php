@@ -7,7 +7,7 @@ function get_client_detail_link(name, sn, baseurl, hash)
 	return '<div class="machine">\
     		<a class="btn btn-default btn-xs" href="'+baseurl+'clients/detail/'+sn+hash+'">'+name+'</a>\
     		<a href="'+baseurl+'admin/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
-    		<i class="icon-remove"></i></a></div>';
+    		<i class="fa fa-times"></i></a></div>';
 }
 
 // Delete machine ajax call
