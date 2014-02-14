@@ -52,7 +52,7 @@
 
               <?$url = 'show/reports/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tasks"></i> Reports <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o"></i> Reports <b class="caret"></b></a>
                 <ul class="dropdown-menu">
 
                   <?foreach(scandir(conf('view_path').'report') AS $list_url):?>
