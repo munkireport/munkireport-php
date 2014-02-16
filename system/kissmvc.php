@@ -40,7 +40,22 @@ class Engine extends KISS_Engine
 //===============================================================
 class Controller extends KISS_Controller 
 {
-	
+	/**
+	 * Check if there is a valid session
+	 * TODO: check authorization
+	 *
+	 * @return boolean TRUE on authorized
+	 * @author AvB
+	 **/
+	function authorized()
+	{
+		ini_set('session.use_cookies', 1);
+		ini_set('session.use_only_cookies', 1);
+		ini_set('session.cookie_path', conf('subdirectory'));
+		session_start();
+
+		return isset($_SESSION['user']);
+	}
 }
 
 //===============================================================
@@ -124,21 +139,34 @@ class Model extends KISS_Model
 	 **/
 	function query($sql, $bindings=array())
 	{
-		$dbh=$this->getdbh();
 		if ( is_scalar( $bindings ) )
 			$bindings=$bindings ? array( $bindings ) : array();
-		if( ! $stmt = $dbh->prepare( $sql ))
-        {
-            $err = $dbh->errorInfo();
-            die($err[2]);
-        }
-		$stmt->execute( $bindings );
+		$stmt = $this->prepare( $sql );
+		$this->execute( $stmt, $bindings );
 		$arr=array();
 		while ( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
 		{
 			$arr[] = $rs;
 		}
 		return $arr;
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Exec statement with error handling
+	 *
+	 * @author AvB
+	 **/
+	function exec($sql)
+	{
+		$dbh = $this->getdbh();
+
+		if( $dbh->exec($sql) === FALSE)
+		{
+			$err = $dbh->errorInfo();
+	        throw new Exception('database error: '.$err[2]);
+		}
 	}
 
 
@@ -241,8 +269,23 @@ class Model extends KISS_Model
         	{
         		if ($this->get_schema_version() !== $this->schema_version)
         		{
-        			require_once(conf('application_path').'helpers/database_helper.php');
-        			migrate($this);
+        			try
+        			{
+        				require_once(conf('application_path').'helpers/database_helper.php');
+
+	        			migrate($this);
+
+	        			$model_name = get_class($this);
+	        			alert('Migrated '.$model_name.' to version '.$this->schema_version);
+        			}
+        			catch(Exception $e)
+        			{
+        				error("Migration error: ".$e->getMessage());
+
+        				// Rollback any open transaction
+        				try { $dbh->rollBack(); } catch (Exception $e2) {}
+        			}
+        			
         		}
         	}
         }
@@ -270,7 +313,7 @@ class Model extends KISS_Model
 		{
 			// Create name
 			$idx_name = $this->tablename . '_' . join('_', $idx_data);
-			$dbh->exec(sprintf("CREATE INDEX '%s' ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
+			$this->exec(sprintf("CREATE INDEX %s ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
 		}
 		
 		return ($dbh->errorCode() == '00000');
@@ -316,7 +359,7 @@ class View extends KISS_View
  * @package munkireport
  * @author AvB
  **/
-class Module_controller
+class Module_controller extends Controller
 {
 	
 	// Module, override in child object
@@ -324,9 +367,17 @@ class Module_controller
 
 	function get_script($name='')
 	{
-		// Get scriptnames in module scripts dir (just to be safe)
-		$scripts = array_diff(scandir($this->module_path . '/scripts/'), array('..', '.'));
-
+		// Check if script dir exists
+		if( is_readable($this->module_path . '/scripts/'))
+		{
+			// Get scriptnames in module scripts dir (just to be safe)
+			$scripts = array_diff(scandir($this->module_path . '/scripts/'), array('..', '.'));
+		}
+		else
+		{
+			$scripts = array();
+		}
+		
 		$script_path = $this->module_path . '/scripts/' . basename($name);
 
 		if( ! in_array($name, $scripts) OR ! is_readable($script_path))

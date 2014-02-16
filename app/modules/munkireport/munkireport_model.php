@@ -5,7 +5,7 @@ class Munkireport_model extends Model {
 	{
 		parent::__construct('id', 'munkireport'); //primary key, tablename
 		$this->rs['id'] = 0;
-		$this->rs['serial_number'] = $serial; $this->rt['serial'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['timestamp'] = '';
 		$this->rs['runstate'] = 'done';
 		$this->rs['runtype'] = '';
@@ -42,6 +42,9 @@ class Munkireport_model extends Model {
 		$this->idx[] = array('itemstoinstall');
 		$this->idx[] = array('appleupdates');
 		
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 1;
+
 		// Create table if it does not exist
         $this->create_table();
         

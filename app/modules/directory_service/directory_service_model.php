@@ -11,20 +11,20 @@ class Directory_service_model extends Model {
 		$this->rs['adforest'] = ''; // string
 		$this->rs['addomain'] = ''; // string
 		$this->rs['computeraccount'] = ''; // string
-		$this->rs['createmobileaccount'] = ''; $this->rt['createmobileaccount'] = 'BOOL';  // Enabled = 1, Disabled = 0
-		$this->rs['requireconfirmation'] = ''; $this->rt['requireconfirmation'] = 'BOOL';// Enabled = 1, Disabled = 0
-		$this->rs['forcehomeinstartup'] = ''; $this->rt['forcehomeinstartup'] = 'BOOL'; // Enabled = 1, Disabled = 0
-		$this->rs['mounthomeassharepoint'] = ''; $this->rt['mounthomeassharepoint'] = 'BOOL'; // Enabled = 1, Disabled = 0
-		$this->rs['usewindowsuncpathforhome'] = ''; $this->rt['usewindowsuncpathforhome'] = 'BOOL'; // Enabled = 1, Disabled = 0
+		$this->rs['createmobileaccount'] = 0; $this->rt['createmobileaccount'] = 'BOOL';  // Enabled = 1, Disabled = 0
+		$this->rs['requireconfirmation'] = 0; $this->rt['requireconfirmation'] = 'BOOL';// Enabled = 1, Disabled = 0
+		$this->rs['forcehomeinstartup'] = 0; $this->rt['forcehomeinstartup'] = 'BOOL'; // Enabled = 1, Disabled = 0
+		$this->rs['mounthomeassharepoint'] = 0; $this->rt['mounthomeassharepoint'] = 'BOOL'; // Enabled = 1, Disabled = 0
+		$this->rs['usewindowsuncpathforhome'] = 0; $this->rt['usewindowsuncpathforhome'] = 'BOOL'; // Enabled = 1, Disabled = 0
 		$this->rs['networkprotocoltobeused'] = '';	// string smb or afp	
 		$this->rs['defaultusershell'] = '';	// string
 		$this->rs['mappinguidtoattribute'] = ''; // string?
 		$this->rs['mappingusergidtoattribute'] = ''; // string?
 		$this->rs['mappinggroupgidtoattr'] = ''; // string?
-		$this->rs['generatekerberosauth'] = ''; $this->rt['generatekerberosauth'] = 'BOOL'; // Enabled = 1, Disabled = 0
+		$this->rs['generatekerberosauth'] = 0; $this->rt['generatekerberosauth'] = 'BOOL'; // Enabled = 1, Disabled = 0
 		$this->rs['preferreddomaincontroller'] = ''; // string?
 		$this->rs['allowedadmingroups'] = ''; //array
-		$this->rs['authenticationfromanydomain'] = ''; $this->rt['authenticationfromanydomain'] = 'BOOL'; // Enabled = 1, Disabled = 0
+		$this->rs['authenticationfromanydomain'] = 0; $this->rt['authenticationfromanydomain'] = 'BOOL'; // Enabled = 1, Disabled = 0
 		$this->rs['packetsigning'] = ''; // allow = 1, ? = 0
 		$this->rs['packetencryption'] = ''; // allow = 1, ? = 0
 		$this->rs['passwordchangeinterval'] = ''; // int
@@ -86,9 +86,18 @@ class Directory_service_model extends Model {
 								'Namespace mode = ' => 'namespacemode');
 
 		//clear any previous data we had
-		foreach($translate as $search => $field) {
-			$this->$field = '';
+		foreach($translate as $search => $field)
+		{
+			if(array_key_exists($field, $this->rt) && $this->rt[$field] == 'BOOL')
+			{
+				$this->$field = 0;
+			}
+			else
+			{
+				$this->$field = '';
+			}
 		}
+
 		// Parse data
 		foreach(explode("\n", $data) as $line) {
 		    // Translate standard entries

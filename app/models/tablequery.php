@@ -22,6 +22,9 @@ class Tablequery {
     {
         $dbh = getdbh();
 
+        // Initial value
+        $iTotal = 0;
+
         // Get tables from column names
         $tables = array('machine' => 1);
         $formatted_columns = array();
@@ -160,8 +163,7 @@ class Tablequery {
             "sEcho" => intval($cfg['sEcho']),
             "iTotalRecords" => $iTotal,
             "iTotalDisplayRecords" => $iFilteredTotal,
-            "aaData" => array(),
-            "order" => $sOrder
+            "aaData" => array()
         );
 
 
@@ -172,8 +174,12 @@ class Tablequery {
         $sOrder
         $sLimit
         ";
-        //echo $sql;
-        //return;
+
+        // When in debug mode, send sql as well
+        if(conf('debug'))
+        {
+            $output['sql'] = str_replace("\n", '', $sql);
+        }
         
         if( ! $stmt = $dbh->prepare( $sql ))
         {

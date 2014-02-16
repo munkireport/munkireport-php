@@ -3,7 +3,7 @@ class datatables extends Controller
 {
 	function __construct()
 	{
-		if( ! isset($_SESSION['user']))
+		if( ! $this->authorized())
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}

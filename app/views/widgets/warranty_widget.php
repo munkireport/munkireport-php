@@ -1,10 +1,10 @@
-		<div class="col-lg-4">
+		<div class="col-lg-4 col-md-6">
 
 			<div class="panel panel-default">
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="icon-umbrella"></i> Warranty status</h3>
+					<h3 class="panel-title"><i class="fa fa-umbrella"></i> Warranty status</h3>
 				
 				</div>
 

@@ -4,7 +4,7 @@
 
 				<div class="panel-heading" data-container="body" title="Munki versions among all clients">
 
-			    	<h3 class="panel-title"><i class="icon-sitemap"></i> Munki versions</h3>
+			    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> Munki versions</h3>
 
 				</div>
 				<div class="list-group scroll-box">

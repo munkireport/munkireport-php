@@ -4,7 +4,7 @@
 
 				<div class="panel-heading" data-container="body">
 
-					<h3 class="panel-title"><i class="icon-bug"></i> Duplicated Computer Names</h3>
+					<h3 class="panel-title"><i class="fa fa-bug"></i> Duplicated Computer Names</h3>
 				
 				</div>
 

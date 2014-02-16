@@ -28,7 +28,7 @@ class Localadmin_model extends Model {
 	 **/
 	function process($data)
 	{		
-		$this->users = $data;
+		$this->users = trim($data);
 		$this->save();
 	}
 

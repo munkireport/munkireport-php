@@ -12,7 +12,7 @@ class Machine_controller extends Module_controller
 	/*** Protect methods with auth! ****/
 	function __construct()
 	{
-		if( ! isset($_SESSION['user']))
+		if( ! $this->authorized())
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}

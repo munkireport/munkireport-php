@@ -17,8 +17,7 @@ function migrate($model_obj)
 	// Check if directory exists
 	if( ! is_dir($migration_dir))
 	{
-		error('Migration error: no migrations found in '.$migration_dir);
-		return FALSE;
+		throw new Exception('no migrations found in '.$migration_dir);
 	}
 
 	$migration_list = array();
@@ -34,8 +33,7 @@ function migrate($model_obj)
 
 	if( $target_version > 0 && ! isset($migration_list[$target_version]))
 	{
-		echo('Migration error: migration '.$target_version.' not found');
-		return FALSE;
+		throw new Exception($model_name.' migration '.$target_version.' not found');
 	}
 
 	if( $target_version > $current_version )
@@ -59,18 +57,23 @@ function migrate($model_obj)
 
 		if ( ! class_exists($class, FALSE))
         {
-            error('Migration error: migration class '.$class.' not found');
-            return FALSE;
+            throw new Exception('migration class '.$class.' not found');
         }
 
 		if (($method === 'up'   && $number > $current_version && $number <= $target_version) OR
 			($method === 'down' && $number <= $current_version && $number > $target_version))
 		{
 			$instance = new $class();
+
+			// Check if we have up and down
+        	if( ! method_exists($instance, 'up') || ! method_exists($instance, 'down'))
+        	{
+				throw new Exception("up() or down() missing from $class");
+        	}
+
 			if(call_user_func(array($instance, $method)) === FALSE )
 			{
-				error('Migration error: '.$instance->get_errors());
-	            return FALSE;
+				throw new Exception($instance->get_errors());
 			}
 
 			$migration_obj->version = $number;
@@ -83,5 +86,4 @@ function migrate($model_obj)
 		$migration_obj->version = $target_version;
 		$migration_obj->save();
 	}
-	alert('Migrated '.$model_name.' to version '.$migration_obj->version);
 }

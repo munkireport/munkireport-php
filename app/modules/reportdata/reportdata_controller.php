@@ -10,7 +10,7 @@ class Reportdata_controller extends Module_controller
 {
 	function __construct()
 	{
-		if( ! isset($_SESSION['user']))
+		if( ! $this->authorized())
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}

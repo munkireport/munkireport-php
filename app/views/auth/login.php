@@ -11,11 +11,11 @@
 
 								<?if(empty($_SERVER['HTTPS'])):?>
 
-									<a href="<?=secure_url()?>"><i title="<?=lang('auth_insecure')?>" class="text-danger icon-unlock-alt pull-right"></i></a>
+									<a href="<?=secure_url()?>"><i title="<?=lang('auth_insecure')?>" class="text-danger fa fa-unlock-alt pull-right"></i></a>
 
 								<?else:?>
 
-									<i title="<?=lang('auth_secure')?>" class="text-success icon-lock pull-right"></i>
+									<i title="<?=lang('auth_secure')?>" class="text-success fa fa-lock pull-right"></i>
 
 								<?endif?>
 

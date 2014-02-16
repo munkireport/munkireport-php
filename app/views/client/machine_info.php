@@ -51,6 +51,12 @@
 
 				<a class="btn btn-default btn-xs" href="<?printf(conf('vnc_link'), $report->remote_ip)?>">Remote Control (vnc)</a>
 				<?endif?>
+
+				<?if(conf('ssh_link')):?>
+
+				<a class="btn btn-default btn-xs" href="<?printf(conf('ssh_link'), $report->remote_ip)?>">Remote Control (ssh)</a>
+				<?endif?>
+
 		</div>
 		<div class="col-lg-4">
 			<small>
