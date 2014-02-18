@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.0.8.692';
+$GLOBALS['version'] = '2.0.8.695';
 
 // Return version without commit count
 function get_version()
@@ -126,7 +126,7 @@ function lang($str)
 			conf('lang', 'en') . '/lang.php';
 		if ((@include_once $path) !== 1)
 		{
-			debug('failed to load language file for '.conf('lang', 'en'));
+			alert('failed to load language file for language: '.conf('lang', 'en'), 'danger');
 			$lang = array();
 		}
 	}
