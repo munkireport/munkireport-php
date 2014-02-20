@@ -204,7 +204,7 @@ class Model extends KISS_Model
 	 * and $this->rt array
 	 *
 	 * @param array assoc array with optional type strings
-	 * @return void
+	 * @return boolean TRUE on success, FALSE if failed
 	 * @author bochoven
 	 **/
 	function create_table()
@@ -215,57 +215,18 @@ class Model extends KISS_Model
 			return TRUE;
 		}
 
-		$dbh = $this->getdbh();
+		// Check if table exists and is up-to-date
+		try
+		{
+			$dbh = $this->getdbh();
 		
-		$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false); 
-		
-        if( ! $dbh->prepare( "SELECT * FROM ".$this->enquote($this->tablename)." LIMIT 1" ))
-        {
-			// Get columns
-			$columns = array();
-			foreach($this->rs as $name => $val)
-			{
-				// Determine type automagically
-				$type = is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
-				
-				// Or set type from type array
-				$columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
-			}
-			
-			// Set primary key
-			$columns[$this->pkname] = 'INTEGER PRIMARY KEY';
-			
-			// Set autoincrement per db engine
-			switch($dbh->getAttribute(constant("PDO::ATTR_DRIVER_NAME")))
-			{
-				case 'sqlite':
-					$columns[$this->pkname] .= ' AUTOINCREMENT';
-					break;
-				case 'mysql':
-					$columns[$this->pkname] .= ' AUTO_INCREMENT';
-			}
-			
-			// Compile columns sql
-            $sql = '';
-			foreach($columns as $name => $type)
-			{
-				$sql .= $this->enquote($name) . " $type,";
-			}
-			$sql = rtrim($sql, ',');
+			$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
 
-            $rowsaffected = $dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
+			// Check if table exists
+			$this->prepare( "SELECT * FROM ".$this->enquote($this->tablename)." LIMIT 1" );
 
-			// Set indexes
-			$this->set_indexes();
-
-			// Store schema version in migration table
-			$migration = new Migration($this->tablename);
-			$migration->version = $this->schema_version;
-			$migration->save();
-			        }
-        else // Existing table, is it up-to date?
-        {
-        	if (conf('allow_migrations'))
+			// Existing table, is it up-to date?
+			if (conf('allow_migrations'))
         	{
         		if ($this->get_schema_version() !== $this->schema_version)
         		{
@@ -288,13 +249,77 @@ class Model extends KISS_Model
         			
         		}
         	}
-        }
+		}
+		catch (Exception $e)
+		{
+			// If the prepare fails, the table does not exist.
+
+			// Get columns
+			$columns = array();
+			foreach($this->rs as $name => $val)
+			{
+				// Determine type automagically
+				$type = is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
+				
+				// Or set type from type array
+				$columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
+			}
+			
+			// Set primary key
+			$columns[$this->pkname] = 'INTEGER PRIMARY KEY';
+			
+			// Set auto increment per db engine
+			switch($this->get_driver())
+			{
+				case 'sqlite':
+					$columns[$this->pkname] .= ' AUTOINCREMENT';
+					break;
+				case 'mysql':
+					$columns[$this->pkname] .= ' AUTO_INCREMENT';
+			}
+			
+			// Compile columns sql
+            $sql = '';
+			foreach($columns as $name => $type)
+			{
+				$sql .= $this->enquote($name) . " $type,";
+			}
+			$sql = rtrim($sql, ',');
+
+			try
+			{
+				
+				// Wrap in transaction
+				$dbh->beginTransaction();
+
+				$rowsaffected = $dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
+
+				// Set indexes
+				$this->set_indexes();
+
+				// Store schema version in migration table
+				$migration = new Migration($this->tablename);
+				$migration->version = $this->schema_version;
+				$migration->save();
+
+				// Commit changes
+				$dbh->commit();
+
+			}
+			catch (Exception $e)
+			{
+				$dbh->rollBack();
+				error("Create table '$this->tablename' failed: " . $e->getMessage());
+				return FALSE;
+			}
+            
+		}
 
         // Store this table in the instantiated tables array
         $GLOBALS['tables'][$this->tablename] = $this->tablename;
 
-		//print_r($dbh->errorInfo());
-        return ($dbh->errorCode() == '00000');
+        // Create table succeeded
+        return TRUE;
 	}
 	
 	// ------------------------------------------------------------------------
