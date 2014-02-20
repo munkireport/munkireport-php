@@ -297,13 +297,13 @@ class Model extends KISS_Model
 				// Set indexes
 				$this->set_indexes();
 
+				// Commit changes
+				$dbh->commit();
+
 				// Store schema version in migration table
 				$migration = new Migration($this->tablename);
 				$migration->version = $this->schema_version;
 				$migration->save();
-
-				// Commit changes
-				$dbh->commit();
 
 			}
 			catch (Exception $e)
