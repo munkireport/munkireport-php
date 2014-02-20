@@ -16,6 +16,7 @@ AD_COMMENTS=''
 # Find which Directory Service we are bound to
 DS=`/usr/bin/dscl localhost -list . | head -n 1`
 
+echo "Directory Service = ${DS}" > "$DIR/cache/directoryservice.txt"
 
 case "$DS" in
 "Active Directory")
@@ -60,6 +61,6 @@ case "$DS" in
 ;;
 esac
 
-echo "Directory Service = ${DS}" > "$DIR/cache/directoryservice.txt"
 echo "Active Directory Domain = ${domain}" >> "$DIR/cache/directoryservice.txt"
+
 exit 0
