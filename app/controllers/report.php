@@ -50,46 +50,55 @@ class report extends Controller
 			$this->error("Items are missing");
 		}
 
-		// Register check in reportdata
-		$report = new Reportdata_model($_POST['serial']);
-		$report->register()->save();
-
-		$req_items = unserialize($_POST['items']); //Todo: check if array
-
 		$itemarr = array('error' => '');
 
-		// Get stored hashes from db
-		$hash = new Hash();
-		$hashes = $hash->all($_POST['serial']);
-
-		// Compare sent hashes with stored hashes
-		foreach($req_items as $name => $val)
+		// Try to register client and lookup hashes in db
+		try
 		{
-		    
-		    // All models are lowercase
-		    $lkey = strtolower($name);
+			// Register check in reportdata
+			$report = new Reportdata_model($_POST['serial']);
+			$report->register()->save();
 
-		    // Rename legacy InventoryItem to inventory
-			$lkey = str_replace('inventoryitem', 'inventory', $lkey);
+			$req_items = unserialize($_POST['items']); //Todo: check if array
 
-		    // Remove _model legacy
-		    if(substr($lkey, -6) == '_model')
+			// Get stored hashes from db
+			$hash = new Hash();
+			$hashes = $hash->all($_POST['serial']);
+
+			// Compare sent hashes with stored hashes
+			foreach($req_items as $name => $val)
 			{
-				$lkey = substr($lkey, 0, -6);
-			}
+			    
+			    // All models are lowercase
+			    $lkey = strtolower($name);
 
-		    if( ! (isset($hashes[$lkey]) && $hashes[$lkey] == $val['hash']))
-		    {
-		        $itemarr[$name] = 1;
-		    }
+			    // Rename legacy InventoryItem to inventory
+				$lkey = str_replace('inventoryitem', 'inventory', $lkey);
+
+			    // Remove _model legacy
+			    if(substr($lkey, -6) == '_model')
+				{
+					$lkey = substr($lkey, 0, -6);
+				}
+
+			    if( ! (isset($hashes[$lkey]) && $hashes[$lkey] == $val['hash']))
+			    {
+			        $itemarr[$name] = 1;
+			    }
+			}
 		}
+		catch (Exception $e) 
+		{
+			error('hash_check: '.$e->getMessage());
+		}
+
 
 		// Handle errors
 		foreach($GLOBALS['alerts'] AS $type => $list)
 		{
 			foreach ($list AS $msg)
 			{
-				$itemarr['error'] .= "$type : $msg\n";
+				$itemarr['error'] .= "$type: $msg\n";
 			}
 		}
 		
@@ -111,9 +120,10 @@ class report extends Controller
 	    	$this->error("No items in POST");
 	    }
 
-		try {
-			$arr = unserialize($_POST['items']);
-		} catch (Exception $e) {
+		$arr = @unserialize($_POST['items']);
+
+		if ( ! is_array($arr))
+		{
 			$this->error("Could not parse items, not a proper serialized file");
 		}
 		
