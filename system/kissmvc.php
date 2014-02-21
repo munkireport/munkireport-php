@@ -305,6 +305,8 @@ class Model extends KISS_Model
 				$migration->version = $this->schema_version;
 				$migration->save();
 
+				alert("Created table '$this->tablename' version $this->schema_version");
+
 			}
 			catch (Exception $e)
 			{
