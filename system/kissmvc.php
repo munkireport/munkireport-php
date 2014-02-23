@@ -288,17 +288,11 @@ class Model extends KISS_Model
 
 			try
 			{
-				
-				// Wrap in transaction
-				$dbh->beginTransaction();
 
-				$rowsaffected = $dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
+				$dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
 
 				// Set indexes
 				$this->set_indexes();
-
-				// Commit changes
-				$dbh->commit();
 
 				// Store schema version in migration table
 				$migration = new Migration($this->tablename);
@@ -310,7 +304,7 @@ class Model extends KISS_Model
 			}
 			catch (Exception $e)
 			{
-				$dbh->rollBack();
+				$dbh->exec('DROP TABLE '.$this->enquote($this->tablename));
 				error("Create table '$this->tablename' failed: " . $e->getMessage());
 				return FALSE;
 			}
