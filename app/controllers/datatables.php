@@ -73,14 +73,19 @@ class datatables extends Controller
 
 		//print_r($cfg);
 
-		// Get model
-		$obj = new Tablequery($cfg);
-
-		//$obj->fetch($cfg);
-
-		//return;
-
-		echo json_encode($obj->fetch($cfg));
+		try
+		{
+			// Get model
+			$obj = new Tablequery($cfg);
+			echo json_encode($obj->fetch($cfg));
+		}
+		catch(Exception $e) 
+		{
+			echo json_encode(array(
+				'error' => $e->getMessage(),
+				'sEcho' => intval($cfg['sEcho'])
+			));
+		}
 
 	}
 	

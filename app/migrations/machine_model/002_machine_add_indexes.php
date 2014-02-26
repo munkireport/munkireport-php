@@ -1,6 +1,6 @@
 <?php
 
-// Add UNIQUE index to serial_number column
+// Add indexes to searchable fields in machine
 
 class Migration_machine_add_indexes extends Model 
 {

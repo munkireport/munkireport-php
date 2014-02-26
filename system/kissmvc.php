@@ -109,6 +109,16 @@ class Model extends KISS_Model
     }
 
     /**
+     * Accessor for primary key name
+     *
+     * @return string table name
+     **/
+    function get_pkname()
+    {
+    	return $this->pkname;
+    }
+
+    /**
      * Get PDO driver name
      *
      * @return string driver
@@ -126,6 +136,26 @@ class Model extends KISS_Model
     function get_errors()
     {
     	return $this->errors;
+    }
+
+     /**
+     * Get indexes
+     *
+     * @return string errors
+     **/
+    function get_indexes()
+    {
+    	return $this->idx;
+    }
+
+     /**
+     * Get types
+     *
+     * @return string errors
+     **/
+    function get_types()
+    {
+    	return $this->rt;
     }
 
 	// ------------------------------------------------------------------------
@@ -195,6 +225,30 @@ class Model extends KISS_Model
 		return 0;
 	}
 
+	/**
+	 * Get database type of value
+	 *
+	 * Returns INTEGER, VARCHAR(255), REAL or BLOB
+	 *
+	 * @return string database type
+	 * @author AvB
+	 **/
+	function get_type($val = '')
+	{
+		return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
+	}
+
+	/**
+	 * Get compound index name
+	 *
+	 * @return string index name
+	 * @author 
+	 **/
+	function get_index_name($idx_data = array())
+	{
+		return $this->tablename . '_' . join('_', $idx_data);
+	}
+
 	// ------------------------------------------------------------------------
 
 	/**
@@ -259,7 +313,7 @@ class Model extends KISS_Model
 			foreach($this->rs as $name => $val)
 			{
 				// Determine type automagically
-				$type = is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
+				$type = $this->get_type($val);
 				
 				// Or set type from type array
 				$columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
@@ -288,27 +342,23 @@ class Model extends KISS_Model
 
 			try
 			{
-				
-				// Wrap in transaction
-				$dbh->beginTransaction();
 
-				$rowsaffected = $dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
+				$dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
 
 				// Set indexes
 				$this->set_indexes();
-
-				// Commit changes
-				$dbh->commit();
 
 				// Store schema version in migration table
 				$migration = new Migration($this->tablename);
 				$migration->version = $this->schema_version;
 				$migration->save();
 
+				alert("Created table '$this->tablename' version $this->schema_version");
+
 			}
 			catch (Exception $e)
 			{
-				$dbh->rollBack();
+				$dbh->exec('DROP TABLE '.$this->enquote($this->tablename));
 				error("Create table '$this->tablename' failed: " . $e->getMessage());
 				return FALSE;
 			}
@@ -327,21 +377,20 @@ class Model extends KISS_Model
 	/**
 	 * Set indexes for this table
 	 *
-	 * @return boolean
+	 * @param string optional provide alternative create index
 	 * @author bochoven
 	 **/
-	function set_indexes()
+	function set_indexes($sql = "CREATE INDEX %s ON %s (%s)")
 	{
 		$dbh = $this->getdbh();
 		
 		foreach($this->idx as $idx_data)
 		{
 			// Create name
-			$idx_name = $this->tablename . '_' . join('_', $idx_data);
-			$this->exec(sprintf("CREATE INDEX %s ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
+			$idx_name = $this->get_index_name($idx_data);
+			$this->exec(sprintf($sql, $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
 		}
 		
-		return ($dbh->errorCode() == '00000');
 	}
 
 	/**
