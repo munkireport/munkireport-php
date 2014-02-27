@@ -12,6 +12,8 @@ class Disk_report_model extends Model {
 		$this->rs['SMARTStatus'] = '';
 		$this->rs['SolidState'] = 0;
 		   
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 0;
 		
 		// Create table if it does not exist
 		$this->create_table();

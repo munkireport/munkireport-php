@@ -9,8 +9,8 @@ class Filevault_status_model extends Model {
 		$this->rs['filevault_status'] = '';	
 		$this->rs['filevault_users'] = '';
 
+		// Schema version, increment when creating a db migration
 		$this->schema_version = 2;
-  
 		
 		// Add indexes
 		$this->idx[] = array('filevault_status');

@@ -12,6 +12,8 @@ class Warranty_model extends Model {
 		$this->rs['end_date'] = '';
 		$this->rs['status'] = '';
 		
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 0;
 		
 		// Create table if it does not exist
 		$this->create_table();

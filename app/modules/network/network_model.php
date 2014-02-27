@@ -25,7 +25,6 @@ class Network_model extends Model {
         // Schema version, increment when creating a db migration
         $this->schema_version = 2;
 
-
         $this->idx[] = array('serial_number');
         $this->idx[] = array('serial_number', 'service');
 				

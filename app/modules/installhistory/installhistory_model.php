@@ -12,6 +12,7 @@ class Installhistory_model extends Model {
 		$this->rs['packageIdentifiers'] = '';
 		$this->rs['processName'] = '';
 
+		// Schema version, increment when creating a db migration
 		$this->schema_version = 1;
 		
 		$this->idx['serial_number'] = array('serial_number');

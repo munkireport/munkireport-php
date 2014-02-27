@@ -15,6 +15,9 @@ class Filevault_escrow_model extends Model {
 		$this->rs['PVUUID'] = '';
 		$this->rs['RecoveryKey'] = '';	   
 		$this->rs['HddSerial'] = '';
+
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 0;
 		
 		// Create table if it does not exist
 		$this->create_table();
