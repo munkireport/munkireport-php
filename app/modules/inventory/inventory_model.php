@@ -12,6 +12,8 @@ class Inventory_model extends Model {
         $this->rs['bundleid'] = '';
         $this->rs['bundlename'] = '';
         $this->rs['path'] = '';
+
+        $this->schema_version = 1;
 		
 		// Add indexes
 		$this->idx['serial'] = array('serial');
