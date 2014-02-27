@@ -13,6 +13,10 @@ class Reportdata_model extends Model {
 		$this->rs['reg_timestamp'] = time(); // Registration date
 		$this->rs['timestamp'] = time();
 
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 1;
+
+
 		// Create indexes
         $this->idx[] = array('console_user');
         $this->idx[] = array('long_username');
