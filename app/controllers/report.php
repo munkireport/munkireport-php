@@ -135,7 +135,7 @@ class report extends Controller
 		    // Rename legacy InventoryItem to inventory
 			$name = str_ireplace('InventoryItem', 'inventory', $name);
 
-		   	$this->msg("Starting: $name");
+		   	alert("starting: $name");
 
 		   	// All models are lowercase
 		   	$name = strtolower($name);
@@ -201,6 +201,19 @@ class report extends Controller
 	       		$this->msg("An error occurred while processing: $classname");
 	       		$this->msg("Error: " . $e->getMessage());	       		
 	       	}
+
+	       	// Handle alerts
+			foreach($GLOBALS['alerts'] AS $type => $list)
+			{
+				foreach ($list AS $msg)
+				{
+					$this->msg("$type: $msg");
+				}
+
+				// Remove alert from array
+				unset($GLOBALS['alerts'][$type]);
+			}
+
 		}
 	}
 
@@ -212,7 +225,7 @@ class report extends Controller
 	 **/
 	function msg($msg = 'No message', $exit = FALSE)
 	{
-		echo('Server: '.$msg."\n");
+		echo('Server '.$msg."\n");
 		if($exit)
 		{
 			exit();
