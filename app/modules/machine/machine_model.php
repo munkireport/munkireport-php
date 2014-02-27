@@ -65,9 +65,7 @@ class Machine_model extends Model {
 	 * @author abn290
 	 **/
 	function process($plist)
-	{
-		echo "Machine: got data\n";
-		
+	{		
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);

@@ -57,7 +57,6 @@ class Directory_service_model extends Model {
 	 **/
 	function process($data)
 	{
-		echo "Directory Service: got data\n";
 		
 		// process copied from network model. Translate strings to db fields. needed? . error proof?
         	$translate = array('Directory Service = ' => 'which_directory_service',
