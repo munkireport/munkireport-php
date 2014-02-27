@@ -23,7 +23,7 @@ class Network_model extends Model {
         $this->rs['timestamp'] = time();
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
+        $this->schema_version = 2;
 
 
         $this->idx[] = array('serial_number');
