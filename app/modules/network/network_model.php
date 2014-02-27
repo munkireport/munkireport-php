@@ -42,8 +42,6 @@ class Network_model extends Model {
      **/
     function process($data)
     {
-        echo "Network: got data\n";
-
         // Translate network strings to db fields
         $translate = array(
         	'Ethernet Address: ' => 'ethernet',
