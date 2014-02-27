@@ -295,7 +295,7 @@ class Model extends KISS_Model
         			}
         			catch(Exception $e)
         			{
-        				error("Migration error: ".$e->getMessage());
+        				error("Migration error: $this->tablename: ".$e->getMessage());
 
         				// Rollback any open transaction
         				try { $dbh->rollBack(); } catch (Exception $e2) {}
