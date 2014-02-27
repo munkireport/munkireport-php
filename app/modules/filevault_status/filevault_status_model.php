@@ -9,7 +9,7 @@ class Filevault_status_model extends Model {
 		$this->rs['filevault_status'] = '';	
 		$this->rs['filevault_users'] = '';
 
-		$this->schema_version = 1;
+		$this->schema_version = 2;
   
 		
 		// Add indexes
