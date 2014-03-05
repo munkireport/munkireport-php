@@ -4,7 +4,7 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="icon-lock"></i> Filevault 2 status</h3>
+					<h3 class="panel-title"><i class="fa fa-lock"></i> Filevault 2 status</h3>
 				
 				</div>
 

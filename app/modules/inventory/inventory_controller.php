@@ -4,7 +4,7 @@ class Inventory_controller extends Module_controller
     // Require authentication
     function __construct()
     {
-        if( ! isset($_SESSION['user']))
+        if( ! $this->authorized())
         {
             redirect('auth/login');
         }

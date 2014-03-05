@@ -42,18 +42,6 @@ function conf($cf_item, $default = '')
 	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
 }
 
-/*
-	A simple debug logger that mutes output when debug is FALSE.
- */
-function debug($msg)
-{
-	if (conf('debug'))
-	{
-		printf('<span class="debug">[DEBUG] %s </span>', 
-			is_string($msg) ? $msg : var_export($msg, TRUE));
-	}
-}
-
 /**
  * Fatal error, show message and die
  *
@@ -90,35 +78,14 @@ require( SYS_PATH.'kissmvc.php' );
 require( APP_PATH.'helpers/site_helper'.EXT );
 
 //===============================================
-// Session
+// Timezone and Locale
 //===============================================
-ini_set('session.use_cookies', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_path', conf('subdirectory'));
-session_start();
 date_default_timezone_set( conf('timezone') );
 setlocale(LC_ALL, conf('locale'));
 
 
 set_exception_handler('uncaught_exception_handler');
 
-//===============================================
-// Quick permissions check for sqlite operations
-//===============================================
-if (conf('check_sqlite_perms') && strpos( conf('pdo_dsn'), "sqlite") === 0)
-{
-	$dbh = getdbh();
-	
-	if( $dbh->exec( 'CREATE TABLE `tmp` (id)' ) === FALSE )
-	{
-		if($dbh->exec( 'DROP TABLE `tmp`' ) === FALSE )
-		{
-			$err = $dbh->errorInfo();
-			fatal('sqlite: '.$err[2]);
-		}
-	}
-	$dbh->exec( 'DROP TABLE `tmp`' );
-}
 
 //===============================================
 // Start the controller

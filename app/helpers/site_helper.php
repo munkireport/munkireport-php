@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.0.7.674';
+$GLOBALS['version'] = '2.0.8.725';
 
 // Return version without commit count
 function get_version()
@@ -18,7 +18,7 @@ function uncaught_exception_handler($e)
   ob_end_clean();
 
   // Get error message
-  error($e->getMessage());
+  error('Uncaught Exception: '.$e->getMessage());
 
   // Write footer
   die(View::do_fetch(conf('view_path').'partials/foot.php'));
@@ -78,6 +78,9 @@ function getdbh()
 		{
 			fatal('Connection failed: '.$e->getMessage());
 		}
+
+		// Set error mode
+		$GLOBALS['dbh']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
 		// Store database name in config array
 		if(preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result))
@@ -126,7 +129,7 @@ function lang($str)
 			conf('lang', 'en') . '/lang.php';
 		if ((@include_once $path) !== 1)
 		{
-			debug('failed to load language file for '.conf('lang', 'en'));
+			alert('failed to load language file for language: '.conf('lang', 'en'), 'danger');
 			$lang = array();
 		}
 	}

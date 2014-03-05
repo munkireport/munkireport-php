@@ -23,7 +23,7 @@ class Migration_network_model_fix_ipv4router extends Model
 				// Unfortunately this is not very simple
 				$sql = "CREATE TABLE network_temp (
 							id INTEGER PRIMARY KEY, 
-							serial_number VARCHAR(255) UNIQUE, 
+							serial_number VARCHAR(255), 
 							service VARCHAR(255), 
 							`order` INTEGER, 
 							status INTEGER, 

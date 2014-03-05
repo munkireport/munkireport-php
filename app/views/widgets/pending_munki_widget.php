@@ -4,7 +4,7 @@
 
 				<div class="panel-heading" data-container="body" title="Pending installs for this week">
 
-					<h3 class="panel-title"><i class="icon-shopping-cart"></i> Pending Installs</h3>
+					<h3 class="panel-title"><i class="fa fa-shopping-cart"></i> Pending Installs</h3>
 				
 				</div>
 

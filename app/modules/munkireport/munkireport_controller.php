@@ -34,7 +34,7 @@ class Munkireport_controller extends Module_controller
 	 **/
 	function pending()
 	{
-		if( ! isset($_SESSION['user']))
+		if( ! $this->authorized())
 		{
 			redirect('auth/login');
 		}

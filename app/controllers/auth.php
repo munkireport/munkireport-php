@@ -9,12 +9,6 @@ class auth extends Controller
 	
 	function __construct()
 	{
-		// Check if we can store sessions
-		if ( session_save_path() && ! is_writable(session_save_path()))
-		{
-			fatal('Session path "'.session_save_path().'" is not writable for PHP!');
-		}
-
 		if(conf('auth_secure') && empty($_SERVER['HTTPS']))
 		{
 			redirect('error/client_error/426'); // Switch protocol
@@ -42,6 +36,12 @@ class auth extends Controller
 	
 	function login($return = '')
 	{
+		
+		if($this->authorized())
+		{
+			redirect($return);
+		}
+
 		$check = FALSE;
 
 		// If no valid mechanisms found, bail
@@ -235,6 +235,10 @@ class auth extends Controller
 	
 	function logout()
 	{
+		// Initialize session
+		$this->authorized();
+
+		// Destroy session;
 		session_destroy();
 		redirect('');
 	}

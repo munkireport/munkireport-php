@@ -21,7 +21,7 @@ $(document).ready(function() {
 		  }).remove();
 		  $('.dataTables_filter input').addClass('form-control input-sm')
 		  	.attr('placeholder', 'Search')
-		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="icon-remove"></i></span>')
+		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="fa fa-times"></i></span>')
 		  	.click(function(e){
 		  		
 		  		// Clear hash
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		},
 		"sPaginationType": "bootstrap",
 		"oLanguage": {
-		 "sProcessing": ' <i class="icon-refresh icon-spin"></i>'
+		 "sProcessing": ' <i class="fa fa-refresh fa fa-spin"></i>'
 		} 
 	});
 

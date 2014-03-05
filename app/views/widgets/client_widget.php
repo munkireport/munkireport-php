@@ -24,7 +24,7 @@ $obj = current($queryobj->query($sql));
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="icon-group"></i> Active clients</h3>
+					<h3 class="panel-title"><i class="fa fa-group"></i> Active clients</h3>
 				
 				</div>
 
@@ -67,7 +67,7 @@ $obj = current($queryobj->query($sql));
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="icon-group"></i> Inactive clients</h3>
+					<h3 class="panel-title"><i class="fa fa-group"></i> Inactive clients</h3>
 				
 				</div>
 

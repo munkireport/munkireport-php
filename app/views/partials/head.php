@@ -46,13 +46,13 @@
                 ?>
               <?foreach($navlist as $url => $obj):?>
             <li <?=$page==$url?'class="active"':''?>>
-              <a href="<?=url($url)?>"><i class="icon-<?=$obj->icon?>"></i> <?=$obj->title?></a>
+              <a href="<?=url($url)?>"><i class="fa fa-<?=$obj->icon?>"></i> <?=$obj->title?></a>
             </li>
               <?endforeach?>
 
               <?$url = 'show/reports/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Reports <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o"></i> Reports <b class="caret"></b></a>
                 <ul class="dropdown-menu">
 
                   <?foreach(scandir(conf('view_path').'report') AS $list_url):?>
@@ -71,7 +71,7 @@
 
               <?$url = 'show/listing/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i> Listings <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> Listings <b class="caret"></b></a>
                 <ul class="dropdown-menu">
 
                   <?foreach(scandir(conf('view_path').'listing') AS $list_url):?>
@@ -94,7 +94,7 @@
 
           <form action="<?=url('auth/logout', true)?>" method="post" class="navbar-form navbar-right">
             <button type="submit" class="btn btn-sm btn-default">
-              <i class="icon-signout"></i> Logout <?=$_SESSION['user']?>
+              <i class="fa fa-sign-out"></i> Logout <?=$_SESSION['user']?>
             </button>
           </form>
 

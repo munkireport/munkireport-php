@@ -4,7 +4,7 @@
 
 				<div class="panel-heading" data-container="body" title="Clients registered this week">
 
-					<h3 class="panel-title"><i class="icon-star-empty"></i> New clients <span id="new-clients" class="badge pull-right"></span></h3>
+					<h3 class="panel-title"><i class="fa fa-star-o"></i> New clients <span id="new-clients" class="badge pull-right"></span></h3>
 
 				</div>
 

@@ -40,7 +40,22 @@ class Engine extends KISS_Engine
 //===============================================================
 class Controller extends KISS_Controller 
 {
-	
+	/**
+	 * Check if there is a valid session
+	 * TODO: check authorization
+	 *
+	 * @return boolean TRUE on authorized
+	 * @author AvB
+	 **/
+	function authorized()
+	{
+		ini_set('session.use_cookies', 1);
+		ini_set('session.use_only_cookies', 1);
+		ini_set('session.cookie_path', conf('subdirectory'));
+		session_start();
+
+		return isset($_SESSION['user']);
+	}
 }
 
 //===============================================================
@@ -94,6 +109,16 @@ class Model extends KISS_Model
     }
 
     /**
+     * Accessor for primary key name
+     *
+     * @return string table name
+     **/
+    function get_pkname()
+    {
+    	return $this->pkname;
+    }
+
+    /**
      * Get PDO driver name
      *
      * @return string driver
@@ -111,6 +136,26 @@ class Model extends KISS_Model
     function get_errors()
     {
     	return $this->errors;
+    }
+
+     /**
+     * Get indexes
+     *
+     * @return string errors
+     **/
+    function get_indexes()
+    {
+    	return $this->idx;
+    }
+
+     /**
+     * Get types
+     *
+     * @return string errors
+     **/
+    function get_types()
+    {
+    	return $this->rt;
     }
 
 	// ------------------------------------------------------------------------
@@ -180,6 +225,30 @@ class Model extends KISS_Model
 		return 0;
 	}
 
+	/**
+	 * Get database type of value
+	 *
+	 * Returns INTEGER, VARCHAR(255), REAL or BLOB
+	 *
+	 * @return string database type
+	 * @author AvB
+	 **/
+	function get_type($val = '')
+	{
+		return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
+	}
+
+	/**
+	 * Get compound index name
+	 *
+	 * @return string index name
+	 * @author 
+	 **/
+	function get_index_name($idx_data = array())
+	{
+		return $this->tablename . '_' . join('_', $idx_data);
+	}
+
 	// ------------------------------------------------------------------------
 
 	/**
@@ -189,7 +258,7 @@ class Model extends KISS_Model
 	 * and $this->rt array
 	 *
 	 * @param array assoc array with optional type strings
-	 * @return void
+	 * @return boolean TRUE on success, FALSE if failed
 	 * @author bochoven
 	 **/
 	function create_table()
@@ -200,18 +269,51 @@ class Model extends KISS_Model
 			return TRUE;
 		}
 
-		$dbh = $this->getdbh();
+		// Check if table exists and is up-to-date
+		try
+		{
+			$dbh = $this->getdbh();
 		
-		$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false); 
-		
-        if( ! $dbh->prepare( "SELECT * FROM ".$this->enquote($this->tablename)." LIMIT 1" ))
-        {
+			$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
+
+			// Check if table exists
+			$this->prepare( "SELECT * FROM ".$this->enquote($this->tablename)." LIMIT 1" );
+
+			// Existing table, is it up-to date?
+			if (conf('allow_migrations'))
+        	{
+        		if ($this->get_schema_version() !== $this->schema_version)
+        		{
+        			try
+        			{
+        				require_once(conf('application_path').'helpers/database_helper.php');
+
+	        			migrate($this);
+
+	        			$model_name = get_class($this);
+	        			alert('Migrated '.$model_name.' to version '.$this->schema_version);
+        			}
+        			catch(Exception $e)
+        			{
+        				error("Migration error: $this->tablename: ".$e->getMessage());
+
+        				// Rollback any open transaction
+        				try { $dbh->rollBack(); } catch (Exception $e2) {}
+        			}
+        			
+        		}
+        	}
+		}
+		catch (Exception $e)
+		{
+			// If the prepare fails, the table does not exist.
+
 			// Get columns
 			$columns = array();
 			foreach($this->rs as $name => $val)
 			{
 				// Determine type automagically
-				$type = is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
+				$type = $this->get_type($val);
 				
 				// Or set type from type array
 				$columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
@@ -220,8 +322,8 @@ class Model extends KISS_Model
 			// Set primary key
 			$columns[$this->pkname] = 'INTEGER PRIMARY KEY';
 			
-			// Set autoincrement per db engine
-			switch($dbh->getAttribute(constant("PDO::ATTR_DRIVER_NAME")))
+			// Set auto increment per db engine
+			switch($this->get_driver())
 			{
 				case 'sqlite':
 					$columns[$this->pkname] .= ' AUTOINCREMENT';
@@ -238,48 +340,36 @@ class Model extends KISS_Model
 			}
 			$sql = rtrim($sql, ',');
 
-            $rowsaffected = $dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
+			try
+			{
 
-			// Set indexes
-			$this->set_indexes();
+				$dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
 
-			// Store schema version in migration table
-			$migration = new Migration($this->tablename);
-			$migration->version = $this->schema_version;
-			$migration->save();
-			        }
-        else // Existing table, is it up-to date?
-        {
-        	if (conf('allow_migrations'))
-        	{
-        		if ($this->get_schema_version() !== $this->schema_version)
-        		{
-        			try
-        			{
-        				require_once(conf('application_path').'helpers/database_helper.php');
+				// Set indexes
+				$this->set_indexes();
 
-	        			migrate($this);
+				// Store schema version in migration table
+				$migration = new Migration($this->tablename);
+				$migration->version = $this->schema_version;
+				$migration->save();
 
-	        			$model_name = get_class($this);
-	        			alert('Migrated '.$model_name.' to version '.$this->schema_version);
-        			}
-        			catch(Exception $e)
-        			{
-        				error("Migration error: ".$e->getMessage());
+				alert("Created table '$this->tablename' version $this->schema_version");
 
-        				// Rollback any open transaction
-        				try { $dbh->rollBack(); } catch (Exception $e2) {}
-        			}
-        			
-        		}
-        	}
-        }
+			}
+			catch (Exception $e)
+			{
+				$dbh->exec('DROP TABLE '.$this->enquote($this->tablename));
+				error("Create table '$this->tablename' failed: " . $e->getMessage());
+				return FALSE;
+			}
+            
+		}
 
         // Store this table in the instantiated tables array
         $GLOBALS['tables'][$this->tablename] = $this->tablename;
 
-		//print_r($dbh->errorInfo());
-        return ($dbh->errorCode() == '00000');
+        // Create table succeeded
+        return TRUE;
 	}
 	
 	// ------------------------------------------------------------------------
@@ -287,21 +377,20 @@ class Model extends KISS_Model
 	/**
 	 * Set indexes for this table
 	 *
-	 * @return boolean
+	 * @param string optional provide alternative create index
 	 * @author bochoven
 	 **/
-	function set_indexes()
+	function set_indexes($sql = "CREATE INDEX %s ON %s (%s)")
 	{
 		$dbh = $this->getdbh();
 		
 		foreach($this->idx as $idx_data)
 		{
 			// Create name
-			$idx_name = $this->tablename . '_' . join('_', $idx_data);
-			$this->exec(sprintf("CREATE INDEX %s ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
+			$idx_name = $this->get_index_name($idx_data);
+			$this->exec(sprintf($sql, $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
 		}
 		
-		return ($dbh->errorCode() == '00000');
 	}
 
 	/**
@@ -344,7 +433,7 @@ class View extends KISS_View
  * @package munkireport
  * @author AvB
  **/
-class Module_controller
+class Module_controller extends Controller
 {
 	
 	// Module, override in child object
