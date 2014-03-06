@@ -46,7 +46,7 @@ class Machine_model extends Model {
 
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 2;
+		$this->schema_version = 3;
 
 		// Create table if it does not exist
 		$this->create_table();
