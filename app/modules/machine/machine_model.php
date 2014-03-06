@@ -10,6 +10,7 @@ class Machine_model extends Model {
 		$this->rs['machine_model'] = '';
 		$this->rs['machine_desc'] = '';
 		$this->rs['img_url'] = '';
+		$this->rs['cpu'] = '';
 		$this->rs['current_processor_speed'] = '';
 		$this->rs['cpu_arch'] = '';
 		$this->rs['os_version'] = '';
@@ -28,6 +29,7 @@ class Machine_model extends Model {
 		$this->idx['hostname'] = array('hostname');
 		$this->idx['machine_model'] = array('machine_model');
 		$this->idx['machine_desc'] = array('machine_desc');
+		$this->idx['cpu'] = array('cpu');
 		$this->idx['current_processor_speed'] = array('current_processor_speed');
 		$this->idx['cpu_arch'] = array('cpu_arch');
 		$this->idx['os_version'] = array('os_version');
