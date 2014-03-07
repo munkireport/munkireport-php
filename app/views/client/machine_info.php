@@ -65,7 +65,7 @@
 					<dd>OS X <?=$machine->os_version . ' ('
 							. $machine->cpu_arch . ')'?>&nbsp;</dd>
 					<dt>CPU</dt>
-					<dd><?=machine->cpu?>
+					<dd><?=machine->cpu?></dd>
 					<dt>CPU Type</dt>
 					<dd><?=$machine->number_processors?> core</dd>
 					<dt>Serial Number</dt>
