@@ -1,6 +1,6 @@
 <?php
 
-class Migration_add_cpu extends Model
+class Migration_machine_add_cpu extends Model
 {
 	protected $columname = 'cpu';
 
@@ -69,7 +69,7 @@ class Migration_add_cpu extends Model
 				$this->exec($sql);
 
 				$sql = "INSERT INTO machine_temp 
-							SELECT id, serial_number, hostname, machine_model, machine_desc, img_url, current_processor_speed, cpu_arch, os_version, physical_memory, platform_UUID, number_processors, SMC_version_system, boot_rom_version, bus_speed, computer_name, l2_cache, machine_name, packages FROM filevault_status";
+							SELECT id, serial_number, hostname, machine_model, machine_desc, img_url, current_processor_speed, cpu_arch, os_version, physical_memory, platform_UUID, number_processors, SMC_version_system, boot_rom_version, bus_speed, computer_name, l2_cache, machine_name, packages FROM machine";
 				$this->exec($sql);
 
 				$sql = "DROP table machine";
