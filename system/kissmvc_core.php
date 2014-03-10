@@ -583,9 +583,9 @@ abstract class KISS_Model
 
 	function merge( $arr ) 
 	{
-		if ( !is_array( $arr ) ) return $this;
+		if ( ! is_array( $arr ) ) return $this;
 		foreach ( $arr as $key => $val )
-			if ( isset( $this->rs[$key] ) )	$this->rs[$key] = $val;
+			if (array_key_exists($key, $this->rs))	$this->rs[$key] = $val;
 		return $this;
 	}
 
