@@ -539,7 +539,7 @@ abstract class KISS_Model
 		$rs = $stmt->fetch( PDO::FETCH_ASSOC );
 		if ( $rs )
 			foreach ( $rs as $key => $val )
-				if ( isset( $this->rs[$key] ) )
+				if (array_key_exists($key, $this->rs))
 					$this->rs[$key] = is_scalar( $this->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
 		return $this;
 	}
@@ -604,7 +604,7 @@ abstract class KISS_Model
 		if ( !$rs )
 			return false;
 		foreach ( $rs as $key => $val )
-			if ( isset( $this->rs[$key] ) )
+			if ( array_key_exists($key, $this->rs) )
 				$this->rs[$key] = is_scalar( $this->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
 		return $this;
 	}
@@ -623,7 +623,7 @@ abstract class KISS_Model
 		{
 			$myclass = new $class();
 			foreach ( $rs as $key => $val )
-				if ( isset( $myclass->rs[$key] ) )
+				if ( array_key_exists($key, $myclass->rs) )
 					$myclass->rs[$key] = is_scalar( $myclass->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
 			$arr[]=$myclass;
 		}
