@@ -14,7 +14,7 @@
 					$thirtydays = date('Y-m-d', strtotime('+30days'));
 					$class_list = array('Supported' => 'warning');
 					$cnt = 0;
-					$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY status";
+					$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY count DESC";
 				?>
 					<?foreach($warranty->query($sql) as $obj):?>
 					<?$status = array_key_exists($obj->status, $class_list) ? $class_list[$obj->status] : 'danger'?>

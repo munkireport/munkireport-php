@@ -8,13 +8,13 @@
 				
 				</div>
 
-				<div class="list-group">
+				<div class="list-group scroll-box">
 
 				<?	$fv = new filevault_status_model(); 
 					$sql = "SELECT count(1) AS count,
 							filevault_status FROM filevault_status
 							GROUP BY filevault_status
-							ORDER BY filevault_status";
+							ORDER BY count DESC";
 					$cnt = 0;
 				?>
 					<?foreach($fv->query($sql) as $obj):?>
