@@ -64,8 +64,10 @@
 					<dt>Software</dt>
 					<dd>OS X <?=$machine->os_version . ' ('
 							. $machine->cpu_arch . ')'?>&nbsp;</dd>
-					<dt>CPU Speed</dt>
-					<dd><?=$machine->current_processor_speed?> ( <?=$machine->number_processors?> core )</dd>
+					<dt>CPU</dt>
+					<dd><?=$machine->cpu?></dd>
+					<dt>CPU Type</dt>
+					<dd><?=$machine->number_processors?> core</dd>
 					<dt>Serial Number</dt>
 					<dd><?=$serial_number?>&nbsp;</dd>
 					<dt>SMC Version</dt>

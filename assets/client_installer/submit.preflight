@@ -23,6 +23,7 @@ def main():
     # Collect some hardware info
     hardware_info = munkicommon.get_hardware_info()
     hardware_info['computer_name'] = reportcommon.get_computername()
+    hardware_info['cpu'] = reportcommon.get_cpuinfo()
     hardware_info['cpu_arch'] = os.uname()[4]
     hardware_info['hostname'] = os.uname()[1]
     hardware_info['os_version'] = \
