@@ -9,8 +9,8 @@ class Filevault_status_model extends Model {
 		$this->rs['filevault_status'] = '';	
 		$this->rs['filevault_users'] = '';
 
-		$this->schema_version = 1;
-  
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 2;
 		
 		// Add indexes
 		$this->idx[] = array('filevault_status');
@@ -34,9 +34,7 @@ class Filevault_status_model extends Model {
 	 * @author gmarnin
 	 **/
 	function process($data)
-	{
-		echo "FileVault Status: got data\n";
-		
+	{		
 		// process copied from network model. Translate strings to db fields. needed? . error proof?
         	$translate = array(
         						'fv_status = ' => 'filevault_status',

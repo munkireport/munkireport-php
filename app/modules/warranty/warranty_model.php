@@ -12,6 +12,8 @@ class Warranty_model extends Model {
 		$this->rs['end_date'] = '';
 		$this->rs['status'] = '';
 		
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 0;
 		
 		// Create table if it does not exist
 		$this->create_table();
@@ -34,7 +36,8 @@ class Warranty_model extends Model {
 	 **/
 	function process()
 	{
-		$this->msg(sprintf("Old status: %s", $this->status));
+
+		alert("warranty: current status: $this->status");
 
 		switch($this->status)
 		{
@@ -59,12 +62,12 @@ class Warranty_model extends Model {
 				return;
 			default:
 				// Unknown status
-				$this->msg('Unknown status: '.$this->status);
+				alert('warranty: unknown status: '.$this->status, 'warning');
 
 		}
 		$this->check_status($force = TRUE);
 
-		$this->msg(sprintf("New status: %s", $this->status));
+		alert(sprintf("warranty: new status: %s", $this->status));
 	}
 
 	
@@ -76,21 +79,29 @@ class Warranty_model extends Model {
 			return $this;
 		}
 
+		// Store previous status
+		$prev_status = $this->status;
+
 		// Load warranty helper
 		require_once(conf('application_path').'helpers/warranty_helper.php');
 		
 		// Update needed, check with apple
 		check_warranty_status($this);
-		
-		$this->save();
+
+		// If new status is 'No information found' and
+		// previous status was set, don't save
+		// This happens when Apple's servers are in maintenance
+		if($this->status == 'No information found' && $prev_status)
+		{
+			alert('warranty: update warranty status failed (Apple server down?)', 'warning');
+			$this->retrieve($this->id);
+		}
+		else
+		{
+			$this->save();
+		}
 		
 		return $this;
 	}
-	
-	function msg($msg = 'No message', $exit = FALSE)
-	{
-		echo "Server: warranty: $msg \n";
-		$exit && exit;
-	}
-	
+		
 }

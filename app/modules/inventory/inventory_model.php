@@ -12,6 +12,9 @@ class Inventory_model extends Model {
         $this->rs['bundleid'] = '';
         $this->rs['bundlename'] = '';
         $this->rs['path'] = '';
+
+        // Schema version, increment when creating a db migration
+       $this->schema_version = 1;
 		
 		// Add indexes
 		$this->idx['serial'] = array('serial');
@@ -40,9 +43,7 @@ class Inventory_model extends Model {
         // List of paths to ignore
         $bundlepath_ignorelist = is_array(conf('bundlepath_ignorelist')) ? conf('bundlepath_ignorelist') : array();
         $path_regex = ':^'.implode('|', $bundlepath_ignorelist).'$:';
-    
-        if (! $this->serial) die('Serial missing');
-                
+                    
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse(
