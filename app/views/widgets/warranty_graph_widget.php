@@ -11,7 +11,7 @@
 				<div class="list-group scroll-box">
 
 					<?	$warranty = new Warranty_model();
-						$sql = "SELECT count(id) as count, status from warranty group by status ORDER BY status";
+						$sql = "SELECT count(id) as count, status from warranty group by status ORDER BY count DESC";
 						$class_list = array('Expired' => 'danger');
 					?>
 					<?foreach($warranty->query($sql) as $obj):?> 
@@ -27,7 +27,7 @@
 
 
 				<?	$thirtydays = date('Y-m-d', strtotime('+30days'));
-					$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY status";
+					$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY count DESC";
 				?>
 					<?foreach($warranty->query($sql) as $obj):?>
 
