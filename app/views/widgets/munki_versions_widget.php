@@ -13,7 +13,7 @@
 						$sql = "SELECT version, COUNT(1) AS count
 								FROM munkireport
 								GROUP BY version
-								ORDER BY version ASC";
+								ORDER BY COUNT DESC";
 					?>
 						<?foreach($munkireport->query($sql) as $obj):?>
 							<?if (empty($obj->version)):?>
