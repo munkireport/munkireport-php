@@ -175,27 +175,30 @@ function getScale()
 
 // Generate nice colors
 // Adapted from http://krazydad.com/tutorials/makecolors.php
-function makeColorGradient(len)
-  {
-    var center = 128,
-		width = 127,
-		frequency1 = .4,
-		frequency2 = frequency1,
-		frequency3 = frequency1,
-		phase1 = -2,
-		phase2 = phase1 + 2,
-		phase3 = phase1 + 4;
-    var out = []
-    for (var i = 0; i < len; ++i)
-    {
-       var red = Math.round(Math.sin(frequency1*i + phase1) * width + center);
-       var grn = Math.round(Math.sin(frequency2*i + phase2) * width + center);
-       var blu = Math.round(Math.sin(frequency3*i + phase3) * width + center);
-       out.push('rgb('+red+','+grn+','+blu+')')
-    }
+if(typeof window.makeColorGradient !== 'function')
+{
+	window.makeColorGradient = function(len)
+	{
+		var center = 128,
+			width = 127,
+			frequency1 = .4,
+			frequency2 = frequency1,
+			frequency3 = frequency1,
+			phase1 = -2,
+			phase2 = phase1 + 2,
+			phase3 = phase1 + 4;
+		var out = []
+		for (var i = 0; i < len; ++i)
+		{
+		   var red = Math.round(Math.sin(frequency1*i + phase1) * width + center);
+		   var grn = Math.round(Math.sin(frequency2*i + phase2) * width + center);
+		   var blu = Math.round(Math.sin(frequency3*i + phase3) * width + center);
+		   out.push('rgb('+red+','+grn+','+blu+')')
+		}
 
-    return out
-  }
+		return out
+	}
+}
 
 // Global variables
 var chartObjects = {}, // Holds instantiated chart objects

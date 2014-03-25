@@ -393,6 +393,19 @@
 	*/
 	$conf['timezone'] = @date_default_timezone_get();
 	
+	/*
+	|===============================================
+	| Custom css and js
+	|===============================================
+	|
+	| If you want to override the default css or default js
+	| you can specify a custom file that will be included
+	| in the header (css) and footer (js)
+	|
+	*/
+	//$conf['custom_css'] = '/custom.css';
+	//$conf['custom_js'] = '/custom.js';
+
 	
 	/*
 	|===============================================
