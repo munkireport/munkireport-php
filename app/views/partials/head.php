@@ -10,6 +10,10 @@
   <link rel="stylesheet" type="text/css" href="<?=conf('subdirectory')?>assets/css/style.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="<?=conf('subdirectory')?>assets/css/dataTables-bootstrap.css" />
   <link href="<?=conf('subdirectory')?>assets/css/font-awesome.min.css" rel="stylesheet">
+  <?if(conf('custom_css')):?> 
+  <link rel="stylesheet" href="<?=conf('custom_css')?>" />
+  <?endif?>
+
   <script src="<?=conf('subdirectory')?>assets/js/jquery.js"></script>
 
 
