@@ -45,6 +45,9 @@ else
 	chmod a+x "${MUNKIPATH}preflight.d/submit.preflight"
 fi
 
+# Create postflight.d
+mkdir -p "${MUNKIPATH}postflight.d"
+
 echo "Configuring munkireport"
 #### Configure Munkireport ####
 
