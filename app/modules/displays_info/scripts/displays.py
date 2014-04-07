@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# extracts monitor and VGA information from system profiler
+# extracts information about the external displays from system profiler
 
 import sys
 import os
@@ -29,54 +29,46 @@ result = ''
 #loop inside each graphic card
 for vga in plist[0]['_items']:
 
-  #this filters iMacs with no external monitor
+  #this filters out iMacs with no external display
   if vga.get('spdisplays_ndrvs', None):
 
-    #loop within each monitor
-    for monitor in vga['spdisplays_ndrvs']:
+    #loop within each display
+    for display in vga['spdisplays_ndrvs']:
 
-      #Serial section
-      #built-in don't have a serial. We need to protect this
-      if monitor.get('spdisplays_display-serial-number', None):
-        result += 'Serial = ' + str(monitor['spdisplays_display-serial-number'])
-      else:
-        result += 'Serial = n/a'
-      #catch KeyError for built-in displays and 10.6. todo Only?
-      try:
-        #Vendor section
-        # todo move vendor matching to mrphp:'610' Apple, '10ac' DELL...
-        # todo find a source for this? who is '4c2d' or '30e4' ?
-        result += '\nVendor = ' + str(monitor['_spdisplays_display-vendor-id'])
+      #filter out built-in that don't have serial (laptops)
+      if display.get('spdisplays_display-serial-number', None):
+        #Serial section
+        result += 'Serial = ' + str(display['spdisplays_display-serial-number'])
 
-        #Model section
-        result += '\nModel = ' + str(monitor['_name'])
+        try:
+          #Vendor section
+          result += '\nVendor = ' + str(display['_spdisplays_display-vendor-id'])
 
-        #Manufactured section
-        pretty = datetime.datetime.strptime(monitor['_spdisplays_display-year'] + monitor['_spdisplays_display-week'] + '1', '%Y%W%w')
-        result += '\nManufactured = ' + str(pretty.strftime('%B %Y'))
+          #Model section
+          result += '\nModel = ' + str(display['_name'])
 
-        #Native resolution section
-        result += '\nNative = ' + str(monitor['_spdisplays_pixels'])
+          #Manufactured section
+          pretty = datetime.datetime.strptime(display['_spdisplays_display-year'] + display['_spdisplays_display-week'] + '1', '%Y%W%w')
+          result += '\nManufactured = ' + str(pretty.strftime('%B %Y'))
 
-        #Type section
-        if monitor.get('spdisplays_builtin', None):
-          result += '\nType = Internal '
-        else:
-          result += '\nType = External '
+          #Native resolution section
+          result += '\nNative = ' + str(display['_spdisplays_pixels'])
 
-      except KeyError as error:
-        pass
+        except KeyError as error:
+          pass
 
       else:
-        result += '\n----------\n'
+        #built-in that don't have serial (laptops)
+        result += 'No external display'
 
-  # else:
-  # iMacs with no external monitor
-  # todo something here?
-  # pass
+      result += '\n----------\n'
+
+  else:
+    # iMacs with no external display
+    result += 'No external display'
 
 # Write to disk
-file = open("%s/display.txt" % cachedir, "w")
+file = open("%s/displays.txt" % cachedir, "w")
 file.write(result)
 file.close()
 

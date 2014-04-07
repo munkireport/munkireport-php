@@ -6,7 +6,7 @@
  * @package munkireport
  * @author Noel B.A.
  **/
-class Displays_controller extends Module_controller
+class Displays_info_controller extends Module_controller
 {
 
 	/*** Protect methods with auth! ****/
