@@ -1,31 +1,36 @@
 <?php
 
 class Displays_model extends Model {
-    //todo fix next line?
-    function __construct($monitor_serial='')
+    //todo fix this line?
+    function __construct($display_serial='')
     {
       //todo all this
-  		parent::__construct('monitor_serial', 'displays'); //primary key, tablename
-  		$this->rs['monitor_serial'] = ''; // unique? string
+      parent::__construct('id', 'displays'); //primary key, tablename
+          $this->rs['id'] = '';
+          $this->rs['display_serial'] = $display_serial; // Serial num of the display; not unique for 'n/a' cases
+          $this->rs['machine_serial'] = ''; // Serial num of the computer
+          $this->rs['vendor'] = ''; // Vendor for the display
+          $this->rs['model'] = ''; // Model of the display
+          $this->rs['manufactured'] = ''; // Aprox. date when it was built
+          $this->rs['native'] = ''; // Native resolution
+          $this->rs['type'] = 1; // Internal(built-in) = 1 , External =1
+          $this->rs['timestamp'] = ''; // Unix time from the computer when report was generated
 
-      // +decide where to put VGA info
+      //indexes to optimize queries
+      $this->idx[] = array('display_serial');
+      $this->idx[] = array('machine_serial');
 
-  		//indexes
-      // monitor and machine serial at least
-      $this->idx[] = array('allowedadmingroups');
+      // Schema version, increment when creating a db migration
+      $this->schema_version = 0;
 
-  		// Schema version, increment when creating a db migration
-      //todo should we start at 0?
-  		$this->schema_version = 1;
-
-  		// Create table if it does not exist
-  		$this->create_table();
+      // Create table if it does not exist
+      $this->create_table();
 
       //todo what's this?
-  		if ($serial) {
-  			$this->retrieve_one('serial_number=?', $serial);
-  			$this->serial = $serial;
-  		}
+      if ($serial) {
+        $this->retrieve_one('serial_number=?', $serial);
+        $this->serial = $serial;
+      }
     } //end construct
 
     /**
@@ -34,53 +39,52 @@ class Displays_model extends Model {
      * @param string data
      * @author Noel B.A.
      **/
-	function process($data)
-	{
+  function process($data)
+  {
 
-		// process copied from network model. Translate strings to db fields. needed? . error proof?
-          //todo use this as an example
-        	$translate = array('Directory Service = ' => 'which_directory_service',
-								'Active Directory Comments = ' => 'directory_service_comments');
+    // translate array used to match data to db fields
+    $translate = array('Serial = ' => 'display_serial',
+                        'Vendor = ' => 'vendor',
+                        'Model = ' => 'model',
+                        'Manufactured = ' => 'vendor',
+                        'Native = ' => 'native',
+                        'Type = ' => 'type');
 
-    //todo all from here to the bottom :P
+    // Parse data
+    foreach(explode("\n", $data) as $line) {
+      // Translate standard entries
+      foreach($translate as $search => $field) {
 
-		//clear any previous data we had
-		foreach($translate as $search => $field)
-		{
-			if(array_key_exists($field, $this->rt) && $this->rt[$field] == 'BOOL')
-			{
-				$this->$field = 0;
-			}
-			else
-			{
-				$this->$field = '';
-			}
-		}
+          if(strpos($line, $search) === 0) {
 
-		// Parse data
-		foreach(explode("\n", $data) as $line) {
-		    // Translate standard entries
-			foreach($translate as $search => $field) {
+            //todo use switch here for $search instead of $translate?
 
-			    if(strpos($line, $search) === 0) {
+            $value = substr($line, strlen($search));
 
-				    $value = substr($line, strlen($search));
+            // Translate type to bool
+            //todo only do this for 'Type = '
+            if (strpos($value, 'External') === 0) {
+              $this->$field = 1;
+              break;
+            } elseif (strpos($value, 'Internal') === 0) {
+              $this->$field = 0;
+              break;
+            }
 
-				    // use bool when possible
-				    if (strpos($value, 'Enabled') === 0) {
-					    $this->$field = 1;
-					    break;
-				    } elseif (strpos($value, 'Disabled') === 0) {
-					    $this->$field = 0;
-					    break;
-				    }
+            $this->$field = $value;
+            break;
+          }
 
-				    $this->$field = $value;
-				    break;
-			    }
-			}
+          //todo separator line makes us jump to next display
 
-		} //end foreach explode lines
-		$this->save();
-	}
+      } //end foreach translate
+    //todo id to be incremented by the server
+    //todo timestamp to be added by the server
+    //todo machine_serial to be added by the server
+    $this->save(); //save after each display
+    } //end foreach explode lines
+
+    //todo echo the result back to the client
+
+  }
 }
