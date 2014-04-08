@@ -16,4 +16,4 @@ This is the table of values for 'displays':
 Remarks
 ---
 
-* Only accounts for external displays.
+* Only accounts for external displays with a valid serial number.

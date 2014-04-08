@@ -35,12 +35,13 @@ for vga in plist[0]['_items']:
     #loop within each display
     for display in vga['spdisplays_ndrvs']:
 
-      #filter out built-in that don't have serial (laptops)
+      #this filters out built-in displays
+      #projectors might have _spdisplays_display-serial-number are also ignored
       if display.get('spdisplays_display-serial-number', None):
-        #Serial section
-        result += 'Serial = ' + str(display['spdisplays_display-serial-number'])
-
         try:
+          #Serial section
+          result += 'Serial = ' + str(display['spdisplays_display-serial-number'])
+
           #Vendor section
           result += '\nVendor = ' + str(display['_spdisplays_display-vendor-id'])
 
@@ -55,17 +56,15 @@ for vga in plist[0]['_items']:
           result += '\nNative = ' + str(display['_spdisplays_pixels'])
 
         except KeyError as error:
-          pass
+          result += 'an error ocurred'
 
       else:
-        #built-in that don't have serial (laptops)
-        result += 'No external display'
+
+        result += 'One built-in display'
 
       result += '\n----------\n'
 
-  else:
-    # iMacs with no external display
-    result += 'No external display'
+##############
 
 # Write to disk
 file = open("%s/displays.txt" % cachedir, "w")

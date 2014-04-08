@@ -49,16 +49,22 @@
             { 'bVisible': false, "aTargets": hideThese }
           ],
           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-            // Update name in first column to link
-            var name=$('td:eq(0)', nRow).html();
-            if(name == ''){name = "No Name"};
-            var sn=$('td:eq(1)', nRow).html();
-            var link = get_client_detail_link(name, sn, '<?=url()?>/');
-            $('td:eq(0)', nRow).html(link);
+            // Translating vendors column
+            var vendor=$('td:eq(0)', nRow).html();
+            switch (vendor)
+            {
+            case "610":
+              vendor="Apple"
+              break;
+            case "10ac":
+              vendor="DELL"
+              break;
+            }
+            $('td:eq(0)', nRow).html(vendor)
 
-            //todo Translate vendors from binary to string
-          }
-        } );
+          } //end fnCreatedRow
+
+        } ); //end oTable
 
         // Use hash as searchquery
         if(window.location.hash.substring(1))
@@ -69,7 +75,7 @@
       } );
     </script>
 
-    <h3>Found Displays report <span id="total-count" class='label label-primary'>…</span></h3>
+    <h3>Displays report <span id="total-count" class='label label-primary'>…</span></h3>
 
       <table class="table table-striped table-condensed table-bordered">
 
