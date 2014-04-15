@@ -7,7 +7,7 @@ class Displays_info_model extends Model {
       parent::__construct('id', 'displays'); //primary key, tablename
           $this->rs['id'] = '';
           $this->rs['display_serial'] = ''; $this->rt['display_serial'] = 'VARCHAR(255) UNIQUE'; // Serial num of the display
-          $this->rs['machine_serial'] = $serial; // Serial num of the computer
+          $this->rs['serial_number'] = $serial; // Serial num of the computer
           $this->rs['vendor'] = ''; // Vendor for the display
           $this->rs['model'] = ''; // Model of the display
           $this->rs['manufactured'] = ''; // Aprox. date when it was built
@@ -16,7 +16,7 @@ class Displays_info_model extends Model {
 
       //indexes to optimize queries
       $this->idx[] = array('display_serial');
-      $this->idx[] = array('machine_serial');
+      $this->idx[] = array('serial_number');
 
       // Schema version, increment when creating a db migration
       $this->schema_version = 0;
@@ -27,7 +27,7 @@ class Displays_info_model extends Model {
       //todo fix this for listing view?
       if ($serial)
       {
-        $this->retrieve_one('machine_serial=?', $serial);
+        $this->retrieve_one('serial_number=?', $serial);
       }
 
       $this->serial = $serial;

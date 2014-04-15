@@ -1,9 +1,8 @@
 <?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
-  new Machine_model;
-  new Reportdata_model;
   new Displays_info_model;
+  new Machine_model;
 ?>
 
 <div class="container">
@@ -62,6 +61,20 @@
             }
             $('td:eq(0)', nRow).html(vendor)
 
+            // Format timestamp from unix to relative
+            date = aData['displays#timestamp'];
+            if(date)
+            {
+                  $('td:eq(5)', nRow).html(moment.unix(date).fromNow());
+            }
+
+            // Update computer name to link
+            var name=$('td:eq(6)', nRow).html();
+            if(name == ''){name = "No Name"};
+            var sn=$('td:eq(7)', nRow).html();
+            var link = get_client_detail_link(name, sn, '<?=url()?>/');
+            $('td:eq(6)', nRow).html(link);
+
           } //end fnCreatedRow
 
         } ); //end oTable
@@ -85,15 +98,16 @@
             <th data-colname='displays#model'>Model</th>
             <th data-colname='displays#display_serial'>Serial number</th>
             <th data-colname='displays#manufactured'>Manufactured</th>
-            <th data-colname='displays#native'>Max. resolution</th>
+            <th data-colname='displays#native'>Native resolution</th>
             <th data-colname='displays#timestamp'>Last seen</th>
-            <th data-colname='displays#machine_serial'>On computer</th>
+            <th data-colname='machine#computer_name'>On computer</th>
+            <th data-colname='displays#serial_number'>Computer serial</th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td colspan="5" class="dataTables_empty">Loading data from server</td>
+            <td colspan="6" class="dataTables_empty">Loading data from server</td>
           </tr>
         </tbody>
 
