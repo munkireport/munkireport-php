@@ -48,8 +48,22 @@
             { 'bVisible': false, "aTargets": hideThese }
           ],
           "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+
+            // Update computer name to link
+            var name=$('td:eq(0)', nRow).html();
+            if(name == ''){name = "No Name"};
+            var sn=$('td:eq(1)', nRow).html();
+            var link = get_client_detail_link(name, sn, '<?=url()?>/');
+            $('td:eq(0)', nRow).html(link);
+
+            // Internal vs External
+            var status=$('td:eq(2)', nRow).html();
+            status = status == 1 ? 'External' :
+              (status == '0' ? 'Internal' : '')
+            $('td:eq(2)', nRow).html(status)
+
             // Translating vendors column
-            var vendor=$('td:eq(0)', nRow).html();
+            var vendor=$('td:eq(3)', nRow).html();
             switch (vendor)
             {
             case "610":
@@ -59,21 +73,14 @@
               vendor="DELL"
               break;
             }
-            $('td:eq(0)', nRow).html(vendor)
+            $('td:eq(3)', nRow).html(vendor)
 
             // Format timestamp from unix to relative
             date = aData['displays#timestamp'];
             if(date)
             {
-                  $('td:eq(5)', nRow).html(moment.unix(date).fromNow());
+                  $('td:eq(8)', nRow).html(moment.unix(date).fromNow());
             }
-
-            // Update computer name to link
-            var name=$('td:eq(6)', nRow).html();
-            if(name == ''){name = "No Name"};
-            var sn=$('td:eq(7)', nRow).html();
-            var link = get_client_detail_link(name, sn, '<?=url()?>/');
-            $('td:eq(6)', nRow).html(link);
 
           } //end fnCreatedRow
 
@@ -94,14 +101,15 @@
 
         <thead>
           <tr>
+            <th data-colname='machine#computer_name'>On computer</th>
+            <th data-colname='displays#serial_number'>Computer serial</th>
+            <th data-colname='displays#type'>Type</th>
             <th data-colname='displays#vendor'>Vendor</th>
             <th data-colname='displays#model'>Model</th>
             <th data-colname='displays#display_serial'>Serial number</th>
             <th data-colname='displays#manufactured'>Manufactured</th>
             <th data-colname='displays#native'>Native resolution</th>
-            <th data-colname='displays#timestamp'>Last seen</th>
-            <th data-colname='machine#computer_name'>On computer</th>
-            <th data-colname='displays#serial_number'>Computer serial</th>
+            <th data-colname='displays#timestamp'>Detected</th>
           </tr>
         </thead>
 
