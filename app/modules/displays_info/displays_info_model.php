@@ -37,16 +37,16 @@ class Displays_info_model extends Model {
 // ------------------------------------------------------------------------
 
 /**
- * Delete any known entry for display_serial
+ * Delete any known entry for matching value(s) in column
  *
  * @author Noel B.A.
  **/
-function delete_set()
+function delete_set_where($column,$value)
 {
   $dbh=$this->getdbh();
-  $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'display_serial' ).'=?';
+  $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote($column).'=?';
   $stmt = $dbh->prepare( $sql );
-  $stmt->bindValue( 1, $this->display_serial );
+  $stmt->bindValue( 1, $value );
   $stmt->execute();
   return $this;
 }
@@ -70,21 +70,35 @@ function delete_set()
                           'Manufactured = ' => 'manufactured',
                           'Native = ' => 'native');
 
+      // if we didn't specify in the config that we like history then
+      // we nuke any data we had with this computer's s/n
+      if (! conf('keep_previous_displays')){
+        $this->delete_set_where('serial_number', $this->serial_number);
+        $this->display_serial = null; //get rid of any s/n that was left in memory
+      }
       // Parse data
       foreach(explode("\n", $data) as $line) {
         // Translate standard entries
         foreach($translate as $search => $field) {
 
           //the separator is what triggers the save for each display
-          if(strpos($line, '----------') === 0) {
-            if($this->type === 1){ //only delete if External
-              $this->id = 0;
-              $this->delete_set();
+          //making sure we have a valid s/n.
+          if((strpos($line, '----------') === 0) && ($this->display_serial)) {
+            //if we have not nuked the records, do a selective delete
+            if (conf('keep_previous_displays')) {
+              $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).
+                  ' WHERE '.$this->enquote( 'serial_number' )." = '$this->serial_number'".
+                  ' AND '.$this->enquote( 'display_serial' )." = '$this->display_serial'";
+              $this->exec($sql);
             }
+            //get a new id
+            $this->id = 0;
             $this->save(); //the actual save
+            $this->display_serial = null; //unset the display s/n to avoid writing twice if multiple separators are passed
             break;
-          } elseif(strpos($line, $search) === 0) {
-            $value = substr($line, strlen($search));
+
+          } elseif(strpos($line, $search) === 0) { //else if not separator and matches
+            $value = substr($line, strlen($search)); //get the current value
             // use bool for Type
             if (strpos($value, 'Internal') === 0) {
               $this->$field = 0;

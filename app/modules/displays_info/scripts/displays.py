@@ -57,10 +57,11 @@ for vga in plist[0]['_items']:
         #Native resolution section
         result += '\nNative = ' + str(display['_spdisplays_pixels'])
 
-      except KeyError as error:
-        result += 'an error ocurred'
+        #Save section
+        result += '\n----------\n'
 
-      result += '\n----------\n'
+      except KeyError as error:
+        result += '\nAn error ocurred while reading this display\n'
 
 ##############
 
