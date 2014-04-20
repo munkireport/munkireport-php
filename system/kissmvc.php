@@ -321,8 +321,11 @@ class Model extends KISS_Model
 			
 			// Set primary key
 			$columns[$this->pkname] = 'INTEGER PRIMARY KEY';
+
+			// Table options, override per driver
+			$tbl_options = '';
 			
-			// Set auto increment per db engine
+			// Driver specific options
 			switch($this->get_driver())
 			{
 				case 'sqlite':
@@ -330,6 +333,8 @@ class Model extends KISS_Model
 					break;
 				case 'mysql':
 					$columns[$this->pkname] .= ' AUTO_INCREMENT';
+					$tbl_options = conf('mysql_create_tbl_opts');
+					break;
 			}
 			
 			// Compile columns sql
@@ -343,7 +348,7 @@ class Model extends KISS_Model
 			try
 			{
 
-				$dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
+				$dbh->exec(sprintf("CREATE TABLE %s (%s) %s", $this->enquote($this->tablename), $sql, $tbl_options));
 
 				// Set indexes
 				$this->set_indexes();

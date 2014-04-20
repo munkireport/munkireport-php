@@ -385,6 +385,16 @@
 	
 	/*
 	|===============================================
+	| Create table options
+	|===============================================
+	|
+	| For MySQL, define the default table and charset
+	|
+	*/
+	$conf['mysql_create_tbl_opts'] = 'ENGINE=InnoDB DEFAULT CHARSET=utf8';
+
+	/*
+	|===============================================
 	| Timezone
 	|===============================================
 	|
