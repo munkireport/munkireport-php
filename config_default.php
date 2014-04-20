@@ -4,38 +4,38 @@
 	|===============================================
 	| Default settings DON'T CHANGE!
 	|===============================================
-	|  
-	| Please don't edit this file, it will get overwritten 
+	|
+	| Please don't edit this file, it will get overwritten
 	| when a new version gets out. Just add the items you
 	| want to change to config.php and change them there.
 	|
 	*/
-	
+
 	/*
 	|===============================================
 	| Index page
 	|===============================================
-	|  
+	|
 	| Default is index.php? which is the most compatible form.
 	| You can leave it blank if you want nicer looking urls.
-	| You will need a server which honors .htaccess (apache) or 
-	| figure out how to rewrite urls in the server of your choice. 
+	| You will need a server which honors .htaccess (apache) or
+	| figure out how to rewrite urls in the server of your choice.
 	|
 	*/
 	$conf['index_page'] = 'index.php?';
-	
+
 	/*
 	|===============================================
 	| Uri protocol
 	|===============================================
 	|
-	| $_SERVER variable that contains the correct request path, 
+	| $_SERVER variable that contains the correct request path,
 	| e.g. 'REQUEST_URI', 'QUERY_STRING', 'PATH_INFO', etc.
 	| defaults to AUTO
 	|
 	*/
 	$conf['uri_protocol'] = 'AUTO';
-	
+
 	/*
 	|===============================================
 	| HTTP host
@@ -43,17 +43,17 @@
 	|
 	| The hostname of the webserver, default automatically
 	| determined. no trailing slash
-	| 
+	|
 	*/
 	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
 		. '://'.$_SERVER[ 'HTTP_HOST' ];
-	
-	
+
+
 	/*
 	|===============================================
 	| Subdirectory
 	|===============================================
-	|  
+	|
 	| Relative to the webroot, with trailing slash.
 	| If you're running munkireport from a subdirectory of a website,
 	| enter subdir path here. E.g. if munkireport is accessible here:
@@ -68,24 +68,24 @@
 	$conf['subdirectory'] = substr(
 					    $_SERVER['PHP_SELF'],
 					    0,
-					    strpos($_SERVER['PHP_SELF'], basename(FC))  
+					    strpos($_SERVER['PHP_SELF'], basename(FC))
 				    );
-	
+
 	/*
 	|===============================================
 	| Sitename
 	|===============================================
-	| 
+	|
 	| Will appear in the title bar of your browser and as heading on each webpage
 	|
 	*/
 	$conf['sitename'] = 'MunkiReport';
-	
+
 	/*
 	|===============================================
 	| Authentication
 	|===============================================
-	| 
+	|
 	| Currently four authentication methods are supported:
 	|
 	|	1) Don't require any authentication: paste the following line in your config.php
@@ -104,13 +104,13 @@
 	|
 	|		Optional items:
 	|		$default_conf['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))'; // LDAP filter to search for user accounts.
-    |		$default_conf['groupfilter'] = '(&(objectClass=posixGroup)(memberUID=%{uid}))'; // LDAP filter to search for groups.
+	|		$default_conf['groupfilter'] = '(&(objectClass=posixGroup)(memberUID=%{uid}))'; // LDAP filter to search for groups.
 	|		$conf['auth']['auth_ldap']['port']        = 389; // LDAP port.
 	|		$conf['auth']['auth_ldap']['version']     = 3; // Use LDAP version 1, 2 or 3.
 	|		$conf['auth']['auth_ldap']['starttls']    = FALSE; // Set to TRUE to use TLS.
 	|		$conf['auth']['auth_ldap']['referrals']   = FALSE; // Set to TRUE to follow referrals.
 	|		$conf['auth']['auth_ldap']['deref']       = LDAP_DEREF_NEVER; // How to dereference aliases. See http://php.net/ldap_search
-	|		$conf['auth']['auth_ldap']['binddn']      = ''; // Optional bind DN 
+	|		$conf['auth']['auth_ldap']['binddn']      = ''; // Optional bind DN
 	|		$conf['auth']['auth_ldap']['bindpw']      = ''; // Optional bind password
 	|		$conf['auth']['auth_ldap']['userscope']   = 'sub'; // Limit search scope to sub, one or base.
 	|		$conf['auth']['auth_ldap']['groupscope']  = 'sub'; // Limit search scope to sub, one or base.
@@ -136,7 +136,7 @@
 	|===============================================
 	| Force secure connection when authorizing
 	|===============================================
-	| 
+	|
 	| Set this value to TRUE to force https when logging in.
 	| This is useful for sites that serve MR both via http and https
 	|
@@ -147,7 +147,7 @@
 	|===============================================
 	| Locale
 	|===============================================
-	| 
+	|
 	| You can set the locale string here, this will render certain strings
 	| according to locale specific settings
 	|
@@ -158,7 +158,7 @@
 	|===============================================
 	| Language
 	|===============================================
-	| 
+	|
 	| You can set the language here, this will change the user interface
 	| language. See for possible values the 'lang' directory
 	|
@@ -169,7 +169,7 @@
 	|===============================================
 	| VNC and SSH links, optional links in the client detail view
 	|===============================================
-	| 
+	|
 	| If you want to have link that opens a screensharing or SSH
 	| connection to a client, enable these settings. If you don't
 	| want the links, set either to an empty string, eg:
@@ -183,13 +183,13 @@
 	|===============================================
 	| Inventory - bundle ignore list
 	|===============================================
-	| 
+	|
 	| List of bundle-id's to be ignored when processing inventory
 	| The list is processed using regex, examples:
-	| 
+	|
 	| Skip  all virtual windows apps created by parallels and VMware
 	| $conf['bundleid_ignorelist'][] = array('com.parallels.winapp.*', 'com.vmware.proxyApp.*');
-	| 
+	|
 	| Skip all Apple apps, except iLife, iWork and Server
 	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
 	|
@@ -204,13 +204,13 @@
 	|===============================================
 	| Inventory - path ignore list
 	|===============================================
-	| 
+	|
 	| List of bundle-paths to be ignored when processing inventory
 	| The list is processed using regex, examples:
-	| 
+	|
 	| Skip all apps in /System/Library
 	| $conf['bundlepath_ignorelist'][] = '/System/Library/.*';
-	| 
+	|
 	| Skip all apps that are contained in an app bundle
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
@@ -221,7 +221,7 @@
 	|===============================================
 	| Modules
 	|===============================================
-	| 
+	|
 	| List of modules that have to be installed on the client
 	| See for possible values the names of the directories
 	| in app/modules/
@@ -229,19 +229,36 @@
 	|
 	| An empty list installs only the basic reporting modules:
 	| Machine and Reportdata
-	| 
+	|
 	| If you don't set this item, all available modules are installed (default)
 	*/
     //$conf['modules'] = array();
+
+
+	/*
+	|===============================================
+	| Displays module history option
+	|===============================================
+	|
+	| By default this module overrides the information of a client computer
+	| on each client's report submission.
+	|
+	| If you would like to keep displays information until the display is seen again
+	| on a different computer use:
+	|			$config['keep_previous_displays'] = TRUE;
+	|
+	| When not configured, or if set to FALSE, the default behaviour applies.
+	*/
+		//$config['keep_previous_displays'] = TRUE;
 
     /*
 	|===============================================
 	| Migrations
 	|===============================================
-	| 
+	|
 	| When a new version of munkireport comes out
 	| it might need to update your database structure
-	| if you want to allow this, set 
+	| if you want to allow this, set
 	| $conf['allow_migrations'] = TRUE;
 	|
 	| There is a small overhead (one database query) when setting allow_migrations
@@ -256,16 +273,16 @@
 	|===============================================
 	| Client passphrases
 	|===============================================
-	| 
+	|
 	| List of passphrases that the client can use to authenticate
-	| 
+	|
 	| On the client:
 	| defaults write /Library/Preferences/MunkiReport Passphrase 'secret1'
 	|
 	| On the server:
 	| $conf['client_passphrases'] = array('secret1', 'secret2');
-	| 
-	| 
+	|
+	|
 	*/
     $conf['client_passphrases'] = array();
 
@@ -273,18 +290,18 @@
 	|===============================================
 	| Proxy settings
 	|===============================================
-	| 
-	| If you are behind a proxy, MunkiReport may be unable to 
+	|
+	| If you are behind a proxy, MunkiReport may be unable to
 	| retrieve warranty and model information from Apple.
 	|
 	| Note that there is only authenticated proxy support for
 	| basic authentication
-	| 
+	|
 	| $conf['proxy']['server'] = 'proxy.yoursite.org'; // Required
 	| $conf['proxy']['username'] = 'proxyuser'; // Optional
 	| $conf['proxy']['password'] = 'proxypassword'; Optional
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
-	| 
+	|
 	*/
     //$conf['proxy']['server'] = 'proxy.yoursite.org';
 
@@ -292,11 +309,11 @@
 	|===============================================
 	| Request timeout
 	|===============================================
-	| 
+	|
 	| Timeout for retrieving warranty and model information from Apple.
 	|
 	| Timeout in seconds
-	| 
+	|
 	*/
     $conf['request_timeout'] = 5;
 
@@ -305,8 +322,8 @@
 	|===============================================
 	| Dashboard - IP Ranges
 	|===============================================
-	| 
-	| Plot IP ranges by providing an array with labels and 
+	|
+	| Plot IP ranges by providing an array with labels and
 	| a partial IP address. Specify multiple partials in array
 	| if you want to group them together.
 	| The IP adress part is queried with SQL LIKE
@@ -314,14 +331,14 @@
 	| $conf['ip_ranges']['MyOrg'] = '100.99.';
 	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
-	*/   
+	*/
     $conf['ip_ranges'] = array();
 
 	/*
 	|===============================================
 	| Dashboard - Layout
 	|===============================================
-	| 
+	|
 	| Dashboard layout is an array of rows that contain
 	| an array of widgets. Omit the _widget postfix
 	|
@@ -341,9 +358,9 @@
 	| the variables below. For enhanced security it is advised to put the
 	| webapp in a directory that is not visible to the internet.
 	*/
-	
+
 	// Path to system folder, with trailing slash
-	$conf['system_path'] = APP_ROOT.'/system/'; 
+	$conf['system_path'] = APP_ROOT.'/system/';
 
 	// Path to app folder, with trailing slash
 	$conf['application_path'] = APP_ROOT.'/app/';
@@ -357,13 +374,13 @@
 	// Path to modules directory, with trailing slash
 	$conf['module_path'] = $conf['application_path'] . "modules/";
 
-	
-	
+
+
 	// Routes
 	$conf['routes'] = array();
 	$conf['routes']['module(/.*)?']	= "module/load$1";
-	
-	
+
+
 	/*
 	|===============================================
 	| PDO Datasource
@@ -382,7 +399,7 @@
 	$conf['pdo_user'] = '';
 	$conf['pdo_pass'] = '';
 	$conf['pdo_opts'] = array();
-	
+
 	/*
 	|===============================================
 	| Create table options
@@ -402,7 +419,7 @@
 	|
 	*/
 	$conf['timezone'] = @date_default_timezone_get();
-	
+
 	/*
 	|===============================================
 	| Custom css and js
@@ -416,7 +433,7 @@
 	//$conf['custom_css'] = '/custom.css';
 	//$conf['custom_js'] = '/custom.js';
 
-	
+
 	/*
 	|===============================================
 	| Debugging
@@ -426,5 +443,3 @@
 	| FALSE in a production environment
 	*/
 	$conf['debug'] = FALSE;
-	
-	

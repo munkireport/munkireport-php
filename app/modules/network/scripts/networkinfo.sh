@@ -10,8 +10,6 @@ DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
 networkfile="$DIR/cache/networkinfo.txt"
 
-echo "Storing network information in $networkfile"
-
 # Store network information in networkinfo.txt
 networkservices=$(networksetup -listallnetworkservices | grep -v asterisk)
 
@@ -25,4 +23,3 @@ do
   echo "Service: $service" >> "$networkfile"
   networksetup -getinfo "$service" >> "$networkfile"
 done
-

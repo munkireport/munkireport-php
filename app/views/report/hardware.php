@@ -28,6 +28,8 @@
 
 		<?$this->view('widgets/memory_widget')?>
 
+		<?$this->view('widgets/external_displays_count_widget')?>
+
 		<?$this->view('widgets/warranty_graph_widget')?>
 
 	</div> <!-- /row -->
