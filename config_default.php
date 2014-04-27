@@ -245,11 +245,11 @@
 	|
 	| If you would like to keep displays information until the display is seen again
 	| on a different computer use:
-	|			$config['keep_previous_displays'] = TRUE;
+	|			$conf['keep_previous_displays'] = TRUE;
 	|
 	| When not configured, or if set to FALSE, the default behaviour applies.
 	*/
-		//$config['keep_previous_displays'] = TRUE;
+		//$conf['keep_previous_displays'] = TRUE;
 
     /*
 	|===============================================
