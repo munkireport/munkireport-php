@@ -17,9 +17,9 @@ This is the table of values for 'displays':
 Remarks
 ---
 
-The default configuration of the module is to delete any previous display information it had for the computer.
+The default configuration of the module is to delete any previous display information it had for the computer. Also be advised that `system_profiler` does not return any display information when the client is at the login window.
 
-Nonetheless you can configure it to keep old data by adding this to your config.php `$config['keep_previous_displays'] = TRUE;`. Some examples of what to expect in each case:
+Nonetheless you can configure it to keep old data by adding this to your config.php `$conf['keep_previous_displays'] = TRUE;`. Some examples of what to expect in each case:
 
 ### Example of default behaviour:
 
@@ -46,3 +46,9 @@ Nonetheless you can configure it to keep old data by adding this to your config.
   * Laptop1 is turned off and stored in a shelve.
 
   * Computer2 reports it's built-in display and the same external display --> mr-php both under computer2's s/n overwriting the external display info it had. Computer2 becomes the last-seen-in computer. Three entries are displayed, possibly matching the number of company assets.
+
+* Scenario 3:
+
+  * Laptop1 reports in the morning about the built-in display and an external display --> mr-php stores and displays both
+  * The display is broken/stolen/etc.
+  * The display remains associated with Laptop1 until you remove Laptop1 from MR
