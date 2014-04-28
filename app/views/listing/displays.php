@@ -79,11 +79,12 @@
             }
             $('td:eq(3)', nRow).html(vendor)
 
-            // Format timestamp from unix to relative
+            // Format timestamp from unix to relative and the title to timezone detail
             date = aData['displays#timestamp'];
             if(date)
             {
-                  $('td:eq(8)', nRow).html(moment.unix(date).fromNow());
+                  var formatted='<time title="'+ moment.unix(date).format("LLLL (Z)") + '" </time>' + moment.unix(date).fromNow();
+                  $('td:eq(8)', nRow).html(formatted);
             }
 
           } //end fnCreatedRow
