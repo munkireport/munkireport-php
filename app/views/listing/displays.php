@@ -67,6 +67,10 @@
             $('td:eq(2)', nRow).html(status)
 
             // Translating vendors column
+            //todo: find how the hell Apple translates the EDID/DDC to these values
+            // http://ftp.netbsd.org/pub/NetBSD/NetBSD-current/src/sys/dev/videomode/ediddevs
+            // https://github.com/GNOME/gnome-desktop/blob/master/libgnome-desktop/gnome-pnp-ids.c
+            // https://www.opensource.apple.com/source/xnu/xnu-124.7/iokit/Families/IOGraphics/AppleDDCDisplay.cpp
             var vendor=$('td:eq(3)', nRow).html();
             switch (vendor)
             {
@@ -75,6 +79,21 @@
               break;
             case "10ac":
               vendor="DELL"
+              break;
+            case "5c23":
+              vendor="Wacom"
+              break;
+            case "4d10":
+              vendor="SHARP"
+              break;
+            case "1e6d":
+              vendor="LG"
+              break;
+            case "38a3":
+              vendor="NEC"
+              break;
+            case "4c49":
+              vendor="SMART Technologies"
               break;
             }
             $('td:eq(3)', nRow).html(vendor)
