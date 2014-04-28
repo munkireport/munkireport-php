@@ -56,8 +56,8 @@
             if(sn){
               var link = get_client_detail_link(name, sn, '<?=url()?>/');
               $('td:eq(0)', nRow).html(link);
-            } else { //hide empty rows
-              $('td', nRow).hide();
+            } else {
+              $('td:eq(0)', nRow).html(name);
             }
 
             // Internal vs External
