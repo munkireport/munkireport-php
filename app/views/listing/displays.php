@@ -133,7 +133,7 @@
             <th data-colname='displays#display_serial'>Serial number</th>
             <th data-colname='displays#manufactured'>Manufactured</th>
             <th data-colname='displays#native'>Native resolution</th>
-            <th data-colname='displays#timestamp'>Detected</th>
+            <th data-sort="desc" data-colname='displays#timestamp'>Detected</th>
           </tr>
         </thead>
 
