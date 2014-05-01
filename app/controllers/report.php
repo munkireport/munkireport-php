@@ -79,6 +79,14 @@ class report extends Controller
 
 			$req_items = unserialize($_POST['items']); //Todo: check if array
 
+			// Reset messages for this client
+			if(isset($req_items['msg']))
+			{
+				$msg_obj = new Messages_model();
+				$msg_obj->reset($_POST['serial']);
+				unset($req_items['msg']);
+			}
+
 			// Get stored hashes from db
 			$hash = new Hash();
 			$hashes = $hash->all($_POST['serial']);
@@ -233,6 +241,40 @@ class report extends Controller
 			}
 
 		}
+	}
+
+	/**
+	 * Report broken client
+	 *
+	 * Use this method to report on client-side
+	 * errors that prevent the client to
+	 * report properly
+	 *
+	 * @author AvB
+	 **/
+	function broken_client()
+	{
+		// At least, we need a serial number
+		if ( ! isset($_POST['serial']))
+		{
+			$this->msg("Serial is missing", TRUE);
+		}
+
+		// Register check in reportdata
+		$report = new Reportdata_model($_POST['serial']);
+		$report->register()->save();
+
+		// Clean POST data
+		$data['module'] = isset($_POST['module']) ? $_POST['module'] : 'generic';
+		$data['type'] = isset($_POST['type']) ? $_POST['type'] : 'danger';
+		$data['msg'] = isset($_POST['msg']) ? $_POST['msg'] : 'Unknown';
+		$data['timestamp'] = time();
+
+		// Store in messages
+		$msg_obj = new Messages_model($_POST['serial'], $data['module']);
+		$msg_obj->merge($data)->save();
+
+		echo "Recorded this message: $msg_obj->msg\n";
 	}
 
 	/**

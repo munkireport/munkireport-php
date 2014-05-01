@@ -14,8 +14,11 @@ function get_version()
 //===============================================s
 function uncaught_exception_handler($e)
 {
-  // Dump out remaining buffered text
-  ob_end_clean();
+	// Dump out remaining buffered text
+	if (ob_get_level())
+	{
+		ob_end_clean();
+	}
 
   // Get error message
   error('Uncaught Exception: '.$e->getMessage());
