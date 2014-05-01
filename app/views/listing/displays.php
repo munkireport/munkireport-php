@@ -78,13 +78,13 @@
               vendor="Apple"
               break;
             case "10ac":
-              vendor="DELL"
+              vendor="Dell"
               break;
             case "5c23":
               vendor="Wacom"
               break;
             case "4d10":
-              vendor="SHARP"
+              vendor="Sharp"
               break;
             case "1e6d":
               vendor="LG"
