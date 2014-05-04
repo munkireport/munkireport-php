@@ -95,6 +95,9 @@
             case "4c49":
               vendor="SMART Technologies"
               break;
+            case "9d1":
+                vendor="BenQ"
+                break;
             }
             $('td:eq(3)', nRow).html(vendor)
 
