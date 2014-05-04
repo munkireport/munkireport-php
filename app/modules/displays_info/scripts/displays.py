@@ -39,6 +39,9 @@ for vga in plist[0]['_items']:
       if display.get('spdisplays_display-serial-number', None):
         result += 'Type = External'
         result += '\nSerial = ' + str(display['spdisplays_display-serial-number'])
+      elif display['_spdisplays_display-vendor-id'] != "610":
+        result += 'Type = External'
+        result += '\nSerial = n/a'
       else:
         result += 'Type = Internal'
         result += '\nSerial = n/a'

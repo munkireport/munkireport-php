@@ -56,8 +56,8 @@
             if(sn){
               var link = get_client_detail_link(name, sn, '<?=url()?>/');
               $('td:eq(0)', nRow).html(link);
-            } else { //hide empty rows
-              $('td', nRow).hide();
+            } else {
+              $('td:eq(0)', nRow).html(name);
             }
 
             // Internal vs External
@@ -67,6 +67,10 @@
             $('td:eq(2)', nRow).html(status)
 
             // Translating vendors column
+            //todo: find how the hell Apple translates the EDID/DDC to these values
+            // http://ftp.netbsd.org/pub/NetBSD/NetBSD-current/src/sys/dev/videomode/ediddevs
+            // https://github.com/GNOME/gnome-desktop/blob/master/libgnome-desktop/gnome-pnp-ids.c
+            // https://www.opensource.apple.com/source/xnu/xnu-124.7/iokit/Families/IOGraphics/AppleDDCDisplay.cpp
             var vendor=$('td:eq(3)', nRow).html();
             switch (vendor)
             {
@@ -74,16 +78,35 @@
               vendor="Apple"
               break;
             case "10ac":
-              vendor="DELL"
+              vendor="Dell"
               break;
+            case "5c23":
+              vendor="Wacom"
+              break;
+            case "4d10":
+              vendor="Sharp"
+              break;
+            case "1e6d":
+              vendor="LG"
+              break;
+            case "38a3":
+              vendor="NEC"
+              break;
+            case "4c49":
+              vendor="SMART Technologies"
+              break;
+            case "9d1":
+                vendor="BenQ"
+                break;
             }
             $('td:eq(3)', nRow).html(vendor)
 
-            // Format timestamp from unix to relative
+            // Format timestamp from unix to relative and the title to timezone detail
             date = aData['displays#timestamp'];
             if(date)
             {
-                  $('td:eq(8)', nRow).html(moment.unix(date).fromNow());
+                  var formatted='<time title="'+ moment.unix(date).format("LLLL (Z)") + '" </time>' + moment.unix(date).fromNow();
+                  $('td:eq(8)', nRow).html(formatted);
             }
 
           } //end fnCreatedRow
@@ -113,7 +136,7 @@
             <th data-colname='displays#display_serial'>Serial number</th>
             <th data-colname='displays#manufactured'>Manufactured</th>
             <th data-colname='displays#native'>Native resolution</th>
-            <th data-colname='displays#timestamp'>Detected</th>
+            <th data-sort="desc" data-colname='displays#timestamp'>Detected</th>
           </tr>
         </thead>
 
