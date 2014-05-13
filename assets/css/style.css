@@ -95,7 +95,7 @@ h2 {
 .table-responsive {
     width: 100%;
     margin-bottom: 15px;
-    overflow-x: scroll;
+    overflow-x: hidden;
     overflow-y: hidden;
     border: 1px solid #ddd
 }
@@ -134,7 +134,7 @@ h2 {
 }
 
 @media print{
-  
+
   a[href]:after {
     content: "";
   }
@@ -149,4 +149,3 @@ h2 {
     page-break-inside: avoid;
   }
 }
-
