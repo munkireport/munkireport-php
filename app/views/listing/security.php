@@ -75,7 +75,7 @@ new Filevault_status_model;
 		      	<th data-colname='machine#computer_name'>Name</th>
 		        <th data-colname='machine#serial_number'>Serial</th>
 		        <th data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='localadmin#users'>Local administrators</th>
+		        <th data-colname='filevault_status#filevault_users'>FileVault Enabled users</th>
 		        <th data-colname='machine#machine_name'>Type</th>
 		        <th data-colname='filevault_status#filevault_status'>Filevault status</th>
 		      </tr>
