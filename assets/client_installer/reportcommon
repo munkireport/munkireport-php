@@ -1,13 +1,11 @@
 #!/usr/bin/python
 # encoding: utf-8
-
+ 
 from munkilib import munkicommon
 from munkilib.phpserialize import *
 import subprocess
 import pwd
 import sys
-import urllib
-import urllib2
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
 from Foundation import CFPreferencesAppSynchronize
 from Foundation import CFPreferencesCopyAppValue
@@ -16,31 +14,106 @@ from Foundation import CFPreferencesSetValue
 from Foundation import kCFPreferencesAnyUser
 from Foundation import kCFPreferencesCurrentUser
 from Foundation import kCFPreferencesCurrentHost
-
-
+ 
+try:
+    import requests
+    requests_installed = True
+except ImportError:
+    import urllib
+    import urllib2
+    requests_installed = False
+ 
 # our preferences "bundle_id"
 BUNDLE_ID = 'MunkiReport'
-
+ 
 def curl(url, values):
-    req = urllib2.Request(url, urllib.urlencode(values))
-    try:
-        response = urllib2.urlopen(req)
-    except urllib2.URLError, e:
-        if hasattr(e, 'reason'):
-            print url
-            print 'We failed to reach a server.'
-            print 'Reason: ', e.reason
-        elif hasattr(e, 'code'):
-            print url
-            print 'The server couldn\'t fulfill the request.'
-            print 'Error code: ', e.code
-        # Reportserver error, exit clean so munki keeps running
-        exit(0)
-    except:
-        print 'A server error occurred:', sys.exc_info()[0]
-        exit(0)
-    return response
+ 
+    ca_cert_path = None
+    ca_dir_path = None
+    if munkicommon.pref('SoftwareRepoCAPath'):
+        CA_path = munkicommon.pref('SoftwareRepoCAPath')
+        if os.path.isfile(CA_path):
+            ca_cert_path = CA_path
+        elif os.path.isdir(CA_path):
+            ca_dir_path = CA_path
+    if munkicommon.pref('SoftwareRepoCACertificate'):
+        ca_cert_path = munkicommon.pref('SoftwareRepoCACertificate')
+    if ca_cert_path == None:
+        ca_cert_path = os.path.join(ManagedInstallDir, 'certs', 'ca.pem')
+        if not os.path.exists(ca_cert_path):
+            ca_cert_path = None
+ 
+    client_cert_path = None
+    client_key_path = None
+    # get client cert if it exists
+    if munkicommon.pref('UseClientCertificate'):
+        client_cert_path = munkicommon.pref('ClientCertificatePath') or None
+        client_key_path = munkicommon.pref('ClientKeyPath') or None
+        if not client_cert_path:
+            for name in ['cert.pem', 'client.pem', 'munki.pem']:
+                client_cert_path = os.path.join(ManagedInstallDir, 'certs',
+                                                                    name)
+                if os.path.exists(client_cert_path):
+                    break
+ 
+    cert_info = {}
+    cert_info['cacert'] = ca_cert_path
+    cert_info['capath'] = ca_dir_path
+    cert_info['cert'] = client_cert_path
+    cert_info['key'] = client_key_path
 
+    if requests_installed:
+        try:
+            if munkicommon.pref('UseClientCertificate'):
+                response = requests.post(url, data=values, verify=cert_info['cacert'], cert=(cert_info['cert'], cert_info['key']))
+            else:
+                response = requests.post(url, data=values)
+        except requests.SSLError, e:
+            print url
+            print 'SSLError occurred.'
+            print 'Reason: ', e
+            exit(0)
+        except requests.RequestException, e:
+            print url
+            print 'RequestException occurred.'
+            print 'Reason: ', e
+            exit(0)
+        except requests.ConnectionError, e:
+            print url
+            print 'ConnectionError occurred.'
+            print 'Reason: ', e
+            exit(0)
+        except requests.ConnectionError, e:
+            print url
+            print 'ConnectionError occurred.'
+            print 'Reason: ', e
+            exit(0)
+        except requests.HTTPError, e:
+            print url
+            print 'HTTPError occurred.'
+            print 'Reason: ', e
+            exit(0)
+        return response
+    else:
+        req = urllib2.Request(url, urllib.urlencode(values))
+        try:
+            response = urllib2.urlopen(req)
+        except urllib2.URLError, e:
+            if hasattr(e, 'reason'):
+                print url
+                print 'We failed to reach a server.'
+                print 'Reason: ', e.reason
+            elif hasattr(e, 'code'):
+                print url
+                print 'The server couldn\'t fulfill the request.'
+                print 'Error code: ', e.code
+            # Reportserver error, exit clean so munki keeps running
+            exit(0)
+        except:
+            print 'A server error occurred:', sys.exc_info()[0]
+            exit(0)
+        return response
+ 
 def get_long_username(username):
     try:
         long_name = pwd.getpwnam(username)[4]
@@ -56,7 +129,7 @@ def get_computername():
     (output, unused_error) = proc.communicate()
     output = output.strip()
     return output.decode('utf-8')
-
+ 
 def set_pref(pref_name, pref_value):
     """Sets a preference, See munkicommon.py for details"""
     CFPreferencesSetValue(
@@ -71,7 +144,7 @@ def set_pref(pref_name, pref_value):
         CFPreferencesAppSynchronize(BUNDLE_ID)
     except Exception:
         pass
-
+ 
    
 def pref(pref_name):
     """Return a preference. See munkicommon.py for details
@@ -82,7 +155,7 @@ def pref(pref_name):
 def process(serial,items):
     """Process receives a list of items, checks if they need updating and updates them
     if necessary"""\
-
+ 
     # Sanitize serial
     serial = ''.join([c for c in serial if c.isalnum()])
     
@@ -92,10 +165,10 @@ def process(serial,items):
     
     hashurl = baseurl + "index.php?/report/hash_check"
     checkurl = baseurl + "index.php?/report/check_in"
-
+ 
     # Get passphrase
     passphrase = pref('Passphrase')
-
+ 
     # Get hashes for all scripts
     for key, i in items.items():
         if i.get('path'):
@@ -110,19 +183,22 @@ def process(serial,items):
     # Send hashes to server
     values = {'serial': serial, 'items': serialize(check), 'passphrase' : passphrase}
     response = curl(hashurl, values)
-    server_data = response.read();
-
+    if requests_installed:
+        server_data = response.text
+    else:
+        server_data = response.read()
+ 
     # Decode response
     try:
         result = unserialize(server_data)
     except:
-        print 'Illegal response from the server: %s' % server_data 
+        print 'Illegal response from the server: %s' % server_data.encode('utf-8')
         return -1
-    
+ 
     if result.get('error') != '':
         print 'Server error: %s' % result['error']
         return -1
-
+ 
     # Retrieve hashes that need updating
     for i in items.keys():
         if i in result:
@@ -136,12 +212,14 @@ def process(serial,items):
                     
         else: # delete items that don't have to be uploaded
             del items[i]
-
+ 
     # Send new files with hashes
     if len(items):
         print 'Sending items'
         response = curl(checkurl, {'serial': serial, 'items': serialize(items), 'passphrase': passphrase})
-        print response.read()
+        if requests_installed:
+            print response.text
+        else:
+            print response.read()
     else:
         print 'No changes'
-
