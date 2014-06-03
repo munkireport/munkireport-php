@@ -28,8 +28,8 @@
 						<?=$warranty->end_date?>
 					</span>
 				<?elseif ($warranty->status == "No Applecare"):?>
-					<span class='text-warning'>No Applecare until
-						<?=$warranty->end_date?>
+					<span class='text-warning'>Supported until
+						<?=$warranty->end_date?>, No Applecare
 					</span>
 				<?elseif ($warranty->status == "Unregistered serialnumber"):?>
 					<span class='text-warning'>Unregistered</span>
