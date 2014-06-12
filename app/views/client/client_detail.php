@@ -75,9 +75,14 @@
 
 			</div>
 
+			<script src="<?=conf('subdirectory')?>assets/js/bootstrap-tabdrop.js"></script>
+
 			<script>
 			$(document).ready(function() {
 
+				// Activate tabdrop
+				$('.nav-tabs').tabdrop();
+				
 				// Activate correct tab depending on hash
 				var hash = window.location.hash.slice(5);
 				$('.nav-tabs a[href="#'+hash+'"]').tab('show');
