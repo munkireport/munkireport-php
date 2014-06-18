@@ -11,7 +11,7 @@
 
 								<?if(empty($_SERVER['HTTPS'])):?>
 
-									<a href="<?=secure_url()?>"><i title="<?=lang('auth_insecure')?>" class="text-danger fa fa-unlock-alt pull-right"></i></a>
+								- <?=conf('sitename')?><a href="<?=secure_url()?>"><i title="<?=lang('auth_insecure')?>" class="text-danger fa fa-unlock-alt pull-right"></i></a>
 
 								<?else:?>
 
