@@ -18,4 +18,129 @@
  * limitations under the License.
  * ========================================================= */
  
-!function(e){var t=function(){var t=[];var n=false;var r;var i=function(e){clearTimeout(r);r=setTimeout(s,100)};var s=function(){for(var e=0,n=t.length;e<n;e++){t[e].apply()}};return{register:function(r){t.push(r);if(n===false){e(window).bind("resize",i);n=true}},unregister:function(e){for(var n=0,r=t.length;n<r;n++){if(t[n]==e){delete t[n];break}}}}}();var n=function(n,r){this.element=e(n);this.options=r;this.dropdown=e('<li class="dropdown hide pull-right tabdrop"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+r.text+' <b class="caret"></b></a><ul class="dropdown-menu"></ul></li>').prependTo(this.element);if(this.element.parent().is(".tabs-below")){this.dropdown.addClass("dropup")}t.register(e.proxy(this.layout,this));this.layout()};n.prototype={constructor:n,layout:function(){function i(e){n.find("a.dropdown-toggle").html('<span class="display-tab"> '+e+' </span><b class="caret"></b>')}function s(){n.find("a.dropdown-toggle").html(r.text+' <b class="caret"></b>')}var t=[];var n=this.dropdown;var r=this.options;this.dropdown.removeClass("hide");this.element.append(this.dropdown.find("li")).find(">li").not(".tabdrop").each(function(){if(this.offsetTop>r.offsetTop){t.push(this)}});this.element.find(">li").not(".tabdrop").off("click");this.element.find(">li").not(".tabdrop").on("click",function(){s()});if(t.length>0){t=e(t);this.dropdown.find("ul").empty().append(t);this.dropdown.on("click","li",function(t){var n=e(this).text();i(n)});if(this.dropdown.find(".active").length==1){this.dropdown.addClass("active");i(this.dropdown.find(".active > a").text())}else{this.dropdown.removeClass("active");s()}}else{this.dropdown.addClass("hide")}}};e.fn.tabdrop=function(t){return this.each(function(){var r=e(this),i=r.data("tabdrop"),s=typeof t==="object"&&t;if(!i){r.data("tabdrop",i=new n(this,e.extend({},e.fn.tabdrop.defaults,s)))}if(typeof t=="string"){i[t]()}})};e.fn.tabdrop.defaults={text:'<i class="fa fa-align-justify"></i>',offsetTop:0};e.fn.tabdrop.Constructor=n}(window.jQuery)
+!function( $ ) {
+
+	var WinReszier = (function(){
+		var registered = [];
+		var inited = false;
+		var timer;
+		var resize = function(ev) {
+			clearTimeout(timer);
+			timer = setTimeout(notify, 100);
+		};
+		var notify = function() {
+			for(var i=0, cnt=registered.length; i<cnt; i++) {
+				registered[i].apply();
+			}
+		};
+		return {
+			register: function(fn) {
+				registered.push(fn);
+				if (inited === false) {
+					$(window).bind('resize', resize);
+					inited = true;
+				}
+			},
+			unregister: function(fn) {
+				for(var i=0, cnt=registered.length; i<cnt; i++) {
+					if (registered[i] == fn) {
+						delete registered[i];
+						break;
+					}
+				}
+			}
+		}
+	}());
+
+	var TabDrop = function(element, options) {
+		this.element = $(element);
+		this.options = options;
+		this.dropdown = $('<li class="dropdown hide pull-right tabdrop"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+options.text+' <b class="caret"></b></a><ul class="dropdown-menu"></ul></li>')
+							.prependTo(this.element);
+		if (this.element.parent().is('.tabs-below')) {
+			this.dropdown.addClass('dropup');
+		}
+		WinReszier.register($.proxy(this.layout, this));
+		this.layout();
+	};
+
+	TabDrop.prototype = {
+		constructor: TabDrop,
+
+		layout: function() {
+			var collection = [];
+			var dropdown = this.dropdown;
+			var options = this.options;
+
+			this.dropdown.removeClass('hide');
+
+			function setDropdownText(text) {
+				dropdown.find('a.dropdown-toggle').html('<span class="display-tab"> ' + text + ' </span><b class="caret"></b>');
+			}
+
+			function setDropdownDefaultText() {
+				dropdown.find('a.dropdown-toggle').html(options.text+' <b class="caret"></b>');
+			}
+
+			this.element
+				.append(this.dropdown.find('li'))
+				.find('>li')
+				.not('.tabdrop')
+				.each(function(){
+					if(this.offsetTop > options.offsetTop) {
+						collection.push(this);
+					}
+				});
+
+			this.element.find('>li').not('.tabdrop').off("click");
+			this.element.find('>li').not('.tabdrop').on("click", function() {
+				setDropdownDefaultText();
+			});
+
+			if (collection.length > 0) {
+				collection = $(collection);
+				this.dropdown
+					.find('ul')
+					.empty()
+					.append(collection);
+				
+				this.dropdown.on("click", "li", function(event){
+					var display = $(this).text();
+					setDropdownText(display);
+				});
+
+				if (this.dropdown.find('.active').length == 1) {
+					this.dropdown.addClass('active');
+					setDropdownText(this.dropdown.find('.active > a').text());
+				} else {
+					this.dropdown.removeClass('active');
+					setDropdownDefaultText();
+				}
+			} else {
+				this.dropdown.addClass('hide');
+			}
+		}
+	}
+
+	$.fn.tabdrop = function ( option ) {
+		return this.each(function () {
+			var $this = $(this),
+				data = $this.data('tabdrop'),
+				options = typeof option === 'object' && option;
+			if (!data)  {
+				$this.data('tabdrop', (data = new TabDrop(this, $.extend({}, $.fn.tabdrop.defaults,options))));
+			}
+			if (typeof option == 'string') {
+				data[option]();
+			}
+		})
+	};
+
+	$.fn.tabdrop.defaults = {
+		text: '<i class="fa fa-align-justify"></i>',
+		offsetTop: 0
+	};
+
+	$.fn.tabdrop.Constructor = TabDrop;
+
+}( window.jQuery );
