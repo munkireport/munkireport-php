@@ -32,9 +32,6 @@
 				<li>
 					<a href="#filevault-tab" data-toggle="tab"><?=lang('FileVault Escrow')?></a>
 				</li>
-				<li>
-					<a href="#bluetooth-tab" data-toggle="tab"><?=lang('Bluetooth')?></a>
-				</li>
 
 			</ul>
 
@@ -68,9 +65,6 @@
 				
 				<div class="tab-pane" id='filevault-tab'>
 					<?$this->view('client/filevault_tab')?>
-				</div>
-				<div class="tab-pane" id='bluetooth-tab'>
-					<?$this->view('client/bluetooth_tab')?>
 				</div>
 
 			</div>
