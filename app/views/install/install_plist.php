@@ -48,6 +48,7 @@
 rm -rf /usr/local/munki/preflight \
   /usr/local/munki/preflight.d \
   /usr/local/munki/postflight \
+  /usr/local/munki/postflight.d \
   /usr/local/munki/report_broken_client \
   /usr/local/munkilib/reportcommon.py \
   /usr/local/munki/munkireport-* \

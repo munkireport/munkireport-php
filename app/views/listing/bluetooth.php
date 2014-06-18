@@ -3,7 +3,7 @@
 <? //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
-new Filevault_status_model;
+new Bluetooth_model;
 ?>
 
 <div class="container">
@@ -52,8 +52,14 @@ new Filevault_status_model;
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
+			        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_bluetooth-tab');
 			        	$('td:eq(0)', nRow).html(link);
+			        	
+			        	// Translate bool. todo function for any bool we find
+                        var status=$('td:eq(7)', nRow).html();
+                        status = status == 1 ? 'Yes' : 
+                        (status === '0' ? 'No' : '')
+                        $('td:eq(7)', nRow).html(status)
 
 				    }
 			    } );
@@ -67,7 +73,7 @@ new Filevault_status_model;
 			} );
 		</script>
 
-		  <h3>Security report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3>Bluetooth report <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -75,10 +81,10 @@ new Filevault_status_model;
 		      	<th data-colname='machine#computer_name'>Name</th>
 		        <th data-colname='machine#serial_number'>Serial</th>
 		        <th data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='localadmin#users'>Local administrators</th>
-		        <th data-colname='filevault_status#filevault_users'>FileVault Enabled users</th>
-		        <th data-colname='machine#machine_name'>Type</th>
-		        <th data-colname='filevault_status#filevault_status'>Filevault status</th>
+		        <th data-colname='bluetooth#bluetooth_status'>Bluetooth Status</th> 
+		        <th data-colname='bluetooth#keyboard_battery'>Keyboard Status</th>
+		        <th data-colname='bluetooth#mouse_battery'>Mouse Status</th>
+		        <th data-colname='bluetooth#trackpad_battery'>Trackpad Status</th>
 		      </tr>
 		    </thead>
 		    <tbody>

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo 'Install network report'
-
 # filevault_status_controller
 NW_CTL="${BASEURL}index.php?/module/network/"
 

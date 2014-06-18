@@ -1,0 +1,2 @@
+# Disable crlf normalization (http://stackoverflow.com/a/10017566).
+* -text

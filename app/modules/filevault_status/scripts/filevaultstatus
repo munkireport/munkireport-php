@@ -9,8 +9,6 @@ fi
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
 
-echo 'Getting FileVault status'
-
 # Store results status in filevaultstatus.txt
 
 fv_status=`/usr/local/bin/filevault_2_status_check.sh`

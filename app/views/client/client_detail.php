@@ -32,6 +32,12 @@
 				<li>
 					<a href="#filevault-tab" data-toggle="tab"><?=lang('FileVault Escrow')?></a>
 				</li>
+				<li>
+					<a href="#bluetooth-tab" data-toggle="tab"><?=lang('Bluetooth')?></a>
+				</li>
+				<li>
+					<a href="#ard-tab" data-toggle="tab"><?=lang('ARD')?></a>
+				</li>
 
 			</ul>
 
@@ -66,12 +72,23 @@
 				<div class="tab-pane" id='filevault-tab'>
 					<?$this->view('client/filevault_tab')?>
 				</div>
+				<div class="tab-pane" id='bluetooth-tab'>
+					<?$this->view('client/bluetooth_tab')?>
+				</div>
+				<div class="tab-pane" id='ard-tab'>
+					<?$this->view('client/ard_tab')?>
+				</div>
 
 			</div>
+
+			<script src="<?=conf('subdirectory')?>assets/js/bootstrap-tabdrop.js"></script>
 
 			<script>
 			$(document).ready(function() {
 
+				// Activate tabdrop
+				$('.nav-tabs').tabdrop();
+				
 				// Activate correct tab depending on hash
 				var hash = window.location.hash.slice(5);
 				$('.nav-tabs a[href="#'+hash+'"]').tab('show');

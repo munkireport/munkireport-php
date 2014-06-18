@@ -22,20 +22,20 @@
 				(<?=$report->console_user?>)
 				<?endif?>
 				<br />
-				Warranty Coverage: 
+				Warranty Coverage:
 				<?if ($warranty->status == "Supported"):?>
-					<span class='text-success'>Supported until 
+					<span class='text-success'>Supported until
 						<?=$warranty->end_date?>
 					</span>
 				<?elseif ($warranty->status == "No Applecare"):?>
-					<span class='text-warning'>No Applecare until 
-						<?=$warranty->end_date?>
+					<span class='text-warning'>Supported until
+						<?=$warranty->end_date?>, No Applecare
 					</span>
 				<?elseif ($warranty->status == "Unregistered serialnumber"):?>
 					<span class='text-warning'>Unregistered</span>
 					<a target="_blank" href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&amp;country=USA&amp;id=<?=$serial_number?>">Register</a>
 				<?elseif ($warranty->status == "Expired"):?>
-					<span class='text-danger'>Expired on 
+					<span class='text-danger'>Expired on
 						<?=$warranty->end_date?>
 					</span>
 				<?else:?>
@@ -64,8 +64,10 @@
 					<dt>Software</dt>
 					<dd>OS X <?=$machine->os_version . ' ('
 							. $machine->cpu_arch . ')'?>&nbsp;</dd>
-					<dt>CPU Speed</dt>
-					<dd><?=$machine->current_processor_speed?> ( <?=$machine->number_processors?> core )</dd>
+					<dt>CPU</dt>
+					<dd><?=$machine->cpu?>&nbsp;</dd>
+					<dt>CPU Type</dt>
+					<dd><?=$machine->number_processors?> core&nbsp;</dd>
 					<dt>Serial Number</dt>
 					<dd><?=$serial_number?>&nbsp;</dd>
 					<dt>SMC Version</dt>
@@ -77,9 +79,9 @@
 					<dt>Hardware UUID</dt>
 					<dd><?=$machine->platform_UUID?>&nbsp;</dd>
 					<dt>Remote IP Address</dt>
-					<dd><?=$report->remote_ip;?>&nbsp;</dd>
+					<dd><?=$report->remote_ip?>&nbsp;</dd>
 					<dt>Local admin</dt>
-					<dd><?=$localadmin->users;?>&nbsp;</dd>
+					<dd><?=$localadmin->users?>&nbsp;</dd>
 
 				</dl>
 			</small>
@@ -119,7 +121,7 @@
 						});
 					});
 				</script>
-				
+
 			</small>
 		</div>
 	</div>
