@@ -35,6 +35,9 @@
 				<li>
 					<a href="#bluetooth-tab" data-toggle="tab"><?=lang('Bluetooth')?></a>
 				</li>
+				<li>
+					<a href="#ard-tab" data-toggle="tab"><?=lang('ARD')?></a>
+				</li>
 
 			</ul>
 
@@ -71,6 +74,9 @@
 				</div>
 				<div class="tab-pane" id='bluetooth-tab'>
 					<?$this->view('client/bluetooth_tab')?>
+				</div>
+				<div class="tab-pane" id='ard-tab'>
+					<?$this->view('client/ard_tab')?>
 				</div>
 
 			</div>
