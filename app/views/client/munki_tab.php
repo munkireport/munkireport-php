@@ -61,7 +61,7 @@
 	<script>
 			$(document).ready(function() {
 				$( "table time" ).each(function( index ) {
-					$(this).html(moment($(this).attr('datetime'), "YYYY-MM-DD HH:mm:ss Z").fromNow());
+					$(this).html(moment($(this).attr('datetime')).fromNow());
 				});
 			});
 	</script>
