@@ -99,7 +99,7 @@
                 vendor="BenQ"
                 break;
             case "22f0":
-                vendor="Compaq"
+                vendor="HP"
                 break;
             }
             $('td:eq(3)', nRow).html(vendor)
