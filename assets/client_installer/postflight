@@ -26,6 +26,7 @@ def main():
     report_info['console_user'] = "%s" % munkicommon.getconsoleuser()
     report_info['runtype'] = runtype
     report_info['runstate'] = 'done'
+    report_info['uptime'] = reportcommon.get_uptime()    
     report_info_plist = FoundationPlist.writePlistToString(report_info)
     items = {'reportdata':{'hash':hashlib.md5(report_info_plist).hexdigest(), \
         'data':report_info_plist}}

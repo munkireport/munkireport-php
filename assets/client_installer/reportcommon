@@ -16,6 +16,9 @@ from Foundation import CFPreferencesSetValue
 from Foundation import kCFPreferencesAnyUser
 from Foundation import kCFPreferencesCurrentUser
 from Foundation import kCFPreferencesCurrentHost
+import ctypes
+import struct
+import time
 
 
 # our preferences "bundle_id"
@@ -65,6 +68,39 @@ def get_cpuinfo():
     (output, unused_error) = proc.communicate()
     output = output.strip()
     return output.decode('utf-8')
+
+def get_uptime():
+    """Returns uptime in seconds or None, on BSD (including OS X). 
+    Copied from https://pypi.python.org/pypi/uptime/1.0.0"""
+    try:
+        libc = ctypes.CDLL('libc.so')
+    except OSError:
+        # OS X; can't use ctypes.util.find_library because that creates
+        # a new process on Linux, which is undesirable.
+        try:
+            libc = ctypes.CDLL('libc.dylib')
+        except OSError:
+            return None
+    
+    if not hasattr(libc, 'sysctlbyname'):
+        # Not BSD
+        return None
+
+    # Determine how much space we need for the response
+    sz = ctypes.c_uint(0)
+    libc.sysctlbyname('kern.boottime', None, ctypes.byref(sz), None, 0)
+    if sz.value != struct.calcsize('@LL'):
+        # Unexpected, let's give up.
+        return None
+
+    # For real now
+    buf = ctypes.create_string_buffer(sz.value)
+    libc.sysctlbyname('kern.boottime', buf, ctypes.byref(sz), None, 0)
+    sec, usec = struct.unpack('@LL', buf.raw)
+
+    boottime = sec + usec / 1000000
+    up = int(time.time() - boottime)
+    return up if up > 0 else None
 
 def set_pref(pref_name, pref_value):
     """Sets a preference, See munkicommon.py for details"""
