@@ -98,7 +98,7 @@
             case "9d1":
                 vendor="BenQ"
                 break;
-            case "22f0"
+            case "22f0":
                 vendor="Compaq"
                 break;
             }
