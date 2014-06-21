@@ -21,7 +21,7 @@ class Migration_reportdata_add_uptime extends Model
 		$dbh->beginTransaction();
 
 		// Adding a column is simple...
-		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s INTEGER', 
+		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s INTEGER DEFAULT 0', 
 			$this->enquote($this->tablename), $this->enquote($this->columname));
 
 		$this->exec($sql);

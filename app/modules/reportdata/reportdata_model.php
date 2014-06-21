@@ -10,7 +10,7 @@ class Reportdata_model extends Model {
 		$this->rs['console_user'] = '';
 		$this->rs['long_username'] = '';
 		$this->rs['remote_ip'] = '';
-		$this->rs['uptime'] = 0; // Uptime in seconds
+		$this->rs['uptime'] = 0; $this->rt['uptime'] = 'INTEGER DEFAULT 0';// Uptime in seconds
 		$this->rs['reg_timestamp'] = time(); // Registration date
 		$this->rs['timestamp'] = time();
 
