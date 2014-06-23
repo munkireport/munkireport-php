@@ -5,6 +5,7 @@
 new Machine_model;
 new Reportdata_model;
 new Network_model;
+new Network_switch_model;
 ?>
 
 <div class="container">
@@ -81,6 +82,11 @@ new Network_model;
 		        <th data-colname='network#ipv4ip'>IP Address</th>
 		        <th data-colname='network#ipv4router'>Router</th>
 		        <th data-colname='network#ipv4mask'>Mask</th>
+		        <th data-colname='network_switch#vlan'>Vlan</th>
+		        <th data-colname='network_switch#port'>Port</th>
+		        <th data-colname='network_switch#switch_name'>Switch Name</th>
+		        <th data-colname='network_switch#location_switch'>Physical Location</th>
+		        <th data-colname='network_switch#switch_ip'>Switch IP</th>
 		      </tr>
 		    </thead>
 		    <tbody>

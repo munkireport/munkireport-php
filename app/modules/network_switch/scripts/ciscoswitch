@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# This script uses Cisco Port Discovery (CDP) to physically locate where the Mac is connected to on the network
+# Locate where a computer is physically connected to your network
+
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
+DIR=$(dirname $0)
+
+mkdir -p "$DIR/cache"
+
+# Run this script once every 7 days. Anything less is probably overkill 
+# 86400 seconds in 24 hours, 604800 seconds in 7 days
+runtime='604800'
+
+switchresults="/usr/local/munki/preflight.d/cache/networkswitch.txt"
+
+if [ ! -f $switchresults ]; then
+	touch $switchresults
+fi
+
+# Sample from http://stackoverflow.com/questions/1207052/how-to-use-shell-script-checking-last-changed-time-of-a-file
+# Get dates
+current=`date +%s`
+last_modified=`/usr/bin/stat -f "%m" $switchresults`
+time=`date -r $current +%G-%m-%d`
+
+if [ $(($current-$last_modified)) -gt $runtime ]; then
+	# echo "switch results time $current-$last_modified"
+	echo "querying switch for information..."
+
+# Find the active network interface minus wi-fi. we only want to query an ethernet interface
+wifi=`/usr/sbin/networksetup -listallhardwareports | awk '/^Hardware Port: (Wi-Fi|AirPort)$/{getline;print $2}'`
+mainInt_excludingwifi=`/usr/sbin/networksetup -listnetworkserviceorder | grep -iow en. |  grep -v "$wifi" | head -n 1`
+
+	echo ""
+	echo "Please be patient as this script can take up to 30 seconds to run...still beats using a Fluke in the field"
+	echo ""
+	echo "Getting switch information from interface $mainInt_excludingwifi"
+
+/usr/sbin/tcpdump -nn -v -i "$mainInt_excludingwifi" -s 1500 -c 1 'ether[20:2] == 0x2000' > /tmp/network.txt
+
+Switch_Port=`cat /tmp/network.txt | grep Port-ID | awk '{print $6}' | tr -d "'"`
+port="switch_port = $Switch_Port"
+
+Mac_Vlan=`cat /tmp/network.txt | grep "Native VLAN ID" | awk '{print $8}'`
+vlan="network_vlan = $Mac_Vlan"
+
+Location_Switch=`cat /tmp/network.txt | grep "Physical Location" | awk '{print $7}'`
+physical_location="physical_location = $Location_Switch"
+
+Switch_ID=`cat /tmp/network.txt | grep "Device-ID" | awk '{print $6}' | tr -d "'"`
+switch_name="switch_id = $Switch_ID"
+
+Switch_Address=`cat /tmp/network.txt | grep "Management Addresses" | awk '{print $9}'`
+switch_ip="switch_address = $Switch_Address"
+
+timestamp="timestamp = $time"
+
+	echo $port '\n'$vlan '\n'$physical_location '\n'$switch_name '\n'$switch_ip '\n'$timestamp > "$switchresults"
+
+else
+
+	# echo "switch results time $current-$last_modified"
+	echo "switch was queried within the past 7 days, skipping check..."
+
+fi
+
+exit 0

@@ -1,5 +1,40 @@
 <?
-$nw = new Network_model();?>
+//Initialize models needed for the table
+$networkswitch = new network_switch_model($serial_number);
+$nw = new Network_model();
+$report = new Reportdata_model($serial_number);
+?>
+
+<h2>Network Switch Details</h2>
+
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td>Switch was last queried on</td>
+					<td><?=$networkswitch->timestamp?></td>
+				</tr>
+				<tr>
+					<td>Mac is plugged into switch port</td>
+					<td><?=$networkswitch->port?></td>
+				</tr>
+				<tr>
+					<td>Mac is on network vlan</td>
+					<td><?=$networkswitch->vlan?></td>
+				</tr>
+					<tr>
+					<td>Physical location of switch</td>
+					<td><?=$networkswitch->location_switch?></td>
+				</tr>
+					<tr>
+					<td>Name of switch</td>
+					<td><?=$networkswitch->switch_name?></td>
+				</tr>
+					<tr>
+					<td>IP address of switch</td>
+					<td><?=$networkswitch->switch_ip?></td>
+				</tr>
+			</tbody>
+		</table>
 
 <?foreach($nw->retrieve_many(
 		'serial_number=? ORDER BY `order`', array($serial_number)) as $item):?>
