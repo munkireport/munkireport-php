@@ -35,15 +35,19 @@ for vga in plist[0]['_items']:
     #loop within each display
     for display in vga['spdisplays_ndrvs']:
 
-      #Serial and Type sections
+      #Type section
+      try:
+        if display['_spdisplays_display-vendor-id'] == "610":
+          result += 'Type = Internal'
+        else:
+          result += 'Type = External'
+      except KeyError as error: #this catches errors in headless Xserve and minis
+          result += 'Type = Internal'
+
+      #Serial section
       if display.get('spdisplays_display-serial-number', None):
-        result += 'Type = External'
         result += '\nSerial = ' + str(display['spdisplays_display-serial-number'])
-      elif display['_spdisplays_display-vendor-id'] != "610":
-        result += 'Type = External'
-        result += '\nSerial = n/a'
       else:
-        result += 'Type = Internal'
         result += '\nSerial = n/a'
 
       try:
