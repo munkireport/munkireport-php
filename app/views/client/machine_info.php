@@ -108,7 +108,7 @@
 
 				<dl class="dl-horizontal">
 					<dt>Uptime</dt>
-					<?if($report->uptime):?>
+					<?if($report->uptime > 0):?>
 					<dd><time class="absolutetime" title="Booted: <?=strftime('%c', $report->timestamp - $report->uptime)?>" datetime="<?=$report->uptime?>"><?=strftime('%x', $report->timestamp - $report->uptime)?></time></dd>
 					<?else:?>
 					<dd><?=lang('unavailable')?></dd>
