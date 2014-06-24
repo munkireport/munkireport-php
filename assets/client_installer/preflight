@@ -28,7 +28,7 @@ def main():
             sub = files.pop(files.index(submitscript))
         except Exception, e:
             print '%s not found in preflight.d' % submitscript
-            exit(-1)
+            exit(0)
         
         # Sort list
         files.sort()
@@ -56,7 +56,7 @@ def main():
                 if result:
                     print('preflight.d/%s return code: %d'
                                             % (preflightscript, result))
-                    exit(-1)
+                    exit(0)
 
             except utils.ScriptNotFoundError:
                 pass  # Script has disappeared? Well, it is not required, so pass
