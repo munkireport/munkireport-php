@@ -16,6 +16,13 @@ def main():
         runtype = sys.argv[1]
     else:
         runtype = 'custom'
+
+    # Try to get the munki verbosity level
+    verbosity = os.environ.get('MUNKI_VERBOSITY_LEVEL')
+    if (verbosity):
+        reportcommon.set_verbosity(int(verbosity))
+    else:
+        reportcommon.set_verbosity(3)
         
     # Get serial
     hardware_info = munkicommon.get_hardware_info()
@@ -35,7 +42,7 @@ def main():
     config_items = reportcommon.pref('ReportItems') or {}
     
     for key, val in config_items.items():
-        print "Requesting %s" % key 
+        reportcommon.display_detail("Requesting %s" % key)
         items[key] = {'path':val}
         
     reportcommon.process(serial, items)
@@ -67,23 +74,23 @@ def run_postflightd_scripts(runtype):
                 continue
             try:
                 # Attempt to execute script
-                print 'Running %s' % postflightscript
+                reportcommon.display_detail('Running %s' % postflightscript)
                 result, stdout, stderr = utils.runExternalScript(
                     postflightscriptpath, allow_insecure=False, script_args=[runtype])
                 if stdout:
-                        print(stdout.encode('UTF-8'))
+                        reportcommon.display_detail(stdout)
                 if stderr:
-                    print('%s Error: %s'
+                    reportcommon.display_detail('%s Error: %s'
                         % (postflightscript, stderr))
                 if result:
-                    print('postflight.d/%s return code: %d'
+                    reportcommon.display_error('postflight.d/%s return code: %d'
                                             % (postflightscript, result))
-                    exit(-1)
+                    continue
 
             except utils.ScriptNotFoundError:
                 pass # Script has disappeared? Well, it is not required, so pass
             except utils.RunExternalScriptError, e:
-                print >> sys.stderr, str(e)
+                reportcommon.display_error( str(e) )
                 # Skip this script
     else:
         # /usr/local/munki/postflight.d does not exist

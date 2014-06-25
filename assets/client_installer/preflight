@@ -3,11 +3,19 @@
 ''' Preflight script'''
 import sys
 import os
+from munkilib import reportcommon
 
 def main():
     '''Main'''
     # Munkireport submit script TODO: make config item
     submitscript = 'submit.preflight'
+
+    # Try to get the munki verbosity level
+    verbosity = os.environ.get('MUNKI_VERBOSITY_LEVEL')
+    if (verbosity):
+        reportcommon.set_verbosity(int(verbosity))
+    else:
+        reportcommon.set_verbosity(3)
 
     # get runtype
     if (len(sys.argv) > 1):
@@ -27,7 +35,7 @@ def main():
         try:
             sub = files.pop(files.index(submitscript))
         except Exception, e:
-            print '%s not found in preflight.d' % submitscript
+            reportcommon.display_error('%s not found in preflight.d' % submitscript)
             exit(0)
         
         # Sort list
@@ -45,23 +53,23 @@ def main():
                 continue
             try:
                 # Attempt to execute script
-                print 'Running %s' % preflightscript
+                reportcommon.display_detail('Running %s' % preflightscript)
                 result, stdout, stderr = utils.runExternalScript(
                     preflightscriptpath, allow_insecure=False, script_args=[runtype])
                 if stdout:
-                        print(stdout.encode('UTF-8'))
+                        reportcommon.display_detail(stdout)
                 if stderr:
-                    print('%s Error: %s' 
+                    reportcommon.display_detail('%s Error: %s' 
                         % (preflightscript, stderr))
                 if result:
-                    print('preflight.d/%s return code: %d'
+                    reportcommon.display_error('preflight.d/%s return code: %d'
                                             % (preflightscript, result))
-                    exit(0)
+                    continue
 
             except utils.ScriptNotFoundError:
                 pass  # Script has disappeared? Well, it is not required, so pass
             except utils.RunExternalScriptError, e:
-                print >> sys.stderr, str(e)
+                reportcommon.display_error(str(e))
                 # Skip this script
     else:
         # /usr/local/munki/preflight.d does not exist

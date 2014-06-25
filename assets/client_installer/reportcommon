@@ -24,23 +24,42 @@ import time
 # our preferences "bundle_id"
 BUNDLE_ID = 'MunkiReport'
 
+def set_verbosity(level):
+    """
+    Set verbosity level
+    """
+    munkicommon.verbose = int(level)
+
+def display_error(msg, *args):
+    """
+    Call munkicommon error msg handler
+    """
+    munkicommon.display_error('Munkireport: %s' % msg, *args)
+
+def display_detail(msg, *args):
+    """
+    Call munkicommon detail msg handler
+    """
+    munkicommon.display_detail('Munkireport: %s' % msg, *args)
+
 def curl(url, values):
     req = urllib2.Request(url, urllib.urlencode(values))
     try:
         response = urllib2.urlopen(req)
     except urllib2.URLError, e:
+        display_error(url)
         if hasattr(e, 'reason'):
-            print url
-            print 'We failed to reach a server.'
-            print 'Reason: ', e.reason
+            display_error('We failed to reach a server')
+            display_error('Reason: %s' % e.reason)
         elif hasattr(e, 'code'):
-            print url
-            print 'The server couldn\'t fulfill the request.'
-            print 'Error code: ', e.code
+            display_error('The server couldn\'t fulfill the request.')
+            display_error('Error code: %s' % e.code)
+        else:
+            display_error('Miscellaneous server error.')
         # Reportserver error, exit clean so munki keeps running
         exit(0)
     except:
-        print 'A server error occurred:', sys.exc_info()[0]
+        display_error('A server error occurred: %s' % sys.exc_info()[0])
         exit(0)
     return response
 
@@ -154,32 +173,32 @@ def process(serial,items):
     try:
         result = unserialize(server_data)
     except:
-        print 'Illegal response from the server: %s' % server_data 
+        display_error('Illegal response from the server: %s' % server_data)
         return -1
     
     if result.get('error') != '':
-        print 'Server error: %s' % result['error']
+        display_error('Server error: %s' % result['error'])
         return -1
 
     # Retrieve hashes that need updating
     for i in items.keys():
         if i in result:
-            print 'Need to update ' + i
+            display_detail('Need to update %s' % i)
             if items[i].get('path'):
                 try:
                     f = open(items[i]['path'], "r")
                     items[i]['data'] = f.read()
                 except:
-                    print "ERROR: Can't open %s" % items[i]['path']
+                    display_error("ERROR: Can't open %s" % items[i]['path'])
                     
         else: # delete items that don't have to be uploaded
             del items[i]
 
     # Send new files with hashes
     if len(items):
-        print 'Sending items'
+        display_detail('Sending items')
         response = curl(checkurl, {'serial': serial, 'items': serialize(items), 'passphrase': passphrase})
-        print response.read()
+        display_detail(response.read())
     else:
-        print 'No changes'
+        display_detail('No changes')
 
