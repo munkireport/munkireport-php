@@ -119,8 +119,8 @@
             case "4c2d":
                 vendor="Samsung"
                 break;
-            case "593a":
-                vendor="Vizio"
+            case "d82":
+                vendor="CompuLab"
                 break;
             }
             $('td:eq(3)', nRow).html(vendor)
