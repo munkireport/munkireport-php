@@ -37,11 +37,13 @@ for vga in plist[0]['_items']:
 
       #Type section
       try:
-        if display['_spdisplays_display-vendor-id'] == "610":
+        if display.get('spdisplays_display-serial-number', None):
+          result += 'Type = External'
+        elif display['_spdisplays_display-vendor-id'] == "610":
           result += 'Type = Internal'
         else:
           result += 'Type = External'
-      except KeyError as error: #this catches errors in headless Xserve and minis
+      except KeyError as error: #this catches the error for 10.6 where there is no vendor for built-in displays
           result += 'Type = Internal'
 
       #Serial section
