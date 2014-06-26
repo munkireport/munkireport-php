@@ -84,3 +84,17 @@ to change the following:
 
  1. Add `$conf['index_page'] = '';` to config.php
 
+#### Change Timeout of the Web Dashboard
+
+Depending on your webserver configuration you might want to increase or decrease the session duration for the Dashboard. You can do this in your config.php file with the following examples:
+
+The following will set the lifetime of the browswer cookie to ‘Until the browser is closed’ (which is the php default).
+
+	ini_set('session.cookie_lifetime', 0);
+
+The second parameter is the lifetime in seconds, so if you put in
+
+	ini_set('session.cookie_lifetime', 3600);
+
+your session will stay valid for an hour.
+
