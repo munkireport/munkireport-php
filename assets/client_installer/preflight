@@ -54,7 +54,7 @@ def main():
             try:
                 # Attempt to execute script
                 reportcommon.display_detail('Running %s' % preflightscript)
-                result, stdout, stderr = utils.runExternalScript(
+                result, stdout, stderr = reportcommon.runExternalScriptWithTimeout(
                     preflightscriptpath, allow_insecure=False, script_args=[runtype])
                 if stdout:
                         reportcommon.display_detail(stdout)
