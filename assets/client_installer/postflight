@@ -75,7 +75,7 @@ def run_postflightd_scripts(runtype):
             try:
                 # Attempt to execute script
                 reportcommon.display_detail('Running %s' % postflightscript)
-                result, stdout, stderr = utils.runExternalScript(
+                result, stdout, stderr = reportcommon.runExternalScriptWithTimeout(
                     postflightscriptpath, allow_insecure=False, script_args=[runtype])
                 if stdout:
                         reportcommon.display_detail(stdout)
