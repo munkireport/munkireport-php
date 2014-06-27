@@ -17,13 +17,9 @@ bluetoothfile="$DIR/cache/bluetoothinfo.txt"
 
 # echo "Getting Bluetooth device status"
 
-# Bluetooth status. Returns '0' for off and '1' for on
-Power=`defaults read /Library/Preferences/com.apple.Bluetooth.plist ControllerPowerState`
-if [ $Power = 0 ]; then
-	status="Status = Bluetooth is off"
-		else
-	status="Status = Bluetooth is on"
-fi
+# Bluetooth status.
+Power=`system_profiler SPBluetoothDataType | grep 'Bluetooth Power' | awk '{print tolower($3)}'`
+status="Status = Bluetooth is $Power"
 
 KeyboardPercent=`ioreg -c AppleBluetoothHIDKeyboard | grep BatteryPercent | sed 's/[a-z,A-Z, ,|,",=]//g' | tail -1 | awk '{print $1}'`
 if [ "${KeyboardPercent}" = "" ]; then
