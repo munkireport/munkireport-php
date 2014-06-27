@@ -47,54 +47,13 @@ def main():
         
     reportcommon.process(serial, items)
     
-    run_postflightd_scripts(runtype)
+    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
+
+    # Try to run postflight.d
+    postflightscriptdir = os.path.join(scriptdir, "postflight.d")
+    reportcommon.rundir(postflightscriptdir, runtype, False)
 
     exit(0)
-    
-def run_postflightd_scripts(runtype):
-    # define path to directory with postflight scripts
-    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
-    postflightscriptdir = os.path.join(scriptdir, "postflight.d")
-
-    if os.path.exists(postflightscriptdir):
-        from munkilib import utils
-        # Get all files in postflight.d
-        files = os.listdir(postflightscriptdir)
-        
-        # Sort list
-        files.sort()
-        for postflightscript in files:
-            if postflightscript.startswith('.'):
-                # Skip files that start with a period
-                continue
-            postflightscriptpath = os.path.join(
-                postflightscriptdir, postflightscript)
-            if os.path.isdir(postflightscriptpath):
-                # Skip directories in postflight.d directory
-                continue
-            try:
-                # Attempt to execute script
-                reportcommon.display_detail('Running %s' % postflightscript)
-                result, stdout, stderr = reportcommon.runExternalScriptWithTimeout(
-                    postflightscriptpath, allow_insecure=False, script_args=[runtype])
-                if stdout:
-                        reportcommon.display_detail(stdout)
-                if stderr:
-                    reportcommon.display_detail('%s Error: %s'
-                        % (postflightscript, stderr))
-                if result:
-                    reportcommon.display_error('postflight.d/%s return code: %d'
-                                            % (postflightscript, result))
-                    continue
-
-            except utils.ScriptNotFoundError:
-                pass # Script has disappeared? Well, it is not required, so pass
-            except utils.RunExternalScriptError, e:
-                reportcommon.display_error( str(e) )
-                # Skip this script
-    else:
-        # /usr/local/munki/postflight.d does not exist
-        pass
 
 if __name__ == '__main__':
     main()

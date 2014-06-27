@@ -19,6 +19,7 @@ from Foundation import kCFPreferencesCurrentHost
 import ctypes
 import struct
 import time
+import os
 
 # our preferences "bundle_id"
 BUNDLE_ID = 'MunkiReport'
@@ -34,6 +35,12 @@ def display_error(msg, *args):
     Call munkicommon error msg handler
     """
     munkicommon.display_error('Munkireport: %s' % msg, *args)
+
+def display_warning(msg, *args):
+    """
+    Call munkicommon warning msg handler
+    """
+    munkicommon.display_warning('Munkireport: %s' % msg, *args)
 
 def display_detail(msg, *args):
     """
@@ -215,7 +222,6 @@ def runExternalScriptWithTimeout(script, allow_insecure=False, script_args=(), t
       RunExternalScriptError: there was an error running the script.
     """
     from munkilib import utils
-    import os
 
     if not os.path.exists(script):
         raise ScriptNotFoundError('script does not exist: %s' % script)
@@ -254,3 +260,71 @@ def runExternalScriptWithTimeout(script, allow_insecure=False, script_args=(), t
         
     else:
         raise utils.RunExternalScriptError('%s not executable' % script)
+
+def rundir(scriptdir, runtype, abort=False, submitscript=''):
+    """
+    Run scripts in directory scriptdir
+    runtype is passed to the script
+    if abort is True, a non-zero exit status will abort munki
+    submitscript is put at the end of the scriptlist
+    """
+    if os.path.exists(scriptdir):
+
+        from munkilib import utils
+
+        # Directory containing the scripts
+        parentdir = os.path.basename(scriptdir)
+        display_detail('# Executing scripts in %s' % parentdir)
+
+        # Get all files in scriptdir
+        files = os.listdir(scriptdir)
+
+        # Sort files
+        files.sort()
+
+        # Find submit script and stick it on the end of the list
+        if submitscript:
+            try:
+                sub = files.pop(files.index(submitscript))
+                files.append(sub)
+            except Exception, e:
+                display_error('%s not found in %s'
+                    % (submitscript, parentdir))
+        
+        for script in files:
+
+            # Skip files that start with a period
+            if script.startswith('.'):
+                continue
+
+            # Concatenate dir and filename
+            scriptpath = os.path.join(scriptdir, script)
+
+            # Skip directories
+            if os.path.isdir(scriptpath):
+                continue
+
+            try:
+                # Attempt to execute script
+                display_detail('Running %s' % script)
+                result, stdout, stderr = runExternalScriptWithTimeout(
+                    scriptpath, allow_insecure=False, script_args=[runtype])
+                if stdout:
+                        display_detail(stdout)
+                if stderr:
+                    display_detail('%s Error: %s' 
+                        % (script, stderr))
+                if result:
+                    if(abort):
+                        display_detail('Aborted by %s' % script)
+                        exit(1)
+                    else:
+                        display_warning('%s return code: %d'
+                                            % (script, result))
+
+            except utils.ScriptNotFoundError:
+                pass  # Script has disappeared? Well, it is not required, so pass
+            except utils.RunExternalScriptError, e:
+                display_warning(str(e))
+                
+# End of reportcommon
