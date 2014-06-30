@@ -5,17 +5,6 @@ $report   = new Reportdata_model($serial_number);
 ?>
 
 
-<!-- Format date -->
-				<script>
-					$(document).ready(function() {
-						$( "dd time" ).each(function( index ) {
-							$(this).html(moment($(this).attr('datetime') * 1000).fromNow());
-							$(this).tooltip().css('cursor', 'pointer');
-						});
-					});
-				</script>
-		
-
 	<h2>FileVault Escrow</h2>
 
 		<table class="table table-striped">

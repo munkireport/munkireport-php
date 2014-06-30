@@ -105,6 +105,20 @@
 						document.body.scrollTop=yScroll;
 					}
 				})
+
+				// Set times
+				$( "dd time" ).each(function( index ) {
+					if($(this).hasClass('absolutetime'))
+					{
+						seconds = moment().seconds(parseInt($(this).attr('datetime')))
+						$(this).html(moment(seconds).fromNow(true));
+					}
+					else
+					{
+						$(this).html(moment($(this).attr('datetime') * 1000).fromNow());
+					}
+					$(this).tooltip().css('cursor', 'pointer');
+				});
 			});
 			</script>
 	    </div> <!-- /span 12 -->

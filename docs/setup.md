@@ -44,6 +44,17 @@ When the client reporting goes well, you can add a pkginfo file to munki:
 2. Copy MunkiReport.plist into your Munki repository (in your pkgsinfo directory)
 3. Run makecatalogs, and be sure to add it to a manifest as well.
 
+Advanced client setup
+---
+
+When Munkireport is installed on the client, 3 directories are generated:
+
+1. `preflight.d` - this directory is used by munkireport to run scripts on preflight, it contains at least `submit.preflight`. Scripts that exit with a non-zero status will not abort the run.
+3. `preflight_abort.d` - this directory is empty and can be used for additional scripts that check if managedsoftwareupdate should run. Scripts that exit with a non-zero status will abort the run.
+4. `postflight.d` - this directory is empty and can be used for additional scripts that should run on postflight.
+
+All scripts have a timeout limit of 10 seconds, after that they're killed.
+
 Advanced server setup
 ---
 

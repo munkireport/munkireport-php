@@ -48,6 +48,9 @@ fi
 # Create postflight.d
 mkdir -p "${MUNKIPATH}postflight.d"
 
+# Create preflight_abort.d
+mkdir -p "${MUNKIPATH}preflight_abort.d"
+
 echo "Configuring munkireport"
 #### Configure Munkireport ####
 

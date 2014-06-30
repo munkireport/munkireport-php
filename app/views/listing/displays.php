@@ -96,7 +96,31 @@
               vendor="SMART Technologies"
               break;
             case "9d1":
-                vendor="BenQ"
+              vendor="BenQ"
+              break;
+            case "4dd9":
+              vendor="Sony"
+              break;
+            case "472":
+              vendor="Acer"
+              break;
+            case "22f0":
+                vendor="HP"
+                break;
+            case "34ac":
+                vendor="Mitsubishi"
+                break;
+            case "22f0":
+                vendor="HP"
+                break;
+            case "5a63":
+                vendor="ViewSonic"
+                break;
+            case "4c2d":
+                vendor="Samsung"
+                break;
+            case "593a":
+                vendor="Vizio"
                 break;
             }
             $('td:eq(3)', nRow).html(vendor)

@@ -107,20 +107,20 @@
 				</dl>
 
 				<dl class="dl-horizontal">
+					<dt>Uptime</dt>
+					<?if($report->uptime > 0):?>
+					<dd><time class="absolutetime" title="Booted: <?=strftime('%c', $report->timestamp - $report->uptime)?>" datetime="<?=$report->uptime?>"><?=strftime('%x', $report->timestamp - $report->uptime)?></time></dd>
+					<?else:?>
+					<dd><?=lang('unavailable')?></dd>
+					<?endif?>
+				</dl>
+
+				<dl class="dl-horizontal">
 					<dt>Registration date</dt>
 					<dd><time title="<?=strftime('%c', $report->reg_timestamp)?>" datetime="<?=$report->reg_timestamp?>"><?=strftime('%x', $report->reg_timestamp)?></time></dd>
 					<dt>Last checkin</dt>
 					<dd><time title="<?=strftime('%c', $report->timestamp)?>" datetime="<?=$report->timestamp?>"><?=strftime('%x', $report->timestamp)?></time></dd>
 				</dl>
-
-				<script>
-					$(document).ready(function() {
-						$( "dd time" ).each(function( index ) {
-							$(this).html(moment($(this).attr('datetime') * 1000).fromNow());
-							$(this).tooltip().css('cursor', 'pointer');
-						});
-					});
-				</script>
 
 			</small>
 		</div>
