@@ -110,9 +110,6 @@
             case "34ac":
                 vendor="Mitsubishi"
                 break;
-            case "22f0":
-                vendor="HP"
-                break;
             case "5a63":
                 vendor="ViewSonic"
                 break;
@@ -122,6 +119,10 @@
             case "593a":
                 vendor="Vizio"
                 break;
+            case "d82":
+                vendor="CompuLab"
+                break;
+
             }
             $('td:eq(3)', nRow).html(vendor)
 
