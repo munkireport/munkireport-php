@@ -344,7 +344,7 @@
 	|
 	*/
     $conf['dashboard_layout'] = array(
-		array('client', 'munki', 'disk_report', 'installed_memory', 'bound_to_ds'),
+		array('client', 'munki', 'disk_report', 'installed_memory', 'bound_to_ds', 'uptime'),
 		array('new_clients', 'pending_apple', 'pending_munki'),
 		array('munki_versions', 'warranty', 'filevault')
 	);
