@@ -2,9 +2,9 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading" data-container="body" title="Totals since this data is being collected">
+				<div class="panel-heading" data-container="body">
 
-					<h3 class="panel-title"><i class="fa fa-history"></i> Uptime</h3>
+					<h3 class="panel-title"><i class="fa fa-power-off"></i> Uptime</h3>
 
 				</div>
 
@@ -22,9 +22,9 @@
 
 						foreach ($machine->query($sql) as $obj) {
 
-							if ( (time() - ($obj->timestamp - $obj->uptime)) <= 86400 ){
+							if ( $obj->uptime <= 86400 ){
 								$in_green += 1;
-							} elseif ( (time() - ($obj->timestamp - $obj->uptime)) >= 604800 ) {
+							} elseif ( $obj->uptime >= 604800 ) {
 								$in_red += 1;
 							} else {
 								$in_yellow += 1;
@@ -34,17 +34,17 @@
 
 					?>
 
-					<a class="btn btn-success">
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-success">
 						<span class="bigger-150"> <?=$in_green?> </span><br>
-						> 1 Day
+						< 1 Day
 					</a>
 
-					<a class="btn btn-warning">
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$in_yellow?> </span><br>
-						> 7 Days
+						< 7 Days
 					</a>
 
-					<a class="btn btn-danger">
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-danger">
 						<span class="bigger-150"> <?=$in_red?> </span><br>
 						7 Days +
 					</a>
