@@ -41,21 +41,88 @@
 				<?else:?>
 					<span class='text-danger'><?=$warranty->status?></span>
 				<?endif?>
+				<a class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>">Recheck Warranty Status</a> <br/>
 
-				</small>
-				<hr />
-				<a class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>">
-					Recheck Warranty Status
-				</a>
-				<?if(conf('vnc_link')):?>
+			<!-- <h5>
+				Display information
+			</h5> -->
 
-				<a class="btn btn-default btn-xs" href="<?printf(conf('vnc_link'), $report->remote_ip)?>">Remote Control (vnc)</a>
-				<?endif?>
+			<?php
+				$display = new Displays_info_model();
+				$sql = "SELECT *
+								FROM displays
+								WHERE serial_number = '$serial_number'
+								ORDER BY type";
+			?>
 
-				<?if(conf('ssh_link')):?>
+			<?foreach($display->query($sql) as $obj):?>
+				<b>
+				<?php
+					switch ($obj->vendor) {
+						case "610":
+							echo "Apple";
+							break;
+						case "10ac":
+							echo "Dell";
+							break;
+						case "5c23":
+							echo "Wacom";
+							break;
+						case "4d10":
+							echo "Sharp";
+							break;
+						case "1e6d":
+							echo "LG";
+							break;
+						case "38a3":
+							echo "NEC";
+							break;
+						case "4c49":
+							echo "SMART Technologies";
+							break;
+						case "9d1":
+							echo "BenQ";
+							break;
+						case "4dd9":
+							echo "Sony";
+							break;
+						case "472":
+							echo "Acer";
+							break;
+						case "22f0":
+							echo "HP";
+							break;
+						case "34ac":
+							echo "Mitsubishi";
+							break;
+						case "5a63":
+							echo "ViewSonic";
+							break;
+						case "4c2d":
+							echo "Samsung";
+							break;
+						case "593a":
+							echo "Vizio";
+							break;
+						case "d82":
+							echo "CompuLab";
+							break;
+					}
+				?>
+				<?=$obj->model?> (<?=($obj->type == 0 ? 'Built-in' : 'External') ?>)</b><br/>
+				<b>Serial</b>
+				<?=$obj->display_serial?><br/>
+				<b>Manufacture date</b>
+				<?=$obj->manufactured?><br/>
+				<b>Resolution</b>
+				<?=$obj->native?><br/>
+				<b>Was connected on</b>
+				<time title="<?=strftime('%c', $obj->timestamp)?>" datetime="<?=$obj->timestamp?>">
+					<?=strftime('%x', $obj->timestamp)?><br/>
+				</time>
+			<?endforeach?>
 
-				<a class="btn btn-default btn-xs" href="<?printf(conf('ssh_link'), $report->remote_ip)?>">Remote Control (ssh)</a>
-				<?endif?>
+		</small>
 
 		</div>
 		<div class="col-lg-4">
@@ -82,6 +149,20 @@
 					<dd><?=$report->remote_ip?>&nbsp;</dd>
 					<dt>Local admin</dt>
 					<dd><?=$localadmin->users?>&nbsp;</dd>
+					<dd>
+						<div class="btn-group btn-group-xs">
+							<?if(conf('vnc_link')):?>
+								<a class="btn btn-default" href="<?printf(conf('vnc_link'), $report->remote_ip)?>">
+									Remote Control (vnc)
+								</a>
+							<?endif?>
+							<?if(conf('ssh_link')):?>
+								<a class="btn btn-default" href="<?printf(conf('ssh_link'), $report->remote_ip)?>">
+									Remote Control (ssh)
+								</a>
+							<?endif?>
+						</div>
+					</dd>
 
 				</dl>
 			</small>
