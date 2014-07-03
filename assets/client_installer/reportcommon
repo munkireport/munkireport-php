@@ -252,7 +252,7 @@ def runExternalScriptWithTimeout(script, allow_insecure=False, script_args=(), t
         else:
             try:
                 proc.kill()
-            except OSError as e:
+            except OSError, e:
                 if e.errno != 3:
                     raise
             raise utils.RunExternalScriptError('%s timed out' % script)
