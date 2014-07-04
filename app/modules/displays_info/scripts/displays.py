@@ -43,7 +43,7 @@ for vga in plist[0]['_items']:
           result += 'Type = Internal'
         else:
           result += 'Type = External'
-      except KeyError as error: #this catches the error for 10.6 where there is no vendor for built-in displays
+      except KeyError, error: #this catches the error for 10.6 where there is no vendor for built-in displays
           result += 'Type = Internal'
 
       #Serial section
@@ -69,7 +69,7 @@ for vga in plist[0]['_items']:
         #Save section
         result += '\n----------\n'
 
-      except KeyError as error:
+      except KeyError, error:
         result += '\nAn error ocurred while reading this display\n'
 
 ##############
