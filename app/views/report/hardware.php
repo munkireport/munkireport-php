@@ -30,7 +30,7 @@
 
 		<?$this->view('widgets/external_displays_count_widget')?>
 
-		<?$this->view('widgets/warranty_graph_widget')?>
+		<?$this->view('widgets/hardware_warranty_widget')?>
 
 	</div> <!-- /row -->
 
