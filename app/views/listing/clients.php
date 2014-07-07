@@ -40,29 +40,20 @@ new Munkireport_model;
                 var cls = disk > 90 ? 'danger' : (disk > 80 ? 'warning' : 'success');
                 $('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
 
-                // Format uptime
-                var uptime=$('td:eq(7)', nRow).html();
-                if(uptime == '0') {
-                  $('td:eq(7)', nRow).html('')
-                } else {
-                  // source: stackoverflow.com's question 13903897
-                  // calculate (and subtract) whole days
-                  var days = Math.floor(uptime / 86400);
-                  uptime -= days * 86400;
-                  // calculate (and subtract) whole hours
-                  var hours = Math.floor(uptime / 3600) % 24;
-                  uptime -= hours * 3600;
-                  // calculate (and subtract) whole minutes
-                  var minutes = Math.floor(uptime / 60) % 60;
-                  uptime -= minutes * 60;
-                  // what's left is seconds
-                  var seconds = uptime
-                  $('td:eq(7)', nRow).html('<div title="'+ days + ' days ' + hours +' hours ' + minutes + ' minutes ' + seconds + ' seconds">' + days+' days</div>')
-                }
-
                 // Format date
-                var date = new Date($('td:eq(8)', nRow).html() * 1000);
+                var checkin = parseInt($('td:eq(8)', nRow).html());
+                var date = new Date(checkin * 1000);
                 $('td:eq(8)', nRow).html(moment(date).fromNow());
+
+                // Format uptime
+                var uptime = parseInt($('td:eq(7)', nRow).html());
+                if(uptime == 0) {
+                  $('td:eq(7)', nRow).html('')
+                }
+                else
+                {
+                  $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract('seconds', uptime).format('llll') + '">' + moment(date).subtract('seconds', uptime).fromNow(true) + '</span>');
+                }
 				    }
 			    } );
 
