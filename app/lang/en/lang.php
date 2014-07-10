@@ -11,7 +11,7 @@ $lang['day']		= 'day';
 $lang['hour']		= 'hour';
 $lang['minute']		= 'minute';
 $lang['second']		= 'second';
-// Plurals	
+// Plurals
 $lang['years']		= 'years';
 $lang['months']		= 'months';
 $lang['weeks']		= 'weeks';
@@ -59,6 +59,7 @@ $lang['tab_third_party_software'] = 'Third Party Software';
 $lang['tab_inventory_items'] = 'Inventory Items';
 $lang['tab_network_interfaces'] = 'Network Interfaces';
 $lang['tab_directory_services'] = 'Directory Services';
+$lang['tab_displays'] = 'Displays';
 $lang['installed_apple_software'] = 'Installed Apple Software';
 $lang['installed_third_party_software'] = 'Installed Third-Party Software';
 $lang['install_date'] = 'Install Date';
@@ -81,11 +82,10 @@ $lang['configuration'] = 'Configuration';
 $lang['error'] = 'Error';
 $lang['error_403'] = 'You are not allowed to view this page';
 $lang['error_404'] = 'Page not found';
-$lang['error_426'] = 'You are required to visit this site using a secure connection. 
+$lang['error_426'] = 'You are required to visit this site using a secure connection.
 <a href="%s">Switch to secure site</a>';
 
 // Warranty lookup
 
 $lang['model_lookup_failed'] = 'Model lookup failed';
 $lang['lookup_failed'] = 'Lookup failed';
-
