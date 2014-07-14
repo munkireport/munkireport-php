@@ -60,7 +60,7 @@ for vga in plist[0]['_items']:
 
         #Manufactured section
         makeValid = display['_spdisplays_display-week']
-        if int(makeValid) = 255:
+        if int(makeValid) == 255:
           makeValid = "*":
           result += '\Model Year = ' + display['_spdisplays_display-year'] + makeValid
         else:
