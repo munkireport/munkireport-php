@@ -60,9 +60,12 @@ for vga in plist[0]['_items']:
 
         #Manufactured section
         makeValid = display['_spdisplays_display-week']
-        if int(makeValid) > 52 : makeValid = "52"
-        pretty = datetime.datetime.strptime(display['_spdisplays_display-year'] + makeValid + '1', '%Y%W%w')
-        result += '\nManufactured = ' + str(pretty.strftime('%B %Y'))
+        if int(makeValid) = 255:
+          makeValid = "*":
+          result += '\Model Year = ' + display['_spdisplays_display-year'] + makeValid
+        else:
+          pretty = datetime.datetime.strptime(display['_spdisplays_display-year'] + makeValid + '1', '%Y%W%w'):
+          result += '\nManufactured = ' + str(pretty.strftime('%B %Y'))
 
         #Native resolution section
         result += '\nNative = ' + str(display['_spdisplays_pixels'])
