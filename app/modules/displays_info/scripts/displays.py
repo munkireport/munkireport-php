@@ -57,12 +57,12 @@ for vga in plist[0]['_items']:
 
         #Model section
         result += '\nModel = ' + str(display['_name'])
-
-        #Manufactured section
         makeValid = display['_spdisplays_display-week']
         if int(makeValid) == 255:
-            result += '\nManufactured = ' + str(display['_spdisplays_display-year']) + "model"
-        else:
+            result += ' (' + str(display['_spdisplays_display-year']) + ")"
+            makeValid = "0"
+
+        #Manufactured section
             pretty = datetime.datetime.strptime(display['_spdisplays_display-year'] + makeValid + '1', '%Y%W%w')
             result += '\nManufactured = ' + str(pretty.strftime('%B %Y'))
 
