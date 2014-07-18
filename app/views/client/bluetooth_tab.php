@@ -2,7 +2,7 @@
 $bluetooth = new bluetooth_model($serial_number);
 ?>
 
-	<h2>Bluetooth</h2>
+	<h2>Bluetooth Status</h2>
 
 		<table class="table table-striped">
 			<tbody>
@@ -11,15 +11,15 @@ $bluetooth = new bluetooth_model($serial_number);
 					<td><?=$bluetooth->bluetooth_status?></td>
 				</tr>
 				<tr>
-					<td>Keyboard Status</td>
+					<td>Keyboard % battery life remaining</td>
 					<td><?=$bluetooth->keyboard_battery?></td>
 				</tr>
 					<tr>
-					<td>Mouse Status</td>
+					<td>Mouse % battery life remaining</td>
 					<td><?=$bluetooth->mouse_battery?></td>
 				</tr>
 					<tr>
-					<td>Trackpad Status</td>
+					<td>Trackpad % battery life remaining</td>
 					<td><?=$bluetooth->trackpad_battery?></td>
 				</tr>
 			</tbody>
