@@ -81,10 +81,10 @@ new Bluetooth_model;
 		      	<th data-colname='machine#computer_name'>Name</th>
 		        <th data-colname='machine#serial_number'>Serial</th>
 		        <th data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='bluetooth#bluetooth_status'>Bluetooth Status</th> 
-		        <th data-colname='bluetooth#keyboard_battery'>Keyboard Status</th>
-		        <th data-colname='bluetooth#mouse_battery'>Mouse Status</th>
-		        <th data-colname='bluetooth#trackpad_battery'>Trackpad Status</th>
+		        <th data-colname='bluetooth#bluetooth_status'>Bluetooth status</th> 
+		        <th data-colname='bluetooth#keyboard_battery'>Keyboard % battery life remaining</th>
+		        <th data-colname='bluetooth#mouse_battery'>Mouse % battery life remaining</th>
+		        <th data-colname='bluetooth#trackpad_battery'>Trackpad % battery life remaining</th>
 		      </tr>
 		    </thead>
 		    <tbody>
