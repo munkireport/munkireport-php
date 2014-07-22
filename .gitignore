@@ -6,3 +6,6 @@ app/views/dashboard/custom_dashboard.php
 
 config.php
 *.DS_Store
+
+assets/css/custom.css
+assets/js/custom.js
