@@ -53,20 +53,21 @@ for vga in plist[0]['_items']:
             else:
                 result += '\nSerial = n/a'
 
-            #Vendor section
             try:
+                #Vendor section
                 result += '\nVendor = ' + str(display['_spdisplays_display-vendor-id'])
 
                 #Model section
                 result += '\nModel = ' + str(display['_name'])
 
                 #Manufactured section
-                makeValid = display['_spdisplays_display-week']
-                if int(makeValid) == 255:
-                    result += ' (' + str(display['_spdisplays_display-year']) + ")"
-                    makeValid = "0"
-                pretty = datetime.datetime.strptime(display['_spdisplays_display-year'] + makeValid + '1', '%Y%W%w')
-                result += '\nManufactured = ' + str(pretty.strftime('%B %Y'))
+                # from http://en.wikipedia.org/wiki/Extended_display_identification_data#EDID_1.3_data_format
+                # If week=255, year is the model year.
+                if int(display['_spdisplays_display-week']) == 255:
+                    result += '\nManufactured = ' + str(display['_spdisplays_display-year']) + ' Model'
+                else:
+                    weektomonth = datetime.datetime.strptime(display['_spdisplays_display-year'] + display['_spdisplays_display-week'], '%Y%W')
+                    result += '\nManufactured = ' + str(weektomonth.strftime('%Y-%m'))
 
                 #Native resolution section
                 result += '\nNative = ' + str(display['_spdisplays_pixels'])
