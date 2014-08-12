@@ -8,6 +8,9 @@
  **/
 function check_warranty_status(&$warranty_model)
 {
+	// Error message
+	$error = '';
+
 	// Check if virtual machine 
 	// We assume vmware serials contain upper and lower chars
 	// There are actual macs with a serial starting with VM
@@ -40,7 +43,8 @@ function check_warranty_status(&$warranty_model)
 
 	if( $result === FALSE)
 	{
-		$warranty_model->status = lang('lookup_failed');
+		$warranty_model->status = 'Lookup failed';
+		$error = 'Lookup failed';
 	}
 	elseif(preg_match('/invalidserialnumber/', $result))
 	{
@@ -105,6 +109,7 @@ function check_warranty_status(&$warranty_model)
 	else
 	{
 		$warranty_model->status = 'No information found';
+		$error = 'No information found';
 	}
 
 	// No valid purchase date, use the estimated manufacture date
@@ -136,6 +141,8 @@ function check_warranty_status(&$warranty_model)
 	$machine = new Machine_model($warranty_model->serial_number);
 	$machine->machine_desc = model_description_lookup($warranty_model->serial_number);
 	$machine->save();
+
+	return $error;
 
 }
 
@@ -248,7 +255,7 @@ function get_url($url, $options = array())
 	}
 
 	$context = stream_context_create($context_options);
-	return file_get_contents($url, FALSE, $context);
+	return @file_get_contents($url, FALSE, $context);
 
 }
 

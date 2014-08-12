@@ -57,6 +57,8 @@ class Warranty_model extends Model {
 				return;
 			case 'No information found':
 				break;
+			case 'Lookup failed':
+				break;
 			case 'Virtual Machine':
 				// Don't check
 				return;
@@ -86,14 +88,13 @@ class Warranty_model extends Model {
 		require_once(conf('application_path').'helpers/warranty_helper.php');
 		
 		// Update needed, check with apple
-		check_warranty_status($this);
+		$error = check_warranty_status($this);
 
-		// If new status is 'No information found' and
-		// previous status was set, don't save
+		// If error and previous status was set, don't save
 		// This happens when Apple's servers are in maintenance
-		if($this->status == 'No information found' && $prev_status)
+		if($error && $prev_status)
 		{
-			alert('warranty: update warranty status failed (Apple server down?)', 'warning');
+			alert("warranty: update warranty status failed ($error)", 'warning');
 			$this->retrieve($this->id);
 		}
 		else
