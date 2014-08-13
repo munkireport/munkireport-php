@@ -4,7 +4,7 @@
 
 			  <div class="panel-heading" data-container="body" title="Totals since this data is being collected">
 
-			    <h3 class="panel-title"><i class="fa fa-bullseye"></i> Bound to a Directory Service</h3>
+			    <h3 class="panel-title"><i class="fa fa-bullseye"></i> <span data-i18n="widget.bound_to_ds.title">Bound to a Directory Service</span></h3>
 
 			  </div>
 

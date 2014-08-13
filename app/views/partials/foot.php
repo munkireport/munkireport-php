@@ -38,6 +38,18 @@
   <script src="<?=conf('subdirectory')?>assets/js/datatables.bootstrap.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/moment.min.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/flotr2.js"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/i18next.min.js"></script>
+  <script>
+    $.i18n.init({
+        useLocalStorage: false,
+        debug: true,
+        resGetPath: "<?=conf('subdirectory')?>assets/locales/__lng__.json",
+        fallbackLng: 'en'
+    }, function() {
+        $('.navbar-nav').i18n();
+        $('.panel').i18n();
+    });
+  </script>
   <?if(conf('custom_js')):?> 
   <script src="<?=conf('custom_js')?>"></script>
   <?endif?>

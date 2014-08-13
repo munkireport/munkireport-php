@@ -1,0 +1,46 @@
+{
+	"nav": {
+		"main": {
+		  "dashboard": "Dashboard",
+		  "reports": "Reports",
+		  "listings": "Listings"
+		},
+		"reports": {
+			"clients": "Client report",
+			"configuration": "Configuration report",
+			"hardware": "Hardware report",
+			"munki": "Munki report",
+			"network": "Network report"
+		},
+		"listings": {
+			"ard": "Apple Remote Desktop",
+			"bluetooth": "Bluetooth",
+			"clients": "Clients",
+			"directoryservice": "Directoryservice",
+			"disk": "Disk",
+			"displays": "Displays",
+			"hardware": "Hardware",
+			"inventory": "Inventory",
+			"munki": "Munki",
+			"network": "Network",
+			"security": "Security",
+			"warranty": "Warranty"
+		},
+		"lang": {
+			"en": "English",
+			"nl": "Nederlands"
+		},
+		"user": {
+			"logout": "Sign Off"
+		}
+	},
+	"widget": {
+		"age": {
+			"title": "Hardware Age"
+		},
+		"bound_to_ds": {
+			"title": "Bound to a Directory Service"
+		}	
+	},
+	"add": "add"
+}

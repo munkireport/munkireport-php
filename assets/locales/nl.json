@@ -1,0 +1,42 @@
+{
+	"nav": {
+		"main": {
+		  "dashboard": "Dashboard",
+		  "reports": "Rapporten",
+		  "listings": "Lijsten"
+		},
+		"reports": {
+			"clients": "Client rapport",
+			"configuration": "Configuratie rapport",
+			"hardware": "Hardware rapport",
+			"munki": "Munki rapport",
+			"network": "Netwerk rapport"
+		},
+		"listings": {
+			"ard": "Apple Remote Desktop",
+			"bluetooth": "Bluetooth",
+			"clients": "Clients",
+			"directoryservice": "Directoryservice",
+			"disk": "Schijf",
+			"displays": "Beeldschermen",
+			"hardware": "Hardware",
+			"inventory": "Inventaris",
+			"munki": "Munki",
+			"network": "Netwerk",
+			"security": "Beveiliging",
+			"warranty": "Garantie"
+		},
+		"user": {
+			"logout": "Log uit"
+		}
+	},
+	"widget": {
+		"age": {
+			"title": "Hardware Leeftijd"
+		},
+		"bound_to_ds": {
+			"title": "Gebonden aan een Directory Service"
+		}	
+	},
+	"add": "add"
+}
