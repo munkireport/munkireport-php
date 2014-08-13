@@ -1,17 +1,11 @@
 {
+	"auth": {
+		"insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
+		"password": "Wachtwoord",
+		"secure": "Veilige verbinding",
+		"username": "Gebruikersnaam"
+	},
 	"nav": {
-		"main": {
-		  "dashboard": "Dashboard",
-		  "reports": "Rapporten",
-		  "listings": "Lijsten"
-		},
-		"reports": {
-			"clients": "Client rapport",
-			"configuration": "Configuratie rapport",
-			"hardware": "Hardware rapport",
-			"munki": "Munki rapport",
-			"network": "Netwerk rapport"
-		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
@@ -26,6 +20,18 @@
 			"security": "Beveiliging",
 			"warranty": "Garantie"
 		},
+		"main": {
+		  "dashboard": "Dashboard",
+		  "listings": "Lijsten",
+		  "reports": "Rapporten"
+		},
+		"reports": {
+			"clients": "Client rapport",
+			"configuration": "Configuratie rapport",
+			"hardware": "Hardware rapport",
+			"munki": "Munki rapport",
+			"network": "Netwerk rapport"
+		},
 		"user": {
 			"logout": "Log uit"
 		}
@@ -39,11 +45,5 @@
 			"title": "Gebonden aan een Directory Service",
 			"info": "Totalen vanaf begin dataverzameling"
 		}	
-	},
-	"auth": {
-		"username": "Gebruikersnaam",
-		"password": "Wachtwoord",
-		"insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
-		"secure": "Veilige verbinding"
 	}
 }
