@@ -44,12 +44,16 @@
         useLocalStorage: false,
         debug: true,
         resGetPath: "<?=conf('subdirectory')?>assets/locales/__lng__.json",
-        fallbackLng: 'en'
+        fallbackLng: 'en',
+        useDataAttrOptions: true
     }, function() {
         $('.navbar-nav').i18n();
         $('.panel').i18n();
+        $('table').i18n();
         // Add tooltips after translation
         $('[title]').tooltip();
+        // Trigger appReady
+        $(document).trigger('appReady');
     });
   </script>
   <?if(conf('custom_js')):?> 

@@ -13,7 +13,7 @@ new Bluetooth_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function() {
 
 				// Get modifiers from data attribute
 				var myCols = [], // Colnames

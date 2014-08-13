@@ -1,9 +1,20 @@
 {
+	"about": {
+		"author": "Arjen van Bochoven"
+	},
 	"auth": {
 		"insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
 		"password": "Wachtwoord",
 		"secure": "Veilige verbinding",
 		"username": "Gebruikersnaam"
+	},
+	"listing": {
+		"ard": {
+			"name": "Naam",
+			"serial": "Serienummer",
+			"username": "Gebruiker",
+			"text": "Tekst __number__"
+		}
 	},
 	"nav": {
 		"listings": {

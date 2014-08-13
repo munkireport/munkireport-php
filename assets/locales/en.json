@@ -5,6 +5,14 @@
 		"insecure": "Insecure connection, switch to secure",
 		"secure": "You're using a secure connection"
 	},
+	"listing": {
+		"ard": {
+			"name": "Name",
+			"serial": "Serial",
+			"username": "Username",
+			"text": "Text __number__"
+		}
+	},
 	"nav": {
 		"lang": {
 			"en": "English",
