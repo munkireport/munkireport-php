@@ -48,6 +48,8 @@
     }, function() {
         $('.navbar-nav').i18n();
         $('.panel').i18n();
+        // Add tooltips after translation
+        $('[title]').tooltip();
     });
   </script>
   <?if(conf('custom_js')):?> 

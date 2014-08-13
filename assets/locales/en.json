@@ -1,16 +1,14 @@
 {
+	"auth": {
+		"username": "Username",
+		"password": "Password",
+		"insecure": "Insecure connection, switch to secure",
+		"secure": "You're using a secure connection"
+	},
 	"nav": {
-		"main": {
-		  "dashboard": "Dashboard",
-		  "reports": "Reports",
-		  "listings": "Listings"
-		},
-		"reports": {
-			"clients": "Client report",
-			"configuration": "Configuration report",
-			"hardware": "Hardware report",
-			"munki": "Munki report",
-			"network": "Network report"
+		"lang": {
+			"en": "English",
+			"nl": "Nederlands"
 		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
@@ -26,21 +24,30 @@
 			"security": "Security",
 			"warranty": "Warranty"
 		},
-		"lang": {
-			"en": "English",
-			"nl": "Nederlands"
+		"main": {
+		  "dashboard": "Dashboard",
+		  "reports": "Reports",
+		  "listings": "Listings"
+		},
+		"reports": {
+			"clients": "Client report",
+			"configuration": "Configuration report",
+			"hardware": "Hardware report",
+			"munki": "Munki report",
+			"network": "Network report"
 		},
 		"user": {
 			"logout": "Sign Off"
 		}
 	},
+	"version": "Version",
 	"widget": {
 		"age": {
 			"title": "Hardware Age"
 		},
 		"bound_to_ds": {
-			"title": "Bound to a Directory Service"
+			"title": "Bound to a Directory Service",
+			"info": "Totals since this data is being collected"
 		}	
-	},
-	"add": "add"
+	}
 }

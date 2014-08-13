@@ -30,13 +30,20 @@
 			"logout": "Log uit"
 		}
 	},
+	"version": "Versie",
 	"widget": {
 		"age": {
 			"title": "Hardware Leeftijd"
 		},
 		"bound_to_ds": {
-			"title": "Gebonden aan een Directory Service"
+			"title": "Gebonden aan een Directory Service",
+			"info": "Totalen vanaf begin dataverzameling"
 		}	
 	},
-	"add": "add"
+	"auth": {
+		"username": "Gebruikersnaam",
+		"password": "Wachtwoord",
+		"insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
+		"secure": "Veilige verbinding"
+	}
 }
