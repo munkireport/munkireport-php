@@ -55,8 +55,11 @@
                   <?foreach(scandir(conf('view_path').'report') AS $list_url):?>
 
                     <?if( strpos($list_url, 'php')):?>
+                    <?$page_url = $url.strtok($list_url, '.')?>
 
-                    <li><a href="<?=url($url.strtok($list_url, '.'))?>" data-i18n="nav.reports.<?=$name = strtok($list_url, '.')?>"><?=ucfirst($name)?></a></li>
+                    <li<?=strpos($page, $page_url)===0?' class="active"':''?>>
+                      <a href="<?=url($page_url)?>" data-i18n="nav.reports.<?=$name = strtok($list_url, '.')?>"><?=ucfirst($name)?></a>
+                    </li>
 
                     <?endif?>
 
@@ -74,8 +77,11 @@
                   <?foreach(scandir(conf('view_path').'listing') AS $list_url):?>
 
                     <?if( strpos($list_url, 'php')):?>
+                    <?$page_url = $url.strtok($list_url, '.')?>
 
-                    <li><a href="<?=url($url.strtok($list_url, '.'))?>" data-i18n="nav.listings.<?=$name = strtok($list_url, '.')?>"><?=ucfirst($name)?></a></li>
+                    <li<?=strpos($page, $page_url)===0?' class="active"':''?>>
+                      <a href="<?=url($url.strtok($list_url, '.'))?>" data-i18n="nav.listings.<?=$name = strtok($list_url, '.')?>"><?=ucfirst($name)?></a>
+                    </li>
 
                     <?endif?>
 
