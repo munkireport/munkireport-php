@@ -41,8 +41,8 @@
   <script src="<?=conf('subdirectory')?>assets/js/i18next.min.js"></script>
   <script>
     $.i18n.init({
-        useLocalStorage: false,
-        debug: true,
+        debug: <?=conf('debug')?'true':'false'?>,
+        useLocalStorage: <?=conf('debug')?'false':'true'?>,
         resGetPath: "<?=conf('subdirectory')?>assets/locales/__lng__.json",
         fallbackLng: 'en',
         useDataAttrOptions: true
