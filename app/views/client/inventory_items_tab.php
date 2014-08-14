@@ -2,10 +2,10 @@
 <table class="inventory table table-striped table-bordered">
 	<thead>
 		<tr>
-          <th><?=lang('name')?></th>
-          <th><?=lang('version')?></th>
-          <th><?=lang('bundle_id')?></th>
-          <th><?=lang('path')?></th>
+      <th data-i18n="name">Name</th>
+      <th data-i18n="version">Version</th>
+      <th data-i18n="bundle_id">BundleID</th>
+      <th data-i18n="path">Path</th>
 		</tr>
 	</thead>
 	<tbody>

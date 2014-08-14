@@ -46,7 +46,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary"><?=lang('auth_signin')?></button> 
+								<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button> 
 								</div>
 							</div>
 			            </fieldset>

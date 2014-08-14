@@ -19,7 +19,7 @@
 				?>
 					<?foreach($fv->query($sql) as $obj):?>
 							<?if (empty($obj->filevault_status)):?>
-								<a class="list-group-item"><?=lang('unknown')?>
+								<a class="list-group-item"><span data-i18n="unknown">Unknown</span>
 									<span class="badge pull-right"><?=$obj->count?></span>
 								</a>
 							<?else:?>

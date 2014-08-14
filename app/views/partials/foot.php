@@ -2,7 +2,7 @@
 
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
 
-      <i><?printf(lang('munkireport_version'), $GLOBALS['version'])?></i>
+      <i>MunkiReport <span data-i18n="version">Version</span> <?=$GLOBALS['version']?></i>
 
     </div>
 
@@ -47,7 +47,7 @@
         fallbackLng: 'en',
         useDataAttrOptions: true
     }, function() {
-        $('.nav, .panel, table, .alert, .tab-content').i18n();
+        $('.nav, .panel, table, .alert, .tab-content, .machine-info').i18n();
         // Add tooltips after translation
         $('[title]').tooltip();
         // Set the current locale in moment.js

@@ -18,8 +18,10 @@
 		"secure": "Veilige verbinding",
 		"signin": "Log in",
 		"username": "Gebruikersnaam",
-		"wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist"
+		"wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist",
+		"go_secure": "Ga naar beveiligde site"
 	},
+	"bundle_id": "BundleID",
 	"client": {
 		"tab": {
 			"munki": "Beheerde Software",
@@ -33,14 +35,23 @@
 			"ard": "ARD"
 		},
 		"installed_apple_software": "Geïnstalleerde Apple Software",
-		"installed_third_party_software": "Geïnstalleerde Software van Derden"
+		"installed_third_party_software": "Geïnstalleerde Software van Derden",
+		"install_date": "Installatie datum",
+		"no_install_history": "Geen installatie historie",
+		"process_name": "Procesnaam"
 	},
+	"configuration": "Configuratie",
 	"date": {
 		"year": "jaar"
 	},
+	"disabled": "Uitgeschakeld",
+	"enabled": "Ingeschakeld",
 	"error": {
 		"title": "Er is een fout opgetreden",
-		"client_nonexistent": "Client met serienummer \"__serial__\" niet gevonden in de database"
+		"client_nonexistent": "Client met serienummer \"__serial__\" niet gevonden in de database",
+		"403": "Geen toestemming om deze pagina te openen",
+		"404": "Pagina niet gevonden",
+		"426": "Het is verplicht deze site over een beveiligde verbinding te bezoeken."
 	},
 	"listing": {
 		"ard": {
@@ -50,7 +61,12 @@
 			"text": "Tekst __number__"
 		}
 	},
+	"name": "Naam",
 	"nav": {
+		"lang": {
+			"en": "Engels",
+			"nl": "Nederlands"
+		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
@@ -81,6 +97,16 @@
 			"logout": "Log uit"
 		}
 	},
+	"network": {
+		"ethernet": "Ethernet",
+		"ip_address": "IP Adres",
+		"network_mask": "Masker",
+		"prefix_length": "Prefix lengte",
+		"router": "Router"
+	},
+	"path": "Pad",
+	"unavailable": "Niet beschikbaar",
+	"unknown": "Onbekend",
 	"version": "Versie",
 	"widget": {
 		"age": {

@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.1.0.862';
+$GLOBALS['version'] = '2.1.0.863';
 
 // Return version without commit count
 function get_version()
@@ -118,27 +118,6 @@ function __autoload( $classname )
 	{
 		require_once( APP_PATH.'models/'.$classname.EXT );
 	}
-}
-
-//===============================================
-// Language getter, lazy loading
-//===============================================
-
-function lang($str)
-{
-	static $lang = '';
-
-	if( $lang === '')
-	{
-		$path = conf('application_path') . 'lang/' . 
-			conf('lang', 'en') . '/lang.php';
-		if ((@include_once $path) !== 1)
-		{
-			alert('failed to load language file for language: '.conf('lang', 'en'), 'danger');
-			$lang = array();
-		}
-	}
-	return array_key_exists($str, $lang) ? $lang[$str] : $str;
 }
 
 function url($url='', $fullurl = FALSE)

@@ -1,4 +1,4 @@
-<div class="well well-small">
+<div class="well well-small machine-info">
 	<?$machine = new Machine_model($serial_number)?>
 	<?$report   = new Reportdata_model($serial_number)?>
 	<?$disk   = new Disk_report_model($serial_number)?>
@@ -111,7 +111,7 @@
 					<?if($report->uptime > 0):?>
 					<dd><time class="absolutetime" title="Booted: <?=strftime('%c', $report->timestamp - $report->uptime)?>" datetime="<?=$report->uptime?>"><?=strftime('%x', $report->timestamp - $report->uptime)?></time></dd>
 					<?else:?>
-					<dd><?=lang('unavailable')?></dd>
+					<dd data-i18n="unavailable">Unavailable</dd>
 					<?endif?>
 				</dl>
 

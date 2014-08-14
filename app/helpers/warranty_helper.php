@@ -202,7 +202,7 @@ function model_description_lookup($serial)
 
 	if ($result === FALSE)
 	{
-		return lang('model_lookup_failed');
+		return 'model_lookup_failed';
 	}
 
 	if(preg_match('#<configCode>(.*)</configCode>#', $result, $matches))
@@ -210,7 +210,7 @@ function model_description_lookup($serial)
 		return($matches[1]);
 	}
 
-	return 'Unknown model';
+	return 'unknown_model';
 
 }
 

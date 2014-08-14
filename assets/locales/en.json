@@ -18,8 +18,10 @@
 		"secure": "You're using a secure connection",
 		"signin": "Sign in",
 		"username": "Username",
-		"wrong_user_or_pass": "Wrong username or password"
+		"wrong_user_or_pass": "Wrong username or password",
+		"go_secure": "Go to secure site"
 	},
+	"bundle_id": "BundleID",
 	"client": {
 		"tab": {
 			"munki": "Managed Software",
@@ -33,14 +35,23 @@
 			"ard": "ARD"
 		},
 		"installed_apple_software": "Installed Apple Software",
-		"installed_third_party_software": "Installed Third Party Software"
+		"installed_third_party_software": "Installed Third Party Software",
+		"install_date": "Install Date",
+		"no_install_history": "No install history",
+		"process_name": "Process Name"
 	},
+	"configuration": "Configuration",
 	"date": {
 		"year": "year"
 	},
+	"disabled": "Disabled",
+	"enabled": "Enabled",
 	"error": {
 		"title": "Error",
-		"client_nonexistent": "Client with serial number \"__serial__\" does not exist"
+		"client_nonexistent": "Client with serial number \"__serial__\" does not exist",
+		"403": "You are not allowed to view this page",
+		"404": "Page not found",
+		"426": "You are required to visit this site using a secure connection."
 	},
 	"listing": {
 		"ard": {
@@ -50,10 +61,11 @@
 			"text": "Text __number__"
 		}
 	},
+	"name": "Name",
 	"nav": {
 		"lang": {
 			"en": "English",
-			"nl": "Nederlands"
+			"nl": "Dutch"
 		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
@@ -85,6 +97,16 @@
 			"logout": "Sign Off"
 		}
 	},
+	"network": {
+		"ethernet": "Ethernet",
+		"ip_address": "IP Address",
+		"network_mask": "Mask",
+		"prefix_length": "Prefix length",
+		"router": "Router"
+	},
+	"path": "Path",
+	"unavailable": "Unavailable",
+	"unknown": "Unknown",
 	"version": "Version",
 	"widget": {
 		"age": {
