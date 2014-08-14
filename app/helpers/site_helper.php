@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.1.0.849';
+$GLOBALS['version'] = '2.1.0.861';
 
 // Return version without commit count
 function get_version()
@@ -52,8 +52,13 @@ function alert($msg, $type="info")
  *
  * @param string message
  **/
-function error($msg)
+function error($msg, $i18n = '')
 {
+	if( $i18n )
+	{
+		$msg = sprintf('<span data-i18n="%s">%s</span>', $i18n, $msg);
+	}
+	
 	alert($msg, 'danger');
 }
 
