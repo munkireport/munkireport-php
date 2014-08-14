@@ -47,9 +47,7 @@
         fallbackLng: 'en',
         useDataAttrOptions: true
     }, function() {
-        $('.navbar-nav').i18n();
-        $('.panel').i18n();
-        $('table').i18n();
+        $('.navbar-nav, .panel, table, .alert').i18n();
         // Add tooltips after translation
         $('[title]').tooltip();
         // Set the current locale in moment.js

@@ -3,10 +3,21 @@
 		"author": "Arjen van Bochoven"
 	},
 	"auth": {
+		"addtoconfig": "Voeg deze regel toe aan config.php:",
+		"back_to_site": "Terug naar de site",
+		"empty_not_allowed": "Lege waarden zijn niet toegestaan",
+		"error_contacting_AD": "Er is een fout opgetreden tijdens het contact opnemen met AD",
+		"gen_other": "Genereer nog een hash",
+		"generate": "Genereer",
+		"generate_hash": "Genereer wachtwoord hash",
+		"generated_hash": "Gegenereerde hash",
 		"insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
+		"noauth_found": "Geen authenticatiegegevens gevonden, voeg een gebruiker toe aan het configuratiebestand.",
+		"not_authorized": "Niet geauthoriseerd",
 		"password": "Wachtwoord",
 		"secure": "Veilige verbinding",
-		"username": "Gebruikersnaam"
+		"username": "Gebruikersnaam",
+		"wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist"
 	},
 	"date": {
 		"year": "jaar"
