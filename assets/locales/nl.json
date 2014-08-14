@@ -16,11 +16,31 @@
 		"not_authorized": "Niet geauthoriseerd",
 		"password": "Wachtwoord",
 		"secure": "Veilige verbinding",
+		"signin": "Log in",
 		"username": "Gebruikersnaam",
 		"wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist"
 	},
+	"client": {
+		"tab": {
+			"munki": "Beheerde Software",
+			"apple_software": "Apple Software",
+			"third_party_software": "Software van Derden",
+			"inventory_items": "Inventaris",
+			"network": "Netwerk",
+			"ds": "Directory Services",
+			"fv_escrow": "Filevault Escrow",
+			"bluetooth": "Bluetooth",
+			"ard": "ARD"
+		},
+		"installed_apple_software": "Geïnstalleerde Apple Software",
+		"installed_third_party_software": "Geïnstalleerde Software van Derden"
+	},
 	"date": {
 		"year": "jaar"
+	},
+	"error": {
+		"title": "Er is een fout opgetreden",
+		"client_nonexistent": "Client met serienummer \"__serial__\" niet gevonden in de database"
 	},
 	"listing": {
 		"ard": {

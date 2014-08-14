@@ -16,11 +16,31 @@
 		"not_authorized": "Not authorized",
 		"password": "Password",
 		"secure": "You're using a secure connection",
+		"signin": "Sign in",
 		"username": "Username",
 		"wrong_user_or_pass": "Wrong username or password"
 	},
+	"client": {
+		"tab": {
+			"munki": "Managed Software",
+			"apple_software": "Apple Software",
+			"third_party_software": "Third Party Software",
+			"inventory_items": "Inventory Items",
+			"network": "Network Interfaces",
+			"ds": "Directory Services",
+			"fv_escrow": "Filevault Escrow",
+			"bluetooth": "Bluetooth",
+			"ard": "ARD"
+		},
+		"installed_apple_software": "Installed Apple Software",
+		"installed_third_party_software": "Installed Third Party Software"
+	},
 	"date": {
 		"year": "year"
+	},
+	"error": {
+		"title": "Error",
+		"client_nonexistent": "Client with serial number \"__serial__\" does not exist"
 	},
 	"listing": {
 		"ard": {
