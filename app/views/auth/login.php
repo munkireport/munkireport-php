@@ -7,11 +7,12 @@
 		        	<form action="<?php echo $url?>" method="post" accept-charset="UTF-8" class="form-horizontal">
 						<fieldset>
 							<legend>
-								<?=lang('auth_login')?>
+
+								<?=conf('sitename')?>
 
 								<?if(empty($_SERVER['HTTPS'])):?>
 
-									- <?=conf('sitename')?><a href="<?=secure_url()?>"><i data-i18n="[title]auth.insecure" title="Insecure connection, switch to secure" class="text-danger fa fa-unlock-alt pull-right"></i></a>
+									<a href="<?=secure_url()?>"><i data-i18n="[title]auth.insecure" title="Insecure connection, switch to secure" class="text-danger fa fa-unlock-alt pull-right"></i></a>
 
 								<?else:?>
 
