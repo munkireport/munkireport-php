@@ -52,6 +52,8 @@
         $('table').i18n();
         // Add tooltips after translation
         $('[title]').tooltip();
+        // Set the current locale in moment.js
+        moment.locale([i18n.lng(), 'en'])
         // Trigger appReady
         $(document).trigger('appReady');
     });
