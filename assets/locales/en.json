@@ -1,9 +1,15 @@
 {
+	"about": {
+		"author": "Arjen van Bochoven"
+	},
 	"auth": {
 		"username": "Username",
 		"password": "Password",
 		"insecure": "Insecure connection, switch to secure",
 		"secure": "You're using a secure connection"
+	},
+	"date": {
+		"year": "year"
 	},
 	"listing": {
 		"ard": {

@@ -8,6 +8,9 @@
 		"secure": "Veilige verbinding",
 		"username": "Gebruikersnaam"
 	},
+	"date": {
+		"year": "jaar"
+	},
 	"listing": {
 		"ard": {
 			"name": "Naam",
