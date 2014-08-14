@@ -52,6 +52,9 @@
         $('[title]').tooltip();
         // Set the current locale in moment.js
         moment.locale([i18n.lng(), 'en'])
+
+        // Activate current lang dropdown
+        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active')
         // Trigger appReady
         $(document).trigger('appReady');
     });

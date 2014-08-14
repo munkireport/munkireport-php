@@ -98,7 +98,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i></a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu locale">
 
                   <?foreach(scandir(APP_ROOT.'assets/locales') AS $list_url):?>
 
