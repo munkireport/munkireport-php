@@ -25,9 +25,6 @@ new Ard_model;
 			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumns": myCols,
-			        "language": {
-			        	"url": "assets/locales/dataTables/"+lang+".json"
-			        },
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();

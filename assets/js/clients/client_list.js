@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('appReady', function(e, lang) {
 
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
@@ -10,6 +10,9 @@ $(document).ready(function() {
 		"fnStateLoad": function (oSettings) {
 		    return state(oSettings.sTableId);
 		},
+        "language": {
+        	"url": "assets/locales/dataTables/"+lang+".json"
+        },
 		"fnInitComplete": function(oSettings, json) {
 
 		  // Wrap table in responsive div
