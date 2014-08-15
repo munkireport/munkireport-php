@@ -30,6 +30,7 @@ class clients extends Controller
 	function detail($sn='')
 	{
 		$data = array('serial_number' => $sn);
+		$data['scripts'] = array("clients/client_list.js");
 
         $obj = new View();
 

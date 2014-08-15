@@ -61,9 +61,13 @@
 			"text": "Text __number__"
 		},
 		"computername": "Name",
+		"hardware": {
+			"description": "Description"
+		},
 		"serial": "Serial",
 		"username": "Username"
 	},
+	"memory": "Memory",
 	"name": "Name",
 	"nav": {
 		"lang": {

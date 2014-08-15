@@ -24,13 +24,17 @@
 
 	</tbody>
 </table>
-<script type="text/javascript" charset="utf-8">
-    $(document).on('appReady', function(e, lang) {
-        $('.inventory').dataTable({
-            "aaSorting": [[1,'asc']],
-            "fnDrawCallback": function( oSettings ) {
-            $('#inventory-cnt').html(oSettings.fnRecordsTotal());
-          }
-        });
-    } );
+
+<script>
+  $(document).on('appReady', function(e, lang) {
+
+        // Initialize datatables
+            $('.inventory').dataTable({
+                "bServerSide": false,
+                "aaSorting": [[1,'asc']],
+                "fnDrawCallback": function( oSettings ) {
+                $('#inventory-cnt').html(oSettings.fnRecordsTotal());
+              }
+            });
+  });
 </script>

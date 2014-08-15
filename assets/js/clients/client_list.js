@@ -17,15 +17,19 @@ $(document).on('appReady', function(e, lang) {
         },
 		"fnInitComplete": function(oSettings, json) {
 
-		  // Wrap table in responsive div
-		  $(this).wrap('<div class="table-responsive" />'); 
+			// Save the parent
+		 	outer = $(this).parent()
+
+			// Wrap table in responsive div
+			$(this).wrap('<div class="table-responsive" />');
+
 
 		  // Customize search box (add clear search field button)
-		  placeholder = $('.dataTables_filter label').contents().filter(function() {return this.nodeType === 3;}).text();
-		  $('.dataTables_filter label').addClass('input-group').contents().filter(function(){
+		  placeholder = $(outer).find('.dataTables_filter label').contents().filter(function() {return this.nodeType === 3;}).text();
+		  $(outer).find('.dataTables_filter label').addClass('input-group').contents().filter(function(){
 		    return this.nodeType === 3;
 		  }).remove();
-		  $('.dataTables_filter input').addClass('form-control input-sm')
+		  $(outer).find('.dataTables_filter input').addClass('form-control input-sm')
 		  	.attr('placeholder', placeholder)
 		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="fa fa-times"></i></span>')
 		  	.click(function(e){
@@ -44,7 +48,7 @@ $(document).on('appReady', function(e, lang) {
 		  	}));
 
 		  // Customize select
-		  $('select').addClass('form-control input-sm');
+		  $(outer).find('select').addClass('form-control input-sm');
 
 		},
         "fnDrawCallback": function( oSettings ) {

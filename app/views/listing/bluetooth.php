@@ -77,7 +77,7 @@ new Bluetooth_model;
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
-		        <th data-i18n="listing.serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
 		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='bluetooth#bluetooth_status'>Bluetooth Status</th> 
 		        <th data-colname='bluetooth#keyboard_battery'>Keyboard Status</th>

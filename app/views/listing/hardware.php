@@ -70,11 +70,11 @@ new Reportdata_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='machine#computer_name'>Name</th>
-		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='machine#machine_desc'>Description</th>
-		        <th data-colname='machine#physical_memory'>Memory</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
+		        <th data-i18n="listing.hardware.description" data-colname='machine#machine_desc'>Description</th>
+		        <th data-i18n="memory" data-colname='machine#physical_memory'>Memory</th>
 		        <th data-colname='machine#number_processors'>Processors</th>
 		        <th data-colname='machine#cpu_arch'>CPU</th>
 		        <th data-colname='machine#current_processor_speed'>Speed</th>

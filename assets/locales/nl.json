@@ -61,9 +61,12 @@
 			"text": "Tekst __number__"
 		},
 		"computername": "Naam",
-		"serial": "Serienummer",
+		"hardware": {
+			"description": "Beschrijving"
+		},
 		"username": "Gebruiker"
 	},
+	"memory": "Geheugen",
 	"name": "Naam",
 	"nav": {
 		"listings": {
@@ -104,6 +107,7 @@
 		"router": "Router"
 	},
 	"path": "Pad",
+	"serial": "Serienummer",
 	"unavailable": "Niet beschikbaar",
 	"unknown": "Onbekend",
 	"version": "Versie",

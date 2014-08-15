@@ -68,13 +68,13 @@
 					<dd><?=$machine->cpu?>&nbsp;</dd>
 					<dt>CPU Type</dt>
 					<dd><?=$machine->number_processors?> core&nbsp;</dd>
-					<dt>Serial Number</dt>
+					<dt data-i18n="serial">Serial Number</dt>
 					<dd><?=$serial_number?>&nbsp;</dd>
 					<dt>SMC Version</dt>
 					<dd><?=$machine->SMC_version_system?>&nbsp;</dd>
 					<dt>Boot ROM</dt>
 					<dd><?=$machine->boot_rom_version?>&nbsp;</dd>
-					<dt>Memory</dt>
+					<dt data-i18n="memory">Memory</dt>
 					<dd><?=intval($machine->physical_memory)?> GB&nbsp;</dd>
 					<dt>Hardware UUID</dt>
 					<dd><?=$machine->platform_UUID?>&nbsp;</dd>

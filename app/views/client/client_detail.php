@@ -11,11 +11,11 @@
 				</li>
 
 				<li>
-					<a href="#apple-software" data-toggle="tab" data-i18n="client.tab.apple_software">Apple Software</a>
+					<a href="#apple-software" data-toggle="tab"><span data-i18n="client.tab.apple_software">Apple Software</span> <span id="history-cnt-1" class="badge">.</span></a>
 				</li>
 
 				<li>
-					<a href="#third-party-software" data-toggle="tab" data-i18n="client.tab.third_party_software">Third party software</a>
+					<a href="#third-party-software" data-toggle="tab"><span data-i18n="client.tab.third_party_software">Third party software</span> <span id="history-cnt-0" class="badge">.</span></a>
 				</li>
 
 				<li>
@@ -49,12 +49,12 @@
 	
 				<div class="tab-pane" id='apple-software'>
 					<h2 data-i18n="client.installed_apple_software">Installed Apple Software</h2>
-					<?$this->view('client/install_history_tab', array('apple'=> TRUE))?>
+					<?$this->view('client/install_history_tab', array('apple'=> 1))?>
 				</div>
 	
 				<div class="tab-pane" id='third-party-software'>
 					<h2 data-i18n="client.installed_third_party_software">Installed Third Party Software</h2>
-					<?$this->view('client/install_history_tab', array('apple'=> FALSE))?>
+					<?$this->view('client/install_history_tab', array('apple'=> 0))?>
 				</div>
 
 				<div class="tab-pane" id='inventory-items'>
@@ -84,7 +84,7 @@
 			<script src="<?=conf('subdirectory')?>assets/js/bootstrap-tabdrop.js"></script>
 
 			<script>
-			$(document).on('appReady', function() {
+			$(document).on('appReady', function(e, lang) {
 
 				// Activate tabdrop
 				$('.nav-tabs').tabdrop();

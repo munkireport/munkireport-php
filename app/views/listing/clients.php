@@ -65,30 +65,30 @@ new Munkireport_model;
 
 	  <h3>Clients report <span id="total-count" class='label label-primary'>…</span></h3>
 
-	  <table class="table table-striped table-condensed table-bordered">
+      <table class="table table-striped table-condensed table-bordered">
 
-      <thead>
-        <tr>
-          <th data-colname='machine#computer_name'>Name</th>
-          <th data-colname='machine#serial_number'>Serial</th>
-          <th data-colname='reportdata#long_username'>Username</th>
-          <th data-colname='machine#os_version'>OS</th>
-          <th data-colname='machine#machine_name'>Type</th>
-          <th data-colname='warranty#status'>Warranty status</th>
-          <th data-colname='diskreport#Percentage'>Disk</th>
-          <th data-colname='reportdata#uptime'>Uptime</th>
-          <th data-colname='reportdata#timestamp'>Check-in</th>
-          <th data-colname='munkireport#manifestname'>Manifest</th>
-        </tr>
-      </thead>
+        <thead>
+          <tr>
+            <th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+            <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
+            <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
+            <th data-colname='machine#os_version'>OS</th>
+            <th data-colname='machine#machine_name'>Type</th>
+            <th data-colname='warranty#status'>Warranty status</th>
+            <th data-colname='diskreport#Percentage'>Disk</th>
+            <th data-colname='reportdata#uptime'>Uptime</th>
+            <th data-colname='reportdata#timestamp'>Check-in</th>
+            <th data-colname='munkireport#manifestname'>Manifest</th>
+          </tr>
+        </thead>
 
-	    <tbody>
-	    	<tr>
-				<td colspan="10" class="dataTables_empty">Loading data from server</td>
-			</tr>
-	    </tbody>
+        <tbody>
+          <tr>
+            <td colspan="10" class="dataTables_empty">Loading data from server</td>
+          </tr>
+        </tbody>
 
-	  </table>
+      </table>
 
     </div> <!-- /span 12 -->
 
