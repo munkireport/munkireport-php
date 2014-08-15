@@ -13,7 +13,7 @@ new Ard_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).on('appReady', function() {
+		$(document).on('appReady', function(e, lang) {
 
 				// Get column names from data attribute
 				var myCols = [];
@@ -25,6 +25,9 @@ new Ard_model;
 			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumns": myCols,
+			        "language": {
+			        	"url": "assets/locales/dataTables/"+lang+".json"
+			        },
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();

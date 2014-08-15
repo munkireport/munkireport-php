@@ -56,7 +56,7 @@
         // Activate current lang dropdown
         $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active')
         // Trigger appReady
-        $(document).trigger('appReady');
+        $(document).trigger('appReady', [i18n.lng()]);
     });
   </script>
   <?if(conf('custom_js')):?> 
