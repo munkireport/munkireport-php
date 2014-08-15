@@ -11,7 +11,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-exclamation-sign"></i> <span data-i18n="error.title">Error</span></h3>
+			<h3 class="panel-title"><i class="fa fa-exclamation-sign"></i> <span data-i18n="errors.title">Error</span></h3>
 		
 		</div>
 
@@ -23,15 +23,15 @@
 <?switch($status_code):?>
 <?case '403': ?>
 
-				<span data-i18n="error.403">You are not allowed to view this page</span>
+				<span data-i18n="errors.403">You are not allowed to view this page</span>
 <?break?>
 <?case '404': ?>
 
-				<span data-i18n="error.404">Page not found</span>
+				<span data-i18n="errors.404">Page not found</span>
 <?break?>
 <?case '426': ?>
 				
-				<span data-i18n="error.426">You are required to visit this site using a secure connection.</span>
+				<span data-i18n="errors.426">You are required to visit this site using a secure connection.</span>
 				<a data-i18n="auth.go_secure" href="<?=secure_url()?>">Go to secure site</a>
 					
 <?break?>

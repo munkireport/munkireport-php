@@ -78,9 +78,9 @@ new Bluetooth_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='machine#computer_name'>Name</th>
-		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>Username</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+		        <th data-i18n="listing.serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='bluetooth#bluetooth_status'>Bluetooth Status</th> 
 		        <th data-colname='bluetooth#keyboard_battery'>Keyboard Status</th>
 		        <th data-colname='bluetooth#mouse_battery'>Mouse Status</th>

@@ -46,7 +46,9 @@
 	},
 	"disabled": "Uitgeschakeld",
 	"enabled": "Ingeschakeld",
-	"error": {
+	"error": "Fout",
+	"error_plural": "Fouten",
+	"errors": {
 		"title": "Er is een fout opgetreden",
 		"client_nonexistent": "Client met serienummer \"__serial__\" niet gevonden in de database",
 		"403": "Geen toestemming om deze pagina te openen",
@@ -55,18 +57,14 @@
 	},
 	"listing": {
 		"ard": {
-			"name": "Naam",
-			"serial": "Serienummer",
-			"username": "Gebruiker",
 			"text": "Tekst __number__"
-		}
+		},
+		"computername": "Naam",
+		"serial": "Serienummer",
+		"username": "Gebruiker"
 	},
 	"name": "Naam",
 	"nav": {
-		"lang": {
-			"en": "Engels",
-			"nl": "Nederlands"
-		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",

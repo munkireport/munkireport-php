@@ -46,7 +46,9 @@
 	},
 	"disabled": "Disabled",
 	"enabled": "Enabled",
-	"error": {
+	"error": "Error",
+	"error_plural": "Errors",
+	"errors": {
 		"title": "Error",
 		"client_nonexistent": "Client with serial number \"__serial__\" does not exist",
 		"403": "You are not allowed to view this page",
@@ -55,17 +57,17 @@
 	},
 	"listing": {
 		"ard": {
-			"name": "Name",
-			"serial": "Serial",
-			"username": "Username",
 			"text": "Text __number__"
-		}
+		},
+		"computername": "Name",
+		"serial": "Serial",
+		"username": "Username"
 	},
 	"name": "Name",
 	"nav": {
 		"lang": {
 			"en": "English",
-			"nl": "Dutch"
+			"nl": "Nederlands"
 		},
 		"listings": {
 			"ard": "Apple Remote Desktop",

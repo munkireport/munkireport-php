@@ -4,9 +4,9 @@
 		<div class="col-sm-offset-4 col-sm-4">
 			<div class="panel panel-danger">
 				<div class="panel-heading">
-					<h3 class="panel-title" data-i18n="error.title">Error</h3>
+					<h3 class="panel-title" data-i18n="errors.title">Error</h3>
 				</div>
-				<div class="panel-body" data-i18n="error.client_nonexistent" data-i18n-options={"serial":"<?=$serial_number?>"}>
+				<div class="panel-body" data-i18n="errors.client_nonexistent" data-i18n-options={"serial":"<?=$serial_number?>"}>
 				<?printf('Client with serial number "%s" does not exist', $serial_number)?>
 				</div>
 			</div>

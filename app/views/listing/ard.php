@@ -51,9 +51,9 @@ new Ard_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.ard.name" data-colname='machine#computer_name'>Name</th>
-		        <th data-i18n="listing.ard.serial" data-colname='machine#serial_number'>Serial</th>
-		        <th data-i18n="listing.ard.username" data-colname='reportdata#long_username'>Username</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+		        <th data-i18n="listing.serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
 		        <th data-i18n="listing.ard.text" data-i18n-options={"number":1} data-colname='ard#Text1'>Text 1</th>
 		        <th data-i18n="listing.ard.text" data-i18n-options={"number":2} data-colname='ard#Text2'>Text 2</th>
 		        <th data-i18n="listing.ard.text" data-i18n-options={"number":3} data-colname='ard#Text3'>Text 3</th>
