@@ -2,6 +2,7 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
+	"all": "All",
 	"auth": {
 		"addtoconfig": "Add this line to config.php:",
 		"back_to_site": "Back to site",
