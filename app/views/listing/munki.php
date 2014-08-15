@@ -40,8 +40,6 @@ new Munkireport_model;
 				});
 
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumnDefs": [
 			        	{ 'bVisible': false, "aTargets": hideThese }

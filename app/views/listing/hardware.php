@@ -20,8 +20,6 @@ new Reportdata_model;
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {

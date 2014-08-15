@@ -2,7 +2,7 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
-	"all": "Allemaal",
+	"all": "Alle",
 	"auth": {
 		"addtoconfig": "Voeg deze regel toe aan config.php:",
 		"back_to_site": "Terug naar de site",

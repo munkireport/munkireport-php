@@ -11,6 +11,7 @@
 <script type="text/javascript" charset="utf-8">
     $(document).on('appReady', function(e, lang) {
         $('.table').dataTable({
+            "bServerSide": false,
             "aaSorting": [[0,'asc']],
             "fnDrawCallback": function( oSettings ) {
 				$('#inv-count').html(oSettings.fnRecordsTotal());

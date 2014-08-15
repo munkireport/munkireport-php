@@ -24,8 +24,6 @@ new Reportdata_model;
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
 			        "oSearch": {"sSearch": hash},
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumns": myCols,

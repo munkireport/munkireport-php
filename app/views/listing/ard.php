@@ -21,10 +21,8 @@ new Ard_model;
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
-			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumns": myCols,
+			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();

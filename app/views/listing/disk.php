@@ -39,8 +39,6 @@ new Reportdata_model;
 				});
 
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aaSorting": mySort,
 			        "aoColumns": myCols,
