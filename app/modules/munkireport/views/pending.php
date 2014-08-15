@@ -12,7 +12,7 @@
 
 			<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function(e, lang) {
 
 			    oTable = $('.table').dataTable( {
 			        "bProcessing": true,

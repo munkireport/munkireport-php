@@ -13,7 +13,7 @@
 
     <script type="text/javascript">
 
-      $(document).ready(function() {
+      $(document).on('appReady', function(e, lang) {
 
         // Get modifiers from data attribute
         var myCols = [], // Colnames

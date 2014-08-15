@@ -12,7 +12,7 @@ new Reportdata_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function(e, lang) {
 
 				// Get column names from data attribute
 				var myCols = [];

@@ -19,7 +19,7 @@
 </div><!-- /col-lg-4 -->
 
 <script>
-$(document).ready(function() {
+$(document).on('appReady', function(e, lang) {
 
 	// Copy barOptions
     myOptions = jQuery.extend({}, barOptions);

@@ -13,7 +13,7 @@ new Reportdata_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function(e, lang) {
 
 				// Use hash as searchquery
 				hash = window.location.hash.substring(1);

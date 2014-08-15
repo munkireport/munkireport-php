@@ -73,7 +73,7 @@ $nw = new Network_model();?>
 <script type="text/javascript" charset="utf-8">
 	// Set network interface count in tab header
 	// Todo: set disabled count as well
-    $(document).ready(function() {
+    $(document).on('appReady', function(e, lang) {
         $('#network-cnt').html($('.nw-enabled').length)
     } );
 </script>

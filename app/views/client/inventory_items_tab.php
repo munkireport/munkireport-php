@@ -25,7 +25,7 @@
 	</tbody>
 </table>
 <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
+    $(document).on('appReady', function(e, lang) {
         $('.inventory').dataTable({
             "aaSorting": [[1,'asc']],
             "fnDrawCallback": function( oSettings ) {
