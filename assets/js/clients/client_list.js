@@ -16,11 +16,12 @@ $(document).ready(function() {
 		  $(this).wrap('<div class="table-responsive" />'); 
 
 		  // Customize search box (add clear search field button)
+		  placeholder = $('.dataTables_filter label').contents().filter(function() {return this.nodeType === 3;}).text();
 		  $('.dataTables_filter label').addClass('input-group').contents().filter(function(){
 		    return this.nodeType === 3;
 		  }).remove();
 		  $('.dataTables_filter input').addClass('form-control input-sm')
-		  	.attr('placeholder', 'Search')
+		  	.attr('placeholder', placeholder)
 		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="fa fa-times"></i></span>')
 		  	.click(function(e){
 		  		
