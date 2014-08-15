@@ -66,7 +66,9 @@
 	"name": "Name",
 	"nav": {
 		"lang": {
+			"de": "Deutsch",
 			"en": "English",
+			"es": "Español",
 			"nl": "Nederlands"
 		},
 		"listings": {
