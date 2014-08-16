@@ -89,24 +89,24 @@ new Reportdata_model;
 						}
 
 						// Look for 'between' statement todo: make generic
-						if(out.sSearch.match(/^\d+ percentage \d+$/))
+						if(out.sSearch.match(/^\d+ freespace \d+$/))
 						{
 							// Clear global search
 							aoData.push( { "name": "sSearch", "value": "" } );
 
 							// Add column specific search
-							aoData.push( { "name": "sSearch_5", "value": out.sSearch.replace(/(\d+) percentage (\d+)/, 'BETWEEN $1 AND $2') } );
+							aoData.push( { "name": "sSearch_6", "value": out.sSearch.replace(/(\d+) freespace (\d+)/, 'BETWEEN $1 AND $2') } );
 							//dumpj(out)
 						}
 
 						// Look for a bigger/smaller/equal statement
-						if(out.sSearch.match(/^percentage [<>=] \d+$/))
+						if(out.sSearch.match(/^freespace [<>=] \d+$/))
 						{
 							// Clear global search
 							aoData.push( { "name": "sSearch", "value": "" } );
 
 							// Add column specific search
-							aoData.push( { "name": "sSearch_5", "value": out.sSearch.replace(/.*([<>=] \d+)$/, '$1') } );
+							aoData.push( { "name": "sSearch_6", "value": out.sSearch.replace(/.*([<>=] \d+)$/, '$1') } );
 							//dumpj(out)
 						}
 				    }
