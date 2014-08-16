@@ -20,7 +20,7 @@
 				<?foreach($munkireport->query($sql) as $obj):?>
 				<a href="<?=url('show/listing/munki#errors')?>" class="btn btn-danger">
 					<span class="bigger-150"> <?=$obj->errors?> </span><br>
-					<span data-i18n="error" data-i18n-options={'count':<?=$obj->errors?>}>Errors</span>
+					<span data-i18n="error" data-i18n-options='{"count":<?=$obj->errors?>}'>Errors</span>
 				</a>
 				<a href="<?=url('show/listing/munki#warnings')?>" class="btn btn-warning">
 					<span class="bigger-150"> <?=$obj->warnings?> </span><br>

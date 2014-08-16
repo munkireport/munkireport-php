@@ -52,10 +52,10 @@ new Ard_model;
 		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
 		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
 		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-		        <th data-i18n="listing.ard.text" data-i18n-options={"number":1} data-colname='ard#Text1'>Text 1</th>
-		        <th data-i18n="listing.ard.text" data-i18n-options={"number":2} data-colname='ard#Text2'>Text 2</th>
-		        <th data-i18n="listing.ard.text" data-i18n-options={"number":3} data-colname='ard#Text3'>Text 3</th>
-		        <th data-i18n="listing.ard.text" data-i18n-options={"number":4} data-colname='ard#Text4'>Text 4</th>
+		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":1}' data-colname='ard#Text1'>Text 1</th>
+		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":2}' data-colname='ard#Text2'>Text 2</th>
+		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":3}' data-colname='ard#Text3'>Text 3</th>
+		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":4}' data-colname='ard#Text4'>Text 4</th>
 		      </tr>
 		    </thead>
 		    <tbody>
