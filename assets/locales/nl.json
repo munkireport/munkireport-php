@@ -57,6 +57,7 @@
 		"404": "Pagina niet gevonden",
 		"426": "Het is verplicht deze site over een beveiligde verbinding te bezoeken."
 	},
+	"free_disk_space": "Vrije Schijfruimte",
 	"listing": {
 		"ard": {
 			"text": "Tekst __number__",

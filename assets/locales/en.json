@@ -57,6 +57,7 @@
 		"404": "Page not found",
 		"426": "You are required to visit this site using a secure connection."
 	},
+	"free_disk_space": "Free Disk Space",
 	"listing": {
 		"ard": {
 			"text": "Text __number__"

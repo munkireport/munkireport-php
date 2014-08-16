@@ -75,7 +75,7 @@ $(document).on('appReady', function(e, lang) {
 	$.fn.dataTable.defaults.aLengthMenu = [[10,25,50,100,-1], [10,25,50,100,i18n.t("all")]];
 
     // Add edit button in list view
-    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">edit</a>');
+    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">'+i18n.t("edit")+'</a>');
 
     $('#edit').click(function(event){
     	event.preventDefault()
