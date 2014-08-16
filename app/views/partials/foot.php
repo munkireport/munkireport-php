@@ -48,6 +48,14 @@
         useDataAttrOptions: true
     }, function() {
         $('body').i18n();
+
+        // Check if current locale is available (FIXME: check loaded locale)
+        if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
+        {
+          // Load 'en' instead...
+          i18n.setLng('en', function(t) { /* loading done - should init other stuff now*/ });
+        }
+
         // Add tooltips after translation
         $('[title]').tooltip();
         // Set the current locale in moment.js
