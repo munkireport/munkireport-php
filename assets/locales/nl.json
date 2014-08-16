@@ -12,6 +12,7 @@
 		"generate": "Genereer",
 		"generate_hash": "Genereer wachtwoord hash",
 		"generated_hash": "Gegenereerde hash",
+		"go_secure": "Ga naar beveiligde site",
 		"insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
 		"noauth_found": "Geen authenticatiegegevens gevonden, voeg een gebruiker toe aan het configuratiebestand.",
 		"not_authorized": "Niet geauthoriseerd",
@@ -19,8 +20,7 @@
 		"secure": "Veilige verbinding",
 		"signin": "Log in",
 		"username": "Gebruikersnaam",
-		"wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist",
-		"go_secure": "Ga naar beveiligde site"
+		"wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist"
 	},
 	"bundle_id": "BundleID",
 	"client": {
@@ -46,6 +46,7 @@
 		"year": "jaar"
 	},
 	"disabled": "Uitgeschakeld",
+	"edit": "Wijzig",
 	"enabled": "Ingeschakeld",
 	"error": "Fout",
 	"error_plural": "Fouten",
@@ -58,7 +59,15 @@
 	},
 	"listing": {
 		"ard": {
-			"text": "Tekst __number__"
+			"text": "Tekst __number__",
+			"title": "Apple Remote Desktop rapport"
+		},
+		"bluetooth": {
+			"keyboard_battery": "Toetsenbord",
+			"mouse_battery": "Muis",
+			"status": "Status",
+			"title": "Bluetooth rapport",
+			"trackpad_battery": "Trackpad"
 		},
 		"computername": "Naam",
 		"hardware": {

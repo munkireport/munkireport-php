@@ -12,6 +12,7 @@
 		"generate": "Generate",
 		"generate_hash": "Generate password hash",
 		"generated_hash": "Generated hash",
+		"go_secure": "Go to secure site",
 		"insecure": "Insecure connection, switch to secure",
 		"noauth_found": "No authentication information found, please add an account to the config file.",
 		"not_authorized": "Not authorized",
@@ -19,8 +20,7 @@
 		"secure": "You're using a secure connection",
 		"signin": "Sign in",
 		"username": "Username",
-		"wrong_user_or_pass": "Wrong username or password",
-		"go_secure": "Go to secure site"
+		"wrong_user_or_pass": "Wrong username or password"
 	},
 	"bundle_id": "BundleID",
 	"client": {
@@ -46,6 +46,7 @@
 		"year": "year"
 	},
 	"disabled": "Disabled",
+	"edit": "Edit",
 	"enabled": "Enabled",
 	"error": "Error",
 	"error_plural": "Errors",
@@ -59,6 +60,13 @@
 	"listing": {
 		"ard": {
 			"text": "Text __number__"
+		},
+		"bluetooth": {
+			"keyboard_battery": "Keyboard",
+			"mouse_battery": "Mouse",
+			"status": "Status",
+			"title": "Bluetooth report",
+			"trackpad_battery": "Trackpad"
 		},
 		"computername": "Name",
 		"hardware": {
