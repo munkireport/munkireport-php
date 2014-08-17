@@ -74,7 +74,17 @@
 		"hardware": {
 			"description": "Description"
 		},
-		"serial": "Serial",
+		"munki": {
+			"latest_run": "Latest Run",
+			"package_installed": "Package installed",
+			"package_installed_plural": "Packages installed",
+			"package_removed": "Package removed",
+			"package_removed_plural": "Packages removed",
+			"pending_install": "Pending install",
+			"pending_install_plural": "Pending installs",
+			"pending_removal": "Pending removal",
+			"pending_install_plural": "Pending removals"
+		},
 		"username": "Username"
 	},
 	"memory": "Memory",

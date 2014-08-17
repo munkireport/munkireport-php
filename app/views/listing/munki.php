@@ -67,21 +67,21 @@ new Munkireport_model;
 
 			        	var runtype = $('td:eq(7)', nRow).html(),
 				        	cols = [
-				        		{name:'errors', flag: 'danger', desc: 'error%s'},
-				        		{name:'warnings', flag: 'warning', desc: 'warning%s'},
-				        		{name:'pendinginstalls', flag: 'info', desc: 'pending install%s'},
-				        		{name:'pendingremovals', flag: 'info', desc: 'pending removal%s'},
-				        		{name:'installresults', flag: 'success', desc: 'package%s installed'},
-				        		{name:'removalresults', flag: 'success', desc: 'package%s removed'}
+				        		{name:'errors', flag: 'danger', desc: 'error'},
+				        		{name:'warnings', flag: 'warning', desc: 'warning'},
+				        		{name:'pendinginstalls', flag: 'info', desc: 'listing.munki.pending_install'},
+				        		{name:'pendingremovals', flag: 'info', desc: 'listing.munki.pending_removal'},
+				        		{name:'installresults', flag: 'success', desc: 'listing.munki.package_installed'},
+				        		{name:'removalresults', flag: 'success', desc: 'listing.munki.package_removed'}
 				        	], 
 			        		count = 0
 
 			        	cols.map( function(col) {
-			        		count = aData['munkireport#' + col.name]
+			        		count = aData['munkireport#' + col.name] * 1
 				        	if(count > 0)
 				        	{
 				        		runtype += ' <span class="text-'+col.flag+'">' + 
-					        		count + ' ' + col.desc.replace('%s', ''.pluralize(count)) + '</span>'
+					        		count + ' ' + i18n.t(col.desc,{"count":count}) + '</span>'
 				        	}
 						})
 
@@ -129,7 +129,7 @@ new Munkireport_model;
 		        <th data-colname='reportdata#remote_ip'>IP</th>
 				<th data-colname='machine#os_version'>OS</th>
 		        <th data-colname='munkireport#version'>Munki</th>
-		        <th data-sort="desc" data-colname='munkireport#timestamp'>Latest Run</th>
+		        <th data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport#timestamp'>Latest Run</th>
 		        <th data-colname='munkireport#runtype'>Runtype</th>
 		        <th data-hide="1" data-colname='munkireport#errors'>Errors</th>
 		        <th data-hide="1" data-colname='munkireport#warnings'>Warnings</th>

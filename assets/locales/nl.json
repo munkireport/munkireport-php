@@ -75,6 +75,17 @@
 		"hardware": {
 			"description": "Beschrijving"
 		},
+		"munki": {
+			"latest_run": "Laatst Gezien",
+			"package_installed": "Pakket geïnstalleerd",
+			"package_installed_plural": "Pakketten geïnstalleerd",
+			"package_removed": "Pakket verwijderd",
+			"package_removed_plural": "Pakketten verwijderd",
+			"pending_install": "Wachtende installatie",
+			"pending_install_plural": "Wachtende installaties",
+			"pending_removal": "Wachtende verwijdering",
+			"pending_install_plural": "Wachtende verwijderingen"	
+		},
 		"username": "Gebruiker"
 	},
 	"memory": "Geheugen",
