@@ -18,7 +18,8 @@ Make sure you:
 * remove the sProcessing property (MunkiReport shows a spinner instead)
 * remove the colon (:) from sSearch (MunkiReport moves this into the placeholder)
 
-Some things to keep in mind:
+Some things to keep in mind
+---------------------------
 
 * Place generic words like 'computer', 'memory', 'hour' in the root of the JSON object
 * Try to find an appropriate place for other words and sentences (look at what's already localized)
