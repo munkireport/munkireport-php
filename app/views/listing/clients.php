@@ -50,7 +50,7 @@ new Munkireport_model;
                 }
                 else
                 {
-                  $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract('seconds', uptime).format('llll') + '">' + moment().subtract('seconds', uptime).fromNow(true) + '</span>');
+                  $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
                 }
 				    }
 			    } );

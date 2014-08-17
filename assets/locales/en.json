@@ -58,6 +58,7 @@
 		"426": "You are required to visit this site using a secure connection."
 	},
 	"free_disk_space": "Free Disk Space",
+	"installed": "Installed",
 	"listing": {
 		"ard": {
 			"text": "Text __number__"
@@ -122,10 +123,13 @@
 		"prefix_length": "Prefix length",
 		"router": "Router"
 	},
+	"pending": "Pending",
 	"path": "Path",
 	"unavailable": "Unavailable",
 	"unknown": "Unknown",
 	"version": "Version",
+	"warning": "Warning",
+	"warning_plural": "Warnings",
 	"widget": {
 		"age": {
 			"title": "Hardware Age"

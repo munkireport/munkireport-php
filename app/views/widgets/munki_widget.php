@@ -24,15 +24,15 @@
 				</a>
 				<a href="<?=url('show/listing/munki#warnings')?>" class="btn btn-warning">
 					<span class="bigger-150"> <?=$obj->warnings?> </span><br>
-					Warnings
+					<span data-i18n="warning" data-i18n-options='{"count":<?=$obj->warnings?>}'>Warnings</span>
 				</a>
 				<a href="<?=url('show/listing/munki#pendinginstalls')?>" class="btn btn-info">
 					<span class="bigger-150"> <?=$obj->pending?> </span><br>
-					Pending
+					<span data-i18n="pending">Pending</span>
 				</a>
 				<a href="<?=url('show/listing/munki#installresults')?>" class="btn btn-success">
 					<span class="bigger-150"> <?=$obj->installed?> </span><br>
-					Installed
+					<span data-i18n="installed">Installed</span>
 				</a>
 				<?endforeach?>
 

@@ -58,6 +58,7 @@
 		"426": "Het is verplicht deze site over een beveiligde verbinding te bezoeken."
 	},
 	"free_disk_space": "Vrije Schijfruimte",
+	"installed": "Geïnstalleerd",
 	"listing": {
 		"ard": {
 			"text": "Tekst __number__",
@@ -117,10 +118,13 @@
 		"router": "Router"
 	},
 	"path": "Pad",
+	"pending": "Wachtend",
 	"serial": "Serienummer",
 	"unavailable": "Niet beschikbaar",
 	"unknown": "Onbekend",
 	"version": "Versie",
+	"warning": "Waarschuwing",
+	"warning_plural": "Waarschuwingen",
 	"widget": {
 		"age": {
 			"title": "Hardware Leeftijd"
