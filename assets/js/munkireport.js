@@ -99,6 +99,19 @@ function fileSize(size, decimals) {
 	return ( size / Math.pow(1024, i) ).toFixed(decimals) * 1 + ' ' + ['', 'K', 'M', 'G', 'T', 'P', 'E'][i] + 'B';
 }
 
+// Convert human readable filesize to bytes
+function humansizeToBytes(size) {
+	var obj = size.match(/(\d+|[^\d]+)/g), res=0;
+	if(obj) {
+		sizes='BKMGTPE';
+		var i = sizes.indexOf(obj[1][0]);
+		if(i != -1) {
+			res = obj[0] * Math.pow(1024, i);
+		}
+	}
+	return res;
+}
+
 // Plural formatter
 String.prototype.pluralize = function(count, plural)
 {
