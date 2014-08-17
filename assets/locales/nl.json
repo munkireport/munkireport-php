@@ -126,8 +126,10 @@
 			"title": "Hardware Leeftijd"
 		},
 		"bound_to_ds": {
-			"title": "Gebonden aan een Directory Service",
-			"info": "Totalen vanaf begin dataverzameling"
+			"bound": "Gebonden",
+			"notbound": "Niet Gebonden",
+			"info": "Totalen vanaf begin dataverzameling",
+			"title": "Gebonden aan een Directory Service"
 		}	
 	}
 }

@@ -20,11 +20,11 @@
 				<?if($obj):?>
 				<a href="<?=url('show/listing/directoryservice')?>" class="btn btn-success">
 					<span class="bigger-150"> <?=$obj->arebound?> </span><br>
-					Bound
+					<span data-i18n="widget.bound_to_ds.bound">Bound</span>
 				</a>
 				<a href="<?=url('show/listing/directoryservice')?>" class="btn btn-danger">
 					<span class="bigger-150"> <?=$obj->total - $obj->arebound?> </span><br>
-					Not Bound
+					<span data-i18n="widget.bound_to_ds.notbound">Not Bound</span>
 				</a>
 				<?endif?>
 

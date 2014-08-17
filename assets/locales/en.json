@@ -131,8 +131,10 @@
 			"title": "Hardware Age"
 		},
 		"bound_to_ds": {
-			"title": "Bound to a Directory Service",
-			"info": "Totals since this data is being collected"
+			"bound": "Bound",
+			"notbound": "Not Bound",
+			"info": "Totals since this data is being collected",
+			"title": "Bound to a Directory Service"
 		}	
 	}
 }
