@@ -30,6 +30,7 @@
 
   <script>
     $('.mr-alert').prependTo('body>div.container:first');
+	var munkireport = { debug: <?=conf('debug') ? 'true' : 'false'?>, subdirectory: <?=conf('subdirectory')?> }
   </script>
 
 
@@ -40,32 +41,8 @@
   <script src="<?=conf('subdirectory')?>assets/js/flotr2.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/i18next.min.js"></script>
   <script>
-    $.i18n.init({
-        debug: <?=conf('debug')?'true':'false'?>,
-        useLocalStorage: <?=conf('debug')?'false':'true'?>,
-        resGetPath: "<?=conf('subdirectory')?>assets/locales/__lng__.json",
-        fallbackLng: 'en',
-        useDataAttrOptions: true
-    }, function() {
-        $('body').i18n();
 
-        // Check if current locale is available (FIXME: check loaded locale)
-        if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
-        {
-          // Load 'en' instead...
-          i18n.setLng('en', function(t) { /* loading done - should init other stuff now*/ });
-        }
 
-        // Add tooltips after translation
-        $('[title]').tooltip();
-        // Set the current locale in moment.js
-        moment.locale([i18n.lng(), 'en'])
-
-        // Activate current lang dropdown
-        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active')
-        // Trigger appReady
-        $(document).trigger('appReady', [i18n.lng()]);
-    });
   </script>
   <?if(conf('custom_js')):?> 
   <script src="<?=conf('custom_js')?>"></script>

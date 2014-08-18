@@ -1,5 +1,34 @@
 // Global functions
 
+$( document ).ready(function() {
+    $.i18n.init({
+        debug: munkireport.debug,
+        useLocalStorage: ! munkireport.debug,
+        resGetPath: munkireport.subdirectory + "assets/locales/__lng__.json",
+        fallbackLng: 'en',
+        useDataAttrOptions: true
+    }, function() {
+        $('body').i18n();
+
+        // Check if current locale is available (FIXME: check loaded locale)
+        if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
+        {
+          // Load 'en' instead...
+          i18n.setLng('en', function(t) { /* loading done - should init other stuff now*/ });
+        }
+
+        // Add tooltips after translation
+        $('[title]').tooltip();
+        // Set the current locale in moment.js
+        moment.locale([i18n.lng(), 'en'])
+
+        // Activate current lang dropdown
+        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active')
+        // Trigger appReady
+        $(document).trigger('appReady', [i18n.lng()]);
+    });
+});
+
 // Get client detail link
 function get_client_detail_link(name, sn, baseurl, hash)
 {
