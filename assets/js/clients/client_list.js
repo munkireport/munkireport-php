@@ -1,16 +1,30 @@
 $(document).on('appReady', function(e, lang) {
 
+	var search = '';
+	// Use hash as searchquery
+	if(window.location.hash.substring(1)) {
+		search = decodeURIComponent(window.location.hash.substring(1));
+	}
+
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
 		"sDom": "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
 		"bStateSave": true,
 		"bProcessing": true,
 		"bServerSide": true,
+		"search": {search: search},
 		"stateSaveCallback": function (oSettings, oData) {
 		    state( oSettings.sTableId, oData);
 		},
 		"stateLoadCallback": function (oSettings) {
 		    return state(oSettings.sTableId);
+		},
+		"stateLoadParams": function (settings, data) {
+
+			// If search, replace state search
+			if(search) {
+				data.search.search = search;
+			}
 		},
         "language": {
         	"url": "assets/locales/dataTables/"+lang+".json"
