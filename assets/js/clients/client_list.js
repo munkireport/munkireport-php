@@ -6,10 +6,10 @@ $(document).on('appReady', function(e, lang) {
 		"bStateSave": true,
 		"bProcessing": true,
 		"bServerSide": true,
-		"fnStateSave": function (oSettings, oData) {
+		"stateSaveCallback": function (oSettings, oData) {
 		    state( oSettings.sTableId, oData);
 		},
-		"fnStateLoad": function (oSettings) {
+		"stateLoadCallback": function (oSettings) {
 		    return state(oSettings.sTableId);
 		},
         "language": {
