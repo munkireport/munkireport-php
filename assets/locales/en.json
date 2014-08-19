@@ -135,6 +135,7 @@
 	},
 	"pending": "Pending",
 	"path": "Path",
+	"serial": "Serialnumber",
 	"unavailable": "Unavailable",
 	"unknown": "Unknown",
 	"version": "Version",
