@@ -15,15 +15,15 @@
 					COUNT(CASE WHEN FreeSpace < 5368709120 THEN 1 END) AS danger FROM diskreport";
 					?>
 					<?if($obj = current($queryobj->query($sql))):?>
-					<a href="<?=url('show/listing/disk#'.rawurlencode('freespace > 10737418240'))?>" class="btn btn-success">
+					<a href="<?=url('show/listing/disk#'.rawurlencode('freespace > 10GB'))?>" class="btn btn-success">
 						<span class="bigger-150"> <?=$obj->total - $obj->warning?> </span><br>
 						10GB +
 					</a>
-					<a href="<?=url('show/listing/disk#'.rawurlencode('5368709120 freespace 10737418240'))?>" class="btn btn-warning">
+					<a href="<?=url('show/listing/disk#'.rawurlencode('5GB freespace 10GB'))?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->warning - $obj->danger?> </span><br>
 						&lt; 10GB
 					</a>
-					<a href="<?=url('show/listing/disk#'.rawurlencode('freespace < 5368709120'))?>" class="btn btn-danger">
+					<a href="<?=url('show/listing/disk#'.rawurlencode('freespace < 5GB'))?>" class="btn btn-danger">
 						<span class="bigger-150"> <?=$obj->danger?> </span><br>
 						&lt; 5GB
 					</a>

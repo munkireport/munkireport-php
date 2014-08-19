@@ -89,35 +89,31 @@ new Reportdata_model;
 						}
 
 						// Look for 'between' statement todo: make generic
-						if(out.sSearch.match(/^\d+ freespace \d+$/))
+						if(out.sSearch.match(/^\d+GB freespace \d+GB$/))
 						{
 							// Clear global search
 							aoData.push( { "name": "sSearch", "value": "" } );
 
 							// Add column specific search
-							aoData.push( { "name": "sSearch_6", "value": out.sSearch.replace(/(\d+) freespace (\d+)/, 'BETWEEN $1 AND $2') } );
+							aoData.push( { 
+								"name": "sSearch_6", 
+								"value": out.sSearch.replace(/(\d+GB) freespace (\d+GB)/, function(m, from, to){return ' BETWEEN ' + humansizeToBytes(from) + ' AND ' + humansizeToBytes(to)})
+							} );
 							//dumpj(out)
 						}
 
 						// Look for a bigger/smaller/equal statement
-						if(out.sSearch.match(/^freespace [<>=] \d+$/))
+						if(out.sSearch.match(/^freespace [<>=] \d+GB$/))
 						{
 							// Clear global search
 							aoData.push( { "name": "sSearch", "value": "" } );
 
 							// Add column specific search
-							aoData.push( { "name": "sSearch_6", "value": out.sSearch.replace(/.*([<>=] \d+)$/, '$1') } );
+							aoData.push( { "name": "sSearch_6", "value": out.sSearch.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + humansizeToBytes(content)}) } );
 							//dumpj(out)
 						}
 				    }
 			    } );
-
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
-
 			} );
 		</script>
 
