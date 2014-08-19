@@ -55,13 +55,6 @@ new Reportdata_model;
 				    }
 			    } );
 
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
-
-			    
 			} );
 		</script>
 

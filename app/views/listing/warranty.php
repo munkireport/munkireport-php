@@ -15,16 +15,12 @@ new Reportdata_model;
 
 		$(document).on('appReady', function(e, lang) {
 
-				// Use hash as searchquery
-				hash = window.location.hash.substring(1);
-
 				// Get column names from data attribute
 				var myCols = [];
 				$('.table th').map(function(){
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
 			    oTable = $('.table').dataTable( {
-			        "oSearch": {"sSearch": hash},
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
@@ -63,7 +59,6 @@ new Reportdata_model;
 			        	}
 				    }
 			    } );
-				oTable.fnFilter( hash );
 			} );
 		</script>
 
