@@ -13,9 +13,9 @@
       <script type="text/javascript" charset="utf-8">
           $(document).on('appReady', function(e, lang) {
               $('.table').dataTable({
+                  "bServerSide": false,
                   "iDisplayLength": 25,
                   "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-                  "bStateSave": true,
                   "aaSorting": [[1,'asc']]
               });
           } );

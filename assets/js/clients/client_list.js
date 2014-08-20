@@ -56,8 +56,9 @@ $(document).on('appReady', function(e, lang) {
 			  		window.location.hash = ''
 			  	}
 
-		  		// Trigger datatables filter
-		  		$('.dataTables_filter input').val('').keyup();
+		  		// Erase and trigger datatables filter
+		  		$(outer).find('.dataTables_filter input').val('');
+		  		$(outer).find('table').dataTable().fnFilter('');
 
 		  	}));
 
