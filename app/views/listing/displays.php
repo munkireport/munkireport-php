@@ -13,7 +13,7 @@
 
     <script type="text/javascript">
 
-      $(document).ready(function() {
+      $(document).on('appReady', function(e, lang) {
 
         // Get modifiers from data attribute
         var myCols = [], // Colnames
@@ -39,8 +39,6 @@
         });
 
         oTable = $('.table').dataTable( {
-          "bProcessing": true,
-          "bServerSide": true,
           "sAjaxSource": "<?=url('datatables/data')?>",
           "aaSorting": mySort,
           "aoColumns": myCols,
@@ -136,12 +134,6 @@
           } //end fnCreatedRow
 
         } ); //end oTable
-
-        // Use hash as searchquery
-        if(window.location.hash.substring(1))
-        {
-          oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-        }
 
       } );
     </script>

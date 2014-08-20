@@ -7,36 +7,36 @@
 			<ul class="nav nav-tabs">
 
 				<li class="active">
-					<a href="#munki" data-toggle="tab"><?=lang('tab_munki')?></a>
+					<a href="#munki" data-toggle="tab" data-i18n="client.tab.munki">Managed Software</a>
 				</li>
 
 				<li>
-					<a href="#apple-software" data-toggle="tab"><?=lang('tab_apple_software')?></a>
+					<a href="#apple-software" data-toggle="tab"><span data-i18n="client.tab.apple_software">Apple Software</span> <span id="history-cnt-1" class="badge">.</span></a>
 				</li>
 
 				<li>
-					<a href="#third-party-software" data-toggle="tab"><?=lang('tab_third_party_software')?></a>
+					<a href="#third-party-software" data-toggle="tab"><span data-i18n="client.tab.third_party_software">Third party software</span> <span id="history-cnt-0" class="badge">.</span></a>
 				</li>
 
 				<li>
-					<a href="#inventory-items" data-toggle="tab"><?=lang('tab_inventory_items')?> <span id="inventory-cnt" class="badge">.</span></a>
+					<a href="#inventory-items" data-toggle="tab"><span data-i18n="client.tab.inventory_items">Inventory Items</span> <span id="inventory-cnt" class="badge">.</span></a>
 				</li>
 
 				<li>
-					<a href="#network-tab" data-toggle="tab"><?=lang('tab_network_interfaces')?> <span id="network-cnt" class="badge">0</span></a>
+					<a href="#network-tab" data-toggle="tab"><span data-i18n="client.tab.network">Network Interfaces</span> <span id="network-cnt" class="badge">0</span></a>
 				</li>
 				
 				<li>
-					<a href="#directory-tab" data-toggle="tab"><?=lang('tab_directory_services')?> <span id="directory-cnt" class="badge">0</span></a>
+					<a href="#directory-tab" data-toggle="tab" data-i18n="client.tab.ds"><span data-i18n="client.tab.ds">Directory Services</span> <span id="directory-cnt" class="badge">0</span></a>
 				</li>
 				<li>
-					<a href="#filevault-tab" data-toggle="tab"><?=lang('FileVault Escrow')?></a>
+					<a href="#filevault-tab" data-toggle="tab" data-i18n="client.tab.fv_escrow">FileVault Escrow</a>
 				</li>
 				<li>
-					<a href="#bluetooth-tab" data-toggle="tab"><?=lang('Bluetooth')?></a>
+					<a href="#bluetooth-tab" data-toggle="tab"data-i18n="client.tab.bluetooth">Bluetooth</a>
 				</li>
 				<li>
-					<a href="#ard-tab" data-toggle="tab"><?=lang('ARD')?></a>
+					<a href="#ard-tab" data-toggle="tab" data-i18n="client.tab.ard">ARD</a>
 				</li>
 
 			</ul>
@@ -48,13 +48,13 @@
 				</div>
 	
 				<div class="tab-pane" id='apple-software'>
-					<h2><?=lang('installed_apple_software')?></h2>
-					<?$this->view('client/install_history_tab', array('apple'=> TRUE))?>
+					<h2 data-i18n="client.installed_apple_software">Installed Apple Software</h2>
+					<?$this->view('client/install_history_tab', array('apple'=> 1))?>
 				</div>
 	
 				<div class="tab-pane" id='third-party-software'>
-					<h2><?=lang('installed_third_party_software')?></h2>
-					<?$this->view('client/install_history_tab', array('apple'=> FALSE))?>
+					<h2 data-i18n="client.installed_third_party_software">Installed Third Party Software</h2>
+					<?$this->view('client/install_history_tab', array('apple'=> 0))?>
 				</div>
 
 				<div class="tab-pane" id='inventory-items'>
@@ -84,7 +84,7 @@
 			<script src="<?=conf('subdirectory')?>assets/js/bootstrap-tabdrop.js"></script>
 
 			<script>
-			$(document).ready(function() {
+			$(document).on('appReady', function(e, lang) {
 
 				// Activate tabdrop
 				$('.nav-tabs').tabdrop();

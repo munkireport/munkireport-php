@@ -3,13 +3,13 @@
 $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
 <?if(isset($installHistory) && count($installHistory) > 1):?>
 
-<table class="table table-striped">
+<table class="install-history-<?=$apple?> table table-striped">
 	<thead>
 		<tr>
-			<th><?=lang('name')?></th>
-			<th><?=lang('version')?></th>
-			<th><?=lang('install_date')?></th>
-			<th><?=lang('process_name')?></th>
+			<th data-i18n="name">Name</th>
+			<th data-i18n="version">Version</th>
+			<th data-i18n="client.install_date">Install Date</th>
+			<th data-i18n="client.process_name">Process Name</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -26,5 +26,19 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
 	</tbody>
 </table>
 <?else:?>
-<p><i><?=lang('no_install_history')?></i></p>
+<p><i data-i18n="client.no_install_history">No install history</i></p>
 <?endif?>
+
+<script>
+  $(document).on('appReady', function(e, lang) {
+
+        // Initialize datatables
+            $('.install-history-<?=$apple?>').dataTable({
+                "bServerSide": false,
+                "aaSorting": [[1,'asc']],
+                "fnDrawCallback": function( oSettings ) {
+                $('#history-cnt-<?=$apple?>').html(oSettings.fnRecordsTotal());
+              }
+            });
+  });
+</script>

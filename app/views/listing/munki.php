@@ -13,7 +13,7 @@ new Munkireport_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function(e, lang) {
 
 			
 				// Get modifiers from data attribute
@@ -40,8 +40,6 @@ new Munkireport_model;
 				});
 
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aoColumnDefs": [
 			        	{ 'bVisible': false, "aTargets": hideThese }
@@ -69,21 +67,21 @@ new Munkireport_model;
 
 			        	var runtype = $('td:eq(7)', nRow).html(),
 				        	cols = [
-				        		{name:'errors', flag: 'danger', desc: 'error%s'},
-				        		{name:'warnings', flag: 'warning', desc: 'warning%s'},
-				        		{name:'pendinginstalls', flag: 'info', desc: 'pending install%s'},
-				        		{name:'pendingremovals', flag: 'info', desc: 'pending removal%s'},
-				        		{name:'installresults', flag: 'success', desc: 'package%s installed'},
-				        		{name:'removalresults', flag: 'success', desc: 'package%s removed'}
+				        		{name:'errors', flag: 'danger', desc: 'error'},
+				        		{name:'warnings', flag: 'warning', desc: 'warning'},
+				        		{name:'pendinginstalls', flag: 'info', desc: 'listing.munki.pending_install'},
+				        		{name:'pendingremovals', flag: 'info', desc: 'listing.munki.pending_removal'},
+				        		{name:'installresults', flag: 'success', desc: 'listing.munki.package_installed'},
+				        		{name:'removalresults', flag: 'success', desc: 'listing.munki.package_removed'}
 				        	], 
 			        		count = 0
 
 			        	cols.map( function(col) {
-			        		count = aData['munkireport#' + col.name]
+			        		count = aData['munkireport#' + col.name] * 1
 				        	if(count > 0)
 				        	{
 				        		runtype += ' <span class="text-'+col.flag+'">' + 
-					        		count + ' ' + col.desc.replace('%s', ''.pluralize(count)) + '</span>'
+					        		count + ' ' + i18n.t(col.desc,{"count":count}) + '</span>'
 				        	}
 						})
 
@@ -112,11 +110,6 @@ new Munkireport_model;
 				    }
 			    } );
 
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
 			} );
 		</script>
 
@@ -125,13 +118,13 @@ new Munkireport_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='machine#computer_name'>Client</th>
-		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>User</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='reportdata#remote_ip'>IP</th>
 				<th data-colname='machine#os_version'>OS</th>
 		        <th data-colname='munkireport#version'>Munki</th>
-		        <th data-sort="desc" data-colname='munkireport#timestamp'>Latest Run</th>
+		        <th data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport#timestamp'>Latest Run</th>
 		        <th data-colname='munkireport#runtype'>Runtype</th>
 		        <th data-hide="1" data-colname='munkireport#errors'>Errors</th>
 		        <th data-hide="1" data-colname='munkireport#warnings'>Warnings</th>

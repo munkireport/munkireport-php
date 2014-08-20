@@ -2,9 +2,9 @@
 
 			<div class="panel panel-default">
 
-			  <div class="panel-heading" data-container="body" title="Totals since this data is being collected">
+			  <div class="panel-heading" data-container="body" data-i18n="[title]widget.bound_to_ds.info" title="Totals since this data is being collected">
 
-			    <h3 class="panel-title"><i class="fa fa-bullseye"></i> Bound to a Directory Service</h3>
+			    <h3 class="panel-title"><i class="fa fa-bullseye"></i> <span data-i18n="widget.bound_to_ds.title">Bound to a Directory Service</span></h3>
 
 			  </div>
 
@@ -20,11 +20,11 @@
 				<?if($obj):?>
 				<a href="<?=url('show/listing/directoryservice')?>" class="btn btn-success">
 					<span class="bigger-150"> <?=$obj->arebound?> </span><br>
-					Bound
+					<span data-i18n="widget.bound_to_ds.bound">Bound</span>
 				</a>
 				<a href="<?=url('show/listing/directoryservice')?>" class="btn btn-danger">
 					<span class="bigger-150"> <?=$obj->total - $obj->arebound?> </span><br>
-					Not Bound
+					<span data-i18n="widget.bound_to_ds.notbound">Not Bound</span>
 				</a>
 				<?endif?>
 

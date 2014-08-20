@@ -18,14 +18,4 @@
 
 </div>	<!-- /container -->
 
-
-<script>
-	// Add tooltips
-	$(document).ready(function() {
-		$('[title]').tooltip();
-	});
-</script>
-
-
-
 <?$this->view('partials/foot')?>

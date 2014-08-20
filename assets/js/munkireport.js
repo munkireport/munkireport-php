@@ -1,5 +1,34 @@
 // Global functions
 
+$( document ).ready(function() {
+    $.i18n.init({
+        debug: munkireport.debug,
+        useLocalStorage: ! munkireport.debug,
+        resGetPath: munkireport.subdirectory + "assets/locales/__lng__.json",
+        fallbackLng: 'en',
+        useDataAttrOptions: true
+    }, function() {
+        $('body').i18n();
+
+        // Check if current locale is available (FIXME: check loaded locale)
+        if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
+        {
+          // Load 'en' instead...
+          i18n.setLng('en', function(t) { /* loading done - should init other stuff now*/ });
+        }
+
+        // Add tooltips after translation
+        $('[title]').tooltip();
+        // Set the current locale in moment.js
+        moment.locale([i18n.lng(), 'en'])
+
+        // Activate current lang dropdown
+        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active')
+        // Trigger appReady
+        $(document).trigger('appReady', [i18n.lng()]);
+    });
+});
+
 // Get client detail link
 function get_client_detail_link(name, sn, baseurl, hash)
 {
@@ -97,6 +126,19 @@ function fileSize(size, decimals) {
 	if(decimals == undefined){decimals = 0};
 	var i = Math.floor( Math.log(size) / Math.log(1024) );
 	return ( size / Math.pow(1024, i) ).toFixed(decimals) * 1 + ' ' + ['', 'K', 'M', 'G', 'T', 'P', 'E'][i] + 'B';
+}
+
+// Convert human readable filesize to bytes
+function humansizeToBytes(size) {
+	var obj = size.match(/(\d+|[^\d]+)/g), res=0;
+	if(obj) {
+		sizes='BKMGTPE';
+		var i = sizes.indexOf(obj[1][0]);
+		if(i != -1) {
+			res = obj[0] * Math.pow(1024, i);
+		}
+	}
+	return res;
 }
 
 // Plural formatter

@@ -59,7 +59,7 @@
 	</div><!-- </div class="col-lg-6"> -->
 
 	<script>
-			$(document).ready(function() {
+			$(document).on('appReady', function(e, lang) {
 				$( "table time" ).each(function( index ) {
 					$(this).html(moment($(this).attr('datetime'), "YYYY-MM-DD HH:mm:ss Z").fromNow());
 				});

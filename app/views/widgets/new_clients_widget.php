@@ -24,7 +24,7 @@
 					<?endif?>
 				</div>
 			<script>
-			$(document).ready(function() {
+			$(document).on('appReady', function() {
 				
 				// New clients + relative time
 				var cnt=0;

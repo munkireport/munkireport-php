@@ -12,11 +12,11 @@
 
 			<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function(e, lang) {
 
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
 			        "bDeferRender": true,
+		            "bServerSide": false,
 			        "fnDrawCallback": function( oSettings ) {
 						$('#pen-count').html(oSettings.fnRecordsTotal());
 					},
@@ -41,11 +41,6 @@
 				    }
 			    } );
 
-				// Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
 			} );
 		</script>
 

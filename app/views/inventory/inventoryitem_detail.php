@@ -11,7 +11,7 @@
     <div class="col-lg-12">
     
       <script type="text/javascript" charset="utf-8">
-          $(document).ready(function() {
+          $(document).on('appReady', function(e, lang) {
               $('.table').dataTable({
                   "iDisplayLength": 25,
                   "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],

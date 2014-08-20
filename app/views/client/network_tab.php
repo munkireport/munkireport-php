@@ -7,9 +7,9 @@ $nw = new Network_model();?>
 <h2><?=$item->service?> (<?=$item->order?>)
 
 <?if($item->status):?>
-<span class="label label-success nw-enabled"><?=lang('enabled')?></span>
+<span class="label label-success nw-enabled" data-i18n="enabled">Enabled</span>
 <?else:?>
-<span class="label label-danger nw-disabled"><?=lang('disabled')?></span>
+<span class="label label-danger nw-disabled" data-i18n="disabled">Disabled</span>
 <?endif?>
 
 </h2>
@@ -21,11 +21,11 @@ $nw = new Network_model();?>
 		<table class="table table-bordered">
 			<caption>IPv4</caption>
 			<tr>
-				<th><?=lang('ethernet')?></th>
-				<th><?=lang('ip_address')?></th>
-				<th><?=lang('network_mask')?></th>
-				<th><?=lang('router')?></th>
-				<th><?=lang('configuration')?></th>
+				<th data-i18n="network.ethernet">Ethernet</th>
+				<th data-i18n="network.ip_address">IP Adress</th>
+				<th data-i18n="network.mask">Network Mask</th>
+				<th data-i18n="network.router">Router</th>
+				<th data-i18n="configuration">Configuration</th>
 			</tr>
 			<tr>
 				<td><?=$item->ethernet?></td>
@@ -49,11 +49,11 @@ $nw = new Network_model();?>
 
 			<caption>IPv6</caption>
 			<tr>
-				<th><?=lang('ethernet')?></th>
-				<th><?=lang('ip_address')?></th>
-				<th><?=lang('prefix_length')?></th>
-				<th><?=lang('router')?></th>
-				<th><?=lang('configuration')?></th>
+				<th data-i18n="network.ethernet">Ethernet</th>
+				<th data-i18n="network.ip_address">IP Adress</th>
+				<th data-i18n="network.prefix_length">Prefix Length</th>
+				<th data-i18n="network.router">Router</th>
+				<th data-i18n="configuration">Configuration</th>
 			</tr>
 			<tr>
 				<td><?=$item->ethernet?></td>
@@ -73,7 +73,7 @@ $nw = new Network_model();?>
 <script type="text/javascript" charset="utf-8">
 	// Set network interface count in tab header
 	// Todo: set disabled count as well
-    $(document).ready(function() {
+    $(document).on('appReady', function(e, lang) {
         $('#network-cnt').html($('.nw-enabled').length)
     } );
 </script>

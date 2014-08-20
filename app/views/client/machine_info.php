@@ -1,4 +1,4 @@
-<div class="well well-small">
+<div class="well well-small machine-info">
 	<?$machine = new Machine_model($serial_number)?>
 	<?$report   = new Reportdata_model($serial_number)?>
 	<?$disk   = new Disk_report_model($serial_number)?>
@@ -68,13 +68,13 @@
 					<dd><?=$machine->cpu?>&nbsp;</dd>
 					<dt>CPU Type</dt>
 					<dd><?=$machine->number_processors?> core&nbsp;</dd>
-					<dt>Serial Number</dt>
+					<dt data-i18n="serial">Serial Number</dt>
 					<dd><?=$serial_number?>&nbsp;</dd>
 					<dt>SMC Version</dt>
 					<dd><?=$machine->SMC_version_system?>&nbsp;</dd>
 					<dt>Boot ROM</dt>
 					<dd><?=$machine->boot_rom_version?>&nbsp;</dd>
-					<dt>Memory</dt>
+					<dt data-i18n="memory">Memory</dt>
 					<dd><?=intval($machine->physical_memory)?> GB&nbsp;</dd>
 					<dt>Hardware UUID</dt>
 					<dd><?=$machine->platform_UUID?>&nbsp;</dd>
@@ -111,7 +111,7 @@
 					<?if($report->uptime > 0):?>
 					<dd><time class="absolutetime" title="Booted: <?=strftime('%c', $report->timestamp - $report->uptime)?>" datetime="<?=$report->uptime?>"><?=strftime('%x', $report->timestamp - $report->uptime)?></time></dd>
 					<?else:?>
-					<dd><?=lang('unavailable')?></dd>
+					<dd data-i18n="unavailable">Unavailable</dd>
 					<?endif?>
 				</dl>
 
