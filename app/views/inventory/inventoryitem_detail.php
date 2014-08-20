@@ -14,9 +14,6 @@
           $(document).on('appReady', function(e, lang) {
               $('.table').dataTable({
                   "bServerSide": false,
-                  "iDisplayLength": 25,
-                  "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-                  "aaSorting": [[1,'asc']]
               });
           } );
       </script>

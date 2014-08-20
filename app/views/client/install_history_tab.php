@@ -31,11 +31,12 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
 
 <script>
   $(document).on('appReady', function(e, lang) {
+  		//Prevent hash search
+  		search = '';
 
         // Initialize datatables
             $('.install-history-<?=$apple?>').dataTable({
-                "bServerSide": false,
-                "aaSorting": [[1,'asc']],
+                "aaSorting": [[2,'asc']],
                 "fnDrawCallback": function( oSettings ) {
                 $('#history-cnt-<?=$apple?>').html(oSettings.fnRecordsTotal());
               }

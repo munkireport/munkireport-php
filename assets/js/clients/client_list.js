@@ -1,6 +1,7 @@
 $(document).on('appReady', function(e, lang) {
 
 	var search = '';
+
 	// Use hash as searchquery
 	if(window.location.hash.substring(1)) {
 		search = decodeURIComponent(window.location.hash.substring(1));
@@ -27,12 +28,12 @@ $(document).on('appReady', function(e, lang) {
 			}
 		},
         "language": {
-        	"url": "assets/locales/dataTables/"+lang+".json"
+        	"url": baseUrl + "assets/locales/dataTables/"+lang+".json"
         },
 		"fnInitComplete": function(oSettings, json) {
 
 			// Save the parent
-		 	outer = $(this).parent()
+		 	var outer = $(this).parent()
 
 			// Wrap table in responsive div
 			$(this).wrap('<div class="table-responsive" />');

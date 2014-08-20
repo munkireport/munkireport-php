@@ -14,6 +14,10 @@
   <link rel="stylesheet" href="<?=conf('custom_css')?>" />
   <?endif?>
 
+  <script>
+    var baseUrl = "<?=conf('subdirectory')?>";
+  </script>
+  
   <script src="<?=conf('subdirectory')?>assets/js/jquery.js"></script>
 
 
