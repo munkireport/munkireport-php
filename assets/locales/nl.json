@@ -84,7 +84,7 @@
 			"pending_install": "Wachtende installatie",
 			"pending_install_plural": "Wachtende installaties",
 			"pending_removal": "Wachtende verwijdering",
-			"pending_install_plural": "Wachtende verwijderingen"	
+			"pending_removal_plural": "Wachtende verwijderingen"	
 		},
 		"username": "Gebruiker"
 	},

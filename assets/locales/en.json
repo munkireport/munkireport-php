@@ -83,7 +83,7 @@
 			"pending_install": "Pending install",
 			"pending_install_plural": "Pending installs",
 			"pending_removal": "Pending removal",
-			"pending_install_plural": "Pending removals"
+			"pending_removal_plural": "Pending removals"
 		},
 		"username": "Username"
 	},
