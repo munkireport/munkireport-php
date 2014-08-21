@@ -36,6 +36,9 @@
 					<a href="#bluetooth-tab" data-toggle="tab"data-i18n="client.tab.bluetooth">Bluetooth</a>
 				</li>
 				<li>
+					<a href="#power-tab" data-toggle="tab"data-i18n="client.tab.power">Power</a>
+				</li>
+				<li>
 					<a href="#ard-tab" data-toggle="tab" data-i18n="client.tab.ard">ARD</a>
 				</li>
 
@@ -74,6 +77,9 @@
 				</div>
 				<div class="tab-pane" id='bluetooth-tab'>
 					<?$this->view('client/bluetooth_tab')?>
+				</div>
+				<div class="tab-pane" id='power-tab'>
+					<?$this->view('client/power_tab')?>
 				</div>
 				<div class="tab-pane" id='ard-tab'>
 					<?$this->view('client/ard_tab')?>
