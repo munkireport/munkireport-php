@@ -317,7 +317,10 @@ abstract class KISS_View
 		}
 		else
 		{
-			require($view_path.$file.EXT);
+			if( ! @include($view_path.$file.EXT))
+			{
+				echo '<!-- Could not open '.$view_path.$file.EXT.'-->';
+			}
 		}
 	}
 	
