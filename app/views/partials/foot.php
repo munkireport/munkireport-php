@@ -30,7 +30,7 @@
 
   <script>
     $('.mr-alert').prependTo('body>div.container:first');
-	var munkireport = { debug: <?=conf('debug') ? 'true' : 'false'?>, subdirectory: <?=conf('subdirectory')?> }
+	var munkireport = { debug: <?=conf('debug') ? 'true' : 'false'?>, subdirectory: "<?=conf('subdirectory')?>" }
   </script>
 
 
