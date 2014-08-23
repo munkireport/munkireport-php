@@ -120,6 +120,9 @@
             case "d82":
                 vendor="CompuLab"
                 break;
+            case "3023":
+                vendor="LaCie"
+                break;
             }
             $('td:eq(3)', nRow).html(vendor)
 
