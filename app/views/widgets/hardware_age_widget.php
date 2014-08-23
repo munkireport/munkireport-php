@@ -5,11 +5,11 @@
 		<div class="panel-heading">
 
 			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="widget.age.title">Hardware Age</span></h3>
-		
+
 		</div>
 
 		<div class="panel-body">
-			
+
 			<div id="age-plot"></div>
 
 		</div>
