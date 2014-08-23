@@ -17,9 +17,7 @@
 					$cnt = 0;
 					$sql = "SELECT count(id) AS count, status 
 							FROM warranty 
-							WHERE end_date != ''
-							AND end_date < '$thirtydays'
-							AND end_date > '$yesterday'
+							WHERE (end_date BETWEEN '$yesterday' AND '$thirtydays') 
 							AND status != 'Expired'
 							GROUP BY status 
 							ORDER BY count DESC";
