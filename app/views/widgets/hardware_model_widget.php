@@ -4,8 +4,8 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-laptop"></i> Hardware breakdown</h3>
-				
+					<h3 class="panel-title"><i class="fa fa-laptop"></i> Hardware model breakdown</h3>
+
 				</div>
 
 				<div class="list-group scroll-box">
