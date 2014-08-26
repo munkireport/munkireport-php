@@ -25,10 +25,15 @@
 				<li>
 					<a href="#network-tab" data-toggle="tab"><span data-i18n="client.tab.network">Network Interfaces</span> <span id="network-cnt" class="badge">0</span></a>
 				</li>
-				
+
 				<li>
-					<a href="#directory-tab" data-toggle="tab" data-i18n="client.tab.ds"><span data-i18n="client.tab.ds">Directory Services</span> <span id="directory-cnt" class="badge">0</span></a>
+					<a href="#directory-tab" data-toggle="tab"><span data-i18n="client.tab.ds">Directory Services</span> <span id="directory-cnt" class="badge">0</span></a>
 				</li>
+
+				<li>
+					<a href="#displays-tab" data-toggle="tab"><span data-i18n="client.tab.displays">Displays</span> <span id="displays-cnt" class="badge">0</span></a>
+				</li>
+
 				<li>
 					<a href="#filevault-tab" data-toggle="tab" data-i18n="client.tab.fv_escrow">FileVault Escrow</a>
 				</li>
@@ -46,12 +51,12 @@
 				<div class="tab-pane active" id='munki'>
 					<?$this->view('client/munki_tab')?>
 				</div>
-	
+
 				<div class="tab-pane" id='apple-software'>
 					<h2 data-i18n="client.installed_apple_software">Installed Apple Software</h2>
 					<?$this->view('client/install_history_tab', array('apple'=> 1))?>
 				</div>
-	
+
 				<div class="tab-pane" id='third-party-software'>
 					<h2 data-i18n="client.installed_third_party_software">Installed Third Party Software</h2>
 					<?$this->view('client/install_history_tab', array('apple'=> 0))?>
@@ -64,11 +69,15 @@
 				<div class="tab-pane" id='network-tab'>
 					<?$this->view('client/network_tab')?>
 				</div>
-				
+
 				<div class="tab-pane" id='directory-tab'>
 					<?$this->view('client/directory_tab')?>
 				</div>
-				
+
+				<div class="tab-pane" id='displays-tab'>
+					<?$this->view('client/displays_tab')?>
+				</div>
+
 				<div class="tab-pane" id='filevault-tab'>
 					<?$this->view('client/filevault_tab')?>
 				</div>
@@ -88,7 +97,7 @@
 
 				// Activate tabdrop
 				$('.nav-tabs').tabdrop();
-				
+
 				// Activate correct tab depending on hash
 				var hash = window.location.hash.slice(5);
 				$('.nav-tabs a[href="#'+hash+'"]').tab('show');

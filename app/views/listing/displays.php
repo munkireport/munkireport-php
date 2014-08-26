@@ -52,7 +52,7 @@
             if(name == ''){name = "No Name"};
             var sn=$('td:eq(1)', nRow).html();
             if(sn){
-              var link = get_client_detail_link(name, sn, '<?=url()?>/');
+              var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_displays-tab');
               $('td:eq(0)', nRow).html(link);
             } else {
               $('td:eq(0)', nRow).html(name);

@@ -41,21 +41,10 @@
 				<?else:?>
 					<span class='text-danger'><?=$warranty->status?></span>
 				<?endif?>
+				
+				<a class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>">Recheck Warranty Status</a> <br/>
 
-				</small>
-				<hr />
-				<a class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>">
-					Recheck Warranty Status
-				</a>
-				<?if(conf('vnc_link')):?>
-
-				<a class="btn btn-default btn-xs" href="<?printf(conf('vnc_link'), $report->remote_ip)?>">Remote Control (vnc)</a>
-				<?endif?>
-
-				<?if(conf('ssh_link')):?>
-
-				<a class="btn btn-default btn-xs" href="<?printf(conf('ssh_link'), $report->remote_ip)?>">Remote Control (ssh)</a>
-				<?endif?>
+		</small>
 
 		</div>
 		<div class="col-lg-4">
@@ -82,6 +71,20 @@
 					<dd><?=$report->remote_ip?>&nbsp;</dd>
 					<dt>Local admin</dt>
 					<dd><?=$localadmin->users?>&nbsp;</dd>
+					<dd>
+						<div class="btn-group btn-group-xs">
+							<?if(conf('vnc_link')):?>
+								<a class="btn btn-default" href="<?printf(conf('vnc_link'), $report->remote_ip)?>">
+									Remote Control (vnc)
+								</a>
+							<?endif?>
+							<?if(conf('ssh_link')):?>
+								<a class="btn btn-default" href="<?printf(conf('ssh_link'), $report->remote_ip)?>">
+									Remote Control (ssh)
+								</a>
+							<?endif?>
+						</div>
+					</dd>
 
 				</dl>
 			</small>
