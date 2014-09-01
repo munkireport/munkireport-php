@@ -41,7 +41,7 @@ CurrentCapacity=$(echo "$AppleSmartBattery" | grep "CurrentCapacity" | awk '{ pr
 current_capacity="current_capacity = $CurrentCapacity"
 
 ## Cycle count
-CycleCount=$(echo "$AppleSmartBattery" | grep "CycleCount" | awk '{ print $NF }')
+CycleCount=$(echo "$AppleSmartBattery" | grep '"CycleCount" =' | awk '{ print $NF }')
 cycle_count="cycle_count = $CycleCount"
 
 ## Battery Temperature
