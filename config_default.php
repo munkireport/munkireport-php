@@ -251,6 +251,21 @@
 	*/
 		//$conf['keep_previous_displays'] = TRUE;
 
+	/*
+	|===============================================
+	| Power module - Temperture °C or °F 
+	|===============================================
+	|
+	| By default Battery temperture is displayed in Celsius °C.
+	|
+	| If you prefer Battery temperture displayed in Fahrenheit °F use:
+	|			$conf['Fahrenheit'] = TRUE;
+	|
+	| When not configured, or if set to FALSE, the default behaviour applies.
+	*/
+		//$conf['Fahrenheit'] = TRUE;
+
+
     /*
 	|===============================================
 	| Migrations
