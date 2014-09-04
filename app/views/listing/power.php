@@ -91,25 +91,25 @@ new Power_model;
 
 
 			        	// Format temperature
-						// Check config for temperature °C or °F (default Celsius)
+						// Check config for temperature_unit °C or °F
 						// °C * 9/5 + 32 = °F
-						var fahrenheit = "<?=conf('Fahrenheit')?>";
-						if ( fahrenheit == 1 ){
-							// Fahrenheit
-							var temperature=$('td:eq(10)', nRow).html();
-							if ( temperature == 0 || temperature == "" ){
-								temperature = "";
-							} else {
-								temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1);
-							}
-							$('td:eq(10)', nRow).html(temperature).addClass('text-right');
-						} else {
+						var temperature_unit = "<?=conf('temperature_unit')?>";
+						if ( temperature_unit == "C" ){
 							// Celsius
 				        	var temperature=$('td:eq(10)', nRow).html();
 							if ( temperature == 0 || temperature == "" ){
 								temperature = "";
 							} else {
 						       	temperature = (temperature / 100).toFixed(1);
+							}
+							$('td:eq(10)', nRow).html(temperature).addClass('text-right');
+						} else {
+							// Fahrenheit
+							var temperature=$('td:eq(10)', nRow).html();
+							if ( temperature == 0 || temperature == "" ){
+								temperature = "";
+							} else {
+								temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1);
 							}
 				        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 						}
@@ -166,11 +166,11 @@ new Power_model;
 		        <th data-colname='power#current_capacity'>Current (mAh)</th>
 		        <th data-colname='power#current_percent'>Charged %</th>
 				<?php
-					$fahrenheit=conf('Fahrenheit');
-					if ( $fahrenheit == 1 ) {
-						echo "<th data-colname='power#temperature'>Temp°F</th>";
-					} else {
+					$temperature_unit=conf('temperature_unit');
+					if ( $temperature_unit == "C" ) {
 						echo "<th data-colname='power#temperature'>Temp°C</th>";
+					} else {
+						echo "<th data-colname='power#temperature'>Temp°F</th>";
 					}
 				?>
 		        <th data-colname='power#manufacture_date'>Manufactured</th> 

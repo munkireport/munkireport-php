@@ -7,9 +7,9 @@ class Power_model extends Model {
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['manufacture_date'] = '';
-		$this->rs['design_capacity'] = 0;
-		$this->rs['max_capacity'] = 0;
-		$this->rs['max_percent'] = 0;
+		$this->rs['design_capacity'] = 1;
+		$this->rs['max_capacity'] = 1;
+		$this->rs['max_percent'] = 100;
 		$this->rs['current_capacity'] = 0;	   
 		$this->rs['current_percent'] = 0;	   
 		$this->rs['cycle_count'] = 0;	   
@@ -52,9 +52,9 @@ class Power_model extends Model {
 
 		// Reset values
 		$this->manufacture_date = '';
-		$this->design_capacity = 0;
-		$this->max_capacity = 0;
-		$this->max_percent = 0;
+		$this->design_capacity = 1;
+		$this->max_capacity = 1;
+		$this->max_percent = 100;
 		$this->current_capacity = 0;
 		$this->current_percent = 0;
 		$this->cycle_count = 0;
@@ -76,39 +76,28 @@ class Power_model extends Model {
 				    break;
 			    }
 			} 
+		} //end foreach explode lines
 
 
 		// Calculate maximum capacity as percentage of original capacity
 		$this->max_percent = round(($this->max_capacity / $this->design_capacity * 100 ), 0 );
 
-
 		// Calculate percentage of current maximum capacity
 		$this->current_percent = round(($this->current_capacity / $this->max_capacity * 100 ), 0 );
 
-
 		// Convert battery manufacture date to calendar date.
-			$ManufactureDate = $this->manufacture_date;
-			$year = (int) (1980 + ( $ManufactureDate / 512 ));
-			$YearNumber = (int) (( $year - 1980 ) * 512 );
-
-			$month = 1;
-			while($month <= 12) {
-				$day = (int) (( $ManufactureDate - $YearNumber ) - ( $month * 32 ));
-				if( $day >=1 && $day <=31 ) {
-					$day = sprintf("%02d", $day);	// pad with leading zero if required
-					$month = sprintf("%02d", $month);
-					$ManufactureDate = "$year-$month-$day";
-				}
-			$month++;
-			}
-		$this->manufacture_date = $ManufactureDate;
-
+		// Bits 0...4 => day (value 1-31; 5 bits)
+        // Bits 5...8 => month (value 1-12; 4 bits)
+        // Bits 9...15 => years since 1980 (value 0-127; 7 bits)
+		$ManufactureDate = $this->manufacture_date;
+        $mfgday = $this->manufacture_date & 31;
+        $mfgmonth = ($this->manufacture_date >> 5) & 15;
+        $mfgyear = (($this->manufacture_date >> 9) & 127) + 1980;
+        $this->manufacture_date = sprintf("%d-%02d-%02d", $mfgyear, $mfgmonth, $mfgday);
 
 		//timestamp added by the server
 		$this->timestamp = time();
-
 		    
-		} //end foreach explode lines
 		$this->save();
 
  
