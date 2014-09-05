@@ -20,25 +20,27 @@
 						$obj = current($queryobj->query($sql));
 					?>
 				<?if($obj):?>
-					<a href="<?=url('show/listing/power#Normal')?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->Normal?> </span><br>
-						Normal
-					</a>
-					<a href="<?=url('show/listing/power#Replace%20Soon')?>" class="btn btn-warning">
-						<span class="bigger-150"> <?=$obj->Soon?> </span><br>
-						Soon
+					<a href="<?=url('show/listing/power#Replace%20Now')?>" class="btn btn-danger">
+						<span class="bigger-150"> <?=$obj->Now?> </span><br>
+						Now
 					</a>
 					<a href="<?=url('show/listing/power#Service%20Battery')?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->Service?> </span><br>
 						Service
 					</a>
-					<a href="<?=url('show/listing/power#Replace%20Now')?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->Now?> </span><br>
-						Now
+					<a href="<?=url('show/listing/power#Replace%20Soon')?>" class="btn btn-warning">
+						<span class="bigger-150"> <?=$obj->Soon?> </span><br>
+						Soon
 					</a>
-					<a href="<?=url('show/listing/power#No%20Battery')?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->Missing?> </span><br>
-						Missing
+					<a href="<?=url('show/listing/power#Normal')?>" class="btn btn-success">
+						<span class="bigger-150"> <?=$obj->Normal?> </span><br>
+						Normal
+					</a>
+					<?if($obj->Missing > 0):?>
+						<a href="<?=url('show/listing/power#No%20Battery')?>" class="btn btn-danger">
+							<span class="bigger-150"> <?=$obj->Missing?> </span><br>
+							No Battery
+					<?endif?>
 					</a>
 				<?endif?>
 

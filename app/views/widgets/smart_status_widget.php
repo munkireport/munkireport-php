@@ -28,16 +28,16 @@
 
 				<?else:?>
 
-					<a href="<?=url('show/listing/disk')?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->Verified?> </span><br>
-						Verified
-					</a>
 					<?if($obj->Not_Supported > 0):?>
 						<a href="<?=url('show/listing/disk#Not Supported')?>" class="btn btn-info">
 							<span class="bigger-150"> <?=$obj->Not_Supported?> </span><br>
 							Not Supported
 						</a>
 					<?endif?>
+					<a href="<?=url('show/listing/disk')?>" class="btn btn-success">
+						<span class="bigger-150"> <?=$obj->Verified?> </span><br>
+						Verified
+					</a>
 
 				<?endif?>
 

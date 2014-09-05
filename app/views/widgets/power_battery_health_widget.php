@@ -18,17 +18,17 @@
 						$obj = current($queryobj->query($sql));
 					?>
 				<?if($obj):?>
-					<a href="<?=url('show/listing/power')?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->success?> </span><br>
-						90% +
+					<a href="<?=url('show/listing/power')?>" class="btn btn-danger">
+						<span class="bigger-150"> <?=$obj->danger?> </span><br>
+						< 80%
 					</a>
 					<a href="<?=url('show/listing/power')?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->warning?> </span><br>
 						80% +
 					</a>
-					<a href="<?=url('show/listing/power')?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->danger?> </span><br>
-						< 80%
+					<a href="<?=url('show/listing/power')?>" class="btn btn-success">
+						<span class="bigger-150"> <?=$obj->success?> </span><br>
+						90% +
 					</a>
 				<?endif?>
 

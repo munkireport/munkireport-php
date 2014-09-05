@@ -94,22 +94,22 @@ new Power_model;
 						// Check config for temperature_unit °C or °F
 						// °C * 9/5 + 32 = °F
 						var temperature_unit = "<?=conf('temperature_unit')?>";
-						if ( temperature_unit == "C" ){
-							// Celsius
-				        	var temperature=$('td:eq(10)', nRow).html();
-							if ( temperature == 0 || temperature == "" ){
-								temperature = "";
-							} else {
-						       	temperature = (temperature / 100).toFixed(1);
-							}
-							$('td:eq(10)', nRow).html(temperature).addClass('text-right');
-						} else {
+						if ( temperature_unit == "F" ){
 							// Fahrenheit
 							var temperature=$('td:eq(10)', nRow).html();
 							if ( temperature == 0 || temperature == "" ){
 								temperature = "";
 							} else {
 								temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1);
+							}
+							$('td:eq(10)', nRow).html(temperature).addClass('text-right');
+						} else {
+							// Celsius
+				        	var temperature=$('td:eq(10)', nRow).html();
+							if ( temperature == 0 || temperature == "" ){
+								temperature = "";
+							} else {
+						       	temperature = (temperature / 100).toFixed(1);
 							}
 				        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 						}
@@ -167,10 +167,10 @@ new Power_model;
 		        <th data-colname='power#current_percent'>Charged %</th>
 				<?php
 					$temperature_unit=conf('temperature_unit');
-					if ( $temperature_unit == "C" ) {
-						echo "<th data-colname='power#temperature'>Temp°C</th>";
-					} else {
+					if ( $temperature_unit == "F" ) {
 						echo "<th data-colname='power#temperature'>Temp°F</th>";
+					} else {
+						echo "<th data-colname='power#temperature'>Temp°C</th>";
 					}
 				?>
 		        <th data-colname='power#manufacture_date'>Manufactured</th> 
