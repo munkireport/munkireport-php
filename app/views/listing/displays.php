@@ -126,6 +126,15 @@
             case "3698":
                 vendor="Matrox"
                 break;
+            case "4ca3":
+                vendor="Epson"
+                break;
+            case "170e":
+                vendor="Extron"
+                break;
+            case "e11":
+                vendor="Compaq"
+                break;
             }
             $('td:eq(3)', nRow).html(vendor)
 
