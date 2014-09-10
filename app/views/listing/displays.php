@@ -135,6 +135,9 @@
             case "e11":
                 vendor="Compaq"
                 break;
+            case "24d3":
+                vendor="ASK Proxima"
+                break;
             }
             $('td:eq(3)', nRow).html(vendor)
 
