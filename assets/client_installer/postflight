@@ -23,6 +23,12 @@ def main():
         reportcommon.set_verbosity(int(verbosity))
     else:
         reportcommon.set_verbosity(3)
+
+    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
+
+    # Try to run postflight.d
+    postflightscriptdir = os.path.join(scriptdir, "postflight.d")
+    reportcommon.rundir(postflightscriptdir, runtype, False)
         
     # Get serial
     hardware_info = munkicommon.get_hardware_info()
@@ -46,12 +52,6 @@ def main():
         items[key] = {'path':val}
         
     reportcommon.process(serial, items)
-    
-    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
-
-    # Try to run postflight.d
-    postflightscriptdir = os.path.join(scriptdir, "postflight.d")
-    reportcommon.rundir(postflightscriptdir, runtype, False)
 
     exit(0)
 
