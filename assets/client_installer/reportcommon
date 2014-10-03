@@ -75,7 +75,7 @@ def get_long_username(username):
     except:
         long_name = ''
     return long_name.decode('utf-8')
-    
+
 def get_computername():
     cmd = ['/usr/sbin/scutil', '--get', 'ComputerName']
     proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
@@ -95,13 +95,13 @@ def get_cpuinfo():
     return output.decode('utf-8')
 
 def get_uptime():
-    """Returns uptime in seconds or None, on BSD (including OS X). 
+    """Returns uptime in seconds or None, on BSD (including OS X).
     Copied from https://pypi.python.org/pypi/uptime/1.0.0"""
     try:
         libc = ctypes.CDLL('libc.dylib')
     except OSError:
         return -1
-        
+
     if not hasattr(libc, 'sysctlbyname'):
         # Not BSD
         return -1
@@ -135,24 +135,24 @@ def set_pref(pref_name, pref_value):
     except Exception:
         pass
 
-   
+
 def pref(pref_name):
     """Return a preference. See munkicommon.py for details
     """
     pref_value = CFPreferencesCopyAppValue(pref_name, BUNDLE_ID)
     return pref_value
-    
-def process(serial,items):
-    """Process receives a list of items, checks if they need updating and updates them
-    if necessary"""\
+
+def process(serial, items):
+    """Process receives a list of items, checks if they need updating
+    and updates them if necessary"""
 
     # Sanitize serial
     serial = ''.join([c for c in serial if c.isalnum()])
-    
+
     # Get prefs
     baseurl = pref('BaseUrl') or \
               munkicommon.pref('SoftwareRepoURL') + '/report/'
-    
+
     hashurl = baseurl + "index.php?/report/hash_check"
     checkurl = baseurl + "index.php?/report/check_in"
 
@@ -163,17 +163,19 @@ def process(serial,items):
     for key, i in items.items():
         if i.get('path'):
             i['hash'] = munkicommon.getmd5hash(i.get('path'))
-            
+
     # Check dict
     check = {}
     for key, i in items.items():
         if i.get('hash'):
             check[key] = {'hash': i.get('hash')}
-    
+
     # Send hashes to server
-    values = {'serial': serial, 'items': serialize(check), 'passphrase' : passphrase}
+    values = {'serial': serial,\
+             'items': serialize(check),\
+             'passphrase' : passphrase}
     response = curl(hashurl, values)
-    server_data = response.read();
+    server_data = response.read()
 
     # Decode response
     try:
@@ -181,7 +183,7 @@ def process(serial,items):
     except:
         display_error('Illegal response from the server: %s' % server_data)
         return -1
-    
+
     if result.get('error') != '':
         display_error('Server error: %s' % result['error'])
         return -1
@@ -196,19 +198,22 @@ def process(serial,items):
                     items[i]['data'] = f.read()
                 except:
                     display_warning("Can't open %s" % items[i]['path'])
-                    
+
         else: # delete items that don't have to be uploaded
             del items[i]
 
     # Send new files with hashes
     if len(items):
         display_detail('Sending items')
-        response = curl(checkurl, {'serial': serial, 'items': serialize(items), 'passphrase': passphrase})
+        response = curl(checkurl, {'serial': serial,\
+             'items': serialize(items),\
+             'passphrase': passphrase})
         display_detail(response.read())
     else:
         display_detail('No changes')
 
-def runExternalScriptWithTimeout(script, allow_insecure=False, script_args=(), timeout=10):
+def runExternalScriptWithTimeout(script, allow_insecure=False,\
+        script_args=(), timeout=10):
     """Run a script (e.g. preflight/postflight) and return its exit status.
 
     Args:
@@ -245,8 +250,8 @@ def runExternalScriptWithTimeout(script, allow_insecure=False, script_args=(), t
         while timeout > 0:
             if proc.poll() is not None:
                 (stdout, stderr) = proc.communicate()
-                return proc.returncode, stdout.decode('UTF-8','replace'), \
-                                        stderr.decode('UTF-8','replace')
+                return proc.returncode, stdout.decode('UTF-8', 'replace'), \
+                                        stderr.decode('UTF-8', 'replace')
             time.sleep(0.1)
             timeout -= 0.1
         else:
@@ -257,7 +262,7 @@ def runExternalScriptWithTimeout(script, allow_insecure=False, script_args=(), t
                     raise
             raise utils.RunExternalScriptError('%s timed out' % script)
         return (0, None, None)
-        
+
     else:
         raise utils.RunExternalScriptError('%s not executable' % script)
 
@@ -288,9 +293,8 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
                 sub = files.pop(files.index(submitscript))
                 files.append(sub)
             except Exception, e:
-                display_error('%s not found in %s'
-                    % (submitscript, parentdir))
-        
+                display_error('%s not found in %s' % (submitscript, parentdir))
+
         for script in files:
 
             # Skip files that start with a period
@@ -310,21 +314,20 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
                 result, stdout, stderr = runExternalScriptWithTimeout(
                     scriptpath, allow_insecure=False, script_args=[runtype])
                 if stdout:
-                        display_detail(stdout)
+                    display_detail(stdout)
                 if stderr:
-                    display_detail('%s Error: %s' 
-                        % (script, stderr))
+                    display_detail('%s Error: %s' % (script, stderr))
                 if result:
-                    if(abort):
+                    if abort:
                         display_detail('Aborted by %s' % script)
                         exit(1)
                     else:
-                        display_warning('%s return code: %d'
-                                            % (script, result))
+                        display_warning('%s return code: %d'\
+                            % (script, result))
 
             except utils.ScriptNotFoundError:
-                pass  # Script has disappeared? Well, it is not required, so pass
+                pass  # Script has disappeared - pass.
             except utils.RunExternalScriptError, e:
                 display_warning(str(e))
-                
+
 # End of reportcommon
