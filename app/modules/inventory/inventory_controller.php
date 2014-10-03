@@ -3,11 +3,8 @@ class Inventory_controller extends Module_controller
 {
     // Require authentication
     function __construct()
-    {
-        if( ! $this->authorized())
-        {
-            redirect('auth/login');
-        }
+    {        
+        $this->module_path = dirname(__FILE__);
     } 
 
     function index() {
@@ -19,6 +16,12 @@ class Inventory_controller extends Module_controller
     // Todo: move expensive data objects to view
     function items($name='', $version='') 
     {
+        // Protect this handler
+        if( ! $this->authorized())
+        {
+            redirect('auth/login');
+        }
+
         $data['inventory_items'] = array();
         $data['name'] = 'No item';
 
