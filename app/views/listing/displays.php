@@ -138,6 +138,12 @@
             case "24d3":
                 vendor="ASK Proxima"
                 break;
+            case "410c":
+                vendor="Philips"
+                break;
+            case "15c3":
+                vendor="Eizo"
+                break;
             }
             $('td:eq(3)', nRow).html(vendor)
 
