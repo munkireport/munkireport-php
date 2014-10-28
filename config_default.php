@@ -134,7 +134,19 @@
 
 	/*
 	|===============================================
-	| Force secure connection when authorizing
+	| Authorization
+	|===============================================
+	|
+	| Authorize people by listing them in the appropriate array.
+	| An entry containing a star (*) signifies that everyone is authorized
+	| which is the default setting.
+	|
+	*/	
+	$conf['authorization']['delete_machine'] = array('*');
+
+	/*
+	|===============================================
+	| Force secure connection when authenticating
 	|===============================================
 	|
 	| Set this value to TRUE to force https when logging in.

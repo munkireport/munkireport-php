@@ -44,6 +44,9 @@ function delete_machine(obj)
 {
 	var row = obj.parents('tr');
 	$.getJSON( obj.attr('href'), function( data ) {
+		
+		data.status = data.status || 'unknown';
+
 		if(data.status == 'success')
 		{
 			// Animate slide up
@@ -59,7 +62,7 @@ function delete_machine(obj)
 		}
 	  	else
 	  	{
-	  		alert('remove failed')
+	  		alert(i18n.t('admin.delete_failed') + i18n.t(data.status));
 	  	}
 	});
 }

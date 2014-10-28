@@ -42,19 +42,53 @@ class Controller extends KISS_Controller
 {
 	/**
 	 * Check if there is a valid session
-	 * TODO: check authorization
+	 * and if the person is authorized for $what
 	 *
 	 * @return boolean TRUE on authorized
 	 * @author AvB
 	 **/
-	function authorized()
+	function authorized($what = '')
 	{
-		ini_set('session.use_cookies', 1);
-		ini_set('session.use_only_cookies', 1);
-		ini_set('session.cookie_path', conf('subdirectory'));
-		session_start();
+		if( ! isset($_SESSION))
+		{
+			ini_set('session.use_cookies', 1);
+			ini_set('session.use_only_cookies', 1);
+			ini_set('session.cookie_path', conf('subdirectory'));
+			session_start();
+		}
 
-		return isset($_SESSION['user']);
+		// Check if we have a valid user
+		if( ! isset($_SESSION['user']))
+		{
+			return FALSE;
+		}
+
+		// Check for a specific authorization item
+		if($what)
+		{
+			foreach(conf('authorization', array()) as $item => $members)
+			{
+				if($what === $item)
+				{
+					// Check if there is an 'authorized for all' item
+					if( in_array('*', $members))
+					{
+						return TRUE;
+					}
+
+					if( in_array($_SESSION['user'], $members))
+					{
+						return TRUE;
+					}
+
+					// Person not found: unauthorized!
+					return FALSE;
+				}
+			}
+		}
+
+		// There is no matching rule, you're authorized!
+		return TRUE;
 	}
 }
 
