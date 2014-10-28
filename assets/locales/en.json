@@ -2,6 +2,9 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
+	"admin": {
+		"delete_failed": "Remove failed: "
+	},
 	"all": "All",
 	"auth": {
 		"addtoconfig": "Add this line to config.php:",
@@ -137,6 +140,7 @@
 	"path": "Path",
 	"serial": "Serialnumber",
 	"unavailable": "Unavailable",
+	"unauthorized": "You are not authorized",
 	"unknown": "Unknown",
 	"version": "Version",
 	"warning": "Warning",
