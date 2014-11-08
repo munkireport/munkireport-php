@@ -18,7 +18,7 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
 		<tr>
 			<td><?=$item->displayName?></td>
 			<td><?=$item->displayVersion?></td>
-			<td><time title="<?=strftime('%c',$item->date)?>" datetime="<?=date('c',$item->date)?>"></time></td>
+			<td data-order="<?=$item->date?>"><time title="<?=strftime('%c',$item->date)?>" datetime="<?=date('c',$item->date)?>"></time></td>
 			<td><?=$item->processName?></td>
 		</tr>
 	<?endif?>
