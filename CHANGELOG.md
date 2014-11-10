@@ -1,3 +1,24 @@
+### 2.1.0 (November 10, 2014)
+
+FIXES
+
+* Improved error handling on 10.5
+* ARD error #139
+* ISO dates for display #138 and #156 (thanks to @nbalonso)
+* DataTables 1.10.2
+* Disk listing
+* Warranty widget
+* Install history date sort
+
+NEW FEATURES
+
+* Uptime widget (thanks to @nbalonso)
+* More display vendors (thanks to @nbalonso and @diwanicki)
+* Localization with i18n js library
+* Updated SMART status widget (thanks to @kene101)
+* Authorization for delete_machine
+
+
 ### 2.0.11 (July 6, 2014)
 
 This release has some changes to the way preflight scripts are handled: 
