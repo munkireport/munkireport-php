@@ -10,11 +10,17 @@
 
 				<div class="list-group">
 
-				<?	$warranty = new Warranty_model(); 
+				<?	$warranty = new Warranty_model();
 					$thirtydays = date('Y-m-d', strtotime('+30days'));
+					$yesterday = date('Y-m-d', strtotime('-1day'));
 					$class_list = array('Supported' => 'warning');
 					$cnt = 0;
-					$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY count DESC";
+					$sql = "SELECT count(id) AS count, status 
+							FROM warranty 
+							WHERE (end_date BETWEEN '$yesterday' AND '$thirtydays') 
+							AND status != 'Expired'
+							GROUP BY status 
+							ORDER BY count DESC";
 				?>
 					<?foreach($warranty->query($sql) as $obj):?>
 					<?$status = array_key_exists($obj->status, $class_list) ? $class_list[$obj->status] : 'danger'?>

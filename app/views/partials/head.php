@@ -14,6 +14,10 @@
   <link rel="stylesheet" href="<?=conf('custom_css')?>" />
   <?endif?>
 
+  <script>
+    var baseUrl = "<?=conf('subdirectory')?>";
+  </script>
+  
   <script src="<?=conf('subdirectory')?>assets/js/jquery.js"></script>
 
 
@@ -41,29 +45,25 @@
     </div>
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
-        <?
-              $page = $GLOBALS[ 'engine' ]->get_uri_string();
-              $navlist = array( 
-                '' => (object) array('icon' => 'th-large', 'title' => 'Dashboard')
-                );
+        <?$page = $GLOBALS[ 'engine' ]->get_uri_string()?>
 
-                ?>
-              <?foreach($navlist as $url => $obj):?>
-            <li <?=$page==$url?'class="active"':''?>>
-              <a href="<?=url($url)?>"><i class="fa fa-<?=$obj->icon?>"></i> <?=$obj->title?></a>
+            <li <?=$page==''?'class="active"':''?>>
+              <a href="<?=url()?>"><i class="fa fa-th-large"></i> <span data-i18n="nav.main.dashboard">Dashboard</span></a>
             </li>
-              <?endforeach?>
 
               <?$url = 'show/reports/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o"></i> Reports <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o"></i> <span data-i18n="nav.main.reports">Reports</span> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
 
                   <?foreach(scandir(conf('view_path').'report') AS $list_url):?>
 
                     <?if( strpos($list_url, 'php')):?>
+                    <?$page_url = $url.strtok($list_url, '.')?>
 
-                    <li><a href="<?=url($url.strtok($list_url, '.'))?>"><?=ucfirst(strtok($list_url, '.'))?></a></li>
+                    <li<?=strpos($page, $page_url)===0?' class="active"':''?>>
+                      <a href="<?=url($page_url)?>" data-i18n="nav.reports.<?=$name = strtok($list_url, '.')?>"><?=ucfirst($name)?></a>
+                    </li>
 
                     <?endif?>
 
@@ -75,14 +75,17 @@
 
               <?$url = 'show/listing/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> Listings <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> <span data-i18n="nav.main.listings">Listings</span> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
 
                   <?foreach(scandir(conf('view_path').'listing') AS $list_url):?>
 
                     <?if( strpos($list_url, 'php')):?>
+                    <?$page_url = $url.strtok($list_url, '.')?>
 
-                    <li><a href="<?=url($url.strtok($list_url, '.'))?>"><?=ucfirst(strtok($list_url, '.'))?></a></li>
+                    <li<?=strpos($page, $page_url)===0?' class="active"':''?>>
+                      <a href="<?=url($url.strtok($list_url, '.'))?>" data-i18n="nav.listings.<?=$name = strtok($list_url, '.')?>"><?=ucfirst($name)?></a>
+                    </li>
 
                     <?endif?>
 
@@ -96,11 +99,32 @@
           <?$auth = conf('auth'); // Hide logout button if auth_noauth
             if( ! array_key_exists('auth_noauth', $auth)):?>
 
-          <form action="<?=url('auth/logout', true)?>" method="post" class="navbar-form navbar-right">
-            <button type="submit" class="btn btn-sm btn-default">
-              <i class="fa fa-sign-out"></i> Logout <?=$_SESSION['user']?>
-            </button>
-          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i></a>
+              <ul class="dropdown-menu locale">
+
+                  <?foreach(scandir(APP_ROOT.'assets/locales') AS $list_url):?>
+
+                    <?if( strpos($list_url, 'json')):?>
+
+                    <?$lang = strtok($list_url, '.')?>
+
+                    <li><a href="<?=url("$page&amp;setLng=$lang")?>" data-i18n="nav.lang.<?=$lang?>"><?=$lang?></a></li>
+
+                    <?endif?>
+
+                  <?endforeach?>
+
+                </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=$_SESSION['user']?> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?=url('auth/logout')?>"><i class="fa fa-power-off"></i> <span data-i18n="nav.user.logout">Sign Off</span></a></li>
+              </ul>
+            </li>
+          </ul>
 
           <?endif?>
     </nav>

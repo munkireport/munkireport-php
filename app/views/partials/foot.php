@@ -2,7 +2,7 @@
 
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
 
-      <i><?printf(lang('munkireport_version'), $GLOBALS['version'])?></i>
+      <i>MunkiReport <span data-i18n="version">Version</span> <?=$GLOBALS['version']?></i>
 
     </div>
 
@@ -30,6 +30,7 @@
 
   <script>
     $('.mr-alert').prependTo('body>div.container:first');
+	var munkireport = { debug: <?=conf('debug') ? 'true' : 'false'?>, subdirectory: "<?=conf('subdirectory')?>" }
   </script>
 
 
@@ -38,6 +39,11 @@
   <script src="<?=conf('subdirectory')?>assets/js/datatables.bootstrap.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/moment.min.js"></script>
   <script src="<?=conf('subdirectory')?>assets/js/flotr2.js"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/i18next.min.js"></script>
+  <script>
+
+
+  </script>
   <?if(conf('custom_js')):?> 
   <script src="<?=conf('custom_js')?>"></script>
   <?endif?>

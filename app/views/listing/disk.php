@@ -13,7 +13,7 @@ new Reportdata_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function(e, lang) {
 
 				// Get modifiers from data attribute
 				var myCols = [], // Colnames
@@ -39,8 +39,6 @@ new Reportdata_model;
 				});
 
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
 			        "sAjaxSource": "<?=url('datatables/data')?>",
 			        "aaSorting": mySort,
 			        "aoColumns": myCols,
@@ -91,35 +89,31 @@ new Reportdata_model;
 						}
 
 						// Look for 'between' statement todo: make generic
-						if(out.sSearch.match(/^\d+ percentage \d+$/))
+						if(out.sSearch.match(/^\d+GB freespace \d+GB$/))
 						{
 							// Clear global search
 							aoData.push( { "name": "sSearch", "value": "" } );
 
 							// Add column specific search
-							aoData.push( { "name": "sSearch_5", "value": out.sSearch.replace(/(\d+) percentage (\d+)/, 'BETWEEN $1 AND $2') } );
+							aoData.push( { 
+								"name": "sSearch_6", 
+								"value": out.sSearch.replace(/(\d+GB) freespace (\d+GB)/, function(m, from, to){return ' BETWEEN ' + humansizeToBytes(from) + ' AND ' + humansizeToBytes(to)})
+							} );
 							//dumpj(out)
 						}
 
 						// Look for a bigger/smaller/equal statement
-						if(out.sSearch.match(/^percentage [<>=] \d+$/))
+						if(out.sSearch.match(/^freespace [<>=] \d+GB$/))
 						{
 							// Clear global search
 							aoData.push( { "name": "sSearch", "value": "" } );
 
 							// Add column specific search
-							aoData.push( { "name": "sSearch_5", "value": out.sSearch.replace(/.*([<>=] \d+)$/, '$1') } );
+							aoData.push( { "name": "sSearch_6", "value": out.sSearch.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + humansizeToBytes(content)}) } );
 							//dumpj(out)
 						}
 				    }
 			    } );
-
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
-
 			} );
 		</script>
 
@@ -128,9 +122,9 @@ new Reportdata_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='machine#computer_name'>Name</th>
-		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>Username</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='machine#machine_name'>Type</th>
 		        <th data-colname='diskreport#SolidState'>Solid state</th>
 		        <th data-sort='desc' data-colname='diskreport#Percentage'>Disk</th>

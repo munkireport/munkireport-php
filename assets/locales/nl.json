@@ -1,0 +1,150 @@
+{
+	"about": {
+		"author": "Arjen van Bochoven"
+	},
+	"all": "Alle",
+	"auth": {
+		"addtoconfig": "Voeg deze regel toe aan config.php:",
+		"back_to_site": "Terug naar de site",
+		"empty_not_allowed": "Lege waarden zijn niet toegestaan",
+		"error_contacting_AD": "Er is een fout opgetreden tijdens het contact opnemen met AD",
+		"gen_other": "Genereer nog een hash",
+		"generate": "Genereer",
+		"generate_hash": "Genereer wachtwoord hash",
+		"generated_hash": "Gegenereerde hash",
+		"go_secure": "Ga naar beveiligde site",
+		"insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
+		"noauth_found": "Geen authenticatiegegevens gevonden, voeg een gebruiker toe aan het configuratiebestand.",
+		"not_authorized": "Niet geauthoriseerd",
+		"password": "Wachtwoord",
+		"secure": "Veilige verbinding",
+		"signin": "Log in",
+		"username": "Gebruikersnaam",
+		"wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist"
+	},
+	"bundle_id": "BundleID",
+	"client": {
+		"tab": {
+			"munki": "Beheerde Software",
+			"apple_software": "Apple Software",
+			"third_party_software": "Software van Derden",
+			"inventory_items": "Inventaris",
+			"network": "Netwerk",
+			"ds": "Directory Services",
+			"fv_escrow": "Filevault Escrow",
+			"bluetooth": "Bluetooth",
+			"ard": "ARD"
+		},
+		"installed_apple_software": "Geïnstalleerde Apple Software",
+		"installed_third_party_software": "Geïnstalleerde Software van Derden",
+		"install_date": "Installatie datum",
+		"no_install_history": "Geen installatie historie",
+		"process_name": "Procesnaam"
+	},
+	"configuration": "Configuratie",
+	"date": {
+		"year": "jaar"
+	},
+	"disabled": "Uitgeschakeld",
+	"edit": "Wijzig",
+	"enabled": "Ingeschakeld",
+	"error": "Fout",
+	"error_plural": "Fouten",
+	"errors": {
+		"title": "Er is een fout opgetreden",
+		"client_nonexistent": "Client met serienummer \"__serial__\" niet gevonden in de database",
+		"403": "Geen toestemming om deze pagina te openen",
+		"404": "Pagina niet gevonden",
+		"426": "Het is verplicht deze site over een beveiligde verbinding te bezoeken."
+	},
+	"free_disk_space": "Vrije Schijfruimte",
+	"installed": "Geïnstalleerd",
+	"listing": {
+		"ard": {
+			"text": "Tekst __number__",
+			"title": "Apple Remote Desktop rapport"
+		},
+		"bluetooth": {
+			"keyboard_battery": "Toetsenbord",
+			"mouse_battery": "Muis",
+			"status": "Status",
+			"title": "Bluetooth rapport",
+			"trackpad_battery": "Trackpad"
+		},
+		"computername": "Naam",
+		"hardware": {
+			"description": "Beschrijving"
+		},
+		"munki": {
+			"latest_run": "Laatst Gezien",
+			"package_installed": "Pakket geïnstalleerd",
+			"package_installed_plural": "Pakketten geïnstalleerd",
+			"package_removed": "Pakket verwijderd",
+			"package_removed_plural": "Pakketten verwijderd",
+			"pending_install": "Wachtende installatie",
+			"pending_install_plural": "Wachtende installaties",
+			"pending_removal": "Wachtende verwijdering",
+			"pending_removal_plural": "Wachtende verwijderingen"	
+		},
+		"username": "Gebruiker"
+	},
+	"memory": "Geheugen",
+	"name": "Naam",
+	"nav": {
+		"listings": {
+			"ard": "Apple Remote Desktop",
+			"bluetooth": "Bluetooth",
+			"clients": "Clients",
+			"directoryservice": "Directoryservice",
+			"disk": "Schijf",
+			"displays": "Beeldschermen",
+			"hardware": "Hardware",
+			"inventory": "Inventaris",
+			"munki": "Munki",
+			"network": "Netwerk",
+			"security": "Beveiliging",
+			"warranty": "Garantie"
+		},
+		"main": {
+		  "dashboard": "Dashboard",
+		  "listings": "Lijsten",
+		  "reports": "Rapporten"
+		},
+		"reports": {
+			"clients": "Client rapport",
+			"configuration": "Configuratie rapport",
+			"hardware": "Hardware rapport",
+			"munki": "Munki rapport",
+			"network": "Netwerk rapport"
+		},
+		"user": {
+			"logout": "Log uit"
+		}
+	},
+	"network": {
+		"ethernet": "Ethernet",
+		"ip_address": "IP Adres",
+		"network_mask": "Masker",
+		"prefix_length": "Prefix lengte",
+		"router": "Router"
+	},
+	"path": "Pad",
+	"pending": "Wachtend",
+	"serial": "Serienummer",
+	"unavailable": "Niet beschikbaar",
+	"unknown": "Onbekend",
+	"version": "Versie",
+	"warning": "Waarschuwing",
+	"warning_plural": "Waarschuwingen",
+	"widget": {
+		"age": {
+			"title": "Hardware Leeftijd"
+		},
+		"bound_to_ds": {
+			"bound": "Gebonden",
+			"notbound": "Niet Gebonden",
+			"info": "Totalen vanaf begin dataverzameling",
+			"title": "Gebonden aan een Directory Service"
+		}	
+	}
+}

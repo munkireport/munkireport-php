@@ -122,7 +122,7 @@
 
 <script type="text/javascript" charset="utf-8">
 	// Set directory count in tab header
-    $(document).ready(function() {
+    $(document).on('appReady', function(e, lang) {
         $('#directory-cnt').html($('.nw-dsenabled').length)
     } );
 </script>

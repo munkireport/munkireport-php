@@ -4,12 +4,12 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-desktop"></i> Hardware breakdown</h3>
-		
+			<h3 class="panel-title"><i class="fa fa-desktop"></i> Hardware type breakdown</h3>
+
 		</div>
 
 		<div class="panel-body">
-			
+
 			<div style="height: 200px" id="hw-plot"></div>
 
 		</div>
@@ -19,7 +19,7 @@
 </div><!-- /col-lg-4 -->
 
 <script>
-$(document).ready(function() {
+$(document).on('appReady', function(e, lang) {
 
 	// Copy barOptions
     myOptions = jQuery.extend({}, barOptions);

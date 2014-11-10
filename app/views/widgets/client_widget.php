@@ -76,22 +76,22 @@ $obj = current($queryobj->query($sql));
 					
 				<?if($obj):?>
 
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->inactive_three_month?> </span>
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
+						<span class="bigger-150"> <?=$obj->inactive_week?> </span>
 						<br>
-						> 3 months
+						Last wk
 					</a>
 					<a href="<?=url('show/listing/clients')?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->inactive_month?> </span>
 						<br>
 						Last mo
 					</a>
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
-						<span class="bigger-150"> <?=$obj->inactive_week?> </span>
+					<a href="<?=url('show/listing/clients')?>" class="btn btn-danger">
+						<span class="bigger-150"> <?=$obj->inactive_three_month?> </span>
 						<br>
-						Last wk
+						3 months +
 					</a>
-
+					
 				<?endif?>
 
 				</div>

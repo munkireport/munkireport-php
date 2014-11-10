@@ -13,7 +13,7 @@
 
     <script type="text/javascript">
 
-      $(document).ready(function() {
+      $(document).on('appReady', function(e, lang) {
 
         // Get modifiers from data attribute
         var myCols = [], // Colnames
@@ -39,8 +39,6 @@
         });
 
         oTable = $('.table').dataTable( {
-          "bProcessing": true,
-          "bServerSide": true,
           "sAjaxSource": "<?=url('datatables/data')?>",
           "aaSorting": mySort,
           "aoColumns": myCols,
@@ -54,7 +52,7 @@
             if(name == ''){name = "No Name"};
             var sn=$('td:eq(1)', nRow).html();
             if(sn){
-              var link = get_client_detail_link(name, sn, '<?=url()?>/');
+              var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_displays-tab');
               $('td:eq(0)', nRow).html(link);
             } else {
               $('td:eq(0)', nRow).html(name);
@@ -110,9 +108,6 @@
             case "34ac":
                 vendor="Mitsubishi"
                 break;
-            case "22f0":
-                vendor="HP"
-                break;
             case "5a63":
                 vendor="ViewSonic"
                 break;
@@ -122,8 +117,43 @@
             case "593a":
                 vendor="Vizio"
                 break;
+            case "d82":
+                vendor="CompuLab"
+                break;
+            case "3023":
+                vendor="LaCie"
+                break;
+            case "3698":
+                vendor="Matrox"
+                break;
+            case "4ca3":
+                vendor="Epson"
+                break;
+            case "170e":
+                vendor="Extron"
+                break;
+            case "e11":
+                vendor="Compaq"
+                break;
+            case "24d3":
+                vendor="ASK Proxima"
+                break;
+            case "410c":
+                vendor="Philips"
+                break;
+            case "15c3":
+                vendor="Eizo"
+                break;
             }
             $('td:eq(3)', nRow).html(vendor)
+
+            // Format manufactured from unix to human friendly and the title to relative
+            date = aData['displays#manufactured'];
+            if(moment(date, 'YYYY-MM', true).isValid())
+            {
+                  var formatted='<time title="'+ moment(date).fromNow() + '" </time>' + moment(date).format("MMMM YYYY");
+                  $('td:eq(6)', nRow).html(formatted);
+            }
 
             // Format timestamp from unix to relative and the title to timezone detail
             date = aData['displays#timestamp'];
@@ -136,12 +166,6 @@
           } //end fnCreatedRow
 
         } ); //end oTable
-
-        // Use hash as searchquery
-        if(window.location.hash.substring(1))
-        {
-          oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-        }
 
       } );
     </script>

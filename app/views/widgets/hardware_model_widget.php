@@ -4,8 +4,8 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-laptop"></i> Hardware breakdown</h3>
-				
+					<h3 class="panel-title"><i class="fa fa-laptop"></i> Hardware model breakdown</h3>
+
 				</div>
 
 				<div class="list-group scroll-box">
@@ -14,7 +14,7 @@
 					$sql = "SELECT count(id) AS count, machine_desc FROM machine GROUP BY machine_desc ORDER BY count DESC";
 				?>
 					<?foreach($machine->query($sql) as $obj):?>
-					<?$obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : lang('unknown');?>
+					<?$obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : 'Unknown';?>
 					<a href="<?=url('show/listing/hardware/#'.rawurlencode($obj->machine_desc))?>" class="list-group-item"><?=$obj->machine_desc?>
 						<span class="badge pull-right"><?=$obj->count?></span>
 					</a>

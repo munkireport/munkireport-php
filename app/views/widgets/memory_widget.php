@@ -19,7 +19,7 @@
 </div><!-- /col-lg-4 -->
 
 <script>
-$(document).ready(function() {
+$(document).on('appReady', function(e, lang) {
 
 	// Clone barOptions
     var myOptions = jQuery.extend(true, {}, horBarOptions);

@@ -134,7 +134,19 @@
 
 	/*
 	|===============================================
-	| Force secure connection when authorizing
+	| Authorization
+	|===============================================
+	|
+	| Authorize people by listing them in the appropriate array.
+	| An entry containing a star (*) signifies that everyone is authorized
+	| which is the default setting.
+	|
+	*/	
+	$conf['authorization']['delete_machine'] = array('*');
+
+	/*
+	|===============================================
+	| Force secure connection when authenticating
 	|===============================================
 	|
 	| Set this value to TRUE to force https when logging in.
@@ -343,10 +355,12 @@
 	| an array of widgets. Omit the _widget postfix
 	|
 	*/
-    $conf['dashboard_layout'] = array(
-		array('client', 'munki', 'disk_report', 'installed_memory', 'bound_to_ds'),
-		array('new_clients', 'pending_apple', 'pending_munki'),
-		array('munki_versions', 'warranty', 'filevault')
+	$conf['dashboard_layout'] = array(
+		array('client', 'munki'), /*client is actually two widgets*/
+		array('disk_report', 'installed_memory', 'bound_to_ds'),
+		array('uptime', 'pending_apple', 'pending_munki'),
+		array('new_clients', 'munki_versions', 'filevault'),
+		array('warranty')
 	);
 
 	/*
