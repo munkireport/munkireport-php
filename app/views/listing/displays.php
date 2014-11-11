@@ -147,6 +147,14 @@
             }
             $('td:eq(3)', nRow).html(vendor)
 
+            // Format manufactured from unix to human friendly and the title to relative
+            date = aData['displays#manufactured'];
+            if(moment(date, 'YYYY-MM', true).isValid())
+            {
+                  var formatted='<time title="'+ moment(date).fromNow() + '" </time>' + moment(date).format("MMMM YYYY");
+                  $('td:eq(6)', nRow).html(formatted);
+            }
+
             // Format timestamp from unix to relative and the title to timezone detail
             date = aData['displays#timestamp'];
             if(date)
