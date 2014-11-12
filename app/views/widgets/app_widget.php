@@ -1,26 +1,34 @@
-// This widget will pull and count the versions of Safari installed on machines.
-// To Customize, copy and paste the code below replacing instances of "Safari"
-// with the app you wish to show in a widget.  You can find the formatting of
-// the app name from MunkiReport -> Listings -> Inventory
+<!--  This widget can be used to specify applications you would like to see in
+      MunkiReport-PHP.  The appsToCheck array is pre-popluated with four sample
+      applications.  You may remove or add additional applications.  -->
 
 <?
-$machine = new Inventory_model();
-$sql = "SELECT machine.computer_name, machine.serial_number,inventoryitem.version, COUNT (inventoryitem.version) as count
-FROM machine
-INNER JOIN inventoryitem
-ON machine.serial_number=inventoryitem.serial
-WHERE inventoryitem.name = 'Safari'
-GROUP by inventoryitem.version
-ORDER BY inventoryitem.version DESC";
+$appsToCheck = array("Safari","Firefox","TextEdit","Notes");
+$appsToChecksql = array();
+$appsIndex = count($appsToCheck);
+$counter=0;
+
+
+foreach ($appsToCheck as $string) {
+    $appsToChecksql[] = "SELECT inventoryitem.version, COUNT(inventoryitem.version) as count
+    FROM inventoryitem
+    WHERE inventoryitem.name = '$string'
+    GROUP BY inventoryitem.version
+    ORDER BY count DESC";
+    }
+?>
+
+<? while ($appsIndex != $counter ) {
+  $machine = new Inventory_model();
 ?>
 <div class="col-lg-4 col-md-6">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-compass"></i> <span data-i18n="Safari">Safari</span></h3>
+            <h3 class="panel-title"><i class="fa fa-tachometer"></i> <span data-i18n="<?echo $appsToCheck[$counter];?>"><?echo $appsToCheck[$counter];?></span></h3>
         </div>
         <div class="list-group scroll-box">
-            <?foreach($machine->query($sql) as $obj):?>
-            <a href="<?=url('module/inventory/items/Safari/'.$obj->version)?>" class="list-group-item">
+            <?foreach($machine->query($appsToChecksql[$counter]) as $obj):?>
+            <a href="<?=url('module/inventory/items/'.$appsToCheck[$counter].'/'.$obj->version)?>" class="list-group-item">
                 <?=$obj->version?>
                 <span class="badge pull-right"><?=$obj->count?></span>
             </a>
@@ -28,3 +36,4 @@ ORDER BY inventoryitem.version DESC";
         </div>
     </div><!-- /panel -->
 </div><!-- /col -->
+<? $counter++; } ?>
