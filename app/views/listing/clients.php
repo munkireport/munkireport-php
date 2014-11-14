@@ -1,6 +1,6 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
 new Machine_model;
 new Warranty_model;
 new Disk_report_model;
@@ -23,14 +23,14 @@ new Munkireport_model;
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
 			    oTable = $('.table').dataTable( {
-			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
                 // Update name in first column to link
                 var name=$('td:eq(0)', nRow).html();
                 if(name == ''){name = "No Name"};
                 var sn=$('td:eq(1)', nRow).html();
-                var link = get_client_detail_link(name, sn, '<?=url()?>/');
+                var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
                 $('td:eq(0)', nRow).html(link);
 
                 // Format disk usage
@@ -90,4 +90,4 @@ new Munkireport_model;
 
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

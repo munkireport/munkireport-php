@@ -25,12 +25,12 @@ $(document).on('appReady', function(e, lang) {
     myOptions = jQuery.extend({}, barOptions);
     myOptions.legend.labelFormatter = function(label, series) {
 			// series is the series object for the label
-			return '<a href="<?=url('show/listing/hardware')?>#' + label + '">' + label + '</a>';
+			return '<a href="<?php echo url('show/listing/hardware'); ?>#' + label + '">' + label + '</a>';
 			}
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?=url('module/machine/hw')?>", '#hw-plot', myOptions, parms);
+	drawGraph("<?php echo url('module/machine/hw'); ?>", '#hw-plot', myOptions, parms);
 
 });
 </script>

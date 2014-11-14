@@ -19,27 +19,27 @@
 					$obj = current($queryobj->query($sql));
 				?>
 
-				<?if($obj->Failing > 0):?>
+				<?php if($obj->Failing > 0): ?>
 
-					<a href="<?=url('show/listing/disk#failing')?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->Failing?> </span><br>
+					<a href="<?php echo url('show/listing/disk#failing'); ?>" class="btn btn-danger">
+						<span class="bigger-150"> <?php echo $obj->Failing; ?> </span><br>
 						Failing!
 					</a>
 
-				<?else:?>
+				<?php else: ?>
 
-					<?if($obj->Not_Supported > 0):?>
-						<a href="<?=url('show/listing/disk#Not Supported')?>" class="btn btn-info">
-							<span class="bigger-150"> <?=$obj->Not_Supported?> </span><br>
+					<?php if($obj->Not_Supported > 0): ?>
+						<a href="<?php echo url('show/listing/disk#Not Supported'); ?>" class="btn btn-info">
+							<span class="bigger-150"> <?php echo $obj->Not_Supported; ?> </span><br>
 							Not Supported
 						</a>
-					<?endif?>
-					<a href="<?=url('show/listing/disk')?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->Verified?> </span><br>
+					<?php endif; ?>
+					<a href="<?php echo url('show/listing/disk'); ?>" class="btn btn-success">
+						<span class="bigger-150"> <?php echo $obj->Verified; ?> </span><br>
 						Verified
 					</a>
 
-				<?endif?>
+				<?php endif; ?>
 
 			  </div>
 

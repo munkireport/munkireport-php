@@ -39,19 +39,19 @@
 					$updates_array = array_count_values($updates_array);
 					arsort($updates_array);
 				?> 
-				<?if( ! $updates_array):?>
+				<?php if( ! $updates_array): ?>
 						<span class="list-group-item">No updates pending</span>
-					<?endif?>
-				<?foreach(array_keys($updates_array) as $obj):?>
+					<?php endif; ?>
+				<?php foreach(array_keys($updates_array) as $obj): ?>
 
 
-					<a href="<?=url('module/munkireport/pending#'.$obj)?>" class="list-group-item">
+					<a href="<?php echo url('module/munkireport/pending#'.$obj); ?>" class="list-group-item">
 					<!--//echo first the key names (update name) and then their values (count) -->
-                	<?=$obj?>
-                	<span class="badge pull-right"><?=$updates_array[$obj]?></span>
+                	<?php echo $obj; ?>
+                	<span class="badge pull-right"><?php echo $updates_array[$obj]; ?></span>
             		</a>
 
-				<?endforeach?>
+				<?php endforeach; ?>
 				</div>
 
 			</div><!-- /panel -->

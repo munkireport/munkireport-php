@@ -1,9 +1,9 @@
-<?$hist_obj = new Installhistory_model();
+<?php $hist_obj = new Installhistory_model();
 
-$installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
-<?if(isset($installHistory) && count($installHistory) > 1):?>
+$installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
+<?php if(isset($installHistory) && count($installHistory) > 1): ?>
 
-<table class="install-history-<?=$apple?> table table-striped">
+<table class="install-history-<?php echo $apple; ?> table table-striped">
 	<thead>
 		<tr>
 			<th data-i18n="name">Name</th>
@@ -13,21 +13,21 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
 		</tr>
 	</thead>
 	<tbody>
-	<?foreach($installHistory as $item):?>
-	<?if($apple == (strpos($item->packageIdentifiers,'com.apple.') === 0)):?>
+	<?php foreach($installHistory as $item): ?>
+	<?php if($apple == (strpos($item->packageIdentifiers,'com.apple.') === 0)): ?>
 		<tr>
-			<td><?=$item->displayName?></td>
-			<td><?=$item->displayVersion?></td>
-			<td data-order="<?=$item->date?>"><time title="<?=strftime('%c',$item->date)?>" datetime="<?=date('c',$item->date)?>"></time></td>
-			<td><?=$item->processName?></td>
+			<td><?php echo $item->displayName; ?></td>
+			<td><?php echo $item->displayVersion; ?></td>
+			<td data-order="<?php echo $item->date; ?>"><time title="<?php echo strftime('%c',$item->date); ?>" datetime="<?php echo date('c',$item->date); ?>"></time></td>
+			<td><?php echo $item->processName; ?></td>
 		</tr>
-	<?endif?>
-	<?endforeach?>
+	<?php endif; ?>
+	<?php endforeach; ?>
 	</tbody>
 </table>
-<?else:?>
+<?php else: ?>
 <p><i data-i18n="client.no_install_history">No install history</i></p>
-<?endif?>
+<?php endif ?>
 
 <script>
   $(document).on('appReady', function(e, lang) {
@@ -35,10 +35,10 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
   		search = '';
 
         // Initialize datatables
-            $('.install-history-<?=$apple?>').dataTable({
+            $('.install-history-<?php echo $apple; ?>').dataTable({
                 "aaSorting": [[2,'asc']],
                 "fnDrawCallback": function( oSettings ) {
-                $('#history-cnt-<?=$apple?>').html(oSettings.fnRecordsTotal());
+                $('#history-cnt-<?php echo $apple; ?>').html(oSettings.fnRecordsTotal());
               }
             });
   });

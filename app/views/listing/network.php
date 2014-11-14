@@ -1,6 +1,6 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
-<?
+<?php 
 //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
@@ -40,7 +40,7 @@ new Network_model;
 				});
 
 			    oTable = $('.table').dataTable( {
-			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
 			        "aaSorting": mySort,
 			        "aoColumns": myCols,
 			        "aoColumnDefs": [
@@ -51,7 +51,7 @@ new Network_model;
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_network-tab');
+			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_network-tab');
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Status
@@ -91,4 +91,4 @@ new Network_model;
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

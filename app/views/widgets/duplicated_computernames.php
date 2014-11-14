@@ -10,31 +10,31 @@
 
 				<div class="list-group scroll-box">
 
-				<?	$machine = new Machine_model();
-					$sql = "SELECT computer_name,
-							COUNT(*) AS count
-							FROM machine
-							GROUP BY computer_name
-							HAVING count > 1
-							ORDER BY count DESC";
-					$cnt = 0;
+				<?php	$machine = new Machine_model();
+						$sql = "SELECT computer_name,
+								COUNT(*) AS count
+								FROM machine
+								GROUP BY computer_name
+								HAVING count > 1
+								ORDER BY count DESC";
+						$cnt = 0;
 				?>
-					<?foreach($machine->query($sql) as $obj):?>
-						<?if (empty($obj->computer_name)):?>
+					<?php foreach($machine->query($sql) as $obj): ?>
+						<?php if (empty($obj->computer_name)): ?>
 							<a class="list-group-item">Empty
-								<span class="badge pull-right"><?=$obj->count?></span>
+								<span class="badge pull-right"><?php echo $obj->count; ?></span>
 							</a>
-						<?else:?>
-							<a href="<?=url('show/listing/clients/#'.$obj->computer_name)?>" class="list-group-item">
-								<span class="badge"><?=$obj->count?></span>
-								<?=$obj->computer_name?>
+						<?php else: ?>
+							<a href="<?php echo url('show/listing/clients/#'.$obj->computer_name); ?>" class="list-group-item">
+								<span class="badge"><?php echo $obj->count; ?></span>
+								<?php echo $obj->computer_name; ?>
 							</a>
-						<?endif?>
-						<?$cnt++?>
-					<?endforeach?>
-					<?if( ! $cnt):?>
+						<?php endif; ?>
+						<?php $cnt++; ?>
+					<?php endforeach; ?>
+					<?php if( ! $cnt): ?>
 						<span class="list-group-item">No duplicates found</span>
-					<?endif?>
+					<?php endif; ?>
 
 				</div>
 
