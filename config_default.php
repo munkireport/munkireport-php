@@ -66,10 +66,10 @@
 	|
 	*/
 	$conf['subdirectory'] = substr(
-					    $_SERVER['PHP_SELF'],
-					    0,
-					    strpos($_SERVER['PHP_SELF'], basename(FC))
-				    );
+						$_SERVER['PHP_SELF'],
+						0,
+						strpos($_SERVER['PHP_SELF'], basename(FC))
+					);
 
 	/*
 	|===============================================
@@ -215,9 +215,9 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
 	*/
-    $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
-    /*
+	/*
 	|===============================================
 	| Modules
 	|===============================================
@@ -232,8 +232,7 @@
 	|
 	| If you don't set this item, all available modules are installed (default)
 	*/
-    //$conf['modules'] = array();
-
+	//$conf['modules'] = array();
 
 	/*
 	|===============================================
@@ -251,7 +250,7 @@
 	*/
 		//$conf['keep_previous_displays'] = TRUE;
 
-    /*
+	/*
 	|===============================================
 	| Migrations
 	|===============================================
@@ -266,7 +265,7 @@
 	| to FALSE when you're done migrating.
 	|
 	*/
-    $conf['allow_migrations'] = FALSE;
+	$conf['allow_migrations'] = FALSE;
 
 
 	/*
@@ -284,7 +283,7 @@
 	|
 	|
 	*/
-    $conf['client_passphrases'] = array();
+	$conf['client_passphrases'] = array();
 
 	/*
 	|===============================================
@@ -303,9 +302,9 @@
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
 	|
 	*/
-    //$conf['proxy']['server'] = 'proxy.yoursite.org';
+	//$conf['proxy']['server'] = 'proxy.yoursite.org';
 
-    /*
+	/*
 	|===============================================
 	| Request timeout
 	|===============================================
@@ -315,10 +314,9 @@
 	| Timeout in seconds
 	|
 	*/
-    $conf['request_timeout'] = 5;
+	$conf['request_timeout'] = 5;
 
-
- 	/*
+	/*
 	|===============================================
 	| Dashboard - IP Ranges
 	|===============================================
@@ -332,7 +330,7 @@
 	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
 	*/
-    $conf['ip_ranges'] = array();
+	$conf['ip_ranges'] = array();
 
 	/*
 	|===============================================
@@ -353,6 +351,21 @@
 
 	/*
 	|===============================================
+	| Apps Version Report
+	|===============================================
+	|
+	| List of applications, by name, that you want to see in the apps
+	| version report. If this is not set the report page will appear empty.
+	| This is case insensitive.
+	|
+	| Eg:
+	| $conf['apps_to_track'] = array('Adobe Flash Player Install Manager',
+								'Firefox','Microsoft Excel');
+	|
+	*/
+
+	/*
+	|===============================================
 	| App settings
 	|===============================================
 	|
@@ -360,7 +373,6 @@
 	| the variables below. For enhanced security it is advised to put the
 	| webapp in a directory that is not visible to the internet.
 	*/
-
 	// Path to system folder, with trailing slash
 	$conf['system_path'] = APP_ROOT.'/system/';
 
@@ -376,12 +388,9 @@
 	// Path to modules directory, with trailing slash
 	$conf['module_path'] = $conf['application_path'] . "modules/";
 
-
-
 	// Routes
 	$conf['routes'] = array();
 	$conf['routes']['module(/.*)?']	= "module/load$1";
-
 
 	/*
 	|===============================================
