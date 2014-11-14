@@ -2,16 +2,16 @@
 	"scripts" => array(
 		"clients/client_list.js"
 	)
-))?>
+)); ?>
 
 <div class="container">
 
   <div class="row">
 
-    <?php $this->view('widgets/network_location_widget')?>
+    <?php $this->view('widgets/network_location_widget'); ?>
 
   </div> <!-- /row -->
 
 </div>  <!-- /container -->
 
-<?php $this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

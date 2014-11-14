@@ -1,9 +1,9 @@
 <div class="well well-small machine-info">
-	<?php $machine = new Machine_model($serial_number)?>
-	<?php $report   = new Reportdata_model($serial_number)?>
-	<?php $disk   = new Disk_report_model($serial_number)?>
-	<?php $warranty   = new Warranty_model($serial_number)?>
-	<?php $localadmin   = new Localadmin_model($serial_number)?>
+	<?php $machine = new Machine_model($serial_number); ?>
+	<?php $report   = new Reportdata_model($serial_number); ?>
+	<?php $disk   = new Disk_report_model($serial_number); ?>
+	<?php $warranty   = new Warranty_model($serial_number); ?>
+	<?php $localadmin   = new Localadmin_model($serial_number); ?>
 	<?php //todo: make 1 query?>
 	<div class="row">
 		<div class="col-lg-1">
