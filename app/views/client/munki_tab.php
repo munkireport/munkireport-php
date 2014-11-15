@@ -1,11 +1,11 @@
-<?$client = new Munkireport_model($serial_number)?>
+<?php $client = new Munkireport_model($serial_number); ?>
 
-<?$report = $client->report_plist?>
+<?php $report = $client->report_plist; ?>
 
-<?if( ! $report):?>
+<?php if( ! $report): ?>
 	<p><i>No Munkireport data</i></p>
-	<?return?>
-<?endif?>
+	<?php return; ?>
+<?php endif; ?>
 
 <div class="row">
 
@@ -13,19 +13,19 @@
 
 		<h2 id="errors">Errors &amp; Warnings</h2>
 
-		<?if($client->report_plist['Errors'] OR $client->report_plist['Warnings']):?>
+		<?php if($client->report_plist['Errors'] OR $client->report_plist['Warnings']): ?>
 		  
-			<?if($client->report_plist['Errors']):?>
-				<pre class="alert alert-danger">• <?=implode("\n• ", $client->report_plist['Errors'])?></pre>
-			<?endif?>
+			<?php if($client->report_plist['Errors']): ?>
+				<pre class="alert alert-danger">• <?php echo implode("\n• ", $client->report_plist['Errors']); ?></pre>
+			<?php endif; ?>
 			
-			<?if($client->report_plist['Warnings']):?>
-				<pre class="alert alert-warning">• <?=implode("\n• ", $client->report_plist['Warnings'])?></pre>
-			<?endif?>
+			<?php if($client->report_plist['Warnings']): ?>
+				<pre class="alert alert-warning">• <?php echo implode("\n• ", $client->report_plist['Warnings']); ?></pre>
+			<?php endif; ?>
 			
-		<?else:?>    
+		<?php else: ?>
 			<p><i>No errors or warnings</i></p>
-		<?endif?>
+		<?php endif ?>
 
 	</div><!-- </div class="col-lg-6"> -->
 
@@ -35,24 +35,24 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Version:</th>
-				<td><?=$client->version?></td>
+				<td><?php echo $client->version; ?></td>
 			</tr>
 			<tr>
 				<th>Manifest:</th>
-				<td><?=$client->manifestname?></td>
+				<td><?php echo $client->manifestname; ?></td>
 			</tr>
 			<tr>
 				<th>Run Type:</th>
-				<td><?=$client->runtype?></td>
+				<td><?php echo $client->runtype; ?></td>
 			</tr>
 			<tr>
 				<th>Start:</th>
-				<td><time datetime="<?=$client->starttime?>"></time></td>
+				<td><time datetime="<?php echo $client->starttime; ?>"></time></td>
 			</tr>
 			<tr>
-				<?$duration = strtotime($client->endtime) - strtotime($client->starttime);?>
+				<?php $duration = strtotime($client->endtime) - strtotime($client->starttime); ?>
 				<th>Duration:</th>
-				<td><?=$duration?> seconds</td>
+				<td><?php echo $duration; ?> seconds</td>
 			</tr>
 		</table>
 
@@ -66,7 +66,7 @@
 			});
 	</script>
 
-<?// Move install results over to their install items.
+<?php // Move install results over to their install items.
 $install_results = array();
 if(isset($report['InstallResults']))
 {
@@ -136,17 +136,17 @@ if(isset($report['ItemsToRemove']))
 }
 ?>
 
-<?$package_tables = array(	'Apple Updates' =>'AppleUpdates',
+<?php $package_tables = array(	'Apple Updates' =>'AppleUpdates',
 							'Active Installs' => 'ItemsToInstall',
 							'Active Removals' => 'ItemsToRemove',
-							'Problem Installs' => 'ProblemInstalls')?>
+							'Problem Installs' => 'ProblemInstalls'); ?>
 
 <!--! Package tables -->
-<?foreach($package_tables AS $title => $report_key):?>
+<?php foreach($package_tables AS $title => $report_key): ?>
 	<div class="col-lg-6">
-		  <h2><?=$title?></h2>
+		  <h2><?php echo $title; ?></h2>
 		  
-			<?if(isset($report[$report_key]) && $report[$report_key]):?>
+			<?php if(isset($report[$report_key]) && $report[$report_key]): ?>
 			<table class="table table-striped">
 		      <thead>
 		        <tr>
@@ -156,36 +156,36 @@ if(isset($report['ItemsToRemove']))
 		        </tr>
 		      </thead>
 		      <tbody>
-				<?foreach($report[$report_key] AS $item):?>
+				<?php foreach($report[$report_key] AS $item): ?>
 		        <tr>
 		          <td>
-					<?=isset($item['display_name']) ? $item['display_name'] : $item['name']?>
-					<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
-					<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
+					<?php echo isset($item['display_name']) ? $item['display_name'] : $item['name']; ?>
+					<?php echo isset($item['version_to_install']) ? $item['version_to_install'] : ''; ?>
+					<?php echo isset($item['installed_version']) ? $item['installed_version'] : ''; ?>
 		          </td>
-		          <td style="text-align: left;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
-		          <td><?=isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed")?></td>
+		          <td style="text-align: left;"><?php echo isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'; ?></td>
+		          <td><?php echo isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed"); ?></td>
 		        </tr>
-				<?endforeach?>
+				<?php endforeach; ?>
 		      </tbody>
 		    </table>
-		    <?else:?>
-		      <p><i>No <?=strtolower($title)?></i></p>
-			<?endif?>
+		    <?php else: ?>
+		      <p><i>No <?php echo strtolower($title); ?></i></p>
+			<?php endif ?>
 	</div><!-- </div class="col-lg-6"> -->
-<?endforeach?>
+<?php endforeach; ?>
 
   </div><!-- </div class="row"> -->
   
   <div class="row">
 
-<?$package_tables = array(	'Managed Installs' =>'ManagedInstalls')?>
+<?php $package_tables = array(	'Managed Installs' =>'ManagedInstalls'); ?>
 
 	<div class="col-lg-6">
-		<?foreach($package_tables AS $title => $report_key):?>
-		  <h2><?=$title?></h2>
+		<?php foreach($package_tables AS $title => $report_key): ?>
+		  <h2><?php echo $title; ?></h2>
 
-			<?if(isset($report[$report_key]) && $report[$report_key]):?>
+			<?php if(isset($report[$report_key]) && $report[$report_key]): ?>
 			<table class="table table-striped">
 		      <thead>
 		        <tr>
@@ -195,28 +195,28 @@ if(isset($report['ItemsToRemove']))
 		        </tr>
 		      </thead>
 		      <tbody>
-				<?foreach($report[$report_key] AS $item):?>
+				<?php foreach($report[$report_key] AS $item): ?>
 		        <tr>
 		          <td>
-					<?=isset($item['display_name']) ? $item['display_name'] : $item['name']?>
-					<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
-					<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
+					<?php echo isset($item['display_name']) ? $item['display_name'] : $item['name']; ?>
+					<?php echo isset($item['version_to_install']) ? $item['version_to_install'] : ''; ?>
+					<?php echo isset($item['installed_version']) ? $item['installed_version'] : ''; ?>
 		          </td>
-		          <td style="text-align: left;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
-		          <td><?=$item['installed'] ? 'installed' : "not installed"?></td>
+		          <td style="text-align: left;"><?php echo isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'; ?></td>
+		          <td><?php echo $item['installed'] ? 'installed' : "not installed"; ?></td>
 		        </tr>
-				<?endforeach?>
+				<?php endforeach; ?>
 		      </tbody>
 		    </table>
-		    <?else:?>
-		      <p><i>No <?=strtolower($title)?></i></p>
-			<?endif?>
-		<?endforeach?>
+		    <?php else: ?>
+		      <p><i>No <?php echo strtolower($title); ?></i></p>
+			<?php endif; ?>
+		<?php endforeach; ?>
     </div><!-- </div class="col-lg-6"> -->
 
     <div class="col-lg-6">
     
-		<?if(isset($report['managed_uninstalls_list'])):?>
+		<?php if(isset($report['managed_uninstalls_list'])): ?>
 		  <h2>Managed Uninstalls</h2>
 
 		  <table class="table table-striped">
@@ -226,19 +226,19 @@ if(isset($report['ItemsToRemove']))
 		      </tr>
 		    </thead>
 		    <tbody>
-			<?foreach($report['managed_uninstalls_list'] AS $item):?>
+			<?php foreach($report['managed_uninstalls_list'] AS $item): ?>
 		      <tr>
 		        <td>
-		          <?=$item?>
+		          <?php echo $item; ?>
 		        </td>
 		      </tr>
-			<?endforeach?>
+			<?php endforeach; ?>
 		    </tbody>
 		  </table>
-		<?endif?>
+		<?php endif; ?>
 
     </div><!-- </div class="col-lg-6"> -->
 
   </div><!-- </div class="row"> -->
 
-<pre><?//print_r($client->rs)?></pre>
+<pre><?php //print_r($client->rs) ?></pre>

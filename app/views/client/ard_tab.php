@@ -8,19 +8,19 @@ $ard_obj = new Ard_model($serial_number);
 			<tbody>
 				<tr>
 					<td>Text 1</td>
-					<td><?=$ard_obj->Text1?></td>
+					<td><?php echo $ard_obj->Text1; ?></td>
 				</tr>
 				<tr>
 					<td>Text 2</td>
-					<td><?=$ard_obj->Text2?></td>
+					<td><?php echo $ard_obj->Text2; ?></td>
 				</tr>
 					<tr>
 					<td>Text 3</td>
-					<td><?=$ard_obj->Text3?></td>
+					<td><?php echo $ard_obj->Text3; ?></td>
 				</tr>
 					<tr>
 					<td>Text 4</td>
-					<td><?=$ard_obj->Text4?></td>
+					<td><?php echo $ard_obj->Text4; ?></td>
 				</tr>
 			</tbody>
 		</table>

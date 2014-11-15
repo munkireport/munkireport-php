@@ -1,5 +1,5 @@
-<?header( "HTTP/1.0 $status_code" )?>
-<?$this->view('partials/head')?>
+<?php header( "HTTP/1.0 $status_code" ); ?>
+<?php $this->view('partials/head'); ?>
 
 <div class="container">
 
@@ -20,25 +20,25 @@
 
 			<p>
 
-<?switch($status_code):?>
-<?case '403': ?>
+<?php switch($status_code): ?>
+<?php case '403': ?>
 
 				<span data-i18n="errors.403">You are not allowed to view this page</span>
-<?break?>
-<?case '404': ?>
+<?php break; ?>
+<?php case '404': ?>
 
 				<span data-i18n="errors.404">Page not found</span>
-<?break?>
-<?case '426': ?>
+<?php break; ?>
+<?php case '426': ?>
 				
 				<span data-i18n="errors.426">You are required to visit this site using a secure connection.</span>
-				<a data-i18n="auth.go_secure" href="<?=secure_url()?>">Go to secure site</a>
+				<a data-i18n="auth.go_secure" href="<?php echo secure_url(); ?>">Go to secure site</a>
 					
-<?break?>
-<?default: ?>
+<?php break; ?>
+<?php default: ?>
 	
 				Unknown error
-<?endswitch?>
+<?php endswitch ?>
 
 
 			</p>
@@ -55,4 +55,4 @@
 
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

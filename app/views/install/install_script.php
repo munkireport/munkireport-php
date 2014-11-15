@@ -11,7 +11,7 @@ PREFPATH="/Library/Preferences/MunkiReport"
 CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
 ERR=0
-VERSION="<?=get_version()?>"
+VERSION="<?php echo get_version(); ?>"
 
 echo "BaseURL is ${BASEURL}"
 
@@ -60,23 +60,23 @@ defaults write "${PREFPATH}" BaseUrl "${BASEURL}"
 defaults write "${PREFPATH}" ReportItems -dict
 
 # Include module scripts
-<?foreach($install_scripts AS $scriptname => $filepath):?>
+<?php foreach($install_scripts AS $scriptname => $filepath): ?>
 
-<?="## $scriptname ##"?> 
-echo '+ Installing <?=$scriptname?>'
+<?php echo "## $scriptname ##"; ?> 
+echo '+ Installing <?php echo $scriptname; ?>'
 
-<?=file_get_contents($filepath)?>
+<?php echo file_get_contents($filepath); ?>
 
-<?endforeach?>
+<?php endforeach; ?>
 
-<?foreach($uninstall_scripts AS $scriptname => $filepath):?>
+<?php foreach($uninstall_scripts AS $scriptname => $filepath): ?>
 
-<?="## $scriptname ##"?> 
-echo '- Uninstalling <?=$scriptname?>'
+<?php echo "## $scriptname ##"; ?> 
+echo '- Uninstalling <?php echo $scriptname; ?>'
 
-<?=file_get_contents($filepath)?>
+<?php echo file_get_contents($filepath); ?>
 
-<?endforeach?>
+<?php endforeach; ?>
 
 # Remove munkireport version file
 rm -f "${MUNKIPATH}munkireport-"*

@@ -1,6 +1,6 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
   new Displays_info_model;
   new Machine_model;
 ?>
@@ -39,7 +39,7 @@
         });
 
         oTable = $('.table').dataTable( {
-          "sAjaxSource": "<?=url('datatables/data')?>",
+          "sAjaxSource": "<?php echo url('datatables/data'); ?>",
           "aaSorting": mySort,
           "aoColumns": myCols,
           "aoColumnDefs": [
@@ -52,7 +52,7 @@
             if(name == ''){name = "No Name"};
             var sn=$('td:eq(1)', nRow).html();
             if(sn){
-              var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_displays-tab');
+              var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_displays-tab');
               $('td:eq(0)', nRow).html(link);
             } else {
               $('td:eq(0)', nRow).html(name);
@@ -202,4 +202,4 @@
 
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

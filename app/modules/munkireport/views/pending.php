@@ -1,8 +1,8 @@
-<?$this->view('partials/head', array(
+<?php $this->view('partials/head', array(
 	"scripts" => array(
 		"clients/client_list.js"
 	)
-))?>
+)); ?>
 
 <div class="container">
 
@@ -25,7 +25,7 @@
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
+			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date
@@ -46,7 +46,7 @@
 
 		<h3>Pending Updates <span id="pen-count" class='label label-primary'>…</span></h3>
 
-<?// Select pending, loop, check if item create table?>
+<?php // Select pending, loop, check if item create table?>
 
 		<table class="table table-striped table-condensed table-bordered">
 
@@ -63,7 +63,7 @@
 			</thead>
 
 			<tbody>
-				<?$sql = "SELECT computer_name, 
+				<?php $sql = "SELECT computer_name, 
 							m.serial_number,
 							long_username,
 							m.timestamp,
@@ -76,44 +76,44 @@
 				$compress = function_exists('gzdeflate');
 					$mr = new Munkireport_model;
 					?>
-				<?foreach($mr->query($sql) as $obj):?>
-					<?$report_plist = unserialize( $compress ? gzinflate( $obj->report_plist ) : $obj->report_plist )?>
-					<?if(isset($report_plist['AppleUpdates'])):?>
-						<?foreach ($report_plist['AppleUpdates'] as $update):?>
+				<?php foreach($mr->query($sql) as $obj): ?>
+					<?php $report_plist = unserialize( $compress ? gzinflate( $obj->report_plist ) : $obj->report_plist ); ?>
+					<?php if(isset($report_plist['AppleUpdates'])): ?>
+						<?php foreach ($report_plist['AppleUpdates'] as $update): ?>
 
 				<tr>
-					<td><?=$obj->computer_name?></td>
-					<td><?=$obj->serial_number?></td>
-					<td><?=$obj->long_username?></td>
-					<td><?=$obj->remote_ip?></td>
-					<td><?=$obj->timestamp?></td>
+					<td><?php echo $obj->computer_name; ?></td>
+					<td><?php echo $obj->serial_number; ?></td>
+					<td><?php echo $obj->long_username; ?></td>
+					<td><?php echo $obj->remote_ip; ?></td>
+					<td><?php echo $obj->timestamp; ?></td>
 					<td>
-						<?=$update['apple_product_name']?>
-						<?=$update['version_to_install']?>
+						<?php echo $update['apple_product_name']; ?>
+						<?php echo $update['version_to_install']; ?>
 					</td>
 					<td>Apple Update</td>
 				</tr>
-						<?endforeach?>
-					<?endif?>
+						<?php endforeach; ?>
+					<?php endif; ?>
 
-					<?if(isset($report_plist['ItemsToInstall'])):?>
-						<?foreach ($report_plist['ItemsToInstall'] as $update):?>
+					<?php if(isset($report_plist['ItemsToInstall'])): ?>
+						<?php foreach ($report_plist['ItemsToInstall'] as $update): ?>
 
 				<tr>
-					<td><?=$obj->computer_name?></td>
-					<td><?=$obj->serial_number?></td>
-					<td><?=$obj->long_username?></td>
-					<td><?=$obj->remote_ip?></td>
-					<td><?=$obj->timestamp?></td>
+					<td><?php echo $obj->computer_name; ?></td>
+					<td><?php echo $obj->serial_number; ?></td>
+					<td><?php echo $obj->long_username; ?></td>
+					<td><?php echo $obj->remote_ip; ?></td>
+					<td><?php echo $obj->timestamp; ?></td>
 					<td>
-						<?=$update['display_name']?>
-						<?=$update['version_to_install']?>
+						<?php echo $update['display_name']; ?>
+						<?php echo $update['version_to_install']; ?>
 					</td>
 					<td>Munki Update</td>
 				</tr>
-						<?endforeach?>
-					<?endif?>
-				<?endforeach?>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				<?php endforeach; ?>
 			</tbody>
 
 		</table>
@@ -125,4 +125,4 @@
 </div>	<!-- /container -->
 
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>
