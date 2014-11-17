@@ -55,6 +55,7 @@ class Migration_machine_add_cpu extends Model
 								img_url VARCHAR(255),
 								current_processor_speed VARCHAR(255),
 								cpu_arch VARCHAR(255),
+								os_version VARCHAR(255),
 								oci_server_version VARCHAR(255),
 								physical_memory INTEGER,
 								platform_UUID VARCHAR(255),
@@ -65,7 +66,7 @@ class Migration_machine_add_cpu extends Model
 								computer_name VARCHAR(255),
 								l2_cache VARCHAR(255),
 								machine_name VARCHAR(255),
-								packages, VARCHAR(255))";
+								packages VARCHAR(255))";
 				$this->exec($sql);
 
 				$sql = "INSERT INTO machine_temp 
@@ -76,13 +77,6 @@ class Migration_machine_add_cpu extends Model
 				$this->exec($sql);
 
 				$sql = "ALTER TABLE machine_temp RENAME TO machine";
-				$this->exec($sql);
-
-				// Add index for old filevault_status column
-				$idx_name = $this->tablename . '_machine';
-				$sql = sprintf("CREATE INDEX %s ON %s (%s)", 
-					$idx_name, $this->enquote($this->tablename), 'machine');
-
 				$this->exec($sql);
 
 				$dbh->commit();
