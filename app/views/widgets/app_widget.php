@@ -1,9 +1,5 @@
-<!--  This widget can be used to specify applications you would like to see in
-      MunkiReport-PHP.  The appsToCheck array is pre-popluated with four sample
-      applications.  You may remove or add additional applications.  -->
-
 <?
-$appsToCheck = array("Safari","Firefox","TextEdit","Notes");
+$appsToCheck = conf('apps_to_track');
 $appsToChecksql = array();
 $appsIndex = count($appsToCheck);
 $counter=0;
@@ -23,7 +19,7 @@ foreach ($appsToCheck as $string) {
 ?>
 <div class="col-lg-4 col-md-6">
     <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel-heading" data-container="body" title="Known versions of <?echo $appsToCheck[$counter];?>">
             <h3 class="panel-title"><i class="fa fa-tachometer"></i> <span data-i18n="<?echo $appsToCheck[$counter];?>"><?echo $appsToCheck[$counter];?></span></h3>
         </div>
         <div class="list-group scroll-box">
