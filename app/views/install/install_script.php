@@ -1,5 +1,5 @@
 <?php header("Content-Type: text/plain");
-?>#!/bin/sh
+?>#!/bin/bash
 
 BASEURL="<?php echo
 	(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://')
@@ -12,6 +12,20 @@ CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
 ERR=0
 VERSION="<?php echo get_version(); ?>"
+
+while getopts b:m:p: flag; do
+       case $flag in
+               b)
+                       BASEURL="$OPTARG"
+                       ;;
+               m)
+                       MUNKIPATH="$OPTARG"
+                       ;;
+               p)
+                       PREFPATH="$OPTARG"
+                       ;;
+       esac
+done
 
 echo "BaseURL is ${BASEURL}"
 
