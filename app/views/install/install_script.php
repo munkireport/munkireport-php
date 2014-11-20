@@ -7,6 +7,7 @@ BASEURL="<?php echo
 	. conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
+CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
