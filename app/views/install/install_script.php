@@ -15,17 +15,17 @@ ERR=0
 VERSION="<?php echo get_version(); ?>"
 
 while getopts b:m:p: flag; do
-       case $flag in
-               b)
-                       BASEURL="$OPTARG"
-                       ;;
-               m)
-                       MUNKIPATH="$OPTARG"
-                       ;;
-               p)
-                       PREFPATH="$OPTARG"
-                       ;;
-       esac
+	case $flag in
+		b)
+			BASEURL="$OPTARG"
+			;;
+		m)
+			MUNKIPATH="$OPTARG"
+			;;
+		p)
+			PREFPATH="$OPTARG"
+			;;
+	esac
 done
 
 echo "BaseURL is ${BASEURL}"
