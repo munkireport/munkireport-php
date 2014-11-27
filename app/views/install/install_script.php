@@ -66,6 +66,10 @@ while getopts b:m:p:nh flag; do
 	esac
 done
 
+echo "Preparing ${MUNKIPATH} and ${PREFPATH}"
+mkdir -p "$(dirname ${PREFPATH})"
+mkdir -p "${MUNKIPATH}munkilib"
+
 echo "BaseURL is ${BASEURL}"
 
 echo "Retrieving munkireport scripts"
