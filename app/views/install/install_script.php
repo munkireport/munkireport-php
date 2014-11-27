@@ -13,6 +13,12 @@ PREFLIGHT=1
 CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
 ERR=0
+
+# Packaging
+PKGTMP=""
+BUILDPKG=0
+IDENTIFIER="com.github.munkireport"
+
 VERSION="<?php echo get_version(); ?>"
 
 function usage {
@@ -27,6 +33,7 @@ Usage: ${PROG} [OPTIONS]
   -p PATH   Path to preferences file (without the .plist extension)
             Current value: ${PREFPATH}
   -n        Do not run preflight script after the installation
+  -i PATH   Create a full installer at PATH
   -h        Display this help message
 
 Example:
@@ -42,10 +49,14 @@ Example:
               -m ~/Desktop/munkireport-$VERSION/usr/local/munki/ \\
               -p ~/Desktop/munkireport-$VERSION/Library/Preferences/MunkiReport \\
               -n
+
+  * Create a package installer for munkireport.
+
+        $PROG -i ~/Desktop
 EOF
 }
 
-while getopts b:m:p:nh flag; do
+while getopts b:m:p:i:nh flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -55,6 +66,15 @@ while getopts b:m:p:nh flag; do
 			;;
 		p)
 			PREFPATH="$OPTARG"
+			;;
+		i)
+			PKGDEST="$OPTARG"
+			# Create temp directory
+			PKGTMP=$(mktemp -d -t mrpkg)
+			MUNKIPATH="$PKGTMP"/usr/local/munki/
+			PREFPATH="$PKGTMP"/Library/Preferences/MunkiReport
+			PREFLIGHT=0
+			BUILDPKG=1
 			;;
 		n)
 			PREFLIGHT=0
@@ -140,17 +160,34 @@ rm -f "${MUNKIPATH}munkireport-"*
 
 if [ $ERR = 0 ]; then
 
-	# Set munkireport version file
-	touch "${MUNKIPATH}munkireport-${VERSION}"
+	if [ $BUILDPKG = 1 ]; then
 
-	echo "Installation of MunkiReport v${VERSION} complete."
-	echo 'Running the preflight script for initialization'
-	if [ $PREFLIGHT = 1 ]; then
-		${MUNKIPATH}preflight
+		echo "Building MunkiReport v${VERSION} package."
+		pkgbuild --identifier "$IDENTIFIER" \
+				 --version "$VERSION" \
+				 --root "$PKGTMP" \
+				 "$PKGDEST/munkireport-${VERSION}.pkg"
+
+	else
+
+		# Set munkireport version file
+		touch "${MUNKIPATH}munkireport-${VERSION}"
+
+		echo "Installation of MunkiReport v${VERSION} complete."
+		echo 'Running the preflight script for initialization'
+		if [ $PREFLIGHT = 1 ]; then
+			${MUNKIPATH}preflight
+		fi
+
 	fi
 	
 else
 	echo "! Installation of MunkiReport v${VERSION} incomplete."
+fi
+
+if [ "$PKGTMP" != "" ]; then
+	echo "Cleaning up temporary files"
+	rm -r $PKGTMP
 fi
 
 exit $ERR
