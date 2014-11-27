@@ -15,7 +15,37 @@ CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 ERR=0
 VERSION="<?php echo get_version(); ?>"
 
-while getopts b:m:p:n flag; do
+function usage {
+	PROG=$(basename $0)
+	cat <<EOF >&2
+Usage: ${PROG} [OPTIONS]
+
+  -b URL    Base url to munki report server
+            Current value: ${BASEURL}
+  -m PATH   Path to installation directory
+            Current value: ${MUNKIPATH}
+  -p PATH   Path to preferences file (without the .plist extension)
+            Current value: ${PREFPATH}
+  -n        Do not run preflight script after the installation
+  -h        Display this help message
+
+Example:
+  * Install munkireport client scripts into the default location and run the
+    preflight script.
+
+        $PROG
+
+  * Install munkireport and preferences into a custom location ready to be
+    packaged.
+
+        $PROG -b ${BASEURL} \\
+              -m ~/Desktop/munkireport-$VERSION/usr/local/munki/ \\
+              -p ~/Desktop/munkireport-$VERSION/Library/Preferences/MunkiReport \\
+              -n
+EOF
+}
+
+while getopts b:m:p:nh flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -28,6 +58,10 @@ while getopts b:m:p:n flag; do
 			;;
 		n)
 			PREFLIGHT=0
+			;;
+		h|?)
+			usage
+			exit
 			;;
 	esac
 done
