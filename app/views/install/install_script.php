@@ -1,5 +1,5 @@
 <?php header("Content-Type: text/plain");
-?>#!/bin/sh
+?>#!/bin/bash
 
 BASEURL="<?php echo
 	(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://')
@@ -7,11 +7,68 @@ BASEURL="<?php echo
 	. conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
+CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
+PREFLIGHT=1
 CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
 ERR=0
 VERSION="<?php echo get_version(); ?>"
+
+function usage {
+	PROG=$(basename $0)
+	cat <<EOF >&2
+Usage: ${PROG} [OPTIONS]
+
+  -b URL    Base url to munki report server
+            Current value: ${BASEURL}
+  -m PATH   Path to installation directory
+            Current value: ${MUNKIPATH}
+  -p PATH   Path to preferences file (without the .plist extension)
+            Current value: ${PREFPATH}
+  -n        Do not run preflight script after the installation
+  -h        Display this help message
+
+Example:
+  * Install munkireport client scripts into the default location and run the
+    preflight script.
+
+        $PROG
+
+  * Install munkireport and preferences into a custom location ready to be
+    packaged.
+
+        $PROG -b ${BASEURL} \\
+              -m ~/Desktop/munkireport-$VERSION/usr/local/munki/ \\
+              -p ~/Desktop/munkireport-$VERSION/Library/Preferences/MunkiReport \\
+              -n
+EOF
+}
+
+while getopts b:m:p:nh flag; do
+	case $flag in
+		b)
+			BASEURL="$OPTARG"
+			;;
+		m)
+			MUNKIPATH="$OPTARG"
+			;;
+		p)
+			PREFPATH="$OPTARG"
+			;;
+		n)
+			PREFLIGHT=0
+			;;
+		h|?)
+			usage
+			exit
+			;;
+	esac
+done
+
+echo "Preparing ${MUNKIPATH} and ${PREFPATH}"
+mkdir -p "$(dirname ${PREFPATH})"
+mkdir -p "${MUNKIPATH}munkilib"
 
 echo "BaseURL is ${BASEURL}"
 
@@ -88,7 +145,9 @@ if [ $ERR = 0 ]; then
 
 	echo "Installation of MunkiReport v${VERSION} complete."
 	echo 'Running the preflight script for initialization'
-	${MUNKIPATH}preflight
+	if [ $PREFLIGHT = 1 ]; then
+		${MUNKIPATH}preflight
+	fi
 	
 else
 	echo "! Installation of MunkiReport v${VERSION} incomplete."

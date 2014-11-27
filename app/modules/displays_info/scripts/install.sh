@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/displays.py"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add displays_info "${MUNKIPATH}preflight.d/cache/displays.txt"
+	defaults write "${PREFPATH}" ReportItems -dict-add displays_info "${CACHEPATH}displays.txt"
 
 else
 	echo "Failed to download all required components!"

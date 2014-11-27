@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/disk_info"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add disk_report "${MUNKIPATH}preflight.d/cache/disk.plist"
+	defaults write "${PREFPATH}" ReportItems -dict-add disk_report "${CACHEPATH}disk.plist"
 
 else
 	echo "Failed to download all required components!"
