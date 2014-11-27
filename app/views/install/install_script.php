@@ -9,12 +9,13 @@ TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
+PREFLIGHT=1
 CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
 ERR=0
 VERSION="<?php echo get_version(); ?>"
 
-while getopts b:m:p: flag; do
+while getopts b:m:p:n flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -24,6 +25,9 @@ while getopts b:m:p: flag; do
 			;;
 		p)
 			PREFPATH="$OPTARG"
+			;;
+		n)
+			PREFLIGHT=0
 			;;
 	esac
 done
@@ -103,7 +107,9 @@ if [ $ERR = 0 ]; then
 
 	echo "Installation of MunkiReport v${VERSION} complete."
 	echo 'Running the preflight script for initialization'
-	${MUNKIPATH}preflight
+	if [ $PREFLIGHT = 1 ]; then
+		${MUNKIPATH}preflight
+	fi
 	
 else
 	echo "! Installation of MunkiReport v${VERSION} incomplete."
