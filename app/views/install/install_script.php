@@ -15,7 +15,6 @@ CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 ERR=0
 
 # Packaging
-PKGTMP=""
 BUILDPKG=0
 IDENTIFIER="com.github.munkireport"
 
@@ -70,9 +69,9 @@ while getopts b:m:p:i:nh flag; do
 		i)
 			PKGDEST="$OPTARG"
 			# Create temp directory
-			PKGTMP=$(mktemp -d -t mrpkg)
-			MUNKIPATH="$PKGTMP"/usr/local/munki/
-			PREFPATH="$PKGTMP"/Library/Preferences/MunkiReport
+			INSTALLROOT=$(mktemp -d -t mrpkg)
+			MUNKIPATH="$INSTALLROOT"/usr/local/munki/
+			PREFPATH="$INSTALLROOT"/Library/Preferences/MunkiReport
 			PREFLIGHT=0
 			BUILDPKG=1
 			;;
@@ -165,7 +164,7 @@ if [ $ERR = 0 ]; then
 		echo "Building MunkiReport v${VERSION} package."
 		pkgbuild --identifier "$IDENTIFIER" \
 				 --version "$VERSION" \
-				 --root "$PKGTMP" \
+				 --root "$INSTALLROOT" \
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
 	else
@@ -185,9 +184,9 @@ else
 	echo "! Installation of MunkiReport v${VERSION} incomplete."
 fi
 
-if [ "$PKGTMP" != "" ]; then
-	echo "Cleaning up temporary files"
-	rm -r $PKGTMP
+if [ "$INSTALLROOT" != "" ]; then
+	echo "Cleaning up temporary directory $INSTALLROOT"
+	rm -r $INSTALLROOT
 fi
 
 exit $ERR
