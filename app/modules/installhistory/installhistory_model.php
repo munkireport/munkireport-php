@@ -55,6 +55,9 @@ class Installhistory_model extends Model {
 		// Check if we're passed a plist (10.6 and higher)
 		if(strpos($plist, '<?xml version="1.0" encoding="UTF-8"?>') === 0)
 		{
+			// Strip invalid xml chars
+			$plist = preg_replace('/[^\x{0009}\x{000A}\x{000D}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '�', $plist);
+			
 			require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 			$parser = new CFPropertyList();
 			$parser->parse($plist, CFPropertyList::FORMAT_XML);
