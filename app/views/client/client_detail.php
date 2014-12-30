@@ -43,6 +43,9 @@
 				<li>
 					<a href="#ard-tab" data-toggle="tab" data-i18n="client.tab.ard">ARD</a>
 				</li>
+				<li>
+					<a href="#map-tab" data-toggle="tab" data-i18n="client.tab.map">Map</a>
+				</li>
 
 			</ul>
 
@@ -86,6 +89,9 @@
 				</div>
 				<div class="tab-pane" id='ard-tab'>
 					<?$this->view('client/ard_tab')?>
+				</div>
+				<div class="tab-pane" id='map-tab'>
+					<?$this->view('client/map_tab')?>
 				</div>
 
 			</div>
