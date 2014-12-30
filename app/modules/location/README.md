@@ -3,7 +3,7 @@ Location module
 
 Provides location information on where the Mac is physical located.
 
-The script uses wifi and Google's map api to determine the approximate latitude, longitude and address of the Mac.
+The script uses wifi and the Google map api to determine the approximate latitude, longitude and address of the Mac.
 
 Credit for script goes to bollman https://jamfnation.jamfsoftware.com/discussion.html?id=12300
 
