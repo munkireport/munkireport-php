@@ -11,7 +11,7 @@ Credit for script goes to bollman https://jamfnation.jamfsoftware.com/discussion
 Limitations
 ==============
 
-Good question. 
+Good question. There maybe a limit of 2,500 requests per 24 hour period and 5 requests per second but I'm not sure.
 
 
 Notes
