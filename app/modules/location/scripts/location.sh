@@ -44,7 +44,7 @@ do
 done
 IFS=$OLD_IFS
 
-curl -s -A "Mozilla" "$URL" > "$locationfile"
+curl -s -A "Mozilla" "$URL" > /tmp/gl_coordinates.txt
 latitude=`cat /tmp/gl_coordinates.txt | grep \"lat\" | awk '{print $3}' | tr -d ","`
 longitude=`cat /tmp/gl_coordinates.txt | grep \"lng\" | awk '{print $3}' | tr -d ","`
 accuracy=`cat /tmp/gl_coordinates.txt | grep \"accuracy\" | awk '{print $3}' | tr -d ","`
