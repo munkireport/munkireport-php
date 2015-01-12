@@ -22,6 +22,63 @@ class Reportdata_controller extends Module_controller
 	}
 
 	/**
+	 * REST API for retrieving registration dates
+	 *
+	 **/
+	function new_clients()
+	{
+		$reportdata = new Reportdata_model();
+		new Machine_model();
+
+		switch($reportdata->get_driver())
+		{
+			case 'sqlite':
+				$sql = "SELECT DATE(reg_timestamp, 'unixepoch') AS date,
+						COUNT(*) AS cnt,
+						machine_name AS type
+						FROM reportdata r
+						LEFT JOIN machine m 
+							ON (r.serial_number = m.serial_number)
+						GROUP BY machine_name, date
+						ORDER BY date";
+				break;
+			case 'mysql':
+				$sql = "SELECT DATE(FROM_UNIXTIME(reg_timestamp)) AS date, 
+						COUNT(*) AS cnt,
+						machine_name AS type
+						FROM reportdata r
+						LEFT JOIN machine m 
+							ON (r.serial_number = m.serial_number)
+						GROUP BY machine_name, date
+						ORDER BY date";
+				break;
+			default:
+				die('Unknown database driver');
+
+		}
+
+		$dates = array();
+		$out = array();
+		
+		foreach($reportdata->query($sql) as $event)
+		{
+			// Store date
+			$pos = array_search($event->date, $dates);
+			if($pos === FALSE)
+			{
+				array_push($dates, $event->date);
+				$pos = count($dates) + 1;
+			}
+
+			$out[$event->type][$pos] = intval($event->cnt);
+		}
+
+
+		$obj = new View();
+		$obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
+	}
+
+	/**
 	 * Flotr2 interface, returns json with ip address ranges
 	 * defined in conf('ip_ranges')
 	 * or passed with GET request
