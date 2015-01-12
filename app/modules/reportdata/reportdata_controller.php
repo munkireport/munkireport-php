@@ -14,6 +14,9 @@ class Reportdata_controller extends Module_controller
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}
+
+		header('Access-Control-Allow-Origin: *');
+
 	}
 
 	function index()
