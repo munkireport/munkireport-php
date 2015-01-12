@@ -42,7 +42,7 @@ class Reportdata_controller extends Module_controller
 						FROM reportdata r
 						LEFT JOIN machine m 
 							ON (r.serial_number = m.serial_number)
-						GROUP BY machine_name, date
+						GROUP BY date, machine_name
 						ORDER BY date";
 				break;
 			case 'mysql':
@@ -52,7 +52,7 @@ class Reportdata_controller extends Module_controller
 						FROM reportdata r
 						LEFT JOIN machine m 
 							ON (r.serial_number = m.serial_number)
-						GROUP BY machine_name, date
+						GROUP BY date, machine_name
 						ORDER BY date";
 				break;
 			default:
