@@ -70,7 +70,7 @@ class Reportdata_controller extends Module_controller
 			if($pos === FALSE)
 			{
 				array_push($dates, $event->date);
-				$pos = count($dates) + 1;
+				$pos = count($dates) - 1;
 			}
 
 			$out[$event->type][$pos] = intval($event->cnt);
