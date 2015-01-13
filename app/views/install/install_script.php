@@ -17,7 +17,7 @@ for plist in "${MANAGED_INSTALLS_PLIST_PATHS[@]}"; do
 		if [[ "$line" =~ ^[^()]+$ ]]; then
 			ADDITIONAL_HTTP_HEADERS+=("$line")
 		fi
-	done <<< "$(defaults read "${MANAGED_INSTALLS_PLIST_PATHS%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
+	done <<< "$(defaults read "${plist%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
 done
 CURL="/usr/bin/curl --insecure --fail --silent  --show-error $(for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do echo -n "-H $header "; done)"
 # Exit status
