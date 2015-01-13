@@ -8,7 +8,18 @@ BASEURL="<?php echo
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 PREFPATH="/Library/Preferences/MunkiReport"
-CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
+BUNDLE_ID='ManagedInstalls'
+MANAGED_INSTALLS_PLIST_PATHS=("/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "/Library/Preferences/${BUNDLE_ID}.plist")
+ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'
+ADDITIONAL_HTTP_HEADERS=()
+for plist in "${MANAGED_INSTALLS_PLIST_PATHS[@]}"; do
+	while IFS= read -r line; do
+		if [[ "$line" =~ ^[^()]+$ ]]; then
+			ADDITIONAL_HTTP_HEADERS+=("$line")
+		fi
+	done <<< "$(defaults read "${MANAGED_INSTALLS_PLIST_PATHS%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
+done
+CURL="/usr/bin/curl --insecure --fail --silent  --show-error $(for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do echo -n "-H $header "; done)"
 # Exit status
 ERR=0
 VERSION="<?=get_version()?>"
