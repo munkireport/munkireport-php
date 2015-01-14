@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/directory_service/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/directoryservice.sh" -o "${MUNKIPATH}preflight.d/directoryservice.sh"
+"${CURL[@]}" "${CTL}get_script/directoryservice.sh" -o "${MUNKIPATH}preflight.d/directoryservice.sh"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

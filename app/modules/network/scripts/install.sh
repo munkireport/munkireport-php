@@ -4,7 +4,7 @@
 NW_CTL="${BASEURL}index.php?/module/network/"
 
 # Get the script in the proper directory
-${CURL} "${NW_CTL}get_script/networkinfo.sh" -o "${MUNKIPATH}preflight.d/networkinfo.sh"
+"${CURL[@]}" "${NW_CTL}get_script/networkinfo.sh" -o "${MUNKIPATH}preflight.d/networkinfo.sh"
 
 if [ "${?}" != 0 ]
 then

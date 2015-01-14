@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/warranty/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/warranty" -o "${MUNKIPATH}preflight.d/warranty"
+"${CURL[@]}" "${CTL}get_script/warranty" -o "${MUNKIPATH}preflight.d/warranty"
 
 # Check exit status of curl
 if [ $? = 0 ]; then
