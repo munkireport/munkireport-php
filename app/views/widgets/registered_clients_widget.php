@@ -52,9 +52,12 @@ $(document).on('appReady', function() {
                 .controlLabels({stacked: "Stacked"})
                 .color(keyColor)
                 .duration(300);
-            chart.xAxis.tickFormat(function(d) { return d3.time.format('%b \'%y')(new Date(d)) });
+            chart.xAxis.tickFormat(function(d) { return moment(d).format("l") })
+            	.showMaxMin(false);
             chart.yAxisTickFormat(d3.format(',.0f'));
-            //chart.yAxis.tickFormat(function(d) { console.log('y' + d);return d3.format('.0f')});
+            chart.yAxis.showMaxMin(false);
+
+            //chart.yAxis.tickFormat(function(d) { return d3.format(',.0f')});
             d3.select('#chart1')
                 .datum(graphData)
                 .transition().duration(1000)
