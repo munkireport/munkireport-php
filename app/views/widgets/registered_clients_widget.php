@@ -20,7 +20,6 @@
 
 <script>
 $(document).on('appReady', function() {
-
 	var colors = d3.scale.category20();
     var keyColor = function(d, i) {return colors(d.key)};
 
@@ -49,11 +48,13 @@ $(document).on('appReady', function() {
                 .useInteractiveGuideline(true)
                 .x(function(d) { return d[0] })
                 .y(function(d) { return d[1] })
-                .controlLabels({stacked: "Stacked"})
+                .controlLabels(i18n.t('chart.stackedarea', {returnObjectTrees: true}))
                 .color(keyColor)
                 .duration(300);
             chart.xAxis.tickFormat(function(d) { return moment(d).format("l") })
             	.showMaxMin(false);
+
+            // This is a bug, 
             chart.yAxisTickFormat(d3.format(',.0f'));
             chart.yAxis.showMaxMin(false);
 
