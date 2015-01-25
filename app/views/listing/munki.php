@@ -116,6 +116,15 @@ new Munkireport_model;
 							}
 							col++;
 						});
+
+						// Look for 'osversion' statement 
+						if(out.sSearch.match(/^\d+\.\d+(\.(\d+)?)?$/))
+						{
+							var search = out.sSearch.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+
+							// Override global search
+							aoData.push( { "name": "sSearch", "value": search } );
+						}
 				    }
 			    } );
 
