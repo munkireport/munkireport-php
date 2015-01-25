@@ -65,6 +65,15 @@ new Munkireport_model;
 			        		$('td:eq(6)', nRow).html('never');
 			        	}
 
+    	                // Format OS Version
+		                var osvers = $('td:eq(4)', nRow).html();
+		                if( osvers !== '' && osvers.indexOf(".") == -1)
+		                {
+		                  osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+		                }
+		                $('td:eq(4)', nRow).html(osvers);
+
+
 			        	var runtype = $('td:eq(7)', nRow).html(),
 				        	cols = [
 				        		{name:'errors', flag: 'danger', desc: 'error'},
@@ -107,6 +116,15 @@ new Munkireport_model;
 							}
 							col++;
 						});
+
+						// Look for 'osversion' statement 
+						if(out.sSearch.match(/^\d+\.\d+(\.(\d+)?)?$/))
+						{
+							var search = out.sSearch.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+
+							// Override global search
+							aoData.push( { "name": "sSearch", "value": search } );
+						}
 				    }
 			    } );
 

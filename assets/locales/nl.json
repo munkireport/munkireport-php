@@ -41,6 +41,13 @@
 		"no_install_history": "Geen installatie historie",
 		"process_name": "Procesnaam"
 	},
+	"chart": {
+		"stackedarea": {
+			"stacked": "Gestapeld",
+			"stream": "Stroom",
+			"expanded": "Geëxpandeerd"
+		}
+	},
 	"configuration": "Configuratie",
 	"date": {
 		"year": "jaar"

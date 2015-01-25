@@ -43,6 +43,10 @@ new Munkireport_model;
                 var date = new Date(checkin * 1000);
                 $('td:eq(8)', nRow).html(moment(date).fromNow());
 
+                // Format OS Version
+                var osvers = integer_to_version($('td:eq(3)', nRow).html());
+                $('td:eq(3)', nRow).html(osvers);
+
                 // Format uptime
                 var uptime = parseInt($('td:eq(7)', nRow).html());
                 if(uptime == 0) {
@@ -52,8 +56,28 @@ new Munkireport_model;
                 {
                   $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
                 }
-				    }
-			    } );
+  				    },
+            "fnServerParams": function ( aoData ) {
+
+                // Hook in serverparams to change search
+                // Convert array to dict
+                var out = {}
+              for (var i = 0; i < aoData.length; i++) {
+                out[aoData[i]['name']] =  aoData[i]['value']
+              }
+
+              // Look for 'osversion' statement 
+              if(out.sSearch.match(/^\d+\.\d+(\.(\d+)?)?$/))
+              {
+
+                var search = out.sSearch.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+
+                // Override global search
+                aoData.push( { "name": "sSearch", "value": search } );
+
+              }
+            }			    
+          } );
 			} );
 		</script>
 

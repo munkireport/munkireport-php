@@ -29,6 +29,17 @@ $( document ).ready(function() {
     });
 });
 
+// Integer or integer string OS Version to semantic OS version
+function integer_to_version(osvers)
+{
+	osvers = "" + osvers
+	if( osvers !== '' && osvers.indexOf(".") == -1)
+    {
+      osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+    }
+    return osvers
+}
+
 // Get client detail link
 function get_client_detail_link(name, sn, baseurl, hash)
 {
