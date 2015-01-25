@@ -43,6 +43,14 @@ new Munkireport_model;
                 var date = new Date(checkin * 1000);
                 $('td:eq(8)', nRow).html(moment(date).fromNow());
 
+                // Format OS Version
+                var osvers = $('td:eq(3)', nRow).html();
+                if( osvers !== '' && osvers.indexOf(".") == -1)
+                {
+                  osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+                }
+                $('td:eq(3)', nRow).html(osvers);
+
                 // Format uptime
                 var uptime = parseInt($('td:eq(7)', nRow).html());
                 if(uptime == 0) {

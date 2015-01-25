@@ -65,6 +65,15 @@ new Munkireport_model;
 			        		$('td:eq(6)', nRow).html('never');
 			        	}
 
+    	                // Format OS Version
+		                var osvers = $('td:eq(4)', nRow).html();
+		                if( osvers !== '' && osvers.indexOf(".") == -1)
+		                {
+		                  osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+		                }
+		                $('td:eq(4)', nRow).html(osvers);
+
+
 			        	var runtype = $('td:eq(7)', nRow).html(),
 				        	cols = [
 				        		{name:'errors', flag: 'danger', desc: 'error'},
