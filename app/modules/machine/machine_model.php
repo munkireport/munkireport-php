@@ -89,7 +89,7 @@ class Machine_model extends Model {
 		}
 
 		// Convert OS version to int
-		if( FALSE && isset($mylist['os_version'])) //FIXME
+		if( isset($mylist['os_version']))
 		{
 			$digits = explode('.', $mylist['os_version']);
 			$mult = 10000;
