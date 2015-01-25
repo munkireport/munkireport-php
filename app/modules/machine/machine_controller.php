@@ -109,7 +109,8 @@ class Machine_controller extends Module_controller
 		$machine = new Machine_model();
 		$sql = "SELECT count(1) as count, os_version 
 				FROM machine
-				GROUP BY os_version";
+				GROUP BY os_version
+				ORDER BY os_version ASC";
 
 		$os_array = array();
 		foreach ($machine->query($sql) as $obj)
@@ -118,14 +119,11 @@ class Machine_controller extends Module_controller
 			$os_array[$obj->os_version] = $obj->count;
 		}
 
-		// Sort OS versions
-		uksort($os_array, 'version_compare');
-
 		// Convert to flotr array
 		$cnt = 0;
 		foreach ($os_array as $os => $count)
 		{
-			$os = $os == '0.0.0' ? 'Unknown' : $os;
+			$os = $os == '0' ? 'Unknown' : $os;
 			$out[] = array('label' => $os, 'data' => array(array(intval($count), $cnt++)));
 		}
 
