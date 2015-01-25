@@ -113,7 +113,7 @@ class Migration_machine_osversion_integer extends Model
 			case 'mysql':
 
 				// Complex query to convert os_version to integer
-				$sql = "UPDATE machine_copy SET os_version =
+				$sql = "UPDATE machine SET os_version =
 				SUBSTRING_INDEX(os_version, '.', 1) * 10000 +
 			   (IF(  length(os_version) - length(replace(os_version, '.', ''))>=1,  
 			       SUBSTRING_INDEX(SUBSTRING_INDEX(os_version, '.', 2), '.', -1) ,0) * 100) +
