@@ -51,8 +51,8 @@
 			<small>
 				<dl class="dl-horizontal">
 					<dt>Software</dt>
-					<dd>OS X <?php echo $machine->os_version . ' ('
-							. $machine->cpu_arch . ')'; ?>&nbsp;</dd>
+					<dd>OS X <span class="osvers"><?php echo $machine->os_version?></span>
+						(<?php echo $machine->cpu_arch; ?>)&nbsp;</dd>
 					<dt>CPU</dt>
 					<dd><?php echo $machine->cpu; ?>&nbsp;</dd>
 					<dt>CPU Type</dt>

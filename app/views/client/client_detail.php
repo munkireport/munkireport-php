@@ -95,6 +95,9 @@
 			<script>
 			$(document).on('appReady', function(e, lang) {
 
+				// Format OS Version
+				$('span.osvers').html(integer_to_version($('span.osvers').html()))
+
 				// Activate tabdrop
 				$('.nav-tabs').tabdrop();
 
