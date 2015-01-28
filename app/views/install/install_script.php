@@ -8,7 +8,19 @@ BASEURL="<?php echo
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 PREFPATH="/Library/Preferences/MunkiReport"
-CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
+BUNDLE_ID='ManagedInstalls'
+MANAGED_INSTALLS_PLIST_PATHS=("/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "/Library/Preferences/${BUNDLE_ID}.plist")
+ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'
+ADDITIONAL_HTTP_HEADERS=()
+for plist in "${MANAGED_INSTALLS_PLIST_PATHS[@]}"; do
+	while IFS= read -r line; do
+		if [[ "$line" =~ \"([^\"]+) ]]; then
+			ADDITIONAL_HTTP_HEADERS+=("${BASH_REMATCH[1]}")
+		fi
+	done <<< "$(defaults read "${plist%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
+done
+CURL=("/usr/bin/curl" "--insecure" "--fail" "--silent"  "--show-error")
+for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do CURL+=("-H" "$header"); done
 # Exit status
 ERR=0
 VERSION="<?=get_version()?>"
@@ -18,9 +30,9 @@ echo "BaseURL is ${BASEURL}"
 echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
-$CURL "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
-	&& $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
-	&& $CURL "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
+"${CURL[@]}" "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
+	&& "${CURL[@]}" "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
+	&& "${CURL[@]}" "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
 
 if [ "${?}" != 0 ]
 then
@@ -35,7 +47,7 @@ chmod a+x "${MUNKIPATH}"{preflight,postflight,report_broken_client}
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"
 cd "${MUNKIPATH}preflight.d"
-${CURL} "${TPL_BASE}submit.preflight" --remote-name
+"${CURL[@]}" "${TPL_BASE}submit.preflight" --remote-name
 
 if [ "${?}" != 0 ]
 then

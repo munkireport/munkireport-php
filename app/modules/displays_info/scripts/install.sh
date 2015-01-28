@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/displays_info/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/displays.py" -o "${MUNKIPATH}preflight.d/displays.py"
+"${CURL[@]}" "${CTL}get_script/displays.py" -o "${MUNKIPATH}preflight.d/displays.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

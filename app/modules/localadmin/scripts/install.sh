@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/localadmin/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/localadmin" -o "${MUNKIPATH}preflight.d/localadmin"
+"${CURL[@]}" "${CTL}get_script/localadmin" -o "${MUNKIPATH}preflight.d/localadmin"
 
 # Check exit status of curl
 if [ $? = 0 ]; then
