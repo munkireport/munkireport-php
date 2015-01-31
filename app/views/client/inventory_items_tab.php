@@ -9,18 +9,18 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?$inventoryitemobj = new Inventory_model()?>
-	<?foreach($inventoryitemobj->retrieve_many(
-		'serial=?', array($serial_number)) as $item):?>
+	<?php $inventoryitemobj = new Inventory_model(); ?>
+	<?php foreach($inventoryitemobj->retrieve_many(
+		'serial=?', array($serial_number)) as $item): ?>
 		      <?php $name_url=url('module/inventory/items/'. rawurlencode($item->name)); ?>
       <?php $vers_url=$name_url . '/' . rawurlencode($item->version); ?>
         <tr>
-          <td><a href='<?=$name_url?>'><?=$item->name?></a></td>
-          <td><a href='<?=$vers_url?>'><?=$item->version?></a></td>
-          <td><?=$item->bundleid?></td>
-          <td><?=$item->path?></td>
+          <td><a href='<?php echo $name_url; ?>'><?php echo $item->name; ?></a></td>
+          <td><a href='<?php echo $vers_url; ?>'><?php echo $item->version; ?></a></td>
+          <td><?php echo $item->bundleid; ?></td>
+          <td><?php echo $item->path; ?></td>
         </tr>
-  <? endforeach ?>
+  <?php endforeach; ?>
 
 	</tbody>
 </table>

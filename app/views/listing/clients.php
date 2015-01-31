@@ -1,6 +1,6 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
 new Machine_model;
 new Warranty_model;
 new Disk_report_model;
@@ -23,14 +23,14 @@ new Munkireport_model;
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
 			    oTable = $('.table').dataTable( {
-			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
                 // Update name in first column to link
                 var name=$('td:eq(0)', nRow).html();
                 if(name == ''){name = "No Name"};
                 var sn=$('td:eq(1)', nRow).html();
-                var link = get_client_detail_link(name, sn, '<?=url()?>/');
+                var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
                 $('td:eq(0)', nRow).html(link);
 
                 // Format disk usage
@@ -43,6 +43,10 @@ new Munkireport_model;
                 var date = new Date(checkin * 1000);
                 $('td:eq(8)', nRow).html(moment(date).fromNow());
 
+                // Format OS Version
+                var osvers = integer_to_version($('td:eq(3)', nRow).html());
+                $('td:eq(3)', nRow).html(osvers);
+
                 // Format uptime
                 var uptime = parseInt($('td:eq(7)', nRow).html());
                 if(uptime == 0) {
@@ -52,8 +56,28 @@ new Munkireport_model;
                 {
                   $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
                 }
-				    }
-			    } );
+  				    },
+            "fnServerParams": function ( aoData ) {
+
+                // Hook in serverparams to change search
+                // Convert array to dict
+                var out = {}
+              for (var i = 0; i < aoData.length; i++) {
+                out[aoData[i]['name']] =  aoData[i]['value']
+              }
+
+              // Look for 'osversion' statement 
+              if(out.sSearch.match(/^\d+\.\d+(\.(\d+)?)?$/))
+              {
+
+                var search = out.sSearch.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+
+                // Override global search
+                aoData.push( { "name": "sSearch", "value": search } );
+
+              }
+            }			    
+          } );
 			} );
 		</script>
 
@@ -90,4 +114,4 @@ new Munkireport_model;
 
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

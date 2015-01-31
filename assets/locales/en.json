@@ -44,6 +44,13 @@
 		"no_install_history": "No install history",
 		"process_name": "Process Name"
 	},
+	"chart": {
+		"stackedarea": {
+			"stacked": "Stacked",
+			"stream": "Stream",
+			"expanded": "Expanded"
+		}
+	},
 	"configuration": "Configuration",
 	"date": {
 		"year": "year"
@@ -138,7 +145,7 @@
 	},
 	"pending": "Pending",
 	"path": "Path",
-	"serial": "Serialnumber",
+	"serial": "Serial Number",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
 	"unknown": "Unknown",

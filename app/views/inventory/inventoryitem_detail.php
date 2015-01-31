@@ -1,8 +1,8 @@
-<?$this->view('partials/head', array(
+<?php $this->view('partials/head', array(
   "scripts" => array(
     "clients/client_list.js"
   )
-))?>
+)); ?>
 
 <div class="container">
 
@@ -18,11 +18,11 @@
           } );
       </script>
       
-      <h3><?=$name?> <span id="inv-count" class='label label-primary'><?=count($inventory_items)?></span></h3>
+      <h3><?php echo $name; ?> <span id="inv-count" class='label label-primary'><?php echo count($inventory_items); ?></span></h3>
       
-      <? if (count($inventory_items)): ?>
+      <?php if (count($inventory_items)): ?>
           <!--
-          <h2>Machines (<?=count($inventory_items)?>)</h2> 
+          <h2>Machines (<?php echo count($inventory_items); ?>)</h2> 
           -->
           <table class='table table-striped table-condensed table-bordered'>
               <thead>
@@ -36,31 +36,31 @@
                   </tr>
               </thead>
               <tbody>
-              <? foreach($inventory_items as $item): ?>
-              <? $url=url('clients/detail/' . $item['serial'] . '#tab_inventory-items') ?>
+              <?php foreach($inventory_items as $item): ?>
+              <?php $url=url('clients/detail/' . $item['serial'] . '#tab_inventory-items') ?>
                   <tr>
                       <td>
-                        <a href='<?= $url ?>'>
-                          <?= $item['hostname'] ?>
+                        <a href='<?php echo $url; ?>'>
+                          <?php echo $item['hostname']; ?>
                         </a>
                       </td>
-                      <td><?= $item['username'] ?></td>
-                      <td><?= $item['version'] ?></td>
-                      <td><?= $item['bundleid'] ?></td>
-                      <td><?= $item['bundlename'] ?></td>
-                      <td><?= $item['path'] ?></td>
+                      <td><?php echo $item['username']; ?></td>
+                      <td><?php echo $item['version']; ?></td>
+                      <td><?php echo $item['bundleid']; ?></td>
+                      <td><?php echo $item['bundlename']; ?></td>
+                      <td><?php echo $item['path']; ?></td>
                   </tr>
-              <? endforeach ?>
+              <?php endforeach; ?>
               </tbody>
           </table>
-      <? else: ?>
+      <?php else: ?>
           <h2>Machines</h2>
           <p><i>No machines.</i></p>
-      <? endif ?>
+      <?php endif ?>
     </div> <!-- /span 12 -->
     
   </div> <!-- /row -->
   
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>
