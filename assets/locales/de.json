@@ -44,6 +44,14 @@
 		"no_install_history": "Keine Installations-Historie",
 		"process_name": "Prozessname"
 	},
+	 "chart": {
+                "stackedarea": {
+                        "stacked": "Gestapelt",
+                        "stream": "Stream",
+                        "expanded": "Ausführlich"
+                }
+        },
+
 	"configuration": "Konfiguration",
 	"date": {
 		"year": "Jahr"
@@ -55,7 +63,7 @@
 	"error_plural": "Fehler",
 	"errors": {
 		"title": "Fehler",
-		"client_nonexistent": "Client mit dieser Seriennummer \"__serial__\" existiert nich",
+		"client_nonexistent": "Client mit dieser Seriennummer \"__serial__\" existiert nicht",
 		"403": "Sie haben keinen Zugriff auf diese Seite",
 		"404": "Seite nicht gefunden",
 		"426": "Sie müssen diese Seite über eine verschlüsselte Verbindung aufrufen."
@@ -68,7 +76,7 @@
 		},
 		"bluetooth": {
 			"keyboard_battery": "Tastatur",
-			"mouse_battery": "Mouse",
+			"mouse_battery": "Maus",
 			"status": "Status",
 			"title": "Bluetooth Bericht",
 			"trackpad_battery": "Trackpad"
