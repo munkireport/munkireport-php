@@ -124,7 +124,7 @@ class auth extends Controller
                             }//end group list check
 
 							// Not in users list or group list
-							error(lang('not_authorized'));
+							error('Not authorized', 'auth.not_authorized');
 
 							break;
 
@@ -146,10 +146,14 @@ class auth extends Controller
 						}
 						catch (adLDAPException $e)
 						{
-							// When in debug mode, show additional info
-							$msg = conf('debug') ? ":<br>".$e->getMessage() : '';
 
-							error(lang('error_contacting_AD').$msg);
+							error('An error ocurred while contacting AD', 'error_contacting_AD');
+
+							// When in debug mode, show additional info
+							if (conf('debug'))
+							{
+								error($e->getMessage());
+							}
 
 							break 2;   
 						}
@@ -191,7 +195,7 @@ class auth extends Controller
                             }//end group list check
 
 							// Not in users list or group list
-							error(lang('not_authorized'));
+							error('Not authorized', 'auth.not_authorized');
 
 							break;
 						}
@@ -219,11 +223,11 @@ class auth extends Controller
 		{
 			if( ! $login OR ! $password)
 			{
-				error(lang('empty_not_allowed'));
+				error('Empty values are not allowed', 'auth.empty_not_allowed');
 			}
 			else
 			{
-				error(lang('wrong_user_or_pass'));
+				error('Wrong username or password', 'auth.wrong_user_or_pass');
 			}
 		}
 		
@@ -250,8 +254,13 @@ class auth extends Controller
 
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
 		$data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
+
+		if( $_POST && (! $data['login'] OR ! $password))
+		{
+			error('Empty values are not allowed', 'auth.empty_not_allowed');
+		}
 		
-		if ($password)
+		if ($data['login'] && $password)
 		{
 			$t_hasher = $this->load_phpass();
 			$data['generated_pwd'] = $t_hasher->HashPassword($password);

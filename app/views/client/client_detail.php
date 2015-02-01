@@ -1,36 +1,47 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head') ?>
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
-			<?$this->view('client/machine_info')?>
+			<?php $this->view('client/machine_info'); ?>
 
 			<ul class="nav nav-tabs">
 
 				<li class="active">
-					<a href="#munki" data-toggle="tab"><?=lang('tab_munki')?></a>
+					<a href="#munki" data-toggle="tab" data-i18n="client.tab.munki">Managed Software</a>
 				</li>
 
 				<li>
-					<a href="#apple-software" data-toggle="tab"><?=lang('tab_apple_software')?></a>
+					<a href="#apple-software" data-toggle="tab"><span data-i18n="client.tab.apple_software">Apple Software</span> <span id="history-cnt-1" class="badge">.</span></a>
 				</li>
 
 				<li>
-					<a href="#third-party-software" data-toggle="tab"><?=lang('tab_third_party_software')?></a>
+					<a href="#third-party-software" data-toggle="tab"><span data-i18n="client.tab.third_party_software">Third party software</span> <span id="history-cnt-0" class="badge">.</span></a>
 				</li>
 
 				<li>
-					<a href="#inventory-items" data-toggle="tab"><?=lang('tab_inventory_items')?> <span id="inventory-cnt" class="badge">.</span></a>
+					<a href="#inventory-items" data-toggle="tab"><span data-i18n="client.tab.inventory_items">Inventory Items</span> <span id="inventory-cnt" class="badge">.</span></a>
 				</li>
 
 				<li>
-					<a href="#network-tab" data-toggle="tab"><?=lang('tab_network_interfaces')?> <span id="network-cnt" class="badge">0</span></a>
+					<a href="#network-tab" data-toggle="tab"><span data-i18n="client.tab.network">Network Interfaces</span> <span id="network-cnt" class="badge">0</span></a>
 				</li>
-				
+
 				<li>
-					<a href="#directory-tab" data-toggle="tab"><?=lang('tab_directory_services')?> <span id="directory-cnt" class="badge">0</span></a>
+					<a href="#directory-tab" data-toggle="tab"><span data-i18n="client.tab.ds">Directory Services</span> <span id="directory-cnt" class="badge">0</span></a>
+				</li>
+
+				<li>
+					<a href="#displays-tab" data-toggle="tab"><span data-i18n="client.tab.displays">Displays</span> <span id="displays-cnt" class="badge">0</span></a>
+				</li>
+
+				<li>
+					<a href="#filevault-tab" data-toggle="tab" data-i18n="client.tab.fv_escrow">FileVault Escrow</a>
 				</li>
 				<li>
-					<a href="#filevault-tab" data-toggle="tab"><?=lang('FileVault Escrow')?></a>
+					<a href="#bluetooth-tab" data-toggle="tab"data-i18n="client.tab.bluetooth">Bluetooth</a>
+				</li>
+				<li>
+					<a href="#ard-tab" data-toggle="tab" data-i18n="client.tab.ard">ARD</a>
 				</li>
 
 			</ul>
@@ -38,39 +49,57 @@
 			<div class="tab-content">
 
 				<div class="tab-pane active" id='munki'>
-					<?$this->view('client/munki_tab')?>
+					<?php $this->view('client/munki_tab'); ?>
 				</div>
-	
+
 				<div class="tab-pane" id='apple-software'>
-					<h2><?=lang('installed_apple_software')?></h2>
-					<?$this->view('client/install_history_tab', array('apple'=> TRUE))?>
+					<h2 data-i18n="client.installed_apple_software">Installed Apple Software</h2>
+					<?php $this->view('client/install_history_tab', array('apple'=> 1)); ?>
 				</div>
-	
+
 				<div class="tab-pane" id='third-party-software'>
-					<h2><?=lang('installed_third_party_software')?></h2>
-					<?$this->view('client/install_history_tab', array('apple'=> FALSE))?>
+					<h2 data-i18n="client.installed_third_party_software">Installed Third Party Software</h2>
+					<?php $this->view('client/install_history_tab', array('apple'=> 0)); ?>
 				</div>
 
 				<div class="tab-pane" id='inventory-items'>
-					<?$this->view('client/inventory_items_tab')?>
+					<?php $this->view('client/inventory_items_tab'); ?>
 				</div>
 
 				<div class="tab-pane" id='network-tab'>
-					<?$this->view('client/network_tab')?>
+					<?php $this->view('client/network_tab'); ?>
 				</div>
-				
+
 				<div class="tab-pane" id='directory-tab'>
-					<?$this->view('client/directory_tab')?>
+					<?php $this->view('client/directory_tab'); ?>
 				</div>
-				
+
+				<div class="tab-pane" id='displays-tab'>
+					<?php $this->view('client/displays_tab'); ?>
+				</div>
+
 				<div class="tab-pane" id='filevault-tab'>
-					<?$this->view('client/filevault_tab')?>
+					<?php $this->view('client/filevault_tab'); ?>
+				</div>
+				<div class="tab-pane" id='bluetooth-tab'>
+					<?php $this->view('client/bluetooth_tab'); ?>
+				</div>
+				<div class="tab-pane" id='ard-tab'>
+					<?php $this->view('client/ard_tab'); ?>
 				</div>
 
 			</div>
 
+			<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-tabdrop.js"></script>
+
 			<script>
-			$(document).ready(function() {
+			$(document).on('appReady', function(e, lang) {
+
+				// Format OS Version
+				$('span.osvers').html(integer_to_version($('span.osvers').html()))
+
+				// Activate tabdrop
+				$('.nav-tabs').tabdrop();
 
 				// Activate correct tab depending on hash
 				var hash = window.location.hash.slice(5);
@@ -88,10 +117,24 @@
 						document.body.scrollTop=yScroll;
 					}
 				})
+
+				// Set times
+				$( "dd time" ).each(function( index ) {
+					if($(this).hasClass('absolutetime'))
+					{
+						seconds = moment().seconds(parseInt($(this).attr('datetime')))
+						$(this).html(moment(seconds).fromNow(true));
+					}
+					else
+					{
+						$(this).html(moment($(this).attr('datetime') * 1000).fromNow());
+					}
+					$(this).tooltip().css('cursor', 'pointer');
+				});
 			});
 			</script>
 	    </div> <!-- /span 12 -->
 	</div> <!-- /row -->
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

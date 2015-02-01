@@ -10,10 +10,15 @@ class Migration_add_dsconfigad_data extends Model
 
 		// Check if database is already migrated 
 		// (to fix issue with failed migration init)
-		$sql = "SELECT adforest FROM directoryservice";
-		if($dbh->query($sql))
+		try
 		{
+			// This will cause an Exception if not migrated
+			$dbh->query("SELECT adforest FROM directoryservice");
 			return TRUE;
+		}
+		catch (Exception $e) 
+		{
+			// Not migrated, continue..
 		}
 
 		switch ($this->get_driver())

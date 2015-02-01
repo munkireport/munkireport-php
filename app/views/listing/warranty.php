@@ -1,6 +1,6 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
 new Machine_model;
 new Warranty_model;
 new Reportdata_model;
@@ -13,10 +13,7 @@ new Reportdata_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).ready(function() {
-
-				// Use hash as searchquery
-				hash = window.location.hash.substring(1);
+		$(document).on('appReady', function(e, lang) {
 
 				// Get column names from data attribute
 				var myCols = [];
@@ -24,17 +21,14 @@ new Reportdata_model;
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
-			        "oSearch": {"sSearch": hash},
-			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
+			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format warranty status
@@ -65,7 +59,6 @@ new Reportdata_model;
 			        	}
 				    }
 			    } );
-				oTable.fnFilter( hash );
 			} );
 		</script>
 
@@ -74,9 +67,9 @@ new Reportdata_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='machine#computer_name'>Name</th>
-		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>Username</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='warranty#status'>Warranty status</th>
 		        <th data-colname='warranty#purchase_date'>Purchased</th>
 		        <th data-colname='warranty#end_date'>Warranty Expires</th>
@@ -92,4 +85,4 @@ new Reportdata_model;
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

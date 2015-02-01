@@ -1,30 +1,45 @@
-<?$hist_obj = new Installhistory_model();
+<?php $hist_obj = new Installhistory_model();
 
-$installHistory = $hist_obj->itemsBySerialNumber($serial_number)?>
-<?if(isset($installHistory) && count($installHistory) > 1):?>
+$installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
+<?php if(isset($installHistory) && count($installHistory) > 1): ?>
 
-<table class="table table-striped">
+<table class="install-history-<?php echo $apple; ?> table table-striped">
 	<thead>
 		<tr>
-			<th><?=lang('name')?></th>
-			<th><?=lang('version')?></th>
-			<th><?=lang('install_date')?></th>
-			<th><?=lang('process_name')?></th>
+			<th data-i18n="name">Name</th>
+			<th data-i18n="version">Version</th>
+			<th data-i18n="client.install_date">Install Date</th>
+			<th data-i18n="client.process_name">Process Name</th>
 		</tr>
 	</thead>
 	<tbody>
-	<?foreach($installHistory as $item):?>
-	<?if($apple == (strpos($item->packageIdentifiers,'com.apple.') === 0)):?>
+	<?php foreach($installHistory as $item): ?>
+	<?php if($apple == (strpos($item->packageIdentifiers,'com.apple.') === 0)): ?>
 		<tr>
-			<td><?=$item->displayName?></td>
-			<td><?=$item->displayVersion?></td>
-			<td><time title="<?=strftime('%c',$item->date)?>" datetime="<?=date('Y-m-d G:i:s',$item->date)?>"><?=date('Y-m-d G:i:s',$item->date)?></time></td>
-			<td><?=$item->processName?></td>
+			<td><?php echo $item->displayName; ?></td>
+			<td><?php echo $item->displayVersion; ?></td>
+			<td data-order="<?php echo $item->date; ?>"><time title="<?php echo strftime('%c',$item->date); ?>" datetime="<?php echo date('c',$item->date); ?>"></time></td>
+			<td><?php echo $item->processName; ?></td>
 		</tr>
-	<?endif?>
-	<?endforeach?>
+	<?php endif; ?>
+	<?php endforeach; ?>
 	</tbody>
 </table>
-<?else:?>
-<p><i><?=lang('no_install_history')?></i></p>
-<?endif?>
+<?php else: ?>
+<p><i data-i18n="client.no_install_history">No install history</i></p>
+<?php endif ?>
+
+<script>
+  $(document).on('appReady', function(e, lang) {
+  		//Prevent hash search
+  		search = '';
+
+        // Initialize datatables
+            $('.install-history-<?php echo $apple; ?>').dataTable({
+                "aaSorting": [[2,'asc']],
+                "fnDrawCallback": function( oSettings ) {
+                $('#history-cnt-<?php echo $apple; ?>').html(oSettings.fnRecordsTotal());
+              }
+            });
+  });
+</script>

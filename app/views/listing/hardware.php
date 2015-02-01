@@ -1,6 +1,6 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
 ?>
@@ -12,7 +12,7 @@ new Reportdata_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function(e, lang) {
 
 				// Get column names from data attribute
 				var myCols = [];
@@ -20,16 +20,14 @@ new Reportdata_model;
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
-			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
+			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	var mem=$('td:eq(4)', nRow).html();
@@ -57,13 +55,6 @@ new Reportdata_model;
 				    }
 			    } );
 
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
-
-			    
 			} );
 		</script>
 
@@ -72,11 +63,11 @@ new Reportdata_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='machine#computer_name'>Name</th>
-		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='machine#machine_desc'>Description</th>
-		        <th data-colname='machine#physical_memory'>Memory</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
+		        <th data-i18n="listing.hardware.description" data-colname='machine#machine_desc'>Description</th>
+		        <th data-i18n="memory" data-colname='machine#physical_memory'>Memory</th>
 		        <th data-colname='machine#number_processors'>Processors</th>
 		        <th data-colname='machine#cpu_arch'>CPU</th>
 		        <th data-colname='machine#current_processor_speed'>Speed</th>
@@ -93,4 +84,4 @@ new Reportdata_model;
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

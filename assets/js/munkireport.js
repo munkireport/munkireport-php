@@ -1,5 +1,45 @@
 // Global functions
 
+$( document ).ready(function() {
+    $.i18n.init({
+        debug: munkireport.debug,
+        useLocalStorage: ! munkireport.debug,
+        resGetPath: munkireport.subdirectory + "assets/locales/__lng__.json",
+        fallbackLng: 'en',
+        useDataAttrOptions: true
+    }, function() {
+        $('body').i18n();
+
+        // Check if current locale is available (FIXME: check loaded locale)
+        if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
+        {
+          // Load 'en' instead...
+          i18n.setLng('en', function(t) { /* loading done - should init other stuff now*/ });
+        }
+
+        // Add tooltips after translation
+        $('[title]').tooltip();
+        // Set the current locale in moment.js
+        moment.locale([i18n.lng(), 'en'])
+
+        // Activate current lang dropdown
+        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active')
+        // Trigger appReady
+        $(document).trigger('appReady', [i18n.lng()]);
+    });
+});
+
+// Integer or integer string OS Version to semantic OS version
+function integer_to_version(osvers)
+{
+	osvers = "" + osvers
+	if( osvers !== '' && osvers.indexOf(".") == -1)
+    {
+      osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+    }
+    return osvers
+}
+
 // Get client detail link
 function get_client_detail_link(name, sn, baseurl, hash)
 {
@@ -15,6 +55,9 @@ function delete_machine(obj)
 {
 	var row = obj.parents('tr');
 	$.getJSON( obj.attr('href'), function( data ) {
+		
+		data.status = data.status || 'unknown';
+
 		if(data.status == 'success')
 		{
 			// Animate slide up
@@ -30,7 +73,7 @@ function delete_machine(obj)
 		}
 	  	else
 	  	{
-	  		alert('remove failed')
+	  		alert(i18n.t('admin.delete_failed') + i18n.t(data.status));
 	  	}
 	});
 }
@@ -97,6 +140,19 @@ function fileSize(size, decimals) {
 	if(decimals == undefined){decimals = 0};
 	var i = Math.floor( Math.log(size) / Math.log(1024) );
 	return ( size / Math.pow(1024, i) ).toFixed(decimals) * 1 + ' ' + ['', 'K', 'M', 'G', 'T', 'P', 'E'][i] + 'B';
+}
+
+// Convert human readable filesize to bytes
+function humansizeToBytes(size) {
+	var obj = size.match(/(\d+|[^\d]+)/g), res=0;
+	if(obj) {
+		sizes='BKMGTPE';
+		var i = sizes.indexOf(obj[1][0]);
+		if(i != -1) {
+			res = obj[0] * Math.pow(1024, i);
+		}
+	}
+	return res;
 }
 
 // Plural formatter
@@ -175,27 +231,30 @@ function getScale()
 
 // Generate nice colors
 // Adapted from http://krazydad.com/tutorials/makecolors.php
-function makeColorGradient(len)
-  {
-    var center = 128,
-		width = 127,
-		frequency1 = .4,
-		frequency2 = frequency1,
-		frequency3 = frequency1,
-		phase1 = -2,
-		phase2 = phase1 + 2,
-		phase3 = phase1 + 4;
-    var out = []
-    for (var i = 0; i < len; ++i)
-    {
-       var red = Math.round(Math.sin(frequency1*i + phase1) * width + center);
-       var grn = Math.round(Math.sin(frequency2*i + phase2) * width + center);
-       var blu = Math.round(Math.sin(frequency3*i + phase3) * width + center);
-       out.push('rgb('+red+','+grn+','+blu+')')
-    }
+if(typeof window.makeColorGradient !== 'function')
+{
+	window.makeColorGradient = function(len)
+	{
+		var center = 128,
+			width = 127,
+			frequency1 = .4,
+			frequency2 = frequency1,
+			frequency3 = frequency1,
+			phase1 = -2,
+			phase2 = phase1 + 2,
+			phase3 = phase1 + 4;
+		var out = []
+		for (var i = 0; i < len; ++i)
+		{
+		   var red = Math.round(Math.sin(frequency1*i + phase1) * width + center);
+		   var grn = Math.round(Math.sin(frequency2*i + phase2) * width + center);
+		   var blu = Math.round(Math.sin(frequency3*i + phase3) * width + center);
+		   out.push('rgb('+red+','+grn+','+blu+')')
+		}
 
-    return out
-  }
+		return out
+	}
+}
 
 // Global variables
 var chartObjects = {}, // Holds instantiated chart objects

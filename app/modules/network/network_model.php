@@ -23,8 +23,7 @@ class Network_model extends Model {
         $this->rs['timestamp'] = time();
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
-
+        $this->schema_version = 2;
 
         $this->idx[] = array('serial_number');
         $this->idx[] = array('serial_number', 'service');
@@ -43,8 +42,6 @@ class Network_model extends Model {
      **/
     function process($data)
     {
-        echo "Network: got data\n";
-
         // Translate network strings to db fields
         $translate = array(
         	'Ethernet Address: ' => 'ethernet',
@@ -120,7 +117,7 @@ class Network_model extends Model {
         // Delete previous entries
         $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).
         		' WHERE '.$this->enquote( 'serial_number' )." = '$this->serial_number'";
-        $this->query($sql);
+        $this->exec($sql);
 
         // Now only store entries with a valid ethernet address
         foreach( $services as $service => $data)

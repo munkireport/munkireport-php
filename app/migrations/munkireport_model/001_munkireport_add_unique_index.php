@@ -10,17 +10,8 @@ class Migration_munkireport_add_unique_index extends Model
 		// Get database handle
 		$dbh = $this->getdbh();
 
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-		// Wrap in transaction
-		$dbh->beginTransaction();
-
 		$sql = 'CREATE UNIQUE INDEX serial_number ON munkireport (serial_number)';
 		$this->exec($sql);
-
-		// Commit changes
-		$dbh->commit();
-
 
 	}// End function up()
 
@@ -29,15 +20,28 @@ class Migration_munkireport_add_unique_index extends Model
 		// Get database handle
 		$dbh = $this->getdbh();
 
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		switch ($this->get_driver())
+		{
+			case 'sqlite':
 
-		// Wrap in transaction
-		$dbh->beginTransaction();
+				$sql = 'DROP INDEX munkireport.serial_number';
 
-		$sql = 'DROP INDEX munkireport.serial_number';
+				break;
+
+			case 'mysql':
+
+				$sql = 'DROP INDEX serial_number ON munkireport';
+
+				break;
+
+			default:
+
+				throw new Exception("UNKNOWN DRIVER");
+				
+		}
+
+		// Execute sql query
 		$this->exec($sql);
 
-		// Commit changes
-		$dbh->commit();
 	}
 }

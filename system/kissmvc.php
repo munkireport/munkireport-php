@@ -42,19 +42,53 @@ class Controller extends KISS_Controller
 {
 	/**
 	 * Check if there is a valid session
-	 * TODO: check authorization
+	 * and if the person is authorized for $what
 	 *
 	 * @return boolean TRUE on authorized
 	 * @author AvB
 	 **/
-	function authorized()
+	function authorized($what = '')
 	{
-		ini_set('session.use_cookies', 1);
-		ini_set('session.use_only_cookies', 1);
-		ini_set('session.cookie_path', conf('subdirectory'));
-		session_start();
+		if( ! isset($_SESSION))
+		{
+			ini_set('session.use_cookies', 1);
+			ini_set('session.use_only_cookies', 1);
+			ini_set('session.cookie_path', conf('subdirectory'));
+			session_start();
+		}
 
-		return isset($_SESSION['user']);
+		// Check if we have a valid user
+		if( ! isset($_SESSION['user']))
+		{
+			return FALSE;
+		}
+
+		// Check for a specific authorization item
+		if($what)
+		{
+			foreach(conf('authorization', array()) as $item => $members)
+			{
+				if($what === $item)
+				{
+					// Check if there is an 'authorized for all' item
+					if( in_array('*', $members))
+					{
+						return TRUE;
+					}
+
+					if( in_array($_SESSION['user'], $members))
+					{
+						return TRUE;
+					}
+
+					// Person not found: unauthorized!
+					return FALSE;
+				}
+			}
+		}
+
+		// There is no matching rule, you're authorized!
+		return TRUE;
 	}
 }
 
@@ -109,6 +143,16 @@ class Model extends KISS_Model
     }
 
     /**
+     * Accessor for primary key name
+     *
+     * @return string table name
+     **/
+    function get_pkname()
+    {
+    	return $this->pkname;
+    }
+
+    /**
      * Get PDO driver name
      *
      * @return string driver
@@ -126,6 +170,26 @@ class Model extends KISS_Model
     function get_errors()
     {
     	return $this->errors;
+    }
+
+     /**
+     * Get indexes
+     *
+     * @return string errors
+     **/
+    function get_indexes()
+    {
+    	return $this->idx;
+    }
+
+     /**
+     * Get types
+     *
+     * @return string errors
+     **/
+    function get_types()
+    {
+    	return $this->rt;
     }
 
 	// ------------------------------------------------------------------------
@@ -195,6 +259,30 @@ class Model extends KISS_Model
 		return 0;
 	}
 
+	/**
+	 * Get database type of value
+	 *
+	 * Returns INTEGER, VARCHAR(255), REAL or BLOB
+	 *
+	 * @return string database type
+	 * @author AvB
+	 **/
+	function get_type($val = '')
+	{
+		return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
+	}
+
+	/**
+	 * Get compound index name
+	 *
+	 * @return string index name
+	 * @author 
+	 **/
+	function get_index_name($idx_data = array())
+	{
+		return $this->tablename . '_' . join('_', $idx_data);
+	}
+
 	// ------------------------------------------------------------------------
 
 	/**
@@ -204,7 +292,7 @@ class Model extends KISS_Model
 	 * and $this->rt array
 	 *
 	 * @param array assoc array with optional type strings
-	 * @return void
+	 * @return boolean TRUE on success, FALSE if failed
 	 * @author bochoven
 	 **/
 	function create_table()
@@ -215,57 +303,18 @@ class Model extends KISS_Model
 			return TRUE;
 		}
 
-		$dbh = $this->getdbh();
+		// Check if table exists and is up-to-date
+		try
+		{
+			$dbh = $this->getdbh();
 		
-		$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false); 
-		
-        if( ! $dbh->prepare( "SELECT * FROM ".$this->enquote($this->tablename)." LIMIT 1" ))
-        {
-			// Get columns
-			$columns = array();
-			foreach($this->rs as $name => $val)
-			{
-				// Determine type automagically
-				$type = is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
-				
-				// Or set type from type array
-				$columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
-			}
-			
-			// Set primary key
-			$columns[$this->pkname] = 'INTEGER PRIMARY KEY';
-			
-			// Set autoincrement per db engine
-			switch($dbh->getAttribute(constant("PDO::ATTR_DRIVER_NAME")))
-			{
-				case 'sqlite':
-					$columns[$this->pkname] .= ' AUTOINCREMENT';
-					break;
-				case 'mysql':
-					$columns[$this->pkname] .= ' AUTO_INCREMENT';
-			}
-			
-			// Compile columns sql
-            $sql = '';
-			foreach($columns as $name => $type)
-			{
-				$sql .= $this->enquote($name) . " $type,";
-			}
-			$sql = rtrim($sql, ',');
+			$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
 
-            $rowsaffected = $dbh->exec(sprintf("CREATE TABLE %s (%s)", $this->enquote($this->tablename), $sql));
+			// Check if table exists
+			$this->prepare( "SELECT * FROM ".$this->enquote($this->tablename)." LIMIT 1" );
 
-			// Set indexes
-			$this->set_indexes();
-
-			// Store schema version in migration table
-			$migration = new Migration($this->tablename);
-			$migration->version = $this->schema_version;
-			$migration->save();
-			        }
-        else // Existing table, is it up-to date?
-        {
-        	if (conf('allow_migrations'))
+			// Existing table, is it up-to date?
+			if (conf('allow_migrations'))
         	{
         		if ($this->get_schema_version() !== $this->schema_version)
         		{
@@ -280,7 +329,7 @@ class Model extends KISS_Model
         			}
         			catch(Exception $e)
         			{
-        				error("Migration error: ".$e->getMessage());
+        				error("Migration error: $this->tablename: ".$e->getMessage());
 
         				// Rollback any open transaction
         				try { $dbh->rollBack(); } catch (Exception $e2) {}
@@ -288,13 +337,78 @@ class Model extends KISS_Model
         			
         		}
         	}
-        }
+		}
+		catch (Exception $e)
+		{
+			// If the prepare fails, the table does not exist.
+
+			// Get columns
+			$columns = array();
+			foreach($this->rs as $name => $val)
+			{
+				// Determine type automagically
+				$type = $this->get_type($val);
+				
+				// Or set type from type array
+				$columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
+			}
+			
+			// Set primary key
+			$columns[$this->pkname] = 'INTEGER PRIMARY KEY';
+
+			// Table options, override per driver
+			$tbl_options = '';
+			
+			// Driver specific options
+			switch($this->get_driver())
+			{
+				case 'sqlite':
+					$columns[$this->pkname] .= ' AUTOINCREMENT';
+					break;
+				case 'mysql':
+					$columns[$this->pkname] .= ' AUTO_INCREMENT';
+					$tbl_options = conf('mysql_create_tbl_opts');
+					break;
+			}
+			
+			// Compile columns sql
+            $sql = '';
+			foreach($columns as $name => $type)
+			{
+				$sql .= $this->enquote($name) . " $type,";
+			}
+			$sql = rtrim($sql, ',');
+
+			try
+			{
+
+				$dbh->exec(sprintf("CREATE TABLE %s (%s) %s", $this->enquote($this->tablename), $sql, $tbl_options));
+
+				// Set indexes
+				$this->set_indexes();
+
+				// Store schema version in migration table
+				$migration = new Migration($this->tablename);
+				$migration->version = $this->schema_version;
+				$migration->save();
+
+				alert("Created table '$this->tablename' version $this->schema_version");
+
+			}
+			catch (Exception $e)
+			{
+				$dbh->exec('DROP TABLE '.$this->enquote($this->tablename));
+				error("Create table '$this->tablename' failed: " . $e->getMessage());
+				return FALSE;
+			}
+            
+		}
 
         // Store this table in the instantiated tables array
         $GLOBALS['tables'][$this->tablename] = $this->tablename;
 
-		//print_r($dbh->errorInfo());
-        return ($dbh->errorCode() == '00000');
+        // Create table succeeded
+        return TRUE;
 	}
 	
 	// ------------------------------------------------------------------------
@@ -302,21 +416,20 @@ class Model extends KISS_Model
 	/**
 	 * Set indexes for this table
 	 *
-	 * @return boolean
+	 * @param string optional provide alternative create index
 	 * @author bochoven
 	 **/
-	function set_indexes()
+	function set_indexes($sql = "CREATE INDEX %s ON %s (%s)")
 	{
 		$dbh = $this->getdbh();
 		
 		foreach($this->idx as $idx_data)
 		{
 			// Create name
-			$idx_name = $this->tablename . '_' . join('_', $idx_data);
-			$this->exec(sprintf("CREATE INDEX %s ON %s (%s)", $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
+			$idx_name = $this->get_index_name($idx_data);
+			$this->exec(sprintf($sql, $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
 		}
 		
-		return ($dbh->errorCode() == '00000');
 	}
 
 	/**

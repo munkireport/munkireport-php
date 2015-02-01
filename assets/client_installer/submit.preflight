@@ -23,6 +23,7 @@ def main():
     # Collect some hardware info
     hardware_info = munkicommon.get_hardware_info()
     hardware_info['computer_name'] = reportcommon.get_computername()
+    hardware_info['cpu'] = reportcommon.get_cpuinfo()
     hardware_info['cpu_arch'] = os.uname()[4]
     hardware_info['hostname'] = os.uname()[1]
     hardware_info['os_version'] = \
@@ -36,6 +37,7 @@ def main():
     report_info['long_username'] = reportcommon.get_long_username(report_info['console_user'])
     report_info['runtype'] = runtype
     report_info['runstate'] = 'done'
+    report_info['uptime'] = reportcommon.get_uptime()    
     report_info_plist = FoundationPlist.writePlistToString(report_info)
     
     items = {'machine': \

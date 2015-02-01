@@ -1,7 +1,7 @@
 munkireport-php
 ===============
 
-![Dashboard view](https://raw.github.com/wiki/munkireport/munkireport-php/assets/pics/dashboard.png)
+![Dashboard view](https://github.com/munkireport/munkireport-php/wiki/assets/pics/dashboard.png)
 
 This is version 2 of munkireport-php, a reporting client for [munki](https://code.google.com/p/munki/). The previous version of munkireport is still available on googlecode: [munkireport-php](https://code.google.com/p/munkireport-php/).
 I moved the project to github because github is just awesome!
@@ -57,6 +57,7 @@ Contributing
 
 If you want to contribute to munkireport2, please 
 
+* read about [Localizing](docs/localize.md) in the docs folder
 * fork the [wip branch of repository](https://github.com/munkireport/munkireport-php/tree/wip)
 * create a feature branch
 * send a pull request with your changes.
@@ -78,4 +79,5 @@ Munkireport-php makes use of these fine software packages:
 * [Bootstrap 3.0](http://getbootstrap.com) the main webframework
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/) for icons
 * [adLDAP](http://adldap.sourceforge.net) for authenticating against AD
+* [i18next](http://i18next.com) js library for localization
 

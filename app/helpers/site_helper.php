@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.0.8.696';
+$GLOBALS['version'] = '2.2.0.975';
 
 // Return version without commit count
 function get_version()
@@ -18,7 +18,7 @@ function uncaught_exception_handler($e)
   ob_end_clean();
 
   // Get error message
-  error($e->getMessage());
+  error('Uncaught Exception: '.$e->getMessage());
 
   // Write footer
   die(View::do_fetch(conf('view_path').'partials/foot.php'));
@@ -52,8 +52,13 @@ function alert($msg, $type="info")
  *
  * @param string message
  **/
-function error($msg)
+function error($msg, $i18n = '')
 {
+	if( $i18n )
+	{
+		$msg = sprintf('<span data-i18n="%s">%s</span>', $i18n, $msg);
+	}
+	
 	alert($msg, 'danger');
 }
 
@@ -78,6 +83,9 @@ function getdbh()
 		{
 			fatal('Connection failed: '.$e->getMessage());
 		}
+
+		// Set error mode
+		$GLOBALS['dbh']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		
 		// Store database name in config array
 		if(preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result))
@@ -110,27 +118,6 @@ function __autoload( $classname )
 	{
 		require_once( APP_PATH.'models/'.$classname.EXT );
 	}
-}
-
-//===============================================
-// Language getter, lazy loading
-//===============================================
-
-function lang($str)
-{
-	static $lang = '';
-
-	if( $lang === '')
-	{
-		$path = conf('application_path') . 'lang/' . 
-			conf('lang', 'en') . '/lang.php';
-		if ((@include_once $path) !== 1)
-		{
-			alert('failed to load language file for language: '.conf('lang', 'en'), 'danger');
-			$lang = array();
-		}
-	}
-	return array_key_exists($str, $lang) ? $lang[$str] : $str;
 }
 
 function url($url='', $fullurl = FALSE)

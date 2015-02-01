@@ -7,6 +7,7 @@ from munkilib import reportcommon
 from munkilib import FoundationPlist
 import hashlib
 import sys
+import os
 
 def main():
     '''Main'''
@@ -15,6 +16,19 @@ def main():
         runtype = sys.argv[1]
     else:
         runtype = 'custom'
+
+    # Try to get the munki verbosity level
+    verbosity = os.environ.get('MUNKI_VERBOSITY_LEVEL')
+    if (verbosity):
+        reportcommon.set_verbosity(int(verbosity))
+    else:
+        reportcommon.set_verbosity(3)
+
+    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
+
+    # Try to run postflight.d
+    postflightscriptdir = os.path.join(scriptdir, "postflight.d")
+    reportcommon.rundir(postflightscriptdir, runtype, False)
         
     # Get serial
     hardware_info = munkicommon.get_hardware_info()
@@ -25,6 +39,7 @@ def main():
     report_info['console_user'] = "%s" % munkicommon.getconsoleuser()
     report_info['runtype'] = runtype
     report_info['runstate'] = 'done'
+    report_info['uptime'] = reportcommon.get_uptime()    
     report_info_plist = FoundationPlist.writePlistToString(report_info)
     items = {'reportdata':{'hash':hashlib.md5(report_info_plist).hexdigest(), \
         'data':report_info_plist}}
@@ -33,10 +48,10 @@ def main():
     config_items = reportcommon.pref('ReportItems') or {}
     
     for key, val in config_items.items():
-        print "Requesting %s" % key 
+        reportcommon.display_detail("Requesting %s" % key)
         items[key] = {'path':val}
         
-    reportcommon.process(serial, items)    
+    reportcommon.process(serial, items)
 
     exit(0)
 

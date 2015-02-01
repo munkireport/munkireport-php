@@ -9,22 +9,22 @@
 				</div>
 
 				<div class="list-group scroll-box">
-				  	<?$queryobj = new Machine_model();// Generic queryobject?>
+				  	<?php $queryobj = new Machine_model();// Generic queryobject ?>
 
-				  	<?	$lastweek = time() - 60 * 60 * 24 * 7;$cnt=0;
-				  		$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) WHERE reg_timestamp > $lastweek ORDER BY reg_timestamp DESC"?>
-					<?foreach($queryobj->query($sql) as $obj):?> 
-					<a class="list-group-item" href="<?=url('clients/detail/'.$obj->serial_number)?>"><?=$obj->computer_name?>
-						<span class="pull-right"><time datetime="<?=$obj->reg_timestamp?>">...</time></span>
+				  	<?php	$lastweek = time() - 60 * 60 * 24 * 7;$cnt=0;
+				  			$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) WHERE reg_timestamp > $lastweek ORDER BY reg_timestamp DESC"?>
+					<?php foreach($queryobj->query($sql) as $obj): ?> 
+					<a class="list-group-item" href="<?php echo url('clients/detail/'.$obj->serial_number); ?>"><?php echo $obj->computer_name; ?>
+						<span class="pull-right"><time datetime="<?php echo $obj->reg_timestamp; ?>">...</time></span>
 					</a>
-					<?$cnt++?>
-					<?endforeach?>
-					<?if( ! $cnt):?>
+					<?php $cnt++; ?>
+					<?php endforeach; ?>
+					<?php if( ! $cnt): ?>
 					<span class="list-group-item">No new clients</span>
-					<?endif?>
+					<?php endif; ?>
 				</div>
 			<script>
-			$(document).ready(function() {
+			$(document).on('appReady', function() {
 				
 				// New clients + relative time
 				var cnt=0;

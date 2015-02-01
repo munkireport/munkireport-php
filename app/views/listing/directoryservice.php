@@ -1,6 +1,6 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
 new Directory_service_model;
@@ -13,7 +13,7 @@ new Directory_service_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
-		$(document).ready(function() {
+		$(document).on('appReady', function(e, lang) {
 
 				// Get modifiers from data attribute
 				var myCols = [], // Colnames
@@ -39,9 +39,7 @@ new Directory_service_model;
 				});
 
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
-			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
 			        "aaSorting": mySort,
 			        "aoColumns": myCols,
 			        "aoColumnDefs": [
@@ -52,7 +50,7 @@ new Directory_service_model;
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_directory-tab');
+			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_directory-tab');
 			        	$('td:eq(0)', nRow).html(link);
 			        	
 			        	// Translate bool. todo function for any bool we find
@@ -63,13 +61,6 @@ new Directory_service_model;
 
 				    }
 			    } );
-
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
-			    
 			} );
 		</script>
 
@@ -78,9 +69,9 @@ new Directory_service_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='machine#computer_name'>Name</th>
-		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>Username</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
 		        <th data-colname='directoryservice#which_directory_service'>Bound Status</th> 
 		        <th data-colname='directoryservice#addomain'>AD Domain</th>
 		        <th data-colname='directoryservice#computeraccount'>Computer Account</th>
@@ -100,4 +91,4 @@ new Directory_service_model;
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

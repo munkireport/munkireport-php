@@ -1,33 +1,40 @@
-<?$this->view('partials/head', array(
+<?php $this->view('partials/head', array(
 	"scripts" => array(
 		"clients/client_list.js"
 	)
-))?>
+)); ?>
 
 <div class="container">
 
-  <div class="row">
+ 	<div class="row">
 
-    <?$this->view('widgets/age_widget')?>
+		<?php $this->view('widgets/installed_memory_widget'); ?>
 
-    <?$this->view('widgets/hardware_widget')?>
+		<?php $this->view('widgets/smart_status_widget'); ?>
 
-    <?$this->view('widgets/memory_widget')?>
+		<?php $this->view('widgets/external_displays_count_widget'); ?>
 
-  </div> <!-- /row -->
+	</div> <!-- /row -->
 
-  <div class="row">
+	<div class="row">
 
+		<?php $this->view('widgets/hardware_model_widget'); ?>
 
-    <?$this->view('widgets/installed_memory_widget')?>
+		<?php $this->view('widgets/hardware_warranty_widget'); ?>
 
-    <?$this->view('widgets/extended_hardware_widget')?>
+	</div> <!-- /row -->
 
-    <?$this->view('widgets/warranty_graph_widget')?>
+	<div class="row">
 
-  </div> <!-- /row -->
+		<?php $this->view('widgets/hardware_type_widget'); ?>
+
+		<?php $this->view('widgets/hardware_age_widget'); ?>
+
+		<?php $this->view('widgets/memory_widget'); ?>
+
+	</div> <!-- /row -->
 
 
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

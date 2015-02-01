@@ -317,7 +317,10 @@ abstract class KISS_View
 		}
 		else
 		{
-			require($view_path.$file.EXT);
+			if( ! @include($view_path.$file.EXT))
+			{
+				echo '<!-- Could not open '.$view_path.$file.EXT.'-->';
+			}
 		}
 	}
 	
@@ -539,7 +542,7 @@ abstract class KISS_Model
 		$rs = $stmt->fetch( PDO::FETCH_ASSOC );
 		if ( $rs )
 			foreach ( $rs as $key => $val )
-				if ( isset( $this->rs[$key] ) )
+				if (array_key_exists($key, $this->rs))
 					$this->rs[$key] = is_scalar( $this->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
 		return $this;
 	}
@@ -583,9 +586,9 @@ abstract class KISS_Model
 
 	function merge( $arr ) 
 	{
-		if ( !is_array( $arr ) ) return $this;
+		if ( ! is_array( $arr ) ) return $this;
 		foreach ( $arr as $key => $val )
-			if ( isset( $this->rs[$key] ) )	$this->rs[$key] = $val;
+			if (array_key_exists($key, $this->rs))	$this->rs[$key] = $val;
 		return $this;
 	}
 
@@ -604,7 +607,7 @@ abstract class KISS_Model
 		if ( !$rs )
 			return false;
 		foreach ( $rs as $key => $val )
-			if ( isset( $this->rs[$key] ) )
+			if ( array_key_exists($key, $this->rs) )
 				$this->rs[$key] = is_scalar( $this->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
 		return $this;
 	}
@@ -623,7 +626,7 @@ abstract class KISS_Model
 		{
 			$myclass = new $class();
 			foreach ( $rs as $key => $val )
-				if ( isset( $myclass->rs[$key] ) )
+				if ( array_key_exists($key, $myclass->rs) )
 					$myclass->rs[$key] = is_scalar( $myclass->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
 			$arr[]=$myclass;
 		}

@@ -1,4 +1,4 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
 <div class="container">
 
@@ -8,7 +8,7 @@
 
 		<?foreach($row as $item):?>
 
-		<?$this->view("widgets/${item}_widget")?>
+		<?php $this->view("widgets/${item}_widget"); ?>
 
 		<?endforeach?>
 
@@ -18,14 +18,4 @@
 
 </div>	<!-- /container -->
 
-
-<script>
-	// Add tooltips
-	$(document).ready(function() {
-		$('[title]').tooltip();
-	});
-</script>
-
-
-
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

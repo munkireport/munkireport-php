@@ -1,26 +1,51 @@
-$(document).ready(function() {
+$(document).on('appReady', function(e, lang) {
+
+	var search = '';
+
+	// Use hash as searchquery
+	if(window.location.hash.substring(1)) {
+		search = decodeURIComponent(window.location.hash.substring(1));
+	}
 
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
 		"sDom": "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
 		"bStateSave": true,
-		"fnStateSave": function (oSettings, oData) {
+		"bProcessing": true,
+		"bServerSide": true,
+		"search": {search: search},
+		"stateSaveCallback": function (oSettings, oData) {
 		    state( oSettings.sTableId, oData);
 		},
-		"fnStateLoad": function (oSettings) {
+		"stateLoadCallback": function (oSettings) {
 		    return state(oSettings.sTableId);
 		},
+		"stateLoadParams": function (settings, data) {
+
+			// If search, replace state search
+			if(search) {
+				data.search.search = search;
+			}
+		},
+        "language": {
+        	"url": baseUrl + "assets/locales/dataTables/"+lang+".json"
+        },
 		"fnInitComplete": function(oSettings, json) {
 
-		  // Wrap table in responsive div
-		  $(this).wrap('<div class="table-responsive" />'); 
+			// Save the parent
+		 	var outer = $(this).parent()
+
+			// Wrap table in responsive div
+			$(this).wrap('<div class="table-responsive" />');
+
 
 		  // Customize search box (add clear search field button)
-		  $('.dataTables_filter label').addClass('input-group').contents().filter(function(){
+		  placeholder = $(outer).find('.dataTables_filter label').contents().filter(function() {return this.nodeType === 3;}).text();
+		  $(outer).find('.dataTables_filter label').addClass('input-group').contents().filter(function(){
 		    return this.nodeType === 3;
 		  }).remove();
-		  $('.dataTables_filter input').addClass('form-control input-sm')
-		  	.attr('placeholder', 'Search')
+		  $(outer).find('.dataTables_filter input').addClass('form-control input-sm')
+		  	.attr('placeholder', placeholder)
 		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="fa fa-times"></i></span>')
 		  	.click(function(e){
 		  		
@@ -32,13 +57,14 @@ $(document).ready(function() {
 			  		window.location.hash = ''
 			  	}
 
-		  		// Trigger datatables filter
-		  		$('.dataTables_filter input').val('').keyup();
+		  		// Erase and trigger datatables filter
+		  		$(outer).find('.dataTables_filter input').val('');
+		  		$(outer).find('table').dataTable().fnFilter('');
 
 		  	}));
 
 		  // Customize select
-		  $('select').addClass('form-control input-sm');
+		  $(outer).find('select').addClass('form-control input-sm');
 
 		},
         "fnDrawCallback": function( oSettings ) {
@@ -62,10 +88,10 @@ $(document).ready(function() {
 	});
 
 	// Modify lengthmenu
-	$.fn.dataTable.defaults.aLengthMenu = [[10,25,50,100,-1], [10,25,50,100,"All"]];
+	$.fn.dataTable.defaults.aLengthMenu = [[10,25,50,100,-1], [10,25,50,100,i18n.t("all")]];
 
     // Add edit button in list view
-    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">edit</a>');
+    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">'+i18n.t("edit")+'</a>');
 
     $('#edit').click(function(event){
     	event.preventDefault()

@@ -2,43 +2,53 @@
 
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
 
-      <i><?printf(lang('munkireport_version'), $GLOBALS['version'])?></i>
+      <i>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></i>
 
     </div>
 
   </div>
 
-  <?foreach($GLOBALS['alerts'] AS $type => $list):?>
+  <?php foreach($GLOBALS['alerts'] AS $type => $list): ?>
 
-  <div class="mr-alert alert alert-dismissable alert-<?=$type?>">
+  <div class="mr-alert alert alert-dismissable alert-<?php echo $type; ?>">
 
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 
     <ul>
 
-    <?foreach ($list AS $msg):?>
+    <?php foreach ($list AS $msg): ?>
 
-      <li><?=$msg?></li>
+      <li><?php echo $msg; ?></li>
 
-    <?endforeach?>
+    <?php endforeach; ?>
 
     </ul>
 
   </div>
 
-  <?endforeach?>
+  <?php endforeach; ?>
 
   <script>
     $('.mr-alert').prependTo('body>div.container:first');
+	var munkireport = { debug: <?php echo conf('debug') ? 'true' : 'false'; ?>, subdirectory: "<?php echo conf('subdirectory'); ?>" }
   </script>
 
 
-  <script src="<?=conf('subdirectory')?>assets/js/bootstrap.min.js"></script>
-  <script src="<?=conf('subdirectory')?>assets/js/jquery.dataTables.min.js"></script>
-  <script src="<?=conf('subdirectory')?>assets/js/datatables.bootstrap.js"></script>
-  <script src="<?=conf('subdirectory')?>assets/js/moment.min.js"></script>
-  <script src="<?=conf('subdirectory')?>assets/js/flotr2.js"></script>
-  <script src="<?=conf('subdirectory')?>assets/js/munkireport.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.dataTables.min.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/datatables.bootstrap.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/moment.min.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/flotr2.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
+  <script>
+
+
+  </script>
+  <?php if(conf('custom_js')): ?> 
+  <script src="<?php echo conf('custom_js'); ?>"></script>
+  <?php endif; ?>
+
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.js"></script>
 
 </body>
 </html>
