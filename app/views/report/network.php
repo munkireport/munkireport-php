@@ -1,6 +1,8 @@
 <?php $this->view('partials/head', array(
 	"scripts" => array(
-		"clients/client_list.js"
+		"clients/client_list.js",
+		"d3.v3.min.js",
+		"nv.d3.min.js"
 	)
 )); ?>
 
