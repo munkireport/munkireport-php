@@ -1,4 +1,4 @@
-		<div class="col-lg-6 col-md-6">
+		<div class="col-lg-12">
 
 			<div class="panel panel-default">
 
@@ -8,7 +8,7 @@
 				
 				</div>
 
-				<div class="panel-body">
+				<div id="ip-panel" class="panel-body" style="overflow-x: auto; padding: 0">
 					
 					<svg style="height: 200px" id="ip-plot"></svg>
 
@@ -22,35 +22,48 @@
 
 		$(document).on('appReady', function() {
 
-			var parms = {}; // Override network settings in config.php
-
 			//drawGraph("<?php echo url('module/reportdata/ip'); ?>", '#ip-plot', pieOptions, parms);
 		    
 		    var url = baseUrl + 'index.php?/module/reportdata/ip'
 		    var chart;
 		    d3.json(url, function(err, data){
 
-			    var height = 200;
-			    var width = 350;
-			    nv.addGraph(function() {
-			        var chart = nv.models.pieChart()
-			            .x(function(d) { return d.key })
-			            .y(function(d) { return d.y })
-			            .donut(true)
-			            .width(width)
-			            .height(height)
-			            .padAngle(.08)
-			            .cornerRadius(5);
-			        chart.title("100%");
-			        chart.pie.donutLabelsOutside(true).donut(true);
-			        d3.select("#ip-plot")
-			            .datum(data)
-			            .transition().duration(1200)
-			            .attr('width', width)
-			            .attr('height', height)
-			            .call(chart);
+		    	var minWidth = data.length * 60 + 175
+		    	var panelWidth = d3.select('#ip-panel').style("width");
+
+		    	var width = Math.max(minWidth, parseInt(panelWidth))
+
+	    		nv.addGraph(function() {
+		        var chart = nv.models.discreteBarChart()
+		            .x(function(d) { return d.key })
+		            .y(function(d) { return d.y })
+		            .staggerLabels(true)
+		            .tooltips(false)
+		            .valueFormat(d3.format(','))
+		            .showValues(true)
+		            .duration(250)
+			        ;
+			        d3.select('#ip-plot')
+			            .datum([{key: 'network', values:data}])
+			            .style("width", width + "px")
+			            .call(chart)
+			            ;
+			        nv.utils.windowResize(function(){
+			        	panelWidth = d3.select('#ip-panel').style("width");
+						width = Math.max(minWidth, parseInt(panelWidth))
+						d3.select('#ip-plot')
+							.style("width", width + "px")
+							.call(chart)
+			        	//chart.update
+			        });
+
 			        return chart;
-			    });
+		       	});
+
+		    	
+
+
+
 
 			});
 

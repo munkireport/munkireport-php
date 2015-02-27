@@ -133,10 +133,7 @@ class Reportdata_controller extends Module_controller
 			{
 				$col = 'r' . $cnt++;
 
-				if($obj->$col)
-				{
-					$out[] = array('key' => $key, 'y' => intval($obj->$col));
-				}
+				$out[] = array('key' => $key, 'y' => intval($obj->$col));
 
 				$total += $obj->$col;
 			}
