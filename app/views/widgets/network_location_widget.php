@@ -33,10 +33,15 @@
 
 		    	var width = Math.max(minWidth, parseInt(panelWidth))
 
+		    	// Sort data on count
+		    	data.sort(function(a,b){
+		    		return b.cnt - a.cnt
+		    	});
+
 	    		nv.addGraph(function() {
 		        var chart = nv.models.discreteBarChart()
 		            .x(function(d) { return d.key })
-		            .y(function(d) { return d.y })
+		            .y(function(d) { return d.cnt })
 		            .staggerLabels(true)
 		            .tooltips(false)
 		            .valueFormat(d3.format(','))
