@@ -24,7 +24,7 @@
 
 			//drawGraph("<?php echo url('module/reportdata/ip'); ?>", '#ip-plot', pieOptions, parms);
 		    
-		    var url = baseUrl + 'index.php?/module/reportdata/ip'
+		    var url = baseUrl + 'index.php?/module/network/routers'
 		    var chart;
 		    d3.json(url, function(err, data){
 
