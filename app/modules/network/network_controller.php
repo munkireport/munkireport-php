@@ -74,7 +74,8 @@ class Network_controller extends Module_controller
 			$sel_arr[] = "SUM(CASE $when_str ELSE 0 END) AS r${cnt}";
 			$cnt++;
 		}
-		$sql = "SELECT " . implode(', ', $sel_arr) . " FROM network";
+		$sql = "SELECT " . implode(', ', $sel_arr) . " FROM network
+			WHERE ipv4router != '(null)' AND ipv4router != ''";
 
 		// Create Out array
 		if($obj = current($reportdata->query($sql)))
