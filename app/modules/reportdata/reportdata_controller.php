@@ -101,7 +101,7 @@ class Reportdata_controller extends Module_controller
 
 		if( ! $ip_arr ) // Empty array, fall back on default ip ranges
 		{
-			$ip_arr = conf('ipv4routers');
+			$ip_arr = conf('ip_ranges');
 		}
 		
 		$out = array();
