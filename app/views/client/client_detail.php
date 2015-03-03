@@ -30,6 +30,9 @@
 					<a href="#directory-tab" data-toggle="tab"><?=lang('tab_directory_services')?> <span id="directory-cnt" class="badge">0</span></a>
 				</li>
 				<li>
+					<a href="#power-tab" data-toggle="tab" data-i18n="client.tab.power">Power</a>
+				</li>
+				<li>
 					<a href="#filevault-tab" data-toggle="tab"><?=lang('FileVault Escrow')?></a>
 				</li>
 
@@ -66,7 +69,9 @@
 				<div class="tab-pane" id='filevault-tab'>
 					<?$this->view('client/filevault_tab')?>
 				</div>
-
+				<div class="tab-pane" id='power-tab'>
+					<?php $this->view('client/power_tab'); ?>
+				</div>
 			</div>
 
 			<script>
