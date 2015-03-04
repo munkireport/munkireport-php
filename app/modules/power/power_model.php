@@ -80,14 +80,16 @@ class Power_model extends Model {
 		
 		// Convert battery manufacture date to calendar date.
 		// Bits 0...4 => day (value 1-31; 5 bits)
- 	       	// Bits 5...8 => month (value 1-12; 4 bits)
-        	// Bits 9...15 => years since 1980 (value 0-127; 7 bits)
+ 	  	// Bits 5...8 => month (value 1-12; 4 bits)
+        // Bits 9...15 => years since 1980 (value 0-127; 7 bits)
 		
 		$ManufactureDate = $this->manufacture_date;
-        	$mfgday = $this->manufacture_date & 31;
-        	$mfgmonth = ($this->manufacture_date >> 5) & 15;
-        	$mfgyear = (($this->manufacture_date >> 9) & 127) + 1980;
-        	$this->manufacture_date = sprintf("%d-%02d-%02d", $mfgyear, $mfgmonth, $mfgday);
+        
+        $mfgday = $this->manufacture_date & 31;
+        $mfgmonth = ($this->manufacture_date >> 5) & 15;
+        $mfgyear = (($this->manufacture_date >> 9) & 127) + 1980;
+        
+        $this->manufacture_date = sprintf("%d-%02d-%02d", $mfgyear, $mfgmonth, $mfgday);
 		
 		//timestamp added by the server
 		$this->timestamp = time();

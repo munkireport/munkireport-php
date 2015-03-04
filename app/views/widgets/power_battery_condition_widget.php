@@ -2,7 +2,7 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading" data-container="body" title="Total number of known external displays">
+				<div class="panel-heading" data-container="body" title="Battery condition listing">
 
 					<h3 class="panel-title"><i class="fa fa-flash"></i> Battery Condition</h3>
 
