@@ -131,7 +131,7 @@
 			"configuration": "Konfigurations-Bericht",
 			"hardware": "Hardware-Bericht",
 			"munki": "Munki-Bericht",
-			"network": "Netzwerk-Bericht"
+			"network": "Netzwerk-Bericht",
 			"power": "Strom-Bericht"
 		},
 		"user": {
