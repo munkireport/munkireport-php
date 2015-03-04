@@ -22,19 +22,19 @@
 				<?if($obj):?>
 					<a href="<?=url('show/listing/power#Replace%20Now')?>" class="btn btn-danger">
 						<span class="bigger-150"> <?=$obj->Now?> </span><br>
-						Now
+						<span data-i18n="widget.power.now">Now</span>
 					</a>
 					<a href="<?=url('show/listing/power#Service%20Battery')?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->Service?> </span><br>
-						Service
+						<span data-i18n="widget.power.service">Service</span>
 					</a>
 					<a href="<?=url('show/listing/power#Replace%20Soon')?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->Soon?> </span><br>
-						Soon
+						<span data-i18n="widget.power.soon">Soon</span>
 					</a>
 					<a href="<?=url('show/listing/power#Normal')?>" class="btn btn-success">
 						<span class="bigger-150"> <?=$obj->Normal?> </span><br>
-						Normal
+						<span data-i18n="widget.power.normal">Normal</span>
 					</a>
 					<?if($obj->Missing > 0):?>
 						<a href="<?=url('show/listing/power#No%20Battery')?>" class="btn btn-danger">
@@ -43,7 +43,6 @@
 					<?endif?>
 					</a>
 				<?endif?>
-
 				</div>
 
 			</div><!-- /panel -->

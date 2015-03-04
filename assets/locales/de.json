@@ -132,6 +132,7 @@
 			"hardware": "Hardware-Bericht",
 			"munki": "Munki-Bericht",
 			"network": "Netzwerk-Bericht"
+			"power": "Strom-Bericht"
 		},
 		"user": {
 			"logout": "Abmelden"
@@ -163,6 +164,13 @@
 			"notbound": "Nicht gebunden",
 			"info": "Summe seit Erfassung dieser Daten",
 			"title": "An Verzeichnisdienste gebunden"
-		}	
+		},
+		"power": {
+			"missing": "Fehlt",
+			"normal": "Normal",
+			"now": "Jetzt",
+			"service": "Service",
+			"soon": "Bald"
+		}
 	}
 }
