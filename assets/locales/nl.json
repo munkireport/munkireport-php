@@ -122,7 +122,8 @@
 			"configuration": "Configuratie rapport",
 			"hardware": "Hardware rapport",
 			"munki": "Munki rapport",
-			"network": "Netwerk rapport"
+			"network": "Netwerk rapport",
+			"power": "Vermogen rapport"
 		},
 		"user": {
 			"logout": "Log uit"
@@ -152,6 +153,13 @@
 			"notbound": "Niet Gebonden",
 			"info": "Totalen vanaf begin dataverzameling",
 			"title": "Gebonden aan een Directory Service"
-		}	
+		},
+		"power": {
+			"missing": "Vermist",
+			"normal": "Normaal",
+			"now": "Nu",
+			"service": "Service",
+			"soon": "Weldra"
+		}
 	}
 }

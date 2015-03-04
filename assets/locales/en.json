@@ -130,7 +130,8 @@
 			"configuration": "Configuration report",
 			"hardware": "Hardware report",
 			"munki": "Munki report",
-			"network": "Network report"
+			"network": "Network report",
+			"power": "Power report"
 		},
 		"user": {
 			"logout": "Sign Off"
@@ -161,6 +162,13 @@
 			"notbound": "Not Bound",
 			"info": "Totals since this data is being collected",
 			"title": "Bound to a Directory Service"
-		}	
+		},
+		"power": {
+			"missing": "Missing",
+			"normal": "Normal",
+			"now": "Now",
+			"service": "Service",
+			"soon": "Soon"
+		}
 	}
 }
