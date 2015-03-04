@@ -133,7 +133,7 @@ class Reportdata_controller extends Module_controller
 			{
 				$col = 'r' . $cnt++;
 
-				$out[] = array('key' => $key, 'y' => intval($obj->$col));
+				$out[] = array('key' => $key, 'cnt' => intval($obj->$col));
 
 				$total += $obj->$col;
 			}
@@ -141,7 +141,7 @@ class Reportdata_controller extends Module_controller
 			// Add Remaining IP's as other
 			if( $obj->count - $total )
 			{
-				$out[] = array('key' => 'Other', 'y' => $obj->count - $total);
+				$out[] = array('key' => 'Other', 'cnt' => $obj->count - $total);
 			}
 		}
 

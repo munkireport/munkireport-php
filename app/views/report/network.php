@@ -14,6 +14,12 @@
 
   </div> <!-- /row -->
 
+  <div class="row">
+
+      <?php $this->view('widgets/network_vlan_widget'); ?>
+
+  </div> <!-- /row -->
+
 </div>  <!-- /container -->
 
 <?php $this->view('partials/foot'); ?>
