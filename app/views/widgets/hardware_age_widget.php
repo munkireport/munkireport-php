@@ -27,7 +27,7 @@ $(document).on('appReady', function() {
 	myOptions.callBack = resizeAgeBox;
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
 		label = obj.data[v].label
-		return '<a class = "btn btn-default btn-xs" href="<?=url('show/listing/warranty')?>">' + label + ' ' + i18n.t('date.year') + '</a>';
+		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/warranty'); ?>">' + label + ' ' + i18n.t('date.year') + '</a>';
 	}
 
 	// Resize the container after we know how many items we have
@@ -38,7 +38,7 @@ $(document).on('appReady', function() {
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?=url('module/warranty/age')?>", '#age-plot', myOptions, parms);
+	drawGraph("<?php echo url('module/warranty/age'); ?>", '#age-plot', myOptions, parms);
 
 });
 </script>

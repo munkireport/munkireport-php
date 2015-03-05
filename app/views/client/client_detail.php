@@ -1,8 +1,8 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head') ?>
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
-			<?$this->view('client/machine_info')?>
+			<?php $this->view('client/machine_info'); ?>
 
 			<ul class="nav nav-tabs">
 
@@ -49,51 +49,54 @@
 			<div class="tab-content">
 
 				<div class="tab-pane active" id='munki'>
-					<?$this->view('client/munki_tab')?>
+					<?php $this->view('client/munki_tab'); ?>
 				</div>
 
 				<div class="tab-pane" id='apple-software'>
 					<h2 data-i18n="client.installed_apple_software">Installed Apple Software</h2>
-					<?$this->view('client/install_history_tab', array('apple'=> 1))?>
+					<?php $this->view('client/install_history_tab', array('apple'=> 1)); ?>
 				</div>
 
 				<div class="tab-pane" id='third-party-software'>
 					<h2 data-i18n="client.installed_third_party_software">Installed Third Party Software</h2>
-					<?$this->view('client/install_history_tab', array('apple'=> 0))?>
+					<?php $this->view('client/install_history_tab', array('apple'=> 0)); ?>
 				</div>
 
 				<div class="tab-pane" id='inventory-items'>
-					<?$this->view('client/inventory_items_tab')?>
+					<?php $this->view('client/inventory_items_tab'); ?>
 				</div>
 
 				<div class="tab-pane" id='network-tab'>
-					<?$this->view('client/network_tab')?>
+					<?php $this->view('client/network_tab'); ?>
 				</div>
 
 				<div class="tab-pane" id='directory-tab'>
-					<?$this->view('client/directory_tab')?>
+					<?php $this->view('client/directory_tab'); ?>
 				</div>
 
 				<div class="tab-pane" id='displays-tab'>
-					<?$this->view('client/displays_tab')?>
+					<?php $this->view('client/displays_tab'); ?>
 				</div>
 
 				<div class="tab-pane" id='filevault-tab'>
-					<?$this->view('client/filevault_tab')?>
+					<?php $this->view('client/filevault_tab'); ?>
 				</div>
 				<div class="tab-pane" id='bluetooth-tab'>
-					<?$this->view('client/bluetooth_tab')?>
+					<?php $this->view('client/bluetooth_tab'); ?>
 				</div>
 				<div class="tab-pane" id='ard-tab'>
-					<?$this->view('client/ard_tab')?>
+					<?php $this->view('client/ard_tab'); ?>
 				</div>
 
 			</div>
 
-			<script src="<?=conf('subdirectory')?>assets/js/bootstrap-tabdrop.js"></script>
+			<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-tabdrop.js"></script>
 
 			<script>
 			$(document).on('appReady', function(e, lang) {
+
+				// Format OS Version
+				$('span.osvers').html(integer_to_version($('span.osvers').html()))
 
 				// Activate tabdrop
 				$('.nav-tabs').tabdrop();
@@ -134,4 +137,4 @@
 	</div> <!-- /row -->
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

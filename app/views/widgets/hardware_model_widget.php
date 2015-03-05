@@ -10,15 +10,15 @@
 
 				<div class="list-group scroll-box">
 
-				<?	$machine = new Machine_model();
-					$sql = "SELECT count(id) AS count, machine_desc FROM machine GROUP BY machine_desc ORDER BY count DESC";
+				<?php	$machine = new Machine_model();
+						$sql = "SELECT count(id) AS count, machine_desc FROM machine GROUP BY machine_desc ORDER BY count DESC";
 				?>
-					<?foreach($machine->query($sql) as $obj):?>
-					<?$obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : 'Unknown';?>
-					<a href="<?=url('show/listing/hardware/#'.rawurlencode($obj->machine_desc))?>" class="list-group-item"><?=$obj->machine_desc?>
-						<span class="badge pull-right"><?=$obj->count?></span>
+					<?php foreach($machine->query($sql) as $obj): ?>
+					<?php $obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : 'Unknown'; ?>
+					<a href="<?php echo url('show/listing/hardware/#'.rawurlencode($obj->machine_desc)); ?>" class="list-group-item"><?php echo $obj->machine_desc; ?>
+						<span class="badge pull-right"><?php echo $obj->count; ?></span>
 					</a>
-					<?endforeach?>
+					<?php endforeach; ?>
 
 				</div>
 

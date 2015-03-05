@@ -15,12 +15,12 @@
 						 			FROM displays;";
 						$obj = current($queryobj->query($sql));
 					?>
-				<?if($obj):?>
-					<a href="<?=url('show/listing/displays')?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->total?> </span><br>
+				<?php if($obj): ?>
+					<a href="<?php echo url('show/listing/displays'); ?>" class="btn btn-success">
+						<span class="bigger-150"> <?php echo $obj->total; ?> </span><br>
 						Displays
 					</a>
-				<?endif?>
+				<?php endif ?>
 
 				</div>
 

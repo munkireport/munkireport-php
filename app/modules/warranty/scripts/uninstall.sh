@@ -4,4 +4,4 @@
 rm -f "${MUNKIPATH}preflight.d/warranty"
 
 # Remove warranty.txt file
-rm -f "${MUNKIPATH}preflight.d/cache/warranty.txt"
+rm -f "${CACHEPATH}warranty.txt"

@@ -13,7 +13,7 @@ class Machine_model extends Model {
 		$this->rs['cpu'] = '';
 		$this->rs['current_processor_speed'] = '';
 		$this->rs['cpu_arch'] = '';
-		$this->rs['os_version'] = '';
+		$this->rs['os_version'] = 0;
 		$this->rs['physical_memory'] = 0;
 		$this->rs['platform_UUID'] = '';
 		$this->rs['number_processors'] = 0;
@@ -46,7 +46,7 @@ class Machine_model extends Model {
 
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 3;
+		$this->schema_version = 4;
 
 		// Create table if it does not exist
 		$this->create_table();
@@ -87,7 +87,20 @@ class Machine_model extends Model {
 		{
 			$mylist['physical_memory'] = intval($mylist['physical_memory']);
 		}
-		
+
+		// Convert OS version to int
+		if( isset($mylist['os_version']))
+		{
+			$digits = explode('.', $mylist['os_version']);
+			$mult = 10000;
+			$mylist['os_version'] = 0;
+			foreach($digits as $digit)
+			{
+				$mylist['os_version'] += $digit * $mult;
+				$mult = $mult / 100;
+			}
+		}
+
 		$this->timestamp = time();
 		$this->merge($mylist)->save();
 	}
