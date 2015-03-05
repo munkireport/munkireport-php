@@ -11,11 +11,11 @@
 				<div class="panel-body text-center">
 					<?php
 						$queryobj = new Power_model();
-						$sql = "SELECT COUNT(CASE WHEN condition='Normal' THEN 1 END) AS Normal,
-										COUNT(CASE WHEN condition='Replace Soon' THEN 1 END) AS Soon,
-										COUNT(CASE WHEN condition='Service Battery' THEN 1 END) AS Service,
-										COUNT(CASE WHEN condition='Replace Now' THEN 1 END) AS Now,
-										COUNT(CASE WHEN condition='No Battery' THEN 1 END) AS Missing
+						$sql = "SELECT COUNT(CASE WHEN `condition` = 'Normal' THEN 1 END) AS Normal,
+										COUNT(CASE WHEN `condition` = 'Replace Soon' THEN 1 END) AS Soon,
+										COUNT(CASE WHEN `condition` = 'Service Battery' THEN 1 END) AS Service,
+										COUNT(CASE WHEN `condition` = 'Replace Now' THEN 1 END) AS Now,
+										COUNT(CASE WHEN `condition` = 'No Battery' THEN 1 END) AS Missing
 							 			FROM power;";
 						$obj = current($queryobj->query($sql));
 					?>
