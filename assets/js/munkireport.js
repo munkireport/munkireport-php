@@ -33,9 +33,15 @@ $( document ).ready(function() {
 function integer_to_version(osvers)
 {
 	osvers = "" + osvers
-	if( osvers !== '' && osvers.indexOf(".") == -1)
+	// If osvers contains a dot, don't convert
+	if( osvers.indexOf(".") == -1)
     {
-      osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+		// Remove non-numerical string
+		osvers = isNaN(osvers) ? "" : osvers;
+		
+		// Left pad with zeroes if necessary
+		osvers = ("000000" + osvers).substr(-6)
+		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
     }
     return osvers
 }
