@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/power.sh"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add power "${MUNKIPATH}preflight.d/cache/powerinfo.txt"
+	defaults write "${PREFPATH}" ReportItems -dict-add power "${CACHEPATH}powerinfo.txt"
 
 else
 	echo "Failed to download all required components!"
