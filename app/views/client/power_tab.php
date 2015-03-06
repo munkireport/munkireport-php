@@ -42,7 +42,21 @@ $power = new power_model($serial_number);
 				</tr>
 					<tr>
 					<td>Temperature:</td>
-					<td><?=$power->temperature?></td>
+					<td><?php
+						if ($power->temperature == 0 || $power->temperature == ""){
+							echo "";
+							}
+						else {
+							if (conf('temperature_unit') == "F"){
+								// Fahrenheit
+								echo round(((($power->temperature * 9/5 ) + 3200 ) / 100), 2) . "° F";
+								}
+							else {
+								// Celsius
+								echo $power->temperature = ($power->temperature / 100) . "° C";
+								}
+						}
+						?></td>
 				</tr>
 					<tr>
 					<td>Condition:</td>
