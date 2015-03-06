@@ -175,5 +175,20 @@ class Munkireport_model extends Model {
 		$this->save();
 		
 		return $this;
-	}	
+	}
+	
+	// function that will sort the managed installs associative array by display name if available and name if not. 
+	function sort_software_arrays($assoc_array)
+	{
+	    
+	    uasort($assoc_array, function ($i, $j) {
+				    $a = isset($i['display_name']) ? $i['display_name'] : $i['name'];
+				    $b = isset($j['display_name']) ? $j['display_name'] : $i['name'];
+				    if ($a == $b) return 0;
+				    elseif ($a > $b) return 1;
+				    else return -1;
+				    });
+	    
+	    return $assoc_array;
+	}
 }
