@@ -312,7 +312,7 @@
 	|
 	|
 	*/
-    $conf['client_passphrases'] = array();
+	$conf['client_passphrases'] = array();
 
 	/*
 	|===============================================
@@ -381,6 +381,21 @@
 
 	/*
 	|===============================================
+	| Apps Version Report
+	|===============================================
+	|
+	| List of applications, by name, that you want to see in the apps
+	| version report. If this is not set the report page will appear empty.
+	| This is case insensitive.
+	|
+	| Eg:
+	| $conf['apps_to_track'] = array('Adobe Flash Player Install Manager',
+								'Firefox','Microsoft Excel');
+	|
+	*/
+
+	/*
+	|===============================================
 	| App settings
 	|===============================================
 	|
@@ -404,12 +419,9 @@
 	// Path to modules directory, with trailing slash
 	$conf['module_path'] = $conf['application_path'] . "modules/";
 
-
-
 	// Routes
 	$conf['routes'] = array();
 	$conf['routes']['module(/.*)?']	= "module/load$1";
-
 
 	/*
 	|===============================================
