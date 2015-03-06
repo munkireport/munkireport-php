@@ -19,7 +19,8 @@ powerfile="$DIR/cache/powerinfo.txt"
 ## Exit if not a MacBook, MacBook Air or MacBook Pro
 AppleSmartBattery=$(ioreg -n AppleSmartBattery -r)
 if [ -z "$AppleSmartBattery" ]; then
-	# echo No battery information found	
+	# echo No battery information found
+	echo '' > "$powerfile"
 	exit 0 
 fi 
 
