@@ -381,6 +381,22 @@
 
 	/*
 	|===============================================
+	| Apps Version Report
+	|===============================================
+	|
+	| List of applications, by name, that you want to see in the apps
+	| version report. If this is not set the report page will appear empty.
+	| This is case insensitive.
+	|
+	| Eg:
+	| $conf['apps_to_track'] = array('Adobe Flash Player Install Manager',
+								'Firefox','Microsoft Excel');
+	|
+	*/
+
+
+	/*
+	|===============================================
 	| App settings
 	|===============================================
 	|
