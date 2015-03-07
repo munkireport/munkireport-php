@@ -66,10 +66,10 @@
 	|
 	*/
 	$conf['subdirectory'] = substr(
-						$_SERVER['PHP_SELF'],
-						0,
-						strpos($_SERVER['PHP_SELF'], basename(FC))
-					);
+					    $_SERVER['PHP_SELF'],
+					    0,
+					    strpos($_SERVER['PHP_SELF'], basename(FC))
+				    );
 
 	/*
 	|===============================================
@@ -134,7 +134,19 @@
 
 	/*
 	|===============================================
-	| Force secure connection when authorizing
+	| Authorization
+	|===============================================
+	|
+	| Authorize people by listing them in the appropriate array.
+	| An entry containing a star (*) signifies that everyone is authorized
+	| which is the default setting.
+	|
+	*/	
+	$conf['authorization']['delete_machine'] = array('*');
+
+	/*
+	|===============================================
+	| Force secure connection when authenticating
 	|===============================================
 	|
 	| Set this value to TRUE to force https when logging in.
@@ -215,9 +227,9 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
 	*/
-	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+    $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
-	/*
+    /*
 	|===============================================
 	| Modules
 	|===============================================
@@ -232,7 +244,8 @@
 	|
 	| If you don't set this item, all available modules are installed (default)
 	*/
-	//$conf['modules'] = array();
+    //$conf['modules'] = array();
+
 
 	/*
 	|===============================================
@@ -248,9 +261,25 @@
 	|
 	| When not configured, or if set to FALSE, the default behaviour applies.
 	*/
-		//$conf['keep_previous_displays'] = TRUE;
+	//$conf['keep_previous_displays'] = TRUE;
 
 	/*
+	|===============================================
+	| Unit of temperature °C or °F 
+	|===============================================
+	|
+	| Unit of temperature, possible values: F for Fahrenheit, C for Celsius
+	|
+	|			$conf['temperature_unit'] = 'F';
+	|
+	| When not configured, the default behaviour applies.
+	| By default temperture units are displayed in Celsius °C.
+	|
+	*/
+    //$conf['temperature_unit'] = 'F';
+    
+    
+    /*
 	|===============================================
 	| Migrations
 	|===============================================
@@ -265,7 +294,7 @@
 	| to FALSE when you're done migrating.
 	|
 	*/
-	$conf['allow_migrations'] = FALSE;
+    $conf['allow_migrations'] = FALSE;
 
 
 	/*
@@ -302,9 +331,9 @@
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
 	|
 	*/
-	//$conf['proxy']['server'] = 'proxy.yoursite.org';
+    //$conf['proxy']['server'] = 'proxy.yoursite.org';
 
-	/*
+    /*
 	|===============================================
 	| Request timeout
 	|===============================================
@@ -314,9 +343,10 @@
 	| Timeout in seconds
 	|
 	*/
-	$conf['request_timeout'] = 5;
+    $conf['request_timeout'] = 5;
 
-	/*
+
+ 	/*
 	|===============================================
 	| Dashboard - IP Ranges
 	|===============================================
@@ -330,7 +360,7 @@
 	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
 	*/
-	$conf['ip_ranges'] = array();
+    $conf['ip_ranges'] = array();
 
 	/*
 	|===============================================
@@ -346,7 +376,7 @@
 		array('disk_report', 'installed_memory', 'bound_to_ds'),
 		array('uptime', 'pending_apple', 'pending_munki'),
 		array('new_clients', 'munki_versions', 'filevault'),
-		array('warranty')
+		array('warranty','power_battery_condition','power_battery_health')
 	);
 
 	/*
@@ -373,6 +403,7 @@
 	| the variables below. For enhanced security it is advised to put the
 	| webapp in a directory that is not visible to the internet.
 	*/
+
 	// Path to system folder, with trailing slash
 	$conf['system_path'] = APP_ROOT.'/system/';
 

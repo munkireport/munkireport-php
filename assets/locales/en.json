@@ -2,6 +2,9 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
+	"admin": {
+		"delete_failed": "Remove failed: "
+	},
 	"all": "All",
 	"auth": {
 		"addtoconfig": "Add this line to config.php:",
@@ -40,6 +43,13 @@
 		"install_date": "Install Date",
 		"no_install_history": "No install history",
 		"process_name": "Process Name"
+	},
+	"chart": {
+		"stackedarea": {
+			"stacked": "Stacked",
+			"stream": "Stream",
+			"expanded": "Expanded"
+		}
 	},
 	"configuration": "Configuration",
 	"date": {
@@ -120,7 +130,8 @@
 			"configuration": "Configuration report",
 			"hardware": "Hardware report",
 			"munki": "Munki report",
-			"network": "Network report"
+			"network": "Network report",
+			"power": "Power report"
 		},
 		"user": {
 			"logout": "Sign Off"
@@ -135,8 +146,9 @@
 	},
 	"pending": "Pending",
 	"path": "Path",
-	"serial": "Serialnumber",
+	"serial": "Serial Number",
 	"unavailable": "Unavailable",
+	"unauthorized": "You are not authorized",
 	"unknown": "Unknown",
 	"version": "Version",
 	"warning": "Warning",
@@ -150,6 +162,13 @@
 			"notbound": "Not Bound",
 			"info": "Totals since this data is being collected",
 			"title": "Bound to a Directory Service"
-		}	
+		},
+		"power": {
+			"missing": "Missing",
+			"normal": "Normal",
+			"now": "Now",
+			"service": "Service",
+			"soon": "Soon"
+		}
 	}
 }

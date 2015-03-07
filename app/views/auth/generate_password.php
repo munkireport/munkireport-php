@@ -1,4 +1,4 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
 	<div class="container">
 		<div class="row">
@@ -13,16 +13,16 @@
 
 						    	<?foreach ($list AS $msg):?>
 
-								<p class="text-<?=$type?>"><?=$msg?></p>
+								<p class="text-<?php echo $type; ?>"><?php echo $msg; ?></p>
 
-								<?endforeach?>
+								<?php endforeach; ?>
 
-							<?php endforeach?>
+							<?php endforeach; ?>
 
-						<?if($reason == 'noauth'):?>
+						<?php if($reason == 'noauth'): ?>
 						    <div class="alert alert-danger" data-i18n="auth.noauth_found">No authentication information found, please add an account to the config file.</div>
-						<?endif?>
-					    <?php if(isset($generated_pwd)):?>
+						<?php endif; ?>
+					    <?php if(isset($generated_pwd)): ?>
 							<!-- Modal -->
 							<div class="modal" role="dialog" aria-labelledby="myModalLabel" style="display: block">
 								<div class="modal-dialog">
@@ -32,16 +32,16 @@
 								    </div>
 								    <div class="modal-body has-success">
 								      	<label class="control-label" for="genpwd" data-i18n="auth.addtoconfig">Add this line to config.php:</label>
-										<input type="text" id="genpwd" name="genpwd" class="form-control" value="$auth_config['<?php echo $login?>'] = '<?php echo $generated_pwd?>';"></input><br/>
+										<input type="text" id="genpwd" name="genpwd" class="form-control" value="$auth_config['<?php echo $login?>'] = '<?php echo $generated_pwd; ?>';"></input><br/>
 								    </div>
 								    <div class="modal-footer">
 								      <a href="" class="btn btn-default" data-i18n="auth.gen_other">Generate another</a>
-								      <a href="<?=url()?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>
+								      <a href="<?php echo url(); ?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>
 								    </div>
 								  </div><!-- /.modal-content -->
 								</div><!-- /.modal-dialog -->
 							</div><!-- /.modal -->
-						<?php endif?>
+						<?php endif; ?>
 				    		<div class="form-group">
 								<label for="loginusername" class="col-lg-5 control-label"><span data-i18n="auth.username">Username</span></label>
 								<div class="col-lg-7">
@@ -57,24 +57,24 @@
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
 								<button type="submit" class="btn btn-primary" data-i18n="auth.generate">Generate</button> 
-								<a href="<?=url()?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>	
+								<a href="<?php echo url(); ?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>	
 								</div>
 							</div>
-						<?php //endif?>				
+						<?php //endif; ?>				
 			            </fieldset>
-			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?=$GLOBALS['version']?></small></p>
+			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	  <script src="<?=conf('subdirectory')?>assets/js/i18next.min.js"></script>
+	  <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
   <script>
     $.i18n.init({
         useLocalStorage: false,
         debug: true,
-        resGetPath: "<?=conf('subdirectory')?>assets/locales/__lng__.json",
+        resGetPath: "<?php echo conf('subdirectory'); ?>assets/locales/__lng__.json",
         fallbackLng: 'en'
     }, function() {
         $('form').i18n();

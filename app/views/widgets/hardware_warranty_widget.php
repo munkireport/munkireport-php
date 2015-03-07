@@ -19,13 +19,13 @@
 						$class_list = array('Expired' => 'danger', 'Supported' => 'success');
 					?>
 
-					<?foreach($warranty->query($sql) as $obj):?>
-						<?$status = array_key_exists($obj->status, $class_list) ? $class_list[$obj->status] : 'default'?>
-						<a href="<?=url('show/listing/warranty#'.$obj->status)?>" class="list-group-item list-group-item-<?=$status?>">
-							<span class="badge"><?=$obj->count?></span>
-							<?=$obj->status?>
+					<?php foreach($warranty->query($sql) as $obj): ?>
+						<?php $status = array_key_exists($obj->status, $class_list) ? $class_list[$obj->status] : 'default'?>
+						<a href="<?php echo url('show/listing/warranty#'.$obj->status); ?>" class="list-group-item list-group-item-<?php echo $status; ?>">
+							<span class="badge"><?php echo $obj->count; ?></span>
+							<?php echo $obj->status; ?>
 						</a>
-					<?endforeach?>
+					<?php endforeach; ?>
 
 
 					<?php
@@ -37,12 +37,12 @@
 										ORDER BY count DESC";
 					?>
 
-					<?foreach($warranty->query($sql) as $obj):?>
-						<a href="<?=url('show/listing/warranty#'.$obj->status)?>" class="list-group-item list-group-item-warning">
-							<span class="badge"><?=$obj->count?></span>
+					<?php foreach($warranty->query($sql) as $obj): ?>
+						<a href="<?php echo url('show/listing/warranty#'.$obj->status); ?>" class="list-group-item list-group-item-warning">
+							<span class="badge"><?php echo $obj->count; ?></span>
 							Expires in 30 days
 						</a>
-					<?endforeach?>
+					<?php endforeach; ?>
 
 				</div>
 

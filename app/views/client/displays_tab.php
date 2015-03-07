@@ -7,7 +7,7 @@
 ?>
 
 	<h2>Displays</h2>
-		<?foreach($display->query($sql) as $obj):?>
+		<?php foreach($display->query($sql) as $obj): ?>
 			<span class="label label-success nw-displayscount"></span>
 			<table class="table table-striped">
 				<thead>
@@ -65,7 +65,7 @@
 										break;
 								}
 							?>
-							<?=$obj->model?> (<?=($obj->type == 0 ? 'Built-in' : 'External') ?>)
+							<?php echo $obj->model; ?> (<?php echo ($obj->type == 0) ? 'Built-in' : 'External'; ?>)
 						</th>
 						<th></th>
 					</tr>
@@ -73,23 +73,23 @@
 				<tbody>
 					<tr>
 						<td>Serial</td>
-						<td><?=$obj->display_serial?></td>
+						<td><?php echo $obj->display_serial; ?></td>
 					</tr>
 					<tr>
 						<td>Manufacture date</td>
-						<td><?=$obj->manufactured?></td>
+						<td><?php echo $obj->manufactured; ?></td>
 					</tr>
 					<tr>
 						<td>Native resolution</td>
-						<td><?=$obj->native?></td>
+						<td><?php echo $obj->native; ?></td>
 					</tr>
 					<tr>
 						<td>Was connected</td>
-						<td><time title="<?=strftime('%c',$obj->timestamp)?>" datetime="<?=date('c',$obj->timestamp)?>"></time></td>
+						<td><time title="<?php echo strftime('%c',$obj->timestamp); ?>" datetime="<?php echo date('c',$obj->timestamp); ?>"></time></td>
 					</tr>
 				</tbody>
 			</table>
-		<?endforeach?>
+		<?php endforeach; ?>
 
 <script type="text/javascript" charset="utf-8">
 	// Set displays count in tab header

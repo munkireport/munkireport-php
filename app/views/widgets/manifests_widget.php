@@ -10,15 +10,15 @@
 
 				<div class="list-group scroll-box">
 
-				<?	$munkireport = new Munkireport_model();
-					$sql = "SELECT count(1) AS count, manifestname FROM munkireport GROUP BY manifestname ORDER BY count DESC";
+				<?php	$munkireport = new Munkireport_model();
+						$sql = "SELECT count(1) AS count, manifestname FROM munkireport GROUP BY manifestname ORDER BY count DESC";
 				?>
-					<?foreach($munkireport->query($sql) as $obj):?>
-					<?$obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown';?>
-					<a href="<?=url('show/listing/munki/#'.$obj->manifestname)?>" class="list-group-item"><?=$obj->manifestname?>
-						<span class="badge pull-right"><?=$obj->count?></span>
+					<?php foreach($munkireport->query($sql) as $obj): ?>
+					<?php $obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown'; ?>
+					<a href="<?php echo url('show/listing/munki/#'.$obj->manifestname); ?>" class="list-group-item"><?php echo $obj->manifestname; ?>
+						<span class="badge pull-right"><?php echo $obj->count; ?></span>
 					</a>
-					<?endforeach?>
+					<?php endforeach; ?>
 
 				</div>
 

@@ -1,7 +1,7 @@
 munkireport-php
 ===============
 
-![Dashboard view](https://raw.github.com/wiki/munkireport/munkireport-php/assets/pics/dashboard.png)
+![Dashboard view](https://github.com/munkireport/munkireport-php/wiki/assets/pics/dashboard.png)
 
 This is version 2 of munkireport-php, a reporting client for [munki](https://code.google.com/p/munki/). The previous version of munkireport is still available on googlecode: [munkireport-php](https://code.google.com/p/munkireport-php/).
 I moved the project to github because github is just awesome!
@@ -74,7 +74,7 @@ Munkireport-php makes use of these fine software packages:
 * [phpserialize](https://github.com/sdfsdhgjkbmnmxc/phpserialize) for serializing client data
 * [jQuery](http://jquery.com) for easy javascript
 * [Datatables](http://datatables.net) table display
-* [Flotr2](http://www.humblesoftware.com/flotr2/) for graphs
+* [Flotr2](http://www.humblesoftware.com/flotr2/) and [nvd3](https://github.com/nvd3-community/nvd3) for graphs
 * [Moment.js](http://momentjs.com) for displaying time
 * [Bootstrap 3.0](http://getbootstrap.com) the main webframework
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/) for icons

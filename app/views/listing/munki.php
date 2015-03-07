@@ -1,6 +1,6 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
 new Munkireport_model;
@@ -40,7 +40,7 @@ new Munkireport_model;
 				});
 
 			    oTable = $('.table').dataTable( {
-			        "sAjaxSource": "<?=url('datatables/data')?>",
+			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
 			        "aoColumnDefs": [
 			        	{ 'bVisible': false, "aTargets": hideThese }
 					],
@@ -51,7 +51,7 @@ new Munkireport_model;
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
 			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
+			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date
@@ -64,6 +64,15 @@ new Munkireport_model;
 			        	{
 			        		$('td:eq(6)', nRow).html('never');
 			        	}
+
+    	                // Format OS Version
+		                var osvers = $('td:eq(4)', nRow).html();
+		                if( osvers !== '' && osvers.indexOf(".") == -1)
+		                {
+		                  osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+		                }
+		                $('td:eq(4)', nRow).html(osvers);
+
 
 			        	var runtype = $('td:eq(7)', nRow).html(),
 				        	cols = [
@@ -107,6 +116,15 @@ new Munkireport_model;
 							}
 							col++;
 						});
+
+						// Look for 'osversion' statement 
+						if(out.sSearch.match(/^\d+\.\d+(\.(\d+)?)?$/))
+						{
+							var search = out.sSearch.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+
+							// Override global search
+							aoData.push( { "name": "sSearch", "value": search } );
+						}
 				    }
 			    } );
 
@@ -145,4 +163,4 @@ new Munkireport_model;
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

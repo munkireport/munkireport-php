@@ -29,6 +29,17 @@ $( document ).ready(function() {
     });
 });
 
+// Integer or integer string OS Version to semantic OS version
+function integer_to_version(osvers)
+{
+	osvers = "" + osvers
+	if( osvers !== '' && osvers.indexOf(".") == -1)
+    {
+      osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+    }
+    return osvers
+}
+
 // Get client detail link
 function get_client_detail_link(name, sn, baseurl, hash)
 {
@@ -44,6 +55,9 @@ function delete_machine(obj)
 {
 	var row = obj.parents('tr');
 	$.getJSON( obj.attr('href'), function( data ) {
+		
+		data.status = data.status || 'unknown';
+
 		if(data.status == 'success')
 		{
 			// Animate slide up
@@ -59,7 +73,7 @@ function delete_machine(obj)
 		}
 	  	else
 	  	{
-	  		alert('remove failed')
+	  		alert(i18n.t('admin.delete_failed') + i18n.t(data.status));
 	  	}
 	});
 }

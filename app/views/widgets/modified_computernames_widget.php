@@ -20,25 +20,25 @@
 									WHERE NOT directoryservice.computeraccount = ''";
 					$cnt = 0;
 				?>
-					<?foreach($machine->query($sql) as $obj):?>
+					<?php foreach($machine->query($sql) as $obj): ?>
 						<!--//removing the dollar sign first, lowercase comparison for non-matching-->
-						<?if (strtolower(str_replace('$', '',$obj->computeraccount)) !== strtolower($obj->computer_name)):?>
+						<?php if (strtolower(str_replace('$', '',$obj->computeraccount)) !== strtolower($obj->computer_name)): ?>
 
-							<a href="<?=url('clients/detail/'.$obj->serial_number.'#tab_directory-tab')?>" class="list-group-item">
+							<a href="<?php echo url('clients/detail/'.$obj->serial_number.'#tab_directory-tab'); ?>" class="list-group-item">
 								<span class="badge">1</span>
-								<?=$obj->computer_name?> != <?=str_replace('$', '',$obj->computeraccount)?>
+								<?php echo $obj->computer_name?> != <?php echo str_replace('$', '',$obj->computeraccount); ?>
 							</a>
-							<?$cnt++?>
+							<?php $cnt++; ?>
 
-						<?endif?>
+						<?php endif; ?>
 
-					<?endforeach?>
+					<?php endforeach; ?>
 
-					<?if( ! $cnt):?>
+					<?php if( ! $cnt): ?>
 
 						<span class="list-group-item">All computers match</span>
 
-					<?endif?>
+					<?php endif; ?>
 
 				</div>
 
