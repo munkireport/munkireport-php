@@ -362,6 +362,31 @@
 	*/
     $conf['ip_ranges'] = array();
 
+ 	/*
+	|===============================================
+	| Dashboard - VLANS
+	|===============================================
+	|
+	| Plot VLANS by providing an array with labels and
+	| a partial IP address of the routers. Specify multiple partials in array
+	| if you want to group them together.
+	| The router IP adress part is queried with SQL LIKE
+	| Examples:
+	| $conf['ipv4routers']['Wired'] = '211.88.10.1';
+	| $conf['ipv4routers']['WiFi'] = array('211.88.12.1', '211.88.13.1');
+	|
+	*/
+    $conf['ipv4routers']['Private range'] = array('10.%', '192.168.%',
+        '172.16.%',
+        '172.17.%',
+        '172.18.%',
+        '172.19.%',
+        '172.2_.%',
+        '172.30.%',
+        '172.31.%', );
+    $conf['ipv4routers']['Link-local'] = array('169.254.%');
+
+
 	/*
 	|===============================================
 	| Dashboard - Layout
