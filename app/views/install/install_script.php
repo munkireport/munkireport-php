@@ -145,6 +145,9 @@ echo '+ Installing <?php echo $scriptname; ?>'
 
 <?php endforeach; ?>
 
+# Capture uninstall scripts
+read -r -d '' UNINSTALLS << EOF
+
 <?php foreach($uninstall_scripts AS $scriptname => $filepath): ?>
 
 <?php echo "## $scriptname ##"; ?> 
@@ -154,17 +157,31 @@ echo '- Uninstalling <?php echo $scriptname; ?>'
 
 <?php endforeach; ?>
 
-# Remove munkireport version file
-rm -f "${MUNKIPATH}munkireport-"*
+EOF
+
+# If not building a package, execute uninstall scripts
+if [ $BUILDPKG = 0 ]; then
+	eval "$UNINSTALLS"
+	# Remove munkireport version file
+	rm -f "${MUNKIPATH}munkireport-"*
+fi
 
 if [ $ERR = 0 ]; then
 
 	if [ $BUILDPKG = 1 ]; then
+		
+		# Create scripts directory
+		SCRIPTDIR=$(mktemp -d -t mrpkg)
+		
+		# Add uninstall script to preflight
+		echo  "#!/bin/bash" > $SCRIPTDIR/preflight
+		echo  "$UNINSTALLS" >> $SCRIPTDIR/preflight
 
 		echo "Building MunkiReport v${VERSION} package."
 		pkgbuild --identifier "$IDENTIFIER" \
 				 --version "$VERSION" \
 				 --root "$INSTALLROOT" \
+				 --scripts "$SCRIPTDIR" \
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
 	else
