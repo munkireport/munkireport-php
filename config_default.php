@@ -141,7 +141,7 @@
 	| An entry containing a star (*) signifies that everyone is authorized
 	| which is the default setting.
 	|
-	*/	
+	*/
 	$conf['authorization']['delete_machine'] = array('*');
 
 	/*
@@ -265,7 +265,7 @@
 
 	/*
 	|===============================================
-	| Unit of temperature °C or °F 
+	| Unit of temperature °C or °F
 	|===============================================
 	|
 	| Unit of temperature, possible values: F for Fahrenheit, C for Celsius
@@ -277,8 +277,8 @@
 	|
 	*/
     //$conf['temperature_unit'] = 'F';
-    
-    
+
+
     /*
 	|===============================================
 	| Migrations
@@ -411,14 +411,14 @@
 	|
 	| List of applications, by name, that you want to see in the apps
 	| version report. If this is not set the report page will appear empty.
-	| This is case insensitive.
+	| This is case insensitive but must be an array.
 	|
 	| Eg:
 	| $conf['apps_to_track'] = array('Adobe Flash Player Install Manager',
-								'Firefox','Microsoft Excel');
+														'Firefox','Microsoft Excel');
 	|
 	*/
-
+	$conf['apps_to_track'] = array('Safari');
 
 	/*
 	|===============================================
