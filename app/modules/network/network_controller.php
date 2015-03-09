@@ -52,7 +52,7 @@ class Network_controller extends Module_controller
 
 		if( ! $router_arr ) // Empty array, fall back on default ip ranges
 		{
-			$router_arr = conf('ipv4routers');
+			$router_arr = conf('ipv4routers', array());
 		}
 		
 		$out = array();
