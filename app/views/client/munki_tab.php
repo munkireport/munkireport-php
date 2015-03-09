@@ -195,7 +195,8 @@ if(isset($report['ItemsToRemove']))
 		        </tr>
 		      </thead>
 		      <tbody>
-				<?php foreach($report[$report_key] AS $item): ?>
+				
+				<?php foreach($client->sort_software_arrays($report[$report_key]) AS $item): ?>
 		        <tr>
 		          <td>
 					<?php echo isset($item['display_name']) ? $item['display_name'] : $item['name']; ?>
