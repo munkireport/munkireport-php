@@ -141,7 +141,7 @@
 	| An entry containing a star (*) signifies that everyone is authorized
 	| which is the default setting.
 	|
-	*/	
+	*/
 	$conf['authorization']['delete_machine'] = array('*');
 
 	/*
@@ -261,7 +261,23 @@
 	|
 	| When not configured, or if set to FALSE, the default behaviour applies.
 	*/
-		//$conf['keep_previous_displays'] = TRUE;
+	//$conf['keep_previous_displays'] = TRUE;
+
+	/*
+	|===============================================
+	| Unit of temperature °C or °F
+	|===============================================
+	|
+	| Unit of temperature, possible values: F for Fahrenheit, C for Celsius
+	|
+	|			$conf['temperature_unit'] = 'F';
+	|
+	| When not configured, the default behaviour applies.
+	| By default temperture units are displayed in Celsius °C.
+	|
+	*/
+    //$conf['temperature_unit'] = 'F';
+
 
     /*
 	|===============================================
@@ -346,6 +362,31 @@
 	*/
     $conf['ip_ranges'] = array();
 
+ 	/*
+	|===============================================
+	| Dashboard - VLANS
+	|===============================================
+	|
+	| Plot VLANS by providing an array with labels and
+	| a partial IP address of the routers. Specify multiple partials in array
+	| if you want to group them together.
+	| The router IP adress part is queried with SQL LIKE
+	| Examples:
+	| $conf['ipv4routers']['Wired'] = '211.88.10.1';
+	| $conf['ipv4routers']['WiFi'] = array('211.88.12.1', '211.88.13.1');
+	| $conf['ipv4routers']['Private range'] = array('10.%', '192.168.%',
+	| 	'172.16.%',
+	| 	'172.17.%',
+	| 	'172.18.%',
+	| 	'172.19.%',
+	| 	'172.2_.%',
+	| 	'172.30.%',
+	| 	'172.31.%', );
+	| $conf['ipv4routers']['Link-local'] = array('169.254.%');
+	|
+	*/
+
+
 	/*
 	|===============================================
 	| Dashboard - Layout
@@ -360,8 +401,24 @@
 		array('disk_report', 'installed_memory', 'bound_to_ds'),
 		array('uptime', 'pending_apple', 'pending_munki'),
 		array('new_clients', 'munki_versions', 'filevault'),
-		array('warranty')
+		array('warranty','power_battery_condition','power_battery_health')
 	);
+
+	/*
+	|===============================================
+	| Apps Version Report
+	|===============================================
+	|
+	| List of applications, by name, that you want to see in the apps
+	| version report. If this is not set the report page will appear empty.
+	| This is case insensitive but must be an array.
+	|
+	| Eg:
+	| $conf['apps_to_track'] = array('Adobe Flash Player Install Manager',
+														'Firefox','Microsoft Excel');
+	|
+	*/
+	$conf['apps_to_track'] = array('Safari');
 
 	/*
 	|===============================================

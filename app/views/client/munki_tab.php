@@ -186,7 +186,7 @@ if(isset($report['ItemsToRemove']))
 		  <h2><?php echo $title; ?></h2>
 
 			<?php if(isset($report[$report_key]) && $report[$report_key]): ?>
-			<table class="table table-striped">
+			<table class="table table-striped <?php echo $report_key; ?>">
 		      <thead>
 		        <tr>
 		          <th>Name</th>
@@ -242,3 +242,13 @@ if(isset($report['ItemsToRemove']))
   </div><!-- </div class="row"> -->
 
 <pre><?php //print_r($client->rs) ?></pre>
+<script>
+  $(document).on('appReady', function(e, lang) {
+
+        // Initialize datatables
+            $('.ManagedInstalls').dataTable({
+                "bServerSide": false,
+                "order": [0,'asc']
+            });
+  });
+</script>
