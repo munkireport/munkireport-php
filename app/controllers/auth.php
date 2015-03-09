@@ -119,7 +119,7 @@ class auth extends Controller
 					if ($_POST && $login && $password)
 					{
 						//include the class and create a connection
-						//To do: wrap this include somewhere else?
+						//TODO: wrap this include somewhere else?
 						include_once (APP_PATH . '/lib/adLDAP/adLDAP.php');
 						try
 						{
