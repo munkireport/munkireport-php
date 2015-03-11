@@ -50,7 +50,7 @@ rm -rf /usr/local/munki/preflight \
   /usr/local/munki/postflight \
   /usr/local/munki/postflight.d \
   /usr/local/munki/report_broken_client \
-  /usr/local/munkilib/reportcommon.py \
+  /usr/local/munki/munkilib/reportcommon.py \
   /usr/local/munki/munkireport-* \
   /Library/Preferences/MunkiReport.plist
 exit 0</string>
