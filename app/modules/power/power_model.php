@@ -37,6 +37,13 @@ class Power_model extends Model {
 	 **/
 	function process($data)
 	{		
+		// If data is empty, remove record
+		if( ! $data)
+		{
+			$this->delete();
+			return;
+		}
+
 		// Translate network strings to db fields
         $translate = array(
         	'manufacture_date = ' => 'manufacture_date',

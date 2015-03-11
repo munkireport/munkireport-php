@@ -20,7 +20,7 @@ powerfile="$DIR/cache/powerinfo.txt"
 AppleSmartBattery=$(ioreg -n AppleSmartBattery -r)
 if [ -z "$AppleSmartBattery" ]; then
 	# echo No battery information found
-	echo '' > "$powerfile"
+	> "$powerfile"
 	exit 0 
 fi 
 
