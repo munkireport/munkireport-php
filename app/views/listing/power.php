@@ -38,7 +38,11 @@ new Power_model;
 			        "aoColumnDefs": [
 			        	{ 'bVisible': false, "aTargets": hideThese }
 					],
-			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+			        "fnServerParams": function ( aoData ) {
+				    	// Only search records where 'condition' is not empty
+				    	aoData.push( { "name": "mrColNotEmpty", "value": "power#condition" } );
+				    },  
+				    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
