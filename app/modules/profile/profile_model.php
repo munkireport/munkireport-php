@@ -4,7 +4,7 @@ class Profile_model extends Model {
 	{
 		parent::__construct('id', 'profile'); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial;
 		$this->rs['profile_uuid'] = ''; // 
 		$this->rs['profile_name'] = ''; // 
 		$this->rs['profile_removal_allowed'] = ''; //Yes or No 
@@ -28,6 +28,15 @@ class Profile_model extends Model {
 		$this->serial = $serial;
 		  
 	}
+	function delete_set_where($column,$value)
+	{
+  		$dbh=$this->getdbh();
+  		$sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote($column).'=?';
+  		$stmt = $dbh->prepare( $sql );
+  		$stmt->bindValue( 1, $value );
+  		$stmt->execute();
+  		return $this;
+	}
 	// ------------------------------------------------------------------------
 	/**
 	 * Process data sent by postflight
@@ -45,6 +54,7 @@ class Profile_model extends Model {
 		//}
 		
 		// Translate profile strings to db fields
+		$this->delete_set_where('serial_number', $this->serial_number);
         $translate = array(
         	'ProfileUUID = ' => 'profile_uuid',
         	'ProfileName = ' => 'profile_name',
@@ -52,13 +62,13 @@ class Profile_model extends Model {
         	'PayloadName = ' => 'payload_name',
         	'PayloadDisplayName = ' => 'payload_display',
         	'PayloadData = ' => 'payload_data');
-			$this->profile_uuid = null;
-			foreach(explode("\n", $data) as $line) {
+	 foreach(explode("\n", $data) as $line) {
         // Translate standard entries
         foreach($translate as $search => $field) {
           //the separator is what triggers the save for each display
           //making sure we have a valid s/n.
           if((strpos($line, '---------') === 0) && ($this->profile_uuid)) {
+            $this->id = 0;
             $this->save(); //the actual save
             $this->profile_uuid = null; //unset the display s/n to avoid writing twice if multiple separators are passed
             break;
