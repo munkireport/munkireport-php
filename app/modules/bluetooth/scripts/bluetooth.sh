@@ -25,21 +25,21 @@ KeyboardPercent=`ioreg -c AppleBluetoothHIDKeyboard | grep BatteryPercent | sed 
 if [ "${KeyboardPercent}" = "" ]; then
 	keyboard="Keyboard = Disconnected"
 		else 
-	keyboard="Keyboard = $KeyboardPercent% battery life remaining"
+	keyboard="Keyboard = $KeyboardPercent"
 fi
 
 MousePercent=`ioreg -c BNBMouseDevice | grep BatteryPercent | sed 's/[a-z,A-Z, ,|,",=]//g' | tail -1 | awk '{print $1}'`
 if [ "${MousePercent}" = "" ]; then
 	mouse="Mouse = Disconnected"
 		else 
-	mouse="Mouse = $MousePercent% battery life remaining"
+	mouse="Mouse = $MousePercent"
 fi
 
 TrackpadPercent=`ioreg -c BNBTrackpadDevice | grep BatteryPercent | sed 's/[a-z,A-Z, ,|,",=]//g' | tail -1 | awk '{print $1}'`
 if [ "${TrackpadPercent}" = "" ]; then
 	trackpad="Trackpad = Disconnected"
 		else 
-	trackpad="Trackpad = $TrackpadPercent% battery life remaining"
+	trackpad="Trackpad = $TrackpadPercent"
 fi
 
 
