@@ -401,7 +401,8 @@
 		array('disk_report', 'installed_memory', 'bound_to_ds'),
 		array('uptime', 'pending_apple', 'pending_munki'),
 		array('new_clients', 'munki_versions', 'filevault'),
-		array('warranty','power_battery_condition','power_battery_health')
+		array('warranty','power_battery_condition','power_battery_health'),
+		array('bluetooth_battery')
 	);
 
 	/*
@@ -414,8 +415,7 @@
 	| This is case insensitive but must be an array.
 	|
 	| Eg:
-	| $conf['apps_to_track'] = array('Adobe Flash Player Install Manager',
-														'Firefox','Microsoft Excel');
+	| $conf['apps_to_track'] = array('Flash Player', 'Java', 'Firefox', 'Microsoft Excel');
 	|
 	*/
 	$conf['apps_to_track'] = array('Safari');
