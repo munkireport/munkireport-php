@@ -43,9 +43,7 @@
 				nv.addGraph(function() {
 					var chart = nv.models.pieChart()
 					    .x(function(d) { return d.key })
-					    .y(function(d) { return d.cnt })
-					    .padAngle(.08)
-					    .cornerRadius(5);
+					    .y(function(d) { return d.cnt });
 
 					chart.title(d3.sum(data, function(d){
 						return +d.cnt;
