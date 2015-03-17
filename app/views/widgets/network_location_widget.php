@@ -43,13 +43,14 @@
 				nv.addGraph(function() {
 					var chart = nv.models.pieChart()
 					    .x(function(d) { return d.key })
-					    .y(function(d) { return d.cnt });
+					    .y(function(d) { return d.cnt })
+					    .showLabels(false);
 
 					chart.title(d3.sum(data, function(d){
 						return +d.cnt;
 					}));
 
-					chart.pie.donutLabelsOutside(true).donut(true);
+					chart.pie.donut(true);
 
 					d3.select("#network-plot")
 					    .datum(data)
