@@ -100,13 +100,6 @@
 	"memory": "Память",
 	"name": "Имя",
 	"nav": {
-		"lang": {
-			"de": "Немецкий",
-			"en": "Английский",
-			"es": "Испанский",
-			"nl": "Голандский",
-			"ru": "Русский"
-		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
@@ -131,7 +124,7 @@
 			"configuration": "Отчет о Конфигурации",
 			"hardware": "Аппаратный отчет",
 			"munki": "Отчет по Munki",
-			"network": "Сетевой отчет"
+			"network": "Сетевой отчет",
 			"power": "Очет по Питанию"
 		},
 		"user": {
