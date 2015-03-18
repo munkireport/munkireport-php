@@ -71,7 +71,7 @@ class Migration_machine_osversion_integer extends Model
 		  			$sql = "SELECT sql FROM sqlite_master WHERE type='table' AND name='machine'";
 		  			foreach($dbh->query($sql) as $arr)
 		  			{
-		  				$sql = preg_replace('/`os_version` VARCHAR\(255\)/', '`os_version` INT', $arr['sql'], 1, $changed);
+		  				$sql = preg_replace('/(`?os_version`?) VARCHAR\(255\)/', '$1 INT', $arr['sql'], 1, $changed);
 		  				if( ! $changed)
 		  				{
 		  					throw new Exception('Could not create temporary table as machine table is in an unknown state.');
