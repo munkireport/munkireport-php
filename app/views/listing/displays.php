@@ -144,6 +144,9 @@
             case "15c3":
                 vendor="Eizo"
                 break;
+            case "26cd":
+                vendor="iiyama"
+                break;
             }
             $('td:eq(3)', nRow).html(vendor)
 
