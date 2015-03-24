@@ -4,7 +4,7 @@ class Profile_model extends Model {
 	{
 		parent::__construct('id', 'profile'); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial;
+		$this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['profile_uuid'] = ''; // 
 		$this->rs['profile_name'] = ''; // 
 		$this->rs['profile_removal_allowed'] = ''; //Yes or No 

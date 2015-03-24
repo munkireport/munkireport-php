@@ -7,6 +7,7 @@ import sys
 import os
 import subprocess
 import plistlib
+import json
 
 # Skip manual check
 if len(sys.argv) > 1:
@@ -45,8 +46,7 @@ for profiles in plist[0]['_items']:
 			result += 'ProfileRemovalDisallowed = ' + str(profile.get('spconfigprofile_RemovalDisallowed')) + '\n'
 			result += 'PayloadName = ' + payload.get('_name') + '\n'
 			result += 'PayloadDisplayName = ' + payload.get('spconfigprofile_payload_display_name') + '\n'
-			result += 'PayloadData = test\n'
-			#result += 'PayloadData = ' + str(payload.get('spconfigprofile_payload_data')) + '\n'
+			result += 'PayloadData = ' + json.dumps(payload.get('spconfigprofile_payload_data')) + '\n'
 			result += "---------\n"
 		#result += '' + profile.get('_name') + '\n'
 		
