@@ -224,6 +224,8 @@ function get_url($url, $options = array())
 {
 	$http = array('header' => '');
 
+	$http['user_agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A';
+
 	if(isset($options['method']))
 	{
 		$http['method'] = $options['method'];
