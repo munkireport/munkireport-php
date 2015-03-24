@@ -1,0 +1,168 @@
+{
+	"about": {
+		"author": "Oleg Pimenov"
+	},
+	"admin": {
+		"delete_failed": "Удаление не удалось: "
+	},
+	"all": "Все",
+	"auth": {
+		"addtoconfig": "Добавьте эту строку в config.php:",
+		"back_to_site": "Вернуться на сайт",
+		"empty_not_allowed": "Пустые значения не допускаются",
+		"error_contacting_AD": "Произошла ошибка при контакте с AD",
+		"gen_other": "Сгенерировать другой",
+		"generate": "Сгенерировать",
+		"generate_hash": "Сгенерировать хэш пароля",
+		"generated_hash": "Сгенерированный хэш",
+		"go_secure": "Перейти на защищенный сайт",
+		"insecure": "Незащищенное соединение, переключиться на защищенное",
+		"noauth_found": "Информация об аутентификации не найдена, пожалуйста, добавить учетную запись в конфигурационный файл.",
+		"not_authorized": "Не разрешено",
+		"password": "Пароль",
+		"secure": "Вы используете защищенное соединение",
+		"signin": "Войти",
+		"username": "Имя пользователя",
+		"wrong_user_or_pass": "Неправильное имя пользователя или пароль"
+	},
+	"bundle_id": "ID комплекта",
+	"client": {
+		"tab": {
+			"munki": "Управляемое ПО",
+			"apple_software": "ПО Apple",
+			"third_party_software": "Стороннее ПО",
+			"inventory_items": "Инвентарь",
+			"network": "Сетевые интерфейсы",
+			"ds": "Службы Каталогов",
+			"fv_escrow": "Filevault Escrow",
+			"bluetooth": "Bluetooth",
+			"ard": "ARD"
+		},
+		"installed_apple_software": "Установленное ПО Apple",
+		"installed_third_party_software": "Установленное Стороннее ПО",
+		"install_date": "Дата установки",
+		"no_install_history": "Нет истории установки",
+		"process_name": "Имя процесса"
+	},
+	"chart": {
+		"stackedarea": {
+			"stacked": "Накопительный",
+			"stream": "Потоковый",
+			"expanded": "Расширенный"
+		}
+	},
+	"configuration": "Конфигурация",
+	"date": {
+		"year": "год"
+	},
+	"disabled": "Отключен",
+	"edit": "Изменить",
+	"enabled": "Включен",
+	"error": "Ошибка",
+	"error_plural": "Ошибки",
+	"errors": {
+		"title": "Ошибка",
+		"client_nonexistent": "Клиент с серийным номером \"__serial__\" не существует",
+		"403": "Вы не можете просматривать эту страницу",
+		"404": "Страница не найдена",
+		"426": "Вы должны зайти на этот сайт с помощью защищенного соединения."
+	},
+	"free_disk_space": "Свободное место на диске",
+	"installed": "Установлено",
+	"listing": {
+		"ard": {
+			"text": "Текст __number__"
+		},
+		"bluetooth": {
+			"keyboard_battery": "Клавиатура",
+			"mouse_battery": "Мышь",
+			"status": "Статус",
+			"title": "Отчет по Bluetooth",
+			"trackpad_battery": "Трекпад"
+		},
+		"computername": "Имя",
+		"hardware": {
+			"description": "Описание"
+		},
+		"munki": {
+			"latest_run": "Последние Запуск",
+			"package_installed": "Пакет установлен",
+			"package_installed_plural": "Пакетов установлено",
+			"package_removed": "Пакет удален",
+			"package_removed_plural": "Пакетов удалено",
+			"pending_install": "Установка в ожидании",
+			"pending_install_plural": "Установок в ожидании",
+			"pending_removal": "Удаление в ожидании",
+			"pending_removal_plural": "Удалений в ожидании"
+		},
+		"username": "Имя пользователя"
+	},
+	"memory": "Память",
+	"name": "Имя",
+	"nav": {
+		"listings": {
+			"ard": "Apple Remote Desktop",
+			"bluetooth": "Bluetooth",
+			"clients": "Клиенты",
+			"directoryservice": "Служба Каталогов",
+			"disk": "Диск",
+			"displays": "Мониторы",
+			"hardware": "Аппаратные средства",
+			"inventory": "Инвентарь",
+			"munki": "Munki",
+			"network": "Сеть",
+			"security": "Безопасность",
+			"warranty": "Гарантия"
+		},
+		"main": {
+		  "dashboard": "Панель приборов",
+		  "reports": "Отчеты",
+		  "listings": "Списки"
+		},
+		"reports": {
+			"clients": "Клиентский отчет",
+			"configuration": "Отчет о Конфигурации",
+			"hardware": "Аппаратный отчет",
+			"munki": "Отчет по Munki",
+			"network": "Сетевой отчет",
+			"power": "Очет по Питанию"
+		},
+		"user": {
+			"logout": "Выйти"
+		}
+	},
+	"network": {
+		"ethernet": "Локальная сеть",
+		"ip_address": "Адрес IP",
+		"network_mask": "Маска",
+		"prefix_length": "Длина префикса",
+		"router": "Маршрутизатор"
+	},
+	"pending": "В ожидании",
+	"path": "Путь",
+	"serial": "Серийный номер",
+	"unavailable": "Недоступно",
+	"unauthorized": "У Вас нет прав",
+	"unknown": "Неизвестно",
+	"version": "Версия",
+	"warning": "Предупреждение",
+	"warning_plural": "Предупреждения",
+	"widget": {
+		"age": {
+			"title": "Срок службы"
+		},
+		"bound_to_ds": {
+			"bound": "Привязано",
+			"notbound": "Не привязано",
+			"info": "Итого с тех пор как эти данные собираются",
+			"title": "Привязано к Службе Каталогов"
+		},
+		"power": {
+			"missing": "Отсутствует",
+			"normal": "Нормально",
+			"now": "Сейчас",
+			"service": "Служба",
+			"soon": "Скоро"
+		}	
+	}
+}
