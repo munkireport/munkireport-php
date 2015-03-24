@@ -46,6 +46,7 @@
 	$items = $profile_item_obj->select('profile_name, (select COUNT(DISTINCT serial_number) from profile p2 where profile.profile_name = p2.profile_name) AS num_profiles, payload_name, serial_number', '1 GROUP BY profile_name, payload_name, serial_number');
 
 	$profile = array();
+	$profilecount = array();
 	foreach($items as $item)
 	{
 		$name = $item['profile_name'];
@@ -53,7 +54,7 @@
 		$serialnumber = $item['serial_number'];
 		$profiles = $item['num_profiles'];
 		$profile[$name][$version] = $profiles;
-		$profile[$name][$name] = $profiles;
+		$profilecount[$name] = $profiles;
 	}
 	?>
     
@@ -63,7 +64,7 @@
     <tr>
       <td>
         <a href='<?php echo $name_url; ?>'><?php echo $name; ?></a>
-        <span class='badge badge-info pull-right'><?php echo $profile[$name][$name]; ?></span>
+        <span class='badge badge-info pull-right'><?php echo $profilecount[$name]; ?></span>
       </td>
       <td>
         <?php foreach($value as $version => $count): ?>
