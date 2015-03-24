@@ -173,8 +173,6 @@ h2 {
 .nav-tabs li li i{
   visibility: hidden;
 }
-.tooltip-inner {
-    white-space:pre-wrap;
-    max-width: 600px;
-    text-align: left;
+.popover{
+    max-width: 800px;
 }
