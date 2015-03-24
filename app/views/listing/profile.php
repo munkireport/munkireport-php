@@ -43,10 +43,11 @@
 
         <tbody>
   	<?php $profile_item_obj = new Profile_model();
-	$items = $profile_item_obj->select('profile_name, (select COUNT(DISTINCT serial_number) from profile p2 where profile.profile_name = p2.profile_name) AS num_profiles, payload_name, serial_number', '1 GROUP BY profile_name, payload_name, serial_number');
+	$items = $profile_item_obj->select('profile_name, (select COUNT(DISTINCT serial_number) from profile p2 where profile.profile_name = p2.profile_name) AS num_profiles, payload_name, serial_number, payload_data', '1 GROUP BY profile_name, payload_name, serial_number');
 
 	$profile = array();
 	$profilecount = array();
+	$payloaddata = array();
 	foreach($items as $item)
 	{
 		$name = $item['profile_name'];
@@ -54,6 +55,7 @@
 		$serialnumber = $item['serial_number'];
 		$profiles = $item['num_profiles'];
 		$profile[$name][$version] = $profiles;
+		$payloaddata[$name][$version] = str_replace(array('{', '}', ';', '(', ')'),'',json_decode($item['payload_data']));
 		$profilecount[$name] = $profiles;
 	}
 	?>
@@ -69,7 +71,7 @@
       <td>
         <?php foreach($value as $version => $count): ?>
         <?php $vers_url=$name_url . '/' . rawurlencode($version); ?>
-        <a href='<?php echo $vers_url; ?>'><?php echo $version; ?>
+        <a href='<?php echo $vers_url; ?>' title='<?php echo $payloaddata[$name][$version];?>'><?php echo $version; ?>
         </a><br />
         <?php endforeach; ?>
       </td>
