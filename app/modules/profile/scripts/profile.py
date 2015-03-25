@@ -53,9 +53,10 @@ plist = plistlib.readPlistFromString(out)
 
 #loop through profile xml data
 for profiles in plist[0]['_items']:
-	# add number of profiles installed to result
-	for profile in profiles.get('_items'):
-		for payload in profile.get('_items'):
+	# Sort the profile dictionary
+	for profile in sorted(profiles.get('_items')):
+		# Sort the payload dictionary
+		for payload in sorted(profile.get('_items')):
 			result += 'ProfileUUID = ' + profile.get('spconfigprofile_profile_uuid', 'No UUID') + '\n'
 			result += 'ProfileName = ' + profile.get('_name', 'No Profile Name') + '\n'
 			result += 'ProfileRemovalDisallowed = ' + str(profile.get('spconfigprofile_RemovalDisallowed')) + '\n'
@@ -63,10 +64,7 @@ for profiles in plist[0]['_items']:
 			result += 'PayloadDisplayName = ' + payload.get('spconfigprofile_payload_display_name', 'No Payload Display Name') + '\n'
 			result += 'PayloadData = ' + json.dumps(payload.get('spconfigprofile_payload_data', 'No Payload Data')) + '\n'
 			result += "---------\n"
-		#result += '' + profile.get('_name') + '\n'
-		
-
-
+			#result += '' + profile.get('_name') + '\n'
 
 ##############
 
