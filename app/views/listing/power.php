@@ -68,6 +68,7 @@ new Power_model;
 			        	status = status == 'Normal' ? '<span class="label label-success">Normal</span>' : 
 			        	status = status == 'Replace Soon' ? '<span class="label label-warning">Replace Soon</span>' : 
 			        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
+			        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
 			        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
 			        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
 			        	$('td:eq(7)', nRow).html(status)
