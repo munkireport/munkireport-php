@@ -33,7 +33,7 @@
               </thead>
               <tbody>
               <?php foreach($profile_items as $item): ?>
-              <?php $url=url('clients/detail/' . $item['serial'] . '#tab_profile-items') ?>
+              <?php $url=url('clients/detail/' . $item['serial'] . '#tab_profile-tab') ?>
                   <tr>
                       <td>
                         <a href='<?php echo $url; ?>'>

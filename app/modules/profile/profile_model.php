@@ -28,6 +28,23 @@ class Profile_model extends Model {
 		$this->serial = $serial;
 		  
 	}
+	// ------------------------------------------------------------------------
+	/**
+	 * Format profile data to make it prettier
+	 *
+	 * @param json string json_string
+	 * 
+	 **/
+	function json_to_html( $json_string )
+	{
+  		# Try to make it prettier
+		$json_string = str_replace('    ', '&nbsp;&nbsp;&nbsp;&nbsp;', $json_string);
+		$json_string = str_replace('\n', '<br />', $json_string);
+		$json_string = str_replace(array('\\"', '"{', '}"','\''), '', $json_string);
+		$json_string = str_replace('null', 'No payload', $json_string);
+		return $json_string;
+	}
+	
 	function delete_set_where($column,$value)
 	{
   		$dbh=$this->getdbh();

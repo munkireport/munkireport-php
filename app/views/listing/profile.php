@@ -20,22 +20,22 @@
 				$('#total-count').html(oSettings.fnRecordsTotal());
 			}
         });
-	//$(".popovers").popover({ trigger: "hover" });
 	$(".popovers").popover({ trigger: "manual" , html: true, animation:false})
-.on("mouseenter", function () {
-    var _this = this;
-    $(this).popover("show");
-    $(".popover").on("mouseleave", function () {
-        $(_this).popover('hide');
-    });
-}).on("mouseleave", function () {
-    var _this = this;
-    setTimeout(function () {
+	    .on("mouseenter", function () {
+	        var _this = this;
+		$(".popovers").popover("hide");
+	        $(this).popover("show");
+        $(".popover").on("mouseleave", function () {
+           $(_this).popover('hide');
+        });
+	}).on("mouseleave", function () {
+	var _this = this;
+	setTimeout(function () {
         if (!$(".popover:hover").length) {
             $(_this).popover("hide");
-        }
-    }, 300);
-});
+	  }
+	 }, 300);
+	});
     } );
     
 	</script>
@@ -46,8 +46,8 @@
 
         <thead>
           <tr>
-            <th data-colname='machine#computer_name'>Profile Name</th>
-            <th data-colname='profile#payload_name'>Payloads</th>
+            <th data-colname='machine#computer_name' class="col-md-4">Profile Name</th>
+            <th data-colname='profile#payload_name' class="col-md-8">Payloads</th>
             <!--<th data-colname='profile#profile_UUID'>UUID</th>
             <th data-colname='profile#profile_name'>Profile Name</th>
             <th data-colname='profile#payload_name'>Payload Name</th>
@@ -72,7 +72,7 @@
 		$serialnumber = $item['serial_number'];
 		$profiles = $item['num_profiles'];
 		$profile[$name][$version] = $profiles;
-		$payloaddata[$name][$version] = json_decode($item['payload_data']);
+		$payloaddata[$name][$version] = $profile_item_obj->json_to_html($item['payload_data']);
 		$profilecount[$name] = $profiles;
 	}
 	?>
@@ -88,7 +88,7 @@
       <td>
         <?php foreach($value as $version => $count): ?>
         <?php $vers_url=$name_url . '/' . rawurlencode($version); ?>
-        <a href='<?php echo $vers_url; ?>' data-content='<?php echo $payloaddata[$name][$version];?>' class='popovers' data-trigger='hover'><?php echo $version; ?>
+        <a href='<?php echo $vers_url; ?>' data-html="true" data-content='<?php echo $payloaddata[$name][$version];?>' class='popovers' data-trigger='hover'><?php echo $version; ?>
         </a><br />
         <?php endforeach; ?>
       </td>

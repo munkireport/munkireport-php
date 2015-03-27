@@ -8,8 +8,9 @@
 	</thead>
 	<tbody>
 	<?php $profile_item_obj = new Profile_model();
-	$items = $profile_item_obj->select('profile_name, payload_name, serial_number', 'serial_number=? GROUP BY profile_name, payload_name, serial_number',array($serial_number));
-
+	$items = $profile_item_obj->select('profile_name, payload_name, serial_number, payload_data', 'serial_number=? GROUP BY profile_name, payload_name, serial_number',array($serial_number));
+	
+	$payloaddata = array();
 	$profile = array();
 	foreach($items as $item)
 	{
@@ -17,7 +18,7 @@
 		$version = $item['payload_name'];
 		$serialnumber = $item['serial_number'];
 		$profile[$name][$version] = $profiles;
-		$profile[$name][$name] = $profiles;
+		$payloaddata[$name][$version] = $profile_item_obj->json_to_html($item['payload_data']);
 	}
 	?>
     
@@ -31,7 +32,7 @@
       <td>
         <?php foreach($value as $version => $count): ?>
         <?php $vers_url=$name_url . '/' . rawurlencode($version); ?>
-        <a href='<?php echo $vers_url; ?>'><?php echo $version; ?>
+        <a href='<?php echo $vers_url; ?>' data-html="true" data-content='<?php echo $payloaddata[$name][$version];?>' class='popovers' data-trigger='hover'><?php echo $version; ?>
         </a><br />
         <?php endforeach; ?>
       </td>
@@ -52,5 +53,22 @@
                 $('#profile-cnt').html(oSettings.fnRecordsTotal());
               }
             });
+	    	//$(".popovers").popover({ trigger: "hover" });
+	$(".popovers").popover({ trigger: "manual" , html: true, animation:false})
+	    .on("mouseenter", function () {
+	        var _this = this;
+		$(".popovers").popover("hide");
+	        $(this).popover("show");
+        $(".popover").on("mouseleave", function () {
+           $(_this).popover('hide');
+        });
+	}).on("mouseleave", function () {
+	var _this = this;
+	setTimeout(function () {
+        if (!$(".popover:hover").length) {
+            $(_this).popover("hide");
+	  }
+	 }, 300);
+	});
   });
 </script>
