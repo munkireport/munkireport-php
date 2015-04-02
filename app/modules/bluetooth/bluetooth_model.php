@@ -6,6 +6,7 @@ class Bluetooth_model extends Model {
 		parent::__construct('id', 'bluetooth'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['hardware_id'] = '';
 		$this->rs['bluetooth_status'] = '';
 		$this->rs['keyboard_battery'] = '';
 		$this->rs['mouse_battery'] = '';
@@ -36,6 +37,7 @@ class Bluetooth_model extends Model {
 	{		
 		// Translate network strings to db fields
         $translate = array(
+            'Hardware ID = ' => 'hardware_id',
         	'Status = ' => 'bluetooth_status',
         	'Keyboard = ' => 'keyboard_battery',
         	'Mouse = ' => 'mouse_battery',

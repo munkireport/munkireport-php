@@ -15,6 +15,9 @@ mkdir -p "$DIR/cache"
 
 bluetoothfile="$DIR/cache/bluetoothinfo.txt"
 
+# Bluetooth ID
+BluetoothID=`system_profiler SPBluetoothDataType | sed -n "/Apple Bluetooth Software Version\:/,/Manufacturer\:/p" | egrep -o '([[:xdigit:]]{1,2}-){5}[[:xdigit:]]{1,2}'`
+hardware="Hardware ID = $BluetoothID"
 # echo "Getting Bluetooth device status"
 
 # Bluetooth status.
@@ -43,4 +46,4 @@ if [ "${TrackpadPercent}" = "" ]; then
 fi
 
 
-echo $status '\n'$keyboard '\n'$mouse '\n'$trackpad > "$bluetoothfile"
+echo $hardware '\n'$status '\n'$keyboard '\n'$mouse '\n'$trackpad > "$bluetoothfile"
