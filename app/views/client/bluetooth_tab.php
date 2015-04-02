@@ -6,6 +6,10 @@ $bluetooth = new bluetooth_model($serial_number);
 
 		<table class="table table-striped">
 			<tbody>
+			    <tr>
+					<td>Bluetooth Hardware ID</td>
+					<td><?php echo $bluetooth->hardware_id; ?></td>
+				</tr>
 				<tr>
 					<td>Bluetooth Status</td>
 					<td><?php echo $bluetooth->bluetooth_status; ?></td>
