@@ -173,3 +173,8 @@ h2 {
 .nav-tabs li li i{
   visibility: hidden;
 }
+.popover{
+    max-width: 800px;
+    max-height: 600px;
+    overflow: scroll
+}

@@ -43,7 +43,9 @@
 				<li>
 					<a href="#power-tab" data-toggle="tab"data-i18n="client.tab.power">Power</a>
 				</li>
-
+				<li>
+					<a href="#profile-tab" data-toggle="tab"data-i18n="client.tab.profile">Profile</a>
+				</li>
 				<li>
 					<a href="#ard-tab" data-toggle="tab" data-i18n="client.tab.ard">ARD</a>
 				</li>
@@ -90,6 +92,9 @@
 				</div>
 				<div class="tab-pane" id='power-tab'>
 					<?php $this->view('client/power_tab'); ?>
+				</div>
+				<div class="tab-pane" id='profile-tab'>
+					<?php $this->view('client/profile_tab'); ?>
 				</div>
 				<div class="tab-pane" id='ard-tab'>
 					<?php $this->view('client/ard_tab'); ?>
