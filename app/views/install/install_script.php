@@ -34,6 +34,7 @@ Usage: ${PROG} [OPTIONS]
   -n        Do not run preflight script after the installation
   -i PATH   Create a full installer at PATH
   -h        Display this help message
+  -v VERS   Override version number
 
 Example:
   * Install munkireport client scripts into the default location and run the
@@ -55,7 +56,7 @@ Example:
 EOF
 }
 
-while getopts b:m:p:i:nh flag; do
+while getopts b:m:p:v:i:nh flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -66,10 +67,14 @@ while getopts b:m:p:i:nh flag; do
 		p)
 			PREFPATH="$OPTARG"
 			;;
+		v)
+			VERSION="$OPTARG"
+			;;
 		i)
 			PKGDEST="$OPTARG"
 			# Create temp directory
-			INSTALLROOT=$(mktemp -d -t mrpkg)
+			INSTALLTEMP=$(mktemp -d -t mrpkg)
+			INSTALLROOT="$INSTALLTEMP"/install_root
 			MUNKIPATH="$INSTALLROOT"/usr/local/munki/
 			PREFPATH="$INSTALLROOT"/Library/Preferences/MunkiReport
 			PREFLIGHT=0
@@ -145,6 +150,9 @@ echo '+ Installing <?php echo $scriptname; ?>'
 
 <?php endforeach; ?>
 
+# Capture uninstall scripts
+read -r -d '' UNINSTALLS << EOF
+
 <?php foreach($uninstall_scripts AS $scriptname => $filepath): ?>
 
 <?php echo "## $scriptname ##"; ?> 
@@ -154,17 +162,32 @@ echo '- Uninstalling <?php echo $scriptname; ?>'
 
 <?php endforeach; ?>
 
-# Remove munkireport version file
-rm -f "${MUNKIPATH}munkireport-"*
+EOF
+
+# If not building a package, execute uninstall scripts
+if [ $BUILDPKG = 0 ]; then
+	eval "$UNINSTALLS"
+	# Remove munkireport version file
+	rm -f "${MUNKIPATH}munkireport-"*
+fi
 
 if [ $ERR = 0 ]; then
 
 	if [ $BUILDPKG = 1 ]; then
+		
+		# Create scripts directory
+		SCRIPTDIR="$INSTALLTEMP"/scripts
+		mkdir -p "$SCRIPTDIR"
+		
+		# Add uninstall script to preflight
+		echo  "#!/bin/bash" > $SCRIPTDIR/preflight
+		echo  "$UNINSTALLS" >> $SCRIPTDIR/preflight
 
 		echo "Building MunkiReport v${VERSION} package."
 		pkgbuild --identifier "$IDENTIFIER" \
 				 --version "$VERSION" \
 				 --root "$INSTALLROOT" \
+				 --scripts "$SCRIPTDIR" \
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
 	else
@@ -184,9 +207,9 @@ else
 	echo "! Installation of MunkiReport v${VERSION} incomplete."
 fi
 
-if [ "$INSTALLROOT" != "" ]; then
-	echo "Cleaning up temporary directory $INSTALLROOT"
-	rm -r $INSTALLROOT
+if [ "$INSTALLTEMP" != "" ]; then
+	echo "Cleaning up temporary directory $INSTALLTEMP"
+	rm -r $INSTALLTEMP
 fi
 
 exit $ERR
