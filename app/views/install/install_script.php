@@ -34,6 +34,7 @@ Usage: ${PROG} [OPTIONS]
   -n        Do not run preflight script after the installation
   -i PATH   Create a full installer at PATH
   -h        Display this help message
+  -v VERS   Override version number
 
 Example:
   * Install munkireport client scripts into the default location and run the
@@ -55,7 +56,7 @@ Example:
 EOF
 }
 
-while getopts b:m:p:i:nh flag; do
+while getopts b:m:p:v:i:nh flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -66,10 +67,14 @@ while getopts b:m:p:i:nh flag; do
 		p)
 			PREFPATH="$OPTARG"
 			;;
+		v)
+			VERSION="$OPTARG"
+			;;
 		i)
 			PKGDEST="$OPTARG"
 			# Create temp directory
-			INSTALLROOT=$(mktemp -d -t mrpkg)
+			INSTALLTEMP=$(mktemp -d -t mrpkg)
+			INSTALLROOT="$INSTALLTEMP"/install_root
 			MUNKIPATH="$INSTALLROOT"/usr/local/munki/
 			PREFPATH="$INSTALLROOT"/Library/Preferences/MunkiReport
 			PREFLIGHT=0
@@ -171,7 +176,8 @@ if [ $ERR = 0 ]; then
 	if [ $BUILDPKG = 1 ]; then
 		
 		# Create scripts directory
-		SCRIPTDIR=$(mktemp -d -t mrpkg)
+		SCRIPTDIR="$INSTALLTEMP"/scripts
+		mkdir -p "$SCRIPTDIR"
 		
 		# Add uninstall script to preflight
 		echo  "#!/bin/bash" > $SCRIPTDIR/preflight
@@ -201,9 +207,9 @@ else
 	echo "! Installation of MunkiReport v${VERSION} incomplete."
 fi
 
-if [ "$INSTALLROOT" != "" ]; then
-	echo "Cleaning up temporary directory $INSTALLROOT"
-	rm -r $INSTALLROOT
+if [ "$INSTALLTEMP" != "" ]; then
+	echo "Cleaning up temporary directory $INSTALLTEMP"
+	rm -r $INSTALLTEMP
 fi
 
 exit $ERR
