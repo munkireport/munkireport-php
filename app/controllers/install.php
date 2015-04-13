@@ -4,14 +4,30 @@ class install extends Controller
     function __construct()
     {
     }
-
+	
+	/**
+	 * Install all modules
+	 *
+	 * @author Bochoven, A.E. van
+	 **/
     function index()
     {
+		$this->modules();
+    }
+
+	/**
+	 * Install only selected modules
+	 *
+	 * @author Bochoven, A.E. van
+	 **/
+	function modules()
+	{
+		
         $data['install_scripts'] = array();
         $data['uninstall_scripts'] = array();
 
         // Get required modules from config
-        $use_modules = conf('modules');
+        $use_modules = func_get_args() or conf('modules');
 
         // Collect install scripts from modules
         foreach(scandir(conf('module_path')) AS $module)
@@ -43,7 +59,8 @@ class install extends Controller
 
     	$obj = new View();
         $obj->view('install/install_script', $data);
-    }
+		
+	}
 
 
 

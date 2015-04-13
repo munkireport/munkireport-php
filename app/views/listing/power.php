@@ -38,7 +38,11 @@ new Power_model;
 			        "aoColumnDefs": [
 			        	{ 'bVisible': false, "aTargets": hideThese }
 					],
-			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+			        "fnServerParams": function ( aoData ) {
+				    	// Only search records where 'condition' is not empty
+				    	aoData.push( { "name": "mrColNotEmpty", "value": "power#condition" } );
+				    },  
+				    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
 			        	if(name == ''){name = "No Name"};
@@ -64,6 +68,7 @@ new Power_model;
 			        	status = status == 'Normal' ? '<span class="label label-success">Normal</span>' : 
 			        	status = status == 'Replace Soon' ? '<span class="label label-warning">Replace Soon</span>' : 
 			        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
+			        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
 			        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
 			        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
 			        	$('td:eq(7)', nRow).html(status)

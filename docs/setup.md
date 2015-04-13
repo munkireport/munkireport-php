@@ -37,12 +37,12 @@ Now you can setup a client to test if all is ok:
 Setting up clients with munki
 ---
 
-When the client reporting goes well, you can add a pkginfo file to munki:
+When the client reporting goes well, you can create an installer package using the following:
 
-1. Download the pkginfo file
-    `curl -s http://example.com/index.php?/install/plist -o MunkiReport.plist`
-2. Copy MunkiReport.plist into your Munki repository (in your pkgsinfo directory)
-3. Run makecatalogs, and be sure to add it to a manifest as well.
+1. Create the installer `bash -c "$(curl http://example.com/index.php?/install)" bash -i ~/Desktop`
+2. Run `/usr/local/munki/munkiimport ~/Desktop/munkireport-2.2.0.pkg` (changing the version number as needed).
+3. Run `makecatalogs`, and be sure to add the newly imported package to a manifest.
+
 
 Advanced client setup
 ---
