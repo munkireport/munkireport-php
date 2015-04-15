@@ -33,6 +33,19 @@ class Machine_controller extends Module_controller
 	}
 
 	/**
+	 * Get machine data for a particular machine
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function report($serial_number = '')
+	{
+		$machine = new Machine_model($serial_number);
+		$obj = new View();
+		$obj->view('json', array('msg' => $machine->rs));
+	}
+
+	/**
 	 * Return json array with memory configuration breakdown
 	 *
 	 * @author AvB
