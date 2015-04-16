@@ -1,3 +1,19 @@
+### 2.4.1 (April 13, 2015)
+
+FIXES
+
+* Disable power reporting for desktops
+* Fix labels for donut chart in network locations
+* Fix machine migration script
+* Fix warranty lookups
+
+NEW FEATURES
+
+* Select modules in installer
+* Profile reporting (thanks to @dingerkingh)
+* Russian localisation (thanks to @little2112)
+
+
 ### 2.3.0 (March 11, 2015)
 
 FIXES
