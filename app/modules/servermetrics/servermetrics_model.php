@@ -1,0 +1,126 @@
+<?php
+class Servermetrics_model extends Model {
+	
+	// Field order as sent by postflight.
+	var	$keys = [
+		'afp_sessions',
+		'smb_sessions',
+		'caching_cache_toclients',
+		'caching_origin_toclients',
+		'caching_peers_toclients',
+		'cpu_user',
+		'memory_wired',
+		'memory_active',
+		'cpu_idle',
+		'memory_free',
+		'network_in',
+		'memory_pressure',
+		'cpu_system',
+		'network_out',
+		'cpu_nice',
+		'memory_inactive'
+	];
+
+	function __construct($serial='')
+	{
+		parent::__construct('id', 'servermetrics'); //primary key, tablename
+		$this->rs['id'] = '';
+		$this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['afp_sessions'] = 0; // number of afp connections
+		$this->rs['smb_sessions'] = 0; // number of smb connections
+		$this->rs['caching_cache_toclients'] = 0.0; // 
+		$this->rs['caching_origin_toclients'] = 0.0; // 
+		$this->rs['caching_peers_toclients'] = 0.0; //
+		$this->rs['cpu_user'] = 0.0; //
+		$this->rs['cpu_idle'] = 0.0; // 
+		$this->rs['cpu_system'] = 0.0; //
+		$this->rs['cpu_nice'] = 0.0; // 
+		$this->rs['memory_wired'] = 0.0; // 
+		$this->rs['memory_active'] = 0.0; //
+		$this->rs['memory_inactive'] = 0.0; // 
+		$this->rs['memory_free'] = 0.0; //
+		$this->rs['memory_pressure'] = 0.0; // 
+		$this->rs['network_in'] = 0.0; // 
+		$this->rs['network_out'] = 0.0; // 
+		$this->rs['datetime'] = ''; // Datetime from record
+		
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 0;
+		
+		//indexes to optimize queries
+		$this->idx[] = array('serial_number');
+		$this->idx[] = array('datetime');
+		
+		// Create table if it does not exist
+		$this->create_table();
+		
+		$this->serial_number = $serial;
+		  
+	}
+	// ------------------------------------------------------------------------
+
+	
+	function delete_set_where($column,$value)
+	{
+  		$dbh=$this->getdbh();
+  		$sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote($column).'=?';
+  		$stmt = $dbh->prepare( $sql );
+  		$stmt->bindValue( 1, $value );
+  		$stmt->execute();
+  		return $this;
+	}
+	// ------------------------------------------------------------------------
+	/**
+	 * Process data sent by postflight
+	 *
+	 * @param string data
+	 * 
+	 **/
+	function process($data)
+	{		
+		
+		// Delete previous set (this is expensive)
+		$this->delete_set_where('serial_number', $this->serial_number);
+
+
+		try
+		{
+			foreach(json_decode($data) as $date => $values)
+			{
+				$this->id = 0;
+				$this->datetime = $date;
+				$this->merge(array_combine($this->keys, $values))->save();
+
+			} //end foreach 
+		}
+		catch(Exception $e)
+		{
+			echo 'Failed to decode data';
+		}
+		
+	}
+
+	/**
+	 * Get data for serial
+	 *
+	 * @return array data
+	 * @author 
+	 **/
+	function get_data($serial_number, $hours)
+	{
+		$date = new DateTime();
+		$date->sub(new DateInterval('PT'.$hours.'H'));
+		$fromdate = $date->format('Y-m-d H:i:s');
+
+		$out =[];
+		$what = implode(',', $this->keys) . ',datetime';
+		$where = 'serial_number = ? AND datetime > ? ORDER BY datetime';
+		foreach($this->select( $what, $where, array($serial_number, $fromdate), PDO::FETCH_NUM ) as $row)
+		{
+			$key = array_pop($row);
+			$row = array_map('floatval', $row);
+			$out[$key] = $row;
+		}
+		return $out;
+	}
+}
