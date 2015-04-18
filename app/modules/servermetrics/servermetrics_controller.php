@@ -49,7 +49,7 @@ class Servermetrics_controller extends Module_controller
      *
      * @author AvB
      **/
-    function report()
+    function report($serial_number = '')
     {
         if( ! $this->authorized())
         {
@@ -57,6 +57,7 @@ class Servermetrics_controller extends Module_controller
         }
 
         $data['page'] = '';
+        $data['serial_number'] = $serial_number;
         $obj = new View();
         $obj->view('report', $data, $this->view_path);
     }

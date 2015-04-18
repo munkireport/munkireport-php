@@ -1,7 +1,7 @@
 <?php
 class Servermetrics_model extends Model {
 	
-	// Field order as sent by postflight.
+	// Field order as sent by postflight and served by get_data().
 	var	$keys = [
 		'afp_sessions',
 		'smb_sessions',
