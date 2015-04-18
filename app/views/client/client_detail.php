@@ -4,101 +4,56 @@
 		<div class="col-lg-12">
 			<?php $this->view('client/machine_info'); ?>
 
+<?php 
+
+// Tab list, each item should contain: 
+//	'view' => path/to/tab
+// 'i18n' => string representing a localised name
+// Optionally:
+// 'view_vars' => array with variables to pass to the vies
+// 'badge' => id of a badge for this tab
+// 'class' => signify first active tab
+$tab_list = array(
+	'munki' => array('view' => 'client/munki_tab', 'i18n' => 'client.tab.munki', 'class' => 'active'),
+	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
+	'third-party-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 0), 'i18n' => 'client.tab.third_party_software', 'badge' => 'history-cnt-0'),
+	'inventory-items' => array('view' => 'client/inventory_items_tab', 'i18n' => 'client.tab.inventory_items', 'badge' => 'inventory-cnt'),
+	'network-tab' => array('view' => 'client/network_tab', 'i18n' => 'client.tab.network', 'badge' => 'network-cnt'),
+	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds', 'badge' => 'directory-cnt'),
+	'displays-tab' => array('view' => 'client/displays_tab', 'i18n' => 'client.tab.displays', 'badge' => 'displays-cnt'),
+	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
+	'bluetooth-tab' => array('view' => 'client/bluetooth_tab', 'i18n' => 'client.tab.bluetooth'),
+	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
+	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles'),
+	'ard-tab' => array('view' => 'client/ard_tab', 'i18n' => 'client.tab.ard')
+		)
+?>
+
 			<ul class="nav nav-tabs">
 
-				<li class="active">
-					<a href="#munki" data-toggle="tab" data-i18n="client.tab.munki">Managed Software</a>
+			<?foreach($tab_list as $name => $data):?>
+
+				<li <?if(isset($data['class'])):?>class="active"<?endif?>>
+					<a href="#<?php echo $name?>" data-toggle="tab"><span data-i18n="<?php echo $data['i18n']?>"></span>
+					<?php if(isset($data['badge'])):?> 
+					 <span id="<?php echo $data['badge']?>" class="badge">0</span>
+					<?php endif?>
+					</a>
 				</li>
 
-				<li>
-					<a href="#apple-software" data-toggle="tab"><span data-i18n="client.tab.apple_software">Apple Software</span> <span id="history-cnt-1" class="badge">.</span></a>
-				</li>
-
-				<li>
-					<a href="#third-party-software" data-toggle="tab"><span data-i18n="client.tab.third_party_software">Third party software</span> <span id="history-cnt-0" class="badge">.</span></a>
-				</li>
-
-				<li>
-					<a href="#inventory-items" data-toggle="tab"><span data-i18n="client.tab.inventory_items">Inventory Items</span> <span id="inventory-cnt" class="badge">.</span></a>
-				</li>
-
-				<li>
-					<a href="#network-tab" data-toggle="tab"><span data-i18n="client.tab.network">Network Interfaces</span> <span id="network-cnt" class="badge">0</span></a>
-				</li>
-
-				<li>
-					<a href="#directory-tab" data-toggle="tab"><span data-i18n="client.tab.ds">Directory Services</span> <span id="directory-cnt" class="badge">0</span></a>
-				</li>
-
-				<li>
-					<a href="#displays-tab" data-toggle="tab"><span data-i18n="client.tab.displays">Displays</span> <span id="displays-cnt" class="badge">0</span></a>
-				</li>
-
-				<li>
-					<a href="#filevault-tab" data-toggle="tab" data-i18n="client.tab.fv_escrow">FileVault Escrow</a>
-				</li>
-				<li>
-					<a href="#bluetooth-tab" data-toggle="tab"data-i18n="client.tab.bluetooth">Bluetooth</a>
-				</li>
-				<li>
-					<a href="#power-tab" data-toggle="tab"data-i18n="client.tab.power">Power</a>
-				</li>
-				<li>
-					<a href="#profile-tab" data-toggle="tab"data-i18n="client.tab.profile">Profile</a>
-				</li>
-				<li>
-					<a href="#ard-tab" data-toggle="tab" data-i18n="client.tab.ard">ARD</a>
-				</li>
+			<?endforeach?>
 
 			</ul>
 
 			<div class="tab-content">
 
-				<div class="tab-pane active" id='munki'>
-					<?php $this->view('client/munki_tab'); ?>
+			<?foreach($tab_list as $name => $data):?>
+
+				<div class="tab-pane <?if(isset($data['class'])):?>active<?endif?>" id='<?php echo $name?>'>
+					<?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array());?>
 				</div>
 
-				<div class="tab-pane" id='apple-software'>
-					<h2 data-i18n="client.installed_apple_software">Installed Apple Software</h2>
-					<?php $this->view('client/install_history_tab', array('apple'=> 1)); ?>
-				</div>
-
-				<div class="tab-pane" id='third-party-software'>
-					<h2 data-i18n="client.installed_third_party_software">Installed Third Party Software</h2>
-					<?php $this->view('client/install_history_tab', array('apple'=> 0)); ?>
-				</div>
-
-				<div class="tab-pane" id='inventory-items'>
-					<?php $this->view('client/inventory_items_tab'); ?>
-				</div>
-
-				<div class="tab-pane" id='network-tab'>
-					<?php $this->view('client/network_tab'); ?>
-				</div>
-
-				<div class="tab-pane" id='directory-tab'>
-					<?php $this->view('client/directory_tab'); ?>
-				</div>
-
-				<div class="tab-pane" id='displays-tab'>
-					<?php $this->view('client/displays_tab'); ?>
-				</div>
-
-				<div class="tab-pane" id='filevault-tab'>
-					<?php $this->view('client/filevault_tab'); ?>
-				</div>
-				<div class="tab-pane" id='bluetooth-tab'>
-					<?php $this->view('client/bluetooth_tab'); ?>
-				</div>
-				<div class="tab-pane" id='power-tab'>
-					<?php $this->view('client/power_tab'); ?>
-				</div>
-				<div class="tab-pane" id='profile-tab'>
-					<?php $this->view('client/profile_tab'); ?>
-				</div>
-				<div class="tab-pane" id='ard-tab'>
-					<?php $this->view('client/ard_tab'); ?>
-				</div>
+			<?endforeach?>
 
 			</div>
 

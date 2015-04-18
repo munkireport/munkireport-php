@@ -28,15 +28,18 @@
 	"bundle_id": "BundleID",
 	"client": {
 		"tab": {
-			"munki": "Managed Software",
 			"apple_software": "Apple Software",
-			"third_party_software": "Third Party Software",
-			"inventory_items": "Inventory Items",
-			"network": "Network Interfaces",
+			"ard": "ARD",
+			"bluetooth": "Bluetooth",
+			"displays": "Displays",
 			"ds": "Directory Services",
 			"fv_escrow": "Filevault Escrow",
-			"bluetooth": "Bluetooth",
-			"ard": "ARD"
+			"inventory_items": "Inventory Items",
+			"munki": "Managed Software",
+			"network": "Network Interfaces",
+			"power": "Power",
+			"profiles": "Profiles",
+			"third_party_software": "Third Party Software"
 		},
 		"installed_apple_software": "Installed Apple Software",
 		"installed_third_party_software": "Installed Third Party Software",
