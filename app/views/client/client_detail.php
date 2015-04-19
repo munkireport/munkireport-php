@@ -8,13 +8,14 @@
 
 // Tab list, each item should contain: 
 //	'view' => path/to/tab
-// 'i18n' => string representing a localised name
+// 'i18n' => i18n identifier matching a localised name
 // Optionally:
-// 'view_vars' => array with variables to pass to the vies
+// 'view_vars' => array with variables to pass to the views
 // 'badge' => id of a badge for this tab
 // 'class' => signify first active tab
 $tab_list = array(
 	'munki' => array('view' => 'client/munki_tab', 'i18n' => 'client.tab.munki', 'class' => 'active'),
+	'serverstats' => array('view_path' => MODULE_PATH . 'servermetrics/views/serverstats_tab', 'i18n' => 'client.tab.serverstats'),
 	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
 	'third-party-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 0), 'i18n' => 'client.tab.third_party_software', 'badge' => 'history-cnt-0'),
 	'inventory-items' => array('view' => 'client/inventory_items_tab', 'i18n' => 'client.tab.inventory_items', 'badge' => 'inventory-cnt'),
@@ -50,7 +51,7 @@ $tab_list = array(
 			<?foreach($tab_list as $name => $data):?>
 
 				<div class="tab-pane <?if(isset($data['class'])):?>active<?endif?>" id='<?php echo $name?>'>
-					<?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array());?>
+					<?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:VIEW_PATH);?>
 				</div>
 
 			<?endforeach?>

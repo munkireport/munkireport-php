@@ -39,6 +39,7 @@
 			"network": "Network Interfaces",
 			"power": "Power",
 			"profiles": "Profiles",
+			"serverstats": "Server Statistics",
 			"third_party_software": "Third Party Software"
 		},
 		"installed_apple_software": "Installed Apple Software",

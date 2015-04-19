@@ -1,21 +1,11 @@
-<?php $this->view('partials/head', array(
-  "scripts" => array(
-	"clients/client_list.js"
-  )
-)); ?>
+<style>svg{height: 400px; width:100%;}</style>
 
-<div class="container">
-
-  <div class="row">
-
-	<div class="col-xs-12">
-
-	  <svg id="chart1" style="height: 400px; width: 100%"></svg>
-	  <svg id="chart2" style="height: 400px; width: 100%"></svg>
-	  <svg id="chart3" style="height: 400px; width: 100%"></svg>
-	  <svg id="chart4" style="height: 400px; width: 100%"></svg>
-	  <svg id="chart5" style="height: 400px; width: 100%"></svg>
-	  <svg id="chart6" style="height: 400px; width: 100%"></svg>
+<svg id="chart1"></svg>
+<svg id="chart2"></svg>
+<svg id="chart3"></svg>
+<svg id="chart4"></svg>
+<svg id="chart5"></svg>
+<svg id="chart6"></svg>
 
 
 	<script>
@@ -26,14 +16,27 @@ function sortByDateAscending(a, b) {
 }
 
 
-$( document ).ready(function() {
+$(document).on('appReady', function(e, lang) {
 
 	var colors = d3.scale.category20(),
 		serialNumber = '<?php echo $serial_number?>',
 		keyColor = function(d, i) {return colors(d.key)},
 		dateformat = "L LT", // Moment.js dateformat
-		xTickCount = 4, // Amount of ticks on x axis
-		chart;
+		charts = [],
+		xTickCount = 4; // Amount of ticks on x axis
+
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		// Call update on all charts when #serverstats
+		// becomes active so nvd3 knows about the width
+		// (hidden tabs are less wide)
+		if($(e.target).attr('href') == '#serverstats')
+		{
+			charts.forEach(function(callback) {
+				callback();
+			});
+		}
+	})
+
 
 	$.when( 
 		$.ajax( baseUrl + 'index.php?/module/machine/report/' + serialNumber ), 
@@ -143,9 +146,9 @@ $( document ).ready(function() {
 				.transition().duration(500)
 				.call(chart)
 
+			charts.push(chart.update);
 			nv.utils.windowResize(chart.update);
-			return chart;
-		});        
+		});
 
 		// CPU Usage
 		nv.addGraph(function() {
@@ -167,6 +170,7 @@ $( document ).ready(function() {
 				.transition().duration(500)
 				.call(chart)
 
+			charts.push(chart.update);
 			nv.utils.windowResize(chart.update);
 			return chart;
 		});
@@ -189,6 +193,7 @@ $( document ).ready(function() {
 				.transition().duration(500)
 				.call(chart)
 
+			charts.push(chart.update);
 			nv.utils.windowResize(chart.update);
 			return chart;
 		});
@@ -213,6 +218,7 @@ $( document ).ready(function() {
 				.transition().duration(500)
 				.call(chart)
 
+			charts.push(chart.update);
 			nv.utils.windowResize(chart.update);
 			return chart;
 		});
@@ -235,6 +241,7 @@ $( document ).ready(function() {
 				.transition().duration(500)
 				.call(chart)
 
+			charts.push(chart.update);
 			nv.utils.windowResize(chart.update);
 			return chart;
 		});
@@ -257,21 +264,14 @@ $( document ).ready(function() {
 				.transition().duration(500)
 				.call(chart)
 
+			charts.push(chart.update);
 			nv.utils.windowResize(chart.update);
 			return chart;
 		}); 
+
 
 	});
 
 
 });
 </script>
-
-	</div> <!-- /span 12 -->
-
-  </div> <!-- /row -->
-
-</div>  <!-- /container -->
-
-
-<?php $this->view('partials/foot'); ?>
