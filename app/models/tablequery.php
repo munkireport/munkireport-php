@@ -59,10 +59,28 @@ class Tablequery {
             $from .= " LEFT JOIN $name USING (serial_number)";
         }
 
+        // Where not empty
+        $where = '';
+        if( $cfg['mrColNotEmpty'])
+        {
+            $tbl_col_array = explode('#', $cfg['mrColNotEmpty']);
+            if(count($tbl_col_array) == 2)
+            {
+                // Format column name
+                $where = sprintf('WHERE `%s`.`%s` IS NOT NULL', 
+                    $tbl_col_array[0], $tbl_col_array[1]);
+            }
+            else
+            {
+                $where = sprintf('WHERE `%s` IS NOT NULL', $cfg['mrColNotEmpty']);
+            }
+        }
+
         // Get total records
         $sql = "
             SELECT COUNT(1) as count
-            $from";
+            $from
+            $where";
         if( ! $stmt = $dbh->prepare( $sql ))
         {
             $err = $dbh->errorInfo();
@@ -98,10 +116,10 @@ class Tablequery {
         }
 
         // Search
-        $sWhere = "";
+        $sWhere = $where;
         if($cfg['sSearch'])
         {
-            $sWhere = "WHERE (";
+            $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach($formatted_columns AS $col)
             {
                 $sWhere .= $col." LIKE '%".( $cfg['sSearch'] )."%' OR ";
@@ -113,7 +131,7 @@ class Tablequery {
         // Search columns
         if($cfg['search_cols'])
         {
-            $sWhere = "WHERE (";
+            $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach ($cfg['search_cols'] as $pos => $val)
             {
                 if(is_string($val))

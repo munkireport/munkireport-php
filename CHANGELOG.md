@@ -1,3 +1,46 @@
+### 2.4.1 (April 13, 2015)
+
+FIXES
+
+* Disable power reporting for desktops
+* Fix labels for donut chart in network locations
+* Fix machine migration script
+* Fix warranty lookups
+
+NEW FEATURES
+
+* Select modules in installer
+* Profile reporting (thanks to @dingerkingh)
+* Russian localisation (thanks to @little2112)
+
+
+### 2.3.0 (March 11, 2015)
+
+FIXES
+
+* TLS support for 10.6 clients
+* Sortable Managed installs table (thanks to @dingerkingh)
+
+NEW FEATURES
+
+* App version report page (thanks to @rsaeks)
+* Updated German translation (thanks to @fridomac)
+* Improved network graphs
+* Laptop battery reporting (thanks to @kene101, @dingerkingh and @rickheil)
+
+### 2.2.0 (Februari 8, 2015)
+
+FIXES
+
+* Migration script 003_machine_add_cpu.php (thanks to @choules)
+* TLSv1 support (thanks to @joshua-d-miller)
+* OS version is now stored as INTEGER for better sorting/comparing
+
+NEW FEATURES
+
+* Create installer pkg for MR-PHP (thanks to @znerol)
+* NVD3 charting library added (with one included graph showing the growth of your munki flock over time)
+
 ### 2.1.0 (November 10, 2014)
 
 FIXES
@@ -17,7 +60,6 @@ NEW FEATURES
 * Localization with i18n js library
 * Updated SMART status widget (thanks to @kene101)
 * Authorization for delete_machine
-
 
 ### 2.0.11 (July 6, 2014)
 

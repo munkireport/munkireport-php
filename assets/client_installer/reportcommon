@@ -8,9 +8,6 @@ import pwd
 import sys
 import urllib
 import urllib2
-import httplib
-import socket
-import ssl
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
 from Foundation import CFPreferencesAppSynchronize
 from Foundation import CFPreferencesCopyAppValue
@@ -24,6 +21,16 @@ import struct
 import time
 import os
 
+# Check for ssl module
+# this will disable the TLS fix on 10.5 and below
+try:
+    import ssl
+    import httplib
+    import socket
+    TLS = True
+except ImportError:
+    TLS = False
+
 class TLS1Connection(httplib.HTTPSConnection):
     """Like HTTPSConnection but more specific"""
     def __init__(self, host, **kwargs):
@@ -33,8 +40,13 @@ class TLS1Connection(httplib.HTTPSConnection):
         """Overrides HTTPSConnection.connect to specify TLS version"""
         # Standard implementation from HTTPSConnection, which is not
         # designed for extension, unfortunately
-        sock = socket.create_connection((self.host, self.port),
-                self.timeout, self.source_address)
+        if getattr(self, 'source_address', None):
+            sock = socket.create_connection((self.host, self.port),
+                    self.timeout, self.source_address)
+        else:
+            # Python 2.6 does not use source_address
+            sock = socket.create_connection((self.host, self.port),
+                    self.timeout)
         if getattr(self, '_tunnel_host', None):
             self.sock = sock
             self._tunnel()
@@ -50,8 +62,6 @@ class TLS1Handler(urllib2.HTTPSHandler):
  
     def https_open(self, req):
         return self.do_open(TLS1Connection, req)
-
-TLS = True
 
 if TLS is True:
     # Override default handler

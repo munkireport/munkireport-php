@@ -18,7 +18,8 @@ class datatables extends Controller
 			'sEcho' => 0, // Identifier, just return
 			'iColumns' => 0, // Number of columns
 			'iSortingCols' => 0, // Amount of sort columns
-			'sSearch' => '' // Search query
+			'sSearch' => '', // Search query
+			'mrColNotEmpty' => '' // Munkireport non empty column name
 		);
 
 		$sortcols = $searchcols = array();
