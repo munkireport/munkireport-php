@@ -33,6 +33,12 @@ EVENTS = {  'filesharing.sessions.afp': 0,
 
 def __main__():
 
+    # Skip manual check
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'manualcheck':
+            print 'Manual check: skipping'
+            exit(0)
+
     input_dir = '/var/log/servermetricsd/'
     output_file_path = '/usr/local/munki/preflight.d/cache/servermetrics.json'
 

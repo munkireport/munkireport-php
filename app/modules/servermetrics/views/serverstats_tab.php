@@ -28,7 +28,7 @@ $(document).on('appReady', function(e, lang) {
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		// Call update on all charts when #serverstats
 		// becomes active so nvd3 knows about the width
-		// (hidden tabs are less wide)
+		// (hidden tabs have no width)
 		if($(e.target).attr('href') == '#serverstats')
 		{
 			charts.forEach(function(callback) {
