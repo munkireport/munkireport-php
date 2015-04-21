@@ -17,6 +17,32 @@ class clients extends Controller
         $obj->view('client/client_list', $data);
     
     }
+
+    /**
+     * Get data for serial_number
+     *
+     * @return void
+     * @author 
+     **/
+    function get_data($serial_number = '')
+    {
+    	$machine = new Machine_model;
+    	new Reportdata_model;
+		new Disk_report_model;
+		new Warranty_model;
+		new Localadmin_model;
+    	new Timemachine_model;
+
+    	$sql = "SELECT * FROM machine m 
+    		LEFT JOIN timemachine t ON (m.serial_number = t.serial_number)
+    		LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
+    		LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
+    		LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
+    		LEFT JOIN diskreport d ON (m.serial_number = d.serial_number)";
+
+    	$obj = new View();
+    	$obj->view('json', array('msg' => $machine->query($sql)));
+    }
 	
 	// ------------------------------------------------------------------------
 
