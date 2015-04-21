@@ -10,17 +10,15 @@
 			<img width="72" height="72" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=<?php echo substr($serial_number, 8); ?>&amp;size=120x120" />
 		</div>
 		<div class="col-lg-3">
-			<h4>
-				<?php echo $machine->computer_name; ?><br />
+			<h4 id="computer_name">
+				<br />
 			</h4>
 			<small class="muted">
-				<?php echo $machine->machine_desc; ?>
-				<?php echo $machine->machine_model; ?>
+				<span id="machine_desc"></span>
+				<span id="machine_model"></span>
 				<br />
-				<?php echo $report->long_username; ?>
-				<?php if($report->console_user): ?>
-				(<?php echo $report->console_user; ?>)
-				<?php endif; ?>
+				<span id="long_username"></span>
+				(<span id="console_user"></span>)
 				<br />
 				Warranty Coverage:
 				<?php if ($warranty->status == "Supported"): ?>
@@ -50,14 +48,14 @@
 		<div class="col-lg-4">
 			<small>
 				<dl class="dl-horizontal">
-					<dt>Software</dt>
+					<dt data-i18n="software"></dt>
 					<dd>OS X <span class="osvers"><?php echo $machine->os_version?></span>
 						(<?php echo $machine->cpu_arch; ?>)&nbsp;</dd>
 					<dt>CPU</dt>
-					<dd><?php echo $machine->cpu; ?>&nbsp;</dd>
+					<dd><span id="cpu"></span>&nbsp;</dd>
 					<dt>CPU Type</dt>
-					<dd><?php echo $machine->number_processors; ?> core&nbsp;</dd>
-					<dt data-i18n="serial">Serial Number</dt>
+					<dd><span id="number_processors"></span> core&nbsp;</dd>
+					<dt data-i18n="serial"></dt>
 					<dd><?php echo $serial_number; ?>&nbsp;</dd>
 					<dt>SMC Version</dt>
 					<dd><?php echo $machine->SMC_version_system; ?>&nbsp;</dd>

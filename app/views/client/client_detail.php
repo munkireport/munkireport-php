@@ -64,7 +64,15 @@ $tab_list = array(
 			$(document).on('appReady', function(e, lang) {
 
 				// Format OS Version
-				$('span.osvers').html(integer_to_version($('span.osvers').html()))
+				$('span.osvers').html(integer_to_version($('span.osvers').html()));
+
+				// Get client data
+				$.getJSON( baseUrl + 'index.php?/clients/get_data/<?php echo $serial_number?>', function( data ) {
+					console.log(data);
+					$.each(data[0], function(prop, val){
+						$('#'+prop).html(val);
+					});
+				});
 
 				// Activate tabdrop
 				$('.nav-tabs').tabdrop();

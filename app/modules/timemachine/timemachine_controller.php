@@ -26,5 +26,24 @@ class Timemachine_controller extends Module_controller
 	}
 
 
+    /**
+     * Retrieve data in json format
+     *
+     * @return void
+     * @author 
+     **/
+    function get_data($serial_number = '')
+    {
+        $obj = new View();
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $timemachine = new Timemachine_model($serial_number);
+        $obj->view('json', array('msg' => $timemachine->rs));
+    }
+
 	
 } // END class Timemachine_controller

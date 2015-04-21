@@ -84,6 +84,7 @@
 			"title": "Bluetooth report",
 			"trackpad_battery": "Trackpad"
 		},
+		"checkin": "Check-in",
 		"computername": "Name",
 		"hardware": {
 			"description": "Description"
@@ -98,6 +99,13 @@
 			"pending_install_plural": "Pending installs",
 			"pending_removal": "Pending removal",
 			"pending_removal_plural": "Pending removals"
+		},
+		"timemachine": {
+			"duration": "Backup duration",
+			"last_failure": "Last failed backup",
+			"last_failure_msg": "Message",
+			"last_success": "Last successful backup",
+			"title": "Timemachine Report"
 		},
 		"username": "Username"
 	},
@@ -123,6 +131,7 @@
 			"munki": "Munki",
 			"network": "Network",
 			"security": "Security",
+			"timemachine": "Timemachine",
 			"warranty": "Warranty"
 		},
 		"main": {
@@ -152,6 +161,7 @@
 	"pending": "Pending",
 	"path": "Path",
 	"serial": "Serial Number",
+	"software": "Software",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
 	"unknown": "Unknown",

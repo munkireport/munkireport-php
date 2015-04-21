@@ -48,7 +48,7 @@ class Timemachine_model extends Model {
         	$message = substr($line, 21);
         	
 
-        	if( strpos($message, 'Starting automatic backup') === 0)
+        	if( preg_match('/^Starting (automatic|manual) backup/', $message))
         	{
         		$start = $date;
         	}
