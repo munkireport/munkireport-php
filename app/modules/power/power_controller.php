@@ -23,5 +23,31 @@ class Power_controller extends Module_controller
 	{
 		echo "You've loaded the power module!";
 	}
+
+	/**
+	 * Get conditions
+	 *
+	 * @return void
+	 * @author AvB
+	 **/
+	function conditions()
+	{
+		
+		if( ! $this->authorized())
+		{
+			die('Authenticate first.'); // Todo: return json
+		}
+
+		$queryobj = new Power_model();
+		$sql = "SELECT COUNT(CASE WHEN `condition` = 'Normal' THEN 1 END) AS normal,
+						COUNT(CASE WHEN `condition` = 'Replace Soon' THEN 1 END) AS soon,
+						COUNT(CASE WHEN `condition` = 'Service Battery' THEN 1 END) AS service,
+						COUNT(CASE WHEN `condition` = 'Replace Now' THEN 1 END) AS now,
+						COUNT(CASE WHEN `condition` = 'No Battery' THEN 1 END) AS missing
+			 			FROM power;";
+		$obj = new View();
+		$obj->view('json', array('msg' => current($queryobj->query($sql))));
+
+	}
 	
 } // END class default_module

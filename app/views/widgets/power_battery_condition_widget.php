@@ -8,42 +8,50 @@
 
 				</div>
 
-				<div class="panel-body text-center">
-					<?php
-						$queryobj = new Power_model();
-						$sql = "SELECT COUNT(CASE WHEN `condition` = 'Normal' THEN 1 END) AS Normal,
-										COUNT(CASE WHEN `condition` = 'Replace Soon' THEN 1 END) AS Soon,
-										COUNT(CASE WHEN `condition` = 'Service Battery' THEN 1 END) AS Service,
-										COUNT(CASE WHEN `condition` = 'Replace Now' THEN 1 END) AS Now,
-										COUNT(CASE WHEN `condition` = 'No Battery' THEN 1 END) AS Missing
-							 			FROM power;";
-						$obj = current($queryobj->query($sql));
-					?>
-				<?if($obj):?>
-					<a href="<?=url('show/listing/power#Replace%20Now')?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->Now?> </span><br>
-						<span data-i18n="widget.power.now">Now</span>
+				<div class="list-group scroll-box">
+					<a id="power-now" href="<?=url('show/listing/power#Replace%20Now')?>" class="list-group-item list-group-item-danger hide">
+						<span class="badge">0</span>
+						<span data-i18n="widget.power.now"></span>
 					</a>
-					<a href="<?=url('show/listing/power#Service%20Battery')?>" class="btn btn-warning">
-						<span class="bigger-150"> <?=$obj->Service?> </span><br>
-						<span data-i18n="widget.power.service">Service</span>
+					<a id="power-service" href="<?=url('show/listing/power#Service%20Battery')?>" class="list-group-item list-group-item-warning hide">
+						<span class="badge">0</span>
+						<span data-i18n="widget.power.service"></span>
 					</a>
-					<a href="<?=url('show/listing/power#Replace%20Soon')?>" class="btn btn-warning">
-						<span class="bigger-150"> <?=$obj->Soon?> </span><br>
-						<span data-i18n="widget.power.soon">Soon</span>
+					<a id="power-soon" href="<?=url('show/listing/power#Replace%20Soon')?>" class="list-group-item list-group-item-warning hide">
+						<span class="badge">0</span>
+						<span data-i18n="widget.power.soon"></span>
 					</a>
-					<a href="<?=url('show/listing/power#Normal')?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->Normal?> </span><br>
-						<span data-i18n="widget.power.normal">Normal</span>
+					<a id="power-normal" href="<?=url('show/listing/power#Normal')?>" class="list-group-item list-group-item-success hide">
+						<span class="badge">0</span>
+						<span data-i18n="widget.power.normal"></span>
 					</a>
-					<?if($obj->Missing > 0):?>
-						<a href="<?=url('show/listing/power#No%20Battery')?>" class="btn btn-danger">
-							<span class="bigger-150"> <?=$obj->Missing?> </span><br>
-							No Battery
-					<?endif?>
+					<a id="power-missing" href="<?=url('show/listing/power#No%20Battery')?>" class="list-group-item list-group-item-danger hide">
+						<span class="badge">0</span>
+						<span data-i18n="widget.power.nobattery"></span>
 					</a>
-				<?endif?>
+					<span id="power-nodata" data-i18n="no_clients" class="list-group-item">No clients</span>
 				</div>
+					
+<script>
+$(document).on('appReady', function(e, lang) {
+
+	$.getJSON( baseUrl + 'index.php?/module/power/conditions', function( data ) {
+		$.each(data, function(prop, val){
+			if(val > 0)
+			{
+				$('#power-nodata').addClass('hide'); // Hide no clients
+				$('#power-' + prop).toggleClass('hide');
+				$('#power-' + prop + '>.badge').html(val);
+			}
+		});
+	});
+});
+
+
+</script>
+
+
+
 
 			</div><!-- /panel -->
 
