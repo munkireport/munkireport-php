@@ -84,6 +84,11 @@
 			"title": "Bluetooth report",
 			"trackpad_battery": "Trackpad"
 		},
+		"certificate": {
+			"commonname": "Common Name",
+			"expires": "Expires",
+			"title": "Certificate Report"
+		},
 		"checkin": "Check-in",
 		"computername": "Name",
 		"hardware": {
