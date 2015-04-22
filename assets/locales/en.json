@@ -167,9 +167,9 @@
 		"power": {
 			"missing": "Missing",
 			"normal": "Normal",
-			"now": "Now",
-			"service": "Service",
-			"soon": "Soon"
+			"now": "Replace Now",
+			"service": "Service Now",
+			"soon": "Service Soon"
 		}
 	}
 }
