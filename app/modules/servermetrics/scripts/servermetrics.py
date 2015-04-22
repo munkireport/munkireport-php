@@ -46,17 +46,17 @@ def __main__():
 
     for file_path in os.listdir(input_dir):
         file_path = path.join(input_dir, file_path)
-        print("Reading: \"{0}\"".format(file_path))
+        # print("Reading: \"{0}\"".format(file_path))
         try:
             f = open(file_path, "rb")
         except IOError as e:
-            print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
+            # print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
             continue
 
         try:
             db = ccl_asldb.AslDb(f)
         except ccl_asldb.AslDbError as e:
-            print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
+            # print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
             f.close()
             continue
 
