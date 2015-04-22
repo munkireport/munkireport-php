@@ -74,6 +74,12 @@ $tab_list = array(
 					});
 				});
 
+				// Get certificate data
+				$.getJSON( baseUrl + 'index.php?/module/certificate/get_data/<?php echo $serial_number?>', function( data ) {
+					console.log(data);
+				});
+
+
 				// Activate tabdrop
 				$('.nav-tabs').tabdrop();
 
