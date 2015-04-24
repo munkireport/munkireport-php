@@ -10,7 +10,8 @@ class Service_controller extends Module_controller
 {
 	function __construct()
 	{
-		$this->module_path = dirname(__FILE__);
+        $this->module_path = dirname(__FILE__) .'/';
+        $this->view_path = $this->module_path . 'views/';
 	}
 
 	/**
@@ -22,6 +23,24 @@ class Service_controller extends Module_controller
 	{
 		echo "You've loaded the service report module!";
 	}
+
+    /**
+     * Show detail information
+     *
+     * @author AvB
+     **/
+    function show()
+    {
+        if( ! $this->authorized())
+        {
+            redirect('auth/login');
+        }
+        
+        $data['scripts'] = array("clients/client_list.js");
+        $data['page'] = '';
+        $obj = new View();
+        $obj->view('services', $data, $this->view_path);
+    }
 
 	/**
      * Retrieve data in json format
