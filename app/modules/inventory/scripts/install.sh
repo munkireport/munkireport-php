@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}postflight.d/inventory_add_plugins.py"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add inventory "/Library/Managed Installs/ApplicationInventory.plist"
+	setreportpref "inventory" "/Library/Managed Installs/ApplicationInventory.plist"
 
 else
 	echo "Failed to download all required components!"

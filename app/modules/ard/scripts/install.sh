@@ -1,9 +1,23 @@
 #!/bin/bash
 
-ARDPREF='/Library/Preferences/com.apple.RemoteDesktop'
+# path to controller
+DR_CTL="${BASEURL}index.php?/module/ard/"
+ARDPREF=/Library/Preferences/com.apple.RemoteDesktop
+SCRIPTNAME=init_ard
 
-# Make sure ard pref exists
-defaults read "$ARDPREF" > /dev/null 2>&1 || defaults write "$ARDPREF" MR created
+# Get the script in the proper directory
+${CURL} "${DR_CTL}get_script/${SCRIPTNAME}" -o "${MUNKIPATH}preflight.d/${SCRIPTNAME}"
 
-# Add ARD Preferences to munkireport
-defaults write "${PREFPATH}" ReportItems -dict-add ard_model "${ARDPREF}.plist"
+# Check exit status of curl
+if [ $? = 0 ]; then
+	# Make executable
+	chmod a+x "${MUNKIPATH}preflight.d/${SCRIPTNAME}"
+
+	# Set preference to include this file in the preflight check
+	setreportpref "ard_model" "${ARDPREF}.plist"
+
+else
+	echo "Failed to download all required components!"
+	rm -f "${MUNKIPATH}preflight.d/${SCRIPTNAME}"
+	ERR=1
+fi

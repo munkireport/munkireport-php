@@ -17,4 +17,4 @@ fi
 chmod a+x "${MUNKIPATH}preflight.d/networkinfo.sh"
 
 # Set preference to include this file in the preflight check
-defaults write "${PREFPATH}" ReportItems -dict-add network "${CACHEPATH}networkinfo.txt"
+setreportpref "network" "${CACHEPATH}networkinfo.txt"
