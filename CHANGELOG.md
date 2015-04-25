@@ -1,4 +1,4 @@
-### 2.4.1 (April 13, 2015)
+### 2.4.2 (April 25, 2015)
 
 FIXES
 
@@ -6,13 +6,14 @@ FIXES
 * Fix labels for donut chart in network locations
 * Fix machine migration script
 * Fix warranty lookups
+* Improved installer package
 
 NEW FEATURES
 
 * Select modules in installer
 * Profile reporting (thanks to @dingerkingh)
 * Russian localisation (thanks to @little2112)
-
+* improved power widget labels (thanks to @rickheil)
 
 ### 2.3.0 (March 11, 2015)
 
