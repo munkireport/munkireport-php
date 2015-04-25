@@ -16,7 +16,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${INSTALLROOT}/usr/local/bin/filevault_2_status_check.sh" "${MUNKIPATH}preflight.d/filevaultstatus"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add filevault_status "${CACHEPATH}filevaultstatus.txt"
+	setreportpref "filevault_status" "${CACHEPATH}filevaultstatus.txt"
 else
 	echo "! Failed to install all required components"
 	echo "! Skipping filevault status report"

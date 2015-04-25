@@ -145,6 +145,7 @@
 		"prefix_length": "Prefix length",
 		"router": "Router"
 	},
+	"no_clients": "No Clients",
 	"pending": "Pending",
 	"path": "Path",
 	"serial": "Serial Number",
@@ -167,9 +168,10 @@
 		"power": {
 			"missing": "Missing",
 			"normal": "Normal",
-			"now": "Now",
-			"service": "Service",
-			"soon": "Soon"
+			"now": "Replace Now",
+			"service": "Service Now",
+			"soon": "Service Soon",
+			"nobattery": "No Battery"
 		}
 	}
 }
