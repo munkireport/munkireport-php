@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/bluetooth.sh"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add bluetooth "${CACHEPATH}bluetoothinfo.txt"
+	setreportpref "bluetooth" "${CACHEPATH}bluetoothinfo.txt"
 
 else
 	echo "Failed to download all required components!"

@@ -70,7 +70,7 @@ for profiles in plist[0]['_items']:
 
 # Write to disk
 txtfile = open("%s/profile.txt" % cachedir, "w")
-txtfile.write(result)
+txtfile.write(result.encode('utf-8'))
 txtfile.close()
 
 #exit(0)

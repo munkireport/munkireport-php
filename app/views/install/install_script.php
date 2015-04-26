@@ -10,6 +10,7 @@ MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREFLIGHT=1
+PREF_CMDS=( ) # Pref commands array
 CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
 # Exit status
 ERR=0
@@ -33,6 +34,7 @@ Usage: ${PROG} [OPTIONS]
             Current value: ${PREFPATH}
   -n        Do not run preflight script after the installation
   -i PATH   Create a full installer at PATH
+  -c ID     Change pkg id to ID
   -h        Display this help message
   -v VERS   Override version number
 
@@ -56,7 +58,22 @@ Example:
 EOF
 }
 
-while getopts b:m:p:v:i:nh flag; do
+# Set munkireport preference
+function setpref {
+	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write ${PREFPATH} ${1} \"${2}\"" )
+}
+
+# Set munkireport reportitem preference
+function setreportpref {
+	setpref "ReportItems -dict-add ${1}" "${2}"
+}
+
+# Reset reportitems
+function resetreportpref {
+	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write ${PREFPATH} ReportItems -dict" )
+}
+
+while getopts b:m:p:c:v:i:nh flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -67,6 +84,9 @@ while getopts b:m:p:v:i:nh flag; do
 		p)
 			PREFPATH="$OPTARG"
 			;;
+		c)
+			IDENTIFIER="$OPTARG"
+			;;
 		v)
 			VERSION="$OPTARG"
 			;;
@@ -76,7 +96,7 @@ while getopts b:m:p:v:i:nh flag; do
 			INSTALLTEMP=$(mktemp -d -t mrpkg)
 			INSTALLROOT="$INSTALLTEMP"/install_root
 			MUNKIPATH="$INSTALLROOT"/usr/local/munki/
-			PREFPATH="$INSTALLROOT"/Library/Preferences/MunkiReport
+			PREFPATH=/Library/Preferences/MunkiReport
 			PREFLIGHT=0
 			BUILDPKG=1
 			;;
@@ -135,10 +155,11 @@ mkdir -p "${MUNKIPATH}preflight_abort.d"
 echo "Configuring munkireport"
 #### Configure Munkireport ####
 
-defaults write "${PREFPATH}" BaseUrl "${BASEURL}"
+# Set BaseUrl preference
+setpref 'BaseUrl' "${BASEURL}"
 
 # Reset ReportItems array
-defaults write "${PREFPATH}" ReportItems -dict
+resetreportpref
 
 # Include module scripts
 <?php foreach($install_scripts AS $scriptname => $filepath): ?>
@@ -149,6 +170,12 @@ echo '+ Installing <?php echo $scriptname; ?>'
 <?php echo file_get_contents($filepath); ?>
 
 <?php endforeach; ?>
+
+# Store munkipath when building a package
+if [ $BUILDPKG = 1 ]; then
+	STOREPATH=${MUNKIPATH}
+	MUNKIPATH='/usr/local/munki/'
+fi
 
 # Capture uninstall scripts
 read -r -d '' UNINSTALLS << EOF
@@ -163,6 +190,12 @@ echo '- Uninstalling <?php echo $scriptname; ?>'
 <?php endforeach; ?>
 
 EOF
+
+# Restore munkipath when building a package
+if [ $BUILDPKG = 1 ]; then
+	MUNKIPATH=${STOREPATH}
+fi
+
 
 # If not building a package, execute uninstall scripts
 if [ $BUILDPKG = 0 ]; then
@@ -179,9 +212,18 @@ if [ $ERR = 0 ]; then
 		SCRIPTDIR="$INSTALLTEMP"/scripts
 		mkdir -p "$SCRIPTDIR"
 		
-		# Add uninstall script to preflight
-		echo  "#!/bin/bash" > $SCRIPTDIR/preflight
-		echo  "$UNINSTALLS" >> $SCRIPTDIR/preflight
+		# Add uninstall script to preinstall
+		echo  "#!/bin/bash" > $SCRIPTDIR/preinstall
+		echo  "$UNINSTALLS" >> $SCRIPTDIR/preinstall
+		chmod +x $SCRIPTDIR/preinstall
+
+		# Add Preference setting commands to postinstall
+		echo  "#!/bin/bash" > $SCRIPTDIR/postinstall
+		for i in "${PREF_CMDS[@]}";
+			do echo $i >> $SCRIPTDIR/postinstall
+		done
+		chmod +x $SCRIPTDIR/postinstall
+
 
 		echo "Building MunkiReport v${VERSION} package."
 		pkgbuild --identifier "$IDENTIFIER" \
@@ -191,6 +233,12 @@ if [ $ERR = 0 ]; then
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
 	else
+
+		# Set preferences
+		echo "Setting preferences"
+		for i in "${PREF_CMDS[@]}"; do 
+			eval $i
+		done
 
 		# Set munkireport version file
 		touch "${MUNKIPATH}munkireport-${VERSION}"
@@ -211,5 +259,7 @@ if [ "$INSTALLTEMP" != "" ]; then
 	echo "Cleaning up temporary directory $INSTALLTEMP"
 	rm -r $INSTALLTEMP
 fi
+
+
 
 exit $ERR

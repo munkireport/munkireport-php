@@ -41,11 +41,17 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
   		search = '';
 
         // Initialize datatables
-            $('.install-history-<?php echo $apple; ?>').dataTable({
-                "aaSorting": [[2,'asc']],
-                "fnDrawCallback": function( oSettings ) {
-                $('#history-cnt-<?php echo $apple; ?>').html(oSettings.fnRecordsTotal());
-              }
-            });
+        $('.install-history-<?php echo $apple; ?>').dataTable(
+		{
+			"aaSorting": [[2,'asc']],
+			"fnDrawCallback": function( oSettings ){
+				// Update tab counter
+				$('#history-cnt-<?php echo $apple; ?>').html(oSettings.fnRecordsTotal());
+			},
+			"fnCreatedRow": function( nRow, aData, iDataIndex ){
+				// Add full time tooltip
+				$('time', nRow).tooltip();
+			}
+        });
   });
 </script>
