@@ -43,6 +43,29 @@ class clients extends Controller
     	$obj = new View();
     	$obj->view('json', array('msg' => $machine->query($sql)));
     }
+
+    /**
+     * Retrieve links from config
+     *
+     * @author 
+     **/
+    function get_links()
+    {
+        $out = array();
+        if(conf('vnc_link'))
+        {
+            $out['vnc'] = conf('vnc_link');
+        }
+        if(conf('ssh_link'))
+        {
+            $out['ssh'] = conf('ssh_link');
+        }
+
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
+
+
+    }
 	
 	// ------------------------------------------------------------------------
 

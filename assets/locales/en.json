@@ -25,6 +25,7 @@
 		"username": "Username",
 		"wrong_user_or_pass": "Wrong username or password"
 	},
+	"boot_time": "Booted",
 	"bundle_id": "BundleID",
 	"client": {
 		"tab": {
@@ -166,6 +167,7 @@
 	"no_clients": "No Clients",
 	"pending": "Pending",
 	"path": "Path",
+	"remote_control": "Remote Control",
 	"serial": "Serial Number",
 	"software": "Software",
 	"unavailable": "Unavailable",

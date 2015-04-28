@@ -63,9 +63,6 @@ $tab_list = array(
 			<script>
 			$(document).on('appReady', function(e, lang) {
 
-				// Format OS Version
-				$('span.osvers').html(integer_to_version($('span.osvers').html()));
-
 				// Get client data
 				$.getJSON( baseUrl + 'index.php?/clients/get_data/<?php echo $serial_number?>', function( data ) {
 					console.log(data);
@@ -75,6 +72,10 @@ $tab_list = array(
 					$.each(machineData, function(prop, val){
 						$('#'+prop).html(val);
 					});
+
+					// Format OS Version
+					$('#os_version').html(integer_to_version(machineData.os_version));
+
 
 					// Format filesizes
 					$('#TotalSize').html(fileSize(machineData.TotalSize, 1));
@@ -113,6 +114,35 @@ $tab_list = array(
 					
 					$('#warranty_status').addClass(cls).html(msg);
 
+					// Uptime
+					if(machineData.uptime > 0){
+						var uptime = moment((machineData.timestamp - machineData.uptime) * 1000);
+						$('#uptime').html('<time title="'+i18n.t('boot_time')+': '+uptime.format('LLLL')+'">'+uptime.fromNow(true)+'</time>');
+					}else{
+						$('#uptime').html(i18n.t('unavailable'));
+					}
+
+					// Registration date
+					var msecs = moment(machineData.reg_timestamp * 1000);
+					$('#reg_date').append('<time title="'+msecs.format('LLLL')+'" datetime="<?php echo $report->reg_timestamp; ?>">'+msecs.fromNow()+'</time>');
+
+					// Check-in date
+					var msecs = moment(machineData.timestamp * 1000);
+					$('#check-in_date').append('<time title="'+msecs.format('LLLL')+'" datetime="<?php echo $report->reg_timestamp; ?>">'+msecs.fromNow()+'</time>');
+
+					// Set tooltips
+					$( "dd time" ).each(function( index ) {
+							$(this).tooltip().css('cursor', 'pointer');
+					});
+					
+					// Remote control links
+					$.getJSON( baseUrl + 'index.php?/clients/get_links', function( links ) {
+						$.each(links, function(prop, val){
+							$('#client_links').append('<a class="btn btn-default" href="'+(val.replace(/%s/, machineData.remote_ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a>');
+						});
+					});
+
+
 				});
 
 				// Get estimate_manufactured_date
@@ -124,6 +154,8 @@ $tab_list = array(
 				$.getJSON( baseUrl + 'index.php?/module/certificate/get_data/<?php echo $serial_number?>', function( data ) {
 					console.log(data);
 				});
+
+
 
 
 				// Activate tabdrop
@@ -146,19 +178,7 @@ $tab_list = array(
 					}
 				})
 
-				// Set times
-				$( "dd time" ).each(function( index ) {
-					if($(this).hasClass('absolutetime'))
-					{
-						seconds = moment().seconds(parseInt($(this).attr('datetime')))
-						$(this).html(moment(seconds).fromNow(true));
-					}
-					else
-					{
-						$(this).html(moment($(this).attr('datetime') * 1000).fromNow());
-					}
-					$(this).tooltip().css('cursor', 'pointer');
-				});
+
 			});
 			</script>
 	    </div> <!-- /span 12 -->

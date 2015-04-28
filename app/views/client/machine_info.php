@@ -1,7 +1,4 @@
 <div class="well well-small machine-info">
-	<?php $machine = new Machine_model($serial_number); ?>
-	<?php $report   = new Reportdata_model($serial_number); ?>
-	<?php //todo: make 1 query?>
 	<div class="row">
 		<div class="col-lg-1">
 			<img width="72" height="72" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=<?php echo substr($serial_number, 8); ?>&amp;size=120x120" />
@@ -29,8 +26,8 @@
 			<small>
 				<dl class="dl-horizontal">
 					<dt data-i18n="software"></dt>
-					<dd>OS X <span class="osvers"><?php echo $machine->os_version?></span>
-						(<?php echo $machine->cpu_arch; ?>)&nbsp;</dd>
+					<dd>OS X <span id="os_version"></span>
+						(<span id="cpu_arch"></span>)</dd>
 					<dt>CPU</dt>
 					<dd><span id="cpu"></span>&nbsp;</dd>
 					<dt>CPU Type</dt>
@@ -50,17 +47,7 @@
 					<dt>Local admin</dt>
 					<dd><span id="users"></span>&nbsp;</dd>
 					<dd>
-						<div class="btn-group btn-group-xs">
-							<?php if(conf('vnc_link')): ?>
-								<a class="btn btn-default" href="<?php printf(conf('vnc_link'), $report->remote_ip); ?>">
-									Remote Control (vnc)
-								</a>
-							<?php endif; ?>
-							<?php if(conf('ssh_link')): ?>
-								<a class="btn btn-default" href="<?php printf(conf('ssh_link'), $report->remote_ip); ?>">
-									Remote Control (ssh)
-								</a>
-							<?php endif; ?>
+						<div id="client_links" class="btn-group btn-group-xs">
 						</div>
 					</dd>
 
@@ -88,18 +75,14 @@
 
 				<dl class="dl-horizontal">
 					<dt>Uptime</dt>
-					<?php if($report->uptime > 0): ?>
-					<dd><time class="absolutetime" title="Booted: <?php echo strftime('%c', $report->timestamp - $report->uptime); ?>" datetime="<?php echo $report->uptime; ?>"><?php echo strftime('%x', $report->timestamp - $report->uptime); ?></time></dd>
-					<?php else: ?>
-					<dd data-i18n="unavailable"></dd>
-					<?php endif; ?>
+					<dd id="uptime"></dd>
 				</dl>
 
 				<dl class="dl-horizontal">
 					<dt>Registration date</dt>
-					<dd><time title="<?php echo strftime('%c', $report->reg_timestamp); ?>" datetime="<?php echo $report->reg_timestamp; ?>"><?php echo strftime('%x', $report->reg_timestamp); ?></time></dd>
+					<dd id="reg_date"></dd>
 					<dt>Last checkin</dt>
-					<dd><time title="<?php echo strftime('%c', $report->timestamp); ?>" datetime="<?php echo $report->timestamp; ?>"><?php echo strftime('%x', $report->timestamp); ?></time></dd>
+					<dd id="check-in_date"></dd>
 				</dl>
 
 			</small>
