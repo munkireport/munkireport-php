@@ -77,9 +77,9 @@ $tab_list = array(
 					});
 
 					// Format filesizes
-					$('#TotalSize').html(fileSize(machineData.TotalSize, 2));
-					$('#UsedSize').html(fileSize(machineData.TotalSize - machineData.FreeSpace, 2));
-					$('#FreeSpace').html(fileSize(machineData.FreeSpace, 2));
+					$('#TotalSize').html(fileSize(machineData.TotalSize, 1));
+					$('#UsedSize').html(fileSize(machineData.TotalSize - machineData.FreeSpace, 1));
+					$('#FreeSpace').html(fileSize(machineData.FreeSpace, 1));
 
 					// Smart status
 					$('#SMARTStatus').html(machineData.SMARTStatus);

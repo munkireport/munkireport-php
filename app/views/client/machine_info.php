@@ -1,9 +1,6 @@
 <div class="well well-small machine-info">
 	<?php $machine = new Machine_model($serial_number); ?>
 	<?php $report   = new Reportdata_model($serial_number); ?>
-	<?php $disk   = new Disk_report_model($serial_number); ?>
-	<?php $warranty   = new Warranty_model($serial_number); ?>
-	<?php $localadmin   = new Localadmin_model($serial_number); ?>
 	<?php //todo: make 1 query?>
 	<div class="row">
 		<div class="col-lg-1">
@@ -39,17 +36,17 @@
 					<dt>CPU Type</dt>
 					<dd><span id="number_processors"></span> core&nbsp;</dd>
 					<dt data-i18n="serial"></dt>
-					<dd><?php echo $serial_number; ?>&nbsp;</dd>
+					<dd><span id="serial_number"></span>&nbsp;</dd>
 					<dt>SMC Version</dt>
-					<dd><?php echo $machine->SMC_version_system; ?>&nbsp;</dd>
+					<dd><span id="SMC_version_system"></span>&nbsp;</dd>
 					<dt>Boot ROM</dt>
-					<dd><?php echo $machine->boot_rom_version; ?>&nbsp;</dd>
-					<dt data-i18n="memory">Memory</dt>
-					<dd><?php echo intval($machine->physical_memory); ?> GB&nbsp;</dd>
+					<dd><span id="boot_rom_version"></span>&nbsp;</dd>
+					<dt data-i18n="memory"></dt>
+					<dd><span id="physical_memory"></span> GB</dd>
 					<dt>Hardware UUID</dt>
-					<dd><?php echo $machine->platform_UUID; ?>&nbsp;</dd>
+					<dd><span id="platform_UUID"></span>&nbsp;</dd>
 					<dt>Remote IP Address</dt>
-					<dd><?php echo $report->remote_ip; ?>&nbsp;</dd>
+					<dd><span id="remote_ip"></span>&nbsp;</dd>
 					<dt>Local admin</dt>
 					<dd><span id="users"></span>&nbsp;</dd>
 					<dd>
@@ -94,7 +91,7 @@
 					<?php if($report->uptime > 0): ?>
 					<dd><time class="absolutetime" title="Booted: <?php echo strftime('%c', $report->timestamp - $report->uptime); ?>" datetime="<?php echo $report->uptime; ?>"><?php echo strftime('%x', $report->timestamp - $report->uptime); ?></time></dd>
 					<?php else: ?>
-					<dd data-i18n="unavailable">Unavailable</dd>
+					<dd data-i18n="unavailable"></dd>
 					<?php endif; ?>
 				</dl>
 
