@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.2.1076';
+$GLOBALS['version'] = '2.4.2.1096';
 
 // Return version without commit count
 function get_version()
@@ -166,6 +166,19 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
 			break;
 	}
 	exit;
+}
+
+function passphrase_to_group($passphrase)
+{
+	foreach(conf('machine_group', array()) as $group)
+	{
+		if($group['type'] == 'key' && $group['value'] == $passphrase)
+		{
+			return $group['group'];
+		}
+	}
+	
+	return 0;
 }
 
 function humanreadablesize($bytes, $decimals = 2) {

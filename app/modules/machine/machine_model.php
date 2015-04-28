@@ -23,7 +23,8 @@ class Machine_model extends Model {
 		$this->rs['computer_name'] = '';
 		$this->rs['l2_cache'] = '';
 		$this->rs['machine_name'] = '';
-		$this->rs['packages'] = '';	   
+		$this->rs['packages'] = '';  
+		$this->rs['computer_group'] = 0;  
 		
 		// Add indexes
 		$this->idx['hostname'] = array('hostname');
@@ -46,7 +47,7 @@ class Machine_model extends Model {
 
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 4;
+		$this->schema_version = 5;
 
 		// Create table if it does not exist
 		$this->create_table();

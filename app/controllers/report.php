@@ -1,6 +1,9 @@
 <?php
 class report extends Controller
 {
+    
+	public $group = 0;
+
     /**
      * Constructor: test if authentication is needed
      * and check if the client has the proper credentials
@@ -9,6 +12,11 @@ class report extends Controller
      **/
     function __construct()
 	{
+		if ( isset($_POST['passphrase']))
+		{
+			$this->group = passphrase_to_group($_POST['passphrase']);
+		}
+
 		if ($auth_list = conf('client_passphrases'))
 		{
 			if ( ! is_array($auth_list))
@@ -58,6 +66,11 @@ class report extends Controller
 			// Register check in reportdata
 			$report = new Reportdata_model($_POST['serial']);
 			$report->register()->save();
+
+			// Store group in machine
+			$report = new Machine_model($_POST['serial']);
+			$report->computer_group = $this->group;
+			$report->save();
 
 			$req_items = unserialize($_POST['items']); //Todo: check if array
 
