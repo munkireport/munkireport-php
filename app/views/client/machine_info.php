@@ -20,25 +20,8 @@
 				<span id="long_username"></span>
 				(<span id="console_user"></span>)
 				<br />
-				Warranty Coverage:
-				<?php if ($warranty->status == "Supported"): ?>
-					<span class='text-success'>Supported until
-						<?php echo $warranty->end_date; ?>
-					</span>
-				<?php elseif ($warranty->status == "No Applecare"): ?>
-					<span class='text-warning'>Supported until
-						<?php echo $warranty->end_date; ?>, No Applecare
-					</span>
-				<?php elseif ($warranty->status == "Unregistered serialnumber"): ?>
-					<span class='text-warning'>Unregistered</span>
-					<a target="_blank" href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&amp;country=USA&amp;id=<?php echo $serial_number; ?>">Register</a>
-				<?php elseif ($warranty->status == "Expired"): ?>
-					<span class='text-danger'>Expired on
-						<?php echo $warranty->end_date; ?>
-					</span>
-				<?php else: ?>
-					<span class='text-danger'><?php echo $warranty->status; ?></span>
-				<?php endif; ?>
+				<span data-i18n="warranty.coverage"></span>:
+				<span id="warranty_status"></span>
 				
 				<a class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>">Recheck Warranty Status</a> <br/>
 
@@ -91,20 +74,19 @@
 			<small>
 				<dl class="dl-horizontal">
 					<dt>Disk size</dt>
-					<dd><span id="TotalSize"></span></dd>
+					<dd><span id="TotalSize"></span>&nbsp;</dd>
 					<dt>Used</dt>
-					<dd><?php echo humanreadablesize($disk->TotalSize - $disk->FreeSpace); ?></dd>
+					<dd><span id="UsedSize"></span>&nbsp;</dd>
 					<dt>Free</dt>
-					<dd><span id="FreeSpace"></dd>
+					<dd><span id="FreeSpace"></span>&nbsp;</dd>
 					<dt>SMART Status</dt>
-					<dd><?php echo ($disk->SMARTStatus == 'Failing') ? '<span class=text-danger>Failing</span>' : $disk->SMARTStatus; ?></dd>
+					<dd><span id="SMARTStatus">&nbsp;</span></dd>
 				</dl>
-				<?php require_once(conf('application_path') . "helpers/warranty_helper.php"); ?>
 				<dl class="dl-horizontal">
 					<dt>Est. Manufacture date</dt>
-					<dd><?php echo estimate_manufactured_date($serial_number); ?></dd>
+					<dd><span id="manufacture_date"></span>&nbsp;</dd>
 					<dt>Est. Purchase date</dt>
-					<dd><?php echo $warranty->purchase_date; ?></dd>
+					<dd><span id="purchase_date"></span>&nbsp;</dd>
 				</dl>
 
 				<dl class="dl-horizontal">

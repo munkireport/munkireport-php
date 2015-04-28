@@ -42,6 +42,27 @@ class Warranty_controller extends Module_controller
 	}
 
 	/**
+	 * Get estimate_manufactured_date
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function estimate_manufactured_date($serial_number='')
+	{
+		// Authenticate
+		if( ! $this->authorized())
+		{
+			die('Authenticate first.'); // Todo: return json?
+		}
+
+		require_once(conf('application_path') . "helpers/warranty_helper.php");
+		$out = array('date' => estimate_manufactured_date($serial_number));
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+
+	/**
 	 * Generate age data for age widget
 	 *
 	 * @author AvB

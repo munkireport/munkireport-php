@@ -80,6 +80,44 @@ $tab_list = array(
 					$('#TotalSize').html(fileSize(machineData.TotalSize, 2));
 					$('#UsedSize').html(fileSize(machineData.TotalSize - machineData.FreeSpace, 2));
 					$('#FreeSpace').html(fileSize(machineData.FreeSpace, 2));
+
+					// Smart status
+					$('#SMARTStatus').html(machineData.SMARTStatus);
+					if(machineData.SMARTStatus == 'Failing'){
+						$('#SMARTStatus').addClass('label label-danger');
+					}
+
+					// Warranty status
+					var cls = 'text-danger',
+						msg = machineData.status
+					switch (machineData.status) {
+						case 'Supported':
+							cls = 'text-success';
+							msg = i18n.t("warranty.supported_until", {date:machineData.end_date});
+							break;
+						case 'No Applecare':
+							cls = 'text-warning';
+							msg = i18n.t("warranty.supported_no_applecare", {date:machineData.end_date});
+							break;
+						case 'Unregistered serialnumber':
+							cls = 'text-warning';
+							msg = i18n.t("warranty.unregistered");
+							msg = msg + ' <a target="_blank" href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&amp;country=USA&amp;id='+machineData.serial_number+'">Register</a>'
+							break;
+						case 'Expired':
+							cls = 'text-danger';
+							msg = i18n.t("warranty.expired", {date:machineData.end_date});
+							break;
+					}
+
+					
+					$('#warranty_status').addClass(cls).html(msg);
+
+				});
+
+				// Get estimate_manufactured_date
+				$.getJSON( baseUrl + 'index.php?/module/warranty/estimate_manufactured_date/<?php echo $serial_number?>', function( data ) {
+					$('#manufacture_date').html(data.date)
 				});
 
 				// Get certificate data
