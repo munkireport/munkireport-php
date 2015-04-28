@@ -145,7 +145,7 @@ function dumpj(obj)
 function fileSize(size, decimals) {
 	if(decimals == undefined){decimals = 0};
 	var i = Math.floor( Math.log(size) / Math.log(1024) );
-	return ( size / Math.pow(1024, i) ).toFixed(decimals) * 1 + ' ' + ['', 'K', 'M', 'G', 'T', 'P', 'E'][i] + 'B';
+	return ( size / Math.pow(1024, i) ).toFixed(decimals) + ' ' + ['', 'K', 'M', 'G', 'T', 'P', 'E'][i] + 'B';
 }
 
 // Convert human readable filesize to bytes
