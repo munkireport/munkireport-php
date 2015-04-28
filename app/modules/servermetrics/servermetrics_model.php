@@ -106,7 +106,7 @@ class Servermetrics_model extends Model {
 	 * @return array data
 	 * @author 
 	 **/
-	function get_data($serial_number, $hours)
+	function get_data($serial_number, $hours = 24)
 	{
 		$date = new DateTime();
 		$date->sub(new DateInterval('PT'.$hours.'H'));

@@ -155,9 +155,6 @@ $tab_list = array(
 					console.log(data);
 				});
 
-
-
-
 				// Activate tabdrop
 				$('.nav-tabs').tabdrop();
 

@@ -16,7 +16,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/servermetrics.py"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add servermetrics "${CACHEPATH}servermetrics.json"
+	setreportpref "servermetrics" "${CACHEPATH}servermetrics.json"
 
 else
 	echo "Failed to download all required components!"

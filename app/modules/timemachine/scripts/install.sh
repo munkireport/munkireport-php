@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/timemachine.sh"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add timemachine "${CACHEPATH}timemachine.txt"
+	setreportpref "timemachine" "${CACHEPATH}timemachine.txt"
 
 else
 	echo "Failed to download all required components!"
