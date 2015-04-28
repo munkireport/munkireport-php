@@ -68,7 +68,7 @@
 					<dt>Remote IP Address</dt>
 					<dd><?php echo $report->remote_ip; ?>&nbsp;</dd>
 					<dt>Local admin</dt>
-					<dd><?php echo $localadmin->users; ?>&nbsp;</dd>
+					<dd><span id="users"></span>&nbsp;</dd>
 					<dd>
 						<div class="btn-group btn-group-xs">
 							<?php if(conf('vnc_link')): ?>
@@ -91,11 +91,11 @@
 			<small>
 				<dl class="dl-horizontal">
 					<dt>Disk size</dt>
-					<dd><?php echo humanreadablesize($disk->TotalSize); ?></dd>
+					<dd><span id="TotalSize"></span></dd>
 					<dt>Used</dt>
 					<dd><?php echo humanreadablesize($disk->TotalSize - $disk->FreeSpace); ?></dd>
 					<dt>Free</dt>
-					<dd><?php echo humanreadablesize($disk->FreeSpace); ?></dd>
+					<dd><span id="FreeSpace"></dd>
 					<dt>SMART Status</dt>
 					<dd><?php echo ($disk->SMARTStatus == 'Failing') ? '<span class=text-danger>Failing</span>' : $disk->SMARTStatus; ?></dd>
 				</dl>

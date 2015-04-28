@@ -69,9 +69,17 @@ $tab_list = array(
 				// Get client data
 				$.getJSON( baseUrl + 'index.php?/clients/get_data/<?php echo $serial_number?>', function( data ) {
 					console.log(data);
-					$.each(data[0], function(prop, val){
+					machineData = data[0];
+
+					// Set properties based on id
+					$.each(machineData, function(prop, val){
 						$('#'+prop).html(val);
 					});
+
+					// Format filesizes
+					$('#TotalSize').html(fileSize(machineData.TotalSize, 2));
+					$('#UsedSize').html(fileSize(machineData.TotalSize - machineData.FreeSpace, 2));
+					$('#FreeSpace').html(fileSize(machineData.FreeSpace, 2));
 				});
 
 				// Get certificate data
