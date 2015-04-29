@@ -58,7 +58,9 @@ new Timemachine_model;
 			        	$('td:eq(4)', nRow).html(moment.duration(parseInt($('td:eq(4)', nRow).html()), "seconds").humanize());
 
 			        	var date = $('td:eq(5)', nRow).html();
-			        	$('td:eq(5)', nRow).html(moment(date + 'Z').fromNow());
+			        	if(date){
+				        	$('td:eq(5)', nRow).html(moment(date + 'Z').fromNow());
+			        	}
 			        	
 						// Format Check-In timestamp
 						var checkin = parseInt($('td:eq(7)', nRow).html());
@@ -92,7 +94,7 @@ new Timemachine_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="8" class="dataTables_empty">Loading data from server</td>
+					<td data-i18n="listing.loading" colspan="8" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

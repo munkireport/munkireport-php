@@ -136,9 +136,9 @@ new Munkireport_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
 		        <th data-colname='reportdata#remote_ip'>IP</th>
 				<th data-colname='machine#os_version'>OS</th>
 		        <th data-colname='munkireport#version'>Munki</th>
@@ -155,7 +155,7 @@ new Munkireport_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="5" class="dataTables_empty">Loading data from server</td>
+					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

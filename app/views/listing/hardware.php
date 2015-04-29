@@ -67,7 +67,7 @@ new Reportdata_model;
 		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
 		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
 		        <th data-i18n="listing.hardware.description" data-colname='machine#machine_desc'>Description</th>
-		        <th data-i18n="memory" data-colname='machine#physical_memory'>Memory</th>
+		        <th data-i18n="memory.memory" data-colname='machine#physical_memory'>Memory</th>
 		        <th data-colname='machine#number_processors'>Processors</th>
 		        <th data-colname='machine#cpu_arch'>CPU</th>
 		        <th data-colname='machine#current_processor_speed'>Speed</th>
@@ -76,7 +76,7 @@ new Reportdata_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="5" class="dataTables_empty">Loading data from server</td>
+					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

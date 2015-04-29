@@ -104,6 +104,7 @@
 		"hardware": {
 			"description": "Description"
 		},
+		"loading": "Loading data from server",
 		"munki": {
 			"latest_run": "Latest Run",
 			"package_installed": "Package installed",

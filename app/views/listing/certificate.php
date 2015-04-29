@@ -88,7 +88,7 @@ new Certificate_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="8" class="dataTables_empty">Loading data from server</td>
+					<td data-i18n="listing.loading" colspan="6" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
