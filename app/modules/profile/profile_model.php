@@ -10,7 +10,7 @@ class Profile_model extends Model {
 		$this->rs['profile_removal_allowed'] = ''; //Yes or No 
 		$this->rs['payload_name'] = ''; //
 		$this->rs['payload_display'] = ''; // 
-		$this->rs['payload_data'] = array(); // 
+		$this->rs['payload_data'] = ''; $this->rt['payload_data'] = 'BLOB'; // Payload can exceed 255 chars
 		$this->rs['timestamp'] = 0; // Unix time when the report was uploaded
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
