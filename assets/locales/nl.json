@@ -95,7 +95,9 @@
 		},
 		"username": "Gebruiker"
 	},
-	"memory": "Geheugen",
+	"memory": {
+		"memory": "Geheugen"
+	},
 	"name": "Naam",
 	"nav": {
 		"listings": {

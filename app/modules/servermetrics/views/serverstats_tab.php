@@ -1,10 +1,21 @@
 <style>svg{height: 400px; width:100%;}</style>
 
+<h2 data-i18n="memory.usage"></h2>
 <svg id="chart1"></svg>
+
+<h2 data-i18n="cpu.usage"></h2>
 <svg id="chart2"></svg>
+
+<h2 data-i18n="network.traffic"></h2>
 <svg id="chart3"></svg>
+
+<h2 data-i18n="memory.pressure"></h2>
 <svg id="chart4"></svg>
+
+<h2 data-i18n="caching.bytes_served"></h2>
 <svg id="chart5"></svg>
+
+<h2 data-i18n="sharing.connected_users"></h2>
 <svg id="chart6"></svg>
 
 
@@ -49,59 +60,59 @@ $(document).on('appReady', function(e, lang) {
 		var data = a2[ 0 ];
 		var networkTraffic = [
 			  {
-				key: 'Inbound traffic',
+				key: i18n.t('network.inbound_traffic'),
 				values:[]
 			  },
 			  {
-				key: 'Outbound traffic',
+				key: i18n.t('network.outbound_traffic'),
 				color: "#ff7f0e",
 				values:[]
 			  }
 			],
 			cpuUsage = [
 			  {
-				key: 'User',
+				key: i18n.t('user.user'),
 				values:[]
 			  },
 			  {
-				key: 'System',
+				key: i18n.t('system.system'),
 				color: "#ff7f0e",
 				values:[]
 			  }
 			],
 			memoryUsage = [
 			  {
-				key: 'Memory Usage',
+				key: i18n.t('memory.usage'),
 				values:[]
 			  }
 			],
 			memoryPressure = [
 			  {
-				key: 'Memory Pressure',
+				key: i18n.t('memory.pressure'),
 				values: []
 			  }
 			],
 			cachingServer = [
 			  {
-				key: 'From Origin',
+				key: i18n.t('caching.from_origin'),
 				values:[]
 			  },
 			  {
-				key: 'From Peers',
+				key: i18n.t('caching.from_peers'),
 				values:[]
 			  },
 			  {
-				key: 'From Cache',
+				key: i18n.t('caching.from_cache'),
 				values:[]
 			  }
 			],
 			connectedUsers = [
 			  {
-				key: 'AFP Users',
+				key: i18n.t('sharing.afp_users'),
 				values:[]
 			  },
 			  {
-				key: 'SMB Users',
+				key: i18n.t('sharing.smb_users'),
 				values:[]
 			  }
 			]

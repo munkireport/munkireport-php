@@ -97,7 +97,9 @@
 		},
 		"username": "Имя пользователя"
 	},
-	"memory": "Память",
+	"memory": {
+		"memory": "Память"
+	},
 	"name": "Имя",
 	"nav": {
 		"listings": {

@@ -18,6 +18,8 @@
 				<span id="warranty_status"></span>
 				
 				<a class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>">Recheck Warranty Status</a> <br/>
+				
+				Group: <span id="computer_group"></span>
 
 		</small>
 
@@ -38,7 +40,7 @@
 					<dd><span id="SMC_version_system"></span>&nbsp;</dd>
 					<dt>Boot ROM</dt>
 					<dd><span id="boot_rom_version"></span>&nbsp;</dd>
-					<dt data-i18n="memory"></dt>
+					<dt data-i18n="memory.memory"></dt>
 					<dd><span id="physical_memory"></span> GB</dd>
 					<dt>Hardware UUID</dt>
 					<dd><span id="platform_UUID"></span>&nbsp;</dd>

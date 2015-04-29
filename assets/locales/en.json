@@ -27,6 +27,12 @@
 	},
 	"boot_time": "Booted",
 	"bundle_id": "BundleID",
+	"caching": {
+		"bytes_served": "Caching – Bytes Served",
+		"from_origin": "From Origin",
+		"from_peers": "From Peers",
+		"from_cache": "From Cache"
+	},
 	"client": {
 		"tab": {
 			"apple_software": "Apple Software",
@@ -57,6 +63,9 @@
 		}
 	},
 	"configuration": "Configuration",
+	"cpu": {
+		"usage": "Processor Usage"
+	},
 	"date": {
 		"year": "year"
 	},
@@ -115,7 +124,11 @@
 		},
 		"username": "Username"
 	},
-	"memory": "Memory",
+	"memory": {
+		"memory": "Memory",
+		"usage": "Memory Usage",
+		"pressure": "Memory Pressure"
+	},
 	"name": "Name",
 	"nav": {
 		"lang": {
@@ -162,17 +175,31 @@
 		"ip_address": "IP Address",
 		"network_mask": "Mask",
 		"prefix_length": "Prefix length",
-		"router": "Router"
+		"router": "Router",
+		"traffic": "Network Traffic",
+		"inbound_traffic": "Inbound Traffic",
+		"outbound_traffic": "Outbound Traffic"
 	},
 	"no_clients": "No Clients",
 	"pending": "Pending",
 	"path": "Path",
 	"remote_control": "Remote Control",
 	"serial": "Serial Number",
+	"sharing": {
+		"connected_users": "Sharing – Connected Users",
+		"afp_users": "AFP Users",
+		"smb_users": "SMB Users"
+	},
 	"software": "Software",
+	"system": {
+		"system": "System"
+	},
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
 	"unknown": "Unknown",
+	"user": {
+		"user": "User"
+	},
 	"version": "Version",
 	"warning": "Warning",
 	"warning_plural": "Warnings",

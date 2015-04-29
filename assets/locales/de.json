@@ -98,7 +98,9 @@
 		},
 		"username": "Benutzername"
 	},
-	"memory": "Speicher",
+	"memory": {
+		"memory": "Speicher"
+	},
 	"name": "Name",
 	"nav": {
 		"lang": {
