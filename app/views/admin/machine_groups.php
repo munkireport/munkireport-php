@@ -1,10 +1,6 @@
 <?php $this->view('partials/head'); ?>
+<?php new Business_unit ?>
 
-<?php //Initialize models needed for the table
-new Machine_model;
-new Reportdata_model;
-new Ard_model;
-?>
 
 <div class="container">
 
@@ -19,17 +15,17 @@ new Ard_model;
 				var myCols = [];
 				$('.table th').map(function(){
 					  myCols.push({'mData' : $(this).data('colname')});
-				});
+				}); 
 			    oTable = $('.table').dataTable( {
 			        "aoColumns": myCols,
 			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
+			        "fnServerParams": function ( aoData ) {
+				    	// Don't use the machine table
+				    	aoData.push( { "name": "mrAddMachineTbl", "value": 0 } );
+				    },
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 			        	// Update name in first column to link
 			        	var name=$('td:eq(0)', nRow).html();
-			        	if(name == ''){name = "No Name"};
-			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
-			        	$('td:eq(0)', nRow).html(link);
 
 			        }
 			    } );
@@ -41,18 +37,14 @@ new Ard_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
-		        <th data-i18n="serial" data-colname='machine#serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":1}' data-colname='ard#Text1'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":2}' data-colname='ard#Text2'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":3}' data-colname='ard#Text3'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":4}' data-colname='ard#Text4'></th>
+		      	<th data-i18n="listing.computername" data-colname='machine_group#groupid'></th>
+		      	<th data-i18n="listing.computername" data-colname='machine_group#property'></th>
+		      	<th data-i18n="listing.computername" data-colname='machine_group#value'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="7" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="3" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

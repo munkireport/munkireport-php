@@ -69,13 +69,13 @@ new Bluetooth_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-		        <th data-i18n="listing.bluetooth.status" data-colname='bluetooth#bluetooth_status'>Bluetooth Status</th> 
-		        <th data-i18n="listing.bluetooth.keyboard_battery" data-colname='bluetooth#keyboard_battery'>Keyboard Status</th>
-		        <th data-i18n="listing.bluetooth.mouse_battery" data-colname='bluetooth#mouse_battery'>Mouse Status</th>
-		        <th data-i18n="listing.bluetooth.trackpad_battery" data-colname='bluetooth#trackpad_battery'>Trackpad Status</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
+		        <th data-i18n="listing.bluetooth.status" data-colname='bluetooth#bluetooth_status'></th> 
+		        <th data-i18n="listing.bluetooth.keyboard_battery" data-colname='bluetooth#keyboard_battery'></th>
+		        <th data-i18n="listing.bluetooth.mouse_battery" data-colname='bluetooth#mouse_battery'></th>
+		        <th data-i18n="listing.bluetooth.trackpad_battery" data-colname='bluetooth#trackpad_battery'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

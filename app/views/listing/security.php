@@ -74,7 +74,7 @@ new Filevault_status_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="5" class="dataTables_empty">Loading data from server</td>
+					<td data-i18n="listing.loading" colspan="7" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

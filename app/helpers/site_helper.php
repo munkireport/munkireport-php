@@ -170,12 +170,10 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
 
 function passphrase_to_group($passphrase)
 {
-	foreach(conf('machine_group', array()) as $group)
+	$machine_group = new Machine_group;
+	if( $machine_group->retrieve_one('property=? AND value=?', array('passphrase', $passphrase)))
 	{
-		if($group['type'] == 'key' && $group['value'] == $passphrase)
-		{
-			return $group['group'];
-		}
+		return $machine_group->groupid;
 	}
 	
 	return 0;

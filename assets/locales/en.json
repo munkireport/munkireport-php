@@ -3,7 +3,15 @@
 		"author": "Arjen van Bochoven"
 	},
 	"admin": {
-		"delete_failed": "Remove failed: "
+		"bu_overview": "Business Units",
+		"delete_failed": "Remove failed: ",
+		"edit_bu": {
+			"title": "Edit Business Unit"
+		},
+		"remove_bu": {
+			"title": "Remove Business Unit",
+			"content": "When you remove this business unit, all related data will be removed. You cannot undo this."
+		}
 	},
 	"all": "All",
 	"auth": {
@@ -68,6 +76,12 @@
 	},
 	"date": {
 		"year": "year"
+	},
+	"dialog": {
+		"cancel": "Cancel",
+		"ok": "Ok",
+		"ok_remove": "Ok, Remove",
+		"save": "Save"
 	},
 	"disabled": "Disabled",
 	"edit": "Edit",

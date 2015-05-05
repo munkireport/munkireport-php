@@ -16,8 +16,131 @@ class admin extends Controller
 	{
 		echo 'Admin';
 	}
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function get_business_units()
+	{
+		$business_unit = new Business_unit;
+		$machine_group = new Machine_group;
+		$out = array();
+		foreach($business_unit->select() as $unit)
+		{
+
+			$out[$unit->unitid][$unit->property] = $unit->value;
+		}
+	}
+
+	/**
+	 * Save Business Unit
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function save_business_unit()
+	{
+		$out = array();
+		if( ! $_POST)
+		{
+			$out['error'] = 'No data';
+		}
+		elseif(isset($_POST['unitid']))
+		{
+			$business_unit = new Business_unit;
+
+			foreach($_POST as $property => $val)
+			{
+				if($property == 'name')
+				{
+					$business_unit->id = '';
+					$business_unit->retrieve_one('unitid=? AND property=?', array($_POST['unitid'], $property));
+					$business_unit->unitid = $_POST['unitid'];
+					$business_unit->property = $property;
+					$business_unit->value = $val;
+					$business_unit->save();
+				}
+				else
+				{
+					//array data (machine_groups, users)
+				}
+			}
+			
+			$out = $business_unit->rs;
+		}
+		else
+		{
+			$out['error'] = 'Unitid missing';
+		}
+
+		$obj = new View();
+        $obj->view('json', array('msg' => $out));
+
+	}
+
+	/**
+	 * remove_business_unit
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function remove_business_unit($unitid='')
+	{
+		$out = array();
+
+		if($unitid !== ''){
+			$bu = new Business_unit;
+			$out['success'] = $bu->delete_all($unitid);
+		}
+		
+		$obj = new View();
+        $obj->view('json', array('msg' => $out));
+
+
+	}
+
+	/**
+	 * Return BU data for unitid or all units if unitid is empty
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function get_bu_data($unitid = "")
+	{
+        $obj = new View();
+        $bu = new Business_unit;
+        $obj->view('json', array('msg' => $bu->all($unitid)));
+	}
 	
-	
+	//===============================================================
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function show($which = '')
+	{
+		if($which)
+		{
+			$data['page'] = 'clients';
+			$data['scripts'] = array("clients/client_list.js");
+			$view = 'admin/'.$which;
+		}
+		else
+		{
+			$data = array('status_code' => 404);
+			$view = 'error/client_error';
+		}
+
+		$obj = new View();
+		$obj->view($view, $data);
+	}
+
 	//===============================================================
 	
 	function delete_machine($serial_number='')
