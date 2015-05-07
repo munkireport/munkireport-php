@@ -6,7 +6,7 @@
 
   	<div class="col-lg-12">
 
-		<h3 data-i18n="admin.bu_overview"></h3>
+		<h3 id="bu_title" data-i18n="admin.bu_overview"></h3>
 
 		<div id="bu_units"></div>
 		<div data-i18n="listing.loading" id="loading"></div>
@@ -40,16 +40,50 @@
 
 		var edit = function(){
 
+				fields = {name:'Unnamed', 'address':''};
+
 				// Get unit data
 				var data = $(this).closest('.unit').data();
+
+				data = data || {};
+
+				// Add data to fields
+				$.each(data, function(prop, val){
+					fields[prop] = val;
+				});
+
 
 				$('#myModal .modal-body')
 					.empty()
 					.append($('<form>')
 						.submit(save)
 						.append($('<input>')
-							.attr('name', 'name')
-							.val(data.name))
+							.attr('type', 'submit')
+							.addClass('invisible'))
+						.append($('<div>')
+							.addClass('form-group')
+							.append($('<label>')
+								.attr('for', 'modalInputName')
+								.text(i18n.t("admin.edit_bu.name")))
+							.append($('<input>')
+								.addClass('form-control')
+								.attr('id', 'modalInputName')
+								.attr('name', 'name')
+								.val(fields.name))
+							.append($('<input>')
+								.attr('type', 'submit')
+								.addClass('hide')))
+						.append($('<div>')
+							.addClass('form-group')
+							.append($('<label>')
+								.attr('for', 'modalInputAddress')
+								.text(i18n.t("admin.edit_bu.address")))
+							.append($('<input>')
+								.addClass('form-control')
+								.attr('id', 'modalInputAddress')
+								.attr('name', 'address')
+								.val(fields.address)))
+
 					);
 				$('#myModal .modal-title').text(i18n.t("admin.edit_bu.title"));
 				$('#myModal button.ok')
@@ -62,6 +96,8 @@
 			save = function(e){
 				// In case we get called by submit
 				e.preventDefault();
+
+				console.log('save')
 
 				var data = $('#myModal button.ok').data();
 
@@ -78,8 +114,10 @@
 					$('#myModal').modal('hide');
 
 					// Update unit
-					$('.unitid-' + data.unitid + ' .name')
-						.text(data.name)
+					$('.unitid-' + data.unitid)
+						.data(data)
+						.each(render);
+
 				})
 				.fail(function() {
 					alert( "Could not save" );
@@ -117,7 +155,27 @@
 						$('.unitid-' + unitid).remove();
 					}
 				});	
+			},
+			render = function(){
+				var data = $(this).data();
+				$(this)
+					.empty()
+					.append($('<h3>')
+						.addClass('name')
+						.text(data.name))
+					.append($('<p>')
+						.text(data.address))
+					.append($('<div>')
+						.append($('<a>')
+							.addClass('btn btn-xs btn-default')
+							.click(edit)
+							.text('edit'))									
+						.append($('<a>')
+							.addClass('btn btn-xs btn-default')
+							.click(remove_dialog)
+							.text('delete')))
 			}
+
 
 		// Get all business units
 		$.getJSON(baseUrl + 'admin/get_bu_data', function(data){
@@ -128,22 +186,18 @@
 					.append($('<div>')
 						.data(value)
 						.addClass('unit unitid-' + value.unitid)
-						.append($('<h3>')
-							.addClass('name')
-							.text(value.name))
-						.append($('<div>')
-							.append($('<a>')
-								.addClass('btn btn-xs btn-default')
-								.click(edit)
-								.text('edit'))									
-							.append($('<a>')
-								.addClass('btn btn-xs btn-default')
-								.click(remove_dialog)
-								.text('delete')))
+						.each(render)
 					);
 			});
 
 		});
+
+		// Add + button
+		$('#bu_title')
+			.append($('<a>')
+				.addClass("btn btn-default")
+				.text('+')
+				.click(edit))
 		
 	} );
 </script>

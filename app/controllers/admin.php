@@ -54,7 +54,14 @@ class admin extends Controller
 
 			foreach($_POST as $property => $val)
 			{
-				if($property == 'name')
+				
+				// Skip unitid
+				if($property == 'unitid')
+				{
+					continue;
+				}
+
+				if(is_scalar($val))
 				{
 					$business_unit->id = '';
 					$business_unit->retrieve_one('unitid=? AND property=?', array($_POST['unitid'], $property));
@@ -95,7 +102,7 @@ class admin extends Controller
 			$bu = new Business_unit;
 			$out['success'] = $bu->delete_all($unitid);
 		}
-		
+
 		$obj = new View();
         $obj->view('json', array('msg' => $out));
 
