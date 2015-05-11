@@ -50,7 +50,7 @@
 					<a href="#ard-tab" data-toggle="tab" data-i18n="client.tab.ard">ARD</a>
 				</li>
 				<li>
-					<a href="#ds-tab" data-toggle="tab" data-i18n="client.tab.ds">DeployStudio</a>
+					<a href="#deploystudio-tab" data-toggle="tab" data-i18n="client.tab.dsw">DeployStudio</a>
 				</li>
 
 			</ul>
