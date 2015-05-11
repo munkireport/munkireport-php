@@ -49,6 +49,9 @@
 				<li>
 					<a href="#ard-tab" data-toggle="tab" data-i18n="client.tab.ard">ARD</a>
 				</li>
+				<li>
+					<a href="#ds-tab" data-toggle="tab" data-i18n="client.tab.ds">DeployStudio</a>
+				</li>
 
 			</ul>
 
@@ -98,6 +101,9 @@
 				</div>
 				<div class="tab-pane" id='ard-tab'>
 					<?php $this->view('client/ard_tab'); ?>
+				</div>
+				<div class="tab-pane" id='ds-tab'>
+					<?php $this->view('client/ds_tab'); ?>
 				</div>
 
 			</div>
