@@ -18,6 +18,15 @@ class Dsw_model extends Model {
     $this->serial = $serial;
   }
 
+  function delete_set($serial) {
+    $dbh=$this->getdbh();
+    $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial' ).'=?';
+    $stmt = $dbh->prepare( $sql );
+    $stmt->bindValue( 1, $serial );
+    $stmt->execute();
+    return $this;
+  }
+
   function process($data) {
     require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
     $parser = new CFPropertyList();
@@ -27,11 +36,13 @@ class Dsw_model extends Model {
 
     print_r($plist);
 
+    $this->delete_set($this->serial);
+
     if (isset($plist['ds_workflow'])) {
       $this->ds_workflow = $plist['ds_workflow'];
     }
     else {
-      $this->$item = '';
+      $this->ds_workflow = '';
     }
 
     $this->save();
