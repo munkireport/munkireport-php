@@ -20,7 +20,7 @@ class Dsw_model extends Model {
 
   function delete_set($serial) {
     $dbh=$this->getdbh();
-    $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial' ).'=?';
+    $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial_number' ).'=?';
     $stmt = $dbh->prepare( $sql );
     $stmt->bindValue( 1, $serial );
     $stmt->execute();
