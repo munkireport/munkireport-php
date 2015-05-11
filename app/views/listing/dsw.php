@@ -54,7 +54,7 @@ new Dsw_model;
                 <th data-colname='machine#computer_name'>Name</th>
                 <th data-colname='machine#serial_number'>Serial</th>
                 <th data-colname='reportdata#long_username'>Username</th>
-                <th data-colname='dsw#ds_workflow'>DS Workflow</th>
+                <th data-colname='deploystudiow#ds_workflow'>DS Workflow</th>
               </tr>
             </thead>
             <tbody>
