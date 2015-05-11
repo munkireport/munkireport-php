@@ -102,8 +102,8 @@
 				<div class="tab-pane" id='ard-tab'>
 					<?php $this->view('client/ard_tab'); ?>
 				</div>
-				<div class="tab-pane" id='ds-tab'>
-					<?php $this->view('client/ds_tab'); ?>
+				<div class="tab-pane" id='deploystudio-tab'>
+					<?php $this->view('client/deploystudio_tab'); ?>
 				</div>
 
 			</div>
