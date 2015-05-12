@@ -44,10 +44,11 @@ class clients extends Controller
     		LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
     		LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
     		LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
-    		LEFT JOIN diskreport d ON (m.serial_number = d.serial_number)";
+    		LEFT JOIN diskreport d ON (m.serial_number = d.serial_number)
+            WHERE m.serial_number = ?";
 
     	$obj = new View();
-    	$obj->view('json', array('msg' => $machine->query($sql)));
+    	$obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
     }
 
     /**
