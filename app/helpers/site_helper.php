@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1109';
+$GLOBALS['version'] = '2.4.3.1111';
 
 // Return version without commit count
 function get_version()
@@ -167,11 +167,16 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
 	}
 	exit;
 }
-
+/**
+ * Lookup group id for passphrase
+ *
+ * @return integer group id
+ * @author AvB
+ **/
 function passphrase_to_group($passphrase)
 {
 	$machine_group = new Machine_group;
-	if( $machine_group->retrieve_one('property=? AND value=?', array('passphrase', $passphrase)))
+	if( $machine_group->retrieve_one('property=? AND value=?', array('key', $passphrase)))
 	{
 		return $machine_group->groupid;
 	}
