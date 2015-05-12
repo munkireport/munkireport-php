@@ -6,7 +6,7 @@ class Machine_group extends Model {
     {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['groupid'] = 0; $this->rt['groupid'] = 'VARCHAR(20)';
+        $this->rs['groupid'] = 0;
         $this->rs['property'] = '';
         $this->rs['value'] = '';
 
@@ -38,25 +38,33 @@ class Machine_group extends Model {
 	 * @return array
 	 * @author abn290
 	 **/
-    function all($groupid)
+    function all($groupid = '')
     {
-		$dbh=$this->getdbh();
-        $out = array('users' => array(), 'passhrases' => array());
-        foreach($this->retrieve_many( 'groupid=?', $groupid ) as $obj)
+        $out = array();
+        $where = $groupid ? 'groupid=?' : '';
+        foreach($this->select( 'groupid, property, value', $where, $groupid, PDO::FETCH_OBJ ) as $obj)
         {
             switch($obj->property)
             {
-                case 'user':
-                    $out['users'][] = $obj->value;
-                    break;
-                case 'passphrase':
-                    $out['passphrases'][] = $obj->value;
+                case 'key':
+                    $out[$obj->groupid]['keys'][] = $obj->value;
                     break;
                 default:
-                    $out[$obj->property] = $obj->value;
+                    $out[$obj->groupid][$obj->property] = $obj->value;
             }
+
+            $out[$obj->groupid]['groupid'] = intval($obj->groupid);
+
         }
-        return $out;
+
+        if($groupid && $out)
+        {
+            return $out[$groupid];
+        }
+        else
+        {
+            return array_values($out);
+        }     
         
     }
 
