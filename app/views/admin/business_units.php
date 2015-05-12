@@ -38,14 +38,14 @@
 
 	$(document).on('appReady', function(e, lang) {
 
+		var machineGroups = [];
+
 		var edit = function(){
 
-				fields = {name:'Unnamed', 'address':''};
+				fields = {name:'', 'address':''};
 
 				// Get unit data
-				var data = $(this).closest('.unit').data();
-
-				data = data || {};
+				var data = $(this).closest('.unit').data() || {unitid:'new'};
 
 				// Add data to fields
 				$.each(data, function(prop, val){
@@ -85,10 +85,21 @@
 								.val(fields.address)))
 
 					);
-				$('#myModal .modal-title').text(i18n.t("admin.edit_bu.title"));
+				
+				// Set title
+				if( fields.unitid == 'new')
+				{
+					$('#myModal .modal-title').text(i18n.t("admin.new_bu.title"));
+				}
+				else
+				{
+					$('#myModal .modal-title').text(i18n.t("admin.edit_bu.title"));
+				}
+
 				$('#myModal button.ok')
 					.data(data)
 					.text(i18n.t("dialog.save"))
+					.off()
 					.click(save);
 
 				$('#myModal').modal('show');
@@ -97,21 +108,30 @@
 				// In case we get called by submit
 				e.preventDefault();
 
-				console.log('save')
-
 				var data = $('#myModal button.ok').data();
 
 				// Collect values from inputs
 				$('#myModal input').each(function(){
-					data[$(this).attr('name')] = $(this).val();
+					if($(this).attr('name'))
+					{
+						data[$(this).attr('name')] = $(this).val();
+					}
 				});
 
 				// Store object in database
 				var jqxhr = $.post( baseUrl + "admin/save_business_unit", data)
-				.done(function(){
-
+				.done(function(data){
+					console.log(data.unitid)
 					// Dismiss modal
 					$('#myModal').modal('hide');
+
+					// If unit does not exist, add it
+					if( ! $('.unitid-' + data.unitid).length)
+					{
+						$('#bu_units')
+							.append($('<div>')
+								.addClass('col-lg-4 col-md-6 unit unitid-' + data.unitid));
+					}
 
 					// Update unit
 					$('.unitid-' + data.unitid)
@@ -137,6 +157,7 @@
 				// Add unitid to ok button
 				$('#myModal button.ok')
 					.data({unitid: data.unitid})
+					.off()
 					.click(remove);
 
 				// Show modal
@@ -157,40 +178,107 @@
 				});	
 			},
 			render = function(){
-				var data = $(this).data();
+				var data = $(this).data(),
+					machine_groups = '',
+					groupname = '',
+					users = '';
+				if(data.machine_groups)
+				{
+					machine_groups = $('<ul>');
+					$.each(data.machine_groups, function(index, val){
+						groupname = 'No name'
+						$.each(machineGroups, function(index, group){
+							if(group.groupid == val)
+							{
+								groupname = group.name || groupname;
+							}
+						})
+						machine_groups.append($('<li>')
+							.text(groupname + ' ')
+							.append($('<button>')
+								.addClass('btn btn-default btn-xs')
+								.text('delete')))
+					});
+				}
+				else
+				{
+					machine_groups = $('<i>');
+				}
+
+				if(data.users)
+				{
+					users = $('<ul>');
+					$.each(data.users, function(index, val){
+						users.append($('<li>')
+							.text(val))
+					});
+					users = $('<div>')
+						.append($('<h4>')
+							.text('Users'))
+						.append(users);				}
+
 				$(this)
 					.empty()
-					.append($('<h3>')
-						.addClass('name')
-						.text(data.name))
-					.append($('<p>')
-						.text(data.address))
 					.append($('<div>')
-						.append($('<a>')
-							.addClass('btn btn-xs btn-default')
-							.click(edit)
-							.text('edit'))									
-						.append($('<a>')
-							.addClass('btn btn-xs btn-default')
-							.click(remove_dialog)
-							.text('delete')))
+						.addClass('panel panel-default')
+						.append($('<div>')
+							.addClass('panel-heading')
+							.append($('<h3>')
+								.addClass('name panel-title')
+								.text(data.name)
+								.append($('<a>')
+									.addClass('btn btn-xs btn-default pull-right')
+									.click(edit)
+									.attr('title', 'edit')
+									.append($('<i>')
+										.addClass('fa fa-edit')))))
+						.append($('<div>')
+							.addClass('panel-body')
+							.text(data.address)
+						.append($('<div>')
+							.append($('<h4>')
+								.text('Machine Groups ')
+									.append($('<button>')
+										.addClass('btn btn-default btn-xs')
+										.text('+')))
+								.append(machine_groups))
+						.append(users))
+						.append($('<div>')
+							.addClass('panel-footer')								
+							.append($('<a>')
+								.addClass('btn btn-xs btn-default')
+								.click(remove_dialog)
+								.text('delete'))))
 			}
 
 
-		// Get all business units
-		$.getJSON(baseUrl + 'admin/get_bu_data', function(data){
+		// Get all business units and machine_groups
+		var defer = $.when(
+			$.getJSON(baseUrl + 'admin/get_bu_data'),
+			$.getJSON(baseUrl + 'admin/get_mg_data')
+			);
+
+		// Render when all requests are successful
+		defer.done(function(bu_data, mg_data){
+			
+			machineGroups = mg_data[0];
+
 			// Remove Loading row
 			$('#loading').hide();
-			$.each(data, function(index, value){
+
+			// Create business units
+			$.each(bu_data[0], function(index, value){
 				$('#bu_units')
 					.append($('<div>')
 						.data(value)
-						.addClass('unit unitid-' + value.unitid)
+						.addClass('col-lg-4 col-md-6 unit unitid-' + value.unitid)
 						.each(render)
 					);
 			});
 
 		});
+
+
 
 		// Add + button
 		$('#bu_title')
