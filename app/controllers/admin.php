@@ -7,6 +7,12 @@ class admin extends Controller
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}
+
+		if( ! $this->authorized('global'))
+		{
+			redirect('business_unit');
+		}
+
 	} 
 	
 	
@@ -17,8 +23,10 @@ class admin extends Controller
 		echo 'Admin';
 	}
 
+	//===============================================================
+
 	/**
-	 * undocumented function
+	 * Retrieve business units information
 	 *
 	 * @return void
 	 * @author 
@@ -35,6 +43,8 @@ class admin extends Controller
 		}
 	}
 
+	//===============================================================
+
 	/**
 	 * Save Business Unit
 	 *
@@ -44,6 +54,7 @@ class admin extends Controller
 	function save_business_unit()
 	{
 		$out = array();
+
 		if( ! $_POST)
 		{
 			$out['error'] = 'No data';
@@ -51,6 +62,16 @@ class admin extends Controller
 		elseif(isset($_POST['unitid']))
 		{
 			$business_unit = new Business_unit;
+
+			$unitid = $_POST['unitid'];
+
+			// Check if new unit
+			if($unitid == 'new')
+			{
+				$unitid = $business_unit->get_max_unitid() + 1;
+			}
+
+			$out['unitid'] = $unitid;
 
 			foreach($_POST as $property => $val)
 			{
@@ -64,11 +85,12 @@ class admin extends Controller
 				if(is_scalar($val))
 				{
 					$business_unit->id = '';
-					$business_unit->retrieve_one('unitid=? AND property=?', array($_POST['unitid'], $property));
-					$business_unit->unitid = $_POST['unitid'];
+					$business_unit->retrieve_one('unitid=? AND property=?', array($unitid, $property));
+					$business_unit->unitid = $unitid;
 					$business_unit->property = $property;
 					$business_unit->value = $val;
 					$business_unit->save();
+					$out[$property] = $val;
 				}
 				else
 				{
@@ -76,7 +98,6 @@ class admin extends Controller
 				}
 			}
 			
-			$out = $business_unit->rs;
 		}
 		else
 		{
@@ -87,6 +108,8 @@ class admin extends Controller
         $obj->view('json', array('msg' => $out));
 
 	}
+
+	//===============================================================
 
 	/**
 	 * remove_business_unit
@@ -109,6 +132,9 @@ class admin extends Controller
 
 	}
 
+	//===============================================================
+
+
 	/**
 	 * Return BU data for unitid or all units if unitid is empty
 	 *
@@ -121,7 +147,22 @@ class admin extends Controller
         $bu = new Business_unit;
         $obj->view('json', array('msg' => $bu->all($unitid)));
 	}
-	
+
+	//===============================================================
+
+	/**
+	 * Return Machinegroup data for groupid or all groups if groupid is empty
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function get_mg_data($groupid = "")
+	{
+        $obj = new View();
+        $mg = new Machine_group;
+        $obj->view('json', array('msg' => $mg->all($groupid)));
+	}
+
 	//===============================================================
 
 	/**

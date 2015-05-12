@@ -7,12 +7,19 @@ class show extends Controller
 		{
 			redirect('auth/login');
 		}
+
+		if( ! $this->authorized('global'))
+		{
+			redirect('business_unit');
+		}
+
 	} 
 
 	function index()
 	{
-		$data = array();
+		$data = array('session' => $_SESSION);
 		$obj = new View();
+
 
 		// Check if there's a custom dashboard
 		if( file_exists(VIEW_PATH.'dashboard/custom_dashboard'.EXT))

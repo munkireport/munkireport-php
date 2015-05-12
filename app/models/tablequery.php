@@ -83,6 +83,22 @@ class Tablequery {
             }
         }
 
+        // Business unit filter
+        if(isset($_SESSION['machine_groups']))
+        {
+            // Todo: We should check if a requested machine_group is allowed
+
+            $bu_where = 'machine.computer_group IN ('. implode(', ', $_SESSION['machine_groups']). ')';
+            if($where)
+            {
+                $where .= ' AND (' . $bu_where . ')';
+            }
+            else
+            {
+                $where = 'WHERE (' .$bu_where . ')';
+            }
+        }
+
         // Get total records
         $sql = "
             SELECT COUNT(1) as count

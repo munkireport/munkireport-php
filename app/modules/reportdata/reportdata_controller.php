@@ -33,6 +33,8 @@ class Reportdata_controller extends Module_controller
 		$reportdata = new Reportdata_model();
 		new Machine_model();
 
+		$where = isset($_SESSION['machine_groups']) ? 'WHERE m.computer_group IN ('. implode(', ', $_SESSION['machine_groups']). ')' : '';
+
 		switch($reportdata->get_driver())
 		{
 			case 'sqlite':
@@ -42,6 +44,7 @@ class Reportdata_controller extends Module_controller
 						FROM reportdata r
 						LEFT JOIN machine m 
 							ON (r.serial_number = m.serial_number)
+						$where
 						GROUP BY date, machine_name
 						ORDER BY date";
 				break;
@@ -52,6 +55,7 @@ class Reportdata_controller extends Module_controller
 						FROM reportdata r
 						LEFT JOIN machine m 
 							ON (r.serial_number = m.serial_number)
+						$where
 						GROUP BY date, machine_name
 						ORDER BY date";
 				break;
@@ -59,7 +63,7 @@ class Reportdata_controller extends Module_controller
 				die('Unknown database driver');
 
 		}
-
+		//echo $sql;
 		$dates = array();
 		$out = array();
 		
