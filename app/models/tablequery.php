@@ -83,7 +83,7 @@ class Tablequery {
             }
         }
 
-        // Business unit filter
+        // Business unit filter (assumes we are selecting the machine table)
         if(isset($_SESSION['machine_groups']))
         {
             // Todo: We should check if a requested machine_group is allowed
