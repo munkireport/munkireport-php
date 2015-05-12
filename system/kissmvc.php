@@ -57,10 +57,18 @@ class Controller extends KISS_Controller
 			session_start();
 		}
 
+		$role = isset($_SESSION['user']) ? $_SESSION['user'] : '';
+
 		// Check if we have a valid user
-		if( ! isset($_SESSION['user']))
+		if( ! $role)
 		{
 			return FALSE;
+		}
+
+		// Check if this is a BU member
+		if(isset($_SESSION['business_unit']))
+		{
+			$role = $_SESSION['type']; // admin, manager, user
 		}
 
 		// Check for a specific authorization item
@@ -76,12 +84,12 @@ class Controller extends KISS_Controller
 						return TRUE;
 					}
 
-					if( in_array($_SESSION['user'], $members))
+					if( in_array($role, $members))
 					{
 						return TRUE;
 					}
 
-					// Person not found: unauthorized!
+					// Role/person not found: unauthorized!
 					return FALSE;
 				}
 			}
