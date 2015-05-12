@@ -6,4 +6,4 @@ DSPREF='/Library/Preferences/DeployStudioInfo'
 defaults read "$DSPREF" > /dev/null 2>&1 || defaults write "$DSPREF" ds_workflow "No DeployStudio file added."
 
 # Add preferences to munkireport
-defaults write "${PREFPATH}" ReportItems -dict-add ard_model "${DSPREF}.plist"
+defaults write "${PREFPATH}" ReportItems -dict-add dsw_model "${DSPREF}.plist"
