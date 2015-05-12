@@ -1,5 +1,5 @@
 <?php //Initialize models needed for the table
-$ds_obj = new Dsw_model($serial_number);
+$deploystudio_obj = new Dsw_model($serial_number);
 ?>
 
     <h2>DeployStudio</h2>
@@ -8,7 +8,7 @@ $ds_obj = new Dsw_model($serial_number);
         <tbody>
           <tr>
             <td>Workflow used</td>
-            <td><?=$ds_obj->ds_workflow?></td>
+            <td><?php echo $deploystudio_obj->workflow; ?></td>
           </tr>
         </tbody>
       </table>

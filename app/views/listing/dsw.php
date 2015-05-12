@@ -36,15 +36,14 @@ new Dsw_model;
 			} );
 		</script>
 
-		  <h3><span data-i18n="listing.ard.title">ARD report</span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="listing.deploystudio.title">DeployStudio report</span> <span id="total-count" class='label label-primary'>…</span></h3>
 		  
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
 		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-		        <th data-i18n="listing.deploystudiow.text" data-i18n-options='{"number":1}' data-colname='deploystudiow#ds_workflow'>DeployStudio workflow</th>
+		        <th data-colname='deploystudio#workflow'>Workflow</th>
 		      </tr>
 		    </thead>
 		    <tbody>
