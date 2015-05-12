@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1120';
+$GLOBALS['version'] = '2.4.3.1123';
 
 // Return version without commit count
 function get_version()
@@ -182,6 +182,65 @@ function passphrase_to_group($passphrase)
 	}
 	
 	return 0;
+}
+
+/**
+ * Get machine computer_group
+ *
+ * @return integer computer group
+ * @author AvB
+ **/
+function machine_computer_group($serial_number = '')
+{
+	if( ! isset($GLOBALS['machine_groups'][$serial_number]))
+	{
+		$machine = new Machine_model;
+		if( $machine->retrieve_one('serial_number=?', $serial_number))
+		{
+			$GLOBALS['machine_groups'][$serial_number] = $machine->computer_group;
+		}
+		else
+		{
+			$GLOBALS['machine_groups'][$serial_number] = 0;
+		}
+	}
+
+	return $GLOBALS['machine_groups'][$serial_number];
+}
+
+/**
+ * Check if machine is member of machine_groups of current user
+ * if no machine_groups defined, return TRUE
+ *
+ * @return void
+ * @author 
+ **/
+function id_in_machine_group($id)
+{
+	if(isset($_SESSION['machine_groups']))
+	{
+		return in_array($id, $_SESSION['machine_groups']);
+	}
+
+	return TRUE;
+}
+
+/**
+ * Get filter for machine_group membership
+ *
+ * @return void
+ * @author 
+ **/
+function get_machine_group_filter($prefix = 'WHERE', $machine_table_name = 'machine')
+{
+	if(isset($_SESSION['machine_groups']))
+	{
+		return sprintf('%s %s.computer_group IN (%s)', $prefix, $machine_table_name, implode(', ', $_SESSION['machine_groups']));
+	}
+	else
+	{
+		return '';
+	}
 }
 
 function humanreadablesize($bytes, $decimals = 2) {

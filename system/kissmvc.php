@@ -241,6 +241,26 @@ class Model extends KISS_Model
 		}
 	}
 
+	/**
+	 * Retrieve one considering machine_group membership
+	 * use this instead of retrieve_one
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function retrieve_record($serial_number)
+	{
+		$group_id = machine_computer_group($serial_number);
+
+		if( ! id_in_machine_group($group_id))
+		{
+			return FALSE;
+		}
+		
+		return $this->retrieve_one('serial_number=?', $serial_number);
+
+	}
+
 
 	// ------------------------------------------------------------------------
 
