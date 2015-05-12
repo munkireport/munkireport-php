@@ -6,7 +6,7 @@ class Business_unit extends Model {
     {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['unitid'] = 0; $this->rt['unitid'] = 'VARCHAR(20)';
+        $this->rs['unitid'] = 0;
         $this->rs['property'] = '';
         $this->rs['value'] = '';
 
@@ -81,5 +81,33 @@ class Business_unit extends Model {
         return $this->execute($stmt);
     }
 
+    /**
+     * Get max unitid
+     *
+     * @return integer max unitid
+     * @author AvB
+     **/
+    function get_max_unitid()
+    {
+        $sql = 'SELECT MAX(unitid) AS max FROM '.$this->enquote( $this->tablename );
+        $result = $this->query($sql);
+        return intval($result[0]->max);
+    }
+
+    /**
+     * Get machinegroups for id
+     *
+     * @return array machine group ids
+     * @author 
+     **/
+    function get_machine_groups($id)
+    {
+        $out = array();
+        foreach($this->retrieve_many('unitid=? AND property=?', array($id, 'machine_group')) AS $obj)
+        {
+            $out[] = intval($obj->value);
+        }
+        return $out;
+    }
 
 }
