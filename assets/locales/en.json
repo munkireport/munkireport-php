@@ -96,6 +96,7 @@
 	"errors": {
 		"title": "Error",
 		"client_nonexistent": "Client with serial number \"__serial__\" does not exist",
+		"client_not_in_unit": "Client with serial number \"__serial__\" is not in your Business Unit",
 		"403": "You are not allowed to view this page",
 		"404": "Page not found",
 		"426": "You are required to visit this site using a secure connection."

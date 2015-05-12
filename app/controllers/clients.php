@@ -7,12 +7,6 @@ class clients extends Controller
 		{
 			redirect('auth/login');
 		}
-
-        if( ! $this->authorized('global'))
-        {
-            redirect('business_unit');
-        }
-
 	} 
 
     function index() {
@@ -45,7 +39,8 @@ class clients extends Controller
     		LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
     		LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
     		LEFT JOIN diskreport d ON (m.serial_number = d.serial_number)
-            WHERE m.serial_number = ?";
+            WHERE m.serial_number = ?
+            ".get_machine_group_filter('AND', 'm');
 
     	$obj = new View();
     	$obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
@@ -93,13 +88,17 @@ class clients extends Controller
         $machine = new Machine_model($sn);
 
         // Check if this is an existing entry
-        if($machine->id)
+        if( ! $machine->id)
         {
-        	$obj->view("client/client_detail", $data);
+        	$obj->view("client/client_dont_exist", $data);
+        }
+        elseif( ! id_in_machine_group($machine->computer_group))
+        {
+        	$obj->view("client/client_not_in_unit", $data);
         }
         else
         {
-        	$obj->view("client/client_dont_exist", $data);
+            $obj->view("client/client_detail", $data);
         }
     	
 	}
