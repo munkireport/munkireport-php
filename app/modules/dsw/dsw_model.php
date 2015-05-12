@@ -23,6 +23,9 @@ class Dsw_model extends Model {
     $this->serial = $serial;
   }
 
+  /*
+   * TODO Deprecated, if module works remove this.
+   */
   function delete_set($serial) {
     $dbh=$this->getdbh();
     $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial_number' ).'=?';
@@ -42,7 +45,9 @@ class Dsw_model extends Model {
     echo $plist['ds_workflow'];
     echo "' as DeployStudio workflow name.\n";
 
-    //$this->delete_set($this->serial);
+    // TODO Also deprecated, if testing works remove this line
+    //$this->delete_set($this->serial); 
+
     $this->workflow = '';
     $this->workflow = $plist['ds_workflow'];
     $this->save();
