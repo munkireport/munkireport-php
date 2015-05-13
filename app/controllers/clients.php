@@ -26,24 +26,31 @@ class clients extends Controller
      **/
     function get_data($serial_number = '')
     {
-    	$machine = new Machine_model;
-    	new Reportdata_model;
-		new Disk_report_model;
-		new Warranty_model;
-		new Localadmin_model;
-    	new Timemachine_model;
-
-    	$sql = "SELECT * FROM machine m 
-    		LEFT JOIN timemachine t ON (m.serial_number = t.serial_number)
-    		LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
-    		LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
-    		LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
-    		LEFT JOIN diskreport d ON (m.serial_number = d.serial_number)
-            WHERE m.serial_number = ?
-            ".get_machine_group_filter('AND', 'm');
-
     	$obj = new View();
-    	$obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
+        
+        if (authorized_for_serial($serial_number))
+        {
+            $machine = new Machine_model;
+            new Reportdata_model;
+            new Disk_report_model;
+            new Warranty_model;
+            new Localadmin_model;
+            new Timemachine_model;
+
+            $sql = "SELECT * FROM machine m 
+                LEFT JOIN timemachine t ON (m.serial_number = t.serial_number)
+                LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
+                LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
+                LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
+                LEFT JOIN diskreport d ON (m.serial_number = d.serial_number)
+                WHERE m.serial_number = ?";
+
+            $obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
+        }
+        else
+        {
+            $obj->view('json', array('msg' => array()));
+        }
     }
 
     /**
@@ -87,14 +94,10 @@ class clients extends Controller
 
         $machine = new Machine_model($sn);
 
-        // Check if this is an existing entry
+        // Check if machine exists/is allowed for this user to view
         if( ! $machine->id)
         {
         	$obj->view("client/client_dont_exist", $data);
-        }
-        elseif( ! id_in_machine_group($machine->computer_group))
-        {
-        	$obj->view("client/client_not_in_unit", $data);
         }
         else
         {

@@ -184,26 +184,9 @@ class auth extends Controller
 		{
 			$_SESSION['user'] = $login;
 			$_SESSION['auth'] = $mechanism;
-
-			// Lookup user in business units
-			$bu = new Business_unit;
-
-			if($bu->retrieve_one("property IN ('admin', 'manager', 'user') AND value=?", $login))
-			{
-				$_SESSION['type'] = $bu->property; // admin, manager, user
-				$_SESSION['business_unit'] = $bu->unitid;
-
-				// Set machine_groups
-				if($_SESSION['type'] == 'admin')
-				{
-					unset($_SESSION['machine_groups']);
-				}
-				else
-				{
-					$_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
-				}
-			}
 			
+			$this->set_session_props();
+
 			session_regenerate_id();
 			redirect($return);
 		}
@@ -225,6 +208,32 @@ class auth extends Controller
 
 		$obj = new View();
 		$obj->view('auth/login', $data);
+	}
+
+	/**
+	 * Set session properties
+	 *
+	 **/
+	function set_session_props()
+	{
+		// Lookup user in business units
+		$bu = new Business_unit;
+
+		if($bu->retrieve_one("property IN ('admin', 'manager', 'user') AND value=?", $_SESSION['user']))
+		{
+			$_SESSION['type'] = $bu->property; // admin, manager, user
+			$_SESSION['business_unit'] = $bu->unitid;
+
+			// Set machine_groups
+			if($_SESSION['type'] == 'admin')
+			{
+				unset($_SESSION['machine_groups']);
+			}
+			else
+			{
+				$_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
+			}
+		}	
 	}
 
 	function logout()

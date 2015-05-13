@@ -88,6 +88,6 @@ class Installhistory_model extends Model {
 	 */
 	public function itemsBySerialNumber($aSerialNumber)
 	{
-		return $this->retrieve_many('serial_number=? ORDER BY date DESC', $aSerialNumber);
+		return $this->retrieve_records($aSerialNumber);
 	}
 }

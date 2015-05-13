@@ -7,12 +7,6 @@ class show extends Controller
 		{
 			redirect('auth/login');
 		}
-
-		if( ! $this->authorized('global'))
-		{
-			redirect('business_unit');
-		}
-
 	} 
 
 	function index()
