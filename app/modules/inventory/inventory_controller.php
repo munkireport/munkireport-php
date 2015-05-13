@@ -4,7 +4,9 @@ class Inventory_controller extends Module_controller
     // Require authentication
     function __construct()
     {        
-        $this->module_path = dirname(__FILE__);
+        // Store module path
+        $this->module_path = dirname(__FILE__) .'/';
+        $this->view_path = $this->module_path . 'views/';
     } 
 
     function index() {
@@ -57,7 +59,7 @@ class Inventory_controller extends Module_controller
         }
 
         $obj = new View();
-        $obj->view('inventory/inventoryitem_detail', $data);
+        $obj->view('inventoryitem_detail', $data, $this->view_path);
     }
 
 }
