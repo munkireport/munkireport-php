@@ -54,8 +54,6 @@ $(document).on('appReady', function() {
             chart.xAxis.tickFormat(function(d) { return moment(d).format("l") })
             	.showMaxMin(false);
 
-            // This is a bug, 
-            chart.yAxisTickFormat(d3.format(',.0f'));
             chart.yAxis.showMaxMin(false);
 
             //chart.yAxis.tickFormat(function(d) { return d3.format(',.0f')});
