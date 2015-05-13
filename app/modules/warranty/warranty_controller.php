@@ -36,8 +36,12 @@ class Warranty_controller extends Module_controller
 			die('Authenticate first.'); // Todo: return json?
 		}
 
-		$warranty = new Warranty_model($serial);
-		$warranty->check_status($force=TRUE);
+		if(authorized_for_serial($serial)
+		{
+			$warranty = new Warranty_model($serial);
+			$warranty->check_status($force=TRUE);
+		}
+
 		redirect("clients/detail/$serial");
 	}
 
@@ -91,9 +95,14 @@ class Warranty_controller extends Module_controller
 				$agesql = "SUBSTR(purchase_date, 1, 4)";
 		}
 
+		// Get filter for business units
+		$where = get_machine_group_filter();
+
 		$sql = "SELECT count(1) as count, 
 				$agesql AS age 
 				FROM warranty
+				LEFT JOIN machine USING (serial_number)
+				$where
 				GROUP by age 
 				ORDER BY age DESC";
 		$cnt = 0;

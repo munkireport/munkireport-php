@@ -58,7 +58,7 @@ class Service_controller extends Module_controller
         }
 
         $cert = new Certificate_model;
-        $obj->view('json', array('msg' => $cert->retrieve_many('serial_number = ?', $serial_number)));
+        $obj->view('json', array('msg' => $cert->retrieve_records($serial_number)));
     }
 
 

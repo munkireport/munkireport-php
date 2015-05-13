@@ -23,6 +23,7 @@ class Profile_controller extends Module_controller
 	{
 		echo "You've loaded the profile module!";
 	}
+
 	function items($name='', $payload='') 
     {
         // Protect this handler
@@ -54,6 +55,13 @@ class Profile_controller extends Module_controller
             foreach ($items as $item)
             {
                 $machine = new Machine_model($item->serial_number);
+
+                // Check if authorized for this serial
+                if( ! $machine->id )
+                {
+                    continue;
+                }
+                
                 $instance['serial'] = $item->serial_number;
                 $instance['hostname'] = $machine->computer_name;
                 $instance['payload'] = $item->profile_name;

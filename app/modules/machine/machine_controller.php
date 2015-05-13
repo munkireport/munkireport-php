@@ -55,7 +55,8 @@ class Machine_controller extends Module_controller
 		$out = array();
 		$machine = new Machine_model();
 		$sql = "SELECT physical_memory, count(1) as count
-			FROM machine 
+			FROM machine
+			".get_machine_group_filter()."
 			GROUP BY physical_memory
 			ORDER BY physical_memory DESC";
 
@@ -97,10 +98,11 @@ class Machine_controller extends Module_controller
 	{
 		$out = array();
 		$machine = new Machine_model();
-		$sql = 'SELECT machine_name, count(1) as count 
-			FROM machine 
+		$sql = "SELECT machine_name, count(1) as count 
+			FROM machine
+			".get_machine_group_filter()."
 			GROUP BY machine_name 
-			ORDER BY count DESC';
+			ORDER BY count DESC";
 		$cnt = 0;
 		foreach ($machine->query($sql) as $obj)
 		{
@@ -122,6 +124,7 @@ class Machine_controller extends Module_controller
 		$machine = new Machine_model();
 		$sql = "SELECT count(1) as count, os_version 
 				FROM machine
+				".get_machine_group_filter()."
 				GROUP BY os_version
 				ORDER BY os_version ASC";
 

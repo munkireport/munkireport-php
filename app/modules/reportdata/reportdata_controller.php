@@ -33,7 +33,7 @@ class Reportdata_controller extends Module_controller
 		$reportdata = new Reportdata_model();
 		new Machine_model();
 
-		$where = isset($_SESSION['machine_groups']) ? 'WHERE m.computer_group IN ('. implode(', ', $_SESSION['machine_groups']). ')' : '';
+		$where = get_machine_group_filter('WHERE', 'm');
 
 		switch($reportdata->get_driver())
 		{
@@ -127,7 +127,10 @@ class Reportdata_controller extends Module_controller
 			$sel_arr[] = "SUM(CASE $when_str ELSE 0 END) AS r${cnt}";
 			$cnt++;
 		}
-		$sql = "SELECT " . implode(', ', $sel_arr) . " FROM reportdata";
+		$sql = "SELECT " . implode(', ', $sel_arr) . "
+				FROM reportdata
+				LEFT JOIN machine USING (serial_number)"
+				.get_machine_group_filter();
 
 		// Create Out array
 		if($obj = current($reportdata->query($sql)))

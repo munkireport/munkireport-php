@@ -59,37 +59,6 @@ class Servermetrics_model extends Model {
 	}
 	// ------------------------------------------------------------------------
 
-	
-	// ------------------------------------------------------------------------
-	/**
-	 * Process data sent by postflight
-	 *
-	 * @param string data
-	 * 
-	 **/
-	function process($data)
-	{		
-		
-		// Delete previous set (this is expensive)
-		$this->delete_where('serial_number=?', $this->serial_number);
-
-		try
-		{
-			foreach(json_decode($data) as $date => $values)
-			{
-				$this->id = 0;
-				$this->datetime = $date;
-				$this->merge(array_combine($this->keys, $values))->save();
-
-			} //end foreach 
-		}
-		catch(Exception $e)
-		{
-			echo 'Failed to decode data';
-		}
-		
-	}
-
 	/**
 	 * Get data for serial
 	 *
@@ -119,4 +88,36 @@ class Servermetrics_model extends Model {
 
 		return $out;
 	}
+
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Process data sent by postflight
+	 *
+	 * @param string data
+	 * 
+	 **/
+	function process($data)
+	{		
+		
+		// Delete previous set (this is expensive)
+		$this->delete_where('serial_number=?', $this->serial_number);
+
+		try
+		{
+			foreach(json_decode($data) as $date => $values)
+			{
+				$this->id = 0;
+				$this->datetime = $date;
+				$this->merge(array_combine($this->keys, $values))->save();
+
+			} //end foreach 
+		}
+		catch(Exception $e)
+		{
+			echo 'Failed to decode data';
+		}
+		
+	}
+
 }

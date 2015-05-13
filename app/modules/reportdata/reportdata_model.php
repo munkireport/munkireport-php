@@ -31,12 +31,35 @@ class Reportdata_model extends Model {
         
         if($serial)
         {
-            $this->retrieve_one('serial_number=?', $serial);
+            $this->retrieve_record($serial);
             $this->serial_number = $serial;
         }
         
         return $this;
     }
+
+	/**
+	 * Register IP and time
+	 *
+	 * @return object this
+	 * @author AvB
+	 **/
+	function register()
+	{
+		// Test for proxy
+		if(isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+		{
+			$this->remote_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+		}
+		else
+		{
+			$this->remote_ip = $_SERVER['REMOTE_ADDR'];
+		}
+		
+		$this->timestamp = time();
+
+		return $this;
+	}
 
 	function process($plist)
 	{
@@ -63,26 +86,4 @@ class Reportdata_model extends Model {
 		$this->merge($mylist)->register()->save();
 	}
 
-	/**
-	 * Register IP and time
-	 *
-	 * @return object this
-	 * @author AvB
-	 **/
-	function register()
-	{
-		// Test for proxy
-		if(isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
-		{
-			$this->remote_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-		}
-		else
-		{
-			$this->remote_ip = $_SERVER['REMOTE_ADDR'];
-		}
-		
-		$this->timestamp = time();
-
-		return $this;
-	}
 }

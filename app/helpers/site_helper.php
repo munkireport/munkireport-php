@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1129';
+$GLOBALS['version'] = '2.4.3.1130';
 
 // Return version without commit count
 function get_version()
@@ -239,7 +239,9 @@ function id_in_machine_group($id)
 /**
  * Get filter for machine_group membership
  *
- * @return void
+ * @var string optional prefix default 'WHERE'
+ * @var string how to address the machine table - default 'machine'
+ * @return string filter clause
  * @author 
  **/
 function get_machine_group_filter($prefix = 'WHERE', $machine_table_name = 'machine')

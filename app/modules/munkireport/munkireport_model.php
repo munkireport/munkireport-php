@@ -50,31 +50,14 @@ class Munkireport_model extends Model {
         
 		if ($serial)
 		{
-		    $this->retrieve($serial);
-            if(!$this->rs['serial_number'])
+		    $this->retrieve_record($serial);
+            if ( ! $this->rs['serial_number'])
             {
                 $this->serial = $serial;
             }
 		}
-		  $this->retrieve($serial);
-		  
-	}		
-		
-	function retrieve( $serial ) 
-	{
-		$dbh=$this->getdbh();
-		$sql = 'SELECT * FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial_number' ).'=?';
-		$stmt = $dbh->prepare( $sql );
-		$stmt->bindValue( 1, $serial );
-		$stmt->execute();
-		$rs = $stmt->fetch( PDO::FETCH_ASSOC );
-		if ( $rs )
-			foreach ( $rs as $key => $val )
-				if ( isset( $this->rs[$key] ) )
-					$this->rs[$key] = is_scalar( $this->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? @gzinflate( $val ) : $val );
-		return $this;
+
 	}
-	
 	
 	function process($plist)
 	{		
