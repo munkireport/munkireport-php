@@ -45,6 +45,11 @@ class Inventory_controller extends Module_controller
             foreach ($items as $item)
             {
                 $machine = new Machine_model($item->serial);
+                // Check if authorized for this serial
+                if( ! $machine->id )
+                {
+                    continue;
+                }
 				$reportdata = new Reportdata_model($item->serial);
                 $instance['serial'] = $item->serial;
                 $instance['hostname'] = $machine->computer_name;

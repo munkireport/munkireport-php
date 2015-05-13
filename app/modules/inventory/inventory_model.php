@@ -23,6 +23,21 @@ class Inventory_model extends Model {
 		// Create table if it does not exist
         $this->create_table();
     }
+
+    /**
+     * Select all entries
+     *
+     * @return array
+     * @author 
+     **/
+    function select_all()
+    {
+        $sql = sprintf('SELECT name, version, COUNT(i.id) AS num_installs
+            FROM %s i LEFT JOIN machine
+            %s 
+            GROUP BY name, version', $this->enquote($this->tablename), get_machine_group_filter());
+        return $this->query($sql);
+    }
     
     function process($data)
     {    
