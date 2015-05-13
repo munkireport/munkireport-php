@@ -216,6 +216,9 @@ class auth extends Controller
 	 **/
 	function set_session_props()
 	{
+		// Initialize session
+		$this->authorized();
+
 		// Lookup user in business units
 		$bu = new Business_unit;
 
