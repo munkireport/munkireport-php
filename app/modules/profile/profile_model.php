@@ -45,15 +45,6 @@ class Profile_model extends Model {
 		return $json_string;
 	}
 	
-	function delete_set_where($column,$value)
-	{
-  		$dbh=$this->getdbh();
-  		$sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote($column).'=?';
-  		$stmt = $dbh->prepare( $sql );
-  		$stmt->bindValue( 1, $value );
-  		$stmt->execute();
-  		return $this;
-	}
 	// ------------------------------------------------------------------------
 	/**
 	 * Process data sent by postflight
@@ -71,7 +62,7 @@ class Profile_model extends Model {
 		//}
 		
 		// Translate profile strings to db fields
-		$this->delete_set_where('serial_number', $this->serial_number);
+		$this->delete_where('serial_number=?', $this->serial_number);
         $translate = array(
         	'ProfileUUID = ' => 'profile_uuid',
         	'ProfileName = ' => 'profile_name',

@@ -22,16 +22,6 @@ class Inventory_model extends Model {
 
 		// Create table if it does not exist
         $this->create_table();
-    }    
-        
-    function delete_set( $serial ) 
-    {
-        $dbh=$this->getdbh();
-        $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial' ).'=?';
-        $stmt = $dbh->prepare( $sql );
-        $stmt->bindValue( 1, $serial );
-        $stmt->execute();
-        return $this;
     }
     
     function process($data)
@@ -52,7 +42,7 @@ class Inventory_model extends Model {
         if (count($inventory_list))
         {
             // clear existing inventory items
-            $this->delete_set($this->serial);
+            $this->delete_where('serial=?', $this->serial);
             // insert current inventory items
             foreach ($inventory_list as $item)
             {

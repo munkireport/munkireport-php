@@ -645,4 +645,18 @@ abstract class KISS_Model
 		$this->execute( $stmt, $bindings );
 		return $stmt->fetchAll( $pdo_fetch_mode );
 	}
+
+	function delete_where( $wherewhat, $bindings ) 
+	{
+		$dbh=$this->getdbh();
+		if ( is_scalar( $bindings ) )
+			$bindings=$bindings ? array( $bindings ) : array();
+
+		$sql = 'DELETE FROM '.$this->enquote( $this->tablename );
+		if ( isset( $wherewhat ) && isset( $bindings ) )
+			$sql .= ' WHERE '.$wherewhat;
+		$stmt = $this->prepare( $sql );
+		return $this->execute( $stmt, $bindings );
+	}
+
 }

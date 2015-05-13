@@ -72,15 +72,6 @@ class Business_unit extends Model {
         
     }
 
-    function delete_all($unitid = '') 
-    {
-        $dbh=$this->getdbh();
-        $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'unitid' ).'=?';
-        $stmt = $this->prepare( $sql );
-        $stmt->bindValue( 1, $unitid );
-        return $this->execute($stmt);
-    }
-
     /**
      * Get max unitid
      *

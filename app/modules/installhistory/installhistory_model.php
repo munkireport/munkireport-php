@@ -21,24 +21,7 @@ class Installhistory_model extends Model {
 		$this->create_table();
 		  
 	}
-	
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Delete all items with serialnumber
-	 *
-	 * @author abn290
-	 **/
-	function delete_set() 
-	{
-		$dbh=$this->getdbh();
-		$sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial_number' ).'=?';
-		$stmt = $dbh->prepare( $sql );
-		$stmt->bindValue( 1, $this->serial_number );
-		$stmt->execute();
-		return $this;
-	}
-		
+			
 	// ------------------------------------------------------------------------
 
 	/**
@@ -50,7 +33,7 @@ class Installhistory_model extends Model {
 	function process($plist)
 	{
 		// Delete old data
-		$this->delete_set();
+		$this->delete_where('serial_number=?', $this->serial_number);
 
 		// Check if we're passed a plist (10.6 and higher)
 		if(strpos($plist, '<?xml version="1.0" encoding="UTF-8"?>') === 0)

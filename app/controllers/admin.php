@@ -123,7 +123,7 @@ class admin extends Controller
 
 		if($unitid !== ''){
 			$bu = new Business_unit;
-			$out['success'] = $bu->delete_all($unitid);
+			$out['success'] = $bu->delete_where('unitid=?', $unitid);
 		}
 
 		$obj = new View();

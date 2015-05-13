@@ -36,23 +36,6 @@ class Displays_info_model extends Model {
 
 // ------------------------------------------------------------------------
 
-/**
- * Delete any known entry for matching value(s) in column
- *
- * @author Noel B.A.
- **/
-function delete_set_where($column,$value)
-{
-  $dbh=$this->getdbh();
-  $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote($column).'=?';
-  $stmt = $dbh->prepare( $sql );
-  $stmt->bindValue( 1, $value );
-  $stmt->execute();
-  return $this;
-}
-
-// ------------------------------------------------------------------------
-
     /**
      * Process data sent by postflight
      *
@@ -72,8 +55,9 @@ function delete_set_where($column,$value)
 
       // if we didn't specify in the config that we like history then
       // we nuke any data we had with this computer's s/n
-      if (! conf('keep_previous_displays')){
-        $this->delete_set_where('serial_number', $this->serial_number);
+      if (! conf('keep_previous_displays'))
+      {
+        $this->delete_where('serial_number=?', $this->serial_number);
         $this->display_serial = null; //get rid of any s/n that was left in memory
       }
       // Parse data
@@ -85,11 +69,9 @@ function delete_set_where($column,$value)
           //making sure we have a valid s/n.
           if((strpos($line, '----------') === 0) && ($this->display_serial)) {
             //if we have not nuked the records, do a selective delete
-            if (conf('keep_previous_displays')) {
-              $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).
-                  ' WHERE '.$this->enquote( 'serial_number' )." = '$this->serial_number'".
-                  ' AND '.$this->enquote( 'display_serial' )." = '$this->display_serial'";
-              $this->exec($sql);
+            if (conf('keep_previous_displays'))
+            {
+              $this->delete_where('serial_number=? AND display_serial=?', array($this->serial_number, $this->display_serial));
             }
             //get a new id
             $this->id = 0;
