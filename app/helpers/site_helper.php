@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1123';
+$GLOBALS['version'] = '2.4.3.1124';
 
 // Return version without commit count
 function get_version()
@@ -182,6 +182,17 @@ function passphrase_to_group($passphrase)
 	}
 	
 	return 0;
+}
+
+/**
+ * Check if current user may access data for serial number 
+ *
+ * @return boolean TRUE if authorized
+ * @author 
+ **/
+function authorized_for_serial($serial_number)
+{
+	return id_in_machine_group(machine_computer_group($serial_number));
 }
 
 /**

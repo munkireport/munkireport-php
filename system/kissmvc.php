@@ -250,15 +250,31 @@ class Model extends KISS_Model
 	 **/
 	function retrieve_record($serial_number)
 	{
-		$group_id = machine_computer_group($serial_number);
-
-		if( ! id_in_machine_group($group_id))
+		if( ! authorized_for_serial($serial_number))
 		{
 			return FALSE;
 		}
 		
 		return $this->retrieve_one('serial_number=?', $serial_number);
+	}
 
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Retrieve many considering machine_group membership
+	 * use this instead of retrieve_many
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function retrieve_records($serial_number)
+	{
+		if( ! authorized_for_serial($serial_number))
+		{
+			return array();
+		}
+		
+		return $this->retrieve_many('serial_number=?', $serial_number);
 	}
 
 

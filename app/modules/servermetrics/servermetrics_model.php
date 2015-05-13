@@ -60,15 +60,6 @@ class Servermetrics_model extends Model {
 	// ------------------------------------------------------------------------
 
 	
-	function delete_set_where($column,$value)
-	{
-  		$dbh=$this->getdbh();
-  		$sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote($column).'=?';
-  		$stmt = $dbh->prepare( $sql );
-  		$stmt->bindValue( 1, $value );
-  		$stmt->execute();
-  		return $this;
-	}
 	// ------------------------------------------------------------------------
 	/**
 	 * Process data sent by postflight
@@ -80,8 +71,7 @@ class Servermetrics_model extends Model {
 	{		
 		
 		// Delete previous set (this is expensive)
-		$this->delete_set_where('serial_number', $this->serial_number);
-
+		$this->delete_where('serial_number=?', $this->serial_number);
 
 		try
 		{
@@ -108,19 +98,25 @@ class Servermetrics_model extends Model {
 	 **/
 	function get_data($serial_number, $hours = 24)
 	{
-		$date = new DateTime();
-		$date->sub(new DateInterval('PT'.$hours.'H'));
-		$fromdate = $date->format('Y-m-d H:i:s');
-
 		$out =[];
-		$what = implode(',', $this->keys) . ',datetime';
-		$where = 'serial_number = ? AND datetime > ? ORDER BY datetime';
-		foreach($this->select( $what, $where, array($serial_number, $fromdate), PDO::FETCH_NUM ) as $row)
+
+		if (authorized_for_serial($serial_number))
 		{
-			$key = array_pop($row);
-			$row = array_map('floatval', $row);
-			$out[$key] = $row;
+			$date = new DateTime();
+			$date->sub(new DateInterval('PT'.$hours.'H'));
+			$fromdate = $date->format('Y-m-d H:i:s');
+
+			$what = implode(',', $this->keys) . ',datetime';
+			$where = 'serial_number = ? AND datetime > ? ORDER BY datetime';
+			foreach($this->select( $what, $where, array($serial_number, $fromdate), PDO::FETCH_NUM ) as $row)
+			{
+				$key = array_pop($row);
+				$row = array_map('floatval', $row);
+				$out[$key] = $row;
+			}
+
 		}
+
 		return $out;
 	}
 }
