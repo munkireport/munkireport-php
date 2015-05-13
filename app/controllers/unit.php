@@ -1,5 +1,5 @@
 <?php
-class business_unit extends Controller
+class unit extends Controller
 {
 	function __construct()
 	{
