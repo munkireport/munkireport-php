@@ -11,8 +11,12 @@
 				<div class="panel-body text-center">
 
 				<?php $queryobj = new Disk_report_model();
-				$sql = "select COUNT(1) as total, COUNT(CASE WHEN FreeSpace < 10737418240 THEN 1 END) AS warning, 
-					COUNT(CASE WHEN FreeSpace < 5368709120 THEN 1 END) AS danger FROM diskreport";
+				$sql = "SELECT COUNT(1) as total, 
+						COUNT(CASE WHEN FreeSpace < 10737418240 THEN 1 END) AS warning, 
+						COUNT(CASE WHEN FreeSpace < 5368709120 THEN 1 END) AS danger 
+						FROM diskreport
+						LEFT JOIN machine USING (serial_number)
+						".get_machine_group_filter();
 					?>
 					<?php if($obj = current($queryobj->query($sql))): ?>
 					<a href="<?php echo url('show/listing/disk#'.rawurlencode('freespace > 10GB')); ?>" class="btn btn-success">

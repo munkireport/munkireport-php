@@ -11,7 +11,13 @@
 				<div class="list-group scroll-box">
 
 				<?php	$munkireport = new Munkireport_model();
-						$sql = "SELECT count(1) AS count, manifestname FROM munkireport GROUP BY manifestname ORDER BY count DESC";
+						$filter = get_machine_group_filter();
+						$sql = "SELECT COUNT(1) AS count, manifestname 
+							FROM munkireport
+							LEFT JOIN machine USING (serial_number)
+							$filter
+							GROUP BY manifestname
+							ORDER BY count DESC";
 				?>
 					<?php foreach($munkireport->query($sql) as $obj): ?>
 					<?php $obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown'; ?>

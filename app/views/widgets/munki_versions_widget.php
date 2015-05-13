@@ -10,8 +10,11 @@
 				<div class="list-group scroll-box">
 
 					<?php	$munkireport = new Munkireport_model();
+							$filter = get_machine_group_filter();
 							$sql = "SELECT version, COUNT(1) AS count
 									FROM munkireport
+									LEFT JOIN machine USING (serial_number)
+									$filter
 									GROUP BY version
 									ORDER BY COUNT DESC";
 					?>

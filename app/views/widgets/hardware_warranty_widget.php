@@ -12,8 +12,11 @@
 
 					<?php
 						$warranty = new Warranty_model();
-						$sql = "SELECT count(id) AS count, status
+						$filter = get_machine_group_filter();
+						$sql = "SELECT count(*) AS count, status
 										FROM warranty
+										LEFT JOIN machine USING (serial_number)
+										$filter
 										GROUP BY status
 										ORDER BY count DESC";
 						$class_list = array('Expired' => 'danger', 'Supported' => 'success');
@@ -30,9 +33,12 @@
 
 					<?php
 						$thirtydays = date('Y-m-d', strtotime('+30days'));
-						$sql = "SELECT count(id) AS count, status
+						$filter = get_machine_group_filter('AND');
+						$sql = "SELECT count(*) AS count, status
 										FROM warranty
+										LEFT JOIN machine USING (serial_number)
 										WHERE end_date < '$thirtydays' AND status = 'Supported'
+										$filter
 										GROUP BY status
 										ORDER BY count DESC";
 					?>

@@ -15,8 +15,10 @@
 						$in_green = 0;
 						$in_yellow = 0;
 						$in_red = 0;
+						$filter = get_machine_group_filter();
 						$sql = "SELECT physical_memory, count(1) as count
-							FROM machine 
+							FROM machine
+							$filter
 							GROUP BY physical_memory
 							ORDER BY physical_memory DESC";
 							

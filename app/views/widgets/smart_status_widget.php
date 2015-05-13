@@ -15,7 +15,9 @@
 						$sql = "SELECT COUNT(CASE WHEN SMARTStatus='Failing' THEN 1 END) AS Failing,
 										COUNT(CASE WHEN SMARTStatus='Verified' THEN 1 END) AS Verified,
 										COUNT(CASE WHEN SMARTStatus='Not Supported' THEN 1 END) AS Not_Supported
-							 			FROM diskreport;";
+							 			FROM diskreport
+							 			LEFT JOIN machine USING(serial_number)
+							 			".get_machine_group_filter();
 					$obj = current($queryobj->query($sql));
 				?>
 

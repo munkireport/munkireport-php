@@ -10,14 +10,17 @@
 
 				<div class="panel-body text-center">
 
-					<?php
+					<?php //FIXME use query to count totals!
 						$machine = new Reportdata_model();
 						$in_green = 0;
 						$in_yellow = 0;
 						$in_red = 0;
+						$filter = get_machine_group_filter('AND');
 						$sql = "SELECT timestamp, uptime
 										FROM reportdata
+										LEFT JOIN machine USING(serial_number)
 										WHERE uptime <> '0'
+										$filter
 										ORDER BY timestamp DESC";
 
 						foreach ($machine->query($sql) as $obj) {

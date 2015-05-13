@@ -14,13 +14,15 @@
 						$sql = "SELECT COUNT(CASE WHEN max_percent>89 THEN 1 END) AS success,
 										COUNT(CASE WHEN max_percent BETWEEN 80 AND 89 THEN 1 END) AS warning,
 										COUNT(CASE WHEN max_percent<80 THEN 1 END) AS danger
-							 			FROM power;";
+							 			FROM power
+							 			LEFT JOIN machine USING(serial_number)
+							 			".get_machine_group_filter();
 						$obj = current($queryobj->query($sql));
 					?>
 				<?if($obj):?>
 					<a href="<?=url('show/listing/power')?>" class="btn btn-danger">
 						<span class="bigger-150"> <?=$obj->danger?> </span><br>
-						< 80%
+						&lt; 80%
 					</a>
 					<a href="<?=url('show/listing/power')?>" class="btn btn-warning">
 						<span class="bigger-150"> <?=$obj->warning?> </span><br>

@@ -15,10 +15,13 @@
 						$yesterday = date('Y-m-d', strtotime('-1day'));
 						$class_list = array('Supported' => 'warning');
 						$cnt = 0;
-						$sql = "SELECT count(id) AS count, status 
-								FROM warranty 
+						$filter = get_machine_group_filter('AND');
+						$sql = "SELECT count(1) AS count, status 
+								FROM warranty
+								LEFT JOIN machine USING(serial_number)
 								WHERE (end_date BETWEEN '$yesterday' AND '$thirtydays') 
 								AND status != 'Expired'
+								$filter
 								GROUP BY status 
 								ORDER BY count DESC";
 				?>

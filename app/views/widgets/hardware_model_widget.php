@@ -11,7 +11,12 @@
 				<div class="list-group scroll-box">
 
 				<?php	$machine = new Machine_model();
-						$sql = "SELECT count(id) AS count, machine_desc FROM machine GROUP BY machine_desc ORDER BY count DESC";
+						$filter = get_machine_group_filter();
+						$sql = "SELECT count(id) AS count, machine_desc 
+							FROM machine
+							$filter
+							GROUP BY machine_desc 
+							ORDER BY count DESC";
 				?>
 					<?php foreach($machine->query($sql) as $obj): ?>
 					<?php $obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : 'Unknown'; ?>

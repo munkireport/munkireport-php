@@ -10,9 +10,13 @@
 
 				<div class="list-group scroll-box">
 
-				<?php	$fv = new filevault_status_model(); 
+				<?php	$fv = new filevault_status_model();
+						$filter = get_machine_group_filter();
 						$sql = "SELECT count(1) AS count,
-								filevault_status FROM filevault_status
+								filevault_status 
+								FROM filevault_status
+								LEFT JOIN machine USING (serial_number)
+								$filter
 								GROUP BY filevault_status
 								ORDER BY count DESC";
 						$cnt = 0;

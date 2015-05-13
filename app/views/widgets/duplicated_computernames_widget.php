@@ -11,9 +11,11 @@
 				<div class="list-group scroll-box">
 
 				<?php	$machine = new Machine_model();
+						$filter = get_machine_group_filter();
 						$sql = "SELECT computer_name,
 								COUNT(*) AS count
 								FROM machine
+								$filter
 								GROUP BY computer_name
 								HAVING count > 1
 								ORDER BY count DESC";

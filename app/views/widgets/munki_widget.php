@@ -10,12 +10,14 @@
 
 			  <div class="panel-body text-center">
 			  	<?php $munkireport = new Munkireport_model();
-				$sql = "select 
-					sum(errors > 0) as errors, 
-					sum(warnings > 0) as warnings, 
-					sum(pendinginstalls > 0) as pending,
-					sum(installresults > 0) as installed 
-					from munkireport;";
+				$sql = "SELECT 
+					SUM(errors > 0) as errors, 
+					SUM(warnings > 0) as warnings, 
+					SUM(pendinginstalls > 0) as pending,
+					SUM(installresults > 0) as installed 
+					FROM munkireport
+					LEFT JOIN machine USING (serial_number)
+					".get_machine_group_filter();
 				?>
 				<?php foreach($munkireport->query($sql) as $obj):?>
 				<a href="<?php echo url('show/listing/munki#errors'); ?>" class="btn btn-danger">

@@ -12,7 +12,13 @@
 				  	<?php $queryobj = new Machine_model();// Generic queryobject ?>
 
 				  	<?php	$lastweek = time() - 60 * 60 * 24 * 7;$cnt=0;
-				  			$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) WHERE reg_timestamp > $lastweek ORDER BY reg_timestamp DESC"?>
+				  			$filter = get_machine_group_filter('AND');
+				  			$sql = "SELECT machine.serial_number, computer_name, reg_timestamp
+				  				FROM machine 
+				  				LEFT JOIN reportdata USING (serial_number)
+				  				WHERE reg_timestamp > $lastweek
+				  				$filter
+				  				ORDER BY reg_timestamp DESC"?>
 					<?php foreach($queryobj->query($sql) as $obj): ?> 
 					<a class="list-group-item" href="<?php echo url('clients/detail/'.$obj->serial_number); ?>"><?php echo $obj->computer_name; ?>
 						<span class="pull-right"><time datetime="<?php echo $obj->reg_timestamp; ?>">...</time></span>
