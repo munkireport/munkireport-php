@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1134';
+$GLOBALS['version'] = '2.4.3.1138';
 
 // Return version without commit count
 function get_version()
@@ -256,8 +256,3 @@ function get_machine_group_filter($prefix = 'WHERE', $machine_table_name = 'mach
 	}
 }
 
-function humanreadablesize($bytes, $decimals = 2) {
-	$sz = 'BKMGTP';
-	$factor = floor((strlen($bytes) - 1) / 3);
-	return sprintf("%.{$decimals}f %sB", $bytes / pow(1024, $factor), $factor?@$sz[$factor]:' ');
-}
