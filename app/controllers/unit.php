@@ -33,6 +33,29 @@ class unit extends Controller
 		
 	}
 
+	/**
+	 * Get unit data for current unit
+	 *
+	 * @author 
+	 **/
+	function get_data()
+	{
+		$out = array();
+
+		// Initiate session
+		$this->authorized();
+
+		if(isset($_SESSION['business_unit']))
+		{
+			// Get data for this unit
+			$unit = new Business_unit;
+			$out = $unit->all($_SESSION['business_unit']);
+		}
+
+		$obj = new View();
+        $obj->view('json', array('msg' => $out));
+	}
+
 	function listing($which = '')
 	{
 		if($which)
