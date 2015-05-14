@@ -144,7 +144,7 @@ function dumpj(obj)
 // Filesize formatter
 function fileSize(size, decimals) {
 	if(decimals == undefined){decimals = 0};
-	var i = Math.floor( Math.log(size) / Math.log(1024) );
+	var i = size > 0 ? Math.floor( Math.log(size) / Math.log(1024) ) : 0;
 	return ( size / Math.pow(1024, i) ).toFixed(decimals) + ' ' + ['', 'K', 'M', 'G', 'T', 'P', 'E'][i] + 'B';
 }
 
