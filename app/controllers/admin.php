@@ -10,7 +10,7 @@ class admin extends Controller
 
 		if( ! $this->authorized('global'))
 		{
-			redirect('business_unit');
+			redirect('unit');
 		}
 
 	} 
