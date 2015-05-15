@@ -29,16 +29,20 @@
 </div>	<!-- /container -->
 
 <script>
-	
-		defer = $.getJSON(baseUrl + 'unit/get_data');
 
+		// Get all business units and machine_groups
+		var defer = $.when(
+			$.getJSON(baseUrl + 'unit/get_data'),
+			$.getJSON(baseUrl + 'unit/get_machine_groups')
+			);
 
-
-		defer.done(function(data){
-			var name = data.name ||'All Business Units'
+		// Render when all requests are successful
+		defer.done(function(bu_data, mg_data){
+			console.log(bu_data)
+			var name = bu_data[0].name ||'All Business Units'
 			$('h3.bu-title').text(name);
 		});
-
+	
 
 
 </script>
