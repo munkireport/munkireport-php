@@ -48,10 +48,12 @@
 			settings = {groupid: $(this).data().groupid, value: this.checked}
 
 		$.post(baseUrl + 'unit/set_filter', settings, function(){
-			console.log('done')
+			console.log('done');
+			// Update all
+			$(document).trigger('appReady', [i18n.lng()]);
 		})
 
-		// Update all
+
 
 	}
 	// Get all business units and machine_groups

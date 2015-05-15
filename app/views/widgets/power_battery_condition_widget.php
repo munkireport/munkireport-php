@@ -40,8 +40,12 @@ $(document).on('appReady', function(e, lang) {
 			if(val > 0)
 			{
 				$('#power-nodata').addClass('hide'); // Hide no clients
-				$('#power-' + prop).toggleClass('hide');
+				$('#power-' + prop).removeClass('hide');
 				$('#power-' + prop + '>.badge').html(val);
+			}
+			else
+			{
+				$('#power-' + prop).addClass('hide');
 			}
 		});
 	});
