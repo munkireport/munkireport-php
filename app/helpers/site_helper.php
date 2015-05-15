@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1145';
+$GLOBALS['version'] = '2.4.3.1146';
 
 // Return version without commit count
 function get_version()
@@ -246,13 +246,37 @@ function id_in_machine_group($id)
  **/
 function get_machine_group_filter($prefix = 'WHERE', $machine_table_name = 'machine')
 {
-	if(isset($_SESSION['machine_groups']))
+	if($groups = get_filtered_groups())
 	{
-		return sprintf('%s %s.computer_group IN (%s)', $prefix, $machine_table_name, implode(', ', $_SESSION['machine_groups']));
+		return sprintf('%s %s.computer_group IN (%s)', $prefix, $machine_table_name, implode(', ', $groups));
 	}
 	else
 	{
 		return '';
 	}
+}
+
+/**
+ * Get filtered groups
+ *
+ * @return void
+ * @author 
+ **/
+function get_filtered_groups()
+{
+	$out = array();
+
+	if(isset($_SESSION['machine_groups']))
+	{
+		if(isset($_SESSION['filter']) && $_SESSION['filter'])
+		{
+			$out = array_diff($_SESSION['machine_groups'], $_SESSION['filter']);
+		}
+		else
+		{
+			$out = $_SESSION['machine_groups'];
+		}
+	}
+	return $out;
 }
 

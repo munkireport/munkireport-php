@@ -13,6 +13,7 @@ The way Business Units (BU) are implemented is by adding restrictions on databas
 * `$_SESSION['business_unit']` contains the numerical id of the BU
 * `$_SESSION['role']` contains the role of the current user (user, manager or admin)
 * `$_SESSION['machine_groups']` contains an array of Machine Group id's that belong to the BU
+* `$_SESSION['filter']` contains an array of Machine Group id's that should be retrieved, the user can change this. You can only add group id's to the filter that are in `$_SESSION['machine_groups']`
 
 ### Helper functions
 

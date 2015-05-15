@@ -55,6 +55,13 @@ class Machine_group extends Model {
 
             $out[$obj->groupid]['groupid'] = intval($obj->groupid);
 
+            // Add filter value
+            $out[$obj->groupid]['checked'] = TRUE;
+            if(isset($_SESSION['filter']) && $_SESSION['filter'])
+            {
+                $out[$obj->groupid]['checked'] = ! in_array($obj->groupid, $_SESSION['filter']);
+            }
+
         }
 
         if($groupid && $out)

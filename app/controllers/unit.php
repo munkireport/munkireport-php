@@ -82,6 +82,48 @@ class unit extends Controller
         $obj->view('json', array('msg' => $out));
 	}
 
+	/**
+	 * Add/remove a filter entry for machine groups
+	 *
+	 * @author 
+	 **/
+	function set_filter()
+	{
+		// Initiate session
+		$this->authorized();
+
+		$out = array();
+
+		if( ! isset($_POST['groupid']) OR ! isset($_POST['value']))
+		{
+			$out['error'] = 'No groupid or value provided';
+		}
+		else
+		{
+			if( ! isset($_SESSION['filter']))
+			{
+				$_SESSION['filter'] = array();
+			}
+			
+			// Find groupid in filter
+			$key = array_search(intval($_POST['groupid']), $_SESSION['filter']);
+
+			if( $key !== FALSE)
+			{
+				array_splice($_SESSION['filter'], $key, 1);
+			}
+
+			if($_POST['value'] == 'false')
+			{
+				$_SESSION['filter'][] = intval($_POST['groupid']);
+
+			}			
+		}
+		$out = $_SESSION;
+		$obj = new View();
+        $obj->view('json', array('msg' => $out));
+	}
+
 
 	function listing($which = '')
 	{

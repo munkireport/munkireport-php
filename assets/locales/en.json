@@ -40,6 +40,11 @@
 	},
 	"boot_time": "Booted",
 	"bundle_id": "BundleID",
+	"business_unit": {
+		"machine_groups": "Machine Groups",
+		"managers": "Managers",
+		"users": "Users"
+	},
 	"caching": {
 		"bytes_served": "Caching – Bytes Served",
 		"from_origin": "From Origin",

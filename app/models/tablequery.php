@@ -84,11 +84,11 @@ class Tablequery {
         }
 
         // Business unit filter (assumes we are selecting the machine table)
-        if(isset($_SESSION['machine_groups']))
+        if($machine_groups = get_filtered_groups())
         {
             // Todo: We should check if a requested machine_group is allowed
 
-            $bu_where = 'machine.computer_group IN ('. implode(', ', $_SESSION['machine_groups']). ')';
+            $bu_where = 'machine.computer_group IN ('. implode(', ', $machine_groups). ')';
             if($where)
             {
                 $where .= ' AND (' . $bu_where . ')';
