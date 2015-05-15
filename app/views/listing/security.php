@@ -4,6 +4,7 @@
 new Machine_model;
 new Reportdata_model;
 new Filevault_status_model;
+new Localadmin_model;
 ?>
 
 <div class="container">
