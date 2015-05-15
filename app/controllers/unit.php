@@ -34,7 +34,7 @@ class unit extends Controller
 	}
 
 	/**
-	 * Get unit data for current unit
+	 * Get unit data for current user
 	 *
 	 * @author 
 	 **/
@@ -55,6 +55,33 @@ class unit extends Controller
 		$obj = new View();
         $obj->view('json', array('msg' => $out));
 	}
+
+	/**
+	 * Get machine group data for current user
+	 *
+	 * @author 
+	 **/
+	function get_machine_groups()
+	{
+		$out = array();
+
+		// Initiate session
+		$this->authorized();
+
+		if(isset($_SESSION['machine_groups']))
+		{
+			// Get data for this unit
+			$mg = new Machine_group;
+			foreach($_SESSION['machine_groups'] AS $group)
+			{
+				$out[] = $mg->all($group);
+			}
+		}
+
+		$obj = new View();
+        $obj->view('json', array('msg' => $out));
+	}
+
 
 	function listing($which = '')
 	{
