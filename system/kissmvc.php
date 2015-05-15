@@ -68,7 +68,7 @@ class Controller extends KISS_Controller
 		// Check if this is a BU member
 		if(isset($_SESSION['business_unit']))
 		{
-			$role = $_SESSION['type']; // admin, manager, user
+			$role = $_SESSION['role']; // admin, manager, user
 		}
 
 		// Check for a specific authorization item

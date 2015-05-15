@@ -224,11 +224,11 @@ class auth extends Controller
 
 		if($bu->retrieve_one("property IN ('admin', 'manager', 'user') AND value=?", $_SESSION['user']))
 		{
-			$_SESSION['type'] = $bu->property; // admin, manager, user
+			$_SESSION['role'] = $bu->property; // admin, manager, user
 			$_SESSION['business_unit'] = $bu->unitid;
 
 			// Set machine_groups
-			if($_SESSION['type'] == 'admin')
+			if($_SESSION['role'] == 'admin')
 			{
 				unset($_SESSION['machine_groups']);
 			}
