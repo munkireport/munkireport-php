@@ -28,6 +28,24 @@ class Machine_group extends Model {
         
         return $this;
     }
+
+    /**
+     * Select unique group ids
+     *
+     * @return void
+     * @author 
+     **/
+    function get_group_ids()
+    {
+        $out = array();
+        $sql = "SELECT groupid FROM $this->tablename GROUP BY groupid";
+        foreach($this->query($sql) as $obj)
+        {
+            $out[] = $obj->groupid;
+        }
+
+        return $out;
+    }
     
 	// ------------------------------------------------------------------------
 

@@ -230,7 +230,8 @@ class auth extends Controller
 			// Set machine_groups
 			if($_SESSION['role'] == 'admin')
 			{
-				unset($_SESSION['machine_groups']);
+				$mg = new Machine_group;
+				$_SESSION['machine_groups'] = $mg->get_group_ids();
 			}
 			else
 			{

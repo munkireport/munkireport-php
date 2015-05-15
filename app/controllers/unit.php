@@ -77,6 +77,11 @@ class unit extends Controller
 				$out[] = $mg->all($group);
 			}
 		}
+		else
+		{
+			$mg = new Machine_group;
+			$out = $mg->all();
+		}
 
 		$obj = new View();
         $obj->view('json', array('msg' => $out));
