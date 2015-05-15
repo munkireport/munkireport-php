@@ -36,7 +36,7 @@ class Warranty_controller extends Module_controller
 			die('Authenticate first.'); // Todo: return json?
 		}
 
-		if(authorized_for_serial($serial)
+		if(authorized_for_serial($serial))
 		{
 			$warranty = new Warranty_model($serial);
 			$warranty->check_status($force=TRUE);
