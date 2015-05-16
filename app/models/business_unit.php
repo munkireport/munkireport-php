@@ -49,6 +49,9 @@ class Business_unit extends Model {
                 case 'user':
                     $out[$obj->unitid]['users'][] = $obj->value;
                     break;
+                case 'manager':
+                    $out[$obj->unitid]['managers'][] = $obj->value;
+                    break;
                 case 'machine_group':
                     $out[$obj->unitid]['machine_groups'][] = intval($obj->value);
                     break;

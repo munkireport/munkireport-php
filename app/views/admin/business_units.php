@@ -181,7 +181,8 @@
 				var data = $(this).data(),
 					machine_groups = '',
 					groupname = '',
-					users = '';
+					users = ''
+					managers = '';
 				if(data.machine_groups)
 				{
 					machine_groups = $('<ul>');
@@ -215,7 +216,20 @@
 					users = $('<div>')
 						.append($('<h4>')
 							.text('Users'))
-						.append(users);				}
+						.append(users);
+				}
+				if(data.managers)
+				{
+					managers = $('<ul>');
+					$.each(data.managers, function(index, val){
+						managers.append($('<li>')
+							.text(val))
+					});
+					managers = $('<div>')
+						.append($('<h4>')
+							.text('Managers'))
+						.append(managers);
+				}
 
 				$(this)
 					.empty()
@@ -242,6 +256,7 @@
 										.addClass('btn btn-default btn-xs')
 										.text('+')))
 								.append(machine_groups))
+						.append(managers)
 						.append(users))
 						.append($('<div>')
 							.addClass('panel-footer')								
