@@ -45,7 +45,11 @@
 	var updateGroup = function(){
 
 		var checked = this.checked,
-			settings = {groupid: $(this).data().groupid, value: this.checked}
+			settings = {
+				filter: 'machine_group',
+				value: $(this).data().groupid,
+				action: checked ? 'remove' : 'add'
+			}
 
 		$.post(baseUrl + 'unit/set_filter', settings, function(){
 			console.log('done');

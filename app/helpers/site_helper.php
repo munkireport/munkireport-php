@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1150';
+$GLOBALS['version'] = '2.4.3.1151';
 
 // Return version without commit count
 function get_version()
@@ -268,9 +268,9 @@ function get_filtered_groups()
 
 	if(isset($_SESSION['machine_groups']))
 	{
-		if(isset($_SESSION['filter']) && $_SESSION['filter'])
+		if(isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group'])
 		{
-			$out = array_diff($_SESSION['machine_groups'], $_SESSION['filter']);
+			$out = array_diff($_SESSION['machine_groups'], $_SESSION['filter']['machine_group']);
 		}
 		else
 		{

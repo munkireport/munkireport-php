@@ -15,6 +15,17 @@ The way Business Units (BU) are implemented is by adding restrictions on databas
 * `$_SESSION['machine_groups']` contains an array of Machine Group id's that belong to the BU
 * `$_SESSION['filter']` contains an array of Machine Group id's that should be retrieved, the user can change this. You can only add group id's to the filter that are in `$_SESSION['machine_groups']`
 
+### Model methods
+
+#### `$this->retrieve_record($serial_number)`
+
+Retrieve record for `$serial_number` if in allowed Machine Groups, otherwise returns FALSE.
+
+#### `$this->retrieve_records($serial_number)`
+
+Retrieve multiple records for `$serial_number` if in allowed Machine Groups, otherwise returns an empty array.
+
+
 ### Helper functions
 
 #### `authorized_for_serial($serial_number)`

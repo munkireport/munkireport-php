@@ -94,37 +94,53 @@ class unit extends Controller
 	 **/
 	function set_filter()
 	{
-		// Initiate session
-		$this->authorized();
-
 		$out = array();
 
-		if( ! isset($_POST['groupid']) OR ! isset($_POST['value']))
-		{
-			$out['error'] = 'No groupid or value provided';
-		}
-		else
-		{
-			if( ! isset($_SESSION['filter']))
-			{
-				$_SESSION['filter'] = array();
-			}
-			
-			// Find groupid in filter
-			$key = array_search(intval($_POST['groupid']), $_SESSION['filter']);
+		$filter = $_POST['filter'];
+		$action = $_POST['action'];
+		$value = $_POST['value'];
 
+		switch ($filter) {
+			case 'machine_group':
+
+				// Convert to int
+				$value = intval($_POST['value']);
+				break;
+			
+			default:
+				$out['error'] = 'Unknown filter: '.$_POST['filter'];
+				break;
+		}
+
+
+		if( ! isset($out['error']))
+		{
+			if( ! isset($_SESSION['filter'][$filter]))
+			{
+				$_SESSION['filter'][$filter] = array();
+			}
+
+			// Find value in filter
+			$key = array_search($value, $_SESSION['filter'][$filter]);
+
+			// If key in filter: remove
 			if( $key !== FALSE)
 			{
-				array_splice($_SESSION['filter'], $key, 1);
+				array_splice($_SESSION['filter'][$filter], $key, 1);
 			}
 
-			if($_POST['value'] == 'false')
+			// If action is add: add to filter
+			if($action == 'add')
 			{
-				$_SESSION['filter'][] = intval($_POST['groupid']);
+				$_SESSION['filter'][$filter][] = $value;
 
-			}			
+			}
+
+			// Return current filter array
+			$out[$filter] = $_SESSION['filter'][$filter];
+
 		}
-		$out = $_SESSION;
+		
 		$obj = new View();
         $obj->view('json', array('msg' => $out));
 	}
