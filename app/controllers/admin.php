@@ -63,6 +63,12 @@ class admin extends Controller
 		{
 			$business_unit = new Business_unit;
 
+			// Translate groups to single entries
+			$translate = array(
+				'machine_groups' => 'machine_group',
+				'users' => 'user',
+				'managers' => 'manager');
+
 			$unitid = $_POST['unitid'];
 
 			// Check if new unit
@@ -92,9 +98,33 @@ class admin extends Controller
 					$business_unit->save();
 					$out[$property] = $val;
 				}
-				else
+				else //array data (machine_groups, users)
 				{
-					//array data (machine_groups, users)
+
+					// Translate property to db entry
+					if( ! isset($translate[$property]))
+					{
+						echo 'Illegal property: '.$property;
+						continue;
+					}
+					$name =  $translate[$property];
+
+					$business_unit->delete_where('unitid=? AND property=?', array($unitid, $name));
+
+					foreach($val AS $entry)
+					{
+						// Empty array placeholder
+						if($entry == '#'){
+							$out[$property] = array();
+							continue;
+						} 
+						$business_unit->id = '';
+						$business_unit->unitid = $unitid;
+						$business_unit->property = $name;
+						$business_unit->value = $entry;
+						$business_unit->save();
+						$out[$property][] = is_numeric($entry) ? 0 + $entry : $entry;
+					}
 				}
 			}
 			

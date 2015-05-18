@@ -10,6 +10,9 @@
 			"name": "Business Unit Name",
 			"address": "Adress"
 		},
+		"edit_mg": {
+			"title": "Edit Machine Groups"
+		},
 		"new_bu": {
 			"title": "New Business Unit"
 		},

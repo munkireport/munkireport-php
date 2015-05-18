@@ -82,9 +82,7 @@
 								.addClass('form-control')
 								.attr('id', 'modalInputAddress')
 								.attr('name', 'address')
-								.val(fields.address)))
-
-					);
+								.val(fields.address))));
 				
 				// Set title
 				if( fields.unitid == 'new')
@@ -104,24 +102,80 @@
 
 				$('#myModal').modal('show');
 			},
+			editGroups = function(){
+
+				// Get unit data
+				var data = $(this).closest('.unit').data();
+
+  				var groupList = $('<div>').addClass('form-group');
+
+				$.each(machineGroups, function(index, obj){
+					groupList
+						.append($('<div>')
+							.addClass('checkbox')
+							.append($('<label>')
+								.append($('<input>')
+									.attr('type', 'checkbox')
+									.attr('name', 'machine_group')
+									.attr('data-id', obj.groupid)
+									.prop('checked', function(){return data.machine_groups.indexOf(obj.groupid) != -1}))
+								.append(obj.name || 'No name')))
+
+				});
+
+				$('#myModal .modal-body')
+					.empty()
+					.append($('<form>')
+						.submit(save)
+						.append(groupList));
+
+				$('#myModal .modal-title').text(i18n.t("admin.edit_mg.title"));
+
+				$('#myModal button.ok')
+					.data(data)
+					.text(i18n.t("dialog.save"))
+					.off()
+					.click(save);
+
+				$('#myModal').modal('show');
+			},
 			save = function(e){
 				// In case we get called by submit
 				e.preventDefault();
 
-				var data = $('#myModal button.ok').data();
+				var data = $('#myModal button.ok').data(),
+					mgroups_found = false,
+					mgroups = ['#'];
 
 				// Collect values from inputs
 				$('#myModal input').each(function(){
 					if($(this).attr('name'))
 					{
-						data[$(this).attr('name')] = $(this).val();
+						if($(this).attr('name') == 'machine_group'){
+
+							// Flag found mgroups
+							mgroups_found = true;
+
+							if($(this).prop('checked')){
+								mgroups.push($(this).data('id'))
+							}
+						}
+						else
+						{
+							data[$(this).attr('name')] = $(this).val();
+						}
 					}
 				});
+
+				// If machine_group entries found, update machine_groups
+				if(mgroups_found){
+					data.machine_groups = mgroups;
+				}
 
 				// Store object in database
 				var jqxhr = $.post( baseUrl + "admin/save_business_unit", data)
 				.done(function(data){
-					console.log(data.unitid)
+
 					// Dismiss modal
 					$('#myModal').modal('hide');
 
@@ -195,15 +249,8 @@
 							}
 						})
 						machine_groups.append($('<li>')
-							.text(groupname + ' ')
-							.append($('<button>')
-								.addClass('btn btn-default btn-xs')
-								.text('delete')))
+							.text(groupname + ' '))
 					});
-				}
-				else
-				{
-					machine_groups = $('<i>');
 				}
 
 				if(data.users)
@@ -213,10 +260,7 @@
 						users.append($('<li>')
 							.text(val))
 					});
-					users = $('<div>')
-						.append($('<h4>')
-							.text('Users'))
-						.append(users);
+					
 				}
 				if(data.managers)
 				{
@@ -225,11 +269,13 @@
 						managers.append($('<li>')
 							.text(val))
 					});
-					managers = $('<div>')
-						.append($('<h4>')
-							.text('Managers'))
-						.append(managers);
 				}
+
+				var editButton = $('<button>')
+										.addClass('btn btn-default btn-xs pull-right')
+										.attr('title', 'edit')
+										.append($('<i>')
+											.addClass('fa fa-edit'));
 
 				$(this)
 					.empty()
@@ -240,24 +286,27 @@
 							.append($('<h3>')
 								.addClass('name panel-title')
 								.text(data.name)
-								.append($('<a>')
-									.addClass('btn btn-xs btn-default pull-right')
-									.click(edit)
-									.attr('title', 'edit')
-									.append($('<i>')
-										.addClass('fa fa-edit')))))
+								.append(editButton.clone()
+										.click(edit))))
 						.append($('<div>')
 							.addClass('panel-body')
 							.text(data.address)
 						.append($('<div>')
 							.append($('<h4>')
 								.text('Machine Groups ')
-									.append($('<button>')
-										.addClass('btn btn-default btn-xs')
-										.text('+')))
+									.append(editButton.clone()
+										.click(editGroups)))
 								.append(machine_groups))
-						.append(managers)
-						.append(users))
+						.append($('<div>')
+							.append($('<h4>')
+								.text('Managers ')
+									.append(editButton.clone()))
+								.append(managers))
+						.append($('<div>')
+							.append($('<h4>')
+								.text('Users ')
+									.append(editButton.clone()))
+								.append(users)))
 						.append($('<div>')
 							.addClass('panel-footer')								
 							.append($('<a>')
@@ -297,8 +346,9 @@
 
 		// Add + button
 		$('#bu_title')
+			.append(' ')
 			.append($('<a>')
-				.addClass("btn btn-default")
+				.addClass("btn btn-default btn-xs")
 				.text('+')
 				.click(edit))
 		

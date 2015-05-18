@@ -44,6 +44,12 @@ class Business_unit extends Model {
         $where = $unitid ? 'unitid=?' : '';
         foreach($this->select( 'unitid, property, value', $where, $unitid, PDO::FETCH_OBJ ) as $obj)
         {
+            // Initialize
+            if ( ! isset($out[$obj->unitid]))
+            {
+                $out[$obj->unitid] = array('users' => array(), 'managers' => array(), 'machine_groups' => array());
+            }
+
             switch($obj->property)
             {
                 case 'user':
