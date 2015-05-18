@@ -139,6 +139,86 @@
 
 				$('#myModal').modal('show');
 			},
+			editUsers = function(){
+
+				// users or managers
+				var who = $(this).data('type');
+
+				// Clone unit data
+				var data = $.extend(true, {}, $(this).closest('.unit').data());
+
+				var groupList = $('<ul>').addClass('user-list');
+
+				var renderUserList = function(){
+					groupList
+						.empty()
+
+					$.each(data[who], function(index, name){
+						groupList
+							.append($('<li>')
+								.text(name)
+								.append(' ')
+								.append($('<button>')
+									.addClass('btn btn-default btn-xs')
+									.click(function(){removeUser(name)})
+									.append($('<i>')
+										.addClass('fa fa-times'))))
+
+					});
+
+				},
+				newUser = function(e){
+					e.preventDefault()
+					if($('input.new-user').val().trim())
+					{
+						addUser($('input.new-user').val())
+						$('input.new-user').val('');
+					}
+				},
+				addUser = function(name){
+					data[who].push(name.trim());
+					renderUserList();
+				},
+				removeUser = function(name){
+					var index = data[who].indexOf(name);
+					if (index > -1) {
+					    data[who].splice(index, 1);
+					}
+					renderUserList();
+				}
+
+				$('#myModal .modal-body')
+					.empty()
+					.append($('<form>')
+						.submit(newUser)
+						.append($('<input>')
+							.attr('type', 'submit')
+							.addClass('invisible'))				
+						.append(groupList)
+						.append($('<div>')
+						.addClass('input-group')
+						.append($('<input>')
+							.addClass('form-control new-user')
+							.attr('placeholder', i18n.t("admin.edit_user.add_user")))
+							.append($('<span>')
+								.addClass('input-group-btn')
+								.append($('<button>')
+									.addClass('btn btn-default')
+									.click(newUser)
+								.text('+')))));
+
+				renderUserList()
+
+				$('#myModal .modal-title').text(i18n.t("admin.edit_mg.title"));
+
+				$('#myModal button.ok')
+					.data(data)
+					.text(i18n.t("dialog.save"))
+					.off()
+					.click(save);
+
+				$('#myModal').modal('show');
+			},
 			save = function(e){
 				// In case we get called by submit
 				e.preventDefault();
@@ -300,12 +380,16 @@
 						.append($('<div>')
 							.append($('<h4>')
 								.text('Managers ')
-									.append(editButton.clone()))
+									.append(editButton.clone()
+										.attr('data-type', 'managers')
+										.click(editUsers)))
 								.append(managers))
 						.append($('<div>')
 							.append($('<h4>')
 								.text('Users ')
-									.append(editButton.clone()))
+									.append(editButton.clone()
+										.attr('data-type', 'users')
+										.click(editUsers)))
 								.append(users)))
 						.append($('<div>')
 							.addClass('panel-footer')								

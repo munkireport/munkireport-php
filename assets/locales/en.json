@@ -13,6 +13,10 @@
 		"edit_mg": {
 			"title": "Edit Machine Groups"
 		},
+		"edit_user": {
+			"title": "Edit Users",
+			"add_user": "Add user"
+		},
 		"new_bu": {
 			"title": "New Business Unit"
 		},
