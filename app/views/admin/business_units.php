@@ -42,66 +42,69 @@
 
 		var edit = function(){
 
-				fields = {name:'', 'address':''};
+			var fields = {name:'', 'address':''},
+				dataTemplate = {unitid:'new', users:['#'], managers:['#']};
 
-				// Get unit data
-				var data = $(this).closest('.unit').data() || {unitid:'new'};
+			// Clone unit data
+			var data = $.extend(true, {}, $(this).closest('.unit').data() || dataTemplate);
 
-				// Add data to fields
-				$.each(data, function(prop, val){
-					fields[prop] = val;
-				});
+			// Add data to fields
+			$.each(data, function(prop, val){
+				fields[prop] = val;
+			});
 
 
-				$('#myModal .modal-body')
-					.empty()
-					.append($('<form>')
-						.submit(save)
+			$('#myModal .modal-body')
+				.empty()
+				.append($('<form>')
+					.submit(save)
+					.append($('<input>')
+						.attr('type', 'submit')
+						.addClass('invisible'))
+					.append($('<div>')
+						.addClass('form-group')
+						.append($('<label>')
+							.attr('for', 'modalInputName')
+							.text(i18n.t("admin.edit_bu.name")))
+						.append($('<input>')
+							.addClass('form-control')
+							.attr('id', 'modalInputName')
+							.attr('name', 'name')
+							.val(fields.name))
 						.append($('<input>')
 							.attr('type', 'submit')
-							.addClass('invisible'))
-						.append($('<div>')
-							.addClass('form-group')
-							.append($('<label>')
-								.attr('for', 'modalInputName')
-								.text(i18n.t("admin.edit_bu.name")))
-							.append($('<input>')
-								.addClass('form-control')
-								.attr('id', 'modalInputName')
-								.attr('name', 'name')
-								.val(fields.name))
-							.append($('<input>')
-								.attr('type', 'submit')
-								.addClass('hide')))
-						.append($('<div>')
-							.addClass('form-group')
-							.append($('<label>')
-								.attr('for', 'modalInputAddress')
-								.text(i18n.t("admin.edit_bu.address")))
-							.append($('<input>')
-								.addClass('form-control')
-								.attr('id', 'modalInputAddress')
-								.attr('name', 'address')
-								.val(fields.address))));
-				
-				// Set title
-				if( fields.unitid == 'new')
-				{
-					$('#myModal .modal-title').text(i18n.t("admin.new_bu.title"));
-				}
-				else
-				{
-					$('#myModal .modal-title').text(i18n.t("admin.edit_bu.title"));
-				}
+							.addClass('hide')))
+					.append($('<div>')
+						.addClass('form-group')
+						.append($('<label>')
+							.attr('for', 'modalInputAddress')
+							.text(i18n.t("admin.edit_bu.address")))
+						.append($('<input>')
+							.addClass('form-control')
+							.attr('id', 'modalInputAddress')
+							.attr('name', 'address')
+							.val(fields.address))));
+			
+			// Set title
+			if( fields.unitid == 'new')
+			{
+				$('#myModal .modal-title').text(i18n.t("admin.new_bu.title"));
+			}
+			else
+			{
+				$('#myModal .modal-title').text(i18n.t("admin.edit_bu.title"));
+			}
 
-				$('#myModal button.ok')
-					.data(data)
-					.text(i18n.t("dialog.save"))
-					.off()
-					.click(save);
+			$('#myModal button.ok')
+				.data(data)
+				.text(i18n.t("dialog.save"))
+				.off()
+				.click(save);
 
-				$('#myModal').modal('show');
-			},
+			console.log($('#myModal button.ok').data())
+
+			$('#myModal').modal('show');
+		},
 			editGroups = function(){
 
 				// Get unit data
@@ -206,15 +209,16 @@
 									.addClass('btn btn-default')
 									.click(newUser)
 								.text('+')))));
-
+				console.log('ok')
 				renderUserList()
+				console.log('ok?')
 
 				$('#myModal .modal-title').text(i18n.t("admin.edit_mg.title"));
 
 				$('#myModal button.ok')
 					.data(data)
 					.text(i18n.t("dialog.save"))
-					.off()
+					.off() // Delete all event handlers
 					.click(save);
 
 				$('#myModal').modal('show');
@@ -264,7 +268,7 @@
 					{
 						$('#bu_units')
 							.append($('<div>')
-								.addClass('col-lg-4 col-md-6 unit unitid-' + data.unitid));
+								.addClass('col-lg-12 unit unitid-' + data.unitid));
 					}
 
 					// Update unit
@@ -369,34 +373,39 @@
 								.append(editButton.clone()
 										.click(edit))))
 						.append($('<div>')
-							.addClass('panel-body')
-							.text(data.address)
-						.append($('<div>')
-							.append($('<h4>')
-								.text('Machine Groups ')
-									.append(editButton.clone()
-										.click(editGroups)))
-								.append(machine_groups))
-						.append($('<div>')
-							.append($('<h4>')
-								.text('Managers ')
-									.append(editButton.clone()
-										.attr('data-type', 'managers')
-										.click(editUsers)))
-								.append(managers))
-						.append($('<div>')
-							.append($('<h4>')
-								.text('Users ')
-									.append(editButton.clone()
-										.attr('data-type', 'users')
-										.click(editUsers)))
-								.append(users)))
-						.append($('<div>')
-							.addClass('panel-footer')								
-							.append($('<a>')
-								.addClass('btn btn-xs btn-default')
-								.click(remove_dialog)
-								.text('delete'))))
+							.addClass('panel-body row')
+							.append($('<div>')
+								.addClass('col-lg-12')
+								.text(data.address))
+							.append($('<div>')
+								.addClass('col-md-4')
+								.append($('<h4>')
+									.text('Machine Groups ')
+										.append(editButton.clone()
+											.click(editGroups)))
+									.append(machine_groups))
+							.append($('<div>')
+								.addClass('col-md-4')
+								.append($('<h4>')
+									.text('Managers ')
+										.append(editButton.clone()
+											.attr('data-type', 'managers')
+											.click(editUsers)))
+									.append(managers))
+							.append($('<div>')
+								.addClass('col-md-4')
+								.append($('<h4>')
+									.text('Users ')
+										.append(editButton.clone()
+											.attr('data-type', 'users')
+											.click(editUsers)))
+									.append(users)))
+							.append($('<div>')
+								.addClass('panel-footer')								
+								.append($('<a>')
+									.addClass('btn btn-xs btn-default')
+									.click(remove_dialog)
+									.text('delete'))))
 			}
 
 
@@ -419,7 +428,7 @@
 				$('#bu_units')
 					.append($('<div>')
 						.data(value)
-						.addClass('col-lg-4 col-md-6 unit unitid-' + value.unitid)
+						.addClass('col-lg-12 unit unitid-' + value.unitid)
 						.each(render)
 					);
 			});
@@ -433,8 +442,9 @@
 			.append(' ')
 			.append($('<a>')
 				.addClass("btn btn-default btn-xs")
-				.text('+')
-				.click(edit))
+				.click(edit)
+				.append($('<i>')
+					.addClass('fa fa-plus')))
 		
 	} );
 </script>
