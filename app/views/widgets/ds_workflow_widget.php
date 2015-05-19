@@ -26,7 +26,7 @@ $(document).on('appReady', function(e, lang) {
 	myOptions.legend = {show: false}
 	myOptions.callBack = resizeBox;
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
-		label = integer_to_version(obj.data[v].label)
+		label = obj.data[v].label
 		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/dsw'); ?>#' + label + '">' + label + '</a>';
 	}
 
