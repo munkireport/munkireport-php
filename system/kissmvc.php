@@ -57,18 +57,20 @@ class Controller extends KISS_Controller
 			session_start();
 		}
 
-		$role = isset($_SESSION['user']) ? $_SESSION['user'] : '';
-
 		// Check if we have a valid user
-		if( ! $role)
+		if( ! isset($_SESSION['user']))
 		{
 			return FALSE;
 		}
 
+		// Add to array
+		$me = array($_SESSION['user']);
+
 		// Check if this is a BU member
 		if(isset($_SESSION['business_unit']))
 		{
-			$role = $_SESSION['role']; // admin, manager, user
+			// Add role to array
+			$me[] = $_SESSION['role']; // admin, manager, user
 		}
 
 		// Check for a specific authorization item
@@ -84,7 +86,8 @@ class Controller extends KISS_Controller
 						return TRUE;
 					}
 
-					if( in_array($role, $members))
+					// Check if user or role is present in members
+					if( array_intersect($me, $members))
 					{
 						return TRUE;
 					}

@@ -214,30 +214,44 @@ class auth extends Controller
 	 * Set session properties
 	 *
 	 **/
-	function set_session_props()
+	function set_session_props($show = false)
 	{
 		// Initialize session
-		$this->authorized();
+		$is_admin = $this->authorized('global');
 
 		// Lookup user in business units
 		$bu = new Business_unit;
+
+		// Default role: no privs
+		$_SESSION['role'] = 'guest';
 
 		if($bu->retrieve_one("property IN ('admin', 'manager', 'user') AND value=?", $_SESSION['user']))
 		{
 			$_SESSION['role'] = $bu->property; // admin, manager, user
 			$_SESSION['business_unit'] = $bu->unitid;
+		}
+		elseif($_SESSION['auth'] == 'config' && $is_admin)
+		{
+			$_SESSION['role'] = 'admin';
+			$_SESSION['business_unit'] = 0;
+		}
 
-			// Set machine_groups
-			if($_SESSION['role'] == 'admin')
-			{
-				$mg = new Machine_group;
-				$_SESSION['machine_groups'] = $mg->get_group_ids();
-			}
-			else
-			{
-				$_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
-			}
-		}	
+		// Set machine_groups
+		if($_SESSION['role'] == 'admin')
+		{
+			$mg = new Machine_group;
+			$_SESSION['machine_groups'] = $mg->get_group_ids();
+		}
+		else
+		{
+			$_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
+		}
+
+		if($show)
+		{
+			print_r($_SESSION);
+			echo 'Is admin: '. ($is_admin ? 'yes' : 'no');
+		}
 	}
 
 	function logout()
