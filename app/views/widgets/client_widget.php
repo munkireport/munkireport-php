@@ -1,4 +1,5 @@
 <?php
+new Machine_model;
 $queryobj = new Reportdata_model();
 $now = time();
 $hour_ago = $now - 3600;
