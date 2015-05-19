@@ -11,12 +11,6 @@ class Dsw_controller extends Module_controller
 	/*** Protect methods with auth! ****/
 	function __construct()
 	{
-		if( ! $this->authorized())
-		{
-      // Error message if haven't authenticated
-			die('Authenticate first.');
-		}
-
 		// Store module path
 		$this->module_path = dirname(__FILE__) .'/';
 		$this->view_path = $this->module_path . 'views/';

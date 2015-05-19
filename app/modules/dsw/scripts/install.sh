@@ -1,9 +1,18 @@
 #!/bin/bash
 
-DSPREF='/Library/Preferences/DeployStudioInfo'
+DSPREF="/Library/Preferences/DeployStudioInfo"
+CTL="${BASEURL}index.php?/module/dsw/"
 
-# Make sure pref file exists
-defaults read "$DSPREF" > /dev/null 2>&1 || defaults write "$DSPREF" ds_workflow "No DeployStudio file added."
+${CURL} "${CTL}get_script/dswplist.sh" -o "${MUNKIPATH}preflight.d/dswplist.sh"
 
-# Add preferences to munkireport
-defaults write "${PREFPATH}" ReportItems -dict-add dsw_model "${DSPREF}.plist"
+if [ $? = 0 ]; then
+    chmod a+x "${MUNKIPATH}preflight.d/dswplist.sh"
+
+    # Add preferences to munkireport
+    defaults write "${PREFPATH}" ReportItems -dict-add dsw_model "${DSPREF}.plist"
+else
+    echo "Failed to download all required components!"
+    rm -f "${MUNKIPATH}preflight.d/dswplist.sh"
+
+    ERR=1
+fi
