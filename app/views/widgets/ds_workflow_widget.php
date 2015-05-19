@@ -10,7 +10,7 @@
 
 		<div class="panel-body">
 			
-			<div id="os-plot"></div>
+			<div id="ds-plot"></div>
 
 		</div>
 
@@ -33,12 +33,12 @@ $(document).on('appReady', function(e, lang) {
 	// Resize the container after we know how many items we have
 	function resizeBox(obj)
 	{
-		$('#os-plot').height(obj.length * 25 + 50);
+		$('#ds-plot').height(obj.length * 25 + 50);
 	}
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?php echo url('module/machine/os'); ?>", '#os-plot', myOptions, parms);
+	drawGraph("<?php echo url('module/dsw/workflow'); ?>", '#ds-plot', myOptions, parms);
 
 });
 </script>
