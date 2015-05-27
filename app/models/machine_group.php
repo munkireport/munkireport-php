@@ -30,6 +30,19 @@ class Machine_group extends Model {
     }
 
     /**
+     * Get max groupid
+     *
+     * @return integer max groupid
+     * @author AvB
+     **/
+    function get_max_groupid()
+    {
+        $sql = 'SELECT MAX(groupid) AS max FROM '.$this->enquote( $this->tablename );
+        $result = $this->query($sql);
+        return intval($result[0]->max);
+    }
+
+    /**
      * Select unique group ids
      *
      * @return void
