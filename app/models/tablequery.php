@@ -28,11 +28,8 @@ class Tablequery {
         // Get tables from column names
         $tables = array();
 
-        // Check if we add the machine table
-        if($cfg['mrAddMachineTbl'])
-        {
-            $tables['machine'] = 1;
-        }
+        // Add the machine table
+        $tables['machine'] = 1;
 
         $formatted_columns = array();
         foreach($cfg['cols'] AS $pos => $name)

@@ -19,8 +19,7 @@ class datatables extends Controller
 			'iColumns' => 0, // Number of columns
 			'iSortingCols' => 0, // Amount of sort columns
 			'sSearch' => '', // Search query
-			'mrColNotEmpty' => '', // Munkireport non empty column name
-			'mrAddMachineTbl' => 1 // Add machine table
+			'mrColNotEmpty' => '' // Munkireport non empty column name
 		);
 
 		$sortcols = $searchcols = array();
