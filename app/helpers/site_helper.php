@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1157';
+$GLOBALS['version'] = '2.4.3.1159';
 
 // Return version without commit count
 function get_version()
@@ -221,19 +221,25 @@ function machine_computer_group($serial_number = '')
 
 /**
  * Check if machine is member of machine_groups of current user
- * if no machine_groups defined, return TRUE
+ * if admin, return TRUE
+ * otherwise return FALSE
  *
  * @return void
  * @author 
  **/
 function id_in_machine_group($id)
 {
+	if($_SESSION['role'] == 'admin')
+	{
+		return TRUE;
+	}
+
 	if(isset($_SESSION['machine_groups']))
 	{
 		return in_array($id, $_SESSION['machine_groups']);
 	}
 
-	return TRUE;
+	return FALSE;
 }
 
 /**
@@ -246,14 +252,19 @@ function id_in_machine_group($id)
  **/
 function get_machine_group_filter($prefix = 'WHERE', $machine_table_name = 'machine')
 {
-	if($groups = get_filtered_groups())
+	// If admin and no filter return no filter
+	if($_SESSION['role'] == 'admin')
 	{
-		return sprintf('%s %s.computer_group IN (%s)', $prefix, $machine_table_name, implode(', ', $groups));
+		if( ! isset($_SESSION['filter']['machine_group']))
+		{
+			return '';
+		}
 	}
-	else
-	{
-		return '';
-	}
+
+	// Get filtered groups
+	$groups = get_filtered_groups();
+		
+	return sprintf('%s %s.computer_group IN (%s)', $prefix, $machine_table_name, implode(', ', $groups));
 }
 
 /**
@@ -277,6 +288,13 @@ function get_filtered_groups()
 			$out = $_SESSION['machine_groups'];
 		}
 	}
+
+	// If out is empty, signal no groups
+	if( ! $out)
+	{
+		$out[] = -1;
+	}
+
 	return $out;
 }
 
