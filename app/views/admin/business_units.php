@@ -43,7 +43,7 @@
 		var edit = function(){
 
 			var fields = {name:'', 'address':''},
-				dataTemplate = {unitid:'new', users:['#'], managers:['#']};
+				dataTemplate = {unitid:'new', users:['#'], managers:['#'], machine_groups:['#']};
 
 			// Clone unit data
 			var data = $.extend(true, {}, $(this).closest('.unit').data() || dataTemplate);
@@ -105,32 +105,109 @@
 
 			$('#myModal').modal('show');
 		},
-			editGroups = function(){
+		getGroupName = function(groupid){
+
+			var returnVal = 'Not found'
+
+			// Find groupid in machineGroups and return name
+			$.each(machineGroups, function(index, group){
+				if( +group.groupid == +groupid){
+					returnVal = group.name;
+					return;
+				}
+			});
+
+			return returnVal;
+		},
+			editItems = function(){
 
 				// Get unit data
 				var data = $(this).closest('.unit').data();
 
-  				var groupList = $('<div>').addClass('form-group');
+				// Make sure data.machine_groups exist
+				data.machine_groups = data.machine_groups || [];
 
-				$.each(machineGroups, function(index, obj){
-					groupList
-						.append($('<div>')
-							.addClass('checkbox')
-							.append($('<label>')
-								.append($('<input>')
-									.attr('type', 'checkbox')
-									.attr('name', 'machine_group')
-									.attr('data-id', obj.groupid)
-									.prop('checked', function(){return data.machine_groups.indexOf(obj.groupid) != -1}))
-								.append(obj.name || 'No name')))
+				// Temp machinegroups array
+				var items = [];
 
-				});
+				// Populate items with current groups
+				$.each(data.machine_groups, function(index, group){
+					items.push({key: group, name:getGroupName(group)});
+				})
+
+  				var itemList = $('<div>').addClass('form-group'),
+  					addItem = function(event){
+
+  						// Disable default behaviour
+  						event.preventDefault();
+
+  						if($('input.new-item').val().trim())
+						{
+							// add to machinegroups
+							items.push({key:'', name: $('input.new-item').val().trim()})
+
+							// re-render list
+							renderItemList();
+
+							// Reset input field
+							$('input.new-item').val('');
+						}
+  						
+  					},
+  					renderItemList = function(){
+						itemList
+							.empty()
+
+						$.each(items, function(index, item){
+							itemList
+								.append($('<li>')
+									.text(item.name)
+									.append(' ')
+									.append($('<button>')
+										.addClass('btn btn-default btn-xs')
+										.click(function(){removeItem(item)})
+										.append($('<i>')
+											.addClass('fa fa-times'))))
+
+						});
+
+					},
+					removeItem = function(obj){
+						var index = items.indexOf(obj);
+						if (index > -1) {
+						    items.splice(index, 1);
+						}
+						renderItemList();					
+					},
+					saveItems = function(){
+						
+						// Add items to data
+						$('#myModal button.ok').data('iteminfo', items);
+
+						// Call save
+						save();
+					};					
+			
 
 				$('#myModal .modal-body')
 					.empty()
 					.append($('<form>')
-						.submit(save)
-						.append(groupList));
+						.submit(addItem)
+						.append($('<input>')
+							.attr('type', 'submit')
+							.addClass('invisible'))
+						.append(itemList)
+						.append($('<div>')
+						.addClass('input-group')
+						.append($('<input>')
+							.addClass('form-control new-item')
+							.attr('placeholder', i18n.t("admin.mg.add_group")))
+							.append($('<span>')
+								.addClass('input-group-btn')
+								.append($('<button>')
+									.addClass('btn btn-default')
+									.click(addItem)
+								.text('+')))));
 
 				$('#myModal .modal-title').text(i18n.t("admin.edit_mg.title"));
 
@@ -138,7 +215,9 @@
 					.data(data)
 					.text(i18n.t("dialog.save"))
 					.off()
-					.click(save);
+					.click(saveItems);
+
+				renderItemList();
 
 				$('#myModal').modal('show');
 			},
@@ -170,17 +249,19 @@
 					});
 
 				},
-				newUser = function(e){
+				addUser = function(e){
 					e.preventDefault()
 					if($('input.new-user').val().trim())
 					{
-						addUser($('input.new-user').val())
+						// add to data
+						data[who].push($('input.new-user').val().trim());
+
+						// re-render list
+						renderUserList();
+
+						// Reset input field
 						$('input.new-user').val('');
 					}
-				},
-				addUser = function(name){
-					data[who].push(name.trim());
-					renderUserList();
 				},
 				removeUser = function(name){
 					var index = data[who].indexOf(name);
@@ -193,7 +274,7 @@
 				$('#myModal .modal-body')
 					.empty()
 					.append($('<form>')
-						.submit(newUser)
+						.submit(addUser)
 						.append($('<input>')
 							.attr('type', 'submit')
 							.addClass('invisible'))				
@@ -207,7 +288,7 @@
 								.addClass('input-group-btn')
 								.append($('<button>')
 									.addClass('btn btn-default')
-									.click(newUser)
+									.click(addUser)
 								.text('+')))));
 				console.log('ok')
 				renderUserList()
@@ -225,56 +306,44 @@
 			},
 			save = function(e){
 				// In case we get called by submit
-				e.preventDefault();
+				e && e.preventDefault();
 
-				var data = $('#myModal button.ok').data(),
-					mgroups_found = false,
-					mgroups = ['#'];
+				var data = $('#myModal button.ok').data();
 
 				// Collect values from inputs
 				$('#myModal input').each(function(){
 					if($(this).attr('name'))
 					{
-						if($(this).attr('name') == 'machine_group'){
-
-							// Flag found mgroups
-							mgroups_found = true;
-
-							if($(this).prop('checked')){
-								mgroups.push($(this).data('id'))
-							}
-						}
-						else
-						{
-							data[$(this).attr('name')] = $(this).val();
-						}
+						data[$(this).attr('name')] = $(this).val();
 					}
 				});
-
-				// If machine_group entries found, update machine_groups
-				if(mgroups_found){
-					data.machine_groups = mgroups;
-				}
 
 				// Store object in database
 				var jqxhr = $.post( baseUrl + "admin/save_business_unit", data)
 				.done(function(data){
 
-					// Dismiss modal
-					$('#myModal').modal('hide');
+					// Reload Machine_groups
+					$.getJSON(baseUrl + 'admin/get_mg_data', function(mg_data){
 
-					// If unit does not exist, add it
-					if( ! $('.unitid-' + data.unitid).length)
-					{
-						$('#bu_units')
-							.append($('<div>')
-								.addClass('col-lg-12 unit unitid-' + data.unitid));
-					}
+						// Set machine_groups
+						machineGroups = mg_data;
 
-					// Update unit
-					$('.unitid-' + data.unitid)
-						.data(data)
-						.each(render);
+						// Dismiss modal
+						$('#myModal').modal('hide');
+
+						// If unit does not exist, add it
+						if( ! $('.unitid-' + data.unitid).length)
+						{
+							$('#bu_units')
+								.append($('<div>')
+									.addClass('col-lg-12 unit unitid-' + data.unitid));
+						}
+
+						// Update unit
+						$('.unitid-' + data.unitid)
+							.data(data)
+							.each(render);
+					});
 
 				})
 				.fail(function() {
@@ -382,7 +451,7 @@
 								.append($('<h4>')
 									.text('Machine Groups ')
 										.append(editButton.clone()
-											.click(editGroups)))
+											.click(editItems)))
 									.append(machine_groups))
 							.append($('<div>')
 								.addClass('col-md-4')

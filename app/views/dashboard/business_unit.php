@@ -12,13 +12,6 @@
 					<div class="machine-groups">
 						<h4 data-i18n="business_unit.machine_groups"></h4>
 					</div>
-					Move users and managers to another view
-					<div class="users">
-						<h4 data-i18n="business_unit.users"></h4>
-					</div>
-					<div class="managers">
-						<h4 data-i18n="business_unit.managers"></h4>
-					</div>
 				</form>
 			</div>
 		</div>

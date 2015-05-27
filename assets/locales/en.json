@@ -17,6 +17,10 @@
 			"title": "Edit Users",
 			"add_user": "Add user"
 		},
+		"mg": {
+			"title": "Machine Groups",
+			"add_group": "New Group"
+		},
 		"new_bu": {
 			"title": "New Business Unit"
 		},

@@ -23,7 +23,6 @@ class admin extends Controller
 		echo 'Admin';
 	}
 
-	//===============================================================
 
 	/**
 	 * Retrieve business units information
@@ -79,6 +78,41 @@ class admin extends Controller
 
 			$out['unitid'] = $unitid;
 
+			// Check if there are changed items
+			if(isset($_POST['iteminfo']))
+			{
+				$groups = array();
+
+				// Loop through iteminfo
+				foreach($_POST['iteminfo'] AS $entry)
+				{
+					if( ! $entry['key'])
+					{
+						$mg = new Machine_group;
+						$newgroup = $mg->get_max_groupid() + 1;
+						$mg->merge(array(
+							'id' => '',
+							'groupid' => $newgroup,
+							'property' => 'name',
+							'value' => $entry['name']));
+						$mg->save();
+						$groups[] = $newgroup;
+					}
+					else
+					{
+						// Maybe update name?
+
+						// Add key to list
+						$groups[] = intval($entry['key']);
+					}
+				}
+
+				// Set new machine_groups to list
+				$_POST['machine_groups'] = $groups;
+				unset($_POST['iteminfo']);
+				
+			}
+
 			foreach($_POST as $property => $val)
 			{
 				
@@ -100,13 +134,14 @@ class admin extends Controller
 				}
 				else //array data (machine_groups, users)
 				{
-
-					// Translate property to db entry
+					// Check if this is a valid property
 					if( ! isset($translate[$property]))
 					{
-						echo 'Illegal property: '.$property;
+						$out['error'][] = 'Illegal property: '.$property;
 						continue;
 					}
+
+					// Translate property to db entry
 					$name =  $translate[$property];
 
 					$business_unit->delete_where('unitid=? AND property=?', array($unitid, $name));
