@@ -43,7 +43,7 @@
 		var edit = function(){
 
 			var fields = {name:'', 'address':''},
-				dataTemplate = {unitid:'new', users:['#'], managers:['#'], machine_groups:['#']};
+				dataTemplate = {unitid:'new', users:['#'], managers:['#'], machine_groups:['#'], iteminfo:[]};
 
 			// Clone unit data
 			var data = $.extend(true, {}, $(this).closest('.unit').data() || dataTemplate);
@@ -105,89 +105,177 @@
 
 			$('#myModal').modal('show');
 		},
-		getGroupName = function(groupid){
+		getGroup = function(groupid, what){
 
-			var returnVal = 'Not found'
+			var groupObj = {groupid: groupid, name: 'Not found'};
 
 			// Find groupid in machineGroups and return name
 			$.each(machineGroups, function(index, group){
 				if( +group.groupid == +groupid){
-					returnVal = group.name;
+					groupObj = group;
 					return;
 				}
 			});
 
-			return returnVal;
+			if(what){
+
+				return groupObj[what];
+			}
+
+			return groupObj;
 		},
-			editItems = function(){
+		guid = function(){
 
-				// Get unit data
-				var data = $(this).closest('.unit').data();
+			// Generate guid
+			var s4 = function() {
+			    return Math.floor((1 + Math.random()) * 0x10000)
+							.toString(16)
+							.substring(1)
+							.toUpperCase();
+			}
 
-				// Make sure data.machine_groups exist
-				data.machine_groups = data.machine_groups || [];
+		  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+		},
+		editMachinegroup = function(e){
 
-				// Temp machinegroups array
-				var items = [];
+			e && e.preventDefault();
 
-				// Populate items with current groups
-				$.each(data.machine_groups, function(index, group){
-					items.push({key: group, name:getGroupName(group)});
+			var data = $(this).data(),
+			saveMachineGroup = function(e){
+
+				e && e.preventDefault();
+
+				// Get data from form
+				var formData = $('#myModal form').serializeArray();
+
+				// Save machine group data
+				var jqxhr = $.post( baseUrl + "admin/save_machine_group", formData);
+
+				jqxhr.done(function(data){
+
+					// Update name in BU view
+					$('a.machine-group-' + data.groupid)
+						.data(data)
+						.text(data.name);
+
+					// Dismiss modal
+					$('#myModal').modal('hide');
 				})
+			}
 
-  				var itemList = $('<div>').addClass('form-group'),
-  					addItem = function(event){
+			data.key = data.key || guid();
 
-  						// Disable default behaviour
-  						event.preventDefault();
+			$('#myModal .modal-body')
+				.empty()
+				.append($('<form>')
+					.submit(saveMachineGroup)
+					.append($('<input>')
+						.attr('type', 'submit')
+						.addClass('invisible'))
+					.append($('<input>')
+						.attr('type', 'hidden')
+						.attr('name', 'groupid')
+						.val(data.groupid))
+					.append($('<div>')
+						.addClass('form-group')
+						.append($('<label>')
+							.text('Name'))
+						.append($('<input>')
+							.attr('name', 'name')
+							.val(data.name)
+							.addClass('form-control')))
+					.append($('<div>')
+						.addClass('form-group')
+						.append($('<label>')
+							.text('Machine Key'))
+						.append($('<input>')
+							.attr('name', 'key')
+							.val(data.key)
+							.addClass('form-control'))));
 
-  						if($('input.new-item').val().trim())
-						{
-							// add to machinegroups
-							items.push({key:'', name: $('input.new-item').val().trim()})
 
-							// re-render list
-							renderItemList();
+			$('#myModal .modal-title').text(i18n.t("admin.edit_mg.title"));
 
-							// Reset input field
-							$('input.new-item').val('');
-						}
-  						
-  					},
-  					renderItemList = function(){
-						itemList
-							.empty()
+			$('#myModal button.ok')
+				.empty()
+				.data(data)
+				.text(i18n.t("dialog.save"))
+				.off()
+				.click(saveMachineGroup);
 
-						$.each(items, function(index, item){
-							itemList
-								.append($('<li>')
-									.text(item.name)
-									.append(' ')
-									.append($('<button>')
-										.addClass('btn btn-default btn-xs')
-										.click(function(){removeItem(item)})
-										.append($('<i>')
-											.addClass('fa fa-times'))))
+			//renderItemList();
 
-						});
+			$('#myModal').modal('show');
+		},
+		editItems = function(){
 
-					},
-					removeItem = function(obj){
-						var index = items.indexOf(obj);
-						if (index > -1) {
-						    items.splice(index, 1);
-						}
-						renderItemList();					
-					},
-					saveItems = function(){
+			// Get unit data
+			var data = $(this).closest('.unit').data();
+
+			// Make sure data.machine_groups exist
+			data.machine_groups = data.machine_groups || [];
+
+			// Temp machinegroups array
+			var items = [];
+
+			// Populate items with current groups
+			$.each(data.machine_groups, function(index, group){
+				items.push({key: group, name:getGroup(group, 'name')});
+			})
+
+				var itemList = $('<div>').addClass('form-group'),
+					addItem = function(event){
+
+						// Disable default behaviour
+						event.preventDefault();
+
+						if($('input.new-item').val().trim())
+					{
+						// add to machinegroups
+						items.push({key:'', name: $('input.new-item').val().trim()})
+
+						// re-render list
+						renderItemList();
+
+						// Reset input field
+						$('input.new-item').val('');
+					}
 						
-						// Add items to data
-						$('#myModal button.ok').data('iteminfo', items);
+					},
+					renderItemList = function(){
+					itemList
+						.empty()
 
-						// Call save
-						save();
-					};					
-			
+					$.each(items, function(index, item){
+						itemList
+							.append($('<li>')
+								.text(item.name)
+								.append(' ')
+								.append($('<button>')
+									.addClass('btn btn-default btn-xs')
+									.click(function(){removeItem(item)})
+									.append($('<i>')
+										.addClass('fa fa-times'))))
+
+					});
+
+				},
+				removeItem = function(obj){
+					var index = items.indexOf(obj);
+					if (index > -1) {
+					    items.splice(index, 1);
+					}
+					renderItemList();					
+				},
+				saveItems = function(){
+					
+					// Add items to data
+					$('#myModal button.ok').data('iteminfo', items);
+
+					// Call save
+					save();
+				};					
+		
 
 				$('#myModal .modal-body')
 					.empty()
@@ -290,9 +378,8 @@
 									.addClass('btn btn-default')
 									.click(addUser)
 								.text('+')))));
-				console.log('ok')
-				renderUserList()
-				console.log('ok?')
+
+				renderUserList();
 
 				$('#myModal .modal-title').text(i18n.t("admin.edit_mg.title"));
 
@@ -394,15 +481,14 @@
 				{
 					machine_groups = $('<ul>');
 					$.each(data.machine_groups, function(index, val){
-						groupname = 'No name'
-						$.each(machineGroups, function(index, group){
-							if(group.groupid == val)
-							{
-								groupname = group.name || groupname;
-							}
-						})
+						var group = getGroup(val)
 						machine_groups.append($('<li>')
-							.text(groupname + ' '))
+							.append($('<a>')
+								.attr('href', '')
+								.addClass('machine-group-' + group.groupid)
+								.data(group)
+								.click(editMachinegroup)
+								.text(group.name + ' ')))
 					});
 				}
 

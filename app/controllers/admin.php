@@ -45,6 +45,57 @@ class admin extends Controller
 	//===============================================================
 
 	/**
+	 * Save Machine Group
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function save_machine_group()
+	{
+		if(isset($_POST['groupid']))
+		{
+			$machine_group = new Machine_group;
+			$groupid = $_POST['groupid'];
+			$out['groupid'] = $groupid;
+
+			foreach($_POST as $property => $val)
+			{
+				
+				// Skip groupid
+				if($property == 'groupid')
+				{
+					continue;
+				}
+
+				if(is_scalar($val))
+				{
+					$machine_group->id = '';
+					$machine_group->retrieve_one('groupid=? AND property=?', array($groupid, $property));
+					$machine_group->groupid = $groupid;
+					$machine_group->property = $property;
+					$machine_group->value = $val;
+					$machine_group->save();
+					$out[$property] = $val;
+				}
+				else //array data
+				{
+					$out['error'] = 'Unknown input: ' .$property;
+				}
+			}
+		}
+		else
+		{
+			$out['error'] = 'Groupid is missing';
+		}
+
+		$obj = new View();
+        $obj->view('json', array('msg' => $out));
+
+	}
+
+	//===============================================================
+
+	/**
 	 * Save Business Unit
 	 *
 	 * @return void
@@ -100,8 +151,6 @@ class admin extends Controller
 					}
 					else
 					{
-						// Maybe update name?
-
 						// Add key to list
 						$groups[] = intval($entry['key']);
 					}
