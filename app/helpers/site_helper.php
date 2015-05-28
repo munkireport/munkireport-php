@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1162';
+$GLOBALS['version'] = '2.4.3.1164';
 
 // Return version without commit count
 function get_version()
@@ -192,6 +192,12 @@ function passphrase_to_group($passphrase)
  **/
 function authorized_for_serial($serial_number)
 {
+	// Make sure the reporting script is authorized
+	if(isset($GLOBALS['auth']) && $GLOBALS['auth'] == 'report')
+	{
+		return TRUE;
+	}
+	
 	return id_in_machine_group(machine_computer_group($serial_number));
 }
 
@@ -252,19 +258,17 @@ function id_in_machine_group($id)
  **/
 function get_machine_group_filter($prefix = 'WHERE', $machine_table_name = 'machine')
 {
-	// If admin and no filter return no filter
-	if($_SESSION['role'] == 'admin')
-	{
-		if( ! isset($_SESSION['filter']['machine_group']))
-		{
-			return '';
-		}
-	}
 
 	// Get filtered groups
-	$groups = get_filtered_groups();
+	if($groups = get_filtered_groups())
+	{
+		return sprintf('%s %s.computer_group IN (%s)', $prefix, $machine_table_name, implode(', ', $groups));
+	}
+	else // No filter
+	{
+		return '';
+	}
 		
-	return sprintf('%s %s.computer_group IN (%s)', $prefix, $machine_table_name, implode(', ', $groups));
 }
 
 /**
@@ -277,22 +281,43 @@ function get_filtered_groups()
 {
 	$out = array();
 
-	if(isset($_SESSION['machine_groups']))
+	// Get filter
+	if(isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group'])
 	{
-		if(isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group'])
-		{
-			$out = array_diff($_SESSION['machine_groups'], $_SESSION['filter']['machine_group']);
-		}
-		else
-		{
-			$out = $_SESSION['machine_groups'];
-		}
+		$filter = $_SESSION['filter']['machine_group'];
+	}
+	else
+	{
+		$filter = array();
 	}
 
-	// If out is empty, signal no groups
-	if( ! $out)
+	// Admins see all machine_groups
+	if($_SESSION['role'] == 'admin')
 	{
-		$out[] = -1;
+		if($filter)
+		{
+			$out = $filter;
+		}
+	}
+	else
+	{
+		if(isset($_SESSION['machine_groups']))
+		{
+			if($filter)
+			{
+				$out = array_diff($_SESSION['machine_groups'], $filter);
+			}
+			else
+			{
+				$out = $_SESSION['machine_groups'];
+			}
+		}
+
+		// If out is empty, signal no groups
+		if( ! $out)
+		{
+			$out[] = -1;
+		}
 	}
 
 	return $out;

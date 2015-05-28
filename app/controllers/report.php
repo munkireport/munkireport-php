@@ -12,6 +12,9 @@ class report extends Controller
      **/
     function __construct()
 	{
+		// Flag we're on report authorization
+		$GLOBALS['auth'] = 'report';
+
 		if ( isset($_POST['passphrase']))
 		{
 			$this->group = passphrase_to_group($_POST['passphrase']);
@@ -63,6 +66,8 @@ class report extends Controller
 		// Try to register client and lookup hashes in db
 		try
 		{
+			// Todo: make these db queries faster:
+
 			// Register check in reportdata
 			$report = new Reportdata_model($_POST['serial']);
 			$report->register()->save();
