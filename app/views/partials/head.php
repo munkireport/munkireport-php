@@ -95,6 +95,28 @@
                 </ul>
 
               </li>
+              <?php $url = 'admin/show/'; ?>
+              <li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> <span data-i18n="nav.main.admin"></span> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+
+                  <?php foreach(scandir(conf('view_path').'admin') AS $list_url): ?>
+
+                    <?php if( strpos($list_url, 'php')): ?>
+                    <?php $page_url = $url.strtok($list_url, '.'); ?>
+
+                    <li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
+                      <a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+                    </li>
+
+                    <?php endif; ?>
+
+                  <?php endforeach; ?>
+
+                </ul>
+
+              </li>
+
 
           </ul>
           <?php $auth = conf('auth'); // Hide logout button if auth_noauth
