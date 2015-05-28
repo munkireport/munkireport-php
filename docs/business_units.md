@@ -20,6 +20,7 @@ The way Business Units (BU) are implemented is by adding restrictions on databas
 #### `$this->retrieve_record($serial_number)`
 
 Retrieve record for `$serial_number` if in allowed Machine Groups, otherwise returns FALSE.
+If $GLOBALS['auth'] == 'report', this method will return the record;
 
 #### `$this->retrieve_records($serial_number)`
 
@@ -31,6 +32,7 @@ Retrieve multiple records for `$serial_number` if in allowed Machine Groups, oth
 #### `authorized_for_serial($serial_number)`
 
 Returns `TRUE` if the current user should be allowed to access the data for this machine.
+If $GLOBALS['auth'] == 'report', this method will return TRUE as well;
 
 #### `get_machine_group_filter($prefix = 'WHERE', $machine_table_alias = 'machine')`
 
@@ -109,4 +111,4 @@ could return
 	name: "Sales People",
 	passphrase: "some_long_random_string"
 }
-
+```
