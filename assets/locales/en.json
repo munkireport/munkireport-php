@@ -167,6 +167,9 @@
 	},
 	"name": "Name",
 	"nav": {
+		"admin": {
+			"business_units": "Manage Business Units"
+		},
 		"lang": {
 			"de": "Deutsch",
 			"en": "English",
@@ -192,7 +195,8 @@
 		"main": {
 		  "dashboard": "Dashboard",
 		  "reports": "Reports",
-		  "listings": "Listings"
+		  "listings": "Listings",
+		  "admin": "Admin"
 		},
 		"reports": {
 			"clients": "Client report",
