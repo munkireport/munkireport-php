@@ -74,6 +74,7 @@ class Machine_group extends Model {
         $out = array();
         $where = $groupid ? 'groupid=?' : '';
         $groups = get_filtered_groups();
+
         foreach($this->select( 'groupid, property, value', $where, $groupid, PDO::FETCH_OBJ ) as $obj)
         {
             switch($obj->property)
@@ -87,14 +88,16 @@ class Machine_group extends Model {
 
             $out[$obj->groupid]['groupid'] = intval($obj->groupid);
 
-            // Add filter value
-            $out[$obj->groupid]['checked'] = TRUE;
-            if($groups)
-            {
-                $out[$obj->groupid]['checked'] = in_array($obj->groupid, $groups);
-            }
-
         }
+
+        // Add filter value
+        $out[$obj->groupid]['checked'] = TRUE;
+
+        if($groups)
+        {
+            $out[$obj->groupid]['checked'] = ! in_array($obj->groupid, $groups);
+        }
+
 
         if($groupid && $out)
         {

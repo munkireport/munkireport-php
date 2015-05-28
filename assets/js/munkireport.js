@@ -23,11 +23,86 @@ $( document ).ready(function() {
         moment.locale([i18n.lng(), 'en'])
 
         // Activate current lang dropdown
-        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active')
+        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active');
+
+        // Activate filter
+        $('a.filter-popup').click(showFilterModal);
+
         // Trigger appReady
         $(document).trigger('appReady', [i18n.lng()]);
     });
 });
+
+var showFilterModal = function(){
+
+	var updateGroup = function(){
+
+		console.log($(this).data().groupid)
+		var checked = this.checked,
+			settings = {
+				filter: 'machine_group',
+				value: $(this).data().groupid,
+				action: checked ? 'remove' : 'add'
+			}
+
+		$.post(baseUrl + 'unit/set_filter', settings, function(){
+			console.log('done');
+			// Update all
+			$(document).trigger('appReady', [i18n.lng()]);
+		})
+	}
+	// Get all business units and machine_groups
+	var defer = $.when(
+		$.getJSON(baseUrl + 'unit/get_data'),
+		$.getJSON(baseUrl + 'unit/get_machine_groups')
+		);
+
+	// Render when all requests are successful
+	defer.done(function(bu_data, mg_data){
+
+		// Set title
+		var name = bu_data[0].name ||'All Business Units'
+		$('h3.bu-title').text(name);
+
+		// Set texts
+		$('#myModal .modal-body').empty().text('Change filter settings');
+		$('#myModal .modal-title').text(name);
+		$('#myModal button.ok').text(i18n.t("dialog.ok_remove"));
+
+		// Add unitid to ok button
+		$('#myModal button.ok')
+			.data({unitid: ''})
+			.off()
+			.click(function(){});
+
+		// Show modal
+		$('#myModal').modal('show');
+
+
+		// Add machine groups
+		$.each(mg_data[0], function(index, obj){
+			if(obj.groupid){
+				$('#myModal .modal-body')
+					.append($('<div>')
+						.addClass('checkbox')
+						.append($('<label>')
+							.append($('<input>')
+								.data(obj)
+								.prop('checked', function(){
+									return obj.checked;
+								})
+								.change(updateGroup)
+								.attr('type', 'checkbox'))
+							.append(obj.name || 'No Name')))
+			}
+		});
+	});
+}
+
+
+	
+
+
 
 // Integer or integer string OS Version to semantic OS version
 function integer_to_version(osvers)

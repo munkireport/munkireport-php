@@ -117,12 +117,17 @@
 
               </li>
 
+            <li>
+              <a href="#" class="filter-popup"><i class="fa fa-filter"></i></a>
+            </li>
+
+
 
           </ul>
-          <?php $auth = conf('auth'); // Hide logout button if auth_noauth
-            if( ! array_key_exists('auth_noauth', $auth)): ?>
 
           <ul class="nav navbar-nav navbar-right">
+
+
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i></a>
               <ul class="dropdown-menu locale">
@@ -141,15 +146,20 @@
 
                 </ul>
             </li>
+
+            <?php if( ! array_key_exists('auth_noauth', conf('auth'))): // Hide logout button if auth_noauth?>
+
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $_SESSION['user']; ?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo url('auth/logout'); ?>"><i class="fa fa-power-off"></i> <span data-i18n="nav.user.logout">Sign Off</span></a></li>
               </ul>
             </li>
+
+            <?php endif; ?>
+
           </ul>
 
-          <?php endif; ?>
     </nav>
   </div>
 </header>

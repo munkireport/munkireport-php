@@ -88,7 +88,10 @@ class unit extends Controller
 	}
 
 	/**
-	 * Add/remove a filter entry for machine groups
+	 * Add/remove a filter entry
+	 *
+	 * Currently only for machine_groups, but could contain
+	 * other filters (date, model, etc.)
 	 *
 	 * @author 
 	 **/
@@ -129,11 +132,15 @@ class unit extends Controller
 				array_splice($_SESSION['filter'][$filter], $key, 1);
 			}
 
-			// If action is add: add to filter
-			if($action == 'add')
+			switch($action)
 			{
-				$_SESSION['filter'][$filter][] = $value;
+				case 'add': // add to filter
+					$_SESSION['filter'][$filter][] = $value;
+					break;
 
+				case 'clear': // clear filter
+					$_SESSION['filter'][$filter] = array();
+					break;
 			}
 
 			// Return current filter array
