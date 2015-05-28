@@ -60,7 +60,7 @@ class auth extends Controller
 			{
 				case 'noauth': // No authentication
 					$check = TRUE;
-					$login = 'noauth';
+					$login = 'admin';
 					break 2;
 
 				case 'config': // Config authentication
@@ -230,7 +230,7 @@ class auth extends Controller
 			$_SESSION['role'] = $bu->property; // admin, manager, user
 			$_SESSION['business_unit'] = $bu->unitid;
 		}
-		elseif($_SESSION['auth'] == 'config' && $is_admin)
+		elseif($_SESSION['auth'] == 'noauth' OR ($_SESSION['auth'] == 'config' && $is_admin))
 		{
 			$_SESSION['role'] = 'admin';
 			$_SESSION['business_unit'] = 0;
