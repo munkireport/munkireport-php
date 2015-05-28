@@ -40,4 +40,12 @@ If you want to use those, just add an empty parameter object (parms = {}).
 			drawGraph("<?php echo url('module/reportdata/ip'); ?>", '#ip-plot', pieOptions, parms);
 
 
+## Variables
 
+Don't pollute the $GLOBALS array, at the moment there are a handful of variables passed around via $GLOBALS:
+
+* $GLOBALS['alerts'] - alerts and messages
+* $GLOBALS['auth'] - authorization variable (currently only in use for report)
+* $GLOBALS['conf'] - config items access with conf()
+* $GLOBALS['dbh'] - the database handle
+* $GLOBALS['version'] - the current version of MunkiReport
