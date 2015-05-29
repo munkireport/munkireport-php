@@ -223,7 +223,7 @@ class auth extends Controller
 		$bu = new Business_unit;
 
 		// Default role: no privs
-		$_SESSION['role'] = 'guest';
+		$_SESSION['role'] = 'nobody';
 
 		if($bu->retrieve_one("property IN ('admin', 'manager', 'user') AND value=?", $_SESSION['user']))
 		{
