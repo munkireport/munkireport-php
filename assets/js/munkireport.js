@@ -46,9 +46,8 @@ var showFilterModal = function(){
 			}
 
 		$.post(baseUrl + 'unit/set_filter', settings, function(){
-			console.log('done');
 			// Update all
-			$(document).trigger('appReady', [i18n.lng()]);
+			$(document).trigger('appUpdate');
 		})
 	}
 	// Get all business units and machine_groups
@@ -60,24 +59,19 @@ var showFilterModal = function(){
 	// Render when all requests are successful
 	defer.done(function(bu_data, mg_data){
 
-		// Set title
-		var name = bu_data[0].name ||'All Business Units'
-		$('h3.bu-title').text(name);
-
 		// Set texts
-		$('#myModal .modal-body').empty().text('Change filter settings');
-		$('#myModal .modal-title').text(name);
-		$('#myModal button.ok').text(i18n.t("dialog.ok_remove"));
+		$('#myModal .modal-title').text(i18n.t("filter.title"));
+		$('#myModal .modal-body')
+			.empty()
+			.append($('<b>')
+				.text(i18n.t("business_unit.machine_groups")));
 
-		// Add unitid to ok button
+		$('#myModal button.ok').text(i18n.t("dialog.close"));
+
+		// Set ok button
 		$('#myModal button.ok')
-			.data({unitid: ''})
 			.off()
-			.click(function(){});
-
-		// Show modal
-		$('#myModal').modal('show');
-
+			.click(function(){$('#myModal').modal('hide')});
 
 		// Add machine groups
 		$.each(mg_data[0], function(index, obj){
@@ -96,6 +90,10 @@ var showFilterModal = function(){
 							.append(obj.name || 'No Name')))
 			}
 		});
+
+		// Show modal
+		$('#myModal').modal('show');
+
 	});
 }
 

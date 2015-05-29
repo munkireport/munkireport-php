@@ -15,6 +15,14 @@ new Munkireport_model;
   	<div class="col-lg-12">
 		<script type="text/javascript">
 
+    $(document).on('appUpdate', function(e){
+
+      var oTable = $('.table').DataTable();
+      oTable.ajax.reload();
+      return;
+
+    });
+
 		$(document).on('appReady', function(e, lang) {
 
 				// Get column names from data attribute
@@ -22,7 +30,7 @@ new Munkireport_model;
 				$('.table th').map(function(){
 					  myCols.push({'mData' : $(this).data('colname')});
 				});
-			    oTable = $('.table').dataTable( {
+			  var oTable = $('.table').dataTable( {
 			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
 			        "aoColumns": myCols,
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {

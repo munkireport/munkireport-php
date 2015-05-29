@@ -33,7 +33,7 @@
 				</div>
 					
 <script>
-$(document).on('appReady', function(e, lang) {
+$(document).on('appReady, appUpdate', function(e, lang) {
 
 	$.getJSON( baseUrl + 'index.php?/module/power/conditions', function( data ) {
 		$.each(data, function(prop, val){
