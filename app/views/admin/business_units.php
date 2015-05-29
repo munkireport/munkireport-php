@@ -363,7 +363,7 @@
 
 				renderUserList();
 
-				$('#myModal .modal-title').text(i18n.t("admin.edit_mg.title"));
+				$('#myModal .modal-title').text(i18n.t("admin.edit_user.title"));
 
 				$('#myModal button.ok')
 					.data(data)

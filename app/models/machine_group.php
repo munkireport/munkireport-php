@@ -95,7 +95,7 @@ class Machine_group extends Model {
 
         if($groups)
         {
-            $out[$obj->groupid]['checked'] = ! in_array($obj->groupid, $groups);
+            $out[$obj->groupid]['checked'] = in_array($obj->groupid, $groups);
         }
 
 

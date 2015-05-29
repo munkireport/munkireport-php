@@ -8,7 +8,7 @@
 		"edit_bu": {
 			"title": "Edit Business Unit",
 			"name": "Business Unit Name",
-			"address": "Adress"
+			"address": "Address"
 		},
 		"edit_mg": {
 			"title": "Edit Machine Groups"

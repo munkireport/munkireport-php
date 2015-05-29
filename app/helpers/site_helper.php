@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.4.3.1171';
+$GLOBALS['version'] = '2.4.3.1172';
 
 // Return version without commit count
 function get_version()
@@ -285,39 +285,17 @@ function get_filtered_groups()
 	if(isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group'])
 	{
 		$filter = $_SESSION['filter']['machine_group'];
+		$out = array_diff($_SESSION['machine_groups'], $filter);
 	}
 	else
 	{
-		$filter = array();
+		$out = $_SESSION['machine_groups'];
 	}
 
-	// Admins see all machine_groups
-	if($_SESSION['role'] == 'admin')
+	// If out is empty, signal no groups
+	if( ! $out)
 	{
-		if($filter)
-		{
-			$out = $filter;
-		}
-	}
-	else
-	{
-		if(isset($_SESSION['machine_groups']))
-		{
-			if($filter)
-			{
-				$out = array_diff($_SESSION['machine_groups'], $filter);
-			}
-			else
-			{
-				$out = $_SESSION['machine_groups'];
-			}
-		}
-
-		// If out is empty, signal no groups
-		if( ! $out)
-		{
-			$out[] = -1;
-		}
+		$out[] = -1;
 	}
 
 	return $out;
