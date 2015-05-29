@@ -100,6 +100,7 @@
 	},
 	"dialog": {
 		"cancel": "Cancel",
+		"close": "Close",
 		"ok": "Ok",
 		"ok_remove": "Ok, Remove",
 		"save": "Save"
@@ -115,6 +116,9 @@
 		"403": "You are not allowed to view this page",
 		"404": "Page not found",
 		"426": "You are required to visit this site using a secure connection."
+	},
+	"filter": {
+		"title": "Set filters"
 	},
 	"free_disk_space": "Free Disk Space",
 	"installed": "Installed",
