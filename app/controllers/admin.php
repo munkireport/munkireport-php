@@ -327,6 +327,9 @@ class admin extends Controller
 		
 		$status = array('status' => 'undefined', 'rowcount' => 0);
 
+		// Don't process these tables
+		$skip_tables = array('migration', 'business_unit', 'machine_group');
+
 		if( ! $this->authorized('delete_machine'))
 		{
 			$status['status'] = 'unauthorized';
@@ -370,43 +373,50 @@ class admin extends Controller
 			// Affected rows counter
 			$cnt = 0;
 
-			// Delete entries
-			foreach($tables as $table)
+			try
 			{
-				// Migration has no serial number
-				if ($table == 'migration')
+				// Delete entries
+				foreach($tables as $table)
 				{
-					continue;
+					// Migration has no serial number
+					if (in_array($table, $skip_tables))
+					{
+						continue;
+					}
+
+					// hash and inventoryitem use serial FIXME
+					if($table == 'hash' OR $table == 'inventoryitem')
+					{
+						$serial = 'serial';
+					}
+					else
+					{
+						$serial = 'serial_number';
+					}
+					
+					$sql = "DELETE FROM $table WHERE `$serial`=?";
+					if( ! $stmt = $dbh->prepare( $sql ))
+					{
+						die('Prepare '.$sql.' failed');
+					}
+					$stmt->bindValue( 1, $serial_number );
+					$stmt->execute();
+					$cnt += $stmt->rowCount();
 				}
 
-				// hash and inventoryitem use serial FIXME
-				if($table == 'hash' OR $table == 'inventoryitem')
-				{
-					$serial = 'serial';
-				}
-				else
-				{
-					$serial = 'serial_number';
-				}
+				$dbh->commit();
+
+				// Return status
+				$status['status'] = 'success';
+				$status['rowcount'] = $cnt;
 				
-				$sql = "DELETE FROM $table WHERE `$serial`=?";
-				if( ! $stmt = $dbh->prepare( $sql ))
-				{
-					die('Prepare '.$sql.' failed');
-				}
-				$stmt->bindValue( 1, $serial_number );
-				$stmt->execute();
-				$cnt += $stmt->rowCount();
+			} 
+			catch (Exception $e)
+			{
+				$status['status'] = 'error';
+				$status['message'] = $e->getMessage();
 			}
-
-			$dbh->commit();
-
-			// Return status
-			$status['status'] = 'success';
-			$status['rowcount'] = $cnt;
 		}
-
-
 
 		$obj = new View();
 		$obj->view('json', array('msg' => $status));
