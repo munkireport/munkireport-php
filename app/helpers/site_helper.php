@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.5.3.1179';
+$GLOBALS['version'] = '2.5.3.1180';
 
 // Return version without commit count
 function get_version()
@@ -182,6 +182,20 @@ function passphrase_to_group($passphrase)
 	}
 	
 	return 0;
+}
+
+/**
+ * Generate GUID
+ *
+ * @return string guid
+ * @author 
+ **/
+function get_guid()
+{
+	return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', 
+		mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), 
+		mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), 
+		mt_rand(0, 65535), mt_rand(0, 65535));
 }
 
 /**

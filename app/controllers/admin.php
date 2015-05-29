@@ -82,6 +82,12 @@ class admin extends Controller
 					$out['error'] = 'Unknown input: ' .$property;
 				}
 			}
+			// Put key in array (for future purposes)
+			if(isset($out['key']))
+			{
+				$out['keys'][] = $out['key'];
+				unset($out['key']);
+			}
 		}
 		else
 		{
@@ -141,12 +147,23 @@ class admin extends Controller
 					{
 						$mg = new Machine_group;
 						$newgroup = $mg->get_max_groupid() + 1;
+
+						// Store name
 						$mg->merge(array(
 							'id' => '',
 							'groupid' => $newgroup,
 							'property' => 'name',
 							'value' => $entry['name']));
 						$mg->save();
+
+						// Store GUID key
+						$mg->merge(array(
+							'id' => '',
+							'groupid' => $newgroup,
+							'property' => 'key',
+							'value' => get_guid()));
+						$mg->save();
+
 						$groups[] = $newgroup;
 					}
 					else
