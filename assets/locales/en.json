@@ -19,7 +19,8 @@
 		},
 		"mg": {
 			"title": "Machine Groups",
-			"add_group": "New Group"
+			"add_group": "New Group",
+			"edit_group": "Edit Machine Group"
 		},
 		"new_bu": {
 			"title": "New Business Unit"
