@@ -44,39 +44,40 @@ def __main__():
 
     out = {}
 
-    for file_path in os.listdir(input_dir):
-        file_path = path.join(input_dir, file_path)
-        # print("Reading: \"{0}\"".format(file_path))
-        try:
-            f = open(file_path, "rb")
-        except IOError as e:
-            # print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
-            continue
+    if os.path.isdir(input_dir):
+        for file_path in os.listdir(input_dir):
+            file_path = path.join(input_dir, file_path)
+            # print("Reading: \"{0}\"".format(file_path))
+            try:
+                f = open(file_path, "rb")
+            except IOError as e:
+                # print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
+                continue
 
-        try:
-            db = ccl_asldb.AslDb(f)
-        except ccl_asldb.AslDbError as e:
-            # print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
+            try:
+                db = ccl_asldb.AslDb(f)
+            except ccl_asldb.AslDbError as e:
+                # print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
+                f.close()
+                continue
+
+            timestamp = ''
+            
+            for record in db:
+                #print "%s %s" % (record.timestamp, record.message.decode('UTF-8'))
+                fmt_timestamp = record.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                if fmt_timestamp != timestamp:
+                    timestamp = fmt_timestamp
+                    out[timestamp] = [0]*16
+                key_val = [x.strip() for x in record.message.split(':')]
+                index = EVENTS.get(key_val[0], -1)
+                if index >= 0:
+                    try:
+                        out[timestamp][index] = float(key_val[1])
+                    except ValueError as e:
+                        continue
+
             f.close()
-            continue
-
-        timestamp = ''
-        
-        for record in db:
-            #print "%s %s" % (record.timestamp, record.message.decode('UTF-8'))
-            fmt_timestamp = record.timestamp.strftime('%Y-%m-%d %H:%M:%S')
-            if fmt_timestamp != timestamp:
-                timestamp = fmt_timestamp
-                out[timestamp] = [0]*16
-            key_val = [x.strip() for x in record.message.split(':')]
-            index = EVENTS.get(key_val[0], -1)
-            if index >= 0:
-                try:
-                    out[timestamp][index] = float(key_val[1])
-                except ValueError as e:
-                    continue
-
-        f.close()
 
     # Open and write output
     output = open(output_file_path, "w")
