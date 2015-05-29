@@ -60,7 +60,11 @@ var showFilterModal = function(){
 	defer.done(function(bu_data, mg_data){
 
 		// Set texts
-		$('#myModal .modal-title').text(i18n.t("filter.title"));
+		$('#myModal .modal-title')
+			.empty()
+			.append($('<i>')
+				.addClass('fa fa-filter'))
+			.append(' ' + i18n.t("filter.title"));
 		$('#myModal .modal-body')
 			.empty()
 			.append($('<b>')
