@@ -77,6 +77,7 @@
 			"power": "Power",
 			"profiles": "Profiles",
 			"serverstats": "Server Statistics",
+			"summary": "Summary",
 			"third_party_software": "Third Party Software"
 		},
 		"installed_apple_software": "Installed Apple Software",
@@ -102,6 +103,10 @@
 	"dialog": {
 		"cancel": "Cancel",
 		"close": "Close",
+		"comment": {
+			"add": "Add Comment",
+			"label": "Comment"
+		},
 		"ok": "Ok",
 		"ok_remove": "Ok, Remove",
 		"save": "Save"
@@ -125,7 +130,8 @@
 	"installed": "Installed",
 	"listing": {
 		"ard": {
-			"text": "Text __number__"
+			"text": "Text __number__",
+			"title": "Apple Remote Desktop Report"
 		},
 		"bluetooth": {
 			"keyboard_battery": "Keyboard",
