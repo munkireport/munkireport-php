@@ -251,14 +251,20 @@ class Model extends KISS_Model
 	 * @return void
 	 * @author 
 	 **/
-	function retrieve_record($serial_number)
+	function retrieve_record($serial_number, $where = '', $bindings = array())
 	{
 		if( ! authorized_for_serial($serial_number))
 		{
 			return FALSE;
 		}
+
+		// Prepend where with serial_number
+		$where = $where ? 'serial_number=? AND '.$where : 'serial_number=?';
+
+		// Push serial number in front of the array
+		array_unshift($bindings, $serial_number);
 		
-		return $this->retrieve_one('serial_number=?', $serial_number);
+		return $this->retrieve_one($where, $bindings);
 	}
 
 	// ------------------------------------------------------------------------
