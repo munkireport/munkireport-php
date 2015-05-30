@@ -1,8 +1,47 @@
 <?php $this->view('partials/head') ?>
 <div class="container">
 	<div class="row">
+
 		<div class="col-lg-12">
-			<?php $this->view('client/machine_info'); ?>
+
+			<div class="panel panel-default">
+		        <div class="panel-heading">
+		            <h3 class="panel-title clearfix">
+		            	<div class="pull-left" style="padding-top:7.5px">
+			            	<i class="fa fa-laptop fa-fw"></i>
+			            	<span id="computer_name"></span>
+			            </div>
+		            	<div class="btn-group pull-right">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							 <span class="fa fa-comment"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a id="add-comment" href="#">Add comment</a></li>
+								<li><a href="#">Show comments</a></li>
+							</ul>
+						</div>
+						<div class="btn-group pull-right" style="margin-right:5px">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							Show <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Summary</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Generate report</a></li>
+							</ul>
+						</div>
+
+		            </h3>
+		        </div>
+		    </div><!-- /panel -->
+
+		</div><!-- /col -->
+
+	</div><!-- /row -->
+	<div class="row">
+		<div class="col-lg-12">
 
 <?php 
 
@@ -14,6 +53,7 @@
 // 'badge' => id of a badge for this tab
 // 'class' => signify first active tab
 $tab_list = array(
+	'summary' => array('view' => 'client/machine_info', 'i18n' => 'client.tab.summary'),
 	'munki' => array('view' => 'client/munki_tab', 'i18n' => 'client.tab.munki', 'class' => 'active'),
 	'serverstats' => array('view_path' => MODULE_PATH . 'servermetrics/views/serverstats_tab', 'i18n' => 'client.tab.serverstats'),
 	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
@@ -63,8 +103,62 @@ $tab_list = array(
 			<script>
 			$(document).on('appReady', function(e, lang) {
 
+				var serial_number = '<?php echo $serial_number?>',
+					addComment = function(){
+
+						var section = 'machine',
+							saveComment = function(){
+
+								var formData = $('#myModal form').serializeArray();
+								
+								// Save comment
+								var jqxhr = $.post( baseUrl + "index.php?/module/comment/create", formData);
+
+								jqxhr.done(function(data){
+
+									// Dismiss modal
+									$('#myModal').modal('hide');
+								})
+
+							}
+
+						$('#myModal .modal-body')
+							.empty()
+							.append($('<form>')
+								.submit(saveComment)
+								.append($('<input>')
+									.attr('type', 'submit')
+									.addClass('invisible'))
+								.append($('<input>')
+									.attr('type', 'hidden')
+									.attr('name', 'serial_number')
+									.val(serial_number))
+								.append($('<input>')
+									.attr('type', 'hidden')
+									.attr('name', 'section')
+									.val(section))
+								.append($('<div>')
+									.addClass('form-group')
+									.append($('<label>')
+										.text(i18n.t("dialog.comment.label")))
+									.append($('<textarea>')
+										.attr('name', 'text')
+										.val('')
+										.addClass('form-control'))));
+
+						$('#myModal button.ok')
+							.text(i18n.t("dialog.save"))
+							.off()
+							.click(saveComment);
+						$('#myModal .modal-title').text(i18n.t("dialog.comment.add"));
+						$('#myModal').modal('show');
+					}
+
+				// Comments
+				$('#add-comment').click(addComment)
+
 				// Get client data
-				$.getJSON( baseUrl + 'index.php?/clients/get_data/<?php echo $serial_number?>', function( data ) {
+				$.getJSON( baseUrl + 'index.php?/clients/get_data/' + serial_number, function( data ) {
 					console.log(data);
 					machineData = data[0];
 
@@ -146,12 +240,12 @@ $tab_list = array(
 				});
 
 				// Get estimate_manufactured_date
-				$.getJSON( baseUrl + 'index.php?/module/warranty/estimate_manufactured_date/<?php echo $serial_number?>', function( data ) {
+				$.getJSON( baseUrl + 'index.php?/module/warranty/estimate_manufactured_date/' + serial_number, function( data ) {
 					$('#manufacture_date').html(data.date)
 				});
 
 				// Get certificate data
-				$.getJSON( baseUrl + 'index.php?/module/certificate/get_data/<?php echo $serial_number?>', function( data ) {
+				$.getJSON( baseUrl + 'index.php?/module/certificate/get_data/' + serial_number, function( data ) {
 					console.log(data);
 				});
 

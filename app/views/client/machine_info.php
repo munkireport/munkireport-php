@@ -1,10 +1,10 @@
-<div class="well well-small machine-info">
+	<p></p>
 	<div class="row">
 		<div class="col-lg-1">
 			<img width="72" height="72" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=<?php echo substr($serial_number, 8); ?>&amp;size=120x120" />
 		</div>
 		<div class="col-lg-3">
-			<h4 id="computer_name">
+			<h4 id="scomputer_name">
 				<br />
 			</h4>
 			<small class="muted">
@@ -90,4 +90,3 @@
 			</small>
 		</div>
 	</div>
-</div>
