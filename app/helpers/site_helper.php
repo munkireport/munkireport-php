@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.5.3.1186';
+$GLOBALS['version'] = '2.5.3.1187';
 
 // Return version without commit count
 function get_version()
@@ -167,6 +167,22 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
 	}
 	exit;
 }
+
+/**
+ * Get $_POST variable without error
+ *
+ * @return string post value
+ **/
+function post($what='', $alt='')
+{
+	if(isset($_POST[$what]))
+	{
+		return $_POST[$what];
+	}
+
+	return $alt;
+}
+
 /**
  * Lookup group id for passphrase
  *
