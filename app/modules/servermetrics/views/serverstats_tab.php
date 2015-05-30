@@ -1,6 +1,7 @@
 <style>svg{height: 400px; width:100%;}</style>
 
 <h2 data-i18n="memory.usage"></h2>
+<div class="comment" data-section="chart1"></div>
 <svg id="chart1"></svg>
 
 <h2 data-i18n="cpu.usage"></h2>

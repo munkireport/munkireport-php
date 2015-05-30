@@ -32,7 +32,7 @@ class Comment_controller extends Module_controller
      * Create a comment
      *
      **/
-    function create()
+    function save()
     {
         $out = array();
 
@@ -42,14 +42,24 @@ class Comment_controller extends Module_controller
         $text = post('text');
         if( $serial_number AND $section AND $text)
         {
-            $comment = new Comment_model;
-            $comment->serial_number = $serial_number;
-            $comment->section = $section;
-            $comment->text = $text;
-            $comment->user = $_SESSION['user'];
-            $comment->timestamp = time();
-            $comment->save();
-            $out['status'] = 'success';
+            if( authorized_for_serial($serial_number))
+            {
+                $comment = new Comment_model;
+                $comment->retrieve_record($serial_number, 'section=?', array($section));
+                $comment->serial_number = $serial_number;
+                $comment->section = $section;
+                $comment->text = $text;
+                $comment->user = $_SESSION['user'];
+                $comment->timestamp = time();
+                $comment->save();
+
+                $out['status'] = 'saved';
+            }
+            else
+            {
+                $out['status'] = 'error';
+                $out['msg'] = 'Not authorized for this serial';
+            }
         }
         else
         {

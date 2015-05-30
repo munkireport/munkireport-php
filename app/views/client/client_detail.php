@@ -16,7 +16,7 @@
 							 <span class="fa fa-comment"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a id="add-comment" href="#">Add comment</a></li>
+								<li><a data-section="machine" id="add-comment" href="#">Add comment</a></li>
 								<li><a href="#">Show comments</a></li>
 							</ul>
 						</div>
@@ -106,13 +106,13 @@ $tab_list = array(
 				var serial_number = '<?php echo $serial_number?>',
 					addComment = function(){
 
-						var section = 'machine',
+						var section = $(this).data('section'),
 							saveComment = function(){
 
 								var formData = $('#myModal form').serializeArray();
 								
 								// Save comment
-								var jqxhr = $.post( baseUrl + "index.php?/module/comment/create", formData);
+								var jqxhr = $.post( baseUrl + "index.php?/module/comment/save", formData);
 
 								jqxhr.done(function(data){
 
@@ -155,7 +155,11 @@ $tab_list = array(
 					}
 
 				// Comments
-				$('#add-comment').click(addComment)
+				$('#add-comment').click(addComment);
+
+				$('div.comment')
+					.empty()
+					.append('Comments')
 
 				// Get client data
 				$.getJSON( baseUrl + 'index.php?/clients/get_data/' + serial_number, function( data ) {
