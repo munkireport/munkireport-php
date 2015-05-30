@@ -33,8 +33,10 @@ $( document ).ready(function() {
     });
 });
 
-var showFilterModal = function(){
+var showFilterModal = function(e){
 
+	e.preventDefault();
+	
 	var updateGroup = function(){
 
 		console.log($(this).data().groupid)
