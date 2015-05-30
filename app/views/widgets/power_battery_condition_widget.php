@@ -45,6 +45,8 @@ $(document).on('appReady appUpdate', function(e, lang) {
 			{
 				$('#power-' + prop).removeClass('hide');
 				$('#power-' + prop + '>.badge').html(val);
+
+				// Hide no clients span
 				$('#power-nodata').addClass('hide');
 			}
 			else
