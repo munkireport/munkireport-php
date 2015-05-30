@@ -46,6 +46,38 @@ class Machine_controller extends Module_controller
 	}
 
 	/**
+	 * Return new clients
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function new_clients()
+	{
+		$lastweek = time() - 60 * 60 * 24 * 7;
+		$out = array();
+		$machine = new Machine_model();
+		new Reportdata_model;
+
+		$filter = get_machine_group_filter('AND');
+
+		$sql = "SELECT machine.serial_number, computer_name, reg_timestamp
+			FROM machine 
+			LEFT JOIN reportdata USING (serial_number)
+			WHERE reg_timestamp > $lastweek
+			$filter
+			ORDER BY reg_timestamp DESC";
+
+		foreach($machine->query($sql) as $obj)
+		{
+			$out[]  = $obj;
+		}
+
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+
+	/**
 	 * Return json array with memory configuration breakdown
 	 *
 	 * @author AvB
