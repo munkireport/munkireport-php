@@ -78,5 +78,24 @@ class show extends Controller
 		$obj = new View();
 		$obj->view($view, $data);
 	}
+
+	function custom($which = 'default')
+	{
+		if($which)
+		{
+			$data['page'] = '';
+			$view = $which;
+			$viewpath = APP_ROOT . 'custom/views/';
+		}
+		else
+		{
+			$data = array('status_code' => 404);
+			$view = 'error/client_error';
+			$viewpath = VIEW_PATH;
+		}
+
+		$obj = new View();
+		$obj->view($view, $data, $viewpath);
+	}
 		
 }
