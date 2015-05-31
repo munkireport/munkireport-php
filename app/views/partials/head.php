@@ -15,6 +15,12 @@
 	<link rel="stylesheet" href="<?php echo conf('custom_css'); ?>" />
 	<?php endif; ?>
 
+	<?if(isset($stylesheets)):?>
+	<?foreach($stylesheets as $stylesheet):?>
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/<?php echo $stylesheet; ?>" />
+	<?endforeach?>
+	<?endif?>
+
 	<script>
 		var baseUrl = "<?php echo conf('subdirectory'); ?>";
 	</script>
