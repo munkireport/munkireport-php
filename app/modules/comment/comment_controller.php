@@ -40,6 +40,7 @@ class Comment_controller extends Module_controller
         $serial_number = post('serial_number');
         $section = post('section');
         $text = post('text');
+        $html = post('html');
         if( $serial_number AND $section AND $text)
         {
             if( authorized_for_serial($serial_number))
@@ -49,6 +50,7 @@ class Comment_controller extends Module_controller
                 $comment->serial_number = $serial_number;
                 $comment->section = $section;
                 $comment->text = $text;
+                $comment->html = $html;
                 $comment->user = $_SESSION['user'];
                 $comment->timestamp = time();
                 $comment->save();
@@ -77,13 +79,29 @@ class Comment_controller extends Module_controller
      **/
     function retrieve($serial_number = '', $section = '')
     {
-        $obj = new View();
+        $out = array();
 
         $where = $section ? 'section=?' : '';
         $bindings = $section ? array($section) : array();
 
         $comment = new Comment_model;
-        $obj->view('json', array('msg' => $comment->retrieve_records($serial_number, $where, $bindings)));
+        if($section)
+        {
+            if($comment->retrieve_record($serial_number, $where, $bindings))
+            {
+                $out = $comment->rs;
+            }
+        }
+        else
+        {
+            foreach($comment->retrieve_records($serial_number, $where, $bindings) AS $obj)
+            {
+                $out[] = $obj->rs;
+            }
+        }
+
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
     }
 
     /**

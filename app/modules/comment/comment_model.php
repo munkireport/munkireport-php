@@ -9,6 +9,7 @@ class Comment_model extends Model {
 		$this->rs['section'] = ''; // Section of the comment
 		$this->rs['user'] = ''; // username
 		$this->rs['text'] = ''; $this->rt['text'] = 'BLOB'; // Source text
+		$this->rs['html'] = ''; $this->rt['html'] = 'BLOB'; // Rendered text
 		$this->rs['timestamp'] = 0; // Timestamp
 		
 		// Schema version, increment when creating a db migration
