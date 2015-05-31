@@ -83,7 +83,7 @@ class show extends Controller
 	{
 		if($which)
 		{
-			$data['page'] = '';
+			$data['args'] = func_get_args();
 			$view = $which;
 			$viewpath = APP_ROOT . 'custom/views/';
 		}
