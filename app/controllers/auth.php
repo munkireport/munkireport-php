@@ -241,6 +241,7 @@ class auth extends Controller
 		{
 			$mg = new Machine_group;
 			$_SESSION['machine_groups'] = $mg->get_group_ids();
+			$_SESSION['machine_groups'][] = 0; // Add group 0
 		}
 		else
 		{
