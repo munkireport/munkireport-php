@@ -241,6 +241,7 @@
 		"afp_users": "AFP Users",
 		"smb_users": "SMB Users"
 	},
+	"show": "Show",
 	"software": "Software",
 	"system": {
 		"system": "System"

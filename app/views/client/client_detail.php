@@ -47,7 +47,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 			            </div>
 						<div class="btn-group pull-right" style="margin-right:5px">
 							<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-							Show <span class="caret"></span>
+							<span data-i18n="show"></span> <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu client-tabs" role="tablist">
 								<?foreach($tab_list as $name => $data):?>
@@ -63,7 +63,6 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 								<?endforeach?>
 
 								<li class="divider"></li>
-								<li><a href="#">Generate report</a></li>
 							</ul>
 						</div>
 		            </h3>
