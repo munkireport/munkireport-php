@@ -36,7 +36,7 @@ $( document ).ready(function() {
 var showFilterModal = function(e){
 
 	e.preventDefault();
-	
+
 	var updateGroup = function(){
 
 		console.log($(this).data().groupid)
@@ -238,6 +238,12 @@ function humansizeToBytes(size) {
 		}
 	}
 	return res;
+}
+
+// Sort by date (used by D3 charts)
+function sortByDateAscending(a, b) {
+	// Dates will be cast to numbers automagically:
+	return a.x - b.x;
 }
 
 // Plural formatter
