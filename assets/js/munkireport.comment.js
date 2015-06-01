@@ -5,10 +5,10 @@
 $(document).on('appReady', function(e, lang) {
 
 	try{
-		if(serial_number){}
+		if(serialNumber){}
 	}
 	catch(e){
-		alert('Error: comment.js - No serial_number');
+		alert('Error: comment.js - No serialNumber');
 		return;
 	}
 
@@ -51,7 +51,7 @@ $(document).on('appReady', function(e, lang) {
 					.append($('<input>')
 						.attr('type', 'hidden')
 						.attr('name', 'serial_number')
-						.val(serial_number))
+						.val(serialNumber))
 					.append($('<input>')
 						.attr('type', 'hidden')
 						.attr('name', 'section')
@@ -68,7 +68,7 @@ $(document).on('appReady', function(e, lang) {
 							.attr('rows', 10)
 							.addClass('form-control'))));
 
-			$.getJSON( baseUrl + 'index.php?/module/comment/retrieve/' + serial_number + '/' + section, function( data ) {
+			$.getJSON( baseUrl + 'index.php?/module/comment/retrieve/' + serialNumber + '/' + section, function( data ) {
 				data.text = data.text || ''
 				$('textarea').text(data.text)
 				$('textarea').markdown({
@@ -109,7 +109,7 @@ $(document).on('appReady', function(e, lang) {
 		.append(function(){
 			var me = $(this),
 				section = $(this).data('section');
-			$.getJSON( baseUrl + 'index.php?/module/comment/retrieve/' + serial_number + '/' + section, function( data ) {
+			$.getJSON( baseUrl + 'index.php?/module/comment/retrieve/' + serialNumber + '/' + section, function( data ) {
 				data.html = data.html || 'No comments'
 				me.html(data.html)
 					.after($('<button>')
