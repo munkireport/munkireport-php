@@ -11,7 +11,6 @@
 $tab_list = array(
 	'summary' => array('view' => 'client/machine_info', 'i18n' => 'client.tab.summary'),
 	'munki' => array('view' => 'client/munki_tab', 'i18n' => 'client.tab.munki'),
-	'serverstats' => array('view_path' => MODULE_PATH . 'servermetrics/views/serverstats_tab', 'i18n' => 'client.tab.serverstats'),
 	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
 	'third-party-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 0), 'i18n' => 'client.tab.third_party_software', 'badge' => 'history-cnt-0'),
 	'inventory-items' => array('view' => 'client/inventory_items_tab', 'i18n' => 'client.tab.inventory_items', 'badge' => 'inventory-cnt'),
@@ -23,8 +22,16 @@ $tab_list = array(
 	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
 	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles'),
 	'ard-tab' => array('view' => 'client/ard_tab', 'i18n' => 'client.tab.ard')
-		)
+		);
+
+// Add custom tabs
+$tab_list = array_merge($tab_list, conf('client_tabs', array()));
+
 ?>
+
+<script>
+	var serialNumber = '<?php echo $serial_number?>';
+</script>
 
 <div class="container">
 	<div class="row">
@@ -38,11 +45,6 @@ $tab_list = array(
 			            	<i class="fa fa-laptop fa-fw"></i>
 			            	<span id="computer_name"></span>
 			            </div>
-		            	<div class="btn-group pull-right">
-							<a data-section="machine" id="add-comment" href="#" class="btn btn-default">
-								<span class="fa fa-comment"></span>
-							</a>
-						</div>
 						<div class="btn-group pull-right" style="margin-right:5px">
 							<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 							Show <span class="caret"></span>
@@ -100,91 +102,9 @@ $tab_list = array(
 				  
 				})
 
-				var serial_number = '<?php echo $serial_number?>',
-					addComment = function(){
-
-						var section = $(this).data('section'),
-							editor = '',
-							saveComment = function(){
-
-								// add parsed text to hidden field
-								$('#myModal input[name="html"]').val(editor.parseContent());
-
-								// Get formdata
-								var formData = $('#myModal form').serializeArray();
-								
-								// Save comment
-								var jqxhr = $.post( baseUrl + "index.php?/module/comment/save", formData);
-
-								jqxhr.done(function(data){
-
-									// Dismiss modal
-									$('#myModal').modal('hide');
-								})
-
-							}
-
-						$('#myModal .modal-body')
-							.empty()
-							.append($('<form>')
-								.submit(saveComment)
-								.append($('<input>')
-									.attr('type', 'submit')
-									.addClass('invisible'))
-								.append($('<input>')
-									.attr('type', 'hidden')
-									.attr('name', 'serial_number')
-									.val(serial_number))
-								.append($('<input>')
-									.attr('type', 'hidden')
-									.attr('name', 'section')
-									.val(section))
-								.append($('<input>')
-									.attr('type', 'hidden')
-									.attr('name', 'html'))
-								.append($('<div>')
-									.addClass('form-group')
-									.append($('<label>')
-										.text(i18n.t("dialog.comment.label")))
-									.append($('<textarea>')
-										.attr('name', 'text')
-										.attr('rows', 10)
-										.addClass('form-control'))));
-
-						$.getJSON( baseUrl + 'index.php?/module/comment/retrieve/' + serial_number + '/' + section, function( data ) {
-							data.text = data.text || ''
-							$('textarea').text(data.text)
-							$('textarea').markdown({
-								autofocus:false,
-								savable:false,
-								iconlibrary: 'fa',
-								fullscreen:{enable:true},
-								onShow: function(e){
-									// Store a reference to the editor
-									editor = e;
-								}
-							});
-						});
-
-
-						$('#myModal button.ok')
-							.text(i18n.t("dialog.save"))
-							.off()
-							.click(saveComment);
-						$('#myModal .modal-title').text(i18n.t("dialog.comment.add"));
-						$('#myModal').modal('show');
-					}
-
-				// Comments
-				$('#add-comment').click(addComment);
-
-				$('div.comment')
-					.empty()
-					.append('Comments')
-
 				// Get client data
-				$.getJSON( baseUrl + 'index.php?/clients/get_data/' + serial_number, function( data ) {
-					console.log(data);
+				$.getJSON( baseUrl + 'index.php?/clients/get_data/' + serialNumber, function( data ) {
+
 					machineData = data[0];
 
 					// Set properties based on id
@@ -222,7 +142,7 @@ $tab_list = array(
 						case 'Unregistered serialnumber':
 							cls = 'text-warning';
 							msg = i18n.t("warranty.unregistered");
-							msg = msg + ' <a target="_blank" href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&amp;country=USA&amp;id='+machineData.serial_number+'">Register</a>'
+							msg = msg + ' <a target="_blank" href="https://selfsolve.apple.com/RegisterProduct.do?productRegister=Y&amp;country=USA&amp;id='+machineData.serialNumber+'">Register</a>'
 							break;
 						case 'Expired':
 							cls = 'text-danger';
@@ -265,12 +185,12 @@ $tab_list = array(
 				});
 
 				// Get estimate_manufactured_date
-				$.getJSON( baseUrl + 'index.php?/module/warranty/estimate_manufactured_date/' + serial_number, function( data ) {
+				$.getJSON( baseUrl + 'index.php?/module/warranty/estimate_manufactured_date/' + serialNumber, function( data ) {
 					$('#manufacture_date').html(data.date)
 				});
 
 				// Get certificate data
-				$.getJSON( baseUrl + 'index.php?/module/certificate/get_data/' + serial_number, function( data ) {
+				$.getJSON( baseUrl + 'index.php?/module/certificate/get_data/' + serialNumber, function( data ) {
 					console.log(data);
 				});
 
