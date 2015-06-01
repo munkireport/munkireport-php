@@ -19,7 +19,7 @@ class Migration_machine_add_group extends Model
 		$dbh->beginTransaction();
 
 		// Adding a column is simple...
-		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s VARCHAR(255)', 
+		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s INT DEFAULT 0', 
 			$this->enquote($this->tablename), $this->enquote($this->columname));
 
 		$this->exec($sql);
@@ -57,7 +57,6 @@ class Migration_machine_add_group extends Model
 								current_processor_speed VARCHAR(255),
 								cpu_arch VARCHAR(255),
 								os_version VARCHAR(255),
-								oci_server_version VARCHAR(255),
 								physical_memory INTEGER,
 								platform_UUID VARCHAR(255),
 								number_processors INTEGER,
@@ -71,7 +70,12 @@ class Migration_machine_add_group extends Model
 				$this->exec($sql);
 
 				$sql = "INSERT INTO machine_temp 
-							SELECT id, serial_number, hostname, machine_model, machine_desc, img_url, cpu, current_processor_speed, cpu_arch, os_version, physical_memory, platform_UUID, number_processors, SMC_version_system, boot_rom_version, bus_speed, computer_name, l2_cache, machine_name, packages FROM machine";
+							SELECT id, serial_number, hostname, machine_model,
+									machine_desc, img_url, cpu, current_processor_speed,
+									cpu_arch, os_version, physical_memory, platform_UUID,
+									number_processors, SMC_version_system, boot_rom_version,
+									bus_speed, computer_name, l2_cache, machine_name, packages 
+							FROM machine";
 				$this->exec($sql);
 
 				$sql = "DROP table machine";
