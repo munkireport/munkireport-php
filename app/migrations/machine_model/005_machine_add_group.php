@@ -6,8 +6,26 @@ class Migration_machine_add_group extends Model
 
 	function __construct()
 	{
-		parent::__construct();
-		$this->tablename = 'machine';
+		parent::__construct('id', 'machine'); //primary key, tablename
+
+		$this->idx['hostname'] = array('hostname');
+		$this->idx['machine_model'] = array('machine_model');
+		$this->idx['machine_desc'] = array('machine_desc');
+		$this->idx['cpu'] = array('cpu');
+		$this->idx['current_processor_speed'] = array('current_processor_speed');
+		$this->idx['cpu_arch'] = array('cpu_arch');
+		$this->idx['os_version'] = array('os_version');
+		$this->idx['physical_memory'] = array('physical_memory');
+		$this->idx['platform_UUID'] = array('platform_UUID');
+		$this->idx['number_processors'] = array('number_processors');
+		$this->idx['SMC_version_system'] = array('SMC_version_system');
+		$this->idx['boot_rom_version'] = array('boot_rom_version');
+		$this->idx['bus_speed'] = array('bus_speed');
+		$this->idx['computer_name'] = array('computer_name');
+		$this->idx['l2_cache'] = array('l2_cache');
+		$this->idx['machine_name'] = array('machine_name');
+		$this->idx['packages'] = array('packages');	
+
 	}
 
 	public function up()
@@ -83,6 +101,9 @@ class Migration_machine_add_group extends Model
 
 				$sql = "ALTER TABLE machine_temp RENAME TO machine";
 				$this->exec($sql);
+
+				// Call set indexes()
+				$this->set_indexes();
 
 				$dbh->commit();
 
