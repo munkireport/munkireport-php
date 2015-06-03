@@ -178,5 +178,17 @@ class Machine_controller extends Module_controller
 		$obj = new View();
 		$obj->view('json', array('msg' => $out));
 	}
+
+	/**
+	 * Get machine groups
+	 *
+	 * @author 
+	 **/
+	function get_groups()
+	{
+		$machine = new Machine_model();
+		$obj = new View();
+		$obj->view('json', array('msg' => $machine->get_groups($count = TRUE)));
+	}
 	
 } // END class Machine_controller

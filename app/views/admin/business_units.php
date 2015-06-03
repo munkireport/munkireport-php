@@ -11,6 +11,8 @@
 		<div id="bu_units"></div>
 		<div data-i18n="listing.loading" id="loading"></div>
 
+		<div id="machine-groups">Stray groups - get all groupids from machine</div>
+
     </div> <!-- /span 12 -->
   </div> <!-- /row -->
 </div>  <!-- /container -->
@@ -140,11 +142,48 @@
 						.data(data)
 						.text(data.name);
 
+					// Update business units
+					$('.unit').each(function(){
+						var bu = $(this).data();
+						
+						// Find and remove machine_group
+						var index = bu.machine_groups.indexOf(data.groupid);
+						if(index > -1){
+							bu.machine_groups.splice(index, 1);
+						}
+
+						// Add machine_group to new Business Unit
+						if(bu.unitid == data.business_unit)
+						{
+							bu.machine_groups.push(data.groupid);
+						}
+
+						// Render
+						$(this).each(render);
+					});
+
 					// Dismiss modal
 					$('#myModal').modal('hide');
 				})
 			}
 
+			// get business units
+			var businessUnitSelect = $('<select>')
+				.attr('name', 'business_unit')
+				.addClass('form-control business-units');
+			$('.unit').each(function(){
+				var bu = $(this).data();
+				businessUnitSelect
+					.append($('<option>')
+							.val(bu.unitid)
+							.attr('selected', function(){
+								return bu.machine_groups.indexOf(data.groupid) !== -1;
+							})
+							.text(bu.name));
+			});
+			 
+
+			// If key is empty, generate guid
 			data.key = data.key || guid();
 
 			$('#myModal .modal-body')
@@ -173,7 +212,12 @@
 						.append($('<input>')
 							.attr('name', 'key')
 							.val(data.key)
-							.addClass('form-control'))));
+							.addClass('form-control')))
+					.append($('<div>')
+						.addClass('form-group')
+						.append($('<label>')
+							.text('Business Unit'))
+						.append(businessUnitSelect)));
 
 
 			$('#myModal .modal-title').text(i18n.t("admin.mg.edit_group"));
@@ -548,12 +592,13 @@
 
 		// Get all business units and machine_groups
 		var defer = $.when(
-			$.getJSON(baseUrl + 'admin/get_bu_data'),
-			$.getJSON(baseUrl + 'admin/get_mg_data')
+			$.getJSON(baseUrl + 'index.php?/admin/get_bu_data'),
+			$.getJSON(baseUrl + 'index.php?/admin/get_mg_data'),
+			$.getJSON(baseUrl + 'index.php?/module/machine/get_groups')
 			);
 
 		// Render when all requests are successful
-		defer.done(function(bu_data, mg_data){
+		defer.done(function(bu_data, mg_data, gr_data){
 			
 			machineGroups = mg_data[0];
 
@@ -569,6 +614,40 @@
 						.each(render)
 					);
 			});
+
+
+			// Create stray machine groups
+			var stray_groups = {};
+
+			// Collect machine_groups
+			$.each(machineGroups, function(index, mg){
+				stray_groups[mg.groupid] = mg;
+			});
+
+			// Find actual group in machine_groups
+			$.each(gr_data[0], function(index, grp){
+				stray_groups[grp.computer_group] = stray_groups[grp.computer_group] || {groupid: grp.computer_group,name:''}
+				stray_groups[grp.computer_group].cnt = grp.cnt;
+			});
+
+			// Remove groups that are in a Business Unit
+			$.each(bu_data[0], function(index, value){
+				$.each(value.machine_groups, function(index, grp){
+					var index = stray_groups[grp];
+					if (index) {
+						delete stray_groups[grp];
+					}
+				});
+			});
+
+			$.each(stray_groups, function(index, value){
+				$('#machine-groups')
+					.append($('<div>')
+						.text(function(){
+							value.cnt = value.cnt || 0;
+							return value.name + ' - ' + value.cnt + ' clients';
+						}))
+			})
 
 		});
 

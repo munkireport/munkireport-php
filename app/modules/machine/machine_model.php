@@ -68,13 +68,31 @@ class Machine_model extends Model {
 	 * @return array machine_groups
 	 * @author AvB
 	 **/
-	function get_groups()
+	function get_groups($count = FALSE)
 	{
-		$out = array(0 => 0);
-		$sql = "SELECT computer_group FROM machine GROUP BY computer_group";
+		if($count)
+		{
+			$out = array();
+		}
+		else
+		{
+			$out = array(0 => 0);
+		}
+		
+		$sql = "SELECT computer_group, COUNT(*) as cnt FROM machine GROUP BY computer_group";
 		foreach($this->query($sql) AS $obj)
 		{
-			$out[$obj->computer_group] = $obj->computer_group;
+			if($count)
+			{
+				$obj->computer_group = intval($obj->computer_group);
+				$obj->cnt = intval($obj->cnt);
+				$out[] = $obj;
+			}
+			else
+			{
+				$out[$obj->computer_group] = $obj->computer_group;
+			}
+			
 		}
 
 		return $out;

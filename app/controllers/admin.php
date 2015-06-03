@@ -56,7 +56,7 @@ class admin extends Controller
 		{
 			$machine_group = new Machine_group;
 			$groupid = $_POST['groupid'];
-			$out['groupid'] = $groupid;
+			$out['groupid'] = intval($groupid);
 
 			foreach($_POST as $property => $val)
 			{
@@ -64,6 +64,17 @@ class admin extends Controller
 				// Skip groupid
 				if($property == 'groupid')
 				{
+					continue;
+				}
+
+				// Update business unit membership
+				if($property == 'business_unit')
+				{
+					$bu = new Business_unit;
+					$bu->retrieve_one("property='machine_group' AND value=?", $_POST['groupid']);
+					$bu->unitid = $val;
+					$bu->save();
+					$out['business_unit'] = intval($val);
 					continue;
 				}
 
