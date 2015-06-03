@@ -51,6 +51,9 @@ class auth extends Controller
 		$login = isset($_POST['login']) ? $_POST['login'] : '';
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
 
+		// User is a member of these groups
+		$groups = array();
+
 		// Loop through authentication mechanisms
 		// Break when we have a match
 		foreach($this->auth_mechanisms as $mechanism => $auth_data)
@@ -64,11 +67,26 @@ class auth extends Controller
 					break 2;
 
 				case 'config': // Config authentication
-					if($_POST && isset($auth_data[$login]))
+					if($login && $password)
 					{
-						$t_hasher = $this->load_phpass();
-						$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
-						break 2;
+						if(isset($auth_data[$login]))
+						{
+							$t_hasher = $this->load_phpass();
+							$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
+							
+							if($check)
+							{
+								// Get group memberships
+								foreach(conf('groups', array()) AS $groupname => $members)
+								{
+									if(in_array($login, $members))
+									{
+										$groups[] = $groupname;
+									}
+								}
+							}
+							break 2;
+						}
 					}
 					break;
 
@@ -87,6 +105,16 @@ class auth extends Controller
 								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
 								{
 									$check = TRUE;
+
+									// If business units enabled, get group memberships
+									if(conf('enable_business_units'))
+									{
+										if( $user_data = $ldap_auth_obj->getUserData($login))
+										{
+											$groups = $user_data['grps'];
+										}
+									}
+
 									break 2;
 								}
 							}
@@ -103,6 +131,13 @@ class auth extends Controller
 										if (in_array($group, $admin_groups))
 										{
 											$check = TRUE;
+
+											// If business units enabled, store group memberships
+											if(conf('enable_business_units'))
+											{
+												$groups = $user_data['grps'];
+											}
+											
 											break 3;
 										}
 									}
@@ -145,6 +180,13 @@ class auth extends Controller
 								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
 								{
 									$check = TRUE;
+
+									// If business units enabled, get group memberships
+									if(conf('enable_business_units'))
+									{
+										$groups = $adldap->user()->groups($login);
+									}
+
 									break 2;
 								}
 							}
@@ -183,6 +225,7 @@ class auth extends Controller
 		if($check)
 		{
 			$_SESSION['user'] = $login;
+			$_SESSION['groups'] = $groups;
 			$_SESSION['auth'] = $mechanism;
 			
 			$this->set_session_props();
@@ -217,41 +260,121 @@ class auth extends Controller
 	function set_session_props($show = false)
 	{
 		// Initialize session
-		$is_admin = $this->authorized('global');
+		$this->authorized();
 
-		// Lookup user in business units
-		$bu = new Business_unit;
-
-		// Default role: no privs
-		$_SESSION['role'] = 'nobody';
-
-		if($bu->retrieve_one("property IN ('admin', 'manager', 'user') AND value=?", $_SESSION['user']))
+		// Check if we are in a session
+		if( ! isset($_SESSION['auth']))
 		{
-			$_SESSION['role'] = $bu->property; // admin, manager, user
-			$_SESSION['business_unit'] = $bu->unitid;
+			echo 'Not authorized'; // Todo: return json?
+			return;
 		}
-		elseif($_SESSION['auth'] == 'noauth' OR ($_SESSION['auth'] == 'config' && $is_admin))
+
+		// Default role is user
+		$_SESSION['role'] = 'user';
+		$_SESSION['role_why'] = 'Default role';
+
+		// Find role in config for current user
+		foreach(conf('roles', array()) AS $role => $members)
 		{
-			$_SESSION['role'] = 'admin';
+			// Check for wildcard
+			if(in_array('*', $members))
+			{
+				$_SESSION['role'] = $role;
+				$_SESSION['role_why'] = 'Matched on wildcard (*) in '.$role;
+				break;
+			}
+
+			// Check if user or group is present in members
+			foreach($members as $member)
+			{
+				if(strpos($member, '@') === 0)
+				{
+					// groups (start with @)
+					if(in_array(substr($member, 1), $_SESSION['groups']))
+					{
+						$_SESSION['role'] = $role;
+						$_SESSION['role_why'] = 'member of ' . $member;
+
+						break 2;
+					}
+				}
+				else
+				{
+					// user
+					if($member == $_SESSION['user'])
+					{
+						$_SESSION['role'] = $role;
+						$_SESSION['role_why'] = $member. ' in "'.$role.'" role array';
+						break 2;
+					}
+				}
+			}
+		}
+
+		// Check if Business Units are enabled in the config file
+		$bu_enabled = conf('enable_business_units', FALSE);
+
+		// Check if user is global admin
+		if($_SESSION['auth'] == 'noauth' OR $_SESSION['role'] == 'admin')
+		{
+			unset($_SESSION['business_unit']);
+		}
+		elseif( ! $bu_enabled)
+		{
+			// Regular user w/o business units enabled
+			unset($_SESSION['business_unit']);
+		}
+		elseif($bu_enabled)
+		{
+			// Authorized user, not in business unit
+			$_SESSION['role'] = 'nobody';
+			$_SESSION['role_why'] = 'Default role for Business Units';
 			$_SESSION['business_unit'] = 0;
+
+			// Lookup user in business units
+			$bu = new Business_unit;
+			if($bu->retrieve_one("property IN ('manager', 'user') AND value=?", $_SESSION['user']))
+			{
+				$_SESSION['role'] = $bu->property; // manager, user
+				$_SESSION['role_why'] = $_SESSION['user'].' found in Business Unit '. $bu->unitid;
+				$_SESSION['business_unit'] = $bu->unitid;
+			}
+			else
+			{
+				// Lookup groups in Business Units
+				foreach($_SESSION['groups'] AS $group)
+				{
+					if($bu->retrieve_one("property IN ('manager', 'user') AND value=?", '@' . $group))
+					{
+						$_SESSION['role'] = $bu->property; // manager, user
+						$_SESSION['role_why'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
+						$_SESSION['business_unit'] = $bu->unitid;
+						break;
+					}
+				}
+			}
 		}
 
 		// Set machine_groups
-		if($_SESSION['role'] == 'admin')
+		if($_SESSION['role'] == 'admin' OR ! $bu_enabled)
 		{
+			// Can access all defined groups (from machine_group)
+			// and used groups (from machine)
 			$mg = new Machine_group;
-			$_SESSION['machine_groups'] = $mg->get_group_ids();
-			$_SESSION['machine_groups'][] = 0; // Add group 0
+			$machine = new Machine_model;
+			$_SESSION['machine_groups'] = array_merge($machine->get_groups(), $mg->get_group_ids());
 		}
 		else
 		{
+			// Only get machine_groups for business unit
 			$_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
 		}
 
+		// Show current session info
 		if($show)
 		{
+			echo '<pre>';
 			print_r($_SESSION);
-			echo 'Is admin: '. ($is_admin ? 'yes' : 'no');
 		}
 	}
 

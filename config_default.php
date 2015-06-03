@@ -134,15 +134,27 @@
 
 	/*
 	|===============================================
-	| Authorization
+	| Role Based Authorization
 	|===============================================
 	|
-	| Authorize people by listing them in the appropriate array.
-	| An entry containing a star (*) signifies that everyone is authorized
-	| which is the default setting.
+	| Authorize actions by listing roles appropriate array.
+	| Don't change these unless you know what you're doing, these roles are
+	| also used by the Business Units
 	|
 	*/
-	$conf['authorization']['delete_machine'] = array('*');
+    $conf['authorization']['delete_machine'] = array('admin', 'manager');
+    $conf['authorization']['global'] = array('admin');
+
+    /*
+	|===============================================
+	| Roles
+	|===============================================
+	|
+	| Authorize actions by listing roles appropriate array.
+	| Don't change these unless you know what you're doing
+	|
+	*/
+	$conf['roles']['admin'] = array('*');
 
 	/*
 	|===============================================

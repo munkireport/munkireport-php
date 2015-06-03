@@ -58,41 +58,25 @@ class Controller extends KISS_Controller
 		}
 
 		// Check if we have a valid user
-		if( ! isset($_SESSION['user']))
+		if( ! isset($_SESSION['role']))
 		{
 			return FALSE;
-		}
-
-		// Add to array
-		$me = array($_SESSION['user']);
-
-		// Check if this is a BU member
-		if(isset($_SESSION['business_unit']))
-		{
-			// Add role to array
-			$me[] = $_SESSION['role']; // admin, manager, user
 		}
 
 		// Check for a specific authorization item
 		if($what)
 		{
-			foreach(conf('authorization', array()) as $item => $members)
+			foreach(conf('authorization', array()) as $item => $roles)
 			{
 				if($what === $item)
 				{
-					// Check if there is an 'authorized for all' item
-					if( in_array('*', $members))
+					// Check if there is a matching role
+					if( in_array($_SESSION['role'], $roles))
 					{
 						return TRUE;
 					}
 
-					// Check if user or role is present in members
-					if( array_intersect($me, $members))
-					{
-						return TRUE;
-					}
-
-					// Role/person not found: unauthorized!
+					// Role not found: unauthorized!
 					return FALSE;
 				}
 			}
