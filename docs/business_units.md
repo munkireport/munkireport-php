@@ -2,7 +2,7 @@
 
 Business Units are a way to use one munkireport instance for more than one business/group. Business Units can have:
 
-* One or more Machine Groups (which contain Machines)
+* One or more Machine Groups (which reference Machines with the same computer_group)
 * One or more Users (who can visit the unit pages)
 * One or more Managers (who can add/delete users, add/delete Machine Groups)
 

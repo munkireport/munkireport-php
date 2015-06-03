@@ -150,11 +150,31 @@
 	| Roles
 	|===============================================
 	|
-	| Authorize actions by listing roles appropriate array.
-	| Don't change these unless you know what you're doing
+	| Add users or groups to the appropriate roles array.
 	|
 	*/
 	$conf['roles']['admin'] = array('*');
+
+    /*
+	|===============================================
+	| Local groups
+	|===============================================
+	|
+	| Create local groups, add users to groups.
+	|
+	*/
+	//$conf['groups']['admin_users'] = array();
+
+    /*
+	|===============================================
+	| Business Units
+	|===============================================
+	|
+	| Set to TRUE to enable Business Units
+	| For more information, see docs/business_units.md
+	|
+	*/
+	$conf['enable_business_units'] = FALSE;
 
 	/*
 	|===============================================
