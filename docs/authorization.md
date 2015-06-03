@@ -1,4 +1,4 @@
-# About Authorization
+# Authorization, Roles and Groups
 
 MunkiReport uses Role Based authorization model, which means that users can do things based on they're role.
 At the moment there are 3 roles defined:
@@ -40,3 +40,11 @@ $conf['groups']['admin_group'] = array('your_username');
 ```
 
 To reference this group in the roles array, prefix the name with @. You can also use this group in Business Units. It is not possible to nest groups
+
+## View session variables
+
+If you want to see the actual authorization settings, and the reason a user got a certain role, you can view the current settings here:
+
+```
+http://example.com/index.php?/auth/set_session_props/1
+```

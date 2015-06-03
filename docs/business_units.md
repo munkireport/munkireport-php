@@ -6,6 +6,16 @@ Business Units are a way to use one munkireport instance for more than one busin
 * One or more Users (who can visit the unit pages)
 * One or more Managers (who can add/delete users, add/delete Machine Groups)
 
+If you want to enable Business Units, add the following line to config.php:
+
+```php
+$conf['enable_business_units'] = TRUE;
+```
+
+Prefix groups with @ for example:
+
+@ldap_group_x will allow all members of ldap_group_x
+
 ## Technical Reference
 
 The way Business Units (BU) are implemented is by adding restrictions on database queries for the current user. On login, the appropriate BU and Machine Groups are added to the user's $_SESSION variables:
