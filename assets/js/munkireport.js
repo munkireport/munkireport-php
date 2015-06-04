@@ -141,21 +141,21 @@ function dumpj(obj)
     alert(JSON.stringify(out));
   }
 
-// Filesize formatter
+// Filesize formatter (uses 1000 as base)
 function fileSize(size, decimals) {
 	if(decimals == undefined){decimals = 0};
-	var i = Math.floor( Math.log(size) / Math.log(1024) );
-	return ( size / Math.pow(1024, i) ).toFixed(decimals) * 1 + ' ' + ['', 'K', 'M', 'G', 'T', 'P', 'E'][i] + 'B';
+	var i = Math.floor( Math.log(size) / Math.log(1000) );
+	return ( size / Math.pow(1000, i) ).toFixed(decimals) * 1 + ' ' + ['', 'K', 'M', 'G', 'T', 'P', 'E'][i] + 'B';
 }
 
-// Convert human readable filesize to bytes
+// Convert human readable filesize to bytes (uses 1000 as base)
 function humansizeToBytes(size) {
 	var obj = size.match(/(\d+|[^\d]+)/g), res=0;
 	if(obj) {
 		sizes='BKMGTPE';
 		var i = sizes.indexOf(obj[1][0]);
 		if(i != -1) {
-			res = obj[0] * Math.pow(1024, i);
+			res = obj[0] * Math.pow(1000, i);
 		}
 	}
 	return res;
