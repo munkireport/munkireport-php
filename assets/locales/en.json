@@ -28,7 +28,8 @@
 		"remove_bu": {
 			"title": "Remove Business Unit",
 			"content": "When you remove this business unit, all related data will be removed. You cannot undo this."
-		}
+		},
+		"unassigned_groups": "Unassigned Groups"
 	},
 	"all": "All",
 	"auth": {

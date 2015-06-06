@@ -205,7 +205,7 @@
 			 
 
 			// If key is empty, generate guid
-			data.key = data.key || guid();
+			data.key = data.key || ''; //guid();
 
 			$('#myModal .modal-body')
 				.empty()
@@ -677,7 +677,7 @@
 							.addClass('panel-heading')
 							.append($('<h3>')
 								.addClass('name panel-title')
-								.text('Stray Groups')))
+								.text(i18n.t('admin.unassigned_groups'))))
 						.append($('<div>')
 							.addClass('panel-body')));
 
