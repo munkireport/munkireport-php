@@ -11,58 +11,6 @@ new Bluetooth_model;
   <div class="row">
 
   	<div class="col-lg-12">
-		<script type="text/javascript">
-
-		$(document).on('appReady', function() {
-
-				// Get modifiers from data attribute
-				var myCols = [], // Colnames
-					mySort = [], // Initial sort
-					hideThese = [], // Hidden columns
-					col = 0; // Column counter
-
-				$('.table th').map(function(){
-
-					  myCols.push({'mData' : $(this).data('colname')});
-
-					  if($(this).data('sort'))
-					  {
-					  	mySort.push([col, $(this).data('sort')])
-					  }
-
-					  if($(this).data('hide'))
-					  {
-					  	hideThese.push(col);
-					  }
-
-					  col++
-				});
-
-			    oTable = $('.table').dataTable( {
-			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
-			        "aaSorting": mySort,
-			        "aoColumns": myCols,
-			        "aoColumnDefs": [
-			        	{ 'bVisible': false, "aTargets": hideThese }
-					],
-			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-			        	// Update name in first column to link
-			        	var name=$('td:eq(0)', nRow).html();
-			        	if(name == ''){name = "No Name"};
-			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_bluetooth-tab');
-			        	$('td:eq(0)', nRow).html(link);
-			        	
-			        	// Translate bool. todo function for any bool we find
-                        var status=$('td:eq(7)', nRow).html();
-                        status = status == 1 ? 'Yes' : 
-                        (status === '0' ? 'No' : '')
-                        $('td:eq(7)', nRow).html(status)
-
-				    }
-			    } );
-			} );
-		</script>
 
 		  <h3><span data-i18n="listing.bluetooth.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
@@ -87,5 +35,66 @@ new Bluetooth_model;
     </div> <!-- /span 12 -->
   </div> <!-- /row -->
 </div>  <!-- /container -->
+
+<script type="text/javascript">
+
+	$(document).on('appUpdate', function(e){
+
+		var oTable = $('.table').DataTable();
+		oTable.ajax.reload();
+		return;
+
+	});
+
+	$(document).on('appReady', function() {
+
+		// Get modifiers from data attribute
+		var myCols = [], // Colnames
+			mySort = [], // Initial sort
+			hideThese = [], // Hidden columns
+			col = 0; // Column counter
+
+		$('.table th').map(function(){
+
+			  myCols.push({'mData' : $(this).data('colname')});
+
+			  if($(this).data('sort'))
+			  {
+			  	mySort.push([col, $(this).data('sort')])
+			  }
+
+			  if($(this).data('hide'))
+			  {
+			  	hideThese.push(col);
+			  }
+
+			  col++
+		});
+
+	    oTable = $('.table').dataTable( {
+	        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
+	        "aaSorting": mySort,
+	        "aoColumns": myCols,
+	        "aoColumnDefs": [
+	        	{ 'bVisible': false, "aTargets": hideThese }
+			],
+	        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+	        	// Update name in first column to link
+	        	var name=$('td:eq(0)', nRow).html();
+	        	if(name == ''){name = "No Name"};
+	        	var sn=$('td:eq(1)', nRow).html();
+	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_bluetooth-tab');
+	        	$('td:eq(0)', nRow).html(link);
+	        	
+	        	// Translate bool. todo function for any bool we find
+                var status=$('td:eq(7)', nRow).html();
+                status = status == 1 ? 'Yes' : 
+                (status === '0' ? 'No' : '')
+                $('td:eq(7)', nRow).html(status)
+
+		    }
+	    });
+	});
+</script>
 
 <?php $this->view('partials/foot'); ?>

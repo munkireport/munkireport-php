@@ -12,70 +12,6 @@ new Timemachine_model;
   <div class="row">
 
   	<div class="col-lg-12">
-		<script type="text/javascript">
-		$(document).on('appReady', function(e, lang) {
-				// Get modifiers from data attribute
-				var myCols = [], // Colnames
-					mySort = [], // Initial sort
-					hideThese = [], // Hidden columns
-					col = 0; // Column counter
-				$('.table th').map(function(){
-					  myCols.push({'mData' : $(this).data('colname')});
-					  if($(this).data('sort'))
-					  {
-					  	mySort.push([col, $(this).data('sort')])
-					  }
-					  if($(this).data('hide'))
-					  {
-					  	hideThese.push(col);
-					  }
-					  col++
-				});
-			    oTable = $('.table').dataTable( {
-			        "sAjaxSource": "<?=url('datatables/data')?>",
-			        "aaSorting": mySort,
-			        "aoColumns": myCols,
-			        "aoColumnDefs": [
-			        	{ 'bVisible': false, "aTargets": hideThese }
-					],
-			        "fnServerParams": function ( aoData ) {
-				    	// Only search records where 'condition' is not empty
-				    	aoData.push( { "name": "mrColNotEmpty", "value": "timemachine#id" } );
-				    },  
-				    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-			        	// Update name in first column to link
-			        	var name=$('td:eq(0)', nRow).html();
-			        	if(name == ''){name = "No Name"};
-			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_power-tab');
-			        	$('td:eq(0)', nRow).html(link);
-
-			        	// Format start date
-			        	var date = $('td:eq(3)', nRow).html();
-			        	$('td:eq(3)', nRow).html(moment(date + 'Z').fromNow());
-
-			        	// Format duration
-			        	$('td:eq(4)', nRow).html(moment.duration(parseInt($('td:eq(4)', nRow).html()), "seconds").humanize());
-
-			        	var date = $('td:eq(5)', nRow).html();
-			        	if(date){
-				        	$('td:eq(5)', nRow).html(moment(date + 'Z').fromNow());
-			        	}
-			        	
-						// Format Check-In timestamp
-						var checkin = parseInt($('td:eq(7)', nRow).html());
-						var date = new Date(checkin * 1000);
-						$('td:eq(7)', nRow).html(moment(date).fromNow());
-				    }
-			    } );
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
-			    
-			} );
-		</script>
 
 		  <h3><span data-i18n="listing.timemachine.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
@@ -102,4 +38,79 @@ new Timemachine_model;
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
+<script type="text/javascript">
+
+	$(document).on('appUpdate', function(e){
+
+		var oTable = $('.table').DataTable();
+		oTable.ajax.reload();
+		return;
+
+	});
+
+	$(document).on('appReady', function(e, lang) {
+		// Get modifiers from data attribute
+		var myCols = [], // Colnames
+			mySort = [], // Initial sort
+			hideThese = [], // Hidden columns
+			col = 0; // Column counter
+		$('.table th').map(function(){
+			  myCols.push({'mData' : $(this).data('colname')});
+			  if($(this).data('sort'))
+			  {
+			  	mySort.push([col, $(this).data('sort')])
+			  }
+			  if($(this).data('hide'))
+			  {
+			  	hideThese.push(col);
+			  }
+			  col++
+		});
+	    oTable = $('.table').dataTable( {
+	        "sAjaxSource": "<?=url('datatables/data')?>",
+	        "aaSorting": mySort,
+	        "aoColumns": myCols,
+	        "aoColumnDefs": [
+	        	{ 'bVisible': false, "aTargets": hideThese }
+			],
+	        "fnServerParams": function ( aoData ) {
+		    	// Only search records where 'condition' is not empty
+		    	aoData.push( { "name": "mrColNotEmpty", "value": "timemachine#id" } );
+		    },  
+		    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+	        	// Update name in first column to link
+	        	var name=$('td:eq(0)', nRow).html();
+	        	if(name == ''){name = "No Name"};
+	        	var sn=$('td:eq(1)', nRow).html();
+	        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_power-tab');
+	        	$('td:eq(0)', nRow).html(link);
+
+	        	// Format start date
+	        	var date = $('td:eq(3)', nRow).html();
+	        	$('td:eq(3)', nRow).html(moment(date + 'Z').fromNow());
+
+	        	// Format duration
+	        	$('td:eq(4)', nRow).html(moment.duration(parseInt($('td:eq(4)', nRow).html()), "seconds").humanize());
+
+	        	var date = $('td:eq(5)', nRow).html();
+	        	if(date){
+		        	$('td:eq(5)', nRow).html(moment(date + 'Z').fromNow());
+	        	}
+	        	
+				// Format Check-In timestamp
+				var checkin = parseInt($('td:eq(7)', nRow).html());
+				var date = new Date(checkin * 1000);
+				$('td:eq(7)', nRow).html(moment(date).fromNow());
+		    }
+	    } );
+	    // Use hash as searchquery
+	    if(window.location.hash.substring(1))
+	    {
+			oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
+	    }
+	    
+	} );
+</script>
+
 <?$this->view('partials/foot')?>
+
