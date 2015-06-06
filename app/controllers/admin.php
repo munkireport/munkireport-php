@@ -10,7 +10,7 @@ class admin extends Controller
 
 		if( ! $this->authorized('global'))
 		{
-			redirect('unit');
+			die('You need to be admin');
 		}
 
 	} 
@@ -73,6 +73,8 @@ class admin extends Controller
 					$bu = new Business_unit;
 					$bu->retrieve_one("property='machine_group' AND value=?", $_POST['groupid']);
 					$bu->unitid = $val;
+					$bu->property = 'machine_group';
+					$bu->value = $_POST['groupid'];
 					$bu->save();
 					$out['business_unit'] = intval($val);
 					continue;
@@ -103,6 +105,32 @@ class admin extends Controller
 		else
 		{
 			$out['error'] = 'Groupid is missing';
+		}
+
+		$obj = new View();
+        $obj->view('json', array('msg' => $out));
+
+	}
+
+	//===============================================================
+
+	/**
+	 * Remove machine group
+	 *
+	 * @author 
+	 **/
+	function remove_machine_group($groupid = '')
+	{
+		$out = array();
+
+		if($groupid !== ''){
+			$mg = new Machine_group;
+			if($out['success'] = $mg->delete_where('groupid=?', $groupid))
+			{
+				// Delete from business unit
+				$bu = new Business_unit;
+				$out['success'] = $bu->delete_where("property='machine_group' AND value=?", $groupid);
+			}
 		}
 
 		$obj = new View();

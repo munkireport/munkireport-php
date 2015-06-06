@@ -39,7 +39,6 @@ var showFilterModal = function(e){
 
 	var updateGroup = function(){
 
-		console.log($(this).data().groupid)
 		var checked = this.checked,
 			settings = {
 				filter: 'machine_group',
@@ -54,12 +53,11 @@ var showFilterModal = function(e){
 	}
 	// Get all business units and machine_groups
 	var defer = $.when(
-		$.getJSON(baseUrl + 'unit/get_data'),
 		$.getJSON(baseUrl + 'unit/get_machine_groups')
 		);
 
 	// Render when all requests are successful
-	defer.done(function(bu_data, mg_data){
+	defer.done(function(mg_data){
 
 		// Set texts
 		$('#myModal .modal-title')
@@ -81,7 +79,7 @@ var showFilterModal = function(e){
 
 		// Add machine groups
 		$.each(mg_data[0], function(index, obj){
-			if(obj.groupid){
+			if(obj.groupid !== undefined){
 				$('#myModal .modal-body')
 					.append($('<div>')
 						.addClass('checkbox')

@@ -650,7 +650,9 @@ abstract class KISS_Model
 	{
 		$dbh=$this->getdbh();
 		if ( is_scalar( $bindings ) )
-			$bindings=$bindings ? array( $bindings ) : array();
+		{
+			$bindings = array( $bindings );
+		}
 
 		$sql = 'DELETE FROM '.$this->enquote( $this->tablename );
 		if ( isset( $wherewhat ) && isset( $bindings ) )

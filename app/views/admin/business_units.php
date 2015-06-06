@@ -4,16 +4,16 @@
 
   <div class="row">
 
-  	<div class="col-lg-12">
 
-		<h3 id="bu_title" data-i18n="admin.bu_overview"></h3>
+	<h3 class="col-lg-12" id="bu_title" data-i18n="admin.bu_overview"></h3>
 
-		<div id="bu_units"></div>
-		<div data-i18n="listing.loading" id="loading"></div>
 
-		<div id="machine-groups">Stray groups - get all groupids from machine</div>
+	<div id="bu_units"></div>
+	<div data-i18n="listing.loading" id="loading"></div>
 
-    </div> <!-- /span 12 -->
+    <div class="col-lg-12">
+    	<div id="machine-groups"></div>
+    </div>
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
@@ -125,6 +125,27 @@
 			e && e.preventDefault();
 
 			var data = $(this).data(),
+			deleteMachineGroup = function(e){
+				e && e.preventDefault();
+
+				// Show a warning
+				if(confirm('Are you sure?'))
+				{
+					var groupid = data.groupid;
+					var url = baseUrl + 'admin/remove_machine_group/' + groupid;
+					$.getJSON(url, function(data){
+						if(data.success == true)
+						{
+							// Dismiss modal
+							$('#myModal').modal('hide');
+							// Update listing
+							$('.machine-group-' + groupid).remove();
+						}
+					});	
+
+				}
+				// Delete
+			},
 			saveMachineGroup = function(e){
 
 				e && e.preventDefault();
@@ -217,10 +238,14 @@
 						.addClass('form-group')
 						.append($('<label>')
 							.text('Business Unit'))
-						.append(businessUnitSelect)));
+						.append(businessUnitSelect))
+					.append($('<button>')
+						.addClass('btn btn-danger')
+						.click(deleteMachineGroup)
+						.text(i18n.t('delete'))));
 
 
-			$('#myModal .modal-title').text(i18n.t("admin.mg.edit_group"));
+			$('#myModal .modal-title').text(i18n.t("admin.mg.edit_group") + ' ' + data.groupid);
 
 			$('#myModal button.ok')
 				.empty()
@@ -640,14 +665,37 @@
 				});
 			});
 
-			$.each(stray_groups, function(index, value){
+			console.log(stray_groups);
+
+			if( ! $.isEmptyObject(stray_groups))
+			{
 				$('#machine-groups')
+					.empty()
 					.append($('<div>')
-						.text(function(){
-							value.cnt = value.cnt || 0;
-							return value.name + ' - ' + value.cnt + ' clients';
-						}))
-			})
+						.addClass('panel panel-default')
+						.append($('<div>')
+							.addClass('panel-heading')
+							.append($('<h3>')
+								.addClass('name panel-title')
+								.text('Stray Groups')))
+						.append($('<div>')
+							.addClass('panel-body')));
+
+				$.each(stray_groups, function(index, value){
+					$('#machine-groups .panel-body')
+						.append($('<div>')
+							.append($('<a>')
+								.addClass('machine-group-' + value.groupid)
+								.data(value)
+								.click(editMachinegroup)
+								.text(function(){
+									value.cnt = value.cnt || 0;
+									return value.name + ' - ' + value.cnt + ' clients';
+								})));
+				});
+			}
+
+			
 
 		});
 

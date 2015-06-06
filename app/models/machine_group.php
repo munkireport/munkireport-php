@@ -90,6 +90,11 @@ class Machine_group extends Model {
 
         }
 
+        if( ! isset($obj))
+        {
+            return [];
+        }
+
         // Add filter value
         $out[$obj->groupid]['checked'] = TRUE;
 
