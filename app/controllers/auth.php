@@ -362,7 +362,7 @@ class auth extends Controller
 			// and used groups (from machine)
 			$mg = new Machine_group;
 			$machine = new Machine_model;
-			$_SESSION['machine_groups'] = array_merge($machine->get_groups(), $mg->get_group_ids());
+			$_SESSION['machine_groups'] = array_unique(array_merge($machine->get_groups(), $mg->get_group_ids()));
 		}
 		else
 		{
