@@ -9,7 +9,7 @@
 // 'view_vars' => array with variables to pass to the views
 // 'badge' => id of a badge for this tab
 $tab_list = array(
-	'summary' => array('view' => 'client/machine_info', 'i18n' => 'client.tab.summary'),
+	'summary' => array('view' => 'client/summary_tab', 'i18n' => 'client.tab.summary'),
 	'munki' => array('view' => 'client/munki_tab', 'i18n' => 'client.tab.munki'),
 	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
 	'third-party-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 0), 'i18n' => 'client.tab.third_party_software', 'badge' => 'history-cnt-0'),
@@ -20,8 +20,7 @@ $tab_list = array(
 	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
 	'bluetooth-tab' => array('view' => 'client/bluetooth_tab', 'i18n' => 'client.tab.bluetooth'),
 	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
-	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles'),
-	'ard-tab' => array('view' => 'client/ard_tab', 'i18n' => 'client.tab.ard')
+	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles')
 		);
 
 // Add custom tabs
@@ -38,36 +37,41 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 		<div class="col-lg-12">
 
-			<div class="panel panel-default">
-		        <div class="panel-heading">
-		            <h3 class="panel-title clearfix">
-		            	<div class="pull-left" style="padding-top:7.5px">
-			            	<i class="fa fa-laptop fa-fw"></i>
-			            	<span id="computer_name"></span>
-			            </div>
-						<div class="btn-group pull-right" style="margin-right:5px">
-							<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-							<span data-i18n="show"></span> <span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu client-tabs" role="tablist">
-								<?foreach($tab_list as $name => $data):?>
+			<div class="input-group">
 
-									<li>
-										<a href="#<?php echo $name?>" data-toggle="tab"><span data-i18n="<?php echo $data['i18n']?>"></span>
-										<?php if(isset($data['badge'])):?> 
-										 <span id="<?php echo $data['badge']?>" class="badge">0</span>
-										<?php endif?>
-										</a>
-									</li>
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<span data-i18n="show" class="hidden-sm hidden-xs"></span>
+						<i class="fa fa-list fa-fw"></i>
+					</button>
+					<ul class="dropdown-menu client-tabs" role="tablist">
+							<?foreach($tab_list as $name => $data):?>
 
-								<?endforeach?>
+								<li>
+									<a href="#<?php echo $name?>" data-toggle="tab"><span data-i18n="<?php echo $data['i18n']?>"></span>
+									<?php if(isset($data['badge'])):?> 
+									 <span id="<?php echo $data['badge']?>" class="badge">0</span>
+									<?php endif?>
+									</a>
+								</li>
 
-								<li class="divider"></li>
-							</ul>
-						</div>
-		            </h3>
-		        </div>
-		    </div><!-- /panel -->
+							<?endforeach?>
+
+							<li class="divider"></li>
+						</ul>
+				</div><!-- /btn-group -->
+
+				<input type="text" class="form-control mr-computer_name_input" readonly>
+
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<i class="fa fa-laptop fa-fw"></i>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right" role="tablist" id="client_links">
+					</ul>
+				</div><!-- /btn-group -->
+
+			</div>
 
 		</div><!-- /col -->
 
@@ -90,6 +94,9 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 			<script>
 			$(document).on('appReady', function(e, lang) {
 
+				// Set table classes
+				$('table').addClass('table table-condensed table-striped');
+
 				// Fix for using a regular dropdown for tabs
 				$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
@@ -108,22 +115,25 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 					// Set properties based on id
 					$.each(machineData, function(prop, val){
-						$('#'+prop).html(val);
+						$('.mr-'+prop).html(val);
 					});
 
+					// Set computer name value
+					$('.mr-computer_name_input').val(machineData.computer_name);
+
 					// Format OS Version
-					$('#os_version').html(integer_to_version(machineData.os_version));
+					$('.mr-os_version').html(integer_to_version(machineData.os_version));
 
 
 					// Format filesizes
-					$('#TotalSize').html(fileSize(machineData.TotalSize, 1));
-					$('#UsedSize').html(fileSize(machineData.TotalSize - machineData.FreeSpace, 1));
-					$('#FreeSpace').html(fileSize(machineData.FreeSpace, 1));
+					$('.mr-TotalSize').html(fileSize(machineData.TotalSize, 1));
+					$('.mr-UsedSize').html(fileSize(machineData.TotalSize - machineData.FreeSpace, 1));
+					$('.mr-FreeSpace').html(fileSize(machineData.FreeSpace, 1));
 
 					// Smart status
-					$('#SMARTStatus').html(machineData.SMARTStatus);
+					$('.mr-SMARTStatus').html(machineData.SMARTStatus);
 					if(machineData.SMARTStatus == 'Failing'){
-						$('#SMARTStatus').addClass('label label-danger');
+						$('.mr-SMARTStatus').addClass('label label-danger');
 					}
 
 					// Warranty status
@@ -150,33 +160,33 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					}
 
 					
-					$('#warranty_status').addClass(cls).html(msg);
+					$('.mr-warranty_status').addClass(cls).html(msg);
 
 					// Uptime
 					if(machineData.uptime > 0){
 						var uptime = moment((machineData.timestamp - machineData.uptime) * 1000);
-						$('#uptime').html('<time title="'+i18n.t('boot_time')+': '+uptime.format('LLLL')+'">'+uptime.fromNow(true)+'</time>');
+						$('.mr-uptime').html('<time title="'+i18n.t('boot_time')+': '+uptime.format('LLLL')+'">'+uptime.fromNow(true)+'</time>');
 					}else{
-						$('#uptime').html(i18n.t('unavailable'));
+						$('.mr-uptime').html(i18n.t('unavailable'));
 					}
 
 					// Registration date
 					var msecs = moment(machineData.reg_timestamp * 1000);
-					$('#reg_date').append('<time title="'+msecs.format('LLLL')+'" datetime="<?php echo $report->reg_timestamp; ?>">'+msecs.fromNow()+'</time>');
+					$('.mr-reg_date').append('<time title="'+msecs.format('LLLL')+'" datetime="<?php echo $report->reg_timestamp; ?>">'+msecs.fromNow()+'</time>');
 
 					// Check-in date
 					var msecs = moment(machineData.timestamp * 1000);
-					$('#check-in_date').append('<time title="'+msecs.format('LLLL')+'" datetime="<?php echo $report->reg_timestamp; ?>">'+msecs.fromNow()+'</time>');
+					$('.mr-check-in_date').append('<time title="'+msecs.format('LLLL')+'" datetime="<?php echo $report->reg_timestamp; ?>">'+msecs.fromNow()+'</time>');
 
 					// Set tooltips
-					$( "dd time" ).each(function( index ) {
+					$( "time" ).each(function( index ) {
 							$(this).tooltip().css('cursor', 'pointer');
 					});
 					
 					// Remote control links
 					$.getJSON( baseUrl + 'index.php?/clients/get_links', function( links ) {
 						$.each(links, function(prop, val){
-							$('#client_links').append('<a class="btn btn-default" href="'+(val.replace(/%s/, machineData.remote_ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a>');
+							$('#client_links').append('<li><a href="'+(val.replace(/%s/, machineData.remote_ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a></li>');
 						});
 					});
 
@@ -185,13 +195,76 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 				// Get estimate_manufactured_date
 				$.getJSON( baseUrl + 'index.php?/module/warranty/estimate_manufactured_date/' + serialNumber, function( data ) {
-					$('#manufacture_date').html(data.date)
+					$('.mr-manufacture_date').html(data.date)
 				});
 
 				// Get certificate data
 				$.getJSON( baseUrl + 'index.php?/module/certificate/get_data/' + serialNumber, function( data ) {
 					console.log(data);
 				});
+
+				// Get certificate data
+				$.getJSON( baseUrl + 'index.php?/module/timemachine/get_data/' + serialNumber, function( data ) {
+					if(data.id !== '')
+					{
+						$('table.mr-timemachine-table')
+							.empty()
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('listing.timemachine.last_success')))
+								.append($('<td>')
+									.text(function(){
+										if(data.last_success){
+											return moment(data.last_success + 'Z').fromNow();
+										}
+									})))
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('listing.timemachine.last_failure')))
+								.append($('<td>')
+									.text(function(){
+										if(data.last_failure){
+											return moment(data.last_failure + 'Z').fromNow();
+										}
+									})))
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('listing.timemachine.last_failure_msg')))
+								.append($('<td>')
+									.text(data.last_failure_msg)))
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('listing.timemachine.duration')))
+								.append($('<td>')
+									.text(moment.duration(data.duration, "seconds").humanize())));
+					}
+					else{
+						$('table.mr-timemachine-table')
+							.empty()
+							.append($('<tr>')
+								.append($('<td>')
+									.attr('colspan', 2)
+									.text(i18n.t('no_data'))))
+					}
+
+				});
+
+
+				// Get ARD data
+				$.getJSON( baseUrl + 'index.php?/module/ard/get_data/' + serialNumber, function( data ) {
+					$.each(data, function(index, item){
+						if(/^Text[\d]$/.test(index))
+						{
+							$('#ard-data')
+								.append($('<tr>')
+									.append($('<th>')
+										.text(index))
+									.append($('<td>')
+										.text(item)));
+						}
+					});
+				});
+
 
 				// Activate correct tab depending on hash
 				var hash = window.location.hash.slice(5);
