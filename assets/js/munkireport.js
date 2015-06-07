@@ -51,6 +51,7 @@ var showFilterModal = function(e){
 			$(document).trigger('appUpdate');
 		})
 	}
+
 	// Get all business units and machine_groups
 	var defer = $.when(
 		$.getJSON(baseUrl + 'unit/get_machine_groups')
@@ -78,7 +79,7 @@ var showFilterModal = function(e){
 			.click(function(){$('#myModal').modal('hide')});
 
 		// Add machine groups
-		$.each(mg_data[0], function(index, obj){
+		$.each(mg_data, function(index, obj){
 			if(obj.groupid !== undefined){
 				$('#myModal .modal-body')
 					.append($('<div>')
