@@ -596,7 +596,9 @@ abstract class KISS_Model
 	{
 		$dbh=$this->getdbh();
 		if ( is_scalar( $bindings ) )
-			$bindings=$bindings ? array( $bindings ) : array();
+		{
+			$bindings = $bindings !== '' ? array( $bindings ) : array();
+		}
 		$sql = 'SELECT * FROM '.$this->enquote( $this->tablename );
 		if ( isset( $wherewhat ) && isset( $bindings ) )
 			$sql .= ' WHERE '.$wherewhat;
@@ -615,7 +617,10 @@ abstract class KISS_Model
 	function retrieve_many( $wherewhat='', $bindings='' ) 
 	{
 		$dbh = $this->getdbh();
-		if ( is_scalar( $bindings ) ) $bindings = $bindings ? array( $bindings ) : array();
+		if ( is_scalar( $bindings ) )
+		{
+			$bindings = $bindings !== '' ? array( $bindings ) : array();
+		}
 		$sql = 'SELECT * FROM '.$this->tablename;
 		if ( $wherewhat ) $sql .= ' WHERE '.$wherewhat;
 		$stmt = $this->prepare( $sql );
@@ -637,7 +642,9 @@ abstract class KISS_Model
 	{
 		$dbh=$this->getdbh();
 		if ( is_scalar( $bindings ) )
-			$bindings=$bindings ? array( $bindings ) : array();
+		{
+			$bindings = $bindings !== '' ? array( $bindings ) : array();
+		}
 		$sql = 'SELECT '.$selectwhat.' FROM '.$this->tablename;
 		if ( $wherewhat )
 			$sql .= ' WHERE '.$wherewhat;
