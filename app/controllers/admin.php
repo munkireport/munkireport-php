@@ -82,13 +82,20 @@ class admin extends Controller
 
 				if(is_scalar($val))
 				{
-					$machine_group->id = '';
-					$machine_group->retrieve_one('groupid=? AND property=?', array($groupid, $property));
-					$machine_group->groupid = $groupid;
-					$machine_group->property = $property;
-					$machine_group->value = $val;
-					$machine_group->save();
-					$out[$property] = $val;
+					if($val)
+					{
+						$machine_group->id = '';
+						$machine_group->retrieve_one('groupid=? AND property=?', array($groupid, $property));
+						$machine_group->groupid = $groupid;
+						$machine_group->property = $property;
+						$machine_group->value = $val;
+						$machine_group->save();
+						$out[$property] = $val;
+					}
+					else // Delete
+					{
+						$machine_group->delete_where('groupid=? AND property=?', array($groupid, $property));
+					}
 				}
 				else //array data
 				{
