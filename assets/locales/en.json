@@ -250,7 +250,7 @@
 		"hostname": "Hostname",
 		"ip_address": "IP Address",
 		"network": "Network",
-		"network_mask": "Mask",
+		"mask": "Mask",
 		"prefix_length": "Prefix length",
 		"router": "Router",
 		"traffic": "Network Traffic",

@@ -136,7 +136,7 @@
 	"network": {
 		"ethernet": "Локальная сеть",
 		"ip_address": "Адрес IP",
-		"network_mask": "Маска",
+		"mask": "Маска",
 		"prefix_length": "Длина префикса",
 		"router": "Маршрутизатор"
 	},

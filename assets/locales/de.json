@@ -143,7 +143,7 @@
 	"network": {
 		"ethernet": "Ethernet",
 		"ip_address": "IP Adresse",
-		"network_mask": "Netzmaske",
+		"mask": "Netzmaske",
 		"prefix_length": "Prefix Länge",
 		"router": "Router"
 	},
