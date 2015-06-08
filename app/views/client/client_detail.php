@@ -18,7 +18,6 @@ $tab_list = array(
 	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds', 'badge' => 'directory-cnt'),
 	'displays-tab' => array('view' => 'client/displays_tab', 'i18n' => 'client.tab.displays', 'badge' => 'displays-cnt'),
 	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
-	'bluetooth-tab' => array('view' => 'client/bluetooth_tab', 'i18n' => 'client.tab.bluetooth'),
 	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
 	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles')
 		);
@@ -65,7 +64,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 				<div class="input-group-btn">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-						<i class="fa fa-laptop fa-fw"></i>
+						<i class="fa fa-binoculars fa-fw"></i>
 					</button>
 					<ul class="dropdown-menu dropdown-menu-right" role="tablist" id="client_links">
 					</ul>
@@ -96,6 +95,9 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 				// Set table classes
 				$('table').addClass('table table-condensed table-striped');
+
+				// Set h4 classes
+				$('h4').addClass('alert alert-info');
 
 				// Fix for using a regular dropdown for tabs
 				$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -203,7 +205,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					console.log(data);
 				});
 
-				// Get certificate data
+				// Get timemachine data
 				$.getJSON( baseUrl + 'index.php?/module/timemachine/get_data/' + serialNumber, function( data ) {
 					if(data.id !== '')
 					{
@@ -263,6 +265,44 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 										.text(item)));
 						}
 					});
+				});
+
+				// Get Bluetooth data
+				$.getJSON( baseUrl + 'index.php?/module/bluetooth/get_data/' + serialNumber, function( data ) {
+					if(data.id !== '')
+					{
+						$('table.mr-bluetooth-table')
+							.empty()
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('bluetooth.status')))
+								.append($('<td>')
+									.text(data.bluetooth_status)))
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('bluetooth.keyboard')))
+								.append($('<td>')
+									.text(data.keyboard_battery)))
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('bluetooth.mouse')))
+								.append($('<td>')
+									.text(data.mouse_battery)))
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('bluetooth.trackpad')))
+								.append($('<td>')
+									.text(data.trackpad_battery)));
+					}
+					else{
+						$('table.mr-bluetooth-table')
+							.empty()
+							.append($('<tr>')
+								.append($('<td>')
+									.attr('colspan', 2)
+									.text(i18n.t('no_data'))))
+					}
+
 				});
 
 

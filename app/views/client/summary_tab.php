@@ -36,7 +36,7 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4 data-i18n="storage.storage"></h4>
+			<h4><i class="fa fa-hdd-o"></i> <span data-i18n="storage.storage"></span></h4>
 			<table>
 				<tr>
 					<th data-i18n="storage.size"></th><td class="mr-TotalSize"></td>
@@ -85,7 +85,7 @@
 			<h4 data-i18n="software.software"></h4>
 			<table>
 				<tr>
-					<th data-i18n="cpu.cpu"></th><td>OS X <span class="mr-os_version"></span></td>
+					<th data-i18n="os.version"></th><td>OS X <span class="mr-os_version"></span></td>
 				</tr>
 				<tr>
 					<th data-i18n="cpu.arch"></th><td class="mr-cpu_arch"></td>
@@ -100,7 +100,7 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4 data-i18n="ard"></h4>
+			<h4><i class="fa fa-apple"></i> <span data-i18n="ard"></span></h4>
 			<table id="ard-data" class="table"></table>
 		</div>
 
@@ -109,7 +109,7 @@
 	<div class="row">
 
 		<div class="col-lg-4">
-			<h4><span data-i18n="warranty.warranty"></span> <a data-i18n="warranty.recheck" class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>"></a></h4>
+			<h4><i class="fa fa-umbrella"></i> <span data-i18n="warranty.warranty"></span> <a data-i18n="warranty.recheck" class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>"></a></h4>
 			<table>
 				<tr>
 					<th data-i18n="warranty.coverage"></th><td class="mr-warranty_status"></td>
@@ -124,7 +124,7 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4><span data-i18n="network.network"></span></h4>
+			<h4><i class="fa fa-sitemap"></i> <span data-i18n="network.network"></span></h4>
 			<table>
 				<tr>
 					<th data-i18n="network.remote_ip"></th><td class="mr-remote_ip"></td>
@@ -137,7 +137,7 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4><span data-i18n="user.users"></span></h4>
+			<h4><i class="fa fa-users"></i> <span data-i18n="user.users"></span></h4>
 			<table>
 				<tr>
 					<th data-i18n="user.local_admin"></th><td class="mr-users"></td>
@@ -151,13 +151,15 @@
 	<div class="row">
 
 		<div class="col-lg-4">
-			<h4><span data-i18n="timemachine.timemachine"></span></h4>
+			<h4><i class="fa fa-clock-o"></i> <span data-i18n="timemachine.timemachine"></span></h4>
 			<table class="mr-timemachine-table">
 			</table>
 		</div>
 
 		<div class="col-lg-4">
-
+			<h4><i class="fa fa-keyboard-o fa-fixed"></i> <span data-i18n="bluetooth.bluetooth"></span></h4>
+			<table class="mr-bluetooth-table">
+			</table>
 		</div>
 
 		<div class="col-lg-4">
