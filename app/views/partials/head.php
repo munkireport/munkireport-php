@@ -22,7 +22,8 @@
 	<?endif?>
 
 	<script>
-		var baseUrl = "<?php echo conf('subdirectory'); ?>";
+		var baseUrl = "<?php echo conf('subdirectory'); ?>",
+			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 	</script>
 	
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>

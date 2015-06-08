@@ -91,7 +91,7 @@
 		},
 		getGroup = function(groupid, what){
 
-			var groupObj = {groupid: groupid, name: 'Not found'};
+			var groupObj = {groupid: groupid, name: 'Group ' + groupid};
 
 			// Find groupid in machineGroups and return name
 			$.each(machineGroups, function(index, group){
@@ -535,7 +535,7 @@
 						var group = getGroup(val)
 						machine_groups.append($('<li>')
 							.append($('<a>')
-								.attr('href', '')
+								.attr('href', '#')
 								.addClass('machine-group-' + group.groupid)
 								.data(group)
 								.click(editMachinegroup)
@@ -665,8 +665,6 @@
 				});
 			});
 
-			console.log(stray_groups);
-
 			if( ! $.isEmptyObject(stray_groups))
 			{
 				$('#machine-groups')
@@ -679,19 +677,19 @@
 								.addClass('name panel-title')
 								.text(i18n.t('admin.unassigned_groups'))))
 						.append($('<div>')
-							.addClass('panel-body')));
+							.addClass('list-group')));
 
 				$.each(stray_groups, function(index, value){
-					$('#machine-groups .panel-body')
-						.append($('<div>')
+					$('#machine-groups .list-group')
 							.append($('<a>')
-								.addClass('machine-group-' + value.groupid)
+								.addClass('list-group-item machine-group-' + value.groupid)
 								.data(value)
+								.attr('href', '#')
 								.click(editMachinegroup)
-								.text(function(){
-									value.cnt = value.cnt || 0;
-									return value.name + ' - ' + value.cnt + ' clients';
-								})));
+								.text(value.name || 'Group ' + value.groupid)
+								.append($('<span>')
+									.addClass('badge')
+									.text(value.cnt || 0)));
 				});
 			}
 
@@ -702,13 +700,23 @@
 
 
 		// Add + button
-		$('#bu_title')
-			.append(' ')
-			.append($('<a>')
-				.addClass("btn btn-default btn-xs")
-				.click(edit)
-				.append($('<i>')
-					.addClass('fa fa-plus')))
+		if(businessUnitsEnabled){
+			$('#bu_title')
+				.append(' ')
+				.append($('<a>')
+					.addClass("btn btn-default btn-xs")
+					.click(edit)
+					.append($('<i>')
+						.addClass('fa fa-plus')))
+		}
+		else{
+			$('#bu_title')
+				.after($('<div>')
+					.addClass('col-lg-12')
+						.append($('<p>')
+							.addClass('alert alert-warning')
+							.text(i18n.t('business_unit.disabled'))));
+		}
 		
 	} );
 </script>
