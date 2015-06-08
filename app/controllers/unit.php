@@ -74,13 +74,29 @@ class unit extends Controller
 			$mg = new Machine_group;
 			foreach($_SESSION['machine_groups'] AS $group)
 			{
-				$out[] = $mg->all($group);
+				if($mg_data = $mg->all($group))
+				{
+					$out[] = $mg->all($group);
+				}
+				else // Not in Machine_group table
+				{
+					$out[] = array(
+						'name' => 'Group '.$group,
+						'groupid' => $group);
+				}
 			}
 		}
 		else
 		{
 			$mg = new Machine_group;
 			$out = $mg->all();
+		}
+
+		//Apply filter
+		$groups = get_filtered_groups();
+		foreach ($out as &$group)
+		{
+			$group['checked'] = in_array($group['groupid'], $groups);
 		}
 
 		$obj = new View();

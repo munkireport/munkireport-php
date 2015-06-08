@@ -95,13 +95,6 @@ class Machine_group extends Model {
             return [];
         }
 
-        // Add filter value
-        $out[$obj->groupid]['checked'] = TRUE;
-        if($groups)
-        {
-            $out[$obj->groupid]['checked'] = in_array($obj->groupid, $groups);
-        }
-
         if($groupid !== '' && $out)
         {
             return $out[$groupid];
