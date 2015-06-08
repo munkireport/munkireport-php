@@ -52,9 +52,17 @@
 		"username": "Username",
 		"wrong_user_or_pass": "Wrong username or password"
 	},
+	"bluetooth": {
+		"bluetooth": "Bluetooth",
+		"keyboard": "Keyboard Status",
+		"mouse": "Mouse Status",
+		"status": "Bluetooth Status",
+		"trackpad": "Trackpad Status"
+	},
 	"boot_time": "Booted",
 	"bundle_id": "BundleID",
 	"business_unit": {
+		"disabled": "Business Units Disabled",
 		"machine_group": "Machine Group",
 		"machine_groups": "Machine Groups",
 		"managers": "Managers",
@@ -252,6 +260,9 @@
 	},
 	"no_clients": "No Clients",
 	"no_data": "No Data",
+	"os": {
+		"version": "OS Version"
+	},
 	"pending": "Pending",
 	"path": "Path",
 	"reg_date": "Registration Date",
