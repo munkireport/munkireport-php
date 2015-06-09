@@ -35,7 +35,7 @@
 <script>
 $(document).on('appReady appUpdate', function(e, lang) {
 
-	$.getJSON( baseUrl + 'index.php?/module/power/conditions', function( data ) {
+	$.getJSON( appUrl + '/module/power/conditions', function( data ) {
 
 		// Show no clients span
 		$('#power-nodata').removeClass('hide');

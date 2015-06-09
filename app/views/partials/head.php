@@ -23,6 +23,7 @@
 
 	<script>
 		var baseUrl = "<?php echo conf('subdirectory'); ?>",
+			appUrl = baseUrl + 'index.php?',
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 	</script>
 	

@@ -111,7 +111,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				})
 
 				// Get client data
-				$.getJSON( baseUrl + 'index.php?/clients/get_data/' + serialNumber, function( data ) {
+				$.getJSON( appUrl + '/clients/get_data/' + serialNumber, function( data ) {
 
 					machineData = data[0];
 
@@ -186,7 +186,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					});
 					
 					// Remote control links
-					$.getJSON( baseUrl + 'index.php?/clients/get_links', function( links ) {
+					$.getJSON( appUrl + '/clients/get_links', function( links ) {
 						$.each(links, function(prop, val){
 							$('#client_links').append('<li><a href="'+(val.replace(/%s/, machineData.remote_ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a></li>');
 						});
@@ -196,17 +196,41 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				});
 
 				// Get estimate_manufactured_date
-				$.getJSON( baseUrl + 'index.php?/module/warranty/estimate_manufactured_date/' + serialNumber, function( data ) {
+				$.getJSON( appUrl + '/module/warranty/estimate_manufactured_date/' + serialNumber, function( data ) {
 					$('.mr-manufacture_date').html(data.date)
 				});
 
 				// Get certificate data
-				$.getJSON( baseUrl + 'index.php?/module/certificate/get_data/' + serialNumber, function( data ) {
-					console.log(data);
+				$.getJSON( appUrl + '/module/certificate/get_data/' + serialNumber, function( data ) {
+					if(data.length)
+					{
+						// Add tab link
+						$('.client-tabs .divider')
+							.before($('<li>')
+								.append($('<a>')
+									.attr('href', '#certificate-tab')
+									.click(function (e) {
+										  e.preventDefault()
+										  $(this).tab('show')
+									})
+									.on('shown.bs.tab', updateHash)
+									.text(i18n.t('client.tab.certificates'))));
+
+						// Add tab
+						$('div.tab-content')
+							.append($('<div>')
+								.attr('id', 'certificate-tab')
+								.addClass('tab-pane')
+								.append($('<h2>')
+									.text(i18n.t('client.tab.certificates'))));
+					}
+
+					// Set correct tab on location hash
+					loadHash();
 				});
 
 				// Get timemachine data
-				$.getJSON( baseUrl + 'index.php?/module/timemachine/get_data/' + serialNumber, function( data ) {
+				$.getJSON( appUrl + '/module/timemachine/get_data/' + serialNumber, function( data ) {
 					if(data.id !== '')
 					{
 						$('table.mr-timemachine-table')
@@ -253,7 +277,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 
 				// Get ARD data
-				$.getJSON( baseUrl + 'index.php?/module/ard/get_data/' + serialNumber, function( data ) {
+				$.getJSON( appUrl + '/module/ard/get_data/' + serialNumber, function( data ) {
 					$.each(data, function(index, item){
 						if(/^Text[\d]$/.test(index))
 						{
@@ -268,7 +292,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				});
 
 				// Get Bluetooth data
-				$.getJSON( baseUrl + 'index.php?/module/bluetooth/get_data/' + serialNumber, function( data ) {
+				$.getJSON( appUrl + '/module/bluetooth/get_data/' + serialNumber, function( data ) {
 					if(data.id !== '')
 					{
 						$('table.mr-bluetooth-table')
@@ -306,28 +330,35 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				});
 
 
-				// Activate correct tab depending on hash
-				var hash = window.location.hash.slice(5);
-				if(hash){
-					$('.client-tabs a[href="#'+hash+'"]').tab('show');
-				}
-				else{
-					$('.client-tabs a[href="#summary"]').tab('show');
-				}
 				
+				
+				// Update hash in url
+				var updateHash = function(e){
+						var url = String(e.target)
+						if(url.indexOf("#") != -1)
+						{
+							var hash = url.substring(url.indexOf("#"));
+							// Save scroll position
+							var yScroll=document.body.scrollTop;
+							window.location.hash = '#tab_'+hash.slice(1);
+							document.body.scrollTop=yScroll;
+						}
+					},
+					loadHash = function(){
+						// Activate correct tab depending on hash
+						var hash = window.location.hash.slice(5);
+						if(hash){
+							$('.client-tabs a[href="#'+hash+'"]').tab('show');
+						}
+						else{
+							$('.client-tabs a[href="#summary"]').tab('show');
+						}
+					}
+
+				loadHash();
 
 				// Update hash when changing tab
-				$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-					var url = String(e.target)
-					if(url.indexOf("#") != -1)
-					{
-						var hash = url.substring(url.indexOf("#"));
-						// Save scroll position
-						var yScroll=document.body.scrollTop;
-						window.location.hash = '#tab_'+hash.slice(1);
-						document.body.scrollTop=yScroll;
-					}
-				})
+				$('a[data-toggle="tab"]').on('shown.bs.tab', updateHash)
 
 
 			});

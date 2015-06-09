@@ -75,14 +75,14 @@ $sql = "SELECT COUNT(1) as total,
 
 If you want to retrieve data in JSON format, you can use these API calls:
 
-#### `baseUrl + 'unit/get_data'`
+#### `appUrl + '/unit/get_data'`
 
 This will return information about the current Business Unit.
 
 **Example:**
 
 ```js
-$.getJSON(baseUrl + 'unit/get_data')
+$.getJSON(appUrl + '/unit/get_data')
 	.done(function(data){
 		console.log(data)
 	})
@@ -100,14 +100,14 @@ could return
 	users: {"John", "Jane", "Betty"}
 }
 
-#### `baseUrl + 'unit/get_machine_groups'`
+#### `appUrl + '/unit/get_machine_groups'`
 
 This call returns information about the machine_groups available to the current user.
 
 **Example:**
 
 ```js
-$.getJSON(baseUrl + 'unit/get_data')
+$.getJSON(appUrl + '/unit/get_data')
 	.done(function(data){
 		console.log(data)
 	})

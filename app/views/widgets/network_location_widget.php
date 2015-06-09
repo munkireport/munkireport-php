@@ -30,7 +30,7 @@
 		    	return point.cnt > 0;
 		    }
 
-		    var url = baseUrl + 'index.php?/module/reportdata/ip'
+		    var url = appUrl + '/module/reportdata/ip'
 		    var chart;
 		    d3.json(url, function(err, data){
 

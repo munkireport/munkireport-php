@@ -46,7 +46,7 @@ var showFilterModal = function(e){
 				action: checked ? 'remove' : 'add'
 			}
 
-		$.post(baseUrl + 'unit/set_filter', settings, function(){
+		$.post(appUrl + '/unit/set_filter', settings, function(){
 			// Update all
 			$(document).trigger('appUpdate');
 		})
@@ -54,7 +54,7 @@ var showFilterModal = function(e){
 
 	// Get all business units and machine_groups
 	var defer = $.when(
-		$.getJSON(baseUrl + 'unit/get_machine_groups')
+		$.getJSON(appUrl + '/unit/get_machine_groups')
 		);
 
 	// Render when all requests are successful

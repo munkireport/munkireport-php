@@ -27,7 +27,7 @@ $(document).on('appReady', function(e, lang) {
 					var formData = $('#myModal form').serializeArray();
 					
 					// Save comment
-					var jqxhr = $.post( baseUrl + "index.php?/module/comment/save", formData);
+					var jqxhr = $.post( appUrl + "/module/comment/save", formData);
 
 					jqxhr.done(function(data){
 
@@ -68,7 +68,7 @@ $(document).on('appReady', function(e, lang) {
 							.attr('rows', 10)
 							.addClass('form-control'))));
 
-			$.getJSON( baseUrl + 'index.php?/module/comment/retrieve/' + serialNumber + '/' + section, function( data ) {
+			$.getJSON( appUrl + '/module/comment/retrieve/' + serialNumber + '/' + section, function( data ) {
 				data.text = data.text || ''
 				$('textarea').text(data.text)
 				$('textarea').markdown({
@@ -109,7 +109,7 @@ $(document).on('appReady', function(e, lang) {
 		.append(function(){
 			var me = $(this),
 				section = $(this).data('section');
-			$.getJSON( baseUrl + 'index.php?/module/comment/retrieve/' + serialNumber + '/' + section, function( data ) {
+			$.getJSON( appUrl + '/module/comment/retrieve/' + serialNumber + '/' + section, function( data ) {
 				data.html = data.html || 'No comments'
 				me.html(data.html)
 					.after($('<button>')

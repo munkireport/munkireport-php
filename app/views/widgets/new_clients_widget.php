@@ -16,7 +16,7 @@
 			<script>
 			$(document).on('appReady appUpdate', function(){
 				
-				$.getJSON( baseUrl + 'index.php?/module/machine/new_clients', function( data ) {
+				$.getJSON( appUrl + '/module/machine/new_clients', function( data ) {
 
 					var scrollBox = $('#new-clients-widget .scroll-box').empty();
 
@@ -25,7 +25,7 @@
 						scrollBox
 							.append($('<a>')
 								.addClass('list-group-item')
-								.attr('href', baseUrl + 'index.php?/clients/detail/' + obj.serial_number)
+								.attr('href', appUrl + '/clients/detail/' + obj.serial_number)
 								.append(obj.computer_name)
 								.append($('<span>')
 									.addClass('pull-right')

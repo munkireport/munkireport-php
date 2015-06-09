@@ -23,7 +23,7 @@ $(document).on('appReady', function() {
 	var colors = d3.scale.category20();
     var keyColor = function(d, i) {return colors(d.key)};
 
-    var url = baseUrl + 'index.php?/module/reportdata/new_clients'
+    var url = appUrl + '/module/reportdata/new_clients'
     var chart;
     d3.json(url, function(err, data){
 

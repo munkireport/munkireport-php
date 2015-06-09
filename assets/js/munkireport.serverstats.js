@@ -33,8 +33,8 @@ $(document).on('appReady', function(e, lang) {
 
 
 	$.when( 
-		$.ajax( baseUrl + 'index.php?/module/machine/report/' + serialNumber ), 
-		$.ajax( baseUrl + 'index.php?/module/servermetrics/get_data/' + serialNumber + '/' + hours ) )
+		$.ajax( appUrl + '/module/machine/report/' + serialNumber ), 
+		$.ajax( appUrl + '/module/servermetrics/get_data/' + serialNumber + '/' + hours ) )
 	.done(function( a1, a2 )
 	{
 		// a1 and a2 are arguments resolved for the page1 and page2 ajax requests, respectively.
