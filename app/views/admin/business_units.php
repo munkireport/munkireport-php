@@ -152,7 +152,7 @@
 
 				// Get data from form
 				var formData = $('#myModal form').serializeArray();
-
+				
 				// Save machine group data
 				var jqxhr = $.post( baseUrl + "index.php?/admin/save_machine_group", formData);
 
@@ -203,9 +203,12 @@
 							.text(bu.name));
 			});
 			 
+			console.log(data)
 
 			// If key is empty, generate guid
-			data.key = data.key || ''; //guid();
+			data.keys = data.keys || []; //guid();
+			
+			var generate = data.keys.length ? ' hidden' : '';
 
 			$('#myModal .modal-body')
 				.empty()
@@ -229,10 +232,18 @@
 					.append($('<div>')
 						.addClass('form-group')
 						.append($('<label>')
-							.text('Machine Key'))
+							.text('Machine Key')
+							.append(' ')
+							.append($('<button>')
+								.addClass('btn btn-default btn-xs' + generate)
+								.click(function(e){
+									e.preventDefault();
+									$('input[name="key"]').val(guid());
+								})
+								.text('Generate')))
 						.append($('<input>')
 							.attr('name', 'key')
-							.val(data.key)
+							.val(data.keys[0])
 							.addClass('form-control')))
 					.append($('<div>')
 						.addClass('form-group')
