@@ -132,7 +132,7 @@
 				if(confirm('Are you sure?'))
 				{
 					var groupid = data.groupid;
-					var url = baseUrl + 'admin/remove_machine_group/' + groupid;
+					var url = baseUrl + 'index.php?/admin/remove_machine_group/' + groupid;
 					$.getJSON(url, function(data){
 						if(data.success == true)
 						{
@@ -154,7 +154,7 @@
 				var formData = $('#myModal form').serializeArray();
 
 				// Save machine group data
-				var jqxhr = $.post( baseUrl + "admin/save_machine_group", formData);
+				var jqxhr = $.post( baseUrl + "index.php?/admin/save_machine_group", formData);
 
 				jqxhr.done(function(data){
 
@@ -457,11 +457,11 @@
 				});
 
 				// Store object in database
-				var jqxhr = $.post( baseUrl + "admin/save_business_unit", data)
+				var jqxhr = $.post( baseUrl + "index.php?/admin/save_business_unit", data)
 				.done(function(data){
 
 					// Reload Machine_groups
-					$.getJSON(baseUrl + 'admin/get_mg_data', function(mg_data){
+					$.getJSON(baseUrl + 'index.php?/admin/get_mg_data', function(mg_data){
 
 						// Set machine_groups
 						machineGroups = mg_data;
@@ -511,7 +511,7 @@
 			},
 			remove = function(){
 				var unitid = $(this).data().unitid;
-				var url = baseUrl + 'admin/remove_business_unit/' + unitid;
+				var url = baseUrl + 'index.php?/admin/remove_business_unit/' + unitid;
 				$.getJSON(url, function(data){
 					if(data.success == true)
 					{
