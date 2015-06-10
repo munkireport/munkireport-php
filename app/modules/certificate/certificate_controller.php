@@ -36,11 +36,29 @@ class Certificate_controller extends Module_controller
         if( ! $this->authorized())
         {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $cert = new Certificate_model;
         $obj->view('json', array('msg' => $cert->retrieve_records($serial_number)));
     }
 
+    /**
+     * Get stats
+     *
+     **/
+    function get_stats()
+    {
+        $obj = new View();
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+
+        $timemachine = new Certificate_model;
+        $obj->view('json', array('msg' => $timemachine->get_stats()));
+    }
 
 } // END class Certificate_controller

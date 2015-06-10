@@ -72,4 +72,24 @@ class Certificate_model extends Model {
         	}
         }       		
 	} // end process()
+
+	/**
+	 * Get statistics
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function get_stats()
+	{
+		$now = time();
+		$three_months = $now + 3600 * 24 * 30 * 3;
+		$sql = "SELECT COUNT(1) as total, 
+			COUNT(CASE WHEN cert_exp_time < '$now' THEN 1 END) AS expired, 
+			COUNT(CASE WHEN cert_exp_time BETWEEN $now AND $three_months THEN 1 END) AS soon,
+			COUNT(CASE WHEN cert_exp_time > $three_months THEN 1 END) AS ok
+			FROM certificate
+			LEFT JOIN machine USING (serial_number)
+			".get_machine_group_filter();
+		return current($this->query($sql));
+	}
 }
