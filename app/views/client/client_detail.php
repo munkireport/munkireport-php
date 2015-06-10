@@ -204,14 +204,18 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				$.getJSON( appUrl + '/module/certificate/get_data/' + serialNumber, function( data ) {
 					if(data.length)
 					{
+						var certs = $('<table>').addClass('table table-condensed table-striped');
+
 						// Add tab link
 						$('.client-tabs .divider')
 							.before($('<li>')
 								.append($('<a>')
 									.attr('href', '#certificate-tab')
-									.click(function (e) {
-										  e.preventDefault()
-										  $(this).tab('show')
+									.attr('data-toggle', 'tab')
+									.on('show.bs.tab', function(){
+										// We have to remove the active class from the 
+										// previous tab manually, unfortunately
+										$('.client-tabs li').removeClass('active');
 									})
 									.on('shown.bs.tab', updateHash)
 									.text(i18n.t('client.tab.certificates'))));
@@ -222,8 +226,36 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 								.attr('id', 'certificate-tab')
 								.addClass('tab-pane')
 								.append($('<h2>')
-									.text(i18n.t('client.tab.certificates'))));
+									.text(i18n.t('client.tab.certificates')))
+								.append(certs));
 					}
+
+					// Set headers
+					certs.append($('<thead>')
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('listing.certificate.commonname')))
+								.append($('<th>')
+									.text(i18n.t('listing.certificate.expires')))));
+
+					// Load data
+					$.each(data, function(index, cert){
+						console.log(cert)
+						certs.append($('<tr>')
+							.attr('title', cert.rs.cert_path)
+							.append($('<td>')
+								.text(cert.rs.cert_cn))
+							.append($('<td>')
+								.html(function(){
+									var date = new Date(cert.rs.cert_exp_time * 1000);
+									var diff = moment().diff(date, 'days');
+									var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
+									return('<span class="label label-'+cls+'">'+moment(date).fromNow()+'</span>');
+								})));
+					});
+
+					// Add tooltips
+					$('tr[title]').tooltip();
 
 					// Set correct tab on location hash
 					loadHash();
