@@ -285,13 +285,13 @@
 				items.push({key: group, name:getGroup(group, 'name')});
 			})
 
-				var itemList = $('<div>').addClass('form-group'),
-					addItem = function(event){
+			var itemList = $('<div>').addClass('form-group'),
+				addItem = function(event){
 
-						// Disable default behaviour
-						event.preventDefault();
+					// Disable default behaviour
+					event.preventDefault();
 
-						if($('input.new-item').val().trim())
+					if($('input.new-item').val().trim())
 					{
 						// add to machinegroups
 						items.push({key:'', name: $('input.new-item').val().trim()})
@@ -303,8 +303,8 @@
 						$('input.new-item').val('');
 					}
 						
-					},
-					renderItemList = function(){
+				},
+				renderItemList = function(){
 					itemList
 						.empty()
 
@@ -466,6 +466,14 @@
 						data[$(this).attr('name')] = $(this).val();
 					}
 				});
+
+				// Check Users and Managers
+				if( ! data.managers.length){
+					data.managers = ['#'];
+				}
+				if( ! data.users.length){
+					data.users = ['#'];
+				}
 
 				// Store object in database
 				var jqxhr = $.post( appUrl + "/admin/save_business_unit", data)
