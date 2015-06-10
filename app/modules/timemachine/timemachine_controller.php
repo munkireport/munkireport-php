@@ -39,10 +39,31 @@ class Timemachine_controller extends Module_controller
         if( ! $this->authorized())
         {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $timemachine = new Timemachine_model($serial_number);
         $obj->view('json', array('msg' => $timemachine->rs));
+    }
+
+    /**
+     * Get timemachine stats
+     *
+     * @return void
+     * @author 
+     **/
+    function get_stats($hours = 24)
+    {
+        $obj = new View();
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+
+        $timemachine = new Timemachine_model;
+        $obj->view('json', array('msg' => $timemachine->get_stats($hours)));
     }
 
 	
