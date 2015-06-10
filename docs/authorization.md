@@ -10,13 +10,14 @@ At the moment there are 4 roles defined:
 
 ## No Business Units
 
-When Business Units are **not** configured, the following authorizations apply:
+When Business Units are **not** configured, the following authorizations apply.
+A user that does not have an admin-role or manager-role gets the role of **user**.
 
 Role    | View         | Delete Machine 
 ------- | ------------ | -------------- 
-Admin   | All machines | Yes            
-Manager | All machines | Yes       
-User    | All machines | No             
+admin   | All machines | Yes            
+manager | All machines | Yes       
+user    | All machines | No             
 
 
 ## Business Units
@@ -26,10 +27,10 @@ A user that does not have an admin role and is not found an a business unit gets
 
 Role    | View         | Delete Machine | Edit Business Units
 ------- | ------------ | -------------- | -------------------
-Admin   | All machines | Yes            | Yes
-Manager | BU only      | BU only        | No
-User    | BU only      | No             | No
-Nobody  | No machines  | No             | No
+admin   | All machines | Yes            | Yes
+manager | BU only      | BU only        | No
+user    | BU only      | No             | No
+nobody  | No machines  | No             | No
 
 
 ## Add role to a user
@@ -67,12 +68,13 @@ If you want to see the actual authorization settings, and the reason a user got 
 http://example.com/index.php?/auth/set_session_props/1
 ```
 
-## Authorizations
+## Authorizations (topic for developers)
 
-and there are two authorizations enabled:
+There are two authorizations enabled:
 
 * global - view everything
 * delete_machine - be able to delete a machine from the database
 
 By default, users with the **admin** role have the 'global' and the 'delete_machine' authorization. users with the **manager** role only have the 'delete_machine' authorization.
 You can override the authorizations in config.php, but don't do that unless you know what you are doing!
+Developers can use the $conf['authorization'] array to create new authorizations based on role.

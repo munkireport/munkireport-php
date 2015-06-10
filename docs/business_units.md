@@ -12,9 +12,14 @@ If you want to enable Business Units, add the following line to config.php:
 $conf['enable_business_units'] = TRUE;
 ```
 
-Prefix groups with @ for example:
+## Adding users/groups to Business Units
 
-@ldap_group_x will allow all members of ldap_group_x
+To add a user/group to a Business Unit, click on the edit button (next to Managers or Users) and type the username/groupname. Prefix groups with @ (so LDAP group od_munki_managers becomes @od_munki_managers).
+Click on to + button and save when ready.
+
+## Add Machinegroups
+
+Machinegroups that aren't in any Business Units appear below in a panel called "Unassigned Groups".
 
 ## Technical Reference
 
