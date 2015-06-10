@@ -18,7 +18,7 @@
 </div>  <!-- /container -->
 
 
-<script type="text/javascript">
+<script>
 
 	$(document).on('appReady', function(e, lang) {
 
