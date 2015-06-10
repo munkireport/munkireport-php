@@ -6,11 +6,21 @@ Business Units are a way to use one munkireport instance for more than one busin
 * One or more Users (who can visit the unit pages)
 * One or more Managers (who can add/delete users, add/delete Machine Groups)
 
+## Configure Business Units
+
 If you want to enable Business Units, add the following line to config.php:
 
 ```php
 $conf['enable_business_units'] = TRUE;
 ```
+
+You also have to override the 'All users are admins' setting from config_default.php by adding the following to config.php:
+
+```php
+$conf['roles']['admin'] = array('your_admin_username');
+```
+
+This will allow you to edit Business Units with your admin account.
 
 ## Adding users/groups to Business Units
 
