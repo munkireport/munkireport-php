@@ -235,6 +235,7 @@
 		  "admin": "Admin"
 		},
 		"reports": {
+			"backup": "Backup Report",
 			"clients": "Client report",
 			"configuration": "Configuration report",
 			"hardware": "Hardware report",
