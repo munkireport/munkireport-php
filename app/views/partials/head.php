@@ -6,10 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title><?php echo conf('sitename'); ?></title>
-	<link rel="stylesheet" type="text/css" href="<?php echo conf('subdirectory'); ?>assets/css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/dataTables-bootstrap.css" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
+	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/dataTables-bootstrap.css" />
 	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
 	<?php if(conf('custom_css')): ?> 
 	<link rel="stylesheet" href="<?php echo conf('custom_css'); ?>" />
