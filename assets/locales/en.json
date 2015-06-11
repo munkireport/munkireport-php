@@ -344,7 +344,7 @@
 		"timemachine": {
 			"lastweek": "Backed up less than a week ago",
 			"title": "Timemachine Status",
-			"today": "Backupped Today",
+			"today": "Backed up today",
 			"week_plus": "Backed up more than a week ago"
 		}
 	}
