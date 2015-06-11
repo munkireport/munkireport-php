@@ -17,10 +17,6 @@
 			<h4 class="mr-computer_name"></h4>
 			<table>
 				<tr>
-					<th data-i18n="last_user"></th><td><span class="mr-long_username"></span>
-				(<span class="mr-console_user"></span>)</td>
-				</tr>	
-				<tr>
 					<th data-i18n="last_seen"></th><td class="mr-check-in_date"></td>
 				</tr>
 				<tr>
@@ -139,6 +135,10 @@
 		<div class="col-lg-4">
 			<h4><i class="fa fa-users"></i> <span data-i18n="user.users"></span></h4>
 			<table>
+				<tr>
+					<th data-i18n="last_user"></th><td><span class="mr-long_username"></span>
+				(<span class="mr-console_user"></span>)</td>
+				</tr>	
 				<tr>
 					<th data-i18n="user.local_admin"></th><td class="mr-users"></td>
 				</tr>	
