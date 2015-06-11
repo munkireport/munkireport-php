@@ -81,7 +81,7 @@ class Timemachine_model extends Model {
 	}
 
 	/**
-	 * Get last successfull
+	 * Get statistics
 	 *
 	 * @return void
 	 * @author 

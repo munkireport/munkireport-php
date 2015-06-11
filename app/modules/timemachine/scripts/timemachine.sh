@@ -10,5 +10,5 @@ DIR=$(dirname $0)
 
 mkdir -p "$DIR/cache"
 
-# Store relevant syslog events
-syslog -F '$((Time)(utc)) $Message' -k Sender com.apple.backupd -k Time ge -1d -k Message R '^(Backup|Starting).*' > "$DIR/cache/timemachine.txt" 
+# Store 7 days of relevant syslog events
+syslog -F '$((Time)(utc)) $Message' -k Sender com.apple.backupd -k Time ge -7d -k Message R '^(Backup|Starting).*' > "$DIR/cache/timemachine.txt" 

@@ -87,8 +87,10 @@ new Timemachine_model;
 
 	        	// Format start date
 	        	var date = $('td:eq(3)', nRow).html();
-	        	$('td:eq(3)', nRow).html(moment(date + 'Z').fromNow());
-
+	        	if(date){
+		        	$('td:eq(3)', nRow).html(moment(date + 'Z').fromNow());
+		        }
+		        
 	        	// Format duration
 	        	$('td:eq(4)', nRow).html(moment.duration(parseInt($('td:eq(4)', nRow).html()), "seconds").humanize());
 
