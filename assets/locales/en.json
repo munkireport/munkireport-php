@@ -342,10 +342,10 @@
 			"nobattery": "No Battery"
 		},
 		"timemachine": {
-			"lastweek": "Backed up less than a week ago",
+			"lastweek": "Latest backup more than a day ago",
 			"title": "Timemachine Status",
 			"today": "Backed up today",
-			"week_plus": "Backed up more than a week ago"
+			"week_plus": "Latest backup more than a week ago"
 		}
 	}
 }

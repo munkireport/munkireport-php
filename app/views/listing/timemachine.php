@@ -90,9 +90,12 @@ new Timemachine_model;
 	        	if(date){
 		        	$('td:eq(3)', nRow).html(moment(date + 'Z').fromNow());
 		        }
-		        
+
 	        	// Format duration
-	        	$('td:eq(4)', nRow).html(moment.duration(parseInt($('td:eq(4)', nRow).html()), "seconds").humanize());
+	        	var duration = parseInt($('td:eq(4)', nRow).html());
+	        	if(duration){
+	        	  	$('td:eq(4)', nRow).html(moment.duration(duration, "seconds").humanize());
+	        	}
 
 	        	var date = $('td:eq(5)', nRow).html();
 	        	if(date){
