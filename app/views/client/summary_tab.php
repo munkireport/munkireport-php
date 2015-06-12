@@ -23,7 +23,7 @@
 					<th data-i18n="uptime"></th><td class="mr-uptime"></td>
 				</tr>
 				<tr>
-					<th data-i18n="business_unit.machine_group"></th><td class="mr-computer_group"></td>
+					<th data-i18n="business_unit.machine_group"></th><td class="mr-machine_group"></td>
 				</tr>
 				<tr>
 					<th data-i18n="reg_date"></th><td class="mr-reg_date"></td>

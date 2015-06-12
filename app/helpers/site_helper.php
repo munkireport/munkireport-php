@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.5.3.1251';
+$GLOBALS['version'] = '2.5.3.1252';
 
 // Return version without commit count
 function get_version()
@@ -228,16 +228,16 @@ function authorized_for_serial($serial_number)
 		return TRUE;
 	}
 	
-	return id_in_machine_group(machine_computer_group($serial_number));
+	return id_in_machine_group(get_machine_group($serial_number));
 }
 
 /**
- * Get machine computer_group
+ * Get machine_group
  *
  * @return integer computer group
  * @author AvB
  **/
-function machine_computer_group($serial_number = '')
+function get_machine_group($serial_number = '')
 {
 	if( ! isset($GLOBALS['machine_groups'][$serial_number]))
 	{

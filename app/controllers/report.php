@@ -68,7 +68,7 @@ class report extends Controller
 		{
 			// Register check and group in reportdata
 			$report = new Reportdata_model($_POST['serial']);
-			$report->computer_group = $this->group;
+			$report->machine_group = $this->group;
 			$report->register()->save();
 
 			$req_items = unserialize($_POST['items']); //Todo: check if array

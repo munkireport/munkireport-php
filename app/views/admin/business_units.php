@@ -670,8 +670,8 @@
 
 			// Find actual group in machine_groups
 			$.each(gr_data[0], function(index, grp){
-				stray_groups[grp.computer_group] = stray_groups[grp.computer_group] || {groupid: grp.computer_group,name:''}
-				stray_groups[grp.computer_group].cnt = grp.cnt;
+				stray_groups[grp.machine_group] = stray_groups[grp.machine_group] || {groupid: grp.machine_group,name:''}
+				stray_groups[grp.machine_group].cnt = grp.cnt;
 			});
 
 			// Remove groups that are in a Business Unit

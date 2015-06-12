@@ -25,6 +25,19 @@ class Reportdata_controller extends Module_controller
 	}
 
 	/**
+	 * Get machine groups
+	 *
+	 * @author 
+	 **/
+	function get_groups()
+	{
+		$reportdata = new Reportdata_model();
+		$obj = new View();
+		$obj->view('json', array('msg' => $reportdata->get_groups($count = TRUE)));
+	}
+
+
+	/**
 	 * REST API for retrieving registration dates
 	 *
 	 **/
