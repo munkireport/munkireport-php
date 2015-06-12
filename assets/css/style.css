@@ -138,6 +138,12 @@ h2 {
   }
 }
 
+/* Client detail header */
+.form-control[readonly] {
+  background-color:inherit;
+  font-size: 1.2em;
+}
+
 @media print{
   
   a[href]:after {

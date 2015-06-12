@@ -120,8 +120,12 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 						$('.mr-'+prop).html(val);
 					});
 
-					// Set computer name value
-					$('.mr-computer_name_input').val(machineData.computer_name);
+					// Set computer name value and title
+					$('.mr-computer_name_input')
+						.val(machineData.computer_name)
+						.attr('title', machineData.computer_name)
+						.data('placement', 'bottom')
+						.tooltip();
 
 					// Format OS Version
 					$('.mr-os_version').html(integer_to_version(machineData.os_version));
