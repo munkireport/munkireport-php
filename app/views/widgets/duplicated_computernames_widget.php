@@ -15,6 +15,7 @@
 						$sql = "SELECT computer_name,
 								COUNT(*) AS count
 								FROM machine
+								LEFT JOIN reportdata USING (serial_number)
 								$filter
 								GROUP BY computer_name
 								HAVING count > 1

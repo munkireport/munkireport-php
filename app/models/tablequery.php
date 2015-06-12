@@ -28,8 +28,8 @@ class Tablequery {
         // Get tables from column names
         $tables = array();
 
-        // Add the machine table
-        $tables['machine'] = 1;
+        // Add the reportdata table
+        $tables['reportdata'] = 1;
 
         $formatted_columns = array();
         foreach($cfg['cols'] AS $pos => $name)
@@ -80,12 +80,12 @@ class Tablequery {
             }
         }
 
-        // Business unit filter (assumes we are selecting the machine table)
+        // Business unit filter (assumes we are selecting the reportdata table)
         if($machine_groups = get_filtered_groups())
         {
             // Todo: We should check if a requested machine_group is allowed
 
-            $bu_where = 'machine.computer_group IN ('. implode(', ', $machine_groups). ')';
+            $bu_where = 'reportdata.machine_group IN ('. implode(', ', $machine_groups). ')';
             if($where)
             {
                 $where .= ' AND (' . $bu_where . ')';

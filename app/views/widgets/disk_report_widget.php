@@ -15,7 +15,7 @@
 						COUNT(CASE WHEN FreeSpace < 10737418240 THEN 1 END) AS warning, 
 						COUNT(CASE WHEN FreeSpace < 5368709120 THEN 1 END) AS danger 
 						FROM diskreport
-						LEFT JOIN machine USING (serial_number)
+						LEFT JOIN reportdata USING (serial_number)
 						".get_machine_group_filter();
 					?>
 					<?php if($obj = current($queryobj->query($sql))): ?>

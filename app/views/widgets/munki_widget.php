@@ -16,7 +16,7 @@
 					SUM(pendinginstalls > 0) as pending,
 					SUM(installresults > 0) as installed 
 					FROM munkireport
-					LEFT JOIN machine USING (serial_number)
+					LEFT JOIN reportdata USING (serial_number)
 					".get_machine_group_filter();
 				?>
 				<?php foreach($munkireport->query($sql) as $obj):?>

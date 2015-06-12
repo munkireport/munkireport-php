@@ -57,8 +57,8 @@ class Certificate_controller extends Module_controller
             return;
         }
 
-        $timemachine = new Certificate_model;
-        $obj->view('json', array('msg' => $timemachine->get_stats()));
+        $cert = new Certificate_model;
+        $obj->view('json', array('msg' => $cert->get_stats()));
     }
 
 } // END class Certificate_controller

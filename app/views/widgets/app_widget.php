@@ -8,7 +8,7 @@ $group_filter = get_machine_group_filter('AND', 'm');
 foreach ($appsToCheck as $string) {
     $appsToChecksql[] = "SELECT i.version, COUNT(i.version) as count
     FROM inventoryitem i
-    LEFT JOIN machine m ON (m.serial_number = i.serial)
+    LEFT JOIN reportdata m ON (m.serial_number = i.serial)
     WHERE i.name = '$string'
     $group_filter
     GROUP BY i.version

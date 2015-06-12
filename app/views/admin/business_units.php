@@ -638,7 +638,7 @@
 		var defer = $.when(
 			$.getJSON(appUrl + '/admin/get_bu_data'),
 			$.getJSON(appUrl + '/admin/get_mg_data'),
-			$.getJSON(appUrl + '/module/machine/get_groups')
+			$.getJSON(appUrl + '/module/reportdata/get_groups')
 			);
 
 		// Render when all requests are successful

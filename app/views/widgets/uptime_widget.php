@@ -18,7 +18,6 @@
 						$filter = get_machine_group_filter('AND');
 						$sql = "SELECT timestamp, uptime
 										FROM reportdata
-										LEFT JOIN machine USING(serial_number)
 										WHERE uptime <> '0'
 										$filter
 										ORDER BY timestamp DESC";

@@ -13,7 +13,7 @@
 						$queryobj = new displays_info_model();
 						$sql = "SELECT COUNT(CASE WHEN type='1' THEN 1 END) AS total
 						 			FROM displays
-						 			LEFT JOIN machine USING (serial_number)
+						 			LEFT JOIN reportdata USING (serial_number)
 						 			".get_machine_group_filter();
 						$obj = current($queryobj->query($sql));
 					?>

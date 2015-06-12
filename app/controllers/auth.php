@@ -359,10 +359,10 @@ class auth extends Controller
 		if($_SESSION['role'] == 'admin' OR ! $bu_enabled)
 		{
 			// Can access all defined groups (from machine_group)
-			// and used groups (from machine)
+			// and used groups (from reportdata)
 			$mg = new Machine_group;
-			$machine = new Machine_model;
-			$_SESSION['machine_groups'] = array_unique(array_merge($machine->get_groups(), $mg->get_group_ids()));
+			$report = new Reportdata_model;
+			$_SESSION['machine_groups'] = array_unique(array_merge($report->get_groups(), $mg->get_group_ids()));
 		}
 		else
 		{

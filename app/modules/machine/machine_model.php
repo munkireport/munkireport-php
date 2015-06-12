@@ -24,7 +24,6 @@ class Machine_model extends Model {
 		$this->rs['l2_cache'] = '';
 		$this->rs['machine_name'] = '';
 		$this->rs['packages'] = '';  
-		$this->rs['computer_group'] = 0; $this->rt['computer_group'] = 'INT DEFAULT 0';
 		
 		// Add indexes
 		$this->idx['hostname'] = array('hostname');
@@ -44,11 +43,10 @@ class Machine_model extends Model {
 		$this->idx['l2_cache'] = array('l2_cache');
 		$this->idx['machine_name'] = array('machine_name');
 		$this->idx['packages'] = array('packages');	
-		$this->idx['computer_group'] = array('computer_group');	
 
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 5;
+		$this->schema_version = 4;
 
 		// Create table if it does not exist
 		$this->create_table();
@@ -60,43 +58,6 @@ class Machine_model extends Model {
 		  
 	}
 	
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Get machine_groups
-	 *
-	 * @return array machine_groups
-	 * @author AvB
-	 **/
-	function get_groups($count = FALSE)
-	{
-		if($count)
-		{
-			$out = array();
-		}
-		else
-		{
-			$out = array(0 => 0);
-		}
-		
-		$sql = "SELECT computer_group, COUNT(*) as cnt FROM machine GROUP BY computer_group";
-		foreach($this->query($sql) AS $obj)
-		{
-			if($count)
-			{
-				$obj->computer_group = intval($obj->computer_group);
-				$obj->cnt = intval($obj->cnt);
-				$out[] = $obj;
-			}
-			else
-			{
-				$out[$obj->computer_group] = $obj->computer_group;
-			}
-			
-		}
-
-		return $out;
-	}
 	// ------------------------------------------------------------------------
 
 	/**

@@ -15,18 +15,18 @@
 								COUNT(CASE WHEN (which_directory_service LIKE 'Active Directory'
 								OR which_directory_service LIKE 'LDAPv3') THEN 1 END) AS arebound
 								FROM directoryservice
-								LEFT JOIN machine USING(serial_number)
+								LEFT JOIN reportdata USING(serial_number)
 								".get_machine_group_filter();
 				$obj = current($queryobj->query($sql));
 				?>
 				<?php if($obj): ?>
 				<a href="<?php echo url('show/listing/directoryservice'); ?>" class="btn btn-success">
 					<span class="bigger-150"> <?php echo $obj->arebound; ?> </span><br>
-					<span data-i18n="widget.bound_to_ds.bound">Bound</span>
+					<span data-i18n="widget.bound_to_ds.bound"></span>
 				</a>
 				<a href="<?php echo url('show/listing/directoryservice'); ?>" class="btn btn-danger">
 					<span class="bigger-150"> <?php echo $obj->total - $obj->arebound; ?> </span><br>
-					<span data-i18n="widget.bound_to_ds.notbound">Not Bound</span>
+					<span data-i18n="widget.bound_to_ds.notbound"></span>
 				</a>
 				<?php endif; ?>
 

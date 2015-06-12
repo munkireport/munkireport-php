@@ -88,6 +88,7 @@ class Machine_controller extends Module_controller
 		$machine = new Machine_model();
 		$sql = "SELECT physical_memory, count(1) as count
 			FROM machine
+			LEFT JOIN reportdata USING (serial_number)
 			".get_machine_group_filter()."
 			GROUP BY physical_memory
 			ORDER BY physical_memory DESC";
@@ -132,6 +133,7 @@ class Machine_controller extends Module_controller
 		$machine = new Machine_model();
 		$sql = "SELECT machine_name, count(1) as count 
 			FROM machine
+			LEFT JOIN reportdata USING (serial_number)
 			".get_machine_group_filter()."
 			GROUP BY machine_name 
 			ORDER BY count DESC";
@@ -156,6 +158,7 @@ class Machine_controller extends Module_controller
 		$machine = new Machine_model();
 		$sql = "SELECT count(1) as count, os_version 
 				FROM machine
+				LEFT JOIN reportdata USING (serial_number)
 				".get_machine_group_filter()."
 				GROUP BY os_version
 				ORDER BY os_version ASC";
@@ -177,18 +180,6 @@ class Machine_controller extends Module_controller
 
 		$obj = new View();
 		$obj->view('json', array('msg' => $out));
-	}
-
-	/**
-	 * Get machine groups
-	 *
-	 * @author 
-	 **/
-	function get_groups()
-	{
-		$machine = new Machine_model();
-		$obj = new View();
-		$obj->view('json', array('msg' => $machine->get_groups($count = TRUE)));
 	}
 	
 } // END class Machine_controller

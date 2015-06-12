@@ -33,9 +33,10 @@ class Inventory_model extends Model {
     function select_all()
     {
         $sql = sprintf('SELECT name, version, COUNT(i.id) AS num_installs
-            FROM %s i LEFT JOIN machine m ON (m.serial_number = i.serial)
+            FROM %s i 
+            LEFT JOIN reportdata r ON (r.serial_number = i.serial)
             %s 
-            GROUP BY name, version', $this->enquote($this->tablename), get_machine_group_filter('WHERE', 'm'));
+            GROUP BY name, version', $this->enquote($this->tablename), get_machine_group_filter('WHERE', 'r'));
         return $this->query($sql);
     }
     

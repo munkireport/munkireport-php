@@ -88,7 +88,7 @@ class Certificate_model extends Model {
 			COUNT(CASE WHEN cert_exp_time BETWEEN $now AND $three_months THEN 1 END) AS soon,
 			COUNT(CASE WHEN cert_exp_time > $three_months THEN 1 END) AS ok
 			FROM certificate
-			LEFT JOIN machine USING (serial_number)
+			LEFT JOIN reportdata USING (serial_number)
 			".get_machine_group_filter();
 		return current($this->query($sql));
 	}

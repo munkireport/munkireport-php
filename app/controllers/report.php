@@ -66,16 +66,10 @@ class report extends Controller
 		// Try to register client and lookup hashes in db
 		try
 		{
-			// Todo: make these db queries faster:
-
-			// Register check in reportdata
+			// Register check and group in reportdata
 			$report = new Reportdata_model($_POST['serial']);
-			$report->register()->save();
-
-			// Store group in machine
-			$report = new Machine_model($_POST['serial']);
 			$report->computer_group = $this->group;
-			$report->save();
+			$report->register()->save();
 
 			$req_items = unserialize($_POST['items']); //Todo: check if array
 

@@ -75,7 +75,7 @@ class Network_controller extends Module_controller
 			$cnt++;
 		}
 		$sql = "SELECT " . implode(', ', $sel_arr) . " FROM network
-			LEFT JOIN machine USING (serial_number)
+			LEFT JOIN reportdata USING (serial_number)
 			WHERE ipv4router != '(null)' AND ipv4router != ''".get_machine_group_filter('AND');
 
 		// Create Out array

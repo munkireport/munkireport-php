@@ -15,7 +15,7 @@
 						$filter = get_machine_group_filter();
 						$sql = "SELECT count(*) AS count, status
 										FROM warranty
-										LEFT JOIN machine USING (serial_number)
+										LEFT JOIN reportdata USING (serial_number)
 										$filter
 										GROUP BY status
 										ORDER BY count DESC";
@@ -36,7 +36,7 @@
 						$filter = get_machine_group_filter('AND');
 						$sql = "SELECT count(*) AS count, status
 										FROM warranty
-										LEFT JOIN machine USING (serial_number)
+										LEFT JOIN reportdata USING (serial_number)
 										WHERE end_date < '$thirtydays' AND status = 'Supported'
 										$filter
 										GROUP BY status

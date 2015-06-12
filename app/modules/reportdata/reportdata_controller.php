@@ -33,7 +33,7 @@ class Reportdata_controller extends Module_controller
 		$reportdata = new Reportdata_model();
 		new Machine_model();
 
-		$where = get_machine_group_filter('WHERE', 'm');
+		$where = get_machine_group_filter('WHERE', 'r');
 
 		switch($reportdata->get_driver())
 		{
@@ -128,8 +128,7 @@ class Reportdata_controller extends Module_controller
 			$cnt++;
 		}
 		$sql = "SELECT " . implode(', ', $sel_arr) . "
-				FROM reportdata
-				LEFT JOIN machine USING (serial_number)"
+				FROM reportdata "
 				.get_machine_group_filter();
 
 		// Create Out array

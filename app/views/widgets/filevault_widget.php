@@ -15,7 +15,7 @@
 						$sql = "SELECT count(1) AS count,
 								filevault_status 
 								FROM filevault_status
-								LEFT JOIN machine USING (serial_number)
+								LEFT JOIN reportdata USING (serial_number)
 								$filter
 								GROUP BY filevault_status
 								ORDER BY count DESC";

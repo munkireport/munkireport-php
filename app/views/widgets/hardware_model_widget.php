@@ -12,8 +12,9 @@
 
 				<?php	$machine = new Machine_model();
 						$filter = get_machine_group_filter();
-						$sql = "SELECT count(id) AS count, machine_desc 
+						$sql = "SELECT count(*) AS count, machine_desc 
 							FROM machine
+							LEFT JOIN reportdata USING (serial_number)
 							$filter
 							GROUP BY machine_desc 
 							ORDER BY count DESC";

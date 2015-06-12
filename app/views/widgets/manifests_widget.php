@@ -14,7 +14,7 @@
 						$filter = get_machine_group_filter();
 						$sql = "SELECT COUNT(1) AS count, manifestname 
 							FROM munkireport
-							LEFT JOIN machine USING (serial_number)
+							LEFT JOIN reportdata USING (serial_number)
 							$filter
 							GROUP BY manifestname
 							ORDER BY count DESC";

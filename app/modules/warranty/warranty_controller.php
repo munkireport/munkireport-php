@@ -101,7 +101,7 @@ class Warranty_controller extends Module_controller
 		$sql = "SELECT count(1) as count, 
 				$agesql AS age 
 				FROM warranty
-				LEFT JOIN machine USING (serial_number)
+				LEFT JOIN reportdata USING (serial_number)
 				$where
 				GROUP by age 
 				ORDER BY age DESC";

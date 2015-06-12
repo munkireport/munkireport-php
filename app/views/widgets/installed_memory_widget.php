@@ -18,6 +18,7 @@
 						$filter = get_machine_group_filter();
 						$sql = "SELECT physical_memory, count(1) as count
 							FROM machine
+							LEFT JOIN reportdata USING (serial_number)
 							$filter
 							GROUP BY physical_memory
 							ORDER BY physical_memory DESC";

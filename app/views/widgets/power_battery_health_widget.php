@@ -15,7 +15,7 @@
 										COUNT(CASE WHEN max_percent BETWEEN 80 AND 89 THEN 1 END) AS warning,
 										COUNT(CASE WHEN max_percent<80 THEN 1 END) AS danger
 							 			FROM power
-							 			LEFT JOIN machine USING(serial_number)
+							 			LEFT JOIN reportdata USING(serial_number)
 							 			".get_machine_group_filter();
 						$obj = current($queryobj->query($sql));
 					?>

@@ -1,5 +1,4 @@
 <?php
-new Machine_model;
 $queryobj = new Reportdata_model();
 $now = time();
 $hour_ago = $now - 3600;
@@ -16,7 +15,6 @@ $sql = "SELECT COUNT(1) as total,
 	COUNT(CASE WHEN timestamp BETWEEN $three_month_ago AND $month_ago THEN 1 END) AS inactive_month,
 	COUNT(CASE WHEN timestamp < $three_month_ago THEN 1 END) AS inactive_three_month
 	FROM reportdata
-	LEFT JOIN machine USING (serial_number)
 	".get_machine_group_filter();
 
 $obj = current($queryobj->query($sql));

@@ -61,7 +61,7 @@ If $GLOBALS['auth'] == 'report', this method will return TRUE as well;
 
 #### `get_machine_group_filter($prefix = 'WHERE', $machine_table_alias = 'machine')`
 
-Retrieve a 'WHERE' clause that contains a filter for the current user. You need to add a join to machine in your database query for this to work.
+Retrieve a 'WHERE' clause that contains a filter for the current user. You need to add a join to reportdata in your database query for this to work.
 
 Example:
 
@@ -79,7 +79,7 @@ $sql = "SELECT COUNT(1) as total,
 		COUNT(CASE WHEN (which_directory_service LIKE 'Active Directory'
 		OR which_directory_service LIKE 'LDAPv3') THEN 1 END) AS arebound
 		FROM directoryservice
-		LEFT JOIN machine USING(serial_number)
+		LEFT JOIN reportdata USING(serial_number)
 		".get_machine_group_filter();
 ```
 

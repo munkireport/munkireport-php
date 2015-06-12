@@ -15,12 +15,12 @@
 					$pendinginstalls_array = array();
 					$week_ago = date('Y-m-d H:i:s', time() - 3600 * 24 * 7);
 					$filter = get_machine_group_filter('AND');
-					$sql = "SELECT serial_number, report_plist 
-							FROM munkireport
-							LEFT JOIN machine USING (serial_number)
+					$sql = "SELECT m.serial_number, report_plist 
+							FROM munkireport m
+							LEFT JOIN reportdata USING (serial_number)
 							WHERE pendinginstalls > 0
 							$filter
-							AND timestamp > '$week_ago'";
+							AND m.timestamp > '$week_ago'";
 					// Get compression (fixme: we should be able to read this from the model) 
 					$compress = function_exists('gzdeflate');
 					

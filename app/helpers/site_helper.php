@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.5.3.1250';
+$GLOBALS['version'] = '2.5.3.1251';
 
 // Return version without commit count
 function get_version()
@@ -241,10 +241,10 @@ function machine_computer_group($serial_number = '')
 {
 	if( ! isset($GLOBALS['machine_groups'][$serial_number]))
 	{
-		$machine = new Machine_model;
-		if( $machine->retrieve_one('serial_number=?', $serial_number))
+		$reportdata = new Reportdata_model;
+		if( $reportdata->retrieve_one('serial_number=?', $serial_number))
 		{
-			$GLOBALS['machine_groups'][$serial_number] = $machine->computer_group;
+			$GLOBALS['machine_groups'][$serial_number] = $reportdata->machine_group;
 		}
 		else
 		{
@@ -282,17 +282,17 @@ function id_in_machine_group($id)
  * Get filter for machine_group membership
  *
  * @var string optional prefix default 'WHERE'
- * @var string how to address the machine table - default 'machine'
+ * @var string how to address the reportdata table - default 'reportdata'
  * @return string filter clause
  * @author 
  **/
-function get_machine_group_filter($prefix = 'WHERE', $machine_table_name = 'machine')
+function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
 {
 
 	// Get filtered groups
 	if($groups = get_filtered_groups())
 	{
-		return sprintf('%s %s.computer_group IN (%s)', $prefix, $machine_table_name, implode(', ', $groups));
+		return sprintf('%s %s.machine_group IN (%s)', $prefix, $reportdata, implode(', ', $groups));
 	}
 	else // No filter
 	{
