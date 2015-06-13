@@ -201,8 +201,6 @@
 					// Update machineGroups array
 					setGroup(group);
 
-					console.log(machineGroups);
-
 					// Update business units
 					$('.unit').each(function(){
 						var bu = $(this).data();
@@ -219,9 +217,10 @@
 							bu.machine_groups.push(data.groupid);
 						}
 
-						// Render
-						$(this).each(render);
 					});
+
+					// Update machine_groups
+					renderMachineGroups();
 
 					// Dismiss modal
 					$('#myModal').modal('hide');
@@ -541,6 +540,10 @@
 						$('.unitid-' + data.unitid)
 							.data(data)
 							.each(render);
+
+						// Update machine_groups
+						renderMachineGroups();
+
 					});
 
 				})
@@ -583,34 +586,47 @@
 				});	
 			},
 			renderMachineGroups = function(){
+
+				// Clear all groups
+				$('.machine-groups').empty();
+				$('.unassigned').empty();
+
+				var groupUnit = {};
+				// Get machine-groups from Business units
+				$('.unit').each(function(){
+					var data = $(this).data();
+					$.each(data.machine_groups, function(index, val){
+						groupUnit[val] = data.unitid;
+					});
+				});
+
 				// Loop through machineGroups
 				$.each(machineGroups, function(index, mg){
 
+					if(groupUnit[mg.groupid] !== undefined){
+						var addTo = $('.unitid-'+ groupUnit[mg.groupid] + ' .machine-groups')
+					}
+					else // Not in Business unit
+					{
+						var addTo = $('.unassigned');
+					}
+						
+					addTo.append($('<a>')
+						.attr('href', '#')
+						.addClass('list-group-item machine-group-' + mg.groupid)
+						.data(mg)
+						.click(editMachinegroup)
+						.text(mg.name + ' ')
+						.append($('<span>')
+								.addClass('badge')
+								.text(mg.cnt || 0)));
 				});
 			},
 			render = function(){
 				var data = $(this).data(),
-					machine_groups = '',
 					groupname = '',
 					users = ''
 					managers = '';
-				if(data.machine_groups)
-				{
-					machine_groups = $('<div>')
-						.addClass('list-group');
-					$.each(data.machine_groups, function(index, val){
-						var group = getGroup(val)
-						machine_groups.append($('<a>')
-							.attr('href', '#')
-							.addClass('list-group-item machine-group-' + group.groupid)
-							.data(group)
-							.click(editMachinegroup)
-							.text(group.name + ' ')
-							.append($('<span>')
-									.addClass('badge')
-									.text(group.cnt || 0)));
-					});
-				}
 
 				if(data.users)
 				{
@@ -663,7 +679,8 @@
 									.addClass('alert alert-info')
 										.append(editButton.clone()
 											.click(editItems)))
-									.append(machine_groups))
+									.append($('<div>')
+										.addClass('list-group machine-groups')))
 							.append($('<div>')
 								.addClass('col-md-4')
 								.append($('<h4>')
@@ -717,34 +734,8 @@
 					);
 			});
 
-
-			// Create stray machine groups
-			var stray_groups = {};
-
-			// Collect machine_groups
-			$.each(machineGroups, function(index, mg){
-				stray_groups[mg.groupid] = mg;
-			});
-
-			// Find actual group in machine_groups
-			//$.each(gr_data[0], function(index, grp){
-			//	stray_groups[grp.machine_group] = stray_groups[grp.machine_group] || {groupid: grp.machine_group,name:''}
-			//	stray_groups[grp.machine_group].cnt = grp.cnt;
-			//});
-
-			// Remove groups that are in a Business Unit
-			$.each(bu_data[0], function(index, value){
-				$.each(value.machine_groups, function(index, grp){
-					var index = stray_groups[grp];
-					if (index) {
-						delete stray_groups[grp];
-					}
-				});
-			});
-
-			if( ! $.isEmptyObject(stray_groups))
-			{
-				$('#machine-groups')
+			// Add unassigned groups
+			$('#machine-groups')
 					.empty()
 					.append($('<div>')
 						.addClass('panel panel-default')
@@ -754,22 +745,10 @@
 								.addClass('name panel-title')
 								.text(i18n.t('admin.unassigned_groups'))))
 						.append($('<div>')
-							.addClass('list-group')));
+							.addClass('list-group unassigned')));
 
-				$.each(stray_groups, function(index, value){
-					$('#machine-groups .list-group')
-							.append($('<a>')
-								.addClass('list-group-item machine-group-' + value.groupid)
-								.data(value)
-								.attr('href', '#')
-								.click(editMachinegroup)
-								.text(value.name || 'Group ' + value.groupid)
-								.append($('<span>')
-									.addClass('badge')
-									.text(value.cnt || 0)));
-				});
-			}
-
+			// Render machine groups
+			renderMachineGroups();
 			
 
 		});
