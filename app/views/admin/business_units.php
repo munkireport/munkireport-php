@@ -89,7 +89,7 @@
 
 			$('#myModal').modal('show');
 		},
-		getGroup = function(groupid, what){
+		getGroup = function(groupid, what){ // get group from machineGroups
 
 			var groupObj = {groupid: groupid, name: 'Group ' + groupid};
 
@@ -107,6 +107,32 @@
 			}
 
 			return groupObj;
+		},
+		setGroup = function(groupObj){ // Add/update group in machineGroups
+			var found = false;
+
+			// Look for group
+			$.each(machineGroups, function(index, group){
+				if( +group.groupid === +groupObj.groupid){
+					group.name = groupObj.name;
+					group.keys = groupObj.keys || [];
+					found = true;
+					return;
+				}
+			});
+
+			//Not found, add
+			found || machineGroups.push(groupObj);
+		},
+		deleteGroup = function(groupid) // Delete group from machineGroups
+		{
+			// Look for group
+			$.each(machineGroups, function(index, group){
+				if( +group.groupid == +groupid){
+					machineGroups.splice(index, 1);
+					return;
+				}
+			});
 		},
 		guid = function(){
 
@@ -136,10 +162,14 @@
 					$.getJSON(url, function(data){
 						if(data.success == true)
 						{
-							// Dismiss modal
-							$('#myModal').modal('hide');
+							// Remove from MachineGroups
+							deleteGroup(groupid);
+
 							// Update listing
 							$('.machine-group-' + groupid).remove();
+
+							// Dismiss modal
+							$('#myModal').modal('hide');
 						}
 					});	
 
@@ -158,10 +188,20 @@
 
 				jqxhr.done(function(data){
 
-					// Update name in BU view
+					var group = {
+						groupid: data.groupid,
+						name: data.name,
+						keys: data.keys || []
+					}
+					// Update name in view
 					$('a.machine-group-' + data.groupid)
-						.data(data)
-						.text(data.name);
+						.data(group)
+						.text(group.name);
+
+					// Update machineGroups array
+					setGroup(group);
+
+					console.log(machineGroups);
 
 					// Update business units
 					$('.unit').each(function(){
@@ -541,6 +581,12 @@
 						$('.unitid-' + unitid).remove();
 					}
 				});	
+			},
+			renderMachineGroups = function(){
+				// Loop through machineGroups
+				$.each(machineGroups, function(index, mg){
+
+				});
 			},
 			render = function(){
 				var data = $(this).data(),

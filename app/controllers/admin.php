@@ -166,6 +166,7 @@ class admin extends Controller
 
 			// Translate groups to single entries
 			$translate = array(
+				'keys' => 'key',
 				'machine_groups' => 'machine_group',
 				'users' => 'user',
 				'managers' => 'manager');
@@ -186,13 +187,14 @@ class admin extends Controller
 				$groups = array();
 
 				// If sent a '#', no items are in the iteminfo array
-				// proceed with deleting all machinegroups
+				// proceed with empty groups array
 				if( ! in_array('#', $_POST['iteminfo']))
 				{
 					// Loop through iteminfo
 					foreach($_POST['iteminfo'] AS $entry)
 					{
-						if( ! $entry['key'])
+						// No key, create new
+						if( $entry['key'] === '')
 						{
 							$mg = new Machine_group;
 							$newgroup = $mg->get_max_groupid() + 1;
@@ -223,14 +225,11 @@ class admin extends Controller
 					}
 				}
 
-
-
 				// Set new machine_groups to list
 				$_POST['machine_groups'] = $groups;
 				unset($_POST['iteminfo']);
 				
 			}
-
 			foreach($_POST as $property => $val)
 			{
 				
@@ -267,17 +266,19 @@ class admin extends Controller
 					foreach($val AS $entry)
 					{
 						// Empty array placeholder
-						if($entry == '#'){
+						if($entry === '#'){
 							$out[$property] = array();
 							continue;
 						} 
 						$business_unit->id = '';
 						$business_unit->unitid = $unitid;
 						$business_unit->property = $name;
-						$business_unit->value = $entry;
+						$business_unit->value = is_numeric($entry) ? 0 + $entry : $entry;
 						$business_unit->save();
 						$out[$property][] = is_numeric($entry) ? 0 + $entry : $entry;
 					}
+											
+
 				}
 			}
 			
