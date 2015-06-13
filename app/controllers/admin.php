@@ -55,6 +55,14 @@ class admin extends Controller
 		{
 			$machine_group = new Machine_group;
 			$groupid = $_POST['groupid'];
+
+			// Empty groupid: create new
+			if($groupid === '')
+			{
+				$mg = new Machine_group;
+				$groupid = $mg->get_max_groupid() + 1;
+			}
+			
 			$out['groupid'] = intval($groupid);
 
 			foreach($_POST as $property => $val)

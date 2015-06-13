@@ -12,7 +12,17 @@
 	<div data-i18n="listing.loading" id="loading"></div>
 
     <div class="col-lg-12">
-    	<div id="machine-groups"></div>
+    	<div id="machine-groups">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h3 class="name panel-title">
+    					<span data-i18n="admin.unassigned_groups"></span>
+    					<button class="btn btn-default btn-xs pull-right add-group"><i class="fa fa-plus"></i></button>
+    				</h3>
+    			</div>
+    			<div class="list-group unassigned"></div>
+    		</div>
+    	</div>
     </div>
   </div> <!-- /row -->
 </div>  <!-- /container -->
@@ -242,8 +252,6 @@
 							.text(bu.name));
 			});
 			 
-			console.log(data)
-
 			// If key is empty, generate guid
 			data.keys = data.keys || []; //guid();
 			
@@ -582,6 +590,10 @@
 						$('#myModal').modal('hide');
 						// Update listing
 						$('.unitid-' + unitid).remove();
+
+						// Update machine_groups
+						renderMachineGroups();
+
 					}
 				});	
 			},
@@ -720,36 +732,32 @@
 			
 			machineGroups = mg_data[0];
 
-
 			// Remove Loading row
 			$('#loading').hide();
 
-			// Create business units
-			$.each(bu_data[0], function(index, value){
-				$('#bu_units')
-					.append($('<div>')
-						.data(value)
-						.addClass('col-lg-12 unit unitid-' + value.unitid)
-						.each(render)
-					);
-			});
+			// Charge new Machine-group button
+			$('.add-group')
+				.click(function(e){
+					e.preventDefault();
+					editMachinegroup();
+				});
 
-			// Add unassigned groups
-			$('#machine-groups')
-					.empty()
-					.append($('<div>')
-						.addClass('panel panel-default')
+			// Create business units
+			if(businessUnitsEnabled)
+			{
+				$.each(bu_data[0], function(index, value){
+					$('#bu_units')
 						.append($('<div>')
-							.addClass('panel-heading')
-							.append($('<h3>')
-								.addClass('name panel-title')
-								.text(i18n.t('admin.unassigned_groups'))))
-						.append($('<div>')
-							.addClass('list-group unassigned')));
+							.data(value)
+							.addClass('col-lg-12 unit unitid-' + value.unitid)
+							.each(render)
+						);
+				});
+			}
+
 
 			// Render machine groups
 			renderMachineGroups();
-			
 
 		});
 
