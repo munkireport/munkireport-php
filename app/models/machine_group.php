@@ -73,7 +73,6 @@ class Machine_group extends Model {
     {
         $out = array();
         $where = $groupid !== '' ? 'groupid=?' : '';
-        $groups = get_filtered_groups();
 
         foreach($this->select( 'groupid, property, value', $where, $groupid, PDO::FETCH_OBJ ) as $obj)
         {

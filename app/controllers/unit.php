@@ -65,9 +65,6 @@ class unit extends Controller
 	{
 		$out = array();
 
-		// Initiate session
-		$this->authorized();
-
 		if(isset($_SESSION['machine_groups']))
 		{
 			// Get data for this unit

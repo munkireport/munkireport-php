@@ -80,7 +80,9 @@ class Reportdata_model extends Model {
 			$out = array(0 => 0);
 		}
 		
-		$sql = "SELECT machine_group, COUNT(*) as cnt FROM reportdata GROUP BY machine_group";
+		$sql = "SELECT machine_group, COUNT(*) AS cnt 
+				FROM reportdata 
+				GROUP BY machine_group";
 		foreach($this->query($sql) AS $obj)
 		{
 			if($count)

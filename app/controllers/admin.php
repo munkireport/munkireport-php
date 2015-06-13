@@ -185,38 +185,45 @@ class admin extends Controller
 			{
 				$groups = array();
 
-				// Loop through iteminfo
-				foreach($_POST['iteminfo'] AS $entry)
+				// If sent a '#', no items are in the iteminfo array
+				// proceed with deleting all machinegroups
+				if( ! in_array('#', $_POST['iteminfo']))
 				{
-					if( ! $entry['key'])
+					// Loop through iteminfo
+					foreach($_POST['iteminfo'] AS $entry)
 					{
-						$mg = new Machine_group;
-						$newgroup = $mg->get_max_groupid() + 1;
+						if( ! $entry['key'])
+						{
+							$mg = new Machine_group;
+							$newgroup = $mg->get_max_groupid() + 1;
 
-						// Store name
-						$mg->merge(array(
-							'id' => '',
-							'groupid' => $newgroup,
-							'property' => 'name',
-							'value' => $entry['name']));
-						$mg->save();
+							// Store name
+							$mg->merge(array(
+								'id' => '',
+								'groupid' => $newgroup,
+								'property' => 'name',
+								'value' => $entry['name']));
+							$mg->save();
 
-						// Store GUID key
-						$mg->merge(array(
-							'id' => '',
-							'groupid' => $newgroup,
-							'property' => 'key',
-							'value' => get_guid()));
-						$mg->save();
+							// Store GUID key
+							$mg->merge(array(
+								'id' => '',
+								'groupid' => $newgroup,
+								'property' => 'key',
+								'value' => get_guid()));
+							$mg->save();
 
-						$groups[] = $newgroup;
-					}
-					else
-					{
-						// Add key to list
-						$groups[] = intval($entry['key']);
+							$groups[] = $newgroup;
+						}
+						else
+						{
+							// Add key to list
+							$groups[] = intval($entry['key']);
+						}
 					}
 				}
+
+
 
 				// Set new machine_groups to list
 				$_POST['machine_groups'] = $groups;
@@ -334,9 +341,30 @@ class admin extends Controller
 	 **/
 	function get_mg_data($groupid = "")
 	{
-        $obj = new View();
+        $out = array();
+
+        // Get created Machine Groups
         $mg = new Machine_group;
-        $obj->view('json', array('msg' => $mg->all($groupid)));
+        foreach($mg->all($groupid) AS $arr){
+        	$out[$arr['groupid']] = $arr;
+        }
+        $reportdata = new Reportdata_model;
+
+        // Get registered machine groups
+        $reportdata = new Reportdata_model;
+        foreach($reportdata->get_groups(true) AS $obj)
+        {
+        	if( ! isset($out[$obj->machine_group]))
+        	{
+        		$out[$obj->machine_group] = array(
+        			'groupid' => $obj->machine_group,
+        			'name' => 'Group '.$obj->machine_group);
+        	}
+        	$out[$obj->machine_group]['cnt'] = $obj->cnt;
+        }
+
+        $obj = new View();
+        $obj->view('json', array('msg' => array_values($out)));
 	}
 
 	//===============================================================

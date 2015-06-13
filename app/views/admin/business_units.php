@@ -332,7 +332,8 @@
 				saveItems = function(){
 					
 					// Add items to data
-					$('#myModal button.ok').data('iteminfo', items);
+					var iteminfo = items.length ? items : ['#'];
+					$('#myModal button.ok').data('iteminfo', iteminfo);
 
 					// Call save
 					save();
@@ -549,33 +550,40 @@
 					managers = '';
 				if(data.machine_groups)
 				{
-					machine_groups = $('<ul>');
+					machine_groups = $('<div>')
+						.addClass('list-group');
 					$.each(data.machine_groups, function(index, val){
 						var group = getGroup(val)
-						machine_groups.append($('<li>')
-							.append($('<a>')
-								.attr('href', '#')
-								.addClass('machine-group-' + group.groupid)
-								.data(group)
-								.click(editMachinegroup)
-								.text(group.name + ' ')))
+						machine_groups.append($('<a>')
+							.attr('href', '#')
+							.addClass('list-group-item machine-group-' + group.groupid)
+							.data(group)
+							.click(editMachinegroup)
+							.text(group.name + ' ')
+							.append($('<span>')
+									.addClass('badge')
+									.text(group.cnt || 0)));
 					});
 				}
 
 				if(data.users)
 				{
-					users = $('<ul>');
+					users = $('<ul>')
+						.addClass('list-group');
 					$.each(data.users, function(index, val){
 						users.append($('<li>')
+							.addClass('list-group-item')
 							.text(val))
 					});
 					
 				}
 				if(data.managers)
 				{
-					managers = $('<ul>');
+					managers = $('<ul>')
+						.addClass('list-group');
 					$.each(data.managers, function(index, val){
 						managers.append($('<li>')
+							.addClass('list-group-item')
 							.text(val))
 					});
 				}
@@ -606,6 +614,7 @@
 								.addClass('col-md-4')
 								.append($('<h4>')
 									.text('Machine Groups ')
+									.addClass('alert alert-info')
 										.append(editButton.clone()
 											.click(editItems)))
 									.append(machine_groups))
@@ -613,6 +622,7 @@
 								.addClass('col-md-4')
 								.append($('<h4>')
 									.text('Managers ')
+									.addClass('alert alert-info')
 										.append(editButton.clone()
 											.attr('data-type', 'managers')
 											.click(editUsers)))
@@ -621,6 +631,7 @@
 								.addClass('col-md-4')
 								.append($('<h4>')
 									.text('Users ')
+									.addClass('alert alert-info')
 										.append(editButton.clone()
 											.attr('data-type', 'users')
 											.click(editUsers)))
@@ -646,6 +657,7 @@
 			
 			machineGroups = mg_data[0];
 
+
 			// Remove Loading row
 			$('#loading').hide();
 
@@ -669,10 +681,10 @@
 			});
 
 			// Find actual group in machine_groups
-			$.each(gr_data[0], function(index, grp){
-				stray_groups[grp.machine_group] = stray_groups[grp.machine_group] || {groupid: grp.machine_group,name:''}
-				stray_groups[grp.machine_group].cnt = grp.cnt;
-			});
+			//$.each(gr_data[0], function(index, grp){
+			//	stray_groups[grp.machine_group] = stray_groups[grp.machine_group] || {groupid: grp.machine_group,name:''}
+			//	stray_groups[grp.machine_group].cnt = grp.cnt;
+			//});
 
 			// Remove groups that are in a Business Unit
 			$.each(bu_data[0], function(index, value){
