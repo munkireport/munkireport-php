@@ -302,8 +302,14 @@
 						.click(deleteMachineGroup)
 						.text(i18n.t('delete'))));
 
-
-			$('#myModal .modal-title').text(i18n.t("admin.mg.edit_group") + ' ' + data.groupid);
+			if(data.groupid)
+			{
+				$('#myModal .modal-title').text(i18n.t("admin.mg.edit_group") + ' ' + data.groupid);
+			}
+			else
+			{
+				$('#myModal .modal-title').text(i18n.t("admin.mg.new_group"));
+			}
 
 			$('#myModal button.ok')
 				.empty()

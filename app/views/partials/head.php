@@ -93,7 +93,7 @@
 							<?php $page_url = $url.strtok($list_url, '.'); ?>
 
 							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-								<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.listings.<?php echo $name = strtok($list_url, '.'); ?>"><?php echo ucfirst($name); ?></a>
+								<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.listings.<?php echo $name = strtok($list_url, '.'); ?>"></a>
 							</li>
 
 							<?php endif; ?>
