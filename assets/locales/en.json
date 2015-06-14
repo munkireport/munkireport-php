@@ -218,6 +218,7 @@
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
 			"clients": "Clients",
+			"certificate": "Certificates",
 			"directoryservice": "Directoryservice",
 			"disk": "Disk",
 			"displays": "Displays",
@@ -225,6 +226,8 @@
 			"inventory": "Inventory",
 			"munki": "Munki",
 			"network": "Network",
+			"power": "Power",
+			"profile": "Profiles",
 			"security": "Security",
 			"timemachine": "Timemachine",
 			"warranty": "Warranty"
