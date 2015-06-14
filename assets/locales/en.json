@@ -271,6 +271,13 @@
 	"reg_date": "Registration Date",
 	"remote_control": "Remote Control",
 	"serial": "Serial Number",
+	"service": {
+		"listing":{
+			"title": "Services Report"
+		},
+		"name": "Service Name",
+		"status": "Service Status"
+	},
 	"sharing": {
 		"connected_users": "Sharing – Connected Users",
 		"afp_users": "AFP Users",

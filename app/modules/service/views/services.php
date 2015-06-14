@@ -52,7 +52,7 @@ new Service_model;
 
 			        	
 						// Format Check-In timestamp
-						var checkin = parseInt($('td:eq(5)', nRow).html());
+						var checkin = parseInt($('td:eq(4)', nRow).html());
 						var date = new Date(checkin * 1000);
 						$('td:eq(4)', nRow).html(moment(date).fromNow());
 				    }
@@ -66,15 +66,15 @@ new Service_model;
 			} );
 		</script>
 
-		  <h3><span data-i18n="listing.service.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="service.listing.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine#serial_number'></th>
-		        <th data-i18n="listing.certificate.commonname" data-colname='service#service_name'></th>
-		        <th data-i18n="listing.certificate.expires" data-colname='service#service_state'></th>
+		        <th data-i18n="service.name" data-colname='service#service_name'></th>
+		        <th data-i18n="service.status" data-colname='service#service_state'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata#timestamp'></th>
 		      </tr>
 		    </thead>
