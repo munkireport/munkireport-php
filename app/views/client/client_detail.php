@@ -265,6 +265,63 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					loadHash();
 				});
 
+				// Get services data
+				$.getJSON( appUrl + '/module/service/get_data/' + serialNumber, function( data ) {
+					if(data.length)
+					{
+						var certs = $('<table>').addClass('table table-condensed table-striped');
+
+						// Add tab link
+						$('.client-tabs .divider')
+							.before($('<li>')
+								.append($('<a>')
+									.attr('href', '#service-tab')
+									.attr('data-toggle', 'tab')
+									.on('show.bs.tab', function(){
+										// We have to remove the active class from the 
+										// previous tab manually, unfortunately
+										$('.client-tabs li').removeClass('active');
+									})
+									.on('shown.bs.tab', updateHash)
+									.text(i18n.t('service.tab.title'))));
+
+						// Add tab
+						$('div.tab-content')
+							.append($('<div>')
+								.attr('id', 'service-tab')
+								.addClass('tab-pane')
+								.append($('<h2>')
+									.text(i18n.t('service.tab.title')))
+								.append(certs));
+					}
+
+					// Set headers
+					certs.append($('<thead>')
+							.append($('<tr>')
+								.append($('<th>')
+									.text(i18n.t('service.name')))
+								.append($('<th>')
+									.text(i18n.t('service.status')))));
+
+					// Load data
+					$.each(data, function(index, cert){
+						console.log(cert)
+						certs.append($('<tr>')
+							.append($('<td>')
+								.text(cert.rs.service_name))
+							.append($('<td>')
+								.html(function(){
+									var cls = "success";
+									if(cert.rs.service_state != 'running'){
+										cls = "warning";
+									}
+									return '<span class="label label-'+cls+'">'+cert.rs.service_state+'</span>';
+								})));
+					});
+
+					// Set correct tab on location hash
+					loadHash();
+				});
 				// Get timemachine data
 				$.getJSON( appUrl + '/module/timemachine/get_data/' + serialNumber, function( data ) {
 					if(data.id !== '')

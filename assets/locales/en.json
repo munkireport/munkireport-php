@@ -276,7 +276,10 @@
 			"title": "Services Report"
 		},
 		"name": "Service Name",
-		"status": "Service Status"
+		"status": "Service Status",
+		"tab": {
+			"title": "Services"
+		}
 	},
 	"sharing": {
 		"connected_users": "Sharing – Connected Users",

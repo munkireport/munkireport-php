@@ -57,8 +57,8 @@ class Service_controller extends Module_controller
             $obj->view('json', array('msg' => 'Not authorized'));
         }
 
-        $cert = new Certificate_model;
-        $obj->view('json', array('msg' => $cert->retrieve_records($serial_number)));
+        $service = new Service_model;
+        $obj->view('json', array('msg' => $service->retrieve_records($serial_number)));
     }
 
 
