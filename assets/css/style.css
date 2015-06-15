@@ -91,6 +91,11 @@ h2 {
   font-size:150%
 }
 
+/* datatable make room for arrows */
+table.table thead th{
+  padding-right: 20px;
+}
+
 /* Responsive table all widths */
 @media screen {
   .table-responsive {
