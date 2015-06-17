@@ -401,8 +401,8 @@ function getdbh()
 abstract class KISS_Model 
 {
 	protected $dbh = ''; // Database handle
-	protected $pkname;
-	protected $tablename;
+	public $pkname;
+	public $tablename;
 	protected $dbhfnname;
 	protected $QUOTE_STYLE='MYSQL'; // valid types are MYSQL, MSSQL, ANSI
 	protected $COMPRESS_ARRAY=true;
@@ -444,7 +444,7 @@ abstract class KISS_Model
 	 *
 	 * @return object PDO instance
 	 **/
-	protected function getdbh() 
+	public function getdbh() 
 	{
 		if ( ! $this->dbh)
 		{
@@ -453,7 +453,7 @@ abstract class KISS_Model
 		return $this->dbh;
 	}
 
-	protected function enquote( $name ) 
+	public function enquote( $name ) 
 	{
 		if ( $this->QUOTE_STYLE=='MYSQL' )
 			return '`'.$name.'`';
