@@ -5,24 +5,30 @@ class Disk_report_model extends Model {
 	{
 		parent::__construct('id', 'diskreport'); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial;
 		$this->rs['TotalSize'] = 0; $this->rt['TotalSize'] = 'BIGINT';
 		$this->rs['FreeSpace'] = 0; $this->rt['FreeSpace'] = 'BIGINT';
 		$this->rs['Percentage'] = 0;
 		$this->rs['SMARTStatus'] = '';
-		$this->rs['SolidState'] = 0;
-		   
+		$this->rs['VolumeType'] = '';
+		$this->rs['BusProtocol'] = '';
+		$this->rs['Internal'] = 0;
+		$this->rs['MountPoint'] = ''; 
+		$this->rs['VolumeName'] = '';
+		$this->rs['CoreStorageEncrypted'] = 0;
+		$this->rs['timestamp'] = 0;
+
+		$this->idx[] = array('serial_number');
+		$this->idx[] = array('VolumeType');
+		$this->idx[] = array('MountPoint');
+		$this->idx[] = array('VolumeName');
+
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
+		$this->schema_version = 1;
 		
 		// Create table if it does not exist
 		$this->create_table();
-		
-		if ($serial)
-			$this->retrieve_record($serial);
-		
-		$this->serial = $serial;
-		  
+				  
 	}
 	
 	// ------------------------------------------------------------------------
@@ -35,32 +41,54 @@ class Disk_report_model extends Model {
 	 **/
 	function process($plist)
 	{		
+
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
-
-		// Reset values
-		$this->SolidState = 0;
-		$this->TotalSize = 0;
-		$this->FreeSpace = 0;
-		$this->Percentage = 0;
-		$this->SMARTStatus = '';
-
-		// Calculate percentage
-		if(isset($mylist['TotalSize']) && isset($mylist['FreeSpace']))
+		if( ! $mylist)
 		{
-			$mylist['Percentage'] = round(($mylist['TotalSize'] - $mylist['FreeSpace']) /
-				max($mylist['TotalSize'], 1) * 100);
+			throw new Exception("No Disks in report", 1);
 		}
 
-		$this->merge($mylist);
+		// Convert old style reports from not migrated clients
+		if(isset($mylist['DeviceIdentifier']))
+		{
+			$mylist = array($mylist);
+		}
 
-		// Set type on SolidState (booleans don't translate well)
-		$this->SolidState = (int) $this->SolidState;
+		// Delete previous set
+		$this->delete_where('serial_number=?', $this->serial_number);
 
-		$this->save();
+		foreach($mylist AS $disk)
+		{
+			// Calculate percentage
+			if(isset($disk['TotalSize']) && isset($disk['FreeSpace']))
+			{
+				$disk['Percentage'] = round(($disk['TotalSize'] - $disk['FreeSpace']) /
+					max($disk['TotalSize'], 1) * 100);
+			}
+
+			// Determine VolumeType
+			$disk['VolumeType'] = "hdd";
+			if(isset($disk['SolidState']) && $disk['SolidState'] == TRUE)
+			{
+				$disk['VolumeType'] = "ssd";
+			}
+			if(isset($disk['CoreStorageCompositeDisk']) && $disk['CoreStorageCompositeDisk'] == TRUE)
+			{
+				$disk['VolumeType'] = "fusion";
+			}
+			if(isset($disk['RAIDMaster']) && $disk['RAIDMaster'] == TRUE)
+			{
+				$disk['VolumeType'] = "raid";
+			}
+
+			$this->merge($disk);
+
+			$this->id = '';
+			$this->timestamp = time();
+			$this->create();
+		}
 	}
-
-	
 }

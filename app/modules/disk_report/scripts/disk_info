@@ -1,15 +1,24 @@
 #!/usr/bin/python
+"""Mac OS X Disk/Volume script for munkireport.
+https://github.com/munkireport/munkireport-php
 
-import re
-import os
+Some ideas and functions are borrowed from gmacpyutil
+https://github.com/google/macops
+
+The script iterates over all partitions and returns a list
+of Volumes with basic info (TotalSize, FreeSpace, MountPoint, VolumeName)
+
+It also reports SMARTStatus from the underlying Physical Disk(s)
+in case of a AppleRAID or CoreStorage Volume
+
+Disk sizes are converted to strings with a precision of .5GB
+
+"""
+
 import subprocess
+import plistlib
 import sys
-
-# Replace integer with string
-# Round to .5GB precision (29 bit)
-def repl(m):
-    contents = int(m.group(1)) >> 29 << 29
-    return '<string>%d</string>' % contents 
+import os
 
 # Skip manual check
 if len(sys.argv) > 1:
@@ -17,17 +26,146 @@ if len(sys.argv) > 1:
 		print 'Manual check: skipping'
 		exit(0)
 
+# Round to .5GB precision (29 bit)
+def _HalfGB(size):
+    return size >> 29 << 29
+
+def _DictFromDiskutilList():
+    """calls diskutil list -plist and returns as dict."""
+
+    command = ["/usr/sbin/diskutil", "list", "-plist"]
+    return _DictFromSubprocess(command)
+
+def _DictFromDiskutilInfo(deviceid):
+    """calls diskutil info for a specific device id.
+
+    Args:
+        deviceid: a given device id for a disk like object
+    Returns:
+        info: dictionary from resulting plist output
+    """
+    command = ["/usr/sbin/diskutil", "info", "-plist", deviceid]
+    return _DictFromSubprocess(command)
+
+def filteredDiskInfo(deviceid):
+    """ Returns a filtered dictionary """
+
+    attrs = _DictFromDiskutilInfo(deviceid)
+
+    keys = ["BusProtocol", "Content", "CoreStorageCompositeDisk", "Ejectable",
+            "FreeSpace", "Internal", "CoreStorageLVGUUID", "MountPoint", 
+            "RAIDMaster", "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus", 
+            "SolidState", "TotalSize", "VolumeName"]
+
+    out = {}
+    for key in keys:
+        try:
+            out[key] = attrs[key]
+        # pylint: disable=pointless-except
+        except KeyError:  # not all objects have all these attributes
+            pass
+
+    # Set sizes to string with .5GB precision
+    if getattr(out, 'TotalSize', None):
+	    out['TotalSize'] = str(_HalfGB(out['TotalSize']));
+
+    if getattr(out, 'FreeSpace', None):
+	    out['FreeSpace'] = str(_HalfGB(out['FreeSpace']));
+
+    return out
+
+def AllDisksAndPartitions():
+    """Returns list of all disks and partitions."""
+    try:
+        return _DictFromDiskutilList()["AllDisksAndPartitions"]
+    except KeyError:
+        # TODO(user): fix errors to actually provide info...
+        raise Exception("Unable to list all partitions.")
+
+
+def _DictFromSubprocess(command, stdin=None):
+    """returns a dict based upon a subprocess call with a -plist argument.
+
+    Args:
+        command: the command to be executed as a list
+        stdin: any standard input required.
+    Returns:
+        dict: dictionary from command output
+    Raises:
+        Exception: Error running command
+        Exception: Error creating plist from standard output
+    """
+
+    task = {}
+
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (stdout, stderr) = p.communicate()
+
+    if p.returncode is not 0:
+        raise Exception("Error running command: %s, stderr: %s" %
+                                             (command, stderr))
+    else:
+        try:
+            return plistlib.readPlistFromString(stdout)
+        except xml.parsers.expat.ExpatError:
+            raise Exception("Error creating plist from output: %s" % stdout)
+
+def DiskReport():
+    """ Retrieve a list of dicts containing disk info """
+    volumeList = []
+    coreStorageDict = {}
+    appleRaidDict = {}
+
+    for disk in AllDisksAndPartitions():
+
+        if getattr(disk, 'Partitions', None):
+            for partition in disk.Partitions:
+
+                if partition.Content == 'Apple_HFS':
+                    diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
+                    if diskInfo['BusProtocol'] == 'Disk Image':
+                        # Skip Disk Images
+                        continue
+                    volumeList.append(diskInfo)
+
+                elif partition.Content == 'Apple_CoreStorage':
+                    diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
+                    coreStorageDict[diskInfo['CoreStorageLVGUUID']] = diskInfo
+
+                elif partition.Content == 'Apple_RAID':
+                    diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
+                    appleRaidDict[diskInfo['RAIDMemberUUID']] = diskInfo
+
+        else:
+            if disk.Content == 'Apple_HFS':
+                diskInfo = filteredDiskInfo(disk.DeviceIdentifier)
+
+                if diskInfo['BusProtocol'] == 'Disk Image':
+                    # Skip Disk Images
+                    continue
+
+                if diskInfo.get('CoreStorageLVGUUID', 0):
+                    # Update SMART status from Physical Volume
+                    pv = coreStorageDict[diskInfo['CoreStorageLVGUUID']]
+                    diskInfo.update({'SMARTStatus': pv['SMARTStatus']})
+
+                if diskInfo.get('RAIDSetMembers', 0):
+                    # Update SMART status from RAID members
+                    for member in diskInfo['RAIDSetMembers']:
+                        raidMember = appleRaidDict[member]
+                        diskInfo.update({'SMARTStatus': raidMember['SMARTStatus']})
+                        # If we find a irregular status, break
+                        if raidMember['SMARTStatus'] not in ['Verified', 'Not Supported']:
+                            break
+
+                volumeList.append(diskInfo)
+
+    return volumeList
+
 # Create cache dir if it does not exist
 cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
 if not os.path.exists(cachedir):
     os.makedirs(cachedir)
 
-# Get output from diskutil
-p = subprocess.Popen(["/usr/sbin/diskutil", "info", "-plist", "/"], stdout=subprocess.PIPE)
-out, err = p.communicate()
-
-# Convert and write to disk
-fo = open("%s/disk.plist" % cachedir, "w")
-fo.write(re.sub('<integer>(\d+)</integer>', repl, out))
-fo.close()
-
+# Write disk report to cache
+plistlib.writePlist(DiskReport(), "%s/disk.plist" % cachedir)

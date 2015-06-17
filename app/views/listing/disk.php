@@ -17,15 +17,15 @@ new Reportdata_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='machine#machine_name'>Type</th>
-		        <th data-colname='diskreport#SolidState'>Solid state</th>
-		        <th data-sort='desc' data-colname='diskreport#Percentage'>Disk</th>
-		        <th data-colname='diskreport#FreeSpace'>Free</th>
-		        <th data-colname='diskreport#TotalSize'>Size</th>
-		    	<th data-colname='diskreport#SMARTStatus'>SMART</th>
+		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
+		        <th data-i18n="serial" data-colname='machine#serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
+		        <th data-i18n="storage.mountpoint" data-colname='diskreport#MountPoint'></th>
+		        <th data-i18n="storage.volume_type" data-colname='diskreport#VolumeType'></th>
+		        <th data-i18n="storage.percentage" data-sort='desc' data-colname='diskreport#Percentage'></th>
+		        <th data-i18n="storage.free" data-colname='diskreport#FreeSpace'></th>
+		        <th data-i18n="storage.total_size" data-colname='diskreport#TotalSize'></th>
+		    	<th data-i18n="storage.smartstatus" data-colname='diskreport#SMARTStatus'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -89,10 +89,8 @@ new Reportdata_model;
 	        	$('td:eq(0)', nRow).html(link);
 	        	
 	        	// is SSD ?
-	        	var status=$('td:eq(4)', nRow).html();
-	        	status = status == 1 ? '<span class="label label-success">Yes</span>' : 
-	        		(status === '0' ? 'No' : '')
-	        	$('td:eq(4)', nRow).html(status)
+	        	var volumeType=$('td:eq(4)', nRow).html();
+	        	$('td:eq(4)', nRow).html(volumeType.toUpperCase())
 
 	        	// Format disk usage
 	        	var disk=$('td:eq(5)', nRow).html();

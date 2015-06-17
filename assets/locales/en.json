@@ -297,10 +297,14 @@
 	},
 	"storage": {
 		"free": "Free",
+		"mountpoint": "Mount Point",
+		"percentage": "Percentage",
 		"size": "Disk Size",
 		"smartstatus": "SMART status",
 		"storage": "Storage",
-		"used": "Used"
+		"total_size": "Size",
+		"used": "Used",
+		"volume_type": "Volume Type"
 	},
 	"system": {
 		"system": "System"
