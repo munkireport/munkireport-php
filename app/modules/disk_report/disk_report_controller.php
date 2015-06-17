@@ -24,6 +24,30 @@ class Disk_report_controller extends Module_controller
 	}
 
 	/**
+     * Retrieve data in json format
+     *
+     * @return void
+     * @author 
+     **/
+    function get_data($serial_number = '')
+    {
+        $obj = new View();
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+        $out = array();
+        $model = new Disk_report_model;
+        foreach($model->retrieve_records($serial_number) AS $res)
+        {
+        	$out[] = $res->rs;
+        }
+        $obj->view('json', array('msg' => $out));
+    }
+
+	/**
 	 * Get statistics
 	 *
 	 * @return void

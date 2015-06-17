@@ -52,9 +52,10 @@ def filteredDiskInfo(deviceid):
 
     attrs = _DictFromDiskutilInfo(deviceid)
 
-    keys = ["BusProtocol", "Content", "CoreStorageCompositeDisk", "Ejectable",
-            "FreeSpace", "Internal", "CoreStorageLVGUUID", "MountPoint", 
-            "RAIDMaster", "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus", 
+    keys = ["BusProtocol", "Content", "CoreStorageCompositeDisk",
+            "CoreStorageEncrypted", "CoreStorageLVGUUID", "Ejectable",
+            "FreeSpace", "Internal",  "MountPoint", "RAIDMaster", 
+            "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus", 
             "SolidState", "TotalSize", "VolumeName"]
 
     out = {}
