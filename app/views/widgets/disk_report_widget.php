@@ -10,31 +10,53 @@
 
 				<div class="panel-body text-center">
 
-				<?php $queryobj = new Disk_report_model();
-				$sql = "SELECT COUNT(1) as total, 
-						COUNT(CASE WHEN FreeSpace < 10737418240 THEN 1 END) AS warning, 
-						COUNT(CASE WHEN FreeSpace < 5368709120 THEN 1 END) AS danger 
-						FROM diskreport
-						LEFT JOIN reportdata USING (serial_number)
-						".get_machine_group_filter();
-					?>
-					<?php if($obj = current($queryobj->query($sql))): ?>
-					<a href="<?php echo url('show/listing/disk#'.rawurlencode('freespace > 10GB')); ?>" class="btn btn-success">
-						<span class="bigger-150"> <?php echo $obj->total - $obj->warning; ?> </span><br>
+
+					<a id="disk-success" href="<?php echo url('show/listing/disk#'.rawurlencode('freespace > 10GB')); ?>" class="btn btn-success hide">
+						<span class="bigger-150"></span><br>
 						10GB +
 					</a>
-					<a href="<?php echo url('show/listing/disk#'.rawurlencode('5GB freespace 10GB')); ?>" class="btn btn-warning">
-						<span class="bigger-150"> <?php echo $obj->warning - $obj->danger; ?> </span><br>
+					<a id="disk-warning" href="<?php echo url('show/listing/disk#'.rawurlencode('5GB freespace 10GB')); ?>" class="btn btn-warning hide">
+						<span class="bigger-150"></span><br>
 						&lt; 10GB
 					</a>
-					<a href="<?php echo url('show/listing/disk#'.rawurlencode('freespace < 5GB')); ?>" class="btn btn-danger">
-						<span class="bigger-150"> <?php echo $obj->danger; ?> </span><br>
+					<a id="disk-danger" href="<?php echo url('show/listing/disk#'.rawurlencode('freespace < 5GB')); ?>" class="btn btn-danger hide">
+						<span class="bigger-150"></span><br>
 						&lt; 5GB
 					</a>
-					<?php endif; ?>
+
+                    <span id="disk-nodata" data-i18n="no_clients"></span>
 
 				</div>
 
 			</div><!-- /panel -->
 
 		</div><!-- /col -->
+
+<script>
+$(document).on('appReady appUpdate', function(e, lang) {
+
+    $.getJSON( appUrl + '/module/disk_report/get_stats', function( data ) {
+
+        console.log(data)
+        // Show no clients span
+        $('#disk-nodata').removeClass('hide');
+
+        $.each(data, function(prop, val){
+            if(val > 0)
+            {
+                $('#disk-' + prop).removeClass('hide');
+                $('#disk-' + prop + '>span').html(val);
+
+                // Hide no clients span
+                $('#disk-nodata').addClass('hide');
+            }
+            else
+            {
+                $('#disk-' + prop).addClass('hide');
+            }
+        });
+    });
+});
+
+
+</script>

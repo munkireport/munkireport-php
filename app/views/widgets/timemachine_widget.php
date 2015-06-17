@@ -40,7 +40,7 @@ $(document).on('appReady appUpdate', function(e, lang) {
             if(val > 0)
             {
                 $('#tm-' + prop).removeClass('hide');
-                $('#tm-' + prop + '>.badge').html(val);
+                $('#tm-' + prop + ' > .badge').text(val);
 
                 // Hide no clients span
                 $('#tm-nodata').addClass('hide');

@@ -26,7 +26,6 @@ new Munkireport_model;
 			<th data-colname='machine#os_version'>OS</th>
 			<th data-colname='machine#machine_name'>Type</th>
 			<th data-colname='warranty#status'>Warranty status</th>
-			<th data-colname='diskreport#Percentage'>Disk</th>
 			<th data-colname='reportdata#uptime'>Uptime</th>
 			<th data-colname='reportdata#timestamp'>Check-in</th>
 			<th data-colname='munkireport#manifestname'>Manifest</th>
@@ -75,28 +74,23 @@ new Munkireport_model;
 				var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
 				$('td:eq(0)', nRow).html(link);
 
-				// Format disk usage
-				var disk=$('td:eq(6)', nRow).html();
-				var cls = disk > 90 ? 'danger' : (disk > 80 ? 'warning' : 'success');
-				$('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
-
 				// Format date
-				var checkin = parseInt($('td:eq(8)', nRow).html());
+				var checkin = parseInt($('td:eq(7)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(8)', nRow).html(moment(date).fromNow());
+				$('td:eq(7)', nRow).html(moment(date).fromNow());
 
 				// Format OS Version
 				var osvers = integer_to_version($('td:eq(3)', nRow).html());
 				$('td:eq(3)', nRow).html(osvers);
 
 				// Format uptime
-				var uptime = parseInt($('td:eq(7)', nRow).html());
+				var uptime = parseInt($('td:eq(6)', nRow).html());
 				if(uptime == 0) {
-				  $('td:eq(7)', nRow).html('')
+				  $('td:eq(6)', nRow).html('')
 				}
 				else
 				{
-				  $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
+				  $('td:eq(6)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
 				}
 			},
 			"fnServerParams": function ( aoData ) {
