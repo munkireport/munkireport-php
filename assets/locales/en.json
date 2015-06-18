@@ -295,8 +295,12 @@
 		"smc_version": "SMC Version",
 		"boot_rom_version": "Boot ROM Version"
 	},
+	"status": "Status",
 	"storage": {
+		"encrypted": "Encrypted",
+		"encryption_status": "Encryption Status",
 		"free": "Free",
+		"not_encrypted": "Not Encrypted",
 		"mountpoint": "Mount Point",
 		"percentage": "Percentage",
 		"size": "Disk Size",

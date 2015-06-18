@@ -149,6 +149,16 @@ table.table thead th{
   font-size: 1.2em;
 }
 
+/* Donut chart title */
+svg .nvd3.nv-pie .nv-pie-title
+{
+  fill: #333;
+}
+svg .nv-label text
+{
+  font-size: .8em;
+}
+
 @media print{
   
   a[href]:after {
