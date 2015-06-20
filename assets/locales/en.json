@@ -273,7 +273,13 @@
 	"path": "Path",
 	"reg_date": "Registration Date",
 	"remote_control": "Remote Control",
+	"report": {
+		"generate": "Generate Report"
+	},
 	"serial": "Serial Number",
+	"servermetrics": {
+		"tab": "Server Metrics"
+	},
 	"service": {
 		"listing":{
 			"title": "Services Report"
