@@ -64,6 +64,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 				<div class="input-group-btn">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<span data-i18n="remote_control" class="hidden-sm hidden-xs"></span>
 						<i class="fa fa-binoculars fa-fw"></i>
 					</button>
 					<ul class="dropdown-menu dropdown-menu-right" role="tablist" id="client_links">
@@ -395,56 +396,6 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 		});
 
-
-		
-		
-		// Update hash in url
-		var updateHash = function(e){
-				var url = String(e.target)
-				if(url.indexOf("#") != -1)
-				{
-					var hash = url.substring(url.indexOf("#"));
-					// Save scroll position
-					var yScroll=document.body.scrollTop;
-					window.location.hash = '#tab_'+hash.slice(1);
-					document.body.scrollTop=yScroll;
-				}
-			},
-			loadHash = function(){
-				// Activate correct tab depending on hash
-				var hash = window.location.hash.slice(5);
-				if(hash){
-					$('.client-tabs a[href="#'+hash+'"]').tab('show');
-				}
-				else{
-					$('.client-tabs a[href="#summary"]').tab('show');
-				}
-			},
-			addTab = function(conf){
-
-				// Add tab link
-				$('.client-tabs .divider')
-					.before($('<li>')
-						.append($('<a>')
-							.attr('href', '#'+conf.id)
-							.attr('data-toggle', 'tab')
-							.on('show.bs.tab', function(){
-								// We have to remove the active class from the 
-								// previous tab manually, unfortunately
-								$('.client-tabs li').removeClass('active');
-							})
-							.on('shown.bs.tab', updateHash)
-							.text(conf.linkTitle)));
-
-				// Add tab
-				$('div.tab-content')
-					.append($('<div>')
-						.attr('id', conf.id)
-						.addClass('tab-pane')
-						.append($('<h2>')
-							.text(conf.tabTitle))
-						.append(conf.tabContent));
-			} // end addTab
 
 		loadHash();
 
