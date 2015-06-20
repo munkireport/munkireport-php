@@ -78,8 +78,14 @@ class Disk_report_model extends Model {
 		// Delete previous set
 		$this->delete_where('serial_number=?', $this->serial_number);
 
+		// Copy default values
+		$empty = $this->rs;
+
 		foreach($mylist AS $disk)
 		{
+			// Reset values
+			$this->rs = $empty;
+			
 			// Calculate percentage
 			if(isset($disk['TotalSize']) && isset($disk['FreeSpace']))
 			{
