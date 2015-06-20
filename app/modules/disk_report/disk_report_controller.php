@@ -35,7 +35,7 @@ class Disk_report_controller extends Module_controller
 
         if( ! $this->authorized())
         {
-            $obj->view('json', array('msg' => 'Not authorized'));
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
         $out = array();
@@ -59,7 +59,7 @@ class Disk_report_controller extends Module_controller
 
         if( ! $this->authorized())
         {
-            $obj->view('json', array('msg' => 'Not authorized'));
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
 
