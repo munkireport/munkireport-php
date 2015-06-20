@@ -5,7 +5,7 @@ MODULESCRIPT="cert_check"
 MODULE_CACHE_FILE="certificate.txt"
 
 # Remove preflight script
-rm -f "${MUNKIPATH}preflight.d/${MODULESCRIPT}"
+rm -f "${MUNKIPATH}preflight.d/cert_check"
 
 # Remove cache file
-rm -f "${CACHEPATH}${MODULE_CACHE_FILE}"
+rm -f "${CACHEPATH}certificate.txt"

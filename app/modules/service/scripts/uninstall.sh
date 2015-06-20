@@ -1,11 +1,5 @@
 #!/bin/bash
 
-MODULE_NAME="certificate"
-MODULESCRIPT="cert_check"
-MODULE_CACHE_FILE="certificate.txt"
+rm -f "${MUNKIPATH}preflight.d/service_check"
+rm -f "${CACHEPATH}services.txt"
 
-# Remove preflight script
-rm -f "${MUNKIPATH}preflight.d/${MODULESCRIPT}"
-
-# Remove cache file
-rm -f "${CACHEPATH}${MODULE_CACHE_FILE}"
