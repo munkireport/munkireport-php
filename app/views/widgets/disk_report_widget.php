@@ -37,7 +37,11 @@ $(document).on('appReady appUpdate', function(e, lang) {
 
     $.getJSON( appUrl + '/module/disk_report/get_stats', function( data ) {
 
-        console.log(data)
+    	if(data.error){
+    		//alert(data.error);
+    		return;
+    	}
+
         // Show no clients span
         $('#disk-nodata').removeClass('hide');
 
@@ -45,7 +49,7 @@ $(document).on('appReady appUpdate', function(e, lang) {
             if(val > 0)
             {
                 $('#disk-' + prop).removeClass('hide');
-                $('#disk-' + prop + '>span').html(val);
+                $('#disk-' + prop + '>span').text(val);
 
                 // Hide no clients span
                 $('#disk-nodata').addClass('hide');
