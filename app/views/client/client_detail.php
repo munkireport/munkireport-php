@@ -179,11 +179,11 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 			// Registration date
 			var msecs = moment(machineData.reg_timestamp * 1000);
-			$('.mr-reg_date').append('<time title="'+msecs.format('LLLL')+'" datetime="<?php echo $report->reg_timestamp; ?>">'+msecs.fromNow()+'</time>');
+			$('.mr-reg_date').append('<time title="'+msecs.format('LLLL')+'" >'+msecs.fromNow()+'</time>');
 
 			// Check-in date
 			var msecs = moment(machineData.timestamp * 1000);
-			$('.mr-check-in_date').append('<time title="'+msecs.format('LLLL')+'" datetime="<?php echo $report->reg_timestamp; ?>">'+msecs.fromNow()+'</time>');
+			$('.mr-check-in_date').append('<time title="'+msecs.format('LLLL')+'" >'+msecs.fromNow()+'</time>');
 
 			// Set tooltips
 			$( "time" ).each(function( index ) {
