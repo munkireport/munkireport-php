@@ -24,7 +24,7 @@ class Disk_report_model extends Model {
 		$this->idx[] = array('VolumeName');
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 1;
+		$this->schema_version = 2;
 		
 		// Create table if it does not exist
 		$this->create_table();
