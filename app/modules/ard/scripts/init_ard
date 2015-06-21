@@ -5,4 +5,5 @@ ARDPREF='/Library/Preferences/com.apple.RemoteDesktop'
 # Make sure ard pref exists
 defaults read "$ARDPREF" > /dev/null 2>&1 || defaults write "$ARDPREF" MR created
 
-# TODO: Selfdestruct here
+# Selfdestruct
+rm -f "${0}"
