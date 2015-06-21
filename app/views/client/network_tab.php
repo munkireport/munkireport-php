@@ -7,9 +7,9 @@ $nw = new Network_model();?>
 <h2><?php echo $item->service; ?> (<?php echo $item->order; ?>)
 
 <?php if($item->status): ?>
-<span class="label label-success nw-enabled" data-i18n="enabled">Enabled</span>
+<span class="label label-success nw-enabled" data-i18n="enabled"></span>
 <?php else: ?>
-<span class="label label-danger nw-disabled" data-i18n="disabled">Disabled</span>
+<span class="label label-danger nw-disabled" data-i18n="disabled"></span>
 <?php endif ?>
 
 </h2>
@@ -21,11 +21,11 @@ $nw = new Network_model();?>
 		<table class="table table-bordered">
 			<caption>IPv4</caption>
 			<tr>
-				<th data-i18n="network.ethernet">Ethernet</th>
-				<th data-i18n="network.ip_address">IP Adress</th>
-				<th data-i18n="network.mask">Network Mask</th>
-				<th data-i18n="network.router">Router</th>
-				<th data-i18n="configuration">Configuration</th>
+				<th data-i18n="network.ethernet"></th>
+				<th data-i18n="network.ip_address"></th>
+				<th data-i18n="network.mask"></th>
+				<th data-i18n="network.router"></th>
+				<th data-i18n="configuration"></th>
 			</tr>
 			<tr>
 				<td><?php echo $item->ethernet; ?></td>
@@ -49,11 +49,11 @@ $nw = new Network_model();?>
 
 			<caption>IPv6</caption>
 			<tr>
-				<th data-i18n="network.ethernet">Ethernet</th>
-				<th data-i18n="network.ip_address">IP Adress</th>
-				<th data-i18n="network.prefix_length">Prefix Length</th>
-				<th data-i18n="network.router">Router</th>
-				<th data-i18n="configuration">Configuration</th>
+				<th data-i18n="network.ethernet"></th>
+				<th data-i18n="network.ip_address"></th>
+				<th data-i18n="network.prefix_length"></th>
+				<th data-i18n="network.router"></th>
+				<th data-i18n="configuration"></th>
 			</tr>
 			<tr>
 				<td><?php echo $item->ethernet; ?></td>

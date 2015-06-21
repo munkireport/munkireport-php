@@ -3,6 +3,12 @@
 $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
 <?php if(isset($installHistory) && count($installHistory) > 1): ?>
 
+<?php if($apple):?>
+<h2 data-i18n="client.installed_apple_software"></h2>
+<?php else:?>
+<h2 data-i18n="client.installed_third_party_software"></h2>
+<?php endif?>
+
 <table class="install-history-<?php echo $apple; ?> table table-striped">
 	<thead>
 		<tr>

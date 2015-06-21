@@ -25,6 +25,19 @@ class Reportdata_controller extends Module_controller
 	}
 
 	/**
+	 * Get machine groups
+	 *
+	 * @author 
+	 **/
+	function get_groups()
+	{
+		$reportdata = new Reportdata_model();
+		$obj = new View();
+		$obj->view('json', array('msg' => $reportdata->get_groups($count = TRUE)));
+	}
+
+
+	/**
 	 * REST API for retrieving registration dates
 	 *
 	 **/
@@ -32,6 +45,8 @@ class Reportdata_controller extends Module_controller
 	{
 		$reportdata = new Reportdata_model();
 		new Machine_model();
+
+		$where = get_machine_group_filter('WHERE', 'r');
 
 		switch($reportdata->get_driver())
 		{
@@ -42,6 +57,7 @@ class Reportdata_controller extends Module_controller
 						FROM reportdata r
 						LEFT JOIN machine m 
 							ON (r.serial_number = m.serial_number)
+						$where
 						GROUP BY date, machine_name
 						ORDER BY date";
 				break;
@@ -52,6 +68,7 @@ class Reportdata_controller extends Module_controller
 						FROM reportdata r
 						LEFT JOIN machine m 
 							ON (r.serial_number = m.serial_number)
+						$where
 						GROUP BY date, machine_name
 						ORDER BY date";
 				break;
@@ -59,7 +76,7 @@ class Reportdata_controller extends Module_controller
 				die('Unknown database driver');
 
 		}
-
+		//echo $sql;
 		$dates = array();
 		$out = array();
 		
@@ -123,7 +140,9 @@ class Reportdata_controller extends Module_controller
 			$sel_arr[] = "SUM(CASE $when_str ELSE 0 END) AS r${cnt}";
 			$cnt++;
 		}
-		$sql = "SELECT " . implode(', ', $sel_arr) . " FROM reportdata";
+		$sql = "SELECT " . implode(', ', $sel_arr) . "
+				FROM reportdata "
+				.get_machine_group_filter();
 
 		// Create Out array
 		if($obj = current($reportdata->query($sql)))

@@ -17,6 +17,64 @@ class clients extends Controller
         $obj->view('client/client_list', $data);
     
     }
+
+    /**
+     * Get some data for serial_number
+     *
+     * @author AvB
+     **/
+    function get_data($serial_number = '')
+    {
+    	$obj = new View();
+        
+        if (authorized_for_serial($serial_number))
+        {
+            $machine = new Machine_model;
+            new Reportdata_model;
+            new Disk_report_model;
+            new Warranty_model;
+            new Localadmin_model;
+
+            $sql = "SELECT m.*, r.*, w.purchase_date, w.end_date, w.status,
+                    l.users, d.TotalSize, d.FreeSpace, d.SMARTStatus, d.CoreStorageEncrypted
+                FROM machine m 
+                LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
+                LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
+                LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
+                LEFT JOIN diskreport d ON (m.serial_number = d.serial_number AND d.MountPoint = '/')
+                WHERE m.serial_number = ?
+                ";
+
+            $obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
+        }
+        else
+        {
+            $obj->view('json', array('msg' => array()));
+        }
+    }
+
+    /**
+     * Retrieve links from config
+     *
+     * @author 
+     **/
+    function get_links()
+    {
+        $out = array();
+        if(conf('vnc_link'))
+        {
+            $out['vnc'] = conf('vnc_link');
+        }
+        if(conf('ssh_link'))
+        {
+            $out['ssh'] = conf('ssh_link');
+        }
+
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
+
+
+    }
 	
 	// ------------------------------------------------------------------------
 
@@ -36,14 +94,14 @@ class clients extends Controller
 
         $machine = new Machine_model($sn);
 
-        // Check if this is an existing entry
-        if($machine->id)
+        // Check if machine exists/is allowed for this user to view
+        if( ! $machine->id)
         {
-        	$obj->view("client/client_detail", $data);
+        	$obj->view("client/client_dont_exist", $data);
         }
         else
         {
-        	$obj->view("client/client_dont_exist", $data);
+            $obj->view("client/client_detail", $data);
         }
     	
 	}

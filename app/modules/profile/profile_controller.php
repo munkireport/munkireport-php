@@ -12,7 +12,8 @@ class Profile_controller extends Module_controller
 	function __construct()
 	{
 		// Store module path
-		$this->module_path = dirname(__FILE__);
+        $this->module_path = dirname(__FILE__) .'/';
+        $this->view_path = $this->module_path . 'views/';
 	}
 	/**
 	 * Default method
@@ -23,6 +24,7 @@ class Profile_controller extends Module_controller
 	{
 		echo "You've loaded the profile module!";
 	}
+
 	function items($name='', $payload='') 
     {
         // Protect this handler
@@ -54,6 +56,13 @@ class Profile_controller extends Module_controller
             foreach ($items as $item)
             {
                 $machine = new Machine_model($item->serial_number);
+
+                // Check if authorized for this serial
+                if( ! $machine->id )
+                {
+                    continue;
+                }
+
                 $instance['serial'] = $item->serial_number;
                 $instance['hostname'] = $machine->computer_name;
                 $instance['payload'] = $item->profile_name;
@@ -63,7 +72,7 @@ class Profile_controller extends Module_controller
         }
 
         $obj = new View();
-        $obj->view('profile/profileitem_detail', $data);
+        $obj->view('profileitem_detail', $data, $this->view_path);
     }
 	
 } // END class default_module

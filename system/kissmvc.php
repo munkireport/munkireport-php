@@ -58,7 +58,7 @@ class Controller extends KISS_Controller
 		}
 
 		// Check if we have a valid user
-		if( ! isset($_SESSION['user']))
+		if( ! isset($_SESSION['role']))
 		{
 			return FALSE;
 		}
@@ -66,22 +66,17 @@ class Controller extends KISS_Controller
 		// Check for a specific authorization item
 		if($what)
 		{
-			foreach(conf('authorization', array()) as $item => $members)
+			foreach(conf('authorization', array()) as $item => $roles)
 			{
 				if($what === $item)
 				{
-					// Check if there is an 'authorized for all' item
-					if( in_array('*', $members))
+					// Check if there is a matching role
+					if( in_array($_SESSION['role'], $roles))
 					{
 						return TRUE;
 					}
 
-					if( in_array($_SESSION['user'], $members))
-					{
-						return TRUE;
-					}
-
-					// Person not found: unauthorized!
+					// Role not found: unauthorized!
 					return FALSE;
 				}
 			}
@@ -231,6 +226,54 @@ class Model extends KISS_Model
 			$err = $dbh->errorInfo();
 	        throw new Exception('database error: '.$err[2]);
 		}
+	}
+
+	/**
+	 * Retrieve one considering machine_group membership
+	 * use this instead of retrieve_one
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function retrieve_record($serial_number, $where = '', $bindings = array())
+	{
+		if( ! authorized_for_serial($serial_number))
+		{
+			return FALSE;
+		}
+
+		// Prepend where with serial_number
+		$where = $where ? 'serial_number=? AND '.$where : 'serial_number=?';
+
+		// Push serial number in front of the array
+		array_unshift($bindings, $serial_number);
+		
+		return $this->retrieve_one($where, $bindings);
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Retrieve many considering machine_group membership
+	 * use this instead of retrieve_many
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function retrieve_records($serial_number, $where = '', $bindings = array())
+	{
+		if( ! authorized_for_serial($serial_number))
+		{
+			return array();
+		}
+
+		// Prepend where with serial_number
+		$where = $where ? 'serial_number=? AND '.$where : 'serial_number=?';
+
+		// Push serial number in front of the array
+		array_unshift($bindings, $serial_number);
+
+		return $this->retrieve_many($where, $bindings);
 	}
 
 

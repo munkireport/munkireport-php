@@ -29,19 +29,29 @@
 						<span class="badge">0</span>
 						<span data-i18n="widget.power.nobattery"></span>
 					</a>
-					<span id="power-nodata" data-i18n="no_clients" class="list-group-item">No clients</span>
+					<span id="power-nodata" data-i18n="no_clients" class="list-group-item"></span>
 				</div>
 					
 <script>
-$(document).on('appReady', function(e, lang) {
+$(document).on('appReady appUpdate', function(e, lang) {
 
-	$.getJSON( baseUrl + 'index.php?/module/power/conditions', function( data ) {
+	$.getJSON( appUrl + '/module/power/conditions', function( data ) {
+
+		// Show no clients span
+		$('#power-nodata').removeClass('hide');
+
 		$.each(data, function(prop, val){
 			if(val > 0)
 			{
-				$('#power-nodata').addClass('hide'); // Hide no clients
-				$('#power-' + prop).toggleClass('hide');
+				$('#power-' + prop).removeClass('hide');
 				$('#power-' + prop + '>.badge').html(val);
+
+				// Hide no clients span
+				$('#power-nodata').addClass('hide');
+			}
+			else
+			{
+				$('#power-' + prop).addClass('hide');
 			}
 		});
 	});

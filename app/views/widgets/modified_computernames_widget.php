@@ -12,12 +12,14 @@
 
 				<?php
 					$machine = new Machine_model();
+					$filter = get_machine_group_filter('AND');
 					$sql = "SELECT directoryservice.serial_number, directoryservice.computeraccount,
 									machine.serial_number, machine.computer_name
 									FROM directoryservice AS directoryservice
-									INNER JOIN machine as machine
-									ON directoryservice.serial_number = machine.serial_number
-									WHERE NOT directoryservice.computeraccount = ''";
+									LEFT JOIN machine USING (serial_number)
+									LEFT JOIN reportdata USING (serial_number)
+									WHERE NOT directoryservice.computeraccount = ''
+									".$filter;
 					$cnt = 0;
 				?>
 					<?php foreach($machine->query($sql) as $obj): ?>

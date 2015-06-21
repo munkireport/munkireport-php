@@ -97,7 +97,9 @@
 		},
 		"username": "Имя пользователя"
 	},
-	"memory": "Память",
+	"memory": {
+		"memory": "Память"
+	},
 	"name": "Имя",
 	"nav": {
 		"listings": {
@@ -134,7 +136,7 @@
 	"network": {
 		"ethernet": "Локальная сеть",
 		"ip_address": "Адрес IP",
-		"network_mask": "Маска",
+		"mask": "Маска",
 		"prefix_length": "Длина префикса",
 		"router": "Маршрутизатор"
 	},
@@ -159,9 +161,9 @@
 		},
 		"power": {
 			"missing": "Отсутствует",
-			"normal": "Нормальное",
+			"normal": "Нормально",
 			"now": "Сейчас",
-			"service": "Сервис",
+			"service": "Служба",
 			"soon": "Скоро"
 		}	
 	}

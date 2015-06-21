@@ -44,7 +44,9 @@ class Power_controller extends Module_controller
 						COUNT(CASE WHEN `condition` = 'Service Battery' THEN 1 END) AS service,
 						COUNT(CASE WHEN `condition` = 'Replace Now' THEN 1 END) AS now,
 						COUNT(CASE WHEN `condition` = 'No Battery' THEN 1 END) AS missing
-			 			FROM power;";
+			 			FROM power
+			 			LEFT JOIN reportdata USING (serial_number)
+			 			".get_machine_group_filter();
 		$obj = new View();
 		$obj->view('json', array('msg' => current($queryobj->query($sql))));
 

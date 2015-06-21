@@ -4,7 +4,9 @@ class Inventory_controller extends Module_controller
     // Require authentication
     function __construct()
     {        
-        $this->module_path = dirname(__FILE__);
+        // Store module path
+        $this->module_path = dirname(__FILE__) .'/';
+        $this->view_path = $this->module_path . 'views/';
     } 
 
     function index() {
@@ -43,6 +45,11 @@ class Inventory_controller extends Module_controller
             foreach ($items as $item)
             {
                 $machine = new Machine_model($item->serial);
+                // Check if authorized for this serial
+                if( ! $machine->id )
+                {
+                    continue;
+                }
 				$reportdata = new Reportdata_model($item->serial);
                 $instance['serial'] = $item->serial;
                 $instance['hostname'] = $machine->computer_name;
@@ -57,7 +64,7 @@ class Inventory_controller extends Module_controller
         }
 
         $obj = new View();
-        $obj->view('inventory/inventoryitem_detail', $data);
+        $obj->view('inventoryitem_detail', $data, $this->view_path);
     }
 
 }

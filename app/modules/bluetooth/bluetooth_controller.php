@@ -26,5 +26,21 @@ class Bluetooth_controller extends Module_controller
 		echo "You've loaded the bluetooth module!";
 	}
 
+	/**
+     * Retrieve data in json format
+     *
+     **/
+    function get_data($serial_number = '')
+    {
+        $obj = new View();
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $bt = new Bluetooth_model($serial_number);
+        $obj->view('json', array('msg' => $bt->rs));
+    }
 	
 } // END class default_module

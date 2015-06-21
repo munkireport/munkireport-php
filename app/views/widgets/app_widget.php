@@ -3,13 +3,15 @@ $appsToCheck = conf('apps_to_track');
 $appsToChecksql = array();
 $appsIndex = count($appsToCheck);
 $counter=0;
-
+$group_filter = get_machine_group_filter('AND', 'm');
 
 foreach ($appsToCheck as $string) {
-    $appsToChecksql[] = "SELECT inventoryitem.version, COUNT(inventoryitem.version) as count
-    FROM inventoryitem
-    WHERE inventoryitem.name = '$string'
-    GROUP BY inventoryitem.version
+    $appsToChecksql[] = "SELECT i.version, COUNT(i.version) as count
+    FROM inventoryitem i
+    LEFT JOIN reportdata m ON (m.serial_number = i.serial)
+    WHERE i.name = '$string'
+    $group_filter
+    GROUP BY i.version
     ORDER BY count DESC";
     }
 ?>

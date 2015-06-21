@@ -20,7 +20,7 @@ class Filevault_status_model extends Model {
 		$this->create_table();
 		
 		if ($serial)
-			$this->retrieve_one('serial_number=?', $serial);
+			$this->retrieve_record($serial);
 		
 		$this->serial = $serial;
 	}

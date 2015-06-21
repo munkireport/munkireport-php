@@ -16,6 +16,12 @@
 
   </div> <!-- /row -->
 
+    <div class="row">
+
+	<?php $this->view('widgets/certificate_widget'); ?>
+
+	</div> <!-- /row -->
+
 </div>  <!-- /container -->
 
 <?php $this->view('partials/foot'); ?>

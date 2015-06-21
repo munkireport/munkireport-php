@@ -26,7 +26,11 @@ class Tablequery {
         $iTotal = 0;
 
         // Get tables from column names
-        $tables = array('machine' => 1);
+        $tables = array();
+
+        // Add the reportdata table
+        $tables['reportdata'] = 1;
+
         $formatted_columns = array();
         foreach($cfg['cols'] AS $pos => $name)
         {
@@ -73,6 +77,22 @@ class Tablequery {
             else
             {
                 $where = sprintf('WHERE `%s` IS NOT NULL', $cfg['mrColNotEmpty']);
+            }
+        }
+
+        // Business unit filter (assumes we are selecting the reportdata table)
+        if($machine_groups = get_filtered_groups())
+        {
+            // Todo: We should check if a requested machine_group is allowed
+
+            $bu_where = 'reportdata.machine_group IN ('. implode(', ', $machine_groups). ')';
+            if($where)
+            {
+                $where .= ' AND (' . $bu_where . ')';
+            }
+            else
+            {
+                $where = 'WHERE (' .$bu_where . ')';
             }
         }
 

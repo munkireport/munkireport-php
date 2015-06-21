@@ -4,6 +4,7 @@
 new Machine_model;
 new Reportdata_model;
 new Filevault_status_model;
+new Localadmin_model;
 ?>
 
 <div class="container">
@@ -11,52 +12,6 @@ new Filevault_status_model;
   <div class="row">
 
   	<div class="col-lg-12">
-		<script type="text/javascript">
-
-		$(document).on('appReady', function(e, lang) {
-
-				// Get modifiers from data attribute
-				var myCols = [], // Colnames
-					mySort = [], // Initial sort
-					hideThese = [], // Hidden columns
-					col = 0; // Column counter
-
-				$('.table th').map(function(){
-
-					  myCols.push({'mData' : $(this).data('colname')});
-
-					  if($(this).data('sort'))
-					  {
-					  	mySort.push([col, $(this).data('sort')])
-					  }
-
-					  if($(this).data('hide'))
-					  {
-					  	hideThese.push(col);
-					  }
-
-					  col++
-				});
-
-			    oTable = $('.table').dataTable( {
-			        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
-			        "aaSorting": mySort,
-			        "aoColumns": myCols,
-			        "aoColumnDefs": [
-			        	{ 'bVisible': false, "aTargets": hideThese }
-					],
-			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
-			        	// Update name in first column to link
-			        	var name=$('td:eq(0)', nRow).html();
-			        	if(name == ''){name = "No Name"};
-			        	var sn=$('td:eq(1)', nRow).html();
-			        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
-			        	$('td:eq(0)', nRow).html(link);
-
-				    }
-			    } );
-			} );
-		</script>
 
 		  <h3>Security report <span id="total-count" class='label label-primary'>…</span></h3>
 
@@ -74,7 +29,7 @@ new Filevault_status_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="5" class="dataTables_empty">Loading data from server</td>
+					<td data-i18n="listing.loading" colspan="7" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -82,4 +37,60 @@ new Filevault_status_model;
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
+<script type="text/javascript">
+
+	$(document).on('appUpdate', function(e){
+
+		var oTable = $('.table').DataTable();
+		oTable.ajax.reload();
+		return;
+
+	});
+
+	$(document).on('appReady', function(e, lang) {
+
+		// Get modifiers from data attribute
+		var myCols = [], // Colnames
+			mySort = [], // Initial sort
+			hideThese = [], // Hidden columns
+			col = 0; // Column counter
+
+		$('.table th').map(function(){
+
+			  myCols.push({'mData' : $(this).data('colname')});
+
+			  if($(this).data('sort'))
+			  {
+			  	mySort.push([col, $(this).data('sort')])
+			  }
+
+			  if($(this).data('hide'))
+			  {
+			  	hideThese.push(col);
+			  }
+
+			  col++
+		});
+
+	    oTable = $('.table').dataTable( {
+	        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
+	        "aaSorting": mySort,
+	        "aoColumns": myCols,
+	        "aoColumnDefs": [
+	        	{ 'bVisible': false, "aTargets": hideThese }
+			],
+	        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+	        	// Update name in first column to link
+	        	var name=$('td:eq(0)', nRow).html();
+	        	if(name == ''){name = "No Name"};
+	        	var sn=$('td:eq(1)', nRow).html();
+	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
+	        	$('td:eq(0)', nRow).html(link);
+
+		    }
+	    } );
+	} );
+</script>
+
 <?php $this->view('partials/foot'); ?>
+

@@ -25,7 +25,9 @@ If you want to understand how modules work, take a look at some modules in the m
 
 Munkireport comes with a bundled graphing library: flotr2.
 
-Munkireport comes with a wrapper function around flotr2 that retrieves graph data and plots a graph. The wrapper is called DrawGraph()
+Munkireport comes with a wrapper function around flotr2 that retrieves graph data and plots a graph. The wrapper is called DrawGraph().
+
+There is also the NVD3 graphing library, based on D3.js. We want to move away from flotr for graphs.
 
 ### Network pie graph
 
@@ -40,4 +42,22 @@ If you want to use those, just add an empty parameter object (parms = {}).
 			drawGraph("<?php echo url('module/reportdata/ip'); ?>", '#ip-plot', pieOptions, parms);
 
 
+## Variables
 
+Don't pollute the $GLOBALS array, at the moment there are a handful of variables passed around via $GLOBALS:
+
+* $GLOBALS['alerts'] - alerts and messages
+* $GLOBALS['auth'] - authorization variable (currently only in use for report)
+* $GLOBALS['conf'] - config items access with conf()
+* $GLOBALS['dbh'] - the database handle
+* $GLOBALS['version'] - the current version of MunkiReport
+
+# Javascript
+
+A large portion of the UI is based on javascript.
+
+## Events
+
+When the DOM is ready and the language files are loaded, the appReady event is triggered.
+
+When there is an update in the filters or a refresh for a dashboard, appUpdate is triggered..

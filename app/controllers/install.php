@@ -27,7 +27,7 @@ class install extends Controller
         $data['uninstall_scripts'] = array();
 
         // Get required modules from config
-        $use_modules = func_get_args() or conf('modules');
+        $use_modules = func_get_args() or conf('modules', array());
 
         // Collect install scripts from modules
         foreach(scandir(conf('module_path')) AS $module)
@@ -39,7 +39,7 @@ class install extends Controller
             }
 
             // Check if we need to uninstall this module
-            if( $use_modules && ! in_array($module, $use_modules))
+            if( ! in_array($module, $use_modules))
             {
                 // Check if there is an uninstall script
                 if(is_file(conf('module_path').$module.'/scripts/uninstall.sh'))
@@ -61,9 +61,6 @@ class install extends Controller
         $obj->view('install/install_script', $data);
 		
 	}
-
-
-
 
 	function plist()
 	{

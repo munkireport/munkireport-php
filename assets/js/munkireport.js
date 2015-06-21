@@ -23,11 +23,142 @@ $( document ).ready(function() {
         moment.locale([i18n.lng(), 'en'])
 
         // Activate current lang dropdown
-        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active')
+        $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').parent().addClass('active');
+
+        // Activate filter
+        $('a.filter-popup').click(showFilterModal);
+
         // Trigger appReady
         $(document).trigger('appReady', [i18n.lng()]);
     });
 });
+
+// Update hash in url
+var updateHash = function(e){
+		var url = String(e.target)
+		if(url.indexOf("#") != -1)
+		{
+			var hash = url.substring(url.indexOf("#"));
+			// Save scroll position
+			var yScroll=document.body.scrollTop;
+			window.location.hash = '#tab_'+hash.slice(1);
+			document.body.scrollTop=yScroll;
+		}
+	},
+	loadHash = function(){
+		// Activate correct tab depending on hash
+		var hash = window.location.hash.slice(5);
+		if(hash){
+			$('.client-tabs a[href="#'+hash+'"]').tab('show');
+		}
+		else{
+			$('.client-tabs a[href="#summary"]').tab('show');
+		}
+	},
+	addTab = function(conf){
+
+		// Add tab link
+		$('.client-tabs .divider')
+			.before($('<li>')
+				.append($('<a>')
+					.attr('href', '#'+conf.id)
+					.attr('data-toggle', 'tab')
+					.on('show.bs.tab', function(){
+						// We have to remove the active class from the 
+						// previous tab manually, unfortunately
+						$('.client-tabs li').removeClass('active');
+					})
+					.on('shown.bs.tab', updateHash)
+					.text(conf.linkTitle)));
+
+		// Add tab
+		$('div.tab-content')
+			.append($('<div>')
+				.attr('id', conf.id)
+				.addClass('tab-pane')
+				.append($('<h2>')
+					.text(conf.tabTitle))
+				.append(conf.tabContent));
+	},
+	removeTab = function(id){
+		// remove tab
+		$('#'+id).remove();
+		$('.client-tabs [href=#'+id+']').parent().remove();
+	}
+
+var showFilterModal = function(e){
+
+	e.preventDefault();
+
+	var updateGroup = function(){
+
+		var checked = this.checked,
+			settings = {
+				filter: 'machine_group',
+				value: $(this).data().groupid,
+				action: checked ? 'remove' : 'add'
+			}
+
+		$.post(appUrl + '/unit/set_filter', settings, function(){
+			// Update all
+			$(document).trigger('appUpdate');
+		})
+	}
+
+	// Get all business units and machine_groups
+	var defer = $.when(
+		$.getJSON(appUrl + '/unit/get_machine_groups')
+		);
+
+	// Render when all requests are successful
+	defer.done(function(mg_data){
+
+		// Set texts
+		$('#myModal .modal-title')
+			.empty()
+			.append($('<i>')
+				.addClass('fa fa-filter'))
+			.append(' ' + i18n.t("filter.title"));
+		$('#myModal .modal-body')
+			.empty()
+			.append($('<b>')
+				.text(i18n.t("business_unit.machine_groups")));
+
+		$('#myModal button.ok').text(i18n.t("dialog.close"));
+
+		// Set ok button
+		$('#myModal button.ok')
+			.off()
+			.click(function(){$('#myModal').modal('hide')});
+
+		// Add machine groups
+		$.each(mg_data, function(index, obj){
+			if(obj.groupid !== undefined){
+				$('#myModal .modal-body')
+					.append($('<div>')
+						.addClass('checkbox')
+						.append($('<label>')
+							.append($('<input>')
+								.data(obj)
+								.prop('checked', function(){
+									return obj.checked;
+								})
+								.change(updateGroup)
+								.attr('type', 'checkbox'))
+							.append(obj.name || 'No Name')))
+			}
+		});
+
+		// Show modal
+		$('#myModal').modal('show');
+
+	});
+}
+
+
+	
+
+
 
 // Integer or integer string OS Version to semantic OS version
 function integer_to_version(osvers)
@@ -52,7 +183,7 @@ function get_client_detail_link(name, sn, baseurl, hash)
 	hash = (typeof hash === "undefined") ? "" : hash;
 	return '<div class="machine">\
     		<a class="btn btn-default btn-xs" href="'+baseurl+'clients/detail/'+sn+hash+'">'+name+'</a>\
-    		<a href="'+baseurl+'admin/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
+    		<a href="'+baseurl+'manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
     		<i class="fa fa-times"></i></a></div>';
 }
 
@@ -159,6 +290,12 @@ function humansizeToBytes(size) {
 		}
 	}
 	return res;
+}
+
+// Sort by date (used by D3 charts)
+function sortByDateAscending(a, b) {
+	// Dates will be cast to numbers automagically:
+	return a.x - b.x;
 }
 
 // Plural formatter

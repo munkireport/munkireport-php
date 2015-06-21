@@ -26,7 +26,7 @@ class Network_controller extends Module_controller
 		echo "You've loaded the network module!";
 	}
 
-		/**
+	/**
 	 * REST interface, returns json with ip address ranges
 	 * defined in conf('ipv4router')
 	 * or passed with GET request
@@ -75,7 +75,8 @@ class Network_controller extends Module_controller
 			$cnt++;
 		}
 		$sql = "SELECT " . implode(', ', $sel_arr) . " FROM network
-			WHERE ipv4router != '(null)' AND ipv4router != ''";
+			LEFT JOIN reportdata USING (serial_number)
+			WHERE ipv4router != '(null)' AND ipv4router != ''".get_machine_group_filter('AND');
 
 		// Create Out array
 		if($obj = current($reportdata->query($sql)))

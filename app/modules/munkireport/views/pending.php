@@ -72,7 +72,8 @@
 						FROM munkireport m
 						LEFT JOIN machine USING (serial_number)
 						LEFT JOIN reportdata USING (serial_number)
-						WHERE pendinginstalls > 0";
+						WHERE pendinginstalls > 0
+						".get_machine_group_filter('AND');
 				$compress = function_exists('gzdeflate');
 					$mr = new Munkireport_model;
 					?>

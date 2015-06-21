@@ -12,6 +12,10 @@ load_conf();
 // Load conf (keeps variables out of global space)
 function load_conf()
 {
+	$conf = array();
+
+	$GLOBALS['conf'] =& $conf;
+
 	// Load default configuration
 	require_once(APP_ROOT . "config_default.php");
 
@@ -26,8 +30,7 @@ function load_conf()
 	{
 		$conf['auth']['auth_config'] = $auth_config;
 	}
-
-	$GLOBALS['conf'] =& $conf;
+	
 }
 
 
