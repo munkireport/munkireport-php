@@ -45,7 +45,6 @@
 			}
 
 		$.post(appUrl + '/unit/set_filter', settings, function(){
-			console.log('done');
 			// Update all
 			$(document).trigger('appReady', [i18n.lng()]);
 		})

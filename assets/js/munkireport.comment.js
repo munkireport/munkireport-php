@@ -31,7 +31,6 @@ $(document).on('appReady', function(e, lang) {
 
 					jqxhr.done(function(data){
 
-						console.log(commentdiv)
 						// Update comment in page
 						commentdiv.html(html);
 

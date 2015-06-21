@@ -95,8 +95,6 @@
 				.off()
 				.click(save);
 
-			console.log($('#myModal button.ok').data())
-
 			$('#myModal').modal('show');
 		},
 		getGroup = function(groupid, what){ // get group from machineGroups
