@@ -274,9 +274,8 @@
 	| An empty list installs only the basic reporting modules:
 	| Machine and Reportdata
 	|
-	| If you don't set this item, all available modules are installed (default)
 	*/
-    //$conf['modules'] = array();
+    $conf['modules'] = array();
 
 
 	/*
