@@ -91,7 +91,7 @@ class Machine_group extends Model {
 
         if( ! isset($obj))
         {
-            return [];
+            return array();
         }
 
         if($groupid !== '' && $out)
