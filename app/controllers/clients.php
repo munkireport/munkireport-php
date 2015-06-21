@@ -19,10 +19,9 @@ class clients extends Controller
     }
 
     /**
-     * Get data for serial_number
+     * Get some data for serial_number
      *
-     * @return void
-     * @author 
+     * @author AvB
      **/
     function get_data($serial_number = '')
     {
@@ -35,16 +34,16 @@ class clients extends Controller
             new Disk_report_model;
             new Warranty_model;
             new Localadmin_model;
-            new Timemachine_model;
 
-            $sql = "SELECT * FROM machine m 
-                LEFT JOIN timemachine t ON (m.serial_number = t.serial_number)
+            $sql = "SELECT m.*, r.*, w.purchase_date, w.end_date, w.status,
+                    l.users, d.TotalSize, d.FreeSpace, d.SMARTStatus, d.CoreStorageEncrypted
+                FROM machine m 
                 LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
                 LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
                 LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
-                LEFT JOIN diskreport d ON (m.serial_number = d.serial_number)
+                LEFT JOIN diskreport d ON (m.serial_number = d.serial_number AND d.MountPoint = '/')
                 WHERE m.serial_number = ?
-                AND d.MountPoint = '/'";
+                ";
 
             $obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
         }

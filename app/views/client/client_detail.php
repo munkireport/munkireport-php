@@ -97,8 +97,8 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 		// Set table classes
 		$('table').addClass('table table-condensed table-striped');
 
-		// Set h4 classes
-		$('h4').addClass('alert alert-info');
+		// Set h4 classes on headings
+		$('#summary h4').addClass('alert alert-info');
 
 		// Fix for using a regular dropdown for tabs
 		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
