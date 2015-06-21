@@ -109,7 +109,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 			// Add 'active' to current li
 			$(e.target).parent().addClass('active');
 		  
-		})
+		});
 
 		// Get client data
 		$.getJSON( appUrl + '/clients/get_data/' + serialNumber, function( data ) {
@@ -204,6 +204,18 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 		$.getJSON( appUrl + '/module/warranty/estimate_manufactured_date/' + serialNumber, function( data ) {
 			$('.mr-manufacture_date').html(data.date)
 		});
+
+		// Add storage plot(s)
+		var plotId = 'storage-plot';
+		var conf = {
+			id: 'storage-tab',
+			linkTitle: i18n.t('storage.storage'),
+			tabTitle: i18n.t('storage.storage'),
+			tabContent: $('<div>').attr('id', plotId)
+		};
+		addTab(conf);
+		//Initialize storage plots
+		drawStoragePlots(serialNumber, plotId)
 
 		// Get certificate data
 		$.getJSON( appUrl + '/module/certificate/get_data/' + serialNumber, function( data ) {
@@ -411,5 +423,6 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-markdown.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/marked.min.js"></script>
+<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.storageplot.js"></script>
 
 <?php $this->view('partials/foot'); ?>
