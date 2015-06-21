@@ -60,6 +60,7 @@ class Migration_multiple_disks_addition extends Model
 		$this->exec($sql);
 
 		// Build indexes
+		$this->tablename = 'diskreport';
 		$this->idx[] = array('serial_number');
 		$this->idx[] = array('VolumeType');
 		$this->idx[] = array('MountPoint');

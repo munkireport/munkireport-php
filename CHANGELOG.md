@@ -15,6 +15,28 @@ NEW FEATURES
 * Russian localisation (thanks to @little2112)
 * improved power widget labels (thanks to @rickheil)
 
+How to upgrade:
+
+* Migrations ON
+* Add authorization
+
+### 2.4.2 (April 25, 2015)
+
+FIXES
+
+* Disable power reporting for desktops
+* Fix labels for donut chart in network locations
+* Fix machine migration script
+* Fix warranty lookups
+* Improved installer package
+
+NEW FEATURES
+
+* Select modules in installer
+* Profile reporting (thanks to @dingerkingh)
+* Russian localisation (thanks to @little2112)
+* improved power widget labels (thanks to @rickheil)
+
 ### 2.3.0 (March 11, 2015)
 
 FIXES

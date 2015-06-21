@@ -15,6 +15,52 @@ class install extends Controller
 		$this->modules();
     }
 
+    /**
+     * Show all installed modules
+     *
+     * @param optional string show readme as well
+     * @author 
+     **/
+    function dump_modules($show_info = FALSE)
+    {
+        foreach($this->_get_modules() as $module)
+        {
+            printf("%s\n", $module);
+            
+            if($show_info)
+            {
+                if(is_file(conf('module_path').$module.'/README.md'))
+                {
+                    echo file_get_contents(conf('module_path').$module.'/README.md');
+                }
+            }
+        }
+    }
+
+    /**
+     * Get installed modules
+     *
+     * @author AvB
+     **/
+    function _get_modules()
+    {
+        $modules = array();
+
+        // Collect install scripts from modules
+        foreach(scandir(conf('module_path')) AS $module)
+        {
+            // Skip everything that starts with a dot
+            if(strpos($module, '.') === 0)
+            {
+                continue;
+            }
+
+            $modules[] = $module;
+        }
+
+        return $modules;
+    }
+
 	/**
 	 * Install only selected modules
 	 *
