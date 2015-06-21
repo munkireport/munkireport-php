@@ -40,7 +40,7 @@ $(document).on('appReady appUpdate', function(e, lang) {
             if(val > 0)
             {
                 $('#cert-' + prop).removeClass('hide');
-                $('#cert-' + prop + '>.badge').html(val);
+                $('#cert-' + prop + ' span.badge').text(val);
 
                 // Hide no clients span
                 $('#cert-nodata').addClass('hide');
