@@ -107,7 +107,7 @@ new Munkireport_model;
 
                 // Format OS Version
                 var osvers = $('td:eq(4)', nRow).html();
-                if( osvers !== '' && osvers.indexOf(".") == -1)
+                if( osvers > 0 && osvers.indexOf(".") == -1)
                 {
                   osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
                 }
