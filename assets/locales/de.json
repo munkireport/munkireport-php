@@ -8,7 +8,7 @@
                 "edit_bu": {
                         "title": "Geschäftsbereiche editieren",
                         "name": "Name des Geschäftsbereiches",
-                        "address": "Addresse"
+                        "address": "Adresse"
                 },
                 "edit_mg": {
                         "title": "Computergruppen editieren"
