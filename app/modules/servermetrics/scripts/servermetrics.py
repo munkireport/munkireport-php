@@ -11,6 +11,7 @@ import os.path as path
 import re
 import ccl_asldb
 import json
+import platform
 
 # Event Type Strings To array position
 EVENTS = {  'filesharing.sessions.afp': 0,
@@ -30,6 +31,10 @@ EVENTS = {  'filesharing.sessions.afp': 0,
             'system.cpu.utilization.nice': 14,
             'system.memory.physical.inactive': 15}
 
+def getOsVersion():
+    """Returns the minor OS version."""
+    os_version_tuple = platform.mac_ver()[0].split('.')
+    return int(os_version_tuple[1])
 
 def __main__():
 
@@ -39,7 +44,12 @@ def __main__():
             print 'Manual check: skipping'
             exit(0)
 
-    input_dir = '/var/log/servermetricsd/'
+    # Set path according to OS version
+    if getOsVersion() < 10:
+        input_dir = '/var/log/performance/'
+    else:
+        input_dir = '/var/log/servermetricsd/'
+
     output_file_path = '/usr/local/munki/preflight.d/cache/servermetrics.json'
 
     out = {}
@@ -78,6 +88,8 @@ def __main__():
                         continue
 
             f.close()
+    else:
+        print "%s is not a dierctory." % input_dir
 
     # Open and write output
     output = open(output_file_path, "w")
