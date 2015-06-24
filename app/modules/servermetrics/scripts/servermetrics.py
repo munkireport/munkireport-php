@@ -88,8 +88,7 @@ def __main__():
                         continue
 
             f.close()
-    else:
-        print "%s is not a dierctory." % input_dir
+
 
     # Open and write output
     output = open(output_file_path, "w")
