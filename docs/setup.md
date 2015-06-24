@@ -20,10 +20,20 @@ Create the first user
  2. Append the generated hash line to config.php
  3. Now refresh the page in your browser, and you should be able to log in with the credentials you just created.
 
+
 #### No authentication
 
 If you want to deploy munkireport without authentication (because you run your own authentication method), add the following line to config.php
 `$conf['auth']['auth_noauth'] = array();`
+
+Select which modules to install on the client
+---
+
+By default munkireport will only install 2 basic reporting modules: 'machine' and 'reportdata'. If you want the client to report on more items, visit:
+
+ `http://example.com/index.php?/install/dump_modules/config`
+
+Paste the resulting `$conf['modules'] = array(...);` in your config.php file. You can remove items that you don't need reporting on from the array.
 
 Setting up a client manually
 ---
