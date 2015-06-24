@@ -16,24 +16,26 @@ class install extends Controller
     }
 
     /**
-     * Show all installed modules
+     * Show all available modules
      *
-     * @param optional string show readme as well
+     * @param optional string format the output
      * @author 
      **/
-    function dump_modules($show_info = FALSE)
+    function dump_modules($format = '')
     {
-        foreach($this->_get_modules() as $module)
+        $modules = $this->_get_modules();
+
+        switch($format)
         {
-            printf("%s\n", $module);
-            
-            if($show_info)
-            {
-                if(is_file(conf('module_path').$module.'/README.md'))
-                {
-                    echo file_get_contents(conf('module_path').$module.'/README.md');
-                }
-            }
+            case 'config':
+                $str = implode("','", $modules);
+                echo "\$conf['modules'] = array('$str');\n";
+                break;
+            case 'json':
+                break;
+            default:
+                echo implode("\n", $modules);
+
         }
     }
 
@@ -73,8 +75,14 @@ class install extends Controller
         $data['uninstall_scripts'] = array();
 
         // Get required modules from config
-        $use_modules = func_get_args() or conf('modules', array());
+        $use_modules = conf('modules', array());
 
+        // Override with requested modules
+        if(func_get_args())
+        {
+            $use_modules = func_get_args();
+        }
+        
         // Collect install scripts from modules
         foreach(scandir(conf('module_path')) AS $module)
         {
