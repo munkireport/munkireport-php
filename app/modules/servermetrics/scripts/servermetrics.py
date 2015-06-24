@@ -5,15 +5,15 @@ Based on script by CCL Forensics
 """
 
 import sys
-sys.path.append('/usr/local/munki/munkireportlib')
 import os
 import os.path as path
+sys.path.append('/usr/local/munki/munkireportlib')
 import re
 import ccl_asldb
 import json
 import platform
 
-# Event Type Strings To array position
+# Event Type strings to array position logformat 1
 EVENTS = {  'filesharing.sessions.afp': 0,
             'filesharing.sessions.smb': 1,
             'caching.bytes.fromcache.toclients': 2,
@@ -31,6 +31,19 @@ EVENTS = {  'filesharing.sessions.afp': 0,
             'system.cpu.utilization.nice': 14,
             'system.memory.physical.inactive': 15}
 
+# Event Type strings to array position - logformat 0
+FMT_PREV = {
+    'NetBytesInPerSecond': 10,
+    'NetBytesOutPerSecond': 13,
+    'UserCPU': 5,
+    'IdleCPU': 8,
+    'SystemCPU': 12,
+    'PhysicalMemoryInactive': 15,
+    'PhysicalMemoryActive': 7,
+    'PhysicalMemoryFree': 9,
+    'PhysicalMemoryWired': 6
+}
+
 def getOsVersion():
     """Returns the minor OS version."""
     os_version_tuple = platform.mac_ver()[0].split('.')
@@ -44,8 +57,13 @@ def __main__():
             print 'Manual check: skipping'
             exit(0)
 
-    # Set path according to OS version
+    # Determine logformat based on OS version
+    logFormat = 1
     if getOsVersion() < 10:
+        logFormat = 0
+
+    # Set path according to logformat
+    if logFormat == 0:
         input_dir = '/var/log/performance/'
     else:
         input_dir = '/var/log/servermetricsd/'
@@ -74,18 +92,39 @@ def __main__():
             timestamp = ''
             
             for record in db:
-                #print "%s %s" % (record.timestamp, record.message.decode('UTF-8'))
+                # print "%s %s" % (record.timestamp, record.message.decode('UTF-8'))
+                # print(record.key_value_dict);
+
                 fmt_timestamp = record.timestamp.strftime('%Y-%m-%d %H:%M:%S')
                 if fmt_timestamp != timestamp:
                     timestamp = fmt_timestamp
                     out[timestamp] = [0]*16
-                key_val = [x.strip() for x in record.message.split(':')]
-                index = EVENTS.get(key_val[0], -1)
-                if index >= 0:
-                    try:
-                        out[timestamp][index] = float(key_val[1])
-                    except ValueError as e:
-                        continue
+
+                if logFormat == 0:
+                    for key in record.key_value_dict:
+                        #print "%s %s" % (key, record.key_value_dict[key])
+                        # Look up key in index
+                        index = FMT_PREV.get(key, -1)
+                        if index >= 0:
+                            try:
+                                val = float(record.key_value_dict[key])
+                                if 'CPU' in key:
+                                    # correct cpu usage (has to be a fraction)
+                                    val = val / 100
+                                elif 'Memory' in key:
+                                    # correct memory usage
+                                    val = val * 10000
+                                out[timestamp][index] = val
+                            except ValueError as e:
+                                continue
+                elif logFormat == 1:
+                    key_val = [x.strip() for x in record.message.split(':')]
+                    index = EVENTS.get(key_val[0], -1)
+                    if index >= 0:
+                        try:
+                            out[timestamp][index] = float(key_val[1])
+                        except ValueError as e:
+                            continue
 
             f.close()
 
