@@ -113,7 +113,7 @@ def __main__():
                                     val = val / 100
                                 elif 'Memory' in key:
                                     # correct memory usage
-                                    val = val * 10000
+                                    val = val * 4096
                                 out[timestamp][index] = val
                             except ValueError as e:
                                 continue
