@@ -9,12 +9,6 @@ The table provides the following information per client:
 * TotalSize (int) Size in Bytes
 * FreeSpace (int) Size in Bytes
 * Percentage (int) percentage 0-100
-* SMARTStatus (string) Verified or ?
-* SolidState (int) Yes = 1, No = 0
-
-* TotalSize (int) Size in Bytes
-* FreeSpace (int) Size in Bytes
-* Percentage (int) percentage 0-100
 * SMARTStatus (string) Verified, Unsupported or Failing
 * VolumeType (string) SSD, FUSION, RAID or HDD
 * BusProtocol (string) PCI, SAS, SATA, USB
