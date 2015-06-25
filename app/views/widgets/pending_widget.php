@@ -1,9 +1,10 @@
 <?php 
-$machine = new Machine_model(); new Munkireport_model;
+$machine = new Machine_model; new Munkireport_model; new Reportdata_model;
 $filter = get_machine_group_filter('AND');
 $sql = "SELECT computer_name, pendinginstalls, machine.serial_number
     FROM machine
     LEFT JOIN munkireport USING(serial_number)
+    LEFT JOIN reportdata USING(serial_number)
     WHERE pendinginstalls > 0
     $filter
     ORDER BY pendinginstalls DESC";
