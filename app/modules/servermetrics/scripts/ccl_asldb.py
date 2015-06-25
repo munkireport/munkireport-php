@@ -176,6 +176,9 @@ class AslDb:
             #print(next_offset)
             self.f.seek(next_offset + 6) # first 6 bytes of a record: 2 bytes of 0x00 followed by 32bit int for length
             n, = struct.unpack(">Q", self.f.read(8))
+            # AvB last_record_offset not reached?
+            if n <= next_offset:
+                break
             self._record_offsets.append(n)
             next_offset = n
 

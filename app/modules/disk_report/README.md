@@ -9,14 +9,8 @@ The table provides the following information per client:
 * TotalSize (int) Size in Bytes
 * FreeSpace (int) Size in Bytes
 * Percentage (int) percentage 0-100
-* SMARTStatus (string) Verified or ?
-* SolidState (int) Yes = 1, No = 0
-
-* TotalSize (int) Size in Bytes
-* FreeSpace (int) Size in Bytes
-* Percentage (int) percentage 0-100
 * SMARTStatus (string) Verified, Unsupported or Failing
-* VolumeType (string) SSD, HDD or RAID
+* VolumeType (string) SSD, FUSION, RAID or HDD
 * BusProtocol (string) PCI, SAS, SATA, USB
 * Internal (bool)
 * MountPoint (string)
@@ -28,3 +22,4 @@ Remarks
 ---
 
 * Sizes are rounded to .5 GB steps to prevent uploading the diskreport every time the size changes with a minimal amount.
+* USB FLASH drives are reported as HDD - this should be fixed

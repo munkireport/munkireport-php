@@ -56,6 +56,12 @@ class report extends Controller
 			$this->error("Serial is missing");
 		}
 
+		if ( ! trim($_POST['serial']))
+		{
+			$this->error("Serial is empty");
+		}
+
+
 		if ( ! isset($_POST['items']))
 		{
 			$this->error("Items are missing");
