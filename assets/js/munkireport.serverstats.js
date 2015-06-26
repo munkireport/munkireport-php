@@ -2,7 +2,7 @@
  * Serverstats for MunkiReport
  * requires nv.d3.js (https://github.com/novus/nvd3)
  */
-$(document).on('appReady', function(e, lang) {
+drawServerPlots = function(hours) {
 
 	try{
 		if(serialNumber){}
@@ -15,9 +15,11 @@ $(document).on('appReady', function(e, lang) {
 	var colors = d3.scale.category20(),
 		keyColor = function(d, i) {return colors(d.key)},
 		dateformat = "L LT", // Moment.js dateformat
-		charts = [],
-		hours = 24, // Time to show
-		xTickCount = 4; // Amount of ticks on x axis
+		charts = [], // Array holding all charts
+		xTickCount = 4, // Amount of ticks on x axis
+		siFormat = d3.format('0.2s'),
+		byteFormat = function(d){ return siFormat(d) + 'B'},
+		networkFormat = function(d){ return siFormat(d) + 'B/s'};
 
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		// Call update on all charts when #serverstats
@@ -32,8 +34,8 @@ $(document).on('appReady', function(e, lang) {
 	})
 
 
-	$.when( 
-		$.ajax( appUrl + '/module/machine/report/' + serialNumber ), 
+	$.when(
+		$.ajax( appUrl + '/module/machine/report/' + serialNumber ),
 		$.ajax( appUrl + '/module/servermetrics/get_data/' + serialNumber + '/' + hours ) )
 	.done(function( a1, a2 )
 	{
@@ -41,6 +43,7 @@ $(document).on('appReady', function(e, lang) {
 		// Each argument is an array with the following structure: [ data, statusText, jqXHR ]
 		var maxMemory = Math.min(parseInt(a1[ 0 ]['physical_memory']), 48);
 		var data = a2[ 0 ];
+
 		var networkTraffic = [
 			  {
 				key: i18n.t('network.inbound_traffic'),
@@ -100,22 +103,34 @@ $(document).on('appReady', function(e, lang) {
 			  }
 			]
 
-		for (var obj in data)
-		{
-			var date = new Date (obj.replace(' ', 'T'))
-			
-			cpuUsage[0].values.push({x: date, y: data[obj][5]}) // User
-			cpuUsage[1].values.push({x: date, y: data[obj][12]}) // System
-			networkTraffic[0].values.push({x: date, y: data[obj][10]}) // Inbound
-			networkTraffic[1].values.push({x: date, y: data[obj][13]}) // Outbound
-			memoryPressure[0].values.push({x: date, y: data[obj][11]})
-			memoryUsage[0].values.push({x: date, y: data[obj][6] + data[obj][7]}) // Wired + Active
-			cachingServer[0].values.push({x: date, y: data[obj][3]}) // From Origin
-			cachingServer[1].values.push({x: date, y: data[obj][4]}) // From Peers
-			cachingServer[2].values.push({x: date, y: data[obj][2]}) // From Cache
-			connectedUsers[0].values.push({x: date, y: data[obj][0]}) // AFP
-			connectedUsers[1].values.push({x: date, y: data[obj][1]}) // SMB
-		}
+			var datapoints = Object.keys(data).length,
+					maxPoints = 200,
+					skip = Math.ceil(datapoints / maxPoints),
+					start = 0
+					;
+
+			for (var obj in data)
+			{
+				// Skip items (average would be better)
+				start++;
+				if( start % skip ){
+					continue;
+				}
+
+				var date = new Date (obj.replace(' ', 'T'))
+
+				cpuUsage[0].values.push({x: date, y: data[obj][5]}) // User
+				cpuUsage[1].values.push({x: date, y: data[obj][12]}) // System
+				networkTraffic[0].values.push({x: date, y: data[obj][10]}) // Inbound
+				networkTraffic[1].values.push({x: date, y: data[obj][13]}) // Outbound
+				memoryPressure[0].values.push({x: date, y: data[obj][11]})
+				memoryUsage[0].values.push({x: date, y: data[obj][6] + data[obj][7]}) // Wired + Active
+				cachingServer[0].values.push({x: date, y: data[obj][3]}) // From Origin
+				cachingServer[1].values.push({x: date, y: data[obj][4]}) // From Peers
+				cachingServer[2].values.push({x: date, y: data[obj][2]}) // From Cache
+				connectedUsers[0].values.push({x: date, y: data[obj][0]}) // AFP
+				connectedUsers[1].values.push({x: date, y: data[obj][1]}) // SMB
+			}
 
 		// Memory Usage
 		nv.addGraph(function() {
@@ -133,7 +148,7 @@ $(document).on('appReady', function(e, lang) {
 			.ticks(6)
 			  .tickFormat(function(d){return d + ' GB'})
 			  .showMaxMin(false)
-			  
+
 
 			d3.select('#memory-usage')
 				.datum(memoryUsage)
@@ -179,7 +194,7 @@ $(document).on('appReady', function(e, lang) {
 			  .tickFormat(function(d) { return moment(d).format(dateformat) })
 			  .showMaxMin(false);
 
-			chart.yAxis.tickFormat(d3.format('s'))
+			chart.yAxis.tickFormat(networkFormat)
 			  .showMaxMin(false);
 
 			d3.select('#network-traffic')
@@ -227,7 +242,10 @@ $(document).on('appReady', function(e, lang) {
 			  .tickFormat(function(d) { return moment(d).format(dateformat) })
 			  .showMaxMin(false);
 
-			chart.yAxis.tickFormat(d3.format('s'))
+			chart.yAxis
+				  	.ticks(4)
+				  	.tickFormat(byteFormat)
+
 			  .showMaxMin(false);
 
 			d3.select('#caching-bytes-served')
@@ -251,7 +269,9 @@ $(document).on('appReady', function(e, lang) {
 			  .showMaxMin(false);
 
 			chart.yDomain([0,1])
-			  .yAxis.tickFormat(d3.format('.0f'));
+				.yAxis
+					.ticks(4)
+					.tickFormat(d3.format('.0f'));
 
 			d3.select('#sharing-connected-users')
 				.datum(connectedUsers)
@@ -261,10 +281,9 @@ $(document).on('appReady', function(e, lang) {
 			charts.push(chart.update);
 			nv.utils.windowResize(chart.update);
 			return chart;
-		}); 
+		});
 
 
 	});
 
-
-});
+};
