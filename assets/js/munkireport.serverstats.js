@@ -104,13 +104,18 @@ drawServerPlots = function(hours) {
 			]
 
 			var datapoints = Object.keys(data).length,
-					maxPoints = 200,
+					maxPoints = 500,
 					skip = Math.ceil(datapoints / maxPoints),
 					start = 0
 					;
 
 			for (var obj in data)
 			{
+				// Skip empty items
+				if(data[obj][12] == 0){
+					continue;
+				}
+
 				// Skip items (average would be better)
 				start++;
 				if( start % skip ){
@@ -131,6 +136,8 @@ drawServerPlots = function(hours) {
 				connectedUsers[0].values.push({x: date, y: data[obj][0]}) // AFP
 				connectedUsers[1].values.push({x: date, y: data[obj][1]}) // SMB
 			}
+
+			//console.log(memoryUsage[0].values.length)
 
 		// Memory Usage
 		nv.addGraph(function() {
