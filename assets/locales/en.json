@@ -3,12 +3,16 @@
 		"author": "Arjen van Bochoven"
 	},
 	"admin": {
+		"bu": {
+			"more_info": "More Information"
+		},
 		"bu_overview": "Business Units",
 		"delete_failed": "Remove failed: ",
 		"edit_bu": {
-			"title": "Edit Business Unit",
+			"address": "Address",
+			"link": "Link (to external site)",
 			"name": "Business Unit Name",
-			"address": "Address"
+			"title": "Edit Business Unit"
 		},
 		"edit_mg": {
 			"title": "Edit Machine Groups"

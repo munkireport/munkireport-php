@@ -36,7 +36,7 @@
 
 		var edit = function(){
 
-			var fields = {name:'', 'address':''},
+			var fields = {name:'', 'address':'', link: ''},
 				dataTemplate = {unitid:'new', users:['#'], managers:['#'], machine_groups:['#'], iteminfo:[]};
 
 			// Clone unit data
@@ -77,8 +77,20 @@
 							.addClass('form-control')
 							.attr('id', 'modalInputAddress')
 							.attr('name', 'address')
-							.val(fields.address))));
-			
+              .attr('placeholder', 'Somewhere, someplace')
+							.val(fields.address)))
+          .append($('<div>')
+            .addClass('form-group')
+            .append($('<label>')
+              .attr('for', 'modal-input-link')
+              .text(i18n.t('admin.edit_bu.link')))
+            .append($('<input>')
+              .addClass('form-control')
+              .attr('id', 'modal-input-link')
+              .attr('name', 'link')
+              .attr('placeholder', 'http://example.com')
+              .val(fields.link))));
+
 			// Set title
 			if( fields.unitid == 'new')
 			{
@@ -179,7 +191,7 @@
 							// Dismiss modal
 							$('#myModal').modal('hide');
 						}
-					});	
+					});
 
 				}
 				// Delete
@@ -190,7 +202,7 @@
 
 				// Get data from form
 				var formData = $('#myModal form').serializeArray();
-				
+
 				// Save machine group data
 				var jqxhr = $.post( appUrl + "/admin/save_machine_group", formData);
 
@@ -212,7 +224,7 @@
 					// Update business units
 					$('.unit').each(function(){
 						var bu = $(this).data();
-						
+
 						// Find and remove machine_group
 						var index = bu.machine_groups.indexOf(data.groupid);
 						if(index > -1){
@@ -249,10 +261,10 @@
 							})
 							.text(bu.name));
 			});
-			 
+
 			// If key is empty, generate guid
 			data.keys = data.keys || []; //guid();
-			
+
 			var generate = data.keys.length ? ' hidden' : '';
 
 			$('#myModal .modal-body')
@@ -353,7 +365,7 @@
 						// Reset input field
 						$('input.new-item').val('');
 					}
-						
+
 				},
 				renderItemList = function(){
 					itemList
@@ -378,18 +390,18 @@
 					if (index > -1) {
 					    items.splice(index, 1);
 					}
-					renderItemList();					
+					renderItemList();
 				},
 				saveItems = function(){
-					
+
 					// Add items to data
 					var iteminfo = items.length ? items : ['#'];
 					$('#myModal button.ok').data('iteminfo', iteminfo);
 
 					// Call save
 					save();
-				};					
-		
+				};
+
 
 				$('#myModal .modal-body')
 					.empty()
@@ -479,7 +491,7 @@
 						.submit(addUser)
 						.append($('<input>')
 							.attr('type', 'submit')
-							.addClass('invisible'))				
+							.addClass('invisible'))
 						.append(groupList)
 						.append($('<div>')
 						.addClass('input-group')
@@ -599,7 +611,7 @@
 						renderMachineGroups();
 
 					}
-				});	
+				});
 			},
 			renderMachineGroups = function(){
 
@@ -626,7 +638,7 @@
 					{
 						var addTo = $('.unassigned');
 					}
-						
+
 					addTo.append($('<a>')
 						.attr('href', '#')
 						.addClass('list-group-item machine-group-' + mg.groupid)
@@ -642,7 +654,8 @@
 				var data = $(this).data(),
 					groupname = '',
 					users = ''
-					managers = '';
+					managers = '',
+          link = '';
 
 				if(data.users)
 				{
@@ -653,7 +666,7 @@
 							.addClass('list-group-item')
 							.text(val))
 					});
-					
+
 				}
 				if(data.managers)
 				{
@@ -665,6 +678,13 @@
 							.text(val))
 					});
 				}
+
+        if(data.link){
+          link = $('<a>')
+                    .attr('href', data.link)
+                    .attr('target', '_blank')
+                    .text(i18n.t('admin.bu.more_info'));
+        }
 
 				var editButton = $('<button>')
 										.addClass('btn btn-default btn-xs pull-right')
@@ -685,9 +705,12 @@
 										.click(edit))))
 						.append($('<div>')
 							.addClass('panel-body row')
-							.append($('<div>')
+              .append($('<div>')
 								.addClass('col-lg-12')
 								.text(data.address))
+              .append($('<div>')
+								.addClass('col-lg-12')
+								.append(link))
 							.append($('<div>')
 								.addClass('col-md-4')
 								.append($('<h4>')
@@ -716,7 +739,7 @@
 											.click(editUsers)))
 									.append(users)))
 							.append($('<div>')
-								.addClass('panel-footer')								
+								.addClass('panel-footer')
 								.append($('<a>')
 									.addClass('btn btn-xs btn-default')
 									.click(remove_dialog)
@@ -733,7 +756,7 @@
 
 		// Render when all requests are successful
 		defer.done(function(bu_data, mg_data, gr_data){
-			
+
 			machineGroups = mg_data[0];
 
 			// Remove Loading row
@@ -785,7 +808,7 @@
 							.addClass('alert alert-warning')
 							.text(i18n.t('business_unit.disabled'))));
 		}
-		
+
 	} );
 </script>
 
