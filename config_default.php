@@ -275,7 +275,7 @@
 	| Machine and Reportdata
 	|
 	*/
-    $conf['modules'] = array();
+    $conf['modules'] = array('munkireport');
 
 
 	/*
