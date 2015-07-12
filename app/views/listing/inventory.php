@@ -29,14 +29,14 @@
   </thead>
   <tbody>
   	<?php $inventory_item_obj = new Inventory_model();
-	$items = $inventory_item_obj->select('name, version, COUNT(id) AS num_installs', '1 GROUP BY name, version');
-
+	$items = $inventory_item_obj->select_all();
+  
 	$inventory = array();
 	foreach($items as $item)
 	{
-		$name = $item['name'];
-		$version = $item['version'];
-		$installs = $item['num_installs'];
+		$name = $item->name;
+		$version = $item->version;
+		$installs = $item->num_installs;
 
 		$inventory[$name][$version] = $installs;
 	}

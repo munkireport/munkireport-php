@@ -26,7 +26,7 @@ class Ard_model extends Model {
 		
 		if ($serial)
 		{
-			$this->retrieve_one('serial_number=?', $serial);
+			$this->retrieve_record($serial);
 		}
 		
 		$this->serial = $serial;

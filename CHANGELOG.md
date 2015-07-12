@@ -1,3 +1,18 @@
+### 2.5.0 (June 25, 2015)
+
+FIXES
+
+* 
+
+NEW FEATURES
+
+* Business Units
+
+How to upgrade:
+
+* Migrations ON
+* Add authorization
+
 ### 2.4.2 (April 25, 2015)
 
 FIXES

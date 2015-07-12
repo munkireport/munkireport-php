@@ -95,7 +95,9 @@
 		},
 		"username": "Gebruiker"
 	},
-	"memory": "Geheugen",
+	"memory": {
+		"memory": "Geheugen"
+	},
 	"name": "Naam",
 	"nav": {
 		"listings": {
@@ -132,7 +134,7 @@
 	"network": {
 		"ethernet": "Ethernet",
 		"ip_address": "IP Adres",
-		"network_mask": "Masker",
+		"mask": "Masker",
 		"prefix_length": "Prefix lengte",
 		"router": "Router"
 	},

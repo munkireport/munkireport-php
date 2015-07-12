@@ -159,11 +159,11 @@ if(isset($report['ItemsToRemove']))
 				<?php foreach($report[$report_key] AS $item): ?>
 		        <tr>
 		          <td>
-					<?php echo isset($item['display_name']) ? $item['display_name'] : $item['name']; ?>
+					<?php echo isset($item['display_name']) && $item['display_name'] ? $item['display_name'] : $item['name']; ?>
 					<?php echo isset($item['version_to_install']) ? $item['version_to_install'] : ''; ?>
 					<?php echo isset($item['installed_version']) ? $item['installed_version'] : ''; ?>
 		          </td>
-		          <td style="text-align: left;"><?php echo isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'; ?></td>
+		          <td class="filesize" style="text-align: left;"><?php echo isset($item['installed_size']) ? $item['installed_size'] * 1024: '?'; ?></td>
 		          <td><?php echo isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed"); ?></td>
 		        </tr>
 				<?php endforeach; ?>
@@ -202,7 +202,7 @@ if(isset($report['ItemsToRemove']))
 					<?php echo isset($item['version_to_install']) ? $item['version_to_install'] : ''; ?>
 					<?php echo isset($item['installed_version']) ? $item['installed_version'] : ''; ?>
 		          </td>
-		          <td style="text-align: left;"><?php echo isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'; ?></td>
+		          <td style="text-align: left;"><?php echo isset($item['installed_size']) ? $item['installed_size'] * 1024: 0; ?></td>
 		          <td><?php echo $item['installed'] ? 'installed' : "not installed"; ?></td>
 		        </tr>
 				<?php endforeach; ?>
@@ -243,12 +243,24 @@ if(isset($report['ItemsToRemove']))
 
 <pre><?php //print_r($client->rs) ?></pre>
 <script>
-  $(document).on('appReady', function(e, lang) {
+$(document).on('appReady', function(e, lang) {
 
-        // Initialize datatables
-            $('.ManagedInstalls').dataTable({
-                "bServerSide": false,
-                "order": [0,'asc']
-            });
-  });
+	// Format filesize
+	var size = $('td.filesize').html();
+	if(size != '?'){
+		$('td.filesize').html(fileSize(size))
+	}
+
+	// Initialize datatables
+	$('.ManagedInstalls').dataTable({
+	    "bServerSide": false,
+	    "order": [0,'asc'],
+	    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+	    	// Update name in first column to link
+	    	var size=$('td:eq(1)', nRow).html();
+	        $('td:eq(1)', nRow).html(fileSize(size, 1));
+
+	    }
+	});
+});
 </script>

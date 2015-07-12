@@ -2,9 +2,36 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
-	"admin": {
-		"delete_failed": "Löschen fehlgeschlagen: "
-	},
+ 	"admin": {
+                "bu_overview": "Geschäftsbereiche",
+                "delete_failed": "Löschen fehlgeschlagen: ",
+                "edit_bu": {
+                        "title": "Geschäftsbereiche editieren",
+                        "name": "Name des Geschäftsbereiches",
+                        "address": "Adresse"
+                },
+                "edit_mg": {
+                        "title": "Computergruppen editieren"
+                },
+                "edit_user": {
+                        "title": "Benutzer editieren",
+                        "add_user": "Benutzer hinzufügen"
+                },
+                "mg": {
+                        "title": "Computergruppen",
+                        "add_group": "Neue Gruppe",
+                        "edit_group": "Computergruppe editieren",
+                        "new_group": "Neue Computergruppe"
+                },
+                "new_bu": {
+                        "title": "Neuer Geschäftsbereich"
+                },
+                "remove_bu": {
+                        "title": "Geschäftsbereich löschen",
+                        "content": "Wenn Sie diesen Geschäftsbereich löschen, werden alle betreffenden Daten gelöscht. Dies kann nicht widerrufen werden."
+                },
+                "unassigned_groups": "Nicht zugeordnete Gruppen"
+        },		
 	"all": "Alle",
 	"auth": {
 		"addtoconfig": "Fügen Sie diese Zeile zur config.php hinzu:",
@@ -98,7 +125,9 @@
 		},
 		"username": "Benutzername"
 	},
-	"memory": "Speicher",
+	"memory": {
+		"memory": "Speicher"
+	},
 	"name": "Name",
 	"nav": {
 		"lang": {
@@ -141,7 +170,7 @@
 	"network": {
 		"ethernet": "Ethernet",
 		"ip_address": "IP Adresse",
-		"network_mask": "Netzmaske",
+		"mask": "Netzmaske",
 		"prefix_length": "Prefix Länge",
 		"router": "Router"
 	},

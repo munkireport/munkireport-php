@@ -134,15 +134,47 @@
 
 	/*
 	|===============================================
-	| Authorization
+	| Role Based Authorization
 	|===============================================
 	|
-	| Authorize people by listing them in the appropriate array.
-	| An entry containing a star (*) signifies that everyone is authorized
-	| which is the default setting.
+	| Authorize actions by listing roles appropriate array.
+	| Don't change these unless you know what you're doing, these roles are
+	| also used by the Business Units
 	|
 	*/
-	$conf['authorization']['delete_machine'] = array('*');
+    $conf['authorization']['delete_machine'] = array('admin', 'manager');
+    $conf['authorization']['global'] = array('admin');
+
+    /*
+	|===============================================
+	| Roles
+	|===============================================
+	|
+	| Add users or groups to the appropriate roles array.
+	|
+	*/
+	$conf['roles']['admin'] = array('*');
+
+    /*
+	|===============================================
+	| Local groups
+	|===============================================
+	|
+	| Create local groups, add users to groups.
+	|
+	*/
+	//$conf['groups']['admin_users'] = array();
+
+    /*
+	|===============================================
+	| Business Units
+	|===============================================
+	|
+	| Set to TRUE to enable Business Units
+	| For more information, see docs/business_units.md
+	|
+	*/
+	$conf['enable_business_units'] = FALSE;
 
 	/*
 	|===============================================
@@ -242,9 +274,8 @@
 	| An empty list installs only the basic reporting modules:
 	| Machine and Reportdata
 	|
-	| If you don't set this item, all available modules are installed (default)
 	*/
-    //$conf['modules'] = array();
+    $conf['modules'] = array('munkireport');
 
 
 	/*

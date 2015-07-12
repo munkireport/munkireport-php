@@ -23,7 +23,7 @@ class Machine_model extends Model {
 		$this->rs['computer_name'] = '';
 		$this->rs['l2_cache'] = '';
 		$this->rs['machine_name'] = '';
-		$this->rs['packages'] = '';	   
+		$this->rs['packages'] = '';  
 		
 		// Add indexes
 		$this->idx['hostname'] = array('hostname');
@@ -52,7 +52,7 @@ class Machine_model extends Model {
 		$this->create_table();
 		
 		if ($serial)
-			$this->retrieve_one('serial_number=?', $serial);
+			$this->retrieve_record($serial);
 		
 		$this->serial = $serial;
 		  

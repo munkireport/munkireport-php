@@ -8,7 +8,7 @@ I moved the project to github because github is just awesome!
 
 This project is a complete rewrite from the previous version, which was a quick-and-dirty port from the original python based munkireport [https://code.google.com/p/munkireport/]. 
 
-The project is still a work-in-progress, although I'm using it in a production environment for quite some time now.
+The project a work-in-progress, please check for updates regularly.
 
 Features
 ---

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Serveradmin executable
+SERVERADMIN="/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin"
+
+# Out file
+OUT="/usr/local/munki/preflight.d/cache/services.txt"
+
+# List of services to check
+SERVICES="addressbook afp caching calendar \
+certs collabd devicemgr dhcp dirserv dns ftp \
+history jabber mail netboot network nfs radius \
+san smb swupdate timemachine vpn web wiki xcode"
+
+ 
+# Truncate out file
+> "$OUT"
+
+# Check if serveradmin exists
+if [ ! -e "$SERVERADMIN" ]; then
+	echo "$SERVERADMIN not found, aborting"
+	exit
+fi
+
+
+for i in $SERVICES
+	do "$SERVERADMIN" status $i | grep '.*:state =' >> $OUT
+done
