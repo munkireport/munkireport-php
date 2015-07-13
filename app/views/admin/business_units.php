@@ -295,7 +295,10 @@
 								.addClass('btn btn-default btn-xs' + generate)
 								.click(function(e){
 									e.preventDefault();
-									$('input[name="key"]').val(guid());
+                  // Only generate if button is not hidden (triggers also on label)
+                  if(! $(this).hasClass('hidden')){
+                    $('input[name="key"]').val(guid());
+                  }
 								})
 								.text('Generate')))
 						.append($('<input>')
