@@ -220,7 +220,7 @@
 			"clients": "Clients",
 			"certificate": "Zertifikate",
 			"directoryservice": "Verzeichnisdienste",
-			"disk": "Festplatte",
+			"disk": "Festplatten",
 			"displays": "Displays",
 			"hardware": "Hardware",
 			"inventory": "Inventar",
@@ -241,7 +241,7 @@
 		"reports": {
 			"backup": "Backup-Bericht",
 			"clients": "Client-Bericht",
-			"configuration": "Konfigurations-bBricht",
+			"configuration": "Konfigurations-Bericht",
 			"hardware": "Hardware-Bericht",
 			"munki": "Munki-Bericht",
 			"network": "Netzwerk-Bericht",
@@ -269,7 +269,7 @@
 	"os": {
 		"version": "OS Version"
 	},
-	"pending": "Aussstehend",
+	"pending": "Ausstehend",
 	"path": "Pfad",
 	"reg_date": "Registratierungsdatum",
 	"remote_control": "Fernsteuerung",
