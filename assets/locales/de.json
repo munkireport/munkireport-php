@@ -2,37 +2,38 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
- 	"admin": {
-                "bu_overview": "Geschäftsbereiche",
-                "delete_failed": "Löschen fehlgeschlagen: ",
-                "edit_bu": {
-                        "title": "Geschäftsbereiche editieren",
-                        "name": "Name des Geschäftsbereiches",
-                        "address": "Adresse"
-                },
-                "edit_mg": {
-                        "title": "Computergruppen editieren"
-                },
-                "edit_user": {
-                        "title": "Benutzer editieren",
-                        "add_user": "Benutzer hinzufügen"
-                },
-                "mg": {
-                        "title": "Computergruppen",
-                        "add_group": "Neue Gruppe",
-                        "edit_group": "Computergruppe editieren",
-                        "new_group": "Neue Computergruppe"
-                },
-                "new_bu": {
-                        "title": "Neuer Geschäftsbereich"
-                },
-                "remove_bu": {
-                        "title": "Geschäftsbereich löschen",
-                        "content": "Wenn Sie diesen Geschäftsbereich löschen, werden alle betreffenden Daten gelöscht. Dies kann nicht widerrufen werden."
-                },
-                "unassigned_groups": "Nicht zugeordnete Gruppen"
-        },		
+	"admin": {
+		"bu_overview": "Geschäftsbereiche",
+		"delete_failed": "Löschen fehlgeschlagen: ",
+		"edit_bu": {
+			"title": "Geschäftsbereiche editieren",
+			"name": "Name des Geschäftsbereiches",
+			"address": "Adresse"
+		},
+		"edit_mg": {
+			"title": "Computergruppen editieren"
+		},
+		"edit_user": {
+			"title": "Benutzer editieren",
+			"add_user": "Benutzer hinzufügen"
+		},
+		"mg": {
+			"title": "Computergruppen",
+			"add_group": "Neue Gruppe",
+			"edit_group": "Computergruppe editieren",
+			"new_group": "Neue Computergruppe"
+		},
+		"new_bu": {
+			"title": "Neuer Geschäftsbereich"
+		},
+		"remove_bu": {
+			"title": "Geschäftsbereich löschen",
+			"content": "Wenn Sie diesen Geschäftsbereich löschen, werden alle betreffenden Daten gelöscht. Dies kann nicht widerrufen werden."
+		},
+		"unassigned_groups": "Nicht zugeordnete Gruppen"
+	},
 	"all": "Alle",
+	"ard": "Apple Remote Desktop",
 	"auth": {
 		"addtoconfig": "Fügen Sie diese Zeile zur config.php hinzu:",
 		"back_to_site": "Zurück zur Seite",
@@ -52,39 +53,85 @@
 		"username": "Benutzername",
 		"wrong_user_or_pass": "Falscher Benutzername oder falches Kennwort"
 	},
+	"bluetooth": {
+		"bluetooth": "Bluetooth",
+		"keyboard": "Tastatur Status",
+		"mouse": "Maus Status",
+		"status": "Bluetooth Status",
+		"trackpad": "Trackpad Status"
+	},
+	"boot_time": "Startzeit",
 	"bundle_id": "BundleID",
+	"business_unit": {
+		"disabled": "Geschäftsbereiche deaktiviert",
+		"machine_group": "Computergruppe",
+		"machine_groups": "Computergruppen",
+		"managers": "Managers",
+		"users": "Benutzer"
+	},
+	"caching": {
+		"bytes_served": "CachingServer – Übertragene Bytes",
+		"from_origin": "Herkunft",
+		"from_peers": "Von Peers",
+		"from_cache": "Aus dem Cache"
+	},
 	"client": {
 		"tab": {
-			"munki": "Verwaltete Software",
 			"apple_software": "Apple Software",
-			"third_party_software": "Drittanbieter",
-			"inventory_items": "Inventar",
-			"network": "Netzwerkschnittstellen",
+			"ard": "ARD",
+			"bluetooth": "Bluetooth",
+			"certificates": "Zertifikate",
+			"displays": "Displays",
 			"ds": "Verzeichnisdienste",
 			"fv_escrow": "Filevault Escrow",
-			"bluetooth": "Bluetooth",
-			"ard": "ARD"
+			"inventory_items": "Inventar",
+			"munki": "Verwaltete Software",
+			"network": "Netzwerk Schnittstellen",
+			"power": "Strom",
+			"profiles": "Profile",
+			"serverstats": "Server Statistik",
+			"summary": "Zusammenfassung",
+			"third_party_software": "Drittanbieter-Software",
+			"timemachine": "Time Machine"
 		},
 		"installed_apple_software": "Installierte Apple Software",
-		"installed_third_party_software": "Install Software von Drittanbietern",
+		"installed_third_party_software": "Installierte Drittanbieter-Software",
 		"install_date": "Installationsdatum",
-		"no_install_history": "Keine Installations-Historie",
+		"no_install_history": "Keine Installationshistorie",
 		"process_name": "Prozessname"
 	},
-	 "chart": {
-                "stackedarea": {
-                        "stacked": "Gestapelt",
-                        "stream": "Stream",
-                        "expanded": "Ausführlich"
-                }
-        },
-
+	"chart": {
+		"stackedarea": {
+			"stacked": "Gestapelt",
+            "stream": "Stream",
+            "expanded": "Ausführlich"
+		}
+	},
 	"configuration": "Konfiguration",
+	"cpu": {
+		"arch": "CPU Architektur",
+		"core": "Kerne",
+		"cpu": "CPU",
+		"type": "CPU Typ",
+		"usage": "Prozessorauslastung"
+	},
 	"date": {
 		"year": "Jahr"
 	},
+	"delete": "Löschen",
+	"dialog": {
+		"cancel": "Abbrechen",
+		"close": "Schließen",
+		"comment": {
+			"add": "Kommentar hinzufügen",
+			"label": "Kommentar"
+		},
+		"ok": "Ok",
+		"ok_remove": "Ok, entfernen",
+		"save": "Speichern"
+	},
 	"disabled": "Deaktiviert",
-	"edit": "Bearbeiten",
+	"edit": "Editieren",
 	"enabled": "Aktiviert",
 	"error": "Fehler",
 	"error_plural": "Fehler",
@@ -95,23 +142,40 @@
 		"404": "Seite nicht gefunden",
 		"426": "Sie müssen diese Seite über eine verschlüsselte Verbindung aufrufen."
 	},
+	"filter": {
+		"title": "Filter setzen"
+	},
 	"free_disk_space": "Verfügbarer Speicherplatz",
+	"hardware": {
+		"hardware": "Hardware",
+		"uuid": "Hardware UUID"
+	},
 	"installed": "Installiert",
+	"last_seen": "Zuletzt gesehen",
+	"last_user": "Letzter User",
 	"listing": {
 		"ard": {
-			"text": "Text __number__"
+			"text": "Text __number__",
+			"title": "Apple Remote Desktop Bericht"
 		},
 		"bluetooth": {
-			"keyboard_battery": "Tastatur",
+			"keyboard_battery": "Tastatus",
 			"mouse_battery": "Maus",
 			"status": "Status",
 			"title": "Bluetooth Bericht",
 			"trackpad_battery": "Trackpad"
 		},
+		"certificate": {
+			"commonname": "Common Name",
+			"expires": "Ablaufdatum",
+			"title": "Zertifikatsbericht"
+		},
+		"checkin": "Check-in",
 		"computername": "Name",
 		"hardware": {
 			"description": "Beschreibung"
 		},
+		"loading": "Lade Daten vom server",
 		"munki": {
 			"latest_run": "Letzter Durchlauf",
 			"package_installed": "Paket installiert",
@@ -123,41 +187,61 @@
 			"pending_removal": "Ausstehende Deinstallation",
 			"pending_removal_plural": "Ausstehende Deinstallationen"
 		},
+		"timemachine": {
+			"duration": "Dauer des Backups",
+			"last_failure": "Letztes Fehlgeschlagenes Backup",
+			"last_failure_msg": "Fehlermeldung",
+			"last_success": "Letztes Erfolgreiches Backup",
+			"title": "Timemachine Bericht"
+		},
 		"username": "Benutzername"
 	},
 	"memory": {
-		"memory": "Speicher"
+		"memory": "Speicher",
+		"usage": "Speichernutzung",
+		"pressure": "Speicherdruck"
 	},
+	"model": "Modell",
 	"name": "Name",
 	"nav": {
+		"admin": {
+			"business_units": "Geschäftsbereiche verwalten"
+		},
 		"lang": {
 			"de": "Deutsch",
 			"en": "English",
 			"es": "Español",
-			"nl": "Nederlands"
+			"nl": "Nederlands",
+			"ru": "Русский"
 		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
 			"clients": "Clients",
+			"certificate": "Zertifikate",
 			"directoryservice": "Verzeichnisdienste",
-			"disk": "Festplatten",
+			"disk": "Festplatte",
 			"displays": "Displays",
 			"hardware": "Hardware",
 			"inventory": "Inventar",
 			"munki": "Munki",
 			"network": "Netzwerk",
+			"power": "Strom",
+			"profile": "Profile",
 			"security": "Sicherheit",
+			"timemachine": "Time Machine",
 			"warranty": "Garantie"
 		},
 		"main": {
 		  "dashboard": "Dashboard",
-		  "reports": "Berichte",
-		  "listings": "Listen"
+		  "reports": "Reports",
+		  "listings": "Listen",
+		  "admin": "Admin"
 		},
 		"reports": {
+			"backup": "Backup-Bericht",
 			"clients": "Client-Bericht",
-			"configuration": "Konfigurations-Bericht",
+			"configuration": "Konfigurations-bBricht",
 			"hardware": "Hardware-Bericht",
 			"munki": "Munki-Bericht",
 			"network": "Netzwerk-Bericht",
@@ -169,37 +253,131 @@
 	},
 	"network": {
 		"ethernet": "Ethernet",
+		"hostname": "Hostname",
 		"ip_address": "IP Adresse",
+		"network": "Netzwerk",
 		"mask": "Netzmaske",
-		"prefix_length": "Prefix Länge",
-		"router": "Router"
+		"prefix_length": "Präfix Länge",
+		"router": "Router",
+		"traffic": "Netzwerkverkehr",
+		"inbound_traffic": "Ankommender Verkehr",
+		"outbound_traffic": "Ausgehender Verkehr",
+		"remote_ip": "Remote IP Adresse"
 	},
-	"new": "Neu",
-	"pending": "Ausstehend",
+	"no_clients": "Keine Clients",
+	"no_data": "Keine Daten",
+	"os": {
+		"version": "OS Version"
+	},
+	"pending": "Aussstehend",
 	"path": "Pfad",
+	"reg_date": "Registratierungsdatum",
+	"remote_control": "Fernsteuerung",
+	"report": {
+		"generate": "Bericht erzeugen"
+	},
 	"serial": "Seriennummer",
+	"servermetrics": {
+		"tab": "Server Statistik"
+	},
+	"service": {
+		"listing":{
+			"title": "Dienste-Bericht"
+		},
+		"name": "Dienstname",
+		"status": "Dienststatus",
+		"tab": {
+			"title": "Dienste"
+		}
+	},
+	"sharing": {
+		"connected_users": "Filesharing – Verbundene Benutzer",
+		"afp_users": "AFP Benutzer",
+		"smb_users": "SMB Benutzer"
+	},
+	"show": "Anzeigen",
+	"software": {
+		"software": "Software",
+		"smc_version": "SMC Version",
+		"boot_rom_version": "Boot ROM Version"
+	},
+	"status": "Status",
+	"storage": {
+		"bus_protocol": "BUS Protokoll",
+		"encrypted": "Verschlüsselt",
+		"encryption_status": "Verschlüsselungsstatus",
+		"external": "Extern",
+		"free": "Frei",
+		"internal": "Intern",
+		"mountpoint": "Mount Point",
+		"not_encrypted": "Nicht verschlüsselt",
+		"percentage": "Prozent",
+		"size": "Festplattengöße",
+		"smartstatus": "SMART status",
+		"storage": "Massenspeicher",
+		"total_size": "Größe",
+		"type": "Massenspeichertyp",
+		"used": "Benutzt",
+		"volume_type": "Volumetyp"
+	},
+	"system": {
+		"system": "System"
+	},
+	"timemachine": {
+		"timemachine": "Time Machine"
+	},
 	"unavailable": "Nicht verfügbar",
 	"unauthorized": "Sie sind nicht autorisiert",
 	"unknown": "Unbekannt",
+	"uptime": "Uptime",
+	"user": {
+		"user": "Benutzer",
+		"users": "Benutzer",
+		"local_admin": "Lokaler Admin"
+	},
 	"version": "Version",
 	"warning": "Warnung",
 	"warning_plural": "Warnungen",
+	"warranty": {
+		"coverage": "Garantieabdeckung",
+		"est_manufacture_date": "ungef. Produktionsdatum",
+		"est_purchase_date": "ungef. Kaufdatum",
+		"expired": "Abgelaufen am __date__",
+		"recheck": "Garantieabdeckung erneut prüfen",
+		"supported_no_applecare": "Unterstützt bis __date__. Kein Applecare",
+		"supported_until": "Unterstützt bis __date__",
+		"unregistered": "Nicht registriert",
+		"warranty": "Garantie"
+	},
 	"widget": {
 		"age": {
 			"title": "Hardware-Alter"
 		},
 		"bound_to_ds": {
-			"bound": "Gebunden",
-			"notbound": "Nicht gebunden",
-			"info": "Summe seit Erfassung dieser Daten",
-			"title": "An Verzeichnisdienste gebunden"
+			"bound": "Angebunden",
+			"notbound": "Nicht angebunden",
+			"info": "Gesamt seit diese Daten gesammelt werden",
+			"title": "An Verzeichnisdienst angebunden"
+		},
+		"certificate": {
+			"expired": "Abgelaufen",
+			"ok": "Gültig für mehr als drei Monate",
+			"soon": "Läuft innerhalb der nächsten drei Monate ab",
+			"title": "Zertifikate"
 		},
 		"power": {
 			"missing": "Fehlt",
 			"normal": "Normal",
-			"now": "Jetzt",
-			"service": "Service",
-			"soon": "Bald"
+			"now": "Jetzt austauschen",
+			"service": "Jetzt zur Wartung",
+			"soon": "Wartung steht an",
+			"nobattery": "Keine Batterie"
+		},
+		"timemachine": {
+			"lastweek": "Letztes Backup vor mehr als einem Tag",
+			"title": "Time Machine Status",
+			"today": "Backup heute",
+			"week_plus": "Letztes Backup vor mehr als einer Woche"
 		}
 	}
 }
