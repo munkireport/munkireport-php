@@ -12,11 +12,11 @@ class admin extends Controller
 		{
 			die('You need to be admin');
 		}
-	} 
-	
-	
+	}
+
+
 	//===============================================================
-	
+
 	function index()
 	{
 		echo 'Admin';
@@ -27,7 +27,7 @@ class admin extends Controller
 	 * Retrieve business units information
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function get_business_units()
 	{
@@ -47,7 +47,7 @@ class admin extends Controller
 	 * Save Machine Group
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function save_machine_group()
 	{
@@ -62,12 +62,12 @@ class admin extends Controller
 				$mg = new Machine_group;
 				$groupid = $mg->get_max_groupid() + 1;
 			}
-			
+
 			$out['groupid'] = intval($groupid);
 
 			foreach($_POST as $property => $val)
 			{
-				
+
 				// Skip groupid
 				if($property == 'groupid')
 				{
@@ -131,7 +131,7 @@ class admin extends Controller
 	/**
 	 * Remove machine group
 	 *
-	 * @author 
+	 * @author
 	 **/
 	function remove_machine_group($groupid = '')
 	{
@@ -145,6 +145,9 @@ class admin extends Controller
 				$bu = new Business_unit;
 				$out['success'] = $bu->delete_where("property='machine_group' AND value=?", $groupid);
 			}
+			// Reset group in report_data
+			$rep = new Reportdata_model;
+			$rep->reset_group($groupid);
 		}
 
 		$obj = new View();
@@ -158,7 +161,7 @@ class admin extends Controller
 	 * Save Business Unit
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function save_business_unit()
 	{
@@ -236,11 +239,11 @@ class admin extends Controller
 				// Set new machine_groups to list
 				$_POST['machine_groups'] = $groups;
 				unset($_POST['iteminfo']);
-				
+
 			}
 			foreach($_POST as $property => $val)
 			{
-				
+
 				// Skip unitid
 				if($property == 'unitid')
 				{
@@ -277,7 +280,7 @@ class admin extends Controller
 						if($entry === '#'){
 							$out[$property] = array();
 							continue;
-						} 
+						}
 						$business_unit->id = '';
 						$business_unit->unitid = $unitid;
 						$business_unit->property = $name;
@@ -285,11 +288,11 @@ class admin extends Controller
 						$business_unit->save();
 						$out[$property][] = is_numeric($entry) ? 0 + $entry : $entry;
 					}
-											
+
 
 				}
 			}
-			
+
 		}
 		else
 		{
@@ -307,7 +310,7 @@ class admin extends Controller
 	 * remove_business_unit
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function remove_business_unit($unitid='')
 	{
@@ -331,7 +334,7 @@ class admin extends Controller
 	 * Return BU data for unitid or all units if unitid is empty
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function get_bu_data($unitid = "")
 	{
@@ -346,7 +349,7 @@ class admin extends Controller
 	 * Return Machinegroup data for groupid or all groups if groupid is empty
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function get_mg_data($groupid = "")
 	{
@@ -382,7 +385,7 @@ class admin extends Controller
 	 * undocumented function
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function show($which = '')
 	{
@@ -401,5 +404,5 @@ class admin extends Controller
 		$obj = new View();
 		$obj->view($view, $data);
 	}
-	
+
 }
