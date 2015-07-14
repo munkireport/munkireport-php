@@ -80,6 +80,7 @@
 		"from_cache": "From Cache"
 	},
 	"client": {
+		"comment": "Comments",
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",

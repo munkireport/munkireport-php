@@ -1,8 +1,8 @@
 <?php $this->view('partials/head', array('stylesheets' => array('bootstrap-markdown.min.css'))) ?>
 
-<?php 
+<?php
 
-// Tab list, each item should contain: 
+// Tab list, each item should contain:
 //	'view' => path/to/tab
 // 'i18n' => i18n identifier matching a localised name
 // Optionally:
@@ -48,7 +48,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 								<li>
 									<a href="#<?php echo $name?>" data-toggle="tab"><span data-i18n="<?php echo $data['i18n']?>"></span>
-									<?php if(isset($data['badge'])):?> 
+									<?php if(isset($data['badge'])):?>
 									 <span id="<?php echo $data['badge']?>" class="badge">0</span>
 									<?php endif?>
 									</a>
@@ -108,7 +108,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 			// Add 'active' to current li
 			$(e.target).parent().addClass('active');
-		  
+
 		});
 
 		// Get client data
@@ -166,7 +166,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					break;
 			}
 
-			
+
 			$('.mr-warranty_status').addClass(cls).html(msg);
 
 			// Uptime
@@ -189,7 +189,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 			$( "time" ).each(function( index ) {
 					$(this).tooltip().css('cursor', 'pointer');
 			});
-			
+
 			// Remote control links
 			$.getJSON( appUrl + '/clients/get_links', function( links ) {
 				$.each(links, function(prop, val){
@@ -304,7 +304,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 				// Set correct tab on location hash
 				loadHash();
-				
+
 			}
 		});
 
@@ -423,6 +423,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-markdown.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/marked.min.js"></script>
+<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.comment.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.storageplot.js"></script>
 
 <?php $this->view('partials/foot'); ?>
