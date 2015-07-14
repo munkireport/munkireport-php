@@ -33,6 +33,10 @@ $( document ).ready(function() {
     });
 });
 
+$(window).on("hashchange", function (e) {
+     loadHash();
+})
+
 // Update hash in url
 var updateHash = function(e){
 		var url = String(e.target)
@@ -64,7 +68,7 @@ var updateHash = function(e){
 					.attr('href', '#'+conf.id)
 					.attr('data-toggle', 'tab')
 					.on('show.bs.tab', function(){
-						// We have to remove the active class from the 
+						// We have to remove the active class from the
 						// previous tab manually, unfortunately
 						$('.client-tabs li').removeClass('active');
 					})
@@ -156,7 +160,7 @@ var showFilterModal = function(e){
 }
 
 
-	
+
 
 
 
@@ -169,7 +173,7 @@ function integer_to_version(osvers)
     {
 		// Remove non-numerical string
 		osvers = isNaN(osvers) ? "" : osvers;
-		
+
 		// Left pad with zeroes if necessary
 		osvers = ("000000" + osvers).substr(-6)
 		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
@@ -192,7 +196,7 @@ function delete_machine(obj)
 {
 	var row = obj.parents('tr');
 	$.getJSON( obj.attr('href'), function( data ) {
-		
+
 		data.status = data.status || 'unknown';
 
 		if(data.status == 'success')
@@ -308,7 +312,7 @@ String.prototype.pluralize = function(count, plural)
   if (plural == null)
     plural = this + 's';
 
-  return (count == 1 ? this : plural) 
+  return (count == 1 ? this : plural)
 }
 
 // Draw a formatted graph with flotr2
@@ -336,7 +340,7 @@ function drawGraph(url, id, options, parms)
 
 		// preventDefault by default for mobile events.  Turn off to enable scroll.
 		options.preventDefault = false;
-		
+
 		//dumpj(options.colors)
 		chartObjects[id] = Flotr.draw($(id)[0], data, options);
 
@@ -369,7 +373,7 @@ function getScale()
 	                        context.oBackingStorePixelRatio ||
 	                        context.backingStorePixelRatio || 1;
 
-	    scale = devicePixelRatio / backingStoreRatio;                    		
+	    scale = devicePixelRatio / backingStoreRatio;
 	}
 
 	return scale
@@ -406,7 +410,7 @@ if(typeof window.makeColorGradient !== 'function')
 // Global variables
 var chartObjects = {}, // Holds instantiated chart objects
 	barOptions = {
-		    
+
 	    	bars: {
 	            show: true,
 	            lineWidth: 0,
@@ -436,10 +440,10 @@ var chartObjects = {}, // Holds instantiated chart objects
 				outlineColor: 'white'
 			},
 			shadowSize: 0
-			
+
 	    },
 	    horBarOptions = {
-		    
+
 	    	bars: {
 	            show: true,
 	            lineWidth: 0,
@@ -469,10 +473,10 @@ var chartObjects = {}, // Holds instantiated chart objects
 				outlineColor: 'white'
 			},
 			shadowSize: 0
-			
+
 	    },
 		pieOptions = {
-				    
+
 	        pie: {
 	            show: true,
 	            explode: 5,
@@ -481,7 +485,7 @@ var chartObjects = {}, // Holds instantiated chart objects
 	            labelFormatter: function(total, value) {
 					return "<div style='font-size:150%; text-align:center; padding:2px; color:white;'>" + value + "</div>";
 				}
-				
+
 	        },
 	        shadowSize: 0,
 	        grid : {

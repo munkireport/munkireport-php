@@ -1,6 +1,6 @@
 <?php
 class Servermetrics_model extends Model {
-	
+
 	// Field order as sent by postflight and served by get_data().
 	var	$keys = [
 		'afp_sessions',
@@ -28,34 +28,34 @@ class Servermetrics_model extends Model {
 		$this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['afp_sessions'] = 0; // number of afp connections
 		$this->rs['smb_sessions'] = 0; // number of smb connections
-		$this->rs['caching_cache_toclients'] = 0.0; // 
-		$this->rs['caching_origin_toclients'] = 0.0; // 
+		$this->rs['caching_cache_toclients'] = 0.0; //
+		$this->rs['caching_origin_toclients'] = 0.0; //
 		$this->rs['caching_peers_toclients'] = 0.0; //
 		$this->rs['cpu_user'] = 0.0; //
-		$this->rs['cpu_idle'] = 0.0; // 
+		$this->rs['cpu_idle'] = 0.0; //
 		$this->rs['cpu_system'] = 0.0; //
-		$this->rs['cpu_nice'] = 0.0; // 
-		$this->rs['memory_wired'] = 0.0; // 
+		$this->rs['cpu_nice'] = 0.0; //
+		$this->rs['memory_wired'] = 0.0; //
 		$this->rs['memory_active'] = 0.0; //
-		$this->rs['memory_inactive'] = 0.0; // 
+		$this->rs['memory_inactive'] = 0.0; //
 		$this->rs['memory_free'] = 0.0; //
-		$this->rs['memory_pressure'] = 0.0; // 
-		$this->rs['network_in'] = 0.0; // 
-		$this->rs['network_out'] = 0.0; // 
+		$this->rs['memory_pressure'] = 0.0; //
+		$this->rs['network_in'] = 0.0; //
+		$this->rs['network_out'] = 0.0; //
 		$this->rs['datetime'] = ''; // Datetime from record
-		
+
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
-		
+
 		//indexes to optimize queries
 		$this->idx[] = array('serial_number');
 		$this->idx[] = array('datetime');
-		
+
 		// Create table if it does not exist
 		$this->create_table();
-		
+
 		$this->serial_number = $serial;
-		  
+
 	}
 	// ------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ class Servermetrics_model extends Model {
 	 * Get data for serial
 	 *
 	 * @return array data
-	 * @author 
+	 * @author
 	 **/
 	function get_data($serial_number, $hours = 24)
 	{
@@ -90,16 +90,16 @@ class Servermetrics_model extends Model {
 	}
 
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * Process data sent by postflight
 	 *
 	 * @param string data
-	 * 
+	 *
 	 **/
 	function process($data)
-	{		
-		
+	{
+
 		// Delete previous set (this is expensive)
 		$this->delete_where('serial_number=?', $this->serial_number);
 
@@ -107,17 +107,20 @@ class Servermetrics_model extends Model {
 		{
 			foreach(json_decode($data) as $date => $values)
 			{
-				$this->id = 0;
-				$this->datetime = $date;
-				$this->merge(array_combine($this->keys, $values))->save();
-
-			} //end foreach 
+				// Only store if there's at least one value > 0
+				if(array_sum($values))
+				{
+					$this->id = 0;
+					$this->datetime = $date;
+					$this->merge(array_combine($this->keys, $values))->save();
+				}
+			} //end foreach
 		}
 		catch(Exception $e)
 		{
 			echo 'Failed to decode data';
 		}
-		
+
 	}
 
 }

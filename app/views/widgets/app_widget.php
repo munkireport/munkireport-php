@@ -9,7 +9,7 @@ foreach ($appsToCheck as $string) {
     $appsToChecksql[] = "SELECT i.version, COUNT(i.version) as count
     FROM inventoryitem i
     LEFT JOIN reportdata m ON (m.serial_number = i.serial)
-    WHERE i.name = '$string'
+    WHERE i.name LIKE '$string'
     $group_filter
     GROUP BY i.version
     ORDER BY count DESC";

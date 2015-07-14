@@ -14,15 +14,14 @@
     
     <?php $this->view('widgets/pending_munki_widget'); ?>
 
+  </div>
+  <div class="row">
+
+    <?php $this->view('widgets/pending_widget'); ?>
+
     <?php $this->view('widgets/manifests_widget'); ?>
     
     <?php $this->view('widgets/munki_versions_widget'); ?>
-
-  </div> <!-- /row -->
-
-  <div class="row">
-
-    
 
   </div> <!-- /row -->
 

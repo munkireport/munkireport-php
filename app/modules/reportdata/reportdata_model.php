@@ -1,7 +1,7 @@
 <?php
 
 class Reportdata_model extends Model {
-    
+
     function __construct($serial='')
     {
         parent::__construct('id','reportdata'); //primary key, tablename
@@ -25,18 +25,18 @@ class Reportdata_model extends Model {
         $this->idx[] = array('remote_ip');
         $this->idx[] = array('reg_timestamp');
         $this->idx[] = array('timestamp');
-		$this->idx[] = array('machine_group');	
+		$this->idx[] = array('machine_group');
 
-				
+
 		// Create table if it does not exist
         $this->create_table();
-        
+
         if($serial)
         {
             $this->retrieve_record($serial);
             $this->serial_number = $serial;
         }
-        
+
         return $this;
     }
 
@@ -57,11 +57,23 @@ class Reportdata_model extends Model {
 		{
 			$this->remote_ip = $_SERVER['REMOTE_ADDR'];
 		}
-		
+
 		$this->timestamp = time();
 
 		return $this;
 	}
+
+  /**
+   * Reset Machine Group attribute
+   *
+   * @param integer $groupid groupid to reset
+   **/
+  public function reset_group($groupid=0)
+  {
+    $sql = 'UPDATE reportdata SET machine_group = 0 WHERE machine_group = ?';
+    $stmt = $this->prepare( $sql );
+		$this->execute( $stmt, array($groupid) );
+  }
 
 	/**
 	 * Get machine_groups
@@ -79,9 +91,9 @@ class Reportdata_model extends Model {
 		{
 			$out = array(0 => 0);
 		}
-		
-		$sql = "SELECT machine_group, COUNT(*) AS cnt 
-				FROM reportdata 
+
+		$sql = "SELECT machine_group, COUNT(*) AS cnt
+				FROM reportdata
 				GROUP BY machine_group";
 		foreach($this->query($sql) AS $obj)
 		{
@@ -95,7 +107,7 @@ class Reportdata_model extends Model {
 			{
 				$out[$obj->machine_group] = $obj->machine_group;
 			}
-			
+
 		}
 
 		return $out;
@@ -107,7 +119,7 @@ class Reportdata_model extends Model {
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
-		
+
 		// Remove serial_number from mylist, use the cleaned serial that was provided in the constructor.
 		unset($mylist['serial_number']);
 
@@ -122,7 +134,7 @@ class Reportdata_model extends Model {
 		{
 			unset($mylist['long_username']);
 		}
-		
+
 		$this->merge($mylist)->register()->save();
 	}
 
