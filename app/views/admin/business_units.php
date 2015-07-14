@@ -109,6 +109,10 @@
 
 			$('#myModal').modal('show');
 		},
+    updateSession = function(){
+      // Update session (for filtering, etc.)
+      $.getJSON( appUrl + '/auth/set_session_props');
+    },
 		getGroup = function(groupid, what){ // get group from machineGroups
 
 			var groupObj = {groupid: groupid, name: 'Group ' + groupid};
@@ -190,6 +194,9 @@
 
 							// Dismiss modal
 							$('#myModal').modal('hide');
+
+              // Update Session vars
+              updateSession();
 						}
 					});
 
@@ -244,6 +251,10 @@
 
 					// Dismiss modal
 					$('#myModal').modal('hide');
+
+          // Update Session vars
+          updateSession();
+
 				})
 			}
 
