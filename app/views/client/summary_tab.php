@@ -10,7 +10,7 @@
 					<span class="label label-info"><span class="mr-serial_number"></span></span><br>
 					<span class="label label-info"><span class="mr-remote_ip"></span></span><br>
 				</div>
-			</div>			
+			</div>
 			<span class="mr-machine_desc"></span>
 		</div>
 		<div class="col-lg-4">
@@ -36,16 +36,16 @@
 			<table>
 				<tr>
 					<th data-i18n="storage.size"></th><td class="mr-TotalSize"></td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="storage.used"></th><td class="mr-UsedSize"></td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="storage.free"></th><td class="mr-FreeSpace"></td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="storage.smartstatus"></th><td class="mr-SMARTStatus"></td>
-				</tr>	
+				</tr>
 			</table>
 		</div>
 
@@ -58,16 +58,16 @@
 			<table>
 				<tr>
 					<th data-i18n="serial"></th><td class="mr-serial_number"></td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="cpu.cpu"></th><td class="mr-cpu"></td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="cpu.type"></th><td><span class="mr-number_processors"></span> <span data-i18n="cpu.core"></span></td>
 				</tr>
 				<tr>
 					<th data-i18n="memory.memory"></th><td><span class="mr-physical_memory"></span> GB</td>
-				</tr>				
+				</tr>
 				<tr>
 					<th data-i18n="hardware.uuid"></th><td class="mr-platform_UUID"></td>
 				</tr>
@@ -109,10 +109,10 @@
 			<table>
 				<tr>
 					<th data-i18n="warranty.coverage"></th><td class="mr-warranty_status"></td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="warranty.est_manufacture_date"></th><td class="mr-manufacture_date"></td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="warranty.est_purchase_date"></th><td class="mr-purchase_date"></td>
 				</tr>
@@ -124,10 +124,10 @@
 			<table>
 				<tr>
 					<th data-i18n="network.remote_ip"></th><td class="mr-remote_ip"></td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="network.hostname"></th><td class="mr-hostname"></td>
-				</tr>	
+				</tr>
 				</tr>
 			</table>
 		</div>
@@ -138,10 +138,10 @@
 				<tr>
 					<th data-i18n="last_user"></th><td><span class="mr-long_username"></span>
 				(<span class="mr-console_user"></span>)</td>
-				</tr>	
+				</tr>
 				<tr>
 					<th data-i18n="user.local_admin"></th><td class="mr-users"></td>
-				</tr>	
+				</tr>
 				</tr>
 			</table>
 		</div>
@@ -159,6 +159,12 @@
 		<div class="col-lg-4">
 			<h4><i class="fa fa-keyboard-o fa-fixed"></i> <span data-i18n="bluetooth.bluetooth"></span></h4>
 			<table class="mr-bluetooth-table">
+			</table>
+		</div>
+
+		<div class="col-lg-4">
+			<h4><i class="fa fa-comment-o fa-fixed"></i> <span data-i18n="client.comment"></span></h4>
+			<div class="comment" data-section="client"></div>
 			</table>
 		</div>
 

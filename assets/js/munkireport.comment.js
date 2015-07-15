@@ -25,7 +25,7 @@ $(document).on('appReady', function(e, lang) {
 
 					// Get formdata
 					var formData = $('#myModal form').serializeArray();
-					
+
 					// Save comment
 					var jqxhr = $.post( appUrl + "/module/comment/save", formData);
 
@@ -74,7 +74,7 @@ $(document).on('appReady', function(e, lang) {
 					autofocus:false,
 					savable:false,
 					iconlibrary: 'fa',
-					fullscreen:{enable:true},
+					fullscreen:{enable:false},
 					onShow: function(e){
 						// Store a reference to the editor
 						editor = e;
@@ -117,7 +117,7 @@ $(document).on('appReady', function(e, lang) {
 						.click(addComment)
 						.text('Edit'))
 			});
-			
+
 		});
 
 });
