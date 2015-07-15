@@ -76,6 +76,7 @@
 		"from_cache": "Aus dem Cache"
 	},
 	"client": {
+		"comment": "Kommentar",
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",
