@@ -18,6 +18,7 @@ ERR=0
 # Packaging
 BUILDPKG=0
 IDENTIFIER="com.github.munkireport"
+RESULT=""
 
 VERSION="<?php echo get_version(); ?>"
 
@@ -36,6 +37,7 @@ Usage: ${PROG} [OPTIONS]
   -i PATH   Create a full installer at PATH
   -c ID     Change pkg id to ID
   -h        Display this help message
+	-r PATH   Path to installer result plist
   -v VERS   Override version number
 
 Example:
@@ -73,7 +75,7 @@ function resetreportpref {
 	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write ${PREFPATH} ReportItems -dict" )
 }
 
-while getopts b:m:p:c:v:i:nh flag; do
+while getopts b:m:p:r:c:v:i:nh flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -83,6 +85,9 @@ while getopts b:m:p:c:v:i:nh flag; do
 			;;
 		p)
 			PREFPATH="$OPTARG"
+			;;
+		r)
+			RESULT="$OPTARG"
 			;;
 		c)
 			IDENTIFIER="$OPTARG"
@@ -164,7 +169,7 @@ resetreportpref
 # Include module scripts
 <?php foreach($install_scripts AS $scriptname => $filepath): ?>
 
-<?php echo "## $scriptname ##"; ?> 
+<?php echo "## $scriptname ##"; ?>
 echo '+ Installing <?php echo $scriptname; ?>'
 
 <?php echo file_get_contents($filepath); ?>
@@ -182,7 +187,7 @@ read -r -d '' UNINSTALLS << EOF
 
 <?php foreach($uninstall_scripts AS $scriptname => $filepath): ?>
 
-<?php echo "## $scriptname ##"; ?> 
+<?php echo "## $scriptname ##"; ?>
 echo '- Uninstalling <?php echo $scriptname; ?>'
 
 <?php echo file_get_contents($filepath); ?>
@@ -207,11 +212,11 @@ fi
 if [ $ERR = 0 ]; then
 
 	if [ $BUILDPKG = 1 ]; then
-		
+
 		# Create scripts directory
 		SCRIPTDIR="$INSTALLTEMP"/scripts
 		mkdir -p "$SCRIPTDIR"
-		
+
 		# Add uninstall script to preinstall
 		echo  "#!/bin/bash" > $SCRIPTDIR/preinstall
 		echo  "$UNINSTALLS" >> $SCRIPTDIR/preinstall
@@ -232,11 +237,16 @@ if [ $ERR = 0 ]; then
 				 --scripts "$SCRIPTDIR" \
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
+		if [[ $RESULT ]]; then
+			defaults write $RESULT version ${VERSION}
+			defaults write $RESULT pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
+		fi
+
 	else
 
 		# Set preferences
 		echo "Setting preferences"
-		for i in "${PREF_CMDS[@]}"; do 
+		for i in "${PREF_CMDS[@]}"; do
 			eval $i
 		done
 
@@ -250,7 +260,7 @@ if [ $ERR = 0 ]; then
 		fi
 
 	fi
-	
+
 else
 	echo "! Installation of MunkiReport v${VERSION} incomplete."
 fi
