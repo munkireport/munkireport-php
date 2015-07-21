@@ -22,9 +22,9 @@ import os
 
 # Skip manual check
 if len(sys.argv) > 1:
-	if sys.argv[1] == 'manualcheck':
-		print 'Manual check: skipping'
-		exit(0)
+    if sys.argv[1] == 'manualcheck':
+        print 'Manual check: skipping'
+        exit(0)
 
 # Round to .5GB precision (29 bit)
 def _HalfGB(size):
@@ -47,6 +47,17 @@ def _DictFromDiskutilInfo(deviceid):
     command = ["/usr/sbin/diskutil", "info", "-plist", deviceid]
     return _DictFromSubprocess(command)
 
+def _DictFromDiskutilCsInfo(deviceid):
+    """calls diskutil cs info for a specific device id.
+
+    Args:
+        deviceid: a given device id for a disk like object
+    Returns:
+        info: dictionary from resulting plist output
+    """
+    command = ["/usr/sbin/diskutil", "cs", "info", "-plist", deviceid]
+    return _DictFromSubprocess(command)
+
 def filteredDiskInfo(deviceid):
     """ Returns a filtered dictionary """
 
@@ -54,8 +65,8 @@ def filteredDiskInfo(deviceid):
 
     keys = ["BusProtocol", "Content", "CoreStorageCompositeDisk",
             "CoreStorageEncrypted", "CoreStorageLVGUUID", "Ejectable",
-            "FreeSpace", "Internal",  "MountPoint", "RAIDMaster", 
-            "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus", 
+            "FreeSpace", "Internal",  "MountPoint", "RAIDMaster",
+            "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus",
             "SolidState", "TotalSize", "VolumeName"]
 
     out = {}
@@ -68,10 +79,10 @@ def filteredDiskInfo(deviceid):
 
     # Set sizes to string with .5GB precision
     if getattr(out, 'TotalSize', None):
-	    out['TotalSize'] = str(_HalfGB(out['TotalSize']));
+        out['TotalSize'] = str(_HalfGB(out['TotalSize']));
 
     if getattr(out, 'FreeSpace', None):
-	    out['FreeSpace'] = str(_HalfGB(out['FreeSpace']));
+        out['FreeSpace'] = str(_HalfGB(out['FreeSpace']));
 
     return out
 
@@ -116,6 +127,7 @@ def DiskReport():
     volumeList = []
     coreStorageDict = {}
     appleRaidDict = {}
+    searchCS = False
 
     for disk in AllDisksAndPartitions():
 
@@ -131,7 +143,17 @@ def DiskReport():
 
                 elif partition.Content == 'Apple_CoreStorage':
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
-                    coreStorageDict[diskInfo['CoreStorageLVGUUID']] = diskInfo
+                    if diskInfo.get('CoreStorageLVGUUID'):
+                        coreStorageDict[diskInfo['CoreStorageLVGUUID']] = diskInfo
+                    else:
+                        # get CoreStorageLVGUUID 
+                        searchCS = True
+                        csInfo = _DictFromDiskutilCsInfo(partition.DeviceIdentifier)
+                        if csInfo.get('MemberOfCoreStorageLogicalVolumeGroup'):
+                            coreStorageDict[csInfo['MemberOfCoreStorageLogicalVolumeGroup']] = diskInfo
+                        else:
+                            raise Exception("No CS info found for %s" % partition.DeviceIdentifier)
+
 
                 elif partition.Content == 'Apple_RAID':
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
@@ -149,6 +171,15 @@ def DiskReport():
                     # Update SMART status from Physical Volume
                     pv = coreStorageDict[diskInfo['CoreStorageLVGUUID']]
                     diskInfo.update({'SMARTStatus': pv['SMARTStatus']})
+
+                if searchCS:
+                    csInfo = _DictFromDiskutilCsInfo(disk.DeviceIdentifier)
+                    if csInfo.get('MemberOfCoreStorageLogicalVolumeGroup'):
+                        pv = coreStorageDict[csInfo['MemberOfCoreStorageLogicalVolumeGroup']]
+                        diskInfo.update({'SMARTStatus': pv['SMARTStatus']})
+                    else:
+                        raise Exception("No CS info found for %s" % disk.DeviceIdentifier)
+
 
                 if diskInfo.get('RAIDSetMembers', 0):
                     # Update SMART status from RAID members
