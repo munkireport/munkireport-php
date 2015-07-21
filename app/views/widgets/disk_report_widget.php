@@ -11,17 +11,17 @@
 				<div class="panel-body text-center">
 
 
-					<a id="disk-success" href="<?php echo url('show/listing/disk#'.rawurlencode('freespace > 10GB')); ?>" class="btn btn-success hide">
+					<a id="disk-danger" href="<?php echo url('show/listing/disk#'.rawurlencode('freespace < 5GB')); ?>" class="btn btn-danger hide">
 						<span class="bigger-150"></span><br>
-						10GB +
+						&lt; 5GB
 					</a>
 					<a id="disk-warning" href="<?php echo url('show/listing/disk#'.rawurlencode('5GB freespace 10GB')); ?>" class="btn btn-warning hide">
 						<span class="bigger-150"></span><br>
 						&lt; 10GB
 					</a>
-					<a id="disk-danger" href="<?php echo url('show/listing/disk#'.rawurlencode('freespace < 5GB')); ?>" class="btn btn-danger hide">
+					<a id="disk-success" href="<?php echo url('show/listing/disk#'.rawurlencode('freespace > 10GB')); ?>" class="btn btn-success hide">
 						<span class="bigger-150"></span><br>
-						&lt; 5GB
+						10GB +
 					</a>
 
                     <span id="disk-nodata" data-i18n="no_clients"></span>
