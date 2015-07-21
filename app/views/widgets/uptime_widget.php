@@ -48,7 +48,7 @@
 						<span class="bigger-150"> <?php echo $in_green; ?> </span><br>
 						< 1 Day
 					</a>
-					
+	
 				</div>
 
 			</div><!-- /panel -->
