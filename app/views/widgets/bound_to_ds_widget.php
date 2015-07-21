@@ -20,13 +20,13 @@
 				$obj = current($queryobj->query($sql));
 				?>
 				<?php if($obj): ?>
-				<a href="<?php echo url('show/listing/directoryservice'); ?>" class="btn btn-success">
-					<span class="bigger-150"> <?php echo $obj->arebound; ?> </span><br>
-					<span data-i18n="widget.bound_to_ds.bound"></span>
-				</a>
 				<a href="<?php echo url('show/listing/directoryservice'); ?>" class="btn btn-danger">
 					<span class="bigger-150"> <?php echo $obj->total - $obj->arebound; ?> </span><br>
 					<span data-i18n="widget.bound_to_ds.notbound"></span>
+				</a>
+				<a href="<?php echo url('show/listing/directoryservice'); ?>" class="btn btn-success">
+					<span class="bigger-150"> <?php echo $obj->arebound; ?> </span><br>
+					<span data-i18n="widget.bound_to_ds.bound"></span>
 				</a>
 				<?php endif; ?>
 
