@@ -164,6 +164,8 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					cls = 'text-danger';
 					msg = i18n.t("warranty.expired", {date:machineData.end_date});
 					break;
+				default:
+					msg = machineData.status;
 			}
 
 
