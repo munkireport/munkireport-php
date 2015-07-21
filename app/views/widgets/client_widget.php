@@ -76,21 +76,21 @@ $obj = current($queryobj->query($sql));
 
 					
                                 <?php if($obj): ?>
-                                        <a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-danger">
-                                                <span class="bigger-150"> <?php echo $obj->inactive_three_month; ?> </span>
-                                                <br>
-                                                3 months +
-                                        </a>
-                                        <a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-warning">
-                                                <span class="bigger-150"> <?php echo $obj->inactive_month; ?> </span>
-                                                <br>
-                                                Last mo
-                                        </a>
-                                        <a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
-                                                <span class="bigger-150"> <?php echo $obj->inactive_week; ?> </span>
-                                                <br>
-                                                Last wk
-                                        </a>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-danger">
+						<span class="bigger-150"> <?php echo $obj->inactive_three_month; ?> </span>
+						<br>
+						3 months +
+					</a>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-warning">
+						<span class="bigger-150"> <?php echo $obj->inactive_month; ?> </span>
+						<br>
+						Last mo
+					</a>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
+						<span class="bigger-150"> <?php echo $obj->inactive_week; ?> </span>
+						<br>
+						Last wk
+					</a>
 					
 				<?php endif; ?>
 
