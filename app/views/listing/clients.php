@@ -23,8 +23,9 @@ new Munkireport_model;
 			<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
 			<th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
 			<th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-			<th data-colname='machine#os_version'>OS</th>
-			<th data-colname='machine#machine_name'>Type</th>
+      <th data-colname='machine#os_version'>OS</th>
+			<th data-i18n="buildversion" data-colname='machine#buildversion'>Type</th>
+      <th data-colname='machine#machine_name'>Type</th>
 			<th data-colname='warranty#status'>Warranty status</th>
 			<th data-colname='reportdata#uptime'>Uptime</th>
 			<th data-colname='reportdata#timestamp'>Check-in</th>
@@ -75,22 +76,22 @@ new Munkireport_model;
 				$('td:eq(0)', nRow).html(link);
 
 				// Format date
-				var checkin = parseInt($('td:eq(7)', nRow).html());
+				var checkin = parseInt($('td:eq(8)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(7)', nRow).html(moment(date).fromNow());
+				$('td:eq(8)', nRow).html(moment(date).fromNow());
 
 				// Format OS Version
 				var osvers = integer_to_version($('td:eq(3)', nRow).html());
 				$('td:eq(3)', nRow).html(osvers);
 
 				// Format uptime
-				var uptime = parseInt($('td:eq(6)', nRow).html());
+				var uptime = parseInt($('td:eq(7)', nRow).html());
 				if(uptime == 0) {
-				  $('td:eq(6)', nRow).html('')
+				  $('td:eq(7)', nRow).html('')
 				}
 				else
 				{
-				  $('td:eq(6)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
+				  $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
 				}
 			},
 			"fnServerParams": function ( aoData ) {
@@ -102,7 +103,7 @@ new Munkireport_model;
 					out[aoData[i]['name']] =  aoData[i]['value']
 				}
 
-				// Look for 'osversion' statement 
+				// Look for 'osversion' statement
 				if(out.sSearch.match(/^\d+\.\d+(\.(\d+)?)?$/))
 				{
 
@@ -112,7 +113,7 @@ new Munkireport_model;
 					aoData.push( { "name": "sSearch", "value": search } );
 
 				}
-			}			    
+			}
 		});
 	});
 </script>

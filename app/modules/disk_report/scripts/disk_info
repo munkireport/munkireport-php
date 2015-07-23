@@ -78,10 +78,10 @@ def filteredDiskInfo(deviceid):
             pass
 
     # Set sizes to string with .5GB precision
-    if getattr(out, 'TotalSize', None):
+    if out.get('TotalSize'):
         out['TotalSize'] = str(_HalfGB(out['TotalSize']));
 
-    if getattr(out, 'FreeSpace', None):
+    if out.get('FreeSpace'):
         out['FreeSpace'] = str(_HalfGB(out['FreeSpace']));
 
     return out
@@ -146,7 +146,7 @@ def DiskReport():
                     if diskInfo.get('CoreStorageLVGUUID'):
                         coreStorageDict[diskInfo['CoreStorageLVGUUID']] = diskInfo
                     else:
-                        # get CoreStorageLVGUUID 
+                        # get CoreStorageLVGUUID
                         searchCS = True
                         csInfo = _DictFromDiskutilCsInfo(partition.DeviceIdentifier)
                         if csInfo.get('MemberOfCoreStorageLogicalVolumeGroup'):

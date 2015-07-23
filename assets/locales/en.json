@@ -73,6 +73,7 @@
 		"managers": "Managers",
 		"users": "Users"
 	},
+	"buildversion": "Build Version",
 	"caching": {
 		"bytes_served": "Caching – Bytes Served",
 		"from_origin": "From Origin",
