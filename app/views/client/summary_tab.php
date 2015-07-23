@@ -84,6 +84,9 @@
 					<th data-i18n="os.version"></th><td>OS X <span class="mr-os_version"></span></td>
 				</tr>
 				<tr>
+					<th data-i18n="buildversion"></th><td class="mr-buildversion"></td>
+				</tr>
+				<tr>
 					<th data-i18n="cpu.arch"></th><td class="mr-cpu_arch"></td>
 				</tr>
 				<tr>
