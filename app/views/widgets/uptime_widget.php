@@ -36,21 +36,19 @@
 
 					?>
 
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-success">
-						<span class="bigger-150"> <?php echo $in_green; ?> </span><br>
-						< 1 Day
-					</a>
-
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-warning">
-						<span class="bigger-150"> <?php echo $in_yellow; ?> </span><br>
-						< 7 Days
-					</a>
-
 					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-danger">
 						<span class="bigger-150"> <?php echo $in_red; ?> </span><br>
 						7 Days +
 					</a>
-
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-warning">
+						<span class="bigger-150"> <?php echo $in_yellow; ?> </span><br>
+						< 7 Days
+					</a>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-success">
+						<span class="bigger-150"> <?php echo $in_green; ?> </span><br>
+						< 1 Day
+					</a>
+	
 				</div>
 
 			</div><!-- /panel -->
