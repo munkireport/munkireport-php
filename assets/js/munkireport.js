@@ -3,7 +3,7 @@
 $( document ).ready(function() {
     $.i18n.init({
         debug: munkireport.debug,
-        useLocalStorage: ! munkireport.debug,
+        useLocalStorage: false,
         resGetPath: munkireport.subdirectory + "assets/locales/__lng__.json",
         fallbackLng: 'en',
         useDataAttrOptions: true
