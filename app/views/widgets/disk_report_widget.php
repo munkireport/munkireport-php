@@ -5,26 +5,26 @@
 				<div class="panel-heading">
 
 					<h3 class="panel-title"><i class="fa fa-hdd-o"></i> <span data-i18n="free_disk_space">Free Disk Space</span></h3>
-				
+
 				</div>
 
 				<div class="panel-body text-center">
 
 
-					<a id="disk-danger" href="<?php echo url('show/listing/disk#'.rawurlencode('freespace < 5GB')); ?>" class="btn btn-danger hide">
-						<span class="bigger-150"></span><br>
-						&lt; 5GB
+					<a id="disk-danger" class="btn btn-danger hide">
+						<span class="disk-count bigger-150"></span><br>
+						<span class="disk-label"></span>
 					</a>
-					<a id="disk-warning" href="<?php echo url('show/listing/disk#'.rawurlencode('5GB freespace 10GB')); ?>" class="btn btn-warning hide">
-						<span class="bigger-150"></span><br>
-						&lt; 10GB
+					<a id="disk-warning" class="btn btn-warning hide">
+						<span class="disk-count bigger-150"></span><br>
+						<span class="disk-label"></span>
 					</a>
-					<a id="disk-success" href="<?php echo url('show/listing/disk#'.rawurlencode('freespace > 10GB')); ?>" class="btn btn-success hide">
-						<span class="bigger-150"></span><br>
-						10GB +
+					<a id="disk-success" class="btn btn-success hide">
+						<span class="disk-count bigger-150"></span><br>
+						<span class="disk-label"></span>
 					</a>
 
-                    <span id="disk-nodata" data-i18n="no_clients"></span>
+          <span id="disk-nodata" data-i18n="no_clients"></span>
 
 				</div>
 
@@ -42,14 +42,31 @@ $(document).on('appReady appUpdate', function(e, lang) {
     		return;
     	}
 
+			// Get limits
+			var dangerThreshold = data.thresholds.danger+'GB',
+					warningThreshhold = data.thresholds.warning+'GB',
+					url = appUrl + '/show/listing/disk#'
+
+			// Set urls
+			$('#disk-danger').attr('href', url + encodeURIComponent('freespace < '+dangerThreshold))
+			$('#disk-warning').attr('href', url + encodeURIComponent(dangerThreshold+' freespace '+warningThreshhold))
+			$('#disk-success').attr('href', url + encodeURIComponent('freespace > '+warningThreshhold))
+
+			// Set labels
+			$('#disk-danger span.disk-label').text('< '+dangerThreshold)
+			$('#disk-warning span.disk-label').text('< '+warningThreshhold)
+			$('#disk-success span.disk-label').text(warningThreshhold+' +')
+
+			// encodeURIComponent
+
         // Show no clients span
         $('#disk-nodata').removeClass('hide');
 
-        $.each(data, function(prop, val){
+        $.each(data.stats, function(prop, val){
             if(val > 0)
             {
                 $('#disk-' + prop).removeClass('hide');
-                $('#disk-' + prop + '>span').text(val);
+                $('#disk-' + prop + '>span.disk-count').text(val);
 
                 // Hide no clients span
                 $('#disk-nodata').addClass('hide');
