@@ -13,7 +13,7 @@ class Disk_report_model extends Model {
 		$this->rs['VolumeType'] = '';
 		$this->rs['BusProtocol'] = '';
 		$this->rs['Internal'] = 0; // Boolean
-		$this->rs['MountPoint'] = ''; 
+		$this->rs['MountPoint'] = '';
 		$this->rs['VolumeName'] = '';
 		$this->rs['CoreStorageEncrypted'] = 0; //Boolean
 		$this->rs['timestamp'] = 0;
@@ -25,30 +25,34 @@ class Disk_report_model extends Model {
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 2;
-		
+
 		// Create table if it does not exist
 		$this->create_table();
-				  
+
 	}
 
 	/**
 	 * Get statistics
 	 *
 	 * @return array
-	 * @author 
+	 * @author
 	 **/
-	function get_stats($mountpoint = '/')
+	function get_stats($mountpoint = '/', $level1 = 5, $level2 = 10)
 	{
-		$sql = "SELECT COUNT(CASE WHEN FreeSpace > 10737418239 THEN 1 END) AS success,
-						COUNT(CASE WHEN FreeSpace < 10737418240 THEN 1 END) AS warning,
-						COUNT(CASE WHEN FreeSpace < 5368709120 THEN 1 END) AS danger 
+		// Convert to GB
+		$level1 = $level1 . '000000000';
+		$level2 = $level2 . '000000000';
+		$level2_minus_one = $level2 - 1;
+		$sql = "SELECT COUNT(CASE WHEN FreeSpace > $level2_minus_one THEN 1 END) AS success,
+						COUNT(CASE WHEN FreeSpace < $level2 THEN 1 END) AS warning,
+						COUNT(CASE WHEN FreeSpace < $level1 THEN 1 END) AS danger
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
 						WHERE MountPoint = '$mountpoint'
 						".get_machine_group_filter('AND');
 		return current($this->query($sql));
 	}
-	
+
 	// ------------------------------------------------------------------------
 
 	/**
@@ -58,7 +62,7 @@ class Disk_report_model extends Model {
 	 * @author abn290
 	 **/
 	function process($plist)
-	{		
+	{
 
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
@@ -85,7 +89,7 @@ class Disk_report_model extends Model {
 		{
 			// Reset values
 			$this->rs = $empty;
-			
+
 			// Calculate percentage
 			if(isset($disk['TotalSize']) && isset($disk['FreeSpace']))
 			{
