@@ -7,7 +7,6 @@ import subprocess
 import pwd
 import sys
 import urllib
-import urllib2
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
 from Foundation import CFPreferencesAppSynchronize
 from Foundation import CFPreferencesCopyAppValue
@@ -20,52 +19,6 @@ import ctypes
 import struct
 import time
 import os
-
-# Check for ssl module
-# this will disable the TLS fix on 10.5 and below
-try:
-    import ssl
-    import httplib
-    import socket
-    TLS = True
-except ImportError:
-    TLS = False
-
-class TLS1Connection(httplib.HTTPSConnection):
-    """Like HTTPSConnection but more specific"""
-    def __init__(self, host, **kwargs):
-        httplib.HTTPSConnection.__init__(self, host, **kwargs)
-
-    def connect(self):
-        """Overrides HTTPSConnection.connect to specify TLS version"""
-        # Standard implementation from HTTPSConnection, which is not
-        # designed for extension, unfortunately
-        if getattr(self, 'source_address', None):
-            sock = socket.create_connection((self.host, self.port),
-                    self.timeout, self.source_address)
-        else:
-            # Python 2.6 does not use source_address
-            sock = socket.create_connection((self.host, self.port),
-                    self.timeout)
-        if getattr(self, '_tunnel_host', None):
-            self.sock = sock
-            self._tunnel()
-
-        # This is the only difference; default wrap_socket uses SSLv23
-        self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file,
-                ssl_version=ssl.PROTOCOL_TLSv1)
-
-class TLS1Handler(urllib2.HTTPSHandler):
-    """Like HTTPSHandler but more specific"""
-    def __init__(self):
-        urllib2.HTTPSHandler.__init__(self)
-
-    def https_open(self, req):
-        return self.do_open(TLS1Connection, req)
-
-if TLS is True:
-    # Override default handler
-    urllib2.install_opener(urllib2.build_opener(TLS1Handler()))
 
 # our preferences "bundle_id"
 BUNDLE_ID = 'MunkiReport'
@@ -95,25 +48,71 @@ def display_detail(msg, *args):
     munkicommon.display_detail('Munkireport: %s' % msg, *args)
 
 def curl(url, values):
-    req = urllib2.Request(url, urllib.urlencode(values))
-    try:
-        response = urllib2.urlopen(req)
-    except urllib2.URLError, e:
-        display_error(url)
-        if hasattr(e, 'reason'):
-            display_error('We failed to reach a server')
-            display_error('Reason: %s' % e.reason)
-        elif hasattr(e, 'code'):
-            display_error('The server couldn\'t fulfill the request.')
-            display_error('Error code: %s' % e.code)
+
+    curl_cmd = ['/usr/bin/curl',
+                '--silent', '--show-error', '--no-buffer',
+                '--dump-header', '-',
+                '--speed-time', '30',
+                '--url', url,
+                '--data', '@-']
+    proc = subprocess.Popen(curl_cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # Send values via stdin
+    proc.stdin.write(urllib.urlencode(values))
+    proc.stdin.close()
+    display_detail('Sent request to %s' % url)
+
+    donewithheaders = False
+    maxheaders = 15
+    header = {}
+    output = ''
+    while True:
+        if not donewithheaders:
+            info = proc.stdout.readline().strip('\r\n')
+            if info.startswith('HTTP/'):
+                header['http_result_code'] = info.split(None, 2)[1]
+                header['http_result_description'] = info.split(None, 2)[2]
+            elif ': ' in info:
+                # got a header line
+                part = info.split(None, 1)
+                fieldname = part[0].rstrip(':').lower()
+                header[fieldname] = part[1]
+            elif info == '':
+                # we got an empty line; end of headers (or curl exited)
+                donewithheaders = True
         else:
-            display_error('Miscellaneous server error.')
-        # Reportserver error, exit clean so munki keeps running
-        exit(0)
-    except:
-        display_error('A server error occurred: %s' % sys.exc_info()[0])
-        exit(0)
-    return response
+            output = output + proc.stdout.readline()
+            time.sleep(0.1)
+
+        if proc.poll() != None:
+            # For small download files curl may exit before all headers
+            # have been parsed, don't immediately exit.
+            maxheaders -= 1
+            if donewithheaders or maxheaders <= 0:
+                break
+
+    retcode = proc.poll()
+    if retcode:
+        curlerr = ''
+        try:
+            curlerr = proc.stderr.read().rstrip('\n')
+            curlerr = curlerr.split(None, 2)[2]
+        except IndexError:
+            pass
+        if retcode == 22:
+            # 22 means any 400 series return code. Note: header seems not to
+            # be dumped to STDOUT for immediate failures. Hence
+            # http_result_code is likely blank/000. Read it from stderr.
+            if re.search(r'URL returned error: [0-9]+$', curlerr):
+                header['http_result_code'] = curlerr[curlerr.rfind(' ')+1:]
+        if curlerr:
+            display_error(curlerr)
+            exit(0)
+    return output
+    #except:
+    #    display_error('A server error occurred: %s' % sys.exc_info()[0])
+    #    exit(0)
 
 def get_long_username(username):
     try:
@@ -229,8 +228,8 @@ def process(serial, items):
     values = {'serial': serial,\
              'items': serialize(check),\
              'passphrase' : passphrase}
-    response = curl(hashurl, values)
-    server_data = response.read()
+    server_data = curl(hashurl, values)
+    # = response.read()
 
     # Decode response
     try:
@@ -263,7 +262,7 @@ def process(serial, items):
         response = curl(checkurl, {'serial': serial,\
              'items': serialize(items),\
              'passphrase': passphrase})
-        display_detail(response.read())
+        display_detail(response)
     else:
         display_detail('No changes')
 
