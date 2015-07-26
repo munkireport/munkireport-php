@@ -15,8 +15,7 @@ from Foundation import CFPreferencesSetValue
 from Foundation import kCFPreferencesAnyUser
 from Foundation import kCFPreferencesCurrentUser
 from Foundation import kCFPreferencesCurrentHost
-import ctypes
-import struct
+import re
 import time
 import os
 
@@ -366,7 +365,9 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
 
             except utils.ScriptNotFoundError:
                 pass  # Script has disappeared - pass.
-            except utils.RunExternalScriptError, e:
-                display_warning(str(e))
+            except Exception, e:
+                display_warning("%s: %s" % (script, str(e)))
+
+
 
 # End of reportcommon
