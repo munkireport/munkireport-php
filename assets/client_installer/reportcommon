@@ -22,6 +22,11 @@ import os
 # our preferences "bundle_id"
 BUNDLE_ID = 'MunkiReport'
 
+class CurlError(Exception):
+    def __init__(self, status, message):
+        display_error(message)
+        exit(0)
+
 def set_verbosity(level):
     """
     Set verbosity level
@@ -48,12 +53,42 @@ def display_detail(msg, *args):
 
 def curl(url, values):
 
-    curl_cmd = ['/usr/bin/curl',
+    curl_path = pref('CurlPath') or '/usr/bin/curl'
+    curl_cmd = [curl_path,
                 '--silent', '--show-error', '--no-buffer',
                 '--dump-header', '-',
                 '--speed-time', '30',
                 '--url', url,
                 '--data', '@-']
+
+    # Add (optional) Certificate info
+    cert_info = pref('CertInfo')
+    if cert_info:
+        cacert = cert_info.get('cacert')
+        capath = cert_info.get('capath')
+        cert = cert_info.get('cert')
+        key = cert_info.get('key')
+        if cacert:
+            if not os.path.isfile(cacert):
+                raise CurlError(-1, 'No CA cert at %s' % cacert)
+            curl_cmd.append('cacert')
+            curl_cmd.append(cacert)
+        if capath:
+            if not os.path.isdir(capath):
+                raise CurlError(-2, 'No CA directory at %s' % capath)
+            curl_cmd.append('capath')
+            curl_cmd.append(capath)
+        if cert:
+            if not os.path.isfile(cert):
+                raise CurlError(-3, 'No client cert at %s' % cert)
+            curl_cmd.append('cert')
+            curl_cmd.append(cert)
+        if key:
+            if not os.path.isfile(key):
+                raise CurlError(-4, 'No client key at %s' % key)
+            curl_cmd.append('key')
+            curl_cmd.append(key)
+
     proc = subprocess.Popen(curl_cmd, shell=False, bufsize=-1,
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
