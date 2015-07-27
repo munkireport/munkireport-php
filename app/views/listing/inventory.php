@@ -1,4 +1,4 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
 <div class="container">
 
@@ -9,8 +9,9 @@
 
 
 <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
+    $(document).on('appReady', function(e, lang) {
         $('.table').dataTable({
+            "bServerSide": false,
             "aaSorting": [[0,'asc']],
             "fnDrawCallback": function( oSettings ) {
 				$('#inv-count').html(oSettings.fnRecordsTotal());
@@ -27,39 +28,39 @@
     </tr>
   </thead>
   <tbody>
-  	<?	$inventory_item_obj = new Inventory_model();
-	$items = $inventory_item_obj->select('name, version, COUNT(id) AS num_installs', '1 GROUP BY name, version');
-
+  	<?php $inventory_item_obj = new Inventory_model();
+	$items = $inventory_item_obj->select_all();
+  
 	$inventory = array();
 	foreach($items as $item)
 	{
-		$name = $item['name'];
-		$version = $item['version'];
-		$installs = $item['num_installs'];
+		$name = $item->name;
+		$version = $item->version;
+		$installs = $item->num_installs;
 
 		$inventory[$name][$version] = $installs;
 	}
 ?>
-    <?foreach($inventory as $name => $value):?>
+    <?php foreach($inventory as $name => $value): ?>
     <?php $name_url=url('module/inventory/items/'. rawurlencode($name)); ?>
     <tr>
       <td>
-        <a href='<?=$name_url?>'><?=$name?></a>
+        <a href='<?php echo $name_url; ?>'><?php echo $name; ?></a>
       </td>
       <td>
-        <?foreach($value as $version => $count):?>
+        <?php foreach($value as $version => $count): ?>
         <?php $vers_url=$name_url . '/' . rawurlencode($version); ?>
-        <a href='<?=$vers_url?>'><?=$version?>
-          <span class='badge badge-info pull-right'><?=$count?></span>
+        <a href='<?php echo $vers_url; ?>'><?php echo $version; ?>
+          <span class='badge badge-info pull-right'><?php echo $count; ?></span>
         </a><br />
-        <?endforeach?>
+        <?php endforeach; ?>
       </td>
     </tr>
-    <?endforeach?>
+    <?php endforeach; ?>
   </tbody>
 </table>
     </div> <!-- /span 12 -->
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

@@ -33,6 +33,51 @@ class Machine_controller extends Module_controller
 	}
 
 	/**
+	 * Get machine data for a particular machine
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function report($serial_number = '')
+	{
+		$machine = new Machine_model($serial_number);
+		$obj = new View();
+		$obj->view('json', array('msg' => $machine->rs));
+	}
+
+	/**
+	 * Return new clients
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function new_clients()
+	{
+		$lastweek = time() - 60 * 60 * 24 * 7;
+		$out = array();
+		$machine = new Machine_model();
+		new Reportdata_model;
+
+		$filter = get_machine_group_filter('AND');
+
+		$sql = "SELECT machine.serial_number, computer_name, reg_timestamp
+			FROM machine 
+			LEFT JOIN reportdata USING (serial_number)
+			WHERE reg_timestamp > $lastweek
+			$filter
+			ORDER BY reg_timestamp DESC";
+
+		foreach($machine->query($sql) as $obj)
+		{
+			$out[]  = $obj;
+		}
+
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+
+	/**
 	 * Return json array with memory configuration breakdown
 	 *
 	 * @author AvB
@@ -42,7 +87,9 @@ class Machine_controller extends Module_controller
 		$out = array();
 		$machine = new Machine_model();
 		$sql = "SELECT physical_memory, count(1) as count
-			FROM machine 
+			FROM machine
+			LEFT JOIN reportdata USING (serial_number)
+			".get_machine_group_filter()."
 			GROUP BY physical_memory
 			ORDER BY physical_memory DESC";
 
@@ -84,10 +131,12 @@ class Machine_controller extends Module_controller
 	{
 		$out = array();
 		$machine = new Machine_model();
-		$sql = 'SELECT machine_name, count(1) as count 
-			FROM machine 
+		$sql = "SELECT machine_name, count(1) as count 
+			FROM machine
+			LEFT JOIN reportdata USING (serial_number)
+			".get_machine_group_filter()."
 			GROUP BY machine_name 
-			ORDER BY count DESC';
+			ORDER BY count DESC";
 		$cnt = 0;
 		foreach ($machine->query($sql) as $obj)
 		{
@@ -109,14 +158,24 @@ class Machine_controller extends Module_controller
 		$machine = new Machine_model();
 		$sql = "SELECT count(1) as count, os_version 
 				FROM machine
-				group by os_version 
+				LEFT JOIN reportdata USING (serial_number)
+				".get_machine_group_filter()."
+				GROUP BY os_version
 				ORDER BY os_version ASC";
 
-		$cnt = 0;
+		$os_array = array();
 		foreach ($machine->query($sql) as $obj)
 		{
-			$obj->os_version = $obj->os_version ? $obj->os_version : 'Unknown';
-			$out[] = array('label' => $obj->os_version, 'data' => array(array(intval($obj->count), $cnt++)));
+			$obj->os_version = $obj->os_version ? $obj->os_version : '0.0.0';
+			$os_array[$obj->os_version] = $obj->count;
+		}
+
+		// Convert to flotr array
+		$cnt = 0;
+		foreach ($os_array as $os => $count)
+		{
+			$os = $os == '0' ? 'Unknown' : $os;
+			$out[] = array('label' => $os, 'data' => array(array(intval($count), $cnt++)));
 		}
 
 		$obj = new View();

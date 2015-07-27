@@ -12,15 +12,17 @@
 					<?php
 						$queryobj = new displays_info_model();
 						$sql = "SELECT COUNT(CASE WHEN type='1' THEN 1 END) AS total
-						 			FROM displays;";
+						 			FROM displays
+						 			LEFT JOIN reportdata USING (serial_number)
+						 			".get_machine_group_filter();
 						$obj = current($queryobj->query($sql));
 					?>
-				<?if($obj):?>
-					<a href="<?=url('show/listing/displays')?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->total?> </span><br>
+				<?php if($obj): ?>
+					<a href="<?php echo url('show/listing/displays'); ?>" class="btn btn-success">
+						<span class="bigger-150"> <?php echo $obj->total; ?> </span><br>
 						Displays
 					</a>
-				<?endif?>
+				<?php endif ?>
 
 				</div>
 

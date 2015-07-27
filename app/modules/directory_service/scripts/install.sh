@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/directoryservice.sh"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add directory_service "${MUNKIPATH}preflight.d/cache/directoryservice.txt"
+	setreportpref "directory_service" "${CACHEPATH}directoryservice.txt"
 
 else
 	echo "Failed to download all required components!"

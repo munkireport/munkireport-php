@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/localadmin"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add localadmin "${MUNKIPATH}preflight.d/cache/localadmins.txt"
+	setreportpref "localadmin" "${CACHEPATH}localadmins.txt"
 
 else
 	echo "Failed to download all required components!"

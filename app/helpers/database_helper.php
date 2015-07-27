@@ -1,6 +1,59 @@
 <?php
 
 /**
+ * undocumented function
+ *
+ * @return void
+ * @author 
+ **/
+function create_table($model)
+{
+	// Get columns
+	$columns = array();
+	foreach($model->rs as $name => $val)
+	{
+		// Determine type automagically
+		$type = $model->get_type($val);
+		
+		// Or set type from type array
+		$columns[$name] = isset($model->rt[$name]) ? $model->rt[$name] : $type;
+	}
+	
+	// Set primary key
+	$columns[$model->pkname] = 'INTEGER PRIMARY KEY';
+
+	// Table options, override per driver
+	$tbl_options = '';
+	
+	// Driver specific options
+	switch($model->get_driver())
+	{
+		case 'sqlite':
+			$columns[$model->pkname] .= ' AUTOINCREMENT';
+			break;
+		case 'mysql':
+			$columns[$model->pkname] .= ' AUTO_INCREMENT';
+			$tbl_options = conf('mysql_create_tbl_opts');
+			break;
+	}
+	
+	// Compile columns sql
+    $sql = '';
+	foreach($columns as $name => $type)
+	{
+		$sql .= $model->enquote($name) . " $type,";
+	}
+	$sql = rtrim($sql, ',');
+
+	$dbh = $model->getdbh();
+	$dbh->exec(sprintf("CREATE TABLE %s (%s) %s", $model->enquote($model->tablename), $sql, $tbl_options));
+
+	// Set indexes
+	$model->set_indexes();
+
+}
+
+/**
  * Migrate database table 
  * 
  * Partly borrowed from codeigniter 

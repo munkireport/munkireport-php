@@ -134,7 +134,51 @@
 
 	/*
 	|===============================================
-	| Force secure connection when authorizing
+	| Role Based Authorization
+	|===============================================
+	|
+	| Authorize actions by listing roles appropriate array.
+	| Don't change these unless you know what you're doing, these roles are
+	| also used by the Business Units
+	|
+	*/
+    $conf['authorization']['delete_machine'] = array('admin', 'manager');
+    $conf['authorization']['global'] = array('admin');
+
+    /*
+	|===============================================
+	| Roles
+	|===============================================
+	|
+	| Add users or groups to the appropriate roles array.
+	|
+	*/
+	$conf['roles']['admin'] = array('*');
+
+    /*
+	|===============================================
+	| Local groups
+	|===============================================
+	|
+	| Create local groups, add users to groups.
+	|
+	*/
+	//$conf['groups']['admin_users'] = array();
+
+    /*
+	|===============================================
+	| Business Units
+	|===============================================
+	|
+	| Set to TRUE to enable Business Units
+	| For more information, see docs/business_units.md
+	|
+	*/
+	$conf['enable_business_units'] = FALSE;
+
+	/*
+	|===============================================
+	| Force secure connection when authenticating
 	|===============================================
 	|
 	| Set this value to TRUE to force https when logging in.
@@ -230,9 +274,8 @@
 	| An empty list installs only the basic reporting modules:
 	| Machine and Reportdata
 	|
-	| If you don't set this item, all available modules are installed (default)
 	*/
-    //$conf['modules'] = array();
+    $conf['modules'] = array('munkireport');
 
 
 	/*
@@ -249,7 +292,23 @@
 	|
 	| When not configured, or if set to FALSE, the default behaviour applies.
 	*/
-		//$conf['keep_previous_displays'] = TRUE;
+	//$conf['keep_previous_displays'] = TRUE;
+
+	/*
+	|===============================================
+	| Unit of temperature °C or °F
+	|===============================================
+	|
+	| Unit of temperature, possible values: F for Fahrenheit, C for Celsius
+	|
+	|			$conf['temperature_unit'] = 'F';
+	|
+	| When not configured, the default behaviour applies.
+	| By default temperture units are displayed in Celsius °C.
+	|
+	*/
+    //$conf['temperature_unit'] = 'F';
+
 
     /*
 	|===============================================
@@ -334,6 +393,31 @@
 	*/
     $conf['ip_ranges'] = array();
 
+ 	/*
+	|===============================================
+	| Dashboard - VLANS
+	|===============================================
+	|
+	| Plot VLANS by providing an array with labels and
+	| a partial IP address of the routers. Specify multiple partials in array
+	| if you want to group them together.
+	| The router IP adress part is queried with SQL LIKE
+	| Examples:
+	| $conf['ipv4routers']['Wired'] = '211.88.10.1';
+	| $conf['ipv4routers']['WiFi'] = array('211.88.12.1', '211.88.13.1');
+	| $conf['ipv4routers']['Private range'] = array('10.%', '192.168.%',
+	| 	'172.16.%',
+	| 	'172.17.%',
+	| 	'172.18.%',
+	| 	'172.19.%',
+	| 	'172.2_.%',
+	| 	'172.30.%',
+	| 	'172.31.%', );
+	| $conf['ipv4routers']['Link-local'] = array('169.254.%');
+	|
+	*/
+
+
 	/*
 	|===============================================
 	| Dashboard - Layout
@@ -342,12 +426,94 @@
 	| Dashboard layout is an array of rows that contain
 	| an array of widgets. Omit the _widget postfix
 	|
+	| Up to three small horizontal widgets will show on one line
+	|
+	| Up to two medium horizontal widgets will show on one line
+	|
+	| Responsive horizontal widgets will change depending on window size
+	|
+	| Be aware of medium / dynamic vertical widgets as it may skew the responsive design
+	|
+	| This is a list of the current dashboard widgets
+	|
+	| Small horizontal widgets:
+	|	bound_to_ds
+	|	client (two items)
+	|	external_displays_count
+	|	hardware_model
+	|	smart_status
+	|	disk_report
+	|	uptime
+	|	installed memory
+	|	munki
+	|	power_battery_condition
+	|	power_battery_health
+	|
+	| Small horizontal / medium vertical widgets:
+	|	network_location
+	|
+	| Small horizontal / dynamic vertical widgets:
+	|	app
+	|	duplicated_computernames
+	|	filevault
+	|	hardware_model
+	|	manifests
+	|	modified_computernames
+	|	munki_versions
+	|	new_clients
+	|	pending
+	|	pending_munki
+	|	pending_apple
+	|	warranty
+	|
+	| Medium horizontal widgets:
+	|
+	| Medium horizontal / dynamic vertical widgets:
+	|	hardware_age
+	|	hardware_model
+	|	memory
+	|	os
+	|
+	| Responsive horizontal widgets:
+	|	network_vlan
+	|	registered clients
 	*/
-    $conf['dashboard_layout'] = array(
-		array('client', 'munki', 'disk_report', 'installed_memory', 'bound_to_ds'),
-		array('new_clients', 'pending_apple', 'pending_munki'),
-		array('munki_versions', 'warranty', 'filevault')
+	$conf['dashboard_layout'] = array(
+		array('client', 'munki'), /*client is actually two widgets*/
+		array('disk_report', 'installed_memory', 'bound_to_ds'),
+		array('uptime', 'pending_apple', 'pending_munki'),
+		array('new_clients', 'munki_versions', 'filevault'),
+		array('warranty','power_battery_condition','power_battery_health')
 	);
+
+	/*
+	|===============================================
+	| Apps Version Report
+	|===============================================
+	|
+	| List of applications, by name, that you want to see in the apps
+	| version report. If this is not set the report page will appear empty.
+	| This is case insensitive but must be an array.
+	|
+	| Eg:
+	| $conf['apps_to_track'] = array('Adobe Flash Player Install Manager',
+														'Firefox','Microsoft Excel');
+	|
+	*/
+	$conf['apps_to_track'] = array('Safari');
+
+	/*
+	|===============================================
+	| Disk Report Widget Thresholds
+	|===============================================
+	|
+	| Thresholds for disk report widget. This array holds two values:
+	| free gigabytes below which the level is set to 'danger'
+	| free gigabytes below which the level is set as 'warning'
+	| If there are more free bytes, the level is set to 'success'
+	|
+	*/
+	$conf['disk_thresholds'] = array('danger' => 5, 'warning' => 10);
 
 	/*
 	|===============================================

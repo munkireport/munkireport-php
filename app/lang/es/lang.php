@@ -71,7 +71,7 @@ $lang['path'] = 'Directorio';
 
 $lang['ethernet'] = 'Ethernet';
 $lang['ip_address'] = 'Dirección IP';
-$lang['network_mask'] = 'Máscara';
+$lang['mask'] = 'Máscara';
 $lang['prefix_length'] = 'Longitud del prefijo';
 $lang['router'] = 'Router';
 $lang['configuration'] = 'Configuración';

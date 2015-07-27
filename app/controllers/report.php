@@ -1,6 +1,9 @@
 <?php
 class report extends Controller
 {
+    
+	public $group = 0;
+
     /**
      * Constructor: test if authentication is needed
      * and check if the client has the proper credentials
@@ -9,6 +12,14 @@ class report extends Controller
      **/
     function __construct()
 	{
+		// Flag we're on report authorization
+		$GLOBALS['auth'] = 'report';
+
+		if ( isset($_POST['passphrase']))
+		{
+			$this->group = passphrase_to_group($_POST['passphrase']);
+		}
+
 		if ($auth_list = conf('client_passphrases'))
 		{
 			if ( ! is_array($auth_list))
@@ -45,6 +56,12 @@ class report extends Controller
 			$this->error("Serial is missing");
 		}
 
+		if ( ! trim($_POST['serial']))
+		{
+			$this->error("Serial is empty");
+		}
+
+
 		if ( ! isset($_POST['items']))
 		{
 			$this->error("Items are missing");
@@ -55,8 +72,9 @@ class report extends Controller
 		// Try to register client and lookup hashes in db
 		try
 		{
-			// Register check in reportdata
+			// Register check and group in reportdata
 			$report = new Reportdata_model($_POST['serial']);
+			$report->machine_group = $this->group;
 			$report->register()->save();
 
 			$req_items = unserialize($_POST['items']); //Todo: check if array

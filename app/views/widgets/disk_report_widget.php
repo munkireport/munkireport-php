@@ -4,33 +4,80 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-hdd-o"></i> Disk status</h3>
-				
+					<h3 class="panel-title"><i class="fa fa-hdd-o"></i> <span data-i18n="free_disk_space">Free Disk Space</span></h3>
+
 				</div>
 
 				<div class="panel-body text-center">
 
-				<?$queryobj = new Disk_report_model();
-				$sql = "select COUNT(1) as total, COUNT(CASE WHEN Percentage > 80 THEN 1 END) AS warning, 
-					COUNT(CASE WHEN Percentage > 90 THEN 1 END) AS danger FROM diskreport";
-					?>
-					<?if($obj = current($queryobj->query($sql))):?>
-					<a href="<?=url('show/listing/disk#'.rawurlencode('percentage < 80'))?>" class="btn btn-success">
-						<span class="bigger-150"> <?=$obj->total - $obj->warning?> </span><br>
-						Under 80%
+
+					<a id="disk-danger" class="btn btn-danger hide">
+						<span class="disk-count bigger-150"></span><br>
+						<span class="disk-label"></span>
 					</a>
-					<a href="<?=url('show/listing/disk#'.rawurlencode('80 percentage 90'))?>" class="btn btn-warning">
-						<span class="bigger-150"> <?=$obj->warning - $obj->danger?> </span><br>
-						Over 80%
+					<a id="disk-warning" class="btn btn-warning hide">
+						<span class="disk-count bigger-150"></span><br>
+						<span class="disk-label"></span>
 					</a>
-					<a href="<?=url('show/listing/disk#'.rawurlencode('percentage > 90'))?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->danger?> </span><br>
-						Over 90%
+					<a id="disk-success" class="btn btn-success hide">
+						<span class="disk-count bigger-150"></span><br>
+						<span class="disk-label"></span>
 					</a>
-					<?endif?>
+
+          <span id="disk-nodata" data-i18n="no_clients"></span>
 
 				</div>
 
 			</div><!-- /panel -->
 
 		</div><!-- /col -->
+
+<script>
+$(document).on('appReady appUpdate', function(e, lang) {
+
+    $.getJSON( appUrl + '/module/disk_report/get_stats', function( data ) {
+
+    	if(data.error){
+    		//alert(data.error);
+    		return;
+    	}
+
+			// Get limits
+			var dangerThreshold = data.thresholds.danger+'GB',
+					warningThreshhold = data.thresholds.warning+'GB',
+					url = appUrl + '/show/listing/disk#'
+
+			// Set urls
+			$('#disk-danger').attr('href', url + encodeURIComponent('freespace < '+dangerThreshold))
+			$('#disk-warning').attr('href', url + encodeURIComponent(dangerThreshold+' freespace '+warningThreshhold))
+			$('#disk-success').attr('href', url + encodeURIComponent('freespace > '+warningThreshhold))
+
+			// Set labels
+			$('#disk-danger span.disk-label').text('< '+dangerThreshold)
+			$('#disk-warning span.disk-label').text('< '+warningThreshhold)
+			$('#disk-success span.disk-label').text(warningThreshhold+' +')
+
+			// encodeURIComponent
+
+        // Show no clients span
+        $('#disk-nodata').removeClass('hide');
+
+        $.each(data.stats, function(prop, val){
+            if(val > 0)
+            {
+                $('#disk-' + prop).removeClass('hide');
+                $('#disk-' + prop + '>span.disk-count').text(val);
+
+                // Hide no clients span
+                $('#disk-nodata').addClass('hide');
+            }
+            else
+            {
+                $('#disk-' + prop).addClass('hide');
+            }
+        });
+    });
+});
+
+
+</script>

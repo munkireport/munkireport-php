@@ -10,23 +10,32 @@
 
 				<div class="list-group">
 
-				<?	$warranty = new Warranty_model(); 
-					$thirtydays = date('Y-m-d', strtotime('+30days'));
-					$class_list = array('Supported' => 'warning');
-					$cnt = 0;
-					$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY count DESC";
+				<?php	$warranty = new Warranty_model();
+						$thirtydays = date('Y-m-d', strtotime('+30days'));
+						$yesterday = date('Y-m-d', strtotime('-1day'));
+						$class_list = array('Supported' => 'warning');
+						$cnt = 0;
+						$filter = get_machine_group_filter('AND');
+						$sql = "SELECT count(1) AS count, status 
+								FROM warranty
+								LEFT JOIN reportdata USING(serial_number)
+								WHERE (end_date BETWEEN '$yesterday' AND '$thirtydays') 
+								AND status != 'Expired'
+								$filter
+								GROUP BY status 
+								ORDER BY count DESC";
 				?>
-					<?foreach($warranty->query($sql) as $obj):?>
-					<?$status = array_key_exists($obj->status, $class_list) ? $class_list[$obj->status] : 'danger'?>
-					<a href="<?=url('show/listing/warranty#'.$obj->status)?>" class="list-group-item list-group-item-<?=$status?>">
-						<span class="badge"><?=$obj->count?></span>
-						Expires in 30 days (<?=$obj->status?>)
-					<?$cnt++?>
+					<?php foreach($warranty->query($sql) as $obj): ?>
+					<?php $status = array_key_exists($obj->status, $class_list) ? $class_list[$obj->status] : 'danger'; ?>
+					<a href="<?php echo url('show/listing/warranty#'.$obj->status); ?>" class="list-group-item list-group-item-<?php echo $status; ?>">
+						<span class="badge"><?php echo $obj->count; ?></span>
+						Expires in 30 days (<?php echo $obj->status; ?>)
+					<?php $cnt++; ?>
 					</a>
-					<?endforeach?>
-					<?if( ! $cnt):?>
+					<?php endforeach; ?>
+					<?php if( ! $cnt): ?>
 						<span class="list-group-item">No warranty alerts</span>
-					<?endif?>
+					<?php endif ?>
 
 				</div>
 

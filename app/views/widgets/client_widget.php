@@ -1,4 +1,4 @@
-<?
+<?php
 $queryobj = new Reportdata_model();
 $now = time();
 $hour_ago = $now - 3600;
@@ -14,7 +14,8 @@ $sql = "SELECT COUNT(1) as total,
 	COUNT(CASE WHEN timestamp BETWEEN $month_ago AND $week_ago THEN 1 END) AS inactive_week,
 	COUNT(CASE WHEN timestamp BETWEEN $three_month_ago AND $month_ago THEN 1 END) AS inactive_month,
 	COUNT(CASE WHEN timestamp < $three_month_ago THEN 1 END) AS inactive_three_month
-	FROM reportdata";
+	FROM reportdata
+	".get_machine_group_filter();
 
 $obj = current($queryobj->query($sql));
 ?>
@@ -31,30 +32,30 @@ $obj = current($queryobj->query($sql));
 				<div class="panel-body text-center">
 
 					
-				<?if($obj):?>
+				<?php if($obj): ?>
 
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
-						<span class="bigger-150"> <?=$obj->lastmonth?> </span>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
+						<span class="bigger-150"> <?php echo $obj->lastmonth; ?> </span>
 						<br>
 						This mo
 					</a>
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
-						<span class="bigger-150"> <?=$obj->lastweek?> </span>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
+						<span class="bigger-150"> <?php echo $obj->lastweek; ?> </span>
 						<br>
 						This wk
 					</a>
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
-						<span class="bigger-150"> <?=$obj->today?> </span>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
+						<span class="bigger-150"> <?php echo $obj->today; ?> </span>
 						<br>
 						Today
 					</a>
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
-						<span class="bigger-150"> <?=$obj->lasthour?> </span>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
+						<span class="bigger-150"> <?php echo $obj->lasthour; ?> </span>
 						<br>
 						Last hour
 					</a>
 
-				<?endif?>
+				<?php endif; ?>
 
 				</div>
 
@@ -74,25 +75,24 @@ $obj = current($queryobj->query($sql));
 				<div class="panel-body text-center">
 
 					
-				<?if($obj):?>
-
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-danger">
-						<span class="bigger-150"> <?=$obj->inactive_three_month?> </span>
+                                <?php if($obj): ?>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-danger">
+						<span class="bigger-150"> <?php echo $obj->inactive_three_month; ?> </span>
 						<br>
-						> 3 months
+						3 months +
 					</a>
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-warning">
-						<span class="bigger-150"> <?=$obj->inactive_month?> </span>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-warning">
+						<span class="bigger-150"> <?php echo $obj->inactive_month; ?> </span>
 						<br>
 						Last mo
 					</a>
-					<a href="<?=url('show/listing/clients')?>" class="btn btn-info">
-						<span class="bigger-150"> <?=$obj->inactive_week?> </span>
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
+						<span class="bigger-150"> <?php echo $obj->inactive_week; ?> </span>
 						<br>
 						Last wk
 					</a>
-
-				<?endif?>
+					
+				<?php endif; ?>
 
 				</div>
 

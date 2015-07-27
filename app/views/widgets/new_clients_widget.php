@@ -1,42 +1,52 @@
 		<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+			<div class="panel panel-default" id="new-clients-widget">
 
 				<div class="panel-heading" data-container="body" title="Clients registered this week">
 
-					<h3 class="panel-title"><i class="fa fa-star-o"></i> New clients <span id="new-clients" class="badge pull-right"></span></h3>
+					<h3 class="panel-title"><i class="fa fa-star-o"></i> New clients <span class="counter badge pull-right"></span></h3>
 
 				</div>
 
 				<div class="list-group scroll-box">
-				  	<?$queryobj = new Machine_model();// Generic queryobject?>
+				  	
 
-				  	<?	$lastweek = time() - 60 * 60 * 24 * 7;$cnt=0;
-				  		$sql = "SELECT machine.serial_number, computer_name, reg_timestamp FROM machine LEFT JOIN reportdata USING (serial_number) WHERE reg_timestamp > $lastweek ORDER BY reg_timestamp DESC"?>
-					<?foreach($queryobj->query($sql) as $obj):?> 
-					<a class="list-group-item" href="<?=url('clients/detail/'.$obj->serial_number)?>"><?=$obj->computer_name?>
-						<span class="pull-right"><time datetime="<?=$obj->reg_timestamp?>">...</time></span>
-					</a>
-					<?$cnt++?>
-					<?endforeach?>
-					<?if( ! $cnt):?>
 					<span class="list-group-item">No new clients</span>
-					<?endif?>
 				</div>
 			<script>
-			$(document).ready(function() {
+			$(document).on('appReady appUpdate', function(){
 				
-				// New clients + relative time
-				var cnt=0;
-				$( "time" ).each(function( index ) {
-					var date = new Date($(this).attr('datetime') * 1000);
-					$(this).html(moment(date).fromNow());
-					cnt++;
-				});
-				$('#new-clients').html(cnt);
+				$.getJSON( appUrl + '/module/machine/new_clients', function( data ) {
 
+					var scrollBox = $('#new-clients-widget .scroll-box').empty();
 
-				
+					$.each(data, function(index, obj){
+
+						scrollBox
+							.append($('<a>')
+								.addClass('list-group-item')
+								.attr('href', appUrl + '/clients/detail/' + obj.serial_number)
+								.append(obj.computer_name)
+								.append($('<span>')
+									.addClass('pull-right')
+									.append($('<time>')
+										.text(function(){
+											var date = new Date(obj.reg_timestamp * 1000);
+											return moment(date).fromNow();
+										}))))
+
+					});
+
+					$('#new-clients-widget .counter').html(data.length);
+
+					if( ! data.length){
+						scrollBox
+							.append($('<span>')
+								.addClass('list-group-item')
+								.text(i18n.t('no_clients')))
+					}
+
+				});				
 			});
 			</script>
 

@@ -14,11 +14,88 @@ class Reportdata_controller extends Module_controller
 		{
 			die('Authenticate first.'); // Todo: return json?
 		}
+
+		header('Access-Control-Allow-Origin: *');
+
 	}
 
 	function index()
 	{
 		echo "You've loaded the Reportdata module!";
+	}
+
+	/**
+	 * Get machine groups
+	 *
+	 * @author 
+	 **/
+	function get_groups()
+	{
+		$reportdata = new Reportdata_model();
+		$obj = new View();
+		$obj->view('json', array('msg' => $reportdata->get_groups($count = TRUE)));
+	}
+
+
+	/**
+	 * REST API for retrieving registration dates
+	 *
+	 **/
+	function new_clients()
+	{
+		$reportdata = new Reportdata_model();
+		new Machine_model();
+
+		$where = get_machine_group_filter('WHERE', 'r');
+
+		switch($reportdata->get_driver())
+		{
+			case 'sqlite':
+				$sql = "SELECT DATE(reg_timestamp, 'unixepoch') AS date,
+						COUNT(*) AS cnt,
+						machine_name AS type
+						FROM reportdata r
+						LEFT JOIN machine m 
+							ON (r.serial_number = m.serial_number)
+						$where
+						GROUP BY date, machine_name
+						ORDER BY date";
+				break;
+			case 'mysql':
+				$sql = "SELECT DATE(FROM_UNIXTIME(reg_timestamp)) AS date, 
+						COUNT(*) AS cnt,
+						machine_name AS type
+						FROM reportdata r
+						LEFT JOIN machine m 
+							ON (r.serial_number = m.serial_number)
+						$where
+						GROUP BY date, machine_name
+						ORDER BY date";
+				break;
+			default:
+				die('Unknown database driver');
+
+		}
+		//echo $sql;
+		$dates = array();
+		$out = array();
+		
+		foreach($reportdata->query($sql) as $event)
+		{
+			// Store date
+			$pos = array_search($event->date, $dates);
+			if($pos === FALSE)
+			{
+				array_push($dates, $event->date);
+				$pos = count($dates) - 1;
+			}
+
+			$out[$event->type][$pos] = intval($event->cnt);
+		}
+
+
+		$obj = new View();
+		$obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
 	}
 
 	/**
@@ -63,7 +140,9 @@ class Reportdata_controller extends Module_controller
 			$sel_arr[] = "SUM(CASE $when_str ELSE 0 END) AS r${cnt}";
 			$cnt++;
 		}
-		$sql = "SELECT " . implode(', ', $sel_arr) . " FROM reportdata";
+		$sql = "SELECT " . implode(', ', $sel_arr) . "
+				FROM reportdata "
+				.get_machine_group_filter();
 
 		// Create Out array
 		if($obj = current($reportdata->query($sql)))
@@ -73,14 +152,16 @@ class Reportdata_controller extends Module_controller
 			{
 				$col = 'r' . $cnt++;
 
-				$out[] = array('label' => $key, 'data' => array(array(0,intval($obj->$col))));
+				$out[] = array('key' => $key, 'cnt' => intval($obj->$col));
 
 				$total += $obj->$col;
 			}
 
 			// Add Remaining IP's as other
-			$out[] = array('label' => 'Other', 'data' => array(array(0,intval($obj->count - $total))));
-				
+			if( $obj->count - $total )
+			{
+				$out[] = array('key' => 'Other', 'cnt' => $obj->count - $total);
+			}
 		}
 
 		$obj = new View();

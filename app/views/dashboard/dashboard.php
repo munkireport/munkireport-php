@@ -1,4 +1,4 @@
-<?$this->view('partials/head')?>
+<?php $this->view('partials/head'); ?>
 
 <div class="container">
 
@@ -8,7 +8,7 @@
 
 		<?foreach($row as $item):?>
 
-		<?$this->view("widgets/${item}_widget")?>
+		<?php $this->view("widgets/${item}_widget"); ?>
 
 		<?endforeach?>
 
@@ -18,14 +18,23 @@
 
 </div>	<!-- /container -->
 
-
 <script>
-	// Add tooltips
-	$(document).ready(function() {
-		$('[title]').tooltip();
-	});
+
+// Automatically refresh widgets
+$(document).on('appReady', function(e, lang) {
+
+	var delay = 60; // seconds
+	var refresh = function(){
+
+		$(document).trigger('appUpdate');
+
+		setTimeout(refresh, delay * 1000);
+	}
+
+	refresh();
+
+});
+
 </script>
 
-
-
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot'); ?>

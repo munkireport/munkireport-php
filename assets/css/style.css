@@ -91,46 +91,72 @@ h2 {
   font-size:150%
 }
 
+/* datatable make room for arrows */
+table.table thead th{
+  padding-right: 20px;
+}
+
 /* Responsive table all widths */
-.table-responsive {
+@media screen {
+  .table-responsive {
     width: 100%;
     margin-bottom: 15px;
-    overflow-x: scroll;
     overflow-y: hidden;
-    border: 1px solid #ddd
-}
-
-.table-responsive>.table {
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #ddd;
+  }
+  .table-responsive > .table {
     margin-bottom: 0;
-    background-color: #fff
+  }
+  .table-responsive > .table > thead > tr > th,
+  .table-responsive > .table > tbody > tr > th,
+  .table-responsive > .table > tfoot > tr > th,
+  .table-responsive > .table > thead > tr > td,
+  .table-responsive > .table > tbody > tr > td,
+  .table-responsive > .table > tfoot > tr > td {
+    white-space: nowrap;
+  }
+  .table-responsive > .table-bordered {
+    border: 0;
+  }
+  .table-responsive > .table-bordered > thead > tr > th:first-child,
+  .table-responsive > .table-bordered > tbody > tr > th:first-child,
+  .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+  .table-responsive > .table-bordered > thead > tr > td:first-child,
+  .table-responsive > .table-bordered > tbody > tr > td:first-child,
+  .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+    border-left: 0;
+  }
+  .table-responsive > .table-bordered > thead > tr > th:last-child,
+  .table-responsive > .table-bordered > tbody > tr > th:last-child,
+  .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+  .table-responsive > .table-bordered > thead > tr > td:last-child,
+  .table-responsive > .table-bordered > tbody > tr > td:last-child,
+  .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+    border-right: 0;
+  }
+  .table-responsive > .table-bordered > tbody > tr:last-child > th,
+  .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+  .table-responsive > .table-bordered > tbody > tr:last-child > td,
+  .table-responsive > .table-bordered > tfoot > tr:last-child > td {
+    border-bottom: 0;
+  }
 }
 
-.table-responsive>.table>thead>tr>th, .table-responsive>.table>tbody>tr>th,
-.table-responsive>.table>tfoot>tr>th, .table-responsive>.table>thead>tr>td,
-.table-responsive>.table>tbody>tr>td, .table-responsive>.table>tfoot>tr>td {
-    white-space: nowrap
+/* Client detail header */
+.form-control[readonly] {
+  background-color:inherit;
+  font-size: 1.2em;
 }
 
-.table-responsive>.table-bordered {
-    border: 0
+/* Donut chart title */
+svg .nvd3.nv-pie .nv-pie-title
+{
+  fill: #333;
 }
-
-.table-responsive>.table-bordered>thead>tr>th:first-child, .table-responsive>.table-bordered>tbody>tr>th:first-child,
-.table-responsive>.table-bordered>tfoot>tr>th:first-child, .table-responsive>.table-bordered>thead>tr>td:first-child,
-.table-responsive>.table-bordered>tbody>tr>td:first-child, .table-responsive>.table-bordered>tfoot>tr>td:first-child {
-    border-left: 0
-}
-
-.table-responsive>.table-bordered>thead>tr>th:last-child, .table-responsive>.table-bordered>tbody>tr>th:last-child,
-.table-responsive>.table-bordered>tfoot>tr>th:last-child, .table-responsive>.table-bordered>thead>tr>td:last-child,
-.table-responsive>.table-bordered>tbody>tr>td:last-child, .table-responsive>.table-bordered>tfoot>tr>td:last-child {
-    border-right: 0
-}
-
-.table-responsive>.table-bordered>thead>tr:last-child>th, .table-responsive>.table-bordered>tbody>tr:last-child>th,
-.table-responsive>.table-bordered>tfoot>tr:last-child>th, .table-responsive>.table-bordered>thead>tr:last-child>td,
-.table-responsive>.table-bordered>tbody>tr:last-child>td, .table-responsive>.table-bordered>tfoot>tr:last-child>td {
-    border-bottom: 0
+svg .nv-label text
+{
+  font-size: .8em;
 }
 
 @media print{
@@ -150,3 +176,8 @@ h2 {
   }
 }
 
+.popover{
+    max-width: 800px;
+    max-height: 600px;
+    overflow: scroll
+}

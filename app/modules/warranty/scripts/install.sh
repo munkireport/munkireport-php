@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/warranty"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add warranty "${MUNKIPATH}preflight.d/cache/warranty.txt"
+	setreportpref "warranty" "${CACHEPATH}warranty.txt"
 
 else
 	echo "Failed to download all required components!"

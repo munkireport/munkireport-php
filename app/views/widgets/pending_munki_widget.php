@@ -14,9 +14,13 @@
 					$mr = new Munkireport_model;
 					$pendinginstalls_array = array();
 					$week_ago = date('Y-m-d H:i:s', time() - 3600 * 24 * 7);
-					$sql = "SELECT serial_number, report_plist 
-							FROM munkireport WHERE pendinginstalls > 0
-							AND timestamp > '$week_ago'";
+					$filter = get_machine_group_filter('AND');
+					$sql = "SELECT m.serial_number, report_plist 
+							FROM munkireport m
+							LEFT JOIN reportdata USING (serial_number)
+							WHERE pendinginstalls > 0
+							$filter
+							AND m.timestamp > '$week_ago'";
 					// Get compression (fixme: we should be able to read this from the model) 
 					$compress = function_exists('gzdeflate');
 					
@@ -35,19 +39,19 @@
 					$pendinginstalls_array = array_count_values($pendinginstalls_array);
 					arsort($pendinginstalls_array);
 				?>
-				<?if( ! $pendinginstalls_array):?>
+				<?php if( ! $pendinginstalls_array): ?>
 					<span class="list-group-item">No updates pending</span>
-				<?endif?>
-				<?foreach(array_keys($pendinginstalls_array) as $obj):?>
+				<?php endif; ?>
+				<?php foreach(array_keys($pendinginstalls_array) as $obj): ?>
 
 
-					<a href="<?=url('module/munkireport/pending#'.$obj)?>" class="list-group-item">
+					<a href="<?php echo url('module/munkireport/pending#'.$obj); ?>" class="list-group-item">
 					<!--//echo first the key names (update name) and then their values (count) -->
-                	<?=$obj?>
-                	<span class="badge pull-right"><?=$pendinginstalls_array[$obj]?></span>
+                	<?php echo $obj; ?>
+                	<span class="badge pull-right"><?php echo $pendinginstalls_array[$obj]; ?></span>
             		</a>
 
-				<?endforeach?>
+				<?php endforeach; ?>
 				</div>
 
 			</div><!-- /panel -->

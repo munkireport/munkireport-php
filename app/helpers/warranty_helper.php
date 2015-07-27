@@ -8,6 +8,9 @@
  **/
 function check_warranty_status(&$warranty_model)
 {
+	// Error message
+	$error = '';
+
 	// Check if virtual machine 
 	// We assume vmware serials contain upper and lower chars
 	// There are actual macs with a serial starting with VM
@@ -40,7 +43,8 @@ function check_warranty_status(&$warranty_model)
 
 	if( $result === FALSE)
 	{
-		$warranty_model->status = lang('lookup_failed');
+		$warranty_model->status = 'Lookup failed';
+		$error = 'Lookup failed';
 	}
 	elseif(preg_match('/invalidserialnumber/', $result))
 	{
@@ -105,6 +109,7 @@ function check_warranty_status(&$warranty_model)
 	else
 	{
 		$warranty_model->status = 'No information found';
+		$error = 'No information found';
 	}
 
 	// No valid purchase date, use the estimated manufacture date
@@ -132,10 +137,15 @@ function check_warranty_status(&$warranty_model)
 
 	}
 	
-	// Get machine model from apple
+	// Get machine model from apple (only when not set or failed)
 	$machine = new Machine_model($warranty_model->serial_number);
-	$machine->machine_desc = model_description_lookup($warranty_model->serial_number);
-	$machine->save();
+	if( ! $machine->machine_desc OR $machine->machine_desc == 'model_lookup_failed')
+	{
+		$machine->machine_desc = model_description_lookup($warranty_model->serial_number);
+		$machine->save();
+	}
+
+	return $error;
 
 }
 
@@ -195,7 +205,7 @@ function model_description_lookup($serial)
 
 	if ($result === FALSE)
 	{
-		return lang('model_lookup_failed');
+		return 'model_lookup_failed';
 	}
 
 	if(preg_match('#<configCode>(.*)</configCode>#', $result, $matches))
@@ -203,7 +213,7 @@ function model_description_lookup($serial)
 		return($matches[1]);
 	}
 
-	return 'Unknown model';
+	return 'unknown_model';
 
 }
 
@@ -216,6 +226,8 @@ function model_description_lookup($serial)
 function get_url($url, $options = array())
 {
 	$http = array('header' => '');
+
+	$http['user_agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A';
 
 	if(isset($options['method']))
 	{
@@ -248,7 +260,7 @@ function get_url($url, $options = array())
 	}
 
 	$context = stream_context_create($context_options);
-	return file_get_contents($url, FALSE, $context);
+	return @file_get_contents($url, FALSE, $context);
 
 }
 

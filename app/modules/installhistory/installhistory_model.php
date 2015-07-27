@@ -21,24 +21,7 @@ class Installhistory_model extends Model {
 		$this->create_table();
 		  
 	}
-	
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Delete all items with serialnumber
-	 *
-	 * @author abn290
-	 **/
-	function delete_set() 
-	{
-		$dbh=$this->getdbh();
-		$sql = 'DELETE FROM '.$this->enquote( $this->tablename ).' WHERE '.$this->enquote( 'serial_number' ).'=?';
-		$stmt = $dbh->prepare( $sql );
-		$stmt->bindValue( 1, $this->serial_number );
-		$stmt->execute();
-		return $this;
-	}
-		
+			
 	// ------------------------------------------------------------------------
 
 	/**
@@ -50,11 +33,14 @@ class Installhistory_model extends Model {
 	function process($plist)
 	{
 		// Delete old data
-		$this->delete_set();
+		$this->delete_where('serial_number=?', $this->serial_number);
 
 		// Check if we're passed a plist (10.6 and higher)
 		if(strpos($plist, '<?xml version="1.0" encoding="UTF-8"?>') === 0)
 		{
+			// Strip invalid xml chars
+			$plist = preg_replace('/[^\x{0009}\x{000A}\x{000D}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '�', $plist);
+			
 			require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 			$parser = new CFPropertyList();
 			$parser->parse($plist, CFPropertyList::FORMAT_XML);
@@ -102,6 +88,6 @@ class Installhistory_model extends Model {
 	 */
 	public function itemsBySerialNumber($aSerialNumber)
 	{
-		return $this->retrieve_many('serial_number=? ORDER BY date DESC', $aSerialNumber);
+		return $this->retrieve_records($aSerialNumber);
 	}
 }

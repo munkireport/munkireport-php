@@ -115,9 +115,7 @@ class Network_model extends Model {
         //print_r($services);
 
         // Delete previous entries
-        $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).
-        		' WHERE '.$this->enquote( 'serial_number' )." = '$this->serial_number'";
-        $this->exec($sql);
+        $this->delete_where('serial_number=?', $this->serial_number);
 
         // Now only store entries with a valid ethernet address
         foreach( $services as $service => $data)

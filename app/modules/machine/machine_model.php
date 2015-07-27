@@ -13,7 +13,7 @@ class Machine_model extends Model {
 		$this->rs['cpu'] = '';
 		$this->rs['current_processor_speed'] = '';
 		$this->rs['cpu_arch'] = '';
-		$this->rs['os_version'] = '';
+		$this->rs['os_version'] = 0;
 		$this->rs['physical_memory'] = 0;
 		$this->rs['platform_UUID'] = '';
 		$this->rs['number_processors'] = 0;
@@ -23,8 +23,9 @@ class Machine_model extends Model {
 		$this->rs['computer_name'] = '';
 		$this->rs['l2_cache'] = '';
 		$this->rs['machine_name'] = '';
-		$this->rs['packages'] = '';	   
-		
+		$this->rs['packages'] = '';
+		$this->rs['buildversion'] = '';
+
 		// Add indexes
 		$this->idx['hostname'] = array('hostname');
 		$this->idx['machine_model'] = array('machine_model');
@@ -42,22 +43,23 @@ class Machine_model extends Model {
 		$this->idx['computer_name'] = array('computer_name');
 		$this->idx['l2_cache'] = array('l2_cache');
 		$this->idx['machine_name'] = array('machine_name');
-		$this->idx['packages'] = array('packages');	
+		$this->idx['packages'] = array('packages');
+		$this->idx[] = array('buildversion');
 
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 3;
+		$this->schema_version = 5;
 
 		// Create table if it does not exist
 		$this->create_table();
-		
+
 		if ($serial)
-			$this->retrieve_one('serial_number=?', $serial);
-		
+			$this->retrieve_record($serial);
+
 		$this->serial = $serial;
-		  
+
 	}
-	
+
 	// ------------------------------------------------------------------------
 
 	/**
@@ -67,12 +69,12 @@ class Machine_model extends Model {
 	 * @author abn290
 	 **/
 	function process($plist)
-	{		
+	{
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
-		
+
 		// Remove serial_number from mylist, use the cleaned serial that was provided in the constructor.
 		unset($mylist['serial_number']);
 
@@ -87,10 +89,23 @@ class Machine_model extends Model {
 		{
 			$mylist['physical_memory'] = intval($mylist['physical_memory']);
 		}
-		
+
+		// Convert OS version to int
+		if( isset($mylist['os_version']))
+		{
+			$digits = explode('.', $mylist['os_version']);
+			$mult = 10000;
+			$mylist['os_version'] = 0;
+			foreach($digits as $digit)
+			{
+				$mylist['os_version'] += $digit * $mult;
+				$mult = $mult / 100;
+			}
+		}
+
 		$this->timestamp = time();
 		$this->merge($mylist)->save();
 	}
 
-	
+
 }

@@ -1,9 +1,12 @@
-<? 
-$machine = new Machine_model(); new Munkireport_model;
+<?php 
+$machine = new Machine_model; new Munkireport_model; new Reportdata_model;
+$filter = get_machine_group_filter('AND');
 $sql = "SELECT computer_name, pendinginstalls, machine.serial_number
     FROM machine
     LEFT JOIN munkireport USING(serial_number)
-    WHERE pendinginstalls > 0 
+    LEFT JOIN reportdata USING(serial_number)
+    WHERE pendinginstalls > 0
+    $filter
     ORDER BY pendinginstalls DESC";
 ?>
 <div class="col-lg-4 col-md-6">
@@ -12,12 +15,12 @@ $sql = "SELECT computer_name, pendinginstalls, machine.serial_number
             <h3 class="panel-title"><i class="fa fa-moon"></i> Clients with pending installs</h3>
         </div>
         <div class="list-group scroll-box">
-            <?foreach($machine->query($sql) as $obj):?>
-            <a href="<?=url('clients/detail/'.$obj->serial_number)?>" class="list-group-item">
-                <?=$obj->computer_name?>
-                <span class="badge pull-right"><?=$obj->pendinginstalls?></span>
+            <?php foreach($machine->query($sql) as $obj): ?>
+            <a href="<?php echo url('clients/detail/'.$obj->serial_number); ?>" class="list-group-item">
+                <?php echo $obj->computer_name; ?>
+                <span class="badge pull-right"><?php echo $obj->pendinginstalls; ?></span>
             </a>
-            <?endforeach?>
+            <?php endforeach; ?>
         </div>
     </div><!-- /panel -->
 </div><!-- /col -->

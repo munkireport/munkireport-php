@@ -71,7 +71,7 @@ $lang['path'] = 'Pfad';
 
 $lang['ethernet'] = 'Ethernet';
 $lang['ip_address'] = 'IP Adresse';
-$lang['network_mask'] = 'Netzmaske';
+$lang['mask'] = 'Netzmaske';
 $lang['prefix_length'] = 'Prefix Laenge';
 $lang['router'] = 'Router';
 $lang['configuration'] = 'Konfiguration';

@@ -10,29 +10,33 @@
 
 				<div class="list-group scroll-box">
 
-				<?	$fv = new filevault_status_model(); 
-					$sql = "SELECT count(1) AS count,
-							filevault_status FROM filevault_status
-							GROUP BY filevault_status
-							ORDER BY count DESC";
-					$cnt = 0;
+				<?php	$fv = new filevault_status_model();
+						$filter = get_machine_group_filter();
+						$sql = "SELECT count(1) AS count,
+								filevault_status 
+								FROM filevault_status
+								LEFT JOIN reportdata USING (serial_number)
+								$filter
+								GROUP BY filevault_status
+								ORDER BY count DESC";
+						$cnt = 0;
 				?>
-					<?foreach($fv->query($sql) as $obj):?>
-							<?if (empty($obj->filevault_status)):?>
-								<a class="list-group-item"><?=lang('unknown')?>
-									<span class="badge pull-right"><?=$obj->count?></span>
+					<?php foreach($fv->query($sql) as $obj): ?>
+							<?php if (empty($obj->filevault_status)):?>
+								<a class="list-group-item"><span data-i18n="unknown">Unknown</span>
+									<span class="badge pull-right"><?php echo $obj->count; ?></span>
 								</a>
-							<?else:?>
-								<a href="<?=url('show/listing/security#'.$obj->filevault_status)?>" class="list-group-item">
-									<span class="badge"><?=$obj->count?></span>
-									<?=$obj->filevault_status?>
+							<?php else: ?>
+								<a href="<?php echo url('show/listing/security#'.$obj->filevault_status); ?>" class="list-group-item">
+									<span class="badge"><?php echo $obj->count; ?></span>
+									<?php echo $obj->filevault_status; ?>
 								</a>
-							<?endif?>
-							<?$cnt++?>
-					<?endforeach?>
-					<?if( ! $cnt):?>
+							<?php endif; ?>
+							<?php $cnt++; ?>
+					<?php endforeach; ?>
+					<?php if( ! $cnt): ?>
 						<span class="list-group-item">No Filevault status available</span>
-						<?endif?>
+						<?php endif; ?>
 
 				</div>
 

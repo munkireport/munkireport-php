@@ -20,10 +20,20 @@ Create the first user
  2. Append the generated hash line to config.php
  3. Now refresh the page in your browser, and you should be able to log in with the credentials you just created.
 
+
 #### No authentication
 
 If you want to deploy munkireport without authentication (because you run your own authentication method), add the following line to config.php
 `$conf['auth']['auth_noauth'] = array();`
+
+Select which modules to install on the client
+---
+
+By default munkireport will only install 2 basic reporting modules: 'machine' and 'reportdata'. If you want the client to report on more items, visit:
+
+ `http://example.com/index.php?/install/dump_modules/config`
+
+Paste the resulting `$conf['modules'] = array(...);` in your config.php file. You can remove items that you don't need reporting on from the array.
 
 Setting up a client manually
 ---
@@ -37,12 +47,23 @@ Now you can setup a client to test if all is ok:
 Setting up clients with munki
 ---
 
-When the client reporting goes well, you can add a pkginfo file to munki:
+When the client reporting goes well, you can create an installer package using the following:
 
-1. Download the pkginfo file
-    `curl -s http://example.com/index.php?/install/plist -o MunkiReport.plist`
-2. Copy MunkiReport.plist into your Munki repository (in your pkgsinfo directory)
-3. Run makecatalogs, and be sure to add it to a manifest as well.
+1. Create the installer `bash -c "$(curl http://example.com/index.php?/install)" bash -i ~/Desktop`
+2. Run `/usr/local/munki/munkiimport ~/Desktop/munkireport-2.2.0.pkg` (changing the version number as needed).
+3. Run `makecatalogs`, and be sure to add the newly imported package to a manifest.
+
+
+Advanced client setup
+---
+
+When Munkireport is installed on the client, 3 directories are generated:
+
+1. `preflight.d` - this directory is used by munkireport to run scripts on preflight, it contains at least `submit.preflight`. Scripts that exit with a non-zero status will not abort the run.
+3. `preflight_abort.d` - this directory is empty and can be used for additional scripts that check if managedsoftwareupdate should run. Scripts that exit with a non-zero status will abort the run.
+4. `postflight.d` - this directory is empty and can be used for additional scripts that should run on postflight.
+
+All scripts have a timeout limit of 10 seconds, after that they're killed.
 
 Advanced server setup
 ---
