@@ -62,6 +62,7 @@ def curl(url, values):
                 '--data', '@-']
 
     # Add (optional) Certificate info
+    # Requires custom cURL binary compiled against OpenSSL or LibreSSL on 10.9+
     cert_info = pref('CertInfo')
     if cert_info:
         cacert = cert_info.get('cacert')
@@ -71,22 +72,22 @@ def curl(url, values):
         if cacert:
             if not os.path.isfile(cacert):
                 raise CurlError(-1, 'No CA cert at %s' % cacert)
-            curl_cmd.append('cacert')
+            curl_cmd.append('--cacert')
             curl_cmd.append(cacert)
         if capath:
             if not os.path.isdir(capath):
                 raise CurlError(-2, 'No CA directory at %s' % capath)
-            curl_cmd.append('capath')
+            curl_cmd.append('--capath')
             curl_cmd.append(capath)
         if cert:
             if not os.path.isfile(cert):
                 raise CurlError(-3, 'No client cert at %s' % cert)
-            curl_cmd.append('cert')
+            curl_cmd.append('--cert')
             curl_cmd.append(cert)
         if key:
             if not os.path.isfile(key):
                 raise CurlError(-4, 'No client key at %s' % key)
-            curl_cmd.append('key')
+            curl_cmd.append('--key')
             curl_cmd.append(key)
 
     proc = subprocess.Popen(curl_cmd, shell=False, bufsize=-1,
