@@ -2,7 +2,7 @@
 class Servermetrics_model extends Model {
 
 	// Field order as sent by postflight and served by get_data().
-	var	$keys = [
+	var	$keys = array(
 		'afp_sessions',
 		'smb_sessions',
 		'caching_cache_toclients',
@@ -19,7 +19,7 @@ class Servermetrics_model extends Model {
 		'network_out',
 		'cpu_nice',
 		'memory_inactive'
-	];
+	);
 
 	function __construct($serial='')
 	{
