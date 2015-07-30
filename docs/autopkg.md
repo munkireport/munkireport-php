@@ -3,7 +3,7 @@ AutoPkg for munkireport
 
 If your munkireport server is running fine and you can create an install package from it, you can automate the process of creating installation packages using the munkireport autopkg recipe. This will help you create a new package suited for your organization when you update your munkireport server.
 
-Thi guide assumes you have installed (AutoPkg)[https://github.com/autopkg/autopkg] and you have some experience working with AutoPkg.
+Thi guide assumes you have installed [AutoPkg](https://github.com/autopkg/autopkg) and you have some experience working with AutoPkg.
 
 First add the munkireport recipe repository:
 
