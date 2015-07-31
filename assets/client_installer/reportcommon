@@ -256,6 +256,8 @@ def process(serial, items):
         result = unserialize(server_data)
     except Exception, e:
         display_error('Could not unserialize server data: %s' % str(e))
+        display_error('Request: %s' % str(values))
+        display_error('Response: %s' % str(server_data))
         return -1
 
     if result.get('error') != '':
