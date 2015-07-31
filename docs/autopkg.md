@@ -8,7 +8,7 @@ Thi guide assumes you have installed [AutoPkg](https://github.com/autopkg/autopk
 First add the munkireport recipe repository:
 
 ```sh
-autopkg autopkg repo-add munkireport-recipes
+autopkg repo-add munkireport-recipes
 ```
 
 This will give you two recipes, munkireport.pkg.recipe and munkireport.munki.recipe. The first will create a package, the second will add it to your munki repository. You cannot use the recipes at the moment, because you have to add some information about your munkireport installation. To add that, you'll need to make an override:
