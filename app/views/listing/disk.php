@@ -18,7 +18,7 @@ new Reportdata_model;
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
-		        <th data-i18n="serial" data-colname='machine#serial_number'></th>
+		        <th data-i18n="serial" data-colname='reportdata#serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
 		        <th data-i18n="storage.mountpoint" data-colname='diskreport#MountPoint'></th>
 		        <th data-i18n="storage.volume_type" data-colname='diskreport#VolumeType'></th>
