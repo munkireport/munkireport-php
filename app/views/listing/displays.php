@@ -18,7 +18,7 @@
 		<thead>
 		  <tr>
 			<th data-colname='machine#computer_name'>On computer</th>
-			<th data-colname='displays#serial_number'>Computer serial</th>
+			<th data-colname='reportdata#serial_number'>Computer serial</th>
 			<th data-colname='displays#type'>Type</th>
 			<th data-colname='displays#vendor'>Vendor</th>
 			<th data-colname='displays#model'>Model</th>
