@@ -254,8 +254,8 @@ def process(serial, items):
     # Decode response
     try:
         result = unserialize(server_data)
-    except:
-        display_error('Illegal response from the server: %s' % server_data)
+    except Exception, e:
+        display_error('Could not unserialize server data: %s' % str(e))
         return -1
 
     if result.get('error') != '':
