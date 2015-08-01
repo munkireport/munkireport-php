@@ -106,6 +106,7 @@ def curl(url, values):
         if not donewithheaders:
             info = proc.stdout.readline().strip('\r\n')
             if info.startswith('HTTP/'):
+                display_detail('Received %s', info)
                 header['http_result_code'] = info.split(None, 2)[1]
                 header['http_result_description'] = info.split(None, 2)[2]
             elif ': ' in info:
@@ -115,7 +116,12 @@ def curl(url, values):
                 header[fieldname] = part[1]
             elif info == '':
                 # we got an empty line; end of headers (or curl exited)
-                donewithheaders = True
+                if header['http_result_code'] in ['100']:
+                    # Continue status
+                    header = {}
+                    header['http_result_code'] = '000'
+                else:
+                    donewithheaders = True
         else:
             output = output + proc.stdout.readline()
             time.sleep(0.1)
