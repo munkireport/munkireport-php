@@ -67,7 +67,7 @@ class Servermetrics_model extends Model {
 	 **/
 	function get_data($serial_number, $hours = 24)
 	{
-		$out =[];
+		$out = '';
 
 		if (authorized_for_serial($serial_number))
 		{
