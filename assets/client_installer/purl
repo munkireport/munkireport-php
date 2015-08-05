@@ -1,4 +1,8 @@
-# Based on: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/URLLoadingSystem/Tasks/UsingNSURLConnection.html#//apple_ref/doc/uid/20001836-SW5
+#!/usr/bin/python
+# encoding: utf-8
+#
+# Adaptation of purl.py by Michael Lynn
+# https://gist.github.com/pudquick/a73d0ce7cd8730c97491
 
 from gurl import *
 from Foundation import NSData, NSString
