@@ -1,0 +1,55 @@
+# Based on: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/URLLoadingSystem/Tasks/UsingNSURLConnection.html#//apple_ref/doc/uid/20001836-SW5
+
+from gurl import *
+from Foundation import NSData, NSString
+
+class Purl(Gurl):
+    '''A POST variant of Gurl'''
+    def initWithOptions_(self, options):
+        '''Set up our Purl object'''
+        # Inherit our basic setup from Gurl
+        self = super(Purl, self).initWithOptions_(options)
+        if not self:
+            return
+        # Now we add in our additional properties: body, content_type
+        if options.get('content_type') is not None:
+            self.additional_headers['Content-Type'] = options.get('content_type')
+        self.body = options.get('body')
+        self.response_data = ''
+        return self
+
+    def start(self):
+        '''Start the connection'''
+        # We're cloning Gurl's start and adding a section in the middle
+        url = NSURL.URLWithString_(self.url)
+        request = (
+            NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval_(
+                url, NSURLRequestReloadIgnoringLocalCacheData,
+                self.connection_timeout))
+        if self.additional_headers:
+            for header, value in self.additional_headers.items():
+                request.setValue_forHTTPHeaderField_(value, header)
+        # new POST-specific code
+        request.setHTTPMethod_('POST')
+        body_unicode = unicode(self.body)
+        body_data    = NSData.dataWithBytes_length_(NSString.stringWithString_(body_unicode).UTF8String(), len(body_unicode.encode('utf-8')))
+        request.setHTTPBody_(body_data)
+        # end POST-specific
+    
+        self.connection = NSURLConnection.alloc().initWithRequest_delegate_(
+            request, self)
+
+    def get_response_data(self):
+        return self.response_data
+
+    def connection_didReceiveData_(self, connection, data):
+        '''NSURLConnectionDataDelegate method
+        Sent as a connection loads data incrementally'''
+
+        # we don't actually use the connection argument, so
+        # pylint: disable=W0613
+        self.response_data = self.response_data + str(data)
+        self.bytesReceived += len(data)
+        if self.expectedLength != NSURLResponseUnknownLength:
+            self.percentComplete = int(
+                float(self.bytesReceived)/float(self.expectedLength) * 100.0)
