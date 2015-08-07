@@ -125,7 +125,8 @@ echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
 $CURL "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
-	&& $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
+    && $CURL "${TPL_BASE}purl" -o "${MUNKIPATH}munkilib/purl.py" \
+    && $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
 	&& $CURL "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
 
 if [ "${?}" != 0 ]
