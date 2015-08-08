@@ -59,6 +59,19 @@ var updateHash = function(e){
 			$('.client-tabs a[href="#summary"]').tab('show');
 		}
 	},
+    addMenuItem = function(conf){
+        conf.menu = conf.menu || 'listing';
+        conf.name = conf.name || 'no_name';
+        conf.i18n = conf.i18n || '';
+        conf.url = conf.url || appUrl + '/show/' + conf.menu + '/' + conf.name;
+        // Add menu item
+        alert('ul.dropdown-menu.' + conf.menu)
+        $('ul.dropdown-menu.' + conf.menu)
+            .append($('<li>')
+                .append($('<a>')
+                    .attr('href', conf.url)
+                    .text(conf.name)));
+    },
 	addTab = function(conf){
 
 		// Add tab link
