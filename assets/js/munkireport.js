@@ -65,7 +65,6 @@ var updateHash = function(e){
         conf.i18n = conf.i18n || '';
         conf.url = conf.url || appUrl + '/show/' + conf.menu + '/' + conf.name;
         // Add menu item
-        alert('ul.dropdown-menu.' + conf.menu)
         $('ul.dropdown-menu.' + conf.menu)
             .append($('<li>')
                 .append($('<a>')
