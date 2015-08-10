@@ -18,9 +18,8 @@ bluetoothfile="$DIR/cache/bluetoothinfo.txt"
 # echo "Getting Bluetooth device status"
 
 # Bluetooth status.
-Power=`system_profiler SPBluetoothDataType | grep 'Bluetooth Power' | awk '{print tolower($3)}'`
-#TODO change this to binary
-status="Status = Bluetooth is $Power"
+status="Status = 0"
+system_profiler SPBluetoothDataType | grep -q 'Bluetooth Power: On' && status="Status = 1"
 
 KeyboardPercent=`ioreg -c AppleBluetoothHIDKeyboard | grep BatteryPercent | sed 's/[a-z,A-Z, ,|,",=]//g' | tail -1 | awk '{print $1}'`
 if [ "${KeyboardPercent}" = "" ]; then

@@ -272,6 +272,8 @@
 	},
 	"no_clients": "No Clients",
 	"no_data": "No Data",
+	"on": "On",
+	"off": "Off",
 	"os": {
 		"version": "OS Version"
 	},

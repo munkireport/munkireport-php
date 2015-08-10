@@ -41,10 +41,10 @@ class Bluetooth_model extends Model {
         	'Keyboard = ' => 'keyboard_battery',
         	'Mouse = ' => 'mouse_battery',
         	'Trackpad = ' => 'trackpad_battery');
-
-//clear any previous data we had
+			
+		//clear any previous data we had
 		foreach($translate as $search => $field) {
-			$this->$field = '';
+			$this->$field = -1;
 		}
 		// Parse data
 		foreach(explode("\n", $data) as $line) {
@@ -53,9 +53,23 @@ class Bluetooth_model extends Model {
 
 			    if(strpos($line, $search) === 0) {
 
-				    $value = substr($line, strlen($search));
+				    $value = trim(substr($line, strlen($search)));
+					
+					// Legacy client module
+					if($value == 'Disconnected')
+					{
+						$value = -1;
+					}
+					elseif(preg_match('/(\d+)% battery life remaining/', $value, $matches))
+					{
+						$value = $matches[1];
+					}
+					elseif(preg_match('/Bluetooth is (.+)/', $value, $matches))
+					{
+						$value = $matches[1] == 'on' ? 1 : 0;
+					}
 
-				    $this->$field = $value;
+				    $this->$field = intval($value);
 				    break;
 			    }
 			}
