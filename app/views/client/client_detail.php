@@ -382,7 +382,15 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 						.append($('<th>')
 							.text(i18n.t('bluetooth.status')))
 						.append($('<td>')
-							.text(data.bluetooth_status)))
+							.text(function(){
+								if(data.bluetooth_status == 1){
+									return i18n.t('on');
+								}
+								if(data.bluetooth_status == 0){
+									return i18n.t('off');
+								}
+								return i18n.t('unknown');
+							})))
 					.append($('<tr>')
 						.append($('<th>')
 							.text(i18n.t('bluetooth.keyboard')))
