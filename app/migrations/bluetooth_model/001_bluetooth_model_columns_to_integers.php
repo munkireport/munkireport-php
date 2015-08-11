@@ -7,7 +7,22 @@ class Migration_bluetooth_model_columns_to_integers extends Model
     {
         // Get database handle
         $dbh = $this->getdbh();
-
+        
+        //Set status to binary
+        $sql = "UPDATE bluetooth SET bluetooth_status = 1 WHERE bluetooth_status = 'Bluetooth is on '";
+        $dbh->exec($sql);
+        $sql = "UPDATE bluetooth SET bluetooth_status = 0 WHERE bluetooth_status = 'Bluetooth is off '";
+        $dbh->exec($sql);
+        $sql = "UPDATE bluetooth SET bluetooth_status = '-1' WHERE bluetooth_status = 'Bluetooth is '";
+        $dbh->exec($sql);
+        //Set disconnected to -1
+        $sql = "UPDATE bluetooth SET keyboard_battery = '-1' WHERE keyboard_battery = 'Disconnected '";
+        $dbh->exec($sql);
+        $sql = "UPDATE bluetooth SET mouse_battery = '-1' WHERE mouse_battery = 'Disconnected '";
+        $dbh->exec($sql);
+        $sql = "UPDATE bluetooth SET trackpad_battery = '-1' WHERE trackpad_battery = 'Disconnected'";
+        $dbh->exec($sql);
+        
         switch ($this->get_driver())
         {
             case 'sqlite':
@@ -15,20 +30,6 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                 break;
 
             case 'mysql':
-                //Set status to binary
-                $sql = "UPDATE bluetooth SET bluetooth_status = 1 WHERE bluetooth_status = 'Bluetooth is on '";
-                $dbh->exec($sql);
-                $sql = "UPDATE bluetooth SET bluetooth_status = 0 WHERE bluetooth_status = 'Bluetooth is off '";
-                $dbh->exec($sql);
-                $sql = "UPDATE bluetooth SET bluetooth_status = '-1' WHERE bluetooth_status = 'Bluetooth is '";
-                $dbh->exec($sql);
-                //Set disconnected to -1
-                $sql = "UPDATE bluetooth SET keyboard_battery = '-1' WHERE keyboard_battery = 'Disconnected '";
-                $dbh->exec($sql);
-                $sql = "UPDATE bluetooth SET mouse_battery = '-1' WHERE mouse_battery = 'Disconnected '";
-                $dbh->exec($sql);
-                $sql = "UPDATE bluetooth SET trackpad_battery = '-1' WHERE trackpad_battery = 'Disconnected '";
-                $dbh->exec($sql);
 
                 // Set columns to INT
                 $sql = "ALTER TABLE bluetooth MODIFY bluetooth_status INT";
@@ -52,7 +53,17 @@ class Migration_bluetooth_model_columns_to_integers extends Model
     {
         // Get database handle
         $dbh = $this->getdbh();
-
+        
+        // Set columns back to VARCHAR
+        $sql = "ALTER TABLE bluetooth MODIFY bluetooth_status VARCHAR(255)";
+        $dbh->exec($sql);
+        $sql = "ALTER TABLE bluetooth MODIFY keyboard_battery VARCHAR(255)";
+        $dbh->exec($sql);
+        $sql = "ALTER TABLE bluetooth MODIFY mouse_battery VARCHAR(255)";
+        $dbh->exec($sql);
+        $sql = "ALTER TABLE bluetooth MODIFY trackpad_battery VARCHAR(255)";
+        $dbh->exec($sql);
+        
         switch ($this->get_driver())
         {
             case 'sqlite':
@@ -60,15 +71,6 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                 break;
 
             case 'mysql':
-                // Set columns back to VARCHAR
-                $sql = "ALTER TABLE bluetooth MODIFY bluetooth_status VARCHAR(255)";
-                $dbh->exec($sql);
-                $sql = "ALTER TABLE bluetooth MODIFY keyboard_battery VARCHAR(255)";
-                $dbh->exec($sql);
-                $sql = "ALTER TABLE bluetooth MODIFY mouse_battery VARCHAR(255)";
-                $dbh->exec($sql);
-                $sql = "ALTER TABLE bluetooth MODIFY trackpad_battery VARCHAR(255)";
-                $dbh->exec($sql);
 
                 //Set status back to strings
                 $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is on ' WHERE bluetooth_status='1'";
