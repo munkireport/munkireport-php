@@ -42,7 +42,10 @@
 									if(obj.keyboard_battery > 14){
 										return 'label-warning';
 									}
-									return 'label-danger';
+									if(obj.keyboard_battery > -1){
+										return 'label-danger';
+									}
+									return 'label-default';
 								})
 								.append('<i class="fa fa-keyboard-o"></i>'))
 							.append(" ")
@@ -55,7 +58,10 @@
 									if(obj.mouse_battery > 14){
 										return 'label-warning';
 									}
-									return 'label-danger';
+									if(obj.mouse_battery > -1){
+										return 'label-danger';
+									}
+									return 'label-default';
 								})
 							.append(' <i class="fa fa-hand-o-up"></i>'))
 							.append(" ")
@@ -68,7 +74,10 @@
 									if(obj.trackpad_battery > 14){
 										return 'label-warning';
 									}
-									return 'label-danger';
+									if(obj.trackpad_battery > -1){
+										return 'label-danger';
+									}
+									return 'label-default';
 								})
 								.append('<i class="fa fa-square-o"></i>'))));
 
