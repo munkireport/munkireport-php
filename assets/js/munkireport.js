@@ -60,16 +60,21 @@ var updateHash = function(e){
 		}
 	},
     addMenuItem = function(conf){
+        // Add menu item
         conf.menu = conf.menu || 'listing';
         conf.name = conf.name || 'no_name';
         conf.i18n = conf.i18n || '';
         conf.url = conf.url || appUrl + '/show/' + conf.menu + '/' + conf.name;
-        // Add menu item
         $('ul.dropdown-menu.' + conf.menu)
             .append($('<li>')
                 .append($('<a>')
                     .attr('href', conf.url)
-                    .text(conf.name)));
+                    .text(function(){
+                        if(conf.i18n){
+                            return i18n.t(conf.i18n);
+                        }
+                        return conf.name;
+                    })));
     },
 	addTab = function(conf){
 

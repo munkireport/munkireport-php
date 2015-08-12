@@ -116,6 +116,31 @@ class Migration_bluetooth_model_columns_to_integers extends Model
 
                     $sql = "ALTER TABLE bluetooth_temp RENAME TO bluetooth";
                     $dbh->exec($sql);
+                    
+                    //Set status back to strings
+                    $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is on ' WHERE bluetooth_status='1'";
+                    $dbh->exec($sql);
+                    $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is off ' WHERE bluetooth_status='0'";
+                    $dbh->exec($sql);
+                    $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is ' WHERE bluetooth_status='-1'";
+                    $dbh->exec($sql);
+
+                    //Replace -1 with disconnected
+                    $sql = "UPDATE bluetooth SET keyboard_battery = 'Disconnected ' WHERE keyboard_battery='-1'";
+                    $dbh->exec($sql);
+                    $sql = "UPDATE bluetooth SET mouse_battery = 'Disconnected ' WHERE mouse_battery='-1'";
+                    $dbh->exec($sql);
+                    $sql = "UPDATE bluetooth SET trackpad_battery = 'Disconnected' WHERE trackpad_battery='-1'";
+                    $dbh->exec($sql);
+                    
+                    //Put the text back
+                    $sql = "UPDATE bluetooth SET keyboard_battery = keyboard_battery || '% battery life remaining ' WHERE keyboard_battery NOT LIKE 'Disconnected '";
+                    $dbh->exec($sql);
+                    $sql = "UPDATE bluetooth SET mouse_battery = mouse_battery || '% battery life remaining ' WHERE mouse_battery NOT LIKE 'Disconnected '";
+                    $dbh->exec($sql);
+                    //next one didn't end in whitespace
+                    $sql = "UPDATE bluetooth SET trackpad_battery = trackpad_battery || '% battery life remaining' WHERE trackpad_battery NOT LIKE 'Disconnected'";
+                    $dbh->exec($sql);
 
                     $dbh->commit();
 
@@ -139,6 +164,31 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                 $dbh->exec($sql);
                 $sql = "ALTER TABLE bluetooth MODIFY trackpad_battery VARCHAR(255)";
                 $dbh->exec($sql);
+                
+                //Set status back to strings
+                $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is on ' WHERE bluetooth_status='1'";
+                $dbh->exec($sql);
+                $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is off ' WHERE bluetooth_status='0'";
+                $dbh->exec($sql);
+                $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is ' WHERE bluetooth_status='-1'";
+                $dbh->exec($sql);
+
+                //Replace -1 with disconnected
+                $sql = "UPDATE bluetooth SET keyboard_battery = 'Disconnected ' WHERE keyboard_battery='-1'";
+                $dbh->exec($sql);
+                $sql = "UPDATE bluetooth SET mouse_battery = 'Disconnected ' WHERE mouse_battery='-1'";
+                $dbh->exec($sql);
+                $sql = "UPDATE bluetooth SET trackpad_battery = 'Disconnected' WHERE trackpad_battery='-1'";
+                $dbh->exec($sql);
+
+                //Put the text back
+                $sql = "UPDATE bluetooth SET keyboard_battery = CONCAT(keyboard_battery , '% battery life remaining ') WHERE keyboard_battery NOT LIKE 'Disconnected '";
+                $dbh->exec($sql);
+                $sql = "UPDATE bluetooth SET mouse_battery = CONCAT(mouse_battery , '% battery life remaining ') WHERE mouse_battery NOT LIKE 'Disconnected '";
+                $dbh->exec($sql);
+                //next one didn't end in whitespace
+                $sql = "UPDATE bluetooth SET trackpad_battery = CONCAT(trackpad_battery , '% battery life remaining') WHERE trackpad_battery NOT LIKE 'Disconnected'";
+                $dbh->exec($sql);
 
                 break;
 
@@ -147,30 +197,6 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                 break;
         }
         
-        //Set status back to strings
-        $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is on ' WHERE bluetooth_status='1'";
-        $dbh->exec($sql);
-        $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is off ' WHERE bluetooth_status='0'";
-        $dbh->exec($sql);
-        $sql = "UPDATE bluetooth SET bluetooth_status = 'Bluetooth is ' WHERE bluetooth_status='-1'";
-        $dbh->exec($sql);
-
-        //Replace -1 with disconnected
-        $sql = "UPDATE bluetooth SET keyboard_battery = 'Disconnected ' WHERE keyboard_battery='-1'";
-        $dbh->exec($sql);
-        $sql = "UPDATE bluetooth SET mouse_battery = 'Disconnected ' WHERE mouse_battery='-1'";
-        $dbh->exec($sql);
-        $sql = "UPDATE bluetooth SET trackpad_battery = 'Disconnected ' WHERE trackpad_battery='-1'";
-        $dbh->exec($sql);
-
-        //Put the text back
-        $sql = "UPDATE bluetooth SET keyboard_battery = CONCAT(keyboard_battery , '% battery life remaining ') WHERE keyboard_battery NOT LIKE 'Disconnected '";
-        $dbh->exec($sql);
-        $sql = "UPDATE bluetooth SET mouse_battery = CONCAT(mouse_battery , '% battery life remaining ') WHERE mouse_battery NOT LIKE 'Disconnected '";
-        $dbh->exec($sql);
-        //next one didn't end in whitespace
-        $sql = "UPDATE bluetooth SET trackpad_battery = CONCAT(trackpad_battery , '% battery life remaining') WHERE trackpad_battery NOT LIKE 'Disconnected '";
-        $dbh->exec($sql);
 
     }
 }
