@@ -43,4 +43,22 @@ class Bluetooth_controller extends Module_controller
         $obj->view('json', array('msg' => $bt->rs));
     }
 	
+	/**
+	 * Get low battery devices
+	 *
+	 *
+	 **/
+	public function get_low()
+	{
+		$obj = new View();
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $bt = new Bluetooth_model();
+        $obj->view('json', array('msg' => $bt->get_low()));
+	}
+	
 } // END class default_module

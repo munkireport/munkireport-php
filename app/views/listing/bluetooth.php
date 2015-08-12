@@ -11,8 +11,17 @@ new Bluetooth_model;
   <div class="row">
     <div class="col-lg-12">
     <script type="text/javascript">
+    
+    $(document).on('appUpdate', function(e){
 
-    $(document).ready(function() {
+        var oTable = $('.table').DataTable();
+        oTable.ajax.reload();
+        return;
+
+    });
+
+
+    $(document).on('appReady', function(e, lang) {
 
         // Get modifiers from data attribute
         var myCols = [], // Colnames
@@ -56,8 +65,8 @@ new Bluetooth_model;
 
                 // Status
                 var status=$('td:eq(3)', nRow).html();
-                status = status == 1 ? '<span class="label label-success">Enabled</span>' :
-                (status === '0' ? '<span class="label label-danger">Disabled</span>' : '')
+                status = status == 1 ? '<span class="label label-success">'+i18n.t('on')+'</span>' :
+                (status === '0' ? '<span class="label label-danger">'+i18n.t('off')+'</span>' : '')
                 $('td:eq(3)', nRow).html(status)
 
                 // Format keyboard percentage

@@ -61,9 +61,12 @@
 		"life_remaining": "__percent__% battery life remaining"
 	},
 	"bluetooth": {
+		"all_ok": "No bluetooth devices with low battery",
 		"bluetooth": "Bluetooth",
+		"bluetooth_battery_widget": "Bluetooth battery status",
 		"keyboard": "Keyboard Status",
 		"mouse": "Mouse Status",
+		"panel_title": "Bluetooth devices with less than 15% battery life",
 		"status": "Bluetooth Status",
 		"trackpad": "Trackpad Status"
 	},

@@ -24,6 +24,33 @@ class Bluetooth_model extends Model {
 		$this->serial = $serial;
 
 	}
+	
+	/**
+	 * Get devices with low battery
+	 *
+	 * Select devices with battery level below 15%
+	 *
+	 **/
+	public function get_low()
+	{
+		$out = array();
+		$sql = "SELECT bluetooth.serial_number, machine.computer_name,
+							bluetooth.keyboard_battery, bluetooth.mouse_battery,
+							bluetooth.trackpad_battery
+						FROM bluetooth
+						LEFT JOIN reportdata USING (serial_number)
+						LEFT JOIN machine USING (serial_number)
+						WHERE ((bluetooth.keyboard_battery BETWEEN 0 AND 14)
+							OR (bluetooth.mouse_battery BETWEEN 0 AND 14)
+							OR (bluetooth.trackpad_battery BETWEEN 0 AND 14))
+						".get_machine_group_filter('AND');
+		foreach($this->query($sql) as $obj)
+		{
+			$out[] = $obj;
+		}
+		
+		return $out;
+	}
 
 	// ------------------------------------------------------------------------
 

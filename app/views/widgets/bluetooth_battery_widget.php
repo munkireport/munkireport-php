@@ -1,64 +1,92 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="bluetooth-battery-widget">
+		
+		<div class="panel-heading">
 
-				<div class="panel-heading" title="Bluetooth devices with less than 15% battery life">
+			<h3 class="panel-title"><i class="fa fa-bolt"></i> 
+				<span data-i18n="bluetooth.bluetooth_battery_widget"></span>
+			</h3>
 
-					<h3 class="panel-title"><i class="fa fa-bolt"></i> <span data-i18n="bluetooth_battery_widget">Bluetooth battery status</span></h3>
+		</div>
 
-				</div>
+		<div class="list-group scroll-box"></div>
+		
+	<script>
+	$(document).on('appReady appUpdate', function(){
+		
+		// Add tooltip
+		$('#bluetooth-battery-widget>div.panel-heading')
+			.attr('title', i18n.t('bluetooth.panel_title'))
+			.tooltip();
+		
+		$.getJSON( appUrl + '/module/bluetooth/get_low', function( data ) {
 
-				<div class="list-group scroll-box">
-					<?php $queryobj = new Bluetooth_model(); ?>
-					<?php $cnt=0;
-								$sql = "SELECT bluetooth.serial_number, machine.computer_name,
-													bluetooth.keyboard_battery, bluetooth.mouse_battery,
-													bluetooth.trackpad_battery
-												FROM bluetooth
-													INNER JOIN
-													machine ON bluetooth.serial_number = machine.serial_number
-												WHERE (bluetooth.keyboard_battery BETWEEN 0 AND 14)
-													OR (bluetooth.mouse_battery BETWEEN 0 AND 14)
-													OR (bluetooth.trackpad_battery BETWEEN 0 AND 14)"; ?>
+			var scrollBox = $('#bluetooth-battery-widget .scroll-box').empty();
 
-					<?php foreach($queryobj->query($sql) as $obj): ?>
-						<a class="list-group-item" href="<?php echo url('clients/detail/'.$obj->serial_number).'#tab_bluetooth-tab'; ?>"><?php echo $obj->computer_name; ?>
-							<span class="pull-right">
-								<?php if ($obj->keyboard_battery > 39) {
-											echo "<span class='label label-success'><i class='fa fa-keyboard-o'></i></span>";
-										} elseif ($obj->keyboard_battery > 14 ) {
-											echo "<span class='label label-warning'><i class='fa fa-keyboard-o'></i></span>";
-										} elseif ($obj->keyboard_battery > -1) {
-											echo "<span class='label label-danger'><i class='fa fa-keyboard-o'></i></span>";
-										}
-								?>
-								<?php if ($obj->mouse_battery > 39) {
-											echo "<span class='label label-success'><i class='fa fa-hand-o-up'></i></span>";
-										} elseif ($obj->mouse_battery > 14 ) {
-											echo "<span class='label label-warning'><i class='fa fa-hand-o-up'></i></span>";
-										} elseif ($obj->mouse_battery > -1) {
-											echo "<span class='label label-danger'><i class='fa fa-hand-o-up'></i></span>";
-										}
-								?>
-								<?php if ($obj->trackpad_battery > 39) {
-											echo "<span class='label label-success'><i class='fa fa-square-o'></i></span>";
-										} elseif ($obj->trackpad_battery > 14 ) {
-											echo "<span class='label label-warning'><i class='fa fa-square-o'></i></span>";
-										} elseif ($obj->trackpad_battery > -1) {
-											echo "<span class='label label-danger'><i class='fa fa-square-o'></i></span>";
-										}
-								?>
-							</span>
-						</a>
-						<?php $cnt++; ?>
-					<?php endforeach; ?>
+			$.each(data, function(index, obj){
 
-					<?php if( ! $cnt): ?>
-						<span class="list-group-item">No bluetooth devices with low battery</span>
-					<?php endif; ?>
+				scrollBox
+					.append($('<a>')
+						.addClass('list-group-item')
+						.attr('href', appUrl + '/clients/detail/' + obj.serial_number + '#tab_summary')
+						.append(obj.computer_name)
+						.append($('<span>')
+							.addClass('pull-right')
+							.append($('<span>')
+								.addClass('label')
+								.addClass(function(){
+									if(obj.keyboard_battery > 39){
+										return 'label-success';
+									}
+									if(obj.keyboard_battery > 14){
+										return 'label-warning';
+									}
+									return 'label-danger';
+								})
+								.append('<i class="fa fa-keyboard-o"></i>'))
+							.append(" ")
+							.append($('<span>')
+								.addClass('label')
+								.addClass(function(){
+									if(obj.mouse_battery > 39){
+										return 'label-success';
+									}
+									if(obj.mouse_battery > 14){
+										return 'label-warning';
+									}
+									return 'label-danger';
+								})
+							.append(' <i class="fa fa-hand-o-up"></i>'))
+							.append(" ")
+							.append($('<span>')
+								.addClass('label')
+								.addClass(function(){
+									if(obj.trackpad_battery > 39){
+										return 'label-success';
+									}
+									if(obj.trackpad_battery > 14){
+										return 'label-warning';
+									}
+									return 'label-danger';
+								})
+								.append('<i class="fa fa-square-o"></i>'))));
 
-				</div>
+			});
 
-			</div><!-- /panel -->
+			$('#bluetooth-battery-widget .counter').html(data.length);
 
-		</div><!-- /col -->
+			if( ! data.length){
+				scrollBox
+					.append($('<span>')
+						.addClass('list-group-item')
+						.text(i18n.t('bluetooth.all_ok')))
+			}
+
+		});				
+	});
+	</script>
+
+	</div><!-- /panel -->
+
+</div><!-- /col -->
