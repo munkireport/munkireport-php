@@ -57,6 +57,9 @@
 		"username": "Username",
 		"wrong_user_or_pass": "Wrong username or password"
 	},
+	"battery": {
+		"life_remaining": "__percent__% battery life remaining"
+	},
 	"bluetooth": {
 		"bluetooth": "Bluetooth",
 		"keyboard": "Keyboard Status",
@@ -137,6 +140,7 @@
 		"save": "Save"
 	},
 	"disabled": "Disabled",
+	"disconnected": "Disconnected",
 	"edit": "Edit",
 	"enabled": "Enabled",
 	"error": "Error",
