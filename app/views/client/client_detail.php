@@ -382,22 +382,45 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 						.append($('<th>')
 							.text(i18n.t('bluetooth.status')))
 						.append($('<td>')
-							.text(data.bluetooth_status)))
+							.text(function(){
+								if(data.bluetooth_status == 1){
+									return i18n.t('on');
+								}
+								if(data.bluetooth_status == 0){
+									return i18n.t('off');
+								}
+								return i18n.t('unknown');
+							})))
 					.append($('<tr>')
 						.append($('<th>')
 							.text(i18n.t('bluetooth.keyboard')))
 						.append($('<td>')
-							.text(data.keyboard_battery)))
+							.text(function(){
+								if(data.keyboard_battery == -1){
+									return i18n.t('disconnected')
+								}
+								return i18n.t('battery.life_remaining', {"percent": data.keyboard_battery})
+							})))
 					.append($('<tr>')
 						.append($('<th>')
 							.text(i18n.t('bluetooth.mouse')))
 						.append($('<td>')
-							.text(data.mouse_battery)))
+							.text(function(){
+								if(data.mouse_battery == -1){
+									return i18n.t('disconnected')
+								}
+								return i18n.t('battery.life_remaining', {"percent": data.mouse_battery})
+							})))
 					.append($('<tr>')
 						.append($('<th>')
 							.text(i18n.t('bluetooth.trackpad')))
 						.append($('<td>')
-							.text(data.trackpad_battery)));
+							.text(function(){
+								if(data.trackpad_battery == -1){
+									return i18n.t('disconnected')
+								}
+								return i18n.t('battery.life_remaining', {"percent": data.trackpad_battery})
+							})));
 			}
 			else{
 				$('table.mr-bluetooth-table')
