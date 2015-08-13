@@ -63,7 +63,7 @@
 				<?php $url = 'show/reports/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o"></i> <span data-i18n="nav.main.reports">Reports</span> <b class="caret"></b></a>
-					<ul class="dropdown-menu">
+					<ul class="report dropdown-menu">
 
 						<?php foreach(scandir(conf('view_path').'report') AS $list_url): ?>
 
@@ -85,7 +85,7 @@
 				<?php $url = 'show/listing/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> <span data-i18n="nav.main.listings">Listings</span> <b class="caret"></b></a>
-					<ul class="dropdown-menu">
+					<ul class="listing dropdown-menu">
 
 						<?php foreach(scandir(conf('view_path').'listing') AS $list_url): ?>
 
@@ -108,7 +108,7 @@
 				<?php $url = 'admin/show/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> <span data-i18n="nav.main.admin"></span> <b class="caret"></b></a>
-					<ul class="dropdown-menu">
+					<ul class="admin dropdown-menu">
 
 						<?php foreach(scandir(conf('view_path').'admin') AS $list_url): ?>
 

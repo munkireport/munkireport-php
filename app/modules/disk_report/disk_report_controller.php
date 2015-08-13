@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Disk report controller class
@@ -27,7 +27,7 @@ class Disk_report_controller extends Module_controller
      * Retrieve data in json format
      *
      * @return void
-     * @author 
+     * @author
      **/
     function get_data($serial_number = '')
     {
@@ -51,7 +51,7 @@ class Disk_report_controller extends Module_controller
 	 * Get statistics
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function get_stats($mount_point = '/')
 	{
@@ -62,9 +62,16 @@ class Disk_report_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
+				$disk_report = new Disk_report_model;
+				$out = array();
+				$thresholds = conf('disk_thresholds', array('danger' => 5, 'warning' => 10));
+				$out['thresholds'] = $thresholds;
+				$out['stats'] = $disk_report->get_stats(
+					$mount_point,
+					$thresholds['danger'],
+					$thresholds['warning']);
 
-        $disk_report = new Disk_report_model;
-        $obj->view('json', array('msg' => $disk_report->get_stats($mount_point)));
+        $obj->view('json', array('msg' => $out));
 
 	}
 

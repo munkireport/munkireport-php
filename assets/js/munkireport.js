@@ -3,7 +3,7 @@
 $( document ).ready(function() {
     $.i18n.init({
         debug: munkireport.debug,
-        useLocalStorage: ! munkireport.debug,
+        useLocalStorage: false,
         resGetPath: munkireport.subdirectory + "assets/locales/__lng__.json",
         fallbackLng: 'en',
         useDataAttrOptions: true
@@ -59,6 +59,23 @@ var updateHash = function(e){
 			$('.client-tabs a[href="#summary"]').tab('show');
 		}
 	},
+    addMenuItem = function(conf){
+        // Add menu item
+        conf.menu = conf.menu || 'listing';
+        conf.name = conf.name || 'no_name';
+        conf.i18n = conf.i18n || '';
+        conf.url = conf.url || appUrl + '/show/' + conf.menu + '/' + conf.name;
+        $('ul.dropdown-menu.' + conf.menu)
+            .append($('<li>')
+                .append($('<a>')
+                    .attr('href', conf.url)
+                    .text(function(){
+                        if(conf.i18n){
+                            return i18n.t(conf.i18n);
+                        }
+                        return conf.name;
+                    })));
+    },
 	addTab = function(conf){
 
 		// Add tab link

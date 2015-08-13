@@ -29,28 +29,40 @@ def main():
     # Try to run postflight.d
     postflightscriptdir = os.path.join(scriptdir, "postflight.d")
     reportcommon.rundir(postflightscriptdir, runtype, False)
-        
+
     # Get serial
     hardware_info = munkicommon.get_hardware_info()
+    hardware_info['computer_name'] = reportcommon.get_computername()
+    hardware_info['cpu'] = reportcommon.get_cpuinfo()
+    hardware_info['cpu_arch'] = os.uname()[4]
+    hardware_info['hostname'] = os.uname()[1]
+    hardware_info['os_version'] = \
+        munkicommon.getOsVersion(only_major_minor=False)
+    hardware_info['buildversion'] = \
+        reportcommon.get_buildversion()
     serial = hardware_info.get('serial_number', 'NO_SERIAL')
-    
+    hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
+
     items = {} # item list
     report_info = {}
     report_info['console_user'] = "%s" % munkicommon.getconsoleuser()
     report_info['runtype'] = runtype
     report_info['runstate'] = 'done'
-    report_info['uptime'] = reportcommon.get_uptime()    
+    report_info['uptime'] = reportcommon.get_uptime()
     report_info_plist = FoundationPlist.writePlistToString(report_info)
-    items = {'reportdata':{'hash':hashlib.md5(report_info_plist).hexdigest(), \
-        'data':report_info_plist}}
+    items = {'machine': \
+        {'hash':hashlib.md5(hw_info_plist).hexdigest(), 'data':hw_info_plist}, \
+            'reportdata': \
+        {'hash':hashlib.md5(report_info_plist).hexdigest(), \
+            'data':report_info_plist}}
     
     # Read config file /Library/Preferences/Munkireport.plist
     config_items = reportcommon.pref('ReportItems') or {}
-    
+
     for key, val in config_items.items():
         reportcommon.display_detail("Requesting %s" % key)
         items[key] = {'path':val}
-        
+
     reportcommon.process(serial, items)
 
     exit(0)

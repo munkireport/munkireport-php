@@ -57,10 +57,16 @@
 		"username": "Username",
 		"wrong_user_or_pass": "Wrong username or password"
 	},
+	"battery": {
+		"life_remaining": "__percent__% battery life remaining"
+	},
 	"bluetooth": {
+		"all_ok": "No bluetooth devices with low battery",
 		"bluetooth": "Bluetooth",
+		"bluetooth_battery_widget": "Bluetooth battery status",
 		"keyboard": "Keyboard Status",
 		"mouse": "Mouse Status",
+		"panel_title": "Bluetooth devices with less than 15% battery life",
 		"status": "Bluetooth Status",
 		"trackpad": "Trackpad Status"
 	},
@@ -137,6 +143,7 @@
 		"save": "Save"
 	},
 	"disabled": "Disabled",
+	"disconnected": "Disconnected",
 	"edit": "Edit",
 	"enabled": "Enabled",
 	"error": "Error",
@@ -272,6 +279,8 @@
 	},
 	"no_clients": "No Clients",
 	"no_data": "No Data",
+	"on": "On",
+	"off": "Off",
 	"os": {
 		"version": "OS Version"
 	},
