@@ -74,7 +74,7 @@ new Reportdata_model;
 		});
 
 	    oTable = $('.table').dataTable( {
-	        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
+	        "sAjaxSource": appUrl + '/datatables/data',
 	        "aaSorting": mySort,
 	        "aoColumns": myCols,
 	        "aoColumnDefs": [
@@ -85,7 +85,7 @@ new Reportdata_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
+	        	var link = get_client_detail_link(name, sn, appUrl + '/', '#tab_storage-tab');
 	        	$('td:eq(0)', nRow).html(link);
 	        	
 	        	// is SSD ?
