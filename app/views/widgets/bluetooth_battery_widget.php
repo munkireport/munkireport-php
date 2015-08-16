@@ -5,7 +5,7 @@
 		<div class="panel-heading">
 
 			<h3 class="panel-title"><i class="fa fa-bolt"></i> 
-				<span data-i18n="bluetooth.bluetooth_battery_widget"></span>
+				<span data-i18n="bluetooth.bluetooth_battery_widget"></span><span class="counter badge pull-right"></span>
 			</h3>
 
 		</div>
