@@ -17,8 +17,8 @@ san smb swupdate timemachine vpn web wiki xcode"
 > "$OUT"
 
 # Check if serveradmin exists
-if [ ! -e "$SERVERADMIN" ]; then
-	echo "$SERVERADMIN not found, aborting"
+if [ -z $( /bin/launchctl list com.apple.serverd 2>/dev/null ) ]; then
+	# Just exit here if com.apple.serverd is not running
 	exit
 fi
 
