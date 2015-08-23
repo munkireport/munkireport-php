@@ -10,6 +10,9 @@ CERTS=/etc/certificates/*.cert.pem
 OUT="/usr/local/munki/preflight.d/cache/certificate.txt"
 SEP="	" # Seperator
 
+# Set LANG to english for the date command to work correctly
+export LANG=en_EN.UTF-8
+
 # Truncate out file
 > "${OUT}"
 
