@@ -1,4 +1,4 @@
-<?php $this->view('partials/head', array('stylesheets' => array('bootstrap-markdown.min.css'))) ?>
+<?php $this->view('partials/head', array('stylesheets' => array('bootstrap-markdown.min.css', 'bootstrap-tagsinput.css'))) ?>
 
 <?php
 
@@ -432,6 +432,56 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 			}
 
 		});
+		
+		// Tags
+		var currentTags = {};
+		$('.mr-machine_desc')
+			.after($('<div>').append($('<select>')
+				.addClass('tags')
+				.attr("data-role", "tagsinput")
+				.attr("multiple", "multiple"))
+				);
+		// Activate tags input
+		$('select.tags').tagsinput();
+		// Get current tags
+		$.getJSON( appUrl + '/module/tag/retrieve/' + serialNumber, function( data ) {
+			// Set item value
+			
+			$.each(data, function(index, item){
+				$('select.tags').tagsinput("add", item.tag)
+				// Store tag id
+				currentTags[item.tag] = item.id;
+			});
+		});
+		
+		// Now add event handlers
+		$('select.tags')
+			.on('itemAdded', function(event) {
+				// Save tag
+				formData = {serial_number: serialNumber, tag: event.item};
+				var jqxhr = $.post( appUrl + "/module/tag/save", formData);
+
+				jqxhr.done(function(data){
+					// Store id in currentTags
+					currentTags[data.tag] = data.id;
+				})
+			})
+		$('select.tags')
+			.on('itemRemoved', function(event) {
+				var id = currentTags[event.item]
+				var jqxhr = $.post( appUrl + "/module/tag/delete/"+serialNumber+"/"+id);
+
+				jqxhr.done(function(data){
+					// remove tag from currentTags
+					delete currentTags[event.item];
+					// TODO: Check on error
+				})
+			});
+		
+			
+		
+		//<select multiple data-role="tagsinput">
+		
 
 
 		loadHash();
@@ -447,6 +497,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 </div>  <!-- /container -->
 
 <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-markdown.js"></script>
+<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-tagsinput.min.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/marked.min.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.comment.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.storageplot.js"></script>
