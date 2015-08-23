@@ -12,7 +12,9 @@ class Tag_controller extends Module_controller
 	{
         if( ! $this->authorized())
         {
-            $obj->view('json', array('msg' => 'Not authorized'));
+            $obj = new View();
+			$obj->view('json', array('msg' => array('error' =>'Not authorized')));
+			die();
         }
 
         $this->module_path = dirname(__FILE__);

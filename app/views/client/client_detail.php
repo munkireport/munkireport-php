@@ -442,9 +442,8 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				.attr("multiple", "multiple"))
 				);
 		
-		// Typeahead suggestions module_path
 		// instantiate the bloodhound suggestion engine
-		var numbers = new Bloodhound({
+		var hotDog = new Bloodhound({
 			datumTokenizer: Bloodhound.tokenizers.whitespace,
 			queryTokenizer: Bloodhound.tokenizers.whitespace,
 			prefetch: {
@@ -454,12 +453,12 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 		});
 
 		// initialize the bloodhound suggestion engine
-		numbers.initialize();
+		hotDog.initialize();
 
 		// Activate tags input
 		$('select.tags').tagsinput({
 			typeaheadjs: {                  
-			  source: numbers.ttAdapter()
+			  source: hotDog.ttAdapter()
 			}
 		});
 		
@@ -482,17 +481,27 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				var jqxhr = $.post( appUrl + "/module/tag/save", formData);
 
 				jqxhr.done(function(data){
-					// Store id in currentTags
-					currentTags[data.tag] = data.id;
+					if(data.error){
+						alert(data.error)
+					}
+					else {
+						// Store id in currentTags
+						currentTags[data.tag] = data.id;
+					}
+					
 				})
 			}).on('itemRemoved', function(event) {
 				var id = currentTags[event.item]
 				var jqxhr = $.post( appUrl + "/module/tag/delete/"+serialNumber+"/"+id);
 
 				jqxhr.done(function(data){
-					// remove tag from currentTags
-					delete currentTags[event.item];
-					// TODO: Check on error
+					if(data.error){
+						alert(data.error)
+					}
+					else {
+						// remove tag from currentTags
+						delete currentTags[event.item];
+					}
 				})
 			});
 			
