@@ -433,7 +433,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 		});
 		
-		// Tags
+		// ------------------------------------ Tags
 		var currentTags = {};
 		$('.mr-machine_desc')
 			.after($('<div>').append($('<select>')
@@ -441,8 +441,28 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				.attr("data-role", "tagsinput")
 				.attr("multiple", "multiple"))
 				);
+		
+		// Typeahead suggestions module_path
+		// instantiate the bloodhound suggestion engine
+		var numbers = new Bloodhound({
+			datumTokenizer: Bloodhound.tokenizers.whitespace,
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			prefetch: {
+    			url: appUrl + '/module/tag/all_tags',
+				cache: false
+			}
+		});
+
+		// initialize the bloodhound suggestion engine
+		numbers.initialize();
+
 		// Activate tags input
-		$('select.tags').tagsinput();
+		$('select.tags').tagsinput({
+			typeaheadjs: {                  
+			  source: numbers.ttAdapter()
+			}
+		});
+		
 		// Get current tags
 		$.getJSON( appUrl + '/module/tag/retrieve/' + serialNumber, function( data ) {
 			// Set item value
@@ -465,9 +485,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					// Store id in currentTags
 					currentTags[data.tag] = data.id;
 				})
-			})
-		$('select.tags')
-			.on('itemRemoved', function(event) {
+			}).on('itemRemoved', function(event) {
 				var id = currentTags[event.item]
 				var jqxhr = $.post( appUrl + "/module/tag/delete/"+serialNumber+"/"+id);
 
@@ -477,12 +495,8 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					// TODO: Check on error
 				})
 			});
-		
 			
-		
-		//<select multiple data-role="tagsinput">
-		
-
+			// ------------------------------------ End Tags
 
 		loadHash();
 
@@ -498,6 +512,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-markdown.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-tagsinput.min.js"></script>
+<script src="<?php echo conf('subdirectory'); ?>assets/js/typeahead.bundle.min.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/marked.min.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.comment.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.storageplot.js"></script>

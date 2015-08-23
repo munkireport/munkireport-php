@@ -88,15 +88,6 @@ class Tag_controller extends Module_controller
     }
 
     /**
-     * Update Tag
-     *
-     **/
-    function update()
-    {
-
-    }
-
-    /**
      * Delete Tag
      *
      **/
@@ -120,6 +111,19 @@ class Tag_controller extends Module_controller
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
+	
+	/**
+	 * Get all defined tags
+	 *
+	 * Returns a JSON array with all defined tags, used for typeahead
+	 *
+	 **/
+	public function all_tags()
+	{
+		$Tag = new Tag_model;
+		$obj = new View();
+        $obj->view('json', array('msg' => $Tag->all_tags()));
+	}
     
 
 

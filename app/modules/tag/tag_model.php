@@ -22,4 +22,27 @@ class Tag_model extends Model {
 		$this->create_table();
 				  
 	}
+    
+    /**
+     * Retrieve all tags
+     *
+     *
+     **/
+    public function all_tags()
+    {
+        $out = array();
+        $filter = get_machine_group_filter();
+        
+		$sql = "SELECT tag
+			FROM tag
+			LEFT JOIN reportdata USING (serial_number)
+			$filter
+			GROUP BY tag
+            ORDER BY tag ASC";
+        foreach($this->query($sql) as $obj)
+		{
+			$out[]  = $obj->tag;
+		}
+        return $out;
+    }
 }
