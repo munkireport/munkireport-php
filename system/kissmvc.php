@@ -115,6 +115,8 @@ class Model extends KISS_Model
             //primary key exists, so update
             $this->update();
         }
+		
+		return $this;
     }
 
     /**
@@ -249,6 +251,31 @@ class Model extends KISS_Model
 		array_unshift($bindings, $serial_number);
 		
 		return $this->retrieve_one($where, $bindings);
+	}
+
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Delete one considering machine_group membership
+	 * use this instead of delete_where
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function delete_record($serial_number, $where = '', $bindings = array())
+	{
+		if( ! authorized_for_serial($serial_number))
+		{
+			return FALSE;
+		}
+
+		// Prepend where with serial_number
+		$where = $where ? 'serial_number=? AND '.$where : 'serial_number=?';
+
+		// Push serial number in front of the array
+		array_unshift($bindings, $serial_number);
+		
+		return $this->delete_where($where, $bindings);
 	}
 
 	// ------------------------------------------------------------------------
