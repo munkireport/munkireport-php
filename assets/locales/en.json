@@ -338,6 +338,9 @@
 	"system": {
 		"system": "System"
 	},
+	"tags": {
+		"add_tag": "Add Tag"
+	},
 	"timemachine": {
 		"timemachine": "Timemachine"
 	},
