@@ -63,7 +63,7 @@ $(document).on('appReady', function(){
 	})
 	
 	
-	$(document).on('appReady appUpdate', function(){
+	$(document).on('appUpdate', function(){
 		
 		var hours = 24 * 7;
 		$.getJSON( appUrl + '/module/munkireport/get_stats/'+hours, function( data ) {
