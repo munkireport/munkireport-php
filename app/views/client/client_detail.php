@@ -465,7 +465,12 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 		// Get current tags
 		$.getJSON( appUrl + '/module/tag/retrieve/' + serialNumber, function( data ) {
 			// Set item value
-			
+			if(data.length == 0){
+				// Show 'Add tags button'
+			}
+			else{
+				// Show 'Edit tags button'
+			}
 			$.each(data, function(index, item){
 				$('select.tags').tagsinput("add", item.tag)
 				// Store tag id

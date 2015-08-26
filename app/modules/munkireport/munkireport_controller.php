@@ -43,6 +43,30 @@ class Munkireport_controller extends Module_controller
 		$obj = new View();
 		$obj->view('pending', $data, $this->view_path);
 	}
+	
+	/**
+	 * undocumented function summary
+	 *
+	 * Undocumented function long description
+	 *
+	 * @param type var Description
+	 **/
+	public function get_stats($hours = 24)
+	{
+		$out = array();
+		if( ! $this->authorized())
+		{
+			$out['error'] = 'Not authorized';
+		}
+		else {
+			$mr = new Munkireport_model;
+			$out = $mr->get_stats($hours);
+		}
+		
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
 
 	
 } // END class default_module

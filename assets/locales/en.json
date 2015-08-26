@@ -215,6 +215,9 @@
 		"pressure": "Memory Pressure"
 	},
 	"model": "Model",
+	"munki": {
+		"panel_title": "Munki statistics this week"
+	},
 	"name": "Name",
 	"nav": {
 		"admin": {
