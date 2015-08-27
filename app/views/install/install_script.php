@@ -37,7 +37,7 @@ Usage: ${PROG} [OPTIONS]
   -i PATH   Create a full installer at PATH
   -c ID     Change pkg id to ID
   -h        Display this help message
-	-r PATH   Path to installer result plist
+  -r PATH   Path to installer result plist
   -v VERS   Override version number
 
 Example:
@@ -239,8 +239,8 @@ if [ $ERR = 0 ]; then
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
 		if [[ $RESULT ]]; then
-			defaults write $RESULT version ${VERSION}
-			defaults write $RESULT pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
+			defaults write "$RESULT" version ${VERSION}
+			defaults write "$RESULT" pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
 		fi
 
 	else
