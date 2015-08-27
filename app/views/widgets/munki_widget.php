@@ -71,12 +71,11 @@ $(document).on('appReady', function(){
 			$.each(entries, function(i, obj){
 				// Set count
 				$('#munki-widget a.'+obj.class+' span.bigger-150')
-					.text(data[obj.name]);
+					.text(+data[obj.name]);
 				// Set localized label
 				$('#munki-widget a.'+obj.class+' span.count')
 					.text(i18n.t(obj.name, { count: +data[obj.name] }));
 			});
-			console.log(data);
 
 		});
 				
