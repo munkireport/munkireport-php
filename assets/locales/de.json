@@ -3,10 +3,14 @@
 		"author": "Arjen van Bochoven"
 	},
 	"admin": {
+		"bu": {
+			"more_info": "Mehr Informationen"
+		},
 		"bu_overview": "Geschäftsbereiche",
 		"delete_failed": "Löschen fehlgeschlagen: ",
 		"edit_bu": {
 			"title": "Geschäftsbereiche editieren",
+			"link": "Link (zu externer Website)",
 			"name": "Name des Geschäftsbereiches",
 			"address": "Adresse"
 		},
@@ -53,10 +57,16 @@
 		"username": "Benutzername",
 		"wrong_user_or_pass": "Falscher Benutzername oder falches Kennwort"
 	},
-	"bluetooth": {
+	"battery": {
+		"life_remaining": "__percent__% verbleibende Batterielaufzeit"
+	},
+"bluetooth": {
+		"all_ok": "Keine Bluetooth-Geräte mit niedrigem Batteriestand",
 		"bluetooth": "Bluetooth",
-		"keyboard": "Tastatur Status",
-		"mouse": "Maus Status",
+		"bluetooth_battery_widget": "Bluetooth Batteriestatus",
+		"keyboard": "Tastatur",
+		"mouse": "Maus",
+		"panel_title": "Bluetooth-Geräta mit weniger als 15% Batterie",
 		"status": "Bluetooth Status",
 		"trackpad": "Trackpad Status"
 	},
@@ -69,6 +79,7 @@
 		"managers": "Managers",
 		"users": "Benutzer"
 	},
+	"buildversion": "Build Version",
 	"caching": {
 		"bytes_served": "CachingServer – Übertragene Bytes",
 		"from_origin": "Herkunft",
@@ -132,6 +143,7 @@
 		"save": "Speichern"
 	},
 	"disabled": "Deaktiviert",
+	"disconnected": "Getrennt",
 	"edit": "Editieren",
 	"enabled": "Aktiviert",
 	"error": "Fehler",
@@ -203,6 +215,9 @@
 		"pressure": "Speicherdruck"
 	},
 	"model": "Modell",
+	"munki": {
+		"panel_title": "Munki Statistik diese Woche"
+	},
 	"name": "Name",
 	"nav": {
 		"admin": {
@@ -267,6 +282,8 @@
 	},
 	"no_clients": "Keine Clients",
 	"no_data": "Keine Daten",
+	"on": "An",
+	"off": "Aus",
 	"os": {
 		"version": "OS Version"
 	},
@@ -323,6 +340,9 @@
 	},
 	"system": {
 		"system": "System"
+	},
+	"tags": {
+		"add_tag": "Tag hinzufügen"
 	},
 	"timemachine": {
 		"timemachine": "Time Machine"
