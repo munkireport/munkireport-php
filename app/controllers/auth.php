@@ -265,7 +265,9 @@ class auth extends Controller
 		// Check if we are in a session
 		if( ! isset($_SESSION['auth']))
 		{
-			echo 'Not authorized'; // Todo: return json?
+			$msg = array('error' => 'Not authorized');
+			$obj = new View();
+	        $obj->view('json', array('msg' => $msg));
 			return;
 		}
 
@@ -373,8 +375,8 @@ class auth extends Controller
 		// Show current session info
 		if($show)
 		{
-			echo '<pre>';
-			print_r($_SESSION);
+			$obj = new View();
+	        $obj->view('json', array('msg' => $_SESSION));
 		}
 	}
 
