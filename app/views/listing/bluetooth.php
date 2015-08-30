@@ -47,8 +47,10 @@ new Bluetooth_model;
         });
 
           oTable = $('.table').dataTable( {
-              ajax: "<?=url('datatables/data')?>",
-              order: mySort,
+              ajax: {
+                  url: "<?php echo url('datatables/data'); ?>",
+                  type: "POST"
+              },              order: mySort,
               columnDefs: columnDefs,
               createdRow: function( nRow, aData, iDataIndex ) {
                 // Update name in first column to link

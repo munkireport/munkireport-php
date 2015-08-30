@@ -60,6 +60,7 @@ new Reportdata_model;
             columnDefs: columnDefs,
             ajax: {
                 url: "<?=url('datatables/data')?>",
+                type: "POST",
                 data: function(d){
                     // Look for a GB search string
                     if(d.search.value.match(/^\d+ GB$/))

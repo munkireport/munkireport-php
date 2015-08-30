@@ -68,7 +68,8 @@ new Munkireport_model;
 		});
 		var oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: "<?php echo url('datatables/data'); ?>",
+                type: "POST",
                 data: function( d ){
                     // Look for 'osversion' statement
                     if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){

@@ -26,8 +26,8 @@ class datatables extends Controller
 
 		$searchcols = array();
 
-		// Process $_GET array
-		foreach($_GET as $k => $v)
+		// Process $_POST array
+		foreach($_POST as $k => $v)
 		{
 			if($k == 'search')
 			{

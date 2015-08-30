@@ -74,6 +74,7 @@ new Reportdata_model;
 	    oTable = $('.table').dataTable( {
             ajax: {
                 url: "<?=url('datatables/data')?>",
+                type: "POST",
                 data: function(d){
             
                     // Look for 'between' statement todo: make generic

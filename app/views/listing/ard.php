@@ -56,7 +56,10 @@ new Ard_model;
 		});
 	    oTable = $('.table').dataTable( {
 	        columnDefs: columnDefs,
-	        ajax: "<?php echo url('datatables/data'); ?>",
+	        ajax: {
+                url: "<?php echo url('datatables/data'); ?>",
+                type: "POST"
+            },
 	        createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();

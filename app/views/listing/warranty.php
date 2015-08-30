@@ -71,7 +71,8 @@ $(document).on('appReady', function(e, lang) {
 
     oTable = $('.table').dataTable( {
         ajax: {
-            url: "<?=url('datatables/data')?>"
+            url: "<?=url('datatables/data')?>",
+            type: "POST"
         },
         order: mySort,
         columnDefs: columnDefs,

@@ -75,6 +75,7 @@ new Timemachine_model;
 	    oTable = $('.table').dataTable( {
             ajax: {
                 url: "<?=url('datatables/data')?>",
+                type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "timemachine.id"
                 }

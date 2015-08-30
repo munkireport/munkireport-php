@@ -80,6 +80,7 @@ new Munkireport_model;
 	    oTable = $('.table').dataTable( {
             ajax: {
                 url: "<?=url('datatables/data')?>",
+                type: "POST",
                 data: function(d){
                     // Check for column in search
                     if(d.search.value){
