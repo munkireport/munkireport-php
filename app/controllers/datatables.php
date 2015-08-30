@@ -16,7 +16,7 @@ class datatables extends Controller
 			'columns' => array(),
 			'order' => array(),
 			'start' => 0, // Start
-			'length' => 0, // Length
+			'length' => -1, // Length
 			'draw' => 0, // Identifier, just return
 			'search' => '', // Search query
 			'where' => '', // Optional where clause

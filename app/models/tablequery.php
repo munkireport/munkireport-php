@@ -50,7 +50,7 @@ class Tablequery {
             $columns[$pos] = $column['name'];
             
             // Check if search in column
-            if($column['search']['value'])
+            if(isset($column['search']['value']) && $column['search']['value'])
             {
                 $search_cols[$pos] = $column['search']['value'];
             }
