@@ -17,21 +17,20 @@ new Munkireport_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
-		        <th data-i18n="serial" data-colname='reportdata#serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
-		        <th data-colname='reportdata#remote_ip'>IP</th>
-				<th data-colname='machine#os_version'>OS</th>
-		        <th data-colname='munkireport#version'>Munki</th>
-		        <th data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport#timestamp'>Latest Run</th>
-		        <th data-colname='munkireport#runtype'>Runtype</th>
-		        <th data-hide="1" data-colname='munkireport#errors'>Errors</th>
-		        <th data-hide="1" data-colname='munkireport#warnings'>Warnings</th>
-		        <th data-hide="1" data-colname='munkireport#pendinginstalls'>Pending</th>
-		        <th data-hide="1" data-colname='munkireport#installresults'>Installed</th>
-		        <th data-hide="1" data-colname='munkireport#removalresults'>Removed</th>
-		        <th data-hide="1" data-colname='munkireport#pendingremovals'>Removed</th>
-				<th data-colname='munkireport#manifestname'>Manifest</th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
+				<th data-i18n="os.version" data-colname='machine.os_version'></th>
+		        <th data-i18n="munki.version" data-colname='munkireport.version'></th>
+		        <th data-i18n="last_seen" data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport.timestamp'>Latest Run</th>
+		        <th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
+		        <th data-i18n="error_plural" data-colname='munkireport.errors'></th>
+		        <th data-i18n="warning_plural" data-colname='munkireport.warnings'></th>
+		        <th data-i18n="listing.munki.pending_install_plural" data-colname='munkireport.pendinginstalls'></th>
+		        <th data-i18n="listing.munki.package_installed_plural" data-colname='munkireport.installresults'></th>
+		        <th data-i18n="listing.munki.package_removed_plural" data-colname='munkireport.removalresults'></th>
+				<th data-i18n="manifest.name" data-colname='munkireport.manifestname'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -56,37 +55,51 @@ new Munkireport_model;
 
 	$(document).on('appReady', function(e, lang) {
 
-		// Get modifiers from data attribute
-		var myCols = [], // Colnames
-			mySort = [], // Initial sort
-			hideThese = [], // Hidden columns
-			col = 0; // Column counter
+        // Get modifiers from data attribute
+        var mySort = [], // Initial sort
+            hideThese = [], // Hidden columns
+            col = 0, // Column counter
+            runtypes = [], // Array for runtype column 
+            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
-		$('.table th').map(function(){
+        $('.table th').map(function(){
 
-			  myCols.push({'mData' : $(this).data('colname')});
+            columnDefs.push({name: $(this).data('colname'), targets: col});
 
-			  if($(this).data('sort'))
-			  {
-			  	mySort.push([col, $(this).data('sort')])
-			  }
+            if($(this).data('sort')){
+              mySort.push([col, $(this).data('sort')])
+            }
 
-			  if($(this).data('hide'))
-			  {
-			  	hideThese.push(col);
-			  }
+            if($(this).data('hide')){
+              hideThese.push(col);
+            }
 
-			  col++
-		});
+            col++
+        });
 
 	    oTable = $('.table').dataTable( {
-            "sAjaxSource": appUrl + '/datatables/data',
-	        "aoColumnDefs": [
-	        	{ 'bVisible': false, "aTargets": hideThese }
-			],
-	        "aoColumns": myCols,
-	        "aaSorting": mySort,
-	        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+            ajax: {
+                url: "<?=url('datatables/data')?>",
+                data: function(d){
+                    // Check for column in search
+                    if(d.search.value){
+                        $.each(d.columns, function(index, item){
+                            if(item.name == 'munkireport.' + d.search.value){
+                                d.columns[index].search.value = '> 0';
+                            }
+                        });
+
+                    }
+        		    // OS version
+                    if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
+                        var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+                        d.search.value = search;
+                    }
+                }
+            },
+            order: mySort,
+            columnDefs: columnDefs,
+		    createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
@@ -95,14 +108,10 @@ new Munkireport_model;
 	        	$('td:eq(0)', nRow).html(link);
 
 	        	// Format date
-	        	date = aData['munkireport#timestamp'];
-	        	if(date)
-	        	{
+	        	date = $('td:eq(6)', nRow).text();
+                $('td:eq(6)', nRow).html('never');
+	        	if(date){
 	              	$('td:eq(6)', nRow).html(moment(date).fromNow());
-	        	}
-	        	else
-	        	{
-	        		$('td:eq(6)', nRow).html('never');
 	        	}
 
                 // Format OS Version
@@ -113,62 +122,10 @@ new Munkireport_model;
                 }
                 $('td:eq(4)', nRow).html(osvers);
 
-
-	        	var runtype = $('td:eq(7)', nRow).html(),
-		        	cols = [
-		        		{name:'errors', flag: 'danger', desc: 'error'},
-		        		{name:'warnings', flag: 'warning', desc: 'warning'},
-		        		{name:'pendinginstalls', flag: 'info', desc: 'listing.munki.pending_install'},
-		        		{name:'pendingremovals', flag: 'info', desc: 'listing.munki.pending_removal'},
-		        		{name:'installresults', flag: 'success', desc: 'listing.munki.package_installed'},
-		        		{name:'removalresults', flag: 'success', desc: 'listing.munki.package_removed'}
-		        	], 
-	        		count = 0
-
-	        	cols.map( function(col) {
-	        		count = aData['munkireport#' + col.name] * 1
-		        	if(count > 0)
-		        	{
-		        		runtype += ' <span class="text-'+col.flag+'">' + 
-			        		count + ' ' + i18n.t(col.desc,{"count":count}) + '</span>'
-		        	}
-				})
-
-	        	$('td:eq(7)', nRow).html(runtype)
-
-		    },
-		    "fnServerParams": function ( aoData ) {
-		      	// Hook in serverparams to change search
-		      	// Convert array to dict
-		      	var out = {}
-				for (var i = 0; i < aoData.length; i++) {
-					out[aoData[i]['name']] =  aoData[i]['value']
-				}
-
-				sortcol = out.sSearch;
-				// Detect correct column here
-				var col = 0,
-					sortarr = []
-				myCols.map(function(item){
-					if(item.mData == 'munkireport#' + sortcol)
-					{
-						aoData.push({ "name": "sSearch_" + col, "value": '> 0'});
-					}
-					col++;
-				});
-
-				// Look for 'osversion' statement 
-				if(out.sSearch.match(/^\d+\.\d+(\.(\d+)?)?$/))
-				{
-					var search = out.sSearch.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
-
-					// Override global search
-					aoData.push( { "name": "sSearch", "value": search } );
-				}
 		    }
-	    } );
+	    });
 
-	} );
+	});
 </script>
 
 <?php $this->view('partials/foot'); ?>

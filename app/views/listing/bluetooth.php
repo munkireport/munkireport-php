@@ -24,14 +24,14 @@ new Bluetooth_model;
     $(document).on('appReady', function(e, lang) {
 
         // Get modifiers from data attribute
-        var myCols = [], // Colnames
-            mySort = [], // Initial sort
+        var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
-            col = 0; // Column counter
+            col = 0, // Column counter
+            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
 
-            myCols.push({'mData' : $(this).data('colname')});
+            columnDefs.push({name: $(this).data('colname'), targets: col});
 
             if($(this).data('sort'))
             {
@@ -47,15 +47,10 @@ new Bluetooth_model;
         });
 
           oTable = $('.table').dataTable( {
-              "bProcessing": true,
-              "bServerSide": true,
-              "sAjaxSource": "<?=url('datatables/data')?>",
-              "aaSorting": mySort,
-              "aoColumns": myCols,
-              "aoColumnDefs": [
-                { 'bVisible': false, "aTargets": hideThese }
-          ],
-              "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+              ajax: "<?=url('datatables/data')?>",
+              order: mySort,
+              columnDefs: columnDefs,
+              createdRow: function( nRow, aData, iDataIndex ) {
                 // Update name in first column to link
                 var name=$('td:eq(0)', nRow).html();
                 if(name == ''){name = "No Name"};
@@ -107,13 +102,13 @@ new Bluetooth_model;
       <table class="table table-striped table-condensed table-bordered">
         <thead>
           <tr>
-              <th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
-              <th data-i18n="serial" data-colname='reportdata#serial_number'></th>
-              <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
-              <th data-i18n="listing.bluetooth.status" data-colname='bluetooth#bluetooth_status'></th> 
-              <th data-i18n="listing.bluetooth.keyboard_battery" data-colname='bluetooth#keyboard_battery'></th>
-              <th data-i18n="listing.bluetooth.mouse_battery" data-colname='bluetooth#mouse_battery'></th>
-              <th data-i18n="listing.bluetooth.trackpad_battery" data-colname='bluetooth#trackpad_battery'></th>
+              <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+              <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+              <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+              <th data-i18n="listing.bluetooth.status" data-colname='bluetooth.bluetooth_status'></th> 
+              <th data-i18n="listing.bluetooth.keyboard_battery" data-colname='bluetooth.keyboard_battery'></th>
+              <th data-i18n="listing.bluetooth.mouse_battery" data-colname='bluetooth.mouse_battery'></th>
+              <th data-i18n="listing.bluetooth.trackpad_battery" data-colname='bluetooth.trackpad_battery'></th>
           </tr>
         </thead>
         <tbody>

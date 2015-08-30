@@ -209,6 +209,9 @@
 		},
 		"username": "Username"
 	},
+	"manifest": {
+		"name": "Manifest Name"
+	},
 	"memory": {
 		"memory": "Memory",
 		"usage": "Memory Usage",
@@ -216,7 +219,9 @@
 	},
 	"model": "Model",
 	"munki": {
-		"panel_title": "Munki statistics this week"
+		"panel_title": "Munki statistics this week",
+		"run_type": "Run Type",
+		"version": "Munki Version"
 	},
 	"name": "Name",
 	"nav": {

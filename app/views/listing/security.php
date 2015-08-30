@@ -18,13 +18,13 @@ new Localadmin_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='reportdata#serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='localadmin#users'>Local administrators</th>
-		        <th data-colname='filevault_status#filevault_users'>FileVault Enabled users</th>
-		        <th data-colname='machine#machine_name'>Type</th>
-		        <th data-colname='filevault_status#filevault_status'>Filevault status</th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
+		        <th data-colname='localadmin.users'>Local administrators</th>
+		        <th data-colname='filevault_status.filevault_users'>FileVault Enabled users</th>
+		        <th data-colname='machine.machine_name'>Type</th>
+		        <th data-colname='filevault_status.filevault_status'>Filevault status</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -49,37 +49,35 @@ new Localadmin_model;
 
 	$(document).on('appReady', function(e, lang) {
 
-		// Get modifiers from data attribute
-		var myCols = [], // Colnames
-			mySort = [], // Initial sort
-			hideThese = [], // Hidden columns
-			col = 0; // Column counter
+        // Get modifiers from data attribute
+        var mySort = [], // Initial sort
+            hideThese = [], // Hidden columns
+            col = 0, // Column counter
+            runtypes = [], // Array for runtype column 
+            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
-		$('.table th').map(function(){
+        $('.table th').map(function(){
 
-			  myCols.push({'mData' : $(this).data('colname')});
+            columnDefs.push({name: $(this).data('colname'), targets: col});
 
-			  if($(this).data('sort'))
-			  {
-			  	mySort.push([col, $(this).data('sort')])
-			  }
+            if($(this).data('sort')){
+              mySort.push([col, $(this).data('sort')])
+            }
 
-			  if($(this).data('hide'))
-			  {
-			  	hideThese.push(col);
-			  }
+            if($(this).data('hide')){
+              hideThese.push(col);
+            }
 
-			  col++
-		});
+            col++
+        });
 
 	    oTable = $('.table').dataTable( {
-	        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
-	        "aaSorting": mySort,
-	        "aoColumns": myCols,
-	        "aoColumnDefs": [
-	        	{ 'bVisible': false, "aTargets": hideThese }
-			],
-	        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+            ajax: {
+                url: "<?=url('datatables/data')?>"
+            },
+            order: mySort,
+            columnDefs: columnDefs,
+		    createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};

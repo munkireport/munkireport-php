@@ -23,7 +23,7 @@ class Tablequery {
         $dbh = getdbh();
 
         // Initial value
-        $iTotal = 0;
+        $recordsTotal = 0;
 
         // Get tables from column names
         $tables = array();
@@ -31,10 +31,10 @@ class Tablequery {
         // Add the reportdata table
         $tables['reportdata'] = 1;
 
-        $formatted_columns = array();
-        foreach($cfg['cols'] AS $pos => $name)
+        $formatted_columns = $columns = $search_cols = array();
+        foreach($cfg['columns'] AS $pos => $column)
         {
-            $tbl_col_array = explode('#', $name);
+            $tbl_col_array = explode('.', $column['name']);
             if(count($tbl_col_array) == 2)
             {
                 // Store table name
@@ -45,7 +45,14 @@ class Tablequery {
             }
             else
             {
-                $formatted_columns[$pos] = sprintf('`%s`', $name);
+                $formatted_columns[$pos] = sprintf('`%s`', $column['name']);
+            }
+            $columns[$pos] = $column['name'];
+            
+            // Check if search in column
+            if($column['search']['value'])
+            {
+                $search_cols[$pos] = $column['search']['value'];
             }
         }
 
@@ -67,17 +74,7 @@ class Tablequery {
         $where = '';
         if( $cfg['mrColNotEmpty'])
         {
-            $tbl_col_array = explode('#', $cfg['mrColNotEmpty']);
-            if(count($tbl_col_array) == 2)
-            {
-                // Format column name
-                $where = sprintf('WHERE `%s`.`%s` IS NOT NULL', 
-                    $tbl_col_array[0], $tbl_col_array[1]);
-            }
-            else
-            {
-                $where = sprintf('WHERE `%s` IS NOT NULL', $cfg['mrColNotEmpty']);
-            }
+            $where = sprintf('WHERE %s IS NOT NULL', $cfg['mrColNotEmpty']);
         }
 
         // Business unit filter (assumes we are selecting the reportdata table)
@@ -101,6 +98,7 @@ class Tablequery {
             SELECT COUNT(1) as count
             $from
             $where";
+        //print $sql;return;
         if( ! $stmt = $dbh->prepare( $sql ))
         {
             $err = $dbh->errorInfo();
@@ -109,50 +107,50 @@ class Tablequery {
         $stmt->execute();// $bindings );
         if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
         {
-            $iTotal = $rs->count;
+            $recordsTotal = $rs->count;
         }   
 
         // Paging
         $sLimit = sprintf(' LIMIT %d,%d', 
-            $cfg['iDisplayStart'], $cfg['iDisplayLength']);
+            $cfg['start'], $cfg['length']);
 
         // Show all
-        if( $cfg['iDisplayLength'] == -1 )
+        if( $cfg['length'] == -1 )
         {
             $sLimit = '';
         }
 
         // Ordering
         $sOrder = "";
-        if(count($cfg['sort_cols']) > 0)
+        if(count($cfg['order']))
         {
             $sOrder = "ORDER BY  ";
             $order_arr = array();
-            foreach($cfg['sort_cols'] AS $pos => $direction)
+            foreach($cfg['order'] AS $order_entry)
             {
-                $order_arr[] = sprintf('%s %s', $formatted_columns[$pos], $direction);
+                $order_arr[] = sprintf('%s %s', $formatted_columns[$order_entry['column']], $order_entry['dir']);
             }
             $sOrder = "ORDER BY  ".implode(',', $order_arr);
         }
 
         // Search
         $sWhere = $where;
-        if($cfg['sSearch'])
+        if($cfg['search'])
         {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach($formatted_columns AS $col)
             {
-                $sWhere .= $col." LIKE '%".( $cfg['sSearch'] )."%' OR ";
+                $sWhere .= $col." LIKE '%".( $cfg['search'] )."%' OR ";
             }
             $sWhere = substr_replace( $sWhere, "", -3 );
             $sWhere .= ')';
         }
 
         // Search columns
-        if($cfg['search_cols'])
+        if($search_cols)
         {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
-            foreach ($cfg['search_cols'] as $pos => $val)
+            foreach ($search_cols as $pos => $val)
             {
                 if(is_string($val))
                 {
@@ -178,13 +176,14 @@ class Tablequery {
         }
 
         // Get filtered results count
-        $iFilteredTotal = $iTotal;
+        $recordsFiltered = $recordsTotal;
         if( $sWhere)
         {
             $sql = "
                 SELECT COUNT(*) as count
                 $from
                 $sWhere";
+            //print $sql;return;
             if( ! $stmt = $dbh->prepare( $sql ))
             {
                 $err = $dbh->errorInfo();
@@ -193,15 +192,15 @@ class Tablequery {
             $stmt->execute();// $bindings );
             if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
             {
-                $iFilteredTotal = $rs->count;
+                $recordsFiltered = $rs->count;
             }   
         }
         
         $output = array(
-            "sEcho" => intval($cfg['sEcho']),
-            "iTotalRecords" => $iTotal,
-            "iTotalDisplayRecords" => $iFilteredTotal,
-            "aaData" => array()
+            "draw" => intval($cfg['draw']),
+            "recordsTotal" => $recordsTotal,
+            "recordsFiltered" => $recordsFiltered,
+            "data" => array()
         );
 
 
@@ -212,7 +211,7 @@ class Tablequery {
         $sOrder
         $sLimit
         ";
-
+        //print $sql;return;
         // When in debug mode, send sql as well
         if(conf('debug'))
         {
@@ -228,7 +227,7 @@ class Tablequery {
         $arr=array();
         while ( $rs = $stmt->fetch( PDO::FETCH_NUM ) )
         {
-            $output['aaData'][] = array_combine($cfg['cols'], $rs);
+            $output['data'][] = $rs;
         }        
 
         return $output;

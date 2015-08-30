@@ -11,8 +11,6 @@
 
 	<div class="col-lg-12">
 
-
-
 	<h3>Profile report <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">

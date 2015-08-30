@@ -17,13 +17,13 @@ new Ard_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
-		        <th data-i18n="serial" data-colname='reportdata#serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":1}' data-colname='ard#Text1'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":2}' data-colname='ard#Text2'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":3}' data-colname='ard#Text3'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":4}' data-colname='ard#Text4'></th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":1}' data-colname='ard.Text1'></th>
+		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":2}' data-colname='ard.Text2'></th>
+		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":3}' data-colname='ard.Text3'></th>
+		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":4}' data-colname='ard.Text4'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -48,14 +48,16 @@ new Ard_model;
 
 	$(document).on('appReady', function(e, lang) {
 		// Get column names from data attribute
-		var myCols = [];
+		var columnDefs = [],
+            col = 0; // Column counter
 		$('.table th').map(function(){
-			  myCols.push({'mData' : $(this).data('colname')});
+              columnDefs.push({name: $(this).data('colname'), targets: col});
+              col++;
 		});
 	    oTable = $('.table').dataTable( {
-	        "aoColumns": myCols,
-	        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
-	        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+	        columnDefs: columnDefs,
+	        ajax: "<?php echo url('datatables/data'); ?>",
+	        createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};

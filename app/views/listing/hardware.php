@@ -16,15 +16,15 @@ new Reportdata_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='reportdata#serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-		        <th data-i18n="listing.hardware.description" data-colname='machine#machine_desc'>Description</th>
-		        <th data-i18n="memory.memory" data-colname='machine#physical_memory'>Memory</th>
-		        <th data-colname='machine#number_processors'>Processors</th>
-		        <th data-colname='machine#cpu_arch'>CPU</th>
-		        <th data-colname='machine#current_processor_speed'>Speed</th>
-		        <th data-colname='machine#boot_rom_version'>Boot ROM</th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
+		        <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'>Description</th>
+		        <th data-i18n="memory.memory" data-colname='machine.physical_memory'>Memory</th>
+		        <th data-colname='machine.number_processors'>Processors</th>
+		        <th data-colname='machine.cpu_arch'>CPU</th>
+		        <th data-colname='machine.current_processor_speed'>Speed</th>
+		        <th data-colname='machine.boot_rom_version'>Boot ROM</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -49,15 +49,32 @@ new Reportdata_model;
 
 	$(document).on('appReady', function(e, lang) {
 
-		// Get column names from data attribute
-		var myCols = [];
+        // Get column names from data attribute
+		var columnDefs = [],
+            col = 0; // Column counter
 		$('.table th').map(function(){
-			  myCols.push({'mData' : $(this).data('colname')});
+              columnDefs.push({name: $(this).data('colname'), targets: col});
+              col++;
 		});
 	    oTable = $('.table').dataTable( {
-	        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
-	        "aoColumns": myCols,
-	        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+            columnDefs: columnDefs,
+            ajax: {
+                url: "<?=url('datatables/data')?>",
+                data: function(d){
+                    // Look for a GB search string
+                    if(d.search.value.match(/^\d+ GB$/))
+                    {
+                        // Add search for memory column
+                        d.columns[4].search.value = parseInt(d.search.value);
+                        // Clear global search
+                        d.search.value = '';
+
+                        //dumpj(d)
+                    }
+
+                }
+            },
+	        createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
@@ -67,27 +84,7 @@ new Reportdata_model;
 
 	        	var mem=$('td:eq(4)', nRow).html();
 	        	$('td:eq(4)', nRow).html(parseInt(mem) + ' GB');
-	        },
-	         "fnServerParams": function ( aoData ) {
-		      //aoData.push( { "name": "more_data", "value": "my_value" } );
-		      	// Hook in serverparams to change search
-		      	// Convert array to dict
-		      	var out = {}
-				for (var i = 0; i < aoData.length; i++) {
-					out[aoData[i]['name']] =  aoData[i]['value']
-				}
-
-				// Look for a GB search string
-				if(out.sSearch.match(/^\d+ GB$/))
-				{
-					// Clear global search
-					aoData.push( { "name": "sSearch", "value": "" } );
-
-					// Add column specific search
-					aoData.push( { "name": "sSearch_4", "value": parseInt(out.sSearch) } );
-					//dumpj(out)
-				}
-		    }
+	        }
 	    });
 
 	});

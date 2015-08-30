@@ -20,16 +20,16 @@ new Munkireport_model;
 
 		<thead>
 		  <tr>
-			<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
-			<th data-i18n="serial" data-colname='reportdata#serial_number'>Serial</th>
-			<th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-      <th data-colname='machine#os_version'>OS</th>
-			<th data-i18n="buildversion" data-colname='machine#buildversion'>Type</th>
-      <th data-colname='machine#machine_name'>Type</th>
-			<th data-colname='warranty#status'>Warranty status</th>
-			<th data-colname='reportdata#uptime'>Uptime</th>
-			<th data-colname='reportdata#timestamp'>Check-in</th>
-			<th data-colname='munkireport#manifestname'>Manifest</th>
+			<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
+			<th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
+			<th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
+      <th data-colname='machine.os_version'>OS</th>
+			<th data-i18n="buildversion" data-colname='machine.buildversion'>Type</th>
+      <th data-colname='machine.machine_name'>Type</th>
+			<th data-colname='warranty.status'>Warranty status</th>
+			<th data-colname='reportdata.uptime'>Uptime</th>
+			<th data-colname='reportdata.timestamp'>Check-in</th>
+			<th data-colname='munkireport.manifestname'>Manifest</th>
 		  </tr>
 		</thead>
 
@@ -60,14 +60,26 @@ new Munkireport_model;
 	$(document).on('appReady', function(e, lang) {
 
 		// Get column names from data attribute
-		var myCols = [];
+		var columnDefs = [], //Column Definitions
+            col = 0; // Column counter
 		$('.table th').map(function(){
-			  myCols.push({'mData' : $(this).data('colname')});
+            columnDefs.push({name: $(this).data('colname'), targets: col});
+            col++;
 		});
 		var oTable = $('.table').dataTable( {
-			"sAjaxSource": "<?php echo url('datatables/data'); ?>",
-			"aoColumns": myCols,
-			"fnCreatedRow": function( nRow, aData, iDataIndex ) {
+            ajax: {
+                url: "<?=url('datatables/data')?>",
+                data: function( d ){
+                    // Look for 'osversion' statement
+                    if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
+                        var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+                        d.search.value = search;
+                    }
+                  
+                }
+            },
+            columnDefs: columnDefs,
+			createdRow: function( nRow, aData, iDataIndex ) {
 				// Update name in first column to link
 				var name=$('td:eq(0)', nRow).html();
 				if(name == ''){name = "No Name"};
@@ -92,26 +104,6 @@ new Munkireport_model;
 				else
 				{
 				  $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
-				}
-			},
-			"fnServerParams": function ( aoData ) {
-
-				// Hook in serverparams to change search
-				// Convert array to dict
-				var out = {}
-				for (var i = 0; i < aoData.length; i++) {
-					out[aoData[i]['name']] =  aoData[i]['value']
-				}
-
-				// Look for 'osversion' statement
-				if(out.sSearch.match(/^\d+\.\d+(\.(\d+)?)?$/))
-				{
-
-					var search = out.sSearch.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
-
-					// Override global search
-					aoData.push( { "name": "sSearch", "value": search } );
-
 				}
 			}
 		});
