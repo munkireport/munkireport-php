@@ -79,7 +79,10 @@
         oTable = $('.table').dataTable( {
             ajax: {
                 url: "<?=url('datatables/data')?>",
-                type: "POST"
+                type: "POST",
+                data: function(d){
+                    d.mrColNotEmpty = "displays.vendor"
+                }
             },
             order: mySort,
             columnDefs: columnDefs,
