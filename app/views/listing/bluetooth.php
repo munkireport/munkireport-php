@@ -50,7 +50,8 @@ new Bluetooth_model;
               ajax: {
                   url: "<?php echo url('datatables/data'); ?>",
                   type: "POST"
-              },              order: mySort,
+              },
+              order: mySort,
               columnDefs: columnDefs,
               createdRow: function( nRow, aData, iDataIndex ) {
                 // Update name in first column to link
