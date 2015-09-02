@@ -50,7 +50,12 @@ class datatables extends Controller
 			$obj = new Tablequery($cfg);
 			//echo '<pre>';print_r($obj->fetch($cfg));
 			echo json_encode($obj->fetch($cfg));
-			//echo json_last_error_msg();
+			
+			// If there is an encoding error, show it
+			if(json_last_error() != JSON_ERROR_NONE)
+			{
+				echo json_last_error_msg();
+			}
 		}
 		catch(Exception $e) 
 		{
