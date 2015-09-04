@@ -2,7 +2,7 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading" data-container="body" title="Computers where the computer name doesn't match the AD name">
+				<div id="modified-computer-names" class="panel-heading" data-container="body" title="Computers where the computer name doesn't match the AD name">
 
 					<h3 class="panel-title"><i class="fa fa-code-fork"></i> Not matching AD Names</h3>
 
