@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Munkireport-php by munkireport</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Munkireport-php</h1>
+        <h2>Reporting for munki sites</h2>
+        <a href="https://github.com/munkireport/munkireport-php" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="munkireport-php" class="anchor" href="#munkireport-php" aria-hidden="true"><span class="octicon octicon-link"></span></a>munkireport-php</h1>
+
+<p><img src="https://github.com/munkireport/munkireport-php/wiki/assets/pics/dashboard.png" alt="Dashboard view"></p>
+
+<p>This is version 2 of munkireport-php, a reporting client for <a href="https://code.google.com/p/munki/">munki</a>. The previous version of munkireport is still available on googlecode: <a href="https://code.google.com/p/munkireport-php/">munkireport-php</a>.
+I moved the project to github because github is just awesome!</p>
+
+<p>This project is a complete rewrite from the previous version, which was a quick-and-dirty port from the original python based munkireport [<a href="https://code.google.com/p/munkireport/">https://code.google.com/p/munkireport/</a>]. </p>
+
+<p>The project a work-in-progress, please check for updates regularly.</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Quick overview of your mac fleet with a dashboard</li>
+<li>Get reports on many features (hardware types, disk usage, etc)</li>
+<li>Lightweight: only sends reports when facts have changed</li>
+<li>Responsive webdesign (looks good on large and small screens)</li>
+<li><a href="https://github.com/munkireport/munkireport-php/wiki/Features">more features</a></li>
+</ul>
+
+<h2>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h2>
+
+<p>Setup is easy, you could be running your own reportingserver within minutes! </p>
+
+<p>Please read the <a href="docs/setup.md">install manual</a></p>
+
+<h2>
+<a id="system-requirements" class="anchor" href="#system-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>System Requirements</h2>
+
+<p>Apart from munki clients doing reporting, Munkireport relies on:</p>
+
+<h3>
+<a id="serverside" class="anchor" href="#serverside" aria-hidden="true"><span class="octicon octicon-link"></span></a>Serverside:</h3>
+
+<ul>
+<li>A webserver (runs fine with Apache, IIS and nginx)</li>
+<li>php version 5 with pdo-sqlite3 and libxml</li>
+</ul>
+
+<h3>
+<a id="clientside" class="anchor" href="#clientside" aria-hidden="true"><span class="octicon octicon-link"></span></a>Clientside</h3>
+
+<ul>
+<li>a Modern webbrowser</li>
+<li>For persistent storage (sorting and search in datatables) you need a browser that supports <a href="http://caniuse.com/#search=localstorage">localStorage</a>
+</li>
+</ul>
+
+<h2>
+<a id="mailinglists" class="anchor" href="#mailinglists" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mailinglists</h2>
+
+<p>For questions about using munkireport or setting up munkireport, you can use:</p>
+
+<p><a href="http://groups.google.com/group/munkireport">http://groups.google.com/group/munkireport</a></p>
+
+<p>For developers who want to contribute to the project:</p>
+
+<p><a href="http://groups.google.com/group/munkireport-dev">http://groups.google.com/group/munkireport-dev</a></p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>If you want to contribute to munkireport2, please </p>
+
+<ul>
+<li>read about <a href="docs/localize.md">Localizing</a> in the docs folder</li>
+<li>fork the <a href="https://github.com/munkireport/munkireport-php/tree/wip">wip branch of repository</a>
+</li>
+<li>create a feature branch</li>
+<li>send a pull request with your changes.</li>
+</ul>
+
+<h2>
+<a id="external-projects" class="anchor" href="#external-projects" aria-hidden="true"><span class="octicon octicon-link"></span></a>External projects</h2>
+
+<p>Munkireport-php makes use of these fine software packages:</p>
+
+<ul>
+<li>
+<a href="http://php.net">php</a> serverside scripting</li>
+<li>
+<a href="https://github.com/rodneyrehm/CFPropertyList">CFPropertyList</a> serverside plist parsing</li>
+<li>
+<a href="http://www.openwall.com/phpass/">phpass 0.3</a> for encrypting passwords</li>
+<li>
+<a href="https://github.com/sdfsdhgjkbmnmxc/phpserialize">phpserialize</a> for serializing client data</li>
+<li>
+<a href="http://jquery.com">jQuery</a> for easy javascript</li>
+<li>
+<a href="http://datatables.net">Datatables</a> table display</li>
+<li>
+<a href="http://www.humblesoftware.com/flotr2/">Flotr2</a> and <a href="https://github.com/nvd3-community/nvd3">nvd3</a> for graphs</li>
+<li>
+<a href="http://momentjs.com">Moment.js</a> for displaying time</li>
+<li>
+<a href="http://getbootstrap.com">Bootstrap 3.0</a> the main webframework</li>
+<li>
+<a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> for icons</li>
+<li>
+<a href="http://adldap.sourceforge.net">adLDAP</a> for authenticating against AD</li>
+<li>
+<a href="http://i18next.com">i18next</a> js library for localization</li>
+</ul>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/munkireport/munkireport-php/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/munkireport/munkireport-php/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/munkireport/munkireport-php"></a> is maintained by <a href="https://github.com/munkireport">munkireport</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
