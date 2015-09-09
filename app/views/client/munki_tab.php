@@ -246,10 +246,12 @@ if(isset($report['ItemsToRemove']))
 $(document).on('appReady', function(e, lang) {
 
 	// Format filesize
-	var size = $('td.filesize').html();
-	if(size != '?'){
-		$('td.filesize').html(fileSize(size))
-	}
+	$('td.filesize').each(function(index, el){
+		var size = $(el).html();
+		if(size != '?'){
+			$(el).html(fileSize(size))
+		}
+	});
 
 	// Initialize datatables
 	$('.ManagedInstalls').dataTable({
