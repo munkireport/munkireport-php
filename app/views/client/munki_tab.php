@@ -83,7 +83,7 @@ foreach(array('ItemsToInstall', 'AppleUpdates') AS $r_item)
 		foreach($report[$r_item] as $key => &$item)
 		{
 			$item['install_result'] = 'Pending';
-			$dversion = $report[$r_item][$key]["display_name"].'-'.$report[$r_item][$key]["version_to_install"];
+			$dversion = $report[$r_item][$key]["name"].'-'.$report[$r_item][$key]["version_to_install"];
 			if(isset($install_results[$dversion]))
 			{
 				$item['install_result'] = $install_results[$dversion]['result'];
@@ -100,7 +100,7 @@ if(isset($report['ManagedInstalls']))
 	{
 		if(isset($item["version_to_install"]))
 		{
-			$dversion = $item["display_name"].'-'.$item["version_to_install"];
+			$dversion = $item["name"].'-'.$item["version_to_install"];
 			if(isset($install_results[$dversion]) && $install_results[$dversion]['result'] == 'Installed')
 			{
 				$report['ManagedInstalls'][$key]['installed'] = TRUE;
@@ -126,7 +126,7 @@ if(isset($report['ItemsToRemove']))
 	foreach($report['ItemsToRemove'] as $key => &$item)
 	{
 		$item['install_result'] = 'Pending';
-		$dversion = $report['ItemsToRemove'][$key]["display_name"];
+		$dversion = $report['ItemsToRemove'][$key]["name"];
 		if(isset($removal_results[$dversion]))
 		{
 			$item['install_result'] = $removal_results[$dversion]['result'];
