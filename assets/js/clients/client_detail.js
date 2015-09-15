@@ -2,20 +2,20 @@ $(document).on('appReady', function(e, lang) {
 
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
-		"sDom": "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-		"bStateSave": true,
-		"bProcessing": true,
-		"bServerSide": false,
-		"stateSaveCallback": function (oSettings, oData) {
+		dom: "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+		stateSave: true,
+		processing: true,
+		serverSide: false,
+		stateSaveCallback: function (oSettings, oData) {
 		    state( oSettings.sTableId, oData);
 		},
-		"stateLoadCallback": function (oSettings) {
+		stateLoadCallback: function (oSettings) {
 		    return state(oSettings.sTableId);
 		},
-        "language": {
-        	"url": baseUrl + "assets/locales/dataTables/"+lang+".json"
+        language: {
+        	url: baseUrl + "assets/locales/dataTables/"+lang+".json"
         },
-		"fnInitComplete": function(oSettings, json) {
+		initComplete: function(oSettings, json) {
 
 			// Save the parent
 		 	var outer = $(this).parent();
@@ -44,13 +44,12 @@ $(document).on('appReady', function(e, lang) {
 		  $(outer).find('select').addClass('form-control input-sm');
 
 		},
-        "fnDrawCallback": function( oSettings ) {
+        drawCallback: function( oSettings ) {
 			$('#total-count').html(oSettings.fnRecordsTotal());
 
 		},
-		"sPaginationType": "bootstrap",
-		"oLanguage": {
-		 "sProcessing": ' <i class="fa fa-refresh fa fa-spin"></i>'
+		language: {
+		 processing: ' <i class="fa fa-refresh fa fa-spin"></i>'
 		} 
 	});
 

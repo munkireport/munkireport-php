@@ -79,6 +79,8 @@ new Directory_service_model;
                 url: "<?php echo url('datatables/data'); ?>",
                 type: "POST"
             },
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
             order: mySort,
             columnDefs: columnDefs,
 		    createdRow: function( nRow, aData, iDataIndex ) {

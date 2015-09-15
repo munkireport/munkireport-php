@@ -79,6 +79,8 @@ new Munkireport_model;
                   
                 }
             },
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
             columnDefs: columnDefs,
 			createdRow: function( nRow, aData, iDataIndex ) {
 				// Update name in first column to link

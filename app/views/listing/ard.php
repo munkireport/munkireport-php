@@ -60,6 +60,8 @@ new Ard_model;
                 url: "<?php echo url('datatables/data'); ?>",
                 type: "POST"
             },
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
 	        createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();

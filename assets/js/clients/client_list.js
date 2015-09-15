@@ -6,10 +6,19 @@ $(document).on('appReady', function(e, lang) {
 	if(window.location.hash.substring(1)) {
 		search = decodeURIComponent(window.location.hash.substring(1));
 	}
-
+	
+	// Datatables variables
+	mr.dt.buttonDom = "<'row'<'col-xs-6 col-md-8'lB r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>";
+	mr.dt.buttons = [
+		'copyHtml5',
+		'excelHtml5',
+		'csvHtml5',
+		'pdfHtml5'
+	];
+	
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
-		"sDom": "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+		dom: "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
 		stateSave: true,
 		processing: true,
 		serverSide: true,
@@ -30,14 +39,18 @@ $(document).on('appReady', function(e, lang) {
         language: {
         	url: baseUrl + "assets/locales/dataTables/"+lang+".json"
         },
-		fnInitComplete: function(oSettings, json) {
+		initComplete: function(oSettings, json) {
 
 			// Save the parent
 		 	var outer = $(this).parent()
 
 			// Wrap table in responsive div
 			$(this).wrap('<div class="table-responsive" />');
-
+			
+			// Move the buttons
+			$('.dt-buttons')
+				.addClass('pull-right')
+				.appendTo('h3');
 
 		  // Customize search box (add clear search field button)
 		  placeholder = $(outer).find('.dataTables_filter label').contents().filter(function() {return this.nodeType === 3;}).text();
@@ -67,7 +80,7 @@ $(document).on('appReady', function(e, lang) {
 		  $(outer).find('select').addClass('form-control input-sm');
 
 		},
-        fnDrawCallback: function( oSettings ) {
+        drawCallback: function( oSettings ) {
 			$('#total-count').html(oSettings.fnRecordsTotal());
 
 			// If the edit button is active, show the remove machine buttons
@@ -81,9 +94,8 @@ $(document).on('appReady', function(e, lang) {
 				delete_machine($(this));
 			});
 		},
-		"sPaginationType": "bootstrap",
-		"oLanguage": {
-		 "sProcessing": ' <i class="fa fa-refresh fa fa-spin"></i>'
+		language: {
+		 processing: ' <i class="fa fa-refresh fa fa-spin"></i>'
 		} 
 	});
 

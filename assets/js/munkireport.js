@@ -1,5 +1,10 @@
 // Global functions
 
+// Global munkireport object
+var mr = {
+        dt:{}
+    };
+
 $( document ).ready(function() {
     $.i18n.init({
         debug: munkireport.debug,
