@@ -54,7 +54,7 @@ $(document).on('appReady', function(e, lang) {
 	});
 
 	// Modify lengthmenu
-	$.fn.dataTable.defaults.aLengthMenu = [[10,25,50,100,-1], [10,25,50,100,i18n.t("all")]];
+	$.fn.dataTable.defaults.lengthMenu = [[10,25,50,100,-1], [10,25,50,100,i18n.t("all")]];
 
 
 } );

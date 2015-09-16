@@ -9,18 +9,20 @@ $(document).on('appReady', function(e, lang) {
 	
 	// Datatables variables
 	mr.dt.buttonDom = "<'row'<'col-xs-6 col-md-8'lB r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>";
-	mr.dt.buttons = [
-		'copyHtml5',
-		'excelHtml5',
-		'csvHtml5',
-		'pdfHtml5'
-	];
+	mr.dt.buttons = {
+		buttons: [
+			'edit',
+			'copyHtml5',
+			'excelHtml5',
+			'csvHtml5',
+			'print'
+		]
+	};
 	
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
 		dom: "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
 		stateSave: true,
-		processing: true,
 		serverSide: true,
 		search: {search: search},
 		stateSaveCallback: function (oSettings, oData) {
@@ -36,9 +38,6 @@ $(document).on('appReady', function(e, lang) {
 				data.search.search = search;
 			}
 		},
-        language: {
-        	url: baseUrl + "assets/locales/dataTables/"+lang+".json"
-        },
 		initComplete: function(oSettings, json) {
 
 			// Save the parent
@@ -48,9 +47,16 @@ $(document).on('appReady', function(e, lang) {
 			$(this).wrap('<div class="table-responsive" />');
 			
 			// Move the buttons
-			$('.dt-buttons')
-				.addClass('pull-right')
-				.appendTo('h3');
+			$('#total-count')
+				.after($('.dt-buttons')
+					.addClass('pull-right')
+				)
+			
+			// Register for processing event
+			$('#total-count').after(' <i class="fa fa-refresh fa fa-spin hide"></i>')
+			$(this).on( 'processing.dt', function ( e, settings, processing ) {
+		        $('i.fa-refresh').toggleClass('hide', ! processing)
+		    } )
 
 		  // Customize search box (add clear search field button)
 		  placeholder = $(outer).find('.dataTables_filter label').contents().filter(function() {return this.nodeType === 3;}).text();
@@ -84,7 +90,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#total-count').html(oSettings.fnRecordsTotal());
 
 			// If the edit button is active, show the remove machine buttons
-			if($('#edit.btn-danger').length > 0){
+			if($('a.buttons-edit.btn-danger').length > 0){
 				$('div.machine').addClass('edit btn-group');
 			}
 
@@ -95,21 +101,22 @@ $(document).on('appReady', function(e, lang) {
 			});
 		},
 		language: {
-		 processing: ' <i class="fa fa-refresh fa fa-spin"></i>'
+			url: baseUrl + "assets/locales/dataTables/"+lang+".json"
 		} 
 	});
 
 	// Modify lengthmenu
 	$.fn.dataTable.defaults.aLengthMenu = [[10,25,50,100,-1], [10,25,50,100,i18n.t("all")]];
 
-    // Add edit button in list view
-    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">'+i18n.t("edit")+'</a>');
-
-    $('#edit').click(function(event){
-    	event.preventDefault()
-    	$(this).toggleClass('btn-danger');
-    	$('.machine').toggleClass('edit btn-group');
-    });
+    // Add custom edit button
+	$.fn.dataTable.ext.buttons.edit = {
+	    className: 'buttons-edit',
+	 	text: i18n.t("edit"),
+	    action: function ( e, dt, node, config ) {
+	        $(node).toggleClass('btn-danger');
+			$('.machine').toggleClass('edit btn-group');
+	    }
+	};
 
 } );
 
