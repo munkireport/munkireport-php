@@ -75,6 +75,8 @@ new Reportdata_model;
 
                 }
             },
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
 	        createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();

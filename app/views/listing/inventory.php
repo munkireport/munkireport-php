@@ -11,9 +11,11 @@
 <script type="text/javascript" charset="utf-8">
     $(document).on('appReady', function(e, lang) {
         $('.table').dataTable({
-            "bServerSide": false,
-            "aaSorting": [[0,'asc']],
-            "fnDrawCallback": function( oSettings ) {
+            serverSide: false,
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
+            sorting: [[0,'asc']],
+            drawCallback: function( oSettings ) {
 				$('#inv-count').html(oSettings.fnRecordsTotal());
 			}
         });

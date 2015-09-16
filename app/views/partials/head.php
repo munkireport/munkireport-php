@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
-	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/dataTables-bootstrap.css" />
+	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/datatables.min.css" />
 	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
 	<?php if(conf('custom_css')): ?> 
 	<link rel="stylesheet" href="<?php echo conf('custom_css'); ?>" />

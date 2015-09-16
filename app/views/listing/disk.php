@@ -101,6 +101,8 @@ new Reportdata_model;
 
                 }
             },
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
             order: mySort,
             columnDefs: columnDefs,
 		    createdRow: function( nRow, aData, iDataIndex ) {

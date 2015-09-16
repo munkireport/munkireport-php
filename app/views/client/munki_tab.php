@@ -255,9 +255,9 @@ $(document).on('appReady', function(e, lang) {
 
 	// Initialize datatables
 	$('.ManagedInstalls').dataTable({
-	    "bServerSide": false,
-	    "order": [0,'asc'],
-	    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+	    serverSide: false,
+	    order: [0,'asc'],
+	    createdRow: function( nRow, aData, iDataIndex ) {
 	    	// Update name in first column to link
 	    	var size=$('td:eq(1)', nRow).html();
 	        $('td:eq(1)', nRow).html(fileSize(size, 1));
