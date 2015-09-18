@@ -33,7 +33,12 @@ $obj = current($queryobj->query($sql));
 
 					
 				<?php if($obj): ?>
-
+					
+					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
+						<span class="bigger-150"><?php echo $obj->total; ?> </span>
+						<br>
+						Total Clients
+					</a>	
 					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
 						<span class="bigger-150"> <?php echo $obj->lastmonth; ?> </span>
 						<br>
