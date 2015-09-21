@@ -55,6 +55,7 @@ class datatables extends Controller
 			if(json_last_error() != JSON_ERROR_NONE)
 			{
 				echo json_last_error_msg();
+				print_r($obj->fetch($cfg));
 			}
 		}
 		catch(Exception $e) 

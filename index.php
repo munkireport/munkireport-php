@@ -6,6 +6,12 @@ define('FC', __FILE__ .'/' );
 
 define('APP_ROOT', dirname(__FILE__) .'/' );
 
+// Pass on https forward to $_SERVER['HTTPS']
+if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+{
+	$_SERVER['HTTPS'] = 'on';
+}
+
 // Load config
 load_conf();
 
