@@ -25,6 +25,7 @@ $(document).on('appReady', function() {
     var myOptions = jQuery.extend(true, {}, horBarOptions);
 	myOptions.legend = {show: false}
 	myOptions.callBack = resizeAgeBox;
+	myOptions.reverseColors = true;
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
 		label = obj.data[v].label
 		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/warranty'); ?>">' + label + ' ' + i18n.t('date.year') + '</a>';

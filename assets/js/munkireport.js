@@ -357,7 +357,7 @@ function drawGraph(url, id, options, parms)
 		}
 		if(options.callBack){options.callBack(data)}
 
-		options.colors = makeColorGradient(data.length);
+		options.colors = makeColorGradient(data.length, options.reverseColors);
 		options.resolution = getScale();
 
 		// preventDefault by default for mobile events.  Turn off to enable scroll.
@@ -406,17 +406,26 @@ function getScale()
 // Adapted from http://krazydad.com/tutorials/makecolors.php
 if(typeof window.makeColorGradient !== 'function')
 {
-	window.makeColorGradient = function(len)
+	window.makeColorGradient = function(len, reverse)
 	{
 		var center = 128,
 			width = 127,
 			frequency1 = .4,
 			frequency2 = frequency1,
-			frequency3 = frequency1,
-			phase1 = -2,
-			phase2 = phase1 + 2,
-			phase3 = phase1 + 4;
+			frequency3 = frequency1;
 		var out = []
+		if(reverse)
+		{
+			var phase1 = 2,
+				phase2 = phase1 - 2,
+				phase3 = phase1 - 4;
+		}
+		else
+		{
+			var phase1 = -2,
+				phase2 = phase1 + 2,
+				phase3 = phase1 + 4;
+		}
 		for (var i = 0; i < len; ++i)
 		{
 		   var red = Math.round(Math.sin(frequency1*i + phase1) * width + center);
