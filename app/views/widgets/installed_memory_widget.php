@@ -42,19 +42,19 @@
 							}
 						} // end foreach
 					?>
-					
+
+					<a href="<?php echo url('show/listing/hardware'); ?>" class="btn btn-danger">
+						<span class="bigger-150"> <?php echo $in_red; ?> </span><br>
+						< 4GB
+					</a>
+					<a href="<?php echo url('show/listing/hardware'); ?>" class="btn btn-warning">
+						<span class="bigger-150"> <?php echo $in_yellow; ?> </span><br>
+						4GB +
+					</a>
 					<a href="<?php echo url('show/listing/hardware'); ?>" class="btn btn-success">
 						<span class="bigger-150"> <?php echo $in_green; ?> </span><br>
-             					8GB +
-           				</a>
-           				<a href="<?php echo url('show/listing/hardware'); ?>" class="btn btn-warning">
-             					<span class="bigger-150"> <?php echo $in_yellow; ?> </span><br>
-             					4GB +
-           				</a>
-           				<a href="<?php echo url('show/listing/hardware'); ?>" class="btn btn-danger">
-             					<span class="bigger-150"> <?php echo $in_red; ?> </span><br>
-             					< 4GB
-          				</a>
+						8GB +
+					</a>
 					
 				</div>
 				
