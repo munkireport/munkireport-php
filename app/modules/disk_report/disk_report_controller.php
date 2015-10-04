@@ -48,6 +48,29 @@ class Disk_report_controller extends Module_controller
     }
 
 	/**
+	 * Get filevault statistics
+	 *
+	 * @return void
+	 * @author
+	 **/
+	function get_filevault_stats($mount_point = '/')
+	{
+        $obj = new View();
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+				$disk_report = new Disk_report_model;
+				$out = array();
+				$out['stats'] = $disk_report->get_filevault_stats($mount_point);
+
+        $obj->view('json', array('msg' => $out));
+
+	}
+
+	/**
 	 * Get statistics
 	 *
 	 * @return void

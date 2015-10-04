@@ -30,9 +30,26 @@ class Disk_report_model extends Model {
 		$this->create_table();
 
 	}
+	
+	/**
+	 * Get filevault statistics
+	 *
+	 * Get statistics about filevault
+	 *
+	 **/
+	public function get_filevault_stats($mountpoint = '/')
+	{
+		$sql = "SELECT COUNT(CASE WHEN CoreStorageEncrypted = 1 THEN 1 END) AS encrypted,
+						COUNT(CASE WHEN CoreStorageEncrypted = 0 THEN 1 END) AS unencrypted
+						FROM diskreport
+						LEFT JOIN reportdata USING (serial_number)
+						WHERE MountPoint = ?
+						".get_machine_group_filter('AND');
+		return current($this->query($sql, $mountpoint));
+	}
 
 	/**
-	 * Get statistics
+	 * Get statistics 
 	 *
 	 * @return array
 	 * @author
