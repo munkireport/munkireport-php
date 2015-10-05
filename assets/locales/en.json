@@ -146,6 +146,7 @@
 	"disconnected": "Disconnected",
 	"edit": "Edit",
 	"enabled": "Enabled",
+	"encrypted": "Encrypted",
 	"error": "Error",
 	"error_plural": "Errors",
 	"errors": {
@@ -154,6 +155,11 @@
 		"403": "You are not allowed to view this page",
 		"404": "Page not found",
 		"426": "You are required to visit this site using a secure connection."
+	},
+	"filevault": {
+		"widget": {
+			"title": "Filevault 2 status"
+		}
 	},
 	"filter": {
 		"title": "Set filters"
@@ -354,6 +360,7 @@
 	},
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
+	"unencrypted": "Unencrypted",
 	"unknown": "Unknown",
 	"uptime": "Uptime",
 	"user": {
