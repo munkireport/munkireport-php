@@ -354,7 +354,7 @@
 	"user": {
 		"user": "Benutzer",
 		"users": "Benutzer",
-		"local_admin": "Lokaler Admin"
+		"local_admins": "Lokaler Admins"
 	},
 	"version": "Version",
 	"warning": "Warnung",

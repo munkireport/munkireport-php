@@ -157,6 +157,7 @@
 		"426": "You are required to visit this site using a secure connection."
 	},
 	"filevault": {
+		"users": "FileVault Enabled users",
 		"widget": {
 			"title": "Filevault 2 status"
 		}
@@ -358,6 +359,7 @@
 	"timemachine": {
 		"timemachine": "Timemachine"
 	},
+	"type": "Type",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
 	"unencrypted": "Unencrypted",
@@ -366,7 +368,7 @@
 	"user": {
 		"user": "User",
 		"users": "Users",
-		"local_admin": "Local admin"
+		"local_admins": "Local Administrators"
 	},
 	"version": "Version",
 	"warning": "Warning",
