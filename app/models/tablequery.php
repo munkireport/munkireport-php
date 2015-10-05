@@ -24,6 +24,12 @@ class Tablequery {
 
         // Initial value
         $recordsTotal = 0;
+        
+        // Output array
+        $output = array(
+            "draw" => intval($cfg['draw']),
+            "data" => array()
+        );
 
         // Get tables from column names
         $tables = array();
@@ -75,6 +81,23 @@ class Tablequery {
         if( $cfg['mrColNotEmpty'])
         {
             $where = sprintf('WHERE %s IS NOT NULL', $cfg['mrColNotEmpty']);
+        }
+        
+        // Extra where clause (can only do is equal)
+        if( is_array($cfg['where']))
+        {
+            foreach($cfg['where'] AS $entry)
+            {
+                $my_where = sprintf("`%s`.`%s` = '%s'", $entry['table'], $entry['column'], $entry['value']);
+                if($where)
+                {
+                    $where .= ' AND (' . $my_where . ')';
+                }
+                else
+                {
+                    $where = 'WHERE (' .$my_where . ')';
+                }
+            }
         }
 
         // Business unit filter (assumes we are selecting the reportdata table)
@@ -196,12 +219,8 @@ class Tablequery {
             }   
         }
         
-        $output = array(
-            "draw" => intval($cfg['draw']),
-            "recordsTotal" => $recordsTotal,
-            "recordsFiltered" => $recordsFiltered,
-            "data" => array()
-        );
+        $output["recordsTotal"] = $recordsTotal;
+        $output["recordsFiltered"] = $recordsFiltered;
 
 
         $sql = "
