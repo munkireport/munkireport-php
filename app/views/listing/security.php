@@ -24,7 +24,8 @@ new Localadmin_model;
 		        <th data-i18n="user.local_admins" data-colname='localadmin.users'></th>
 		        <th data-i18n="filevault.users" data-colname='filevault_status.filevault_users'></th>
 		        <th data-i18n="type"data-colname='machine.machine_name'></th>
-		        <th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+                <th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+                <th data-hide="1" data-colname='diskreport.MountPoint'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -88,6 +89,9 @@ new Localadmin_model;
                         console.log(d.columns[6].search.value)
                         //dumpj(d.columns[6].search.value)
                     }
+                    
+                    // Only search on bootvolume
+                    d.columns[7].search.value = '/';
 
                 }
             },
