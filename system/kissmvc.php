@@ -332,14 +332,14 @@ class Model extends KISS_Model
 	/**
 	 * Get database type of value
 	 *
-	 * Returns INTEGER, VARCHAR(255), REAL or BLOB
+	 * Returns INTEGER, VARCHAR(255), REAL or MEDIUMBLOB
 	 *
 	 * @return string database type
 	 * @author AvB
 	 **/
 	function get_type($val = '')
 	{
-		return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
+		return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'MEDIUMBLOB'));
 	}
 
 	/**
