@@ -60,11 +60,10 @@ class adLDAPUtils {
     * @param array $groups
     * @return array
     */
-    public function niceNames($groups)
-    {
+    public function niceNames($groups) {
 
         $groupArray = array();
-        for ($i=0; $i<$groups["count"]; $i++){ // For each group
+        for ($i=0; $i<$groups["count"]; $i++) { // For each group
             $line = $groups[$i];
             
             if (strlen($line)>0) { 
@@ -97,12 +96,17 @@ class adLDAPUtils {
     *
     * @param string $str The string the parse
     * @author Port by Andreas Gohr <andi@splitbrain.org>
+    * @author Modified for PHP55 by Esteban Santana Santana <MentalPower@GMail.com>
     * @return string
     */
-    public function ldapSlashes($str){
-        return preg_replace('/([\x00-\x1F\*\(\)\\\\])/e',
-                            '"\\\\\".join("",unpack("H2","$1"))',
-                            $str);
+    public function ldapSlashes($str) {
+        return preg_replace_callback(
+      		'/([\x00-\x1F\*\(\)\\\\])/',
+        	function ($matches) {
+            	return "\\".join("", unpack("H2", $matches[1]));
+        	},
+        	$str
+    	);
     }
     
     /**
@@ -111,8 +115,7 @@ class adLDAPUtils {
     * @param string $strGUID A string representation of a GUID
     * @return string
     */
-    public function strGuidToHex($strGUID) 
-    {
+    public function strGuidToHex($strGUID) {
         $strGUID = str_replace('-', '', $strGUID);
 
         $octet_str = '\\' . substr($strGUID, 6, 2);
@@ -162,8 +165,7 @@ class adLDAPUtils {
     * @param string $hex A hex code
     * @return string
     */
-     public function littleEndian($hex) 
-     {
+     public function littleEndian($hex) {
         $result = '';
         for ($x = strlen($hex) - 2; $x >= 0; $x = $x - 2) {
             $result .= substr($hex, $x, 2);
@@ -177,8 +179,7 @@ class adLDAPUtils {
     * @param string $bin A binary LDAP attribute
     * @return string
     */
-    public function binaryToText($bin) 
-    {
+    public function binaryToText($bin) {
         $hex_guid = bin2hex($bin); 
         $hex_guid_to_guid_str = ''; 
         for($k = 1; $k <= 4; ++$k) { 
@@ -203,8 +204,7 @@ class adLDAPUtils {
     * @param string $binaryGuid The binary GUID attribute to convert
     * @return string
     */
-    public function decodeGuid($binaryGuid) 
-    {
+    public function decodeGuid($binaryGuid) {
         if ($binaryGuid === null){ return "Missing compulsory field [binaryGuid]"; }
         
         $strGUID = $this->binaryToText($binaryGuid);          
@@ -218,8 +218,7 @@ class adLDAPUtils {
     * @param bool $bool Boolean value
     * @return string
     */
-    public function boolToStr($bool) 
-    {
+    public function boolToStr($bool) {
         return ($bool) ? 'TRUE' : 'FALSE';
     }
     
@@ -260,5 +259,3 @@ class adLDAPUtils {
       return $unixTime; 
     }
 }
-
-?>

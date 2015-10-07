@@ -57,10 +57,16 @@
 		"username": "Username",
 		"wrong_user_or_pass": "Wrong username or password"
 	},
+	"battery": {
+		"life_remaining": "__percent__% battery life remaining"
+	},
 	"bluetooth": {
+		"all_ok": "No bluetooth devices with low battery",
 		"bluetooth": "Bluetooth",
+		"bluetooth_battery_widget": "Bluetooth battery status",
 		"keyboard": "Keyboard Status",
 		"mouse": "Mouse Status",
+		"panel_title": "Bluetooth devices with less than 15% battery life",
 		"status": "Bluetooth Status",
 		"trackpad": "Trackpad Status"
 	},
@@ -137,8 +143,10 @@
 		"save": "Save"
 	},
 	"disabled": "Disabled",
+	"disconnected": "Disconnected",
 	"edit": "Edit",
 	"enabled": "Enabled",
+	"encrypted": "Encrypted",
 	"error": "Error",
 	"error_plural": "Errors",
 	"errors": {
@@ -147,6 +155,12 @@
 		"403": "You are not allowed to view this page",
 		"404": "Page not found",
 		"426": "You are required to visit this site using a secure connection."
+	},
+	"filevault": {
+		"users": "FileVault Enabled users",
+		"widget": {
+			"title": "Filevault 2 status"
+		}
 	},
 	"filter": {
 		"title": "Set filters"
@@ -202,12 +216,20 @@
 		},
 		"username": "Username"
 	},
+	"manifest": {
+		"name": "Manifest Name"
+	},
 	"memory": {
 		"memory": "Memory",
 		"usage": "Memory Usage",
 		"pressure": "Memory Pressure"
 	},
 	"model": "Model",
+	"munki": {
+		"panel_title": "Munki statistics this week",
+		"run_type": "Run Type",
+		"version": "Munki Version"
+	},
 	"name": "Name",
 	"nav": {
 		"admin": {
@@ -272,6 +294,8 @@
 	},
 	"no_clients": "No Clients",
 	"no_data": "No Data",
+	"on": "On",
+	"off": "Off",
 	"os": {
 		"version": "OS Version"
 	},
@@ -329,17 +353,22 @@
 	"system": {
 		"system": "System"
 	},
+	"tags": {
+		"add_tag": "Add Tag"
+	},
 	"timemachine": {
 		"timemachine": "Timemachine"
 	},
+	"type": "Type",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
+	"unencrypted": "Unencrypted",
 	"unknown": "Unknown",
 	"uptime": "Uptime",
 	"user": {
 		"user": "User",
 		"users": "Users",
-		"local_admin": "Local admin"
+		"local_admins": "Local Administrators"
 	},
 	"version": "Version",
 	"warning": "Warning",

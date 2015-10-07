@@ -2,12 +2,12 @@
 # encoding: utf-8
 
 from munkilib import munkicommon
+from munkilib.purl import Purl
 from munkilib.phpserialize import *
 import subprocess
 import pwd
 import sys
-import urllib
-import urllib2
+from urllib import urlencode
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
 from Foundation import CFPreferencesAppSynchronize
 from Foundation import CFPreferencesCopyAppValue
@@ -16,59 +16,18 @@ from Foundation import CFPreferencesSetValue
 from Foundation import kCFPreferencesAnyUser
 from Foundation import kCFPreferencesCurrentUser
 from Foundation import kCFPreferencesCurrentHost
-import ctypes
-import struct
+from Foundation import NSHTTPURLResponse
+import re
 import time
 import os
 
-# Check for ssl module
-# this will disable the TLS fix on 10.5 and below
-try:
-    import ssl
-    import httplib
-    import socket
-    TLS = True
-except ImportError:
-    TLS = False
-
-class TLS1Connection(httplib.HTTPSConnection):
-    """Like HTTPSConnection but more specific"""
-    def __init__(self, host, **kwargs):
-        httplib.HTTPSConnection.__init__(self, host, **kwargs)
-
-    def connect(self):
-        """Overrides HTTPSConnection.connect to specify TLS version"""
-        # Standard implementation from HTTPSConnection, which is not
-        # designed for extension, unfortunately
-        if getattr(self, 'source_address', None):
-            sock = socket.create_connection((self.host, self.port),
-                    self.timeout, self.source_address)
-        else:
-            # Python 2.6 does not use source_address
-            sock = socket.create_connection((self.host, self.port),
-                    self.timeout)
-        if getattr(self, '_tunnel_host', None):
-            self.sock = sock
-            self._tunnel()
-
-        # This is the only difference; default wrap_socket uses SSLv23
-        self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file,
-                ssl_version=ssl.PROTOCOL_TLSv1)
-
-class TLS1Handler(urllib2.HTTPSHandler):
-    """Like HTTPSHandler but more specific"""
-    def __init__(self):
-        urllib2.HTTPSHandler.__init__(self)
-
-    def https_open(self, req):
-        return self.do_open(TLS1Connection, req)
-
-if TLS is True:
-    # Override default handler
-    urllib2.install_opener(urllib2.build_opener(TLS1Handler()))
-
 # our preferences "bundle_id"
 BUNDLE_ID = 'MunkiReport'
+
+class CurlError(Exception):
+    def __init__(self, status, message):
+        display_error(message)
+        exit(0)
 
 def set_verbosity(level):
     """
@@ -95,25 +54,64 @@ def display_detail(msg, *args):
     munkicommon.display_detail('Munkireport: %s' % msg, *args)
 
 def curl(url, values):
-    req = urllib2.Request(url, urllib.urlencode(values))
+    
+    options = dict()
+    options["url"] = url
+    options["method"] = "POST"
+    options["content_type"] = "application/x-www-form-urlencoded"
+    options["body"] = urlencode(values)
+    
+    # Build Purl with initial settings
+    connection = Purl.alloc().initWithOptions_(options)
+    connection.start()
     try:
-        response = urllib2.urlopen(req)
-    except urllib2.URLError, e:
-        display_error(url)
-        if hasattr(e, 'reason'):
-            display_error('We failed to reach a server')
-            display_error('Reason: %s' % e.reason)
-        elif hasattr(e, 'code'):
-            display_error('The server couldn\'t fulfill the request.')
-            display_error('Error code: %s' % e.code)
-        else:
-            display_error('Miscellaneous server error.')
-        # Reportserver error, exit clean so munki keeps running
-        exit(0)
-    except:
-        display_error('A server error occurred: %s' % sys.exc_info()[0])
-        exit(0)
-    return response
+        while True:
+            # if we did `while not connection.isDone()` we'd miss printing
+            # messages if we exit the loop first
+            if connection.isDone():
+                break
+
+    except (KeyboardInterrupt, SystemExit):
+        # safely kill the connection then re-raise
+        connection.cancel()
+        raise
+    except Exception, err: # too general, I know
+        # Let us out! ... Safely! Unexpectedly quit dialogs are annoying...
+        connection.cancel()
+        # Re-raise the error as a GurlError
+        raise CurlError(-1, str(err))
+
+    if connection.error != None:
+        # Gurl returned an error
+        munkicommon.display_detail(
+            'Download error %s: %s', connection.error.code(), 
+            connection.error.localizedDescription())
+        if connection.SSLerror:
+            display_detail(
+                'SSL error detail: %s', str(connection.SSLerror))
+            keychain.debug_output()
+        display_detail('Headers: %s', connection.headers)
+        raise CurlError(connection.error.code(), 
+                        connection.error.localizedDescription())
+
+    if connection.response != None:
+        munkicommon.display_detail('Status: %s', connection.status)
+        munkicommon.display_detail('Headers: %s', connection.headers)
+    if connection.redirection != []:
+        munkicommon.display_detail('Redirection: %s', connection.redirection)
+
+    connection.headers['http_result_code'] = str(connection.status)
+    description = NSHTTPURLResponse.localizedStringForStatusCode_(
+                                                            connection.status)
+    connection.headers['http_result_description'] = description
+
+    if str(connection.status).startswith('2'):
+        return connection.get_response_data()
+    else:
+        # there was an HTTP error of some sort.
+        raise HTTPError(connection.status,
+                        connection.headers.get('http_result_description',''))
+
 
 def get_long_username(username):
     try:
@@ -150,30 +148,15 @@ def get_buildversion():
     return output.decode('utf-8')
 
 def get_uptime():
-    """Returns uptime in seconds or None, on BSD (including OS X).
-    Copied from https://pypi.python.org/pypi/uptime/1.0.0"""
-    try:
-        libc = ctypes.CDLL('libc.dylib')
-    except OSError:
-        return -1
-
-    if not hasattr(libc, 'sysctlbyname'):
-        # Not BSD
-        return -1
-
-    # Determine how much space we need for the response
-    sz = ctypes.c_uint(0)
-    libc.sysctlbyname('kern.boottime', None, ctypes.byref(sz), None, 0)
-    if sz.value != struct.calcsize('@LL'):
-        # Unexpected, let's give up.
-        return -1
-
-    # For real now
-    buf = ctypes.create_string_buffer(sz.value)
-    libc.sysctlbyname('kern.boottime', buf, ctypes.byref(sz), None, 0)
-    sec, usec = struct.unpack('@LL', buf.raw)
+    cmd = ['/usr/sbin/sysctl', '-n', 'kern.boottime']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    sec = int(re.sub('.*sec = (\d+),.*', '\\1', output))
     up = int(time.time() - sec)
     return up if up > 0 else -1
+
 
 def set_pref(pref_name, pref_value):
     """Sets a preference, See munkicommon.py for details"""
@@ -229,14 +212,16 @@ def process(serial, items):
     values = {'serial': serial,\
              'items': serialize(check),\
              'passphrase' : passphrase}
-    response = curl(hashurl, values)
-    server_data = response.read()
+    server_data = curl(hashurl, values)
+    # = response.read()
 
     # Decode response
     try:
         result = unserialize(server_data)
-    except:
-        display_error('Illegal response from the server: %s' % server_data)
+    except Exception, e:
+        display_error('Could not unserialize server data: %s' % str(e))
+        display_error('Request: %s' % str(values))
+        display_error('Response: %s' % str(server_data))
         return -1
 
     if result.get('error') != '':
@@ -263,7 +248,7 @@ def process(serial, items):
         response = curl(checkurl, {'serial': serial,\
              'items': serialize(items),\
              'passphrase': passphrase})
-        display_detail(response.read())
+        display_detail(response)
     else:
         display_detail('No changes')
 
@@ -382,7 +367,9 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
 
             except utils.ScriptNotFoundError:
                 pass  # Script has disappeared - pass.
-            except utils.RunExternalScriptError, e:
-                display_warning(str(e))
+            except Exception, e:
+                display_warning("%s: %s" % (script, str(e)))
+
+
 
 # End of reportcommon

@@ -37,7 +37,7 @@ Usage: ${PROG} [OPTIONS]
   -i PATH   Create a full installer at PATH
   -c ID     Change pkg id to ID
   -h        Display this help message
-	-r PATH   Path to installer result plist
+  -r PATH   Path to installer result plist
   -v VERS   Override version number
 
 Example:
@@ -125,7 +125,8 @@ echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
 $CURL "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
-	&& $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
+    && $CURL "${TPL_BASE}purl" -o "${MUNKIPATH}munkilib/purl.py" \
+    && $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
 	&& $CURL "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
 
 if [ "${?}" != 0 ]
@@ -238,8 +239,8 @@ if [ $ERR = 0 ]; then
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
 		if [[ $RESULT ]]; then
-			defaults write $RESULT version ${VERSION}
-			defaults write $RESULT pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
+			defaults write "$RESULT" version ${VERSION}
+			defaults write "$RESULT" pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
 		fi
 
 	else

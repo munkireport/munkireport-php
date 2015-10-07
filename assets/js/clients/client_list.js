@@ -6,38 +6,57 @@ $(document).on('appReady', function(e, lang) {
 	if(window.location.hash.substring(1)) {
 		search = decodeURIComponent(window.location.hash.substring(1));
 	}
-
+	
+	// Datatables variables
+	mr.dt.buttonDom = "<'row'<'col-xs-6 col-md-8'lB r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>";
+	mr.dt.buttons = {
+		buttons: [
+			'edit',
+			'copyHtml5',
+			'excelHtml5',
+			'csvHtml5',
+			'print'
+		]
+	};
+	
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
-		"sDom": "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-		"bStateSave": true,
-		"bProcessing": true,
-		"bServerSide": true,
-		"search": {search: search},
-		"stateSaveCallback": function (oSettings, oData) {
+		dom: "<'row'<'col-xs-6 col-md-8'l r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+		stateSave: true,
+		serverSide: true,
+		search: {search: search},
+		stateSaveCallback: function (oSettings, oData) {
 		    state( oSettings.sTableId, oData);
 		},
-		"stateLoadCallback": function (oSettings) {
+		stateLoadCallback: function (oSettings) {
 		    return state(oSettings.sTableId);
 		},
-		"stateLoadParams": function (settings, data) {
+		stateLoadParams: function (settings, data) {
 
 			// If search, replace state search
 			if(search) {
 				data.search.search = search;
 			}
 		},
-        "language": {
-        	"url": baseUrl + "assets/locales/dataTables/"+lang+".json"
-        },
-		"fnInitComplete": function(oSettings, json) {
+		initComplete: function(oSettings, json) {
 
 			// Save the parent
 		 	var outer = $(this).parent()
 
 			// Wrap table in responsive div
 			$(this).wrap('<div class="table-responsive" />');
-
+			
+			// Move the buttons
+			$('#total-count')
+				.after($('.dt-buttons')
+					.addClass('pull-right')
+				)
+			
+			// Register for processing event
+			$('#total-count').after(' <i class="fa fa-refresh fa fa-spin hide"></i>')
+			$(this).on( 'processing.dt', function ( e, settings, processing ) {
+		        $('i.fa-refresh').toggleClass('hide', ! processing)
+		    } )
 
 		  // Customize search box (add clear search field button)
 		  placeholder = $(outer).find('.dataTables_filter label').contents().filter(function() {return this.nodeType === 3;}).text();
@@ -67,11 +86,11 @@ $(document).on('appReady', function(e, lang) {
 		  $(outer).find('select').addClass('form-control input-sm');
 
 		},
-        "fnDrawCallback": function( oSettings ) {
+        drawCallback: function( oSettings ) {
 			$('#total-count').html(oSettings.fnRecordsTotal());
 
 			// If the edit button is active, show the remove machine buttons
-			if($('#edit.btn-danger').length > 0){
+			if($('a.buttons-edit.btn-danger').length > 0){
 				$('div.machine').addClass('edit btn-group');
 			}
 
@@ -81,23 +100,23 @@ $(document).on('appReady', function(e, lang) {
 				delete_machine($(this));
 			});
 		},
-		"sPaginationType": "bootstrap",
-		"oLanguage": {
-		 "sProcessing": ' <i class="fa fa-refresh fa fa-spin"></i>'
+		language: {
+			url: baseUrl + "assets/locales/dataTables/"+lang+".json"
 		} 
 	});
 
 	// Modify lengthmenu
 	$.fn.dataTable.defaults.aLengthMenu = [[10,25,50,100,-1], [10,25,50,100,i18n.t("all")]];
 
-    // Add edit button in list view
-    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">'+i18n.t("edit")+'</a>');
-
-    $('#edit').click(function(event){
-    	event.preventDefault()
-    	$(this).toggleClass('btn-danger');
-    	$('.machine').toggleClass('edit btn-group');
-    });
+    // Add custom edit button
+	$.fn.dataTable.ext.buttons.edit = {
+	    className: 'buttons-edit',
+	 	text: i18n.t("edit"),
+	    action: function ( e, dt, node, config ) {
+	        $(node).toggleClass('btn-danger');
+			$('.machine').toggleClass('edit btn-group');
+	    }
+	};
 
 } );
 

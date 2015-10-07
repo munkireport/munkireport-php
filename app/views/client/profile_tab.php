@@ -17,7 +17,7 @@
 		$name = $item['profile_name'];
 		$version = $item['payload_name'];
 		$serialnumber = $item['serial_number'];
-		$profile[$name][$version] = $profiles;
+		$profile[$name][$version] = $profile;
 		$payloaddata[$name][$version] = $profile_item_obj->json_to_html($item['payload_data']);
 	}
 	?>

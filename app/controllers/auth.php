@@ -34,7 +34,13 @@ class auth extends Controller
 
 	function login($return = '')
 	{
+		if(func_get_args())
+		{
+			$return_parts = func_get_args();
+			$return = implode('/', $return_parts);
 
+		}
+		
 		if($this->authorized())
 		{
 			redirect($return);
@@ -265,7 +271,9 @@ class auth extends Controller
 		// Check if we are in a session
 		if( ! isset($_SESSION['auth']))
 		{
-			echo 'Not authorized'; // Todo: return json?
+			$msg = array('error' => 'unauthorized');
+			$obj = new View();
+	        $obj->view('json', array('msg' => $msg));
 			return;
 		}
 
@@ -373,8 +381,8 @@ class auth extends Controller
 		// Show current session info
 		if($show)
 		{
-			echo '<pre>';
-			print_r($_SESSION);
+			$obj = new View();
+	        $obj->view('json', array('msg' => $_SESSION));
 		}
 	}
 

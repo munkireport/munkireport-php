@@ -1,45 +1,67 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div id="filevault-status-widget" class="panel panel-default">
 
-				<div class="panel-heading">
+		<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-lock"></i> Filevault 2 status</h3>
-				
-				</div>
+			<h3 class="panel-title"><i class="fa fa-lock"></i> <span data-i18n="filevault.widget.title"></span></h3>
 
-				<div class="list-group scroll-box">
+		</div>
 
-				<?php	$fv = new filevault_status_model();
-						$filter = get_machine_group_filter();
-						$sql = "SELECT count(1) AS count,
-								filevault_status 
-								FROM filevault_status
-								LEFT JOIN reportdata USING (serial_number)
-								$filter
-								GROUP BY filevault_status
-								ORDER BY count DESC";
-						$cnt = 0;
-				?>
-					<?php foreach($fv->query($sql) as $obj): ?>
-							<?php if (empty($obj->filevault_status)):?>
-								<a class="list-group-item"><span data-i18n="unknown">Unknown</span>
-									<span class="badge pull-right"><?php echo $obj->count; ?></span>
-								</a>
-							<?php else: ?>
-								<a href="<?php echo url('show/listing/security#'.$obj->filevault_status); ?>" class="list-group-item">
-									<span class="badge"><?php echo $obj->count; ?></span>
-									<?php echo $obj->filevault_status; ?>
-								</a>
-							<?php endif; ?>
-							<?php $cnt++; ?>
-					<?php endforeach; ?>
-					<?php if( ! $cnt): ?>
-						<span class="list-group-item">No Filevault status available</span>
-						<?php endif; ?>
+		<div class="panel-body text-center">
 
-				</div>
 
-			</div><!-- /panel -->
+			<a id="fv-unencrypted" class="btn btn-danger hide">
+				<span class="disk-count bigger-150"></span><br>
+				<span data-i18n="unencrypted"></span>
+			</a>
+			<a id="fv-encrypted" class="btn btn-success hide">
+				<span class="disk-count bigger-150"></span><br>
+				<span data-i18n="encrypted"></span>
+			</a>
 
-		</div><!-- /col -->
+			<span id="fv-nodata" data-i18n="no_clients"></span>
+
+		</div>
+
+	</div><!-- /panel -->
+
+</div><!-- /col -->
+
+<script>
+$(document).on('appUpdate', function(e, lang) {
+
+	$.getJSON( appUrl + '/module/disk_report/get_filevault_stats', function( data ) {
+
+		if(data.error){
+			//alert(data.error);
+			return;
+		}
+		
+		var url = appUrl + '/show/listing/security#'
+
+		// Set urls
+		$('#fv-unencrypted').attr('href', url + encodeURIComponent('encrypted = 0'))
+		$('#fv-encrypted').attr('href', url + encodeURIComponent('encrypted = 1'))
+
+		// Show no clients span
+		$('#fv-nodata').removeClass('hide');
+
+		$.each(data.stats, function(prop, val){
+			if(val > 0)
+			{
+				$('#fv-' + prop).removeClass('hide');
+				$('#fv-' + prop + '>span.disk-count').text(val);
+
+				// Hide no clients span
+				$('#fv-nodata').addClass('hide');
+			}
+			else
+			{
+				$('#fv-' + prop).addClass('hide');
+			}
+		});
+	});
+});
+
+</script>

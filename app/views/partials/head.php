@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
-	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/dataTables-bootstrap.css" />
+	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/datatables.min.css" />
 	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
 	<?php if(conf('custom_css')): ?> 
 	<link rel="stylesheet" href="<?php echo conf('custom_css'); ?>" />
@@ -63,7 +63,7 @@
 				<?php $url = 'show/reports/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o"></i> <span data-i18n="nav.main.reports">Reports</span> <b class="caret"></b></a>
-					<ul class="dropdown-menu">
+					<ul class="report dropdown-menu">
 
 						<?php foreach(scandir(conf('view_path').'report') AS $list_url): ?>
 
@@ -85,7 +85,7 @@
 				<?php $url = 'show/listing/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> <span data-i18n="nav.main.listings">Listings</span> <b class="caret"></b></a>
-					<ul class="dropdown-menu">
+					<ul class="listing dropdown-menu">
 
 						<?php foreach(scandir(conf('view_path').'listing') AS $list_url): ?>
 
@@ -108,7 +108,7 @@
 				<?php $url = 'admin/show/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> <span data-i18n="nav.main.admin"></span> <b class="caret"></b></a>
-					<ul class="dropdown-menu">
+					<ul class="admin dropdown-menu">
 
 						<?php foreach(scandir(conf('view_path').'admin') AS $list_url): ?>
 
