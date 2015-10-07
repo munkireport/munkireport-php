@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-### 2.5.3 (July 31, 2015)
-
-FIXES
-
-* Filesize formatter now uses base 1000 instead of 1024
-* Fix uninstall scripts
-* Session vars are updated when adding/removing machine groups
-* Better support for Corestorage volume reporting
-* Reordered buttons in some widgets thanks to @poundbangbash
-* Servermetrics model
-
-NEW FEATURES
-
-=======
 ### 2.6.0 (October 7, 2015)
 
 FIXES
@@ -46,7 +31,6 @@ FIXES
 
 NEW FEATURES
 
->>>>>>> wip
 * Support for Business Units - [Read more](https://github.com/munkireport/munkireport-php/blob/master/docs/business_units.md)
 * Support for Machine Groups - [Read more](https://github.com/munkireport/munkireport-php/blob/master/docs/machine_groups.md)
 * Role Based Access [Read more](https://github.com/munkireport/munkireport-php/blob/master/docs/authorization.md)
