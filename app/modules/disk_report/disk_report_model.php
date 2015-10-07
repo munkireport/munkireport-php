@@ -29,6 +29,8 @@ class Disk_report_model extends Model {
 		// Create table if it does not exist
 		$this->create_table();
 
+<<<<<<< HEAD
+=======
 	}
 	
 	/**
@@ -46,6 +48,7 @@ class Disk_report_model extends Model {
 						WHERE MountPoint = ?
 						".get_machine_group_filter('AND');
 		return current($this->query($sql, $mountpoint));
+>>>>>>> wip
 	}
 
 	/**

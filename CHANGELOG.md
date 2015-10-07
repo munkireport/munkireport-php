@@ -2,7 +2,7 @@
 
 FIXES
 
-* TLS1.2 support - NSUrl replaces urllib2 thanks to @gneagle and @frogor
+* TLS1.2 support - NSUrl replaces urllib2 thanks to @gneagle and @pudquick
 * Better checking of preflight scripts
 * Uptime fix for El Capitan
 * ADLDap utils (deprecated modifier)
