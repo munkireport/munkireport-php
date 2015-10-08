@@ -170,7 +170,7 @@ resetreportpref
 # Include module scripts
 <?php foreach($install_scripts AS $scriptname => $filepath): ?>
 
-<?php echo "## $scriptname ##"; ?>
+<?php echo "## $scriptname ##\n"; ?>
 echo '+ Installing <?php echo $scriptname; ?>'
 
 <?php echo file_get_contents($filepath); ?>
