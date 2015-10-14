@@ -136,6 +136,9 @@
 	"crashplan": {
 		"listing": {
 			"title": "CrashPlan Report"
+		},
+		"widget": {
+			"title": "CrashPlan Status"
 		}
 	},
 	"date": {

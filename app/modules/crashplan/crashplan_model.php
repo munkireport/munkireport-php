@@ -51,9 +51,29 @@ class Crashplan_model extends Model {
 				$this->timestamp = time();
 				$this->save();
 			}
-		}
-		
-		throw new Exception("Error Processing Request", 1);
-				
+		}				
 	} // end process()
+	
+	/**
+	 * Get statistics
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function get_stats($hours)
+	{
+		$now = time();
+		$today = date('Y-m-d H:i:s', $now - 3600 * 24);
+		$week_ago = date('Y-m-d H:i:s', $now - 3600 * 24 * 7);
+		$month_ago = date('Y-m-d H:i:s', $now - 3600 * 24 * 30);
+		$sql = "SELECT COUNT(1) as total, 
+			COUNT(CASE WHEN last_success > '$today' THEN 1 END) AS today, 
+			COUNT(CASE WHEN last_success BETWEEN '$week_ago' AND '$today' THEN 1 END) AS lastweek,
+			COUNT(CASE WHEN last_success < '$week_ago' THEN 1 END) AS week_plus
+			FROM timemachine
+			LEFT JOIN reportdata USING (serial_number)
+			".get_machine_group_filter();
+		return current($this->query($sql));
+	}
+
 }

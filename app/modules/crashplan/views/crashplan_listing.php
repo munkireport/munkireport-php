@@ -100,7 +100,11 @@ $(document).on('appReady', function(e, lang) {
             var checkin = parseInt($('td:eq(3)', nRow).html());
             var date = new Date(checkin * 1000);
             $('td:eq(3)', nRow).html(moment(date).fromNow());
-
+			
+			// Format duration
+			var val = parseInt($('td:eq(4)', nRow).html());
+			$('td:eq(4)', nRow).html(moment.duration(val, "seconds").humanize());
+			
             // Format Last failure timestamp
             var checkin = parseInt($('td:eq(5)', nRow).html());
             var date = new Date(checkin * 1000);

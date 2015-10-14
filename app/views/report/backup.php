@@ -9,6 +9,7 @@
   <div class="row">
 
     <?php $this->view('widgets/timemachine_widget'); ?>
+	<?php $this->view('widgets/crashplan_widget'); ?>
 
   </div>
 
