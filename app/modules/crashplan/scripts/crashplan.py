@@ -34,35 +34,38 @@ last_success = ''
 last_failure = ''
 duration = 0
 destinations = {}
-with open(crashplan_log, mode='r', buffering=-1) as cplog:
-    for line in cplog:
-        m = regex.match(line)
-        if m:
-            timestamp = cp_date_to_unixtimestamp(m.group(1))
-            destination = m.group(2)
-            message = m.group(3)
-            # Check if destination is enclosed with []
-            if not re.match(r'^\[.+\]$', destination):
-                continue
-            if not destinations.get(destination):
-                destinations[destination] = {'destination': destination, 'start': '', 'last_success': '', 'duration': 0, 'last_failure': '', 'reason': ''}
-            if re.match(r'^Starting backup', message):
-                destinations[destination]['start'] = timestamp
-            elif re.match(r'^Completed backup', message):
-                if start:
-                    duration = timestamp - destinations[destination]['start']
-                    destinations[destination]['duration'] = duration
-                else:
-                    destinations[destination]['duration'] = 0
-                destinations[destination]['last_success'] = timestamp
-            elif re.match(r'^Stopped backup', message):
-                destinations[destination]['last_failure'] = timestamp
-                reason = re.match(r'.*Reason for stopping backup: (.*)', next(cplog))
-                if reason:
-                    destinations[destination]['reason'] = reason.group(1)
-                else:
-                    destinations[destination]['reason'] = 'unknown'
-
+if os.path.exists(crashplan_log):
+    with open(crashplan_log, mode='r', buffering=-1) as cplog:
+        for line in cplog:
+            m = regex.match(line)
+            if m:
+                timestamp = cp_date_to_unixtimestamp(m.group(1))
+                destination = m.group(2)
+                message = m.group(3)
+                # Check if destination is enclosed with []
+                if not re.match(r'^\[.+\]$', destination):
+                    continue
+                if not destinations.get(destination):
+                    destinations[destination] = {'destination': destination, 'start': '', 'last_success': '', 'duration': 0, 'last_failure': '', 'reason': ''}
+                if re.match(r'^Starting backup', message):
+                    destinations[destination]['start'] = timestamp
+                elif re.match(r'^Completed backup', message):
+                    if start:
+                        duration = timestamp - destinations[destination]['start']
+                        destinations[destination]['duration'] = duration
+                    else:
+                        destinations[destination]['duration'] = 0
+                    destinations[destination]['last_success'] = timestamp
+                elif re.match(r'^Stopped backup', message):
+                    destinations[destination]['last_failure'] = timestamp
+                    reason = re.match(r'.*Reason for stopping backup: (.*)', next(cplog))
+                    if reason:
+                        destinations[destination]['reason'] = reason.group(1)
+                    else:
+                        destinations[destination]['reason'] = 'unknown'
+else:
+    print "CrashPlan log not found here: %s " % crashplan_log
+    
 # Make sure cachedir exists
 cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
 if not os.path.exists(cachedir):
