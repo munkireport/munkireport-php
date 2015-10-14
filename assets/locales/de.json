@@ -57,6 +57,12 @@
 		"username": "Benutzername",
 		"wrong_user_or_pass": "Falscher Benutzername oder falches Kennwort"
 	},
+	"backup": {
+		"duration": "Dauer des Backups",
+		"last_failure": "Letztes Fehlgeschlagenes Backup",
+		"last_failure_msg": "Fehlermeldung",
+		"last_success": "Letztes Erfolgreiches Backup"
+	},
 	"battery": {
 		"life_remaining": "__percent__% verbleibende Batterielaufzeit"
 	},
@@ -201,10 +207,6 @@
 			"pending_removal_plural": "Ausstehende Deinstallationen"
 		},
 		"timemachine": {
-			"duration": "Dauer des Backups",
-			"last_failure": "Letztes Fehlgeschlagenes Backup",
-			"last_failure_msg": "Fehlermeldung",
-			"last_success": "Letztes Erfolgreiches Backup",
 			"title": "Timemachine Bericht"
 		},
 		"username": "Benutzername"

@@ -318,7 +318,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 					.empty()
 					.append($('<tr>')
 						.append($('<th>')
-							.text(i18n.t('listing.timemachine.last_success')))
+							.text(i18n.t('backup.last_success')))
 						.append($('<td>')
 							.text(function(){
 								if(data.last_success){
@@ -327,7 +327,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 							})))
 					.append($('<tr>')
 						.append($('<th>')
-							.text(i18n.t('listing.timemachine.last_failure')))
+							.text(i18n.t('backup.last_failure')))
 						.append($('<td>')
 							.text(function(){
 								if(data.last_failure){
@@ -336,12 +336,12 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 							})))
 					.append($('<tr>')
 						.append($('<th>')
-							.text(i18n.t('listing.timemachine.last_failure_msg')))
+							.text(i18n.t('backup.last_failure_msg')))
 						.append($('<td>')
 							.text(data.last_failure_msg)))
 					.append($('<tr>')
 						.append($('<th>')
-							.text(i18n.t('listing.timemachine.duration')))
+							.text(i18n.t('backup.duration')))
 						.append($('<td>')
 							.text(moment.duration(data.duration, "seconds").humanize())));
 			}

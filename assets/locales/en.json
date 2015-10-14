@@ -57,6 +57,12 @@
 		"username": "Username",
 		"wrong_user_or_pass": "Wrong username or password"
 	},
+	"backup":{
+		"duration": "Backup duration",
+		"last_failure": "Last failed backup",
+		"last_failure_msg": "Message",
+		"last_success": "Last successful backup"
+	},
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
 	},
@@ -126,6 +132,11 @@
 		"cpu": "CPU",
 		"type": "CPU Type",
 		"usage": "Processor Usage"
+	},
+	"crashplan": {
+		"listing": {
+			"title": "CrashPlan Report"
+		}
 	},
 	"date": {
 		"year": "year"
