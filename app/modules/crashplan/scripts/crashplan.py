@@ -15,7 +15,7 @@ def cp_date_to_unixtimestamp(cp_date):
     #ep = dt.fromtimestamp(0)
     #diff = dt - ep
     #return int(diff.total_seconds())
-    return datetime.strftime(dt, "%s")
+    return int(datetime.strftime(dt, "%s"))
 
 # Skip manual check
 if len(sys.argv) > 1:
@@ -29,10 +29,7 @@ cacheFile = 'crashplan.txt'
 # crashplan logformat
 regex = re.compile(r'. (\d+\/\d+\/\d+ \d+:\d+[AP]M)\s+([^\s]+)\s+(.*)')
 
-start = ''
-last_success = ''
-last_failure = ''
-duration = 0
+start = 0
 destinations = {}
 if os.path.exists(crashplan_log):
     with open(crashplan_log, mode='r', buffering=-1) as cplog:
@@ -46,11 +43,11 @@ if os.path.exists(crashplan_log):
                 if not re.match(r'^\[.+\]$', destination):
                     continue
                 if not destinations.get(destination):
-                    destinations[destination] = {'destination': destination, 'start': '', 'last_success': '', 'duration': 0, 'last_failure': '', 'reason': ''}
+                    destinations[destination] = {'destination': destination, 'start': 0, 'last_success': 0, 'duration': 0, 'last_failure': 0, 'reason': ''}
                 if re.match(r'^Starting backup', message):
                     destinations[destination]['start'] = timestamp
                 elif re.match(r'^Completed backup', message):
-                    if start:
+                    if destinations[destination]['start']:
                         duration = timestamp - destinations[destination]['start']
                         destinations[destination]['duration'] = duration
                     else:

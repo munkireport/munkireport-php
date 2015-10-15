@@ -63,9 +63,9 @@ class Crashplan_model extends Model {
 	function get_stats($hours)
 	{
 		$now = time();
-		$today = date('Y-m-d H:i:s', $now - 3600 * 24);
-		$week_ago = date('Y-m-d H:i:s', $now - 3600 * 24 * 7);
-		$month_ago = date('Y-m-d H:i:s', $now - 3600 * 24 * 30);
+		$today = $now - 3600 * 24;
+		$week_ago = $now - 3600 * 24 * 7;
+		$month_ago = $now - 3600 * 24 * 30;
 		$sql = "SELECT COUNT(1) as total, 
 			COUNT(CASE WHEN last_success > '$today' THEN 1 END) AS today, 
 			COUNT(CASE WHEN last_success BETWEEN '$week_ago' AND '$today' THEN 1 END) AS lastweek,

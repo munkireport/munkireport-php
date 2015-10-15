@@ -71,9 +71,13 @@ class Crashplan_controller extends Module_controller
         {
             $obj->view('json', array('msg' => 'Not authorized'));
         }
-
-        $service = new Crashplan_model;
-        $obj->view('json', array('msg' => $service->retrieve_records($serial_number)));
+		$out = array();
+        $model = new Crashplan_model;
+		foreach($model->retrieve_records($serial_number) as $record)
+		{
+			$out[] = $record->rs;
+		}
+        $obj->view('json', array('msg' => $out));
     }
 
 

@@ -356,6 +356,12 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 		});
 
+		// Get Crashplan data
+		$.getJSON( appUrl + '/module/crashplan/get_data/' + serialNumber, function( data ) {
+			$.each(data, function(index, item){
+				console.log(item)
+			});
+		});
 
 		// Get ARD data
 		$.getJSON( appUrl + '/module/ard/get_data/' + serialNumber, function( data ) {
