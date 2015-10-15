@@ -70,7 +70,7 @@ class Crashplan_model extends Model {
 			COUNT(CASE WHEN last_success > '$today' THEN 1 END) AS today, 
 			COUNT(CASE WHEN last_success BETWEEN '$week_ago' AND '$today' THEN 1 END) AS lastweek,
 			COUNT(CASE WHEN last_success < '$week_ago' THEN 1 END) AS week_plus
-			FROM timemachine
+			FROM crashplan
 			LEFT JOIN reportdata USING (serial_number)
 			".get_machine_group_filter();
 		return current($this->query($sql));
