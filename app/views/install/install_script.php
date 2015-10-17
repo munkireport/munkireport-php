@@ -1,10 +1,7 @@
 <?php header("Content-Type: text/plain");
 ?>#!/bin/bash
 
-BASEURL="<?php echo
-	(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://')
-	. $_SERVER['HTTP_HOST']
-	. conf('subdirectory'); ?>"
+BASEURL="<?php echo conf('webhost') . conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 CACHEPATH="${MUNKIPATH}preflight.d/cache/"
