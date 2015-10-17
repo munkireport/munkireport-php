@@ -24,7 +24,7 @@ new Crashplan_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
-		        <th data-i18n="service.name" data-colname='crashplan.destination'></th>
+		        <th data-i18n="backup.destination" data-colname='crashplan.destination'></th>
                 <th data-i18n="backup.last_success" data-colname='crashplan.last_success'></th>
                 <th data-i18n="backup.duration" data-colname='crashplan.duration'></th>
                 <th data-i18n="backup.last_failure" data-colname='crashplan.last_failure'></th>

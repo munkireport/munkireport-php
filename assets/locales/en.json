@@ -58,6 +58,7 @@
 		"wrong_user_or_pass": "Wrong username or password"
 	},
 	"backup":{
+		"destination": "Backup Destination",
 		"duration": "Backup duration",
 		"last_failure": "Last failed backup",
 		"last_failure_msg": "Message",
