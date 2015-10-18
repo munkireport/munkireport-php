@@ -2,6 +2,7 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
+	"active": "Active",
 	"admin": {
 		"bu": {
 			"more_info": "More Information"
@@ -87,7 +88,9 @@
 		"from_cache": "From Cache"
 	},
 	"client": {
+		"activity": "Client Activity",
 		"comment": "Comments",
+		"hour": "Clients per hour",
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",
@@ -110,7 +113,9 @@
 		"installed_third_party_software": "Installed Third Party Software",
 		"install_date": "Install Date",
 		"no_install_history": "No install history",
-		"process_name": "Process Name"
+		"panel_title": "Client activity in the last month",
+		"process_name": "Process Name",
+		"total": "Total Clients"
 	},
 	"chart": {
 		"stackedarea": {
@@ -170,6 +175,7 @@
 		"hardware": "Hardware",
 		"uuid": "Hardware UUID"
 	},
+	"inactive": "Inactive",
 	"installed": "Installed",
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
@@ -359,6 +365,7 @@
 	"timemachine": {
 		"timemachine": "Timemachine"
 	},
+	"total_clients": "Total Clients",
 	"type": "Type",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
