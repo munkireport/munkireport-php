@@ -98,25 +98,21 @@ $(document).on('appReady', function() {
 			$('#client-widget span.hour-clients').text(data.lasthour);
 
 			// Show change for total
+			$('#client-widget span.total-change').removeClass().addClass('total-change');
 			if(total < data.total){
 				$('#client-widget span.total-change').addClass('fa fa-caret-up text-success');
 			}
 			else if(total > data.total){
 				$('#client-widget span.total-change').addClass('fa fa-caret-down text-danger');
 			}
-			else{
-				$('#client-widget span.total-change').removeClass();
-			}
-			
+
 			// Show change for hour
+			$('#client-widget span.lasthour-change').removeClass().addClass('lasthour-change');
 			if(lasthour < data.lasthour){
 				$('#client-widget span.lasthour-change').addClass('fa fa-caret-up text-success');
 			}
 			else if(lasthour > data.lasthour){
 				$('#client-widget span.lasthour-change').addClass('fa fa-caret-down text-danger');
-			}
-			else{
-				$('#client-widget span.lasthour-change').removeClass();
 			}
 
 			
