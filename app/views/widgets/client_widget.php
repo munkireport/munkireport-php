@@ -14,9 +14,9 @@
 			
 			<svg id="test1" class="center-block"></svg>
 			<div class="text-muted text-center">
-				<span data-i18n="client.total"></span>: <span class="total-clients"></span>
+				<span data-i18n="client.total"></span>: <span class="total-clients"></span> <span class="total-change"></span>
 				|
-				<span data-i18n="client.hour"></span>: <span class="hour-clients"></span>
+				<span data-i18n="client.hour"></span>: <span class="hour-clients"></span> <span class="lasthour-change"></span>
 			</div>
 
 		</div>
@@ -90,8 +90,36 @@ $(document).on('appReady', function() {
 			d3.select('#test1').datum(testdata1).transition().duration(500).call(chart);
 			nv.utils.windowResize(chart.update);
 			
+			var total = +$('#client-widget span.total-clients').text(),
+				lasthour = +$('#client-widget span.hour-clients').text();
+			
+			// Set count for total and hour
 			$('#client-widget span.total-clients').text(data.total);
 			$('#client-widget span.hour-clients').text(data.lasthour);
+
+			// Show change for total
+			if(total < data.total){
+				$('#client-widget span.total-change').addClass('fa fa-caret-up text-success');
+			}
+			else if(total > data.total){
+				$('#client-widget span.total-change').addClass('fa fa-caret-down text-danger');
+			}
+			else{
+				$('#client-widget span.total-change').removeClass();
+			}
+			
+			// Show change for hour
+			if(lasthour < data.lasthour){
+				$('#client-widget span.lasthour-change').addClass('fa fa-caret-up text-success');
+			}
+			else if(lasthour > data.lasthour){
+				$('#client-widget span.lasthour-change').addClass('fa fa-caret-down text-danger');
+			}
+			else{
+				$('#client-widget span.lasthour-change').removeClass();
+			}
+
+			
 		});
 
 	};
