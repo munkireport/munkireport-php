@@ -85,7 +85,7 @@ $(document).on('appReady', function() {
 		d3.json(url, function(data) {
 			testdata1[0].y = data.lastmonth // Active
 			testdata1[1].y = data.total - data.lastmonth // Inactive
-			chart.title(data.lastmonth);
+			chart.title("" + data.lastmonth);
 
 			d3.select('#test1').datum(testdata1).transition().duration(500).call(chart);
 			nv.utils.windowResize(chart.update);
