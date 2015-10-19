@@ -39,15 +39,15 @@
 		    	});
 
 	    		nv.addGraph(function() {
-		        var chart = nv.models.discreteBarChart()
-		            .x(function(d) { return d.key })
-		            .y(function(d) { return d.cnt })
-		            .staggerLabels(true)
-		            .tooltips(false)
-		            .valueFormat(d3.format(','))
-		            .showValues(true)
-		            .duration(250)
-			        ;
+			        var chart = nv.models.discreteBarChart()
+			            .x(function(d) { return d.key })
+			            .y(function(d) { return d.cnt })
+			            .staggerLabels(true)
+			            .valueFormat(d3.format(','))
+			            .showValues(true)
+			            .duration(250)
+				        ;
+					chart.tooltip.enabled(false);
 			        d3.select('#ip-plot')
 			            .datum([{key: 'network', values:data}])
 			            .style("width", width + "px")

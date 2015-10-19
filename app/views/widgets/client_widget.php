@@ -60,16 +60,9 @@ $(document).on('appReady', function() {
 			.growOnHover(false)
 			.arcsRadius(arcRadius1);
 		
-		chart.title("    ");
+		chart.title(" ");
 		
-		chart.legend.dispatch.legendClick = function(d, i){
-		//redraw
-			console.log(d)
-			return false
-		};
-
-		
-		d3.select("#test1")
+		d3.select("#client-widget svg")
 			.datum(testdata1)
 			.attr('width', width)
 			.attr('height', height)
@@ -88,7 +81,7 @@ $(document).on('appReady', function() {
 			chart.title("" + data.lastmonth);
 
 			d3.select('#test1').datum(testdata1).transition().duration(500).call(chart);
-			nv.utils.windowResize(chart.update);
+			chart.update();
 			
 			var total = +$('#client-widget span.total-clients').text(),
 				lasthour = +$('#client-widget span.hour-clients').text();
