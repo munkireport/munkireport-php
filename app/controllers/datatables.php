@@ -51,11 +51,15 @@ class datatables extends Controller
 			//echo '<pre>';print_r($obj->fetch($cfg));
 			echo json_encode($obj->fetch($cfg));
 			
-			// If there is an encoding error, show it
-			if(json_last_error() != JSON_ERROR_NONE)
+			// Check for older php versions
+			if(function_exists('json_last_error'))
 			{
-				echo json_last_error_msg();
-				print_r($obj->fetch($cfg));
+				// If there is an encoding error, show it
+				if(json_last_error() != JSON_ERROR_NONE)
+				{
+					echo json_last_error_msg();
+					print_r($obj->fetch($cfg));
+				}
 			}
 		}
 		catch(Exception $e) 
