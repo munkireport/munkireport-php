@@ -73,7 +73,7 @@ $(document).on('appReady', function() {
 	});
 	
 	// Get data and update graph
-	drawGraph = function(){
+	var drawGraph = function(){
 		var url = appUrl + '/module/reportdata/get_lastseen_stats';
 		d3.json(url, function(data) {
 			testdata1[0].y = data.lastmonth // Active
