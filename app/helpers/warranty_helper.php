@@ -31,35 +31,27 @@ function check_warranty_status(&$warranty_model)
 		return;
 	}
 	
-	// Get est. manufacture date
-	$est_manufacture_date = estimate_manufactured_date($warranty_model->serial_number);
-
-	// Get data
-
-	
-	// As of 19 oct 2015 warranty information is behind a Captcha
-	// so we can't do any automated lookup anymore
-	$warranty_model->status = "Can't lookup warranty";
-	$warranty_model->end_date = '';
-	$warranty_model->purchase_date = $est_manufacture_date;
-
-	// No expiration date, use the estimated manufacture date + n year
-	if( ! $warranty_model->end_date)
+	// Previous entry
+	if($warranty_model->end_date)
 	{
-		$man_time = strtotime($warranty_model->purchase_date);
-
-		// If we're within 3 years, after man_date we did not have AppleCare
-		// So end_date = man_date + 1 year
-		if(strtotime('+3 years', $man_time) > time())
+		if($warranty_model->end_date < date('Y-m-d'))
 		{
-			$warranty_model->end_date = date('Y-m-d', strtotime('+1 year', $man_time));
+			$warranty_model->status = 'Expired';
 		}
-		else // end_date = man_date + 3 yrs (assume we had 3 yrs of AppleCare)
-		{
-			$warranty_model->end_date = date('Y-m-d', strtotime('+3 years', $man_time));
-		}
-
 	}
+	else // New entry
+	{		
+		// As of 19 oct 2015 warranty information is behind a Captcha
+		// so we can't do any automated lookup anymore
+		$warranty_model->status = "Can't lookup warranty";
+		$warranty_model->purchase_date = estimate_manufactured_date($warranty_model->serial_number);
+		
+		// Calculate time to expire
+		$max_applecare_years = sprintf('+%s year', conf('max_applecare', 3));
+		$purchase_time = strtotime($warranty_model->purchase_date);
+		$warranty_model->end_date = date('Y-m-d', strtotime($max_applecare_years, $purchase_time));
+	}
+	
 	
 	// Get machine model from apple (only when not set or failed)
 	$machine = new Machine_model($warranty_model->serial_number);
