@@ -14,6 +14,25 @@ class Inventory_controller extends Module_controller
         echo "You've loaded the inventory module!";
     
     }
+    
+    /**
+    * Get versions and count from an application
+    *
+    * @param string $app Appname
+    **/
+    public function appVersions($app = '')
+    {
+        // Protect this handler
+        if( ! $this->authorized())
+        {
+            redirect('auth/login');
+        }
+        $app = rawurldecode($app);
+        $inventory_item_obj = new Inventory_model();
+        $obj = new View();
+        $obj->view('json', array('msg' => $inventory_item_obj->appVersions($app)));
+
+    }
 
     // Todo: move expensive data objects to view
     function items($name='', $version='') 

@@ -40,6 +40,24 @@ class Inventory_model extends Model {
         return $this->query($sql);
     }
     
+    /**
+     * Get versions and count from an application
+     *
+     * @param string $app Appname
+     **/
+    public function appVersions($app = '')
+    {
+        $sql = sprintf('SELECT version, COUNT(i.id) AS count
+            FROM %s i 
+            LEFT JOIN reportdata r ON (r.serial_number = i.serial)
+            %s 
+            AND i.name LIKE ?
+            GROUP BY version
+            ORDER BY count DESC', $this->enquote($this->tablename), get_machine_group_filter('WHERE', 'r'));
+        return $this->query($sql, $app);
+
+    }
+    
     function process($data)
     {    
         //list of bundleids to ignore
