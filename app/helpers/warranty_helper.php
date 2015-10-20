@@ -10,7 +10,7 @@ function check_warranty_status(&$warranty_model)
 {
 	// Error message
 	$error = '';
-
+	
 	// Check if virtual machine 
 	// We assume vmware serials contain upper and lower chars
 	// There are actual macs with a serial starting with VM
@@ -31,93 +31,17 @@ function check_warranty_status(&$warranty_model)
 		return;
 	}
 	
-	$url = 'https://selfsolve.apple.com/wcResults.do';
-	$opts['data'] = array ('sn' => $warranty_model->serial_number, 'num' => '0');
-	$opts['method'] = 'POST';
-
 	// Get est. manufacture date
 	$est_manufacture_date = estimate_manufactured_date($warranty_model->serial_number);
 
 	// Get data
-	$result = get_url($url, $opts);
 
-	if( $result === FALSE)
-	{
-		$warranty_model->status = 'Lookup failed';
-		$error = 'Lookup failed';
-	}
-	elseif(preg_match('/invalidserialnumber/', $result))
-	{
-		// Check invalid serial
-		$warranty_model->status = 'Invalid serial number';
-	}
-	elseif(preg_match("/RegisterProduct.do\?productRegister=Y/", $result))
-	{
-		// Check registration
-		$warranty_model->status = 'Unregistered serialnumber';
-	}
-	elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(false/', $result))
-	{
-		// Get expired status
-		$warranty_model->status = 'Expired';
-		//$warranty_model->end_date = '0000-00-00';
-	}
-	elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(true([^\)])+/', $result, $matches))
-	{
-		// Get support status
-
-		if(preg_match('/Limited Warranty\./', $matches[0]))
-		{
-			$warranty_model->status = 'No Applecare';
-		}
-		else
-		{
-			$warranty_model->status = 'Supported';
-		}
-					
-		// Get estimated exp date
-		if(preg_match('/Estimated Expiration Date: ([^<]+)</', $matches[0], $matches))
-		{
-			$exp_time = strtotime($matches[1]);
-			$warranty_model->end_date = date('Y-m-d', $exp_time);
-
-			if($warranty_model->status == 'Supported')
-			{
-				// There are 3, 4 and 5 year AppleCare contracts
-				// We're checking how many years there are
-				// between exp date and manufacture date
-				$est_man_time = strtotime($est_manufacture_date);
-
-				// For the next calculation take manufacture time minus half year
-				// to fix an issue where the est_man_time is later than
-				// the est_purchase date (a half year should be enough to compensate for the
-				// estimation)
-				$adjusted_man_time = $est_man_time - (60*60*24*180);
-
-				// Get difference between expiration time and manufacture time divided by year seconds
-				$years = sprintf('%d', intval($exp_time - $adjusted_man_time) / (60*60*24*365));
-
-				// Estimated purchase date
-				$warranty_model->purchase_date = date('Y-m-d', strtotime("-$years years", $exp_time));
-			}
-			else
-			{
-				$warranty_model->purchase_date = date('Y-m-d', strtotime('-1 year', $exp_time));
-			}
-		}	
-	}
-	else
-	{
-		$warranty_model->status = 'No information found';
-		$error = 'No information found';
-	}
-
-	// No valid purchase date, use the estimated manufacture date
-	if( ! $warranty_model->purchase_date OR 
-		! preg_match('/\d{4}-\d{2}-\d{2}/', $warranty_model->purchase_date))
-	{
-		$warranty_model->purchase_date = $est_manufacture_date;
-	}
+	
+	// As of 19 oct 2015 warranty information is behind a Captcha
+	// so we can't do any automated lookup anymore
+	$warranty_model->status = "Can't lookup warranty";
+	$warranty_model->end_date = '';
+	$warranty_model->purchase_date = $est_manufacture_date;
 
 	// No expiration date, use the estimated manufacture date + n year
 	if( ! $warranty_model->end_date)
