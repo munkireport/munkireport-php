@@ -308,6 +308,15 @@
 	"report": {
 		"generate": "Generate Report"
 	},
+	"printer": {
+		"name": "Printer Name",
+		"ppd": "PPD",
+		"driver_version": "Driver Version",
+		"url": "URL":,
+		"default_set": "Default Set",
+		"printer_status": "Printer Status",
+		"printer_sharing": "Printer Sharing"
+	},	
 	"serial": "Serial Number",
 	"servermetrics": {
 		"tab": "Server Metrics"
