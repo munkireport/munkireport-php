@@ -61,6 +61,7 @@ $(document).on('appReady', function() {
 			.arcsRadius(arcRadius1);
 		
 		chart.title(" ");
+		chart.legend.updateState(false);
 		
 		d3.select("#client-widget svg")
 			.datum(testdata1)
