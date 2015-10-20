@@ -139,7 +139,8 @@ function check_warranty_status(&$warranty_model)
 	
 	// Get machine model from apple (only when not set or failed)
 	$machine = new Machine_model($warranty_model->serial_number);
-	if( ! $machine->machine_desc OR $machine->machine_desc == 'model_lookup_failed')
+	$lookup_failed = array('model_lookup_failed', 'unknown_model');
+	if( ! $machine->machine_desc OR in_array($machine->machine_desc, $lookup_failed))
 	{
 		$machine->machine_desc = model_description_lookup($warranty_model->serial_number);
 		$machine->save();

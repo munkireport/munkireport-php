@@ -1,3 +1,23 @@
+### 2.6.0 (October 7, 2015)
+
+FIXES
+
+* TLS1.2 support - NSUrl replaces urllib2 thanks to @gneagle and @pudquick
+* Better checking of preflight scripts
+* Uptime fix for El Capitan
+* ADLDap utils (deprecated modifier)
+
+NEW FEATURES
+
+* Bluetooth widget thanks to @gmarnin and @nbalonso
+* Configurable disk size thresholds
+* German localisation thanks to @fridomac
+* Etag support for install controller (used by AutoPkg recipe)
+* initial support for 'tagging' machines
+* Datatables 10
+* Download CSV, Print, and Copy to clipboard
+* better FileVault status widget
+
 ### 2.5.3 (July 31, 2015)
 
 FIXES

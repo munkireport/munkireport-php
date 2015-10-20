@@ -24,16 +24,18 @@ case "$DS" in
 	# osvers is 10 for 10.6, 11 for 10.7, 12 for 10.8, 13 for 10.9, etc.
 	osversionlong=$(uname -r)
 	osvers=${osversionlong/.*/}
-	localhostname=`/usr/sbin/scutil --get LocalHostName`
+	
 	# Set variable for Domain
 	domain=`dscl localhost -list /Active\ Directory`
+	# Get AD computer object name
+	adbindname=$(defaults read "/Library/Preferences/OpenDirectory/Configurations/Active Directory/$domain" trustaccount)
 	
 	if [[ ${osvers} -ge 11 ]]; then
-		AD_COMMENTS=`dscl /Search -read Computers/"${localhostname}"$ Comment 2>/dev/null | tr -d '\n' | awk '{$1 =""; print }'`
+		AD_COMMENTS=`dscl /Search -read Computers/"${adbindname}"$ Comment 2>/dev/null | tr -d '\n' | awk '{$1 =""; print }'`
 	fi
 	
 	if [ "${osvers}" = 10 ]; then
-		AD_COMMENTS=`dscl /Active\ Directory/All\ Domains/ -read Computers/"${localhostname}"$ Comment 2>/dev/null | tr -d '\n' | awk '{$1 =""; print }'`	
+		AD_COMMENTS=`dscl /Active\ Directory/All\ Domains/ -read Computers/"${adbindname}"$ Comment 2>/dev/null | tr -d '\n' | awk '{$1 =""; print }'`	
 	fi
 	
 	echo "Active Directory Comments = ${AD_COMMENTS}" >> "$DIR/cache/directoryservice.txt"

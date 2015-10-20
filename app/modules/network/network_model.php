@@ -120,7 +120,7 @@ class Network_model extends Model {
         // Now only store entries with a valid ethernet address
         foreach( $services as $service => $data)
         {
-        	if( $data['ethernet'] && $data['ethernet'] != '(null)')
+            if( $data['ethernet'] && strlen($data['ethernet']) == 17)
         	{
         		$this->merge($data);
                 $this->id = '';

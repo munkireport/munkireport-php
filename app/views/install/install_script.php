@@ -1,10 +1,7 @@
 <?php header("Content-Type: text/plain");
 ?>#!/bin/bash
 
-BASEURL="<?php echo
-	(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://')
-	. $_SERVER['HTTP_HOST']
-	. conf('subdirectory'); ?>"
+BASEURL="<?php echo conf('webhost') . conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 CACHEPATH="${MUNKIPATH}preflight.d/cache/"
@@ -37,7 +34,7 @@ Usage: ${PROG} [OPTIONS]
   -i PATH   Create a full installer at PATH
   -c ID     Change pkg id to ID
   -h        Display this help message
-	-r PATH   Path to installer result plist
+  -r PATH   Path to installer result plist
   -v VERS   Override version number
 
 Example:
@@ -125,7 +122,8 @@ echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
 $CURL "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
-	&& $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
+    && $CURL "${TPL_BASE}purl" -o "${MUNKIPATH}munkilib/purl.py" \
+    && $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
 	&& $CURL "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
 
 if [ "${?}" != 0 ]
@@ -169,7 +167,7 @@ resetreportpref
 # Include module scripts
 <?php foreach($install_scripts AS $scriptname => $filepath): ?>
 
-<?php echo "## $scriptname ##"; ?>
+<?php echo "## $scriptname ##\n"; ?>
 echo '+ Installing <?php echo $scriptname; ?>'
 
 <?php echo file_get_contents($filepath); ?>
@@ -238,8 +236,8 @@ if [ $ERR = 0 ]; then
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
 		if [[ $RESULT ]]; then
-			defaults write $RESULT version ${VERSION}
-			defaults write $RESULT pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
+			defaults write "$RESULT" version ${VERSION}
+			defaults write "$RESULT" pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
 		fi
 
 	else

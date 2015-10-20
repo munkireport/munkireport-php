@@ -143,7 +143,7 @@
 				(<span class="mr-console_user"></span>)</td>
 				</tr>
 				<tr>
-					<th data-i18n="user.local_admin"></th><td class="mr-users"></td>
+					<th data-i18n="user.local_admins"></th><td class="mr-users"></td>
 				</tr>
 				</tr>
 			</table>

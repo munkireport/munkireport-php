@@ -37,4 +37,6 @@
 
 </div>  <!-- /container -->
 
+<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.autoupdate.js"></script>
+
 <?php $this->view('partials/foot'); ?>

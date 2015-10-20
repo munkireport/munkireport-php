@@ -11,7 +11,7 @@ $report   = new Reportdata_model($serial_number);
 			<tbody>
 				<tr>
 					<td>Status as of last Check-in
-					<dd>(<time title="<?php echo strftime('%c', $report->timestamp); ?>" datetime="<?php echo $report->timestamp; ?>"><?php echo strftime('%x', $report->timestamp); ?></time>)</dd></td>
+					(<span class="mr-check-in_date"></span>)</td>
 					<td><?php echo $filevault_status->filevault_status; ?></td>
 				</tr>
 				<tr>

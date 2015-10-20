@@ -50,12 +50,16 @@ def getOsVersion():
     return int(os_version_tuple[1])
 
 def __main__():
-
+    
+    debug = False
     # Skip manual check
     if len(sys.argv) > 1:
         if sys.argv[1] == 'manualcheck':
             print 'Manual check: skipping'
             exit(0)
+        if sys.argv[1] == 'debug':
+            print '******* DEBUG MODE ********'
+            debug = True
 
     # Determine logformat based on OS version
     logFormat = 1
@@ -75,24 +79,28 @@ def __main__():
     if os.path.isdir(input_dir):
         for file_path in os.listdir(input_dir):
             file_path = path.join(input_dir, file_path)
-            # print("Reading: \"{0}\"".format(file_path))
+            if debug:
+                print("Reading: \"{0}\"".format(file_path))
             try:
                 f = open(file_path, "rb")
             except IOError as e:
-                # print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
+                if debug:
+                    print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
                 continue
 
             try:
                 db = ccl_asldb.AslDb(f)
             except ccl_asldb.AslDbError as e:
-                # print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
+                if debug:
+                    print("Couldn't open file {0} ({1}). Skipping this file".format(file_path, e))
                 f.close()
                 continue
 
             timestamp = ''
             
             for record in db:
-                # print "%s %s" % (record.timestamp, record.message.decode('UTF-8'))
+                if debug:
+                    print "%s %s" % (record.timestamp, record.message.decode('UTF-8'))
                 # print(record.key_value_dict);
 
                 fmt_timestamp = record.timestamp.strftime('%Y-%m-%d %H:%M:%S')
@@ -127,7 +135,9 @@ def __main__():
                             continue
 
             f.close()
-
+    else:
+        if debug:
+            print "Log directory %s not found" % input_dir
 
     # Open and write output
     output = open(output_file_path, "w")

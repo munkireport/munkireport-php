@@ -102,6 +102,12 @@ class Machine_model extends Model {
 				$mult = $mult / 100;
 			}
 		}
+		
+		// Dirify buildversion
+		if( isset($mylist['buildversion']))
+		{
+			$mylist['buildversion'] = preg_replace('/[^A-Za-z0-9]/', '', $mylist['buildversion']);
+		}
 
 		$this->timestamp = time();
 		$this->merge($mylist)->save();

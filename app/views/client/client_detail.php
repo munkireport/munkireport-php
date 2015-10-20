@@ -1,4 +1,4 @@
-<?php $this->view('partials/head', array('stylesheets' => array('bootstrap-markdown.min.css'))) ?>
+<?php $this->view('partials/head', array('stylesheets' => array('bootstrap-markdown.min.css', 'bootstrap-tagsinput.css'))) ?>
 
 <?php
 
@@ -382,22 +382,45 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 						.append($('<th>')
 							.text(i18n.t('bluetooth.status')))
 						.append($('<td>')
-							.text(data.bluetooth_status)))
+							.text(function(){
+								if(data.bluetooth_status == 1){
+									return i18n.t('on');
+								}
+								if(data.bluetooth_status == 0){
+									return i18n.t('off');
+								}
+								return i18n.t('unknown');
+							})))
 					.append($('<tr>')
 						.append($('<th>')
 							.text(i18n.t('bluetooth.keyboard')))
 						.append($('<td>')
-							.text(data.keyboard_battery)))
+							.text(function(){
+								if(data.keyboard_battery == -1){
+									return i18n.t('disconnected')
+								}
+								return i18n.t('battery.life_remaining', {"percent": data.keyboard_battery})
+							})))
 					.append($('<tr>')
 						.append($('<th>')
 							.text(i18n.t('bluetooth.mouse')))
 						.append($('<td>')
-							.text(data.mouse_battery)))
+							.text(function(){
+								if(data.mouse_battery == -1){
+									return i18n.t('disconnected')
+								}
+								return i18n.t('battery.life_remaining', {"percent": data.mouse_battery})
+							})))
 					.append($('<tr>')
 						.append($('<th>')
 							.text(i18n.t('bluetooth.trackpad')))
 						.append($('<td>')
-							.text(data.trackpad_battery)));
+							.text(function(){
+								if(data.trackpad_battery == -1){
+									return i18n.t('disconnected')
+								}
+								return i18n.t('battery.life_remaining', {"percent": data.trackpad_battery})
+							})));
 			}
 			else{
 				$('table.mr-bluetooth-table')
@@ -409,7 +432,85 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 			}
 
 		});
+		
+		// ------------------------------------ Tags
+		var currentTags = {};
+		$('.mr-machine_desc')
+			.after($('<div>').append($('<select>')
+				.addClass('tags')
+				.attr("data-role", "tagsinput")
+				.attr("multiple", "multiple"))
+				);
+		
+		// instantiate the bloodhound suggestion engine
+		var hotDog = new Bloodhound({
+			datumTokenizer: Bloodhound.tokenizers.whitespace,
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			prefetch: {
+    			url: appUrl + '/module/tag/all_tags',
+				cache: false
+			}
+		});
 
+		// initialize the bloodhound suggestion engine
+		hotDog.initialize();
+
+		// Activate tags input
+		$('select.tags').tagsinput({
+			typeaheadjs: {                  
+			  source: hotDog.ttAdapter()
+			}
+		});
+		
+		// Get current tags
+		$.getJSON( appUrl + '/module/tag/retrieve/' + serialNumber, function( data ) {
+			// Set item value
+			if(data.length == 0){
+				// Show 'Add tags button'
+			}
+			else{
+				// Show 'Edit tags button'
+			}
+			$.each(data, function(index, item){
+				$('select.tags').tagsinput("add", item.tag)
+				// Store tag id
+				currentTags[item.tag] = item.id;
+			});
+		});
+		
+		// Now add event handlers
+		$('select.tags')
+			.on('itemAdded', function(event) {
+				// Save tag
+				formData = {serial_number: serialNumber, tag: event.item};
+				var jqxhr = $.post( appUrl + "/module/tag/save", formData);
+
+				jqxhr.done(function(data){
+					if(data.error){
+						alert(data.error)
+					}
+					else {
+						// Store id in currentTags
+						currentTags[data.tag] = data.id;
+					}
+					
+				})
+			}).on('itemRemoved', function(event) {
+				var id = currentTags[event.item]
+				var jqxhr = $.post( appUrl + "/module/tag/delete/"+serialNumber+"/"+id);
+
+				jqxhr.done(function(data){
+					if(data.error){
+						alert(data.error)
+					}
+					else {
+						// remove tag from currentTags
+						delete currentTags[event.item];
+					}
+				})
+			});
+			
+			// ------------------------------------ End Tags
 
 		loadHash();
 
@@ -424,6 +525,8 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 </div>  <!-- /container -->
 
 <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-markdown.js"></script>
+<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-tagsinput.min.js"></script>
+<script src="<?php echo conf('subdirectory'); ?>assets/js/typeahead.bundle.min.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/marked.min.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.comment.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.storageplot.js"></script>
