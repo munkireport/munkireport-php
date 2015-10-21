@@ -395,6 +395,9 @@
 		"age": {
 			"title": "Hardware Age"
 		},
+		"app": {
+			"versions": "Known versions of __app__"
+		},
 		"bound_to_ds": {
 			"bound": "Bound",
 			"notbound": "Not Bound",
