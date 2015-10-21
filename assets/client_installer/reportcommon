@@ -60,7 +60,8 @@ def curl(url, values):
     options["method"] = "POST"
     options["content_type"] = "application/x-www-form-urlencoded"
     options["body"] = urlencode(values)
-    
+    options["logging_function"] = display_detail
+
     # Build Purl with initial settings
     connection = Purl.alloc().initWithOptions_(options)
     connection.start()
