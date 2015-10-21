@@ -86,6 +86,9 @@ class Warranty_model extends Model {
 					return;
 				}
 				break;
+			case "Can't lookup warranty":
+				// No need to check anymore
+				return;
 			case 'No Applecare':
 				break;
 			case 'Unregistered serialnumber':

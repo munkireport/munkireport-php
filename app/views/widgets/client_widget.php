@@ -1,106 +1,125 @@
-<?php
-$queryobj = new Reportdata_model();
-$now = time();
-$hour_ago = $now - 3600;
-$today = strtotime('today');
-$week_ago = $now - 3600 * 24 * 7;
-$month_ago = $now - 3600 * 24 * 30;
-$three_month_ago = $now - 3600 * 24 * 90;
-$sql = "SELECT COUNT(1) as total, 
-	COUNT(CASE WHEN timestamp > $hour_ago THEN 1 END) AS lasthour, 
-	COUNT(CASE WHEN timestamp > $today THEN 1 END) AS today, 
-	COUNT(CASE WHEN timestamp > $week_ago THEN 1 END) AS lastweek,
-	COUNT(CASE WHEN timestamp > $month_ago THEN 1 END) AS lastmonth,
-	COUNT(CASE WHEN timestamp BETWEEN $month_ago AND $week_ago THEN 1 END) AS inactive_week,
-	COUNT(CASE WHEN timestamp BETWEEN $three_month_ago AND $month_ago THEN 1 END) AS inactive_month,
-	COUNT(CASE WHEN timestamp < $three_month_ago THEN 1 END) AS inactive_three_month
-	FROM reportdata
-	".get_machine_group_filter();
+<div class="col-lg-4 col-md-6">
 
-$obj = current($queryobj->query($sql));
-?>
-		<div class="col-lg-4 col-md-6">
+	<div class="panel panel-default" id="client-widget">
 
-			<div class="panel panel-default">
+		<div class="panel-heading">
 
-				<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-group"></i>
+				<span data-i18n="client.activity"></span>
+			</h3>
+		
+		</div>
 
-					<h3 class="panel-title"><i class="fa fa-group"></i> Active clients</h3>
-				
-				</div>
+		<div class="panel-body">
+			
+			<svg id="test1" class="center-block"></svg>
+			<div class="text-muted text-center">
+				<span data-i18n="client.total"></span>: <span class="total-clients"></span> <span class="total-change"></span>
+				|
+				<span data-i18n="client.hour"></span>: <span class="hour-clients"></span> <span class="lasthour-change"></span>
+			</div>
 
-				<div class="panel-body text-center">
+		</div>
+	
+	</div>
+	
+</div>
 
-					
-				<?php if($obj): ?>
+<script>
 
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
-						<span class="bigger-150"><?php echo $obj->total; ?> </span>
-						<br>
-						Total Clients
-					</a>	
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
-						<span class="bigger-150"> <?php echo $obj->lastmonth; ?> </span>
-						<br>
-						This mo
-					</a>
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
-						<span class="bigger-150"> <?php echo $obj->lastweek; ?> </span>
-						<br>
-						This wk
-					</a>
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
-						<span class="bigger-150"> <?php echo $obj->today; ?> </span>
-						<br>
-						Today
-					</a>
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
-						<span class="bigger-150"> <?php echo $obj->lasthour; ?> </span>
-						<br>
-						Last hour
-					</a>
+$(document).on('appReady', function() {
 
-				<?php endif; ?>
+	// Add tooltip
+	$('#client-widget>div.panel-heading')
+		.attr('title', i18n.t('client.panel_title'))
+		.tooltip();
+	
+	var active = i18n.t('active'),
+		inactive = i18n.t('inactive');
+	
+	var testdata1 = [
+		{ key: active, y: 0 },
+		{ key: inactive, y: 100 }
+	];
+	var arcRadius1 = [
+		{ inner: .75, outer: 1.25 },
+		{ inner: 0.85, outer: 1.15 }
+	];
+	var colors = ["green", "gray"];
+	var chart;
+	var height = 258;
+	var width = 258;
+	nv.addGraph(function () {
+		chart = nv.models.pieChart()
+			.x(function (d) { return d.key })
+			.y(function (d) { return d.y })
+			.donut(true)
+			.showLabels(false)
+			.width(width)
+			.height(height)
+			.growOnHover(false)
+			.arcsRadius(arcRadius1);
+		
+		chart.title(" ");
+		chart.legend.updateState(false);
+		
+		d3.select("#client-widget svg")
+			.datum(testdata1)
+			.attr('width', width)
+			.attr('height', height)
+			.call(chart);
+		
+		drawGraph();
 
-				</div>
+	});
+	
+	// Get data and update graph
+	var drawGraph = function(){
+		var url = appUrl + '/module/reportdata/get_lastseen_stats';
+		d3.json(url, function(data) {
+			testdata1[0].y = data.lastmonth // Active
+			testdata1[1].y = data.total - data.lastmonth // Inactive
+			chart.title("" + data.lastmonth);
 
-			</div><!-- /panel -->
+			d3.select('#test1').datum(testdata1).transition().duration(500).call(chart);
+			chart.update();
+			
+			var total = +$('#client-widget span.total-clients').text(),
+				lasthour = +$('#client-widget span.hour-clients').text();
+			
+			// Set count for total and hour
+			$('#client-widget span.total-clients').text(data.total);
+			$('#client-widget span.hour-clients').text(data.lasthour);
 
-		</div><!-- /col -->
-		<div class="col-lg-4 col-md-6">
+			// Show change for total
+			$('#client-widget span.total-change').removeClass().addClass('total-change');
+			if(total < data.total){
+				$('#client-widget span.total-change').addClass('fa fa-caret-up text-success');
+			}
+			else if(total > data.total){
+				$('#client-widget span.total-change').addClass('fa fa-caret-down text-danger');
+			}
 
-			<div class="panel panel-default">
+			// Show change for hour
+			$('#client-widget span.lasthour-change').removeClass().addClass('lasthour-change');
+			if(lasthour < data.lasthour){
+				$('#client-widget span.lasthour-change').addClass('fa fa-caret-up text-success');
+			}
+			else if(lasthour > data.lasthour){
+				$('#client-widget span.lasthour-change').addClass('fa fa-caret-down text-danger');
+			}
 
-				<div class="panel-heading">
+			
+		});
 
-					<h3 class="panel-title"><i class="fa fa-group"></i> Inactive clients</h3>
-				
-				</div>
+	};
+	
+	
+	// update chart data
+	$(document).on('appUpdate', function(){drawGraph()});
+		
+});
+</script>
 
-				<div class="panel-body text-center">
 
-					
-                                <?php if($obj): ?>
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-danger">
-						<span class="bigger-150"> <?php echo $obj->inactive_three_month; ?> </span>
-						<br>
-						3 months +
-					</a>
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-warning">
-						<span class="bigger-150"> <?php echo $obj->inactive_month; ?> </span>
-						<br>
-						Last mo
-					</a>
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-info">
-						<span class="bigger-150"> <?php echo $obj->inactive_week; ?> </span>
-						<br>
-						Last wk
-					</a>
-					
-				<?php endif; ?>
 
-				</div>
-
-			</div><!-- /panel -->
-
-		</div><!-- /col -->

@@ -58,7 +58,7 @@
   <script src="<?php echo conf('subdirectory'); ?>assets/js/moment.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/flotr2.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/d3.v3.min.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/d3/d3.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/nv.d3.min.js"></script>
   <script>
 
