@@ -41,7 +41,7 @@ $(document).on('appReady', function(){
                 $.each(data, function(j, d){
                     app.list.append($('<a>')
                         .addClass('list-group-item')
-                        .attr('href', appUrl + '/module/inventory/items/' + app + '/' + d.version)
+                        .attr('href', appUrl + '/module/inventory/items/' + app.name + '/' + d.version)
                         .text(d.version)
                         .append($('<span>')
                             .addClass('badge pull-right')
