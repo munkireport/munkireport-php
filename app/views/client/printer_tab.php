@@ -1,53 +1,33 @@
-<?php
-$printer = new Printer_model($serial_number);
-// $printer = new printer_model();
-$sql = "SELECT *
-					FROM printer
-					WHERE serial_number = '$serial_number'
-					ORDER BY name";
-?>
 
-	<h2>Installed Printers</h2>
-		<?php foreach($printer->query($sql) as $obj): ?>
-		<?php echo $obj->name; ?> 
-			<span class="label label-success nw-printercount"></span>
-			<table class="table table-striped">
-				<tbody>
-					<tr>
-						<td>Name</td>
-						<td><?php echo $obj->name?></td>
-					</tr>
-					<tr> 
-						<td>PPD</td>
-						<td><?php echo $obj->ppd?></td>
-					</tr>
-					<tr>
-						<td>Driver Verison</td>
-						<td><?php echo $obj->driver_version?></td>
-					</tr>
-					<tr>
-						<td>URL</td>
-						<td><?php echo $obj->url?></td>
-					</tr>
-					<tr>
-						<td>Default Set</td>
-						<td><?php echo $obj->default_set?></td>
-					</tr>
-					<tr>
-						<td>Printer Status</td>
-						<td><?php echo $obj->printer_status?></td>
-					</tr>
-					<tr>
-						<td>Printer Sharing</td>
-						<td><?php echo $obj->printer_sharing?></td>
-					</tr>
-				</tbody>
-			</table>
-			<?php endforeach; ?>
+<div id="printer-tab"></div>
+<h2>Installed Printers</h2>
 
-<script type="text/javascript" charset="utf-8">
-	// Set printer count in tab header
-	$(document).ready(function() {
-		$('#printer-cnt').html($('.nw-printercount').length)
-	} );
+
+<script>
+$(document).on('appReady', function(){
+	$.getJSON(appUrl + '/module/printer/get_data/' + serialNumber, function(data){
+		// Set count of printers
+		$('#printer-cnt').text(data.length)
+		$.each(data, function(i,d){
+			var rows = ''
+			// Generate rows from data
+			for (var prop in d){
+				// Skip id and serial_number
+				if(prop != 'id' && prop != 'serial_number'){
+					rows = rows + '<tr><th>'+i18n.t('printer.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
+				}
+				console.log(prop)
+			}
+			$('#printer-tab')
+				.append($('<h4>')
+					.text(d.name))
+				.append($('<div>')
+					.addClass('table-responsive')
+					.append($('<table>')
+						.addClass('table table-striped table-condensed')
+						.append($('<tbody>')
+							.append(rows))))
+		})
+	});
+});
 </script>

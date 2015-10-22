@@ -19,15 +19,15 @@ new Printer_model;
 
 		<thead>
 		  <tr>
-			<th data-i18n="listing.computername" data-colname='machine.computer_name'>On Computer</th>
-			<th data-i18n="serial" data-colname='reportdata.serial_number'>Computer Serial</th>
-			<th data-i18n="printer.name" data-colname='printer.name'>Printer Name</th>
-			<th data-i18n="printer.ppd" data-colname='printer.ppd'>PPD</th>
-			<th data-i18n="printer.driver_version" data-colname='printer.driver_version'>Drive Version</th>
-			<th data-i18n="printer.url" data-colname='printer.URL'>URL</th>
-			<th data-i18n="printer.default_set" data-colname='printer.default_set'>Default</th>
-			<th data-i18n="printer.printer_status" data-colname='printer.printer_status'>Printer Status</th>
-			<th data-i18n="printer.printer_sharing" data-colname='printer.printer_sharing'>Shared</th>
+			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+			<th data-i18n="printer.name" data-colname='printer.name'></th>
+			<th data-i18n="printer.ppd" data-colname='printer.ppd'></th>
+			<th data-i18n="printer.driver_version" data-colname='printer.driver_version'></th>
+			<th data-i18n="printer.url" data-colname='printer.URL'></th>
+			<th data-i18n="printer.default_set" data-colname='printer.default_set'></th>
+			<th data-i18n="printer.printer_status" data-colname='printer.printer_status'></th>
+			<th data-i18n="printer.printer_sharing" data-colname='printer.printer_sharing'></th>
 		  </tr>
 		</thead>
 
