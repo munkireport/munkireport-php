@@ -1,6 +1,6 @@
 
 <div id="printer-tab"></div>
-<h2>Installed Printers</h2>
+<h2 data-i18n="printer.tab_title"></h2>
 
 
 <script>

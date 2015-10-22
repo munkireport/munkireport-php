@@ -315,13 +315,14 @@
 		"generate": "Generate Report"
 	},
 	"printer": {
+		"default_set": "Default Set",
+		"driver_version": "Driver Version",
 		"name": "Printer Name",
 		"ppd": "PPD",
-		"driver_version": "Driver Version",
-		"url": "URL",
-		"default_set": "Default Set",
+		"printer_sharing": "Printer Sharing",
 		"printer_status": "Printer Status",
-		"printer_sharing": "Printer Sharing"
+		"tab_title": "Installed Printers",
+		"url": "URL"
 	},	
 	"serial": "Serial Number",
 	"servermetrics": {
