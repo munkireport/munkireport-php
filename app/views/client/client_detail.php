@@ -435,7 +435,8 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 		});
 		
 		// ------------------------------------ Tags
-		var currentTags = {};
+		var currentTags = {}
+			tagsRetrieved = false;
 		$('.mr-machine_desc')
 			.after($('<div>').append($('<select>')
 				.addClass('tags')
@@ -477,11 +478,17 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 				// Store tag id
 				currentTags[item.tag] = item.id;
 			});
+			// Signal tags retrieved
+			tagsRetrieved = true;
 		});
 		
 		// Now add event handlers
 		$('select.tags')
 			.on('itemAdded', function(event) {
+				// Check if tags are retrieved
+				if(!tagsRetrieved){
+					return;
+				}
 				// Save tag
 				formData = {serial_number: serialNumber, tag: event.item};
 				var jqxhr = $.post( appUrl + "/module/tag/save", formData);
