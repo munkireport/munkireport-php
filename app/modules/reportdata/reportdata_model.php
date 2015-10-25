@@ -114,6 +114,25 @@ class Reportdata_model extends Model {
 	}
     
     /**
+     * Get uptime for Clients
+     *
+     * Calculate uptime per timeslot
+     *
+     **/
+    public function getUptimeStats()
+    {
+            $sql = "SELECT SUM(CASE WHEN uptime <= 86400 THEN 1 END) AS oneday,
+                    SUM(CASE WHEN uptime BETWEEN 86400 AND 604800 THEN 1 END) AS oneweek,
+                    SUM(CASE WHEN uptime >= 604800 THEN 1 END) AS oneweekplus
+                    FROM reportdata
+                    WHERE uptime > 0
+                    ".get_machine_group_filter('AND');
+            
+            return current($this->query($sql));
+    }
+    
+    
+    /**
      * Get check-in statistics
      *
      *
