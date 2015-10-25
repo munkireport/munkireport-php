@@ -158,12 +158,14 @@ class Tablequery {
 
         // Search
         $sWhere = $where;
+        $bindings = array();
         if($cfg['search'])
         {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach($formatted_columns AS $col)
             {
-                $sWhere .= $col." LIKE '%".( $cfg['search'] )."%' OR ";
+                $bindings[] = '%'.$cfg['search'].'%';
+                $sWhere .= $col." LIKE ? OR ";
             }
             $sWhere = substr_replace( $sWhere, "", -3 );
             $sWhere .= ')';
@@ -175,23 +177,17 @@ class Tablequery {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach ($search_cols as $pos => $val)
             {
-                if(is_string($val))
+                if(preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val))
                 {
-                    if(preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val))
-                    {
-                        // Special case, use unquoted
-                        $compstr = $val;
-                    }
-                    else
-                    {
-                        // Regular string, quote
-                        $compstr = " = '$val'";
-                    }
+                    // Special case, use unquoted
+                    $compstr = $val;
                 }
-                else // Integer or boolean
+                else
                 {
-                    $compstr = " = $val";
+                    $bindings[] = $val;
+                    $compstr = " = ?";
                 }
+                
                 $sWhere .= $formatted_columns[$pos].$compstr." OR ";
             }
             $sWhere = substr_replace( $sWhere, "", -3 );
@@ -212,7 +208,7 @@ class Tablequery {
                 $err = $dbh->errorInfo();
 				die($err[2]);
             }
-            $stmt->execute();// $bindings );
+            $stmt->execute($bindings);//  );
             if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
             {
                 $recordsFiltered = $rs->count;
@@ -242,7 +238,7 @@ class Tablequery {
             $err = $dbh->errorInfo();
 			die($err[2]);
         }
-        $stmt->execute();// $bindings );
+        $stmt->execute($bindings);// $bindings );
         $arr=array();
         while ( $rs = $stmt->fetch( PDO::FETCH_NUM ) )
         {
