@@ -422,7 +422,8 @@ $(document).on('appReady', function(e, lang) {
 	});
 	
 	// ------------------------------------ Tags
-	var currentTags = {};
+	var currentTags = {}
+		tagsRetrieved = false;
 	$('.mr-machine_desc')
 		.after($('<div>').append($('<select>')
 			.addClass('tags')
@@ -450,6 +451,9 @@ $(document).on('appReady', function(e, lang) {
 		}
 	});
 	
+	// Fix bug in tagsinput/typeahead that shows the last tag on blur
+	$('input.tt-input').on('blur', function(){$(this).val('')})
+	
 	// Get current tags
 	$.getJSON( appUrl + '/module/tag/retrieve/' + serialNumber, function( data ) {
 		// Set item value
@@ -464,11 +468,18 @@ $(document).on('appReady', function(e, lang) {
 			// Store tag id
 			currentTags[item.tag] = item.id;
 		});
+		// Signal tags retrieved
+		tagsRetrieved = true;
 	});
 	
 	// Now add event handlers
 	$('select.tags')
 		.on('itemAdded', function(event) {
+			// Check if tags are retrieved
+			if(!tagsRetrieved){
+				return;
+			}
+
 			// Save tag
 			formData = {serial_number: serialNumber, tag: event.item};
 			var jqxhr = $.post( appUrl + "/module/tag/save", formData);
