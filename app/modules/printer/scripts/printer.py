@@ -40,17 +40,17 @@ if not task:
 	txtfile.close()
 	exit(0)
 
-
 #loop through all printers
 for printer in printers:
-			result += 'Name: ' + printer['_name'] + '\n'
-			result += 'PPD: ' + printer['ppd'] + '\n'
-			result += 'Driver Version: ' + printer['ppdfileversion'] + '\n'
-			result += 'URL: ' + printer['uri'] + '\n'
-			result += 'Default Set: ' + printer['default'] + '\n'
-			result += 'Printer Status: ' + printer['status'] + '\n'
-			result += 'Printer Sharing: ' + printer['printersharing']
-			result += '\n----------\n'
+    if printer.get('uri'):
+		result += 'Name: ' + printer['_name'] + '\n'
+		result += 'PPD: ' + printer['ppd'] + '\n'
+		result += 'Driver Version: ' + printer['ppdfileversion'] + '\n'
+		result += 'URL: ' + printer['uri'] + '\n'
+		result += 'Default Set: ' + printer['default'] + '\n'
+		result += 'Printer Status: ' + printer['status'] + '\n'
+		result += 'Printer Sharing: ' + printer['printersharing']
+		result += '\n----------\n'
 
 
 # Write to disk
