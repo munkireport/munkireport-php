@@ -2,32 +2,13 @@
 
 	<div class="panel panel-default" id="smart-status-widget">
 
-		<div class="panel-heading" data-container="body" title="HD SMART Status">
+		<div class="panel-heading" data-container="body">
 
 			<h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> <span data-i18n="storage.smartstatus"></span></h3>
 
 		</div>
 
-		<div class="panel-body text-center">
-
-			<a href="<?php echo url('show/listing/disk#failing'); ?>" class="btn btn-danger">
-				<span class="bigger-150"> <?php echo $obj->Failing; ?> </span><br>
-				Failing!
-			</a>
-
-
-			<a href="<?php echo url('show/listing/disk#Not Supported'); ?>" class="btn btn-info">
-				<span class="bigger-150"> <?php echo $obj->Not_Supported; ?> </span><br>
-				Not Supported
-			</a>
-
-			<a href="<?php echo url('show/listing/disk'); ?>" class="btn btn-success">
-				<span class="bigger-150"> <?php echo $obj->Verified; ?> </span><br>
-				Verified
-			</a>
-
-
-	  </div>
+		<div class="panel-body text-center"></div>
 
 	</div><!-- /panel -->
 
