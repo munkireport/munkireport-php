@@ -69,6 +69,22 @@ class Disk_report_model extends Model {
 						".get_machine_group_filter('AND');
 		return current($this->query($sql));
 	}
+	
+	/**
+	 * Get SMART Status statistics
+	 *
+	 *
+	 **/
+	public function getSmartStats()
+	{
+		$sql = "SELECT COUNT(CASE WHEN SMARTStatus='Failing' THEN 1 END) AS failing,
+						COUNT(CASE WHEN SMARTStatus='Verified' THEN 1 END) AS verified,
+						COUNT(CASE WHEN SMARTStatus='Not Supported' THEN 1 END) AS unsupported
+						FROM diskreport
+						LEFT JOIN reportdata USING(serial_number)
+						".get_machine_group_filter();
+		return current($this->query($sql));
+	}
 
 	// ------------------------------------------------------------------------
 

@@ -180,6 +180,7 @@
 		"404": "Page not found",
 		"426": "You are required to visit this site using a secure connection."
 	},
+	"failing": "Failing!",
 	"filevault": {
 		"users": "FileVault Enabled users",
 		"widget": {
@@ -379,7 +380,7 @@
 		"not_encrypted": "Not Encrypted",
 		"percentage": "Percentage",
 		"size": "Disk Size",
-		"smartstatus": "SMART status",
+		"smartstatus": "SMART Status",
 		"storage": "Storage",
 		"total_size": "Size",
 		"type": "Storage Type",
@@ -401,12 +402,14 @@
 	"unauthorized": "You are not authorized",
 	"unencrypted": "Unencrypted",
 	"unknown": "Unknown",
+	"unsupported": "Not Supported",
 	"uptime": "Uptime",
 	"user": {
 		"user": "User",
 		"users": "Users",
 		"local_admins": "Local Administrators"
 	},
+	"verified": "Verified",
 	"version": "Version",
 	"warning": "Warning",
 	"warning_plural": "Warnings",
