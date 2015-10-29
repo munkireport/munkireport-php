@@ -54,10 +54,10 @@ $(document).on('appUpdate', function(e, lang) {
 			panel.append('<a href="'+baseUrl+'#failing" class="btn btn-danger"><span class="bigger-150">'+data.failing+'</span><br>'+i18n.t('failing')+'</a>');
 		}
 		if(data.verified){
-			panel.append('<a href="'+baseUrl+'#verified" class="btn btn-success"><span class="bigger-150">'+data.verified+'</span><br>'+i18n.t('verified')+'</a>');
+			panel.append(' <a href="'+baseUrl+'#verified" class="btn btn-success"><span class="bigger-150">'+data.verified+'</span><br>'+i18n.t('verified')+'</a>');
 		}
 		if(data.unsupported){
-			panel.append('<a href="'+baseUrl+'#not supported" class="btn btn-info"><span class="bigger-150">'+data.unsupported+'</span><br>'+i18n.t('unsupported')+'</a>');
+			panel.append(' <a href="'+baseUrl+'#not supported" class="btn btn-info"><span class="bigger-150">'+data.unsupported+'</span><br>'+i18n.t('unsupported')+'</a>');
 		}
 
 
