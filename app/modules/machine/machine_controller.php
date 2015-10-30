@@ -31,6 +31,19 @@ class Machine_controller extends Module_controller
 	{
 		echo "You've loaded the hardware module!";
 	}
+	
+	/**
+	 * Get duplicate computernames
+	 *	
+	 *
+	 **/
+	public function get_duplicate_computernames()
+	{
+		$machine = new Machine_model();
+		$obj = new View();
+		$obj->view('json', array('msg' => $machine->get_duplicate_computernames()));
+
+	}
 
 	/**
 	 * Get machine data for a particular machine

@@ -1,46 +1,41 @@
-		<div class="col-lg-4">
+<div class="col-lg-4">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="duplicated-computernames-widget">
 
-				<div class="panel-heading" data-container="body">
+		<div class="panel-heading" data-container="body">
 
-					<h3 class="panel-title"><i class="fa fa-bug"></i> Duplicated Computer Names</h3>
-				
-				</div>
+			<h3 class="panel-title"><i class="fa fa-bug"></i> Duplicate Computer Names</h3>
+		
+		</div>
 
-				<div class="list-group scroll-box">
+		<div class="list-group scroll-box"></div>
 
-				<?php	$machine = new Machine_model();
-						$filter = get_machine_group_filter();
-						$sql = "SELECT computer_name,
-								COUNT(*) AS count
-								FROM machine
-								LEFT JOIN reportdata USING (serial_number)
-								$filter
-								GROUP BY computer_name
-								HAVING count > 1
-								ORDER BY count DESC";
-						$cnt = 0;
-				?>
-					<?php foreach($machine->query($sql) as $obj): ?>
-						<?php if (empty($obj->computer_name)): ?>
-							<a class="list-group-item">Empty
-								<span class="badge pull-right"><?php echo $obj->count; ?></span>
-							</a>
-						<?php else: ?>
-							<a href="<?php echo url('show/listing/clients/#'.$obj->computer_name); ?>" class="list-group-item">
-								<span class="badge"><?php echo $obj->count; ?></span>
-								<?php echo $obj->computer_name; ?>
-							</a>
-						<?php endif; ?>
-						<?php $cnt++; ?>
-					<?php endforeach; ?>
-					<?php if( ! $cnt): ?>
-						<span class="list-group-item">No duplicates found</span>
-					<?php endif; ?>
+	</div><!-- /panel -->
 
-				</div>
+</div><!-- /col -->
 
-			</div><!-- /panel -->
-
-		</div><!-- /col -->
+<script>
+$(document).on('appUpdate', function(e, lang) {
+	
+	var box = $('#duplicated-computernames-widget div.scroll-box');
+	box.empty();
+	
+	$.getJSON( appUrl + '/module/machine/get_duplicate_computernames', function( data ) {
+		
+		if(data.length){
+			$.each(data, function(i,d){
+				var badge = '<span class="badge pull-right">'+d.count+'</span>';
+				if( ! d.computer_name){
+					box.append('<a class="list-group-item">'+i18n.t('empty')+badge+'</a>')
+				}
+				else{
+					box.append('<a href="'+appUrl+'/show/listing/clients/#'+d.computer_name+'" class="list-group-item">'+d.computer_name+badge+'</a>')
+				}
+			})
+		}
+		else{
+			box.append('<span class="list-group-item">'+i18n.t('widget.duplicate_computernames.notfound')+'</span>');
+		}
+	});
+});	
+</script>

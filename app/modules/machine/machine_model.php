@@ -59,6 +59,33 @@ class Machine_model extends Model {
 		$this->serial = $serial;
 
 	}
+	
+	/**
+	 * Get duplicate computernames
+	 *
+	 *
+	 **/
+	public function get_duplicate_computernames()
+	{
+		$out = array();
+		$filter = get_machine_group_filter();
+		$sql = "SELECT computer_name,
+				COUNT(*) AS count
+				FROM machine
+				LEFT JOIN reportdata USING (serial_number)
+				$filter
+				GROUP BY computer_name
+				HAVING count > 1
+				ORDER BY count DESC";
+				
+		foreach($this->query($sql) as $obj)
+		{
+			$out[] = $obj;
+		}
+		
+		return $out;
+	
+	}
 
 	// ------------------------------------------------------------------------
 

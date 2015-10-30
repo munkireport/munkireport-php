@@ -443,6 +443,9 @@
 			"soon": "Expires within three months",
 			"title": "Certificates"
 		},
+		"duplicate_computernames": {
+			"notfound": "No duplicates found"
+		},
 		"power": {
 			"missing": "Missing",
 			"normal": "Normal",
