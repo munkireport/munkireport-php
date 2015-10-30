@@ -32,6 +32,21 @@ class Displays_info_model extends Model {
       $this->serial = $serial;
 
     } //end construct
+    
+    /**
+     * Get count of  displays
+     *
+     *
+     * @param int $type type 1 is external, type 0 is internal
+     **/
+    public function get_count($type)
+    {
+        $sql = "SELECT COUNT(CASE WHEN type=? THEN 1 END) AS total
+                    FROM displays
+                    LEFT JOIN reportdata USING (serial_number)
+                    ".get_machine_group_filter();
+        return current($this->query($sql, $type));
+    }
 
 
 // ------------------------------------------------------------------------

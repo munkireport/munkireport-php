@@ -168,6 +168,11 @@
 	},
 	"disabled": "Disabled",
 	"disconnected": "Disconnected",
+	"displays": {
+		"displays": "Displays",
+		"widget_info": "Total number of known external displays",
+		"widget_title": "External Displays Count"
+	},
 	"edit": "Edit",
 	"enabled": "Enabled",
 	"encrypted": "Encrypted",
