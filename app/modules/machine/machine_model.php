@@ -94,7 +94,6 @@ class Machine_model extends Model {
 	public function get_model_stats()
 	{
 		$out = array();
-		$machine = new Machine_model();
 		$filter = get_machine_group_filter();
 		$sql = "SELECT count(*) AS count, machine_desc 
 			FROM machine
