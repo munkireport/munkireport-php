@@ -247,6 +247,9 @@
 		},
 		"username": "Username"
 	},
+	"machine": {
+		"hardware_widget_title": "Hardware model breakdown"
+	},
 	"manifest": {
 		"name": "Manifest Name"
 	},

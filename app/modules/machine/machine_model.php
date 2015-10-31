@@ -86,6 +86,32 @@ class Machine_model extends Model {
 		return $out;
 	
 	}
+	
+	/**
+	 * Get model statistics
+	 *
+	 **/
+	public function get_model_stats()
+	{
+		$out = array();
+		$machine = new Machine_model();
+		$filter = get_machine_group_filter();
+		$sql = "SELECT count(*) AS count, machine_desc 
+			FROM machine
+			LEFT JOIN reportdata USING (serial_number)
+			$filter
+			GROUP BY machine_desc 
+			ORDER BY count DESC";
+		
+		foreach($this->query($sql) as $obj)
+		{
+			$obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : 'Unknown';
+			$out[] = $obj;
+		}
+		
+		return $out;
+
+	}
 
 	// ------------------------------------------------------------------------
 

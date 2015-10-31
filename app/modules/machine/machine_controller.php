@@ -42,8 +42,19 @@ class Machine_controller extends Module_controller
 		$machine = new Machine_model();
 		$obj = new View();
 		$obj->view('json', array('msg' => $machine->get_duplicate_computernames()));
-
 	}
+	
+	/**
+	 * Get model statistics
+	 *
+	 **/
+	public function get_model_stats()
+	{
+		$machine = new Machine_model();
+		$obj = new View();
+		$obj->view('json', array('msg' => $machine->get_model_stats()));
+	}
+
 
 	/**
 	 * Get machine data for a particular machine
