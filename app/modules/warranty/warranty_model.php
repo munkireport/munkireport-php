@@ -27,6 +27,29 @@ class Warranty_model extends Model {
 		$this->serial_number = $serial;
 		  
 	}
+	
+	/**
+	 * Get Warranty statistics
+	 *
+	 **/
+	public function get_stats()
+	{
+		$out = array();
+		$filter = get_machine_group_filter();
+		$sql = "SELECT count(*) AS count, status
+					FROM warranty
+					LEFT JOIN reportdata USING (serial_number)
+					$filter
+					GROUP BY status
+					ORDER BY count DESC";
+		
+		foreach($this->query($sql) as $obj)
+		{
+			$out[] = $obj;
+		}
+		
+		return $out;
+	}
 
 	/**
 	 * Check warranty status and update

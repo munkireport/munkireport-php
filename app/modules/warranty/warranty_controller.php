@@ -65,6 +65,24 @@ class Warranty_controller extends Module_controller
 		$obj->view('json', array('msg' => $out));
 
 	}
+	
+	/**
+	 * Get Warranty statistics
+	 *
+	 **/
+	public function get_stats()
+	{
+		$obj = new View();
+		if( ! $this->authorized())
+		{
+			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
+		}
+		else
+		{
+			$wm = new Warranty_model();
+			$obj->view('json', array('msg' => $wm->get_stats()));
+		}
+	}
 
 	/**
 	 * Generate age data for age widget

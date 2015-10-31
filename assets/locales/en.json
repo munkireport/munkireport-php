@@ -430,7 +430,8 @@
 		"supported_no_applecare": "Supported until __date__. No Applecare",
 		"supported_until": "Supported until __date__",
 		"unregistered": "Unregistered",
-		"warranty": "Warranty"
+		"warranty": "Warranty",
+		"widget_title": "Hardware Warranty"
 	},
 	"widget": {
 		"age": {
