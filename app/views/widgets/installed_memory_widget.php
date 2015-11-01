@@ -27,8 +27,8 @@ $(document).on('appUpdate', function(e, lang) {
 		// Todo: add to config
 		var entries = [
 			{name: '< 4GB', link: 'memory < 4GB', count: 0, class:'btn-danger', filter: function(n){return n < 4}},
-			{name: '4GB +', link: '4GB memory 8GB', count: 0, class:'btn-warning', filter: function(n){return n < 8 && n >= 4}},
-			{name: '8GB +', link: 'memory > 8GB', count: 0, class:'btn-success', filter: function(n){return n >= 8}}
+			{name: '4GB +', link: '5GB memory 7GB', count: 0, class:'btn-warning', filter: function(n){return n < 8 && n >= 4}},
+			{name: '8GB +', link: 'memory > 7GB', count: 0, class:'btn-success', filter: function(n){return n >= 8}}
 		]
 		
 		// Calculate entries
@@ -42,8 +42,7 @@ $(document).on('appUpdate', function(e, lang) {
 			// render
 			$.each(entries, function(i, o){
 				body.append('<a href="'+appUrl+'/show/listing/hardware/#'+encodeURIComponent(o.link)+'" class="btn '+o.class+'"><span class="bigger-150">'+o.count+'</span><br>'+o.name+'</a> ');
-
-			})
+			});
 		}
 		else{
 			body.append(i18n.t('no_clients'));

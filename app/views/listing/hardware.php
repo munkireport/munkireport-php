@@ -48,7 +48,7 @@ new Reportdata_model;
 	});	
 
 	$(document).on('appReady', function(e, lang) {
-
+        
         // Get column names from data attribute
 		var columnDefs = [],
             col = 0; // Column counter
@@ -62,15 +62,26 @@ new Reportdata_model;
                 url: "<?=url('datatables/data')?>",
                 type: "POST",
                 data: function(d){
-                    // Look for a GB search string
-                    if(d.search.value.match(/^\d+ GB$/))
+                    
+                    // Look for 'between' statement todo: make generic
+                    if(d.search.value.match(/^\d+GB memory \d+GB$/))
                     {
-                        // Add search for memory column
-                        d.columns[4].search.value = parseInt(d.search.value);
+                        // Add column specific search
+                        d.columns[4].search.value = d.search.value.replace(/(\d+GB) memory (\d+GB)/, function(m, from, to){return ' BETWEEN ' + parseInt(from) + ' AND ' + parseInt(to)});
                         // Clear global search
                         d.search.value = '';
 
-                        //dumpj(d)
+                    }
+
+                    // Look for a bigger/smaller/equal statement
+                    if(d.search.value.match(/^memory [<>=] \d+GB$/))
+                    {
+                        // Add column specific search
+                        d.columns[4].search.value = d.search.value.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + parseInt(content)});
+                        // Clear global search
+                        d.search.value = '';
+
+                        //dumpj(out)
                     }
 
                 }

@@ -27,7 +27,7 @@ $(document).on('appReady', function(e, lang) {
 	myOptions.callBack = resizeBox;
     myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
 		label = obj.data[v].label
-		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/hardware'); ?>#' + label + '">' + label + '</a>';
+		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/hardware'); ?>#' + encodeURIComponent('memory = ') + parseInt(label) + 'GB">' + label + '</a>';
 	}
 
 	// Resize the container after we know how many items we have
