@@ -35,7 +35,7 @@ $(document).on('appUpdate', function(e, lang) {
 		if(data.length){
 			$.each(data, function(i,d){
 				$.each(entries, function(i, o){
-					o.count = o.count + o.filter(d.physical_memory);
+					o.count = o.count + d.count * o.filter(d.physical_memory);
 				})
 			});
 			
