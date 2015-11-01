@@ -45,11 +45,28 @@ class Munkireport_controller extends Module_controller
 	}
 	
 	/**
-	 * undocumented function summary
+	 * Get manifests statistics
 	 *
-	 * Undocumented function long description
 	 *
-	 * @param type var Description
+	 **/
+	public function get_manifest_stats()
+	{
+		$obj = new View();
+		if( ! $this->authorized())
+		{
+			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
+		}
+		else
+		{
+			$mrm = new Munkireport_model();
+			$obj->view('json', array('msg' => $mrm->get_manifest_stats()));
+		}
+	}
+	
+	/**
+	 * Get statistics
+	 *	 *
+	 * @param integer $hours Number of hours to get stats from
 	 **/
 	public function get_stats($hours = 24)
 	{

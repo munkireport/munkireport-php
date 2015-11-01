@@ -59,6 +59,31 @@ class Munkireport_model extends Model {
 
 	}
 	
+	/**
+	 * Get manifests statistics
+	 *
+	 *
+	 **/
+	public function get_manifest_stats()
+	{
+		$out = array();
+		$filter = get_machine_group_filter();
+		$sql = "SELECT COUNT(1) AS count, manifestname 
+			FROM munkireport
+			LEFT JOIN reportdata USING (serial_number)
+			$filter
+			GROUP BY manifestname
+			ORDER BY count DESC";
+			
+		foreach($this->query($sql) as $obj)
+		{
+			$obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown';
+			$out[] = $obj;
+		}
+		
+		return $out;
+	}
+	
 	function process($plist)
 	{		
 		$this->timestamp = date('Y-m-d H:i:s');
