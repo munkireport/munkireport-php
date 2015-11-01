@@ -1,55 +1,54 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default" id="new-clients-widget">
+	<div class="panel panel-default" id="new-clients-widget">
 
-				<div class="panel-heading" data-container="body" title="Clients registered this week">
+		<div class="panel-heading" data-container="body" title="Clients registered this week">
 
-					<h3 class="panel-title"><i class="fa fa-star-o"></i> New clients <span class="counter badge pull-right"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-star-o"></i> New clients <span class="counter badge pull-right"></span></h3>
 
-				</div>
+		</div>
 
-				<div class="list-group scroll-box">
-				  	
+		<div class="list-group scroll-box">
+			<span class="list-group-item">No new clients</span>
+		</div>
 
-					<span class="list-group-item">No new clients</span>
-				</div>
-			<script>
-			$(document).on('appReady appUpdate', function(){
-				
-				$.getJSON( appUrl + '/module/machine/new_clients', function( data ) {
+	</div><!-- /panel -->
 
-					var scrollBox = $('#new-clients-widget .scroll-box').empty();
+</div><!-- /col -->
 
-					$.each(data, function(index, obj){
+<script>
+$(document).on('appUpdate', function(){
+	
+	$.getJSON( appUrl + '/module/machine/new_clients', function( data ) {
 
-						scrollBox
-							.append($('<a>')
-								.addClass('list-group-item')
-								.attr('href', appUrl + '/clients/detail/' + obj.serial_number)
-								.append(obj.computer_name)
-								.append($('<span>')
-									.addClass('pull-right')
-									.append($('<time>')
-										.text(function(){
-											var date = new Date(obj.reg_timestamp * 1000);
-											return moment(date).fromNow();
-										}))))
+		var scrollBox = $('#new-clients-widget .scroll-box').empty();
 
-					});
+		$.each(data, function(index, obj){
 
-					$('#new-clients-widget .counter').html(data.length);
+			scrollBox
+				.append($('<a>')
+					.addClass('list-group-item')
+					.attr('href', appUrl + '/clients/detail/' + obj.serial_number)
+					.append(obj.computer_name)
+					.append($('<span>')
+						.addClass('pull-right')
+						.append($('<time>')
+							.text(function(){
+								var date = new Date(obj.reg_timestamp * 1000);
+								return moment(date).fromNow();
+							}))))
 
-					if( ! data.length){
-						scrollBox
-							.append($('<span>')
-								.addClass('list-group-item')
-								.text(i18n.t('no_clients')))
-					}
+		});
 
-				});				
-			});
-			</script>
+		$('#new-clients-widget .counter').html(data.length);
 
-			</div><!-- /panel -->
+		if( ! data.length){
+			scrollBox
+				.append($('<span>')
+					.addClass('list-group-item')
+					.text(i18n.t('no_clients')))
+		}
 
-		</div><!-- /col -->
+	});				
+});
+</script>
