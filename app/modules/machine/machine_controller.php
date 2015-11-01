@@ -104,27 +104,19 @@ class Machine_controller extends Module_controller
 	/**
 	 * Return json array with memory configuration breakdown
 	 *
+	 * @param string $format Format output. Possible values: flotr, none
 	 * @author AvB
 	 **/
-	function memory()
+	function get_memory_stats($format='none')
 	{
 		$out = array();
-		$machine = new Machine_model();
-		$sql = "SELECT physical_memory, count(1) as count
-			FROM machine
-			LEFT JOIN reportdata USING (serial_number)
-			".get_machine_group_filter()."
-			GROUP BY physical_memory
-			ORDER BY physical_memory DESC";
 
 		// Legacy loop to do sort in php
 		$tmp = array();
-		foreach ($machine->query($sql) as $obj)
+		$machine = new Machine_model();
+		foreach ($machine->get_memory_stats() as $obj)
 		{
-			// Convert string to intval
-			$obj->physical_memory = intval($obj->physical_memory);
-
-			// Take care of mixed entries
+			// Take care of mixed entries (string or int)
 			if (isset($tmp[$obj->physical_memory]))
 			{
 				$tmp[$obj->physical_memory] += $obj->count;
@@ -134,13 +126,27 @@ class Machine_controller extends Module_controller
 				$tmp[$obj->physical_memory] = $obj->count;
 			}
 		}
-		krsort($tmp);
-
-		$cnt = 0;
-		foreach ($tmp as $mem => $memcnt)
+		
+		switch($format)
 		{
-			$out[] = array('label' => $mem . ' GB', 'data' => array(array(intval($memcnt), $cnt++)));
-		}
+			case 'flotr':
+				krsort($tmp);
+
+				$cnt = 0;
+				foreach ($tmp as $mem => $memcnt)
+				{
+					$out[] = array('label' => $mem . ' GB', 'data' => array(array(intval($memcnt), $cnt++)));
+				}
+				break;
+				
+			default:
+			
+				foreach ($tmp as $mem => $memcnt)
+				{
+					$out[] = array('physical_memory' => $mem, 'count' => $memcnt);
+				}
+
+		}		
 
 		$obj = new View();
 		$obj->view('json', array('msg' => $out));

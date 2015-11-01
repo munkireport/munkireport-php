@@ -38,7 +38,7 @@ $(document).on('appReady', function(e, lang) {
 
 	var parms = {}
 	// HW Plot
-	drawGraph("<?php echo url('module/machine/memory'); ?>", '#memory-plot', myOptions, parms);
+	drawGraph("<?php echo url('module/machine/get_memory_stats/flotr'); ?>", '#memory-plot', myOptions, parms);
 
 });
 </script>

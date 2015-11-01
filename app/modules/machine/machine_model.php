@@ -69,8 +69,7 @@ class Machine_model extends Model {
 	{
 		$out = array();
 		$filter = get_machine_group_filter();
-		$sql = "SELECT computer_name,
-				COUNT(*) AS count
+		$sql = "SELECT computer_name, COUNT(*) AS count
 				FROM machine
 				LEFT JOIN reportdata USING (serial_number)
 				$filter
@@ -96,11 +95,11 @@ class Machine_model extends Model {
 		$out = array();
 		$filter = get_machine_group_filter();
 		$sql = "SELECT count(*) AS count, machine_desc 
-			FROM machine
-			LEFT JOIN reportdata USING (serial_number)
-			$filter
-			GROUP BY machine_desc 
-			ORDER BY count DESC";
+				FROM machine
+				LEFT JOIN reportdata USING (serial_number)
+				$filter
+				GROUP BY machine_desc 
+				ORDER BY count DESC";
 		
 		foreach($this->query($sql) as $obj)
 		{
@@ -109,7 +108,30 @@ class Machine_model extends Model {
 		}
 		
 		return $out;
+	}
+	
+	/**
+	 * Get memory statistics
+	 *
+	 * 
+	 **/
+	public function get_memory_stats()
+	{
+		$out = array();
+		$sql = "SELECT physical_memory, count(1) as count
+				FROM machine
+				LEFT JOIN reportdata USING (serial_number)
+				".get_machine_group_filter()."
+				GROUP BY physical_memory
+				ORDER BY physical_memory DESC";
 
+		foreach($this->query($sql) as $obj)
+		{
+			$obj->physical_memory = intval($obj->physical_memory);
+			$out[] = $obj;
+		}
+		
+		return $out;
 	}
 
 	// ------------------------------------------------------------------------
