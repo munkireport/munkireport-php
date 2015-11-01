@@ -18,10 +18,11 @@
 $(document).on('appUpdate', function(e, lang) {
 	
 	var box = $('#hardware-model-widget div.scroll-box');
-	box.empty();
 	
 	$.getJSON( appUrl + '/module/machine/get_model_stats', function( data ) {
 		
+		box.empty();
+
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>';

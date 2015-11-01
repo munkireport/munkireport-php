@@ -18,10 +18,11 @@
 $(document).on('appUpdate', function(e, lang) {
 	
 	var box = $('#duplicated-computernames-widget div.scroll-box');
-	box.empty();
 	
 	$.getJSON( appUrl + '/module/machine/get_duplicate_computernames', function( data ) {
 		
+		box.empty();
+
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>';

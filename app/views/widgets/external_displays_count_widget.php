@@ -22,9 +22,11 @@ $(document).on('appReady', function(e, lang) {
 });
 $(document).on('appUpdate', function(e, lang) {
 	var body = $('#external-displays-count-widget div.panel-body');
-	body.empty();
 	
 	$.getJSON( appUrl + '/module/displays_info/get_count/1', function( data ) {
+		
+		body.empty();
+
 		data.total = data.total || 0;
 		body.append('<a href="'+appUrl+'/show/listing/displays'+'" class="btn btn-success"><span class="bigger-150">'+data.total+'</span><br>'+i18n.t('displays.displays')+'</a>');
 	});
