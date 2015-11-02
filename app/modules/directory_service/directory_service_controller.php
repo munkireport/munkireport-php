@@ -46,6 +46,28 @@ class Directory_service_controller extends Module_controller
 		
 	}
 
+	/**
+	 * Get Modified Computer names
+	 *
+	 *
+	 **/
+	public function get_modified_computernames()
+	{
+		$obj = new View();
+
+		if( ! $this->authorized())
+		{
+			$obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+			return;
+		}
+		
+		$dm = new Directory_service_model();
+		$obj->view('json', array('msg' => $dm->get_modified_computernames()));
+		
+	}
+	
+	
+
 	
 } // END class default_module
 

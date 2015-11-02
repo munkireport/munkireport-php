@@ -118,6 +118,26 @@ class Model extends KISS_Model
 		
 		return $this;
     }
+	
+	/**
+	 * Get SQL partial for trim
+	 *
+	 *
+	 * @param string $string original string
+	 * @param string $remove characters to remove
+	 **/
+	public function trim($string='', $remove=' ')
+	{
+		switch($this->get_driver())
+		{
+			case 'sqlite':
+				return "TRIM('$string', '$remove')";
+				break;
+			case 'mysql':
+				return "TRIM('$remove' FROM '$string')";
+				break;
+		}
+	}
 
     /**
      * Get schema version
