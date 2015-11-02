@@ -28,6 +28,23 @@ class Power_model extends Model {
 		  
 	}
 	
+	/**
+	 * Get Power statistics
+	 *
+	 *
+	 **/
+	public function get_stats()
+	{
+		$sql = "SELECT COUNT(CASE WHEN max_percent>89 THEN 1 END) AS success,
+						COUNT(CASE WHEN max_percent BETWEEN 80 AND 89 THEN 1 END) AS warning,
+						COUNT(CASE WHEN max_percent<80 THEN 1 END) AS danger
+						FROM power
+						LEFT JOIN reportdata USING(serial_number)
+						".get_machine_group_filter();
+		return current($this->query($sql));
+
+	}
+	
 	// ------------------------------------------------------------------------
 	/**
 	 * Process data sent by postflight
