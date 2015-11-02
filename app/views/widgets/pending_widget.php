@@ -1,26 +1,35 @@
-<?php 
-$machine = new Machine_model; new Munkireport_model; new Reportdata_model;
-$filter = get_machine_group_filter('AND');
-$sql = "SELECT computer_name, pendinginstalls, machine.serial_number
-    FROM machine
-    LEFT JOIN munkireport USING(serial_number)
-    LEFT JOIN reportdata USING(serial_number)
-    WHERE pendinginstalls > 0
-    $filter
-    ORDER BY pendinginstalls DESC";
-?>
 <div class="col-lg-4 col-md-6">
-    <div class="panel panel-default">
+    <div class="panel panel-default" id="pending-widget">
         <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-moon"></i> Clients with pending installs</h3>
         </div>
-        <div class="list-group scroll-box">
-            <?php foreach($machine->query($sql) as $obj): ?>
-            <a href="<?php echo url('clients/detail/'.$obj->serial_number); ?>" class="list-group-item">
-                <?php echo $obj->computer_name; ?>
-                <span class="badge pull-right"><?php echo $obj->pendinginstalls; ?></span>
-            </a>
-            <?php endforeach; ?>
-        </div>
+        <div class="list-group scroll-box"></div>
     </div><!-- /panel -->
 </div><!-- /col -->
+
+<script>
+
+$(document).on('appUpdate', function(e, lang) {
+	
+	var box = $('#pending-widget div.scroll-box'),
+        hours = 24; // Hours back
+	
+	$.getJSON( appUrl + '/module/munkireport/get_pending/'+hours, function( data ) {
+		
+		box.empty();
+
+		if(data.length){
+			$.each(data, function(i,d){
+				var badge = '<span class="badge pull-right">'+d.pendinginstalls+'</span>',
+                    url = appUrl+'/clients/detail/'+d.serial_number+'#tab_munki';
+                
+                d.computer_name = d.computer_name || i18n.t('empty');
+				box.append('<a href="'+url+'" class="list-group-item">'+d.computer_name+badge+'</a>');
+			});
+		}
+		else{
+			box.append('<span class="list-group-item">'+i18n.t('no_clients')+'</span>');
+		}
+	});
+});	
+</script>

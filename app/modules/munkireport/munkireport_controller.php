@@ -63,6 +63,33 @@ class Munkireport_controller extends Module_controller
 		}
 	}
 	
+	
+	
+	/**
+	 * Get machines with pending installs
+	 *	 *
+	 * @param integer $hours Number of hours to get stats from
+	 **/
+	public function get_pending($hours = 24)
+	{
+		$out = array();
+		if( ! $this->authorized())
+		{
+			$out['error'] = 'Not authorized';
+		}
+		else {
+			$mr = new Munkireport_model;
+			foreach($mr->get_pending() AS $rs)
+			{
+				$out[] = $rs;
+			}
+		}
+		
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+	
 	/**
 	 * Get statistics
 	 *	 *
