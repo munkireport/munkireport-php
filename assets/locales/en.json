@@ -426,6 +426,8 @@
 		"est_manufacture_date": "Est. Manufacture Date",
 		"est_purchase_date": "Est. Purchase date",
 		"expired": "Expired on __date__",
+		"expires_in": "Expires in __date__",
+		"no_alerts": "No Warranty Alerts",
 		"recheck": "Recheck Warranty Status",
 		"supported_no_applecare": "Supported until __date__. No Applecare",
 		"supported_until": "Supported until __date__",

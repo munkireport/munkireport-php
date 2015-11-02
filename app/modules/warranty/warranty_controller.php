@@ -69,8 +69,9 @@ class Warranty_controller extends Module_controller
 	/**
 	 * Get Warranty statistics
 	 *
+	 * @param bool $alert Filter on 30 days
 	 **/
-	public function get_stats()
+	public function get_stats($alert=FALSE)
 	{
 		$obj = new View();
 		if( ! $this->authorized())
@@ -80,7 +81,7 @@ class Warranty_controller extends Module_controller
 		else
 		{
 			$wm = new Warranty_model();
-			$obj->view('json', array('msg' => $wm->get_stats()));
+			$obj->view('json', array('msg' => $wm->get_stats($alert)));
 		}
 	}
 

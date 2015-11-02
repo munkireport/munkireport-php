@@ -1,44 +1,45 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="warranty-widget">
 
-				<div class="panel-heading">
+		<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-umbrella"></i> Warranty status</h3>
+			<h3 class="panel-title"><i class="fa fa-umbrella"></i> Warranty status</h3>
+		
+		</div>
+
+		<div class="list-group scroll-box"></div>
+
+	</div><!-- /panel -->
+
+</div><!-- /col -->
+
+<script>
+$(document).on('appUpdate', function(e, lang) {
+	
+	var box = $('#warranty-widget div.scroll-box'),
+		days = 30,
+		expires = i18n.t('warranty.expires_in', {date: moment.duration(days, "days").humanize()});
+
+    $.getJSON( appUrl + '/module/warranty/get_stats/1', function( data ) {
+		
+		// Clear box
+		box.empty();
+		
+		if(data.length){
+			$.each(data, function(i,d){
+				var badge = '<span class="badge pull-right">'+d.count+'</span>',
+					url = appUrl+'/show/listing/warranty#'+d.status;
 				
-				</div>
+				box.append('<a href="'+url+'" class="list-group-item">'+expires+' ('+d.status+')'+badge+'</a>')
+			});
+		}
+		else{
+			box.append('<span class="list-group-item">'+i18n.t('warranty.no_alerts')+'</span>');
+		}
+        
+    });
+});
 
-				<div class="list-group">
 
-				<?php	$warranty = new Warranty_model();
-						$thirtydays = date('Y-m-d', strtotime('+30days'));
-						$yesterday = date('Y-m-d', strtotime('-1day'));
-						$class_list = array('Supported' => 'warning');
-						$cnt = 0;
-						$filter = get_machine_group_filter('AND');
-						$sql = "SELECT count(1) AS count, status 
-								FROM warranty
-								LEFT JOIN reportdata USING(serial_number)
-								WHERE (end_date BETWEEN '$yesterday' AND '$thirtydays') 
-								AND status != 'Expired'
-								$filter
-								GROUP BY status 
-								ORDER BY count DESC";
-				?>
-					<?php foreach($warranty->query($sql) as $obj): ?>
-					<?php $status = array_key_exists($obj->status, $class_list) ? $class_list[$obj->status] : 'danger'; ?>
-					<a href="<?php echo url('show/listing/warranty#'.$obj->status); ?>" class="list-group-item list-group-item-<?php echo $status; ?>">
-						<span class="badge"><?php echo $obj->count; ?></span>
-						Expires in 30 days (<?php echo $obj->status; ?>)
-					<?php $cnt++; ?>
-					</a>
-					<?php endforeach; ?>
-					<?php if( ! $cnt): ?>
-						<span class="list-group-item">No warranty alerts</span>
-					<?php endif ?>
-
-				</div>
-
-			</div><!-- /panel -->
-
-		</div><!-- /col -->
+</script>

@@ -32,14 +32,24 @@ class Warranty_model extends Model {
 	 * Get Warranty statistics
 	 *
 	 **/
-	public function get_stats()
+	public function get_stats($alert=FALSE)
 	{
 		$out = array();
 		$filter = get_machine_group_filter();
+		$datefilter = '';
+		
+		// Check if we have to only return machines due in 30 days
+		if($alert)
+		{
+			$thirtydays = date('Y-m-d', strtotime('+30days'));
+			$yesterday = date('Y-m-d', strtotime('-1day'));
+			$datefilter = "AND (end_date BETWEEN '$yesterday' AND '$thirtydays')";
+		}
 		$sql = "SELECT count(*) AS count, status
 					FROM warranty
 					LEFT JOIN reportdata USING (serial_number)
 					$filter
+					$datefilter
 					GROUP BY status
 					ORDER BY count DESC";
 		
