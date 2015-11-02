@@ -63,6 +63,24 @@ class Munkireport_controller extends Module_controller
 		}
 	}
 	
+	/**
+	* Get munki versions
+	 *
+	 *
+	 **/
+	public function get_versions()
+	{
+		$obj = new View();
+		if( ! $this->authorized())
+		{
+			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
+		}
+		else
+		{
+			$mrm = new Munkireport_model();
+			$obj->view('json', array('msg' => $mrm->get_versions()));
+		}
+	}
 	
 	
 	/**

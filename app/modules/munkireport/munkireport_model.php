@@ -85,6 +85,23 @@ class Munkireport_model extends Model {
 	}
 	
 	/**
+	 * Get munki versions
+	 *
+	 *
+	 **/
+	public function get_versions()
+	{
+		$filter = get_machine_group_filter();
+		$sql = "SELECT version, COUNT(1) AS count
+				FROM munkireport
+				LEFT JOIN reportdata USING (serial_number)
+				$filter
+				GROUP BY version
+				ORDER BY COUNT DESC";
+		return $this->query($sql);
+	}
+	
+	/**
 	 * Get machines with pending installs
 	 *
 	 * Undocumented function long description
