@@ -1,17 +1,50 @@
-### 2.5.0 (June 25, 2015)
+### 2.6.0 (October 7, 2015)
 
 FIXES
 
-* 
+* TLS1.2 support - NSUrl replaces urllib2 thanks to @gneagle and @pudquick
+* Better checking of preflight scripts
+* Uptime fix for El Capitan
+* ADLDap utils (deprecated modifier)
 
 NEW FEATURES
 
-* Business Units
+* Bluetooth widget thanks to @gmarnin and @nbalonso
+* Configurable disk size thresholds
+* German localisation thanks to @fridomac
+* Etag support for install controller (used by AutoPkg recipe)
+* initial support for 'tagging' machines
+* Datatables 10
+* Download CSV, Print, and Copy to clipboard
+* better FileVault status widget
 
-How to upgrade:
+### 2.5.3 (July 31, 2015)
 
-* Migrations ON
-* Add authorization
+FIXES
+
+* Filesize formatter now uses base 1000 instead of 1024
+* Fix uninstall scripts
+* Session vars are updated when adding/removing machine groups
+* Better support for Corestorage volume reporting
+* Reordered buttons in some widgets thanks to @poundbangbash
+* Servermetrics model
+
+NEW FEATURES
+
+* Support for Business Units - [Read more](https://github.com/munkireport/munkireport-php/blob/master/docs/business_units.md)
+* Support for Machine Groups - [Read more](https://github.com/munkireport/munkireport-php/blob/master/docs/machine_groups.md)
+* Role Based Access [Read more](https://github.com/munkireport/munkireport-php/blob/master/docs/authorization.md)
+* Filter on Machine Group
+* Server metrics module (reports server metrics for OSX Server)
+* Services module (reports on running services on OSX Server)
+* Timemachine module (reports on Time Machine backups)
+* Certificate module (reports on certificate expiration dates)
+* Comment module (for custom views: add admin comments)
+* Improved Disk reporting (now reports on all connected HFS Disks, reports on RAID and FUSION drives)
+* Live updates on certain widgets
+* German localisation thanks to @fridomac 
+* Reporting on OS Buildversion
+* Disk size thresholds
 
 ### 2.4.2 (April 25, 2015)
 

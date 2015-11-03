@@ -424,13 +424,16 @@ class Auth_ldap
      * @param  string $string
      * @return string
      */
-    protected function _filterEscape($string) {
-        return preg_replace(
-            '/([\x00-\x1F\*\(\)\\\\])/e',
-            '"\\\\\".join("",unpack("H2","$1"))',
-            $string
-        );
-    }
+     protected function _filterEscape($string) {
+         // see https://github.com/adldap/adLDAP/issues/22
+         return preg_replace_callback(
+             '/([\x00-\x1F\*\(\)\\\\])/',
+             function ($matches) {
+                 return "\\".join("", unpack("H2", $matches[1]));
+             },
+             $string
+         );
+     }
 
     /**
      * Opens a connection to the configured LDAP server and sets the wanted

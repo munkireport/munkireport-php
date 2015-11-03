@@ -19,12 +19,12 @@ new Certificate_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
-		        <th data-i18n="serial" data-colname='machine#serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
-		        <th data-i18n="listing.certificate.commonname" data-colname='certificate#cert_cn'></th>
-		        <th data-i18n="listing.certificate.expires" data-colname='certificate#cert_exp_time'></th>
-				<th data-i18n="listing.checkin" data-colname='reportdata#timestamp'></th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="listing.certificate.commonname" data-colname='certificate.cert_cn'></th>
+		        <th data-i18n="listing.certificate.expires" data-colname='certificate.cert_exp_time'></th>
+				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -48,35 +48,42 @@ new Certificate_model;
 	});
 
 	$(document).on('appReady', function(e, lang) {
-		// Get modifiers from data attribute
-		var myCols = [], // Colnames
-			mySort = [], // Initial sort
-			hideThese = [], // Hidden columns
-			col = 0; // Column counter
-		$('.table th').map(function(){
-			  myCols.push({'mData' : $(this).data('colname')});
-			  if($(this).data('sort'))
-			  {
-			  	mySort.push([col, $(this).data('sort')])
-			  }
-			  if($(this).data('hide'))
-			  {
-			  	hideThese.push(col);
-			  }
-			  col++
-		});
+        // Get modifiers from data attribute
+        var mySort = [], // Initial sort
+            hideThese = [], // Hidden columns
+            col = 0, // Column counter
+            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
+
+        $('.table th').map(function(){
+
+            columnDefs.push({name: $(this).data('colname'), targets: col});
+
+            if($(this).data('sort'))
+            {
+              mySort.push([col, $(this).data('sort')])
+            }
+
+            if($(this).data('hide'))
+            {
+              hideThese.push(col);
+            }
+
+            col++
+        });
+        
 	    oTable = $('.table').dataTable( {
-	        "sAjaxSource": "<?=url('datatables/data')?>",
-	        "aaSorting": mySort,
-	        "aoColumns": myCols,
-	        "aoColumnDefs": [
-	        	{ 'bVisible': false, "aTargets": hideThese }
-			],
-	        "fnServerParams": function ( aoData ) {
-		    	// Only search records where 'condition' is not empty
-		    	aoData.push( { "name": "mrColNotEmpty", "value": "certificate#id" } );
-		    },  
-		    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+            ajax: {
+                url: "<?=url('datatables/data')?>",
+                type: "POST",
+                data: function( d ){
+                  d.mrColNotEmpty = "certificate.id"
+                }
+            },
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
+            order: mySort,
+            columnDefs: columnDefs,
+		    createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};

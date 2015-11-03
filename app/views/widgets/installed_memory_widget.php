@@ -1,63 +1,52 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
+	
+	<div class="panel panel-default" id="installed-memory-widget">
+		
+		<div class="panel-heading">
 			
-			<div class="panel panel-default">
-				
-				<div class="panel-heading">
-					
-					<h3 class="panel-title"><i class="fa fa-tasks"></i> Installed Memory</h3>
-					
-				</div>
-				
-				<div class="panel-body text-center">
-					
-					<?php
-						$machine = new Machine_model();
-						$in_green = 0;
-						$in_yellow = 0;
-						$in_red = 0;
-						$filter = get_machine_group_filter();
-						$sql = "SELECT physical_memory, count(1) as count
-							FROM machine
-							LEFT JOIN reportdata USING (serial_number)
-							$filter
-							GROUP BY physical_memory
-							ORDER BY physical_memory DESC";
-							
-						foreach ($machine->query($sql) as $obj) {
-							
-							// with intval for the memory column should be robust enough for clients not converted yet to int
-							
-							if (intval($obj->physical_memory) >= 8 ){
-								
-								$in_green += $obj->count ;
-								
-							} elseif (intval($obj->physical_memory) < 4 ) {
-								
-								$in_red += $obj->count ;
-								
-							} else {
-								
-								$in_yellow += $obj->count ;
-								
-							}
-						} // end foreach
-					?>
-					
-					<a href="<?php echo url('show/listing/hardware'); ?>" class="btn btn-success">
-						<span class="bigger-150"> <?php echo $in_green; ?> </span><br>
-             					8GB +
-           				</a>
-           				<a href="<?php echo url('show/listing/hardware'); ?>" class="btn btn-warning">
-             					<span class="bigger-150"> <?php echo $in_yellow; ?> </span><br>
-             					4GB +
-           				</a>
-           				<a href="<?php echo url('show/listing/hardware'); ?>" class="btn btn-danger">
-             					<span class="bigger-150"> <?php echo $in_red; ?> </span><br>
-             					< 4GB
-          				</a>
-					
-				</div>
-				
-			</div><!-- /panel -->
+			<h3 class="panel-title"><i class="fa fa-tasks"></i> Installed Memory</h3>
 			
-		</div><!-- /col -->
+		</div>
+		
+		<div class="panel-body text-center"></div>
+		
+	</div><!-- /panel -->
+	
+</div><!-- /col -->
+
+<script>
+$(document).on('appUpdate', function(e, lang) {
+	
+	var body = $('#installed-memory-widget div.panel-body');
+	
+	$.getJSON( appUrl + '/module/machine/get_memory_stats', function( data ) {
+		
+		// Clear previous content
+		body.empty();
+		
+		// Todo: add to config
+		var entries = [
+			{name: '< 4GB', link: 'memory < 4GB', count: 0, class:'btn-danger', filter: function(n){return n < 4}},
+			{name: '4GB +', link: '5GB memory 7GB', count: 0, class:'btn-warning', filter: function(n){return n < 8 && n >= 4}},
+			{name: '8GB +', link: 'memory > 7GB', count: 0, class:'btn-success', filter: function(n){return n >= 8}}
+		]
+		
+		// Calculate entries
+		if(data.length){
+			$.each(data, function(i,d){
+				$.each(entries, function(i, o){
+					o.count = o.count + d.count * o.filter(d.physical_memory);
+				})
+			});
+			
+			// render
+			$.each(entries, function(i, o){
+				body.append('<a href="'+appUrl+'/show/listing/hardware/#'+encodeURIComponent(o.link)+'" class="btn '+o.class+'"><span class="bigger-150">'+o.count+'</span><br>'+o.name+'</a> ');
+			});
+		}
+		else{
+			body.append(i18n.t('no_clients'));
+		}
+	});
+});	
+</script>

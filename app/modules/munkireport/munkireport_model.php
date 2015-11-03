@@ -43,7 +43,7 @@ class Munkireport_model extends Model {
 		$this->idx[] = array('appleupdates');
 		
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 2;
+		$this->schema_version = 3;
 
 		// Create table if it does not exist
         $this->create_table();
@@ -58,6 +58,92 @@ class Munkireport_model extends Model {
 		}
 
 	}
+	
+	/**
+	 * Get manifests statistics
+	 *
+	 *
+	 **/
+	public function get_manifest_stats()
+	{
+		$out = array();
+		$filter = get_machine_group_filter();
+		$sql = "SELECT COUNT(1) AS count, manifestname 
+			FROM munkireport
+			LEFT JOIN reportdata USING (serial_number)
+			$filter
+			GROUP BY manifestname
+			ORDER BY count DESC";
+			
+		foreach($this->query($sql) as $obj)
+		{
+			$obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown';
+			$out[] = $obj;
+		}
+		
+		return $out;
+	}
+	
+	/**
+	 * Get munki versions
+	 *
+	 *
+	 **/
+	public function get_versions()
+	{
+		$filter = get_machine_group_filter();
+		$sql = "SELECT version, COUNT(1) AS count
+				FROM munkireport
+				LEFT JOIN reportdata USING (serial_number)
+				$filter
+				GROUP BY version
+				ORDER BY COUNT DESC";
+		return $this->query($sql);
+	}
+	
+	/**
+	 * Get machines with pending installs
+	 *
+	 *
+	 * @param int $hours Amount of hours to look back in history
+	 **/
+	public function get_pending($hours=24)
+	{
+		$timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
+		$out = array();
+		$filter = get_machine_group_filter('AND');
+		$sql = "SELECT computer_name, pendinginstalls, reportdata.serial_number
+		    FROM reportdata
+		    LEFT JOIN munkireport USING(serial_number)
+		    LEFT JOIN machine USING(serial_number)
+		    WHERE pendinginstalls > 0
+		    $filter
+			AND munkireport.timestamp > '$timestamp'
+		    ORDER BY pendinginstalls DESC";
+		
+		return $this->query($sql);
+	}
+	
+	/**
+	 * Get pending installs
+	 *
+	 *
+	 * @param int $hours Amount of hours to look back in history
+	 **/
+	public function get_pending_installs($hours=24)
+	{
+		$fromdate = date('Y-m-d H:i:s', time() - 3600 * $hours);
+		$updates_array = array();
+		$filter = get_machine_group_filter('AND');
+		$sql = "SELECT m.serial_number, report_plist 
+				FROM munkireport m
+				LEFT JOIN reportdata USING (serial_number)
+				WHERE pendinginstalls > 0
+				$filter
+				AND m.timestamp > '$fromdate'";
+		return $this->query($sql);
+	}
+
 	
 	function process($plist)
 	{		
@@ -158,5 +244,28 @@ class Munkireport_model extends Model {
 		$this->save();
 		
 		return $this;
-	}	
+	}
+	
+	/**
+	 * Get statistics
+	 *
+	 * Get object describing statistics
+	 *
+	 * @param integer hours hours of statistics
+	 **/
+	public function get_stats($hours = 24)
+	{
+		$timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
+		$sql = "SELECT 
+			SUM(errors > 0) as error, 
+			SUM(warnings > 0) as warning, 
+			SUM(pendinginstalls > 0) as pending,
+			SUM(installresults > 0) as installed 
+			FROM munkireport
+			LEFT JOIN reportdata USING (serial_number)
+			".get_machine_group_filter()."
+			AND munkireport.timestamp > '$timestamp'";
+
+		return current($this->query($sql));
+	}
 }

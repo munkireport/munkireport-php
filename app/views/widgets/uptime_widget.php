@@ -1,56 +1,55 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="uptime-widget">
 
-				<div class="panel-heading" data-container="body">
+		<div class="panel-heading" data-container="body">
 
-					<h3 class="panel-title"><i class="fa fa-power-off"></i> Uptime</h3>
+			<h3 class="panel-title"><i class="fa fa-power-off"></i> Uptime</h3>
 
-				</div>
+		</div>
 
-				<div class="panel-body text-center">
+		<div class="panel-body text-center">
 
-					<?php //FIXME use query to count totals!
-						$machine = new Reportdata_model();
-						$in_green = 0;
-						$in_yellow = 0;
-						$in_red = 0;
-						$filter = get_machine_group_filter('AND');
-						$sql = "SELECT timestamp, uptime
-										FROM reportdata
-										WHERE uptime <> '0'
-										$filter
-										ORDER BY timestamp DESC";
+			<a href="" class="btn btn-danger">
+				<span class="bigger-150"> 0 </span><br>
+				7 Days +
+			</a>
+			<a href="" class="btn btn-warning">
+				<span class="bigger-150"> 0 </span><br>
+				< 7 Days
+			</a>
+			<a href="" class="btn btn-success">
+				<span class="bigger-150"> 0 </span><br>
+				< 1 Day
+			</a>
 
-						foreach ($machine->query($sql) as $obj) {
+		</div>
 
-							if ( $obj->uptime <= 86400 ){
-								$in_green += 1;
-							} elseif ( $obj->uptime >= 604800 ) {
-								$in_red += 1;
-							} else {
-								$in_yellow += 1;
-							}
+	</div><!-- /panel -->
 
-						} // end foreach
+</div><!-- /col -->
 
-					?>
-
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-danger">
-						<span class="bigger-150"> <?php echo $in_red; ?> </span><br>
-						7 Days +
-					</a>
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-warning">
-						<span class="bigger-150"> <?php echo $in_yellow; ?> </span><br>
-						< 7 Days
-					</a>
-					<a href="<?php echo url('show/listing/clients'); ?>" class="btn btn-success">
-						<span class="bigger-150"> <?php echo $in_green; ?> </span><br>
-						< 1 Day
-					</a>
+<script>
+$(document).on('appReady', function(e, lang) {
 	
-				</div>
+	var panelBody = $('#uptime-widget div.panel-body');
+	panelBody.find('a.btn').attr('href', appUrl + '/show/listing/clients');
+	
+	$(document).on('appUpdate', function(e, lang) {
 
-			</div><!-- /panel -->
+	    $.getJSON( appUrl + '/module/reportdata/getUptimeStats', function( data ) {
 
-		</div><!-- /col -->
+	    	if(data.error){
+	    		//alert(data.error);
+	    		return;
+	    	}
+
+			panelBody.find('a.btn-success span').text(data.oneday);
+			panelBody.find('a.btn-warning span').text(data.oneweek);
+			panelBody.find('a.btn-danger span').text(data.oneweekplus);
+			
+	    });
+	});
+});
+
+</script>

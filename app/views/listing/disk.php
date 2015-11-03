@@ -17,15 +17,15 @@ new Reportdata_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'></th>
-		        <th data-i18n="serial" data-colname='machine#serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'></th>
-		        <th data-i18n="storage.mountpoint" data-colname='diskreport#MountPoint'></th>
-		        <th data-i18n="storage.volume_type" data-colname='diskreport#VolumeType'></th>
-		        <th data-i18n="storage.percentage" data-sort='desc' data-colname='diskreport#Percentage'></th>
-		        <th data-i18n="storage.free" data-colname='diskreport#FreeSpace'></th>
-		        <th data-i18n="storage.total_size" data-colname='diskreport#TotalSize'></th>
-		    	<th data-i18n="storage.smartstatus" data-colname='diskreport#SMARTStatus'></th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="storage.mountpoint" data-colname='diskreport.MountPoint'></th>
+		        <th data-i18n="storage.volume_type" data-colname='diskreport.VolumeType'></th>
+		        <th data-i18n="storage.percentage" data-sort='desc' data-colname='diskreport.Percentage'></th>
+		        <th data-i18n="storage.free" data-colname='diskreport.FreeSpace'></th>
+		        <th data-i18n="storage.total_size" data-colname='diskreport.TotalSize'></th>
+		    	<th data-i18n="storage.smartstatus" data-colname='diskreport.SMARTStatus'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -50,42 +50,67 @@ new Reportdata_model;
 
 	$(document).on('appReady', function(e, lang) {
 
-		// Get modifiers from data attribute
-		var myCols = [], // Colnames
-			mySort = [], // Initial sort
-			hideThese = [], // Hidden columns
-			col = 0; // Column counter
+        // Get modifiers from data attribute
+        var mySort = [], // Initial sort
+            hideThese = [], // Hidden columns
+            col = 0, // Column counter
+            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
-		$('.table th').map(function(){
+        $('.table th').map(function(){
 
-			  myCols.push({'mData' : $(this).data('colname')});
+            columnDefs.push({name: $(this).data('colname'), targets: col});
 
-			  if($(this).data('sort'))
-			  {
-			  	mySort.push([col, $(this).data('sort')])
-			  }
+            if($(this).data('sort')){
+              mySort.push([col, $(this).data('sort')])
+            }
 
-			  if($(this).data('hide'))
-			  {
-			  	hideThese.push(col);
-			  }
+            if($(this).data('hide')){
+              hideThese.push(col);
+            }
 
-			  col++
-		});
+            col++
+        });
 
 	    oTable = $('.table').dataTable( {
-	        "sAjaxSource": "<?php echo url('datatables/data'); ?>",
-	        "aaSorting": mySort,
-	        "aoColumns": myCols,
-	        "aoColumnDefs": [
-	        	{ 'bVisible': false, "aTargets": hideThese }
-			],
-	        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+            ajax: {
+                url: "<?=url('datatables/data')?>",
+                type: "POST",
+                data: function(d){
+            
+                    // Look for 'between' statement todo: make generic
+                    if(d.search.value.match(/^\d+GB freespace \d+GB$/))
+                    {
+                        // Add column specific search
+                        d.columns[6].search.value = d.search.value.replace(/(\d+GB) freespace (\d+GB)/, function(m, from, to){return ' BETWEEN ' + humansizeToBytes(from) + ' AND ' + humansizeToBytes(to)});
+                        // Clear global search
+                        d.search.value = '';
+
+                        //dumpj(d)
+                    }
+
+                    // Look for a bigger/smaller/equal statement
+                    if(d.search.value.match(/^freespace [<>=] \d+GB$/))
+                    {
+                        // Add column specific search
+                        d.columns[6].search.value = d.search.value.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + humansizeToBytes(content)});
+                        // Clear global search
+                        d.search.value = '';
+
+                        //dumpj(out)
+                    }
+
+                }
+            },
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
+            order: mySort,
+            columnDefs: columnDefs,
+		    createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
+	        	var link = get_client_detail_link(name, sn, appUrl + '/', '#tab_storage-tab');
 	        	$('td:eq(0)', nRow).html(link);
 	        	
 	        	// is SSD ?
@@ -111,43 +136,10 @@ new Reportdata_model;
 	        		(smartstatus)
 	        	$('td:eq(8)', nRow).html(smartstatus)
 
-		    },
-		    "fnServerParams": function ( aoData ) {
-
-		      	// Hook in serverparams to change search
-		      	// Convert array to dict
-		      	var out = {}
-				for (var i = 0; i < aoData.length; i++) {
-					out[aoData[i]['name']] =  aoData[i]['value']
-				}
-
-				// Look for 'between' statement todo: make generic
-				if(out.sSearch.match(/^\d+GB freespace \d+GB$/))
-				{
-					// Clear global search
-					aoData.push( { "name": "sSearch", "value": "" } );
-
-					// Add column specific search
-					aoData.push( { 
-						"name": "sSearch_6", 
-						"value": out.sSearch.replace(/(\d+GB) freespace (\d+GB)/, function(m, from, to){return ' BETWEEN ' + humansizeToBytes(from) + ' AND ' + humansizeToBytes(to)})
-					} );
-					//dumpj(out)
-				}
-
-				// Look for a bigger/smaller/equal statement
-				if(out.sSearch.match(/^freespace [<>=] \d+GB$/))
-				{
-					// Clear global search
-					aoData.push( { "name": "sSearch", "value": "" } );
-
-					// Add column specific search
-					aoData.push( { "name": "sSearch_6", "value": out.sSearch.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + humansizeToBytes(content)}) } );
-					//dumpj(out)
-				}
 		    }
-	    } );
-	} );
+
+	    });
+	});
 </script>
 
 <?php $this->view('partials/foot'); ?>

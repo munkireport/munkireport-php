@@ -47,6 +47,44 @@ class Directory_service_model extends Model {
 		}
 	}
 	
+	/**
+	 * Get bound stats
+	 *
+	 **/
+	public function get_bound_stats()
+	{
+		$sql = "SELECT COUNT(1) as total,
+						COUNT(CASE WHEN (which_directory_service LIKE 'Active Directory'
+						OR which_directory_service LIKE 'LDAPv3') THEN 1 END) AS arebound
+						FROM directoryservice
+						LEFT JOIN reportdata USING(serial_number)
+						".get_machine_group_filter();
+		return(current($this->query($sql)));
+	}
+	
+	/**
+	 * Get modified computer names
+	 *
+	 * Match computer_name with computeraccount in AD
+	 *
+	 * @param type var Description
+	 **/
+	public function get_modified_computernames()
+	{
+		$machine = new Machine_model();
+		$filter = get_machine_group_filter('AND');
+		$trim = $this->trim('computeraccount','$');
+		$sql = "SELECT reportdata.serial_number, computeraccount, computer_name
+				FROM directoryservice
+				LEFT JOIN machine USING (serial_number)
+				LEFT JOIN reportdata USING (serial_number)
+				WHERE NOT directoryservice.computeraccount = ''
+				AND LOWER($trim) != LOWER(computer_name)
+				".$filter;
+		//echo $sql;
+		return $this->query($sql);
+	}
+	
 	// ------------------------------------------------------------------------
 
 	/**

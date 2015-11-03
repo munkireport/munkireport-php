@@ -83,7 +83,7 @@ foreach(array('ItemsToInstall', 'AppleUpdates') AS $r_item)
 		foreach($report[$r_item] as $key => &$item)
 		{
 			$item['install_result'] = 'Pending';
-			$dversion = $report[$r_item][$key]["display_name"].'-'.$report[$r_item][$key]["version_to_install"];
+			$dversion = $report[$r_item][$key]["name"].'-'.$report[$r_item][$key]["version_to_install"];
 			if(isset($install_results[$dversion]))
 			{
 				$item['install_result'] = $install_results[$dversion]['result'];
@@ -100,7 +100,7 @@ if(isset($report['ManagedInstalls']))
 	{
 		if(isset($item["version_to_install"]))
 		{
-			$dversion = $item["display_name"].'-'.$item["version_to_install"];
+			$dversion = $item["name"].'-'.$item["version_to_install"];
 			if(isset($install_results[$dversion]) && $install_results[$dversion]['result'] == 'Installed')
 			{
 				$report['ManagedInstalls'][$key]['installed'] = TRUE;
@@ -126,7 +126,7 @@ if(isset($report['ItemsToRemove']))
 	foreach($report['ItemsToRemove'] as $key => &$item)
 	{
 		$item['install_result'] = 'Pending';
-		$dversion = $report['ItemsToRemove'][$key]["display_name"];
+		$dversion = $report['ItemsToRemove'][$key]["name"];
 		if(isset($removal_results[$dversion]))
 		{
 			$item['install_result'] = $removal_results[$dversion]['result'];
@@ -246,16 +246,18 @@ if(isset($report['ItemsToRemove']))
 $(document).on('appReady', function(e, lang) {
 
 	// Format filesize
-	var size = $('td.filesize').html();
-	if(size != '?'){
-		$('td.filesize').html(fileSize(size))
-	}
+	$('td.filesize').each(function(index, el){
+		var size = $(el).html();
+		if(size != '?'){
+			$(el).html(fileSize(size))
+		}
+	});
 
 	// Initialize datatables
 	$('.ManagedInstalls').dataTable({
-	    "bServerSide": false,
-	    "order": [0,'asc'],
-	    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+	    serverSide: false,
+	    order: [0,'asc'],
+	    createdRow: function( nRow, aData, iDataIndex ) {
 	    	// Update name in first column to link
 	    	var size=$('td:eq(1)', nRow).html();
 	        $('td:eq(1)', nRow).html(fileSize(size, 1));

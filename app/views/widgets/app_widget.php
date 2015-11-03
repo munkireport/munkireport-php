@@ -1,37 +1,56 @@
-<?
-$appsToCheck = conf('apps_to_track');
-$appsToChecksql = array();
-$appsIndex = count($appsToCheck);
-$counter=0;
-$group_filter = get_machine_group_filter('AND', 'm');
-
-foreach ($appsToCheck as $string) {
-    $appsToChecksql[] = "SELECT i.version, COUNT(i.version) as count
-    FROM inventoryitem i
-    LEFT JOIN reportdata m ON (m.serial_number = i.serial)
-    WHERE i.name LIKE '$string'
-    $group_filter
-    GROUP BY i.version
-    ORDER BY count DESC";
-    }
-?>
-
-<? while ($appsIndex != $counter ) {
-  $machine = new Inventory_model();
-?>
+<?php foreach(conf('apps_to_track', array()) as $string):?> 
 <div class="col-lg-4 col-md-6">
-    <div class="panel panel-default">
-        <div class="panel-heading" data-container="body" title="Known versions of <?echo $appsToCheck[$counter];?>">
-            <h3 class="panel-title"><i class="fa fa-tachometer"></i> <span data-i18n="<?echo $appsToCheck[$counter];?>"><?echo $appsToCheck[$counter];?></span></h3>
+    <div class="panel panel-default app-widget" data-ident="<?php echo $string;?>">
+        <div class="panel-heading" data-container="body">
+            <h3 class="panel-title"><i class="fa fa-tachometer"></i> <span></span></h3>
         </div>
-        <div class="list-group scroll-box">
-            <?foreach($machine->query($appsToChecksql[$counter]) as $obj):?>
-            <a href="<?=url('module/inventory/items/'.$appsToCheck[$counter].'/'.$obj->version)?>" class="list-group-item">
-                <?=$obj->version?>
-                <span class="badge pull-right"><?=$obj->count?></span>
-            </a>
-            <?endforeach?>
-        </div>
+        <div class="list-group scroll-box"></div>
     </div><!-- /panel -->
 </div><!-- /col -->
-<? $counter++; } ?>
+<?php endforeach?>
+
+<script>
+$(document).on('appReady', function(){
+    
+    var baseUrl = appUrl + '/module/inventory/appVersions/',
+        apps = [];
+    // Compile list of apps
+    $('.app-widget').each(function(){
+        var appName = $(this).data('ident');
+        // Set tooltip
+        $(this).find('div.panel-heading')
+            .attr('title', i18n.t('widget.app.versions', {app: appName}))
+            .tooltip();
+        // Set title
+        $(this).find('.panel-title span').text(appName);
+        // Add to app list
+        apps.push({
+            name: appName,
+            list: $(this).find('div.list-group')
+        });
+    });
+    
+    $(document).on('appUpdate', function(){
+        
+        // Get data for apps
+        $.each(apps, function(i, app){
+            $.getJSON(baseUrl + app.name, function(data){
+                // Empty old list
+                app.list.empty();
+                // Make a list item for every datapoint (d)
+                $.each(data, function(j, d){
+                    app.list.append($('<a>')
+                        .addClass('list-group-item')
+                        .attr('href', appUrl + '/module/inventory/items/' + app.name + '/' + d.version)
+                        .text(d.version)
+                        .append($('<span>')
+                            .addClass('badge pull-right')
+                            .text(d.count)));
+                });
+            });
+        });
+    }); // end appUpdate
+});
+
+</script>
+

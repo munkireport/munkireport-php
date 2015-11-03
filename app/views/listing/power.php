@@ -18,27 +18,27 @@ new Power_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine#computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='machine#serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='power#design_capacity'>Designed (mAh)</th>
-		        <th data-colname='power#max_capacity'>Capacity (mAh)</th>
-		        <th data-colname='power#cycle_count'>Cycles</th>
-		        <th data-colname='power#max_percent'>Health %</th>
-		        <th data-colname='power#condition'>Condition</th>
-		        <th data-colname='power#current_capacity'>Current (mAh)</th>
-		        <th data-colname='power#current_percent'>Charged %</th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-colname='power.design_capacity'>Designed (mAh)</th>
+		        <th data-colname='power.max_capacity'>Capacity (mAh)</th>
+		        <th data-colname='power.cycle_count'>Cycles</th>
+		        <th data-colname='power.max_percent'>Health %</th>
+		        <th data-colname='power.condition'>Condition</th>
+		        <th data-colname='power.current_capacity'>Current (mAh)</th>
+		        <th data-colname='power.current_percent'>Charged %</th>
 				<?php
 					$temperature_unit=conf('temperature_unit');
 					if ( $temperature_unit == "F" ) {
-						echo "<th data-colname='power#temperature'>Temp°F</th>";
+						echo "<th data-colname='power.temperature'>Temp°F</th>";
 					} else {
-						echo "<th data-colname='power#temperature'>Temp°C</th>";
+						echo "<th data-colname='power.temperature'>Temp°C</th>";
 					}
 				?>
-		        <th data-colname='power#manufacture_date'>Manufactured</th> 
-		        <th data-sort="desc" data-colname='power#timestamp'>Check-In</th> 
-		        <th data-colname='machine#machine_model'>Model ( col 13 hidden )</th>
+		        <th data-colname='power.manufacture_date'>Manufactured</th> 
+		        <th data-sort="desc" data-colname='power.timestamp'>Check-In</th> 
+		        <th data-hide="1" data-colname='machine.machine_model'>Model ( col 13 hidden )</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -62,35 +62,65 @@ new Power_model;
 	});
 	
 	$(document).on('appReady', function(e, lang) {
-		// Get modifiers from data attribute
-		var myCols = [], // Colnames
-			mySort = [], // Initial sort
-			hideThese = [ 13 ], // Hidden columns
-			col = 0; // Column counter
-		$('.table th').map(function(){
-			  myCols.push({'mData' : $(this).data('colname')});
-			  if($(this).data('sort'))
-			  {
-			  	mySort.push([col, $(this).data('sort')])
-			  }
-			  if($(this).data('hide'))
-			  {
-			  	hideThese.push(col);
-			  }
-			  col++
-		});
+
+        // Get modifiers from data attribute
+        var mySort = [], // Initial sort
+            hideThese = [], // Hidden columns
+            col = 0, // Column counter
+            runtypes = [], // Array for runtype column 
+            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
+
+        $('.table th').map(function(){
+
+            columnDefs.push({name: $(this).data('colname'), targets: col});
+
+            if($(this).data('sort')){
+              mySort.push([col, $(this).data('sort')])
+            }
+
+            if($(this).data('hide')){
+              hideThese.push(col);
+            }
+
+            col++
+        });
+        
 	    oTable = $('.table').dataTable( {
-	        "sAjaxSource": "<?=url('datatables/data')?>",
-	        "aaSorting": mySort,
-	        "aoColumns": myCols,
-	        "aoColumnDefs": [
-	        	{ 'bVisible': false, "aTargets": hideThese }
-			],
-	        "fnServerParams": function ( aoData ) {
-		    	// Only search records where 'condition' is not empty
-		    	aoData.push( { "name": "mrColNotEmpty", "value": "power#condition" } );
-		    },  
-		    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+            ajax: {
+                url: "<?=url('datatables/data')?>",
+                type: "POST",
+                data: function(d){
+                    d.mrColNotEmpty = "power.condition";
+                    
+                    // Look for 'between' statement todo: make generic
+                    if(d.search.value.match(/^\d+% max_percent \d+%$/))
+                    {
+                        // Add column specific search
+                        d.columns[6].search.value = d.search.value.replace(/(\d+%) max_percent (\d+%)/, function(m, from, to){return ' BETWEEN ' + parseInt(from) + ' AND ' + parseInt(to)});
+                        // Clear global search
+                        d.search.value = '';
+
+                        //dumpj(d)
+                    }
+
+                    // Look for a bigger/smaller/equal statement
+                    if(d.search.value.match(/^max_percent [<>=] \d+%$/))
+                    {
+                        // Add column specific search
+                        d.columns[6].search.value = d.search.value.replace(/.*([<>=] )(\d+%)$/, function(m, o, content){return o + parseInt(content)});
+                        // Clear global search
+                        d.search.value = '';
+
+                        //dumpj(out)
+                    }
+
+                }
+            },
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
+            order: mySort,
+            columnDefs: columnDefs,
+		    createdRow: function( nRow, aData, iDataIndex ) {
 	        	// Update name in first column to link
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};

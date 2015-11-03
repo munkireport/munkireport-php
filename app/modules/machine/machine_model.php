@@ -59,6 +59,80 @@ class Machine_model extends Model {
 		$this->serial = $serial;
 
 	}
+	
+	/**
+	 * Get duplicate computernames
+	 *
+	 *
+	 **/
+	public function get_duplicate_computernames()
+	{
+		$out = array();
+		$filter = get_machine_group_filter();
+		$sql = "SELECT computer_name, COUNT(*) AS count
+				FROM machine
+				LEFT JOIN reportdata USING (serial_number)
+				$filter
+				GROUP BY computer_name
+				HAVING count > 1
+				ORDER BY count DESC";
+				
+		foreach($this->query($sql) as $obj)
+		{
+			$out[] = $obj;
+		}
+		
+		return $out;
+	
+	}
+	
+	/**
+	 * Get model statistics
+	 *
+	 **/
+	public function get_model_stats()
+	{
+		$out = array();
+		$filter = get_machine_group_filter();
+		$sql = "SELECT count(*) AS count, machine_desc 
+				FROM machine
+				LEFT JOIN reportdata USING (serial_number)
+				$filter
+				GROUP BY machine_desc 
+				ORDER BY count DESC";
+		
+		foreach($this->query($sql) as $obj)
+		{
+			$obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : 'Unknown';
+			$out[] = $obj;
+		}
+		
+		return $out;
+	}
+	
+	/**
+	 * Get memory statistics
+	 *
+	 * 
+	 **/
+	public function get_memory_stats()
+	{
+		$out = array();
+		$sql = "SELECT physical_memory, count(1) as count
+				FROM machine
+				LEFT JOIN reportdata USING (serial_number)
+				".get_machine_group_filter()."
+				GROUP BY physical_memory
+				ORDER BY physical_memory DESC";
+
+		foreach($this->query($sql) as $obj)
+		{
+			$obj->physical_memory = intval($obj->physical_memory);
+			$out[] = $obj;
+		}
+		
+		return $out;
+	}
 
 	// ------------------------------------------------------------------------
 
@@ -101,6 +175,12 @@ class Machine_model extends Model {
 				$mylist['os_version'] += $digit * $mult;
 				$mult = $mult / 100;
 			}
+		}
+		
+		// Dirify buildversion
+		if( isset($mylist['buildversion']))
+		{
+			$mylist['buildversion'] = preg_replace('/[^A-Za-z0-9]/', '', $mylist['buildversion']);
 		}
 
 		$this->timestamp = time();

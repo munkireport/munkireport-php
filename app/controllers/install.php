@@ -33,6 +33,10 @@ class install extends Controller
                 break;
             case 'json':
                 break;
+            case 'autopkg':
+                $obj = new View();
+        		$obj->view('install/modules_autopkg', array('modules' => $modules));
+                break;
             default:
                 echo implode("\n", $modules);
 
@@ -56,8 +60,13 @@ class install extends Controller
             {
                 continue;
             }
-
-            $modules[] = $module;
+            
+            // Only include modules with an install script
+            if(is_file(conf('module_path').$module.'/scripts/install.sh'))
+            {
+                $modules[] = $module;
+            }
+            
         }
 
         return $modules;
@@ -110,9 +119,31 @@ class install extends Controller
                 $data['install_scripts'][$module] = conf('module_path').$module.'/scripts/install.sh';
             }
         }
-
+        
+        // Buffer script
+        ob_start();
     	$obj = new View();
         $obj->view('install/install_script', $data);
+        $content = ob_get_clean();
+        
+        // Get etag header
+        $etagHeader = ( isset( $_SERVER["HTTP_IF_NONE_MATCH"] ) ? trim( $_SERVER["HTTP_IF_NONE_MATCH"] ) : false );
+
+        // generate the etag from content
+        $etag = md5( $content );
+
+        //set etag-header
+        header( "Etag: ".$etag );
+
+        // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
+        if ( $etag === $etagHeader ) {
+            header( "HTTP/1.1 304 Not Modified" );
+            exit;
+        }
+
+        // new content modified, so output content
+        echo $content;
+        exit;
 		
 	}
 

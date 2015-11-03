@@ -115,7 +115,29 @@ class Model extends KISS_Model
             //primary key exists, so update
             $this->update();
         }
+		
+		return $this;
     }
+	
+	/**
+	 * Get SQL partial for trim
+	 *
+	 *
+	 * @param string $string original string
+	 * @param string $remove characters to remove
+	 **/
+	public function trim($string='', $remove=' ')
+	{
+		switch($this->get_driver())
+		{
+			case 'sqlite':
+				return "TRIM('$string', '$remove')";
+				break;
+			case 'mysql':
+				return "TRIM('$remove' FROM '$string')";
+				break;
+		}
+	}
 
     /**
      * Get schema version
@@ -252,6 +274,31 @@ class Model extends KISS_Model
 	}
 
 	// ------------------------------------------------------------------------
+	
+	/**
+	 * Delete one considering machine_group membership
+	 * use this instead of delete_where
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function delete_record($serial_number, $where = '', $bindings = array())
+	{
+		if( ! authorized_for_serial($serial_number))
+		{
+			return FALSE;
+		}
+
+		// Prepend where with serial_number
+		$where = $where ? 'serial_number=? AND '.$where : 'serial_number=?';
+
+		// Push serial number in front of the array
+		array_unshift($bindings, $serial_number);
+		
+		return $this->delete_where($where, $bindings);
+	}
+
+	// ------------------------------------------------------------------------
 
 	/**
 	 * Retrieve many considering machine_group membership
@@ -305,14 +352,14 @@ class Model extends KISS_Model
 	/**
 	 * Get database type of value
 	 *
-	 * Returns INTEGER, VARCHAR(255), REAL or BLOB
+	 * Returns INTEGER, VARCHAR(255), REAL or MEDIUMBLOB
 	 *
 	 * @return string database type
 	 * @author AvB
 	 **/
 	function get_type($val = '')
 	{
-		return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'BLOB'));
+		return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'MEDIUMBLOB'));
 	}
 
 	/**

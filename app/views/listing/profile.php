@@ -11,8 +11,6 @@
 
 	<div class="col-lg-12">
 
-
-
 	<h3>Profile report <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
@@ -81,9 +79,11 @@
 
 	$(document).on('appReady', function(e, lang) {
 		$('.table').dataTable({
-			"bServerSide": false,
-			"aaSorting": [[0,'asc']],
-			"fnDrawCallback": function( oSettings ) {
+			serverSide: false,
+            dom: mr.dt.buttonDom,
+            buttons: mr.dt.buttons,
+			sorting: [[0,'asc']],
+			drawCallback: function( oSettings ) {
 				$('#total-count').html(oSettings.fnRecordsTotal());
 			}
 		});
