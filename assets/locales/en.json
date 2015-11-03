@@ -457,6 +457,9 @@
 		"duplicate_computernames": {
 			"notfound": "No duplicates found"
 		},
+		"munki": {
+			"no_updates_pending": "No Updates Pending"
+		},
 		"power": {
 			"missing": "Missing",
 			"normal": "Normal",
