@@ -50,12 +50,13 @@ def display_detail(msg, *args):
     munkicommon.display_detail('Munkireport: %s' % msg, *args)
 
 def curl(url, values):
-    custom_headers = munkicommon.pref(munkicommon.ADDITIONAL_HTTP_HEADERS_KEY)
     req = urllib2.Request(url, urllib.urlencode(values))
-    for header in custom_headers:
-        m = re.search(r'^(?P<header_name>.*?): (?P<header_value>.*?)$', header)
-        if m:
-            req.add_header(m.group('header_name'), m.group('header_value'))
+    if pref('UseMunkiAdditionalHttpHeaders'):
+        custom_headers = munkicommon.pref(munkicommon.ADDITIONAL_HTTP_HEADERS_KEY)
+        for header in custom_headers:
+            m = re.search(r'^(?P<header_name>.*?): (?P<header_value>.*?)$', header)
+            if m:
+                req.add_header(m.group('header_name'), m.group('header_value'))
     try:
         response = urllib2.urlopen(req)
     except urllib2.URLError, e:

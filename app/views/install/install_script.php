@@ -7,23 +7,27 @@ BASEURL="<?php echo
 	. conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
-PREFPATH="/Library/Preferences/MunkiReport"
-BUNDLE_ID='ManagedInstalls'
-MANAGED_INSTALLS_PLIST_PATHS=("/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "/Library/Preferences/${BUNDLE_ID}.plist")
-ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'
-ADDITIONAL_HTTP_HEADERS=()
-for plist in "${MANAGED_INSTALLS_PLIST_PATHS[@]}"; do
-	while IFS= read -r line; do
-		if [[ "$line" =~ \"([^\"]+) ]]; then
-			ADDITIONAL_HTTP_HEADERS+=("${BASH_REMATCH[1]}")
-		fi
-	done <<< "$(defaults read "${plist%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
-done
 CURL=("/usr/bin/curl" "--insecure" "--fail" "--silent"  "--show-error")
-for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do CURL+=("-H" "$header"); done
 # Exit status
 ERR=0
 VERSION="<?=get_version()?>"
+
+# build additional HTTP headers
+if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders)" = "1" ]; then
+	PREFPATH="/Library/Preferences/MunkiReport"
+	BUNDLE_ID='ManagedInstalls'
+	MANAGED_INSTALLS_PLIST_PATHS=("/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "/Library/Preferences/${BUNDLE_ID}.plist")
+	ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'
+	ADDITIONAL_HTTP_HEADERS=()
+	for plist in "${MANAGED_INSTALLS_PLIST_PATHS[@]}"; do
+		while IFS= read -r line; do
+			if [[ "$line" =~ \"([^\"]+) ]]; then
+				ADDITIONAL_HTTP_HEADERS+=("${BASH_REMATCH[1]}")
+			fi
+		done <<< "$(defaults read "${plist%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
+	done
+	for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do CURL+=("-H" "$header"); done
+fi
 
 echo "BaseURL is ${BASEURL}"
 
