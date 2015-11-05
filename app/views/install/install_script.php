@@ -13,8 +13,8 @@ ERR=0
 VERSION="<?=get_version()?>"
 
 # build additional HTTP headers
+PREFPATH="/Library/Preferences/MunkiReport"
 if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders)" = "1" ]; then
-	PREFPATH="/Library/Preferences/MunkiReport"
 	BUNDLE_ID='ManagedInstalls'
 	MANAGED_INSTALLS_PLIST_PATHS=("/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "/Library/Preferences/${BUNDLE_ID}.plist")
 	ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'
