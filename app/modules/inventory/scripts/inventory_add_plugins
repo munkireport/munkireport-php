@@ -3,16 +3,21 @@
 Adds Internet Plug-Ins to the Application Inventory data that is gathered
 by munki.
 Thanks to Adam Reed and Josh Malone
-"""
 
+Modified by Wesley Whetstone for dynamic munki support and somewhat pep8 :)
+"""
 import os
 import sys
 
-sys.path.insert(0,'/usr/local/munki')
+sys.path.insert(0, '/usr/local/munki')
 
 from munkilib import FoundationPlist
 
-invPath = r"/Library/Managed Installs/ApplicationInventory.plist"
+# check the ManagedInstalls plist for where the ManagedInstallDir is located
+managed_installs = FoundationPlist.readPlist("/Library/Preferences/ManagedInstalls.plist")
+munki_install_dir = managed_installs.get('ManagedInstallDir')
+
+invPath = os.path.join(munki_install_dir, r'ApplicationInventory.plist')
 plugins = r"/Library/Internet Plug-Ins/"
 directoryListing = os.listdir(plugins)
 appinv = FoundationPlist.readPlist(invPath)
@@ -26,7 +31,7 @@ for x in directoryListing:
         plugin = {}
         plugin['CFBundleName'] = info.get('CFBundleName', x)
         plugin['bundleid'] = info.get('CFBundleIdentifier', 'N/A')
-        plugin['version'] = info.get('CFBundleVersion','N/A')
+        plugin['version'] = info.get('CFBundleVersion', 'N/A')
         plugin['path'] = os.path.join(plugins, x)
         plugin['name'] = info.get('CFBundleName', os.path.splitext(os.path.basename(x))[0])
         appinv.append(plugin.copy())
