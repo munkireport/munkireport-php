@@ -20,6 +20,10 @@ class Tablequery {
 	 **/
     function fetch($cfg)
     {
+        
+        // Quick debug
+        $debug = FALSE;
+        
         $dbh = getdbh();
 
         // Initial value
@@ -121,7 +125,9 @@ class Tablequery {
             SELECT COUNT(1) as count
             $from
             $where";
-        //print $sql;return;
+            
+        if($debug) print $sql;
+        
         if( ! $stmt = $dbh->prepare( $sql ))
         {
             $err = $dbh->errorInfo();
@@ -171,9 +177,10 @@ class Tablequery {
             $sWhere .= ')';
         }
 
-        // Search columns
+        // Search columns overrides global search
         if($search_cols)
         {
+            $bindings = array();
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach ($search_cols as $pos => $val)
             {
@@ -202,7 +209,13 @@ class Tablequery {
                 SELECT COUNT(*) as count
                 $from
                 $sWhere";
-            //print $sql;return;
+
+            if($debug)
+            {
+                echo "\nFiltered count: $sql";
+                print_r($bindings);
+            }
+
             if( ! $stmt = $dbh->prepare( $sql ))
             {
                 $err = $dbh->errorInfo();
@@ -226,7 +239,9 @@ class Tablequery {
         $sOrder
         $sLimit
         ";
-        //print $sql;return;
+
+        if($debug) echo "\nFiltered: $sql";
+
         // When in debug mode, send sql as well
         if(conf('debug'))
         {
