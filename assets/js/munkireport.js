@@ -236,7 +236,7 @@ function delete_machine(obj)
 		}
 	  	else
 	  	{
-	  		alert(i18n.t('admin.delete_failed') + i18n.t(data.status));
+	  		alert(i18n.t('admin.delete_failed') + i18n.t(data.status) + '['+data.message+']');
 	  	}
 	});
 }
