@@ -189,28 +189,6 @@
 
 	/*
 	|===============================================
-	| Locale
-	|===============================================
-	|
-	| You can set the locale string here, this will render certain strings
-	| according to locale specific settings
-	|
-	*/
-	$conf['locale'] = 'en_US';
-
-	/*
-	|===============================================
-	| Language
-	|===============================================
-	|
-	| You can set the language here, this will change the user interface
-	| language. See for possible values the 'lang' directory
-	|
-	*/
-	$conf['lang'] = 'en';
-
-	/*
-	|===============================================
 	| VNC and SSH links, optional links in the client detail view
 	|===============================================
 	|

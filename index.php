@@ -87,11 +87,9 @@ require( SYS_PATH.'kissmvc.php' );
 require( APP_PATH.'helpers/site_helper'.EXT );
 
 //===============================================
-// Timezone and Locale
+// Timezone
 //===============================================
 date_default_timezone_set( conf('timezone') );
-setlocale(LC_ALL, conf('locale'));
-
 
 set_exception_handler('uncaught_exception_handler');
 
