@@ -67,7 +67,7 @@ class report extends Controller
 			$this->error("Items are missing");
 		}
 
-		$itemarr = array('error' => '');
+		$itemarr = array('error' => '', 'info' => '');
 
 		// Try to register client and lookup hashes in db
 		try
@@ -124,7 +124,7 @@ class report extends Controller
 		{
 			foreach ($list AS $msg)
 			{
-				$itemarr['error'] .= "$type: $msg\n";
+                $itemarr[$type] .= "$type: $msg\n";
 			}
 		}
 		
