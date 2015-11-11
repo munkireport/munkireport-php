@@ -4,7 +4,7 @@
 
 		<div class="panel-heading" data-container="body" title="Messages generated the last 24 h">
 
-			<h3 class="panel-title"><i class="fa fa-comment"></i> Messages <span id="messages-danger" class="badge pull-right"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-bullhorn"></i> <span data-i18n="event_plural"></span></h3>
 
 		</div>
 
@@ -79,7 +79,8 @@ $(document).on('appUpdate', function(){
 				msg = item.msg + ' ' + i18n.t('error', {count: +item.msg})
 			}
 		}
-		else {
+		else if(item.module == 'reportdata'){
+			msg = i18n.t(item.msg);
 		}
 		
 		return '<a class="list-group-item list-group-item-'+type+'" '+ 'href="'+url+'">'+

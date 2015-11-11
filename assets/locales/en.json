@@ -185,6 +185,8 @@
 		"404": "Page not found",
 		"426": "You are required to visit this site using a secure connection."
 	},
+	"event": "Event",
+	"event_plural": "Events",
 	"failing": "Failing!",
 	"filevault": {
 		"users": "FileVault Enabled users",
@@ -327,6 +329,8 @@
 		"outbound_traffic": "Outbound Traffic",
 		"remote_ip": "Remote IP Address"
 	},
+	"new_client": "New Client",
+	"new_client_plural": "New Clients",
 	"no_clients": "No Clients",
 	"no_data": "No Data",
 	"on": "On",

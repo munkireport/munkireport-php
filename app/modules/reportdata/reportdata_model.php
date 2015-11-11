@@ -162,7 +162,9 @@ class Reportdata_model extends Model {
 
 	function process($plist)
 	{
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+		$new_client = TRUE; //$this->id ? FALSE : TRUE;
+        
+        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
@@ -183,6 +185,11 @@ class Reportdata_model extends Model {
 		}
 
 		$this->merge($mylist)->register()->save();
+        
+        if($new_client)
+        {
+            store_event($this->serial_number, 'reportdata', 'info', 'new_client');
+        }
 	}
 
 }

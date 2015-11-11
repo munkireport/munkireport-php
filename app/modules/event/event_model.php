@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Events class
+ * Event class
  *
  * This is the central place to store events from
  * a client.
