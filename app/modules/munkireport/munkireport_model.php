@@ -243,6 +243,24 @@ class Munkireport_model extends Model {
 				
 		$this->save();
 		
+		// Set apropriate notification: 
+		if($this->errors)
+		{
+			store_event($this->serial_number, 'munkireport', 'danger', $this->errors);
+		}
+		elseif($this->warnings)
+		{
+			store_event($this->serial_number, 'munkireport', 'warning', $this->warnings);
+		}
+		elseif($this->installresults)
+		{
+			store_event($this->serial_number, 'munkireport', 'info', $this->installresults);
+		}
+
+		
+
+		
+		
 		return $this;
 	}
 	

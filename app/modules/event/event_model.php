@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Messages class
+ * Events class
  *
- * This is the central place to store messages about
+ * This is the central place to store events from
  * a client.
  *
  * @package munkireport
  * @author AvB
  **/
-class Messages_model extends Model
+class Event_model extends Model
 {
 	function __construct($serial_number = '', $module = '')
     {
-		parent::__construct('id', 'messages'); //primary key, tablename
+		parent::__construct('id', 'event'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = ''; $this->rt['serial_number'] = 'VARCHAR(30)';
         $this->rs['type'] = ''; $this->rt['type'] = 'VARCHAR(10)';
@@ -27,14 +27,15 @@ class Messages_model extends Model
         if($serial_number && $module)
         {
             $this->retrieve_one('serial_number=? AND module=?', array($serial_number, $module));
-            $this->serial_number = $serial_number;
+			$this->serial_number = $serial_number;
+			$this->module = $module;
         }
         
         return $this;
     }
 
     /**
-     * Reset messages
+     * Reset events
      *
      * @param string serial number
      * @param string optional module
@@ -57,6 +58,22 @@ class Messages_model extends Model
         return $stmt->execute($where_params);
 
     }
+	
+	/**
+	 * Store message
+	 *
+	 * Store a message
+	 *
+	 * @param string $type message type
+	 * @param string $type message
+	 **/
+	public function store($type, $msg)
+	{
+		$this->type = $type;
+		$this->msg = $msg;
+        $this->timestamp = time();
+		$this->save();
+	}
 
     /**
      * Add message

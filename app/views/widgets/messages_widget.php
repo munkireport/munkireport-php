@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" id="events-widget">
 
 		<div class="panel-heading" data-container="body" title="Messages generated the last 24 h">
 
@@ -8,7 +8,7 @@
 
 		</div>
 
-		<div id="messages" class="list-group scroll-box"></div>
+		<div class="list-group scroll-box"></div>
 
 	</div><!-- /panel -->
 
@@ -16,8 +16,10 @@
 
 <script>
 $(document).on('appUpdate', function(){
-
-	$.getJSON( appUrl + '/module/messages/get')
+	
+	var list = $('#events-widget div.scroll-box');
+	
+	$.getJSON( appUrl + '/module/event/get')
 	.done(function( data ) {
 
 		if(data.error)
@@ -28,7 +30,7 @@ $(document).on('appUpdate', function(){
 				location.reload();
 			}
 		}
-		$('#messages').empty();
+		list.empty();
 
 		var arrayLength = data.items.length
 		if (arrayLength)
@@ -36,25 +38,21 @@ $(document).on('appUpdate', function(){
 			for (var i = 0; i < arrayLength; i++) {
 				serial=data.items[i].serial_number
 				type = data.items[i].type
-				$('#messages').append(
-					'<a class="list-group-item list-group-item-'+type+'" '+
-					'href="<?=url("clients/detail/")?>'+serial+'">'+data.items[i].msg+
-					'<span class="pull-right"><time datetime="'+data.items[i].timestamp+'">...</time></span></a>'
-				)
+				list.append(get_module_item(data.items[i]));
 			}
 
 			update_time();
 		}
 		else
 		{
-			$('#messages').append('<span class="list-group-item">No messages</span>');
+			list.append('<span class="list-group-item">No messages</span>');
 		}
 
 
 	}).fail(function( jqxhr, textStatus, error ) {
-		$('#messages').empty();
+		list.empty();
 		var err = textStatus + ", " + error;
-		$('#messages').append('<span class="list-group-item list-group-item-danger">'+
+		list.append('<span class="list-group-item list-group-item-danger">'+
 			"Request Failed: " + err+'</span>')
 	});
 
@@ -64,6 +62,30 @@ $(document).on('appUpdate', function(){
 			var date = new Date($(this).attr('datetime') * 1000);
 			$(this).html(moment(date).fromNow());
 		});
+	}
+	
+	// Get module specific item
+	function get_module_item(item){
+		
+		var url = appUrl + '/clients/detail/' + item.serial_number,
+			msg = item.msg;
+
+		if(item.module == 'munkireport'){
+			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_munki';
+			if(item.type == 'warning'){
+				msg = item.msg + ' ' + i18n.t('warning', {count: +item.msg})
+			}
+			else if(item.type == 'error'){
+				msg = item.msg + ' ' + i18n.t('error', {count: +item.msg})
+			}
+		}
+		else {
+		}
+		
+		return '<a class="list-group-item list-group-item-'+type+'" '+ 'href="'+url+'">'+
+		item.serial_number+': '+item.module + ' '+msg+
+		'<span class="pull-right"><time datetime="'+item.timestamp+'">...</time></span></a>'
+	
 	}
 
 });

@@ -1,12 +1,12 @@
 <?php 
 
 /**
- * Messages module class
+ * Event module class
  *
  * @package munkireport
  * @author AvB
  **/
-class Messages_controller extends Module_controller
+class Event_controller extends Module_controller
 {
 	function __construct()
 	{
@@ -24,23 +24,23 @@ class Messages_controller extends Module_controller
 
 	function index()
 	{
-		echo "You've loaded the Messages module!";
+		echo "You've loaded the Event module!";
 	}
 
 	/**
-	 * Get messages
+	 * Get Event
 	 *
 	 * @author AvB
 	 **/
 	function get($type = 'all')
 	{
-		$queryobj = new Messages_model();
+		$queryobj = new Event_model();
 		$queryobj = new Reportdata_model();
 		$twentyfour = time() - 60 * 60 * 24;
 		$out['items'] = array();
 		$out['error'] = '';
 		$sql = "SELECT m.serial_number, module, type, msg, m.timestamp 
-				FROM messages m LEFT JOIN reportdata USING (serial_number) 
+				FROM event m LEFT JOIN reportdata USING (serial_number) 
 				WHERE m.timestamp > $twentyfour 
 				ORDER BY m.timestamp DESC";
 
@@ -56,4 +56,4 @@ class Messages_controller extends Module_controller
 	}
 
 	
-} // END class Messages_controller
+} // END class Event_controller

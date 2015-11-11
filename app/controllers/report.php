@@ -270,11 +270,10 @@ class report extends Controller
 		$data['msg'] = isset($_POST['msg']) ? $_POST['msg'] : 'Unknown';
 		$data['timestamp'] = time();
 
-		// Store in messages
-		$msg_obj = new Messages_model($_POST['serial'], $data['module']);
-		$msg_obj->merge($data)->save();
+		// Store event
+        store_event($_POST['serial'], $data['module'], $data['type'], $data['msg']);
 
-		echo "Recorded this message: $msg_obj->msg\n";
+		echo "Recorded this message: $data['msg']\n";
 	}
 
 	/**
