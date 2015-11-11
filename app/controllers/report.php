@@ -273,7 +273,7 @@ class report extends Controller
 		// Store event
         store_event($_POST['serial'], $data['module'], $data['type'], $data['msg']);
 
-		echo "Recorded this message: $data['msg']\n";
+		echo "Recorded this message: ".$data['msg']."\n";
 	}
 
 	/**
