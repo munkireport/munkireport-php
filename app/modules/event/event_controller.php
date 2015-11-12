@@ -42,6 +42,7 @@ class Event_controller extends Module_controller
 		$sql = "SELECT m.serial_number, module, type, msg, m.timestamp 
 				FROM event m LEFT JOIN reportdata USING (serial_number) 
 				WHERE m.timestamp > $twentyfour 
+				".get_machine_group_filter('AND')."
 				ORDER BY m.timestamp DESC";
 
 
