@@ -154,6 +154,37 @@ class Disk_report_model extends Model {
 			$this->id = '';
 			$this->timestamp = time();
 			$this->create();
+			
+			// Fire event when systemdisk hits a threshold
+			if($this->MountPoint == '/')
+			{
+				$type = 'success';
+				$lowvalue = 1000; // Lowest value (GB)
+				foreach(conf('disk_thresholds', array()) as $name => $value)
+				{
+					if($this->FreeSpace < $value * 1000000000)
+					{
+						if($value < $lowvalue)
+						{
+							$msg = $value;
+							$type = $name;
+							// Store lowest value
+							$lowvalue = $value;
+						}
+					}
+				}
+				
+				if($type == 'success')
+				{
+					delete_event($this->serial_number, 'disk_report');
+				}
+				else
+				{
+					store_event($this->serial_number, 'disk_report', $type, $msg);
+				}
+
+			}
+			
 		}
 	}
 }

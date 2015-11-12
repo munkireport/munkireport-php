@@ -44,15 +44,15 @@ class Event_model extends Model
     function reset($serial_number = '', $module = '')
     {
         $where_params = array($serial_number);
-        $where_string = ' WHERE '. $this->enquote('serial_number').'=?';
+        $where_string = ' WHERE serial_number=?';
 
         if($module)
         {
             $where_params[] = $module;
-            $where_string .= ' AND '.$this->enquote('serial_number').'=?';
+            $where_string .= ' AND module=?';
         }
 
-        $sql = 'DELETE FROM '.$this->enquote( $this->tablename ).$where_string;
+        $sql = "DELETE FROM $this->tablename $where_string";
         $stmt = $this->prepare( $sql );
 
         return $stmt->execute($where_params);

@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.7.0.1585';
+$GLOBALS['version'] = '2.7.0.1586';
 
 // Return version without commit count
 function get_version()
@@ -346,4 +346,16 @@ function store_event($serial, $module = '', $type = '', $msg = '')
 {
 	$evtobj = new Event_model($serial, $module);
 	$evtobj->store($type, $msg);
+}
+
+/**
+ * Delete event for client
+ *
+ * @param string $serial serial number
+ * @param string $module reporting module
+ **/
+function delete_event($serial, $module = '')
+{
+	$evtobj = new Event_model();
+	$evtobj->reset($serial, $module);
 }

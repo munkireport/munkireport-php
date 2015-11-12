@@ -79,6 +79,11 @@ $(document).on('appUpdate', function(){
 				msg = item.msg + ' ' + i18n.t('error', {count: +item.msg})
 			}
 		}
+		else if(item.module == 'disk_report'){
+			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_storage-tab';
+			msg = i18n.t( i18n.t('free_disk_space') + ' < ' + item.msg + 'GB');
+			item.module = '';
+		}
 		else if(item.module == 'reportdata'){
 			msg = i18n.t(item.msg);
 		}
