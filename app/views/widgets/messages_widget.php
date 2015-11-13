@@ -17,7 +17,13 @@
 <script>
 $(document).on('appUpdate', function(){
 	
-	var list = $('#events-widget div.scroll-box');
+	var list = $('#events-widget div.scroll-box'),
+		icons = {
+			danger:'fa-times-circle',
+			warning: 'fa-warning',
+			info: 'fa-info-circle',
+			success: 'fa-thumbs-up'
+		};
 	
 	$.getJSON( appUrl + '/module/event/get/60/all/all')
 	.done(function( data ) {
@@ -89,7 +95,10 @@ $(document).on('appUpdate', function(){
 			msg = i18n.t(item.msg);
 		}
 		
-		return '<a class="list-group-item list-group-item-'+type+'" '+ 'href="'+url+'">'+
+		// Get appropriate icon
+		var icon = '<span class="text-'+type+' fa '+icons[item.type]+'"></span> ';
+		
+		return '<a class="list-group-item" '+ 'href="'+url+'">'+icon+
 		item.serial_number+': '+item.module + ' '+msg+
 		'<span class="pull-right">'+moment(date).fromNow()+'</span></a>'
 	
