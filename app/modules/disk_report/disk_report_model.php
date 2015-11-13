@@ -144,6 +144,10 @@ class Disk_report_model extends Model {
 			{
 				$disk['VolumeType'] = "raid";
 			}
+			if(isset($disk['Content']) && $disk['Content'] == 'Microsoft Basic Data')
+			{
+				$disk['VolumeType'] = "bootcamp";
+			}
 
 			$this->merge($disk);
 
