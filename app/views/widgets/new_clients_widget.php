@@ -32,11 +32,10 @@ $(document).on('appUpdate', function(){
 					.append(obj.computer_name)
 					.append($('<span>')
 						.addClass('pull-right')
-						.append($('<time>')
-							.text(function(){
+						.text(function(){
 								var date = new Date(obj.reg_timestamp * 1000);
 								return moment(date).fromNow();
-							}))))
+							})))
 
 		});
 
