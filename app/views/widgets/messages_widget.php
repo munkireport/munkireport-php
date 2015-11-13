@@ -68,7 +68,8 @@ $(document).on('appUpdate', function(){
 	function get_module_item(item){
 		
 		var url = appUrl + '/clients/detail/' + item.serial_number,
-			msg = item.msg;
+			msg = item.msg,
+			date = new Date(item.timestamp * 1000);
 
 		if(item.module == 'munkireport'){
 			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_munki';
@@ -90,7 +91,7 @@ $(document).on('appUpdate', function(){
 		
 		return '<a class="list-group-item list-group-item-'+type+'" '+ 'href="'+url+'">'+
 		item.serial_number+': '+item.module + ' '+msg+
-		'<span class="pull-right"><time datetime="'+item.timestamp+'">...</time></span></a>'
+		'<span class="pull-right">'+moment(date).fromNow()+'</span></a>'
 	
 	}
 
