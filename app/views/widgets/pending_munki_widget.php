@@ -1,4 +1,4 @@
-	<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
 	<div class="panel panel-default" id="pending-munki-widget">
 
@@ -8,7 +8,9 @@
 		
 		</div>
 
-		<div class="list-group scroll-box"></div><!-- /panel -->
+		<div class="list-group scroll-box"></div>
+	
+	</div><!-- /panel -->
 
 </div><!-- /col -->
 
