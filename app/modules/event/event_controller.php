@@ -32,16 +32,16 @@ class Event_controller extends Module_controller
 	 *
 	 * @author AvB
 	 **/
-	function get($type = 'all')
+	function get($minutes = 60, $type = 'all', $module = 'all')
 	{
 		$queryobj = new Event_model();
 		$queryobj = new Reportdata_model();
-		$twentyfour = time() - 60 * 60 * 24;
+		$fromtime = time() - 60 * $minutes;
 		$out['items'] = array();
 		$out['error'] = '';
 		$sql = "SELECT m.serial_number, module, type, msg, m.timestamp 
 				FROM event m LEFT JOIN reportdata USING (serial_number) 
-				WHERE m.timestamp > $twentyfour 
+				WHERE m.timestamp > $fromtime 
 				".get_machine_group_filter('AND')."
 				ORDER BY m.timestamp DESC";
 

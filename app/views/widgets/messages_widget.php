@@ -8,7 +8,7 @@
 
 		</div>
 
-		<div class="list-group scroll-box"></div>
+		<div class="list-group scroll-box" style="max-height: 308px"></div>
 
 	</div><!-- /panel -->
 
@@ -19,7 +19,7 @@ $(document).on('appUpdate', function(){
 	
 	var list = $('#events-widget div.scroll-box');
 	
-	$.getJSON( appUrl + '/module/event/get')
+	$.getJSON( appUrl + '/module/event/get/60/all/all')
 	.done(function( data ) {
 
 		if(data.error)
