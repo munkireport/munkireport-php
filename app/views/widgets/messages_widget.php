@@ -1,4 +1,4 @@
-<div class="col-lg-4 col-md-6">
+<div class="col-lg-8 col-md-6">
 
 	<div class="panel panel-default" id="events-widget">
 

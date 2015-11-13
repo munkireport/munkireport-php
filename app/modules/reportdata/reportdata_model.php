@@ -162,7 +162,8 @@ class Reportdata_model extends Model {
 
 	function process($plist)
 	{
-		$new_client = TRUE; //$this->id ? FALSE : TRUE;
+		// Check if uptime is set to determine this is a new client
+        $new_client = $this->uptime ? FALSE : TRUE;
         
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();

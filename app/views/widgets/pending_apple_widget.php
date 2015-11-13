@@ -1,6 +1,6 @@
-	<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-        <div class="panel panel-default" id="pending-apple-widget">
+    <div class="panel panel-default" id="pending-apple-widget">
 
 		<div class="panel-heading" data-container="body" title="Pending Apple Updates for this week">
 

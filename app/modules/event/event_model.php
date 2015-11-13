@@ -20,7 +20,12 @@ class Event_model extends Model
         $this->rs['module'] = ''; $this->rt['module'] = 'VARCHAR(20)';
         $this->rs['msg'] = '';
         $this->rs['timestamp'] = time();
-				
+		
+		$this->idx[] = array('serial_number');
+		$this->idx[] = array('serial_number', 'module');
+		$this->idx[] = array('type');
+
+
 		// Create table if it does not exist
         $this->create_table();
         
