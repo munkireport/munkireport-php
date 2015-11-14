@@ -254,12 +254,8 @@ class Munkireport_model extends Model {
 		}
 		elseif($this->installresults)
 		{
-			store_event($this->serial_number, 'munkireport', 'info', $this->installresults);
+			store_event($this->serial_number, 'munkireport', 'success', $this->installresults);
 		}
-
-		
-
-		
 		
 		return $this;
 	}

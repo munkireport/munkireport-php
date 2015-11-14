@@ -85,6 +85,10 @@ $(document).on('appUpdate', function(){
 			else if(item.type == 'error'){
 				msg = item.msg + ' ' + i18n.t('error', {count: +item.msg})
 			}
+			else if(item.type == 'success'){
+				msg = item.msg + ' ' + i18n.t('listing.munki.package_installed', {count: +item.msg})
+			}
+
 		}
 		else if(item.module == 'disk_report'){
 			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_storage-tab';
