@@ -241,7 +241,7 @@ if(isset($report['ItemsToRemove']))
 
   </div><!-- </div class="row"> -->
 
-<pre><?php print_r($client->rs) ?></pre>
+<pre><?php //print_r($client->rs) ?></pre>
 <script>
 $(document).on('appReady', function(e, lang) {
 
