@@ -231,12 +231,10 @@ class Munkireport_model extends Model {
 				if($result["status"])
 				{
 					$this->failedinstalls++;
+					$this->installresults--;
 				}
 			}
 		}
-
-		// Adjust installed items
-		$this->installresults -= $this->failed_installs;
 
 		# Save plist todo: remove all cruft from plist
 		$this->report_plist = $mylist;
