@@ -252,7 +252,11 @@ class Munkireport_model extends Model {
 						'pkg' => $result['display_name'],
 						'reason' => '' // Client should handle default reason
 					);
-
+				}
+				else {
+					$install_info = array(
+						'pkg' => $result['display_name']
+					);
 				}
 			}
 		}
@@ -271,24 +275,66 @@ class Munkireport_model extends Model {
 				json_encode($install_info)
 			);
 		}
-		elseif($this->errors)
+		elseif($this->failedinstalls > 1)
 		{
-			$this->store_event('danger', $this->errors);
+			$this->store_event(
+				'danger',
+				'pkg_failed_to_install',
+				json_encode(array('count' => $this->failedinstalls))
+			);
 		}
-		elseif($this->warnings)
+		elseif($this->errors == 1)
 		{
-			$this->store_event('warning', $this->warnings);
+			$this->store_event(
+				'danger',
+				'munki.error',
+				json_encode(array('error' => truncate_string($mylist['Errors'][0])))
+			);
 		}
-		elseif($this->installresults)
+		elseif($this->errors > 1)
 		{
-			if($this->installresults == 1)
-			{
-				$this->store_event('success', $this->installresults);
-			}
-			else
-			{
-				$this->store_event('success', $this->installresults);
-			}
+			$this->store_event(
+				'danger',
+				'munki.error',
+				json_encode(array('count' => $this->errors))
+			);
+		}
+		elseif($this->warnings == 1)
+		{
+			$this->store_event(
+				'warning',
+				'munki.warning',
+				json_encode(array('warning' => truncate_string($mylist['Warnings'][0])))
+			);
+		}
+		elseif($this->warnings > 1)
+		{
+			$this->store_event(
+				'warning',
+				'munki.warning',
+				json_encode(array('count' => $this->errors))
+			);
+		}
+		elseif($this->installresults == 1)
+		{
+			$this->store_event(
+				'success',
+				'munki.package_installed',
+				json_encode($install_info)
+			);
+		}
+		elseif($this->installresults > 1)
+		{
+			$this->store_event(
+				'success',
+				'munki.package_installed',
+				json_encode(array('count' => $this->installresults))
+			);
+		}
+		else
+		{
+			// Delete event
+			$this->delete_event();
 		}
 		
 		return $this;

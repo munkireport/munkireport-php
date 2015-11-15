@@ -559,6 +559,18 @@ class Model extends KISS_Model
 	{
 		store_event($this->serial_number, $this->tablename, $type, $msg, $data);
 	}
+	
+	/**
+	 * Delete event
+	 *
+	 * Delete event for this model, assumes we have a serial_number
+	 *
+	 **/
+	public function delete_event()
+	{
+		delete_event($this->serial_number, $this->tablename);
+	}
+
 }
 
 //===============================================================
