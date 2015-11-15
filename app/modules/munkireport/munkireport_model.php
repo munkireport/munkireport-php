@@ -312,7 +312,7 @@ class Munkireport_model extends Model {
 			$this->store_event(
 				'warning',
 				'munki.warning',
-				json_encode(array('count' => $this->errors))
+				json_encode(array('count' => $this->warnings))
 			);
 		}
 		elseif($this->installresults == 1)
