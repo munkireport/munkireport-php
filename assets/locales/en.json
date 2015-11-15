@@ -338,8 +338,9 @@
 	"os": {
 		"version": "OS Version"
 	},
-	"pending": "Pending",
 	"path": "Path",
+	"pending": "Pending",
+	"pkg_failed_to_install": "__pkg__ failed to install",
 	"reg_date": "Registration Date",
 	"remote_control": "Remote Control",
 	"report": {

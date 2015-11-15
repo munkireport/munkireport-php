@@ -546,6 +546,19 @@ class Model extends KISS_Model
 		return array_key_exists($this->tablename, $GLOBALS['schema_versions']) ?
 			intval($GLOBALS['schema_versions'][$this->tablename]) : 0;
 	}
+	
+	/**
+	 * Store event
+	 *
+	 * Store event for this model, assumes we have a serial_number
+	 *
+	 * @param string $type Use one of 'danger', 'warning', 'info' or 'success'
+	 * @param string $msg The message
+	 **/
+	public function store_event($type, $msg, $data='')
+	{
+		store_event($this->serial_number, $this->tablename, $type, $msg, $data);
+	}
 }
 
 //===============================================================

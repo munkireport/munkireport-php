@@ -156,7 +156,7 @@ class Munkireport_model extends Model {
             $this->warnings = 0;
             return $this;
 		}
-		
+				
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
@@ -198,7 +198,7 @@ class Munkireport_model extends Model {
 					$this->rs['report_plist'][$str] = $mylist[$str];
 				}
 			}
-
+			
 			$this->save();
 			return $this;
 		}
@@ -241,18 +241,29 @@ class Munkireport_model extends Model {
 				
 		$this->save();
 		
-		// Set apropriate notification: 
-		if($this->errors)
+		// Store apropriate event:
+		if($this->failedinstalls)
 		{
-			store_event($this->serial_number, 'munkireport', 'danger', $this->errors);
+			$this->store_event('danger', 'pkg_failed_to_install');
+		}
+		elseif($this->errors)
+		{
+			$this->store_event('danger', $this->errors);
 		}
 		elseif($this->warnings)
 		{
-			store_event($this->serial_number, 'munkireport', 'warning', $this->warnings);
+			$this->store_event('warning', $this->warnings);
 		}
 		elseif($this->installresults)
 		{
-			store_event($this->serial_number, 'munkireport', 'success', $this->installresults);
+			if($this->installresults == 1)
+			{
+				$this->store_event('success', $this->installresults);
+			}
+			else
+			{
+				$this->store_event('success', $this->installresults);
+			}
 		}
 		
 		return $this;

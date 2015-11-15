@@ -18,12 +18,14 @@ class Event_model extends Model
         $this->rs['serial_number'] = ''; $this->rt['serial_number'] = 'VARCHAR(30)';
         $this->rs['type'] = ''; $this->rt['type'] = 'VARCHAR(10)';
         $this->rs['module'] = ''; $this->rt['module'] = 'VARCHAR(20)';
-        $this->rs['msg'] = '';
+		$this->rs['msg'] = '';
+		$this->rs['data'] = '';
         $this->rs['timestamp'] = time();
 		
 		$this->idx[] = array('serial_number');
 		$this->idx[] = array('serial_number', 'module');
 		$this->idx[] = array('type');
+		$this->idx[] = array('msg');
 
 
 		// Create table if it does not exist
@@ -72,10 +74,11 @@ class Event_model extends Model
 	 * @param string $type message type
 	 * @param string $type message
 	 **/
-	public function store($type, $msg)
+	public function store($type, $msg, $data = '')
 	{
 		$this->type = $type;
 		$this->msg = $msg;
+		$this->data = $data;
         $this->timestamp = time();
 		$this->save();
 	}
