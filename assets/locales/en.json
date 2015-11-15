@@ -340,7 +340,7 @@
 	},
 	"path": "Path",
 	"pending": "Pending",
-	"pkg_failed_to_install": "__pkg__ failed to install",
+	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
 	"reg_date": "Registration Date",
 	"remote_control": "Remote Control",
 	"report": {

@@ -39,7 +39,7 @@ class Event_controller extends Module_controller
 		$fromtime = time() - 60 * $minutes;
 		$out['items'] = array();
 		$out['error'] = '';
-		$sql = "SELECT m.serial_number, module, type, msg, m.timestamp 
+		$sql = "SELECT m.serial_number, module, type, msg, data, m.timestamp 
 				FROM event m LEFT JOIN reportdata USING (serial_number) 
 				WHERE m.timestamp > $fromtime 
 				".get_machine_group_filter('AND')."

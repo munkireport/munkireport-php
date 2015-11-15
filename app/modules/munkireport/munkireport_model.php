@@ -214,7 +214,24 @@ class Munkireport_model extends Model {
 				$this->rs[$lcname] = count($mylist[$str]);
 			}
 		}
-
+		
+		// Install info - used when there is one install to report on
+		$install_info = array();
+		
+		// Problem installs
+		$this->failedinstalls = 0;
+		if(array_key_exists('ProblemInstalls', $mylist))
+		{
+			$this->failedinstalls = count($mylist['ProblemInstalls']);
+			if($this->failedinstalls == 1)
+			{
+				$install_info = array(
+					'pkg' => $mylist['ProblemInstalls'][0]['display_name'],
+					'reason' => $mylist['ProblemInstalls'][0]['note']
+				);
+			}
+		}
+		
 		// Calculate pending installs
 		$this->pendinginstalls = max(($this->itemstoinstall + $this->appleupdates) - $this->installresults, 0);
 
@@ -223,7 +240,6 @@ class Munkireport_model extends Model {
         $this->pendingremovals = max($removal_items - $this->removalresults, 0);
 
 		// Check results for failed installs
-		$this->failedinstalls = 0;
 		if($this->installresults)
 		{
 			foreach($mylist['InstallResults'] as $result)
@@ -232,6 +248,11 @@ class Munkireport_model extends Model {
 				{
 					$this->failedinstalls++;
 					$this->installresults--;
+					$install_info = array(
+						'pkg' => $result['display_name'],
+						'reason' => '' // Client should handle default reason
+					);
+
 				}
 			}
 		}
@@ -242,9 +263,13 @@ class Munkireport_model extends Model {
 		$this->save();
 		
 		// Store apropriate event:
-		if($this->failedinstalls)
+		if($this->failedinstalls == 1)
 		{
-			$this->store_event('danger', 'pkg_failed_to_install');
+			$this->store_event(
+				'danger',
+				'pkg_failed_to_install',
+				json_encode($install_info)
+			);
 		}
 		elseif($this->errors)
 		{

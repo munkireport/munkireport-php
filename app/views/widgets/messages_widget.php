@@ -79,16 +79,9 @@ $(document).on('appUpdate', function(){
 
 		if(item.module == 'munkireport'){
 			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_munki';
-			if(item.type == 'warning'){
-				msg = item.msg + ' ' + i18n.t('warning', {count: +item.msg})
-			}
-			else if(item.type == 'error'){
-				msg = item.msg + ' ' + i18n.t('error', {count: +item.msg})
-			}
-			else if(item.type == 'success'){
-				msg = item.msg + ' ' + i18n.t('listing.munki.package_installed', {count: +item.msg})
-			}
-
+			item.module = '';
+			item.data = item.data || '{}';
+			msg = i18n.t(item.msg, JSON.parse(item.data));
 		}
 		else if(item.module == 'disk_report'){
 			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_storage-tab';
