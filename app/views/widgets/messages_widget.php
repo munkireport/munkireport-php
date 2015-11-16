@@ -83,10 +83,11 @@ $(document).on('appUpdate', function(){
 			item.data = item.data || '{}';
 			msg = i18n.t(item.msg, JSON.parse(item.data));
 		}
-		else if(item.module == 'disk_report'){
+		else if(item.module == 'diskreport'){
 			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_storage-tab';
-			msg = i18n.t( i18n.t('free_disk_space') + ' < ' + item.msg + 'GB');
 			item.module = '';
+			item.data = item.data || '{}';
+			msg = i18n.t(item.msg, JSON.parse(item.data));
 		}
 		else if(item.module == 'reportdata'){
 			msg = i18n.t(item.msg);

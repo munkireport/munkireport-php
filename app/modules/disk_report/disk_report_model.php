@@ -163,15 +163,25 @@ class Disk_report_model extends Model {
 			if($this->MountPoint == '/')
 			{
 				$type = 'success';
+				$msg = '';
+				$data = '';
 				$lowvalue = 1000; // Lowest value (GB)
+				
+				// Check SMART Status
+				if($this->SMARTStatus=='Failing')
+				{
+					$type = 'danger';
+					$msg = 'smartstatus_failing';
+				}
 				foreach(conf('disk_thresholds', array()) as $name => $value)
 				{
 					if($this->FreeSpace < $value * 1000000000)
 					{
 						if($value < $lowvalue)
 						{
-							$msg = $value;
 							$type = $name;
+							$msg = 'free_disk_space_less_than';
+							$data = json_encode(array('gb'=> $value));
 							// Store lowest value
 							$lowvalue = $value;
 						}
@@ -180,11 +190,11 @@ class Disk_report_model extends Model {
 				
 				if($type == 'success')
 				{
-					delete_event($this->serial_number, 'disk_report');
+					$this->delete_event();
 				}
 				else
 				{
-					store_event($this->serial_number, 'disk_report', $type, $msg);
+					$this->store_event($type, $msg, $data);
 				}
 
 			}
