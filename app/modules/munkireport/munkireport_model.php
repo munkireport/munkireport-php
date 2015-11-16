@@ -255,7 +255,7 @@ class Munkireport_model extends Model {
 				}
 				else {
 					$install_info_success = array(
-						'pkg' => $result['display_name']
+						'pkg' => $result['display_name'] . ' ' .$result['version']
 					);
 				}
 			}
