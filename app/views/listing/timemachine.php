@@ -21,10 +21,10 @@ new Timemachine_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="listing.timemachine.last_success" data-colname='timemachine.last_success'></th>
-		        <th data-i18n="listing.timemachine.duration" data-colname='timemachine.duration'></th>
-		        <th data-i18n="listing.timemachine.last_failure" data-colname='timemachine.last_failure'></th>
-		        <th data-i18n="listing.timemachine.last_failure_msg" data-colname='timemachine.last_failure_msg'></th>
+		        <th data-i18n="backup.last_success" data-colname='timemachine.last_success'></th>
+		        <th data-i18n="backup.duration" data-colname='timemachine.duration'></th>
+		        <th data-i18n="backup.last_failure" data-colname='timemachine.last_failure'></th>
+		        <th data-i18n="backup.last_failure_msg" data-colname='timemachine.last_failure_msg'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>

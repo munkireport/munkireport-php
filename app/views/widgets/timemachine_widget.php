@@ -29,7 +29,7 @@
         </div><!-- /col -->
 
 <script>
-$(document).on('appReady appUpdate', function(e, lang) {
+$(document).on('appUpdate', function(e, lang) {
 
     $.getJSON( appUrl + '/module/timemachine/get_stats', function( data ) {
 

@@ -108,7 +108,7 @@
 	<div class="row">
 
 		<div class="col-lg-4">
-			<h4><i class="fa fa-umbrella"></i> <span data-i18n="warranty.warranty"></span> <a data-i18n="warranty.recheck" class="btn btn-default btn-xs" href="<?php echo url('module/warranty/recheck_warranty/' . $serial_number);?>"></a></h4>
+			<h4><i class="fa fa-umbrella"></i> <span data-i18n="warranty.warranty"></span></h4>
 			<table>
 				<tr>
 					<th data-i18n="warranty.coverage"></th><td class="mr-warranty_status"></td>
@@ -158,6 +158,12 @@
 			<table class="mr-timemachine-table">
 			</table>
 		</div>
+		
+		<div class="col-lg-4">
+			<h4><i class="fa fa-home"></i> <span data-i18n="crashplan.client.title"></span></h4>
+			<table class="mr-crashplan-table">
+			</table>
+		</div>
 
 		<div class="col-lg-4">
 			<h4><i class="fa fa-keyboard-o fa-fixed"></i> <span data-i18n="bluetooth.bluetooth"></span></h4>
@@ -170,8 +176,5 @@
 			<div class="comment" data-section="client"></div>
 			</table>
 		</div>
-
-		<div class="col-lg-4">
-		</div>
-
+		
 	</div><!-- /row -->

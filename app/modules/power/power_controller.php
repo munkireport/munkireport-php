@@ -23,6 +23,30 @@ class Power_controller extends Module_controller
 	{
 		echo "You've loaded the power module!";
 	}
+	
+	/**
+	 * Get Power Statistics
+	 *
+	 *
+	 **/
+	public function get_stats()
+	{
+		$out = array();
+		if( ! $this->authorized())
+		{
+			$out['error'] = 'Not authorized';
+		}
+		else
+		{
+			$pm = new Power_model;
+			$out[] = $pm->get_stats();
+		}
+		
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+
 
 	/**
 	 * Get conditions

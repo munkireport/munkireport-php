@@ -114,6 +114,25 @@ class Reportdata_model extends Model {
 	}
     
     /**
+     * Get uptime for Clients
+     *
+     * Calculate uptime per timeslot
+     *
+     **/
+    public function getUptimeStats()
+    {
+            $sql = "SELECT SUM(CASE WHEN uptime <= 86400 THEN 1 END) AS oneday,
+                    SUM(CASE WHEN uptime BETWEEN 86400 AND 604800 THEN 1 END) AS oneweek,
+                    SUM(CASE WHEN uptime >= 604800 THEN 1 END) AS oneweekplus
+                    FROM reportdata
+                    WHERE uptime > 0
+                    ".get_machine_group_filter('AND');
+            
+            return current($this->query($sql));
+    }
+    
+    
+    /**
      * Get check-in statistics
      *
      *
@@ -143,7 +162,10 @@ class Reportdata_model extends Model {
 
 	function process($plist)
 	{
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+		// Check if uptime is set to determine this is a new client
+        $new_client = $this->uptime ? FALSE : TRUE;
+        
+        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
@@ -164,6 +186,11 @@ class Reportdata_model extends Model {
 		}
 
 		$this->merge($mylist)->register()->save();
+        
+        if($new_client)
+        {
+            store_event($this->serial_number, 'reportdata', 'info', 'new_client');
+        }
 	}
 
 }

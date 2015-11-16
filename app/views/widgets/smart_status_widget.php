@@ -1,52 +1,49 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="smart-status-widget">
 
-			  <div class="panel-heading" data-container="body" title="HD SMART Status">
+		<div class="panel-heading" data-container="body">
 
-			    <h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> HD SMART Status</h3>
+			<h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> <span data-i18n="storage.smartstatus"></span></h3>
 
-			  </div>
+		</div>
 
-			  <div class="panel-body text-center">
+		<div class="panel-body text-center"></div>
 
-			  <?php
-			  	$queryobj = new Machine_model();
-						$sql = "SELECT COUNT(CASE WHEN SMARTStatus='Failing' THEN 1 END) AS Failing,
-										COUNT(CASE WHEN SMARTStatus='Verified' THEN 1 END) AS Verified,
-										COUNT(CASE WHEN SMARTStatus='Not Supported' THEN 1 END) AS Not_Supported
-							 			FROM diskreport
-							 			LEFT JOIN reportdata USING(serial_number)
-							 			".get_machine_group_filter();
-					$obj = current($queryobj->query($sql));
-				?>
+	</div><!-- /panel -->
 
-				<?php if($obj->Failing > 0): ?>
-
-					<a href="<?php echo url('show/listing/disk#failing'); ?>" class="btn btn-danger">
-						<span class="bigger-150"> <?php echo $obj->Failing; ?> </span><br>
-						Failing!
-					</a>
-
-				<?php else: ?>
-
-					<?php if($obj->Not_Supported > 0): ?>
-						<a href="<?php echo url('show/listing/disk#Not Supported'); ?>" class="btn btn-info">
-							<span class="bigger-150"> <?php echo $obj->Not_Supported; ?> </span><br>
-							Not Supported
-						</a>
-					<?php endif; ?>
-					<a href="<?php echo url('show/listing/disk'); ?>" class="btn btn-success">
-						<span class="bigger-150"> <?php echo $obj->Verified; ?> </span><br>
-						Verified
-					</a>
-
-				<?php endif; ?>
-
-			  </div>
-
-			</div><!-- /panel -->
-
-		</div><!-- /col -->
+</div><!-- /col -->
 
 
+
+<script>
+$(document).on('appUpdate', function(e, lang) {
+
+    $.getJSON( appUrl + '/module/disk_report/get_smart_stats', function( data ) {
+
+    	if(data.error){
+    		//alert(data.error);
+    		return;
+    	}
+		
+		var panel = $('#smart-status-widget div.panel-body'),
+			baseUrl = appUrl + '/show/listing/disk';
+		panel.empty();
+		
+		// Set statuses
+		if(data.failing){
+			panel.append('<a href="'+baseUrl+'#failing" class="btn btn-danger"><span class="bigger-150">'+data.failing+'</span><br>'+i18n.t('failing')+'</a>');
+		}
+		if(data.verified){
+			panel.append(' <a href="'+baseUrl+'#verified" class="btn btn-success"><span class="bigger-150">'+data.verified+'</span><br>'+i18n.t('verified')+'</a>');
+		}
+		if(data.unsupported){
+			panel.append(' <a href="'+baseUrl+'#not supported" class="btn btn-info"><span class="bigger-150">'+data.unsupported+'</span><br>'+i18n.t('unsupported')+'</a>');
+		}
+
+
+    });
+});
+
+
+</script>

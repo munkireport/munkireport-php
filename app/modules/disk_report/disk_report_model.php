@@ -69,6 +69,22 @@ class Disk_report_model extends Model {
 						".get_machine_group_filter('AND');
 		return current($this->query($sql));
 	}
+	
+	/**
+	 * Get SMART Status statistics
+	 *
+	 *
+	 **/
+	public function getSmartStats()
+	{
+		$sql = "SELECT COUNT(CASE WHEN SMARTStatus='Failing' THEN 1 END) AS failing,
+						COUNT(CASE WHEN SMARTStatus='Verified' THEN 1 END) AS verified,
+						COUNT(CASE WHEN SMARTStatus='Not Supported' THEN 1 END) AS unsupported
+						FROM diskreport
+						LEFT JOIN reportdata USING(serial_number)
+						".get_machine_group_filter();
+		return current($this->query($sql));
+	}
 
 	// ------------------------------------------------------------------------
 
@@ -128,6 +144,10 @@ class Disk_report_model extends Model {
 			{
 				$disk['VolumeType'] = "raid";
 			}
+			if(isset($disk['Content']) && $disk['Content'] == 'Microsoft Basic Data')
+			{
+				$disk['VolumeType'] = "bootcamp";
+			}
 
 			$this->merge($disk);
 
@@ -138,6 +158,37 @@ class Disk_report_model extends Model {
 			$this->id = '';
 			$this->timestamp = time();
 			$this->create();
+			
+			// Fire event when systemdisk hits a threshold
+			if($this->MountPoint == '/')
+			{
+				$type = 'success';
+				$lowvalue = 1000; // Lowest value (GB)
+				foreach(conf('disk_thresholds', array()) as $name => $value)
+				{
+					if($this->FreeSpace < $value * 1000000000)
+					{
+						if($value < $lowvalue)
+						{
+							$msg = $value;
+							$type = $name;
+							// Store lowest value
+							$lowvalue = $value;
+						}
+					}
+				}
+				
+				if($type == 'success')
+				{
+					delete_event($this->serial_number, 'disk_report');
+				}
+				else
+				{
+					store_event($this->serial_number, 'disk_report', $type, $msg);
+				}
+
+			}
+			
 		}
 	}
 }

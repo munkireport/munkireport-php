@@ -189,28 +189,6 @@
 
 	/*
 	|===============================================
-	| Locale
-	|===============================================
-	|
-	| You can set the locale string here, this will render certain strings
-	| according to locale specific settings
-	|
-	*/
-	$conf['locale'] = 'en_US';
-
-	/*
-	|===============================================
-	| Language
-	|===============================================
-	|
-	| You can set the language here, this will change the user interface
-	| language. See for possible values the 'lang' directory
-	|
-	*/
-	$conf['lang'] = 'en';
-
-	/*
-	|===============================================
 	| VNC and SSH links, optional links in the client detail view
 	|===============================================
 	|
@@ -479,12 +457,9 @@
 	|	registered clients
 	*/
 	$conf['dashboard_layout'] = array(
-		array('client', 'munki'), /*client is actually two widgets*/
-		array('disk_report', 'installed_memory', 'bound_to_ds'),
-		array('uptime', 'pending_apple', 'pending_munki'),
-		array('new_clients', 'munki_versions', 'filevault'),
-		array('warranty','power_battery_condition','power_battery_health'),
-		array('bluetooth_battery')
+		array('client', 'messages'),
+        array('new_clients', 'pending_apple', 'pending_munki'),
+		array('munki', 'disk_report','uptime'),
 	);
 
 	/*

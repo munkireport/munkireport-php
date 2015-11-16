@@ -60,7 +60,8 @@ def curl(url, values):
     options["method"] = "POST"
     options["content_type"] = "application/x-www-form-urlencoded"
     options["body"] = urlencode(values)
-    
+    options["logging_function"] = display_detail
+
     # Build Purl with initial settings
     connection = Purl.alloc().initWithOptions_(options)
     connection.start()
@@ -227,7 +228,10 @@ def process(serial, items):
     if result.get('error') != '':
         display_error('Server error: %s' % result['error'])
         return -1
-
+        
+    if result.get('info') != '':
+        display_detail('Server info: %s' % result['info'])
+        
     # Retrieve hashes that need updating
     for i in items.keys():
         if i in result:

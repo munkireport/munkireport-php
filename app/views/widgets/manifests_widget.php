@@ -1,34 +1,37 @@
- 		<div class="col-lg-4 col-md-6">
+	<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="manifests-widget">
 
-				<div class="panel-heading">
+		<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-book"></i> Manifests</h3>
-				
-				</div>
+			<h3 class="panel-title"><i class="fa fa-book"></i> Manifests</h3>
+		
+		</div>
 
-				<div class="list-group scroll-box">
+		<div class="list-group scroll-box"></div>
 
-				<?php	$munkireport = new Munkireport_model();
-						$filter = get_machine_group_filter();
-						$sql = "SELECT COUNT(1) AS count, manifestname 
-							FROM munkireport
-							LEFT JOIN reportdata USING (serial_number)
-							$filter
-							GROUP BY manifestname
-							ORDER BY count DESC";
-				?>
-					<?php foreach($munkireport->query($sql) as $obj): ?>
-					<?php $obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown'; ?>
-					<a href="<?php echo url('show/listing/munki/#'.$obj->manifestname); ?>" class="list-group-item"><?php echo $obj->manifestname; ?>
-						<span class="badge pull-right"><?php echo $obj->count; ?></span>
-					</a>
-					<?php endforeach; ?>
+	</div><!-- /panel -->
 
-				</div>
+</div><!-- /col -->
 
+<script>
+$(document).on('appUpdate', function(){
+	
+	$.getJSON( appUrl + '/module/munkireport/get_manifest_stats', function( data ) {
+        
+        var list = $('#manifests-widget div.scroll-box').empty();
+        
+        if(data.length){
+            $.each(data, function(i,d){
+                var badge = '<span class="badge pull-right">'+d.count+'</span>';
+                list.append('<a href="'+appUrl+'/show/listing/munki/#'+d.manifestname+'" class="list-group-item">'+d.manifestname+badge+'</a>')
+            });
+        }
+        else{
+            list.append('<span class="list-group-item">'+i18n.t('no_clients')+'</span>');
+        }
 
-			</div><!-- /panel -->
+    });
+});
+</script>
 
-		</div><!-- /col -->

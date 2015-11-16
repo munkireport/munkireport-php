@@ -140,6 +140,16 @@
 	},
 	"path": "Pad",
 	"pending": "Wachtend",
+	"printer": {
+		"default_set": "Default Aan",
+		"driver_version": "Driver Versie",
+		"name": "Printer Naam",
+		"ppd": "PPD",
+		"printer_sharing": "Printer Delen",
+		"printer_status": "Printer Status",
+		"tab_title": "Geïnstalleerde Printers",
+		"url": "URL"
+	},
 	"serial": "Serienummer",
 	"unavailable": "Niet beschikbaar",
 	"unknown": "Onbekend",

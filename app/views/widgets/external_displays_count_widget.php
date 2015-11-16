@@ -1,31 +1,35 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="external-displays-count-widget">
 
-				<div class="panel-heading" data-container="body" title="Total number of known external displays">
+		<div class="panel-heading" data-container="body">
 
-					<h3 class="panel-title"><i class="fa fa-expand"></i> External Displays Count</h3>
+			<h3 class="panel-title"><i class="fa fa-expand"></i> <span data-i18n="displays.widget_title"></span></h3>
 
-				</div>
+		</div>
 
-				<div class="panel-body text-center">
-					<?php
-						$queryobj = new displays_info_model();
-						$sql = "SELECT COUNT(CASE WHEN type='1' THEN 1 END) AS total
-						 			FROM displays
-						 			LEFT JOIN reportdata USING (serial_number)
-						 			".get_machine_group_filter();
-						$obj = current($queryobj->query($sql));
-					?>
-				<?php if($obj): ?>
-					<a href="<?php echo url('show/listing/displays'); ?>" class="btn btn-success">
-						<span class="bigger-150"> <?php echo $obj->total; ?> </span><br>
-						Displays
-					</a>
-				<?php endif ?>
+		<div class="panel-body text-center"></div>
 
-				</div>
+	</div><!-- /panel -->
 
-			</div><!-- /panel -->
+</div><!-- /col -->
 
-		</div><!-- /col -->
+<script>
+$(document).on('appReady', function(e, lang) {
+	$('#external-displays-count-widget div.panel-heading')
+		.attr('title', i18n.t('displays.widget_info'))
+		.tooltip();
+});
+$(document).on('appUpdate', function(e, lang) {
+	var body = $('#external-displays-count-widget div.panel-body');
+	
+	$.getJSON( appUrl + '/module/displays_info/get_count/1', function( data ) {
+		
+		body.empty();
+
+		data.total = data.total || 0;
+		body.append('<a href="'+appUrl+'/show/listing/displays'+'" class="btn btn-success"><span class="bigger-150">'+data.total+'</span><br>'+i18n.t('displays.displays')+'</a>');
+	});
+
+});
+</script>

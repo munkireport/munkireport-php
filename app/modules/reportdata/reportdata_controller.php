@@ -46,7 +46,17 @@ class Reportdata_controller extends Module_controller
 		$obj = new View();
 		$obj->view('json', array('msg' => $reportdata->get_lastseen_stats()));
 	}
-
+	
+	/**
+	 * Get uptime statistics
+	 *
+	 **/
+	public function getUptimeStats()
+	{
+		$reportdata = new Reportdata_model();
+		$obj = new View();
+		$obj->view('json', array('msg' => $reportdata->getUptimeStats()));
+	}
 
 	/**
 	 * REST API for retrieving registration dates

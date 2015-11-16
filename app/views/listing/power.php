@@ -90,7 +90,30 @@ new Power_model;
                 url: "<?=url('datatables/data')?>",
                 type: "POST",
                 data: function(d){
-                    d.mrColNotEmpty = "power.condition"
+                    d.mrColNotEmpty = "power.condition";
+                    
+                    // Look for 'between' statement todo: make generic
+                    if(d.search.value.match(/^\d+% max_percent \d+%$/))
+                    {
+                        // Add column specific search
+                        d.columns[6].search.value = d.search.value.replace(/(\d+%) max_percent (\d+%)/, function(m, from, to){return ' BETWEEN ' + parseInt(from) + ' AND ' + parseInt(to)});
+                        // Clear global search
+                        d.search.value = '';
+
+                        //dumpj(d)
+                    }
+
+                    // Look for a bigger/smaller/equal statement
+                    if(d.search.value.match(/^max_percent [<>=] \d+%$/))
+                    {
+                        // Add column specific search
+                        d.columns[6].search.value = d.search.value.replace(/.*([<>=] )(\d+%)$/, function(m, o, content){return o + parseInt(content)});
+                        // Clear global search
+                        d.search.value = '';
+
+                        //dumpj(out)
+                    }
+
                 }
             },
             dom: mr.dt.buttonDom,

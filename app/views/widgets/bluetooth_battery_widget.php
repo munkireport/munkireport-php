@@ -13,7 +13,7 @@
 		<div class="list-group scroll-box"></div>
 		
 	<script>
-	$(document).on('appReady appUpdate', function(){
+	$(document).on('appUpdate', function(){
 		
 		// Add tooltip
 		$('#bluetooth-battery-widget>div.panel-heading')

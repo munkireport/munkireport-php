@@ -1,33 +1,37 @@
- 		<div class="col-lg-4 col-md-6">
+	<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="hardware-model-widget">
 
-				<div class="panel-heading">
+		<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-laptop"></i> Hardware model breakdown</h3>
+			<h3 class="panel-title"><i class="fa fa-laptop"></i> <span data-i18n="machine.hardware_widget_title"></span></h3>
 
-				</div>
+		</div>
 
-				<div class="list-group scroll-box">
+		<div class="list-group scroll-box"></div>
 
-				<?php	$machine = new Machine_model();
-						$filter = get_machine_group_filter();
-						$sql = "SELECT count(*) AS count, machine_desc 
-							FROM machine
-							LEFT JOIN reportdata USING (serial_number)
-							$filter
-							GROUP BY machine_desc 
-							ORDER BY count DESC";
-				?>
-					<?php foreach($machine->query($sql) as $obj): ?>
-					<?php $obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : 'Unknown'; ?>
-					<a href="<?php echo url('show/listing/hardware/#'.rawurlencode($obj->machine_desc)); ?>" class="list-group-item"><?php echo $obj->machine_desc; ?>
-						<span class="badge pull-right"><?php echo $obj->count; ?></span>
-					</a>
-					<?php endforeach; ?>
+	</div><!-- /panel -->
 
-				</div>
+</div><!-- /col -->
 
-			</div><!-- /panel -->
+<script>
+$(document).on('appUpdate', function(e, lang) {
+	
+	var box = $('#hardware-model-widget div.scroll-box');
+	
+	$.getJSON( appUrl + '/module/machine/get_model_stats', function( data ) {
+		
+		box.empty();
 
-		</div><!-- /col -->
+		if(data.length){
+			$.each(data, function(i,d){
+				var badge = '<span class="badge pull-right">'+d.count+'</span>';
+                box.append('<a href="'+appUrl+'/show/listing/hardware/#'+d.machine_desc+'" class="list-group-item">'+d.machine_desc+badge+'</a>')
+			});
+		}
+		else{
+			box.append('<span class="list-group-item">'+i18n.t('no_clients')+'</span>');
+		}
+	});
+});	
+</script>
