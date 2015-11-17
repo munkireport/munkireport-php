@@ -1,177 +1,489 @@
 {
-	"about": {
-		"author": "Arjen van Bochoven"
-	},
-	"all": "Alle",
-	"auth": {
-		"addtoconfig": "Voeg deze regel toe aan config.php:",
-		"back_to_site": "Terug naar de site",
-		"empty_not_allowed": "Lege waarden zijn niet toegestaan",
-		"error_contacting_AD": "Er is een fout opgetreden tijdens het contact opnemen met AD",
-		"gen_other": "Genereer nog een hash",
-		"generate": "Genereer",
-		"generate_hash": "Genereer wachtwoord hash",
-		"generated_hash": "Gegenereerde hash",
-		"go_secure": "Ga naar beveiligde site",
-		"insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
-		"noauth_found": "Geen authenticatiegegevens gevonden, voeg een gebruiker toe aan het configuratiebestand.",
-		"not_authorized": "Niet geauthoriseerd",
-		"password": "Wachtwoord",
-		"secure": "Veilige verbinding",
-		"signin": "Log in",
-		"username": "Gebruikersnaam",
-		"wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist"
-	},
-	"bundle_id": "BundleID",
-	"client": {
-		"tab": {
-			"munki": "Beheerde Software",
-			"apple_software": "Apple Software",
-			"third_party_software": "Software van Derden",
-			"inventory_items": "Inventaris",
-			"network": "Netwerk",
-			"ds": "Directory Services",
-			"fv_escrow": "Filevault Escrow",
-			"bluetooth": "Bluetooth",
-			"ard": "ARD"
-		},
-		"installed_apple_software": "Geïnstalleerde Apple Software",
-		"installed_third_party_software": "Geïnstalleerde Software van Derden",
-		"install_date": "Installatie datum",
-		"no_install_history": "Geen installatie historie",
-		"process_name": "Procesnaam"
-	},
-	"chart": {
-		"stackedarea": {
-			"stacked": "Gestapeld",
-			"stream": "Stroom",
-			"expanded": "Geëxpandeerd"
-		}
-	},
-	"configuration": "Configuratie",
-	"date": {
-		"year": "jaar"
-	},
-	"disabled": "Uitgeschakeld",
-	"edit": "Wijzig",
-	"enabled": "Ingeschakeld",
-	"error": "Fout",
-	"error_plural": "Fouten",
-	"errors": {
-		"title": "Er is een fout opgetreden",
-		"client_nonexistent": "Client met serienummer \"__serial__\" niet gevonden in de database",
-		"403": "Geen toestemming om deze pagina te openen",
-		"404": "Pagina niet gevonden",
-		"426": "Het is verplicht deze site over een beveiligde verbinding te bezoeken."
-	},
-	"free_disk_space": "Vrije Schijfruimte",
-	"installed": "Geïnstalleerd",
-	"listing": {
-		"ard": {
-			"text": "Tekst __number__",
-			"title": "Apple Remote Desktop rapport"
-		},
-		"bluetooth": {
-			"keyboard_battery": "Toetsenbord",
-			"mouse_battery": "Muis",
-			"status": "Status",
-			"title": "Bluetooth rapport",
-			"trackpad_battery": "Trackpad"
-		},
-		"computername": "Naam",
-		"hardware": {
-			"description": "Beschrijving"
-		},
-		"munki": {
-			"latest_run": "Laatst Gezien",
-			"package_installed": "Pakket geïnstalleerd",
-			"package_installed_plural": "Pakketten geïnstalleerd",
-			"package_removed": "Pakket verwijderd",
-			"package_removed_plural": "Pakketten verwijderd",
-			"pending_install": "Wachtende installatie",
-			"pending_install_plural": "Wachtende installaties",
-			"pending_removal": "Wachtende verwijdering",
-			"pending_removal_plural": "Wachtende verwijderingen"	
-		},
-		"username": "Gebruiker"
-	},
-	"memory": {
-		"memory": "Geheugen"
-	},
-	"name": "Naam",
-	"nav": {
-		"listings": {
-			"ard": "Apple Remote Desktop",
-			"bluetooth": "Bluetooth",
-			"clients": "Clients",
-			"directoryservice": "Directoryservice",
-			"disk": "Schijf",
-			"displays": "Beeldschermen",
-			"hardware": "Hardware",
-			"inventory": "Inventaris",
-			"munki": "Munki",
-			"network": "Netwerk",
-			"security": "Beveiliging",
-			"warranty": "Garantie"
-		},
-		"main": {
-		  "dashboard": "Dashboard",
-		  "listings": "Lijsten",
-		  "reports": "Rapporten"
-		},
-		"reports": {
-			"clients": "Client rapport",
-			"configuration": "Configuratie rapport",
-			"hardware": "Hardware rapport",
-			"munki": "Munki rapport",
-			"network": "Netwerk rapport",
-			"power": "Vermogen rapport"
-		},
-		"user": {
-			"logout": "Log uit"
-		}
-	},
-	"network": {
-		"ethernet": "Ethernet",
-		"ip_address": "IP Adres",
-		"mask": "Masker",
-		"prefix_length": "Prefix lengte",
-		"router": "Router"
-	},
-	"path": "Pad",
-	"pending": "Wachtend",
-	"printer": {
-		"default_set": "Default Aan",
-		"driver_version": "Driver Versie",
-		"name": "Printer Naam",
-		"ppd": "PPD",
-		"printer_sharing": "Printer Delen",
-		"printer_status": "Printer Status",
-		"tab_title": "Geïnstalleerde Printers",
-		"url": "URL"
-	},
-	"serial": "Serienummer",
-	"unavailable": "Niet beschikbaar",
-	"unknown": "Onbekend",
-	"version": "Versie",
-	"warning": "Waarschuwing",
-	"warning_plural": "Waarschuwingen",
-	"widget": {
-		"age": {
-			"title": "Hardware Leeftijd"
-		},
-		"bound_to_ds": {
-			"bound": "Gebonden",
-			"notbound": "Niet Gebonden",
-			"info": "Totalen vanaf begin dataverzameling",
-			"title": "Gebonden aan een Directory Service"
-		},
-		"power": {
-			"missing": "Vermist",
-			"normal": "Normaal",
-			"now": "Nu",
-			"service": "Service",
-			"soon": "Weldra"
-		}
-	}
+  "about": {
+    "author": "Arjen van Bochoven"
+  },
+  "active": "Aktief",
+  "admin": {
+    "bu": {
+      "more_info": "Meer informatie"
+    },
+    "bu_overview": "Business Units",
+    "delete_failed": "Verwijderen mislukt:",
+    "edit_bu": {
+      "address": "Adres",
+      "link": "Link (naar externe site)",
+      "name": "Business Unit Name",
+      "title": "Business Unit Name"
+    },
+    "edit_mg": {
+      "title": "Edit Machine Groups"
+    },
+    "edit_user": {
+      "title": "Wijzig gebruikers",
+      "add_user": "Voeg gebruiker toe"
+    },
+    "mg": {
+      "title": "Machine Groups",
+      "add_group": "Nieuwe groep",
+      "edit_group": "Wijzig Machine Groep",
+      "new_group": "Nieuwe Machine Groep"
+    },
+    "new_bu": {
+      "title": "New Business Unit"
+    },
+    "remove_bu": {
+      "title": "Remove Business Unit",
+      "content": "When you remove this business unit, all related data will be removed. You cannot undo this."
+    },
+    "unassigned_groups": "Unassigned Groups"
+  },
+  "all": "Alle",
+  "ard": "Apple Remote Desktop",
+  "auth": {
+    "addtoconfig": "Voeg deze regel toe aan config.php:",
+    "back_to_site": "Terug naar de site",
+    "empty_not_allowed": "Lege waarden zijn niet toegestaan",
+    "error_contacting_AD": "Er is een fout opgetreden tijdens het contact opnemen met AD",
+    "gen_other": "Genereer nog een hash",
+    "generate": "Genereer",
+    "generate_hash": "Genereer wachtwoord hash",
+    "generated_hash": "Gegenereerde hash",
+    "go_secure": "Ga naar beveiligde site",
+    "insecure": "Onveilige verbinding, schakel om naar een beveiligde verbinding",
+    "noauth_found": "Geen authenticatiegegevens gevonden, voeg een gebruiker toe aan het configuratiebestand.",
+    "not_authorized": "Niet geauthoriseerd",
+    "password": "Wachtwoord",
+    "secure": "Veilige verbinding",
+    "signin": "Log in",
+    "username": "Gebruikersnaam",
+    "wrong_user_or_pass": "Gebruikersnaam of wachtwoord onjuist"
+  },
+  "backup": {
+    "destination": "Backup bestemming",
+    "duration": "Backup duration",
+    "last_failure": "Last failed backup",
+    "last_failure_msg": "Boodschap",
+    "last_success": "Last successful backup"
+  },
+  "battery": {
+    "life_remaining": "__percent__% battery life remaining"
+  },
+  "bluetooth": {
+    "all_ok": "No bluetooth devices with low battery",
+    "bluetooth": "Bluetooth",
+    "bluetooth_battery_widget": "Bluetooth battery status",
+    "keyboard": "Keyboard Status",
+    "mouse": "Mouse Status",
+    "panel_title": "Bluetooth devices with less than 15% battery life",
+    "status": "Bluetooth Status",
+    "trackpad": "Trackpad Status"
+  },
+  "boot_time": "Opgestart",
+  "bundle_id": "BundleID",
+  "business_unit": {
+    "disabled": "Business Units Disabled",
+    "machine_group": "Machine Group",
+    "machine_groups": "Machine Groups",
+    "managers": "Managers",
+    "users": "Gebruikers"
+  },
+  "buildversion": "Build Version",
+  "caching": {
+    "bytes_served": "Caching – Bytes Served",
+    "from_origin": "From Origin",
+    "from_peers": "From Peers",
+    "from_cache": "From Cache"
+  },
+  "client": {
+    "activity": "Client Activity",
+    "comment": "Commentaar",
+    "hour": "Clients per hour",
+    "tab": {
+      "apple_software": "Apple Software",
+      "ard": "ARD",
+      "bluetooth": "Bluetooth",
+      "certificates": "Certificaten",
+      "displays": "Beeldschermen",
+      "ds": "Directory Services",
+      "fv_escrow": "Filevault Escrow",
+      "inventory_items": "Inventaris",
+      "munki": "Beheerde Software",
+      "network": "Netwerk",
+      "power": "Power",
+      "printers": "Printers",
+      "profiles": "Profielen",
+      "serverstats": "Server Statistics",
+      "summary": "Overzicht",
+      "third_party_software": "Software van Derden",
+      "timemachine": "Timemachine"
+    },
+    "installed_apple_software": "Geïnstalleerde Apple Software",
+    "installed_third_party_software": "Geïnstalleerde Software van Derden",
+    "install_date": "Installatie datum",
+    "no_install_history": "Geen installatie historie",
+    "panel_title": "Client activity in the last month",
+    "process_name": "Procesnaam",
+    "total": "Total Clients"
+  },
+  "chart": {
+    "stackedarea": {
+      "stacked": "Gestapeld",
+      "stream": "Stroom",
+      "expanded": "Geëxpandeerd"
+    }
+  },
+  "configuration": "Configuratie",
+  "cpu": {
+    "arch": "CPU Architecture",
+    "core": "core",
+    "cpu": "CPU",
+    "type": "CPU Type",
+    "usage": "Processor gebruik"
+  },
+  "crashplan": {
+    "listing": {
+      "title": "CrashPlan Rapport"
+    },
+    "widget": {
+      "title": "CrashPlan Status"
+    },
+    "client": {
+      "title": "CrashPlan"
+    }
+  },
+  "date": {
+    "year": "jaar"
+  },
+  "delete": "Verwijder",
+  "dialog": {
+    "cancel": "Annuleer",
+    "close": "Sluit",
+    "comment": {
+      "add": "Voeg Opmerking toe",
+      "label": "Opmerking"
+    },
+    "ok": "Ok",
+    "ok_remove": "Ok, verwijder",
+    "save": "Bewaar"
+  },
+  "disabled": "Uitgeschakeld",
+  "disconnected": "Niet verbonden",
+  "displays": {
+    "displays": "Beeldschermen",
+    "widget_info": "Total number of known external displays",
+    "widget_title": "External Displays Count"
+  },
+  "edit": "Wijzig",
+  "enabled": "Ingeschakeld",
+  "encrypted": "Versleuteld",
+  "error": "Fout",
+  "error_plural": "Fouten",
+  "errors": {
+    "title": "Er is een fout opgetreden",
+    "client_nonexistent": "Client met serienummer \"__serial__\" niet gevonden in de database"
+  },
+  "event": "Event",
+  "event_plural": "Events",
+  "failing": "Faalt!",
+  "filevault": {
+    "users": "FileVault Enabled users",
+    "widget": {
+      "title": "Filevault 2 status"
+    }
+  },
+  "filter": {
+    "title": "Set filters"
+  },
+  "free_disk_space": "Vrije Schijfruimte",
+  "free_disk_space_less_than": "Minder dan < __gb__GB vrije disk ruimte",
+  "hardware": {
+    "hardware": "Hardware",
+    "uuid": "Hardware UUID"
+  },
+  "inactive": "Inactive",
+  "installed": "Geïnstalleerd",
+  "last_seen": "Laatst gezien",
+  "last_user": "Laatste gebruiker",
+  "listing": {
+    "ard": {
+      "text": "Tekst __number__",
+      "title": "Apple Remote Desktop rapport"
+    },
+    "bluetooth": {
+      "keyboard_battery": "Toetsenbord",
+      "mouse_battery": "Muis",
+      "status": "Status",
+      "title": "Bluetooth rapport",
+      "trackpad_battery": "Trackpad"
+    },
+    "certificate": {
+      "commonname": "Common Name",
+      "expires": "Expires",
+      "title": "Certificate Report"
+    },
+    "checkin": "Check-in",
+    "computername": "Naam",
+    "hardware": {
+      "description": "Beschrijving"
+    },
+    "loading": "Data van server laden",
+    "munki": {
+      "latest_run": "Laatst Gezien",
+      "package_installed": "Pakket geïnstalleerd",
+      "package_installed_plural": "Pakketten geïnstalleerd",
+      "package_removed": "Pakket verwijderd",
+      "package_removed_plural": "Pakketten verwijderd",
+      "pending_install": "Wachtende installatie",
+      "pending_install_plural": "Wachtende installaties",
+      "pending_removal": "Wachtende verwijdering",
+      "pending_removal_plural": "Wachtende verwijderingen"
+    },
+    "timemachine": {
+      "duration": "Backup duration",
+      "last_failure": "Last failed backup",
+      "last_failure_msg": "Boodschap",
+      "last_success": "Last successful backup",
+      "title": "Timemachine Rapport"
+    },
+    "username": "Gebruiker"
+  },
+  "machine": {
+    "hardware_widget_title": "Hardware model breakdown"
+  },
+  "manifest": {
+    "name": "Manifest Naam"
+  },
+  "memory": {
+    "memory": "Geheugen",
+    "usage": "Geheugengebruik",
+    "pressure": "Geheugendruk"
+  },
+  "model": "Model",
+  "munki": {
+    "error": "Munki fout: __error__",
+    "error_plural": "__count__ Munki fouten",
+    "package_installed": "__pkg__ geïnstalleerd",
+    "package_installed_plural": "__count__ pakketten geïnstalleerd",
+    "panel_title": "Munki statistics this week",
+    "run_type": "Run Type",
+    "version": "Munki Version",
+    "warning": "Munki warning: __warning__",
+    "warning_plural": "__count__ Munki warnings"
+  },
+  "name": "Naam",
+  "nav": {
+    "admin": {
+      "business_units": "Manage Business Units"
+    },
+    "lang": {
+      "de": "Deutsch",
+      "en": "English",
+      "es": "Español",
+      "nl": "Nederlands",
+      "ru": "Русский"
+    },
+    "listings": {
+      "ard": "Apple Remote Desktop",
+      "bluetooth": "Bluetooth",
+      "clients": "Clients",
+      "certificate": "Certificaten",
+      "directoryservice": "Directoryservice",
+      "disk": "Schijf",
+      "displays": "Beeldschermen",
+      "hardware": "Hardware",
+      "inventory": "Inventaris",
+      "munki": "Munki",
+      "network": "Netwerk",
+      "power": "Power",
+      "printers": "Printers",
+      "profile": "Profiles",
+      "security": "Beveiliging",
+      "timemachine": "Timemachine",
+      "warranty": "Garantie"
+    },
+    "main": {
+      "dashboard": "Dashboard",
+      "reports": "Rapporten",
+      "listings": "Lijsten",
+      "admin": "Admin"
+    },
+    "reports": {
+      "backup": "Backup Rapport",
+      "clients": "Client rapport",
+      "configuration": "Configuratie rapport",
+      "hardware": "Hardware rapport",
+      "munki": "Munki rapport",
+      "network": "Netwerk rapport",
+      "power": "Vermogen rapport"
+    },
+    "user": {
+      "logout": "Log uit"
+    }
+  },
+  "network": {
+    "ethernet": "Ethernet",
+    "hostname": "Hostnaam",
+    "ip_address": "IP Adres",
+    "network": "Netwerk",
+    "mask": "Masker",
+    "prefix_length": "Prefix lengte",
+    "router": "Router",
+    "traffic": "Netwerkverkeer",
+    "inbound_traffic": "Inkomend verkeer",
+    "outbound_traffic": "Uitgaand verkeer",
+    "remote_ip": "Remote IP Addres"
+  },
+  "new_client": "Nieuwe Client",
+  "new_client_plural": "Nieuwe Clients",
+  "no_clients": "Geen Clients",
+  "no_data": "Geen Data",
+  "on": "Aan",
+  "off": "Uit",
+  "os": {
+    "version": "OS Versie"
+  },
+  "path": "Pad",
+  "pending": "Wachtend",
+  "pkg_failed_to_install": "__pkg__ failed to install: __reason__",
+  "pkg_failed_to_install_plural": "__count__ packages failed to install",
+  "reg_date": "Registration Date",
+  "remote_control": "Remote Control",
+  "report": {
+    "generate": "Generate Report"
+  },
+  "printer": {
+    "default_set": "Default Aan",
+    "driver_version": "Driver Versie",
+    "name": "Printer Naam",
+    "ppd": "PPD",
+    "printer_sharing": "Printer Delen",
+    "printer_status": "Printer Status",
+    "tab_title": "Geïnstalleerde Printers",
+    "url": "URL"
+  },
+  "serial": "Serienummer",
+  "servermetrics": {
+    "tab": "Server Metrics"
+  },
+  "service": {
+    "listing": {
+      "title": "Services Report"
+    },
+    "name": "Service Name",
+    "status": "Service Status",
+    "tab": {
+      "title": "Services"
+    }
+  },
+  "sharing": {
+    "connected_users": "Sharing – Connected Users",
+    "afp_users": "AFP Users",
+    "smb_users": "SMB Users"
+  },
+  "show": "Show",
+  "software": {
+    "software": "Software",
+    "smc_version": "SMC Versie",
+    "boot_rom_version": "Boot ROM Versie"
+  },
+  "status": "Status",
+  "storage": {
+    "bus_protocol": "BUS Protocol",
+    "encrypted": "Encrypted",
+    "encryption_status": "Encryptie Status",
+    "external": "Extern",
+    "free": "Free",
+    "internal": "Intern",
+    "mountpoint": "Mount Point",
+    "not_encrypted": "Not Encrypted",
+    "percentage": "Percentage",
+    "size": "Disk Size",
+    "smartstatus": "SMART Status",
+    "smartstatus_failing": "SMART Status failing",
+    "storage": "Opslag",
+    "total_size": "Grootte",
+    "type": "Opslag Type",
+    "used": "Gebruikt",
+    "volume_type": "Volume Type"
+  },
+  "system": {
+    "system": "Systeem"
+  },
+  "tags": {
+    "add_tag": "Add Tag"
+  },
+  "timemachine": {
+    "timemachine": "Timemachine"
+  },
+  "total_clients": "Total Clients",
+  "type": "Type",
+  "unavailable": "Niet beschikbaar",
+  "unauthorized": "You are not authorized",
+  "unencrypted": "Niet versleuteld",
+  "unknown": "Onbekend",
+  "unsupported": "Not Supported",
+  "uptime": "Uptime",
+  "user": {
+    "user": "Gebruiker",
+    "users": "Gebruikers",
+    "local_admins": "Local Administrators"
+  },
+  "verified": "Verified",
+  "version": "Versie",
+  "warning": "Waarschuwing",
+  "warning_plural": "Waarschuwingen",
+  "warranty": {
+    "coverage": "Warranty Coverage",
+    "est_manufacture_date": "Est. Manufacture Date",
+    "est_purchase_date": "Est. Purchase date",
+    "expired": "Expired on __date__",
+    "expires_in": "Expires in __date__",
+    "no_alerts": "No Warranty Alerts",
+    "recheck": "Recheck Warranty Status",
+    "supported_no_applecare": "Supported until __date__. No Applecare",
+    "supported_until": "Ondersteund tot __date__",
+    "unregistered": "Ongeregistreerd",
+    "warranty": "Garantie",
+    "widget_title": "Hardware garantie"
+  },
+  "widget": {
+    "age": {
+      "title": "Hardware Leeftijd"
+    },
+    "app": {
+      "versions": "Bekende versies van __app__"
+    },
+    "bound_to_ds": {
+      "bound": "Gebonden",
+      "notbound": "Niet Gebonden",
+      "info": "Totalen vanaf begin dataverzameling",
+      "title": "Gebonden aan een Directory Service"
+    },
+    "certificate": {
+      "expired": "Verlopen",
+      "ok": "Meer dan drie maanden geldig",
+      "soon": "Verloopt binnen drie maanden",
+      "title": "Certificaten"
+    },
+    "duplicate_computernames": {
+      "notfound": "Geen duplicaten gevonden"
+    },
+    "munki": {
+      "no_updates_pending": "Geen wachtende updates"
+    },
+    "power": {
+      "missing": "Vermist",
+      "normal": "Normaal",
+      "now": "Nu",
+      "service": "Service",
+      "soon": "Weldra",
+      "nobattery": "Geen accu"
+    },
+    "timemachine": {
+      "lastweek": "Laatste backup meer dan een dag geleden",
+      "title": "Timemachine Status",
+      "today": "Vandaag geback-upt",
+      "week_plus": "Laatste backup meer dan een week geleden"
+    }
+  }
 }
