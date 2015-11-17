@@ -98,9 +98,10 @@ $(document).on('appUpdate', function(){
 			url = appUrl+'/clients/detail/'+item.serial_number+tab;
 		
 		return '<a class="list-group-item" href="'+url+'">'+
-			icon+item.computer_name+' | '+
-			item.module + ' '+msg+
-			'<span class="pull-right">'+moment(date).fromNow()+'</span></a>'
+			'<span class="pull-right" style="padding-left: 10px">'+moment(date).fromNow()+'</span>'+
+			icon+item.computer_name+'<span class="hidden-xs"> | </span><br class="visible-xs-inline">'+
+			item.module + ' '+msg+'</a>'
+			
 	
 	}
 
