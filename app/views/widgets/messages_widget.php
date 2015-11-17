@@ -73,18 +73,18 @@ $(document).on('appUpdate', function(){
 	// Get module specific item
 	function get_module_item(item){
 		
-		var url = appUrl + '/clients/detail/' + item.serial_number,
+		var tab = '#tab_summary',
 			msg = item.msg,
 			date = new Date(item.timestamp * 1000);
 
 		if(item.module == 'munkireport'){
-			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_munki';
+			tab = '#tab_munki';
 			item.module = '';
 			item.data = item.data || '{}';
 			msg = i18n.t(item.msg, JSON.parse(item.data));
 		}
 		else if(item.module == 'diskreport'){
-			url = appUrl + '/clients/detail/' + item.serial_number + '#tab_storage-tab';
+			tab = '#tab_storage-tab';
 			item.module = '';
 			item.data = item.data || '{}';
 			msg = i18n.t(item.msg, JSON.parse(item.data));
@@ -94,11 +94,13 @@ $(document).on('appUpdate', function(){
 		}
 		
 		// Get appropriate icon
-		var icon = '<span class="text-'+type+' fa '+icons[item.type]+'"></span> ';
+		var icon = '<i class="text-'+type+' fa '+icons[item.type]+'"></i> ',
+			url = appUrl+'/clients/detail/'+item.serial_number+tab;
 		
-		return '<a class="list-group-item" '+ 'href="'+url+'">'+icon+
-		item.serial_number+': '+item.module + ' '+msg+
-		'<span class="pull-right">'+moment(date).fromNow()+'</span></a>'
+		return '<a class="list-group-item" href="'+url+'">'+
+			icon+item.computer_name+' | '+
+			item.module + ' '+msg+
+			'<span class="pull-right">'+moment(date).fromNow()+'</span></a>'
 	
 	}
 
