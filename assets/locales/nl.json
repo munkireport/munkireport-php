@@ -195,7 +195,7 @@
     "title": "Set filters"
   },
   "free_disk_space": "Vrije Schijfruimte",
-  "free_disk_space_less_than": "Minder dan < __gb__GB vrije disk ruimte",
+  "free_disk_space_less_than": "Minder dan __gb__GB vrije disk ruimte",
   "hardware": {
     "hardware": "Hardware",
     "uuid": "Hardware UUID"
