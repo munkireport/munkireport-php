@@ -254,8 +254,8 @@ class Munkireport_model extends Model {
 					);
 				}
 				else {
-					$install_info = array(
-						'pkg' => $result['display_name']
+					$install_info_success = array(
+						'pkg' => $result['display_name'] . ' ' .$result['version']
 					);
 				}
 			}
@@ -320,7 +320,7 @@ class Munkireport_model extends Model {
 			$this->store_event(
 				'success',
 				'munki.package_installed',
-				json_encode($install_info)
+				json_encode($install_info_success)
 			);
 		}
 		elseif($this->installresults > 1)

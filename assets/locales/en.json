@@ -198,6 +198,7 @@
 		"title": "Set filters"
 	},
 	"free_disk_space": "Free Disk Space",
+	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
 	"hardware": {
 		"hardware": "Hardware",
 		"uuid": "Hardware UUID"
@@ -401,6 +402,7 @@
 		"percentage": "Percentage",
 		"size": "Disk Size",
 		"smartstatus": "SMART Status",
+		"smartstatus_failing": "SMART Status failing",
 		"storage": "Storage",
 		"total_size": "Size",
 		"type": "Storage Type",
