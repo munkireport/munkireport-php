@@ -8,7 +8,7 @@
 	</thead>
 	<tbody>
 	<?php $profile_item_obj = new Profile_model();
-	$items = $profile_item_obj->select('profile_name, payload_name, serial_number, payload_data', 'serial_number=? GROUP BY profile_name, payload_name, serial_number',array($serial_number));
+	$items = $profile_item_obj->select('profile_name, payload_name, serial_number, GROUP_CONCAT(payload_data) as payload_data', 'serial_number=? GROUP BY profile_name, payload_name, serial_number',array($serial_number));
 	
 	$payloaddata = array();
 	$profile = array();
