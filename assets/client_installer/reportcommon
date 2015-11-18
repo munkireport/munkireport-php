@@ -61,6 +61,13 @@ def curl(url, values):
     options["content_type"] = "application/x-www-form-urlencoded"
     options["body"] = urlencode(values)
     options["logging_function"] = display_detail
+    if pref('UseMunkiAdditionalHttpHeaders'):
+        custom_headers = munkicommon.pref(munkicommon.ADDITIONAL_HTTP_HEADERS_KEY)
+        options["additional_headers"] = dict()
+        for header in custom_headers:
+            m = re.search(r'^(?P<header_name>.*?): (?P<header_value>.*?)$', header)
+            if m:
+                options["additional_headers"][m.group('header_name')] = m.group('header_value')
 
     # Build Purl with initial settings
     connection = Purl.alloc().initWithOptions_(options)

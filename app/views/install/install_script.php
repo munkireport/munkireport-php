@@ -8,7 +8,7 @@ CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREFLIGHT=1
 PREF_CMDS=( ) # Pref commands array
-CURL="/usr/bin/curl --insecure --fail --silent  --show-error"
+CURL=("/usr/bin/curl" "--insecure" "--fail" "--silent" "--show-error")
 # Exit status
 ERR=0
 
@@ -112,6 +112,22 @@ while getopts b:m:p:r:c:v:i:nh flag; do
 	esac
 done
 
+# build additional HTTP headers
+if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders)" = "1" ]; then
+	BUNDLE_ID='ManagedInstalls'
+	MANAGED_INSTALLS_PLIST_PATHS=("/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "/Library/Preferences/${BUNDLE_ID}.plist")
+	ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'
+	ADDITIONAL_HTTP_HEADERS=()
+	for plist in "${MANAGED_INSTALLS_PLIST_PATHS[@]}"; do
+		while IFS= read -r line; do
+			if [[ "$line" =~ \"([^\"]+) ]]; then
+				ADDITIONAL_HTTP_HEADERS+=("${BASH_REMATCH[1]}")
+			fi
+		done <<< "$(defaults read "${plist%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
+	done
+	for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do CURL+=("-H" "$header"); done
+fi
+
 echo "Preparing ${MUNKIPATH} and ${PREFPATH}"
 mkdir -p "$(dirname ${PREFPATH})"
 mkdir -p "${MUNKIPATH}munkilib"
@@ -121,10 +137,10 @@ echo "BaseURL is ${BASEURL}"
 echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
-$CURL "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
-    && $CURL "${TPL_BASE}purl" -o "${MUNKIPATH}munkilib/purl.py" \
-    && $CURL "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
-	&& $CURL "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
+"${CURL[@]}" "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
+    && "${CURL[@]}" "${TPL_BASE}purl" -o "${MUNKIPATH}munkilib/purl.py" \
+    && "${CURL[@]}" "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
+	&& "${CURL[@]}" "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
 
 if [ "${?}" != 0 ]
 then
