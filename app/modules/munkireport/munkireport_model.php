@@ -270,7 +270,7 @@ class Munkireport_model extends Model {
 		if($this->failedinstalls == 1)
 		{
 			$this->store_event(
-				'danger',
+				'warning',
 				'pkg_failed_to_install',
 				json_encode($install_info)
 			);
@@ -278,7 +278,7 @@ class Munkireport_model extends Model {
 		elseif($this->failedinstalls > 1)
 		{
 			$this->store_event(
-				'danger',
+				'warning',
 				'pkg_failed_to_install',
 				json_encode(array('count' => $this->failedinstalls))
 			);
