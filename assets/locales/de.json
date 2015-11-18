@@ -203,7 +203,7 @@
 		"hardware": "Hardware",
 		"uuid": "Hardware UUID"
 	},
-	"inactive": "Inaktiv"
+	"inactive": "Inaktiv",
 	"installed": "Installiert",
 	"last_seen": "Zuletzt gesehen",
 	"last_user": "Letzter User",
