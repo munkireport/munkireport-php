@@ -296,7 +296,7 @@ class Munkireport_model extends Model {
 			$this->store_event(
 				'danger',
 				'munki.error',
-				json_encode(array('count' => $this->errors))
+				json_encode(array('count' => $this->rs['errors']))
 			);
 		}
 		elseif($this->warnings == 1)
