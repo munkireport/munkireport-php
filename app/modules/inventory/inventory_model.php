@@ -47,13 +47,24 @@ class Inventory_model extends Model {
      **/
     public function appVersions($app = '')
     {
+        // Detect wildcard character
+        $match = 'AND i.name = ?';
+        if(preg_match('/[_%]/', $app))
+        {
+            $match = 'AND i.name LIKE ?';
+        }
+        
         $sql = sprintf('SELECT version, COUNT(i.id) AS count
             FROM %s i 
             LEFT JOIN reportdata r ON (r.serial_number = i.serial)
             %s 
-            AND i.name LIKE ?
+            %s
             GROUP BY version
-            ORDER BY count DESC', $this->enquote($this->tablename), get_machine_group_filter('WHERE', 'r'));
+            ORDER BY count DESC', 
+            $this->enquote($this->tablename), 
+            get_machine_group_filter('WHERE', 'r'),
+            $match
+        );
         return $this->query($sql, $app);
 
     }
