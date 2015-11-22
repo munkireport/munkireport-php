@@ -8,7 +8,9 @@ munki_install_dir=$(/usr/bin/defaults read /Library/Preferences/ManagedInstalls 
 
 # make sure the munki directory is defined. If not default back to normal
 if [[ "${munki_install_dir}" == "" ]]; then
+  #Default back to normal since munki doesn't appear to be installed
   setreportpref "munkireport" '/Library/Managed Installs/ManagedInstallReport.plist'
 fi
 
+# configure munkireport to use munki's config
 setreportpref "munkireport" "${munki_install_dir}/ManagedInstallReport.plist"

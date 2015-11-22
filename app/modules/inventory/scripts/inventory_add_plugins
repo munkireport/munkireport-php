@@ -14,13 +14,24 @@ sys.path.insert(0, '/usr/local/munki')
 from munkilib import FoundationPlist
 
 # check the ManagedInstalls plist for where the ManagedInstallDir is located
-managed_installs = FoundationPlist.readPlist("/Library/Preferences/ManagedInstalls.plist")
-munki_install_dir = managed_installs.get('ManagedInstallDir')
+munki_path = "/Library/Preferences/ManagedInstalls.plist"
+if os.path.isfile(munki_path):
+    managed_installs = FoundationPlist.readPlist(munki_path)
+    munki_install_dir = managed_installs.get('ManagedInstallDir')
+    invPath = os.path.join(munki_install_dir, r'ApplicationInventory.plist')
+else:
+    invPath = r'/Library/Managed Installs/ApplicationInventory.plist'
 
-invPath = os.path.join(munki_install_dir, r'ApplicationInventory.plist')
+# Look for our set path to make sure it exists. If not exit because munki
+# most likely isn't installed yet
+if os.path.isfile(invPath):
+    appinv = FoundationPlist.readPlist(invPath)
+else:
+    print("Munki File %s couldn't be found. Exiting..." % (invPath))
+    exit(1)
+
 plugins = r"/Library/Internet Plug-Ins/"
 directoryListing = os.listdir(plugins)
-appinv = FoundationPlist.readPlist(invPath)
 
 print "Adding %i plugins" % len(directoryListing)
 
