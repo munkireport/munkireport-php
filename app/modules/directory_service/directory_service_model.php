@@ -81,7 +81,6 @@ class Directory_service_model extends Model {
 				WHERE NOT directoryservice.computeraccount = ''
 				AND LOWER($trim) != LOWER(computer_name)
 				".$filter;
-		//echo $sql;
 		return $this->query($sql);
 	}
 	
