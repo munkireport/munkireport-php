@@ -95,21 +95,30 @@ $(document).on('appReady', function(e, lang) {
         	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_summary');
         	$('td:eq(0)', nRow).html(link);
             
-            
             // Format Last success timestamp
-            var checkin = parseInt($('td:eq(3)', nRow).html());
-            var date = new Date(checkin * 1000);
-            $('td:eq(3)', nRow).html(moment(date).fromNow());
+            var checkin = parseInt($('td:eq(3)', nRow).html()),
+				date = '';
+			$('td:eq(3)', nRow).html('-');
+			if(checkin > 0){
+				date = new Date(checkin * 1000);
+				$('td:eq(3)', nRow).html(moment(date).fromNow());
+			}
+			
+			// Format Last failure timestamp
+			checkin = parseInt($('td:eq(5)', nRow).html());
+			$('td:eq(5)', nRow).html('-');
+			if(checkin > 0){
+				date = new Date(checkin * 1000);
+				$('td:eq(5)', nRow).html(moment(date).fromNow());
+			}
 			
 			// Format duration
 			var val = parseInt($('td:eq(4)', nRow).html());
-			$('td:eq(4)', nRow).html(moment.duration(val, "seconds").humanize());
+			$('td:eq(4)', nRow).html('-');
+			if(date){
+				$('td:eq(4)', nRow).html(moment.duration(val, "seconds").humanize());
+			}
 			
-            // Format Last failure timestamp
-            var checkin = parseInt($('td:eq(5)', nRow).html());
-            var date = new Date(checkin * 1000);
-            $('td:eq(5)', nRow).html(moment(date).fromNow());
-
 			// Format Check-In timestamp
 			var checkin = parseInt($('td:last', nRow).html());
 			var date = new Date(checkin * 1000);
