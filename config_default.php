@@ -459,7 +459,7 @@
 	$conf['dashboard_layout'] = array(
 		array('client', 'messages'),
         array('new_clients', 'pending_apple', 'pending_munki'),
-		array('munki', 'disk_report','uptime'),
+		array('munki', 'disk_report','uptime')
 	);
 
 	/*

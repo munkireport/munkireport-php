@@ -283,7 +283,7 @@ class Munkireport_model extends Model {
 				json_encode(array('count' => $this->failedinstalls))
 			);
 		}
-		elseif($this->errors == 1)
+		elseif($this->rs['errors'] == 1) // Errors is a protected name
 		{
 			$this->store_event(
 				'danger',
@@ -291,12 +291,12 @@ class Munkireport_model extends Model {
 				json_encode(array('error' => truncate_string($mylist['Errors'][0])))
 			);
 		}
-		elseif($this->errors > 1)
+		elseif($this->rs['errors'] > 1) // Errors is a protected name
 		{
 			$this->store_event(
 				'danger',
 				'munki.error',
-				json_encode(array('count' => $this->errors))
+				json_encode(array('count' => $this->rs['errors']))
 			);
 		}
 		elseif($this->warnings == 1)

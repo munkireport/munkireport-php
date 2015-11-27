@@ -131,10 +131,10 @@ class Model extends KISS_Model
 		switch($this->get_driver())
 		{
 			case 'sqlite':
-				return "TRIM('$string', '$remove')";
+				return "TRIM($string, '$remove')";
 				break;
 			case 'mysql':
-				return "TRIM('$remove' FROM '$string')";
+				return "TRIM('$remove' FROM $string)";
 				break;
 		}
 	}

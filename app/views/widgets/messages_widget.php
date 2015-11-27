@@ -22,7 +22,7 @@ $(document).on('appUpdate', function(){
 			danger:'fa-times-circle',
 			warning: 'fa-warning',
 			info: 'fa-info-circle',
-			success: 'fa-thumbs-up'
+			success: 'fa-check-circle'
 		};
 	
 	$.getJSON( appUrl + '/module/event/get/60/all/all')
