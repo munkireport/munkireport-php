@@ -110,8 +110,11 @@ def curl(url, values):
         return connection.get_response_data()
     else:
         # there was an HTTP error of some sort.
-        raise HTTPError(connection.status,
-                        connection.headers.get('http_result_description',''))
+        raise CurlError(connection.status,
+            '%s failed, HTTP returncode %s (%s)' % (
+                url,
+                connection.status,
+                connection.headers.get('http_result_description', 'Failed')))
 
 
 def get_long_username(username):
