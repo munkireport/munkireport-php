@@ -7,8 +7,8 @@ mkdir -p ${MUNKIPATH}munkireportlib
 CTL="${BASEURL}index.php?/module/servermetrics/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/servermetrics.py" -o "${MUNKIPATH}preflight.d/servermetrics.py" && 
-${CURL} "${CTL}get_script/ccl_asldb.py" -o "${MUNKIPATH}munkireportlib/ccl_asldb.py"
+"${CURL[@]}" "${CTL}get_script/servermetrics.py" -o "${MUNKIPATH}preflight.d/servermetrics.py" && 
+"${CURL[@]}" "${CTL}get_script/ccl_asldb.py" -o "${MUNKIPATH}munkireportlib/ccl_asldb.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

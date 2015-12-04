@@ -4,7 +4,7 @@
 FV_CTL="${BASEURL}index.php?/module/filevault_status/"
 
 # Get the scripts in the proper directories
-${CURL}  "${FV_CTL}get_script/filevaultstatus" -o "${MUNKIPATH}preflight.d/filevaultstatus" \
+"${CURL[@]}" "${FV_CTL}get_script/filevaultstatus" -o "${MUNKIPATH}preflight.d/filevaultstatus" \
 
 # Check exit status of curl
 if [ $? = 0 ]; then

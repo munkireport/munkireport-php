@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/power/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/power.sh" -o "${MUNKIPATH}preflight.d/power.sh"
+"${CURL[@]}" "${CTL}get_script/power.sh" -o "${MUNKIPATH}preflight.d/power.sh"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

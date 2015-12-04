@@ -4,7 +4,7 @@
 DR_CTL="${BASEURL}index.php?/module/inventory/"
 
 # Get the scripts in the proper directories
-${CURL} "${DR_CTL}get_script/inventory_add_plugins" -o "${MUNKIPATH}postflight.d/inventory_add_plugins.py"
+"${CURL[@]}" "${DR_CTL}get_script/inventory_add_plugins" -o "${MUNKIPATH}postflight.d/inventory_add_plugins.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

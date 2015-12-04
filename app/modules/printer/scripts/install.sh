@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/printer/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/printer.py" -o "${MUNKIPATH}preflight.d/printer.py"
+"${CURL[@]}" "${CTL}get_script/printer.py" -o "${MUNKIPATH}preflight.d/printer.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

@@ -4,7 +4,7 @@
 DR_CTL="${BASEURL}index.php?/module/disk_report/"
 
 # Get the scripts in the proper directories
-${CURL} "${DR_CTL}get_script/disk_info" -o "${MUNKIPATH}preflight.d/disk_info"
+"${CURL[@]}" "${DR_CTL}get_script/disk_info" -o "${MUNKIPATH}preflight.d/disk_info"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/profile/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/profile.py" -o "${MUNKIPATH}preflight.d/profile.py"
+"${CURL[@]}" "${CTL}get_script/profile.py" -o "${MUNKIPATH}preflight.d/profile.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

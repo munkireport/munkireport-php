@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/bluetooth/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/bluetooth.sh" -o "${MUNKIPATH}preflight.d/bluetooth.sh"
+"${CURL[@]}" "${CTL}get_script/bluetooth.sh" -o "${MUNKIPATH}preflight.d/bluetooth.sh"
 
 # Check exit status of curl
 if [ $? = 0 ]; then
