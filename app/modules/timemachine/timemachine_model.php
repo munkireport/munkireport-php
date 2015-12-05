@@ -6,7 +6,7 @@ class Timemachine_model extends Model {
 		parent::__construct('id', 'timemachine'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['last_success'] = ''; // Datetime of last successfull backup
+		$this->rs['last_success'] = ''; // Datetime of last successful backup
 		$this->rs['last_failure'] = ''; // Datetime of last failure
 		$this->rs['last_failure_msg'] = ''; // Message of the last failure
 		$this->rs['duration'] = 0; // Duration in seconds

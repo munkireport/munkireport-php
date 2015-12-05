@@ -1,7 +1,7 @@
 Servermetrics module
 ==============
 
-Reports on Server Statistics by parsing asl logfiles found in /var/log/servermetricsd/
+Reports on OS X Server Statistics by parsing asl logfiles found in /var/log/servermetricsd/
 Log entries occur once per 5 minutes
 
 The table stores the following information per log entry:

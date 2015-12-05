@@ -1,4 +1,4 @@
-Services module
+Service module
 ===============
 
 Get status of selected OS X Server services.
