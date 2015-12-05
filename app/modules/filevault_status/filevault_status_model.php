@@ -36,9 +36,7 @@ class Filevault_status_model extends Model {
 	function process($data)
 	{		
 		// process copied from network model. Translate strings to db fields. needed? . error proof?
-        	$translate = array(
-        						'fv_status = ' => 'filevault_status',
-								'fv_users = ' => 'filevault_users');
+        	$translate = array('fv_users = ' => 'filevault_users');
 
 		//clear any previous data we had
 		foreach($translate as $search => $field) {

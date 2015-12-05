@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.6.1.1487';
+$GLOBALS['version'] = '2.7.0.1640';
 
 // Return version without commit count
 function get_version()
@@ -14,8 +14,11 @@ function get_version()
 //===============================================s
 function uncaught_exception_handler($e)
 {
-  // Dump out remaining buffered text
-  ob_end_clean();
+	// Dump out remaining buffered text
+	if (ob_get_level())
+	{
+		ob_end_clean();
+	}
 
   // Get error message
   error('Uncaught Exception: '.$e->getMessage());
@@ -329,4 +332,48 @@ function get_filtered_groups()
 	}
 
 	return $out;
+}
+
+/**
+ * Store event for client
+ *
+ * @param string $serial serial number
+ * @param string $module reporting module
+ * @param string $type info, error
+ * @param string $msg long message
+ **/
+function store_event($serial, $module = '', $type = '', $msg = 'no_message', $data='')
+{
+	$evtobj = new Event_model($serial, $module);
+	$evtobj->store($type, $msg, $data);
+}
+
+/**
+ * Delete event for client
+ *
+ * @param string $serial serial number
+ * @param string $module reporting module
+ **/
+function delete_event($serial, $module = '')
+{
+	$evtobj = new Event_model();
+	$evtobj->reset($serial, $module);
+}
+
+
+// Original PHP code by Chirp Internet: www.chirp.com.au
+// Please acknowledge use of this code by including this header.
+function truncate_string($string, $limit=100, $break=".", $pad="...")
+{
+  // return with no change if string is shorter than $limit
+  if(strlen($string) <= $limit) return $string;
+
+  // is $break present between $limit and the end of the string?
+  if(false !== ($breakpoint = strpos($string, $break, $limit))) {
+    if($breakpoint < strlen($string) - 1) {
+      $string = substr($string, 0, $breakpoint) . $pad;
+    }
+  }
+
+  return $string;
 }

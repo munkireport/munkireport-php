@@ -11,7 +11,7 @@
 	<tbody>
 	<?php $inventoryitemobj = new Inventory_model(); ?>
 	<?php foreach($inventoryitemobj->retrieve_many(
-		'serial=?', array($serial_number)) as $item): ?>
+		'serial_number=?', array($serial_number)) as $item): ?>
 		      <?php $name_url=url('module/inventory/items/'. rawurlencode($item->name)); ?>
       <?php $vers_url=$name_url . '/' . rawurlencode($item->version); ?>
         <tr>

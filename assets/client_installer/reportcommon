@@ -60,7 +60,22 @@ def curl(url, values):
     options["method"] = "POST"
     options["content_type"] = "application/x-www-form-urlencoded"
     options["body"] = urlencode(values)
-    
+    options["logging_function"] = display_detail
+    if pref('UseMunkiAdditionalHttpHeaders'):
+        custom_headers = munkicommon.pref(
+                            munkicommon.ADDITIONAL_HTTP_HEADERS_KEY)
+        if custom_headers:
+            options["additional_headers"] = dict()
+            for header in custom_headers:
+                m = re.search(r'^(?P<header_name>.*?): (?P<header_value>.*?)$',
+                    header)
+                if m:
+                    options["additional_headers"][
+                            m.group('header_name')] = m.group('header_value')
+        else:
+            raise CurlError(-1, 'UseMunkiAdditionalHttpHeaders defined, '
+                                'but not found in Munki preferences')
+
     # Build Purl with initial settings
     connection = Purl.alloc().initWithOptions_(options)
     connection.start()
@@ -109,8 +124,11 @@ def curl(url, values):
         return connection.get_response_data()
     else:
         # there was an HTTP error of some sort.
-        raise HTTPError(connection.status,
-                        connection.headers.get('http_result_description',''))
+        raise CurlError(connection.status,
+            '%s failed, HTTP returncode %s (%s)' % (
+                url,
+                connection.status,
+                connection.headers.get('http_result_description', 'Failed')))
 
 
 def get_long_username(username):
@@ -227,7 +245,10 @@ def process(serial, items):
     if result.get('error') != '':
         display_error('Server error: %s' % result['error'])
         return -1
-
+        
+    if result.get('info') != '':
+        display_detail('Server info: %s' % result['info'])
+        
     # Retrieve hashes that need updating
     for i in items.keys():
         if i in result:

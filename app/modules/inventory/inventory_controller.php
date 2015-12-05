@@ -14,6 +14,25 @@ class Inventory_controller extends Module_controller
         echo "You've loaded the inventory module!";
     
     }
+    
+    /**
+    * Get versions and count from an application
+    *
+    * @param string $app Appname
+    **/
+    public function appVersions($app = '')
+    {
+        // Protect this handler
+        if( ! $this->authorized())
+        {
+            redirect('auth/login');
+        }
+        $app = rawurldecode($app);
+        $inventory_item_obj = new Inventory_model();
+        $obj = new View();
+        $obj->view('json', array('msg' => $inventory_item_obj->appVersions($app)));
+
+    }
 
     // Todo: move expensive data objects to view
     function items($name='', $version='') 
@@ -44,14 +63,14 @@ class Inventory_controller extends Module_controller
             
             foreach ($items as $item)
             {
-                $machine = new Machine_model($item->serial);
+                $machine = new Machine_model($item->serial_number);
                 // Check if authorized for this serial
                 if( ! $machine->id )
                 {
                     continue;
                 }
-				$reportdata = new Reportdata_model($item->serial);
-                $instance['serial'] = $item->serial;
+				$reportdata = new Reportdata_model($item->serial_number);
+                $instance['serial_number'] = $item->serial_number;
                 $instance['hostname'] = $machine->computer_name;
                 $instance['username'] = $reportdata->console_user;
                 $instance['version'] = $item->version;

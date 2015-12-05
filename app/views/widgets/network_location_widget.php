@@ -46,8 +46,8 @@
 					    .y(function(d) { return d.cnt })
 					    .showLabels(false);
 
-					chart.title(d3.sum(data, function(d){
-						return +d.cnt;
+					chart.title("" + d3.sum(data, function(d){
+						return d.cnt;
 					}));
 
 					chart.pie.donut(true);
@@ -57,7 +57,15 @@
 					    .transition().duration(1200)
 					    .style('height', height)
 					    .call(chart);
-
+					
+					// Adjust title (count) depending on active slices
+					chart.dispatch.on('stateChange.legend', function (newState) {
+						var disabled = newState.disabled;
+						chart.title("" + d3.sum(data, function(d, i){
+							return d.cnt * !disabled[i];
+						}));
+			        });
+											
 					return chart;
 
 			    });

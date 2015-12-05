@@ -10,7 +10,7 @@ function check_warranty_status(&$warranty_model)
 {
 	// Error message
 	$error = '';
-
+	
 	// Check if virtual machine 
 	// We assume vmware serials contain upper and lower chars
 	// There are actual macs with a serial starting with VM
@@ -31,111 +31,27 @@ function check_warranty_status(&$warranty_model)
 		return;
 	}
 	
-	$url = 'https://selfsolve.apple.com/wcResults.do';
-	$opts['data'] = array ('sn' => $warranty_model->serial_number, 'num' => '0');
-	$opts['method'] = 'POST';
-
-	// Get est. manufacture date
-	$est_manufacture_date = estimate_manufactured_date($warranty_model->serial_number);
-
-	// Get data
-	$result = get_url($url, $opts);
-
-	if( $result === FALSE)
+	// Previous entry
+	if($warranty_model->end_date)
 	{
-		$warranty_model->status = 'Lookup failed';
-		$error = 'Lookup failed';
-	}
-	elseif(preg_match('/invalidserialnumber/', $result))
-	{
-		// Check invalid serial
-		$warranty_model->status = 'Invalid serial number';
-	}
-	elseif(preg_match("/RegisterProduct.do\?productRegister=Y/", $result))
-	{
-		// Check registration
-		$warranty_model->status = 'Unregistered serialnumber';
-	}
-	elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(false/', $result))
-	{
-		// Get expired status
-		$warranty_model->status = 'Expired';
-		//$warranty_model->end_date = '0000-00-00';
-	}
-	elseif(preg_match('/warrantyPage.warrantycheck.displayHWSupportInfo\(true([^\)])+/', $result, $matches))
-	{
-		// Get support status
-
-		if(preg_match('/Limited Warranty\./', $matches[0]))
+		if($warranty_model->end_date < date('Y-m-d'))
 		{
-			$warranty_model->status = 'No Applecare';
+			$warranty_model->status = 'Expired';
 		}
-		else
-		{
-			$warranty_model->status = 'Supported';
-		}
-					
-		// Get estimated exp date
-		if(preg_match('/Estimated Expiration Date: ([^<]+)</', $matches[0], $matches))
-		{
-			$exp_time = strtotime($matches[1]);
-			$warranty_model->end_date = date('Y-m-d', $exp_time);
-
-			if($warranty_model->status == 'Supported')
-			{
-				// There are 3, 4 and 5 year AppleCare contracts
-				// We're checking how many years there are
-				// between exp date and manufacture date
-				$est_man_time = strtotime($est_manufacture_date);
-
-				// For the next calculation take manufacture time minus half year
-				// to fix an issue where the est_man_time is later than
-				// the est_purchase date (a half year should be enough to compensate for the
-				// estimation)
-				$adjusted_man_time = $est_man_time - (60*60*24*180);
-
-				// Get difference between expiration time and manufacture time divided by year seconds
-				$years = sprintf('%d', intval($exp_time - $adjusted_man_time) / (60*60*24*365));
-
-				// Estimated purchase date
-				$warranty_model->purchase_date = date('Y-m-d', strtotime("-$years years", $exp_time));
-			}
-			else
-			{
-				$warranty_model->purchase_date = date('Y-m-d', strtotime('-1 year', $exp_time));
-			}
-		}	
 	}
-	else
-	{
-		$warranty_model->status = 'No information found';
-		$error = 'No information found';
+	else // New entry
+	{		
+		// As of 19 oct 2015 warranty information is behind a Captcha
+		// so we can't do any automated lookup anymore
+		$warranty_model->status = "Can't lookup warranty";
+		$warranty_model->purchase_date = estimate_manufactured_date($warranty_model->serial_number);
+		
+		// Calculate time to expire
+		$max_applecare_years = sprintf('+%s year', conf('max_applecare', 3));
+		$purchase_time = strtotime($warranty_model->purchase_date);
+		$warranty_model->end_date = date('Y-m-d', strtotime($max_applecare_years, $purchase_time));
 	}
-
-	// No valid purchase date, use the estimated manufacture date
-	if( ! $warranty_model->purchase_date OR 
-		! preg_match('/\d{4}-\d{2}-\d{2}/', $warranty_model->purchase_date))
-	{
-		$warranty_model->purchase_date = $est_manufacture_date;
-	}
-
-	// No expiration date, use the estimated manufacture date + n year
-	if( ! $warranty_model->end_date)
-	{
-		$man_time = strtotime($warranty_model->purchase_date);
-
-		// If we're within 3 years, after man_date we did not have AppleCare
-		// So end_date = man_date + 1 year
-		if(strtotime('+3 years', $man_time) > time())
-		{
-			$warranty_model->end_date = date('Y-m-d', strtotime('+1 year', $man_time));
-		}
-		else // end_date = man_date + 3 yrs (assume we had 3 yrs of AppleCare)
-		{
-			$warranty_model->end_date = date('Y-m-d', strtotime('+3 years', $man_time));
-		}
-
-	}
+	
 	
 	// Get machine model from apple (only when not set or failed)
 	$machine = new Machine_model($warranty_model->serial_number);

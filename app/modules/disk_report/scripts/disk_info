@@ -158,6 +158,10 @@ def DiskReport():
                 elif partition.Content == 'Apple_RAID':
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
                     appleRaidDict[diskInfo['RAIDMemberUUID']] = diskInfo
+                
+                elif partition.Content == 'Microsoft Basic Data':
+                    diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
+                    volumeList.append(diskInfo)
 
         else:
             if disk.Content == 'Apple_HFS':

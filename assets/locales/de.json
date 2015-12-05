@@ -2,6 +2,7 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
+	"active": "Aktiv",
 	"admin": {
 		"bu": {
 			"more_info": "Mehr Informationen"
@@ -57,6 +58,13 @@
 		"username": "Benutzername",
 		"wrong_user_or_pass": "Falscher Benutzername oder falches Kennwort"
 	},
+	"backup": {
+		"destination": "Backupziel",
+		"duration": "Dauer des Backups",
+		"last_failure": "Letztes Fehlgeschlagenes Backup",
+		"last_failure_msg": "Fehlermeldung",
+		"last_success": "Letztes Erfolgreiches Backup"
+	},
 	"battery": {
 		"life_remaining": "__percent__% verbleibende Batterielaufzeit"
 	},
@@ -87,7 +95,9 @@
 		"from_cache": "Aus dem Cache"
 	},
 	"client": {
+		"activity": "Clientaktivität",
 		"comment": "Kommentar",
+		"hour": "Clients pro Stunde",
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",
@@ -100,6 +110,7 @@
 			"munki": "Verwaltete Software",
 			"network": "Netzwerk Schnittstellen",
 			"power": "Strom",
+			"printers": "Drucker",
 			"profiles": "Profile",
 			"serverstats": "Server Statistik",
 			"summary": "Zusammenfassung",
@@ -110,7 +121,9 @@
 		"installed_third_party_software": "Installierte Drittanbieter-Software",
 		"install_date": "Installationsdatum",
 		"no_install_history": "Keine Installationshistorie",
-		"process_name": "Prozessname"
+		"panel_title": "Clientaktivität im letzten Monat",
+		"process_name": "Prozessname",
+		"total": "Gesamtanzahl Clients"
 	},
 	"chart": {
 		"stackedarea": {
@@ -126,6 +139,17 @@
 		"cpu": "CPU",
 		"type": "CPU Typ",
 		"usage": "Prozessorauslastung"
+	},
+	"crashplan": {
+		"listing": {
+			"title": "CrashPlan-Report"
+		},
+		"widget": {
+			"title": "CrashPlan-Status"
+		},
+		"client": {
+			"title": "CrashPlan"
+		}
 	},
 	"date": {
 		"year": "Jahr"
@@ -144,8 +168,14 @@
 	},
 	"disabled": "Deaktiviert",
 	"disconnected": "Getrennt",
+	"displays": {
+		"displays": "Bildschirme",
+		"widget_info": "Gesamtanzahl bekannter externer Bildschirme",
+		"widget_title": "Anzahl externer Bildschirme"
+	},
 	"edit": "Editieren",
 	"enabled": "Aktiviert",
+	"encrypted": "Verschlüsselt",
 	"error": "Fehler",
 	"error_plural": "Fehler",
 	"errors": {
@@ -155,14 +185,25 @@
 		"404": "Seite nicht gefunden",
 		"426": "Sie müssen diese Seite über eine verschlüsselte Verbindung aufrufen."
 	},
+	"event": "Event",
+	"event_plural": "Events",
+	"failing": "Fehlgeschlagen!",
+	"filevault": {
+		"users": "User bei denen FileVault aktiv ist",
+		"widget": {
+			"title": "Filevault 2 status"
+		}
+	},
 	"filter": {
 		"title": "Filter setzen"
 	},
 	"free_disk_space": "Verfügbarer Speicherplatz",
+	"free_disk_space_less_than": "Verfügbarer Speicherplatz < __gb__GB",
 	"hardware": {
 		"hardware": "Hardware",
 		"uuid": "Hardware UUID"
 	},
+	"inactive": "Inaktiv",
 	"installed": "Installiert",
 	"last_seen": "Zuletzt gesehen",
 	"last_user": "Letzter User",
@@ -201,13 +242,19 @@
 			"pending_removal_plural": "Ausstehende Deinstallationen"
 		},
 		"timemachine": {
-			"duration": "Dauer des Backups",
-			"last_failure": "Letztes Fehlgeschlagenes Backup",
+			"duration": "Backupdauer",
+			"last_failure": "Letztes fehlgeschlagenes Backup",
 			"last_failure_msg": "Fehlermeldung",
-			"last_success": "Letztes Erfolgreiches Backup",
+			"last_success": "Letztes erfolgreiches Backup",
 			"title": "Timemachine Bericht"
 		},
 		"username": "Benutzername"
+	},
+	"machine": {
+		"hardware_widget_title": "Liste der Hardwaremodelle"
+	},
+	"manifest": {
+		"name": "Manifest Name"
 	},
 	"memory": {
 		"memory": "Speicher",
@@ -216,7 +263,15 @@
 	},
 	"model": "Modell",
 	"munki": {
-		"panel_title": "Munki Statistik diese Woche"
+		"error": "Munki-Fehler: __error__",
+		"error_plural": "__count__ Munki-Fehler",
+		"package_installed": "__pkg__ installiert",
+		"package_installed_plural": "__count__ Pakete installiert",
+		"panel_title": "Munki Statistik diese Woche",
+		"run_type": "Run Type",
+		"version": "Munki Version",
+		"warning": "Munki-Warnung: __warning__",
+		"warning_plural": "__count__ Munki-Warnungen"
 	},
 	"name": "Name",
 	"nav": {
@@ -243,6 +298,7 @@
 			"munki": "Munki",
 			"network": "Netzwerk",
 			"power": "Strom",
+			"printers": "Printers",
 			"profile": "Profile",
 			"security": "Sicherheit",
 			"timemachine": "Time Machine",
@@ -280,6 +336,8 @@
 		"outbound_traffic": "Ausgehender Verkehr",
 		"remote_ip": "Remote IP Adresse"
 	},
+	"new_client": "Neuer Client",
+	"new_client_plural": "Neue Clients",
 	"no_clients": "Keine Clients",
 	"no_data": "Keine Daten",
 	"on": "An",
@@ -287,13 +345,25 @@
 	"os": {
 		"version": "OS Version"
 	},
-	"pending": "Ausstehend",
 	"path": "Pfad",
+	"pending": "Anstehend",
+	"pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
+	"pkg_failed_to_install_plural": "__count__ Pakete wurden nicht installiert",
 	"reg_date": "Registrierungsdatum",
 	"remote_control": "Fernsteuerung",
 	"report": {
-		"generate": "Bericht erzeugen"
+		"generate": "Report erzeugen"
 	},
+	"printer": {
+		"default_set": "Standarddrucker",
+		"driver_version": "Treiberversion",
+		"name": "Druckername",
+		"ppd": "PPD",
+		"printer_sharing": "Printer Sharing",
+		"printer_status": "Druckerstatus",
+		"tab_title": "Installierte Drucker",
+		"url": "URL"
+	},	
 	"serial": "Seriennummer",
 	"servermetrics": {
 		"tab": "Server Statistik"
@@ -332,6 +402,7 @@
 		"percentage": "Prozent",
 		"size": "Festplattengöße",
 		"smartstatus": "SMART status",
+		"smartstatus_failing": "SMART Status Fehler",
 		"storage": "Massenspeicher",
 		"total_size": "Größe",
 		"type": "Massenspeichertyp",
@@ -347,15 +418,20 @@
 	"timemachine": {
 		"timemachine": "Time Machine"
 	},
+	"total_clients": "Gesamte Anzahl Clients",
+	"type": "Typ",
 	"unavailable": "Nicht verfügbar",
 	"unauthorized": "Sie sind nicht autorisiert",
+	"unencrypted": "Unverschlüsselt",
 	"unknown": "Unbekannt",
+	"unsupported": "Nicht unterstützt",
 	"uptime": "Uptime",
 	"user": {
 		"user": "Benutzer",
 		"users": "Benutzer",
 		"local_admins": "Lokaler Admins"
 	},
+	"verified": "Verifiziert",
 	"version": "Version",
 	"warning": "Warnung",
 	"warning_plural": "Warnungen",
@@ -364,15 +440,21 @@
 		"est_manufacture_date": "ungef. Produktionsdatum",
 		"est_purchase_date": "ungef. Kaufdatum",
 		"expired": "Abgelaufen am __date__",
+		"expires_in": "Läuft ab __date__",
+		"no_alerts": "Keine Garantiewarnung",
 		"recheck": "Garantieabdeckung erneut prüfen",
 		"supported_no_applecare": "Unterstützt bis __date__. Kein Applecare",
 		"supported_until": "Unterstützt bis __date__",
 		"unregistered": "Nicht registriert",
-		"warranty": "Garantie"
+		"warranty": "Garantie",
+		"widget_title": "Hardware Warranty"
 	},
 	"widget": {
 		"age": {
 			"title": "Hardware-Alter"
+		},
+			"app": {
+			"versions": "Bekannte Versionen von __app__"
 		},
 		"bound_to_ds": {
 			"bound": "Angebunden",
@@ -385,6 +467,12 @@
 			"ok": "Gültig für mehr als drei Monate",
 			"soon": "Läuft innerhalb der nächsten drei Monate ab",
 			"title": "Zertifikate"
+		},
+		"duplicate_computernames": {
+			"notfound": "Keine Duplikate gefunden"
+		},
+		"munki": {
+			"no_updates_pending": "Keine anstehenden Updates"
 		},
 		"power": {
 			"missing": "Fehlt",

@@ -59,6 +59,92 @@ class Munkireport_model extends Model {
 
 	}
 	
+	/**
+	 * Get manifests statistics
+	 *
+	 *
+	 **/
+	public function get_manifest_stats()
+	{
+		$out = array();
+		$filter = get_machine_group_filter();
+		$sql = "SELECT COUNT(1) AS count, manifestname 
+			FROM munkireport
+			LEFT JOIN reportdata USING (serial_number)
+			$filter
+			GROUP BY manifestname
+			ORDER BY count DESC";
+			
+		foreach($this->query($sql) as $obj)
+		{
+			$obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown';
+			$out[] = $obj;
+		}
+		
+		return $out;
+	}
+	
+	/**
+	 * Get munki versions
+	 *
+	 *
+	 **/
+	public function get_versions()
+	{
+		$filter = get_machine_group_filter();
+		$sql = "SELECT version, COUNT(1) AS count
+				FROM munkireport
+				LEFT JOIN reportdata USING (serial_number)
+				$filter
+				GROUP BY version
+				ORDER BY COUNT DESC";
+		return $this->query($sql);
+	}
+	
+	/**
+	 * Get machines with pending installs
+	 *
+	 *
+	 * @param int $hours Amount of hours to look back in history
+	 **/
+	public function get_pending($hours=24)
+	{
+		$timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
+		$out = array();
+		$filter = get_machine_group_filter('AND');
+		$sql = "SELECT computer_name, pendinginstalls, reportdata.serial_number
+		    FROM reportdata
+		    LEFT JOIN munkireport USING(serial_number)
+		    LEFT JOIN machine USING(serial_number)
+		    WHERE pendinginstalls > 0
+		    $filter
+			AND munkireport.timestamp > '$timestamp'
+		    ORDER BY pendinginstalls DESC";
+		
+		return $this->query($sql);
+	}
+	
+	/**
+	 * Get pending installs
+	 *
+	 *
+	 * @param int $hours Amount of hours to look back in history
+	 **/
+	public function get_pending_installs($hours=24)
+	{
+		$fromdate = date('Y-m-d H:i:s', time() - 3600 * $hours);
+		$updates_array = array();
+		$filter = get_machine_group_filter('AND');
+		$sql = "SELECT m.serial_number, report_plist 
+				FROM munkireport m
+				LEFT JOIN reportdata USING (serial_number)
+				WHERE pendinginstalls > 0
+				$filter
+				AND m.timestamp > '$fromdate'";
+		return $this->query($sql);
+	}
+
+	
 	function process($plist)
 	{		
 		$this->timestamp = date('Y-m-d H:i:s');
@@ -70,7 +156,7 @@ class Munkireport_model extends Model {
             $this->warnings = 0;
             return $this;
 		}
-		
+				
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
@@ -112,7 +198,7 @@ class Munkireport_model extends Model {
 					$this->rs['report_plist'][$str] = $mylist[$str];
 				}
 			}
-
+			
 			$this->save();
 			return $this;
 		}
@@ -128,7 +214,24 @@ class Munkireport_model extends Model {
 				$this->rs[$lcname] = count($mylist[$str]);
 			}
 		}
-
+		
+		// Install info - used when there is one install to report on
+		$install_info = array();
+		
+		// Problem installs
+		$this->failedinstalls = 0;
+		if(array_key_exists('ProblemInstalls', $mylist))
+		{
+			$this->failedinstalls = count($mylist['ProblemInstalls']);
+			if($this->failedinstalls == 1)
+			{
+				$install_info = array(
+					'pkg' => $mylist['ProblemInstalls'][0]['display_name'],
+					'reason' => $mylist['ProblemInstalls'][0]['note']
+				);
+			}
+		}
+		
 		// Calculate pending installs
 		$this->pendinginstalls = max(($this->itemstoinstall + $this->appleupdates) - $this->installresults, 0);
 
@@ -137,7 +240,6 @@ class Munkireport_model extends Model {
         $this->pendingremovals = max($removal_items - $this->removalresults, 0);
 
 		// Check results for failed installs
-		$this->failedinstalls = 0;
 		if($this->installresults)
 		{
 			foreach($mylist['InstallResults'] as $result)
@@ -145,17 +247,95 @@ class Munkireport_model extends Model {
 				if($result["status"])
 				{
 					$this->failedinstalls++;
+					$this->installresults--;
+					$install_info = array(
+						'pkg' => $result['display_name'],
+						'reason' => '' // Client should handle default reason
+					);
+				}
+				else {
+					$install_info_success = array(
+						'pkg' => $result['display_name'] . ' ' .$result['version']
+					);
 				}
 			}
 		}
-
-		// Adjust installed items
-		$this->installresults -= $this->failed_installs;
 
 		# Save plist todo: remove all cruft from plist
 		$this->report_plist = $mylist;
 				
 		$this->save();
+		
+		// Store apropriate event:
+		if($this->failedinstalls == 1)
+		{
+			$this->store_event(
+				'warning',
+				'pkg_failed_to_install',
+				json_encode($install_info)
+			);
+		}
+		elseif($this->failedinstalls > 1)
+		{
+			$this->store_event(
+				'warning',
+				'pkg_failed_to_install',
+				json_encode(array('count' => $this->failedinstalls))
+			);
+		}
+		elseif($this->rs['errors'] == 1) // Errors is a protected name
+		{
+			$this->store_event(
+				'danger',
+				'munki.error',
+				json_encode(array('error' => truncate_string($mylist['Errors'][0])))
+			);
+		}
+		elseif($this->rs['errors'] > 1) // Errors is a protected name
+		{
+			$this->store_event(
+				'danger',
+				'munki.error',
+				json_encode(array('count' => $this->rs['errors']))
+			);
+		}
+		elseif($this->warnings == 1)
+		{
+			$this->store_event(
+				'warning',
+				'munki.warning',
+				json_encode(array('warning' => truncate_string($mylist['Warnings'][0])))
+			);
+		}
+		elseif($this->warnings > 1)
+		{
+			$this->store_event(
+				'warning',
+				'munki.warning',
+				json_encode(array('count' => $this->warnings))
+			);
+		}
+		elseif($this->installresults == 1)
+		{
+			$this->store_event(
+				'success',
+				'munki.package_installed',
+				json_encode($install_info_success)
+			);
+		}
+		elseif($this->installresults > 1)
+		{
+			$this->store_event(
+				'success',
+				'munki.package_installed',
+				json_encode(array('count' => $this->installresults))
+			);
+		}
+		else
+		{
+			// Delete event
+			$this->delete_event();
+		}
 		
 		return $this;
 	}

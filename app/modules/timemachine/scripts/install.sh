@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/timemachine/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/timemachine.sh" -o "${MUNKIPATH}preflight.d/timemachine.sh"
+"${CURL[@]}" "${CTL}get_script/timemachine.sh" -o "${MUNKIPATH}preflight.d/timemachine.sh"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

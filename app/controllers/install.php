@@ -33,6 +33,10 @@ class install extends Controller
                 break;
             case 'json':
                 break;
+            case 'autopkg':
+                $obj = new View();
+        		$obj->view('install/modules_autopkg', array('modules' => $modules));
+                break;
             default:
                 echo implode("\n", $modules);
 
@@ -56,8 +60,13 @@ class install extends Controller
             {
                 continue;
             }
-
-            $modules[] = $module;
+            
+            // Only include modules with an install script
+            if(is_file(conf('module_path').$module.'/scripts/install.sh'))
+            {
+                $modules[] = $module;
+            }
+            
         }
 
         return $modules;

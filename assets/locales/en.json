@@ -2,6 +2,7 @@
 	"about": {
 		"author": "Arjen van Bochoven"
 	},
+	"active": "Active",
 	"admin": {
 		"bu": {
 			"more_info": "More Information"
@@ -57,6 +58,13 @@
 		"username": "Username",
 		"wrong_user_or_pass": "Wrong username or password"
 	},
+	"backup":{
+		"destination": "Backup Destination",
+		"duration": "Backup duration",
+		"last_failure": "Last failed backup",
+		"last_failure_msg": "Message",
+		"last_success": "Last successful backup"
+	},
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
 	},
@@ -87,7 +95,9 @@
 		"from_cache": "From Cache"
 	},
 	"client": {
+		"activity": "Client Activity",
 		"comment": "Comments",
+		"hour": "Clients per hour",
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",
@@ -100,6 +110,7 @@
 			"munki": "Managed Software",
 			"network": "Network Interfaces",
 			"power": "Power",
+			"printers": "Printers",
 			"profiles": "Profiles",
 			"serverstats": "Server Statistics",
 			"summary": "Summary",
@@ -110,7 +121,9 @@
 		"installed_third_party_software": "Installed Third Party Software",
 		"install_date": "Install Date",
 		"no_install_history": "No install history",
-		"process_name": "Process Name"
+		"panel_title": "Client activity in the last month",
+		"process_name": "Process Name",
+		"total": "Total Clients"
 	},
 	"chart": {
 		"stackedarea": {
@@ -126,6 +139,17 @@
 		"cpu": "CPU",
 		"type": "CPU Type",
 		"usage": "Processor Usage"
+	},
+	"crashplan": {
+		"listing": {
+			"title": "CrashPlan Report"
+		},
+		"widget": {
+			"title": "CrashPlan Status"
+		},
+		"client": {
+			"title": "CrashPlan"
+		}
 	},
 	"date": {
 		"year": "year"
@@ -144,6 +168,11 @@
 	},
 	"disabled": "Disabled",
 	"disconnected": "Disconnected",
+	"displays": {
+		"displays": "Displays",
+		"widget_info": "Total number of known external displays",
+		"widget_title": "External Displays Count"
+	},
 	"edit": "Edit",
 	"enabled": "Enabled",
 	"encrypted": "Encrypted",
@@ -156,6 +185,12 @@
 		"404": "Page not found",
 		"426": "You are required to visit this site using a secure connection."
 	},
+	"event": "Event",
+	"event_plural": "Events",
+	"events": {
+		"widget_title": "Events generated in the last hour"
+	},
+	"failing": "Failing!",
 	"filevault": {
 		"users": "FileVault Enabled users",
 		"widget": {
@@ -166,10 +201,12 @@
 		"title": "Set filters"
 	},
 	"free_disk_space": "Free Disk Space",
+	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
 	"hardware": {
 		"hardware": "Hardware",
 		"uuid": "Hardware UUID"
 	},
+	"inactive": "Inactive",
 	"installed": "Installed",
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
@@ -216,6 +253,9 @@
 		},
 		"username": "Username"
 	},
+	"machine": {
+		"hardware_widget_title": "Hardware model breakdown"
+	},
 	"manifest": {
 		"name": "Manifest Name"
 	},
@@ -226,9 +266,15 @@
 	},
 	"model": "Model",
 	"munki": {
+		"error": "Munki error: __error__",
+		"error_plural": "__count__ Munki errors",
+		"package_installed": "__pkg__ installed",
+		"package_installed_plural": "__count__ packages installed",
 		"panel_title": "Munki statistics this week",
 		"run_type": "Run Type",
-		"version": "Munki Version"
+		"version": "Munki Version",
+		"warning": "Munki warning: __warning__",
+		"warning_plural": "__count__ Munki warnings"
 	},
 	"name": "Name",
 	"nav": {
@@ -255,6 +301,7 @@
 			"munki": "Munki",
 			"network": "Network",
 			"power": "Power",
+			"printers": "Printers",
 			"profile": "Profiles",
 			"security": "Security",
 			"timemachine": "Timemachine",
@@ -292,6 +339,8 @@
 		"outbound_traffic": "Outbound Traffic",
 		"remote_ip": "Remote IP Address"
 	},
+	"new_client": "New Client",
+	"new_client_plural": "New Clients",
 	"no_clients": "No Clients",
 	"no_data": "No Data",
 	"on": "On",
@@ -299,13 +348,25 @@
 	"os": {
 		"version": "OS Version"
 	},
-	"pending": "Pending",
 	"path": "Path",
+	"pending": "Pending",
+	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
+	"pkg_failed_to_install_plural": "__count__ packages failed to install",
 	"reg_date": "Registration Date",
 	"remote_control": "Remote Control",
 	"report": {
 		"generate": "Generate Report"
 	},
+	"printer": {
+		"default_set": "Default Set",
+		"driver_version": "Driver Version",
+		"name": "Printer Name",
+		"ppd": "PPD",
+		"printer_sharing": "Printer Sharing",
+		"printer_status": "Printer Status",
+		"tab_title": "Installed Printers",
+		"url": "URL"
+	},	
 	"serial": "Serial Number",
 	"servermetrics": {
 		"tab": "Server Metrics"
@@ -343,7 +404,8 @@
 		"not_encrypted": "Not Encrypted",
 		"percentage": "Percentage",
 		"size": "Disk Size",
-		"smartstatus": "SMART status",
+		"smartstatus": "SMART Status",
+		"smartstatus_failing": "SMART Status failing",
 		"storage": "Storage",
 		"total_size": "Size",
 		"type": "Storage Type",
@@ -359,17 +421,20 @@
 	"timemachine": {
 		"timemachine": "Timemachine"
 	},
+	"total_clients": "Total Clients",
 	"type": "Type",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
 	"unencrypted": "Unencrypted",
 	"unknown": "Unknown",
+	"unsupported": "Not Supported",
 	"uptime": "Uptime",
 	"user": {
 		"user": "User",
 		"users": "Users",
 		"local_admins": "Local Administrators"
 	},
+	"verified": "Verified",
 	"version": "Version",
 	"warning": "Warning",
 	"warning_plural": "Warnings",
@@ -378,15 +443,21 @@
 		"est_manufacture_date": "Est. Manufacture Date",
 		"est_purchase_date": "Est. Purchase date",
 		"expired": "Expired on __date__",
+		"expires_in": "Expires in __date__",
+		"no_alerts": "No Warranty Alerts",
 		"recheck": "Recheck Warranty Status",
 		"supported_no_applecare": "Supported until __date__. No Applecare",
 		"supported_until": "Supported until __date__",
 		"unregistered": "Unregistered",
-		"warranty": "Warranty"
+		"warranty": "Warranty",
+		"widget_title": "Hardware Warranty"
 	},
 	"widget": {
 		"age": {
 			"title": "Hardware Age"
+		},
+		"app": {
+			"versions": "Known versions of __app__"
 		},
 		"bound_to_ds": {
 			"bound": "Bound",
@@ -399,6 +470,12 @@
 			"ok": "Valid for more than three months",
 			"soon": "Expires within three months",
 			"title": "Certificates"
+		},
+		"duplicate_computernames": {
+			"notfound": "No duplicates found"
+		},
+		"munki": {
+			"no_updates_pending": "No Updates Pending"
 		},
 		"power": {
 			"missing": "Missing",

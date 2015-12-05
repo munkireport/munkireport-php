@@ -20,6 +20,10 @@ class Tablequery {
 	 **/
     function fetch($cfg)
     {
+        
+        // Quick debug
+        $debug = FALSE;
+        
         $dbh = getdbh();
 
         // Initial value
@@ -121,7 +125,9 @@ class Tablequery {
             SELECT COUNT(1) as count
             $from
             $where";
-        //print $sql;return;
+            
+        if($debug) print $sql;
+        
         if( ! $stmt = $dbh->prepare( $sql ))
         {
             $err = $dbh->errorInfo();
@@ -158,40 +164,37 @@ class Tablequery {
 
         // Search
         $sWhere = $where;
+        $bindings = array();
         if($cfg['search'])
         {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach($formatted_columns AS $col)
             {
-                $sWhere .= $col." LIKE '%".( $cfg['search'] )."%' OR ";
+                $bindings[] = '%'.$cfg['search'].'%';
+                $sWhere .= $col." LIKE ? OR ";
             }
             $sWhere = substr_replace( $sWhere, "", -3 );
             $sWhere .= ')';
         }
 
-        // Search columns
+        // Search columns overrides global search
         if($search_cols)
         {
+            $bindings = array();
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach ($search_cols as $pos => $val)
             {
-                if(is_string($val))
+                if(preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val))
                 {
-                    if(preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val))
-                    {
-                        // Special case, use unquoted
-                        $compstr = $val;
-                    }
-                    else
-                    {
-                        // Regular string, quote
-                        $compstr = " = '$val'";
-                    }
+                    // Special case, use unquoted
+                    $compstr = $val;
                 }
-                else // Integer or boolean
+                else
                 {
-                    $compstr = " = $val";
+                    $bindings[] = $val;
+                    $compstr = " = ?";
                 }
+                
                 $sWhere .= $formatted_columns[$pos].$compstr." OR ";
             }
             $sWhere = substr_replace( $sWhere, "", -3 );
@@ -206,13 +209,19 @@ class Tablequery {
                 SELECT COUNT(*) as count
                 $from
                 $sWhere";
-            //print $sql;return;
+
+            if($debug)
+            {
+                echo "\nFiltered count: $sql";
+                print_r($bindings);
+            }
+
             if( ! $stmt = $dbh->prepare( $sql ))
             {
                 $err = $dbh->errorInfo();
 				die($err[2]);
             }
-            $stmt->execute();// $bindings );
+            $stmt->execute($bindings);//  );
             if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
             {
                 $recordsFiltered = $rs->count;
@@ -230,7 +239,9 @@ class Tablequery {
         $sOrder
         $sLimit
         ";
-        //print $sql;return;
+
+        if($debug) echo "\nFiltered: $sql";
+
         // When in debug mode, send sql as well
         if(conf('debug'))
         {
@@ -242,7 +253,7 @@ class Tablequery {
             $err = $dbh->errorInfo();
 			die($err[2]);
         }
-        $stmt->execute();// $bindings );
+        $stmt->execute($bindings);// $bindings );
         $arr=array();
         while ( $rs = $stmt->fetch( PDO::FETCH_NUM ) )
         {

@@ -118,6 +118,26 @@ class Model extends KISS_Model
 		
 		return $this;
     }
+	
+	/**
+	 * Get SQL partial for trim
+	 *
+	 *
+	 * @param string $string original string
+	 * @param string $remove characters to remove
+	 **/
+	public function trim($string='', $remove=' ')
+	{
+		switch($this->get_driver())
+		{
+			case 'sqlite':
+				return "TRIM($string, '$remove')";
+				break;
+			case 'mysql':
+				return "TRIM('$remove' FROM $string)";
+				break;
+		}
+	}
 
     /**
      * Get schema version
@@ -526,6 +546,31 @@ class Model extends KISS_Model
 		return array_key_exists($this->tablename, $GLOBALS['schema_versions']) ?
 			intval($GLOBALS['schema_versions'][$this->tablename]) : 0;
 	}
+	
+	/**
+	 * Store event
+	 *
+	 * Store event for this model, assumes we have a serial_number
+	 *
+	 * @param string $type Use one of 'danger', 'warning', 'info' or 'success'
+	 * @param string $msg The message
+	 **/
+	public function store_event($type, $msg, $data='')
+	{
+		store_event($this->serial_number, $this->tablename, $type, $msg, $data);
+	}
+	
+	/**
+	 * Delete event
+	 *
+	 * Delete event for this model, assumes we have a serial_number
+	 *
+	 **/
+	public function delete_event()
+	{
+		delete_event($this->serial_number, $this->tablename);
+	}
+
 }
 
 //===============================================================
