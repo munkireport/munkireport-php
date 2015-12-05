@@ -23,3 +23,6 @@ The table stores the following information per log entry:
 * network_in - Network Usage
 * network_out - Network Usage
 * datetime - Datetime from record
+
+TODO:
+Use syslog -d instead of the ccl_asldb.py script
