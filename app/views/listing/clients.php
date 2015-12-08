@@ -67,6 +67,11 @@ new Munkireport_model;
             col++;
 		});
 		var oTable = $('.table').dataTable( {
+			// Make the column order sortable by the user
+			colReorder: true,
+			// Save column re-order state for user on this machine
+			bStateSave: true,
+
             ajax: {
                 url: "<?php echo url('datatables/data'); ?>",
                 type: "POST",
