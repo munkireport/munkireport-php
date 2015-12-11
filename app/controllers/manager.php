@@ -86,8 +86,8 @@ class manager extends Controller
 						continue;
 					}
 
-					// hash and inventoryitem use serial FIXME
-					if($table == 'hash' OR $table == 'inventoryitem')
+					// hash uses serial FIXME
+					if($table == 'hash')
 					{
 						$serial = 'serial';
 					}
