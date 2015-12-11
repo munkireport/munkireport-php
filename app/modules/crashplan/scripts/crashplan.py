@@ -27,7 +27,7 @@ crashplan_log="/Library/Logs/CrashPlan/history.log.0"
 cacheFile = 'crashplan.txt'
 
 # crashplan logformat
-regex = re.compile(r'. (\d+\/\d+\/\d+ \d+:\d+[AP]M)\s+([^\s]+)\s+(.*)')
+regex = re.compile(r'. (\d+\/\d+\/\d+ \d+:\d+[AP]M)\s+(\[[^\]]+\])\s+(.*)')
 
 start = 0
 destinations = {}
