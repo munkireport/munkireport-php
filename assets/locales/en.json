@@ -415,6 +415,13 @@
 	"system": {
 		"system": "System"
 	},
+	"tag": {
+		"listing": {
+			"title": "Tag report"
+		},
+		"name": "Tag Name",
+		"widget_title": "Tags"
+	},
 	"tags": {
 		"add_tag": "Add Tag"
 	},

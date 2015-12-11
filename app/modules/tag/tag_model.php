@@ -26,14 +26,14 @@ class Tag_model extends Model {
     /**
      * Retrieve all tags
      *
-     *
+     * @param $add_count (boolean) Add counts
      **/
-    public function all_tags()
+    public function all_tags($add_count = FALSE)
     {
         $out = array();
         $filter = get_machine_group_filter();
         
-		$sql = "SELECT tag
+		$sql = "SELECT tag, count(*) as cnt
 			FROM tag
 			LEFT JOIN reportdata USING (serial_number)
 			$filter
@@ -41,7 +41,15 @@ class Tag_model extends Model {
             ORDER BY tag ASC";
         foreach($this->query($sql) as $obj)
 		{
-			$out[]  = $obj->tag;
+			if($add_count)
+			{
+				$out[]  = $obj;
+			}
+			else
+			{
+				$out[]  = $obj->tag;			
+			}
+			
 		}
         return $out;
     }
