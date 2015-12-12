@@ -104,7 +104,6 @@ def curl(url, values):
         if connection.SSLerror:
             display_detail(
                 'SSL error detail: %s', str(connection.SSLerror))
-            keychain.debug_output()
         display_detail('Headers: %s', connection.headers)
         raise CurlError(connection.error.code(), 
                         connection.error.localizedDescription())
