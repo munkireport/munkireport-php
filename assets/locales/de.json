@@ -280,10 +280,11 @@
 		},
 		"lang": {
 			"de": "Deutsch",
-			"en": "English",
-			"es": "Español",
-			"nl": "Nederlands",
-			"ru": "Русский"
+	        "en": "English",
+	        "es": "Español",
+	        "fr": "Francais",
+	        "nl": "Nederlands",
+	        "ru": "Русский"
 		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
