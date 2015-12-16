@@ -1,3 +1,22 @@
+### 2.7.2 (December 12, 2015)
+
+FIXES
+
+* Fix Delete machine (which was broken in the 2.7.1 release) thanks to @gmarnin 
+* RESTified all widgets
+* Tags input
+* Warranty check removed (can't use that anymore since Apple put a captcha on the status page)
+* FileVault status widget
+
+NEW FEATURES
+
+* Event module - collects events and shows them on the dashboard
+* Crashplan module
+* New client graph
+* Printer module thanks to @gmarnin
+* German translation thanks to @fridomac
+* Support for curl headers (and authentication) thanks to @morgant 
+
 ### 2.6.0 (October 7, 2015)
 
 FIXES
