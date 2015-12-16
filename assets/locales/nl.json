@@ -276,11 +276,12 @@
       "business_units": "Manage Business Units"
     },
     "lang": {
-      "de": "Deutsch",
-      "en": "English",
-      "es": "Español",
-      "nl": "Nederlands",
-      "ru": "Русский"
+        "de": "Deutsch",
+        "en": "English",
+        "es": "Español",
+        "fr": "Francais",
+        "nl": "Nederlands",
+        "ru": "Русский"
     },
     "listings": {
       "ard": "Apple Remote Desktop",

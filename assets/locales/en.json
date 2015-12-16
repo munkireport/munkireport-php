@@ -283,10 +283,11 @@
 		},
 		"lang": {
 			"de": "Deutsch",
-			"en": "English",
-			"es": "Español",
-			"nl": "Nederlands",
-			"ru": "Русский"
+	        "en": "English",
+	        "es": "Español",
+	        "fr": "Francais",
+	        "nl": "Nederlands",
+	        "ru": "Русский"
 		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
@@ -414,6 +415,13 @@
 	},
 	"system": {
 		"system": "System"
+	},
+	"tag": {
+		"listing": {
+			"title": "Tag report"
+		},
+		"name": "Tag Name",
+		"widget_title": "Tags"
 	},
 	"tags": {
 		"add_tag": "Add Tag"

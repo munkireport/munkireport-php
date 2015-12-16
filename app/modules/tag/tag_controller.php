@@ -17,7 +17,8 @@ class Tag_controller extends Module_controller
 			die();
         }
 
-        $this->module_path = dirname(__FILE__);
+		$this->module_path = dirname(__FILE__) .'/';
+        $this->view_path = $this->module_path . 'views/';
 	}
 
 	/**
@@ -29,6 +30,14 @@ class Tag_controller extends Module_controller
 	{
 		echo "You've loaded the Tag module!";
 	}
+	
+	function listing()
+	{		
+		$data['page'] = '';
+		$obj = new View();
+		$obj->view('tag_listing', $data, $this->view_path);
+	}
+	
 
     /**
      * Create a Tag
@@ -120,11 +129,11 @@ class Tag_controller extends Module_controller
 	 * Returns a JSON array with all defined tags, used for typeahead
 	 *
 	 **/
-	public function all_tags()
+	public function all_tags($add_count = FALSE)
 	{
 		$Tag = new Tag_model;
 		$obj = new View();
-        $obj->view('json', array('msg' => $Tag->all_tags()));
+        $obj->view('json', array('msg' => $Tag->all_tags($add_count)));
 	}
     
 
