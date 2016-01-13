@@ -517,10 +517,12 @@
 	| 	$conf['pdo_opts'] = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
 	|
 	*/
+	/*
 	$conf['pdo_dsn'] = 'sqlite:'.$conf['application_path'].'db/db.sqlite';
 	$conf['pdo_user'] = '';
 	$conf['pdo_pass'] = '';
 	$conf['pdo_opts'] = array();
+        */
 
 	/*
 	|===============================================
