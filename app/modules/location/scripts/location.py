@@ -24,6 +24,7 @@ import tempfile
 import json
 from urllib2 import urlopen, URLError, HTTPError
 from time import gmtime, strftime, sleep
+from Foundation import CFPreferencesCopyAppValue
 import objc
 
 # PyLint cannot properly find names inside Cocoa libraries, so issues bogus
@@ -173,7 +174,12 @@ def add_python():
         FoundationPlist.writePlist(clients_dict, das_plist)
         os.chown(das_plist, 205, 205)
         service_handler('load')
-        sleep(30)
+        # sleep(30)
+        # Munki's preflight will time out before we've had 30 seconds to enable
+        # all the services needed. As such we will exit gracefully.
+        # This process will only happen at initial setup or if location services was disabled.
+        exit("We have enabled Location Services." +
+             "Please wait 30 seconds before tying to do a lookup.")
 
 # Access CoreLocation framework to locate Mac
 is_enabled = CLLocationManager.locationServicesEnabled()
@@ -279,6 +285,19 @@ def address_resolve(lat, lon):
     except:
         pass
 
+def munkireport_prefs():
+    """Read MunkiReport preferences file to term if we should lookup the
+    client computers estimated address using Google's Reverse Geocode API."""
+    munki_report = "/Library/Preferences/MunkiReport.plist"
+    prefs = CFPreferencesCopyAppValue('ReportPrefs', munki_report)
+    if prefs:
+        if prefs.get('google_api_lookup'):
+            return True
+        else:
+            return False
+    else:
+        return True
+
 def main():
     """Locate Mac"""
     root_check()
@@ -287,9 +306,15 @@ def main():
     add_python()
     lookup(5)
     try:
-        if plist['Latitude']:
+        if munkireport_prefs() is True:
+            if plist['Latitude']:
+                add = dict(
+                    Address=str(address_resolve(plist['Latitude'], plist['Longitude'])),
+                )
+                plist.update(add)
+        else:
             add = dict(
-                Address=str(address_resolve(plist['Latitude'], plist['Longitude'])),
+                Address=str('Address lookup has been disabled on this computer.'),
             )
             plist.update(add)
     except:
