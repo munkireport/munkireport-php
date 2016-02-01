@@ -34,12 +34,12 @@ The call out to Google's API can be disabled if you wish. If you disable this ap
 Disable Google API loopups:
 
 ```bash
-sudo defaults write /Library/Preferences/MunkiReport ReportPrefs -dict-add google_api_lookup -bool True
+sudo defaults write /Library/Preferences/MunkiReport ReportPrefs -dict-add google_api_lookup -bool False
 ````
 
 Re-enable Google API lookups (default):
 ```bash
-sudo defaults write /Library/Preferences/MunkiReport ReportPrefs -dict-add google_api_lookup -bool False
+sudo defaults write /Library/Preferences/MunkiReport ReportPrefs -dict-add google_api_lookup -bool True
 ```
 
 This can also be disabled with a profile. Example: [@clburlison/profiles](https://github.com/clburlison/profiles/blob/master/MunkiReportDisableAddressLookups.mobileconfig).
@@ -48,7 +48,7 @@ This can also be disabled with a profile. Example: [@clburlison/profiles](https:
 Notes
 ==============
 
-The following data is created by this script:
+The following data is created by this script and can be accessed via MunkiReports API:
 
 * Address - Str, Estimated street address
 * Latitude - Str, Latitude
