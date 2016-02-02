@@ -39,6 +39,13 @@ $( document ).ready(function() {
             window.location = appUrl + '/show/dashboard';
             return true;
         });
+        
+        // Client listing
+        $(document).bind('keydown', 'c', function(){
+            window.location = appUrl + '/show/listing/clients';
+            return true;
+        });
+
 
         // Trigger appReady
         $(document).trigger('appReady', [i18n.lng()]);
