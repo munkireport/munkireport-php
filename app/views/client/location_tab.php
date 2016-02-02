@@ -76,7 +76,7 @@ $(document).on('appReady', function(e, lang) {
 			var marker = new google.maps.Marker({
 				position: myLatlng,
 				map: map,
-				title: '<?=$machine->computer_name?>'
+				title: ''
 			});
 			
 			var myLocation = new google.maps.Circle({
