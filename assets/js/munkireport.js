@@ -32,6 +32,20 @@ $( document ).ready(function() {
 
         // Activate filter
         $('a.filter-popup').click(showFilterModal);
+        
+        // *******   Define hotkeys  *******
+        // Dashboard
+        $(document).bind('keydown', 'd', function(){
+            window.location = appUrl + '/show/dashboard';
+            return true;
+        });
+        
+        // Client listing
+        $(document).bind('keydown', 'c', function(){
+            window.location = appUrl + '/show/listing/clients';
+            return true;
+        });
+
 
         // Trigger appReady
         $(document).trigger('appReady', [i18n.lng()]);
