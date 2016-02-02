@@ -25,19 +25,21 @@ class Location_controller extends Module_controller
 	{
 		echo "You've loaded the location module!";
 	}
-		/**
-		* Retrieve data in json format
-		*
-		**/
-		function get_data($serial_number = '')
+	
+	/**
+	* Retrieve data in json format
+	*
+	**/
+	function get_data($serial_number = '')
+	{
+		$obj = new View();
+		if( ! $this->authorized())
 		{
-				$obj = new View();
-				if( ! $this->authorized())
-				{
-						$obj->view('json', array('msg' => 'Not authorized'));
-				}
-				$ard = new location_model($serial_number);
-				$obj->view('json', array('msg' => $location->rs));
-			}
+			$obj->view('json', array('msg' => 'Not authorized'));
+			return;
+		}
+		$location = new Location_model($serial_number);
+		$obj->view('json', array('msg' => $location->rs));
+	}
 	
 } // END class location_controller

@@ -15,6 +15,10 @@ class Location_model extends Model {
 		$this->rs['latitudeaccuracy'] = 0;
 		$this->rs['longitude'] = 0.0;
 		$this->rs['longitudeaccuracy'] = 0;
+		
+		// Add indexes
+		$this->idx[] = array('address');
+		$this->idx[] = array('currentstatus');
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -23,7 +27,9 @@ class Location_model extends Model {
 		$this->create_table();
 		
 		if ($serial)
-			$this->retrieve_one('serial_number=?', $serial);
+		{
+			$this->retrieve_record($serial);
+		}
 		
 		$this->serial = $serial;
 		  
