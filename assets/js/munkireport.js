@@ -45,7 +45,12 @@ $( document ).ready(function() {
             window.location = appUrl + '/show/listing/clients';
             return true;
         });
-
+        
+        // search
+        $(document).bind('keydown', '/', function(){
+            $('input[type="search"]').focus();
+            return false;
+        });
 
         // Trigger appReady
         $(document).trigger('appReady', [i18n.lng()]);
