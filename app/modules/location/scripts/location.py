@@ -394,9 +394,11 @@ def main():
         write_to_cache_location(plist, plist['CurrentStatus'])
         logging.info("Run status: %s", plist['CurrentStatus'])
     except KeyError:
-        logging.warn("Error writing to plist. This might have "
-                     "occurred because you didn't wait 30 seconds "
-                     "after enabling location services.")
+        status = ("Error obtaining a location. This might have "
+                  "occurred because you didn't wait 30 seconds "
+                  "after enabling location services.")
+        logging.warn(status)
+        write_to_cache_location(plist, status)
 
 if __name__ == '__main__':
     main()
