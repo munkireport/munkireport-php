@@ -305,6 +305,7 @@ def main():
     sysprefs_boxchk()
     add_python()
     lookup(5)
+    global plist
     try:
         if munkireport_prefs() is True:
             if plist['Latitude']:
