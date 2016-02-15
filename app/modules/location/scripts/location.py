@@ -25,16 +25,14 @@ import argparse
 import logging
 import json
 from urllib2 import urlopen, URLError, HTTPError
-from time import gmtime, strftime, sleep
-from Foundation import CFPreferencesCopyAppValue
+from time import gmtime, strftime
 import objc
 
 # PyLint cannot properly find names inside Cocoa libraries, so issues bogus
 # No name 'Foo' in module 'Bar' warnings. Disable them.
 # pylint: disable=E0611
 from CoreLocation import CLLocationManager, kCLDistanceFilterNone, kCLLocationAccuracyBest
-from Foundation import NSRunLoop, NSDate, NSObject
-from Foundation import NSBundle
+from Foundation import NSRunLoop, NSDate, NSObject, NSBundle, CFPreferencesCopyAppValue
 try:
     sys.path.append('/usr/local/munki/munkilib/')
     import FoundationPlist
@@ -58,7 +56,7 @@ if not os.path.exists(cachedir):
 location = cachedir + "/location.plist"
 
 # Create global plist object for data storage
-plist = dict ()
+plist = dict()
 
 # Retrieve system UUID
 IOKit_bundle = NSBundle.bundleWithIdentifier_('com.apple.framework.IOKit')
@@ -113,7 +111,7 @@ def write_to_cache_location(data, status):
     if data is not None:
         plist = data
     base_stats = dict(
-        CurrentStatus= str(status),
+        CurrentStatus=str(status),
         LastRun=str(current_time_GMT()),
         LS_Enabled=is_enabled,
     )
@@ -208,7 +206,7 @@ def add_python():
         logging.debug("load locationd service")
         service_handler('load')
         logging.debug("process a lookup so locationd service can properly authorize "
-          "python for your OS.")
+                      "python for your OS.")
         lookup(1)
         logging.debug("unload locationd service")
         service_handler('unload')
@@ -219,10 +217,7 @@ def add_python():
         os.chown(das_plist, 205, 205)
         logging.debug("load locationd service")
         service_handler('load')
-        # sleep(30)
-        # Munki's preflight will time out before we've had 30 seconds to enable
-        # all the services needed. As such we will exit gracefully.
-        # This process will only happen at initial setup or if location services was disabled.
+        # We need to wait 30 secs for locationd service to initial on first setup.
         status = "Location Services was enabled. Please wait 30 seconds before doing a lookup."
         write_to_cache_location(None, status)
         logging.warn(status)
@@ -362,15 +357,14 @@ def main():
             our lookup request finding your mac if possible.")
     parser.add_argument('-v', '--verbose', action='count', default=0, help=" \
             More verbose output. May be specified multiple times.")
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
     levels = [logging.WARN, logging.INFO, logging.DEBUG]
-    level = levels[min(len(levels)-1,args.verbose)]  # capped to number of levels
+    level = levels[min(len(levels)-1, args.verbose)]  # capped to number of levels
 
     logging.basicConfig(level=level,
                         format="%(levelname)s: %(message)s")
-    
-    
+
     os_check()
     if mac_has_wireless() is False:
         status = "No wireless interface found."
@@ -401,8 +395,8 @@ def main():
         logging.info("Run status: %s", plist['CurrentStatus'])
     except KeyError:
         logging.warn("Error writing to plist. This might have "
-          "occurred because you didn't wait 30 seconds after enabling location services.")
-        
+                     "occurred because you didn't wait 30 seconds "
+                     "after enabling location services.")
 
 if __name__ == '__main__':
     main()
