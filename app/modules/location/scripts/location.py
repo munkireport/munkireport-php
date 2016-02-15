@@ -300,8 +300,8 @@ def munkireport_prefs():
 
 def main():
     """Locate Mac"""
-    root_check()
     os_check()
+    root_check()
     sysprefs_boxchk()
     add_python()
     lookup(5)
