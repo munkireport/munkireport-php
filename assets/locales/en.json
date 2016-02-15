@@ -312,6 +312,7 @@
 			"displays": "Displays",
 			"hardware": "Hardware",
 			"inventory": "Inventory",
+			"location": "Location",
 			"munki": "Munki",
 			"network": "Network",
 			"power": "Power",
