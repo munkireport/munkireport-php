@@ -55,7 +55,8 @@ if not os.path.exists(cachedir):
 # Define location.plist
 location = cachedir + "/location.plist"
 
-plist = []
+# Create global plist object for data storage
+plist = dict ()
 
 # Retrieve system UUID
 IOKit_bundle = NSBundle.bundleWithIdentifier_('com.apple.framework.IOKit')
@@ -66,6 +67,9 @@ functions = [("IOServiceGetMatchingService", b"II@"),
             ]
 
 objc.loadBundleFunctions(IOKit_bundle, globals(), functions)
+objc.loadBundle('CoreWLAN',
+                bundle_path='/System/Library/Frameworks/CoreWLAN.framework',
+                module_globals=globals())
 
 def io_key(keyname):
     """Pythonic function to retrieve system info without a subprocess call."""
@@ -90,17 +94,36 @@ def os_check():
     """Only tested on 10.8 - 10.11."""
     if not 8 <= int(os_vers()) <= 11:
         global plist
-        plist = dict(
-            CurrentStatus="Your OS is not supported at this time: %s." % platform.mac_ver()[0],
-            LastRun=str(current_time_GMT()),
-        )
-        plistlib.writePlist(plist, location)
-        exit("This tool only tested on 10.8 - 10.11")
+        status = "Your OS is not supported at this time: %s" % platform.mac_ver()[0]
+        write_to_cache_location(None, status)
+        exit(status)
 
 def current_time_GMT():
     """Prints current date/time stamp"""
     currentTime = strftime("%Y-%m-%d %H:%M:%S +0000", gmtime())
     return currentTime
+
+def write_to_cache_location(data, status):
+    """Method to write plist data to disk"""
+    global plist
+    if data is not None:
+        plist = data
+    base_stats = dict(
+        CurrentStatus= str(status),
+        LastRun=str(current_time_GMT()),
+        LS_Enabled=is_enabled,
+    )
+    plist.update(base_stats)
+    plistlib.writePlist(plist, location)
+
+def mac_has_wireless():
+    """Check to see if this Mac has a wireless NIC. If it doesn't the
+    CoreLocation lookup will fail."""
+    wifi = CWInterface.interfaceNames()
+    if wifi:
+        return True
+    else:
+        return False
 
 def service_handler(action):
     """Loads/unloads System's location services launchd job."""
@@ -178,8 +201,9 @@ def add_python():
         # Munki's preflight will time out before we've had 30 seconds to enable
         # all the services needed. As such we will exit gracefully.
         # This process will only happen at initial setup or if location services was disabled.
-        exit("We have enabled Location Services." +
-             "Please wait 30 seconds before tying to do a lookup.")
+        status = "Location Services was enabled. Please wait 30 seconds before doing a lookup."
+        write_to_cache_location(None, status)
+        exit(status)
 
 # Access CoreLocation framework to locate Mac
 is_enabled = CLLocationManager.locationServicesEnabled()
@@ -220,9 +244,7 @@ class MyLocationManagerDelegate(NSObject):
             LongitudeAccuracy=int(horAcc),
             Altitude=int(altitude),
             GoogleMap=str(gmap),
-            LastRun=str(time),
             CurrentStatus="Successful",
-            LS_Enabled=is_enabled,
         )
     def locationManager_didFailWithError_(self, manager, err):
         """Handlers errors for location manager."""
@@ -241,8 +263,6 @@ class MyLocationManagerDelegate(NSObject):
         global plist
         plist = dict(
             CurrentStatus="Unsuccessful: " + status,
-            LS_Enabled=is_enabled,
-            LastRun=str(current_time_GMT()),
         )
 
 def lookup(lookupTime):
@@ -301,6 +321,10 @@ def munkireport_prefs():
 def main():
     """Locate Mac"""
     os_check()
+    if mac_has_wireless() is False:
+        status = "No wireless interface found."
+        write_to_cache_location(None, status)
+        exit(status)
     root_check()
     sysprefs_boxchk()
     add_python()
@@ -320,7 +344,7 @@ def main():
             plist.update(add)
     except:
         pass
-    plistlib.writePlist(plist, location)
+    write_to_cache_location(plist, plist['CurrentStatus'])
 
 if __name__ == '__main__':
     main()
