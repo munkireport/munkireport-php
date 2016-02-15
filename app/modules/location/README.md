@@ -46,10 +46,9 @@ sudo defaults write /Library/Preferences/MunkiReport ReportPrefs -dict-add locat
 
 This can also be disabled with a profile. Example: [@clburlison/profiles](https://github.com/clburlison/profiles/blob/master/clburlison/MunkiReportDisableAddressLookups.mobileconfig).
 
-##Error codes
-Most errors from this script 
+##Errors 
 
-| Error Code  |  Meaning |
+| Error message  |  Meaning |
 |---|---|
 | Your OS is not supported at this time  | Your OS is either too old or possibly too new for this script. |
 | Location Services was enabled. Please wait 30 seconds before doing a lookup | This status message should only be seen on the first run of this script. We need to wait 30 seconds before doing a lookup. |
@@ -59,6 +58,7 @@ Most errors from this script
 | Unsuccessful: Restricted  | CoreLocation obtained restricted access to location services. Apple Error Code: 1  |
 | Unsuccessful: Not Determined | CoreLocation could not determine a geolocation. Apple Error Code: 0 |
 | Unsuccessful: Location Services Disabled | Location Services is disabled. This is often due to your AirPort card being turned off. | 
+| Error obtaining a location. This might have occurred because you didn't wait 30 seconds after enabling location services. | You should wait. The system is doing things in the background to prep locationd for the first time. |
 
 ##Testing
 In most cases the warnings produced by this script in a normal run will provide enough information to determine what the issue is. However, if you are unsure why a lookup is failing the best way to get more information is with the `verbose` output option.
