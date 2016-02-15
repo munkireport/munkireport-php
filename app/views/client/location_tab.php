@@ -7,6 +7,10 @@
 		<div class="col-md-6">
 			<table class="table table-striped">
 				<tr>
+					<th data-i18n="location.currentstatus"></th>
+					<td id="location-currentstatus"></td>
+				</tr>
+				<tr>
 					<th data-i18n="location.address"></th>
 					<td id="location-address"></td>
 				</tr>
@@ -42,7 +46,7 @@
 	
 $(document).on('appReady', function(e, lang) {
 	
-	// Get ARD data
+	// Get location data
 	$.getJSON( appUrl + '/module/location/get_data/' + serialNumber, function( data ) {
 		if( ! data.lastrun){
 			$('#location-msg').text(i18n.t('no_data'));
@@ -54,6 +58,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#location-view').removeClass('hide');
 			
 			// Add strings
+			$('#location-currentstatus').text(data.currentstatus);
 			$('#location-address').text(data.address);
 			$('#location-coordinates').text(data.latitude + ', ' + data.longitude);
 			$('#location-altitude').text(data.altitude + 'm');
