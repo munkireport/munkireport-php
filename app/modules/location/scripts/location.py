@@ -21,6 +21,8 @@ import plistlib
 import platform
 import subprocess
 import tempfile
+import argparse
+import logging
 import json
 from urllib2 import urlopen, URLError, HTTPError
 from time import gmtime, strftime, sleep
@@ -37,13 +39,13 @@ try:
     sys.path.append('/usr/local/munki/munkilib/')
     import FoundationPlist
 except ImportError as error:
-    print "Could not find FoundationPlist, are munkitools installed?"
-    raise error
+    logging.warn(error)
+    exit(0)
 
 # Skip manual check
 if len(sys.argv) > 1:
     if sys.argv[1] == 'manualcheck':
-        print 'Manual check: skipping'
+        logging.info("Manual check: skipping")
         exit(0)
 
 # Create cache dir if it does not exist
@@ -83,7 +85,8 @@ def get_hardware_uuid():
 def root_check():
     """Check for root access."""
     if not os.geteuid() == 0:
-        exit("This must be run with root access.")
+        logging.warn("You must run this as root!")
+        exit(0)
 
 def os_vers():
     """Retrieve OS version."""
@@ -95,8 +98,9 @@ def os_check():
     if not 8 <= int(os_vers()) <= 11:
         global plist
         status = "Your OS is not supported at this time: %s" % platform.mac_ver()[0]
+        logging.warn(status)
         write_to_cache_location(None, status)
-        exit(status)
+        exit(0)
 
 def current_time_GMT():
     """Prints current date/time stamp"""
@@ -136,22 +140,31 @@ def sysprefs_boxchk():
     uuid = get_hardware_uuid()
     perfdir = "/private/var/db/locationd/Library/Preferences/ByHost/"
     if not os.path.exists(perfdir):
+        logging.info("locationd preference directory not present")
         os.makedirs(perfdir)
     path_stub = "/private/var/db/locationd/Library/Preferences/ByHost/com.apple.locationd."
     das_plist = path_stub + uuid.strip() + ".plist"
+    logging.info("Read current locationd settings")
     try:
         on_disk = FoundationPlist.readPlist(das_plist)
     except:
         p = {}
         FoundationPlist.writePlist(p, das_plist)
+        logging.debug("creating empty locationd preferences")
         on_disk = FoundationPlist.readPlist(das_plist)
     val = on_disk.get('LocationServicesEnabled', None)
     if val != 1:
+        logging.info("Location Services are not enabled")
+        logging.debug("unload locationd service")
         service_handler('unload')
         on_disk['LocationServicesEnabled'] = 1
         FoundationPlist.writePlist(on_disk, das_plist)
         os.chown(das_plist, 205, 205)
+        logging.debug("load locationd service")
         service_handler('load')
+        logging.info("Location Services have been enabled")
+    else:
+        logging.info("Location Services are enabled")
 
 def add_python():
     """Python dict for clients.plist in locationd settings."""
@@ -171,6 +184,8 @@ def add_python():
         p = {}
         FoundationPlist.writePlist(p, das_plist)
         clients_dict = FoundationPlist.readPlist(das_plist)
+    logging.debug("Current client.plist is: ")
+    logging.debug(clients_dict)
     val = clients_dict.get(domain, None)
     need_to_run = False
     try:
@@ -184,18 +199,25 @@ def add_python():
     # El Capital added a cdhash requirement that is difficult to calculate. As such we are allowing
     # the system to correctly input the values and then giving Python access to LS.
     if need_to_run is True:
+        logging.info("we need to authorize python")
+        logging.debug("unload locationd service")
         service_handler('unload')
         clients_dict[domain] = auth_plist
         FoundationPlist.writePlist(clients_dict, das_plist)
         os.chown(das_plist, 205, 205)
+        logging.debug("load locationd service")
         service_handler('load')
+        logging.debug("process a lookup so locationd service can properly authorize "
+          "python for your OS.")
         lookup(1)
+        logging.debug("unload locationd service")
         service_handler('unload')
         clients_dict = FoundationPlist.readPlist(das_plist)
         auth_plist = clients_dict[domain]
         auth_plist["Authorized"] = True
         FoundationPlist.writePlist(clients_dict, das_plist)
         os.chown(das_plist, 205, 205)
+        logging.debug("load locationd service")
         service_handler('load')
         # sleep(30)
         # Munki's preflight will time out before we've had 30 seconds to enable
@@ -203,7 +225,10 @@ def add_python():
         # This process will only happen at initial setup or if location services was disabled.
         status = "Location Services was enabled. Please wait 30 seconds before doing a lookup."
         write_to_cache_location(None, status)
-        exit(status)
+        logging.warn(status)
+        exit(0)
+    else:
+        logging.info("Python is enabled")
 
 # Access CoreLocation framework to locate Mac
 is_enabled = CLLocationManager.locationServicesEnabled()
@@ -236,6 +261,7 @@ class MyLocationManagerDelegate(NSObject):
         gmap = ("http://www.google.com/maps/place/" + str(lat) + "," + str(lon) +
                 "/@" + str(lat) + "," + str(lon) + ",18z/data=!3m1!1e3")
 
+        logging.info("process a lookup request")
         global plist
         plist = dict(
             Latitude=str(lat),
@@ -246,6 +272,8 @@ class MyLocationManagerDelegate(NSObject):
             GoogleMap=str(gmap),
             CurrentStatus="Successful",
         )
+        logging.debug("output from successful lookup request: ")
+        logging.debug(plist)
     def locationManager_didFailWithError_(self, manager, err):
         """Handlers errors for location manager."""
         if is_enabled is True:
@@ -264,6 +292,9 @@ class MyLocationManagerDelegate(NSObject):
         plist = dict(
             CurrentStatus="Unsuccessful: " + status,
         )
+        logging.info("lookup request failed")
+        logging.debug("output from failed lookup request: ")
+        logging.debug(plist)
 
 def lookup(lookupTime):
     """Ask python to find current location."""
@@ -271,22 +302,24 @@ def lookup(lookupTime):
     NSRunLoop.currentRunLoop().runUntilDate_(NSDate.dateWithTimeIntervalSinceNow_(lookupTime))
 
 def download_file(url):
-    """Download a simple file from the ineternet."""
+    """Download a simple file from the Internet."""
+    logging.info("download json address file from Google")
     try:
         temp_file = os.path.join(tempfile.mkdtemp(), 'tempdata')
         f = urlopen(url)
         with open(temp_file, "wb") as local_file:
             local_file.write(f.read())
+        logging.info("download successful")
     except HTTPError, e:
-        print "HTTP Error:", e.code, url
+        logging.debug("HTTP Error: %s, %s", e.code, url)
     except URLError, e:
-        print "URL Error:", e.reason, url
+        logging.debug("URL Error: %s, %s", e.reason, url)
     try:
         file_handle = open(temp_file)
         data = file_handle.read()
         file_handle.close()
     except (OSError, IOError):
-        print "Couldn't read %s" % temp_file
+        logging.debug("Couldn't read %s", temp_file)
         return False
     try:
         os.unlink(temp_file)
@@ -303,6 +336,7 @@ def address_resolve(lat, lon):
         obj = json.loads(data)
         return obj["results"][0]["formatted_address"]
     except:
+        logging.info("google reverse lookup failed")
         pass
 
 def munkireport_prefs():
@@ -311,20 +345,38 @@ def munkireport_prefs():
     munki_report = "/Library/Preferences/MunkiReport.plist"
     prefs = CFPreferencesCopyAppValue('ReportPrefs', munki_report)
     if prefs:
-        if prefs.get('google_api_lookup'):
+        if prefs.get('location_address_lookup'):
+            logging.info("address lookup enabled")
             return True
         else:
+            logging.info("address lookup disabled")
             return False
     else:
         return True
 
 def main():
     """Locate Mac"""
+    parser = argparse.ArgumentParser(description="This script will \
+            enable Location Services and Python if your mac is supported. \
+            Python and the CoreLocation framework will process \
+            our lookup request finding your mac if possible.")
+    parser.add_argument('-v', '--verbose', action='count', default=0, help=" \
+            More verbose output. May be specified multiple times.")
+    args = parser.parse_args()
+
+    levels = [logging.WARN, logging.INFO, logging.DEBUG]
+    level = levels[min(len(levels)-1,args.verbose)]  # capped to number of levels
+
+    logging.basicConfig(level=level,
+                        format="%(levelname)s: %(message)s")
+    
+    
     os_check()
     if mac_has_wireless() is False:
         status = "No wireless interface found."
         write_to_cache_location(None, status)
-        exit(status)
+        logging.warn(status)
+        exit(0)
     root_check()
     sysprefs_boxchk()
     add_python()
@@ -344,7 +396,13 @@ def main():
             plist.update(add)
     except:
         pass
-    write_to_cache_location(plist, plist['CurrentStatus'])
+    try:
+        write_to_cache_location(plist, plist['CurrentStatus'])
+        logging.info("Run status: %s", plist['CurrentStatus'])
+    except KeyError:
+        logging.warn("Error writing to plist. This might have "
+          "occurred because you didn't wait 30 seconds after enabling location services.")
+        
 
 if __name__ == '__main__':
     main()
