@@ -35,6 +35,23 @@ class Location_model extends Model {
 		  
 	}
 	
+	/**
+	 * Retrieve locations and names to render on a google map
+	 *
+	 *
+	 **/
+	public function get_map_data()
+	{
+		// FIXME Does not account for business units!!!
+		$out = array();
+		$sql = 'SELECT serial_number, latitude, longitude FROM location';
+		foreach($this->query($sql) as $obj)
+		{
+			$out[] = $obj;
+		}
+		return $out;
+	}
+	
 	// ------------------------------------------------------------------------
 
 	/**

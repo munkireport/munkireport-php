@@ -42,4 +42,17 @@ class Location_controller extends Module_controller
 		$obj->view('json', array('msg' => $location->rs));
 	}
 	
+	// return locations of all macs
+	function get_map_data()
+	{
+		$obj = new View();
+		if( ! $this->authorized())
+		{
+			$obj->view('json', array('msg' => 'Not authorized'));
+			return;
+		}
+		$location = new Location_model();
+		$obj->view('json', array('msg' => $location->get_map_data()));
+	}
+	
 } // END class location_controller
