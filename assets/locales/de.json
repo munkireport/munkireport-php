@@ -264,7 +264,7 @@
 		"latitude": "Breitengrad",
 		"latitudeaccuracy": "Genauigkeit des Breitengrades",
 		"longitude": "Längengrad",
-		"longitudeaccuracy": "Genauigkeit de Längengrades"
+		"longitudeaccuracy": "Genauigkeit des Längengrades"
 	},
 	"machine": {
 		"hardware_widget_title": "Liste der Hardwaremodelle"
