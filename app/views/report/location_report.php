@@ -28,6 +28,7 @@ mapObj.map = null;
 mapObj.markerClusterer = null;
 mapObj.markers = [];
 mapObj.infoWindow = null;
+mapObj.options = {gridSize: 30, maxZoom: 20};
 
 mapObj.init = function() {
     var latlng = new google.maps.LatLng(39.91, 116.38);
@@ -82,7 +83,7 @@ mapObj.showMarkers = function() {
         mapObj.markers.push(marker);
     }
 
-    mapObj.markerClusterer = new MarkerClusterer(mapObj.map, mapObj.markers);
+    mapObj.markerClusterer = new MarkerClusterer(mapObj.map, mapObj.markers, mapObj.options);
 };
 
 // Show popup
