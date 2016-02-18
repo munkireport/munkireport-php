@@ -207,7 +207,7 @@ def add_python():
         service_handler('load')
         logging.debug("process a lookup so locationd service can properly authorize "
                       "python for your OS.")
-        lookup(1)
+        lookup(8)
         logging.debug("unload locationd service")
         service_handler('unload')
         clients_dict = FoundationPlist.readPlist(das_plist)
@@ -374,7 +374,7 @@ def main():
     root_check()
     sysprefs_boxchk()
     add_python()
-    lookup(5)
+    lookup(8)
     global plist
     try:
         if munkireport_prefs() is True:
@@ -394,9 +394,8 @@ def main():
         write_to_cache_location(plist, plist['CurrentStatus'])
         logging.info("Run status: %s", plist['CurrentStatus'])
     except KeyError:
-        status = ("Error obtaining a location. This might have "
-                  "occurred because you didn't wait 30 seconds "
-                  "after enabling location services.")
+        status = ("Error obtaining a location. LS was unresponsive "
+                  "or a lookup timeout occurred.")
         logging.warn(status)
         write_to_cache_location(plist, status)
 

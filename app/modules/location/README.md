@@ -58,7 +58,7 @@ This can also be disabled with a profile. Example: [@clburlison/profiles](https:
 | Unsuccessful: Restricted  | CoreLocation obtained restricted access to location services. Apple Error Code: 1  |
 | Unsuccessful: Not Determined | CoreLocation could not determine a geolocation. Apple Error Code: 0 |
 | Unsuccessful: Location Services Disabled | Location Services is disabled. This is often due to your AirPort card being turned off. | 
-| Error obtaining a location. This might have occurred because you didn't wait 30 seconds after enabling location services. | You should wait. The system is doing things in the background to prep locationd for the first time. |
+| Error obtaining a location. LS was unresponsive or a lookup timeout occurred. | General Error. Location services failed to find a location for one or more reasons. |
 
 ##Testing
 In most cases the warnings produced by this script in a normal run will provide enough information to determine what the issue is. However, if you are unsure why a lookup is failing the best way to get more information is with the `verbose` output option.
