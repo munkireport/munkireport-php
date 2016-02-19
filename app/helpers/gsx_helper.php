@@ -14,7 +14,7 @@ function get_gsx_stats(&$gsx_model)
 
     // Import gsxlib - https://github.com/filipp/gsxlib
     // Set up variables
-    require_once(conf('application_path').'helpers/gsxlib.php');
+    include_once (conf('application_path').'lib/gsxlib/gsxlib.php');
     $_ENV['GSX_CERT'] = conf('gsx_cert');
     $_ENV['GSX_KEYPASS'] = conf('gsx_cert_keypass');
     $sold_to = conf('gsx_sold_to');
