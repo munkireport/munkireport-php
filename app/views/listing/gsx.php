@@ -15,12 +15,12 @@ new gsx_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-colname='gsx.warrantyStatus' data-i18n="gsx.warrantystatus"></th>
-		        <th data-colname='gsx.coverageEndDate' data-i18n="gsx.warrentyend"></th>		        
-			<th data-colname='gsx.estimatedPurchaseDate' data-i18n="warranty.est_purchase_date"></th>
-		        <th data-colname='gsx.daysRemaining' data-i18n="gsx.warrantydays"></th>
-		        <th data-colname='gsx.isVintage' data-i18n="gsx.vintage"></th>
-		        <th data-colname='gsx.configDescription' data-i18n="configuration">Configuration</th>
+		        <th data-i18n="gsx.warrantystatus" data-colname='gsx.warrantyStatus' ></th>
+		        <th data-i18n="gsx.warrentyend" data-colname='gsx.coverageEndDate' ></th>		        
+			<th data-i18n="warranty.est_purchase_date" data-colname='gsx.estimatedPurchaseDate' ></th>
+		        <th data-i18n="gsx.warrantydays" data-colname='gsx.daysRemaining'></th>
+		        <th data-i18n="gsx.vintage" data-colname='gsx.isVintage'></th>
+		        <th data-i18n="configuration" data-colname='gsx.configDescription'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

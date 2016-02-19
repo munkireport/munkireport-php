@@ -21,7 +21,7 @@ $gsx_obj = new gsx_model($serial_number);
                     <tr>
                     <td data-i18n="gsx.coverage.end">Coverage End Date</td>
                     <td><?=$gsx_obj->coverageEndDate?></td>
-                    <td data-i18n="gsx.configdesc"></td>
+                    <td data-i18n="gsx.configuration"></td>
                     <td><?=$gsx_obj->configDescription?></td>
                 </tr>
                     <tr>

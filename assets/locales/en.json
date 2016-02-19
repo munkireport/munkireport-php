@@ -204,7 +204,7 @@
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
     "gsx": {
-        "configdesc": "Configuration Description",
+        "configuration": "Shipping Configuration",
         "contracttype": "Contract Type",
         "country": "Country of Purchase",
         "coverage": {
