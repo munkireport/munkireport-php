@@ -15,7 +15,7 @@ $gsx_obj = new gsx_model($serial_number);
                     <tr>
                     <td data-i18n="gsx.coverage.start"></td>
                     <td><?=$gsx_obj->coverageStartDate?></td>
-                    <td data-i18n="hardware.description"></td>
+                    <td data-i18n="gsx.modeldescription"></td>
                     <td><?=$gsx_obj->productDescription?></td>
                 </tr>
                     <tr>

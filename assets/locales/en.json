@@ -216,6 +216,7 @@
         "estpurchasedate": "Estimated Purchase Date",
         "laborcovered": "Labor Covered",
         "loaner": "Loaner",
+        "modeldescription": "Model Description",
         "obsolete": "Obsolete",
         "partscovered": "Parts Covered",
         "recheck": "Recheck Warranty Status",
