@@ -221,6 +221,7 @@
         "partscovered": "Parts Covered",
         "recheck": "Recheck Warranty Status",
         "sla": "Warranty SLA",
+        "supported": "Supported",
         "vintage": "Vintage",
         "warrantystatus": "Warranty Status",
         "warrantydays": "Warranty Days Remaining",
@@ -522,6 +523,10 @@
 			"title": "Timemachine Status",
 			"today": "Backed up today",
 			"week_plus": "Latest backup more than a week ago"
-		}
+		},
+        "warrantysupport":{
+            "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
+            "warrentysupportstatus": "Warranty Support Status"
+        }
 	}
 }
