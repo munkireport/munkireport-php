@@ -149,8 +149,8 @@ function get_gsx_stats(&$gsx_model)
         $gsx_model->isObsolete = 'No';
         
         // Check if Vintage and write flag
-        $vintageCheck = substr($gsx_model->productDescription, 0, 4);
-        if ($vintageCheck === "VIN,")
+        $vintageCheck = substr($gsx_model->configDescription, 0, 3);
+        if ($vintageCheck === "VIN")
         {
         $gsx_model->isVintage = 'Yes';
         }
@@ -201,13 +201,13 @@ function get_gsx_stats(&$gsx_model)
         
         // Service Level Agreement
         // Fix for different warranty type returns from GSX
-        if(empty($result->slaGroupDescription))
+        if(empty($result->warrantyReferenceNo))
         {
-            $gsx_model->warrantyReferenceNo = $result->warrantyReferenceNo; 
+            $gsx_model->warrantyReferenceNo = $result->slaGroupDescription; 
         }
          else
         {
-            $gsx_model->warrantyReferenceNo = $result->slaGroupDescription; 
+            $gsx_model->warrantyReferenceNo = $result->warrantyReferenceNo; 
         }
         
         // Update the stock warranty tables
