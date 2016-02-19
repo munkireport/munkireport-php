@@ -218,11 +218,12 @@
         "loaner": "Loaner",
         "obsolete": "Obsolete",
         "partscovered": "Parts Covered",
+        "recheck": "Recheck Warranty Status",
         "sla": "Warranty SLA",
         "vintage": "Vintage",
         "warrantystatus": "Warranty Status",
         "warrantydays": "Warranty Days Remaining",
-        "recheck": "Recheck Warranty Status"
+        "warrentyend": "Warranty End Date"
 	},
 	"hardware": {
 		"hardware": "Hardware",
@@ -471,7 +472,7 @@
 	"warranty": {
 		"coverage": "Warranty Coverage",
 		"est_manufacture_date": "Est. Manufacture Date",
-		"est_purchase_date": "Est. Purchase date",
+		"est_purchase_date": "Est. Purchase Date",
 		"expired": "Expired on __date__",
 		"expires_in": "Expires in __date__",
 		"no_alerts": "No Warranty Alerts",
