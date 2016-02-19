@@ -23,6 +23,12 @@ $tab_list = array(
 	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles')
 		);
 
+// Add GSX tab if enabled
+if (conf('gsx_enable'))
+	{
+	$tab_list = array_merge($tab_list, array('gsx-tab' => array('view' => 'client/gsx_tab', 'i18n' => 'client.tab.gsx'));
+	}
+
 // Add custom tabs
 $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
