@@ -210,15 +210,13 @@ function get_gsx_stats(&$gsx_model)
             $gsx_model->warrantyReferenceNo = $result->slaGroupDescription; 
         }
         
-        /// TEST ME vvv
         // Update the stock warranty tables
 		$warranty = new Warranty_model($gsx_model->serial_number);
 		$warranty->purchase_date = $gsx_model->estimatedPurchaseDate;
 		$warranty->end_date = $gsx_model->contractCoverageEndDate;
         $warranty->status = $local_warrantyStatus;
 		$warranty->save();
-        /// TEST ME ^^^
-
+        
         // Save that stuff :D
 		$gsx_model->save();
         $error = 'GSX data processed';
