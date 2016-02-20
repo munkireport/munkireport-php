@@ -67,5 +67,23 @@ class gsx_controller extends Module_controller
 		$obj->view('json', array('msg' =>$gsx->getGSXSupportStats()));
 
 	}
+    
+    /**
+	 * Get warranty for serial_number
+	 *
+	 * @param string $serial serial number
+	 **/
+	public function get_data($serial_number = '')
+	{
+		$obj = new View();
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $gsx = new gsx_model($serial_number);
+        $obj->view('json', array('msg' => $gsx->rs));
+	}
 	
 } // END class gsx_module

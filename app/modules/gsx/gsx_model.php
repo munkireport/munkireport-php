@@ -38,11 +38,10 @@ class gsx_model extends Model {
 		if ($serial)
 		{
 			$this->retrieve_record($serial);
-			//$this->get_gsx_stats();
 		}
 		
 		$this->serial_number = $serial;
-		  
+
 	}
 	
 	/**
@@ -79,8 +78,7 @@ class gsx_model extends Model {
 	}
 
 	/**
-	 * Get GSX supported statistics
-	 *
+	 * Get GSX supported statistics for widget
 	 *
 	 **/
 	public function getGSXSupportStats()
