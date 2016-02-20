@@ -46,5 +46,26 @@ class gsx_controller extends Module_controller
 
 		redirect("clients/detail/$serial#tab_gsx-tab");
 	}
+    
+    /**
+	 * Get warranty stats
+	 *
+	 * @return void
+	 * @author John Eberle (tuxudo)
+	 **/
+	function get_GSX_Support_Stats()
+	{
+		$obj = new View();
+
+		if( ! $this->authorized())
+		{
+			$obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+			return;
+		}
+		
+		$gsx = new gsx_model;
+		$obj->view('json', array('msg' =>$gsx->getGSXSupportStats()));
+
+	}
 	
 } // END class gsx_module

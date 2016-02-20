@@ -79,6 +79,26 @@ class gsx_model extends Model {
 	}
 
 	/**
+	 * Get GSX supported statistics
+	 *
+	 *
+	 **/
+	public function getGSXSupportStats()
+	{
+		$sql = "SELECT 	COUNT(CASE WHEN isObsolete = 'Yes' THEN 1 END) AS obsolete,
+				COUNT(CASE WHEN isVintage = 'Yes' THEN 1 END) AS vintage,
+				COUNT(CASE WHEN isVintage = 'No' AND isObsolete = 'No' AND warrantyStatus IS NOT NULL THEN 1 END) AS supported,
+				COUNT(CASE WHEN isVintage IS NULL AND isObsolete IS NULL THEN 1 END) AS unknown
+				FROM gsx
+				LEFT JOIN reportdata USING(serial_number)
+				".get_machine_group_filter();
+		return current($this->query($sql));
+	}
+
+	// ------------------------------------------------------------------------
+
+
+	/**
 	 * Check GSX status and update
 	 *
 	 * @return void
