@@ -11,6 +11,10 @@
 					<td id="location-currentstatus"></td>
 				</tr>
 				<tr>
+					<th data-i18n="location.stalelocation"></th>
+					<td id="location-stalelocation"></td>
+				</tr>
+				<tr>
 					<th data-i18n="location.address"></th>
 					<td id="location-address"></td>
 				</tr>
@@ -25,6 +29,10 @@
 				<tr>
 					<th data-i18n="location.lastrun"></th>
 					<td id="location-lastrun"></td>
+				</tr>
+				<tr>
+					<th data-i18n="location.lastlocationrun"></th>
+					<td id="location-lastlocationrun"></td>
 				</tr>
 				<tr>
 					<th data-i18n="location.latitudeaccuracy"></th>
@@ -59,16 +67,22 @@ $(document).on('appReady', function(e, lang) {
 			
 			// Add strings
 			$('#location-currentstatus').text(data.currentstatus);
+			$('#location-stalelocation').text(data.stalelocation);
 			$('#location-address').text(data.address);
 			$('#location-coordinates').text(data.latitude + ', ' + data.longitude);
 			$('#location-altitude').text(data.altitude + 'm');
 			$('#location-latitudeaccuracy').text(data.latitudeaccuracy + 'm');
 			$('#location-longitudeaccuracy').text(data.longitudeaccuracy + 'm');
 			
-			// Format date
+			// Format LastRun date
 			var mydate = moment(data.lastrun, "YYYY-MM-DD HH:mm:ss Z");
 			$('#location-lastrun').append('<time title="'+mydate.format('LLLL')+'" >'+mydate.fromNow()+'</time>');
 			$('#location-lastrun time').tooltip().css('cursor', 'pointer');
+			
+			// Format LastLocationRun date
+			var mydate = moment(data.lastlocationrun, "YYYY-MM-DD HH:mm:ss Z");
+			$('#location-lastlocationrun').append('<time title="'+mydate.format('LLLL')+'" >'+mydate.fromNow()+'</time>');
+			$('#location-lastlocationrun time').tooltip().css('cursor', 'pointer');
 			
 			// Create google maps instance
 			var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
