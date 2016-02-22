@@ -48,7 +48,7 @@ class gsx_controller extends Module_controller
 	}
     
     /**
-	 * Get warranty stats
+	 * Get GSX information
 	 *
 	 * @return void
 	 * @author John Eberle (tuxudo)
@@ -69,11 +69,11 @@ class gsx_controller extends Module_controller
 	}
     
     /**
-	 * Get warranty for serial_number
+	 * Get GSX information for serial_number
 	 *
 	 * @param string $serial serial number
 	 **/
-	public function get_data($serial_number = '')
+	public function get_gsx_data($serial_number = '')
 	{
 		$obj = new View();
 

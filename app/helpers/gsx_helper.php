@@ -21,7 +21,6 @@ function get_gsx_stats(&$gsx_model)
     $username = conf('gsx_username');
     
     // Pull from gsxlib
-    //$serialnumber = $gsx_model->serial_number;
     $gsx = GsxLib::getInstance($sold_to, $username);
     try {
     $result = $gsx->warrantyStatus($gsx_model->serial_number);
@@ -36,11 +35,8 @@ function get_gsx_stats(&$gsx_model)
         // Load warranty_helper and run stock warranty functions
         require_once(conf('application_path').'helpers/warranty_helper.php');
         $gsx_model->productdescription = model_description_lookup($gsx_model->serial_number);
-        $gsx_model->estimatedpurchasedate = estimate_manufactured_date($gsx_model->serial_number);
-        $gsx_model->coveragestartdate = $gsx_model->estimatedpurchasedate;
-        $gsx_model->registrationdate = $gsx_model->estimatedpurchasedate;
-        $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($gsx_model->estimatedpurchasedate)) . " + 365 day"));
         $gsx_model->warrantystatus = 'Obsolete';
+        $gsx_model->warrantymod = 'Expired';
         $gsx_model->partcovered = 'No';
         $gsx_model->laborcovered = 'No';
         $gsx_model->daysremaining = '0';
@@ -48,6 +44,26 @@ function get_gsx_stats(&$gsx_model)
         $gsx_model->isobsolete = 'Yes';
         $gsx_model->isvintage = 'No';
             
+        // Don't overwrite actual GSX data with guessed data
+        // For recently obsoleted machines
+        // Disabled because I haven't gotten it working correctly let
+        //if(empty($gsx_model->estimatedpurchasedate))
+        //{
+            $gsx_model->estimatedpurchasedate = estimate_manufactured_date($gsx_model->serial_number);
+        //}
+        //if(empty($gsx_model->coveragestartdate))
+        //{
+            $gsx_model->coveragestartdate = $gsx_model->estimatedpurchasedate;
+        //}
+        //if(empty($gsx_model->registrationdate))
+        //{
+            $gsx_model->registrationdate = $gsx_model->estimatedpurchasedate;
+        //}
+        //if(empty($gsx_model->coverageenddate))
+        //{
+            $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($gsx_model->estimatedpurchasedate)) . " + 365 day"));
+        //}    
+
         $gsx_model->save();
         $error = 'GSX Lookup failed - machine is Obsolete - running stock warranty lookup';
        
@@ -66,12 +82,29 @@ function get_gsx_stats(&$gsx_model)
 	{        
         // Load warranty_helper and run stock warranty functions
         require_once(conf('application_path').'helpers/warranty_helper.php');
-        $gsx_model->productdescription = model_description_lookup($gsx_model->serial_number);
-        $gsx_model->estimatedpurchasedate = estimate_manufactured_date($gsx_model->serial_number);
-        $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($gsx_model->estimatedpurchasedate)) . " + 365 day"));
-        $gsx_model->coveragestartdate = $gsx_model->estimatedpurchasedate;
-        $gsx_model->registrationdate = $gsx_model->estimatedpurchasedate;
         $gsx_model->warrantystatus = 'GSX lookup failed';
+        $gsx_model->productdescription = model_description_lookup($gsx_model->serial_number);
+        $gsx_model->warrantymod = "Lookup failed";
+        
+        // Don't overwrite actual GSX data with guessed data
+        // Disabled because I haven't gotten it working correctly let
+        //if(empty($gsx_model->estimatedpurchasedate))
+        //{
+            $gsx_model->estimatedpurchasedate = estimate_manufactured_date($gsx_model->serial_number);
+        //}
+        //if(empty($gsx_model->coveragestartdate))
+        //{
+            $gsx_model->coveragestartdate = $gsx_model->estimatedpurchasedate;
+        //}
+        //if(empty($gsx_model->registrationdate))
+        //{
+            $gsx_model->registrationdate = $gsx_model->estimatedpurchasedate;
+        //}
+        //if(empty($gsx_model->coverageenddate))
+        //{
+            $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($gsx_model->estimatedpurchasedate)) . " + 365 day"));
+        //}
+        
         $gsx_model->save();
         
 		$error = 'GSX Lookup failed - running stock warranty lookup';

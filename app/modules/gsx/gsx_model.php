@@ -111,7 +111,7 @@ class gsx_model extends Model {
             {
             
                 // Load gsx helper
-            require_once(conf('application_path').'helpers/gsx_helper.php');
+                require_once(conf('application_path').'helpers/gsx_helper.php');
             
                 get_gsx_stats($this);
                 // ^^ Comment and uncomment to turn off and on
@@ -129,7 +129,5 @@ class gsx_model extends Model {
 	function process()
 	{
 		$this->run_gsx_stats();
-
-		//require_once(conf('application_path').'helpers/gsx_helper.php');
 	}		
 }
