@@ -44,25 +44,25 @@ function get_gsx_stats(&$gsx_model)
         $gsx_model->isobsolete = 'Yes';
         $gsx_model->isvintage = 'No';
             
+            
         // Don't overwrite actual GSX data with guessed data
         // For recently obsoleted machines
-        // Disabled because I haven't gotten it working correctly let
-        //if(empty($gsx_model->estimatedpurchasedate))
-        //{
+        if(is_null($gsx_model->estimatedpurchasedate) || ($gsx_model->estimatedpurchasedate === ""))
+        {
             $gsx_model->estimatedpurchasedate = estimate_manufactured_date($gsx_model->serial_number);
-        //}
-        //if(empty($gsx_model->coveragestartdate))
-        //{
+        }
+        if(is_null($gsx_model->coveragestartdate) || ($gsx_model->coveragestartdate === ""))
+        {
             $gsx_model->coveragestartdate = $gsx_model->estimatedpurchasedate;
-        //}
-        //if(empty($gsx_model->registrationdate))
-        //{
+        }
+        if(is_null($gsx_model->registrationdate) || ($gsx_model->registrationdate === ""))
+        {
             $gsx_model->registrationdate = $gsx_model->estimatedpurchasedate;
-        //}
-        //if(empty($gsx_model->coverageenddate))
-        //{
+        }
+        if(is_null($gsx_model->coverageenddate) || ($gsx_model->coverageenddate === ""))
+        {
             $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($gsx_model->estimatedpurchasedate)) . " + 365 day"));
-        //}    
+        }    
 
         $gsx_model->save();
         $error = 'GSX Lookup failed - machine is Obsolete - running stock warranty lookup';
@@ -87,23 +87,22 @@ function get_gsx_stats(&$gsx_model)
         $gsx_model->warrantymod = "Lookup failed";
         
         // Don't overwrite actual GSX data with guessed data
-        // Disabled because I haven't gotten it working correctly let
-        //if(empty($gsx_model->estimatedpurchasedate))
-        //{
+        if(is_null($gsx_model->estimatedpurchasedate) || ($gsx_model->estimatedpurchasedate === ""))
+        {
             $gsx_model->estimatedpurchasedate = estimate_manufactured_date($gsx_model->serial_number);
-        //}
-        //if(empty($gsx_model->coveragestartdate))
-        //{
+        }
+        if(is_null($gsx_model->coveragestartdate) || ($gsx_model->coveragestartdate === ""))
+        {
             $gsx_model->coveragestartdate = $gsx_model->estimatedpurchasedate;
-        //}
-        //if(empty($gsx_model->registrationdate))
-        //{
+        }
+        if(is_null($gsx_model->registrationdate) || ($gsx_model->registrationdate === ""))
+        {
             $gsx_model->registrationdate = $gsx_model->estimatedpurchasedate;
-        //}
-        //if(empty($gsx_model->coverageenddate))
-        //{
+        }
+        if(is_null($gsx_model->coverageenddate) || ($gsx_model->coverageenddate === ""))
+        {
             $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($gsx_model->estimatedpurchasedate)) . " + 365 day"));
-        //}
+        } 
         
         $gsx_model->save();
         
