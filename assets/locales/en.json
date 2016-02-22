@@ -311,7 +311,7 @@
 		"package_installed": "__pkg__ installed",
 		"package_installed_plural": "__count__ packages installed",
 		"panel_title": "Munki statistics this week",
-		"protocol": "Munki Protocol",
+		"munkiprotocol": "Munki Protocol",
 		"run_type": "Run Type",
 		"version": "Munki Version",
 		"warning": "Munki warning: __warning__",
@@ -532,9 +532,12 @@
 		"munki": {
 			"no_updates_pending": "No Updates Pending"
 		},
-		"munki_protocol": {
-			"http": "http",
-			"https": "https"
+		"munkiinfo": {
+			"munkiprotocol": {
+				"localrepo": "local repo",
+				"http": "http",
+				"https": "https"
+			}
 		},
 		"power": {
 			"missing": "Missing",

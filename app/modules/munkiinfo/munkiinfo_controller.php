@@ -1,11 +1,11 @@
 <?php
 /**
- * power status module class
+ * munkiinfo status module class
  *
  * @package munkireport
  * @author
  **/
-class munkiprotocol_controller extends Module_controller
+class munkiinfo_controller extends Module_controller
 {
 
 	/*** Protect methods with auth! ****/
@@ -21,7 +21,7 @@ class munkiprotocol_controller extends Module_controller
 	 **/
 	function index()
 	{
-		echo "You've loaded the munkiprotocol module!";
+		echo "You've loaded the munkiinfo module!";
 	}
 
 	/**
@@ -29,7 +29,7 @@ class munkiprotocol_controller extends Module_controller
 	 *
 	 *
 	 **/
-	public function get_stats()
+	public function get_protocol_stats()
 	{
 		$obj = new View();
 		if( ! $this->authorized())
@@ -38,8 +38,8 @@ class munkiprotocol_controller extends Module_controller
 			return;
 		}
 
-		$dm = new munkiprotocol_model();
-		$obj->view('json', array('msg' => $dm->get_stats()));
+		$dm = new munkiinfo_model();
+		$obj->view('json', array('msg' => $dm->get_protocol_stats()));
 
 	}
 
@@ -57,10 +57,11 @@ class munkiprotocol_controller extends Module_controller
 			die('Authenticate first.'); // Todo: return json
 		}
 
-		$queryobj = new munkiprotocol_model();
-		$sql = "SELECT COUNT(CASE WHEN `protocol_status` = 'http' THEN 1 END) AS http,
-						COUNT(CASE WHEN `protocol_status` = 'https' THEN 1 END) AS https
-						FROM munkiprotocol
+		$queryobj = new munkiinfo_model();
+		$sql = "SELECT COUNT(CASE WHEN `munkiprotocol` = 'http' THEN 1 END) AS http,
+						COUNT(CASE WHEN `munkiprotocol` = 'https' THEN 1 END) AS https,
+						COUNT(CASE WHEN `munkiprotocol` = 'localrepo' THEN 1 END) AS localrepo
+						FROM munkiinfo
 						LEFT JOIN reportdata USING (serial_number)
 						".get_machine_group_filter();
 		$obj = new View();

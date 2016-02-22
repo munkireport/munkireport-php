@@ -8,7 +8,7 @@ import sys
 sys.path.append('/usr/local/munki/munkilib/')
 import munkicommon
 
-def get_protocol_status():
+def get_munkiprotocol_status():
 	Protocol = munkicommon.pref('SoftwareRepoURL')
 	try:
 		return Protocol.split(":")[0]
@@ -23,8 +23,8 @@ def main():
 		if not os.path.exists(cachedir):
 			os.makedirs(cachedir)
 		# Write to disk
-		result = get_protocol_status()
-		txtfile = open("%s/protocol.txt" % cachedir, "w")
+		result = get_munkiprotocol_status()
+		txtfile = open("%s/munkiinfo.txt" % cachedir, "w")
 		txtfile.write(result.encode('utf-8'))
 		txtfile.close()
 	except:

@@ -4,7 +4,7 @@
 new Machine_model;
 new Reportdata_model;
 new Munkireport_model;
-new munkiprotocol_model;
+new munkiinfo_model;
 ?>
 
 <div class="container">
@@ -24,7 +24,7 @@ new munkiprotocol_model;
 		        <th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
 			<th data-i18n="os.version" data-colname='machine.os_version'></th>
 		        <th data-i18n="munki.version" data-colname='munkireport.version'></th>
-			<th data-i18n="munki.protocol" data-colname='munkiprotocol.protocol_status'></th>
+			<th data-i18n="munki.munkiprotocol" data-colname='munkiinfo.munkiprotocol'></th>
 		        <th data-i18n="last_seen" data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport.timestamp'>Latest Run</th>
 		        <th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
 		        <th data-i18n="error_plural" data-colname='munkireport.errors'></th>
@@ -110,20 +110,25 @@ new munkiprotocol_model;
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
                 var link = get_client_detail_link(name, sn, appUrl + '/', '#tab_munki');
-	        	$('td:eq(0)', nRow).html(link);
+			$('td:eq(0)', nRow).html(link);
 
 			// https is good
-			var protocolstatus=$('td:eq(6)', nRow).html();
-			protocolstatus = protocolstatus == 'https' ? '<span class="label label-success">https</span>' :
-				(protocolstatus)
-			$('td:eq(6)', nRow).html(protocolstatus)
+			var munkiprotocol=$('td:eq(6)', nRow).html();
+			munkiprotocol = munkiprotocol == 'https' ? '<span class="label label-success">https</span>' :
+				(munkiprotocol)
+			$('td:eq(6)', nRow).html(munkiprotocol)
 			// Warn on http
-			var protocolstatus=$('td:eq(6)', nRow).html();
-			protocolstatus = protocolstatus == 'http' ? '<span class="label label-danger">http</span>' :
-				(protocolstatus)
-			$('td:eq(6)', nRow).html(protocolstatus)
+			var munkiprotocol=$('td:eq(6)', nRow).html();
+			munkiprotocol = munkiprotocol == 'http' ? '<span class="label label-danger">http</span>' :
+				(munkiprotocol)
+			$('td:eq(6)', nRow).html(munkiprotocol)
+			// Warn on http
+			var munkiprotocol=$('td:eq(6)', nRow).html();
+			munkiprotocol = munkiprotocol == 'localrepo' ? '<span class="label label-info">local repo</span>' :
+				(munkiprotocol)
+			$('td:eq(6)', nRow).html(munkiprotocol)
 
-	        	// Format date
+			// Format date
 			date = $('td:eq(7)', nRow).text();
 	                $('td:eq(7)', nRow).html('never');
 	        	if(date){
