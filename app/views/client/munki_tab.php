@@ -1,5 +1,5 @@
 <?php $client = new Munkireport_model($serial_number); ?>
-<?php $mp = new munkiprotocol_model($serial_number); ?>
+<?php $mp = new munkiinfo_model($serial_number); ?>
 
 <?php $report = $client->report_plist; ?>
 
@@ -40,7 +40,7 @@
 			</tr>
 			<tr>
 				<th>Protocol:</th>
-				<td><?php echo $mp->protocol_status; ?></td>
+				<td><?php echo $mp->munkiprotocol; ?></td>
 			</tr>
 			<tr>
 				<th>Manifest:</th>

@@ -12,7 +12,7 @@
 
     <?php $this->view('widgets/munki_versions_widget'); ?>
     
-    <?php $this->view('widgets/munki_protocol_widget'); ?>
+    <?php $this->view('widgets/munkiinfo_munkiprotocol_widget'); ?>
 
   </div>
   <div class="row">
