@@ -8,57 +8,57 @@ $gsx_obj = new gsx_model($serial_number);
             <tbody>
                 <tr">
                     <td style="width:220px" data-i18n="warranty.coverage"></td>
-                    <td><?=$gsx_obj->warrantyStatus?></td>
+                    <td><?=$gsx_obj->warrantystatus?></td>
                     <td style="width:220px" data-i18n="gsx.warrantydays"></td>
-                    <td><?=$gsx_obj->daysRemaining?></td>
+                    <td><?=$gsx_obj->daysremaining?></td>
                 </tr>
                     <tr>
                     <td data-i18n="gsx.coverage.start"></td>
-                    <td><?=$gsx_obj->coverageStartDate?></td>
+                    <td><?=$gsx_obj->coveragestartdate?></td>
                     <td data-i18n="gsx.modeldescription"></td>
-                    <td><?=$gsx_obj->productDescription?></td>
+                    <td><?=$gsx_obj->productdescription?></td>
                 </tr>
                     <tr>
                     <td data-i18n="gsx.coverage.end">Coverage End Date</td>
-                    <td><?=$gsx_obj->coverageEndDate?></td>
+                    <td><?=$gsx_obj->coverageenddate?></td>
                     <td data-i18n="gsx.configuration"></td>
-                    <td><?=$gsx_obj->configDescription?></td>
+                    <td><?=$gsx_obj->configdescription?></td>
                 </tr>
                     <tr>
                     <td data-i18n="gsx.estpurchasedate"></td>
-                    <td><?=$gsx_obj->estimatedPurchaseDate?></td>
+                    <td><?=$gsx_obj->estimatedpurchasedate?></td>
                     <td data-i18n="gsx.laborcovered"></td>
-                    <td><?=$gsx_obj->laborCovered?></td>
+                    <td><?=$gsx_obj->laborcovered?></td>
                 </tr>
                     <tr>
                     <td data-i18n="gsx.coverage.constart"></td>
-                    <td><?=$gsx_obj->contractCoverageStartDate?></td>
+                    <td><?=$gsx_obj->contractcoveragestartdate?></td>
                     <td data-i18n="gsx.partscovered"></td>
-                    <td><?=$gsx_obj->partCovered?></td>
+                    <td><?=$gsx_obj->partcovered?></td>
                 </tr>
                     <tr>
                     <td data-i18n="gsx.coverage.conend"></td>
-                    <td><?=$gsx_obj->contractCoverageEndDate?></td>
+                    <td><?=$gsx_obj->contractcoverageenddate?></td>
                     <td data-i18n="gsx.contracttype"></td>
-                    <td><?=$gsx_obj->contractType?></td>
+                    <td><?=$gsx_obj->contracttype?></td>
                 </tr>
                     <tr>
                     <td data-i18n="reg_date"></td>
-                    <td><?=$gsx_obj->registrationDate?></td>
+                    <td><?=$gsx_obj->registrationdate?></td>
                     <td data-i18n="gsx.country"></td>
-                    <td><?=$gsx_obj->purchaseCountry?></td>
+                    <td><?=$gsx_obj->purchasecountry?></td>
                 </tr>
                     <tr>
                     <td data-i18n="gsx.sla"></td>
-                    <td><?=$gsx_obj->warrantyReferenceNo?></td>
+                    <td><?=$gsx_obj->warrantyreferenceno?></td>
                     <td data-i18n="gsx.loaner"></td>
-                    <td><?=$gsx_obj->isLoaner?></td>
+                    <td><?=$gsx_obj->isloaner?></td>
                 </tr>   
                     <tr>
                     <td data-i18n="gsx.vintage"></td>
-                    <td><?=$gsx_obj->isVintage?></td>
+                    <td><?=$gsx_obj->isvintage?></td>
                     <td data-i18n="gsx.obsolete"></td>
-                    <td><?=$gsx_obj->isObsolete?></td>
+                    <td><?=$gsx_obj->isobsolete?></td>
                 </tr>                   
              </tbody>
         </table>
