@@ -24,6 +24,8 @@ def main():
 			os.makedirs(cachedir)
 		# Write to disk
 		result = get_munkiprotocol_status()
+		if "file" in result:
+			result = 'localrepo'
 		txtfile = open("%s/munkiinfo.txt" % cachedir, "w")
 		txtfile.write(result.encode('utf-8'))
 		txtfile.close()
