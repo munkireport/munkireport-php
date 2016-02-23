@@ -38,8 +38,8 @@ class munkiinfo_controller extends Module_controller
 			return;
 		}
 
-		$dm = new munkiinfo_model();
-		$obj->view('json', array('msg' => $dm->get_protocol_stats()));
+		$mim = new munkiinfo_model();
+		$obj->view('json', array('msg' => $mim->get_protocol_stats()));
 
 	}
 
