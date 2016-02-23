@@ -2,7 +2,7 @@
 
 MODULE_NAME="munkiinfo"
 MODULESCRIPT="munkiinfo.py"
-MODULE_CACHE_FILE="munkiinfo.txt"
+MODULE_CACHE_FILE="munkiinfo.plist"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 
