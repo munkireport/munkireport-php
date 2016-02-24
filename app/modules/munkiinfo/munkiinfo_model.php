@@ -14,17 +14,17 @@ class munkiinfo_model extends Model {
                 $this->rs['iconurl'] = '';
                 $this->rs['clientresourceurl'] = '';
                 $this->rs['helpurl'] = '';
-                $this->rs['installapplesoftwareupdates'] = '';
-                $this->rs['applesoftwareupdatesonly'] = '';
+                $this->rs['installapplesoftwareupdates']  = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['applesoftwareupdatesonly'] = 'BOOL';  // Enabled = 1, Disabled = 0
                 $this->rs['softwareupdateserverurl'] = '';
-                $this->rs['daysbetweennotifications'] = '';
-                $this->rs['useclientcertificate'] = '';
-                $this->rs['suppressusernotification'] = '';
-                $this->rs['suppressautoinstall'] = '';
-                $this->rs['suppressstopbuttononinstall'] = '';
+                $this->rs['daysbetweennotifications'] = ''; // integer
+                $this->rs['useclientcertificate'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['suppressusernotification'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['suppressautoinstall'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['suppressstopbuttononinstall'] = 'BOOL';  // Enabled = 1, Disabled = 0
                 $this->rs['followhttpredirects'] = '';
-                $this->rs['unattendedappleupdates'] = '';
-                $this->rs['installrequireslogout'] = '';
+                $this->rs['unattendedappleupdates'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['installrequireslogout'] = 'BOOL';  // Enabled = 1, Disabled = 0
                 $this->rs['localonlymanifest'] = '';
                 $this->rs['munkiprotocol'] = '';
 
@@ -77,7 +77,6 @@ class munkiinfo_model extends Model {
         		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         		$parser = new CFPropertyList();
         		$parser->parse($plist, CFPropertyList::FORMAT_XML);
-        		print_r($parser->toArray());
         		$plist = $parser->toArray();
 				
 				if( ! $plist)
