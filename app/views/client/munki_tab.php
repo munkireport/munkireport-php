@@ -1,5 +1,5 @@
 <?php $client = new Munkireport_model($serial_number); ?>
-<?php $mp = new munkiinfo_model($serial_number); ?>
+<?php $munkiinfo = new munkiinfo_model($serial_number); ?>
 
 <?php $report = $client->report_plist; ?>
 
@@ -7,28 +7,6 @@
 	<p><i>No Munkireport data</i></p>
 	<?php return; ?>
 <?php endif; ?>
-
-<div class="row">
-
-		<div class="col-lg-6">
-
-		<h2 id="errors">Errors &amp; Warnings</h2>
-
-		<?php if($client->report_plist['Errors'] OR $client->report_plist['Warnings']): ?>
-		  
-			<?php if($client->report_plist['Errors']): ?>
-				<pre class="alert alert-danger">• <?php echo implode("\n• ", $client->report_plist['Errors']); ?></pre>
-			<?php endif; ?>
-			
-			<?php if($client->report_plist['Warnings']): ?>
-				<pre class="alert alert-warning">• <?php echo implode("\n• ", $client->report_plist['Warnings']); ?></pre>
-			<?php endif; ?>
-			
-		<?php else: ?>
-			<p><i>No errors or warnings</i></p>
-		<?php endif ?>
-
-	</div><!-- </div class="col-lg-6"> -->
 
 	<div class="col-lg-6">
 
@@ -39,12 +17,20 @@
 				<td><?php echo $client->version; ?></td>
 			</tr>
 			<tr>
-				<th>Protocol:</th>
-				<td><?php echo $mp->munkiprotocol; ?></td>
+				<th>SoftwareRepoURL:</th>
+				<td><?php echo $munkiinfo->SoftwareRepoURL; ?></td>
+			</tr>
+			<tr>
+				<th>SoftwareUpdateServerURL:</th>
+				<td><?php echo $munkiinfo->SoftwareUpdateServerURL; ?></td>
 			</tr>
 			<tr>
 				<th>Manifest:</th>
 				<td><?php echo $client->manifestname; ?></td>
+			</tr>
+			<tr>
+				<th>LocalOnlyManifest:</th>
+				<td><?php echo $munkiinfo->LocalOnlyManifest; ?></td>
 			</tr>
 			<tr>
 				<th>Run Type:</th>
@@ -59,7 +45,111 @@
 				<th>Duration:</th>
 				<td><?php echo $duration; ?> seconds</td>
 			</tr>
+			<tr>
+				<th>PackageURL:</th>
+				<td><?php echo $munkiinfo->PackageURL; ?></td>
+			</tr>
+			<tr>
+				<th>CatalogURL:</th>
+				<td><?php echo $munkiinfo->CatalogURL; ?></td>
+			</tr>
+			<tr>
+				<th>ManifestURL:</th>
+				<td><?php echo $munkiinfo->ManifestURL; ?></td>
+			</tr>
+			<tr>
+				<th>IconURL:</th>
+				<td><?php echo $munkiinfo->IconURL; ?></td>
+			</tr>
+			<tr>
+				<th>ClientResourceURL:</th>
+				<td><?php echo $munkiinfo->ClientResourceURL; ?></td>
+			</tr>
 		</table>
+
+	</div><!-- </div class="col-lg-6"> -->
+
+<!-- </div class="col-lg-6"> -->
+
+	<div class="col-lg-6">
+
+		<h2>Additional Munki Info</h2>
+		<table class="table table-striped">
+			<tr>
+				<th>Protocol:</th>
+				<td><?php echo $munkiinfo->munkiprotocol; ?></td>
+			</tr>
+			<tr>
+				<th>ManagedInstallDir:</th>
+				<td><?php echo $munkiinfo->ManagedInstallDir; ?></td>
+			</tr>
+			<tr>
+				<th>AppleSoftwareUpdatesOnly:</th>
+				<td><?php echo $munkiinfo->AppleSoftwareUpdatesOnly; ?></td>
+			</tr>
+			<tr>
+				<th>InstallAppleSoftwareUpdates:</th>
+				<td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>
+			</tr>
+			<tr>
+				<th>UnattendedAppleUpdates:</th>
+				<td><?php echo $munkiinfo->UnattendedAppleUpdates; ?></td>
+			</tr>
+			<tr>
+				<th>DaysBetweenNotifications:</th>
+				<td><?php echo $munkiinfo->DaysBetweenNotifications; ?></td>
+			</tr>
+			<tr>
+				<th>UseClientCertificate:</th>
+				<td><?php echo $munkiinfo->UseClientCertificate; ?></td>
+			</tr>
+			<tr>
+				<th>FollowHTTPRedirects:</th>
+				<td><?php echo $munkiinfo->FollowHTTPRedirects; ?></td>
+			</tr>
+			<tr>
+				<th>SuppressUserNotification:</th>
+				<td><?php echo $munkiinfo->SuppressUserNotification; ?></td>
+			</tr>
+			<tr>
+				<th>SuppressAutoInstall:</th>
+				<td><?php echo $munkiinfo->SuppressAutoInstall; ?></td>
+			</tr>
+			<tr>
+				<th>SuppressStopButtonOnInstall:</th>
+				<td><?php echo $munkiinfo->SuppressStopButtonOnInstall; ?></td>
+			</tr>
+			<tr>
+				<th>InstallRequiresLogout:</th>
+				<td><?php echo $munkiinfo->InstallRequiresLogout; ?></td>
+			</tr>
+			<tr>
+				<th>HelpURL:</th>
+				<td><?php echo $munkiinfo->HelpURL; ?></td>
+			</tr>
+		</table>
+
+	</div>
+
+<div class="row">
+
+		<div class="col-lg-8">
+
+		<h2 id="errors">Errors &amp; Warnings</h2>
+
+		<?php if($client->report_plist['Errors'] OR $client->report_plist['Warnings']): ?>
+
+			<?php if($client->report_plist['Errors']): ?>
+				<pre class="alert alert-danger">• <?php echo implode("\n• ", $client->report_plist['Errors']); ?></pre>
+			<?php endif; ?>
+
+			<?php if($client->report_plist['Warnings']): ?>
+				<pre class="alert alert-warning">• <?php echo implode("\n• ", $client->report_plist['Warnings']); ?></pre>
+			<?php endif; ?>
+
+		<?php else: ?>
+			<p><i>No errors or warnings</i></p>
+		<?php endif ?>
 
 	</div><!-- </div class="col-lg-6"> -->
 
