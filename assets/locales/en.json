@@ -105,6 +105,7 @@
 			"certificates": "Certificates",
 			"displays": "Displays",
 			"ds": "Directory Services",
+            "gsx": "GSX",
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
 			"location": "Location",
@@ -116,7 +117,7 @@
 			"serverstats": "Server Statistics",
 			"summary": "Summary",
 			"third_party_software": "Third Party Software",
-			"timemachine": "Timemachine"
+			"timemachine": "Time Machine"
 		},
 		"installed_apple_software": "Installed Apple Software",
 		"installed_third_party_software": "Installed Third Party Software",
@@ -203,6 +204,30 @@
 	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
+    "gsx": {
+        "configuration": "Shipping Configuration",
+        "contracttype": "Contract Type",
+        "country": "Country of Purchase",
+        "coverage": {
+            "conend": "Contract Coverage End Date",
+            "constart": "Contract Coverage Start Date",
+			"start": "Coverage Start Date",
+			"end": "Coverage End Date"
+		},
+        "estpurchasedate": "Estimated Purchase Date",
+        "laborcovered": "Labor Covered",
+        "loaner": "Loaner",
+        "modeldescription": "Model Description",
+        "obsolete": "Obsolete",
+        "partscovered": "Parts Covered",
+        "recheck": "Recheck Warranty Status",
+        "sla": "Warranty SLA",
+        "supported": "Supported",
+        "vintage": "Vintage",
+        "warrantystatus": "Warranty Status",
+        "warrantydays": "Warranty Days Remaining",
+        "warrentyend": "Warranty End Date"
+	},
 	"hardware": {
 		"hardware": "Hardware",
 		"uuid": "Hardware UUID"
@@ -250,7 +275,7 @@
 			"last_failure": "Last failed backup",
 			"last_failure_msg": "Message",
 			"last_success": "Last successful backup",
-			"title": "Timemachine Report"
+			"title": "Time Machine Report"
 		},
 		"username": "Username"
 	},
@@ -307,7 +332,7 @@
 			"bluetooth": "Bluetooth",
 			"clients": "Clients",
 			"certificate": "Certificates",
-			"directoryservice": "Directoryservice",
+			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
 			"hardware": "Hardware",
@@ -319,7 +344,7 @@
 			"printers": "Printers",
 			"profile": "Profiles",
 			"security": "Security",
-			"timemachine": "Timemachine",
+			"timemachine": "Time Machine",
 			"warranty": "Warranty"
 		},
 		"main": {
@@ -463,7 +488,7 @@
 	"warranty": {
 		"coverage": "Warranty Coverage",
 		"est_manufacture_date": "Est. Manufacture Date",
-		"est_purchase_date": "Est. Purchase date",
+		"est_purchase_date": "Est. Purchase Date",
 		"expired": "Expired on __date__",
 		"expires_in": "Expires in __date__",
 		"no_alerts": "No Warranty Alerts",
@@ -512,6 +537,10 @@
 			"title": "Timemachine Status",
 			"today": "Backed up today",
 			"week_plus": "Latest backup more than a week ago"
-		}
+		},
+        "warrantysupport":{
+            "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
+            "warrentysupportstatus": "Warranty Support Status"
+        }
 	}
 }

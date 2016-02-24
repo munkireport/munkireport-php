@@ -239,6 +239,32 @@
 	*/
     $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
+	/*
+	|===============================================
+	| GSX lookups
+	|===============================================
+	|
+	| Access to GSX and certificates are required for use of this module
+	|
+	| The GSX module is designed to be used in place of the warranty module.
+	| While both the warranty and GSX modules can be enabled at the same
+	| time it is recommended that only one be enabled at a time to prevent
+	| the warranty module from overwriting the data provided by the GSX module.
+	|
+	| Use GSX article OP1474 and 
+	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
+	| to assist with creating certificates and whitelisting your IPs.
+	|
+	| To use GSX module, set enable to TRUE and uncomment and
+	| fill out rest of configuration options
+	*/
+
+	$conf['gsx_enable'] = FALSE;
+	//$conf['gsx_cert'] = '/Library/Keychains/GSX/certbundle.pem';
+	//$conf['gsx_cert_keypass'] = '';
+	//$conf['gsx_sold_to'] = '1234567890';
+	//$conf['gsx_username'] = 'steve@apple.com';
+
     /*
 	|===============================================
 	| Modules
