@@ -6,15 +6,30 @@ class munkiinfo_model extends Model {
                 parent::__construct('id', 'munkiinfo'); //primary key, tablename
                 $this->rs['id'] = '';
                 $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-                $this->rs['endtime'] = '';
+                $this->rs['ManagedInstallDir'] = '';
+                $this->rs['SoftwareRepoURL'] = '';
+                $this->rs['PackageURL'] = '';
+                $this->rs['CatalogURL'] = '';
+                $this->rs['ManifestURL'] = '';
+                $this->rs['IconURL'] = '';
+                $this->rs['ClientResourceURL'] = '';
+                $this->rs['HelpURL'] = '';
+                $this->rs['InstallAppleSoftwareUpdates'] = '';
+                $this->rs['AppleSoftwareUpdatesOnly'] = '';
+                $this->rs['SoftwareUpdateServerURL'] = '';
+                $this->rs['DaysBetweenNotifications'] = '';
+                $this->rs['UseClientCertificate'] = '';
+                $this->rs['SuppressUserNotification'] = '';
+                $this->rs['SuppressAutoInstall'] = '';
+                $this->rs['SuppressStopButtonOnInstall'] = '';
+                $this->rs['FollowHTTPRedirects'] = '';
+                $this->rs['UnattendedAppleUpdates'] = '';
+                $this->rs['InstallRequiresLogout'] = '';
+                $this->rs['LocalOnlyManifest'] = '';
                 $this->rs['munkiprotocol'] = '';
-                $this->rs['runstate'] = 'done';
-                $this->rs['runtype'] = '';
-                $this->rs['starttime'] = '';
-                $this->rs['version'] = '';
 
                 // Schema version, increment when creating a db migration
-                $this->schema_version = 2;
+                $this->schema_version = 0;
 
                 // Add indexes
                 $this->idx[] = array('serial_number');
