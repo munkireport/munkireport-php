@@ -1,66 +1,103 @@
 #!/usr/bin/python
+"""
+munkiinfo for munkireport
+"""
 
-from Foundation import CFPreferencesCopyAppValue
 import os
 import plistlib
 import sys
+
+sys.path.append('/usr/local/munki')
 try:
     from munkilib import FoundationPlist
-except:
-    sys.path.append('/usr/local/munki')
-    from munkilib import FoundationPlist
+    from munkilib import munkicommon
+except ImportError, msg:
+    print "%s" % msg
+    exit(1)
 
-sys.path.append('/usr/local/munki/munkilib/')
-import munkicommon
+def pref_to_str(pref_value):
+    """If the value of a preference is None return a string type
+    so we can write this data to a plist."""
+    if pref_value is None:
+        # convert to strings
+        pref_value = str(pref_value)
+        return pref_value
+    else:
+        return pref_value
 
-def get_munkiprotocol_status():
-	Protocol = munkicommon.pref('SoftwareRepoURL')
-	try:
-		return Protocol.split(":")[0]
-	except Exception:
-		Protocol = 'Could not obtain protocol'
-		return Protocol
+# Munki common preferences
+# Pylint doesn't like munki variables
+# pylint: disable=C0103
+ManagedInstallDir = pref_to_str(munkicommon.pref('ManagedInstallDir'))
+SoftwareRepoURL = pref_to_str(munkicommon.pref('SoftwareRepoURL'))
+PackageURL = pref_to_str(munkicommon.pref('PackageURL'))
+CatalogURL = pref_to_str(munkicommon.pref('CatalogURL'))
+ManifestURL = pref_to_str(munkicommon.pref('ManifestURL'))
+IconURL = pref_to_str(munkicommon.pref('IconURL'))
+ClientResourceURL = pref_to_str(munkicommon.pref('ClientResourceURL'))
+HelpURL = pref_to_str(munkicommon.pref('HelpURL'))
+InstallAppleSoftwareUpdates = pref_to_str(munkicommon.pref('InstallAppleSoftwareUpdates'))
+AppleSoftwareUpdatesOnly = pref_to_str(munkicommon.pref('AppleSoftwareUpdatesOnly'))
+SoftwareUpdateServerURL = pref_to_str(munkicommon.pref('AppleSoftwareUpdatesOnly'))
+DaysBetweenNotifications = pref_to_str(munkicommon.pref('DaysBetweenNotifications'))
+UseClientCertificate = pref_to_str(munkicommon.pref('UseClientCertificate'))
+SuppressUserNotification = pref_to_str(munkicommon.pref('SuppressUserNotification'))
+SuppressAutoInstall = pref_to_str(munkicommon.pref('SuppressAutoInstall'))
+SuppressStopButtonOnInstall = pref_to_str(munkicommon.pref('SuppressStopButtonOnInstall'))
+FollowHTTPRedirects = pref_to_str(munkicommon.pref('FollowHTTPRedirects'))
+UnattendedAppleUpdates = pref_to_str(munkicommon.pref('UnattendedAppleUpdates'))
+InstallRequiresLogout = pref_to_str(munkicommon.pref('InstallRequiresLogout'))
+LocalOnlyManifest = pref_to_str(munkicommon.pref('LocalOnlyManifest'))
 
-def get_munki_version():
-	munkireport = '/Library/Managed Installs/ManagedInstallReport.plist'
-	try:
-		plist = FoundationPlist.readPlist(munkireport)
-		munkiversion = plist['Conditions']['munki_version']
-		return munkiversion
-	except Exception:
-		return {}
+def get_munkiprotocol():
+    """The protocol munki is using"""
+    try:
+        return SoftwareRepoURL.split(":")[0]
+    except AttributeError:
+        return 'Could not obtain protocol'
 
 def munkiinfo_report():
-	report = []
-	if (len(sys.argv) > 1):
-		runtype = sys.argv[1]
-	else:
-		runtype = 'custom'
-	munkiprotocol = get_munkiprotocol_status()
-	munkiversion = get_munki_version()
-	if "file" in munkiprotocol:
-		munkiprotocol = 'localrepo'
-	report.append({
-	'munkiprotocol': munkiprotocol,
-	'runstate': 'done',
-	'runtype': runtype,
-	'starttime': 'NEEDTOFINISH',
-	'endtime': 'NEEDTOFINISH',
-	'version': munkiversion
-	})
-	return report
+    """Build our report data for our munkiinfo plist"""
+    munkiprotocol = get_munkiprotocol()
+
+    if 'file' in munkiprotocol:
+        munkiprotocol = 'localrepo'
+
+    report = ([{
+        'ManagedInstallDir': ManagedInstallDir,
+        'SoftwareRepoURL': SoftwareRepoURL,
+        'PackageURL': PackageURL,
+        'CatalogURL': CatalogURL,
+        'ManifestURL': ManifestURL,
+        'IconURL': IconURL,
+        'ClientResourceURL': ClientResourceURL,
+        'HelpURL': HelpURL,
+        'InstallAppleSoftwareUpdates': InstallAppleSoftwareUpdates,
+        'AppleSoftwareUpdatesOnly': AppleSoftwareUpdatesOnly,
+        'SoftwareUpdateServerURL': SoftwareUpdateServerURL,
+        'DaysBetweenNotifications': DaysBetweenNotifications,
+        'UseClientCertificate': UseClientCertificate,
+        'SuppressUserNotification': SuppressUserNotification,
+        'SuppressAutoInstall': SuppressAutoInstall,
+        'SuppressStopButtonOnInstall': SuppressStopButtonOnInstall,
+        'FollowHTTPRedirects': FollowHTTPRedirects,
+        'UnattendedAppleUpdates': UnattendedAppleUpdates,
+        'InstallRequiresLogout': InstallRequiresLogout,
+        'LocalOnlyManifest': LocalOnlyManifest,
+        'munkiprotocol': munkiprotocol,
+    }])
+    return report
 
 def main():
-	try:
-		# Create cache dir if it does not exist
-		cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
-		if not os.path.exists(cachedir):
-			os.makedirs(cachedir)
-		# Write munkiinfo report to cache
-		plistlib.writePlist(munkiinfo_report(), "%s/munkiinfo.plist" % cachedir)
-	except:
-		print 'Could not successfully create plist'
-		sys.exit(1)
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
+
+    # Write munkiinfo report to cache
+    output_plist = os.path.join(cachedir, 'munkiinfo.plist')
+    plistlib.writePlist(munkiinfo_report(), output_plist)
 
 if __name__ == "__main__":
-	main()
+    main()
