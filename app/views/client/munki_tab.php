@@ -18,11 +18,11 @@
 			</tr>
 			<tr>
 				<th>SoftwareRepoURL:</th>
-				<td><?php echo $munkiinfo->SoftwareRepoURL; ?></td>
+				<td><?php echo $munkiinfo->softwarerepourl; ?></td>
 			</tr>
 			<tr>
 				<th>SoftwareUpdateServerURL:</th>
-				<td><?php echo $munkiinfo->SoftwareUpdateServerURL; ?></td>
+				<td><?php echo $munkiinfo->softwareupdateserverurl; ?></td>
 			</tr>
 			<tr>
 				<th>Manifest:</th>
@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<th>LocalOnlyManifest:</th>
-				<td><?php echo $munkiinfo->LocalOnlyManifest; ?></td>
+				<td><?php echo $munkiinfo->localonlymanifest; ?></td>
 			</tr>
 			<tr>
 				<th>Run Type:</th>
@@ -47,23 +47,23 @@
 			</tr>
 			<tr>
 				<th>PackageURL:</th>
-				<td><?php echo $munkiinfo->PackageURL; ?></td>
+				<td><?php echo $munkiinfo->packageurl; ?></td>
 			</tr>
 			<tr>
 				<th>CatalogURL:</th>
-				<td><?php echo $munkiinfo->CatalogURL; ?></td>
+				<td><?php echo $munkiinfo->catalogurl; ?></td>
 			</tr>
 			<tr>
 				<th>ManifestURL:</th>
-				<td><?php echo $munkiinfo->ManifestURL; ?></td>
+				<td><?php echo $munkiinfo->manifesturl; ?></td>
 			</tr>
 			<tr>
 				<th>IconURL:</th>
-				<td><?php echo $munkiinfo->IconURL; ?></td>
+				<td><?php echo $munkiinfo->iconurl; ?></td>
 			</tr>
 			<tr>
 				<th>ClientResourceURL:</th>
-				<td><?php echo $munkiinfo->ClientResourceURL; ?></td>
+				<td><?php echo $munkiinfo->clientresourceurl; ?></td>
 			</tr>
 		</table>
 
@@ -81,51 +81,51 @@
 			</tr>
 			<tr>
 				<th>ManagedInstallDir:</th>
-				<td><?php echo $munkiinfo->ManagedInstallDir; ?></td>
+				<td><?php echo $munkiinfo->managedinstalldir; ?></td>
 			</tr>
 			<tr>
 				<th>AppleSoftwareUpdatesOnly:</th>
-				<td><?php echo $munkiinfo->AppleSoftwareUpdatesOnly; ?></td>
+				<td><?php echo $munkiinfo->applesoftwareupdatesonly; ?></td>
 			</tr>
 			<tr>
 				<th>InstallAppleSoftwareUpdates:</th>
-				<td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>
+				<td><?php echo $munkiinfo->installapplesoftwareupdates; ?></td>
 			</tr>
 			<tr>
 				<th>UnattendedAppleUpdates:</th>
-				<td><?php echo $munkiinfo->UnattendedAppleUpdates; ?></td>
+				<td><?php echo $munkiinfo->unattendedappleupdates; ?></td>
 			</tr>
 			<tr>
 				<th>DaysBetweenNotifications:</th>
-				<td><?php echo $munkiinfo->DaysBetweenNotifications; ?></td>
+				<td><?php echo $munkiinfo->daysbetweennotifications; ?></td>
 			</tr>
 			<tr>
 				<th>UseClientCertificate:</th>
-				<td><?php echo $munkiinfo->UseClientCertificate; ?></td>
+				<td><?php echo $munkiinfo->useclientcertificate; ?></td>
 			</tr>
 			<tr>
 				<th>FollowHTTPRedirects:</th>
-				<td><?php echo $munkiinfo->FollowHTTPRedirects; ?></td>
+				<td><?php echo $munkiinfo->followhttpredirects; ?></td>
 			</tr>
 			<tr>
 				<th>SuppressUserNotification:</th>
-				<td><?php echo $munkiinfo->SuppressUserNotification; ?></td>
+				<td><?php echo $munkiinfo->suppressusernotification; ?></td>
 			</tr>
 			<tr>
 				<th>SuppressAutoInstall:</th>
-				<td><?php echo $munkiinfo->SuppressAutoInstall; ?></td>
+				<td><?php echo $munkiinfo->suppressautoinstall; ?></td>
 			</tr>
 			<tr>
 				<th>SuppressStopButtonOnInstall:</th>
-				<td><?php echo $munkiinfo->SuppressStopButtonOnInstall; ?></td>
+				<td><?php echo $munkiinfo->suppressstopbuttononinstall; ?></td>
 			</tr>
 			<tr>
 				<th>InstallRequiresLogout:</th>
-				<td><?php echo $munkiinfo->InstallRequiresLogout; ?></td>
+				<td><?php echo $munkiinfo->installrequireslogout; ?></td>
 			</tr>
 			<tr>
 				<th>HelpURL:</th>
-				<td><?php echo $munkiinfo->HelpURL; ?></td>
+				<td><?php echo $munkiinfo->helpurl; ?></td>
 			</tr>
 		</table>
 
