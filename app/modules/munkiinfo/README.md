@@ -1,17 +1,31 @@
 Munki Info module
 ================
 
-Reports on the protocol that the munki client is using.
+An extension to the munkireport module as such that module is a requirement. Contains additional munki preferences and widgets.
 
-Retrieves information from SoftwareRepoURL
 
-The following information is stored in the table:
+The following information is stored in the munkiinfo table:
 
-* endtime - http, https or localrepo
-* munkiprotocol - http, https or localrepo
-* runstate - munki runstate
-* runtype - munki runtype
-* starttime - munki start time
-* endtime - munki end time
-* version - munki version
+_NOTE:_ the names line up with [Munki Preferences](https://github.com/munki/munki/wiki/Preferences) as such no description is given
 
+* managedinstalldir
+* softwarerepourl
+* packageurl
+* catalogurl
+* manifesturl
+* iconurl
+* clientresourceurl
+* helpurl
+* installapplesoftwareupdates
+* applesoftwareupdatesonly
+* softwareupdateserverurl
+* daysbetweennotifications
+* useclientcertificate
+* suppressusernotification
+* suppressautoinstall
+* suppressstopbuttononinstall
+* followhttpredirects
+* unattendedappleupdates
+* installrequireslogout
+* localonlymanifest
+* munkiprotocol
