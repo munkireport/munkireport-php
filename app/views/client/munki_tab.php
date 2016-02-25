@@ -43,8 +43,8 @@
 				<td><?php echo $munkiinfo->softwarerepourl; ?></td>
 			</tr>
 			<tr>
-				<th>SoftwareUpdateServerURL:</th>
-				<td><?php echo $munkiinfo->softwareupdateserverurl; ?></td>
+				<th>AppleCatalogURL:</th>
+				<td><?php echo $munkiinfo->applecatalogurl; ?></td>
 			</tr>
 			<tr>
 				<th>Manifest:</th>
@@ -232,7 +232,7 @@
 					<td><?php echo $munkiinfo->softwarerepocapath; ?></td>
 				</tr>
 				<tr>
-					<th>SoftwareRepoURL:</th>
+					<th>SoftwareRepoURL (depreciated):</th>
 					<td><?php echo $munkiinfo->softwarerepourl; ?></td>
 				</tr>
 				<tr>
