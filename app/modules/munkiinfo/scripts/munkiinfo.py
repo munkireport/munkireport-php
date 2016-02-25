@@ -6,10 +6,10 @@ munkiinfo for munkireport
 import os
 import plistlib
 import sys
+import urlparse
 
 sys.path.append('/usr/local/munki')
 try:
-    from munkilib import FoundationPlist
     from munkilib import munkicommon
 except ImportError, msg:
     print "%s" % msg
@@ -25,34 +25,62 @@ def pref_to_str(pref_value):
     else:
         return pref_value
 
-# Munki common preferences
-# Pylint doesn't like munki variables
-# pylint: disable=C0103
-ManagedInstallDir = pref_to_str(munkicommon.pref('ManagedInstallDir'))
-SoftwareRepoURL = pref_to_str(munkicommon.pref('SoftwareRepoURL'))
-PackageURL = pref_to_str(munkicommon.pref('PackageURL'))
-CatalogURL = pref_to_str(munkicommon.pref('CatalogURL'))
-ManifestURL = pref_to_str(munkicommon.pref('ManifestURL'))
-IconURL = pref_to_str(munkicommon.pref('IconURL'))
-ClientResourceURL = pref_to_str(munkicommon.pref('ClientResourceURL'))
-HelpURL = pref_to_str(munkicommon.pref('HelpURL'))
-InstallAppleSoftwareUpdates = pref_to_str(munkicommon.pref('InstallAppleSoftwareUpdates'))
-AppleSoftwareUpdatesOnly = pref_to_str(munkicommon.pref('AppleSoftwareUpdatesOnly'))
-SoftwareUpdateServerURL = pref_to_str(munkicommon.pref('SoftwareUpdateServerURL'))
-DaysBetweenNotifications = pref_to_str(munkicommon.pref('DaysBetweenNotifications'))
-UseClientCertificate = pref_to_str(munkicommon.pref('UseClientCertificate'))
-SuppressUserNotification = pref_to_str(munkicommon.pref('SuppressUserNotification'))
-SuppressAutoInstall = pref_to_str(munkicommon.pref('SuppressAutoInstall'))
-SuppressStopButtonOnInstall = pref_to_str(munkicommon.pref('SuppressStopButtonOnInstall'))
-FollowHTTPRedirects = pref_to_str(munkicommon.pref('FollowHTTPRedirects'))
-UnattendedAppleUpdates = pref_to_str(munkicommon.pref('UnattendedAppleUpdates'))
-InstallRequiresLogout = pref_to_str(munkicommon.pref('InstallRequiresLogout'))
-LocalOnlyManifest = pref_to_str(munkicommon.pref('LocalOnlyManifest'))
+def munki_prefs():
+    """A full listing of all Munki preferences"""
+    our_prefs = [
+        'AppleSoftwareUpdatesOnly',
+        'InstallAppleSoftwareUpdates',
+        'UnattendedAppleUpdates',
+        'SoftwareUpdateServerURL',
+        'SoftwareRepoURL',
+        'PackageURL',
+        'CatalogURL',
+        'ManifestURL',
+        'IconURL',
+        'ClientResourceURL',
+        'ClientResourcesFilename',
+        'HelpURL',
+        'ClientIdentifier',
+        'ManagedInstallDir',
+        'LogFile',
+        'LogToSyslog',
+        'LoggingLevel',
+        'DaysBetweenNotifications',
+        'UseClientCertificate',
+        'UseClientCertificateCNAsClientIdentifier',
+        'SoftwareRepoCAPath',
+        'SoftwareRepoCACertificate',
+        'ClientCertificatePath',
+        'ClientKeyPath',
+        # 'AdditionalHttpHeaders',
+        'PackageVerificationMode',
+        'SuppressUserNotification',
+        'SuppressAutoInstall',
+        'SuppressLoginwindowInstall',
+        'SuppressStopButtonOnInstall',
+        'InstallRequiresLogout',
+        'ShowRemovalDetail',
+        'MSULogEnabled',
+        'MSUDebugLogEnabled',
+        'LocalOnlyManifest',
+        'FollowHTTPRedirects',
+    ]
+    return our_prefs
+
+def formated_prefs():
+    """Formated dictionary object for output to plist"""
+    my_dict = {}
+    for pref in munki_prefs():
+        pref_value = pref_to_str(munkicommon.pref(pref))
+        my_dict.update({pref.lower(): pref_value})
+    return my_dict
 
 def get_munkiprotocol():
     """The protocol munki is using"""
+    software_repo_url = pref_to_str(munkicommon.pref('SoftwareRepoURL'))
     try:
-        return SoftwareRepoURL.split(":")[0]
+       url_parse = urlparse.urlparse(software_repo_url)
+       return url_parse.scheme
     except AttributeError:
         return 'Could not obtain protocol'
 
@@ -62,31 +90,12 @@ def munkiinfo_report():
 
     if 'file' in munkiprotocol:
         munkiprotocol = 'localrepo'
-
-    report = ([{
-        'managedinstalldir': ManagedInstallDir,
-        'softwarerepourl': SoftwareRepoURL,
-        'packageurl': PackageURL,
-        'catalogurl': CatalogURL,
-        'manifesturl': ManifestURL,
-        'iconurl': IconURL,
-        'clientresourceurl': ClientResourceURL,
-        'helpurl': HelpURL,
-        'installapplesoftwareupdates': InstallAppleSoftwareUpdates,
-        'applesoftwareupdatesonly': AppleSoftwareUpdatesOnly,
-        'softwareupdateserverurl': SoftwareUpdateServerURL,
-        'daysbetweennotifications': DaysBetweenNotifications,
-        'useclientcertificate': UseClientCertificate,
-        'suppressusernotification': SuppressUserNotification,
-        'suppressautoinstall': SuppressAutoInstall,
-        'suppressstopbuttononinstall': SuppressStopButtonOnInstall,
-        'followhttpredirects': FollowHTTPRedirects,
-        'unattendedappleupdates': UnattendedAppleUpdates,
-        'installrequireslogout': InstallRequiresLogout,
-        'localonlymanifest': LocalOnlyManifest,
+    report = {
         'munkiprotocol': munkiprotocol,
-    }])
-    return report
+        'additionalhttpheaders': str(pref_to_str(munkicommon.pref('AdditionalHttpHeaders'))),
+    }
+    report.update(formated_prefs())
+    return ([report])
 
 def main():
     """Main"""
