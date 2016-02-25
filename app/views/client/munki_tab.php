@@ -67,142 +67,147 @@
 				<th>Duration:</th>
 				<td><?php echo $duration; ?> seconds</td>
 			</tr>
-			<tr>
-				<td>
-					<!-- <Additional Munki Info> -->
-						<style>
-							/* Popover */
-							.popover {
-							  border: 2px solid black;
-							  width:550px;
-							}
-						</style>
-						<a data-container="body"
-							data-toggle="popover"
-							data-html="true"
-							data-placement="right"
-							data-trigger="click"
-							data-content='
-								<table class="table table-striped">
-									<tr>
-										<th>Protocol:</th>
-										<td><?php echo $munkiinfo->munkiprotocol; ?></td>
-									</tr>
-									<tr>
-										<th>ManagedInstallDir:</th>
-										<td><?php echo $munkiinfo->managedinstalldir; ?></td>
-									</tr>
-									<tr>
-										<th>AppleSoftwareUpdatesOnly:</th>
-										<!-- <td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>-->
-										<?php if($munkiinfo->applesoftwareupdatesonly == true): ?>
-											<td><?php echo 'True'; ?></td>
-										<?php else: ?>
-											<td><?php echo 'False'; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>InstallAppleSoftwareUpdates:</th>
-										<!-- <td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>-->
-										<?php if($munkiinfo->installapplesoftwareupdates == true): ?>
-											<td><?php echo 'True'; ?></td>
-										<?php else: ?>
-											<td><?php echo 'False'; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>UnattendedAppleUpdates:</th>
-										<?php if($munkiinfo->unattendedappleupdates = 'None'): ?>
-											<td><?php echo 'Value not set'; ?></td>
-										<?php else: ?>
-											<td><?php echo $munkiinfo->followhttpredirects; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>DaysBetweenNotifications:</th>
-										<td><?php echo $munkiinfo->daysbetweennotifications; ?></td>
-									</tr>
-									<tr>
-										<th>UseClientCertificate:</th>
-										<?php if($munkiinfo->useclientcertificate == true): ?>
-											<td><?php echo 'True'; ?></td>
-										<?php else: ?>
-											<td><?php echo 'False'; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>FollowHTTPRedirects:</th>
-										<?php if($munkiinfo->followhttpredirects = 'None'): ?>
-											<td><?php echo 'Value not set'; ?></td>
-										<?php else: ?>
-											<td><?php echo $munkiinfo->followhttpredirects; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>SuppressUserNotification:</th>
-										<?php if($munkiinfo->suppressusernotification == true): ?>
-											<td><?php echo 'True'; ?></td>
-										<?php else: ?>
-											<td><?php echo 'False'; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>SuppressAutoInstall:</th>
-										<?php if($munkiinfo->suppressautoinstall == true): ?>
-											<td><?php echo 'True'; ?></td>
-										<?php else: ?>
-											<td><?php echo 'False'; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>SuppressStopButtonOnInstall:</th>
-										<!-- <td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>-->
-										<?php if($munkiinfo->suppressstopbuttononinstall == true): ?>
-											<td><?php echo 'True'; ?></td>
-										<?php else: ?>
-											<td><?php echo 'False'; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>InstallRequiresLogout:</th>
-										<!-- <td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>-->
-										<?php if($munkiinfo->installrequireslogout == true): ?>
-											<td><?php echo 'True'; ?></td>
-										<?php else: ?>
-											<td><?php echo 'False'; ?></td>
-										<?php endif; ?>
-									</tr>
-									<tr>
-										<th>PackageURL:</th>
-										<td><?php echo $munkiinfo->packageurl; ?></td>
-									</tr>
-									<tr>
-										<th>CatalogURL:</th>
-										<td><?php echo $munkiinfo->catalogurl; ?></td>
-									</tr>
-									<tr>
-										<th>ManifestURL:</th>
-										<td><?php echo $munkiinfo->manifesturl; ?></td>
-									</tr>
-									<tr>
-										<th>IconURL:</th>
-										<td><?php echo $munkiinfo->iconurl; ?></td>
-									</tr>
-									<tr>
-										<th>ClientResourceURL:</th>
-										<td><?php echo $munkiinfo->clientresourceurl; ?></td>
-									</tr>
-									<tr>
-										<th>HelpURL:</th>
-										<td><?php echo $munkiinfo->helpurl; ?></td>
-									</tr>
-								</table>
-						'><b>Additional Munki Info</b></a>
-						<!-- </Additional Munki Info> -->
-				</td>
 		</table>
-
 	</div><!-- </div class="col-lg-6"> -->
+
+	<!-- <Additional Munki Info> -->
+	<style>
+		/* Popover */
+		.popover {
+		  border: 2px solid black;
+		  width:550px;
+		}
+		.munkiinfo {
+			position: relative;
+			top: -15px;
+			left: 15px;
+		}
+	</style>
+	<button class="btn btn-info btn-sm munkiinfo">
+	<a data-container="body"
+		data-toggle="popover"
+		data-html="true"
+		data-placement="right"
+		data-trigger="click"
+		data-content='
+			<table class="table table-striped">
+			<caption>Additional Munki Info</caption>
+				<tr>
+					<th>Protocol:</th>
+					<td><?php echo $munkiinfo->munkiprotocol; ?></td>
+				</tr>
+				<tr>
+					<th>ManagedInstallDir:</th>
+					<td><?php echo $munkiinfo->managedinstalldir; ?></td>
+				</tr>
+				<tr>
+					<th>AppleSoftwareUpdatesOnly:</th>
+					<!-- <td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>-->
+					<?php if($munkiinfo->applesoftwareupdatesonly == true): ?>
+						<td><?php echo 'True'; ?></td>
+					<?php else: ?>
+						<td><?php echo 'False'; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>InstallAppleSoftwareUpdates:</th>
+					<!-- <td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>-->
+					<?php if($munkiinfo->installapplesoftwareupdates == true): ?>
+						<td><?php echo 'True'; ?></td>
+					<?php else: ?>
+						<td><?php echo 'False'; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>UnattendedAppleUpdates:</th>
+					<?php if($munkiinfo->unattendedappleupdates = 'None'): ?>
+						<td><?php echo 'Value not set'; ?></td>
+					<?php else: ?>
+						<td><?php echo $munkiinfo->followhttpredirects; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>DaysBetweenNotifications:</th>
+					<td><?php echo $munkiinfo->daysbetweennotifications; ?></td>
+				</tr>
+				<tr>
+					<th>UseClientCertificate:</th>
+					<?php if($munkiinfo->useclientcertificate == true): ?>
+						<td><?php echo 'True'; ?></td>
+					<?php else: ?>
+						<td><?php echo 'False'; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>FollowHTTPRedirects:</th>
+					<?php if($munkiinfo->followhttpredirects = 'None'): ?>
+						<td><?php echo 'Value not set'; ?></td>
+					<?php else: ?>
+						<td><?php echo $munkiinfo->followhttpredirects; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>SuppressUserNotification:</th>
+					<?php if($munkiinfo->suppressusernotification == true): ?>
+						<td><?php echo 'True'; ?></td>
+					<?php else: ?>
+						<td><?php echo 'False'; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>SuppressAutoInstall:</th>
+					<?php if($munkiinfo->suppressautoinstall == true): ?>
+						<td><?php echo 'True'; ?></td>
+					<?php else: ?>
+						<td><?php echo 'False'; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>SuppressStopButtonOnInstall:</th>
+					<!-- <td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>-->
+					<?php if($munkiinfo->suppressstopbuttononinstall == true): ?>
+						<td><?php echo 'True'; ?></td>
+					<?php else: ?>
+						<td><?php echo 'False'; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>InstallRequiresLogout:</th>
+					<!-- <td><?php echo $munkiinfo->InstallAppleSoftwareUpdates; ?></td>-->
+					<?php if($munkiinfo->installrequireslogout == true): ?>
+						<td><?php echo 'True'; ?></td>
+					<?php else: ?>
+						<td><?php echo 'False'; ?></td>
+					<?php endif; ?>
+				</tr>
+				<tr>
+					<th>PackageURL:</th>
+					<td><?php echo $munkiinfo->packageurl; ?></td>
+				</tr>
+				<tr>
+					<th>CatalogURL:</th>
+					<td><?php echo $munkiinfo->catalogurl; ?></td>
+				</tr>
+				<tr>
+					<th>ManifestURL:</th>
+					<td><?php echo $munkiinfo->manifesturl; ?></td>
+				</tr>
+				<tr>
+					<th>IconURL:</th>
+					<td><?php echo $munkiinfo->iconurl; ?></td>
+				</tr>
+				<tr>
+					<th>ClientResourceURL:</th>
+					<td><?php echo $munkiinfo->clientresourceurl; ?></td>
+				</tr>
+				<tr>
+					<th>HelpURL:</th>
+					<td><?php echo $munkiinfo->helpurl; ?></td>
+				</tr>
+			</table>
+		'><b><font color="white">Additional Munki Info</font></b></a>	</button>
+	<!-- </Additional Munki Info> -->
+
 
 	<script>
 			$(document).on('appReady', function(e, lang) {
