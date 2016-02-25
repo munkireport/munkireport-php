@@ -232,11 +232,11 @@
 					<td><?php echo $munkiinfo->softwarerepocapath; ?></td>
 				</tr>
 				<tr>
-					<th>SoftwareRepoURL (depreciated):</th>
+					<th>SoftwareRepoURL:</th>
 					<td><?php echo $munkiinfo->softwarerepourl; ?></td>
 				</tr>
 				<tr>
-					<th>SoftwareUpdateServerURL:</th>
+					<th>SoftwareUpdateServerURL (depreciated):</th>
 					<td><?php echo $munkiinfo->softwareupdateserverurl; ?></td>
 				</tr>
 				<tr>
