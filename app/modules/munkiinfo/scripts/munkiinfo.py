@@ -8,6 +8,7 @@ import os
 import plistlib
 import sys
 import urlparse
+from Foundation import CFPreferencesCopyAppValue
 
 sys.path.append('/usr/local/munki')
 try:
@@ -103,6 +104,7 @@ def munkiinfo_report():
     	'applecatalogurl': applecatalogurl,
         'munkiprotocol': munkiprotocol,
         'additionalhttpheaders': str(pref_to_str(munkicommon.pref('AdditionalHttpHeaders'))),
+        'applesoftwareupdate_catalogurl': str(CFPreferencesCopyAppValue('CatalogURL', 'com.apple.softwareupdate')),
     }
     report.update(formated_prefs())
     return ([report])
