@@ -6,28 +6,44 @@ class munkiinfo_model extends Model {
                 parent::__construct('id', 'munkiinfo'); //primary key, tablename
                 $this->rs['id'] = '';
                 $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-                $this->rs['managedinstalldir'] = '';
-                $this->rs['softwarerepourl'] = '';
-                $this->rs['packageurl'] = '';
-                $this->rs['catalogurl'] = '';
-                $this->rs['manifesturl'] = '';
-                $this->rs['iconurl'] = '';
-                $this->rs['clientresourceurl'] = '';
-                $this->rs['helpurl'] = '';
-                $this->rs['installapplesoftwareupdates']  = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['additionalhttpheaders'] = ''; //Array, probably needs more work
                 $this->rs['applesoftwareupdatesonly'] = 'BOOL';  // Enabled = 1, Disabled = 0
-                $this->rs['softwareupdateserverurl'] = '';
+                $this->rs['catalogurl'] = '';
+                $this->rs['clientcertificatepath'] = '';
+                $this->rs['clientidentifier'] = '';
+                $this->rs['clientkeypath'] = '';
+                $this->rs['clientresourcesfilename'] = '';
+                $this->rs['clientresourceurl'] = '';
                 $this->rs['daysbetweennotifications'] = ''; // integer
-                $this->rs['useclientcertificate'] = 'BOOL';  // Enabled = 1, Disabled = 0
-                $this->rs['suppressusernotification'] = 'BOOL';  // Enabled = 1, Disabled = 0
-                $this->rs['suppressautoinstall'] = 'BOOL';  // Enabled = 1, Disabled = 0
-                $this->rs['suppressstopbuttononinstall'] = 'BOOL';  // Enabled = 1, Disabled = 0
                 $this->rs['followhttpredirects'] = '';
-                $this->rs['unattendedappleupdates'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['helpurl'] = '';
+                $this->rs['iconurl'] = '';
+                $this->rs['installapplesoftwareupdates']  = 'BOOL';  // Enabled = 1, Disabled = 0
                 $this->rs['installrequireslogout'] = 'BOOL';  // Enabled = 1, Disabled = 0
                 $this->rs['localonlymanifest'] = '';
+                $this->rs['logfile'] = '';
+                $this->rs['logginglevel'] = ''; // integer
+                $this->rs['logtosyslog'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['managedinstalldir'] = '';
+                $this->rs['manifesturl'] = '';
+                $this->rs['msudebuglogenabled'] = '';
+                $this->rs['msudebuglogenabled'] = '';
+                $this->rs['msulogenabled'] = '';
                 $this->rs['munkiprotocol'] = '';
-
+                $this->rs['packageurl'] = '';
+                $this->rs['packageverificationmode'] = '';
+                $this->rs['showremovaldetail'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['softwarerepocacertificate'] = '';
+                $this->rs['softwarerepocapath'] = '';
+                $this->rs['softwarerepourl'] = '';
+                $this->rs['softwareupdateserverurl'] = '';
+                $this->rs['suppressautoinstall'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['suppressloginwindowinstall'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['suppressstopbuttononinstall'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['suppressusernotification'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['unattendedappleupdates'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['useclientcertificate'] = 'BOOL';  // Enabled = 1, Disabled = 0
+                $this->rs['useclientcertificatecnasclientidentifier'] = '';
                 // Schema version, increment when creating a db migration
                 $this->schema_version = 0;
 
