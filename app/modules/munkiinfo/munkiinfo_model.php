@@ -7,6 +7,7 @@ class munkiinfo_model extends Model {
                 $this->rs['id'] = '';
                 $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
                 $this->rs['additionalhttpheaders'] = ''; //Array, probably needs more work
+                $this->rs['applecatalogurl'] = '';
                 $this->rs['applesoftwareupdatesonly'] = 'BOOL';  // Enabled = 1, Disabled = 0
                 $this->rs['catalogurl'] = '';
                 $this->rs['clientcertificatepath'] = '';
