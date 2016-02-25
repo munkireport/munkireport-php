@@ -3,6 +3,7 @@
 munkiinfo for munkireport
 """
 
+from Foundation import CFPreferencesCopyAppValue
 import os
 import plistlib
 import sys
@@ -84,13 +85,22 @@ def get_munkiprotocol():
     except AttributeError:
         return 'Could not obtain protocol'
 
+def get_applecatalogurl():
+    """Get the Apple Catalog URL for orgs managing outside of munki"""
+    apple_catalog_url = pref_to_str(CFPreferencesCopyAppValue('CatalogURL', 'com.apple.SoftwareUpdate'))
+    try:
+       return apple_catalog_url
+    except AttributeError:
+        return 'Not Set'
+
 def munkiinfo_report():
     """Build our report data for our munkiinfo plist"""
     munkiprotocol = get_munkiprotocol()
-
+    applecatalogurl = get_applecatalogurl()
     if 'file' in munkiprotocol:
         munkiprotocol = 'localrepo'
     report = {
+	'applecatalogurl': applecatalogurl,
         'munkiprotocol': munkiprotocol,
         'additionalhttpheaders': str(pref_to_str(munkicommon.pref('AdditionalHttpHeaders'))),
     }
