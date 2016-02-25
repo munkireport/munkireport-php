@@ -74,8 +74,11 @@
 	<style>
 		/* Popover */
 		.popover {
-		  border: 2px solid black;
-		  width:550px;
+		  	border-bottom:1px solid #ebebeb;
+		  	-webkit-border-radius:5px 5px 0 0;
+    	  	-moz-border-radius:5px 5px 0 0;
+    	  	border-radius:5px 5px 0 0;
+		  	width:550px;
 		}
 		.munkiinfo {
 			position: relative;
@@ -394,9 +397,37 @@ if(isset($report['ItemsToRemove']))
 
 <pre><?php //print_r($client->rs) ?></pre>
 <script>
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover();   
+// Popup Close button - Credit to https://jsfiddle.net/backos/T5Bev/
+$.fn.extend({
+    popoverClosable: function (options) {
+        var defaults = {
+            template:
+                '<div class="popover">\
+<div class="arrow"></div>\
+<div class="popover-header">\
+<button type="button" class="close" data-dismiss="popover" aria-hidden="true">&times;</button>\
+<h3 class="popover-title"></h3>\
+</div>\
+<div class="popover-content"></div>\
+</div>'
+        };
+        options = $.extend({}, defaults, options);
+        var $popover_togglers = this;
+        $popover_togglers.popover(options);
+        $popover_togglers.on('click', function (e) {
+            e.preventDefault();
+            $popover_togglers.not(this).popover('hide');
+        });
+        $('html').on('click', '[data-dismiss="popover"]', function (e) {
+            $popover_togglers.popover('hide');
+        });
+    }
 });
+
+$(function () {
+    $('[data-toggle="popover"]').popoverClosable();
+});
+// Popup close button
 
 $(document).on('appReady', function(e, lang) {
 
