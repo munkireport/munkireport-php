@@ -1,7 +1,10 @@
 <?php $client = new Munkireport_model($serial_number); ?>
-<?php $munkiinfo = new munkiinfo_model($serial_number); ?>
 
 <?php $report = $client->report_plist; ?>
+
+<?php $pref_obj = new munkiinfo_model();
+
+$munkiPreferences = $pref_obj->itemsBySerialNumber($serial_number); ?>
 
 <?php if( ! $report): ?>
 	<p><i>No Munkireport data</i></p>
@@ -93,205 +96,18 @@
 		data-placement="right"
 		data-trigger="click"
 		data-content='
-			<table class="table table-striped">
-			<caption>Additional Munki Info</caption>
+		<table class="table table-striped">
+		<caption>Additional Munki Info</caption>
+			<tbody>
+			<?php foreach($munkiPreferences as $item): ?>
 				<tr>
-					<th>AdditionalHTTPHeaders:</th>
-					<td><?php echo $munkiinfo->additionalhttpheaders; ?></td>
+					<th><?php echo $item->key; ?></th>
+					<td><?php echo $item->value; ?></td>
 				</tr>
-				<tr>
-					<th>AppleSoftwareUpdatesOnly:</th>
-					<?php if($munkiinfo->applesoftwareupdatesonly == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>CatalogURL:</th>
-					<td><?php echo $munkiinfo->catalogurl; ?></td>
-				</tr>
-				<tr>
-					<th>ClientCertificatePath:</th>
-					<td><?php echo $munkiinfo->clientcertificatepath; ?></td>
-				</tr>
-				<tr>
-					<th>ClientIdentifier:</th>
-					<td><?php echo $munkiinfo->clientidentifier; ?></td>
-				</tr>
-				<tr>
-					<th>ClientKeyPath:</th>
-					<td><?php echo $munkiinfo->clientkeypath; ?></td>
-				</tr>
-				<tr>
-					<th>ClientResourcesFileName:</th>
-					<td><?php echo $munkiinfo->clientresourcesfilename; ?></td>
-				</tr>
-				<tr>
-					<th>ClientResourceURL:</th>
-					<td><?php echo $munkiinfo->clientresourceurl; ?></td>
-				</tr>
-				<tr>
-					<th>DaysBetweenNotifications:</th>
-					<td><?php echo $munkiinfo->daysbetweennotifications; ?></td>
-				</tr>
-				<tr>
-					<th>FollowHTTPRedirects:</th>
-					<?php if($munkiinfo->followhttpredirects = 'None'): ?>
-						<td><?php echo 'Value not set'; ?></td>
-					<?php else: ?>
-						<td><?php echo $munkiinfo->followhttpredirects; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>HelpURL:</th>
-					<td><?php echo $munkiinfo->helpurl; ?></td>
-				</tr>
-				<tr>
-					<th>IconURL:</th>
-					<td><?php echo $munkiinfo->iconurl; ?></td>
-				</tr>
-				<tr>
-					<th>InstallAppleSoftwareUpdates:</th>
-					<?php if($munkiinfo->installapplesoftwareupdates == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>InstallRequiresLogout:</th>
-					<?php if($munkiinfo->installrequireslogout == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>LocalOnlyManifest:</th>
-					<td><?php echo $munkiinfo->localonlymanifest; ?></td>
-				</tr>
-				<tr>
-					<th>LogFile:</th>
-					<td><?php echo $munkiinfo->logfile; ?></td>
-				</tr>
-				<tr>
-					<th>LoggingLevel:</th>
-					<td><?php echo $munkiinfo->logginglevel; ?></td>
-				</tr>
-				<tr>
-					<th>LogToSysLog:</th>
-					<?php if($munkiinfo->logtosyslog == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>ManagedInstallDir:</th>
-					<td><?php echo $munkiinfo->managedinstalldir; ?></td>
-				</tr>
-				<tr>
-					<th>ManifestURL:</th>
-					<td><?php echo $munkiinfo->manifesturl; ?></td>
-				</tr>
-				<tr>
-					<th>MSUDebugLogEnabled:</th>
-					<td><?php echo $munkiinfo->msudebuglogenabled; ?></td>
-				</tr>
-				<tr>
-					<th>MSULogEnabled:</th>
-					<td><?php echo $munkiinfo->msulogenabled; ?></td>
-				</tr>
-				<tr>
-					<th>Protocol:</th>
-					<td><?php echo $munkiinfo->munkiprotocol; ?></td>
-				</tr>
-				<tr>
-					<th>PackageURL:</th>
-					<td><?php echo $munkiinfo->packageurl; ?></td>
-				</tr>
-				<tr>
-					<th>PackageVerificationMode:</th>
-					<td><?php echo $munkiinfo->packageverificationmode; ?></td>
-				</tr>
-				<tr>
-					<th>ShowRemovalDetail:</th>
-					<?php if($munkiinfo->showremovaldetail == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>SoftwareRepocaCertificate:</th>
-					<td><?php echo $munkiinfo->softwarerepocacertificate; ?></td>
-				</tr>
-				<tr>
-					<th>SoftwareRepoCAPath:</th>
-					<td><?php echo $munkiinfo->softwarerepocapath; ?></td>
-				</tr>
-				<tr>
-					<th>SoftwareRepoURL:</th>
-					<td><?php echo $munkiinfo->softwarerepourl; ?></td>
-				</tr>
-				<tr>
-					<th>SoftwareUpdateServerURL (depreciated):</th>
-					<td><?php echo $munkiinfo->softwareupdateserverurl; ?></td>
-				</tr>
-				<tr>
-					<th>SuppressAutoInstall:</th>
-					<?php if($munkiinfo->suppressautoinstall == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>SuppressLoginWindowInstall:</th>
-					<?php if($munkiinfo->suppressloginwindowinstall == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>SuppressStopButtonOnInstall:</th>
-					<?php if($munkiinfo->suppressstopbuttononinstall == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>SuppressUserNotification:</th>
-					<?php if($munkiinfo->suppressusernotification == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>UnattendedAppleUpdates:</th>
-					<?php if($munkiinfo->unattendedappleupdates = 'None'): ?>
-						<td><?php echo 'Value not set'; ?></td>
-					<?php else: ?>
-						<td><?php echo $munkiinfo->followhttpredirects; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>UseClientCertificate:</th>
-					<?php if($munkiinfo->useclientcertificate == true): ?>
-						<td><?php echo 'True'; ?></td>
-					<?php else: ?>
-						<td><?php echo 'False'; ?></td>
-					<?php endif; ?>
-				</tr>
-				<tr>
-					<th>UseClientCertificateCNAsClientIdentifier:</th>
-					<td><?php echo $munkiinfo->useclientcertificatecnasclientidentifier; ?></td>
-				</tr>
-			</table>
+			<?php endif; ?>
+			<?php endforeach; ?>
+			</tbody>
+		</table>
 		'><b><font color="white">Additional Munki Info</font></b></a>	</button>
 	<!-- </Additional Munki Info> -->
 

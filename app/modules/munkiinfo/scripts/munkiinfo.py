@@ -17,14 +17,19 @@ except ImportError, msg:
     exit(1)
 
 def pref_to_str(pref_value):
-    """If the value of a preference is None return a string type
-    so we can write this data to a plist."""
+    """If the value of a preference is None return an empty string type
+    so we can write this data to a plist. Convert Bool values to strings
+    for easy display in MunkiReport."""
     if pref_value is None:
-        # convert to strings
-        pref_value = str(pref_value)
-        return pref_value
+        # convert to empty string for values that are not set
+        pref_value = ''
+    elif pref_value is True:
+        pref_value = 'True'
+    elif pref_value is False:
+        pref_value = 'False'
     else:
         return pref_value
+    return pref_value
 
 def munki_prefs():
     """A full listing of all Munki preferences"""
@@ -73,7 +78,7 @@ def formated_prefs():
     my_dict = {}
     for pref in munki_prefs():
         pref_value = pref_to_str(munkicommon.pref(pref))
-        my_dict.update({pref.lower(): pref_value})
+        my_dict.update({pref: pref_value})
     return my_dict
 
 def get_munkiprotocol():
@@ -88,13 +93,16 @@ def get_munkiprotocol():
 def munkiinfo_report():
     """Build our report data for our munkiinfo plist"""
     munkiprotocol = get_munkiprotocol()
-
     if 'file' in munkiprotocol:
         munkiprotocol = 'localrepo'
+
+    AppleCatalogURL = str(CFPreferencesCopyAppValue('CatalogURL', 'com.apple.softwareupdate'))
+    if AppleCatalogURL == 'None':
+        AppleCatalogURL = ''
+
     report = {
-        'applecatalogurl': str(CFPreferencesCopyAppValue('CatalogURL', 'com.apple.softwareupdate')),
+        'AppleCatalogURL': AppleCatalogURL,
         'munkiprotocol': munkiprotocol,
-        'additionalhttpheaders': str(pref_to_str(munkicommon.pref('AdditionalHttpHeaders'))),
     }
     report.update(formated_prefs())
     return ([report])
