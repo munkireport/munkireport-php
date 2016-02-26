@@ -53,7 +53,6 @@ def munki_prefs():
         'SoftwareRepoCACertificate',
         'ClientCertificatePath',
         'ClientKeyPath',
-        # 'AdditionalHttpHeaders',
         'PackageVerificationMode',
         'SuppressUserNotification',
         'SuppressAutoInstall',

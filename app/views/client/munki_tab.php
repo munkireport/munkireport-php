@@ -96,10 +96,6 @@
 			<table class="table table-striped">
 			<caption>Additional Munki Info</caption>
 				<tr>
-					<th>AdditionalHTTPHeaders:</th>
-					<td><?php echo $munkiinfo->additionalhttpheaders; ?></td>
-				</tr>
-				<tr>
 					<th>AppleSoftwareUpdatesOnly:</th>
 					<?php if($munkiinfo->applesoftwareupdatesonly == true): ?>
 						<td><?php echo 'True'; ?></td>
