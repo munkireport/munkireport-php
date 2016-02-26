@@ -104,7 +104,6 @@ $munkiPreferences = $pref_obj->itemsBySerialNumber($serial_number); ?>
 					<th><?php echo $item->key; ?></th>
 					<td><?php echo $item->value; ?></td>
 				</tr>
-			<?php endif; ?>
 			<?php endforeach; ?>
 			</tbody>
 		</table>
