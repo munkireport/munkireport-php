@@ -368,6 +368,11 @@
 		"tab_title": "Installed Printers",
 		"url": "URL"
 	},	
+	"security": {
+		"security": "Security",
+		"gatekeeper": "Gatekeeper Status",
+		"sip": "SIP Status"
+	},
 	"serial": "Serial Number",
 	"servermetrics": {
 		"tab": "Server Metrics"
