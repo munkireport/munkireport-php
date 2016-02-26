@@ -20,6 +20,7 @@ new Location_model;
             <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
             <th data-i18n="location.currentstatus" data-colname='location.CurrentStatus'></th>
             <th data-i18n="location.lastrun" data-colname='location.LastRun'></th>
+            <th data-i18n="location.stalelocation" data-colname='location.StaleLocation'></th>
             <th data-i18n="location.address" data-colname='location.Address'></th>
           </tr>
         </thead>

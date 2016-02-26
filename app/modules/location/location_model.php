@@ -10,18 +10,20 @@ class Location_model extends Model {
 		$this->rs['altitude'] = 0;
 		$this->rs['currentstatus'] = '';
 		$this->rs['ls_enabled'] = 0;
+		$this->rs['lastlocationrun'] = '';
 		$this->rs['lastrun'] = '';
 		$this->rs['latitude'] = 0.0;
 		$this->rs['latitudeaccuracy'] = 0;
 		$this->rs['longitude'] = 0.0;
 		$this->rs['longitudeaccuracy'] = 0;
+		$this->rs['stalelocation'] = '';
 		
 		// Add indexes
 		$this->idx[] = array('address');
 		$this->idx[] = array('currentstatus');
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
+		$this->schema_version = 1;
 		
 		// Create table if it does not exist
 		$this->create_table();
@@ -58,11 +60,13 @@ class Location_model extends Model {
 			'CurrentStatus' => 'currentstatus',
 			'GoogleMap' => 'googlemap',
 			'LS_Enabled' => 'ls_enabled',
+			'LastLocationRun' => 'lastlocationrun',
 			'LastRun' => 'lastrun',
 			'Latitude' => 'latitude',
 			'LatitudeAccuracy' => 'latitudeaccuracy',
 			'Longitude' => 'longitude',
-			'LongitudeAccuracy' => 'longitudeaccuracy');
+			'LongitudeAccuracy' => 'longitudeaccuracy',
+			'StaleLocation' => 'stalelocation');
 
 		// Parse data
 		foreach($translate as $search => $field) {
