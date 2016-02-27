@@ -73,7 +73,7 @@ class gsx_controller extends Module_controller
 	 *
 	 * @param string $serial serial number
 	 **/
-	public function get_gsx_data($serial_number = '')
+	public function get_data($serial_number = '')
 	{
 		$obj = new View();
 

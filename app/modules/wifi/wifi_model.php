@@ -13,7 +13,7 @@ class wifi_model extends Model {
 		$this->rs['state'] = '';
 		$this->rs['op_mode'] = '';
 		$this->rs['lasttxrate'] = 0;
-		$this->rs['lastassocstatus'] = 0;
+		$this->rs['lastassocstatus'] = '';
 		$this->rs['maxrate'] = 0;
 		$this->rs['x802_11_auth'] = '';
 		$this->rs['link_auth'] = '';
