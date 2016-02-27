@@ -298,10 +298,12 @@
 		"currentstatus": "Current Status",
 		"ls_enabled": "Location Services Enabled",
 		"lastrun": "Last Run",
+        "lastlocationrun": "Last Location Run",
 		"latitude": "Latitude",
 		"latitudeaccuracy": "Latitude Accuracy",
 		"longitude": "Longitude",
-		"longitudeaccuracy": "Longitude Accuracy"
+		"longitudeaccuracy": "Longitude Accuracy",
+        "stalelocation": "Stale Location"
 	},
 	"machine": {
 		"hardware_widget_title": "Hardware model breakdown"
@@ -419,6 +421,11 @@
 		"tab_title": "Installed Printers",
 		"url": "URL"
 	},	
+    "security": {
+		"security": "Security",
+		"gatekeeper": "Gatekeeper Status",
+		"sip": "SIP Status"
+	},
 	"serial": "Serial Number",
 	"servermetrics": {
 		"tab": "Server Metrics"
