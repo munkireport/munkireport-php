@@ -359,7 +359,8 @@
 			"profile": "Profiles",
 			"security": "Security",
 			"timemachine": "Time Machine",
-			"warranty": "Warranty"
+			"warranty": "Warranty",
+			"wifi": "WiFi"
 		},
 		"main": {
 		  "dashboard": "Dashboard",
@@ -564,6 +565,8 @@
 	},
     "wifi": {
         "apmode": "Access Point Mode",
+        "bssid": "BSSID",
+        "channel": "Channel",
         "extrssi": "External RSSI",
         "lasttrx": "Last Transmit Rate (Mbps)",
         "maxtrx": "Maximum Transmit Rate (Mbps)",
@@ -572,6 +575,7 @@
         "nonetworks": "No Networks",
         "rssilevel": "RSSI Level",
         "state": "WiFi State",
+        "ssid": "SSID",
         "xauthtype": "802.11X Authentication Type",
         "wifiauthtype": "WiFi Authentication Type",
         "wifiinfo": "WiFi Information"
