@@ -359,7 +359,8 @@
 			"profile": "Profiles",
 			"security": "Security",
 			"timemachine": "Time Machine",
-			"warranty": "Warranty"
+			"warranty": "Warranty",
+			"wifi": "WiFi"
 		},
 		"main": {
 		  "dashboard": "Dashboard",
