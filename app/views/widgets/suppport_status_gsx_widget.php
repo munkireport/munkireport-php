@@ -25,16 +25,16 @@ $(document).on('appUpdate', function(e, lang) {
 		
 		// Set statuses
 		if(data.obsolete){
-			panel.append('<a href="'+baseUrl+'" class="btn btn-danger"><span class="bigger-150">'+data.obsolete+'</span><br>'+i18n.t('gsx.obsolete')+'</a>');
+			panel.append(' <a href="'+baseUrl+'" class="btn btn-danger"><span class="bigger-150">'+data.obsolete+'</span><br>'+i18n.t('gsx.obsolete')+'</a>');
 		}
 		if(data.vintage){
-			panel.append('<a href="'+baseUrl+'#VIN" class="btn btn-warning"><span class="bigger-150">'+data.vintage+'</span><br>'+i18n.t('gsx.vintage')+'</a>');
+			panel.append(' <a href="'+baseUrl+'#VIN" class="btn btn-warning"><span class="bigger-150">'+data.vintage+'</span><br>'+i18n.t('gsx.vintage')+'</a>');
 		}
 		if(data.supported){
-			panel.append('<a href="'+baseUrl+'" class="btn btn-success"><span class="bigger-150">'+data.supported+'</span><br>'+i18n.t('gsx.supported')+'</a>');
+			panel.append(' <a href="'+baseUrl+'" class="btn btn-success"><span class="bigger-150">'+data.supported+'</span><br>'+i18n.t('gsx.supported')+'</a>');
 		}
 		if(data.unknown){
-			panel.append('<a href="'+baseUrl+'" class="btn btn-info"><span class="bigger-150">'+data.unknown+'</span><br>'+i18n.t('unknown')+'</a>');
+			panel.append(' <a href="'+baseUrl+'" class="btn btn-info"><span class="bigger-150">'+data.unknown+'</span><br>'+i18n.t('unknown')+'</a>');
 		}
 
     });

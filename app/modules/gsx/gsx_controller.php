@@ -48,7 +48,7 @@ class gsx_controller extends Module_controller
 	}
     
     /**
-	 * Get GSX information
+	 * Get GSX information for widget
 	 *
 	 * @return void
 	 * @author John Eberle (tuxudo)

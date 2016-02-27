@@ -105,7 +105,7 @@
 			"certificates": "Certificates",
 			"displays": "Displays",
 			"ds": "Directory Services",
-            "gsx": "GSX",
+			"gsx": "GSX",
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
 			"location": "Location",
@@ -117,7 +117,8 @@
 			"serverstats": "Server Statistics",
 			"summary": "Summary",
 			"third_party_software": "Third Party Software",
-			"timemachine": "Time Machine"
+			"timemachine": "Time Machine",
+			"wifi": "WiFi"
 		},
 		"installed_apple_software": "Installed Apple Software",
 		"installed_third_party_software": "Installed Third Party Software",
@@ -135,6 +136,7 @@
 		}
 	},
 	"configuration": "Configuration",
+    "connected": "Connected",
 	"cpu": {
 		"arch": "CPU Architecture",
 		"core": "core",
@@ -277,7 +279,17 @@
 			"last_success": "Last successful backup",
 			"title": "Time Machine Report"
 		},
-		"username": "Username"
+		"username": "Username",
+        "wifi": {
+            "apmode": "AP Mode",
+            "authtype": "802.11X Auth Type", 
+            "channel": "Channel", 
+            "lasttx": "Last Tx Rate (Mbps)", 
+            "linkauthtype": "Link Auth Type", 
+            "maxtx": "Max Tx Rate (Mbps)", 
+            "noise": "Noise", 
+            "state": "WiFi State"
+        }
 	},
 	"location": {
 		"address": "Address",
@@ -286,12 +298,10 @@
 		"currentstatus": "Current Status",
 		"ls_enabled": "Location Services Enabled",
 		"lastrun": "Last Run",
-		"lastlocationrun": "Last Location Run",
 		"latitude": "Latitude",
 		"latitudeaccuracy": "Latitude Accuracy",
 		"longitude": "Longitude",
-		"longitudeaccuracy": "Longitude Accuracy",
-		"stalelocation": "Stale Location"
+		"longitudeaccuracy": "Longitude Accuracy"
 	},
 	"machine": {
 		"hardware_widget_title": "Hardware model breakdown"
@@ -409,11 +419,6 @@
 		"tab_title": "Installed Printers",
 		"url": "URL"
 	},	
-	"security": {
-		"security": "Security",
-		"gatekeeper": "Gatekeeper Status",
-		"sip": "SIP Status"
-	},
 	"serial": "Serial Number",
 	"servermetrics": {
 		"tab": "Server Metrics"
@@ -549,5 +554,19 @@
             "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
             "warrentysupportstatus": "Warranty Support Status"
         }
-	}
+	},
+    "wifi": {
+        "apmode": "Access Point Mode",
+        "extrssi": "External RSSI",
+        "lasttrx": "Last Transmit Rate (Mbps)",
+        "maxtrx": "Maximum Transmit Rate (Mbps)",
+        "networks": "WiFi Networks",
+        "noise": "Noise Level",
+        "nonetworks": "No Networks",
+        "rssilevel": "RSSI Level",
+        "state": "WiFi State",
+        "xauthtype": "802.11X Authentication Type",
+        "wifiauthtype": "WiFi Authentication Type",
+        "wifiinfo": "WiFi Information"
+    }
 }
