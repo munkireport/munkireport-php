@@ -2,21 +2,6 @@
 $gsx_obj = new gsx_model($serial_number);
 ?>
 
-<script>
-   // $(document).on('appReady', function(e, lang) {
-        //$.getJSON(appUrl + '/module/gsx/get_gsx_data/' + serialNumber, function(data){
-
-          //  gsxData = data[0];
-
-            // Set properties based on id
-            //$.each(gsxData, function(prop, val){
-              //  $('.mr-'+prop).html(val);
-        //    });
-            
-        //});
-    //}
-</script>
-
 <h2>GSX <a data-i18n="gsx.recheck" class="btn btn-default btn-xs" href="<?php echo url('module/gsx/recheck_gsx/' . $serial_number);?>"></a></h2>
 
         <table class="table table-striped table-bordered">
