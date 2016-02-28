@@ -20,6 +20,8 @@ if [[ ${osvers} -ge 7 ]]; then
    else
       gatekeeper=Active
    fi
+else 
+ 	  gatekeeper="Not Supported"
 #   echo "Gatekeeper is $gatekeeper"
 fi
 
@@ -33,7 +35,7 @@ if [[ ${osvers} -ge 11 ]]; then
    else
       sip=Active
    fi
-    else 
+else 
 	  sip="Not Supported"
 #   echo "SIP is $sip_status"
 fi
