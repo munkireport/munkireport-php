@@ -83,7 +83,7 @@ class gsx_model extends Model {
 	 **/
 	public function getGSXSupportStats()
 	{
-		$sql = "SELECT 	COUNT(CASE WHEN isobsolete = 'Yes' THEN 1 END) AS obsolete,
+		$sql = "SELECT COUNT(CASE WHEN isobsolete = 'Yes' THEN 1 END) AS obsolete,
 				COUNT(CASE WHEN isvintage = 'Yes' THEN 1 END) AS vintage,
 				COUNT(CASE WHEN isvintage = 'No' AND isobsolete = 'No' AND warrantystatus IS NOT NULL THEN 1 END) AS supported,
 				COUNT(CASE WHEN isvintage IS NULL AND isobsolete IS NULL THEN 1 END) AS unknown

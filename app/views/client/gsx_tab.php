@@ -1,64 +1,125 @@
-<?php //Initialize models needed for the table
-$gsx_obj = new gsx_model($serial_number);
-?>
+<h2>GSX <a data-i18n="gsx.recheck" class="btn btn-default btn-xs" href="<?php echo url('module/gsx/recheck_gsx/' . $serial_number);?>"></a></h2>
+	
+	<div id="gsx-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
 
-    <h2>GSX <a data-i18n="gsx.recheck" class="btn btn-default btn-xs" href="<?php echo url('module/gsx/recheck_gsx/' . $serial_number);?>"></a></h2>
+    <div id="gsx-view" class="row hide">
 
-        <table class="table table-striped table-bordered">
-            <tbody>
-                <tr">
-                    <td style="width:220px" data-i18n="warranty.coverage"></td>
-                    <td><?=$gsx_obj->warrantystatus?></td>
-                    <td style="width:220px" data-i18n="gsx.warrantydays"></td>
-                    <td><?=$gsx_obj->daysremaining?></td>
+        <div class="col-md-6">
+			<table class="table table-striped">
+				<tr>
+                	<th data-i18n="warranty.coverage"></th>
+					<td id="gsx-warrantystatus"></td>
                 </tr>
-                    <tr>
-                    <td data-i18n="gsx.coverage.start"></td>
-                    <td><?=$gsx_obj->coveragestartdate?></td>
-                    <td data-i18n="gsx.modeldescription"></td>
-                    <td><?=$gsx_obj->productdescription?></td>
+                <tr>
+                	<th data-i18n="gsx.estpurchasedate"></th>
+					<td id="gsx-estimatedpurchasedate"></td>
                 </tr>
-                    <tr>
-                    <td data-i18n="gsx.coverage.end">Coverage End Date</td>
-                    <td><?=$gsx_obj->coverageenddate?></td>
-                    <td data-i18n="gsx.configuration"></td>
-                    <td><?=$gsx_obj->configdescription?></td>
+                <tr>
+                	<th data-i18n="reg_date"></th>
+					<td id="gsx-registrationdate"></td>
                 </tr>
-                    <tr>
-                    <td data-i18n="gsx.estpurchasedate"></td>
-                    <td><?=$gsx_obj->estimatedpurchasedate?></td>
-                    <td data-i18n="gsx.laborcovered"></td>
-                    <td><?=$gsx_obj->laborcovered?></td>
+                <tr>
+                	<th data-i18n="gsx.warrantydays"></th>
+					<td id="gsx-daysremaining"></td>
                 </tr>
-                    <tr>
-                    <td data-i18n="gsx.coverage.constart"></td>
-                    <td><?=$gsx_obj->contractcoveragestartdate?></td>
-                    <td data-i18n="gsx.partscovered"></td>
-                    <td><?=$gsx_obj->partcovered?></td>
+                <tr>
+                	<th data-i18n="gsx.coverage.start"></th>
+					<td id="gsx-coveragestartdate"></td>
                 </tr>
-                    <tr>
-                    <td data-i18n="gsx.coverage.conend"></td>
-                    <td><?=$gsx_obj->contractcoverageenddate?></td>
-                    <td data-i18n="gsx.contracttype"></td>
-                    <td><?=$gsx_obj->contracttype?></td>
+                <tr>
+                	<th data-i18n="gsx.coverage.end"></th>
+					<td id="gsx-coverageenddate"></td>
                 </tr>
-                    <tr>
-                    <td data-i18n="reg_date"></td>
-                    <td><?=$gsx_obj->registrationdate?></td>
-                    <td data-i18n="gsx.country"></td>
-                    <td><?=$gsx_obj->purchasecountry?></td>
+                <tr>
+                	<th data-i18n="gsx.coverage.constart"></th>
+					<td id="gsx-contractcoveragestartdate"></td>
                 </tr>
-                    <tr>
-                    <td data-i18n="gsx.sla"></td>
-                    <td><?=$gsx_obj->warrantyreferenceno?></td>
-                    <td data-i18n="gsx.loaner"></td>
-                    <td><?=$gsx_obj->isloaner?></td>
-                </tr>   
-                    <tr>
-                    <td data-i18n="gsx.vintage"></td>
-                    <td><?=$gsx_obj->isvintage?></td>
-                    <td data-i18n="gsx.obsolete"></td>
-                    <td><?=$gsx_obj->isobsolete?></td>
-                </tr>                   
-             </tbody>
-        </table>
+                <tr>
+                	<th data-i18n="gsx.coverage.conend"></th>
+					<td id="gsx-contractcoverageenddate"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.contracttype"></th>
+					<td id="gsx-contracttype"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.sla"></th>
+					<td id="gsx-warrantyreferenceno"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.modeldescription"></th>
+					<td id="gsx-productdescription"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.configuration"></th>
+					<td id="gsx-configdescription"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.laborcovered"></th>
+					<td id="gsx-laborcovered"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.partscovered"></th>
+					<td id="gsx-partcovered"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.country"></th>
+					<td id="gsx-purchasecountry"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.loaner"></th>
+					<td id="gsx-isloaner"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.vintage"></th>
+					<td id="gsx-isvintage"></td>
+                </tr>
+                <tr>
+                	<th data-i18n="gsx.obsolete"></th>
+					<td id="gsx-isobsolete"></td>
+                </tr>
+            </table>
+          </div>
+    </div>
+
+<script>
+$(document).on('appReady', function(e, lang) {
+	
+	// Get GSX data
+	$.getJSON( appUrl + '/module/gsx/get_data/' + serialNumber, function( data ) {
+		if( ! data.warrantystatus){
+			$('#gsx-msg').text(i18n.t('no_data'));
+		}
+		else{
+			
+			// Hide
+			$('#gsx-msg').text('');
+			$('#gsx-view').removeClass('hide');
+			
+			// Add strings
+			$('#gsx-warrantystatus').text(data.warrantystatus);
+			$('#gsx-coverageenddate').text(data.coverageenddate);
+			$('#gsx-coveragestartdate').text(data.coveragestartdate);
+			$('#gsx-daysremaining').text(data.daysremaining);
+			$('#gsx-estimatedpurchasedate').text(data.estimatedpurchasedate);
+			$('#gsx-purchasecountry').text(data.purchasecountry);
+			$('#gsx-registrationdate').text(data.registrationdate);
+			$('#gsx-productdescription').text(data.productdescription);
+			$('#gsx-configdescription').text(data.configdescription);
+			$('#gsx-contractcoverageenddate').text(data.contractcoverageenddate);
+			$('#gsx-contractcoveragestartdate').text(data.contractcoveragestartdate);
+			$('#gsx-contracttype').text(data.contracttype);
+			$('#gsx-laborcovered').text(data.laborcovered);
+			$('#gsx-partcovered').text(data.partcovered);
+			$('#gsx-warrantyreferenceno').text(data.warrantyreferenceno);
+			$('#gsx-isloaner').text(data.isloaner);
+			$('#gsx-warrantymod').text(data.warrantymod);
+			$('#gsx-isvintage').text(data.isvintage);
+			$('#gsx-isobsolete').text(data.isobsolete);      
+		}
+
+	});
+	
+});
+
+</script>

@@ -105,7 +105,7 @@
 			"certificates": "Certificates",
 			"displays": "Displays",
 			"ds": "Directory Services",
-            "gsx": "GSX",
+			"gsx": "GSX",
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
 			"location": "Location",
@@ -117,7 +117,8 @@
 			"serverstats": "Server Statistics",
 			"summary": "Summary",
 			"third_party_software": "Third Party Software",
-			"timemachine": "Time Machine"
+			"timemachine": "Time Machine",
+			"wifi": "WiFi"
 		},
 		"installed_apple_software": "Installed Apple Software",
 		"installed_third_party_software": "Installed Third Party Software",
@@ -135,6 +136,7 @@
 		}
 	},
 	"configuration": "Configuration",
+    "connected": "Connected",
 	"cpu": {
 		"arch": "CPU Architecture",
 		"core": "core",
@@ -204,29 +206,29 @@
 	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
-    "gsx": {
-        "configuration": "Shipping Configuration",
-        "contracttype": "Contract Type",
-        "country": "Country of Purchase",
-        "coverage": {
-            "conend": "Contract Coverage End Date",
-            "constart": "Contract Coverage Start Date",
+    	"gsx": {
+		"configuration": "Shipping Configuration",
+		"contracttype": "Contract Type",
+		"country": "Country of Purchase",
+		"coverage": {
+			"conend": "Contract Coverage End Date",
+			"constart": "Contract Coverage Start Date",
 			"start": "Coverage Start Date",
 			"end": "Coverage End Date"
 		},
-        "estpurchasedate": "Estimated Purchase Date",
-        "laborcovered": "Labor Covered",
-        "loaner": "Loaner",
-        "modeldescription": "Model Description",
-        "obsolete": "Obsolete",
-        "partscovered": "Parts Covered",
-        "recheck": "Recheck Warranty Status",
-        "sla": "Warranty SLA",
-        "supported": "Supported",
-        "vintage": "Vintage",
-        "warrantystatus": "Warranty Status",
-        "warrantydays": "Warranty Days Remaining",
-        "warrentyend": "Warranty End Date"
+		"estpurchasedate": "Estimated Purchase Date",
+		"laborcovered": "Labor Covered",
+		"loaner": "Loaner",
+		"modeldescription": "Model Description",
+		"obsolete": "Obsolete",
+		"partscovered": "Parts Covered",
+		"recheck": "Recheck Warranty Status",
+		"sla": "Warranty SLA",
+		"supported": "Supported",
+		"vintage": "Vintage",
+		"warrantystatus": "Warranty Status",
+		"warrantydays": "Warranty Days Remaining",
+		"warrentyend": "Warranty End Date"
 	},
 	"hardware": {
 		"hardware": "Hardware",
@@ -277,7 +279,17 @@
 			"last_success": "Last successful backup",
 			"title": "Time Machine Report"
 		},
-		"username": "Username"
+		"username": "Username",
+        "wifi": {
+            "apmode": "AP Mode",
+            "authtype": "802.11X Auth Type", 
+            "channel": "Channel", 
+            "lasttx": "Last Tx Rate (Mbps)", 
+            "linkauthtype": "Link Auth Type", 
+            "maxtx": "Max Tx Rate (Mbps)", 
+            "noise": "Noise", 
+            "state": "WiFi State"
+        }
 	},
 	"location": {
 		"address": "Address",
@@ -348,7 +360,8 @@
 			"profile": "Profiles",
 			"security": "Security",
 			"timemachine": "Time Machine",
-			"warranty": "Warranty"
+			"warranty": "Warranty",
+			"wifi": "WiFi"
 		},
 		"main": {
 		  "dashboard": "Dashboard",
@@ -550,5 +563,22 @@
             "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
             "warrentysupportstatus": "Warranty Support Status"
         }
-	}
+	},
+    "wifi": {
+        "apmode": "Access Point Mode",
+        "bssid": "BSSID",
+        "channel": "Channel",
+        "extrssi": "External RSSI",
+        "lasttrx": "Last Transmit Rate (Mbps)",
+        "maxtrx": "Maximum Transmit Rate (Mbps)",
+        "networks": "WiFi Networks",
+        "noise": "Noise Level",
+        "nonetworks": "No Networks",
+        "rssilevel": "RSSI Level",
+        "state": "WiFi State",
+        "ssid": "SSID",
+        "xauthtype": "802.11X Authentication Type",
+        "wifiauthtype": "WiFi Authentication Type",
+        "wifiinfo": "WiFi Information"
+    }
 }
