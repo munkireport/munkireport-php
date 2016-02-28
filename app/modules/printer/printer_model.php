@@ -28,6 +28,33 @@ class Printer_model extends Model {
 	
 	// ------------------------------------------------------------------------
 
+    /**
+	 * Get printer names for widget
+	 *
+	 **/
+    public function get_printers()
+	{
+        $out = array();
+        $sql = "SELECT COUNT(1) AS count, name 
+				    FROM printer
+				    LEFT JOIN reportdata USING (serial_number)
+                    ".get_machine_group_filter()."
+                    GROUP BY name
+                    ORDER BY count DESC";
+
+        
+        foreach($this->query($sql) as $obj)
+		{
+            if( "$obj->count" !== "0" )
+            {
+			$obj->name = $obj->name ? $obj->name : 'Unknown';
+			$out[] = $obj;
+            }
+		}
+		
+		return $out;
+    }
+    
 	/**
 	 * Process data sent by postflight
 	 *
@@ -49,7 +76,7 @@ class Printer_model extends Model {
         	'Printer Status: ' => 'printer_status',
         	'Printer Sharing: ' => 'printer_sharing');
 
-//clear any previous data we had
+        //clear any previous data we had
 		foreach($translate as $search => $field) {
 			$this->$field = '';
 		}
