@@ -75,10 +75,6 @@ class Location_model extends Model {
 			{
 				$this->$field = $plist[$search];
 			}
-			else
-			{
-				$this->$field = '';
-			}
 		}
 				    
 		$this->save();
