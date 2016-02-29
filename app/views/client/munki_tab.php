@@ -2,10 +2,6 @@
 
 <?php $report = $client->report_plist; ?>
 
-<?php $pref_obj = new munkiinfo_model();
-
-$munkiPreferences = $pref_obj->itemsBySerialNumber($serial_number); ?>
-
 <?php if( ! $report): ?>
 	<p><i>No Munkireport data</i></p>
 	<?php return; ?>
@@ -43,11 +39,11 @@ $munkiPreferences = $pref_obj->itemsBySerialNumber($serial_number); ?>
 			</tr>
 			<tr>
 				<th>SoftwareRepoURL:</th>
-				<td><?php echo $munkiinfo->softwarerepourl; ?></td>
+				<td><div id="munkiinfo-SoftwareRepoURL"></div></td>
 			</tr>
 			<tr>
 				<th>AppleCatalogURL:</th>
-				<td><?php echo $munkiinfo->applecatalogurl; ?></td>
+				<td><div id="munkiinfo-AppleCatalogURL"></div></td>
 			</tr>
 			<tr>
 				<th>Manifest:</th>
@@ -55,7 +51,7 @@ $munkiPreferences = $pref_obj->itemsBySerialNumber($serial_number); ?>
 			</tr>
 			<tr>
 				<th>LocalOnlyManifest:</th>
-				<td><?php echo $munkiinfo->localonlymanifest; ?></td>
+				<td><div id="munkiinfo-LocalOnlyManifest"></div></td>
 			</tr>
 			<tr>
 				<th>Run Type:</th>
@@ -74,50 +70,86 @@ $munkiPreferences = $pref_obj->itemsBySerialNumber($serial_number); ?>
 	</div><!-- </div class="col-lg-6"> -->
 
 	<!-- <Additional Munki Info> -->
-	<style>
-		/* Popover */
-		.popover {
-			border-bottom:1px solid #ebebeb;
-			-webkit-border-radius:5px 5px 0 0;
-		-moz-border-radius:5px 5px 0 0;
-		border-radius:5px 5px 0 0;
-			width:550px;
-		}
-		.munkiinfo {
-			position: relative;
-			top: -15px;
-			left: 15px;
-		}
-	</style>
-	<button class="btn btn-info btn-sm munkiinfo">
-	<a data-container="body"
-		data-toggle="popover"
-		data-html="true"
-		data-placement="right"
-		data-trigger="click"
-		data-content='
-		<table class="table table-striped">
-		<caption>Additional Munki Info</caption>
-			<tbody>
-			<?php foreach($munkiPreferences as $item): ?>
-				<tr>
-					<th><?php echo $item->key; ?></th>
-					<td><?php echo $item->value; ?></td>
-				</tr>
-			<?php endforeach; ?>
-			</tbody>
-		</table>
-		'><b><font color="white">Additional Munki Info</font></b></a>	</button>
+  <style>
+    /* Popover */
+    .popover {
+      border-bottom:1px solid #ebebeb;
+      -webkit-border-radius:5px 5px 0 0;
+      -moz-border-radius:5px 5px 0 0;
+      border-radius:5px 5px 0 0;
+      width:550px;
+    }
+    .munkiinfo {
+      position: relative;
+      top: -15px;
+      left: 15px;
+    }
+    
+  </style>
+  
+  <button id="popoverId" class="popoverThis btn btn-info btn-sm munkiinfo"><b>Additional Munki Info</b></button>
+  <div id="munkiinfo-prefs-table" style="display: none"></div>
 	<!-- </Additional Munki Info> -->
 
 
-	<script>
-			$(document).on('appReady', function(e, lang) {
-				$( "table time" ).each(function( index ) {
-					$(this).html(moment($(this).attr('datetime'), "YYYY-MM-DD HH:mm:ss Z").fromNow());
-				});
+<script>
+		$(document).on('appReady', function(e, lang) {
+			$( "table time" ).each(function( index ) {
+				$(this).html(moment($(this).attr('datetime'), "YYYY-MM-DD HH:mm:ss Z").fromNow());
 			});
-	</script>
+		});
+</script>
+
+<script>
+$(document).on('appReady', function(){
+  $.getJSON(appUrl + '/module/munkiinfo/get_data/' + serialNumber, function(data){
+    // These are single preferences
+    $('#munkiinfo-SoftwareRepoURL').text(data['SoftwareRepoURL']);
+    $('#munkiinfo-AppleCatalogURL').text(data['AppleCatalogURL']);
+    $('#munkiinfo-LocalOnlyManifest').text(data['LocalOnlyManifest']);
+    
+    // Create table of all preferences
+    var rows = ''
+    for (key in data){
+      rows = rows + '<tr><th>'+key+': </th><td>'+data[key]+'</td></tr>'
+    }
+      $("#munkiinfo-prefs-table")
+			.append($('<div>')
+      .append('<a target="_blank" href="https://github.com/munki/munki/wiki/Preferences#supported-managedinstalls-keys">Supported Managedinstalls Keys</a>')
+        .addClass('table-responsive')
+        .append($('<table>')
+          // .append('<caption>Additional Munki Info</caption>')
+					.addClass('table table-striped')
+					.append($('<tbody>')
+						.append(rows))))
+  });
+});
+</script>
+
+<script>
+// Pop-up button - Credit http://jsfiddle.net/kAYyR/547/
+$(document).ready(function(){
+  $('#popoverId').popover({
+      html: true,
+      // title: 'Popover Title<a class="close" href="#");">&times;</a>',
+      // content: $('#popoverContent').html(),
+      content: function() {
+        return $('#munkiinfo-prefs-table').html();
+      }
+  });
+});
+$(document).ready(function(){
+  $('#popoverId').click(function (e) {
+      e.stopPropagation();
+  });
+});
+
+$(document).click(function (e) {
+    if (($('.popover').has(e.target).length == 0) || $(e.target).is('.close')) {
+        $('#popoverId').popover('hide');
+    }
+});
+</script>
 
 <?php // Move install results over to their install items.
 $install_results = array();
@@ -295,39 +327,8 @@ if(isset($report['ItemsToRemove']))
   </div><!-- </div class="row"> -->
 
 <pre><?php //print_r($client->rs) ?></pre>
+
 <script>
-// Popup Close button - Credit to https://jsfiddle.net/backos/T5Bev/
-$.fn.extend({
-    popoverClosable: function (options) {
-        var defaults = {
-            template:
-                '<div class="popover">\
-<div class="arrow"></div>\
-<div class="popover-header">\
-<button type="button" class="close" data-dismiss="popover" aria-hidden="true">&times;</button>\
-<h3 class="popover-title"></h3>\
-</div>\
-<div class="popover-content"></div>\
-</div>'
-        };
-        options = $.extend({}, defaults, options);
-        var $popover_togglers = this;
-        $popover_togglers.popover(options);
-        $popover_togglers.on('click', function (e) {
-            e.preventDefault();
-            $popover_togglers.not(this).popover('hide');
-        });
-        $('html').on('click', '[data-dismiss="popover"]', function (e) {
-            $popover_togglers.popover('hide');
-        });
-    }
-});
-
-$(function () {
-    $('[data-toggle="popover"]').popoverClosable();
-});
-// Popup close button
-
 $(document).on('appReady', function(e, lang) {
 
 	// Format filesize
