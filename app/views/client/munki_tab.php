@@ -114,8 +114,8 @@ $(document).on('appReady', function(){
       rows = rows + '<tr><th>'+key+': </th><td>'+data[key]+'</td></tr>'
     }
       $("#munkiinfo-prefs-table")
-			.append($('<div>')
-      .append('<a target="_blank" href="https://github.com/munki/munki/wiki/Preferences#supported-managedinstalls-keys">Supported Managedinstalls Keys</a>')
+			.append('<center><a target="_blank" href="https://github.com/munki/munki/wiki/Preferences#supported-managedinstalls-keys">Munki Wiki - Supported Managedinstalls Keys</a></center>')
+      .append($('<div>')
         .addClass('table-responsive')
         .append($('<table>')
           // .append('<caption>Additional Munki Info</caption>')
@@ -131,8 +131,7 @@ $(document).on('appReady', function(){
 $(document).ready(function(){
   $('#popoverId').popover({
       html: true,
-      // title: 'Popover Title<a class="close" href="#");">&times;</a>',
-      // content: $('#popoverContent').html(),
+      title: 'Additional Munki Info<a class="close");">&times;</a>',
       content: function() {
         return $('#munkiinfo-prefs-table').html();
       }
