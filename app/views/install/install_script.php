@@ -201,7 +201,7 @@ read -r -d '' UNINSTALLS << EOF
 
 <?php foreach($uninstall_scripts AS $scriptname => $filepath): ?>
 
-<?php echo "## $scriptname ##"; ?>
+<?php echo "## $scriptname ##\n"; ?>
 echo '- Uninstalling <?php echo $scriptname; ?>'
 
 <?php echo file_get_contents($filepath); ?>
