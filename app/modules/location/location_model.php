@@ -1,82 +1,91 @@
 <?php
 class Location_model extends Model {
 
-	function __construct($serial='')
-	{
-		parent::__construct('id', 'location'); //primary key, tablename
-		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['address'] = '';
-		$this->rs['altitude'] = 0;
-		$this->rs['currentstatus'] = '';
-		$this->rs['ls_enabled'] = 0;
-		$this->rs['lastlocationrun'] = '';
-		$this->rs['lastrun'] = '';
-		$this->rs['latitude'] = 0.0;
-		$this->rs['latitudeaccuracy'] = 0;
-		$this->rs['longitude'] = 0.0;
-		$this->rs['longitudeaccuracy'] = 0;
-		$this->rs['stalelocation'] = '';
-		
-		// Add indexes
-		$this->idx[] = array('address');
-		$this->idx[] = array('currentstatus');
+    // Defaults array
+    private $defaults = array();
 
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 1;
-		
-		// Create table if it does not exist
-		$this->create_table();
-		
-		if ($serial)
-		{
-			$this->retrieve_record($serial);
-		}
-		
-		$this->serial = $serial;
-		  
-	}
-	
-	// ------------------------------------------------------------------------
+    function __construct($serial='')
+    {
+        parent::__construct('id', 'location'); //primary key, tablename
+        $this->rs['id'] = '';
+        $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['address'] = '';
+        $this->rs['altitude'] = 0;
+        $this->rs['currentstatus'] = '';
+        $this->rs['ls_enabled'] = 0;
+        $this->rs['lastlocationrun'] = '';
+        $this->rs['lastrun'] = '';
+        $this->rs['latitude'] = 0.0;
+        $this->rs['latitudeaccuracy'] = 0;
+        $this->rs['longitude'] = 0.0;
+        $this->rs['longitudeaccuracy'] = 0;
+        $this->rs['stalelocation'] = '';
 
-	/**
-	 * Process data sent by postflight
-	 *
-	 * @param string data
-	 * 
-	 **/
-	function process($data)
-	{		
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-		$parser = new CFPropertyList();
-		$parser->parse($data);
-		
-		$plist = $parser->toArray();
-		
-		// Translate location strings to db fields
-		$translate = array(
-			'Address' => 'address',
-			'Altitude' => 'altitude',
-			'CurrentStatus' => 'currentstatus',
-			'GoogleMap' => 'googlemap',
-			'LS_Enabled' => 'ls_enabled',
-			'LastLocationRun' => 'lastlocationrun',
-			'LastRun' => 'lastrun',
-			'Latitude' => 'latitude',
-			'LatitudeAccuracy' => 'latitudeaccuracy',
-			'Longitude' => 'longitude',
-			'LongitudeAccuracy' => 'longitudeaccuracy',
-			'StaleLocation' => 'stalelocation');
+        // Store default values
+        $this->defaults = $this->rs;
 
-		// Parse data
-		foreach($translate as $search => $field) {
-			    
-			if (isset($plist[$search]))
-			{
-				$this->$field = $plist[$search];
-			}
-		}
-				    
-		$this->save();
-	}
+        // Add indexes
+        $this->idx[] = array('address');
+        $this->idx[] = array('currentstatus');
+
+        // Schema version, increment when creating a db migration
+        $this->schema_version = 1;
+
+        // Create table if it does not exist
+        $this->create_table();
+
+        if ($serial)
+        {
+            $this->retrieve_record($serial);
+        }
+
+        $this->serial = $serial;
+
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Process data sent by postflight
+     *
+     * @param string data
+     * 
+     **/
+    function process($data)
+    {       
+        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+        $parser = new CFPropertyList();
+        $parser->parse($data);
+
+        $plist = $parser->toArray();
+
+        // Translate location strings to db fields
+        $translate = array(
+            'Address' => 'address',
+            'Altitude' => 'altitude',
+            'CurrentStatus' => 'currentstatus',
+            'LS_Enabled' => 'ls_enabled',
+            'LastLocationRun' => 'lastlocationrun',
+            'LastRun' => 'lastrun',
+            'Latitude' => 'latitude',
+            'LatitudeAccuracy' => 'latitudeaccuracy',
+            'Longitude' => 'longitude',
+            'LongitudeAccuracy' => 'longitudeaccuracy',
+            'StaleLocation' => 'stalelocation');
+
+        // Parse data
+        foreach($translate as $search => $field) {
+
+            if (isset($plist[$search]))
+            {
+                $this->$field = $plist[$search];
+            }
+            else
+            {
+              $this->$field = $this->defaults[$field];
+            }
+        }       
+
+        $this->save();
+    }
 }
