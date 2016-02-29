@@ -452,6 +452,7 @@
 	|	munki
 	|	power_battery_condition
 	|	power_battery_health
+	|	wifi_state
 	|
 	| Small horizontal / medium vertical widgets:
 	|	network_location
@@ -477,6 +478,7 @@
 	|	hardware_model
 	|	memory
 	|	os
+	|	printer
 	|
 	| Responsive horizontal widgets:
 	|	network_vlan
