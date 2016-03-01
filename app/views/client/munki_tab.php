@@ -67,11 +67,11 @@
 				<td><?php echo $duration; ?> seconds</td>
 			</tr>
 		</table>
+		<button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munki.additional_info"></span></button>
+
 	</div><!-- </div class="col-lg-6"> -->
 
   
-  <button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munki.additional_info"></span></button>
-	<!-- </Additional Munki Info> -->
 
 
 <script>
