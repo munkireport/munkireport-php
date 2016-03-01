@@ -327,7 +327,8 @@
 		"run_type": "Run Type",
 		"version": "Munki Version",
 		"warning": "Munki warning: __warning__",
-		"warning_plural": "__count__ Munki warnings"
+		"warning_plural": "__count__ Munki warnings",
+		"additional_info": "Additional Munki Info"
 	},
 	"name": "Name",
 	"nav": {

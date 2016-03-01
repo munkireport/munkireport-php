@@ -34,61 +34,43 @@
 		<h2>Munki</h2>
 		<table class="table table-striped">
 			<tr>
-				<th>Version:</th>
+				<th>Version</th>
 				<td><?php echo $client->version; ?></td>
 			</tr>
 			<tr>
-				<th>SoftwareRepoURL:</th>
+				<th>SoftwareRepoURL</th>
 				<td><div id="munkiinfo-SoftwareRepoURL"></div></td>
 			</tr>
 			<tr>
-				<th>AppleCatalogURL:</th>
+				<th>AppleCatalogURL</th>
 				<td><div id="munkiinfo-AppleCatalogURL"></div></td>
 			</tr>
 			<tr>
-				<th>Manifest:</th>
+				<th>Manifest</th>
 				<td><?php echo $client->manifestname; ?></td>
 			</tr>
 			<tr>
-				<th>LocalOnlyManifest:</th>
+				<th>LocalOnlyManifest</th>
 				<td><div id="munkiinfo-LocalOnlyManifest"></div></td>
 			</tr>
 			<tr>
-				<th>Run Type:</th>
+				<th>Run Type</th>
 				<td><?php echo $client->runtype; ?></td>
 			</tr>
 			<tr>
-				<th>Start:</th>
+				<th>Start</th>
 				<td><time datetime="<?php echo $client->starttime; ?>"></time></td>
 			</tr>
 			<tr>
 				<?php $duration = strtotime($client->endtime) - strtotime($client->starttime); ?>
-				<th>Duration:</th>
+				<th>Duration</th>
 				<td><?php echo $duration; ?> seconds</td>
 			</tr>
 		</table>
 	</div><!-- </div class="col-lg-6"> -->
 
-	<!-- <Additional Munki Info> -->
-  <style>
-    /* Popover */
-    .popover {
-      border-bottom:1px solid #ebebeb;
-      -webkit-border-radius:5px 5px 0 0;
-      -moz-border-radius:5px 5px 0 0;
-      border-radius:5px 5px 0 0;
-      width:550px;
-    }
-    .munkiinfo {
-      position: relative;
-      top: -15px;
-      left: 15px;
-    }
-    
-  </style>
   
-  <button id="popoverId" class="popoverThis btn btn-info btn-sm munkiinfo"><b>Additional Munki Info</b></button>
-  <div id="munkiinfo-prefs-table" style="display: none"></div>
+  <button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munki.additional_info"></span></button>
 	<!-- </Additional Munki Info> -->
 
 
@@ -102,6 +84,29 @@
 
 <script>
 $(document).on('appReady', function(){
+	
+	var table = $('<div>');
+	
+	$('#popoverId').click(function(e){
+		
+		$('#myModal .modal-title')
+			.empty()
+			.append(i18n.t("munki.additional_info"))
+		$('#myModal .modal-body')
+			.empty()
+			.append(table);
+		
+		$('#myModal button.ok').text(i18n.t("dialog.close"));
+
+		// Set ok button
+		$('#myModal button.ok')
+			.off()
+			.click(function(){$('#myModal').modal('hide')});
+
+		
+		$('#myModal').modal('show');
+	})
+	
   $.getJSON(appUrl + '/module/munkiinfo/get_data/' + serialNumber, function(data){
     // These are single preferences
     $('#munkiinfo-SoftwareRepoURL').text(data['SoftwareRepoURL']);
@@ -111,10 +116,9 @@ $(document).on('appReady', function(){
     // Create table of all preferences
     var rows = ''
     for (key in data){
-      rows = rows + '<tr><th>'+key+': </th><td>'+data[key]+'</td></tr>'
+      rows = rows + '<tr><th>'+key+'</th><td>'+data[key]+'</td></tr>'
     }
-      $("#munkiinfo-prefs-table")
-			.append('<center><a target="_blank" href="https://github.com/munki/munki/wiki/Preferences#supported-managedinstalls-keys">Munki Wiki - Supported Managedinstalls Keys</a></center>')
+      table.append('<center><a target="_blank" href="https://github.com/munki/munki/wiki/Preferences#supported-managedinstalls-keys">Munki Wiki - Supported Managedinstalls Keys</a></center>')
       .append($('<div>')
         .addClass('table-responsive')
         .append($('<table>')
@@ -126,29 +130,6 @@ $(document).on('appReady', function(){
 });
 </script>
 
-<script>
-// Pop-up button - Credit http://jsfiddle.net/kAYyR/547/
-$(document).ready(function(){
-  $('#popoverId').popover({
-      html: true,
-      title: 'Additional Munki Info<a class="close");">&times;</a>',
-      content: function() {
-        return $('#munkiinfo-prefs-table').html();
-      }
-  });
-});
-$(document).ready(function(){
-  $('#popoverId').click(function (e) {
-      e.stopPropagation();
-  });
-});
-
-$(document).click(function (e) {
-    if (($('.popover').has(e.target).length == 0) || $(e.target).is('.close')) {
-        $('#popoverId').popover('hide');
-    }
-});
-</script>
 
 <?php // Move install results over to their install items.
 $install_results = array();
