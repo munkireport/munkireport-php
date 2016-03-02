@@ -22,8 +22,9 @@ new munkiinfo_model;
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
-			<th data-i18n="os.version" data-colname='machine.os_version'></th>
+    			<th data-i18n="os.version" data-colname='machine.os_version'></th>
 		        <th data-i18n="munki.version" data-colname='munkireport.version'></th>
+                <th data-i18n="munki.munkiprotocol" data-colname='munkiinfo.munkiinfo_value'></th>
 		        <th data-i18n="last_seen" data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport.timestamp'>Latest Run</th>
 		        <th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
 		        <th data-i18n="error_plural" data-colname='munkireport.errors'></th>
@@ -97,6 +98,16 @@ new munkiinfo_model;
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
                     }
+                    
+                    // Only search on bootvolume
+                    d.where = [
+                        {
+                            table: 'munkiinfo',
+                            column: 'munkiinfo_key',
+                            value: 'munkiprotocol'
+                        }
+                    ];
+
                 }
             },
             dom: mr.dt.buttonDom,
