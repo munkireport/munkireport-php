@@ -95,15 +95,15 @@ mapObj.markerClickFunction = function(machine, latlng) {
       e.stopPropagation();
       e.preventDefault();
     }
-    var title = machine.serial_number;
     var url = machine.photo_url;
     var fileurl = machine.photo_file_url;
 
-    var infoHtml = '<div class="info"><h3>' + title +
-      '</h3><div class="info-body">' +
-      '<a href="' + url + '" target="_blank"></a></div>' +
+    var infoHtml = '<div class="info">' + 
+	'<img style="width:120px; height: auto" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode='+machine.serial_number.substr(8)+'&amp;size=240x240" />' +
+      '<div class="info-body">' +
+      machine.long_username +
       '<br/>' +
-      '<a href="' + machine.owner_url + '" target="_blank">' + machine.owner_name +
+      '<a href="' + appUrl + '/clients/detail/' + machine.serial_number + '#tab_location-tab">' + machine.computer_name +
       '</a></div></div>';
 
     mapObj.infoWindow.setContent(infoHtml);

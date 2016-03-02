@@ -44,8 +44,15 @@ class Location_model extends Model {
 	{
 		// FIXME Does not account for business units!!!
 		$out = array();
-		$sql = "SELECT serial_number, latitude, longitude FROM location
-			WHERE currentstatus = 'Successful'";;
+		$filter = get_machine_group_filter();
+		$sql = "SELECT serial_number, latitude, longitude, long_username,
+					computer_name
+				FROM location
+				LEFT JOIN reportdata USING (serial_number)
+				LEFT JOIN machine USING (serial_number)
+				$filter
+				AND currentstatus = 'Successful'";
+				
 		foreach($this->query($sql) as $obj)
 		{
 			$out[] = $obj;

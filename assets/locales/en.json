@@ -264,7 +264,8 @@
 		"latitude": "Latitude",
 		"latitudeaccuracy": "Latitude Accuracy",
 		"longitude": "Longitude",
-		"longitudeaccuracy": "Longitude Accuracy"
+		"longitudeaccuracy": "Longitude Accuracy",
+		"report": "Location Report"
 	},
 	"machine": {
 		"hardware_widget_title": "Hardware model breakdown"
@@ -333,6 +334,7 @@
 			"clients": "Client report",
 			"configuration": "Configuration report",
 			"hardware": "Hardware report",
+			"location": "Location report",
 			"munki": "Munki report",
 			"network": "Network report",
 			"power": "Power report"
