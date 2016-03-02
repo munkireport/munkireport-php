@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Create cache dir if it does not exist
+DIR=$(dirname $0)
+mkdir -p "$DIR/cache"
+wifi_file="$DIR/cache/wifi.txt"
+wifi_data=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I`
+
+if [[ "${wifi_data}" == *"AirPort: Off"* ]] ; then
+
+echo "     agrCtlRSSI: " > $wifi_file
+echo "     agrExtRSSI: " >> $wifi_file
+echo "    agrCtlNoise: " >> $wifi_file
+echo "    agrExtNoise: " >> $wifi_file
+echo "          state: off" >> $wifi_file
+echo "        op mode: " >> $wifi_file
+echo "     lastTxRate: " >> $wifi_file
+echo "        maxRate: " >> $wifi_file
+echo "lastAssocStatus: " >> $wifi_file
+echo "    802.11 auth: " >> $wifi_file
+echo "      link auth: " >> $wifi_file
+echo "          BSSID: " >> $wifi_file
+echo "           SSID: " >> $wifi_file
+echo "            MCS: " >> $wifi_file
+echo "        channel: " >> $wifi_file
+
+else
+
+/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I > $wifi_file
+
+fi

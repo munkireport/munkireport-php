@@ -52,5 +52,25 @@ class Printer_controller extends Module_controller
 		$obj->view('json', array('msg' => $out));
 	}
 
+    /**
+	 * Get printer information for printer widget
+	 *
+	 * @return void
+	 * @author John Eberle (tuxudo)
+	 **/
+	public function get_printers()
+	{
+		$obj = new View();
+
+		if( ! $this->authorized())
+		{
+			$obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+			return;
+		}
+		
+		$printers = new Printer_model;
+		$obj->view('json', array('msg' => $printers->get_printers()));
+
+	}
 	
 } // END class default_module

@@ -1,7 +1,3 @@
 #!/bin/bash
 
-# Remove location script
-rm -f "${MUNKIPATH}preflight.d/location.py"
-
-# Remove location.plist file
-rm -f "${MUNKIPATH}preflight.d/cache/location.plist"
+# Nothing to remove as this module is now dependent on https://github.com/clburlison/pinpoint
