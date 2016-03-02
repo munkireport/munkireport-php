@@ -3,6 +3,12 @@
 # Autoversion updater for munkireport
 # $GLOBALS['version'] = '2.0.0.275';
 
+# Only increment patch number when on the wip branch
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [[ $BRANCH != 'wip' ]]; then
+    exit
+fi
+
 VERSION_FILE=$(git rev-parse --show-toplevel)"/app/helpers/site_helper.php"
 COMMIT_COUNT=$(git rev-list HEAD --count)
 

@@ -21,6 +21,8 @@
 	<?php $this->view('tag_widget', '', MODULE_PATH . 'tag/views/'); ?>
 
 	<?php $this->view('widgets/bound_to_ds_widget'); ?>
+	
+	<?php $this->view('widgets/printer_widget'); ?>
 
 	</div> <!-- /row -->
 

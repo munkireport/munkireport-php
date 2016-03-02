@@ -34,7 +34,7 @@ var drawStoragePlots = function(serialNumber, divid) {
 	    					.append('tbody')
 
 	    	// get encryption string
-	    	var encrypted = obj.CoreStorageEncrypted ? i18n.t('storage.encrypted') : i18n.t('storage.not_encrypted');
+	    	var encrypted = obj.CoreStorageEncrypted == 1 ? i18n.t('storage.encrypted') : i18n.t('storage.not_encrypted');
 	    	if(obj.CoreStorageEncrypted == -1)
 	    	{
 	    		encrypted = i18n.t('unknown')
@@ -57,7 +57,7 @@ var drawStoragePlots = function(serialNumber, divid) {
 	    			val: obj.BusProtocol
 	    		},{
 	    			key: i18n.t('storage.type'),
-	    			val: obj.Internal ? i18n.t('storage.internal') : i18n.t('storage.external')
+	    			val: obj.Internal == 1 ? i18n.t('storage.internal') : i18n.t('storage.external')
 	    		},
 	    		{
 	    			key: i18n.t('storage.encryption_status'),

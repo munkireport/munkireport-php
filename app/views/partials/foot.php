@@ -60,6 +60,7 @@
   <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/d3/d3.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/nv.d3.min.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.hotkeys/jquery.hotkeys.js"></script>
   <script>
 
 

@@ -296,6 +296,7 @@
       "displays": "Moniteurs",
       "hardware": "Matériel",
       "inventory": "Inventaire",
+      "location": "Location",
       "munki": "Munki",
       "network": "Réseau",
       "power": "Alimentation",
