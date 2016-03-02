@@ -303,6 +303,7 @@
 		"latitudeaccuracy": "Latitude Accuracy",
 		"longitude": "Longitude",
 		"longitudeaccuracy": "Longitude Accuracy",
+		"report": "Location Report",
 		"stalelocation": "Stale Location"
 	},
 	"machine": {
@@ -376,6 +377,7 @@
 			"clients": "Client report",
 			"configuration": "Configuration report",
 			"hardware": "Hardware report",
+			"location": "Location report",
 			"munki": "Munki report",
 			"network": "Network report",
 			"power": "Power report"
