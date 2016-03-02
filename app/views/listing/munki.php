@@ -24,7 +24,6 @@ new munkiinfo_model;
 		        <th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
     			<th data-i18n="os.version" data-colname='machine.os_version'></th>
 		        <th data-i18n="munki.version" data-colname='munkireport.version'></th>
-                <th data-i18n="munki.munkiprotocol" data-colname='munkiinfo.munkiinfo_value'></th>
 		        <th data-i18n="last_seen" data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport.timestamp'>Latest Run</th>
 		        <th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
 		        <th data-i18n="error_plural" data-colname='munkireport.errors'></th>
@@ -99,15 +98,6 @@ new munkiinfo_model;
                         d.search.value = search;
                     }
                     
-                    // Only search on bootvolume
-                    d.where = [
-                        {
-                            table: 'munkiinfo',
-                            column: 'munkiinfo_key',
-                            value: 'munkiprotocol'
-                        }
-                    ];
-
                 }
             },
             dom: mr.dt.buttonDom,
@@ -123,10 +113,10 @@ new munkiinfo_model;
 			$('td:eq(0)', nRow).html(link);
 
 			// Format date
-			date = $('td:eq(7)', nRow).text();
-	                $('td:eq(7)', nRow).html('never');
+			date = $('td:eq(6)', nRow).text();
+	                $('td:eq(6)', nRow).html('never');
 	        	if(date){
-			$('td:eq(7)', nRow).html(moment(date).fromNow());
+			$('td:eq(6)', nRow).html(moment(date).fromNow());
 	        	}
 
                 // Format OS Version
