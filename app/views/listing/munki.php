@@ -22,7 +22,7 @@ new munkiinfo_model;
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
-			<th data-i18n="os.version" data-colname='machine.os_version'></th>
+    			<th data-i18n="os.version" data-colname='machine.os_version'></th>
 		        <th data-i18n="munki.version" data-colname='munkireport.version'></th>
 		        <th data-i18n="last_seen" data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport.timestamp'>Latest Run</th>
 		        <th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
@@ -97,6 +97,7 @@ new munkiinfo_model;
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
                     }
+                    
                 }
             },
             dom: mr.dt.buttonDom,
@@ -112,10 +113,10 @@ new munkiinfo_model;
 			$('td:eq(0)', nRow).html(link);
 
 			// Format date
-			date = $('td:eq(7)', nRow).text();
-	                $('td:eq(7)', nRow).html('never');
+			date = $('td:eq(6)', nRow).text();
+	                $('td:eq(6)', nRow).html('never');
 	        	if(date){
-			$('td:eq(7)', nRow).html(moment(date).fromNow());
+			$('td:eq(6)', nRow).html(moment(date).fromNow());
 	        	}
 
                 // Format OS Version

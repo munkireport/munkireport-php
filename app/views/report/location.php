@@ -56,6 +56,8 @@ mapObj.showMarkers = function() {
     }
 
     var numMarkers = mapObj.machines.length;
+	
+	var bounds = new google.maps.LatLngBounds();
 
     for (var i = 0; i < numMarkers; i++) {
         var titleText = mapObj.machines[i].serial_number;
@@ -81,7 +83,14 @@ mapObj.showMarkers = function() {
         var fn = mapObj.markerClickFunction(mapObj.machines[i], latLng);
         google.maps.event.addListener(marker, 'click', fn);
         mapObj.markers.push(marker);
+		
+		bounds.extend(latLng);
     }
+	
+	// Set center and zoom
+	var center = bounds.getCenter();
+	mapObj.map.fitBounds(bounds);
+	mapObj.map.setCenter(center);
 
     mapObj.markerClusterer = new MarkerClusterer(mapObj.map, mapObj.markers, mapObj.options);
 };
