@@ -1,6 +1,7 @@
 {
   "about": {
-    "author": "Patrick Exner"
+    "author": "Patrick Exner",
+    "author": "Patrick Bernard"
   },
   "active": "Actif",
   "admin": {
@@ -296,7 +297,7 @@
       "displays": "Moniteurs",
       "hardware": "Matériel",
       "inventory": "Inventaire",
-      "location": "Location",
+      "location": "Localisation",
       "munki": "Munki",
       "network": "Réseau",
       "power": "Alimentation",
@@ -351,7 +352,7 @@
   "pending": "En attente",
   "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
   "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
-  "reg_date": "Date de registration",
+  "reg_date": "Date d'enregistrement",
   "remote_control": "Contrôle en distance",
   "report": {
     "generate": "Générer un Rapport"
@@ -440,12 +441,12 @@
   "warranty": {
     "coverage": "Couverture de la garantie",
     "est_manufacture_date": "Date de fabrication estimée",
-    "est_purchase_date": "Date d'achat estimé",
+    "est_purchase_date": "Date d'achat estimée",
     "expired": "Expiré le __date__",
     "expires_in": "Expire le __date__",
     "no_alerts": "Aucune alerte de garantie",
     "recheck": "Retest de l'état de la garantie",
-    "supported_no_applecare": "Pris en charge jusqu'à __date__. Pas de Applecare",
+    "supported_no_applecare": "Pris en charge jusqu'à __date__. Pas d'Applecare",
     "supported_until": "Pris en charge jusqu'à __date__",
     "unregistered": "Non enregistré",
     "warranty": "Garantie",
@@ -474,7 +475,7 @@
       "notfound": "Pas de doublons trouvés"
     },
     "munki": {
-      "no_updates_pending": "Pas de mises à jour en attente"
+      "no_updates_pending": "Pas de mise à jour en attente"
     },
     "power": {
       "missing": "Manquant",
