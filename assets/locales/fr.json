@@ -335,12 +335,12 @@
       "business_units": "Gérer les divisions de l'entreprise"
     },
     "lang": {
-      "de": "Allemand",
-      "en": "Anglais",
-      "es": "Espagnol",
-      "fr": "Français",
-      "nl": "Hollandais",
-      "ru": "Russe"
+        "de": "Deutsch",
+        "en": "English",
+        "es": "Español",
+        "fr": "Francais",
+        "nl": "Nederlands",
+        "ru": "Русский"
     },
     "listings": {
       "ard": "Apple Remote Desktop",
