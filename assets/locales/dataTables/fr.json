@@ -8,10 +8,10 @@
     "sLengthMenu":     "_MENU_ enregistrements par page",
     "sLoadingRecords": "Chargement...",
     "sSearch":         "Rechercher",
-    "sZeroRecords":    "Pas d'enregistrements correspondants trouvés",
+    "sZeroRecords":    "Aucun enregistrement correspondant trouvé",
     "oPaginate": {
         "sFirst":    "Première",
-        "sLast":     "Derinère",
+        "sLast":     "Dernière",
         "sNext":     "Suivante",
         "sPrevious": "Précédente"
     },

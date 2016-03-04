@@ -1,3 +1,26 @@
+### 2.8.0-beta.1 (March 2, 2016)
+
+#### :bangbang: THIS IS A BETA RELEASE :bangbang:
+Don't use in production unless you like to TiP(Test in Production)
+Please report back any issues you find with this release.
+
+FIXES
+
+* Markdown now accepts line breaks in client comments
+* FileVault 2 reporting fix for #375 and #378
+
+NEW FEATURES
+
+* Location module - thanks to @clburlison and @gmarnin
+* GSX module thanks to @tuxudo 
+* Security module thanks to @gmarnin
+* Munkiinfo module thanks to @erikng and @clburlison 
+* Wi-Fi module thanks to @tuxudo
+* Printer widget thanks to @tuxudo
+* Hotkey support
+* German localisation updates thanks to @fridomac 
+* French localisation updates thanks to @lolipale 
+
 ### 2.7.2 (December 12, 2015)
 
 FIXES

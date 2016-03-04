@@ -1,6 +1,7 @@
 {
   "about": {
-    "author": "Patrick Exner"
+    "author": "Patrick Exner",
+    "author": "Patrick Bernard"
   },
   "active": "Actif",
   "admin": {
@@ -8,7 +9,7 @@
       "more_info": "Plus d'infos"
     },
     "bu_overview": "Divisions de l'entreprise",
-    "delete_failed": "Suppression échoué",
+    "delete_failed": "Suppression échouée",
     "edit_bu": {
       "address": "Adresse",
       "link": "Lien (vers site externe)",
@@ -23,35 +24,35 @@
       "add_user": "Ajouter un Utilisateur"
     },
     "mg": {
-      "title": "Groupes des Appareils",
-      "add_group": "Nouvelle Groupe",
-      "edit_group": "Modifier Groupe des Appareils",
-      "new_group": "Nouvelle Groupe des Appareils"
+      "title": "Groupes d'Appareils",
+      "add_group": "Nouveau Groupe",
+      "edit_group": "Modifier Groupe d'Appareils",
+      "new_group": "Nouvelle Groupe d'Appareils"
     },
     "new_bu": {
       "title": "Nouvelle Division de l'entreprise"
     },
     "remove_bu": {
       "title": "Supprimer Division de l'entreprise",
-      "content": "Lorsque vous supprimez cette Division de l'entreprise, toutes les données liées seront supprimés. Vous ne pouvez pas annuler cette action."
+      "content": "Lorsque vous supprimez cette Division de l'entreprise, toutes les données liées seront supprimées. Vous ne pouvez pas annuler cette action."
     },
-    "unassigned_groups": "Goupes non assignés"
+    "unassigned_groups": "Groupes non assignés"
   },
   "all": "Tous",
   "ard": "Apple Remote Desktop",
   "auth": {
     "addtoconfig": "Ajoutez cette ligne dans config.php:",
-    "back_to_site": "Retour à la site",
-    "empty_not_allowed": "Valeurs non définis ne sont pas permises",
+    "back_to_site": "Retour au site",
+    "empty_not_allowed": "Valeurs non définies ne sont pas permises",
     "error_contacting_AD": "Une erreur est survenue en contactant l'AD",
     "gen_other": "Créer une autre",
     "generate": "Créer",
     "generate_hash": "Créer hash de mot de passe",
-    "generated_hash": "hash crée",
-    "go_secure": "Aller vers site sécurisée",
-    "insecure": "Connexion insécure, basculer vers une connexion sécurisé",
-    "noauth_found": "Aucune information d'authentification trouvé, s'il vous plaît ajoutez un compte dans le fichier de configuration.",
-    "not_authorized": "Ne pas autorisé",
+    "generated_hash": "hash créé",
+    "go_secure": "Aller vers site sécurisé",
+    "insecure": "Connexion non sécurisée, veuillez basculer vers une connexion sécurisée",
+    "noauth_found": "Aucune information d'authentification trouvée, s'il vous plaît veuillez ajouter un compte dans le fichier de configuration.",
+    "not_authorized": "Ne pas autoriser",
     "password": "Mot de passe",
     "secure": "Vous utilisez une connexion sécurisée",
     "signin": "Connectez-vous",
@@ -63,7 +64,7 @@
     "duration": "Durée de sauvegarde",
     "last_failure": "Dernière sauvegarde échouée",
     "last_failure_msg": "Message",
-    "last_success": "Dernière sauvegarde réussi"
+    "last_success": "Dernière sauvegarde réussie"
   },
   "battery": {
     "life_remaining": "Durée restante de la batterie __percent__%"
@@ -74,16 +75,16 @@
     "bluetooth_battery_widget": "État de la batterie Bluetooth",
     "keyboard": "État du clavier",
     "mouse": "État de la souris",
-    "panel_title": "Périphériques Bluetooth avec mois de 15% batterie",
+    "panel_title": "Périphériques Bluetooth avec moins de 15% batterie",
     "status": "État Bluetooth",
     "trackpad": "État Trackpad"
   },
   "boot_time": "Démarré",
   "bundle_id": "BundleID",
   "business_unit": {
-    "disabled": "Divisions de l'entreprise désactivé",
-    "machine_group": "Groupe de Appareils",
-    "machine_groups": "Groupes de Appareils",
+    "disabled": "Divisions de l'entreprise désactivées",
+    "machine_group": "Groupe d'Appareils",
+    "machine_groups": "Groupes d'Appareils",
     "managers": "Gestionnaires",
     "users": "Utilisateurs"
   },
@@ -104,23 +105,23 @@
       "bluetooth": "Bluetooth",
       "certificates": "Certificats",
       "displays": "Moniteurs",
-      "ds": "Directory Services",
+      "ds": "Services d'annuaire",
       "fv_escrow": "Filevault Escrow",
       "inventory_items": "Objets dans l'inventaire",
       "munki": "Logiciels gérés",
       "network": "Interfaces réseau",
       "power": "Alimentation",
       "printers": "Imprimantes",
-      "profiles": "Profiles",
-      "serverstats": "Statistique du serveur",
+      "profiles": "Profils",
+      "serverstats": "Statistiques du serveur",
       "summary": "Résumé",
       "third_party_software": "Logiciels tiers",
       "timemachine": "Timemachine"
     },
     "installed_apple_software": "Apple Software installé",
-    "installed_third_party_software": "Logiciels tiers installé",
-    "install_date": "Date de l'install du client",
-    "no_install_history": "Pas de l'historique de l'install",
+    "installed_third_party_software": "Logiciels tiers installés",
+    "install_date": "Date de l'installation du client",
+    "no_install_history": "Pas de l'historique de l'installation",
     "panel_title": "Activité du client dans le dernier mois",
     "process_name": "Nom du processus",
     "total": "Nombre de clients "
@@ -137,7 +138,7 @@
     "arch": "Architecture processeur",
     "core": "core",
     "cpu": "CPU",
-    "type": "Model processeur",
+    "type": "Modèle processeur",
     "usage": "Utilisation processeur"
   },
   "crashplan": {
@@ -200,8 +201,8 @@
   "free_disk_space": "Espace disque disponible",
   "free_disk_space_less_than": "Espace disque disponible < __gb__Go",
   "hardware": {
-    "hardware": "Materiel",
-    "uuid": "UUID Materiel"
+    "hardware": "Matériel",
+    "uuid": "UUID Matériel"
   },
   "inactive": "Inactif",
   "installed": "Installé",
@@ -229,7 +230,7 @@
     "hardware": {
       "description": "Description"
     },
-    "loading": "Chargement des donnes depuis le serveur",
+    "loading": "Chargement des données depuis le serveur",
     "munki": {
       "latest_run": "Dernière activité",
       "package_installed": "Paquet installé",
@@ -243,9 +244,9 @@
     },
     "timemachine": {
       "duration": "Durée du sauvegarde",
-      "last_failure": "Dernier sauvegarde échoué",
+      "last_failure": "Dernière sauvegarde échouée",
       "last_failure_msg": "Message",
-      "last_success": "Dernier sauvegarde réussi",
+      "last_success": "Dernière sauvegarde réussie",
       "title": "Rapport Timemachine"
     },
     "username": "Nom utilisateur"
@@ -261,13 +262,13 @@
     "usage": "Utilisation de la mémoire",
     "pressure": "Pression sur la mémoire"
   },
-  "model": "Model",
+  "model": "Modèle",
   "munki": {
     "error": "Erreur de Munki : __error__",
     "error_plural": "__count__ Erreurs de Munki",
     "package_installed": "__pkg__ installé",
     "package_installed_plural": "__count__ paquets installés",
-    "panel_title": "Statistique du Munki cette semaine",
+    "panel_title": "Statistique de Munki cette semaine",
     "run_type": "Type d'évènement",
     "version": "Version de Munki",
     "warning": "Alerte de Munki : __warning__",
@@ -282,7 +283,7 @@
         "de": "Deutsch",
         "en": "English",
         "es": "Español",
-        "fr": "Francais",
+        "fr": "Français",
         "nl": "Nederlands",
         "ru": "Русский"
     },
@@ -291,17 +292,17 @@
       "bluetooth": "Bluetooth",
       "clients": "Clients",
       "certificate": "Certificats",
-      "directoryservice": "Service de Repertoire",
+      "directoryservice": "Service d'annuaire",
       "disk": "Disque",
       "displays": "Moniteurs",
-      "hardware": "Materiel",
+      "hardware": "Matériel",
       "inventory": "Inventaire",
-      "location": "Location",
+      "location": "Localisation",
       "munki": "Munki",
       "network": "Réseau",
       "power": "Alimentation",
       "printers": "Imprimantes",
-      "profile": "Profiles",
+      "profile": "Profils",
       "security": "Sécurité",
       "timemachine": "Timemachine",
       "warranty": "Garantie"
@@ -309,17 +310,18 @@
     "main": {
       "dashboard": "Tableau de bord",
       "reports": "Rapports",
-      "listings": "Listages",
+      "listings": "Listings",
       "admin": "Admin"
     },
     "reports": {
-      "backup": "Rapport Sauvegarde",
-      "clients": "Rapport Client",
-      "configuration": "Rapport Configuration",
-      "hardware": "Rapport Materiel",
-      "munki": "Rapport Munki",
-      "network": "Rapport Réseau",
-      "power": "Rapport Alimentation"
+      "backup": "Sauvegarde",
+      "clients": "Client",
+      "configuration": "Configuration",
+      "location": "Localisation",
+      "hardware": "Matériel",
+      "munki": "Munki",
+      "network": "Réseau",
+      "power": "Alimentation"
     },
     "user": {
       "logout": "Se déconnecter"
@@ -340,8 +342,8 @@
   },
   "new_client": "Nouveau Client",
   "new_client_plural": "Nouveaux Clients",
-  "no_clients": "Pas des Clients",
-  "no_data": "Pas des données",
+  "no_clients": "Pas de Clients",
+  "no_data": "Pas de données",
   "on": "Activé",
   "off": "Désactivé",
   "os": {
@@ -349,9 +351,9 @@
   },
   "path": "Chemin",
   "pending": "En attente",
-  "pkg_failed_to_install": "L'installation de __pkg__ a échoué : __reason__",
-  "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échoué",
-  "reg_date": "Date de registration",
+  "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
+  "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
+  "reg_date": "Date d'enregistrement",
   "remote_control": "Contrôle en distance",
   "report": {
     "generate": "Générer un Rapport"
@@ -363,10 +365,10 @@
     "ppd": "PPD",
     "printer_sharing": "Partage d'imprimantes",
     "printer_status": "État de l'imprimante",
-    "tab_title": "Imprimantes installés",
+    "tab_title": "Imprimantes installées",
     "url": "URL"
   },
-  "serial": "Numero de série",
+  "serial": "Numéro de série",
   "servermetrics": {
     "tab": "Server Metrics "
   },
@@ -388,7 +390,7 @@
   "show": "Afficher",
   "software": {
     "software": "Software",
-    "smc_version": "Version de l'SMC",
+    "smc_version": "Version de la SMC",
     "boot_rom_version": "Version du Boot ROM"
   },
   "status": "État",
@@ -400,7 +402,7 @@
     "free": "Libre",
     "internal": "Interne",
     "mountpoint": "Point de montage",
-    "not_encrypted": "Ne pas chiffré",
+    "not_encrypted": "Ne pas chiffrer",
     "percentage": "Pourcentage",
     "size": "Taille du disque",
     "smartstatus": "État SMART",
@@ -439,21 +441,21 @@
   "warning_plural": "Alertes",
   "warranty": {
     "coverage": "Couverture de la garantie",
-    "est_manufacture_date": "Date de fabrication estimé",
-    "est_purchase_date": "Date d'achat estimé",
+    "est_manufacture_date": "Date de fabrication estimée",
+    "est_purchase_date": "Date d'achat estimée",
     "expired": "Expiré le __date__",
     "expires_in": "Expire le __date__",
     "no_alerts": "Aucune alerte de garantie",
-    "recheck": "Retest l'état de la garantie",
-    "supported_no_applecare": "Pris en charge jusqu'à __date__. Pas de Applecare",
+    "recheck": "Retest de l'état de la garantie",
+    "supported_no_applecare": "Pris en charge jusqu'à __date__. Pas d'Applecare",
     "supported_until": "Pris en charge jusqu'à __date__",
     "unregistered": "Non enregistré",
     "warranty": "Garantie",
-    "widget_title": "Garantie Materiel"
+    "widget_title": "Garantie Matériel"
   },
   "widget": {
     "age": {
-      "title": "Age Materiel"
+      "title": "Age Matériel"
     },
     "app": {
       "versions": "Versions connues du __app__"
@@ -461,7 +463,7 @@
     "bound_to_ds": {
       "bound": "Lié",
       "notbound": "Pas lié",
-      "info": "Cumuls depuis ces données sont collectées",
+      "info": "Cumuls depuis que ces données sont collectées",
       "title": "Lié à un service d'annuaire"
     },
     "certificate": {
@@ -474,7 +476,7 @@
       "notfound": "Pas de doublons trouvés"
     },
     "munki": {
-      "no_updates_pending": "Pas de mises à jour en attente"
+      "no_updates_pending": "Pas de mise à jour en attente"
     },
     "power": {
       "missing": "Manquant",
@@ -485,10 +487,10 @@
       "nobattery": "Pas de batterie"
     },
     "timemachine": {
-      "lastweek": "Dernière sauvegarde effectuée il ya plus d'une journée",
+      "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
       "title": "État Timemachine",
       "today": "Sauvegardé aujourd'hui",
-      "week_plus": "Dernière sauvegarde effectuée il ya plus d'une semaine"
+      "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
     }
   }
 }

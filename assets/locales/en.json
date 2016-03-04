@@ -303,6 +303,7 @@
 		"latitudeaccuracy": "Latitude Accuracy",
 		"longitude": "Longitude",
 		"longitudeaccuracy": "Longitude Accuracy",
+		"report": "Location Report",
 		"stalelocation": "Stale Location"
 	},
 	"machine": {
@@ -327,7 +328,8 @@
 		"run_type": "Run Type",
 		"version": "Munki Version",
 		"warning": "Munki warning: __warning__",
-		"warning_plural": "__count__ Munki warnings"
+		"warning_plural": "__count__ Munki warnings",
+		"additional_info": "Additional Munki Info"
 	},
 	"name": "Name",
 	"nav": {
@@ -375,6 +377,7 @@
 			"clients": "Client report",
 			"configuration": "Configuration report",
 			"hardware": "Hardware report",
+			"location": "Location report",
 			"munki": "Munki report",
 			"network": "Network report",
 			"power": "Power report"
