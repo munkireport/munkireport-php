@@ -303,6 +303,7 @@
 		"latitudeaccuracy": "Latitude Accuracy",
 		"longitude": "Longitude",
 		"longitudeaccuracy": "Longitude Accuracy",
+		"report": "Location Report",
 		"stalelocation": "Stale Location"
 	},
 	"machine": {
@@ -323,10 +324,12 @@
 		"package_installed": "__pkg__ installed",
 		"package_installed_plural": "__count__ packages installed",
 		"panel_title": "Munki statistics this week",
+		"munkiprotocol": "Munki Protocol",
 		"run_type": "Run Type",
 		"version": "Munki Version",
 		"warning": "Munki warning: __warning__",
-		"warning_plural": "__count__ Munki warnings"
+		"warning_plural": "__count__ Munki warnings",
+		"additional_info": "Additional Munki Info"
 	},
 	"name": "Name",
 	"nav": {
@@ -349,6 +352,7 @@
 			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
+			"gsx": "GSX",
 			"hardware": "Hardware",
 			"inventory": "Inventory",
 			"location": "Location",
@@ -373,6 +377,7 @@
 			"clients": "Client report",
 			"configuration": "Configuration report",
 			"hardware": "Hardware report",
+			"location": "Location report",
 			"munki": "Munki report",
 			"network": "Network report",
 			"power": "Power report"
@@ -543,6 +548,13 @@
 		},
 		"munki": {
 			"no_updates_pending": "No Updates Pending"
+		},
+		"munkiinfo": {
+			"munkiprotocol": {
+				"localrepo": "local repo",
+				"http": "http",
+				"https": "https"
+			}
 		},
 		"power": {
 			"missing": "Missing",

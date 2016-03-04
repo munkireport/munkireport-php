@@ -25,6 +25,7 @@ CurrentStatus="pinpoint has not ran or been installed"
 if [ ! -f "${LOCATION_PREF}" ]; then
   /bin/mkdir -p "${LOCATION_DIR}"
   /usr/bin/defaults write "${LOCATION_PREF}" LastRun -string "${LastRun}"
+  /usr/bin/defaults write "${LOCATION_PREF}" LastLocationRun -string "${LastRun}"
   /usr/bin/defaults write "${LOCATION_PREF}" CurrentStatus -string "${CurrentStatus}"
   # Change permissions to match regular preference files
   /bin/chmod 644 "${LOCATION_PREF}"

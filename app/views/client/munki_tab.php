@@ -14,15 +14,15 @@
 		<h2 id="errors">Errors &amp; Warnings</h2>
 
 		<?php if($client->report_plist['Errors'] OR $client->report_plist['Warnings']): ?>
-		  
+
 			<?php if($client->report_plist['Errors']): ?>
 				<pre class="alert alert-danger">• <?php echo implode("\n• ", $client->report_plist['Errors']); ?></pre>
 			<?php endif; ?>
-			
+
 			<?php if($client->report_plist['Warnings']): ?>
 				<pre class="alert alert-warning">• <?php echo implode("\n• ", $client->report_plist['Warnings']); ?></pre>
 			<?php endif; ?>
-			
+
 		<?php else: ?>
 			<p><i>No errors or warnings</i></p>
 		<?php endif ?>
@@ -34,37 +34,102 @@
 		<h2>Munki</h2>
 		<table class="table table-striped">
 			<tr>
-				<th>Version:</th>
+				<th>Version</th>
 				<td><?php echo $client->version; ?></td>
 			</tr>
 			<tr>
-				<th>Manifest:</th>
+				<th>SoftwareRepoURL</th>
+				<td><div id="munkiinfo-SoftwareRepoURL"></div></td>
+			</tr>
+			<tr>
+				<th>AppleCatalogURL</th>
+				<td><div id="munkiinfo-AppleCatalogURL"></div></td>
+			</tr>
+			<tr>
+				<th>Manifest</th>
 				<td><?php echo $client->manifestname; ?></td>
 			</tr>
 			<tr>
-				<th>Run Type:</th>
+				<th>LocalOnlyManifest</th>
+				<td><div id="munkiinfo-LocalOnlyManifest"></div></td>
+			</tr>
+			<tr>
+				<th>Run Type</th>
 				<td><?php echo $client->runtype; ?></td>
 			</tr>
 			<tr>
-				<th>Start:</th>
+				<th>Start</th>
 				<td><time datetime="<?php echo $client->starttime; ?>"></time></td>
 			</tr>
 			<tr>
 				<?php $duration = strtotime($client->endtime) - strtotime($client->starttime); ?>
-				<th>Duration:</th>
+				<th>Duration</th>
 				<td><?php echo $duration; ?> seconds</td>
 			</tr>
 		</table>
+		<button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munki.additional_info"></span></button>
 
 	</div><!-- </div class="col-lg-6"> -->
 
-	<script>
-			$(document).on('appReady', function(e, lang) {
-				$( "table time" ).each(function( index ) {
-					$(this).html(moment($(this).attr('datetime'), "YYYY-MM-DD HH:mm:ss Z").fromNow());
-				});
+  
+
+
+<script>
+		$(document).on('appReady', function(e, lang) {
+			$( "table time" ).each(function( index ) {
+				$(this).html(moment($(this).attr('datetime'), "YYYY-MM-DD HH:mm:ss Z").fromNow());
 			});
-	</script>
+		});
+</script>
+
+<script>
+$(document).on('appReady', function(){
+	
+	var table = $('<div>');
+	
+	$('#popoverId').click(function(e){
+		
+		$('#myModal .modal-title')
+			.empty()
+			.append(i18n.t("munki.additional_info"))
+		$('#myModal .modal-body')
+			.empty()
+			.append(table);
+		
+		$('#myModal button.ok').text(i18n.t("dialog.close"));
+
+		// Set ok button
+		$('#myModal button.ok')
+			.off()
+			.click(function(){$('#myModal').modal('hide')});
+
+		
+		$('#myModal').modal('show');
+	})
+	
+  $.getJSON(appUrl + '/module/munkiinfo/get_data/' + serialNumber, function(data){
+    // These are single preferences
+    $('#munkiinfo-SoftwareRepoURL').text(data['SoftwareRepoURL']);
+    $('#munkiinfo-AppleCatalogURL').text(data['AppleCatalogURL']);
+    $('#munkiinfo-LocalOnlyManifest').text(data['LocalOnlyManifest']);
+    
+    // Create table of all preferences
+    var rows = ''
+    for (key in data){
+      rows = rows + '<tr><th>'+key+'</th><td>'+data[key]+'</td></tr>'
+    }
+      table.append('<center><a target="_blank" href="https://github.com/munki/munki/wiki/Preferences#supported-managedinstalls-keys">Munki Wiki - Supported Managedinstalls Keys</a></center>')
+      .append($('<div>')
+        .addClass('table-responsive')
+        .append($('<table>')
+          // .append('<caption>Additional Munki Info</caption>')
+					.addClass('table table-striped')
+					.append($('<tbody>')
+						.append(rows))))
+  });
+});
+</script>
+
 
 <?php // Move install results over to their install items.
 $install_results = array();
@@ -242,6 +307,7 @@ if(isset($report['ItemsToRemove']))
   </div><!-- </div class="row"> -->
 
 <pre><?php //print_r($client->rs) ?></pre>
+
 <script>
 $(document).on('appReady', function(e, lang) {
 
