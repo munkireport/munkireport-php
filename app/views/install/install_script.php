@@ -8,7 +8,7 @@ CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREFLIGHT=1
 PREF_CMDS=( ) # Pref commands array
-CURL=("/usr/bin/curl" "--insecure" "--fail" "--silent" "--show-error")
+CURL=("<?php echo implode('" "', conf('curl_cmd'))?>")
 # Exit status
 ERR=0
 
