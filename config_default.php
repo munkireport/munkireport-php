@@ -264,6 +264,24 @@
 	//$conf['gsx_cert_keypass'] = '';
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
+	
+	/*
+	|===============================================
+	| Curl
+	|===============================================
+	|
+	| Define path to the curl binary and add options
+	| this is used by the installer script.
+	| Override to use custom path and add or remove options
+	|
+	*/
+	$conf['curl_cmd'] = array(
+		"/usr/bin/curl",
+		"--insecure",
+		"--fail",
+		"--silent",
+		"--show-error");
+
 
     /*
 	|===============================================
