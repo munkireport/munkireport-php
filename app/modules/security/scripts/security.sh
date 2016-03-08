@@ -30,7 +30,7 @@ fi
 
 if [[ ${osvers} -ge 11 ]]; then
    sip_status=$(/usr/bin/csrutil status | awk '{print $5}')
-   if [ "$sip_status" = "disabled." ]; then
+   if [ "$sip_status" == "disabled." ]; then
       sip=Disabled
    else
       sip=Active
