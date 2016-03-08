@@ -29,8 +29,8 @@ fi
 # Checks SIP status on Macs running 10.11 or higher
 
 if [[ ${osvers} -ge 11 ]]; then
-    sip_status=$(/usr/bin/csrutil status | awk '{print $5}')
-   if [ "$sip_status" = "disabled" ]; then
+   sip_status=$(/usr/bin/csrutil status | awk '{print $5}')
+   if [ "$sip_status" = "disabled." ]; then
       sip=Disabled
    else
       sip=Active
