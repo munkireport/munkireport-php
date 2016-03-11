@@ -6,9 +6,9 @@
 
 <div class="container">
 
-  <div class="row">
+  <div class="row" style="height: calc(100vh - 136px);">
 
-    <div class="col-md-12" id="map" style="height:500px"></div>
+    <div class="col-md-12" id="map" style="height:100%"></div>
 
   </div>
 
