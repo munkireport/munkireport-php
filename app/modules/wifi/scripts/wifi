@@ -6,7 +6,7 @@ mkdir -p "$DIR/cache"
 wifi_file="$DIR/cache/wifi.txt"
 wifi_data=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I`
 
-if [[ "${wifi_data}" == *"AirPort: Off"* ]] ; then
+if [[ "${wifi_data}" == *"AirPort: Off"* ]] || [[ "${wifi_data}" == *"AirPort is Off"* ]] ; then
 
 echo "     agrCtlRSSI: " > $wifi_file
 echo "     agrExtRSSI: " >> $wifi_file
@@ -23,6 +23,48 @@ echo "          BSSID: " >> $wifi_file
 echo "           SSID: " >> $wifi_file
 echo "            MCS: " >> $wifi_file
 echo "        channel: " >> $wifi_file
+
+elif [[ "${wifi_data}" == "" ]] ; then
+
+# Check if Internet Connection Sharing is turned on
+check_ICS=`/usr/libexec/PlistBuddy /Library/Preferences/SystemConfiguration/com.apple.nat.plist -c 'Print :NAT:SharingDevices:0'`
+if [[ "${check_ICS}" == "en"* ]] ; then
+
+echo "     agrCtlRSSI: " > $wifi_file
+echo "     agrExtRSSI: " >> $wifi_file
+echo "    agrCtlNoise: " >> $wifi_file
+echo "    agrExtNoise: " >> $wifi_file
+echo "          state: sharing" >> $wifi_file
+echo "        op mode: " >> $wifi_file
+echo "     lastTxRate: " >> $wifi_file
+echo "        maxRate: " >> $wifi_file
+echo "lastAssocStatus: " >> $wifi_file
+echo "    802.11 auth: " >> $wifi_file
+echo "      link auth: " >> $wifi_file
+echo "          BSSID: " >> $wifi_file
+echo "           SSID: " >> $wifi_file
+echo "            MCS: " >> $wifi_file
+echo "        channel: " >> $wifi_file
+
+else
+
+echo "     agrCtlRSSI: " > $wifi_file
+echo "     agrExtRSSI: " >> $wifi_file
+echo "    agrCtlNoise: " >> $wifi_file
+echo "    agrExtNoise: " >> $wifi_file
+echo "          state: unknown" >> $wifi_file
+echo "        op mode: " >> $wifi_file
+echo "     lastTxRate: " >> $wifi_file
+echo "        maxRate: " >> $wifi_file
+echo "lastAssocStatus: " >> $wifi_file
+echo "    802.11 auth: " >> $wifi_file
+echo "      link auth: " >> $wifi_file
+echo "          BSSID: " >> $wifi_file
+echo "           SSID: " >> $wifi_file
+echo "            MCS: " >> $wifi_file
+echo "        channel: " >> $wifi_file
+
+fi
 
 else
 

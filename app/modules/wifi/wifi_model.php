@@ -51,6 +51,8 @@ class wifi_model extends Model {
 	{
 		$sql = "SELECT COUNT(CASE WHEN state = 'running' THEN 1 END) AS connected,
 				COUNT(CASE WHEN state = 'init' THEN 1 END) AS on_not_connected,
+				COUNT(CASE WHEN state = 'sharing' THEN 1 END) AS sharing,
+				COUNT(CASE WHEN state = 'unknown' THEN 1 END) AS unknown,
 				COUNT(CASE WHEN state = 'off' THEN 1 END) AS off
 				FROM wifi
 				LEFT JOIN reportdata USING(serial_number)
