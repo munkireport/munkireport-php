@@ -253,6 +253,7 @@
 		},
 		"username": "Username"
 	},
+	"loading": "Loading data from server",
 	"machine": {
 		"hardware_widget_title": "Hardware model breakdown"
 	},
@@ -344,6 +345,11 @@
 	"new_client_plural": "New Clients",
 	"no_clients": "No Clients",
 	"no_data": "No Data",
+	"notification": {
+		"widget": {
+			"title": "Notification rules"
+		}
+	},
 	"on": "On",
 	"off": "Off",
 	"os": {
