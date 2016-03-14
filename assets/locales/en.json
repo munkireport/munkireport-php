@@ -586,6 +586,7 @@
         "noise": "Noise Level",
         "nonetworks": "No Networks",
         "rssilevel": "RSSI Level",
+        "sharing": "Sharing",
         "state": "WiFi State",
         "ssid": "SSID",
         "xauthtype": "802.11X Authentication Type",
