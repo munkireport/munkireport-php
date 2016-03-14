@@ -28,7 +28,9 @@ $(document).on('appUpdate', function(){
 			scrollBox
 				.append($('<a>')
 					.addClass('list-group-item')
-					.attr('href', appUrl + '/clients/detail/' + obj.serial_number)
+					.click(function(){
+                        showModal(obj);
+                    })
 					.append(obj.title)
 					.append($('<span>')
 						.addClass('pull-right')
@@ -47,6 +49,10 @@ $(document).on('appUpdate', function(){
 					.text(i18n.t('no_data')))
 		}
 
-	});				
+	});
+    
+    function showModal(obj){
+        alert(obj.title)
+    }		
 });
 </script>
