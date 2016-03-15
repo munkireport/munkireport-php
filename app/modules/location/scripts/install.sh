@@ -18,7 +18,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/${MODULESCRIPT}"
 
 	# Set preference to include this file in the preflight check
-	setreportpref $MODULE_NAME "${PREF_FILE}"
+	setreportpref "${MODULE_NAME}" "${LOCATION_PREF}"
 
 else
 	echo "Failed to download all required components!"
