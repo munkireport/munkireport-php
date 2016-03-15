@@ -583,6 +583,7 @@
     "noise": "Störsignalstärke",
     "nonetworks": "Keine Netzwerke",
     "rssilevel": "RSSI Stärke",
+    "sharing": "Sharing",
     "state": "WiFi Status",
     "ssid": "SSID",
     "xauthtype": "802.11X Authentifizierungstyp",
