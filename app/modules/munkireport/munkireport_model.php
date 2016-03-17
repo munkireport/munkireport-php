@@ -225,8 +225,11 @@ class Munkireport_model extends Model {
 			$this->failedinstalls = count($mylist['ProblemInstalls']);
 			if($this->failedinstalls == 1)
 			{
+				// Use name as pkg if displayname is missing
+				$pkg = isset($mylist['ProblemInstalls'][0]['display_name']) ? $mylist['ProblemInstalls'][0]['display_name'] : $mylist['ProblemInstalls'][0]['name'];
+
 				$install_info = array(
-					'pkg' => $mylist['ProblemInstalls'][0]['display_name'],
+					'pkg' => $pkg,
 					'reason' => $mylist['ProblemInstalls'][0]['note']
 				);
 			}
@@ -244,18 +247,22 @@ class Munkireport_model extends Model {
 		{
 			foreach($mylist['InstallResults'] as $result)
 			{
+				// Use name as displayname if displayname is missing and append version
+				$pkg = isset($result['display_name']) ? $result['display_name'] : $result['name'];
+				$pkg .= isset($result['version']) ? ' ' . $result['version'] : '';
+				
 				if($result["status"])
 				{
 					$this->failedinstalls++;
 					$this->installresults--;
 					$install_info = array(
-						'pkg' => $result['display_name'],
+						'pkg' => $pkg,
 						'reason' => '' // Client should handle default reason
 					);
 				}
 				else {
 					$install_info_success = array(
-						'pkg' => $result['display_name'] . ' ' .$result['version']
+						'pkg' => $pkg
 					);
 				}
 			}

@@ -105,8 +105,10 @@
 			"certificates": "Certificates",
 			"displays": "Displays",
 			"ds": "Directory Services",
+			"gsx": "GSX",
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
+			"location": "Location",
 			"munki": "Managed Software",
 			"network": "Network Interfaces",
 			"power": "Power",
@@ -115,7 +117,8 @@
 			"serverstats": "Server Statistics",
 			"summary": "Summary",
 			"third_party_software": "Third Party Software",
-			"timemachine": "Timemachine"
+			"timemachine": "Time Machine",
+			"wifi": "WiFi"
 		},
 		"installed_apple_software": "Installed Apple Software",
 		"installed_third_party_software": "Installed Third Party Software",
@@ -133,6 +136,7 @@
 		}
 	},
 	"configuration": "Configuration",
+    "connected": "Connected",
 	"cpu": {
 		"arch": "CPU Architecture",
 		"core": "core",
@@ -202,6 +206,30 @@
 	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
+    	"gsx": {
+		"configuration": "Shipping Configuration",
+		"contracttype": "Contract Type",
+		"country": "Country of Purchase",
+		"coverage": {
+			"conend": "Contract Coverage End Date",
+			"constart": "Contract Coverage Start Date",
+			"start": "Coverage Start Date",
+			"end": "Coverage End Date"
+		},
+		"estpurchasedate": "Estimated Purchase Date",
+		"laborcovered": "Labor Covered",
+		"loaner": "Loaner",
+		"modeldescription": "Model Description",
+		"obsolete": "Obsolete",
+		"partscovered": "Parts Covered",
+		"recheck": "Recheck Warranty Status",
+		"sla": "Warranty SLA",
+		"supported": "Supported",
+		"vintage": "Vintage",
+		"warrantystatus": "Warranty Status",
+		"warrantydays": "Warranty Days Remaining",
+		"warrentyend": "Warranty End Date"
+	},
 	"hardware": {
 		"hardware": "Hardware",
 		"uuid": "Hardware UUID"
@@ -249,9 +277,34 @@
 			"last_failure": "Last failed backup",
 			"last_failure_msg": "Message",
 			"last_success": "Last successful backup",
-			"title": "Timemachine Report"
+			"title": "Time Machine Report"
 		},
-		"username": "Username"
+		"username": "Username",
+        "wifi": {
+            "apmode": "AP Mode",
+            "authtype": "802.11X Auth Type", 
+            "channel": "Channel", 
+            "lasttx": "Last Tx Rate (Mbps)", 
+            "linkauthtype": "Link Auth Type", 
+            "maxtx": "Max Tx Rate (Mbps)", 
+            "noise": "Noise", 
+            "state": "WiFi State"
+        }
+	},
+	"location": {
+		"address": "Address",
+		"altitude": "Altitude",
+		"coordinates": "Coordinates",
+		"currentstatus": "Current Status",
+		"ls_enabled": "Location Services Enabled",
+		"lastrun": "Last Run",
+		"lastlocationrun": "Last Location Run",
+		"latitude": "Latitude",
+		"latitudeaccuracy": "Latitude Accuracy",
+		"longitude": "Longitude",
+		"longitudeaccuracy": "Longitude Accuracy",
+		"report": "Location Report",
+		"stalelocation": "Stale Location"
 	},
 	"machine": {
 		"hardware_widget_title": "Hardware model breakdown"
@@ -271,10 +324,12 @@
 		"package_installed": "__pkg__ installed",
 		"package_installed_plural": "__count__ packages installed",
 		"panel_title": "Munki statistics this week",
+		"munkiprotocol": "Munki Protocol",
 		"run_type": "Run Type",
 		"version": "Munki Version",
 		"warning": "Munki warning: __warning__",
-		"warning_plural": "__count__ Munki warnings"
+		"warning_plural": "__count__ Munki warnings",
+		"additional_info": "Additional Munki Info"
 	},
 	"name": "Name",
 	"nav": {
@@ -294,19 +349,22 @@
 			"bluetooth": "Bluetooth",
 			"clients": "Clients",
 			"certificate": "Certificates",
-			"directoryservice": "Directoryservice",
+			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
+			"gsx": "GSX",
 			"hardware": "Hardware",
 			"inventory": "Inventory",
+			"location": "Location",
 			"munki": "Munki",
 			"network": "Network",
 			"power": "Power",
 			"printers": "Printers",
 			"profile": "Profiles",
 			"security": "Security",
-			"timemachine": "Timemachine",
-			"warranty": "Warranty"
+			"timemachine": "Time Machine",
+			"warranty": "Warranty",
+			"wifi": "WiFi"
 		},
 		"main": {
 		  "dashboard": "Dashboard",
@@ -319,6 +377,7 @@
 			"clients": "Client report",
 			"configuration": "Configuration report",
 			"hardware": "Hardware report",
+			"location": "Location report",
 			"munki": "Munki report",
 			"network": "Network report",
 			"power": "Power report"
@@ -368,6 +427,11 @@
 		"tab_title": "Installed Printers",
 		"url": "URL"
 	},	
+	"security": {
+		"security": "Security",
+		"gatekeeper": "Gatekeeper Status",
+		"sip": "SIP Status"
+	},
 	"serial": "Serial Number",
 	"servermetrics": {
 		"tab": "Server Metrics"
@@ -449,7 +513,7 @@
 	"warranty": {
 		"coverage": "Warranty Coverage",
 		"est_manufacture_date": "Est. Manufacture Date",
-		"est_purchase_date": "Est. Purchase date",
+		"est_purchase_date": "Est. Purchase Date",
 		"expired": "Expired on __date__",
 		"expires_in": "Expires in __date__",
 		"no_alerts": "No Warranty Alerts",
@@ -485,6 +549,13 @@
 		"munki": {
 			"no_updates_pending": "No Updates Pending"
 		},
+		"munkiinfo": {
+			"munkiprotocol": {
+				"localrepo": "local repo",
+				"http": "http",
+				"https": "https"
+			}
+		},
 		"power": {
 			"missing": "Missing",
 			"normal": "Normal",
@@ -498,6 +569,28 @@
 			"title": "Timemachine Status",
 			"today": "Backed up today",
 			"week_plus": "Latest backup more than a week ago"
-		}
-	}
+		},
+        "warrantysupport":{
+            "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
+            "warrentysupportstatus": "Warranty Support Status"
+        }
+	},
+    "wifi": {
+        "apmode": "Access Point Mode",
+        "bssid": "BSSID",
+        "channel": "Channel",
+        "extrssi": "External RSSI",
+        "lasttrx": "Last Transmit Rate (Mbps)",
+        "maxtrx": "Maximum Transmit Rate (Mbps)",
+        "networks": "WiFi Networks",
+        "noise": "Noise Level",
+        "nonetworks": "No Networks",
+        "rssilevel": "RSSI Level",
+        "sharing": "Sharing",
+        "state": "WiFi State",
+        "ssid": "SSID",
+        "xauthtype": "802.11X Authentication Type",
+        "wifiauthtype": "WiFi Authentication Type",
+        "wifiinfo": "WiFi Information"
+    }
 }

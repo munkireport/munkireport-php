@@ -177,4 +177,16 @@
 			</table>
 		</div>
 		
+		<div class="col-lg-4">
+			<h4><i class="fa fa-key fa-fixed"></i> <span data-i18n="security.security"></span></h4>
+			<table>
+				<tr>
+					<th data-i18n="security.gatekeeper"></th><td class="mr-gatekeeper"></td>
+				</tr>
+				<tr>
+					<th data-i18n="security.sip"></th><td class="mr-sip"></td>
+				</tr>
+			</table>
+		</div>
+		
 	</div><!-- /row -->

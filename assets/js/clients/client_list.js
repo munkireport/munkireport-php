@@ -7,6 +7,19 @@ $(document).on('appReady', function(e, lang) {
 		search = decodeURIComponent(window.location.hash.substring(1));
 	}
 	
+	// ------------------------------------ Hotkeys
+	// Use arrows to use pagination
+	
+	$(document).bind('keydown', 'right', function(){
+		$(".paginate_button.next").click();
+	});
+	$(document).bind('keydown', 'left', function(){
+		$(".paginate_button.previous").click();
+	});
+
+	// ------------------------------------ End Hotkeys
+	
+	
 	// Datatables variables
 	mr.dt.buttonDom = "<'row'<'col-xs-6 col-md-8'lB r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>";
 	mr.dt.buttons = {

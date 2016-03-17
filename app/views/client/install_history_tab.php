@@ -43,7 +43,7 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
         // Initialize datatables
         $('.install-history-<?php echo $apple; ?>').dataTable(
 		{
-			"aaSorting": [[2,'asc']],
+			"order": [[2, 'desc']],
 			"fnDrawCallback": function( oSettings ){
 				// Update tab counter
 				$('#history-cnt-<?php echo $apple; ?>').html(oSettings.fnRecordsTotal());

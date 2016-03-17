@@ -155,7 +155,7 @@ chmod a+x "${MUNKIPATH}"{preflight,postflight,report_broken_client}
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"
 cd "${MUNKIPATH}preflight.d"
-${CURL} "${TPL_BASE}submit.preflight" --remote-name
+${CURL[@]} "${TPL_BASE}submit.preflight" --remote-name
 
 if [ "${?}" != 0 ]
 then
@@ -201,7 +201,7 @@ read -r -d '' UNINSTALLS << EOF
 
 <?php foreach($uninstall_scripts AS $scriptname => $filepath): ?>
 
-<?php echo "## $scriptname ##"; ?>
+<?php echo "## $scriptname ##\n"; ?>
 echo '- Uninstalling <?php echo $scriptname; ?>'
 
 <?php echo file_get_contents($filepath); ?>

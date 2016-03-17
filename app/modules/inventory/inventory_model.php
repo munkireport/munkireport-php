@@ -60,7 +60,7 @@ class Inventory_model extends Model {
             %s 
             %s
             GROUP BY version
-            ORDER BY count DESC', 
+            ORDER BY version DESC', 
             $this->enquote($this->tablename), 
             get_machine_group_filter('WHERE', 'r'),
             $match

@@ -5,6 +5,7 @@ new Machine_model;
 new Reportdata_model;
 new Filevault_status_model;
 new Localadmin_model;
+new Security_model;
 ?>
 
 <div class="container">
@@ -25,6 +26,8 @@ new Localadmin_model;
 		        <th data-i18n="filevault.users" data-colname='filevault_status.filevault_users'></th>
 		        <th data-i18n="type"data-colname='machine.machine_name'></th>
                 <th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+                <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
+                <th data-i18n="security.sip" data-colname='security.sip'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
