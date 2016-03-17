@@ -60,6 +60,9 @@ class Notification_controller extends Module_controller
 		}
 		else
 		{
+			$now = time();
+			$stats = array('errors' => 0, 'email' => 0, 'desktop' => 0);
+			
 			// Load notifications
 			$notifyObj = new Notification_model();
 			$notificationList = $notifyObj->getDueNotifications();
@@ -90,22 +93,28 @@ class Notification_controller extends Module_controller
 					
 					// Update notification obj.
 					$notificationObj->event_obj = json_encode($events);
-					$notificationObj->last_notified = time();
+					$notificationObj->last_run = $now;
 					$notificationObj->save();
+				}
+				
+				// Get stats
+				foreach ($stats as $key => $value) {
+					$stats[$key] = isset($allEvents[$key]) ? count($allEvents[$key]) : $value;
+				}
+				
+				// Check if we need to send email
+				if($stats['email'])
+				{
 					
 				}
 				
-				
-
 			}
-			
-			
 			
 			
 			// notify
 			
 			// Return JSON with results
-			$obj->view('json', array('msg' => $events));
+			$obj->view('json', array('msg' => $stats));
 		}
 		
 	}
