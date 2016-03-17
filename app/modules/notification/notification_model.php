@@ -6,28 +6,23 @@ class Notification_model extends Model {
     {
 		parent::__construct('id', 'notification'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['unitid'] = 0; // Business unit this notification belongs to
-        $this->rs['title'] = ''; // Human readable description
-        $this->rs['created_by'] = ''; // Who made this?
-        $this->rs['event_module'] = ''; // disk, certificate, 
-        $this->rs['event_type'] = ''; // serial_number, network, etc.
-        $this->rs['event_what'] = ''; // ZBB02BGGB, my_corp
-        $this->rs['event_msg'] = ''; // The message 
-        $this->rs['custom_filter'] = ''; // size < 5G, end_date < 1 month
-        $this->rs['notify_type'] = ''; // userid, business_unit, etc.
-        $this->rs['notify_who'] = ''; // bill, anne, my_corp
-        $this->rs['notify_how'] = ''; // email, desktop notification
+        $this->rs['serial_number'] = ''; // serial_number
+        $this->rs['notification_title'] = ''; // Human readable description
+        $this->rs['notification_creator'] = ''; // Who made this?
+        $this->rs['notification_module'] = ''; // disk, certificate, *
+        $this->rs['notification_severity'] = ''; // danger, warning, success, * 
+        $this->rs['notification_who'] = ''; // bill, anne, my_corp
+        $this->rs['notification_how'] = ''; // email, desktop notification
+        $this->rs['event_obj'] = ''; $this->rt['notification_json'] = 'BLOB'; // JSON object with last notification data
+        $this->rs['notification_interval'] = 3600; // Seconds after which to notify again
+        $this->rs['notification_enabled'] = 1; // Active = 1, Inactive = 0
         $this->rs['last_notified'] = 0; // Last notification timestamp
-        $this->rs['interval'] = 3600; // Seconds after which to notify again
-        $this->rs['enabled'] = 1; // Active = 1, Inactive = 0
         $this->rs['timestamp'] = time(); // When was the filter enabled
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
 
-        $this->idx[] = array('unitid');
-        $this->idx[] = array('event_module');
-        $this->idx[] = array('event_what');
+        //$this->idx[] = array('unitid');
 				
 		// Create table if it does not exist
         $this->create_table();
@@ -47,6 +42,20 @@ class Notification_model extends Model {
     {
         $sql = 'SELECT * FROM notification';
         return $this->query($sql);        
+    }
+    
+    /**
+     * Get list of notifications to check
+     *
+     * Check which notifications should be checked against the event list
+     *
+     **/
+    public function getDueNotifications()
+    {
+        $where = sprintf('notification_enabled = 1 AND (last_notified+notification_interval) < %d',
+            time()
+        );
+        return $this->retrieve_many($where);
     }
 
 }
