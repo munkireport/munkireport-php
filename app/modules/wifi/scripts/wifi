@@ -23,6 +23,7 @@ echo "          BSSID: " >> $wifi_file
 echo "           SSID: " >> $wifi_file
 echo "            MCS: " >> $wifi_file
 echo "        channel: " >> $wifi_file
+date +%s >> $wifi_file
 
 elif [[ "${wifi_data}" == "" ]] ; then
 
@@ -45,6 +46,7 @@ echo "          BSSID: " >> $wifi_file
 echo "           SSID: " >> $wifi_file
 echo "            MCS: " >> $wifi_file
 echo "        channel: " >> $wifi_file
+date +%s >> $wifi_file
 
 else
 
@@ -63,6 +65,7 @@ echo "          BSSID: " >> $wifi_file
 echo "           SSID: " >> $wifi_file
 echo "            MCS: " >> $wifi_file
 echo "        channel: " >> $wifi_file
+date +%s >> $wifi_file
 
 fi
 
