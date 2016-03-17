@@ -51,7 +51,7 @@ class Notification_controller extends Module_controller
 	 * Check notifications, notify if necessary
 	 *
 	 **/
-	public function notify()
+	public function runCheck()
 	{
 		$obj = new View();
 		if( ! $this->authorized())

@@ -15,6 +15,7 @@ class Notification_model extends Model {
         $this->rs['notification_how'] = ''; // email, desktop notification
         $this->rs['event_obj'] = ''; $this->rt['notification_json'] = 'BLOB'; // JSON object with last notification data
         $this->rs['notification_interval'] = 3600; // Seconds after which to notify again
+        $this->rs['suspended_until'] = 0; // Suspend notification until timestamp
         $this->rs['notification_enabled'] = 1; // Active = 1, Inactive = 0
         $this->rs['last_notified'] = 0; // Last notification timestamp
         $this->rs['timestamp'] = time(); // When was the filter enabled
@@ -52,8 +53,10 @@ class Notification_model extends Model {
      **/
     public function getDueNotifications()
     {
-        $where = sprintf('notification_enabled = 1 AND (last_notified+notification_interval) < %d',
-            time()
+        $where = sprintf('notification_enabled = 1
+            AND (last_notified+notification_interval) < %d
+            AND suspended_until < %d',
+            time(), time()
         );
         return $this->retrieve_many($where);
     }
