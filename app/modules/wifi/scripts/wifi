@@ -8,20 +8,20 @@ wifi_data=`/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Curre
 
 if [[ "${wifi_data}" == *"AirPort: Off"* ]] || [[ "${wifi_data}" == *"AirPort is Off"* ]] ; then
 
-echo "     agrCtlRSSI: " > $wifi_file
-echo "     agrExtRSSI: " >> $wifi_file
-echo "    agrCtlNoise: " >> $wifi_file
-echo "    agrExtNoise: " >> $wifi_file
+echo "     agrCtlRSSI: 0" > $wifi_file
+echo "     agrExtRSSI: 0" >> $wifi_file
+echo "    agrCtlNoise: 0" >> $wifi_file
+echo "    agrExtNoise: 0" >> $wifi_file
 echo "          state: off" >> $wifi_file
 echo "        op mode: " >> $wifi_file
-echo "     lastTxRate: " >> $wifi_file
-echo "        maxRate: " >> $wifi_file
+echo "     lastTxRate: 0" >> $wifi_file
+echo "        maxRate: 0" >> $wifi_file
 echo "lastAssocStatus: " >> $wifi_file
 echo "    802.11 auth: " >> $wifi_file
 echo "      link auth: " >> $wifi_file
 echo "          BSSID: " >> $wifi_file
 echo "           SSID: " >> $wifi_file
-echo "            MCS: " >> $wifi_file
+echo "            MCS: 0" >> $wifi_file
 echo "        channel: " >> $wifi_file
 date +%s >> $wifi_file
 
@@ -31,39 +31,39 @@ elif [[ "${wifi_data}" == "" ]] ; then
 check_ICS=`/usr/libexec/PlistBuddy /Library/Preferences/SystemConfiguration/com.apple.nat.plist -c 'Print :NAT:SharingDevices:0'`
 if [[ "${check_ICS}" == "en"* ]] ; then
 
-echo "     agrCtlRSSI: " > $wifi_file
-echo "     agrExtRSSI: " >> $wifi_file
-echo "    agrCtlNoise: " >> $wifi_file
-echo "    agrExtNoise: " >> $wifi_file
+echo "     agrCtlRSSI: 0" > $wifi_file
+echo "     agrExtRSSI: 0" >> $wifi_file
+echo "    agrCtlNoise: 0" >> $wifi_file
+echo "    agrExtNoise: 0" >> $wifi_file
 echo "          state: sharing" >> $wifi_file
 echo "        op mode: " >> $wifi_file
-echo "     lastTxRate: " >> $wifi_file
-echo "        maxRate: " >> $wifi_file
+echo "     lastTxRate: 0" >> $wifi_file
+echo "        maxRate: 0" >> $wifi_file
 echo "lastAssocStatus: " >> $wifi_file
 echo "    802.11 auth: " >> $wifi_file
 echo "      link auth: " >> $wifi_file
 echo "          BSSID: " >> $wifi_file
 echo "           SSID: " >> $wifi_file
-echo "            MCS: " >> $wifi_file
+echo "            MCS: 0" >> $wifi_file
 echo "        channel: " >> $wifi_file
 date +%s >> $wifi_file
 
 else
 
-echo "     agrCtlRSSI: " > $wifi_file
-echo "     agrExtRSSI: " >> $wifi_file
-echo "    agrCtlNoise: " >> $wifi_file
-echo "    agrExtNoise: " >> $wifi_file
+echo "     agrCtlRSSI: 0" > $wifi_file
+echo "     agrExtRSSI: 0" >> $wifi_file
+echo "    agrCtlNoise: 0" >> $wifi_file
+echo "    agrExtNoise: 0" >> $wifi_file
 echo "          state: unknown" >> $wifi_file
 echo "        op mode: " >> $wifi_file
-echo "     lastTxRate: " >> $wifi_file
-echo "        maxRate: " >> $wifi_file
+echo "     lastTxRate: 0" >> $wifi_file
+echo "        maxRate: 0" >> $wifi_file
 echo "lastAssocStatus: " >> $wifi_file
 echo "    802.11 auth: " >> $wifi_file
 echo "      link auth: " >> $wifi_file
 echo "          BSSID: " >> $wifi_file
 echo "           SSID: " >> $wifi_file
-echo "            MCS: " >> $wifi_file
+echo "            MCS: 0" >> $wifi_file
 echo "        channel: " >> $wifi_file
 date +%s >> $wifi_file
 
