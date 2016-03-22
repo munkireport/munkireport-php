@@ -110,6 +110,9 @@ class Notification_controller extends Module_controller
 				// Check if we need to send email
 				if($stats['email'])
 				{
+					// Get email template path FIXME make config item
+					$template_path = dirname(__FILE__) .'/views/notification_email.php';
+					
 					// Load Email class until we can autoload an email library
 					$email_config = conf('email');
 					if($email_config)
@@ -117,7 +120,7 @@ class Notification_controller extends Module_controller
 						foreach($allEvents['email'] as $who => $event_array)
 						{
 							// Load email template
-							$obj = new View(VIEW_PATH.'email/notification.php', array('events' => $event_array ));
+							$obj = new View($template_path, array('events' => $event_array ));
 							$email['content'] = $obj->fetch();
 							$email['subject'] = 'Munkireport Notification';
 							$email['to'] = array($who => '');
