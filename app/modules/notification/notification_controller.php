@@ -75,7 +75,7 @@ class Notification_controller extends Module_controller
 				foreach ($notificationList as $notificationObj)
 				{
 					$events = array();
-					// Match notification with event
+					// Match notification with event todo: move to model
 					$sql = sprintf("SELECT serial_number, msg, data 
 						FROM event 
 						WHERE serial_number LIKE '%s'
@@ -93,7 +93,7 @@ class Notification_controller extends Module_controller
 					
 					// Update notification obj.
 					$notificationObj->event_obj = json_encode($events);
-					$notificationObj->last_run = $now;
+					//$notificationObj->last_run = $now;
 					$notificationObj->save();
 				}
 				
@@ -105,11 +105,24 @@ class Notification_controller extends Module_controller
 				// Check if we need to send email
 				if($stats['email'])
 				{
-					
+					// Load Email class until we can autoload an email library
+					$email_config = conf('email');
+					if($email_config)
+					{
+						foreach($allEvents['email'] as $who => $event_array)
+						{
+							
+							$email['to'] = array($who => '');
+							$email['events'] = $event_array; // Format this?
+							include_once (APP_PATH . '/lib/munkireport/Email.php');
+							$mailer = new munkireport\email\Email($email_config);
+							$mailer->send($email);
+
+						}
+					}
 				}
 				
 			}
-			
 			
 			// notify
 			

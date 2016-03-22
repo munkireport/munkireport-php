@@ -353,6 +353,25 @@
 	|
 	*/
     $conf['request_timeout'] = 5;
+	
+	
+	/*
+	|===============================================
+	| Email Settings
+	|===============================================
+	|
+	| These settings are used for email notifications
+	| Only smtp is supported at the moment.
+	|
+	| 	$conf['email']['use_smtp'] = true;
+	| 	$conf['email']['from'] = array('noreply@example.com' => 'Munkireport Mailer');
+	|	$conf['email']['smtp_host'] = 'smtp1.example.com;smtp2.example.com';
+	|	$conf['email']['smtp_auth'] = true;
+	|	$conf['email']['smtp_username'] = 'user@example.com';
+	|	$conf['email']['smtp_password'] = 'secret';
+	|	$conf['email']['smtp_secure'] = 'tls';
+	|	$conf['email']['smtp_port'] = 587;
+	*/
 
 
  	/*
