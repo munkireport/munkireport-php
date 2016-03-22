@@ -10,6 +10,7 @@ class Notification_model extends Model {
         $this->rs['notification_title'] = ''; // Human readable description
         $this->rs['notification_creator'] = ''; // Who made this?
         $this->rs['notification_module'] = ''; // disk, certificate, *
+        $this->rs['notification_msg'] = ''; // munki.warning, new_client, *
         $this->rs['notification_severity'] = ''; // danger, warning, success, * 
         $this->rs['notification_who'] = ''; // bill, anne, my_corp
         $this->rs['notification_how'] = ''; // email, desktop notification

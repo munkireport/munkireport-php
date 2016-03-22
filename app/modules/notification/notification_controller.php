@@ -76,14 +76,19 @@ class Notification_controller extends Module_controller
 				{
 					$events = array();
 					// Match notification with event todo: move to model
-					$sql = sprintf("SELECT serial_number, msg, data 
+					$sql = sprintf("SELECT * 
 						FROM event 
 						WHERE serial_number LIKE '%s'
 						AND module LIKE '%s'
-						AND type LIKE '%s'",
+						AND msg LIKE '%s'
+						AND type LIKE '%s'
+						AND timestamp > %s",
 						$notificationObj->serial_number,
 						$notificationObj->notification_module,
-						$notificationObj->notification_severity);
+						$notificationObj->notification_msg,
+						$notificationObj->notification_severity,
+						$notificationObj->last_run);
+
 					foreach($eventObj->query($sql) as $event)
 					{
 						$events[] = $event;
@@ -111,9 +116,12 @@ class Notification_controller extends Module_controller
 					{
 						foreach($allEvents['email'] as $who => $event_array)
 						{
-							
+							// Load email template
+							$obj = new View(VIEW_PATH.'email/notification.php', array('events' => $event_array ));
+							$email['content'] = $obj->fetch();
+							$email['subject'] = 'Munkireport Notification';
 							$email['to'] = array($who => '');
-							$email['events'] = $event_array; // Format this?
+							$email['vars'] = $event_array; // Format this?
 							include_once (APP_PATH . '/lib/munkireport/Email.php');
 							$mailer = new munkireport\email\Email($email_config);
 							$mailer->send($email);
