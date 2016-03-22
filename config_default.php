@@ -257,7 +257,9 @@
 	| Readme.md located in the GSX module.
 	|
 	| To use GSX module, set enable to TRUE and uncomment and
-	| fill out rest of configuration options
+	| fill out rest of configuration options. When setting the date format
+	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
+	| are required.
 	*/
 
 	$conf['gsx_enable'] = FALSE;
@@ -265,6 +267,7 @@
 	//$conf['gsx_cert_keypass'] = '';
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
+	//$conf['gsx_date_format'] = 'm/d/y';
 
     /*
 	|===============================================
