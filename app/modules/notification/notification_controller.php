@@ -62,8 +62,7 @@ class Notification_controller extends Module_controller
 			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
 			return;
 		}
-		
-		
+				
 		$now = time();
 		$stats = array('errors' => 0, 'email' => 0, 'desktop' => 0);
 		
@@ -153,11 +152,16 @@ class Notification_controller extends Module_controller
 			if($email_config)
 			{
 				include_once (APP_PATH . '/lib/munkireport/Email.php');
+				include_once (APP_PATH . '/lib/munkireport/I18next.php');
+				$i18nObj = new munkireport\localize\I18next('');
 
 				foreach($allEvents['email'] as $who => $event_array)
 				{
 					// Load email template
-					$obj = new View($template_path, array('events' => $event_array ));
+					$obj = new View($template_path, array(
+						'events' => $event_array,
+						'i18nObj' => $i18nObj,
+					));
 					$email['content'] = $obj->fetch();
 					$email['subject'] = 'Munkireport Notification';
 					$email['to'] = array($who => '');
