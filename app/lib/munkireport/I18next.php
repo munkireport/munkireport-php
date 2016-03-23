@@ -2,17 +2,24 @@
 
 namespace munkireport\localize;
 
+/**
+ * A php library to translate i18next localisation files
+ * Author: Arjen van Bochoven
+ *
+ * @package Munkireport
+ */
+
 class I18next {
     
-    private $config;
     private $i18nArray;
 
-    public function __construct($config)
+    public function __construct($locale = 'en')
     {
-        $this->config = $config;
+        // Default to en locale
+        $locale = $locale ? $locale : 'en';
         
         // Load the localisation JSON
-        if($json = @file_get_contents(APP_ROOT . 'assets/locales/en.json'))
+        if($json = @file_get_contents(APP_ROOT . 'assets/locales/' . $locale . '.json'))
         {
             $this->i18nArray = json_decode($json, true);
         }
@@ -46,6 +53,7 @@ class I18next {
         
         // Check if there are params
         if($params){
+            
             $paramsArray = json_decode($params, true);
             
             // Check if there is a count param
