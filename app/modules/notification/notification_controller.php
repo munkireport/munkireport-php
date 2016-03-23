@@ -96,8 +96,8 @@ class Notification_controller extends Module_controller
 			// Match notification with event todo: move to event model
 			$sql = sprintf("SELECT event.*, machine.computer_name 
 				FROM event
-				LEFT JOIN reportdata USING (serial_number)
-				LEFT JOIN machine USING (serial_number)
+				JOIN reportdata USING (serial_number)
+				JOIN machine USING (serial_number)
 				WHERE event.serial_number LIKE '%s'
 				AND module LIKE '%s'
 				AND msg LIKE '%s'
