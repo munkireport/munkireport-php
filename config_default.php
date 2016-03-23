@@ -371,6 +371,7 @@
 	|	$conf['email']['smtp_password'] = 'secret';
 	|	$conf['email']['smtp_secure'] = 'tls';
 	|	$conf['email']['smtp_port'] = 587;
+	|	$conf['email']['locale'] = 'en';
 	*/
 
 

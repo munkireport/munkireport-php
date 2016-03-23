@@ -153,7 +153,7 @@ class Notification_controller extends Module_controller
 			{
 				include_once (APP_PATH . '/lib/munkireport/Email.php');
 				include_once (APP_PATH . '/lib/munkireport/I18next.php');
-				$i18nObj = new munkireport\localize\I18next('');
+				$i18nObj = new munkireport\localize\I18next($email_config['locale']);
 
 				foreach($allEvents['email'] as $who => $event_array)
 				{
