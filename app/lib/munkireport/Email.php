@@ -34,7 +34,7 @@ class Email {
         $mail->Password = $this->config['smtp_password']; // SMTP password
         $mail->SMTPSecure = $this->config['smtp_secure']; // Enable TLS encryption, `ssl` also accepted
         $mail->Port = $this->config['smtp_port']; // TCP port to connect to
-        
+        $mail->CharSet = "UTF-8";
         $mail->setFrom($from_addr, $from_name);
         
         // Add recipient(s)
