@@ -14,6 +14,7 @@ class Notification_model extends Model {
         $this->rs['notification_severity'] = ''; // danger, warning, success, * 
         $this->rs['notification_who'] = ''; // bill, anne, my_corp
         $this->rs['notification_how'] = ''; // email, desktop notification
+        $this->rs['business_unit'] = 0; // User is part of this BU
         $this->rs['event_obj'] = ''; $this->rt['notification_json'] = 'BLOB'; // JSON object with last notification data
         $this->rs['run_interval'] = 3600; // Seconds after which to notify again
         $this->rs['last_run'] = 0; // Last run timestamp
@@ -43,7 +44,11 @@ class Notification_model extends Model {
      **/
     public function get_list()
     {
-        $sql = 'SELECT * FROM notification';
+        $where = '';
+        if (array_key_exists('business_unit', $_SESSION)) {
+            $where = sprintf('WHERE business_unit=%d', $_SESSION['business_unit']);
+        }
+        $sql = "SELECT * FROM notification $where";
         return $this->query($sql);        
     }
     
