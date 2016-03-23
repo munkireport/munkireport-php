@@ -26,7 +26,9 @@
   
   <div class="row">
 
-	  <?php $this->view('notification_widget', '', MODULE_PATH . 'notification/views/'); ?>
+	<?php $this->view('widgets/bound_to_ds_widget'); ?>
+	
+	<?php $this->view('widgets/printer_widget'); ?>
 
   </div> <!-- /row -->
 

@@ -9,6 +9,8 @@
   <div class="row">
 
     <?php $this->view('widgets/network_location_widget'); ?>
+    <?php $this->view('widgets/wifi_networks_widget'); ?>
+    <?php $this->view('widgets/wifi_state_widget'); ?>
 
   </div> <!-- /row -->
 

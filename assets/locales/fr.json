@@ -1,6 +1,7 @@
 {
   "about": {
-    "author": "Patrick Exner"
+    "author": "Patrick Exner",
+    "author": "Patrick Bernard"
   },
   "active": "Actif",
   "admin": {
@@ -8,50 +9,50 @@
       "more_info": "Plus d'infos"
     },
     "bu_overview": "Divisions de l'entreprise",
-    "delete_failed": "Suppression échoué",
+    "delete_failed": "Suppression échouée",
     "edit_bu": {
       "address": "Adresse",
       "link": "Lien (vers site externe)",
-      "name": "Nom de la Division de l'entreprise",
-      "title": "Modifier Division de l'entreprise"
+      "name": "Nom de la division de l'entreprise",
+      "title": "Modifier le nom de la division"
     },
     "edit_mg": {
-      "title": "Modifier les Groupes des Appareils"
+      "title": "Modifier le groupe d'appareils"
     },
     "edit_user": {
-      "title": "Modifier les Utilisateurs",
-      "add_user": "Ajouter un Utilisateur"
+      "title": "Modifier les utilisateurs",
+      "add_user": "Ajouter un utilisateur"
     },
     "mg": {
-      "title": "Groupes des Appareils",
-      "add_group": "Nouvelle Groupe",
-      "edit_group": "Modifier Groupe des Appareils",
-      "new_group": "Nouvelle Groupe des Appareils"
+      "title": "Groupe d'appareils",
+      "add_group": "Nouveau groupe",
+      "edit_group": "Modifier le groupe d'appareils",
+      "new_group": "Nouveau groupe d'appareils"
     },
     "new_bu": {
-      "title": "Nouvelle Division de l'entreprise"
+      "title": "Nouvelle division de l'entreprise"
     },
     "remove_bu": {
-      "title": "Supprimer Division de l'entreprise",
-      "content": "Lorsque vous supprimez cette Division de l'entreprise, toutes les données liées seront supprimés. Vous ne pouvez pas annuler cette action."
+      "title": "Supprimer une division de l'entreprise",
+      "content": "Lorsque vous supprimez cette Division de l'entreprise, toutes les données liées seront supprimées. Vous ne pouvez pas annuler cette action."
     },
-    "unassigned_groups": "Goupes non assignés"
+    "unassigned_groups": "Groupes non assignés"
   },
   "all": "Tous",
   "ard": "Apple Remote Desktop",
   "auth": {
     "addtoconfig": "Ajoutez cette ligne dans config.php:",
-    "back_to_site": "Retour à la site",
-    "empty_not_allowed": "Valeurs non définis ne sont pas permises",
+    "back_to_site": "Retour au site",
+    "empty_not_allowed": "Les valeurs non définies ne sont pas permises",
     "error_contacting_AD": "Une erreur est survenue en contactant l'AD",
     "gen_other": "Créer une autre",
     "generate": "Créer",
-    "generate_hash": "Créer hash de mot de passe",
-    "generated_hash": "hash crée",
-    "go_secure": "Aller vers site sécurisée",
-    "insecure": "Connexion insécure, basculer vers une connexion sécurisé",
-    "noauth_found": "Aucune information d'authentification trouvé, s'il vous plaît ajoutez un compte dans le fichier de configuration.",
-    "not_authorized": "Ne pas autorisé",
+    "generate_hash": "Créer un hash de mot de passe",
+    "generated_hash": "Hash créé",
+    "go_secure": "Aller vers site sécurisé",
+    "insecure": "Connexion non sécurisée, veuillez basculer vers une connexion sécurisée",
+    "noauth_found": "Aucune information d'authentification trouvée, s'il vous plaît veuillez ajouter un compte dans le fichier de configuration.",
+    "not_authorized": "Non autorisé",
     "password": "Mot de passe",
     "secure": "Vous utilisez une connexion sécurisée",
     "signin": "Connectez-vous",
@@ -63,7 +64,7 @@
     "duration": "Durée de sauvegarde",
     "last_failure": "Dernière sauvegarde échouée",
     "last_failure_msg": "Message",
-    "last_success": "Dernière sauvegarde réussi"
+    "last_success": "Dernière sauvegarde réussie"
   },
   "battery": {
     "life_remaining": "Durée restante de la batterie __percent__%"
@@ -74,22 +75,22 @@
     "bluetooth_battery_widget": "État de la batterie Bluetooth",
     "keyboard": "État du clavier",
     "mouse": "État de la souris",
-    "panel_title": "Périphériques Bluetooth avec mois de 15% batterie",
+    "panel_title": "Périphériques Bluetooth avec moins de 15% batterie",
     "status": "État Bluetooth",
     "trackpad": "État Trackpad"
   },
   "boot_time": "Démarré",
   "bundle_id": "BundleID",
   "business_unit": {
-    "disabled": "Divisions de l'entreprise désactivé",
-    "machine_group": "Groupe de Appareils",
-    "machine_groups": "Groupes de Appareils",
+    "disabled": "Divisions de l'entreprise désactivées",
+    "machine_group": "Groupe d'Appareils",
+    "machine_groups": "Groupes d'Appareils",
     "managers": "Gestionnaires",
     "users": "Utilisateurs"
   },
-  "buildversion": "Build Version",
+  "buildversion": "N° de version",
   "caching": {
-    "bytes_served": "Caching – Octets servi",
+    "bytes_served": "Caching – Octets servis",
     "from_origin": "Depuis origine",
     "from_peers": "Depuis peers",
     "from_cache": "Depuis cache"
@@ -99,31 +100,34 @@
     "comment": "Commentaires",
     "hour": "Clients par heure",
     "tab": {
-      "apple_software": "Apple Software",
+      "apple_software": "Logiciels Apple",
       "ard": "ARD",
       "bluetooth": "Bluetooth",
       "certificates": "Certificats",
       "displays": "Moniteurs",
-      "ds": "Directory Services",
-      "fv_escrow": "Filevault Escrow",
+      "ds": "Services d'annuaires",
+      "gsx": "GSX",
+      "fv_escrow": "Filevault",
       "inventory_items": "Objets dans l'inventaire",
+      "location": "Localisation",
       "munki": "Logiciels gérés",
       "network": "Interfaces réseau",
       "power": "Alimentation",
       "printers": "Imprimantes",
-      "profiles": "Profiles",
-      "serverstats": "Statistique du serveur",
+      "profiles": "Profils",
+      "serverstats": "Statistiques du serveur",
       "summary": "Résumé",
       "third_party_software": "Logiciels tiers",
-      "timemachine": "Timemachine"
+      "timemachine": "Time Machine",
+      "wifi": "WiFi"
     },
-    "installed_apple_software": "Apple Software installé",
-    "installed_third_party_software": "Logiciels tiers installé",
-    "install_date": "Date de l'install du client",
-    "no_install_history": "Pas de l'historique de l'install",
+    "installed_apple_software": "Logiciels Apple installés",
+    "installed_third_party_software": "Logiciels tiers installés",
+    "install_date": "Date de l'installation du client",
+    "no_install_history": "Pas de l'historique de l'installation",
     "panel_title": "Activité du client dans le dernier mois",
     "process_name": "Nom du processus",
-    "total": "Nombre de clients "
+    "total": "Nombre de clients"
   },
   "chart": {
     "stackedarea": {
@@ -133,19 +137,20 @@
     }
   },
   "configuration": "Configuration",
+  "connected": "Connecté",
   "cpu": {
     "arch": "Architecture processeur",
     "core": "core",
     "cpu": "CPU",
-    "type": "Model processeur",
+    "type": "Modèle processeur",
     "usage": "Utilisation processeur"
   },
   "crashplan": {
     "listing": {
-      "title": "CrashPlan Report"
+      "title": "Rapport CrashPlan"
     },
     "widget": {
-      "title": "CrashPlan Status"
+      "title": "Etat CrashPlan"
     },
     "client": {
       "title": "CrashPlan"
@@ -159,7 +164,7 @@
     "cancel": "Annuler",
     "close": "Fermer",
     "comment": {
-      "add": "Ajouter Commentaire",
+      "add": "Ajouter un commentaire",
       "label": "Commentaire"
     },
     "ok": "Ok",
@@ -179,8 +184,8 @@
   "error": "Erreur",
   "error_plural": "Erreurs",
   "errors": {
-    "title": "Erreur",
-    "client_nonexistent": "Client avec le numéro de série \"__serial__\" n'existe pas"
+    "title": "Erreurs",
+    "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas"
   },
   "event": "Événement",
   "event_plural": "Événements",
@@ -199,9 +204,33 @@
   },
   "free_disk_space": "Espace disque disponible",
   "free_disk_space_less_than": "Espace disque disponible < __gb__Go",
+  "gsx": {
+    "configuration": "Configuration livrée",
+    "contracttype": "Type de contrat",
+    "country": "Pays d'achat",
+    "coverage": {
+      "conend": "Date de fin de contrat",
+      "constart": "Date de début de contrat",
+      "start": "Date de démarrage de couverture",
+      "end": "Date de fin de couverture"
+    },
+    "estpurchasedate": "Date d'achat estimée",
+    "laborcovered": "Main d'oeuvre prise en charge",
+    "loaner": "Prêt",
+    "modeldescription": "Description du modèle",
+    "obsolete": "Obsolète",
+    "partscovered": "Pièces prises en charge",
+    "recheck": "Retest de l'état de la garantie",
+    "sla": "SLA Garantie",
+    "supported": "Supporté",
+    "vintage": "Vintage",
+    "warrantystatus": "Etat de la garantie",
+    "warrantydays": "Jours restants de garantie",
+    "warrentyend": "Date de fin de garantie"
+  },
   "hardware": {
-    "hardware": "Materiel",
-    "uuid": "UUID Materiel"
+    "hardware": "Matériel",
+    "uuid": "UUID Matériel"
   },
   "inactive": "Inactif",
   "installed": "Installé",
@@ -215,12 +244,12 @@
     "bluetooth": {
       "keyboard_battery": "Clavier",
       "mouse_battery": "Souris",
-      "status": "État",
+      "status": "Etat",
       "title": "Rapport Bluetooth",
-      "trackpad_battery": "Trackpad"
+      "trackpad_battery": ""
     },
     "certificate": {
-      "commonname": "Nom général",
+      "commonname": "Nom commun",
       "expires": "Expire",
       "title": "Rapport Certificat"
     },
@@ -229,7 +258,7 @@
     "hardware": {
       "description": "Description"
     },
-    "loading": "Chargement des donnes depuis le serveur",
+    "loading": "Chargement des données depuis le serveur",
     "munki": {
       "latest_run": "Dernière activité",
       "package_installed": "Paquet installé",
@@ -242,13 +271,38 @@
       "pending_removal_plural": "Suppressions en attente"
     },
     "timemachine": {
-      "duration": "Durée du sauvegarde",
-      "last_failure": "Dernier sauvegarde échoué",
+      "duration": "Durée de sauvegarde",
+      "last_failure": "Dernière sauvegarde échouée",
       "last_failure_msg": "Message",
-      "last_success": "Dernier sauvegarde réussi",
+      "last_success": "Dernière sauvegarde réussie",
       "title": "Rapport Timemachine"
     },
-    "username": "Nom utilisateur"
+    "username": "Nom utilisateur",
+    "wifi": {
+      "apmode": "Mode AP",
+      "authtype": "Type Auth 802.11X",
+      "channel": "Canal",
+      "lasttx": "Dernière taux Tx (Mbps)",
+      "linkauthtype": "Lien type Auth",
+      "maxtx": "Taux Max Tx(Mbps)",
+      "noise": "Bruit",
+      "state": "Etat WiFi"
+    }
+  },
+  "location": {
+    "address": "Adresse",
+    "altitude": "Altitude",
+    "coordinates": "Coordonnées",
+    "currentstatus": "Etat actuel",
+    "ls_enabled": "Services de localisation activés",
+    "lastrun": "Dernière mise à jour",
+    "lastlocationrun": "Dernière mise à jour de la localisation",
+    "latitude": "Latitude",
+    "latitudeaccuracy": "Précision Latitude",
+    "longitude": "Longitude",
+    "longitudeaccuracy": "Précision Longitude",
+    "report": "Rapport Localisation",
+    "stalelocation": "Localisation obsolète"
   },
   "machine": {
     "hardware_widget_title": "Détails de l'appareil"
@@ -261,17 +315,19 @@
     "usage": "Utilisation de la mémoire",
     "pressure": "Pression sur la mémoire"
   },
-  "model": "Model",
+  "model": "Modèle",
   "munki": {
     "error": "Erreur de Munki : __error__",
     "error_plural": "__count__ Erreurs de Munki",
     "package_installed": "__pkg__ installé",
     "package_installed_plural": "__count__ paquets installés",
-    "panel_title": "Statistique du Munki cette semaine",
+    "panel_title": "Statistique de Munki cette semaine",
+    "munkiprotocol": "Protocole Munki",
     "run_type": "Type d'évènement",
     "version": "Version de Munki",
     "warning": "Alerte de Munki : __warning__",
-    "warning_plural": "__count__ Alertes de Munki"
+    "warning_plural": "__count__ Alertes de Munki",
+    "additional_info": "Informations additionnelles Munki"
   },
   "name": "Nom",
   "nav": {
@@ -291,34 +347,38 @@
       "bluetooth": "Bluetooth",
       "clients": "Clients",
       "certificate": "Certificats",
-      "directoryservice": "Service de Repertoire",
+      "directoryservice": "Service d'annuaire",
       "disk": "Disque",
       "displays": "Moniteurs",
-      "hardware": "Materiel",
+      "gsx": "GSX",
+      "hardware": "Matériel",
       "inventory": "Inventaire",
+      "location": "Localisation",
       "munki": "Munki",
       "network": "Réseau",
       "power": "Alimentation",
       "printers": "Imprimantes",
-      "profile": "Profiles",
+      "profile": "Profils",
       "security": "Sécurité",
-      "timemachine": "Timemachine",
-      "warranty": "Garantie"
+      "timemachine": "Time Machine",
+      "warranty": "Garantie",
+      "wifi": "WiFi"
     },
     "main": {
       "dashboard": "Tableau de bord",
       "reports": "Rapports",
-      "listings": "Listages",
+      "listings": "Listings",
       "admin": "Admin"
     },
     "reports": {
-      "backup": "Rapport Sauvegarde",
-      "clients": "Rapport Client",
-      "configuration": "Rapport Configuration",
-      "hardware": "Rapport Materiel",
-      "munki": "Rapport Munki",
-      "network": "Rapport Réseau",
-      "power": "Rapport Alimentation"
+      "backup": "Sauvegarde",
+      "clients": "Client",
+      "configuration": "Configuration",
+      "hardware": "Matériel",
+      "location": "Localisation",
+      "munki": "Munki",
+      "network": "Réseau",
+      "power": "Alimentation"
     },
     "user": {
       "logout": "Se déconnecter"
@@ -339,8 +399,8 @@
   },
   "new_client": "Nouveau Client",
   "new_client_plural": "Nouveaux Clients",
-  "no_clients": "Pas des Clients",
-  "no_data": "Pas des données",
+  "no_clients": "Pas de Clients",
+  "no_data": "Pas de données",
   "on": "Activé",
   "off": "Désactivé",
   "os": {
@@ -348,10 +408,10 @@
   },
   "path": "Chemin",
   "pending": "En attente",
-  "pkg_failed_to_install": "L'installation de __pkg__ a échoué : __reason__",
-  "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échoué",
-  "reg_date": "Date de registration",
-  "remote_control": "Contrôle en distance",
+  "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
+  "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
+  "reg_date": "Date d'enregistrement",
+  "remote_control": "Contrôle à distance",
   "report": {
     "generate": "Générer un Rapport"
   },
@@ -362,12 +422,17 @@
     "ppd": "PPD",
     "printer_sharing": "Partage d'imprimantes",
     "printer_status": "État de l'imprimante",
-    "tab_title": "Imprimantes installés",
+    "tab_title": "Imprimantes installées",
     "url": "URL"
   },
-  "serial": "Numero de série",
+  "security": {
+    "security": "Sécurité",
+    "gatekeeper": "Etat Gatekeeper",
+    "sip": "Etat SIP"
+  },
+  "serial": "Numéro de série",
   "servermetrics": {
-    "tab": "Server Metrics "
+    "tab": "Server Metrics"
   },
   "service": {
     "listing": {
@@ -386,20 +451,20 @@
   },
   "show": "Afficher",
   "software": {
-    "software": "Software",
-    "smc_version": "Version de l'SMC",
+    "software": "Logiciel",
+    "smc_version": "Version de la SMC",
     "boot_rom_version": "Version du Boot ROM"
   },
   "status": "État",
   "storage": {
     "bus_protocol": "Protocole BUS",
-    "encrypted": "Crypté",
+    "encrypted": "Chiffré",
     "encryption_status": "État du chiffrement",
     "external": "Externe",
     "free": "Libre",
     "internal": "Interne",
     "mountpoint": "Point de montage",
-    "not_encrypted": "Ne pas chiffré",
+    "not_encrypted": "Non chiffré",
     "percentage": "Pourcentage",
     "size": "Taille du disque",
     "smartstatus": "État SMART",
@@ -413,17 +478,24 @@
   "system": {
     "system": "Système"
   },
+  "tag": {
+    "listing": {
+      "title": "Rapport Tags"
+    },
+    "name": "Nom du Tag",
+    "widget_title": "Tags"
+  },
   "tags": {
     "add_tag": "Ajouter un tag"
   },
   "timemachine": {
-    "timemachine": "Timemachine"
+    "timemachine": "Time Machine"
   },
   "total_clients": "Nombre Clients",
   "type": "Type",
   "unavailable": "Indisponible",
   "unauthorized": "Vous n'êtes pas autorisé",
-  "unencrypted": "Non crypté",
+  "unencrypted": "Non chiffré",
   "unknown": "Inconnu",
   "unsupported": "Non pris en charge",
   "uptime": "En fonction depuis",
@@ -438,29 +510,29 @@
   "warning_plural": "Alertes",
   "warranty": {
     "coverage": "Couverture de la garantie",
-    "est_manufacture_date": "Date de fabrication estimé",
-    "est_purchase_date": "Date d'achat estimé",
-    "expired": "Expiré le __date__",
+    "est_manufacture_date": "Date de fabrication estimée",
+    "est_purchase_date": "Date d'achat estimée",
+    "expired": "Expirée le __date__",
     "expires_in": "Expire le __date__",
     "no_alerts": "Aucune alerte de garantie",
-    "recheck": "Retest l'état de la garantie",
-    "supported_no_applecare": "Pris en charge jusqu'à __date__. Pas de Applecare",
+    "recheck": "Retest de l'état de la garantie",
+    "supported_no_applecare": "Pris en charge jusqu'à __date__. Pas d'Applecare",
     "supported_until": "Pris en charge jusqu'à __date__",
     "unregistered": "Non enregistré",
     "warranty": "Garantie",
-    "widget_title": "Garantie Materiel"
+    "widget_title": "Garantie Matériel"
   },
   "widget": {
     "age": {
-      "title": "Age Materiel"
+      "title": "Age Matériel"
     },
     "app": {
       "versions": "Versions connues du __app__"
     },
     "bound_to_ds": {
       "bound": "Lié",
-      "notbound": "Pas lié",
-      "info": "Cumuls depuis ces données sont collectées",
+      "notbound": "Non lié",
+      "info": "Cumuls depuis que ces données sont collectées",
       "title": "Lié à un service d'annuaire"
     },
     "certificate": {
@@ -473,7 +545,14 @@
       "notfound": "Pas de doublons trouvés"
     },
     "munki": {
-      "no_updates_pending": "Pas de mises à jour en attente"
+      "no_updates_pending": "Pas de mise à jour en attente"
+    },
+    "munkiinfo": {
+      "munkiprotocol": {
+        "localrepo": "repo local",
+        "http": "http",
+        "https": "https"
+      }
     },
     "power": {
       "missing": "Manquant",
@@ -484,10 +563,31 @@
       "nobattery": "Pas de batterie"
     },
     "timemachine": {
-      "lastweek": "Dernière sauvegarde effectuée il ya plus d'une journée",
-      "title": "État Timemachine",
+      "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
+      "title": "État Time Machine",
       "today": "Sauvegardé aujourd'hui",
-      "week_plus": "Dernière sauvegarde effectuée il ya plus d'une semaine"
+      "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
+    },
+    "warrantysupport": {
+      "warrantyinfo": "Comptes pris en charge, Vintage, Obsolètes et Etat du support inconnu",
+      "warrentysupportstatus": "Etat de la garantie du support"
     }
+  },
+  "wifi": {
+    "apmode": "Mode du point d'accès",
+    "bssid": "BSSID",
+    "channel": "Canal",
+    "extrssi": "RSSI externe",
+    "lasttrx": "Dernier taux de transmission (Mbps)",
+    "maxtrx": "Taux maximal de transmission (Mbps)",
+    "networks": "Réseaux WiFi",
+    "noise": "Niveau de bruit",
+    "nonetworks": "Pas de réseaux",
+    "rssilevel": "Niveau RSSI",
+    "state": "Etat WiFi",
+    "ssid": "SSID",
+    "xauthtype": "Type Authentification 802.11X",
+    "wifiauthtype": "Type Authentication WiFi",
+    "wifiinfo": "Information WiFi"
   }
 }

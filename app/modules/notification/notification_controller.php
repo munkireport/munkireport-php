@@ -10,7 +10,7 @@ class Notification_controller extends Module_controller
 {
 	// For development set debug to true,
 	// this will prevent the last_run to be updated.
-	private $debug = true;
+	private $debug = false;
 	
 	/*** Protect methods with auth! ****/
 	function __construct()
@@ -168,8 +168,12 @@ class Notification_controller extends Module_controller
 					$email['vars'] = $event_array; // Format this?
 
 					$mailer = new munkireport\email\Email($email_config);
-					$mailer->send($email);
-
+					$result = $mailer->send($email);
+					if($result['error'])
+					{
+						$stats['errors']++;
+						$stats['error_msgs'][] = $result['error_msg'];
+					}
 				}
 			}			
 		}
