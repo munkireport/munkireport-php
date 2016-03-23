@@ -20,6 +20,8 @@ class Email {
      **/
     public function send($email)
     {
+        $out = array('error' => 0, 'error_msg' => '');
+        
         include_once (APP_PATH . '/lib/phpmailer/class.phpmailer.php');
         include_once (APP_PATH . '/lib/phpmailer/class.smtp.php');
         $mail = new \PHPMailer;
@@ -43,16 +45,15 @@ class Email {
             $mail->addAddress($to_addr, $to_name);
         }
 
-        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->isHTML(true); // Set email format to HTML
         $mail->Subject = $email['subject'];
         $mail->Body    = $email['content'];
 
         if( ! $mail->send()) {
-            echo 'Message could not be sent.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } else {
-            // Update notification object
+            $out['error'] = 1;
+            $out['error_msg'] = $mail->ErrorInfo;
         }
-
+        
+        return $out;
     }
 }
