@@ -96,7 +96,7 @@ def munkiinfo_report():
     if 'file' in munkiprotocol:
         munkiprotocol = 'localrepo'
 
-    AppleCatalogURL = str(CFPreferencesCopyAppValue('CatalogURL', 'com.apple.softwareupdate'))
+    AppleCatalogURL = str(CFPreferencesCopyAppValue('CatalogURL', 'com.apple.SoftwareUpdate'))
     if AppleCatalogURL == 'None':
         AppleCatalogURL = ''
 
