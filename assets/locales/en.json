@@ -204,6 +204,19 @@
 	"filter": {
 		"title": "Set filters"
 	},
+	"findmymac": {
+		"listing": {
+			"email": "Email",
+			"status": "Status",
+			"title": "FindMyMac report"
+		},
+		"widget": {
+			"title": "FindMyMac Status"
+		},
+		"client": {
+			"title": "FindMyMac"
+		}
+	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
     	"gsx": {
@@ -352,6 +365,7 @@
 			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
+			"findmymac": "FindMyMac",
 			"gsx": "GSX",
 			"hardware": "Hardware",
 			"inventory": "Inventory",
@@ -376,6 +390,7 @@
 			"backup": "Backup Report",
 			"clients": "Client report",
 			"configuration": "Configuration report",
+			"findmymac": "FindMyMac report",
 			"hardware": "Hardware report",
 			"location": "Location report",
 			"munki": "Munki report",
