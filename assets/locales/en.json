@@ -208,7 +208,8 @@
 		"listing": {
 			"email": "Email",
 			"status": "Status",
-			"title": "FindMyMac report"
+			"title": "FindMyMac report",
+			"ownerdisplayname": "Owner Display Name"
 		},
 		"widget": {
 			"title": "FindMyMac Status"

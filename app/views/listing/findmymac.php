@@ -21,6 +21,7 @@ new findmymac_model;
                 <th data-i18n="serial" data-colname='machine.serial_number'></th>
                 <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
                 <th data-i18n="findmymac.listing.status" data-colname='findmymac.status'></th>
+                <th data-i18n="findmymac.listing.ownerdisplayname" data-colname='findmymac.ownerdisplayname'></th>
                 <th data-i18n="findmymac.listing.email" data-colname='findmymac.email'></th>
               </tr>
             </thead>
@@ -76,6 +77,12 @@ new findmymac_model;
                 var sn=$('td:eq(1)', nRow).html();
                 var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
                 $('td:eq(0)', nRow).html(link);
+								
+                // Status
+                var status=$('td:eq(3)', nRow).html();
+                status = status == 'Enabled' ? '<span class="label label-danger">'+i18n.t('Enabled')+'</span>' :
+                (status === 'Disabled' ? '<span class="label label-success">'+i18n.t('Disabled')+'</span>' : '')
+                $('td:eq(3)', nRow).html(status)
                     
             }
         } );

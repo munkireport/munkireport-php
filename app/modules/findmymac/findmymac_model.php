@@ -6,7 +6,7 @@ class findmymac_model extends Model {
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['status'] = '';
-		$this->rs['data'] = ''; $this->rt['data'] = 'MEDIUMBLOB';
+		$this->rs['ownerdisplayname'] = '';
 		$this->rs['email'] = '';
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -35,7 +35,7 @@ class findmymac_model extends Model {
 		// Translate network strings to db fields
         $translate = array(
         	'Status = ' => 'status',
-        	'Data = ' => 'data',
+        	'OwnerDisplayName = ' => 'ownerdisplayname',
         	'Email = ' => 'email');
 
 		//clear any previous data we had
