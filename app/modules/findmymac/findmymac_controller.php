@@ -16,27 +16,29 @@ class findmymac_controller extends Module_controller
 		$this->module_path = dirname(__FILE__);
 	}
 
-	/**
-	 * Default method
-	 *
-	 * @author AvB
-	 **/
-	function index()
-	{
-		echo "You've loaded the findmymac module!";
-	}
-	
-	function listing()
-	{
-		if( ! $this->authorized())
-		{
-			redirect('auth/login');
-		}
-		
-		$data['page'] = '';
-		$obj = new View();
-		$obj->view('findmymac_listing', $data, $this->view_path);
-	}
+  /**
+   * Get findmymac widget data
+   *
+   * @author clburlison
+   **/
+  function get_stats()
+  {
+
+      if( ! $this->authorized())
+      {
+          // die('Authenticate first.'); // Todo: return json
+          $out['error'] = 'Not authorized';
+      }
+
+      $queryobj = new findmymac_model();
+      $sql = "SELECT  COUNT(1) as total,
+                      COUNT(CASE WHEN `status` = 'Enabled' THEN 1 END) AS Enabled,
+                      COUNT(CASE WHEN `status` = 'Disabled' THEN 1 END) AS Disabled
+                      FROM findmymac";
+      $obj = new View();
+      $obj->view('json', array('msg' => current($queryobj->query($sql))));
+
+  }
 	
   /**
  * Get findmymac information for serial_number

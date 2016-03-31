@@ -1,37 +1,40 @@
-		<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+	<div class="panel panel-default" id="findmymac-widget">
 
-				<div class="panel-heading" data-container="body" title="FindMyMac status">
+		<div class="panel-heading" data-container="body" title="FindMyMac status">
 
-			    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> 
-							<span data-i18n="findmymac.widget.title"></span>
-						</h3>
+	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> 
+					<span data-i18n="findmymac.widget.title"></span>
+				</h3>
 
 
-				</div>
-				<div class="list-group scroll-box">
+		</div>
+		  <div class="panel-body text-center"></div>
 
-					<?php	$munkireport = new findmymac_model();
-							$sql = "SELECT status, COUNT(1) AS count
-									FROM findmymac
-									GROUP BY status
-									ORDER BY COUNT DESC";
-					?>
-						<?php foreach($munkireport->query($sql) as $obj): ?>
-							<?php if (empty($obj->status)):?>
-								<a class="list-group-item"><span data-i18n="unknown">Unknown</span>
-									<span class="badge pull-right"><?php echo $obj->count; ?></span>
-								</a>
-							<?php else: ?>
-								<a href="<?php echo url('show/listing/findmymac/#'.$obj->status); ?>" class="list-group-item"><?php echo $obj->status; ?>
-									<span class="badge pull-right"><?php echo $obj->count; ?></span>
-								</a>
-							<?php endif; ?>
-						<?php endforeach; ?>
+	</div><!-- /panel -->
 
-				</div><!-- /scroll-box -->
+</div><!-- /col -->
 
-			</div><!-- /panel -->
+<script>
+$(document).on('appUpdate', function(e, lang) {
 
-		</div><!-- /col -->
+    $.getJSON( appUrl + '/module/findmymac/get_stats', function( data ) {
+	if(data.error){
+		//alert(data.error);
+		return;
+	}
+
+		var panel = $('#findmymac-widget div.panel-body'),
+			baseUrl = appUrl + '/show/listing/findmymac/#';
+		panel.empty();
+
+		// Set statuses
+		panel.append(' <a href="'+baseUrl+'" class="btn btn-danger"><span class="bigger-150">'+data.Enabled+'</span><br>'+i18n.t('findmymac.widget.enabled')+'</a>');
+		panel.append(' <a href="'+baseUrl+'" class="btn btn-success"><span class="bigger-150">'+data.Disabled+'</span><br>'+i18n.t('findmymac.widget.disabled')+'</a>');
+
+    });
+});
+
+
+</script>

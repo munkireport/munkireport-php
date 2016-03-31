@@ -212,7 +212,9 @@
 			"ownerdisplayname": "Owner Display Name"
 		},
 		"widget": {
-			"title": "FindMyMac Status"
+			"title": "FindMyMac Status",
+			"enabled": "Enabled",
+			"disabled": "Disabled"
 		},
 		"client": {
 			"title": "FindMyMac"
