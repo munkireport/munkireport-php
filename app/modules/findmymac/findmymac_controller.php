@@ -4,7 +4,7 @@
  * FindMyMac manifest status module class
  *
  * @package munkireport
- * @author
+ * @author poundbangbash/clburlison
  **/
 class findmymac_controller extends Module_controller
 {
