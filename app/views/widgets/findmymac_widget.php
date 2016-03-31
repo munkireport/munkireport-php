@@ -24,7 +24,7 @@
 									<span class="badge pull-right"><?php echo $obj->count; ?></span>
 								</a>
 							<?php else: ?>
-								<a href="<?php echo url('show/custom/findmymac/#'.$obj->status); ?>" class="list-group-item"><?php echo $obj->status; ?>
+								<a href="<?php echo url('show/listing/findmymac/#'.$obj->status); ?>" class="list-group-item"><?php echo $obj->status; ?>
 									<span class="badge pull-right"><?php echo $obj->count; ?></span>
 								</a>
 							<?php endif; ?>
