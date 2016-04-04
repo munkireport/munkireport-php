@@ -209,7 +209,9 @@
 			"email": "Email",
 			"status": "Status",
 			"title": "FindMyMac report",
-			"ownerdisplayname": "Owner Display Name"
+			"ownerdisplayname": "Owner Display Name",
+			"personid": "iCloud PersonID",
+			"hostname": "iCloud Hostname"
 		},
 		"widget": {
 			"title": "FindMyMac Status",

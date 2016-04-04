@@ -28,6 +28,12 @@ else
     
     owner_displayName=$(/usr/libexec/PlistBuddy -c "Print userInfo:InUseOwnerDisplayName" $findmymac_raw_data)
     echo "OwnerDisplayName = $owner_displayName" >> "$findmymac_manfiest_file"
+    
+    personID=$(/usr/libexec/PlistBuddy -c "Print personID" $findmymac_raw_data)
+    echo "personID = $personID" >> "$findmymac_manfiest_file"
+    
+    hostname=$(/usr/libexec/PlistBuddy -c "Print dataclassProperties:com.apple.Dataclass.DeviceLocator:hostname" $findmymac_raw_data)
+    echo "hostname = $hostname" >> "$findmymac_manfiest_file"
 fi
 
 exit 0

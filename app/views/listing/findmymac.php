@@ -23,6 +23,8 @@ new findmymac_model;
                 <th data-i18n="findmymac.listing.status" data-colname='findmymac.status'></th>
                 <th data-i18n="findmymac.listing.ownerdisplayname" data-colname='findmymac.ownerdisplayname'></th>
                 <th data-i18n="findmymac.listing.email" data-colname='findmymac.email'></th>
+                <th data-i18n="findmymac.listing.personid" data-colname='findmymac.personid'></th>
+                <th data-i18n="findmymac.listing.hostname" data-colname='findmymac.hostname'></th>
               </tr>
             </thead>
             <tbody>

@@ -8,6 +8,8 @@ class findmymac_model extends Model {
 		$this->rs['status'] = '';
 		$this->rs['ownerdisplayname'] = '';
 		$this->rs['email'] = '';
+		$this->rs['personid'] = '';
+		$this->rs['hostname'] = '';
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
 		
@@ -18,7 +20,7 @@ class findmymac_model extends Model {
 			$this->retrieve_one('serial_number=?', $serial);
 		
 		$this->serial = $serial;
-		  
+			
 	}
 	
 	// ------------------------------------------------------------------------
@@ -33,10 +35,12 @@ class findmymac_model extends Model {
 	{		
 
 		// Translate network strings to db fields
-        $translate = array(
-        	'Status = ' => 'status',
-        	'OwnerDisplayName = ' => 'ownerdisplayname',
-        	'Email = ' => 'email');
+				$translate = array(
+					'Status = ' => 'status',
+					'OwnerDisplayName = ' => 'ownerdisplayname',
+					'Email = ' => 'email',
+					'personID = ' => 'personid',
+					'hostname = ' => 'hostname');
 
 		//clear any previous data we had
 		foreach($translate as $search => $field) {
@@ -44,19 +48,19 @@ class findmymac_model extends Model {
 		}
 		// Parse data
 		foreach(explode("\n", $data) as $line) {
-		    // Translate standard entries
+				// Translate standard entries
 			foreach($translate as $search => $field) {
-			    
-			    if(strpos($line, $search) === 0) {
-				    
-				    $value = substr($line, strlen($search));
-				    
-				    $this->$field = $value;
-				    break;
-			    }
+					
+					if(strpos($line, $search) === 0) {
+						
+						$value = substr($line, strlen($search));
+						
+						$this->$field = $value;
+						break;
+					}
 			} 
-		    
-		} //end foreach explode lines				
+				
+		} //end foreach explode lines
 
 		$this->save();
 	}
