@@ -478,11 +478,12 @@ class GsxLib
 
     /**
     * A shortcut for checking warranty status of device
+    * UPDATE: Now includes shipTo as per GSX update May 2016.
     */
-    public function warrantyStatus($serialNumber)
+    public function warrantyStatus($serialNumber, $ship_to)
     {
         if(!is_array($serialNumber)) {
-            $serialNumber = array('serialNumber' => $serialNumber);
+            $serialNumber = array('serialNumber' => $serialNumber, 'shipTo' => $ship_to);
         }
 
         if(array_key_exists('alternateDeviceId', $serialNumber)) {
