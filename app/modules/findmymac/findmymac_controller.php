@@ -23,11 +23,11 @@ class findmymac_controller extends Module_controller
    **/
   function get_stats()
   {
-
+      $obj = new View();
       if( ! $this->authorized())
       {
-          // die('Authenticate first.'); // Todo: return json
-          $out['error'] = 'Not authorized';
+          $obj->view('json', array('msg' => 'Not authorized'));
+          return;
       }
 
       $queryobj = new findmymac_model();
@@ -35,7 +35,6 @@ class findmymac_controller extends Module_controller
                       COUNT(CASE WHEN `status` = 'Enabled' THEN 1 END) AS Enabled,
                       COUNT(CASE WHEN `status` = 'Disabled' THEN 1 END) AS Disabled
                       FROM findmymac";
-      $obj = new View();
       $obj->view('json', array('msg' => current($queryobj->query($sql))));
 
   }
@@ -47,11 +46,11 @@ class findmymac_controller extends Module_controller
  **/
 public function get_data($serial_number = '')
 {
-	$obj = new View();
-
+      $obj = new View();
       if( ! $this->authorized())
       {
           $obj->view('json', array('msg' => 'Not authorized'));
+          return;
       }
 
       $findmymac = new findmymac_model($serial_number);
