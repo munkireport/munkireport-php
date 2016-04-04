@@ -253,10 +253,13 @@
 	|
 	| Use GSX article OP1474 and 
 	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
-	| to assist with creating certificates and whitelisting your IPs.
+	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the 
+	| Readme.md located in the GSX module.
 	|
 	| To use GSX module, set enable to TRUE and uncomment and
-	| fill out rest of configuration options
+	| fill out rest of configuration options. When setting the date format
+	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
+	| are required.
 	*/
 
 	$conf['gsx_enable'] = FALSE;
@@ -264,6 +267,7 @@
 	//$conf['gsx_cert_keypass'] = '';
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
+	//$conf['gsx_date_format'] = 'm/d/y';
 
     /*
 	|===============================================
