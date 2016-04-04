@@ -134,6 +134,8 @@ var updateHash = function(e){
 var showFilterModal = function(e){
 
 	e.preventDefault();
+    
+    var mgList = [];
 
 	var updateGroup = function(){
 
@@ -148,7 +150,23 @@ var showFilterModal = function(e){
 			// Update all
 			$(document).trigger('appUpdate');
 		})
-	}
+	};
+    
+    var updateAll = function() {
+        
+        var checked = this.checked,
+            settings = {
+                filter: 'machine_group',
+                value: mgList,
+                action: checked ? 'clear' : 'add_all'
+            }
+            
+        $.post(appUrl + '/unit/set_filter', settings, function(){
+			// Update all
+            $('#myModal .modal-body input[type=checkbox]').prop('checked', checked);
+			$(document).trigger('appUpdate');
+		})
+    };
 
 	// Get all business units and machine_groups
 	var defer = $.when(
@@ -175,10 +193,21 @@ var showFilterModal = function(e){
 		$('#myModal button.ok')
 			.off()
 			.click(function(){$('#myModal').modal('hide')});
-
+        
+        // Add check/uncheck all
+        $('#myModal .modal-body')
+            .append($('<div>')
+                .addClass('checkbox')
+                .append($('<label>')
+                    .append($('<input>')
+                        .change(updateAll)
+                        .attr('type', 'checkbox'))
+                    .append('Check/uncheck all')))
+                    
 		// Add machine groups
 		$.each(mg_data, function(index, obj){
 			if(obj.groupid !== undefined){
+                mgList.push(obj.groupid);
 				$('#myModal .modal-body')
 					.append($('<div>')
 						.addClass('checkbox')
