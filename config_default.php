@@ -267,7 +267,7 @@
 	//$conf['gsx_cert_keypass'] = '';
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
-<<<<<<< HEAD
+	//$conf['gsx_date_format'] = 'm/d/y';
 	
 	/*
 	|===============================================
@@ -286,10 +286,6 @@
 		"--fail",
 		"--silent",
 		"--show-error");
-
-=======
-	//$conf['gsx_date_format'] = 'm/d/y';
->>>>>>> bugfix
 
     /*
 	|===============================================
