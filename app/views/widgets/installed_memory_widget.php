@@ -27,7 +27,7 @@ $(document).on('appUpdate', function(e, lang) {
 		// Todo: add to config
 		var entries = [
 			{name: '< 4GB', link: 'memory < 4GB', count: 0, class:'btn-danger', filter: function(n){return n < 4}},
-			{name: '4GB +', link: '5GB memory 7GB', count: 0, class:'btn-warning', filter: function(n){return n < 8 && n >= 4}},
+			{name: '4GB +', link: '4GB memory 7GB', count: 0, class:'btn-warning', filter: function(n){return n < 8 && n >= 4}},
 			{name: '8GB +', link: 'memory > 7GB', count: 0, class:'btn-success', filter: function(n){return n >= 8}}
 		]
 		
