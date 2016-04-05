@@ -30,8 +30,8 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 
 		// Set statuses
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-danger"><span class="bigger-150">'+data.Enabled+'</span><br>'+i18n.t('findmymac.widget.enabled')+'</a>');
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-success"><span class="bigger-150">'+data.Disabled+'</span><br>'+i18n.t('findmymac.widget.disabled')+'</a>');
+		panel.append(' <a href="'+baseUrl+'enabled" class="btn btn-danger"><span class="bigger-150">'+data.Enabled+'</span><br>'+i18n.t('findmymac.widget.enabled')+'</a>');
+		panel.append(' <a href="'+baseUrl+'disabled" class="btn btn-success"><span class="bigger-150">'+data.Disabled+'</span><br>'+i18n.t('findmymac.widget.disabled')+'</a>');
 
     });
 });
