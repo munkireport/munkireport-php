@@ -82,6 +82,25 @@
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "displays.vendor"
+                    
+                    // Look for 'external' keyword
+                    if(d.search.value.match(/^external$/))
+                    {
+                        // Add column specific search
+                        d.columns[2].search.value = '= 1';
+                        // Clear global search
+                        d.search.value = '';
+                    }
+                    
+                    // Look for 'external' keyword
+                    if(d.search.value.match(/^internal/))
+                    {
+                        // Add column specific search
+                        d.columns[2].search.value = '= 0';
+                        // Clear global search
+                        d.search.value = '';
+                    }
+
                 }
             },
             dom: mr.dt.buttonDom,

@@ -185,7 +185,10 @@
   "error_plural": "Erreurs",
   "errors": {
     "title": "Erreurs",
-    "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas"
+    "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas",
+		"403": "Vous n'êtes pas autorisé à voir cette page",
+		"404": "Page non trouvée",
+		"426": "Vous devez visiter ce site à l'aide d'une connexion sécurisée."
   },
   "event": "Événement",
   "event_plural": "Événements",

@@ -6,20 +6,20 @@ class wifi_model extends Model {
 		parent::__construct('id', 'wifi'); //primary key, tablename
 		$this->rs['id'] = 0;
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['agrctlrssi'] = ''; $this->rt['agrctlrssi'] = 'INTEGER DEFAULT NULL';
-		$this->rs['agrextrssi'] = ''; $this->rt['agrextrssi'] = 'INTEGER DEFAULT NULL';
-		$this->rs['agrctlnoise'] = ''; $this->rt['agrctlnoise'] = 'INTEGER DEFAULT NULL';
-		$this->rs['agrextnoise'] = ''; $this->rt['agrextnoise'] = 'INTEGER DEFAULT NULL';
+		$this->rs['agrctlrssi'] = 0;
+		$this->rs['agrextrssi'] = 0;
+		$this->rs['agrctlnoise'] = 0;
+		$this->rs['agrextnoise'] = 0;
 		$this->rs['state'] = '';
 		$this->rs['op_mode'] = '';
-		$this->rs['lasttxrate'] = ''; $this->rt['lasttxrate'] = 'INTEGER DEFAULT NULL';
+		$this->rs['lasttxrate'] = 0;
 		$this->rs['lastassocstatus'] = '';
-		$this->rs['maxrate'] = ''; $this->rt['maxrate'] = 'INTEGER DEFAULT NULL';
+		$this->rs['maxrate'] = 0;
 		$this->rs['x802_11_auth'] = '';
 		$this->rs['link_auth'] = '';
 		$this->rs['bssid'] = '';
 		$this->rs['ssid'] = '';
-		$this->rs['mcs'] = ''; $this->rt['mcs'] = 'INTEGER DEFAULT NULL';
+		$this->rs['mcs'] = 0;
 		$this->rs['channel'] = '';
 		
         // Schema version, increment when creating a db migration
