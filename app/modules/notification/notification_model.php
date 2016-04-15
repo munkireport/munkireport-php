@@ -2,7 +2,7 @@
 
 class Notification_model extends Model {
     
-    function __construct($serial_number='')
+    function __construct()
     {
 		parent::__construct('id', 'notification'); //primary key, tablename
         $this->rs['id'] = '';
@@ -50,6 +50,43 @@ class Notification_model extends Model {
         }
         $sql = "SELECT * FROM notification $where";
         return $this->query($sql);        
+    }
+    
+    public function save($data)
+    {
+        $id = array_key_exists('id', $data) ? $data['id'] : '';
+        $this->retrieve($id);
+
+        // if business unit in session, overwrite business unit in data or reject?
+        if (array_key_exists('business_unit', $_SESSION))
+        {
+            $data['business_unit'] = $_SESSION['business_unit'];
+        }
+        
+        // TODO validate $data
+        $this->merge($data);
+                
+        return parent::save();
+    }
+    
+    /**
+     * retrieve override
+     *
+     * Checks membership of bu
+     *
+     * @param integer $id Notification id
+     * @return object model
+     */
+    public function retrieve($id='')
+    {
+        $wherewhat = 'id=?';
+        $bindings = array($id);
+        if (array_key_exists('business_unit', $_SESSION)) {
+            $wherewhat .= sprintf(' AND business_unit=%d', $_SESSION['business_unit']);
+        }
+        
+        $this->retrieve_one( $wherewhat, $bindings );
+        return $this;
     }
     
     /**

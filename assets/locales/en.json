@@ -155,6 +155,7 @@
 			"title": "CrashPlan"
 		}
 	},
+	"danger": "Error",
 	"date": {
 		"year": "year"
 	},
@@ -178,6 +179,7 @@
 		"widget_title": "External Displays Count"
 	},
 	"edit": "Edit",
+	"email": "Email",
 	"enabled": "Enabled",
 	"encrypted": "Encrypted",
 	"error": "Error",
@@ -235,6 +237,7 @@
 		"uuid": "Hardware UUID"
 	},
 	"inactive": "Inactive",
+	"info": "Information",
 	"installed": "Installed",
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
@@ -405,6 +408,18 @@
 	"no_clients": "No Clients",
 	"no_data": "No Data",
 	"notification": {
+		"all_levels": "All levels",
+		"business_unit": "Business Unit",
+		"business_units_all": "All Business Units",
+		"edit": "Edit notification",
+		"new": "New notification",
+		"notification_enabled": "Enabled",
+		"notification_how": "Method",
+		"notification_module": "Module",
+		"notification_severity": "Level",
+		"notification_title": "Name",
+		"notification_who": "Email address",
+		"title": "Notifications",
 		"widget": {
 			"title": "Notification rules"
 		}
@@ -483,6 +498,7 @@
 		"used": "Used",
 		"volume_type": "Volume Type"
 	},
+	"success": "Success",
 	"system": {
 		"system": "System"
 	},

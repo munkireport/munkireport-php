@@ -17,6 +17,12 @@ class Notification_controller extends Module_controller
 	{
 		// Store module path
 		$this->module_path = dirname(__FILE__);
+		if( ! $this->authorized())
+		{
+			$obj = new View();
+			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
+		}
+
 	}
 
 	/**
@@ -28,24 +34,40 @@ class Notification_controller extends Module_controller
 	{
 		echo "You've loaded the notification module!";
 	}
+	
+	/**
+	 * Manage notifications
+	 * 
+	 */
+	public function manage()
+	{
+		$obj = new View();
+		$obj->view('notifications_manager', $vars='', $this->module_path.'/views/');
+
+	}
 
 	/**
 	 * REST interface, returns json with notification objects
 	 **/
 	function get_list()
 	{
-		
         $obj = new View();
-		if( ! $this->authorized())
-		{
-			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
-		}
-		else
-		{
-			$notify_obj = new Notification_model();
-			$obj->view('json', array('msg' => $notify_obj->get_list()));
-		}
-
+		$notify_obj = new Notification_model();
+		$obj->view('json', array('msg' => $notify_obj->get_list()));
+	}
+	
+	/**
+	 * Save notification
+	 *
+	 * Save a notification objects
+	 *
+	 */
+	public function save()
+	{
+		$obj = new View();
+		$notify_obj = new Notification_model();
+		$obj->view('json', array('msg' => $notify_obj->save($_POST)));
+		
 	}
 	
 	/**
@@ -56,12 +78,6 @@ class Notification_controller extends Module_controller
 	 **/
 	public function runCheck()
 	{
-		$obj = new View();
-		if( ! $this->authorized())
-		{
-			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
-			return;
-		}
 				
 		$now = time();
 		$stats = array('errors' => 0, 'email' => 0, 'desktop' => 0);
