@@ -23,6 +23,9 @@ $(document).on('appReady', function(e, lang) {
 
     var url = appUrl + '/module/notification/get_list',
         bu_url = appUrl + '/admin/get_bu_data',
+        bu_choices = [
+            [-1, i18n.t("notification.business_units_all")]
+        ],
         columns = [
             'notification_title',
             'notification_how',
@@ -56,12 +59,7 @@ $(document).on('appReady', function(e, lang) {
                 name: "business_unit",
                 label: i18n.t("notification.business_unit"),
                 type: "select",
-                choices: [
-                    [-1, i18n.t("notification.business_units_all")],
-                    ['disk', 'disk'],
-                    ['munkireport', 'munkireport'],
-                    ['reportdata', 'reportdata']
-                ]
+                choices: bu_choices
             },
             {
                 name: "notification_module",
@@ -214,6 +212,11 @@ $(document).on('appReady', function(e, lang) {
     
     // Retrieve business units
     $.getJSON(bu_url, function(data){
+        
+        // Add business units to list
+        $.each(data, function(i, el){
+            bu_choices.push([el.unitid, el.name])
+        });
         
         // Render list
         renderNotificationList();

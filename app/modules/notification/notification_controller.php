@@ -41,6 +41,11 @@ class Notification_controller extends Module_controller
 	 */
 	public function manage()
 	{
+		if( ! $this->authorized('global'))
+		{
+			die('You need to be admin');
+		}
+
 		$obj = new View();
 		$obj->view('notifications_manager', $vars='', $this->module_path.'/views/');
 
