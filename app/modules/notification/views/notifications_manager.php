@@ -30,6 +30,7 @@ $(document).on('appReady', function(e, lang) {
             'notification_title',
             'notification_how',
             'notification_who',
+            'serial_number',
             'notification_module',
             'notification_msg',
             'notification_severity',
@@ -62,6 +63,11 @@ $(document).on('appReady', function(e, lang) {
                 choices: bu_choices
             },
             {
+                name: "serial_number",
+                label: i18n.t("serial"),
+                type: "text"
+            },
+            {
                 name: "notification_module",
                 label: i18n.t("notification.notification_module"),
                 type: "select",
@@ -83,6 +89,10 @@ $(document).on('appReady', function(e, lang) {
                     ['warning', i18n.t("warning")],
                     ['danger', i18n.t("danger")]
                 ]
+            },
+            {
+                name: "notification_msg",
+                type: "hidden"
             },
             {
                 name: "id",
@@ -111,7 +121,20 @@ $(document).on('appReady', function(e, lang) {
         
         // -------------------- prepareDeleteNotification --------------------
         prepareDeleteNotification = function(){
-            
+            $('#myModal .modal-footer button.btn-danger')
+                .text(i18n.t('notification.confirm_delete'))
+                .off()
+                .click(deleteNotification)
+        },
+        
+        // -------------------- deleteNotification --------------------
+        deleteNotification = function(){
+            var id = $(this).data().id,
+			jqxhr = $.get( appUrl + "/module/notification/delete/" + id)
+			.done(function(data){
+                renderNotificationList();
+                $('#myModal').modal('hide');
+			});
         },
 
         // -------------------- showEditModal --------------------
@@ -120,7 +143,9 @@ $(document).on('appReady', function(e, lang) {
                 modalBody = $('#myModal .modal-body')
                     .empty()
                     .append(thisForm),
-                myData = conf.data || {};
+                myData = conf.data || {
+                    notification_msg: '%'
+                };
 
             $.each(fields, function(j, d){
                 if(myData[d.name]){

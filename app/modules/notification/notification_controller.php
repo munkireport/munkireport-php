@@ -69,10 +69,20 @@ class Notification_controller extends Module_controller
 	 */
 	public function save()
 	{
+		// TODO validate input
 		$obj = new View();
 		$notify_obj = new Notification_model();
 		$obj->view('json', array('msg' => $notify_obj->save($_POST)));
 		
+	}
+	
+	public function delete($id)
+	{
+		// TODO validate input
+		$obj = new View();
+		$notify_obj = new Notification_model();
+		$notify_obj->id = $id;
+		$obj->view('json', array('msg' => $notify_obj->delete()));
 	}
 	
 	/**
