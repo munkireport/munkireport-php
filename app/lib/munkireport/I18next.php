@@ -39,7 +39,7 @@ class I18next {
         $search = $this->i18nArray;
         foreach($textArray as $part)
         {
-            if( ! is_array($search) && ! isset($search[$part])){
+            if( ! is_array($search) or ! isset($search[$part])){
                 return $text;
             }
             $parent = $search;
