@@ -179,7 +179,10 @@
 		"widget_title": "External Displays Count"
 	},
 	"edit": "Edit",
-	"email": "Email",
+	"email": {
+		"email": "Email",
+		"show_machine_in_browser": "Show machine in browser"
+	},
 	"enabled": "Enabled",
 	"encrypted": "Encrypted",
 	"error": "Error",

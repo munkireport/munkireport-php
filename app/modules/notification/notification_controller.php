@@ -93,7 +93,8 @@ class Notification_controller extends Module_controller
 	 **/
 	public function runCheck()
 	{
-				
+		$obj = new View();
+
 		$now = time();
 		$stats = array('errors' => 0, 'email' => 0, 'desktop' => 0);
 		
@@ -212,7 +213,6 @@ class Notification_controller extends Module_controller
 		// notify
 		
 		// Return JSON with results
-		$obj = new View();
 		$obj->view('json', array('msg' => $stats));
 		
 	}
