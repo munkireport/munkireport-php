@@ -48,7 +48,7 @@ $(document).on('appReady', function(e, lang) {
                 label: i18n.t("notification.notification_how"),
                 type: "select",
                 choices: [
-                    ['email', i18n.t("email")]
+                    ['email', i18n.t("email.email")]
                 ]
             },
             {

@@ -422,7 +422,7 @@
 		"notification_how": "Method",
 		"notification_module": "Module",
 		"notification_severity": "Level",
-		"notification_title": "Name",
+		"notification_title": "Description",
 		"notification_who": "Email address",
 		"title": "Notifications",
 		"widget": {
