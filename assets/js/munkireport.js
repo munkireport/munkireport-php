@@ -5,6 +5,15 @@ var mr = {
         dt:{}
     };
 
+$(document).on('appReady', function(e, lang) {
+    
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'notification.menu_link',
+        url: appUrl + '/module/notification/manage'
+    }); 
+});
+
 $( document ).ready(function() {
     $.i18n.init({
         debug: munkireport.debug,
