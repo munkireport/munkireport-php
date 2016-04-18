@@ -94,6 +94,9 @@
 		"from_peers": "From Peers",
 		"from_cache": "From Cache"
 	},
+	"cert": {
+		"expired": "__name__ expired __moment__"
+	},
 	"client": {
 		"activity": "Client Activity",
 		"comment": "Comments",
@@ -211,7 +214,7 @@
 	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
-    	"gsx": {
+	"gsx": {
 		"configuration": "Shipping Configuration",
 		"contracttype": "Contract Type",
 		"country": "Country of Purchase",
