@@ -72,7 +72,7 @@ class Certificate_model extends Model {
 	        		$this->timestamp = time();
 		        	$this->create();
 					
-					// Create notification					
+					// Check for errors					
 					if($this->cert_exp_time < $now){
 						$errors[] = [
 							'type' => 'danger',
