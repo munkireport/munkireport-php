@@ -5,12 +5,8 @@ DR_CTL="${BASEURL}index.php?/module/inventory/"
 
 # Find out where the munki directory is to set accordingly.
 munki_install_dir=$(/usr/bin/python -c 'import CoreFoundation; print CoreFoundation.CFPreferencesCopyAppValue("ManagedInstallDir", "ManagedInstalls")')
-munki_install_dir_len=$((${#munki_install_dir}-1))
+munki_install_dir=$(echo ${munki_install_dir} | sed 's/\/$//')
 
-if [[ ${munki_install_dir:$munki_install_dir_len:1} == '/' ]]; then
-    #if our custom path has a '/' at the end we should trim it off
-    munki_install_dir=$(echo ${munki_install_dir} | sed 's/.$//')
-fi
 # Get the scripts in the proper directories
 "${CURL[@]}" "${DR_CTL}get_script/inventory_add_plugins" -o "${MUNKIPATH}postflight.d/inventory_add_plugins.py"
 
