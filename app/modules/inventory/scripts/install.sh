@@ -7,8 +7,13 @@
 DR_CTL="${BASEURL}index.php?/module/inventory/"
 
 # Find out where the munki directory is to set accordingly.
-munki_install_dir=$(/usr/bin/defaults read /Library/Preferences/ManagedInstalls ManagedInstallDir)
+munki_install_dir=$(/usr/bin/python -c 'import CoreFoundation; print CoreFoundation.CFPreferencesCopyAppValue("ManagedInstallDir", "ManagedInstalls")')
+munki_install_dir_len=$((${#munki_install_dir}-1))
 
+if [[ ${munki_install_dir:$munki_install_dir_len:1} == '/' ]]; then
+  #if our custom path has a '/' at the end we should trim it off
+  munki_install_dir=$(echo ${munki_install_dir} | sed 's/.$//')
+fi
 # Get the scripts in the proper directories
 "${CURL[@]}" "${DR_CTL}get_script/inventory_add_plugins" -o "${MUNKIPATH}postflight.d/inventory_add_plugins.py"
 
@@ -18,13 +23,13 @@ if [ $? = 0 ]; then
   chmod a+x "${MUNKIPATH}postflight.d/inventory_add_plugins.py"
 
   # make sure the munki install directory is defined. If not default back to normal
-  if [[ "${munki_install_dir}" == "" ]]; then
+  if [[ "${munki_install_dir}" == "None" ]]; then
     # This also intended behavior if munki isn't installed
     setreportpref "munkireport" '/Library/Managed Installs/ApplicationInventory.plist'
+  else
+    # Set preference to include this file in the preflight check
+    setreportpref "inventory" "${munki_install_dir}/ApplicationInventory.plist"
   fi
-  # Set preference to include this file in the preflight check
-  setreportpref "inventory" "${munki_install_dir}/ApplicationInventory.plist"
-
 else
   echo "Failed to download all required components!"
   rm -f "${MUNKIPATH}postflight.d/inventory_add_plugins.py"

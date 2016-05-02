@@ -8,26 +8,24 @@ Modified by Wesley Whetstone for dynamic munki support and somewhat pep8 :)
 """
 import os
 import sys
-
+import CoreFoundation
 sys.path.insert(0, '/usr/local/munki')
 
 from munkilib import FoundationPlist
 
 # check the ManagedInstalls plist for where the ManagedInstallDir is located
-munki_path = "/Library/Preferences/ManagedInstalls.plist"
-if os.path.isfile(munki_path):
-    managed_installs = FoundationPlist.readPlist(munki_path)
-    munki_install_dir = managed_installs.get('ManagedInstallDir')
-    invPath = os.path.join(munki_install_dir, r'ApplicationInventory.plist')
+munki_install_dir = CoreFoundation.CFPreferencesCopyAppValue("ManagedInstallDir", "ManagedInstalls")
+if munki_install_dir:
+    invPath = os.path.join(munki_install_dir, 'ApplicationInventory.plist')
 else:
-    invPath = r'/Library/Managed Installs/ApplicationInventory.plist'
+    invPath = '/Library/Managed Installs/ApplicationInventory.plist'
 
 # Look for our set path to make sure it exists. If not exit because munki
 # most likely isn't installed yet
-if os.path.isfile(invPath):
+try:
     appinv = FoundationPlist.readPlist(invPath)
-else:
-    print("Munki File %s couldn't be found. Exiting..." % (invPath))
+except FoundationPlist.NSPropertyListSerializationException as e:
+    print "{0} couldn't be found. Exiting...".format(invPath)
     exit(1)
 
 plugins = r"/Library/Internet Plug-Ins/"
