@@ -21,7 +21,7 @@ if [ $? = 0 ]; then
     # make sure the munki install directory is defined. If not default back to normal
     if [[ "${munki_install_dir}" == "None" ]]; then
         # This also intended behavior if munki isn't installed
-        setreportpref "munkireport" '/Library/Managed Installs/ApplicationInventory.plist'
+        setreportpref "inventory" '/Library/Managed Installs/ApplicationInventory.plist'
     else
         # Set preference to include this file in the preflight check
         setreportpref "inventory" "${munki_install_dir}/ApplicationInventory.plist"
