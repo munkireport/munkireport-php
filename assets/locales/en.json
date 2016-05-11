@@ -510,6 +510,9 @@
 	"system": {
 		"system": "System"
 	},
+	"systemstatus": {
+		"menu_link": "Show Systemstatus"
+	},
 	"tag": {
 		"listing": {
 			"title": "Tag report"
