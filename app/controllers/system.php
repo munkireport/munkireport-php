@@ -24,12 +24,45 @@ class system extends Controller
 	 */
 	public function DataBaseInfo()
 	{
+		$out = array(
+			'connection' => false,
+			'error' => '',
+			'writable' => false,
+		);
+		$config = array(
+			'pdo_dsn' => conf('pdo_dsn'),
+			'pdo_user' => conf('pdo_user'),
+			'pdo_pass' => conf('pdo_pass'),
+			'pdo_opts' => conf('pdo_opts'),
+		);
+		
+		include_once (APP_PATH . '/lib/munkireport/Database.php');
+		$db = new munkireport\Database($config);
+		//echo '<pre>'; var_dump($db);
+		if($db->connect()){
+			$out['connection'] = true;
+			
+			if($db->isWritable())
+			{
+				$out['writable'] = true;
+			}
+			else {
+				$out['error'] = $db->getError();
+			}
+		}
+		else{
+			$out['error'] = $db->getError();
+		}
+		//echo '<pre>'; var_dump($db);
 		// Get engine
 		// Get permissions
 		// Do a write
 		// Do a read
 		// Get tables
 		// Get size
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
 	}
 	
 	//===============================================================

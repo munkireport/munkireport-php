@@ -1,34 +1,5 @@
 <?php $this->view('partials/head'); ?>
 
-<?php //Initialize models needed for the table
-new Machine_model;
-new Reportdata_model;
-new Ard_model;
-
-// Sort config file
-$this_config = $GLOBALS['conf'];
-ksort($this_config);
-
-$db_items = array(
-    'pdo_dsn' => '',
-    'pdo_opts' => '',
-    'pdo_pass' => '',
-    'pdo_user' => '',
-    'mysql_create_tbl_opts' => '',
-    'dbname' => '',
-);
-foreach($db_items as $key => $val){
-    if(array_key_exists($key, $this_config))
-    {
-        // Copy item
-        $db_items[$key] = $this_config[$key];
-        // Remove from config
-        unset($this_config[$key]);
-    }
-}
-
-?>
-
 <div class="container">
 
     <div class="row">
@@ -39,32 +10,29 @@ foreach($db_items as $key => $val){
 
     <div class="row">
         
-        <div class="col-lg-6">
+        <div id="mr-db" class="col-lg-6">
             
             <h4>Database</h4>
             
-            <table class="table table-striped">
-              <?php foreach($db_items as $key => $item):?>
-              
-              <tr>
-                  <th>
-                      <?=$key?>
-                  </th>
-                  <td>
-                      <pre><?print_r($item)?></pre>
-                  </td>
-              </tr>
-              
-              <?php endforeach?>
-                  
-              </table>
+            <table class="table table-striped"></table>
               
         </div>
-
         <div class="col-lg-6">
+        </div>
+    </div>
+    <div class="row">
+        
+        <div class="col-lg-12">
+            
+            <?php 
 
+            // Sort config file
+            $this_config = $GLOBALS['conf'];
+            ksort($this_config);
+
+            ?>
               
-            <h4>Configuration</h4>
+            <h4>Configuration file</h4>
 
             <table class="table striped">
                 <?php foreach($this_config as $key => $item):?>
@@ -84,8 +52,28 @@ foreach($db_items as $key => $val){
             
         </div>
 
-  </div> <!-- /row -->
+    </div>
+    
+
 </div>  <!-- /container -->
+
+<script>
+$(document).on('appReady', function(e, lang) {
+    $.getJSON( appUrl + '/system/DataBaseInfo', function( data ) {
+        var table = $('#mr-db table');
+        for(var prop in data) {
+            console.log(prop);
+            if(data.hasOwnProperty(prop)){
+                table.append($('<tr>')
+                    .append($('<th>')
+                        .text(prop))
+                    .append($('<td>')
+                        .text(data[prop])))
+            }
+        }
+    });
+});
+</script>
 
 
 <?php $this->view('partials/foot'); ?>
