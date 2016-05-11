@@ -1,14 +1,7 @@
 #!/bin/bash
 
-# OS check
-OSVERSION=$(/usr/bin/sw_vers -productVersion | /usr/bin/cut -d . -f 2)
-
 # Serveradmin executable
-if [[ ${OSVERSION} -lt 8 ]]; then
-    SERVERADMIN="/usr/sbin/serveradmin"
-else
-    SERVERADMIN="/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin"
-fi
+SERVERADMIN="/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin"
 
 # Out file
 OUT="/usr/local/munki/preflight.d/cache/services.txt"
