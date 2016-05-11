@@ -62,14 +62,14 @@ $(document).on('appReady', function(e, lang) {
     $.getJSON( appUrl + '/system/DataBaseInfo', function( data ) {
         var table = $('#mr-db table');
         for(var prop in data) {
-            console.log(prop);
-            if(data.hasOwnProperty(prop)){
-                table.append($('<tr>')
-                    .append($('<th>')
-                        .text(prop))
-                    .append($('<td>')
-                        .text(data[prop])))
+            if(data[prop] == false){
+                data[prop] = '<span class="label label-danger">No</span>';
             }
+            table.append($('<tr>')
+                .append($('<th>')
+                    .html(prop))
+                .append($('<td>')
+                    .html(data[prop])))
         }
     });
 });
