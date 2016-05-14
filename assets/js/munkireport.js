@@ -5,6 +5,21 @@ var mr = {
         dt:{}
     };
 
+$(document).on('appReady', function(e, lang) {
+    
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'notification.menu_link',
+        url: appUrl + '/module/notification/manage'
+    });
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'systemstatus.menu_link',
+        url: appUrl + '/system/show/status'
+    }); 
+
+});
+
 $( document ).ready(function() {
     $.i18n.init({
         debug: munkireport.debug,
