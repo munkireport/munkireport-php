@@ -14,7 +14,7 @@
             
             <h4>Database</h4>
             
-            <table class="table table-striped"></table>
+            <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
               
         </div>
         <div class="col-lg-6">
@@ -60,17 +60,28 @@
 <script>
 $(document).on('appReady', function(e, lang) {
     $.getJSON( appUrl + '/system/DataBaseInfo', function( data ) {
-        var table = $('#mr-db table');
+        var table = $('#mr-db table').empty();
         for(var prop in data) {
-            if(data[prop] == false){
+            if(data[prop] === false){
                 data[prop] = '<span class="label label-danger">No</span>';
             }
+            if(data[prop] === true){
+                data[prop] = '<span class="label label-success">Yes</span>';
+            }
+
             table.append($('<tr>')
                 .append($('<th>')
                     .html(prop))
                 .append($('<td>')
                     .html(data[prop])))
         }
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+        var err = textStatus + ", " + error;
+        $('#mr-db table tr td')
+            .empty()
+            .addClass('text-danger')
+            .text(i18n.t('errors.loading', {error:err}));
     });
 });
 </script>

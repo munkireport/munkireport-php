@@ -25,9 +25,10 @@ class system extends Controller
 	public function DataBaseInfo()
 	{
 		$out = array(
-			'connection' => false,
+			'db.driver' => '',
+			'db.connectable' => false,
+			'db.writable' => false,
 			'error' => '',
-			'writable' => false,
 		);
 		$config = array(
 			'pdo_dsn' => conf('pdo_dsn'),
@@ -40,11 +41,12 @@ class system extends Controller
 		$db = new munkireport\Database($config);
 		//echo '<pre>'; var_dump($db);
 		if($db->connect()){
-			$out['connection'] = true;
-			
+			$out['db.connectable'] = true;
+			$out['db.driver'] = $db->get_driver();
+
 			if($db->isWritable())
 			{
-				$out['writable'] = true;
+				$out['db.writable'] = true;
 			}
 			else {
 				$out['error'] = $db->getError();

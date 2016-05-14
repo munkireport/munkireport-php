@@ -70,7 +70,7 @@ class Database {
         }
         
         try{
-            $dbh->exec("CREATE TABLE mr_temp (id)");
+            $dbh->exec("CREATE TABLE mr_temp (id TEXT)");
             $dbh->exec("DROP TABLE mr_temp");
             return true;
         }
@@ -91,6 +91,16 @@ class Database {
     public function getError()
     {
         return $this->error;
+    }
+    
+    /**
+     * Get PDO driver name
+     *
+     * @return string driver
+     **/
+    function get_driver()
+    {
+        return $this->getDBH()->getAttribute(\PDO::ATTR_DRIVER_NAME);
     }
 
 }

@@ -195,7 +195,8 @@
 		"client_nonexistent": "Client with serial number \"__serial__\" does not exist",
 		"403": "You are not allowed to view this page",
 		"404": "Page not found",
-		"426": "You are required to visit this site using a secure connection."
+		"426": "You are required to visit this site using a secure connection.",
+		"loading": "There was problem with retrieving this data: __error__"
 	},
 	"event": "Event",
 	"event_plural": "Events",
