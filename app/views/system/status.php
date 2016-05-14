@@ -10,13 +10,6 @@
 
     <div class="row">
         
-        <div id="mr-db" class="col-lg-6">
-            
-            <h4 data-i18n="database"></h4>
-            
-            <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
-              
-        </div>
         <div id="mr-phpinfo" class="col-lg-6">
             
             <h4 data-i18n="php.php"></h4>
@@ -24,41 +17,15 @@
             <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
 
         </div>
-    </div>
-    <div class="row">
-        
-        <div class="col-lg-12">
+
+        <div id="mr-db" class="col-lg-6">
             
-            <?php 
-
-            // Sort config file
-            $this_config = $GLOBALS['conf'];
-            ksort($this_config);
-
-            ?>
-              
-            <h4>Configuration file</h4>
-
-            <table class="table striped">
-                <?php foreach($this_config as $key => $item):?>
-
-                <tr>
-                    <th>
-                      <?=$key?>
-                    </th>
-                    <td>
-                      <pre><?print_r($item)?></pre>
-                    </td>
-                </tr>
-
-                <?php endforeach?>
-              
-            </table>
+            <h4 data-i18n="database"></h4>
             
+            <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
+              
         </div>
-
-    </div>
-    
+    </div>    
 
 </div>  <!-- /container -->
 
