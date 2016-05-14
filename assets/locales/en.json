@@ -159,8 +159,14 @@
 		}
 	},
 	"danger": "Error",
+	"database": "Database",
 	"date": {
 		"year": "year"
+	},
+	"db": {
+		"connectable": "Connectable",
+		"driver": "Driver",
+		"writable": "Writable"
 	},
 	"delete": "Delete",
 	"dialog": {
@@ -440,6 +446,13 @@
 	},
 	"path": "Path",
 	"pending": "Pending",
+	"php": {
+		"dom": "DOM Extension",
+		"pdo": "PDO Extension",
+		"pdodrivers": "PDO Database drivers",
+		"php": "PHP",
+		"version": "Version"
+	},
 	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
 	"pkg_failed_to_install_plural": "__count__ packages failed to install",
 	"reg_date": "Registration Date",
@@ -509,6 +522,7 @@
 	},
 	"success": "Success",
 	"system": {
+		"status": "Munkireport System Status",
 		"system": "System"
 	},
 	"systemstatus": {

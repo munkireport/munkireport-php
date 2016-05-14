@@ -80,6 +80,39 @@ class system extends Controller
 		# code...
 	}
 	//===============================================================
+	
+	/**
+	 * php information
+	 *
+	 * Retrieve information about php
+	 *
+	 */
+	public function phpInfo()
+	{	
+		ob_start();
+		phpinfo(11);
+		$raw = ob_get_clean();
+		$phpinfo = array('phpinfo' => array());
+		
+		// Remove credits
+		$nocreds = preg_replace('#<h1>PHP Credits.*#s', '', $raw);
+	    if(preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', $nocreds, $matches, PREG_SET_ORDER)){
+	        foreach($matches as $match){
+		        if(strlen($match[1])){
+		            $phpinfo[$match[1]] = array();
+		        }elseif(isset($match[3])){
+		        $keys1 = array_keys($phpinfo);
+		        $phpinfo[end($keys1)][$match[2]] = isset($match[4]) ? array($match[3], $match[4]) : $match[3];
+		        }else{
+		            $keys1 = array_keys($phpinfo);
+		            $phpinfo[end($keys1)][] = trim(strip_tags($match[2]));
+		        }
+	        }
+		}
+		//echo '<pre>';print_r($phpinfo);return;
+		$obj = new View();
+		$obj->view('json', array('msg' => $phpinfo));
+	}
 	//===============================================================
 	//===============================================================
 	//===============================================================
