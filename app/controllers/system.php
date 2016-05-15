@@ -102,7 +102,7 @@ class system extends Controller
 		            $phpinfo[$match[1]] = array();
 		        }elseif(isset($match[3])){
 		        $keys1 = array_keys($phpinfo);
-		        $phpinfo[end($keys1)][$match[2]] = isset($match[4]) ? array($match[3], $match[4]) : $match[3];
+		        $phpinfo[end($keys1)][$match[2]] = isset($match[4]) ? $match[3] . ' ('.$match[4].')' : str_replace(',', ', ', $match[3]);
 		        }else{
 		            $keys1 = array_keys($phpinfo);
 		            $phpinfo[end($keys1)][] = trim(strip_tags($match[2]));

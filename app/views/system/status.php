@@ -64,14 +64,35 @@ $(document).on('appReady', function(e, lang) {
         
         //console.log(data);
         
-        // List of collectable values
+        
+        // Create php info dom structure
+        var phpinfo = $('<table>').addClass('table table-striped');
+        for(var section in data) {
+            phpinfo
+                .append($('<tr>')
+                    .append($('<th>')
+                        .attr('colspan', 2)
+                        .addClass('info')
+                        .append($('<h4>')
+                            .text(section))))
+
+            for(var sectiondata in data[section]){
+                phpinfo.append($('<tr>')
+                    .append($('<th>')
+                        .text(sectiondata))
+                    .append($('<td>')
+                        .html(data[section][sectiondata])));
+            }
+                
+        }
+        
+        // Create table with required php items
         var list = {
             'php.version': data.Core['PHP Version'],
             'php.dom': data.dom['DOM/XML'] || false,
             'php.pdo': data.PDO['PDO support'] || false,
             'php.pdodrivers': data.PDO['PDO drivers'] || false
-        }
-
+        };
         for(var prop in list) {
             
             if(list[prop] === false){
@@ -86,7 +107,31 @@ $(document).on('appReady', function(e, lang) {
                 .html(i18n.t(prop)))
                 .append($('<td>')
                     .html(list[prop])))
+            
         }
+        
+        table.after($('<button>')
+            .addClass('btn btn-info')
+            .text(i18n.t('php.moreinfo'))
+            .click(function(){
+                // Create large modal
+                $('#myModal .modal-dialog').addClass('modal-lg');
+                $('#myModal .modal-title')
+        			.empty()
+        			.append(i18n.t("php.moreinfo"))
+        		$('#myModal .modal-body')
+        			.empty()
+        			.append(phpinfo);
+        		
+        		$('#myModal button.ok').text(i18n.t("dialog.close"));
+
+        		// Set ok button
+        		$('#myModal button.ok')
+        			.off()
+        			.click(function(){$('#myModal').modal('hide')});
+                    
+                $('#myModal').modal('show');
+            }))
     })
     .fail(function( jqxhr, textStatus, error ) {
         var err = textStatus + ", " + error;

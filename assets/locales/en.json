@@ -468,6 +468,7 @@
 	"pending": "Pending",
 	"php": {
 		"dom": "DOM Extension",
+		"moreinfo": "Extended PHP info",
 		"pdo": "PDO Extension",
 		"pdodrivers": "PDO Database drivers",
 		"php": "PHP",
