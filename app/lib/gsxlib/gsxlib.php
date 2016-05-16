@@ -489,7 +489,7 @@ class GsxLib
         if(array_key_exists('alternateDeviceId', $serialNumber)) {
             # checking warranty with IMEI code - must run activation check first
             $ad = $this->fetchiOsActivation($serialNumber);
-            $wty = $this->warrantyStatus($ad->serialNumber);
+            $wty = $this->warrantyStatus($ad->serialNumber, $ship_to);
             $wty->activationDetails = $ad;
             return $wty;
         }
