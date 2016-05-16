@@ -35,7 +35,7 @@ function get_gsx_stats(&$gsx_model)
     // Pull from gsxlib
     $gsx = GsxLib::getInstance($sold_to, $username);
     try {
-    $result = $gsx->warrantyStatus($gsx_model->serial_number);
+    $result = $gsx->warrantyStatus($gsx_model->serial_number, $ship_to);
     }
     
     // Catch errors
