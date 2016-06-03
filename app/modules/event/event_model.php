@@ -33,7 +33,12 @@ class Event_model extends Model
         
         if($serial_number && $module)
         {
-            $this->retrieve_one('serial_number=? AND module=?', array($serial_number, $module));
+			if( ! authorized_for_serial($serial_number))
+			{
+				return FALSE;
+			}
+
+			$this->retrieve_one('serial_number=? AND module=?', array($serial_number, $module));
 			$this->serial_number = $serial_number;
 			$this->module = $module;
         }
@@ -50,7 +55,12 @@ class Event_model extends Model
      **/
     function reset($serial_number = '', $module = '')
     {
-        $where_params = array($serial_number);
+		if( ! authorized_for_serial($serial_number))
+		{
+			return FALSE;
+		}
+		
+		$where_params = array($serial_number);
         $where_string = ' WHERE serial_number=?';
 
         if($module)

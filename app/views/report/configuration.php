@@ -16,15 +16,21 @@
 
   </div> <!-- /row -->
 
-    <div class="row">
+  <div class="row">
 
-	<?php $this->view('tag_widget', '', MODULE_PATH . 'tag/views/'); ?>
+	  <?php $this->view('tag_widget', '', MODULE_PATH . 'tag/views/'); ?>
+
+	  <?php $this->view('widgets/bound_to_ds_widget'); ?>
+
+  </div> <!-- /row -->
+  
+  <div class="row">
 
 	<?php $this->view('widgets/bound_to_ds_widget'); ?>
 	
 	<?php $this->view('widgets/printer_widget'); ?>
 
-	</div> <!-- /row -->
+  </div> <!-- /row -->
 
 </div>  <!-- /container -->
 
