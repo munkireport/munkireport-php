@@ -196,12 +196,7 @@ echo '+ Installing <?php echo $scriptname; ?>'
 # Store munkipath when building a package
 if [ $BUILDPKG = 1 ]; then
 	STOREPATH=${MUNKIPATH}
-	MUNKIPATH='/usr/local/munki/'
-fi
-
-if [ $BUILDPKG = 1 ]; then
-	# Prepend with install volume
-	MUNKIPATH="\$3${MUNKIPATH}"
+	MUNKIPATH='$3/usr/local/munki/'
 	CACHEPATH="\$3${CACHEPATH}"
 fi
 
