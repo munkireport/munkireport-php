@@ -1,0 +1,71 @@
+<?php
+class managedinstalls_model extends Model {
+        
+	function __construct($serial='')
+	{
+		parent::__construct('id', 'managedinstalls'); //primary key, tablename
+		$this->rs['id'] = '';
+		$this->rs['serial_number'] = $serial;
+        $this->rs['name'] = '';
+        $this->rs['display_name'] = '';
+        $this->rs['version'] = '';
+        $this->rs['size'] = 0;
+        $this->rs['installed'] = 0; // 1 = installed, 0 = not installed
+        $this->rs['status'] = ''; // installed, pending, failed
+        
+        // TODO: add indexes
+                
+		// Schema version, increment when creating a db migration
+		$this->schema_version = 0;
+		
+		// Create table if it does not exist
+		$this->create_table();
+		
+		$this->serial = $serial;
+			
+	}
+	
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Process data sent by postflight
+	 *
+	 * @param string data
+	 * 
+	 **/
+	function process($data)
+	{		
+        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+        $parser = new CFPropertyList();
+        $parser->parse($data, CFPropertyList::FORMAT_XML);
+        $mylist = $parser->toArray();
+        if( ! $mylist)
+        {
+            throw new Exception("No Data in report", 1);
+        }
+        
+        // Remove previous data
+        $this->delete_where('serial_number=?', $this->serial_number);
+        
+        # Loop through list
+        foreach($mylist as $name => $props){
+            # Add name to props
+            $props['name'] = $name;
+            # Set version
+            if(isset($props['installed_version'])){
+                $props['version'] = $props['installed_version'];
+            }
+            elseif(isset($props['version_to_install'])){
+                $props['version'] = $props['version_to_install'];
+            }
+            if(isset($props['installed_size'])){
+                $props['size'] = $props['installed_size'];
+            }
+            $props['installed'] = (int) $props['installed'];
+            $this->id = 0;
+            $this->merge($props)->save();
+
+        }
+
+	}
+}
