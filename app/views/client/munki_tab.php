@@ -306,7 +306,14 @@ if(isset($report['ItemsToRemove']))
 
   </div><!-- </div class="row"> -->
 
-<pre><?php //print_r($client->rs) ?></pre>
+<pre><?php
+if(false){
+	require_once(APP_PATH . 'lib/munkireport/ArrayToPlist.php');
+	$parser = new munkireport\ArrayToPlist();
+	echo htmlspecialchars($parser->parse($client->rs['report_plist']));
+	//print_r($client->rs['report_plist']);
+}
+?></pre>
 
 <script>
 $(document).on('appReady', function(e, lang) {
