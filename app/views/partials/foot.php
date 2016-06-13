@@ -54,8 +54,6 @@
 
 
   <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/underscore/underscore.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap/bootstrap-formform.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/datatables.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/moment.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/flotr2.js"></script>
