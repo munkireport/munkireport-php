@@ -13,8 +13,14 @@ class managedinstalls_model extends Model {
         $this->rs['installed'] = 0; // 1 = installed, 0 = not installed
         $this->rs['status'] = ''; // installed, pending, failed
         
-        // TODO: add indexes
-                
+        // Add indexes
+        $this->idx[] = array('serial_number');
+        $this->idx[] = array('name');
+        $this->idx[] = array('version');
+        $this->idx[] = array('name', 'version');
+        $this->idx[] = array('display_name');
+        $this->idx[] = array('status');
+
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
 		
