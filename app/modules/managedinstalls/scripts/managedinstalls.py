@@ -29,28 +29,28 @@ def _DictFromPlist(path):
     except Exception, message:
         raise Exception("Error creating plist from output: %s" % message)
 
-def addItems(itemList, globalList, status):
+def addItems(itemList, installList, status):
     for item in itemList:
-        globalList[item["name"]] = filterItem(item)
-        globalList[item["name"]]['status'] = status
+        installList[item["name"]] = filterItem(item)
+        installList[item["name"]]['status'] = status
 
-def removeResult(itemList, globalList):
+def removeResult(itemList, installList):
     for item in itemList:
-        #globalList[item["name"]]['time'] = item.time
+        #installList[item["name"]]['time'] = item.time
         if item.status == 0:
-            globalList[item["name"]]['installed'] = False
-            globalList[item["name"]]['status'] = 'uninstalled'
+            installList[item["name"]]['installed'] = False
+            installList[item["name"]]['status'] = 'uninstalled'
         else:
-            globalList[item["name"]]['status'] = 'uninstall_failed'
+            installList[item["name"]]['status'] = 'uninstall_failed'
 
-def installResult(itemList, globalList):
+def installResult(itemList, installList):
     for item in itemList:
-        #globalList[item["name"]]['time'] = item.time
+        #installList[item["name"]]['time'] = item.time
         if item.status == 0:
-            globalList[item["name"]]['installed'] = True
-            globalList[item["name"]]['status'] = 'installed'
+            installList[item["name"]]['installed'] = True
+            installList[item["name"]]['status'] = 'installed'
         else:
-            globalList[item["name"]]['status'] = 'install_failed'
+            installList[item["name"]]['status'] = 'install_failed'
 
 
 def filterItem(item):
@@ -68,50 +68,46 @@ def filterItem(item):
 
         return out
 
+def main():
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
 
-# Create cache dir if it does not exist
-cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
-if not os.path.exists(cachedir):
-    os.makedirs(cachedir)
+    # Check if ManagedInstallReport exists
+    ManagedInstallReport = '/Library/Managed Installs/ManagedInstallReport.plist'
+    if not os.path.exists(ManagedInstallReport):
+        print '%s is missing.' % ManagedInstallReport
+        installReport = {}
+    else:
+        installReport = _DictFromPlist(ManagedInstallReport)
 
-# Check if ManagedInstallReport exists
-ManagedInstallReport = '/Library/Managed Installs/ManagedInstallReport.plist'
-if not os.path.exists(ManagedInstallReport):
-    print '%s is missing.' % ManagedInstallReport
-    installReport = {}
-else:
-    installReport = _DictFromPlist(ManagedInstallReport)
+    installList = {}
+    if installReport.get('ManagedInstalls'):
+        addItems(installReport.ManagedInstalls, installList, 'installed')
+    if installReport.get('ProblemInstalls'):
+        addItems(installReport.ProblemInstalls, installList, 'install_failed')
+    if installReport.get('ItemsToRemove'):
+        addItems(installReport.ItemsToRemove, installList, 'pending_removal')
+    if installReport.get('ItemsToInstall'):
+        addItems(installReport.ItemsToInstall, installList, 'pending_install')
+    if installReport.get('AppleUpdates'):
+        addItems(installReport.AppleUpdates, installList, 'pending_install')
+        
+    # Update installList with results
+    if installReport.get('RemovalResults'):
+        removeResult(installReport.RemovalResults, installList)
+    if installReport.get('InstallResults'):
+        installResult(installReport.InstallResults, installList)
 
-# InstallResults
-# ItemsToInstall
-# ItemsToRemove
-# ManagedInstalls
-# ProblemInstalls
-# RemovalResults
-# RemovedItems
-# pp.pprint(installReport)
+    if debug:
+        pp.pprint(installList)
 
-globalList = {}
-if installReport.get('ManagedInstalls'):
-    addItems(installReport.ManagedInstalls, globalList, 'installed')
-if installReport.get('ProblemInstalls'):
-    addItems(installReport.ProblemInstalls, globalList, 'install_failed')
-if installReport.get('ItemsToRemove'):
-    addItems(installReport.ItemsToRemove, globalList, 'pending_removal')
-if installReport.get('ItemsToInstall'):
-    addItems(installReport.ItemsToInstall, globalList, 'pending_install')
-if installReport.get('AppleUpdates'):
-    addItems(installReport.AppleUpdates, globalList, 'pending_install')
-if installReport.get('RemovalResults'):
-    removeResult(installReport.RemovalResults, globalList)
-if installReport.get('InstallResults'):
-    installResult(installReport.InstallResults, globalList)
+    # Write report to cache
+    plistlib.writePlist(installList, "%s/managedinstalls.plist" % cachedir)
 
-if debug:
-    pp.pprint(globalList)
-
-# Write report to cache
-plistlib.writePlist(globalList, "%s/managedinstalls.plist" % cachedir)
-
+if __name__ == "__main__":
+    main()
 
 
