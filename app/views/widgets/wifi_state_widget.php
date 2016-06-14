@@ -22,6 +22,9 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 		
 		// Set statuses
+		if(data.unknown){
+		panel.append(' <a href="'+baseUrl+'#unknown" class="btn btn-info"><span class="bigger-150">'+data.unknown+'</span><br>'+i18n.t('unknown')+'</a>');
+		}
 		if(data.off){
 			panel.append(' <a href="'+baseUrl+'#off" class="btn btn-danger"><span class="bigger-150">'+data.off+'</span><br>&nbsp;&nbsp;'+i18n.t('off')+'&nbsp;&nbsp;</a>');
 		}
@@ -31,7 +34,9 @@ $(document).on('appUpdate', function(e, lang) {
 		if(data.connected){
 			panel.append(' <a href="'+baseUrl+'#running" class="btn btn-success"><span class="bigger-150">'+data.connected+'</span><br>'+i18n.t('connected')+'</a>');
 		}
-
+		if(data.sharing){
+			panel.append(' <a href="'+baseUrl+'#sharing" class="btn btn-info"><span class="bigger-150">'+data.sharing+'</span><br>'+i18n.t('wifi.sharing')+'</a>');
+		}
     });
 });
 </script>

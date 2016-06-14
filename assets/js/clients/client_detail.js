@@ -84,6 +84,10 @@ $(document).on('appReady', function(e, lang) {
 		$.each(machineData, function(prop, val){
 			$('.mr-'+prop).html(val);
 		});
+		
+		// Convert computer_model to link to everymac.com TODO: make this optional/configurable
+		var mmodel = $('.mr-machine_model').html();
+		$('.mr-machine_model').html('<a target="_blank" href="https://www.everymac.com/ultimate-mac-lookup/?search_keywords='+mmodel+'">'+mmodel+'</a>');
 
 		// Set computer name value and title
 		$('.mr-computer_name_input')

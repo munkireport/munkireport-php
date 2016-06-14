@@ -253,10 +253,13 @@
 	|
 	| Use GSX article OP1474 and 
 	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
-	| to assist with creating certificates and whitelisting your IPs.
+	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the 
+	| Readme.md located in the GSX module.
 	|
 	| To use GSX module, set enable to TRUE and uncomment and
-	| fill out rest of configuration options
+	| fill out rest of configuration options. When setting the date format
+	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
+	| are required.
 	*/
 
 	$conf['gsx_enable'] = FALSE;
@@ -264,6 +267,25 @@
 	//$conf['gsx_cert_keypass'] = '';
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
+	//$conf['gsx_date_format'] = 'm/d/y';
+	
+	/*
+	|===============================================
+	| Curl
+	|===============================================
+	|
+	| Define path to the curl binary and add options
+	| this is used by the installer script.
+	| Override to use custom path and add or remove options, some environments
+	| may need to add "--insecure" if the servercertificate is not to be 
+	| checked.
+	|
+	*/
+	$conf['curl_cmd'] = array(
+		"/usr/bin/curl",
+		"--fail",
+		"--silent",
+		"--show-error");
 
     /*
 	|===============================================
@@ -379,6 +401,26 @@
 	|
 	*/
     $conf['request_timeout'] = 5;
+	
+	
+	/*
+	|===============================================
+	| Email Settings
+	|===============================================
+	|
+	| These settings are used for email notifications
+	| Only smtp is supported at the moment.
+	|
+	| 	$conf['email']['use_smtp'] = true;
+	| 	$conf['email']['from'] = array('noreply@example.com' => 'Munkireport Mailer');
+	|	$conf['email']['smtp_host'] = 'smtp1.example.com;smtp2.example.com';
+	|	$conf['email']['smtp_auth'] = true;
+	|	$conf['email']['smtp_username'] = 'user@example.com';
+	|	$conf['email']['smtp_password'] = 'secret';
+	|	$conf['email']['smtp_secure'] = 'tls';
+	|	$conf['email']['smtp_port'] = 587;
+	|	$conf['email']['locale'] = 'en';
+	*/
 
 
  	/*

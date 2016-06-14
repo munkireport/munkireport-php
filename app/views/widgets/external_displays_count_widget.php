@@ -28,7 +28,7 @@ $(document).on('appUpdate', function(e, lang) {
 		body.empty();
 
 		data.total = data.total || 0;
-		body.append('<a href="'+appUrl+'/show/listing/displays'+'" class="btn btn-success"><span class="bigger-150">'+data.total+'</span><br>'+i18n.t('displays.displays')+'</a>');
+		body.append('<a href="'+appUrl+'/show/listing/displays#external" class="btn btn-success"><span class="bigger-150">'+data.total+'</span><br>'+i18n.t('displays.displays')+'</a>');
 	});
 
 });

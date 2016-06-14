@@ -24,7 +24,7 @@ $.getJSON( appUrl + '/module/tag/all_tags/add_count', function( data ) {
     if(data.length){
         $.each(data, function(i,d){
             var badge = '<span class="badge pull-right">'+d.cnt+'</span>';
-            list.append('<a href="'+appUrl+'/module/tag/listing#'+d.tag+'" class="list-group-item">'+d.tag+badge+'</a>')
+            list.append('<a href="'+appUrl+'/module/tag/listing#tag%20=%20'+d.tag+'" class="list-group-item">'+d.tag+badge+'</a>')
         });
     }
     else{

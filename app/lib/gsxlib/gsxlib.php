@@ -478,17 +478,18 @@ class GsxLib
 
     /**
     * A shortcut for checking warranty status of device
+    * UPDATE: Now includes shipTo as per GSX update May 2016.
     */
-    public function warrantyStatus($serialNumber)
+    public function warrantyStatus($serialNumber, $ship_to)
     {
         if(!is_array($serialNumber)) {
-            $serialNumber = array('serialNumber' => $serialNumber);
+            $serialNumber = array('serialNumber' => $serialNumber, 'shipTo' => $ship_to);
         }
 
         if(array_key_exists('alternateDeviceId', $serialNumber)) {
             # checking warranty with IMEI code - must run activation check first
             $ad = $this->fetchiOsActivation($serialNumber);
-            $wty = $this->warrantyStatus($ad->serialNumber);
+            $wty = $this->warrantyStatus($ad->serialNumber, $ship_to);
             $wty->activationDetails = $ad;
             return $wty;
         }

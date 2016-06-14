@@ -53,7 +53,7 @@ class Location_model extends Model {
 		// FIXME Does not account for business units!!!
 		$out = array();
 		$filter = get_machine_group_filter();
-		$sql = "SELECT serial_number, latitude, longitude, long_username,
+		$sql = "SELECT location.serial_number AS serial_number, latitude, longitude, long_username,
 					computer_name
 				FROM location
 				LEFT JOIN reportdata USING (serial_number)

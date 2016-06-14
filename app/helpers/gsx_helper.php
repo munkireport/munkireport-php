@@ -20,10 +20,22 @@ function get_gsx_stats(&$gsx_model)
     $sold_to = conf('gsx_sold_to');
     $username = conf('gsx_username');
     
+    //$conf['gsx_date_format'] = 'd/m/y';
+    // Get the current local date format from config
+    // Because Apple can't follow ISO standards
+    if (! conf('gsx_date_format'))
+    {
+        $gsx_date_format = 'm/d/y'; // Default is US format
+    }
+    else
+    {
+        $gsx_date_format = conf('gsx_date_format');  
+    }
+    
     // Pull from gsxlib
     $gsx = GsxLib::getInstance($sold_to, $username);
     try {
-    $result = $gsx->warrantyStatus($gsx_model->serial_number);
+    $result = $gsx->warrantyStatus($gsx_model->serial_number, $sold_to);
     }
     
     // Catch errors
@@ -61,7 +73,7 @@ function get_gsx_stats(&$gsx_model)
         }
         if(is_null($gsx_model->coverageenddate) || ($gsx_model->coverageenddate === ""))
         {
-            $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($gsx_model->estimatedpurchasedate)) . " + 365 day"));
+            $gsx_model->coverageenddate = date("Y-m-d", strtotime(date_format(date_create_from_format($gsx_date_format, $result->estimatedpurchasedate), 'Y-m-d') . " + 365 day"));
         }    
 
         $gsx_model->save();
@@ -101,7 +113,7 @@ function get_gsx_stats(&$gsx_model)
         }
         if(is_null($gsx_model->coverageenddate) || ($gsx_model->coverageenddate === ""))
         {
-            $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($gsx_model->estimatedpurchasedate)) . " + 365 day"));
+            $gsx_model->coverageenddate = date("Y-m-d", strtotime(date_format(date_create_from_format($gsx_date_format, $result->estimatedpurchasedate), 'Y-m-d') . " + 365 day"));
         } 
         
         $gsx_model->save();
@@ -132,8 +144,8 @@ function get_gsx_stats(&$gsx_model)
         }
          else
         {
-             $gsx_model->contractcoverageenddate = date('Y-m-d', strtotime($result->contractCoverageEndDate));
-        }
+             $gsx_model->contractcoverageenddate = date_format(date_create_from_format($gsx_date_format, $result->contractCoverageEndDate), 'Y-m-d');
+         }
         
         if(empty($result->contractCoverageStartDate))
         {
@@ -141,7 +153,7 @@ function get_gsx_stats(&$gsx_model)
         }
          else
         {
-             $gsx_model->contractcoveragestartdate = date('Y-m-d', strtotime($result->contractCoverageStartDate));
+             $gsx_model->contractcoveragestartdate = date_format(date_create_from_format($gsx_date_format, $result->contractCoverageStartDate), 'Y-m-d');
         }
         
         if(empty($result->laborCovered))
@@ -172,9 +184,9 @@ function get_gsx_stats(&$gsx_model)
         $gsx_model->warrantymod = $local_warrantyStatus;
         $gsx_model->warrantystatus = $result->warrantyStatus;
         $gsx_model->daysremaining = $result->daysRemaining; 
-        $gsx_model->estimatedpurchasedate = date('Y-m-d', strtotime($result->estimatedPurchaseDate));
+        $gsx_model->estimatedpurchasedate = date_format(date_create_from_format($gsx_date_format, $result->estimatedPurchaseDate), 'Y-m-d');
         $gsx_model->purchasecountry = $result->purchaseCountry;
-        $gsx_model->registrationdate = date('Y-m-d', strtotime($result->registrationDate));
+        $gsx_model->registrationdate = date_format(date_create_from_format($gsx_date_format, $result->registrationDate), 'Y-m-d');
         $gsx_model->productdescription = $result->productDescription;
         $gsx_model->configdescription = $result->configDescription;
         $gsx_model->isloaner = str_replace(array('Y','N'), array('Yes','No'), $result->isLoaner);
@@ -198,28 +210,28 @@ function get_gsx_stats(&$gsx_model)
             {
                if(empty($result->contractCoverageEndDate)) 
                {
-                $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($result->registrationDate)) . " + 365 day"));
-                }
+                $gsx_model->coverageenddate = date("Y-m-d", strtotime(date_format(date_create_from_format($gsx_date_format, $result->registrationDate), 'Y-m-d') . " + 365 day"));
+               }
                 else
                     {
-                    $gsx_model->coverageenddate = date('Y-m-d', strtotime($result->contractCoverageEndDate));  
+                    $gsx_model->coverageenddate = date_format(date_create_from_format($gsx_date_format, $result->contractCoverageEndDate), 'Y-m-d');
                     }
         }
             else
             {
-            $gsx_model->coverageenddate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($result->registrationDate)) . " + 365 day"));
+            $gsx_model->coverageenddate = date("Y-m-d", strtotime(date_format(date_create_from_format($gsx_date_format, $result->registrationDate), 'Y-m-d') . " + 365 day"));
             }
         }
          else
         {
-             $gsx_model->coverageenddate = date('Y-m-d', strtotime($result->coverageEndDate));
+             $gsx_model->coverageenddate = date_format(date_create_from_format($gsx_date_format, $result->coverageEndDate), 'Y-m-d');
         }
         
         if(empty($result->coverageStartDate))
         {
             if ($result->warrantyStatus === "Out Of Warranty (No Coverage)" )
             {
-            $gsx_model->coveragestartdate = date('Y-m-d', strtotime($result->registrationDate));
+            $gsx_model->coveragestartdate = date_format(date_create_from_format($gsx_date_format, $result->registrationDate), 'Y-m-d');
             }
             else
             {
@@ -228,8 +240,8 @@ function get_gsx_stats(&$gsx_model)
         }
          else
         {
-             $gsx_model->coveragestartdate = date('Y-m-d', strtotime($result->coverageStartDate));
-        }
+             $gsx_model->coveragestartdate = date_format(date_create_from_format($gsx_date_format, $result->coverageStartDate), 'Y-m-d');
+         }
         
         // Service Level Agreement
         // Fix for different warranty type returns from GSX

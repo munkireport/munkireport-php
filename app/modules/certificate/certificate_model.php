@@ -38,6 +38,10 @@ class Certificate_model extends Model {
 
 		// Parse log data
 		$start = ''; // Start date
+		$errors = array();
+		$now = time();
+		$four_weeks = $now + 3600 * 24 * 7 * 4;
+
         foreach(explode("\n", $data) as $line)
         {
         	if($line)
@@ -67,10 +71,78 @@ class Certificate_model extends Model {
 	        		$this->id = '';
 	        		$this->timestamp = time();
 		        	$this->create();
-
+					
+					// Check for errors					
+					if($this->cert_exp_time < $now){
+						$errors[] = [
+							'type' => 'danger',
+							'msg' => 'cert.expired', 
+							'data' => json_encode(array(
+								'name' => $this->cert_cn,
+								'timestamp' => $this->cert_exp_time
+							))
+						];
+					}elseif($this->cert_exp_time < $four_weeks){
+						$errors[] = [
+							'type' => 'warning',
+							'msg' => 'cert.expire_warning', 
+							'data' => json_encode(array(
+								'name' => $this->cert_cn,
+								'timestamp' => $this->cert_exp_time
+							))
+						];
+					}
 	        	}
         	}
-        }       		
+        }// end foreach()	
+		
+		if( ! $errors)
+		{
+			$this->delete_event();
+		}
+		else
+		{
+			if(count($errors) == 1){
+				$error = array_pop($errors);
+				$this->store_event($error['type'], $error['msg'], $error['data']);
+			}else{
+				// Loop through errors and submit stats 
+				$error_count = 0;
+				$last_error = [];
+				$warning_count = 0;
+				// Search through errors and warnings
+				foreach($errors as $error){
+					if($error['type'] == 'danger'){
+						$last_error = $error;
+						$error_count ++;
+					} 
+					if($error['type'] == 'warning'){
+						$warning_count ++;
+					}
+				}
+				// If errors, ignore warnings
+				 if($error_count)
+				 {
+					$type = 'error';
+					if($error_count == 1){
+						$msg = $last_error['msg'];
+						$data = $last_error['data'];
+					}
+					else{
+						$msg = 'cert.multiple_errors';
+						$data = $error_count;
+					}
+				 }
+				 else {
+				 	$type = 'warning';
+					$msg = 'cert.multiple_warnings';
+					$data = $warning_count;
+				 }
+				$this->store_event($type, $msg, $data);
+			}
+			
+		}
+
 	} // end process()
 
 	/**

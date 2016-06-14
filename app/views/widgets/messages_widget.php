@@ -25,7 +25,7 @@ $(document).on('appUpdate', function(){
 			success: 'fa-check-circle'
 		};
 	
-	$.getJSON( appUrl + '/module/event/get/60/all/all')
+	$.getJSON( appUrl + '/module/event/get/60/all/all/50') // TODO make this configurable
 	.done(function( data ) {
 
 		if(data.error)
@@ -91,6 +91,16 @@ $(document).on('appUpdate', function(){
 		}
 		else if(item.module == 'reportdata'){
 			msg = i18n.t(item.msg);
+		}
+		else if(item.module == 'certificate'){
+			tab = '#tab_certificate-tab';
+			item.module = '';
+			item.data = item.data || '{}';
+			var parsedData = JSON.parse(item.data);
+			// Convert unix timestamp to relative time
+			parsedData.moment = moment(parsedData.timestamp * 1000).fromNow();
+			console.log(parsedData)
+			msg = i18n.t(item.msg, parsedData);
 		}
 		
 		// Get appropriate icon

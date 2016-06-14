@@ -336,6 +336,12 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
     if os.path.exists(scriptdir):
 
         from munkilib import utils
+        
+        # Get timeout for scripts
+        scriptTimeOut = 10
+        if pref('scriptTimeOut'):
+            scriptTimeOut = int(pref('scriptTimeOut'))
+            display_detail('# Set custom script timeout to %s seconds' % scriptTimeOut)
 
         # Directory containing the scripts
         parentdir = os.path.basename(scriptdir)
@@ -372,7 +378,10 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
                 # Attempt to execute script
                 display_detail('Running %s' % script)
                 result, stdout, stderr = runExternalScriptWithTimeout(
-                    scriptpath, allow_insecure=False, script_args=[runtype])
+                    scriptpath, \
+                    allow_insecure=False, \
+                    script_args=[runtype], \
+                    timeout=scriptTimeOut)
                 if stdout:
                     display_detail(stdout)
                 if stderr:
