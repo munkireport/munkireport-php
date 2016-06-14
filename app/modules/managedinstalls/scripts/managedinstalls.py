@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-Filter the result of /Library/Managed Installs/ManagedInstallReport.plist
+Filter the result of /Library/Managed Installs/MANAGED_INSTALL_REPORT.plist
 to only the parts that represent the installed items
 """
 
@@ -8,7 +8,8 @@ import plistlib
 import sys
 import os
 
-debug = False
+DEBUG = False
+MANAGED_INSTALL_REPORT = '/Library/Managed Installs/Managedinstall_report.plist'
 
 # Skip manual check
 if len(sys.argv) > 1:
@@ -17,56 +18,59 @@ if len(sys.argv) > 1:
         exit(0)
     if sys.argv[1] == 'debug':
         print '**** DEBUGGING ENABLED ****'
-        debug = True
+        DEBUG = True
         import pprint
-        pp = pprint.PrettyPrinter(indent=4)
+        PP = pprint.PrettyPrinter(indent=4)
 
 
-def _DictFromPlist(path):
+def dict_from_plist(path):
     """Returns a dict based on plist found in path"""
     try:
         return plistlib.readPlist(path)
     except Exception, message:
         raise Exception("Error creating plist from output: %s" % message)
 
-def addItems(itemList, installList, status):
-    for item in itemList:
-        installList[item["name"]] = filterItem(item)
-        installList[item["name"]]['status'] = status
+def add_items(item_list, install_list, status):
+    """Add item to list and set status"""
+    for item in item_list:
+        install_list[item["name"]] = filter_item(item)
+        install_list[item["name"]]['status'] = status
 
-def removeResult(itemList, installList):
-    for item in itemList:
-        #installList[item["name"]]['time'] = item.time
+def remove_result(item_list, install_list):
+    """Update list according to result"""
+    for item in item_list:
+        #install_list[item["name"]]['time'] = item.time
         if item.status == 0:
-            installList[item["name"]]['installed'] = False
-            installList[item["name"]]['status'] = 'uninstalled'
+            install_list[item["name"]]['installed'] = False
+            install_list[item["name"]]['status'] = 'uninstalled'
         else:
-            installList[item["name"]]['status'] = 'uninstall_failed'
+            install_list[item["name"]]['status'] = 'uninstall_failed'
 
-def installResult(itemList, installList):
-    for item in itemList:
-        #installList[item["name"]]['time'] = item.time
+def install_result(item_list, install_list):
+    """Update list according to result"""
+    for item in item_list:
+        #install_list[item["name"]]['time'] = item.time
         if item.status == 0:
-            installList[item["name"]]['installed'] = True
-            installList[item["name"]]['status'] = 'installed'
+            install_list[item["name"]]['installed'] = True
+            install_list[item["name"]]['status'] = 'installed'
         else:
-            installList[item["name"]]['status'] = 'install_failed'
+            install_list[item["name"]]['status'] = 'install_failed'
 
 
-def filterItem(item):
-    
-        keys = ["display_name", "installed_version", "installed_size",
-                "version_to_install", "installed", "note"]
+def filter_item(item):
+    """Only return specified keys"""
+    keys = ["display_name", "installed_version", "installed_size",
+            "version_to_install", "installed", "note"]
 
-        out = {}
-        for key in keys:
-            try:
-                out[key] = item[key]
-            # pylint: disable=pointless-except
-            except KeyError:  # not all objects have all these attributes
-                pass
+    out = {}
+    for key in keys:
+        try:
+            out[key] = item[key]
+        # pylint: disable=pointless-except
+        except KeyError:  # not all objects have all these attributes
+            pass
 
-        return out
+    return out
 
 def main():
     """Main"""
@@ -75,37 +79,40 @@ def main():
     if not os.path.exists(cachedir):
         os.makedirs(cachedir)
 
-    # Check if ManagedInstallReport exists
-    ManagedInstallReport = '/Library/Managed Installs/ManagedInstallReport.plist'
-    if not os.path.exists(ManagedInstallReport):
-        print '%s is missing.' % ManagedInstallReport
-        installReport = {}
+    # Check if MANAGED_INSTALL_REPORT exists
+    if not os.path.exists(MANAGED_INSTALL_REPORT):
+        print '%s is missing.' % MANAGED_INSTALL_REPORT
+        install_report = {}
     else:
-        installReport = _DictFromPlist(ManagedInstallReport)
+        install_report = dict_from_plist(MANAGED_INSTALL_REPORT)
 
-    installList = {}
-    if installReport.get('ManagedInstalls'):
-        addItems(installReport.ManagedInstalls, installList, 'installed')
-    if installReport.get('ProblemInstalls'):
-        addItems(installReport.ProblemInstalls, installList, 'install_failed')
-    if installReport.get('ItemsToRemove'):
-        addItems(installReport.ItemsToRemove, installList, 'pending_removal')
-    if installReport.get('ItemsToInstall'):
-        addItems(installReport.ItemsToInstall, installList, 'pending_install')
-    if installReport.get('AppleUpdates'):
-        addItems(installReport.AppleUpdates, installList, 'pending_install')
-        
-    # Update installList with results
-    if installReport.get('RemovalResults'):
-        removeResult(installReport.RemovalResults, installList)
-    if installReport.get('InstallResults'):
-        installResult(installReport.InstallResults, installList)
+    # pylint: disable=E1103
+    install_list = {}
+    if install_report.get('ManagedInstalls'):
+        add_items(install_report.ManagedInstalls, install_list, 'installed')
+    if install_report.get('ProblemInstalls'):
+        add_items(install_report.ProblemInstalls, install_list, \
+            'install_failed')
+    if install_report.get('ItemsToRemove'):
+        add_items(install_report.ItemsToRemove, install_list, 'pending_removal')
+    if install_report.get('ItemsToInstall'):
+        add_items(install_report.ItemsToInstall, install_list, \
+            'pending_install')
+    if install_report.get('AppleUpdates'):
+        add_items(install_report.AppleUpdates, install_list, 'pending_install')
 
-    if debug:
-        pp.pprint(installList)
+    # Update install_list with results
+    if install_report.get('RemovalResults'):
+        remove_result(install_report.RemovalResults, install_list)
+    if install_report.get('install_results'):
+        install_result(install_report.install_results, install_list)
+    # pylint: enable=E1103
+
+    if DEBUG:
+        PP.pprint(install_list)
 
     # Write report to cache
-    plistlib.writePlist(installList, "%s/managedinstalls.plist" % cachedir)
+    plistlib.writePlist(install_list, "%s/managedinstalls.plist" % cachedir)
 
 if __name__ == "__main__":
     main()
