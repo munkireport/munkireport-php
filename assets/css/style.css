@@ -181,3 +181,8 @@ svg .nv-label text
     max-height: 600px;
     overflow: scroll
 }
+
+.modal-body {
+    max-height: calc(100vh - 212px);
+    overflow-y: auto;
+}

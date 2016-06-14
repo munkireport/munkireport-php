@@ -34,6 +34,7 @@ class Ard_controller extends Module_controller
         if( ! $this->authorized())
         {
             $obj->view('json', array('msg' => 'Not authorized'));
+			return;
         }
 
         $ard = new Ard_model($serial_number);

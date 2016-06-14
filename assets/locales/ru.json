@@ -111,6 +111,7 @@
 			"displays": "Мониторы",
 			"hardware": "Аппаратные средства",
 			"inventory": "Инвентарь",
+			"location": "Location",
 			"munki": "Munki",
 			"network": "Сеть",
 			"security": "Безопасность",

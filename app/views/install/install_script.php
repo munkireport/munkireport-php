@@ -8,7 +8,8 @@ CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREFLIGHT=1
 PREF_CMDS=( ) # Pref commands array
-CURL=("/usr/bin/curl" "--insecure" "--fail" "--silent" "--show-error")
+TARGET_VOLUME=''
+CURL=("<?php echo implode('" "', conf('curl_cmd'))?>")
 # Exit status
 ERR=0
 
@@ -98,9 +99,11 @@ while getopts b:m:p:r:c:v:i:nh flag; do
 			INSTALLTEMP=$(mktemp -d -t mrpkg)
 			INSTALLROOT="$INSTALLTEMP"/install_root
 			MUNKIPATH="$INSTALLROOT"/usr/local/munki/
-			PREFPATH=/Library/Preferences/MunkiReport
+			TARGET_VOLUME='$3'
+			PREFPATH="${TARGET_VOLUME}/Library/Preferences/MunkiReport"
 			PREFLIGHT=0
 			BUILDPKG=1
+			
 			;;
 		n)
 			PREFLIGHT=0
@@ -115,7 +118,7 @@ done
 # build additional HTTP headers
 if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders)" = "1" ]; then
 	BUNDLE_ID='ManagedInstalls'
-	MANAGED_INSTALLS_PLIST_PATHS=("/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "/Library/Preferences/${BUNDLE_ID}.plist")
+	MANAGED_INSTALLS_PLIST_PATHS=("${TARGET_VOLUME}/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "${TARGET_VOLUME}/Library/Preferences/${BUNDLE_ID}.plist")
 	ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'
 	ADDITIONAL_HTTP_HEADERS=()
 	for plist in "${MANAGED_INSTALLS_PLIST_PATHS[@]}"; do
@@ -155,7 +158,7 @@ chmod a+x "${MUNKIPATH}"{preflight,postflight,report_broken_client}
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"
 cd "${MUNKIPATH}preflight.d"
-${CURL} "${TPL_BASE}submit.preflight" --remote-name
+${CURL[@]} "${TPL_BASE}submit.preflight" --remote-name
 
 if [ "${?}" != 0 ]
 then
@@ -193,7 +196,8 @@ echo '+ Installing <?php echo $scriptname; ?>'
 # Store munkipath when building a package
 if [ $BUILDPKG = 1 ]; then
 	STOREPATH=${MUNKIPATH}
-	MUNKIPATH='/usr/local/munki/'
+	MUNKIPATH='$3/usr/local/munki/'
+	CACHEPATH="\$3${CACHEPATH}"
 fi
 
 # Capture uninstall scripts
@@ -201,7 +205,7 @@ read -r -d '' UNINSTALLS << EOF
 
 <?php foreach($uninstall_scripts AS $scriptname => $filepath): ?>
 
-<?php echo "## $scriptname ##"; ?>
+<?php echo "## $scriptname ##\n"; ?>
 echo '- Uninstalling <?php echo $scriptname; ?>'
 
 <?php echo file_get_contents($filepath); ?>
@@ -233,6 +237,7 @@ if [ $ERR = 0 ]; then
 
 		# Add uninstall script to preinstall
 		echo  "#!/bin/bash" > $SCRIPTDIR/preinstall
+		# Add uninstall scripts
 		echo  "$UNINSTALLS" >> $SCRIPTDIR/preinstall
 		chmod +x $SCRIPTDIR/preinstall
 

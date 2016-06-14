@@ -77,7 +77,17 @@ $(document).on('appReady', function(e, lang) {
             url: "<?=url('datatables/data')?>",
             type: "POST",
             data: function(d){
-                d.mrColNotEmpty = "tag.id"
+                d.mrColNotEmpty = "tag.id";
+				
+				// Look for a bigger/smaller/equal statement
+				if(d.search.value.match(/^tag = .+$/))
+				{
+					// Add column specific search
+					d.columns[3].search.value = d.search.value.replace(/tag = /, '');
+					// Clear global search
+					d.search.value = '';
+				}
+
             }
         },
         dom: mr.dt.buttonDom,

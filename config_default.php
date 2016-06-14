@@ -103,8 +103,8 @@
 	|		$conf['auth']['auth_ldap']['mr_allowed_groups'] = array('group1','group2'); // For group based access, fill in groups.
 	|
 	|		Optional items:
-	|		$default_conf['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))'; // LDAP filter to search for user accounts.
-	|		$default_conf['groupfilter'] = '(&(objectClass=posixGroup)(memberUID=%{uid}))'; // LDAP filter to search for groups.
+	|		$conf['auth']['auth_ldap']['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))'; // LDAP filter to search for user accounts.
+	|		$conf['auth']['auth_ldap']['groupfilter'] = '(&(objectClass=posixGroup)(memberUID=%{uid}))'; // LDAP filter to search for groups.
 	|		$conf['auth']['auth_ldap']['port']        = 389; // LDAP port.
 	|		$conf['auth']['auth_ldap']['version']     = 3; // Use LDAP version 1, 2 or 3.
 	|		$conf['auth']['auth_ldap']['starttls']    = FALSE; // Set to TRUE to use TLS.
@@ -239,6 +239,54 @@
 	*/
     $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
+	/*
+	|===============================================
+	| GSX lookups
+	|===============================================
+	|
+	| Access to GSX and certificates are required for use of this module
+	|
+	| The GSX module is designed to be used in place of the warranty module.
+	| While both the warranty and GSX modules can be enabled at the same
+	| time it is recommended that only one be enabled at a time to prevent
+	| the warranty module from overwriting the data provided by the GSX module.
+	|
+	| Use GSX article OP1474 and 
+	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
+	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the 
+	| Readme.md located in the GSX module.
+	|
+	| To use GSX module, set enable to TRUE and uncomment and
+	| fill out rest of configuration options. When setting the date format
+	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
+	| are required.
+	*/
+
+	$conf['gsx_enable'] = FALSE;
+	//$conf['gsx_cert'] = '/Library/Keychains/GSX/certbundle.pem';
+	//$conf['gsx_cert_keypass'] = '';
+	//$conf['gsx_sold_to'] = '1234567890';
+	//$conf['gsx_username'] = 'steve@apple.com';
+	//$conf['gsx_date_format'] = 'm/d/y';
+	
+	/*
+	|===============================================
+	| Curl
+	|===============================================
+	|
+	| Define path to the curl binary and add options
+	| this is used by the installer script.
+	| Override to use custom path and add or remove options, some environments
+	| may need to add "--insecure" if the servercertificate is not to be 
+	| checked.
+	|
+	*/
+	$conf['curl_cmd'] = array(
+		"/usr/bin/curl",
+		"--fail",
+		"--silent",
+		"--show-error");
+
     /*
 	|===============================================
 	| Modules
@@ -353,6 +401,26 @@
 	|
 	*/
     $conf['request_timeout'] = 5;
+	
+	
+	/*
+	|===============================================
+	| Email Settings
+	|===============================================
+	|
+	| These settings are used for email notifications
+	| Only smtp is supported at the moment.
+	|
+	| 	$conf['email']['use_smtp'] = true;
+	| 	$conf['email']['from'] = array('noreply@example.com' => 'Munkireport Mailer');
+	|	$conf['email']['smtp_host'] = 'smtp1.example.com;smtp2.example.com';
+	|	$conf['email']['smtp_auth'] = true;
+	|	$conf['email']['smtp_username'] = 'user@example.com';
+	|	$conf['email']['smtp_password'] = 'secret';
+	|	$conf['email']['smtp_secure'] = 'tls';
+	|	$conf['email']['smtp_port'] = 587;
+	|	$conf['email']['locale'] = 'en';
+	*/
 
 
  	/*
@@ -426,6 +494,7 @@
 	|	munki
 	|	power_battery_condition
 	|	power_battery_health
+	|	wifi_state
 	|
 	| Small horizontal / medium vertical widgets:
 	|	network_location
@@ -451,6 +520,7 @@
 	|	hardware_model
 	|	memory
 	|	os
+	|	printer
 	|
 	| Responsive horizontal widgets:
 	|	network_vlan

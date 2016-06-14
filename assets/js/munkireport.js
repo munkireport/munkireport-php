@@ -5,6 +5,21 @@ var mr = {
         dt:{}
     };
 
+$(document).on('appReady', function(e, lang) {
+    
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'notification.menu_link',
+        url: appUrl + '/module/notification/manage'
+    });
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'systemstatus.menu_link',
+        url: appUrl + '/system/show/status'
+    }); 
+
+});
+
 $( document ).ready(function() {
     $.i18n.init({
         debug: munkireport.debug,
@@ -32,6 +47,25 @@ $( document ).ready(function() {
 
         // Activate filter
         $('a.filter-popup').click(showFilterModal);
+        
+        // *******   Define hotkeys  *******
+        // Dashboard
+        $(document).bind('keydown', 'd', function(){
+            window.location = appUrl + '/show/dashboard';
+            return true;
+        });
+        
+        // Client listing
+        $(document).bind('keydown', 'c', function(){
+            window.location = appUrl + '/show/listing/clients';
+            return true;
+        });
+        
+        // search
+        $(document).bind('keydown', '/', function(){
+            $('input[type="search"]').focus();
+            return false;
+        });
 
         // Trigger appReady
         $(document).trigger('appReady', [i18n.lng()]);
@@ -115,6 +149,8 @@ var updateHash = function(e){
 var showFilterModal = function(e){
 
 	e.preventDefault();
+    
+    var mgList = [];
 
 	var updateGroup = function(){
 
@@ -129,7 +165,23 @@ var showFilterModal = function(e){
 			// Update all
 			$(document).trigger('appUpdate');
 		})
-	}
+	};
+    
+    var updateAll = function() {
+        
+        var checked = this.checked,
+            settings = {
+                filter: 'machine_group',
+                value: mgList,
+                action: checked ? 'clear' : 'add_all'
+            }
+            
+        $.post(appUrl + '/unit/set_filter', settings, function(){
+			// Update all
+            $('#myModal .modal-body input[type=checkbox]').prop('checked', checked);
+			$(document).trigger('appUpdate');
+		})
+    };
 
 	// Get all business units and machine_groups
 	var defer = $.when(
@@ -156,10 +208,21 @@ var showFilterModal = function(e){
 		$('#myModal button.ok')
 			.off()
 			.click(function(){$('#myModal').modal('hide')});
-
+        
+        // Add check/uncheck all
+        $('#myModal .modal-body')
+            .append($('<div>')
+                .addClass('checkbox')
+                .append($('<label>')
+                    .append($('<input>')
+                        .change(updateAll)
+                        .attr('type', 'checkbox'))
+                    .append('Check/uncheck all')))
+                    
 		// Add machine groups
 		$.each(mg_data, function(index, obj){
 			if(obj.groupid !== undefined){
+                mgList.push(obj.groupid);
 				$('#myModal .modal-body')
 					.append($('<div>')
 						.addClass('checkbox')

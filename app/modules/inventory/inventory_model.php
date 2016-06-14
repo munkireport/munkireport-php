@@ -11,10 +11,10 @@ class Inventory_model extends Model {
         $this->rs['version'] = '';
         $this->rs['bundleid'] = '';
         $this->rs['bundlename'] = '';
-        $this->rs['path'] = '';
+        $this->rs['path'] = ''; $this->rt['path'] = 'VARCHAR(1024)';
 
         // Schema version, increment when creating a db migration
-       $this->schema_version = 2;
+        $this->schema_version = 3;
 		
 		// Add indexes
 		$this->idx['serial'] = array('serial_number');
@@ -60,7 +60,7 @@ class Inventory_model extends Model {
             %s 
             %s
             GROUP BY version
-            ORDER BY count DESC', 
+            ORDER BY version DESC', 
             $this->enquote($this->tablename), 
             get_machine_group_filter('WHERE', 'r'),
             $match
