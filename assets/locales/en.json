@@ -344,6 +344,9 @@
 	"machine": {
 		"hardware_widget_title": "Hardware model breakdown"
 	},
+	"managedinstalls": {
+		"report": "Managedinstalls Report"
+	},
 	"manifest": {
 		"name": "Manifest Name"
 	},
@@ -516,6 +519,7 @@
 		"smb_users": "SMB Users"
 	},
 	"show": "Show",
+	"size": "Size",
 	"software": {
 		"software": "Software",
 		"smc_version": "SMC Version",
