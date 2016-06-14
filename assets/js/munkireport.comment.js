@@ -12,6 +12,19 @@ $(document).on('appReady', function(e, lang) {
 		return;
 	}
 
+	//Initialize marked library
+	var markdown_parser = marked;
+	markdown_parser.setOptions({
+	  renderer: new marked.Renderer(),
+	  gfm: true,
+	  tables: true,
+	  breaks: true,
+	  pedantic: false,
+	  sanitize: true,
+	  smartLists: true,
+	  smartypants: false
+	});
+
 	var addComment = function(){
 
 			var section = $(this).data('section'),
@@ -71,6 +84,7 @@ $(document).on('appReady', function(e, lang) {
 				data.text = data.text || ''
 				$('textarea').text(data.text)
 				$('textarea').markdown({
+					parser: markdown_parser,
 					autofocus:false,
 					savable:false,
 					iconlibrary: 'fa',

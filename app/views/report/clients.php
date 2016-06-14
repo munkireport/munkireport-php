@@ -11,12 +11,18 @@
     <?php $this->view('widgets/registered_clients_widget'); ?>
 
   </div>
+  
+  <div class="row">
+	
+  <?php $this->view('widgets/client_widget'); ?>
+
+  <?php $this->view('widgets/filevault_widget'); ?>
+
+  </div> <!-- /row -->
 
   <div class="row">
 
     <?php $this->view('widgets/os_widget'); ?>
-
-    <?php $this->view('widgets/client_widget'); ?>
 
   </div> <!-- /row -->
 

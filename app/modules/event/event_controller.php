@@ -32,11 +32,12 @@ class Event_controller extends Module_controller
 	 *
 	 * @author AvB
 	 **/
-	function get($minutes = 60, $type = 'all', $module = 'all')
+	function get($minutes = 60, $type = 'all', $module = 'all', $limit = 0)
 	{
 		$queryobj = new Event_model();
 		$queryobj = new Reportdata_model();
 		$fromtime = time() - 60 * $minutes;
+		$limit = $limit ? sprintf('LIMIT %d', $limit) : '';
 		$out['items'] = array();
 		$out['error'] = '';
 		$sql = "SELECT m.serial_number, module, type, msg, data, m.timestamp,
@@ -46,7 +47,8 @@ class Event_controller extends Module_controller
 				LEFT JOIN machine USING (serial_number) 
 				WHERE m.timestamp > $fromtime 
 				".get_machine_group_filter('AND')."
-				ORDER BY m.timestamp DESC";
+				ORDER BY m.timestamp DESC
+				$limit";
 
 
 		foreach($queryobj->query($sql) as $obj)
