@@ -190,7 +190,7 @@ function get_gsx_stats(&$gsx_model)
         // Update the stock machine tables
 	$machine = new Machine_model($gsx_model->serial_number);
 	//$machine->img_url = $matches[1]; Todo: get image url for VM
-	$machine->machine_desc = $result->productDescription;
+	$machine->machine_desc = str_replace(array('~VIN,'), array(''), $result->productDescription);
 	$machine->save();
         
         // Translate gsxlib to MunkiReport DB
@@ -200,7 +200,7 @@ function get_gsx_stats(&$gsx_model)
         $gsx_model->estimatedpurchasedate = date_format(date_create_from_format($gsx_date_format, $result->estimatedPurchaseDate), 'Y-m-d');
         $gsx_model->purchasecountry = $result->purchaseCountry;
         $gsx_model->registrationdate = date_format(date_create_from_format($gsx_date_format, $result->registrationDate), 'Y-m-d');
-        $gsx_model->productdescription = $result->productDescription;
+        $gsx_model->productdescription = str_replace(array('~VIN,'), array(''), $result->productDescription);
         $gsx_model->configdescription = $result->configDescription;
         $gsx_model->isloaner = str_replace(array('Y','N'), array('Yes','No'), $result->isLoaner);
         $gsx_model->isobsolete = 'No';
