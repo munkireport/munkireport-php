@@ -9,7 +9,7 @@ import sys
 import os
 
 DEBUG = False
-MANAGED_INSTALL_REPORT = '/Library/Managed Installs/Managedinstall_report.plist'
+MANAGED_INSTALL_REPORT = '/Library/Managed Installs/ManagedInstallReport.plist'
 
 # Skip manual check
 if len(sys.argv) > 1:
@@ -104,8 +104,8 @@ def main():
     # Update install_list with results
     if install_report.get('RemovalResults'):
         remove_result(install_report.RemovalResults, install_list)
-    if install_report.get('install_results'):
-        install_result(install_report.install_results, install_list)
+    if install_report.get('InstallResults'):
+        install_result(install_report.InstallResults, install_list)
     # pylint: enable=E1103
 
     if DEBUG:
