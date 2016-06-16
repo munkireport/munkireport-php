@@ -642,6 +642,7 @@
         "recheck": "Recheck Asset Information",
         "roomName": "Room Name",
         "state": "State",
+        "version": "Version",
         "warrantyExpirationDate": "Warranty Expiration Date"
     },
 	"widget": {

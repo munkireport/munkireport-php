@@ -19,6 +19,10 @@
 					<td id="whd-notes"></td>
                 </tr>
                 <tr>
+                	<th data-i18n="whd.version"></th>
+					<td id="whd-version"></td>
+                </tr>
+                <tr>
                 	<th data-i18n="whd.locationName"></th>
 					<td id="whd-locationName"></td>
                 </tr>
@@ -211,6 +215,7 @@ $(document).on('appReady', function(e, lang) {
 			// Add strings
 			$('#whd-assetNumber').text(data.assetNumber);
 			$('#whd-notes').text(data.notes);
+			$('#whd-version').text(data.version);
 			$('#whd-roomName').text(data.roomName);
 			$('#whd-modelName').text(data.modelName);
 			$('#whd-locationName').text(data.locationName);

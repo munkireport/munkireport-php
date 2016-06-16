@@ -10,6 +10,7 @@ class whd_model extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['assetNumber'] = '';
 		$this->rs['notes'] = ''; $this->rt['notes'] = 'BLOB(65535)'; 
+		$this->rs['version'] = '';
 		$this->rs['locationName'] = '';
 		$this->rs['modelName'] = '';
 		$this->rs['roomName'] = '';

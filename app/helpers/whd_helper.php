@@ -35,6 +35,7 @@ function run_whd_status(&$whd_model)
            // Translate network strings to db fields
            $whd_model->assetNumber = utf8_encode($objresponse->assetNumber);
            $whd_model->notes = utf8_encode($objresponse->notes);
+           $whd_model->version = utf8_encode($objresponse->version);
            $whd_model->roomName = utf8_encode($objresponse->room->roomName);
            $whd_model->modelName = utf8_encode($objresponse->model->modelName);
            $whd_model->locationName = utf8_encode($objresponse->location->locationName);
