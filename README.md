@@ -81,5 +81,6 @@ Munkireport-php makes use of these fine software packages:
 * [adLDAP](http://adldap.sourceforge.net) for authenticating against AD
 * [i18next](http://i18next.com) js library for localization
 * [libgsx](https://github.com/filipp/gsxlib) libgsx library used for GSX integration 
+* [httpful](http://phphttpclient.com/) http library used by WHD integration
 
 

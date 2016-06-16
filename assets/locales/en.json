@@ -121,6 +121,7 @@
 			"summary": "Summary",
 			"third_party_software": "Third Party Software",
 			"timemachine": "Time Machine",
+			"whd": "Web Help Desk",
 			"wifi": "WiFi"
 		},
 		"installed_apple_software": "Installed Apple Software",
@@ -239,7 +240,7 @@
 	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
-	"gsx": {
+    "gsx": {
 		"configuration": "Shipping Configuration",
 		"contracttype": "Contract Type",
 		"country": "Country of Purchase",
@@ -400,7 +401,8 @@
 			"security": "Security",
 			"timemachine": "Time Machine",
 			"warranty": "Warranty",
-			"wifi": "WiFi"
+			"wifi": "WiFi",
+			"whd": "Web Help Desk"
 		},
 		"main": {
 		  "dashboard": "Dashboard",
@@ -593,6 +595,55 @@
 		"warranty": "Warranty",
 		"widget_title": "Hardware Warranty"
 	},
+    "whd":{
+        "address": "Address",
+        "assetNumber": "Asset Number",
+        "assetType": "Type",
+        "city": "City",
+        "client": "Client Number",
+        "clientaddress": "Client Address",
+        "clientcity": "Client City",
+        "clientcompanyName": "Client Company Name",
+        "clientdepartment": "Client Department",
+        "clientEmail": "Client Email",
+        "clientlocationName": "Client Location Name",
+        "clientName": "Client Name",
+        "clientNotes": "Client Notes",
+        "clientPhone": "Client Phone",
+        "clientPhone2": "Client Phone 2",
+        "clientpostalCode": "Client Postal Code",
+        "clientroom": "Client Room",
+        "clientstate": "Client State",
+        "isDeleted": "Deleted",
+        "isNotesVisibleToClients": "Notes Visible To Clients",
+        "isReservable": "Is Reservable",
+        "leaseExpirationDate": "Lease Expiration Date",
+        "locaddress": "Location Address",
+        "locationName": "Location",
+        "locbusinessZone": "Location Business Zone",
+        "loccity": "Location City",
+        "loccolor": "Location Color",
+        "loccountry": "Location Country",
+        "locdomainName": "Location Domain Name",
+        "locfax": "Location Fax",
+        "loclocationName": "Location Name",
+        "locnote": "Location Note",
+        "locphone": "Location Phone",
+        "locphone2": "Location Phone 2",
+        "locpostalCode": "Location Postal Code",
+        "locstate": "Location State",
+        "macAddress": "MAC Address",
+        "modelName": "Model Name",
+        "networkAddress": "Network Address",
+        "networkName": "Network Name",
+        "notes": "Asset Notes",
+        "postalCode": "Postal Code",
+        "purchaseDate": "Purchase Date",
+        "recheck": "Recheck Asset Information",
+        "roomName": "Room Name",
+        "state": "State",
+        "warrantyExpirationDate": "Warranty Expiration Date"
+    },
 	"widget": {
 		"age": {
 			"title": "Hardware Age"

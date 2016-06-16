@@ -142,10 +142,10 @@
 	| also used by the Business Units
 	|
 	*/
-    $conf['authorization']['delete_machine'] = array('admin', 'manager');
-    $conf['authorization']['global'] = array('admin');
+ 	$conf['authorization']['delete_machine'] = array('admin', 'manager');
+ 	$conf['authorization']['global'] = array('admin');
 
-    /*
+ 	/*
 	|===============================================
 	| Roles
 	|===============================================
@@ -155,7 +155,7 @@
 	*/
 	$conf['roles']['admin'] = array('*');
 
-    /*
+ 	/*
 	|===============================================
 	| Local groups
 	|===============================================
@@ -165,7 +165,7 @@
 	*/
 	//$conf['groups']['admin_users'] = array();
 
-    /*
+ 	/*
 	|===============================================
 	| Business Units
 	|===============================================
@@ -237,7 +237,7 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
 	*/
-    $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+ 	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
 	/*
 	|===============================================
@@ -253,8 +253,8 @@
 	|
 	| Use GSX article OP1474 and 
 	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
-	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the 
-	| Readme.md located in the GSX module.
+	| to assist with creating certificates and whitelisting your IPs.  
+	| Additional documentation can be found in the Readme.md located in the GSX module.
 	|
 	| To use GSX module, set enable to TRUE and uncomment and
 	| fill out rest of configuration options. When setting the date format
@@ -268,7 +268,7 @@
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
-	
+
 	/*
 	|===============================================
 	| Curl
@@ -286,6 +286,32 @@
 		"--fail",
 		"--silent",
 		"--show-error");
+	| Web Help Desk
+	|===============================================
+	|
+	| MunkiReport can pull date from Web Help Desk. By default this is 
+	| turned off. To turn it on, set enable to TRUE and fill in the  
+	| api_key with the API key of a user that has read permissions
+	| to the Assets and the uri for your WHD installation.
+	| 
+	| MunkiReport can also push data back into WHD's Assets. This is
+	| turned off by default. To enable it, set whd_write to TRUE and
+	| make sure the API key belongs to a user with Asset write
+	| permissions. Things MunkiReport writes back include: 
+	|    Network IP Address and Network Name (hostname)
+	|    Purchase Date and Warranty Expiration Date
+	| 
+	| MunkiReport is also able to denote when it last pushed data to
+	| WHD by using the Version field. This is off by default. To turn
+	| it on, set write_status to TRUE. It will then push the last date 
+	| and time MunkiReport pushed data into WHD.
+	| 
+	*/
+        $conf['whd_enable'] = FALSE;
+        //$conf['whd_api_key'] = "HduefMj85FCr9H4ec9jH7ygf8VFerd21k";
+        //$conf['whd_uri'] = "http://webhelpdesk.apple.com:8081/helpdesk/WebObjects/Helpdesk.woa";
+        //$conf['whd_write'] = FALSE;
+        //$conf['whd_write_status'] = FALSE;
 
     /*
 	|===============================================
@@ -301,7 +327,7 @@
 	| Machine and Reportdata
 	|
 	*/
-    $conf['modules'] = array('munkireport');
+ 	$conf['modules'] = array('munkireport');
 
 
 	/*
@@ -333,10 +359,10 @@
 	| By default temperture units are displayed in Celsius °C.
 	|
 	*/
-    //$conf['temperature_unit'] = 'F';
+ 	//$conf['temperature_unit'] = 'F';
 
 
-    /*
+ 	/*
 	|===============================================
 	| Migrations
 	|===============================================
@@ -351,7 +377,7 @@
 	| to FALSE when you're done migrating.
 	|
 	*/
-    $conf['allow_migrations'] = FALSE;
+ 	$conf['allow_migrations'] = FALSE;
 
 
 	/*
@@ -369,7 +395,7 @@
 	|
 	|
 	*/
-    $conf['client_passphrases'] = array();
+ 	$conf['client_passphrases'] = array();
 
 	/*
 	|===============================================
@@ -388,9 +414,9 @@
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
 	|
 	*/
-    //$conf['proxy']['server'] = 'proxy.yoursite.org';
+ 	//$conf['proxy']['server'] = 'proxy.yoursite.org';
 
-    /*
+ 	/*
 	|===============================================
 	| Request timeout
 	|===============================================
@@ -437,7 +463,7 @@
 	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
 	*/
-    $conf['ip_ranges'] = array();
+ 	$conf['ip_ranges'] = array();
 
  	/*
 	|===============================================
@@ -528,7 +554,7 @@
 	*/
 	$conf['dashboard_layout'] = array(
 		array('client', 'messages'),
-        array('new_clients', 'pending_apple', 'pending_munki'),
+		array('new_clients', 'pending_apple', 'pending_munki'),
 		array('munki', 'disk_report','uptime')
 	);
 
