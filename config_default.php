@@ -286,6 +286,8 @@
 		"--fail",
 		"--silent",
 		"--show-error");
+		
+	/*
 	| Web Help Desk
 	|===============================================
 	|
@@ -313,7 +315,7 @@
         //$conf['whd_write'] = FALSE;
         //$conf['whd_write_status'] = FALSE;
 
-    /*
+        /*
 	|===============================================
 	| Modules
 	|===============================================
@@ -426,7 +428,7 @@
 	| Timeout in seconds
 	|
 	*/
-    $conf['request_timeout'] = 5;
+	$conf['request_timeout'] = 5;
 	
 	
 	/*
