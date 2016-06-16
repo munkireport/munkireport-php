@@ -127,7 +127,7 @@
     "installed_apple_software": "Logiciels Apple installés",
     "installed_third_party_software": "Logiciels tiers installés",
     "install_date": "Date de l'installation du client",
-    "no_install_history": "Pas de l'historique de l'installation",
+    "no_install_history": "Pas d'historique de l'installation",
     "panel_title": "Activité du client dans le dernier mois",
     "process_name": "Nom du processus",
     "total": "Nombre de clients"
@@ -223,11 +223,11 @@
   "findmymac": {
 		"listing": {
 			"email": "Email",
-			"status": "Statut",
+			"status": "Etat",
 			"title": "Rapport FindMyMac",
 			"ownerdisplayname": "Nom du propriétaire",
 			"personid": "ID ICloud",
-			"hostname": "Hostname iCloud"
+			"hostname": "Nom d'hôte iCloud"
 		},
 		"widget": {
 			"title": "Statut FindMyMac",
@@ -444,7 +444,7 @@
 		"business_units_all": "Toutes les divisions",
 		"confirm_delete": "Veuillez confirmer la suppression de la notification",
 		"edit": "Editer la notification",
-		"menu_link": "Manager les notifications",
+		"menu_link": "Gérer les notifications",
 		"new": "Nouvelle notification",
 		"notification_enabled": "Activée",
 		"notification_how": "Méthode",
