@@ -84,7 +84,7 @@
     "disabled": "Geschäftsbereiche deaktiviert",
     "machine_group": "Computergruppe",
     "machine_groups": "Computergruppen",
-    "managers": "Managers",
+    "managers": "Manager",
     "users": "Benutzer"
   },
   "buildversion": "Build Version",
@@ -93,6 +93,9 @@
     "from_origin": "Herkunft",
     "from_peers": "Von Peers",
     "from_cache": "Aus dem Cache"
+  },
+  "cert": {
+    "expired": "__name__ expired __moment__"
   },
   "client": {
     "activity": "Clientaktivität",
@@ -155,8 +158,15 @@
       "title": "CrashPlan"
     }
   },
+  "danger": "Fehler",
+  "database": "Datenbank",
   "date": {
     "year": "Jahr"
+  },
+  "db": {
+    "connectable": "Erreichbar",
+    "driver": "Treiber",
+    "writable": "Beschreibbar"
   },
   "delete": "Löschen",
   "dialog": {
@@ -178,13 +188,18 @@
     "widget_title": "Anzahl externer Bildschirme"
   },
   "edit": "Editieren",
+  "email": {
+    "email": "Email",
+    "show_machine_in_browser": "Zeige Maschine im Browser"
+  },
   "enabled": "Aktiviert",
   "encrypted": "Verschlüsselt",
   "error": "Fehler",
   "error_plural": "Fehler",
   "errors": {
     "title": "Fehler",
-    "client_nonexistent": "Client mit dieser Seriennummer \"__serial__\" existiert nicht"
+    "client_nonexistent": "Client mit dieser Seriennummer \"__serial__\" existiert nicht",
+    "loading": "Es gab ein Problem beim Abruf dieser Daten: __error__"
   },
   "event": "Ereignis",
   "event_plural": "Ereignisse",
@@ -200,6 +215,24 @@
   },
   "filter": {
     "title": "Filter setzen"
+  },
+  "findmymac": {
+    "listing": {
+      "email": "Email",
+      "status": "Status",
+      "title": "Meinen Mac suchen report",
+      "ownerdisplayname": "Anzeigename des Eigentümers",
+      "personid": "iCloud ID",
+      "hostname": "iCloud Hostname"
+    },
+    "widget": {
+      "title": "Meinen Mac suchen Status",
+      "enabled": "Aktiviert",
+      "disabled": "Deaktiviert"
+    },
+    "client": {
+      "title": "Meinen Mac suchen"
+    }
   },
   "free_disk_space": "Verfügbarer Speicherplatz",
   "free_disk_space_less_than": "Verfügbarer Speicherplatz < __gb__GB",
@@ -232,6 +265,7 @@
     "uuid": "Hardware UUID"
   },
   "inactive": "Inaktiv",
+  "info": "Information",
   "installed": "Installiert",
   "last_seen": "Zuletzt gesehen",
   "last_user": "Letzter User",
@@ -303,6 +337,7 @@
     "report": "Standortreport",
     "stalelocation": "Veralteter Standort"
   },
+  "loading": "Lade Daten vom Server",
   "machine": {
     "hardware_widget_title": "Liste der Hardwaremodelle"
   },
@@ -349,6 +384,7 @@
       "directoryservice": "Verzeichnisdienste",
       "disk": "Festplatten",
       "displays": "Displays",
+      "findmymac": "Meinen Mac suchen",
       "gsx": "GSX",
       "hardware": "Hardware",
       "inventory": "Inventar",
@@ -373,6 +409,7 @@
       "backup": "Backup-Bericht",
       "clients": "Client-Bericht",
       "configuration": "Konfigurations-Bericht",
+      "findmymac": "Meinen Mac suchen Bericht",
       "hardware": "Hardware-Bericht",
       "location": "Standort-Bericht",
       "munki": "Munki-Bericht",
@@ -400,6 +437,25 @@
   "new_client_plural": "Neue Clients",
   "no_clients": "Keine Clients",
   "no_data": "Keine Daten",
+  "notification": {
+    "all_levels": "Alle Levels",
+    "business_unit": "Geschäftsbereich",
+    "business_units_all": "Alle Geschäftsbereiche",
+    "confirm_delete": "Nachricht löschen bestätigen",
+    "edit": "Nachricht editieren",
+    "menu_link": "Nachrichten verwalten",
+    "new": "Neue Nachricht",
+    "notification_enabled": "Aktiviert",
+    "notification_how": "Methode",
+    "notification_module": "Modul",
+    "notification_severity": "Level",
+    "notification_title": "Beschreibung",
+    "notification_who": "Email-Adresse",
+    "title": "Nachrichten",
+    "widget": {
+      "title": "Regeln für Nachrichten"
+    }
+  },
   "on": "An",
   "off": "Aus",
   "os": {
@@ -407,6 +463,14 @@
   },
   "path": "Pfad",
   "pending": "Anstehend",
+  "php": {
+    "dom": "DOM Extension",
+    "moreinfo": "Extended PHP info",
+    "pdo": "PDO Extension",
+    "pdodrivers": "PDO Database drivers",
+    "php": "PHP",
+    "version": "Version"
+  },
   "pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
   "pkg_failed_to_install_plural": "__count__ Pakete wurden nicht installiert",
   "reg_date": "Registrierungsdatum",
@@ -474,8 +538,13 @@
     "used": "Benutzt",
     "volume_type": "Volumetyp"
   },
+  "success": "Erfolg",
   "system": {
+    "status": "Munkireport Systemstatus",
     "system": "System"
+  },
+  "systemstatus": {
+    "menu_link": "Systemstatus zeigen"
   },
   "tag": {
     "listing": {
