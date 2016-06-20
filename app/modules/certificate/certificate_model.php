@@ -38,7 +38,7 @@ class Certificate_model extends Model {
 
 		// Parse log data
 		$start = ''; // Start date
-		$errors = [];
+		$errors = array();
 		$now = time();
 		$four_weeks = $now + 3600 * 24 * 7 * 4;
 

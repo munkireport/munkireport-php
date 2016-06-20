@@ -95,6 +95,9 @@
     "from_peers": "Depuis peers",
     "from_cache": "Depuis cache"
   },
+  "cert": {
+		"expiré": "__name__ expired __moment__"
+	},
   "client": {
     "activity": "Activité Client",
     "comment": "Commentaires",
@@ -124,7 +127,7 @@
     "installed_apple_software": "Logiciels Apple installés",
     "installed_third_party_software": "Logiciels tiers installés",
     "install_date": "Date de l'installation du client",
-    "no_install_history": "Pas de l'historique de l'installation",
+    "no_install_history": "Pas d'historique de l'installation",
     "panel_title": "Activité du client dans le dernier mois",
     "process_name": "Nom du processus",
     "total": "Nombre de clients"
@@ -156,9 +159,16 @@
       "title": "CrashPlan"
     }
   },
+  "danger": "Erreur",
+	"database": "base de données",
   "date": {
     "year": "année"
   },
+  "db": {
+		"connectable": "pouvant être connecté",
+		"driver": "Pilote",
+		"writable": "Inscriptible"
+	},
   "delete": "Supprimer",
   "dialog": {
     "cancel": "Annuler",
@@ -179,6 +189,10 @@
     "widget_title": "Nombre d'écrans"
   },
   "edit": "Modifier",
+  	"email": {
+		"email": "Email",
+		"show_machine_in_browser": "Voir la station dans le navigateur"
+	},
   "enabled": "Activé",
   "encrypted": "Crypté",
   "error": "Erreur",
@@ -188,8 +202,9 @@
     "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas",
 		"403": "Vous n'êtes pas autorisé à voir cette page",
 		"404": "Page non trouvée",
-		"426": "Vous devez visiter ce site à l'aide d'une connexion sécurisée."
-  },
+		"426": "Vous devez visiter ce site à l'aide d'une connexion sécurisée.",
+ 	"loading": "Il y avait un problème avec la récupération de ces données: __error__"
+   },
   "event": "Événement",
   "event_plural": "Événements",
   "events": {
@@ -205,6 +220,24 @@
   "filter": {
     "title": "Appliquer filtres"
   },
+  "findmymac": {
+		"listing": {
+			"email": "Email",
+			"status": "Etat",
+			"title": "Rapport FindMyMac",
+			"ownerdisplayname": "Nom du propriétaire",
+			"personid": "ID ICloud",
+			"hostname": "Nom d'hôte iCloud"
+		},
+		"widget": {
+			"title": "Statut FindMyMac",
+			"enabled": "Activé",
+			"disabled": "Désactivé"
+		},
+		"client": {
+			"title": "FindMyMac"
+		}
+	},
   "free_disk_space": "Espace disque disponible",
   "free_disk_space_less_than": "Espace disque disponible < __gb__Go",
   "gsx": {
@@ -254,7 +287,7 @@
     "certificate": {
       "commonname": "Nom commun",
       "expires": "Expire",
-      "title": "Rapport Certificat"
+      "title": "Rapport Certificats"
     },
     "checkin": "Enregistrement",
     "computername": "Nom",
@@ -278,7 +311,7 @@
       "last_failure": "Dernière sauvegarde échouée",
       "last_failure_msg": "Message",
       "last_success": "Dernière sauvegarde réussie",
-      "title": "Rapport Timemachine"
+      "title": "Rapport Time Machine"
     },
     "username": "Nom utilisateur",
     "wifi": {
@@ -307,6 +340,7 @@
     "report": "Rapport Localisation",
     "stalelocation": "Localisation obsolète"
   },
+  "loading": "Chargement des données depuis le serveur",
   "machine": {
     "hardware_widget_title": "Détails de l'appareil"
   },
@@ -400,10 +434,30 @@
     "outbound_traffic": "Trafic sortant",
     "remote_ip": "Adresse IP distante"
   },
-  "new_client": "Nouveau Client",
-  "new_client_plural": "Nouveaux Clients",
-  "no_clients": "Pas de Clients",
-  "no_data": "Pas de données",
+  "new_client": "Nouveau client",
+	"new_client_plural": "Nouveaux clients",
+	"no_clients": "Pas de client",
+	"no_data": "Pas de données",
+	"notification": {
+		"all_levels": "Tout niveaux",
+		"business_unit": "Divisions",
+		"business_units_all": "Toutes les divisions",
+		"confirm_delete": "Veuillez confirmer la suppression de la notification",
+		"edit": "Editer la notification",
+		"menu_link": "Gérer les notifications",
+		"new": "Nouvelle notification",
+		"notification_enabled": "Activée",
+		"notification_how": "Méthode",
+		"notification_module": "Module",
+		"notification_severity": "Niveau",
+		"notification_title": "Description",
+		"notification_who": "Adresse email",
+		"title": "Notifications",
+		"widget": {
+			"title": "Règles des notifications"
+		}
+},
+
   "on": "Activé",
   "off": "Désactivé",
   "os": {
@@ -411,6 +465,14 @@
   },
   "path": "Chemin",
   "pending": "En attente",
+  	"php": {
+		"dom": "Extension DOM",
+		"moreinfo": "Infos PHP avancées",
+		"pdo": "Extension PDO",
+		"pdodrivers": "Base de données pilotes PDO",
+		"php": "PHP",
+		"version": "Version"
+		},
   "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
   "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
   "reg_date": "Date d'enregistrement",
@@ -478,9 +540,14 @@
     "used": "Utilisé",
     "volume_type": "Type de Volume"
   },
+  "success": "Succès",
   "system": {
-    "system": "Système"
-  },
+		"status": "Etat système Munkireport",
+		"system": "Système"
+	},
+	"systemstatus": {
+		"menu_link": "Voir l'état du système"
+	},
   "tag": {
     "listing": {
       "title": "Rapport Tags"
@@ -587,6 +654,7 @@
     "noise": "Niveau de bruit",
     "nonetworks": "Pas de réseaux",
     "rssilevel": "Niveau RSSI",
+    "sharing": "Partagé",
     "state": "Etat WiFi",
     "ssid": "SSID",
     "xauthtype": "Type Authentification 802.11X",
