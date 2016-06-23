@@ -35,6 +35,12 @@ def add_items(item_list, install_list, status):
     for item in item_list:
         install_list[item["name"]] = filter_item(item)
         install_list[item["name"]]['status'] = status
+        
+def add_removeditems(item_list, install_list, status):
+    """Add removed item to list and set status"""
+    for item in item_list:
+        install_list[item] = {'name': item, 'status': status,
+            'installed': False}
 
 def remove_result(item_list, install_list):
     """Update list according to result"""
@@ -95,6 +101,8 @@ def main():
             'install_failed')
     if install_report.get('ItemsToRemove'):
         add_items(install_report.ItemsToRemove, install_list, 'pending_removal')
+    if install_report.get('RemovedItems'):
+        add_removeditems(install_report.RemovedItems, install_list, 'removed')
     if install_report.get('ItemsToInstall'):
         add_items(install_report.ItemsToInstall, install_list, \
             'pending_install')

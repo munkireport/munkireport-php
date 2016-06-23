@@ -53,23 +53,48 @@ class managedinstalls_model extends Model {
         // Remove previous data
         $this->delete_where('serial_number=?', $this->serial_number);
         
+        // List with fillable entries
+        $fillable = array(
+            'name' => '',
+            'display_name' => '',
+            'version' => '',
+            'size' => 0,
+            'installed' => 0,
+            'status' => '',
+        );
+        
         # Loop through list
         foreach($mylist as $name => $props){
-            # Add name to props
-            $props['name'] = $name;
-            # Set version
+            
+            // Get an instance of the fillable array
+            $temp = $fillable;
+            
+            // Add name to temp
+            $temp['name'] = $name;
+            
+            // Copy values and correct type
+            foreach ($temp as $key => $value) {
+                if(array_key_exists($key, $props)){
+                    $temp[$key] = $props[$key];
+                    settype($temp[$key], gettype($value));
+                }
+            }
+            
+            // Set version
             if(isset($props['installed_version'])){
-                $props['version'] = $props['installed_version'];
+                $temp['version'] = $props['installed_version'];
             }
             elseif(isset($props['version_to_install'])){
-                $props['version'] = $props['version_to_install'];
+                $temp['version'] = $props['version_to_install'];
             }
+            
+            // Set installed size
             if(isset($props['installed_size'])){
-                $props['size'] = $props['installed_size'];
+                $temp['size'] = $props['installed_size'];
             }
-            $props['installed'] = (int) $props['installed'];
+            
             $this->id = 0;
-            $this->merge($props)->save();
+            $this->merge($temp)->save();
 
         }
 
