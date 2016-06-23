@@ -12,6 +12,7 @@ class managedinstalls_model extends Model {
         $this->rs['size'] = 0;
         $this->rs['installed'] = 0; // 1 = installed, 0 = not installed
         $this->rs['status'] = ''; // installed, pending, failed
+        $this->rs['type'] = ''; // munki, applesus
         
         // Add indexes
         $this->idx[] = array('serial_number');
@@ -20,6 +21,7 @@ class managedinstalls_model extends Model {
         $this->idx[] = array('name', 'version');
         $this->idx[] = array('display_name');
         $this->idx[] = array('status');
+        $this->idx[] = array('type');
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -61,6 +63,7 @@ class managedinstalls_model extends Model {
             'size' => 0,
             'installed' => 0,
             'status' => '',
+            'type' => '',
         );
         
         # Loop through list

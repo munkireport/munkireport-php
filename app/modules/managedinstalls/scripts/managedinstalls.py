@@ -30,17 +30,24 @@ def dict_from_plist(path):
     except Exception, message:
         raise Exception("Error creating plist from output: %s" % message)
 
-def add_items(item_list, install_list, status):
+def add_items(item_list, install_list, status, item_type):
     """Add item to list and set status"""
     for item in item_list:
-        install_list[item["name"]] = filter_item(item)
-        install_list[item["name"]]['status'] = status
+        # Check if applesus item
+        if item.get('productKey'):
+            name = item['productKey']
+        else:
+            name = item['name']
+
+        install_list[name] = filter_item(item)
+        install_list[name]['status'] = status
+        install_list[name]['type'] = item_type
         
 def add_removeditems(item_list, install_list, status):
     """Add removed item to list and set status"""
     for item in item_list:
         install_list[item] = {'name': item, 'status': status,
-            'installed': False, 'display_name': item}
+            'installed': False, 'display_name': item, 'type': 'munki'}
 
 def remove_result(item_list, install_list):
     """Update list according to result"""
@@ -56,11 +63,18 @@ def install_result(item_list, install_list):
     """Update list according to result"""
     for item in item_list:
         #install_list[item["name"]]['time'] = item.time
-        if item.status == 0:
-            install_list[item["name"]]['installed'] = True
-            install_list[item["name"]]['status'] = 'installed'
+        
+        # Check if applesus item
+        if item.get('productKey'):
+            name = item['productKey']
         else:
-            install_list[item["name"]]['status'] = 'install_failed'
+            name = item['name']
+            
+        if item.status == 0:
+            install_list[name]['installed'] = True
+            install_list[name]['status'] = 'installed'
+        else:
+            install_list[name]['status'] = 'install_failed'
 
 
 def filter_item(item):
@@ -95,19 +109,21 @@ def main():
     # pylint: disable=E1103
     install_list = {}
     if install_report.get('ManagedInstalls'):
-        add_items(install_report.ManagedInstalls, install_list, 'installed')
+        add_items(install_report.ManagedInstalls, install_list, 'installed', 'munki')
+    if install_report.get('AppleUpdates'):
+        add_items(install_report.AppleUpdates, install_list, \
+            'pending_apple_install', 'applesus')
     if install_report.get('ProblemInstalls'):
         add_items(install_report.ProblemInstalls, install_list, \
-            'install_failed')
+            'install_failed', 'munki')
     if install_report.get('ItemsToRemove'):
-        add_items(install_report.ItemsToRemove, install_list, 'pending_removal')
+        add_items(install_report.ItemsToRemove, install_list, \
+            'pending_removal', 'munki')
     if install_report.get('RemovedItems'):
         add_removeditems(install_report.RemovedItems, install_list, 'removed')
     if install_report.get('ItemsToInstall'):
         add_items(install_report.ItemsToInstall, install_list, \
-            'pending_install')
-    if install_report.get('AppleUpdates'):
-        add_items(install_report.AppleUpdates, install_list, 'pending_install')
+            'pending_install', 'munki')
 
     # Update install_list with results
     if install_report.get('RemovalResults'):
