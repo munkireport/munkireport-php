@@ -40,7 +40,7 @@ def add_removeditems(item_list, install_list, status):
     """Add removed item to list and set status"""
     for item in item_list:
         install_list[item] = {'name': item, 'status': status,
-            'installed': False}
+            'installed': False, 'display_name': item}
 
 def remove_result(item_list, install_list):
     """Update list according to result"""
