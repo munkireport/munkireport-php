@@ -52,17 +52,17 @@ def add_removeditems(item_list, install_list, status):
 def remove_result(item_list, install_list):
     """Update list according to result"""
     for item in item_list:
-        #install_list[item["name"]]['time'] = item.time
+        #install_list[item['name']]['time'] = item.time
         if item.status == 0:
-            install_list[item["name"]]['installed'] = False
-            install_list[item["name"]]['status'] = 'uninstalled'
+            install_list[item['name']]['installed'] = False
+            install_list[item['name']]['status'] = 'uninstalled'
         else:
-            install_list[item["name"]]['status'] = 'uninstall_failed'
+            install_list[item['name']]['status'] = 'uninstall_failed'
 
 def install_result(item_list, install_list):
     """Update list according to result"""
     for item in item_list:
-        #install_list[item["name"]]['time'] = item.time
+        #install_list[item['name']]['time'] = item.time
         
         # Check if applesus item
         if item.get('productKey'):
@@ -112,7 +112,7 @@ def main():
         add_items(install_report.ManagedInstalls, install_list, 'installed', 'munki')
     if install_report.get('AppleUpdates'):
         add_items(install_report.AppleUpdates, install_list, \
-            'pending_apple_install', 'applesus')
+            'pending_install', 'applesus')
     if install_report.get('ProblemInstalls'):
         add_items(install_report.ProblemInstalls, install_list, \
             'install_failed', 'munki')

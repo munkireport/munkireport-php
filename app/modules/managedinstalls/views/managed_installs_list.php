@@ -24,6 +24,7 @@ new Managedinstalls_model;
 			<th data-i18n="name" data-colname='managedinstalls.display_name'></th>
             <th data-i18n="version" data-colname='managedinstalls.version'></th>
             <th data-i18n="status" data-colname='managedinstalls.status'></th>
+            <th data-i18n="type" data-colname='managedinstalls.type'></th>
             <th data-i18n="size" data-colname='managedinstalls.size'></th>
 		  </tr>
 		</thead>
