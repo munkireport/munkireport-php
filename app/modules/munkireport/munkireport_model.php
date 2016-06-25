@@ -6,44 +6,28 @@ class Munkireport_model extends Model {
 		parent::__construct('id', 'munkireport'); //primary key, tablename
 		$this->rs['id'] = 0;
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['timestamp'] = '';
-		$this->rs['runstate'] = 'done';
 		$this->rs['runtype'] = '';
-		$this->rs['starttime'] = '';
-		$this->rs['endtime'] = '';
 		$this->rs['version'] = '';
 		$this->rs['errors'] = 0;
 		$this->rs['warnings'] = 0;
 		$this->rs['manifestname'] = '';
-		$this->rs['managedinstalls'] = 0; // Total packages
-		$this->rs['pendinginstalls'] = 0; // To be installed
-		$this->rs['installresults'] = 0; // Installed
-		$this->rs['removalresults'] = 0; // Removed
-		$this->rs['failedinstalls'] = 0; // Failed to install
-		$this->rs['pendingremovals'] = 0; // To be removed
-		$this->rs['itemstoinstall'] = 0; // Munki items
-		$this->rs['appleupdates'] = 0; // Apple updates
-		$this->rs['report_plist'] = array();
+		$this->rs['error_json'] = ''; $this->rt['errors'] = 'BLOB'; // JSON object errors
+		$this->rs['warning_json'] = ''; $this->rt['warnings'] = 'BLOB'; // JSON object with warnings
+		$this->rs['starttime'] = '';
+		$this->rs['endtime'] = '';
+		$this->rs['timestamp'] = '';
 
 
 		// Add indexes
 		$this->idx[] = array('timestamp');
 		$this->idx[] = array('runtype');
 		$this->idx[] = array('version');
-		$this->idx[] = array('errors');
-		$this->idx[] = array('warnings');
 		$this->idx[] = array('manifestname');
-		$this->idx[] = array('managedinstalls');
-		$this->idx[] = array('pendinginstalls');
-		$this->idx[] = array('installresults');
-		$this->idx[] = array('removalresults');
-		$this->idx[] = array('failedinstalls');
-		$this->idx[] = array('pendingremovals');
-		$this->idx[] = array('itemstoinstall');
-		$this->idx[] = array('appleupdates');
-		
+		$this->idx[] = array('error_json');
+		$this->idx[] = array('warning_json');
+
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 3;
+		$this->schema_version = 4;
 
 		// Create table if it does not exist
         $this->create_table();
@@ -149,148 +133,53 @@ class Munkireport_model extends Model {
 	{		
 		$this->timestamp = date('Y-m-d H:i:s');
 		
-		// Todo: why this check?
-		if ( ! $plist)
-		{
-            $this->errors = 0;
-            $this->warnings = 0;
-            return $this;
+		if ( ! $plist){
+            throw new Exception("Error Processing Request: No property list found", 1);
 		}
 				
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$mylist = $parser->toArray();
-
-		# Check munki version
-		if(array_key_exists('ManagedInstallVersion', $mylist))
-		{
-			$this->version = $mylist['ManagedInstallVersion'];
-		}
-
-		# Copy items
-		$strings = array('ManifestName', 'RunType', 'RunState', 'StartTime', 'EndTime');
-		foreach($strings as $str)
-		{
-			if(array_key_exists($str, $mylist))
-			{
-				$lcname = strtolower($str);
-				$this->rs[$lcname] = $mylist[$str];
-				unset($mylist[$str]);
-			}
-		}
-
-		// If there's an error downloading the manifest, we don't get a ManagedInstalls
-		// array. We retain the old ManagedInstalls array and only store the new
-		// Errors, Warnings, StartTime, EndTime
-		if( ! array_key_exists('ManagedInstalls', $mylist))
-		{
-			$strings = array('Errors', 'Warnings');
-			foreach($strings as $str)
-			{
-				$lcname = strtolower($str);
-				$this->rs[$lcname] = 0;
-				if(array_key_exists($str, $mylist))
-				{
-					$this->rs[$lcname] = count($mylist[$str]);
-
-					// Store errors and warnings
-					$this->rs['report_plist'][$str] = $mylist[$str];
-				}
-			}
-			
-			$this->save();
-			return $this;
-		}
-
-		# Count items
-		$strings = array('Errors', 'Warnings', 'ManagedInstalls', 'InstallResults', 'ItemsToInstall', 'AppleUpdates', 'RemovalResults');
-		foreach($strings as $str)
-		{
-			$lcname = strtolower($str);
-			$this->rs[$lcname] = 0;
-			if(array_key_exists($str, $mylist))
-			{
-				$this->rs[$lcname] = count($mylist[$str]);
+		
+		// Translate plist keys to db keys
+		$translate = array(
+			'ManagedInstallVersion' => 'version',
+			'ManifestName' => 'manifestname',
+			'RunType' => 'runtype',
+			'StartTime' => 'starttime',
+			'EndTime' => 'endtime',
+		);
+		
+		foreach ($translate as $key => $dbkey) {
+			if(array_key_exists($key, $mylist)){
+				$this->$dbkey = $mylist[$key];
 			}
 		}
 		
-		// Install info - used when there is one install to report on
-		$install_info = array();
-		
-		// Problem installs
-		$this->failedinstalls = 0;
-		if(array_key_exists('ProblemInstalls', $mylist))
-		{
-			$this->failedinstalls = count($mylist['ProblemInstalls']);
-			if($this->failedinstalls == 1)
-			{
-				// Use name as pkg if displayname is missing
-				$pkg = isset($mylist['ProblemInstalls'][0]['display_name']) ? $mylist['ProblemInstalls'][0]['display_name'] : $mylist['ProblemInstalls'][0]['name'];
-
-				$install_info = array(
-					'pkg' => $pkg,
-					'reason' => $mylist['ProblemInstalls'][0]['note']
-				);
-			}
-		}
-		
-		// Calculate pending installs
-		$this->pendinginstalls = max(($this->itemstoinstall + $this->appleupdates) - $this->installresults, 0);
-
-		// Calculate pending removals
-		$removal_items = isset($mylist['ItemsToRemove']) ? count($mylist['ItemsToRemove']) : 0;
-        $this->pendingremovals = max($removal_items - $this->removalresults, 0);
-
-		// Check results for failed installs
-		if($this->installresults)
-		{
-			foreach($mylist['InstallResults'] as $result)
-			{
-				// Use name as displayname if displayname is missing and append version
-				$pkg = isset($result['display_name']) ? $result['display_name'] : $result['name'];
-				$pkg .= isset($result['version']) ? ' ' . $result['version'] : '';
+		// Parse errors and warnings
+		$errorsWarnings = array('Errors' => 'error_json', 'Warnings' => 'warning_json');
+		foreach ($errorsWarnings as $key => $json) {
+			$dbkey = strtolower($key);
+			if(isset($mylist[$key]) && is_array($mylist[$key])){
+				// Store count
+				$this->$dbkey = count($mylist[$key]);
 				
-				if($result["status"])
-				{
-					$this->failedinstalls++;
-					$this->installresults--;
-					$install_info = array(
-						'pkg' => $pkg,
-						'reason' => '' // Client should handle default reason
-					);
-				}
-				else {
-					$install_info_success = array(
-						'pkg' => $pkg
-					);
-				}
+				// Store json
+				$this->$json = json_encode($mylist[$key]);
+			}
+			else{
+				// reset
+				$this->$dbkey = 0;
+				$this->$json = json_encode(array());
 			}
 		}
-
-		# Save plist todo: remove all cruft from plist
-		$this->report_plist = $mylist;
-				
+		
+		// Store record	
 		$this->save();
 		
 		// Store apropriate event:
-		if($this->failedinstalls == 1)
-		{
-			$this->store_event(
-				'warning',
-				'pkg_failed_to_install',
-				json_encode($install_info)
-			);
-		}
-		elseif($this->failedinstalls > 1)
-		{
-			$this->store_event(
-				'warning',
-				'pkg_failed_to_install',
-				json_encode(array('count' => $this->failedinstalls))
-			);
-		}
-		elseif($this->rs['errors'] == 1) // Errors is a protected name
+		if($this->rs['errors'] == 1) // Errors is a protected name
 		{
 			$this->store_event(
 				'danger',
@@ -320,22 +209,6 @@ class Munkireport_model extends Model {
 				'warning',
 				'munki.warning',
 				json_encode(array('count' => $this->warnings))
-			);
-		}
-		elseif($this->installresults == 1)
-		{
-			$this->store_event(
-				'success',
-				'munki.package_installed',
-				json_encode($install_info_success)
-			);
-		}
-		elseif($this->installresults > 1)
-		{
-			$this->store_event(
-				'success',
-				'munki.package_installed',
-				json_encode(array('count' => $this->installresults))
 			);
 		}
 		else

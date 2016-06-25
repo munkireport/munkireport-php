@@ -29,16 +29,33 @@ class managedinstalls_model extends Model {
 		// Create table if it does not exist
 		$this->create_table();
 		
-		$this->serial = $serial;
+        if ($serial)
+		{
+		    $this->retrieve_record($serial);
+            if ( ! $this->rs['serial_number'])
+            {
+                $this->serial = $serial;
+            }
+		}
 			
 	}
 	
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Setter for serial_number
+     */
+    public function setSerialNumber($serial_number)
+    {
+        $this->serial_number = $serial_number;
+    }
+    
+    // ------------------------------------------------------------------------
 	
 	/**
 	 * Process data sent by postflight
 	 *
-	 * @param string data
+	 * @param string data property list
 	 * 
 	 **/
 	function process($data)
@@ -51,10 +68,24 @@ class managedinstalls_model extends Model {
         {
             throw new Exception("No Data in report", 1);
         }
-        
+                
+        // Run processData
+        $this->processData($mylist);
+    }
+    
+    /**
+     * Process Data
+     *
+     * Process data provided
+     *
+     * @param array $mylist array with entries
+     */
+    public function processData($mylist)
+    {
+            
         // Remove previous data
         $this->delete_where('serial_number=?', $this->serial_number);
-        
+
         // List with fillable entries
         $fillable = array(
             'name' => '',
