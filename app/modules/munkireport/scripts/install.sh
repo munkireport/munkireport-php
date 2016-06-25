@@ -1,14 +1,24 @@
 #!/bin/bash
 
-# Find out where the munki directory is so we can configure accordingly.
-munki_install_dir=$(/usr/bin/python -c 'import CoreFoundation; print CoreFoundation.CFPreferencesCopyAppValue("ManagedInstallDir", "ManagedInstalls")')
-munki_install_dir=$(echo ${munki_install_dir} | sed 's/\/$//')
+# managedinstalls controller
+CTL="${BASEURL}index.php?/module/munkireport/"
 
-# make sure the munki directory is defined. If not default back to normal
-if [[ "${munki_install_dir}" == "None" ]]; then
-    #Default back to normal since munki doesn't appear to be installed
-    setreportpref "munkireport" '/Library/Managed Installs/ManagedInstallReport.plist'
+# Get the scripts in the proper directories
+${CURL} "${CTL}get_script/munkireport.py" -o "${MUNKIPATH}preflight.d/munkireport.py"
+
+# Check exit status of curl
+if [ $? = 0 ]; then
+	# Make executable
+	chmod a+x "${MUNKIPATH}preflight.d/munkireport.py"
+
+	# Set preference to include this file in the preflight check
+	setreportpref "munkireport" "${CACHEPATH}munkireport.plist"
+
 else
-    # configure munkireport to use munki's config
-    setreportpref "munkireport" "${munki_install_dir}/ManagedInstallReport.plist"
+	echo "Failed to download all required components!"
+	rm -f "${MUNKIPATH}preflight.d/munkireport.py"
+
+	# Signal that we had an error
+	ERR=1
 fi
+

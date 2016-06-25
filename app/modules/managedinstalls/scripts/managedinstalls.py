@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-Filter the result of /Library/Managed Installs/MANAGED_INSTALL_REPORT.plist
+Filter the result of /Library/Managed Installs/ManagedInstallReport.plist
 to only the parts that represent the installed items
 """
 
