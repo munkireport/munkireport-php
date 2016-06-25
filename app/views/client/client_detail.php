@@ -23,6 +23,7 @@ $tab_list = array(
 	'gsx-tab' => array('view' => 'client/gsx_tab', 'i18n' => 'client.tab.gsx'),
 	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
 	'printer-tab' => array('view' => 'client/printer_tab', 'i18n' => 'client.tab.printers', 'badge' => 'printer-cnt'),
+	'whd-tab' => array('view' => 'client/whd_tab', 'i18n' => 'client.tab.whd'),
 	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles')
 		);
 
