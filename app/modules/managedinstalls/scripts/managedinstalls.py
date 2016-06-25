@@ -43,10 +43,10 @@ def add_items(item_list, install_list, status, item_type):
         install_list[name]['status'] = status
         install_list[name]['type'] = item_type
         
-def add_removeditems(item_list, install_list, status):
+def add_removeditems(item_list, install_list):
     """Add removed item to list and set status"""
     for item in item_list:
-        install_list[item] = {'name': item, 'status': status,
+        install_list[item] = {'name': item, 'status': 'removed',
             'installed': False, 'display_name': item, 'type': 'munki'}
 
 def remove_result(item_list, install_list):
@@ -58,6 +58,16 @@ def remove_result(item_list, install_list):
             install_list[item['name']]['status'] = 'uninstalled'
         else:
             install_list[item['name']]['status'] = 'uninstall_failed'
+            
+        # Sometimes an item is only in RemovalResults, so we have to add
+        # extra info:
+                        
+        # Add munki
+        install_list[item['name']]['type'] = 'munki';
+        
+        # Fix display name
+        if not install_list[item['name']].get('display_name'):
+            install_list[item['name']]['display_name'] = item.display_name;
 
 def install_result(item_list, install_list):
     """Update list according to result"""
@@ -120,7 +130,7 @@ def main():
         add_items(install_report.ItemsToRemove, install_list, \
             'pending_removal', 'munki')
     if install_report.get('RemovedItems'):
-        add_removeditems(install_report.RemovedItems, install_list, 'removed')
+        add_removeditems(install_report.RemovedItems, install_list)
     if install_report.get('ItemsToInstall'):
         add_items(install_report.ItemsToInstall, install_list, \
             'pending_install', 'munki')
