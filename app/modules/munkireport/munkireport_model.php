@@ -23,6 +23,8 @@ class Munkireport_model extends Model {
 		$this->idx[] = array('runtype');
 		$this->idx[] = array('version');
 		$this->idx[] = array('manifestname');
+		$this->idx[] = array('errors');
+		$this->idx[] = array('warnings');
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 4;
@@ -125,6 +127,27 @@ class Munkireport_model extends Model {
 				AND m.timestamp > '$fromdate'";
 		return $this->query($sql);
 	}
+	
+	/**
+	 * Get statistics
+	 *
+	 * Get object describing statistics
+	 *
+	 * @param integer hours hours of statistics
+	 **/
+	public function get_stats($hours = 24)
+	{
+		$timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
+		$sql = "SELECT 
+			SUM(errors > 0) as error, 
+			SUM(warnings > 0) as warning
+			FROM munkireport
+			LEFT JOIN reportdata USING (serial_number)
+			".get_machine_group_filter()."
+			AND munkireport.timestamp > '$timestamp'";
+
+		return current($this->query($sql));
+	}
 
 	
 	function process($plist)
@@ -216,28 +239,5 @@ class Munkireport_model extends Model {
 		}
 		
 		return $this;
-	}
-	
-	/**
-	 * Get statistics
-	 *
-	 * Get object describing statistics
-	 *
-	 * @param integer hours hours of statistics
-	 **/
-	public function get_stats($hours = 24)
-	{
-		$timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
-		$sql = "SELECT 
-			SUM(errors > 0) as error, 
-			SUM(warnings > 0) as warning, 
-			SUM(pendinginstalls > 0) as pending,
-			SUM(installresults > 0) as installed 
-			FROM munkireport
-			LEFT JOIN reportdata USING (serial_number)
-			".get_machine_group_filter()."
-			AND munkireport.timestamp > '$timestamp'";
-
-		return current($this->query($sql));
-	}
+	}	
 }
