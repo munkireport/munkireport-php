@@ -148,9 +148,7 @@ $(document).on('appReady', function(e, lang) {
 				val.type
 			])
 		});
-		
-		console.log(dataSet);
-		
+				
 		// Initialize datatables
 		$('#managedinstalls-table tbody').empty();
 		$('#managedinstalls-table').dataTable({
@@ -158,7 +156,7 @@ $(document).on('appReady', function(e, lang) {
 			serverSide: false,
 			order: [0,'asc'],
 			createdRow: function( nRow, aData, iDataIndex ) {
-				// Update name in first column to link
+				// make filesize human readable
 				var size=$('td:eq(1)', nRow).html();
 				$('td:eq(1)', nRow).html(fileSize(size, 1));
 			}
