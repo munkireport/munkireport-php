@@ -43,6 +43,20 @@ class Migration_munkireport_new extends Model
         // Wrap in transaction
         $dbh->beginTransaction();
         
+        // ***** Add columns
+        
+        try {
+            foreach($this->addcols as $colname => $type){
+                $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s',
+                    $this->tablename, $colname, $type);
+                $this->exec($sql);
+            }
+        } catch (Exception $e) {
+            // We do nothing here
+        }
+        
+
+        
         // ***** Move content from report_plist to managedinstalls module
         
         // Check if we have compression support
@@ -94,30 +108,29 @@ class Migration_munkireport_new extends Model
             // Store data in managedinstalls
             $managedinstalls->setSerialNumber($arr['serial_number']);
             $managedinstalls->processData($install_list);
+            
+            // Save errors and warnings
+            if(isset($report['Errors'])){
+                $sql = sprintf("UPDATE munkireport SET error_json = ? WHERE serial_number = '%s'",
+                            $arr['serial_number']);
+                $this->query($sql, array(json_encode($report['Errors']))); 
+            }
+            
+            if(isset($report['Warnings'])){
+                $sql = sprintf("UPDATE munkireport SET warning_json = ? WHERE serial_number = '%s'",
+                            $arr['serial_number']);
+                $this->query($sql, array(json_encode($report['Warnings']))); 
+            }
 
         }
 
         // ***** Modify columns
 
         if ($this->get_driver() == 'mysql')
-        {
-            // ***** Add columns
-            foreach($this->addcols as $colname => $type){
-                $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s',
-                    $this->tablename, $colname, $type);
-                $this->exec($sql);
-            }
-            
+        {            
             // Drop columns
             $sql = sprintf('ALTER TABLE munkireport DROP %s', implode(', DROP ', $this->dropCols));
-            $this->exec($sql); 
-            
-            // Create indexes
-            foreach ($addcols as $key ) {
-                $sql = sprintf('CREATE INDEX munkireport_%s ON munkireport (%s)', $key, $key);
-                $this->exec($sql); 
-            }
-            
+            $this->exec($sql);             
         }
         else{
             throw new Exception("SQLite migration not ready", 1);
