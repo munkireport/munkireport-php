@@ -1,5 +1,8 @@
 <?php
 
+// This migration converts the old munkireport table to a new version
+// most of the data is migrated to managedinstalls
+
 class Migration_munkireport_new extends Model
 {
     // Drop these columns
@@ -13,6 +16,7 @@ class Migration_munkireport_new extends Model
                 'itemstoinstall',
                 'appleupdates',
                 'report_plist',
+                'runstate',
             );
             
     // Add these columns
@@ -26,15 +30,7 @@ class Migration_munkireport_new extends Model
      */
     public function __construct()
     {
-        parent::__construct('id', 'munkireport'); //primary key, tablename
-        
-        // Indexes
-        $this->idx[] = array('timestamp');
-		$this->idx[] = array('runtype');
-		$this->idx[] = array('version');
-		$this->idx[] = array('manifestname');
-		$this->idx[] = array('error_json');
-		$this->idx[] = array('warning_json');
+        parent::__construct('id', 'munkireport'); //primary key, tablename        
     }
 
     
@@ -45,20 +41,20 @@ class Migration_munkireport_new extends Model
 
         
         // Wrap in transaction
-        //$dbh->beginTransaction();
+        $dbh->beginTransaction();
         
-        
-        // Move content from report_plist to managedinstalls module
+        // ***** Move content from report_plist to managedinstalls module
         
         // Check if we have compression support
         $compress = function_exists('gzdeflate');
         
         // Instantiate managedinstalls model
         $managedinstalls = new Managedinstalls_model;
-        
+                
         // Get managedinstalls instance
         
-        // Get all reports (make faster by only moving data of machines that don't have entries in managedinstalls)
+        // Get all reports (make faster by only moving data of machines that
+        // don't have entries in managedinstalls)
         $sql = "SELECT munkireport.serial_number, report_plist 
                 FROM munkireport 
                 LEFT JOIN managedinstalls USING(serial_number)
@@ -100,36 +96,37 @@ class Migration_munkireport_new extends Model
             $managedinstalls->processData($install_list);
 
         }
-        
-        throw new Exception('Stored entries in managedinstalls', 1);
 
-
-        // Add columns
-        foreach($this->addcols as $colname => $type){
-            $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s',
-                $this->tablename, $colname, $type);
-            //$this->exec($sql);
-        }
-        
-
-        
-
-        
-        
-        throw new Exception($sql, 1);
-        
-
+        // ***** Modify columns
 
         if ($this->get_driver() == 'mysql')
         {
+            // ***** Add columns
+            foreach($this->addcols as $colname => $type){
+                $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s',
+                    $this->tablename, $colname, $type);
+                $this->exec($sql);
+            }
+            
             // Drop columns
-            $sql = sprintf('ALTER TABLE munkireport DROP "%s"', implode('", "', $this->dropCols));
+            $sql = sprintf('ALTER TABLE munkireport DROP %s', implode(', DROP ', $this->dropCols));
             $this->exec($sql); 
+            
+            // Create indexes
+            foreach ($addcols as $key ) {
+                $sql = sprintf('CREATE INDEX munkireport_%s ON munkireport (%s)', $key, $key);
+                $this->exec($sql); 
+            }
+            
+        }
+        else{
+            throw new Exception("SQLite migration not ready", 1);
         }
         
+        // Commit transaction
+        $dbh->commit();
         
-        
-        throw new Exception("Error Processing Request", 1);
+        //throw new Exception("Error Processing Request", 1);
         
         
 

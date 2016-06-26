@@ -23,8 +23,6 @@ class Munkireport_model extends Model {
 		$this->idx[] = array('runtype');
 		$this->idx[] = array('version');
 		$this->idx[] = array('manifestname');
-		$this->idx[] = array('error_json');
-		$this->idx[] = array('warning_json');
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 4;

@@ -28,9 +28,6 @@ new munkiinfo_model;
 		        <th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
 		        <th data-i18n="error_plural" data-colname='munkireport.errors'></th>
 		        <th data-i18n="warning_plural" data-colname='munkireport.warnings'></th>
-		        <th data-i18n="listing.munki.pending_install_plural" data-colname='munkireport.pendinginstalls'></th>
-		        <th data-i18n="listing.munki.package_installed_plural" data-colname='munkireport.installresults'></th>
-		        <th data-i18n="listing.munki.package_removed_plural" data-colname='munkireport.removalresults'></th>
 				<th data-i18n="manifest.name" data-colname='munkireport.manifestname'></th>
 		      </tr>
 		    </thead>
