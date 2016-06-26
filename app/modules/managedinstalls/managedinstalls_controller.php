@@ -24,15 +24,22 @@ class managedinstalls_controller extends Module_controller
 	 **/
 	public function get_data($serial_number = '')
 	{
-	      $obj = new View();
-	      if( ! $this->authorized())
-	      {
-	          $obj->view('json', array('msg' => 'Not authorized'));
-	          return;
-	      }
+		$out = array();
+        if( ! $this->authorized())
+        {
+          $out['error'] = 'Not authorized';
+        }
+        else
+        {
+          $model = new Managedinstalls_model;
+          foreach($model->retrieve_records($serial_number) as $prefs)
+          {
+            $out[] = $prefs->rs;
+          }
+        }
 
-	      $managedinstalls = new managedinstalls_model($serial_number);
-	      $obj->view('json', array('msg' => $managedinstalls->rs));
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
 	}
 	
 	/**
