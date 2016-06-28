@@ -158,7 +158,7 @@ $(document).on('appReady', function(e, lang) {
 			createdRow: function( nRow, aData, iDataIndex ) {
 				// make filesize human readable
 				var size=$('td:eq(1)', nRow).html();
-				$('td:eq(1)', nRow).html(fileSize(size, 1));
+				$('td:eq(1)', nRow).html(fileSize(size * 1024, 0));
 			}
 		});
 	});
