@@ -65,7 +65,7 @@ class managedinstalls_controller extends Module_controller
 			
 			foreach($model->get_pending_installs($type, $hoursBack ) as $obj){
 				
-				$out[] = array('name' => $obj->name . ' ' . $obj->version, 'count' => $obj->count);
+				$out[] = array('name' => $obj->name, 'version' => $obj->version, 'count' => $obj->count);
 			
 			}
 	

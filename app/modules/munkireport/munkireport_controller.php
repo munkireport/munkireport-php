@@ -43,23 +43,6 @@ class Munkireport_controller extends Module_controller
 		$model = new Munkireport_model($serial_number);
 		$obj->view('json', array('msg' => $model->rs));
 	}
-
-	/**
-	 * Show detail information
-	 *
-	 * @author AvB
-	 **/
-	function pending()
-	{
-		if( ! $this->authorized())
-		{
-			redirect('auth/login');
-		}
-		
-		$data['page'] = '';
-		$obj = new View();
-		$obj->view('pending', $data, $this->view_path);
-	}
 	
 	/**
 	 * Get manifests statistics
