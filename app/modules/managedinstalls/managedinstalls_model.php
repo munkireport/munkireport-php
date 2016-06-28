@@ -68,6 +68,32 @@ class managedinstalls_model extends Model {
 
         return $this->query($sql);
     }
+    
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Get pending installs
+     *
+     *
+     * @param int $hours Amount of hours to look back in history
+     **/
+    public function get_pending_installs($type, $hoursBack)
+    {
+        $fromdate = time() - 3600 * $hoursBack;
+        $updates_array = array();
+        $filter = get_machine_group_filter('AND');
+        $sql = "SELECT m.name, m.version, count(*) as count 
+                FROM managedinstalls m
+                LEFT JOIN reportdata USING (serial_number)
+                WHERE status = 'pending_install'
+                AND type = ?
+                $filter
+                AND reportdata.timestamp > $fromdate
+                GROUP BY name, version
+                ORDER BY count DESC";
+        return $this->query($sql, array($type));
+    }
+
 	
     // ------------------------------------------------------------------------
     

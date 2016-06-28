@@ -84,27 +84,7 @@ class Munkireport_model extends Model {
 				ORDER BY COUNT DESC";
 		return $this->query($sql);
 	}
-	
-	/**
-	 * Get pending installs
-	 *
-	 *
-	 * @param int $hours Amount of hours to look back in history
-	 **/
-	public function get_pending_installs($hours=24)
-	{
-		$fromdate = date('Y-m-d H:i:s', time() - 3600 * $hours);
-		$updates_array = array();
-		$filter = get_machine_group_filter('AND');
-		$sql = "SELECT m.serial_number, report_plist 
-				FROM munkireport m
-				LEFT JOIN reportdata USING (serial_number)
-				WHERE pendinginstalls > 0
-				$filter
-				AND m.timestamp > '$fromdate'";
-		return $this->query($sql);
-	}
-	
+		
 	/**
 	 * Get statistics
 	 *

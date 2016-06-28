@@ -19,7 +19,7 @@
 $(document).on('appUpdate', function(e, lang) {
 	
 	
-	$.getJSON( appUrl + '/module/munkireport/get_pending_installs/munki', function( data ) {
+	$.getJSON( appUrl + '/module/managedinstalls/get_pending_installs/munki', function( data ) {
 		
         var box = $('#pending-munki-widget div.scroll-box').empty();
 

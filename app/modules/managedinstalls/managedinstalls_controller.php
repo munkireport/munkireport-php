@@ -45,6 +45,40 @@ class managedinstalls_controller extends Module_controller
 	// ------------------------------------------------------------------------
 	
 	/**
+	 * Get pending installs
+	 *
+	 *
+	 * @param string $type Type, munki or apple
+	 **/
+	public function get_pending_installs($type="munki")
+	{
+		$out = array();
+		if( ! $this->authorized())
+		{
+			$out['error'] = 'Not authorized';
+		}
+		else
+		{
+			$model = new Managedinstalls_model;
+			$hoursBack = 24 * 7; // Hours back
+			$out = array();
+			
+			foreach($model->get_pending_installs($type, $hoursBack ) as $obj){
+				
+				$out[] = array('name' => $obj->name . ' ' . $obj->version, 'count' => $obj->count);
+			
+			}
+	
+		}
+		
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+	
+	// ------------------------------------------------------------------------
+	
+	/**
 	 * Get package statistics   
 	 *
 	 * Get statistics about a packat
