@@ -39,7 +39,59 @@ class managedinstalls_model extends Model {
 		}
 			
 	}
+    
+    /**
+     * Get statistics
+     *
+     * 
+     *
+     * @param integer $hours hours
+     * @return {11:return type}
+     */
+    public function get_stats($hours = 24)
+    {
+        if($hours > 0){
+            $timestamp = time() - 60 * 60 * $hours;
+        }
+        else{
+            $timestamp = 0;
+        }
+        
+        $filter = get_machine_group_filter('AND');
+        $sql = "SELECT managedinstalls.status, type, count(distinct reportdata.serial_number) as clients, count(managedinstalls.status) as total_items
+            FROM reportdata
+            LEFT JOIN managedinstalls USING(serial_number)
+            WHERE reportdata.timestamp > $timestamp
+            AND managedinstalls.type IS NOT NULL
+            $filter
+            GROUP BY managedinstalls.status,  managedinstalls.type";
+
+        return $this->query($sql);
+    }
 	
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Get package statistics   
+     *
+     * Get statistics about a packat
+     *
+     * @param string name Package name or nothing for all
+     * @return {11:return type}
+     */
+    public function get_pkg_stats($pkg='')
+    {
+        $filter = get_machine_group_filter('AND');
+        $sql = "SELECT managedinstalls.status, count(distinct reportdata.serial_number) as clients
+            FROM reportdata
+            LEFT JOIN managedinstalls USING(serial_number)
+            WHERE managedinstalls.name = ?
+            $filter
+            GROUP BY managedinstalls.status";
+            
+        return $this->query($sql, array($pkg));
+            
+    }
     // ------------------------------------------------------------------------
     
     /**
@@ -49,6 +101,33 @@ class managedinstalls_model extends Model {
     {
         $this->serial_number = $serial_number;
     }
+    
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Get machines with pending installs
+     *
+     *
+     * @param int $hours Amount of hours to look back in history
+     **/
+    public function get_pending($hours=24)
+    {
+        $timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
+        $out = array();
+        $filter = get_machine_group_filter('AND');
+        $sql = "SELECT computer_name, pendinginstalls, reportdata.serial_number
+            FROM reportdata
+            LEFT JOIN managedinstalls USING(serial_number)
+            LEFT JOIN machine USING(serial_number)
+            WHERE pendinginstalls > 0
+            $filter
+            AND munkireport.timestamp > '$timestamp'
+            ORDER BY pendinginstalls DESC";
+        
+        return $this->query($sql);
+    }
+    
+
     
     // ------------------------------------------------------------------------
 	

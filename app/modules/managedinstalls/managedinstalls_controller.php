@@ -42,6 +42,66 @@ class managedinstalls_controller extends Module_controller
         $obj->view('json', array('msg' => $out));
 	}
 	
+	// ------------------------------------------------------------------------
+	
+	/**
+	 * Get package statistics   
+	 *
+	 * Get statistics about a packat
+	 *
+	 * @param string name Package name
+	 * @return {11:return type}
+	 */
+	public function get_pkg_stats($pkg=''){
+		$out = array();
+		if( ! $this->authorized())
+		{
+		  $out['error'] = 'Not authorized';
+		}
+		else
+		{
+			$model = new Managedinstalls_model;
+			foreach($model->get_pkg_stats($pkg) AS $rs)
+			{
+			  $out[] = $rs;
+			}
+		}
+
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+
+	
+	/**
+	 * Get installs statistics
+	 *
+	 * Undocumented function long description
+	 *
+	 * @param int $hours number of hours back or 0 for all
+	 * @return {11:return type}
+	 */
+	public function get_stats($hours = 0)
+	{
+		$out = array();
+		if( ! $this->authorized())
+		{
+		  $out['error'] = 'Not authorized';
+		}
+		else
+		{
+			$model = new Managedinstalls_model;
+			foreach($model->get_stats($hours) AS $rs)
+			{
+			  $out[] = $rs;
+			}
+		}
+
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+	
 	/**
 	 * undocumented function summary
 	 *
@@ -61,5 +121,31 @@ class managedinstalls_controller extends Module_controller
         $obj = new View();
         $obj->view('managed_installs_list', $data, $this->view_path);
 	}
+	
+	/**
+	 * Get machines with pending installs
+	 *	 *
+	 * @param integer $hours Number of hours to get stats from
+	 **/
+	public function get_pending($hours = 24)
+	{
+		$out = array();
+		if( ! $this->authorized())
+		{
+			$out['error'] = 'Not authorized';
+		}
+		else {
+			$model = new Managedinstalls_model;
+			foreach($model->get_pending() AS $rs)
+			{
+				$out[] = $rs;
+			}
+		}
+		
+		$obj = new View();
+		$obj->view('json', array('msg' => $out));
+
+	}
+
 
 } // END class default_module
