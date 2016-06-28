@@ -345,6 +345,7 @@
 		"hardware_widget_title": "Hardware model breakdown"
 	},
 	"managedinstalls": {
+		"failing_clients": "Clients with failing installs",
 		"no_managedinstalls": "No Managed Installs",
 		"report": "Managedinstalls Report",
 		"title": "Managed Installs"

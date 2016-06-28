@@ -118,7 +118,8 @@ $(document).on('appReady', function(){
 		      <thead>
 		        <tr>
 		          <th>Name</th>
-		          <th>Size</th>
+				  <th>Version</th>
+				  <th>Size</th>
 				  <th>Status</th>
 				  <th>Type</th>
 		        </tr>
@@ -142,7 +143,8 @@ $(document).on('appReady', function(e, lang) {
 		var dataSet = [];
 		$.each(data, function(index, val){
 			dataSet.push([
-				val.display_name, 
+				val.display_name,
+				val.version,
 				val.size,
 				val.status,
 				val.type
@@ -157,8 +159,8 @@ $(document).on('appReady', function(e, lang) {
 			order: [0,'asc'],
 			createdRow: function( nRow, aData, iDataIndex ) {
 				// make filesize human readable
-				var size=$('td:eq(1)', nRow).html();
-				$('td:eq(1)', nRow).html(fileSize(size * 1024, 0));
+				var size=$('td:eq(2)', nRow).html();
+				$('td:eq(2)', nRow).html(fileSize(size * 1024, 0));
 			}
 		});
 	});

@@ -136,21 +136,22 @@ class managedinstalls_model extends Model {
      *
      * @param int $hours Amount of hours to look back in history
      **/
-    public function get_pending($hours=24)
+    public function get_clients($status, $hours=24)
     {
-        $timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
+        $timestamp = time() - 60 * 60 * $hours;
         $out = array();
         $filter = get_machine_group_filter('AND');
-        $sql = "SELECT computer_name, pendinginstalls, reportdata.serial_number
+        $sql = "SELECT computer_name, count(*) as count, reportdata.serial_number
             FROM reportdata
             LEFT JOIN managedinstalls USING(serial_number)
             LEFT JOIN machine USING(serial_number)
-            WHERE pendinginstalls > 0
+            WHERE status = ?
             $filter
-            AND munkireport.timestamp > '$timestamp'
-            ORDER BY pendinginstalls DESC";
+            AND reportdata.timestamp > $timestamp
+            GROUP BY reportdata.serial_number, computer_name
+            ORDER BY count DESC";
         
-        return $this->query($sql);
+        return $this->query($sql, array($status));
     }
     
 

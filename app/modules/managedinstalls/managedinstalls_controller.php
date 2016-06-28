@@ -157,11 +157,11 @@ class managedinstalls_controller extends Module_controller
 	}
 	
 	/**
-	 * Get machines with pending installs
+	 * Get machines with $status installs
 	 *	 *
 	 * @param integer $hours Number of hours to get stats from
 	 **/
-	public function get_pending($hours = 24)
+	public function get_clients($status = 'pending_install', $hours = 24)
 	{
 		$out = array();
 		if( ! $this->authorized())
@@ -170,7 +170,7 @@ class managedinstalls_controller extends Module_controller
 		}
 		else {
 			$model = new Managedinstalls_model;
-			foreach($model->get_pending() AS $rs)
+			foreach($model->get_clients($status, $hours) AS $rs)
 			{
 				$out[] = $rs;
 			}
@@ -180,6 +180,5 @@ class managedinstalls_controller extends Module_controller
 		$obj->view('json', array('msg' => $out));
 
 	}
-
 
 } // END class default_module
