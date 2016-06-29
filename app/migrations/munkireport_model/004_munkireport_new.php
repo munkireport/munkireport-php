@@ -65,13 +65,18 @@ class Migration_munkireport_new extends Model
         // Instantiate managedinstalls model
         $managedinstalls = new Managedinstalls_model;
                 
-        // Get managedinstalls instance
+        // Lock tables
+        if ($this->get_driver() == 'mysql'){
+            $sql = "LOCK TABLES munkireport WRITE, managedinstalls WRITE";
+            $this->exec($sql);
+        }
+
         
-        // Get 100 reports
+        // Get limited
         $sql = "SELECT serial_number, report_plist 
                 FROM munkireport 
                 WHERE report_plist != ''
-                LIMIT 10";
+                LIMIT 50";
         if($resultset = $this->query($sql)){
             foreach($resultset as $arr)
             {
