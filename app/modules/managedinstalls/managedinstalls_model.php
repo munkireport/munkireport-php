@@ -1,11 +1,11 @@
 <?php
 class managedinstalls_model extends Model {
         
-	function __construct($serial='')
+	function __construct($serial_number='')
 	{
 		parent::__construct('id', 'managedinstalls'); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial;
+		$this->rs['serial_number'] = $serial_number;
         $this->rs['name'] = '';
         $this->rs['display_name'] = '';
         $this->rs['version'] = '';
@@ -29,12 +29,12 @@ class managedinstalls_model extends Model {
 		// Create table if it does not exist
 		$this->create_table();
 		
-        if ($serial)
+        if ($serial_number)
 		{
-		    $this->retrieve_record($serial);
+		    $this->retrieve_record($serial_number);
             if ( ! $this->rs['serial_number'])
             {
-                $this->serial = $serial;
+                $this->serial_number = $serial_number;
             }
 		}
 			
