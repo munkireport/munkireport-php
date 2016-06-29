@@ -67,40 +67,49 @@ class Migration_munkireport_new extends Model
                 
         // Get managedinstalls instance
         
-        // Get all reports (make faster by only moving data of machines that
-        // don't have entries in managedinstalls)
-        $sql = "SELECT munkireport.serial_number, report_plist 
+        // Get 100 reports
+        $sql = "SELECT serial_number, report_plist 
                 FROM munkireport 
-                LEFT JOIN managedinstalls USING(serial_number)
-                WHERE managedinstalls.serial_number IS NULL AND report_plist != ''";
-        foreach($dbh->query($sql) as $arr)
-        {
-            $report = unserialize( $this->COMPRESS_ARRAY ? gzinflate( $arr['report_plist'] ) : $arr['report_plist'] );
-            
-            // Load legacy support TODO: use autoloader
-            include_once (APP_PATH . '/lib/munkireport/Legacy_munkireport.php');
-            $legacyObj = new munkireport\Legacy_munkireport;
-            $install_list = $legacyObj->parse($report)->getList();
-            
-            // Store data in managedinstalls
-            $managedinstalls->setSerialNumber($arr['serial_number']);
-            $managedinstalls->processData($install_list);
-            
-            // Save errors and warnings
-            if(isset($report['Errors'])){
-                $sql = sprintf("UPDATE munkireport SET error_json = ? WHERE serial_number = '%s'",
-                            $arr['serial_number']);
-                $stmt = $this->prepare( $sql );
-        		$this->execute($stmt, array(json_encode($report['Errors'])));
+                WHERE report_plist != ''
+                LIMIT 100";
+        if($resultset = $this->query($sql)){
+            foreach($resultset as $arr)
+            {
+                $report = unserialize( $this->COMPRESS_ARRAY ? gzinflate( $arr->report_plist ) : $arr->report_plist );
+                
+                // Load legacy support TODO: use autoloader
+                include_once (APP_PATH . '/lib/munkireport/Legacy_munkireport.php');
+                $legacyObj = new munkireport\Legacy_munkireport;
+                $install_list = $legacyObj->parse($report)->getList();
+                
+                // Store data in managedinstalls
+                $managedinstalls->setSerialNumber($arr->serial_number);
+                $managedinstalls->processData($install_list);
+                
+                // Save errors and warnings
+                if(isset($report['Errors'])){
+                    $sql = sprintf("UPDATE munkireport SET error_json = ? WHERE serial_number = '%s'",
+                                $arr->serial_number);
+                    $stmt = $this->prepare( $sql );
+                    $this->execute($stmt, array(json_encode($report['Errors'])));
+                }
+                
+                if(isset($report['Warnings'])){
+                    $sql = sprintf("UPDATE munkireport SET warning_json = ? WHERE serial_number = '%s'",
+                                $arr->serial_number);
+                    $stmt = $this->prepare( $sql );
+                    $this->execute($stmt, array(json_encode($report['Warnings'])));
+                }
+                
+                // Reset report_plist
+                $sql = sprintf("UPDATE munkireport SET report_plist = '' WHERE serial_number = '%s'",
+                                $arr->serial_number);
+                $this->exec($sql);
             }
             
-            if(isset($report['Warnings'])){
-                $sql = sprintf("UPDATE munkireport SET warning_json = ? WHERE serial_number = '%s'",
-                            $arr['serial_number']);
-                $stmt = $this->prepare( $sql );
-        		$this->execute($stmt, array(json_encode($report['Warnings'])));
-            }
-
+            
+            // Prevent migration to be marked complete
+            throw new Exception("Still converting entries", 1);
         }
 
         // ***** Modify columns
