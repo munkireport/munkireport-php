@@ -112,7 +112,37 @@ class Migration_munkireport_new extends Model
             $this->exec($sql);             
         }
         else{
-            throw new Exception("SQLite migration not ready", 1);
+            //throw new Exception("SQLite migration not ready", 1);
+            
+            // Create a temporary table
+            $sql = "CREATE TABLE munkireport_temp (
+                        id INTEGER PRIMARY KEY,
+                        serial_number VARCHAR(255) UNIQUE,
+                        timestamp VARCHAR(255),
+                        runtype VARCHAR(255),
+                        starttime VARCHAR(255),
+                        endtime varchar(255),
+                        version varchar(255),
+                        errors int(11),
+                        warnings int(11),
+                        manifestname varchar(255),
+                        error_json BLOB,
+                        warning_json BLOB)";
+            $this->exec($sql);
+            
+            // Copy everything to the temp table
+            $sql = "INSERT INTO munkireport_temp 
+                        SELECT id, serial_number, timestamp, runtype, starttime, endtime, version, errors, warnings, manifestname, error_json, warning_json FROM munkireport";
+            $this->exec($sql);
+            
+            // Drop original table
+            $sql = "DROP table munkireport";
+            $this->exec($sql);
+            
+            // Rename temp table
+            $sql = "ALTER TABLE munkireport_temp RENAME TO munkireport";
+            $this->exec($sql);
+
         }
         
         // Commit transaction
