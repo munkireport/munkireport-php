@@ -301,7 +301,7 @@
 	| Machine and Reportdata
 	|
 	*/
-    $conf['modules'] = array('munkireport');
+    $conf['modules'] = array('munkireport', 'managedinstalls');
 
 
 	/*
