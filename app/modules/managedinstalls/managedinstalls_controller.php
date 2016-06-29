@@ -9,6 +9,9 @@
 class managedinstalls_controller extends Module_controller
 {
 	
+	protected $module_path;
+	protected $view_path;
+	
 	/*** Protect methods with auth! ****/
 	function __construct()
 	{
@@ -95,14 +98,25 @@ class managedinstalls_controller extends Module_controller
 		else
 		{
 			$model = new Managedinstalls_model;
+			
+			// Convert to list
 			foreach($model->get_pkg_stats($pkg) AS $rs)
 			{
-			  $out[] = $rs;
+				if(isset($out[$rs->name])){
+					$out[$rs->name][$rs->status] = $rs->count;
+				}
+				else{
+					$out[$rs->name] = array(
+						'name' => $rs->name,
+						'display_name' => $rs->display_name,
+						$rs->status => $rs->count,
+					);
+				}
 			}
 		}
 
 		$obj = new View();
-		$obj->view('json', array('msg' => $out));
+		$obj->view('json', array('msg' => array_values($out)));
 
 	}
 
@@ -154,6 +168,22 @@ class managedinstalls_controller extends Module_controller
 		$data['scripts'] = array("clients/client_list.js");
         $obj = new View();
         $obj->view('managed_installs_list', $data, $this->view_path);
+	}
+	
+	/**
+	 * View a file
+	 * TODO: move to parent?
+	 * @param string $page filename
+	 */
+	public function view($page)
+	{
+		if( ! $this->authorized())
+		{
+			redirect('auth/login');
+		}
+		
+		$obj = new View();
+        $obj->view($page, '', $this->view_path);
 	}
 	
 	/**

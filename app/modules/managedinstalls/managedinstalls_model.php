@@ -102,20 +102,27 @@ class managedinstalls_model extends Model {
      *
      * Get statistics about a packat
      *
-     * @param string name Package name or nothing for all
+     * @param string name Package name or nothing for all packages
      * @return {11:return type}
      */
     public function get_pkg_stats($pkg='')
     {
-        $filter = get_machine_group_filter('AND');
-        $sql = "SELECT managedinstalls.status, count(distinct reportdata.serial_number) as clients
+        $where = '';
+        $bindings = array();
+        
+        if($pkg){
+            $where = 'AND m.name = ?';
+            $bindings[] = $pkg;
+        }
+        
+        $filter = get_machine_group_filter();
+        $sql = "SELECT m.name, m.display_name, m.status, count(*) as count
             FROM reportdata
-            LEFT JOIN managedinstalls USING(serial_number)
-            WHERE managedinstalls.name = ?
+            LEFT JOIN managedinstalls m USING(serial_number)
             $filter
-            GROUP BY managedinstalls.status";
-            
-        return $this->query($sql, array($pkg));
+            $where
+            GROUP BY m.status, m.name, m.display_name";
+        return $this->query($sql, $bindings);
             
     }
     // ------------------------------------------------------------------------

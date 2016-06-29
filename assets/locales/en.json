@@ -346,6 +346,7 @@
 	},
 	"managedinstalls": {
 		"failing_clients": "Clients with failing installs",
+		"installratio_report": "Installation Ratio Report",
 		"no_managedinstalls": "No Managed Installs",
 		"report": "Managedinstalls Report",
 		"title": "Managed Installs"
