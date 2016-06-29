@@ -43,7 +43,6 @@ class Ds_model extends Model {
 		if ($serial)
 		{
 			$this->retrieve_record($serial);
-			$this->check_status();
 		}
 		
 		$this->serial_number = $serial;

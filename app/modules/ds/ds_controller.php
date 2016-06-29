@@ -4,9 +4,9 @@
  * Warranty module class
  *
  * @package munkireport
- * @author AvB
+ * @author tuxudo (John Eberle)
  **/
-class Warranty_controller extends Module_controller
+class Ds_controller extends Module_controller
 {
 	function __construct()
 	{
@@ -19,16 +19,16 @@ class Warranty_controller extends Module_controller
 
 	function index()
 	{
-		echo "You've loaded the warranty module!";
+		echo "You've loaded the ds (DeployStudio) module!";
 	}
 
 	/**
-	 * Force recheck warranty
+	 * Force recheck from DeployStudio
 	 *
 	 * @return void
-	 * @author AvB
+	 * @author tuxudo (John Eberle)
 	 **/
-	function recheck_warranty($serial='')
+	function recheck_ds($serial='')
 	{
 		// Authenticate
 		if( ! $this->authorized())
@@ -38,103 +38,29 @@ class Warranty_controller extends Module_controller
 
 		if(authorized_for_serial($serial))
 		{
-			$warranty = new Warranty_model($serial);
-			$warranty->check_status($force=TRUE);
+			$ds = new Ds_model($serial);
+			$ds->run_ds_stats();
 		}
 
-		redirect("clients/detail/$serial");
+		redirect("clients/detail/$serial#tab_ds-tab");
 	}
 
-	/**
-	 * Get estimate_manufactured_date
+    /**
+	 * Get DeployStudio information for serial_number
 	 *
-	 * @return void
-	 * @author 
+	 * @param string $serial serial number
 	 **/
-	function estimate_manufactured_date($serial_number='')
-	{
-		// Authenticate
-		if( ! $this->authorized())
-		{
-			die('Authenticate first.'); // Todo: return json?
-		}
-
-		require_once(conf('application_path') . "helpers/warranty_helper.php");
-		$out = array('date' => estimate_manufactured_date($serial_number));
-		$obj = new View();
-		$obj->view('json', array('msg' => $out));
-
-	}
-	
-	/**
-	 * Get Warranty statistics
-	 *
-	 * @param bool $alert Filter on 30 days
-	 **/
-	public function get_stats($alert=FALSE)
+	public function get_data($serial_number = '')
 	{
 		$obj = new View();
-		if( ! $this->authorized())
-		{
-			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
-		}
-		else
-		{
-			$wm = new Warranty_model();
-			$obj->view('json', array('msg' => $wm->get_stats($alert)));
-		}
+
+        if( ! $this->authorized())
+        {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $ds = new Ds_model($serial_number);
+        $obj->view('json', array('msg' => $ds->rs));
 	}
-
-	/**
-	 * Generate age data for age widget
-	 *
-	 * @author AvB
-	 **/
-	function age()
-	{
-		// Authenticate
-		if( ! $this->authorized())
-		{
-			die('Authenticate first.'); // Todo: return json?
-		}
-
-		$out = array();
-		$warranty = new Warranty_model();
-
-		// Time calculations differ between sql implementations
-		switch($warranty->get_driver())
-		{
-			case 'sqlite':
-				$agesql = "CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', purchase_date) AS INT)";
-				break;
-			case 'mysql':
-				$agesql = "TIMESTAMPDIFF(YEAR,purchase_date,CURDATE())";
-				break;
-			default: // FIXME for other DB engines
-				$agesql = "SUBSTR(purchase_date, 1, 4)";
-		}
-
-		// Get filter for business units
-		$where = get_machine_group_filter();
-
-		$sql = "SELECT count(1) as count, 
-				$agesql AS age 
-				FROM warranty
-				LEFT JOIN reportdata USING (serial_number)
-				$where
-				GROUP by age 
-				ORDER BY age DESC";
-		$cnt = 0;
-		foreach ($warranty->query($sql) as $obj)
-		{
-			$obj->age = $obj->age ? $obj->age : '<1';
-			$out[] = array('label' => $obj->age, 'data' => array(array(intval($obj->count), $cnt++)));
-		}
-
-		$obj = new View();
-		$obj->view('json', array('msg' => $out));
-
-	}
-
-	
-} // END class Warranty_module
+		
+} // END class Ds_module
