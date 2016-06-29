@@ -181,7 +181,7 @@ $(document).on('appReady', function(e, lang) {
 		$('#munki-duration').html(moment.duration(duration, "seconds").humanize());
 		
 		// Handle Errors and Warnings
-		if (data.errors) {
+		if (data.errors > 0) {
 			var errors = JSON.parse(data.error_json);
 			console.log(errors);
 			$('#munkireport-errors')
@@ -189,7 +189,7 @@ $(document).on('appReady', function(e, lang) {
 				.html(errors.join("\n"));
 			$('#munkireport-no-errors').addClass('hide');
 		}
-		if (data.warnings) {
+		if (data.warnings > 0) {
 			var warnings = JSON.parse(data.warning_json);
 			$('#munkireport-warnings')
 				.removeClass('hide')
