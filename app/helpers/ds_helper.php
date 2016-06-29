@@ -4,6 +4,7 @@
  *
  * @param object deploystudio model instance
  * @author tuxudo (John Eberle)
+ * Idea provided by @n8felton
  **/
 function pull_ds_data(&$Ds_model)
 {
