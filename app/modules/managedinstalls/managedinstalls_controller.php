@@ -103,7 +103,16 @@ class managedinstalls_controller extends Module_controller
 			foreach($model->get_pkg_stats($pkg) AS $rs)
 			{
 				if(isset($out[$rs->name])){
-					$out[$rs->name][$rs->status] = $rs->count;
+					// We can have multiple results with the same name
+					// but different display_name
+					// so we have to add the amounts
+					if(isset($out[$rs->name][$rs->status])){
+						$out[$rs->name][$rs->status] += $rs->count;
+					}
+					else{
+						$out[$rs->name][$rs->status] = $rs->count;
+					}
+					
 				}
 				else{
 					$out[$rs->name] = array(
