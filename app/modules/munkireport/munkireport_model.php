@@ -1,11 +1,11 @@
 <?php
 class Munkireport_model extends Model {
 
-	function __construct($serial='')
+	function __construct($serial_number='')
 	{
 		parent::__construct('id', 'munkireport'); //primary key, tablename
 		$this->rs['id'] = 0;
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial_number; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['runtype'] = '';
 		$this->rs['version'] = '';
 		$this->rs['errors'] = 0;
@@ -32,12 +32,12 @@ class Munkireport_model extends Model {
 		// Create table if it does not exist
         $this->create_table();
         
-		if ($serial)
+		if ($serial_number)
 		{
-		    $this->retrieve_record($serial);
+		    $this->retrieve_record($serial_number);
             if ( ! $this->rs['serial_number'])
             {
-                $this->serial = $serial;
+                $this->serial_number = $serial_number;
             }
 		}
 
@@ -194,6 +194,39 @@ class Munkireport_model extends Model {
 			// Delete event
 			$this->delete_event();
 		}
+		
+		// Legacy support: check if we got an old style report
+		if(array_key_exists('ManagedInstalls', $mylist)){
+			
+			// Load legacy support TODO: use autoloader
+			include_once (APP_PATH . '/lib/munkireport/Legacy_munkireport.php');
+			$legacyObj = new munkireport\Legacy_munkireport;
+			$install_list = $legacyObj->parse($mylist)->getList();
+			
+			// Calculate hash and check with hash
+			$myHash = md5(serialize($install_list));
+			$hashObj = new Hash();
+			$bindings = array($this->serial_number, 'managedinstalls');
+			$hashObj->retrieve_one('serial=? AND name=?', $bindings);
+			
+			// Compare hash with stored hash
+			if( $hashObj->hash != $myHash ){
+				// Instantiate managedinstalls model
+				$managedinstallsObj = new Managedinstalls_model;
+				// Store data in managedinstalls
+				$managedinstallsObj->setSerialNumber($this->serial_number);
+				$managedinstallsObj->processData($install_list);
+
+				$hashObj->serial = $this->serial_number;
+				$hashObj->name = 'managedinstalls';
+				$hashObj->hash = $myHash;
+				$hashObj->save();
+				
+			}
+			
+
+		}
+
 		
 		return $this;
 	}	
