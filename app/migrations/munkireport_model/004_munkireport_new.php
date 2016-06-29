@@ -71,7 +71,7 @@ class Migration_munkireport_new extends Model
         $sql = "SELECT serial_number, report_plist 
                 FROM munkireport 
                 WHERE report_plist != ''
-                LIMIT 100";
+                LIMIT 10";
         if($resultset = $this->query($sql)){
             foreach($resultset as $arr)
             {
