@@ -90,13 +90,15 @@ class Migration_munkireport_new extends Model
             if(isset($report['Errors'])){
                 $sql = sprintf("UPDATE munkireport SET error_json = ? WHERE serial_number = '%s'",
                             $arr['serial_number']);
-                $this->query($sql, array(json_encode($report['Errors']))); 
+                $stmt = $this->prepare( $sql );
+        		$this->execute($stmt, array(json_encode($report['Errors'])));
             }
             
             if(isset($report['Warnings'])){
                 $sql = sprintf("UPDATE munkireport SET warning_json = ? WHERE serial_number = '%s'",
                             $arr['serial_number']);
-                $this->query($sql, array(json_encode($report['Warnings']))); 
+                $stmt = $this->prepare( $sql );
+        		$this->execute($stmt, array(json_encode($report['Warnings'])));
             }
 
         }
