@@ -36,6 +36,9 @@ class Migration_munkireport_new extends Model
     
     public function up()
     {
+        throw new Exception("Migration disabled - please revert to previous version of munkireport", 1);
+        
+        
         // Get database handle
         $dbh = $this->getdbh();
 
