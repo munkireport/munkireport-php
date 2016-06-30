@@ -33,9 +33,9 @@ function pull_ds_data(&$Ds_model)
 		$Ds_model->{'dstudio-auto-started-workflow'} = $workflow_title;
 	}
 
-	if(array_key_exists('dstudio-last-started-workflow',$plist)){
-		$workflow_title = get_workflow_title($plist['dstudio-last-started-workflow']);
-		$Ds_model->{'dstudio-last-started-workflow'} = $workflow_title;
+	if(array_key_exists('dstudio-last-workflow',$plist)){
+		$workflow_title = get_workflow_title($plist['dstudio-last-workflow']);
+		$Ds_model->{'dstudio-last-workflow'} = $workflow_title;
 	}
 
   // Save the data
