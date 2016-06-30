@@ -10,20 +10,20 @@ class Ds_model extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['architecture'] = '';
 		$this->rs['cn'] = '';
-		$this->rs['dstudio-auto-disable'] = ''; $this->rt['dstudio-auto-disable'] = 'BOOL';
-		$this->rs['dstudio-auto-reset-workflow'] = ''; $this->rt['dstudio-auto-reset-workflow'] = 'BOOL';
+		$this->rs['dstudio-auto-disable'] = '';
+		$this->rs['dstudio-auto-reset-workflow'] = '';
 		$this->rs['dstudio-auto-started-workflow'] = '';
 		$this->rs['dstudio-bootcamp-windows-computer-name'] = '';
-		$this->rs['dstudio-disabled'] = ''; $this->rt['dstudio-disabled'] = 'BOOL';
+		$this->rs['dstudio-disabled'] = '';
 		$this->rs['dstudio-group'] = '';
 		$this->rs['dstudio-host-ard-field-1'] = '';
 		$this->rs['dstudio-host-ard-field-2'] = '';
 		$this->rs['dstudio-host-ard-field-3'] = '';
 		$this->rs['dstudio-host-ard-field-4'] = '';
-		$this->rs['dstudio-host-ard-ignore-empty-fields'] = ''; $this->rt['dstudio-host-ard-ignore-empty-fields'] = 'BOOL';
-		$this->rs['dstudio-host-delete-other-locations'] = ''; $this->rt['dstudio-host-delete-other-locations'] = 'BOOL';
+		$this->rs['dstudio-host-ard-ignore-empty-fields'] = '';
+		$this->rs['dstudio-host-delete-other-locations'] = '';
 		$this->rs['dstudio-host-model-identifier'] = '';
-		$this->rs['dstudio-host-new-network-location'] = ''; $this->rt['dstudio-host-new-network-location'] = 'BOOL';
+		$this->rs['dstudio-host-new-network-location'] = '';
 		$this->rs['dstudio-host-primary-key'] = '';
 		$this->rs['dstudio-host-serial-number'] = '';
 		$this->rs['dstudio-host-type'] = '';
@@ -60,11 +60,12 @@ class Ds_model extends Model {
         // Check if we should enable DeployStudio lookup
         if (conf('ds_enable'))
             {
-            
+
                 // Load ds helper
                 require_once(conf('application_path').'helpers/ds_helper.php');
-            
+
                 pull_ds_data($this);
+
                 // ^^ Comment and uncomment to turn off and on
             }
         
