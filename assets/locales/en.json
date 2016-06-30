@@ -204,6 +204,7 @@
         "dstudio-host-ard-ignore-empty-fields": "Ignore Empty ARD Fields",
         "dstudio-host-delete-other-locations": "Delete Other Locations",
         "dstudio-host-model-identifier": "Model Identifier",
+        "dstudio-hostname": "Hostname",
         "dstudio-host-new-network-location": "New Network Location",
         "dstudio-host-serial-number": "Serial Number",
         "dstudio-host-type": "Host Type",

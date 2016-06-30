@@ -87,10 +87,6 @@
 					<td id="dstudio-host-new-network-location"></td>
                 </tr>
                 <tr>
-                	<th data-i18n="ds.dstudio-host-primary-key"></th>
-					<td id="dstudio-host-primary-key"></td>
-                </tr>
-                <tr>
                 	<th data-i18n="ds.dstudio-host-serial-number"></th>
 					<td id="dstudio-host-serial-number"></td>
                 </tr>
@@ -115,7 +111,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	// Get ds data
 	$.getJSON( appUrl + '/module/ds/get_data/' + serialNumber, function( data ) {
-		if( ! data.warrantystatus){
+		if( ! data['dstudio-host-primary-key']){
 			$('#ds-msg').text(i18n.t('no_data'));
 		}
 		else{
@@ -125,31 +121,30 @@ $(document).on('appReady', function(e, lang) {
 			$('#ds-view').removeClass('hide');
 			
 			// Add strings
-			$('#architecture').text(data.warrantystatus);
-			$('#cn').text(data.coverageenddate);
-			$('#dstudio-auto-disable').text(data.coveragestartdate);
-			$('#dstudio-auto-reset-workflow').text(data.daysremaining);
-			$('#dstudio-auto-started-workflow').text(data.estimatedpurchasedate);
-			$('#dstudio-bootcamp-windows-computer-name').text(data.purchasecountry);
-			$('#dstudio-disabled').text(data.registrationdate);
-			$('#dstudio-group').text(data.productdescription);
-			$('#dstudio-host-ard-field-1').text(data.configdescription);
-			$('#dstudio-host-ard-field-2').text(data.contractcoverageenddate);
-			$('#dstudio-host-ard-field-3').text(data.contractcoveragestartdate);
-			$('#dstudio-host-ard-field-3').text(data.contracttype);
-			$('#dstudio-host-ard-ignore-empty-fields').text(data.laborcovered);
-			$('#dstudio-host-delete-other-locations').text(data.partcovered);
-			$('#dstudio-host-model-identifier').text(data.warrantyreferenceno);
-			$('#dstudio-host-new-network-location').text(data.isloaner);
-			$('#dstudio-host-primary-key').text(data.isloaner);
-			$('#dstudio-host-serial-number').text(data.isloaner);
-			$('#dstudio-host-type').text(data.isloaner);
-			$('#dstudio-hostname').text(data.isloaner);
-			$('#dstudio-last-workflow').text(data.isloaner);
-			$('#dstudio-last-workflow-duration').text(data.isloaner);
-			$('#dstudio-last-workflow-execution-date').text(data.isloaner);
-			$('#dstudio-last-workflow-status').text(data.warrantymod);
-			$('#dstudio-mac-addr').text(data.isvintage);
+			$('#architecture').text(data['architecture']);
+			$('#cn').text(data['cn']);
+			$('#dstudio-auto-disable').text(data['dstudio-auto-disable']);
+			$('#dstudio-auto-reset-workflow').text(data['dstudio-auto-reset-workflow']);
+			$('#dstudio-auto-started-workflow').text(data['dstudio-auto-started-workflow']);
+			$('#dstudio-bootcamp-windows-computer-name').text(data['dstudio-bootcamp-windows-computer-name']);
+			$('#dstudio-disabled').text(data['dstudio-disabled']);
+			$('#dstudio-group').text(data['dstudio-group']);
+			$('#dstudio-host-ard-field-1').text(data['dstudio-host-ard-field-1']);
+			$('#dstudio-host-ard-field-2').text(data['dstudio-host-ard-field-2']);
+			$('#dstudio-host-ard-field-3').text(data['dstudio-host-ard-field-3']);
+			$('#dstudio-host-ard-field-4').text(data['dstudio-host-ard-field-4']);
+			$('#dstudio-host-ard-ignore-empty-fields').text(data['dstudio-host-ard-ignore-empty-fields']);
+			$('#dstudio-host-delete-other-locations').text(data['dstudio-host-delete-other-locations']);
+			$('#dstudio-host-model-identifier').text(data['dstudio-host-model-identifier']);
+			$('#dstudio-host-new-network-location').text(data['dstudio-host-new-network-location']);
+			$('#dstudio-host-serial-number').text(data['dstudio-host-serial-number']);
+			$('#dstudio-host-type').text(data['dstudio-host-type']);
+			$('#dstudio-hostname').text(data['dstudio-hostname']);
+			$('#dstudio-last-workflow').text(data['dstudio-last-workflow']);
+			$('#dstudio-last-workflow-duration').text(data['dstudio-last-workflow-duration']);
+			$('#dstudio-last-workflow-execution-date').text(data['dstudio-last-workflow-execution-date']);
+			$('#dstudio-last-workflow-status').text(data['dstudio-last-workflow-status']);
+			$('#dstudio-mac-addr').text(data['dstudio-mac-addr']);
 		}
 
 	});
