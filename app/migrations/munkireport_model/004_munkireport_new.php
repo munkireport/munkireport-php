@@ -30,15 +30,19 @@ class Migration_munkireport_new extends Model
      */
     public function __construct()
     {
+        $ctl = new Controller;
+        if( ! $ctl->authorized('global'))
+        {
+            throw new Exception("Only migrate in admin session", 1);
+        }
+
+        
         parent::__construct('id', 'munkireport'); //primary key, tablename        
     }
 
     
     public function up()
-    {
-        throw new Exception("Migration disabled - please revert to previous version of munkireport", 1);
-        
-        
+    {            
         // Get database handle
         $dbh = $this->getdbh();
 
@@ -70,10 +74,16 @@ class Migration_munkireport_new extends Model
                 
         // Lock tables
         if ($this->get_driver() == 'mysql'){
-            $sql = "LOCK TABLES munkireport WRITE, managedinstalls WRITE";
+            $sql = "LOCK TABLES munkireport WRITE, managedinstalls WRITE, migration WRITE";
             $this->exec($sql);
         }
-
+        
+        // Get number of records to convert
+        $sql = "SELECT count(*) as count
+                FROM munkireport 
+                WHERE report_plist != ''";
+        $resultset = $this->query($sql);
+        $count = $resultset[0]->count;
         
         // Get limited
         $sql = "SELECT serial_number, report_plist 
@@ -117,7 +127,7 @@ class Migration_munkireport_new extends Model
             
             
             // Prevent migration to be marked complete
-            throw new Exception("Still converting entries", 1);
+            throw new Exception("Still converting $count entries", 1);
         }
 
         // ***** Modify columns

@@ -40,18 +40,19 @@ $(document).on('appReady', function(e, lang) {
     $.getJSON(appUrl + '/module/managedinstalls/get_pkg_stats/', function(data){
             
         var dataSet = [],
+            displayNames = {},
             linkUrl = appUrl + '/module/managedinstalls/listing#';
 
         $.each(data, function(index, val){
             if(val.name){
-                var display_name = val.display_name || val.name,
-                    installed = val.installed || 0,
+                displayNames[val.name] = val.display_name || val.name;
+                var installed = val.installed || 0,
                     pending = val.pending_install || 0,
                     failed = val.install_failed || 0,
                     total = installed + pending + failed,
                     pct = total ? Math.round((total - pending - failed)/total * 100) : 0;
                 dataSet.push([
-                    display_name,
+                    val.name,
                     pct + '%',
                     installed,
                     pending,
@@ -68,7 +69,7 @@ $(document).on('appReady', function(e, lang) {
             order: [0,'asc'],
             createdRow: function( nRow, aData, iDataIndex ) {
                 var name=$('td:eq(0)', nRow).html();
-                $('td:eq(0)', nRow).html('<a href="'+linkUrl+name+'">'+name+'</a>');
+                $('td:eq(0)', nRow).html('<a href="'+linkUrl+name+'">'+displayNames[name]+'</a>');
 
             },
             drawCallback: function( oSettings ) {
