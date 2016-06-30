@@ -82,14 +82,14 @@ class managedinstalls_model extends Model {
         $fromdate = time() - 3600 * $hoursBack;
         $updates_array = array();
         $filter = get_machine_group_filter('AND');
-        $sql = "SELECT m.display_name as name, m.version, count(*) as count 
+        $sql = "SELECT m.name, m.display_name, m.version, count(*) as count 
                 FROM managedinstalls m
                 LEFT JOIN reportdata USING (serial_number)
                 WHERE status = 'pending_install'
                 AND type = ?
                 $filter
                 AND reportdata.timestamp > $fromdate
-                GROUP BY display_name, version
+                GROUP BY name, display_name, version
                 ORDER BY count DESC";
         return $this->query($sql, array($type));
     }

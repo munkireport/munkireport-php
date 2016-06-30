@@ -21,7 +21,8 @@ new Managedinstalls_model;
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-			<th data-i18n="name" data-colname='managedinstalls.display_name'></th>
+            <th data-i18n="name" data-colname='managedinstalls.name'></th>
+            <th data-i18n="displayname" data-colname='managedinstalls.display_name'></th>
             <th data-i18n="version" data-colname='managedinstalls.version'></th>
             <th data-i18n="status" data-colname='managedinstalls.status'></th>
             <th data-i18n="type" data-colname='managedinstalls.type'></th>

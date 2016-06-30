@@ -26,9 +26,10 @@ $(document).on('appUpdate', function(e, lang) {
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>',
-                    url = appUrl+'/module/managedinstalls/listing#'+d.name;
+                    url = appUrl+'/module/managedinstalls/listing#'+d.name,
+					display_name = d.display_name || d.name;
                 
-				box.append('<a href="'+url+'" class="list-group-item">'+d.name+' '+d.version+badge+'</a>');
+				box.append('<a href="'+url+'" class="list-group-item">'+display_name+' '+d.version+badge+'</a>');
 			});
 		}
 		else{
