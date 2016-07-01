@@ -198,7 +198,7 @@
   "error_plural": "Fehler",
   "errors": {
     "title": "Fehler",
-    "client_nonexistent": "Client mit dieser Seriennummer \"__serial__\" existiert nicht",
+    "client_nonexistent": "Client mit der Seriennummer \"__serial__\" existiert nicht",
     "loading": "Es gab ein Problem beim Abruf dieser Daten: __error__"
   },
   "event": "Ereignis",
