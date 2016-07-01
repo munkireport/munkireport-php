@@ -82,7 +82,7 @@ def install_result(item_list, install_list):
             
         if item.status == 0:
             install_list[name]['installed'] = True
-            install_list[name]['status'] = 'installed'
+            install_list[name]['status'] = 'install_succeeded'
         else:
             install_list[name]['status'] = 'install_failed'
 

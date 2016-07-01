@@ -210,6 +210,8 @@ class managedinstalls_model extends Model {
             'type' => '',
         );
         
+        $new_installs = array();
+        
         # Loop through list
         foreach($mylist as $name => $props){
             
@@ -239,11 +241,33 @@ class managedinstalls_model extends Model {
             if(isset($props['installed_size'])){
                 $temp['size'] = $props['installed_size'];
             }
-            
+                        
             $this->id = 0;
             $this->merge($temp)->save();
+            
+            // Store new installs
+            if($this->status == 'install_succeeded'){
+                $new_installs[] = $temp;
+            }
 
         }
+        
+        // Store apropriate event:
+        if($new_installs)
+        {
+            $count = count($new_installs);
+            $msg = array('count' => $count);
+            if($count == 1){
+                $pkg = array_pop($new_installs);
+                $msg['pkg'] = $pkg['display_name'] . ' ' . $pkg['version'];
+            }
+            $this->store_event(
+                'success',
+                'munki.package_installed',
+                json_encode($msg)
+            );
+        }
+
 
 	}
 }

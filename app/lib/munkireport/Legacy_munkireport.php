@@ -147,7 +147,7 @@ class Legacy_munkireport {
                 
             if ($item['status'] == 0){
                 $this->install_list[$name]['installed'] = true;
-                $this->install_list[$name]['status'] = 'installed';
+                $this->install_list[$name]['status'] = 'install_succeeded';
             }
             else{
                 $this->install_list[$name]['status'] = 'install_failed';
