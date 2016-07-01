@@ -141,15 +141,15 @@ class Munkireport_model extends Model {
 			$dbkey = strtolower($key);
 			if(isset($mylist[$key]) && is_array($mylist[$key])){
 				// Store count
-				$this->$dbkey = count($mylist[$key]);
+				$this->rs[$dbkey] = count($mylist[$key]);
 				
 				// Store json
-				$this->$json = json_encode($mylist[$key]);
+				$this->rs[$json] = json_encode($mylist[$key]);
 			}
 			else{
 				// reset
-				$this->$dbkey = 0;
-				$this->$json = json_encode(array());
+				$this->rs[$dbkey] = 0;
+				$this->rs[$json] = json_encode(array());
 			}
 		}
 		
