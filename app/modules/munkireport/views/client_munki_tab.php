@@ -112,7 +112,7 @@ $(document).on('appReady', function(){
 
 	<div class="col-lg-12">
 		
-		<h2 data-i18n="managedinstalls.title"></h2>
+		<h2><span data-i18n="managedinstalls.title"></span><span id="managedinstalls-statuslist"></span></h2>
 		
 			<table id="managedinstalls-table" class="table table-striped">
 		      <thead>
@@ -137,10 +137,27 @@ $(document).on('appReady', function(){
 <script>
 $(document).on('appReady', function(e, lang) {
 	
-
+	
+	// Get managedinstalls data
 	$.getJSON(appUrl + '/module/managedinstalls/get_data/' + serialNumber, function(data){
 		
-		var dataSet = [];
+		var dataSet = [],
+			statusFormat = {
+				install_failed: {type: 'danger'},
+				install_succeeded: {type: 'success'},
+				installed: {type: 'info'},
+				pending_install: {type: 'warning'}
+			},
+			statusList = {
+				installed: 0,
+				install_succeeded: 0,
+				install_failed: 0,
+				pending_install: 0,
+				removed: 0,
+				pending_removal: 0,
+				uninstall_failed: 0
+			};
+
 		$.each(data, function(index, val){
 			dataSet.push([
 				val.display_name,
@@ -148,8 +165,29 @@ $(document).on('appReady', function(e, lang) {
 				val.size,
 				val.status,
 				val.type
-			])
+			]);
+			statusList[val.status] ++; 
 		});
+		
+		// Show statusList
+		$('#managedinstalls-statuslist').empty();
+		for (var prop in statusFormat) {
+			if(statusList[prop]){
+				var format = statusFormat[prop];
+				$('#managedinstalls-statuslist')
+					.append(' ')
+					.append($('<button>')
+						.addClass('btn btn-xs')
+						.addClass('btn-' + format.type)
+						.text(prop + ' ' + statusList[prop])
+						.data('prop', prop)
+						.click(function(){
+							var table = $('#managedinstalls-table').DataTable();
+							table.search( $(this).data('prop') ).draw();
+						})
+					);
+			}
+		}
 				
 		// Initialize datatables
 		$('#managedinstalls-table tbody').empty();
