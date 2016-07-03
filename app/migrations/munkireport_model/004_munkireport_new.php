@@ -74,7 +74,8 @@ class Migration_munkireport_new extends Model
                 
         // Lock tables
         if ($this->get_driver() == 'mysql'){
-            $sql = "LOCK TABLES munkireport WRITE, managedinstalls WRITE, migration WRITE";
+            $sql = "LOCK TABLES munkireport WRITE, managedinstalls WRITE, 
+                        migration WRITE, event WRITE, reportdata WRITE, munkiinfo WRITE";
             $this->exec($sql);
         }
         
