@@ -195,7 +195,9 @@
         "dstudio-auto-reset-workflow": "Auto Reset Workflow",
         "dstudio-auto-started-workflow": "Auto Started Workflow",
         "dstudio-bootcamp-windows-computer-name": "Boot Camp Windows Name",
+        "dstudio-completed": "Completed",
         "dstudio-disabled": "Disabled",
+        "dstudio-failed": "Failed",
         "dstudio-group": "Group",
         "dstudio-host-ard-field-1": "ARD Field 1",
         "dstudio-host-ard-field-2": "ARD Field 2",
@@ -213,7 +215,9 @@
         "dstudio-last-workflow-execution-date": "Last Workflow Execution Date",
         "dstudio-last-workflow-status": "Workflow Status",
         "dstudio-mac-addr": "MAC Address",
-        "recheck": "Pull DeployStudio Data"
+        "no": "No",
+        "recheck": "Pull DeployStudio Data",
+        "yes": "Yes"
     },
 	"edit": "Edit",
 	"email": {

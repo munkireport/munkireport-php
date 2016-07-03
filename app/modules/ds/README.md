@@ -1,24 +1,13 @@
 DeployStudio module
 ==============
 
-Provides warranty status information by querying the Apple Support Web page
+Provides DeployStudio details about the client if it exists in the DeployStudio database.
 
-The table provides the following information:
+The client listing table provides the following information:
+* Last workflow executed by the client.
+* Date the last workflow was run
+* Duration of last workflow
+* Status of last workflow
 
-* purchase_date (string) Date in the following format: yyyy-mm-dd
-* end_date (string) Date in the following format: yyyy-mm-dd
-* status (string) One of the following strings: 
-  * Unregistered serialnumber
-  * No Applecare
-  * Supported
-  * No information found
-  * Virtual Machine
-  * Expired
-
-Remarks
----
-
-* The client triggers the server to do a lookup once a day
-* Warranty status is **not** checked when the status is 'Expired', Virtual Machine'
-* Warranty status is **not** checked when the status is 'Supported' and end_date > today
-* The status 'Virtual Machine' is for VMware only at the moment (detects upper and lowercase in serial number)
+The DeployStudio tab will show a number of important computer configurations set in DeployStudio
+*  Computer ARD fields

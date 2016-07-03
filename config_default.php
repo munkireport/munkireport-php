@@ -142,10 +142,10 @@
 	| also used by the Business Units
 	|
 	*/
-    $conf['authorization']['delete_machine'] = array('admin', 'manager');
-    $conf['authorization']['global'] = array('admin');
+	$conf['authorization']['delete_machine'] = array('admin', 'manager');
+	$conf['authorization']['global'] = array('admin');
 
-    /*
+	/*
 	|===============================================
 	| Roles
 	|===============================================
@@ -155,7 +155,7 @@
 	*/
 	$conf['roles']['admin'] = array('*');
 
-    /*
+	/*
 	|===============================================
 	| Local groups
 	|===============================================
@@ -165,7 +165,7 @@
 	*/
 	//$conf['groups']['admin_users'] = array();
 
-    /*
+	/*
 	|===============================================
 	| Business Units
 	|===============================================
@@ -237,7 +237,7 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
 	*/
-    $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
 	/*
 	|===============================================
@@ -256,7 +256,7 @@
 	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the 
 	| Readme.md located in the GSX module.
 	|
-	| To use GSX module, set enable to TRUE and uncomment and
+	| To use the GSX module, set enable to TRUE and uncomment and
 	| fill out rest of configuration options. When setting the date format
 	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
 	| are required.
@@ -268,6 +268,29 @@
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
+
+
+	/*
+	|===============================================
+	| DeployStudio
+	|===============================================
+	|
+	| A working DeployStudio server is required for use of this module. 
+	|
+	| To use the DeployStudio (DS) module, set 'ds_enable' to TRUE and
+	| enter the server, username, and password for accessing your primary
+	| DeployStudio server.
+	|
+	| This module currently only pulls data from the primary DeployStudio
+	| server. This means if a machine was imaged off of a replica server
+	| its data may not show in MunkiReport.
+	*/
+
+	$conf['ds_enable'] = FALSE;
+	$conf['ds_server'] = 'https://deploystudio.apple.com:60443/';
+	$conf['ds_username'] = 'deploystudio_user';
+	$conf['ds_password'] = 'deploystudio_password';
+
 	
 	/*
 	|===============================================
@@ -287,7 +310,7 @@
 		"--silent",
 		"--show-error");
 
-    /*
+	/*
 	|===============================================
 	| Modules
 	|===============================================
@@ -301,7 +324,7 @@
 	| Machine and Reportdata
 	|
 	*/
-    $conf['modules'] = array('munkireport');
+	$conf['modules'] = array('munkireport');
 
 
 	/*
@@ -333,10 +356,10 @@
 	| By default temperture units are displayed in Celsius °C.
 	|
 	*/
-    //$conf['temperature_unit'] = 'F';
+	//$conf['temperature_unit'] = 'F';
 
 
-    /*
+	/*
 	|===============================================
 	| Migrations
 	|===============================================
@@ -351,7 +374,7 @@
 	| to FALSE when you're done migrating.
 	|
 	*/
-    $conf['allow_migrations'] = FALSE;
+	$conf['allow_migrations'] = FALSE;
 
 
 	/*
@@ -369,7 +392,7 @@
 	|
 	|
 	*/
-    $conf['client_passphrases'] = array();
+	$conf['client_passphrases'] = array();
 
 	/*
 	|===============================================
@@ -388,9 +411,9 @@
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
 	|
 	*/
-    //$conf['proxy']['server'] = 'proxy.yoursite.org';
+	//$conf['proxy']['server'] = 'proxy.yoursite.org';
 
-    /*
+	/*
 	|===============================================
 	| Request timeout
 	|===============================================
@@ -400,7 +423,7 @@
 	| Timeout in seconds
 	|
 	*/
-    $conf['request_timeout'] = 5;
+	$conf['request_timeout'] = 5;
 	
 	
 	/*
@@ -437,7 +460,7 @@
 	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
 	*/
-    $conf['ip_ranges'] = array();
+	$conf['ip_ranges'] = array();
 
  	/*
 	|===============================================
