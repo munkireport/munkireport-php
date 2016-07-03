@@ -116,12 +116,13 @@ class managedinstalls_model extends Model {
         }
         
         $filter = get_machine_group_filter();
-        $sql = "SELECT m.name, m.display_name, m.status, count(*) as count
+        $sql = "SELECT m.name, m.version, m.display_name, m.status, count(*) as count
             FROM reportdata
             LEFT JOIN managedinstalls m USING(serial_number)
             $filter
             $where
-            GROUP BY m.status, m.name, m.display_name";
+            GROUP BY m.status, m.name, m.display_name, m.version
+            ORDER BY m.version DESC";
         return $this->query($sql, $bindings);
             
     }

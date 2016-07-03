@@ -19,6 +19,8 @@ new munkiinfo_model;
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Displayname</th>
+                <th>Version</th>
                 <th>Ratio</th>
                 <th>Installed</th>
                 <th>Pending</th>
@@ -45,14 +47,16 @@ $(document).on('appReady', function(e, lang) {
 
         $.each(data, function(index, val){
             if(val.name){
-                displayNames[val.name] = val.display_name || val.name;
-                var installed = val.installed || 0,
+                var displayname = (val.display_name || val.name) + ' ' + val.version
+                    installed = val.installed || 0,
                     pending = val.pending_install || 0,
                     failed = val.install_failed || 0,
                     total = installed + pending + failed,
                     pct = total ? Math.round((total - pending - failed)/total * 100) : 0;
                 dataSet.push([
                     val.name,
+                    displayname,
+                    val.version || '',
                     pct + '%',
                     installed,
                     pending,
@@ -69,7 +73,7 @@ $(document).on('appReady', function(e, lang) {
             order: [0,'asc'],
             createdRow: function( nRow, aData, iDataIndex ) {
                 var name=$('td:eq(0)', nRow).html();
-                $('td:eq(0)', nRow).html('<a href="'+linkUrl+name+'">'+displayNames[name]+'</a>');
+                $('td:eq(0)', nRow).html('<a href="'+linkUrl+name+'">'+name+'</a>');
 
             },
             drawCallback: function( oSettings ) {

@@ -102,23 +102,24 @@ class managedinstalls_controller extends Module_controller
 			// Convert to list
 			foreach($model->get_pkg_stats($pkg) AS $rs)
 			{
-				if(isset($out[$rs->name])){
-					// We can have multiple results with the same name
-					// but different display_name
-					// so we have to add the amounts
-					if(isset($out[$rs->name][$rs->status])){
-						$out[$rs->name][$rs->status] += $rs->count;
-					}
-					else{
-						$out[$rs->name][$rs->status] = $rs->count;
-					}
+				$status = $rs->status == 'install_succeeded' ? 'installed' : $rs->status;
+				$key = $rs->name . $rs->version;
+				if(isset($out[$key])){
 					
+					if(isset($out[$key][$status])){
+						// $key exists, add count
+						$out[$key][$status] += $rs->count;
+					}
+					else {
+						$out[$key][$status] = $rs->count;
+					}
 				}
 				else{
-					$out[$rs->name] = array(
+					$out[$key] = array(
 						'name' => $rs->name,
+						'version' => $rs->version,
 						'display_name' => $rs->display_name,
-						$rs->status => $rs->count,
+						$status => $rs->count,
 					);
 				}
 			}
