@@ -3,7 +3,7 @@
 		<div class="col-lg-6">
 
 		<h2 data-i18n="munki.errors_and_warnings"></h2>
-			
+
 				<pre id="munkireport-errors" class="hide alert alert-danger"></pre>
 				<pre id="munkireport-warnings" class="hide alert alert-warning"></pre>
 
@@ -52,24 +52,24 @@
 
 	</div><!-- </div class="col-lg-6"> -->
 
-  
+
 
 
 
 <script>
 $(document).on('appReady', function(){
-	
+
 	var table = $('<div>');
-	
+
 	$('#popoverId').click(function(e){
-		
+
 		$('#myModal .modal-title')
 			.empty()
 			.append(i18n.t("munki.additional_info"))
 		$('#myModal .modal-body')
 			.empty()
 			.append(table);
-		
+
 		$('#myModal button.ok').text(i18n.t("dialog.close"));
 
 		// Set ok button
@@ -77,16 +77,16 @@ $(document).on('appReady', function(){
 			.off()
 			.click(function(){$('#myModal').modal('hide')});
 
-		
+
 		$('#myModal').modal('show');
 	})
-	
+
   $.getJSON(appUrl + '/module/munkiinfo/get_data/' + serialNumber, function(data){
     // These are single preferences
     $('#munkiinfo-SoftwareRepoURL').text(data['SoftwareRepoURL']);
     $('#munkiinfo-AppleCatalogURL').text(data['AppleCatalogURL']);
     $('#munkiinfo-LocalOnlyManifest').text(data['LocalOnlyManifest']);
-    
+
     // Create table of all preferences
     var rows = ''
     for (key in data){
@@ -107,13 +107,13 @@ $(document).on('appReady', function(){
 
 
   </div><!-- </div class="row"> -->
-  
+
   <div class="row">
 
 	<div class="col-lg-12">
-		
+
 		<h2><span data-i18n="managedinstalls.title"></span><span id="managedinstalls-statuslist"></span></h2>
-		
+
 			<table id="managedinstalls-table" class="table table-striped">
 		      <thead>
 		        <tr>
@@ -127,7 +127,7 @@ $(document).on('appReady', function(){
 		      <tbody>
 		      </tbody>
 		    </table>
-			
+
     </div><!-- </div class="col-lg-12"> -->
 
   </div><!-- </div class="row"> -->
@@ -136,11 +136,11 @@ $(document).on('appReady', function(){
 
 <script>
 $(document).on('appReady', function(e, lang) {
-	
-	
+
+
 	// Get managedinstalls data
 	$.getJSON(appUrl + '/module/managedinstalls/get_data/' + serialNumber, function(data){
-		
+
 		var dataSet = [],
 			statusFormat = {
 				install_failed: {type: 'danger'},
@@ -166,9 +166,9 @@ $(document).on('appReady', function(e, lang) {
 				val.status,
 				val.type
 			]);
-			statusList[val.status] ++; 
+			statusList[val.status] ++;
 		});
-		
+
 		// Show statusList
 		$('#managedinstalls-statuslist').empty();
 		for (var prop in statusFormat) {
@@ -188,7 +188,7 @@ $(document).on('appReady', function(e, lang) {
 					);
 			}
 		}
-				
+
 		// Initialize datatables
 		$('#managedinstalls-table tbody').empty();
 		$('#managedinstalls-table').dataTable({
@@ -199,17 +199,27 @@ $(document).on('appReady', function(e, lang) {
 				// make filesize human readable
 				var size=$('td:eq(2)', nRow).html();
 				$('td:eq(2)', nRow).html(fileSize(size * 1024, 0));
+				// add status labels
+					var status = $('td:eq(3)', nRow).text();
+					if(statusFormat[status]){
+						$('td:eq(3)', nRow).empty()
+							.append($('<button>')
+								.addClass('btn btn-xs')
+								.addClass('btn-' + statusFormat[status].type)
+								.text(status));
+					}
+
 			}
 		});
 	});
-    
+
 	// Get munkireport data TODO: move to client_detail.js
     $.getJSON(appUrl + '/module/munkireport/get_data/' + serialNumber, function(data){
 		// TODO: check for errors
 		$.each(data, function(prop, val){
 			$('#munki-'+prop).html(val);
 		});
-		
+
 		// Set times
 		var starttime = moment(data.starttime, "YYYY-MM-DD HH:mm:ss Z"),
 			endtime = moment(data.endtime, "YYYY-MM-DD HH:mm:ss Z"),
@@ -217,11 +227,10 @@ $(document).on('appReady', function(e, lang) {
 
 		$('#munki-starttime').html(starttime.fromNow());
 		$('#munki-duration').html(moment.duration(duration, "seconds").humanize());
-		
+
 		// Handle Errors and Warnings
 		if (data.errors > 0) {
 			var errors = JSON.parse(data.error_json);
-			console.log(errors);
 			$('#munkireport-errors')
 				.removeClass('hide')
 				.html(errors.join("\n"));
