@@ -203,9 +203,9 @@ $(document).on('appReady', function(e, lang) {
 					var status = $('td:eq(3)', nRow).text();
 					if(statusFormat[status]){
 						$('td:eq(3)', nRow).empty()
-							.append($('<button>')
-								.addClass('btn btn-xs')
-								.addClass('btn-' + statusFormat[status].type)
+							.append($('<span>')
+								.addClass('label')
+								.addClass('label-' + statusFormat[status].type)
 								.text(status));
 					}
 
