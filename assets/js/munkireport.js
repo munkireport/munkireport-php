@@ -16,7 +16,13 @@ $(document).on('appReady', function(e, lang) {
         menu: 'admin',
         i18n: 'systemstatus.menu_link',
         url: appUrl + '/system/show/status'
+    });
+    addMenuItem({
+        menu: 'report',
+        i18n: 'managedinstalls.installratio_report',
+        url: appUrl + '/module/managedinstalls/view/pkg_stats'
     }); 
+
 
 });
 

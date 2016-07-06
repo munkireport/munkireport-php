@@ -187,6 +187,7 @@
 		"widget_info": "Total number of known external displays",
 		"widget_title": "External Displays Count"
 	},
+	"displayname": "Display Name",
 	"edit": "Edit",
 	"email": {
 		"email": "Email",
@@ -344,6 +345,13 @@
 	"machine": {
 		"hardware_widget_title": "Hardware model breakdown"
 	},
+	"managedinstalls": {
+		"failing_clients": "Clients with failing installs",
+		"installratio_report": "Installation Ratio Report",
+		"no_managedinstalls": "No Managed Installs",
+		"report": "Managedinstalls Report",
+		"title": "Managed Installs"
+	},
 	"manifest": {
 		"name": "Manifest Name"
 	},
@@ -356,6 +364,7 @@
 	"munki": {
 		"error": "Munki error: __error__",
 		"error_plural": "__count__ Munki errors",
+		"errors_and_warnings": "Errors and Warnings",
 		"package_installed": "__pkg__ installed",
 		"package_installed_plural": "__count__ packages installed",
 		"panel_title": "Munki statistics this week",
@@ -440,6 +449,7 @@
 	"new_client_plural": "New Clients",
 	"no_clients": "No Clients",
 	"no_data": "No Data",
+	"no_errors_or_warnings": "No Errors or Warnings",
 	"notification": {
 		"all_levels": "All levels",
 		"business_unit": "Business Unit",
@@ -516,6 +526,7 @@
 		"smb_users": "SMB Users"
 	},
 	"show": "Show",
+	"size": "Size",
 	"software": {
 		"software": "Software",
 		"smc_version": "SMC Version",
