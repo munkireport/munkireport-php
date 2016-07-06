@@ -47,7 +47,7 @@ $(document).on('appReady', function(e, lang) {
 
         $.each(data, function(index, val){
             if(val.name){
-                var displayname = (val.display_name || val.name) + ' ' + val.version
+                var displayname = (val.display_name || val.name),
                     installed = val.installed || 0,
                     pending = val.pending_install || 0,
                     failed = val.install_failed || 0,
