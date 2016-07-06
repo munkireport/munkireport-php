@@ -187,6 +187,7 @@
     "widget_info": "Gesamtanzahl bekannter externer Bildschirme",
     "widget_title": "Anzahl externer Bildschirme"
   },
+  "displayname": "Anzeigename",
   "edit": "Editieren",
   "email": {
     "email": "Email",
@@ -341,6 +342,13 @@
   "machine": {
     "hardware_widget_title": "Liste der Hardwaremodelle"
   },
+  "managedinstalls": {
+    "failing_clients": "Clients mit fehlgeschlagenen Installationen",
+    "installratio_report": "Installationsverhältnis Bericht",
+    "no_managedinstalls": "Keine verwalteten Installationen",
+    "report": "Verwaltete Installationen Bericht",
+    "title": "Verwaltete Installs"
+  },
   "manifest": {
     "name": "Manifest Name"
   },
@@ -353,6 +361,7 @@
   "munki": {
     "error": "Munki-Fehler: __error__",
     "error_plural": "__count__ Munki-Fehler",
+    "errors_and_warnings": "Fehler und Warnungen",
     "package_installed": "__pkg__ installiert",
     "package_installed_plural": "__count__ Pakete installiert",
     "panel_title": "Munki Statistik diese Woche",
@@ -437,6 +446,7 @@
   "new_client_plural": "Neue Clients",
   "no_clients": "Keine Clients",
   "no_data": "Keine Daten",
+  "no_errors_or_warnings": "Keine Fehler oder Warnungen",
   "notification": {
     "all_levels": "Alle Levels",
     "business_unit": "Geschäftsbereich",
@@ -513,6 +523,7 @@
     "smb_users": "SMB Benutzer"
   },
   "show": "Anzeigen",
+  "size": "Größe",
   "software": {
     "software": "Software",
     "smc_version": "SMC Version",
