@@ -344,7 +344,7 @@
   },
   "managedinstalls": {
     "failing_clients": "Clients mit fehlgeschlagenen Installationen",
-    "installratio_report": "Installationsverhältnis Bericht",
+    "installratio_report": "Installationsquoten Bericht",
     "no_managedinstalls": "Keine verwalteten Installationen",
     "report": "Verwaltete Installationen Bericht",
     "title": "Verwaltete Installs"
