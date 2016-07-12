@@ -160,7 +160,7 @@
     }
   },
   "danger": "Erreur",
-	"database": "base de données",
+	"database": "Base de données",
   "date": {
     "year": "année"
   },
@@ -188,7 +188,8 @@
     "widget_info": "Nombre total d'écrans externes connus",
     "widget_title": "Nombre d'écrans"
   },
-  "edit": "Modifier",
+  "displayname": "Nom d'affichage",
+   "edit": "Modifier",
   	"email": {
 		"email": "Email",
 		"show_machine_in_browser": "Voir la station dans le navigateur"
@@ -230,7 +231,7 @@
 			"hostname": "Nom d'hôte iCloud"
 		},
 		"widget": {
-			"title": "Statut FindMyMac",
+			"title": "Etat FindMyMac",
 			"enabled": "Activé",
 			"disabled": "Désactivé"
 		},
@@ -269,6 +270,7 @@
     "uuid": "UUID Matériel"
   },
   "inactive": "Inactif",
+  "info": "Information",
   "installed": "Installé",
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
@@ -282,7 +284,7 @@
       "mouse_battery": "Souris",
       "status": "Etat",
       "title": "Rapport Bluetooth",
-      "trackpad_battery": ""
+      "trackpad_battery": "Trackpad"
     },
     "certificate": {
       "commonname": "Nom commun",
@@ -344,6 +346,13 @@
   "machine": {
     "hardware_widget_title": "Détails de l'appareil"
   },
+  "managedinstalls": {
+		"failing_clients": "Clients avec erreurs d'installation",
+		"installratio_report": "Rapport du ratio d'installation",
+		"no_managedinstalls": "Pas d'installation managées",
+		"report": "Rapport installations managées",
+		"title": "Instalation managées"
+	},
   "manifest": {
     "name": "Nom du manifest"
   },
@@ -356,6 +365,7 @@
   "munki": {
     "error": "Erreur de Munki : __error__",
     "error_plural": "__count__ Erreurs de Munki",
+    "errors_and_warnings": "Erreurs et Alertes",
     "package_installed": "__pkg__ installé",
     "package_installed_plural": "__count__ paquets installés",
     "panel_title": "Statistique de Munki cette semaine",
@@ -387,6 +397,7 @@
       "directoryservice": "Service d'annuaire",
       "disk": "Disque",
       "displays": "Moniteurs",
+      "findmymac": "FindMyMac",
       "gsx": "GSX",
       "hardware": "Matériel",
       "inventory": "Inventaire",
@@ -411,6 +422,7 @@
       "backup": "Sauvegarde",
       "clients": "Client",
       "configuration": "Configuration",
+      "findmymac": "FindMyMac",
       "hardware": "Matériel",
       "location": "Localisation",
       "munki": "Munki",
@@ -438,6 +450,7 @@
 	"new_client_plural": "Nouveaux clients",
 	"no_clients": "Pas de client",
 	"no_data": "Pas de données",
+	"no_errors_or_warnings": "Aucune erreur ni alertes",
 	"notification": {
 		"all_levels": "Tout niveaux",
 		"business_unit": "Divisions",
@@ -457,7 +470,6 @@
 			"title": "Règles des notifications"
 		}
 },
-
   "on": "Activé",
   "off": "Désactivé",
   "os": {
@@ -478,7 +490,7 @@
   "reg_date": "Date d'enregistrement",
   "remote_control": "Contrôle à distance",
   "report": {
-    "generate": "Générer un Rapport"
+    "generate": "Générer un rapport"
   },
   "printer": {
     "default_set": "Ensemble par défaut",
@@ -515,6 +527,7 @@
     "smb_users": "Utilisateurs SMB"
   },
   "show": "Afficher",
+  "size": "Taille",
   "software": {
     "software": "Logiciel",
     "smc_version": "Version de la SMC",
