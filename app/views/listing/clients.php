@@ -96,7 +96,7 @@ new Munkireport_model;
 				$('td:eq(8)', nRow).html(moment(date).fromNow());
 
 				// Format OS Version
-				var osvers = integer_to_version($('td:eq(3)', nRow).html());
+				var osvers = mr.integerToVersion($('td:eq(3)', nRow).html());
 				$('td:eq(3)', nRow).html(osvers);
 
 				// Format uptime

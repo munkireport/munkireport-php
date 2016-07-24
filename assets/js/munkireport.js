@@ -2,7 +2,24 @@
 
 // Global munkireport object
 var mr = {
-        dt:{}
+        dt:{},
+        
+        // Integer or integer string OS Version to semantic OS version
+        integerToVersion: function(osvers)
+        {
+        	osvers = "" + osvers
+        	// If osvers contains a dot, don't convert
+        	if( osvers.indexOf(".") == -1)
+            {
+        		// Remove non-numerical string
+        		osvers = isNaN(osvers) ? "" : osvers;
+
+        		// Left pad with zeroes if necessary
+        		osvers = ("000000" + osvers).substr(-6)
+        		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+            }
+            return osvers
+        }
     };
 
 $(document).on('appReady', function(e, lang) {
@@ -250,27 +267,6 @@ var showFilterModal = function(e){
 	});
 }
 
-
-
-
-
-
-// Integer or integer string OS Version to semantic OS version
-function integer_to_version(osvers)
-{
-	osvers = "" + osvers
-	// If osvers contains a dot, don't convert
-	if( osvers.indexOf(".") == -1)
-    {
-		// Remove non-numerical string
-		osvers = isNaN(osvers) ? "" : osvers;
-
-		// Left pad with zeroes if necessary
-		osvers = ("000000" + osvers).substr(-6)
-		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
-    }
-    return osvers
-}
 
 // Get client detail link
 function get_client_detail_link(name, sn, baseurl, hash)

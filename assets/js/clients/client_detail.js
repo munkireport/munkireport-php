@@ -97,7 +97,7 @@ $(document).on('appReady', function(e, lang) {
 			.tooltip();
 
 		// Format OS Version
-		$('.mr-os_version').html(integer_to_version(machineData.os_version));
+		$('.mr-os_version').html(mr.integerToVersion(machineData.os_version));
 
 
 		// Format filesizes
