@@ -19,7 +19,18 @@ var mr = {
         		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
             }
             return osvers
+        },
+        
+        // Get client detail link
+        getClientDetailLink: function(name, sn, hash)
+        {
+        	hash = (typeof hash === "undefined") ? "" : hash;
+        	return '<div class="machine">\
+            		<a class="btn btn-default btn-xs" href="'+appUrl+'/clients/detail/'+sn+hash+'">'+name+'</a>\
+            		<a href="'+appUrl+'/manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
+            		<i class="fa fa-times"></i></a></div>';
         }
+
     };
 
 $(document).on('appReady', function(e, lang) {
@@ -265,17 +276,6 @@ var showFilterModal = function(e){
 		$('#myModal').modal('show');
 
 	});
-}
-
-
-// Get client detail link
-function get_client_detail_link(name, sn, baseurl, hash)
-{
-	hash = (typeof hash === "undefined") ? "" : hash;
-	return '<div class="machine">\
-    		<a class="btn btn-default btn-xs" href="'+baseurl+'clients/detail/'+sn+hash+'">'+name+'</a>\
-    		<a href="'+baseurl+'manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
-    		<i class="fa fa-times"></i></a></div>';
 }
 
 // Delete machine ajax call
