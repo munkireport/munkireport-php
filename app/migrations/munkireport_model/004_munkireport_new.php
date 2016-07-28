@@ -81,13 +81,23 @@ class Migration_munkireport_new extends Model
             // Wrap in transaction
             $dbh->beginTransaction();
         }
+        
+        try {
+            // Get number of records to convert
+            $sql = "SELECT count(*) as count
+                    FROM munkireport
+                    WHERE report_plist != ''";
+            $resultset = $this->query($sql);
+            $count = $resultset[0]->count;
 
-        // Get number of records to convert
-        $sql = "SELECT count(*) as count
-                FROM munkireport
-                WHERE report_plist != ''";
-        $resultset = $this->query($sql);
-        $count = $resultset[0]->count;
+            
+        } catch (Exception $e) {
+            // report_plist not found?
+            // we're done..
+            return;
+            
+        }
+        
 
         // Get limited
         $sql = "SELECT serial_number, report_plist

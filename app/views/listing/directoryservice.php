@@ -88,7 +88,7 @@ new Directory_service_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_directory-tab');
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_directory-tab');
 	        	$('td:eq(0)', nRow).html(link);
 	        	
 	        	// Translate bool. todo function for any bool we find
