@@ -1,4 +1,4 @@
-<h2>DeployStudio <a data-i18n="ds.recheck" class="btn btn-default btn-xs" href="<?php echo url('module/ds/recheck_ds/' . $serial_number);?>"></a></h2>
+<h2>DeployStudio <a data-i18n="ds.recheck" class="btn btn-default btn-xs" href="<?php echo url('module/deploystudio/recheck_deploystudio/' . $serial_number);?>"></a></h2>
 	
 	<div id="ds-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
 
@@ -109,8 +109,8 @@
 <script>
 $(document).on('appReady', function(e, lang) {
 	
-	// Get ds data
-	$.getJSON( appUrl + '/module/ds/get_data/' + serialNumber, function( data ) {
+	// Get deploystudio data
+	$.getJSON( appUrl + '/module/deploystudio/get_data/' + serialNumber, function( data ) {
 		if( ! data['dstudio-host-primary-key']){
 			$('#ds-msg').text(i18n.t('no_data'));
 		}

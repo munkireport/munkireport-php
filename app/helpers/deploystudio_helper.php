@@ -5,41 +5,41 @@
  * @author tuxudo (John Eberle)
  * Idea provided by @n8felton
  **/
-function pull_ds_data(&$Ds_model)
+function pull_deploystudio_data(&$deploystudio_model)
 {
 	// Error message
 	$error = '';
 
-	$ds_server = conf('ds_server');
+	$deploystudio_server = conf('deploystudio_server');
 
 	// Get computer data from DeployStudio
-	$url = "{$ds_server}/computers/get/entry?id={$Ds_model->serial_number}";
-	$ds_computer_result = get_url($url);
+	$url = "{$deploystudio_server}/computers/get/entry?id={$deploystudio_model->serial_number}";
+	$deploystudio_computer_result = get_deploystudio_url($url);
 
 	require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 	$plist = new CFPropertyList();
-	$plist->parse($ds_computer_result);
+	$plist->parse($deploystudio_computer_result);
 
 	$plist = $plist->toArray();
 	$plist = array_values($plist);
 	$plist = $plist[0];
 
 	foreach($plist as $key=>$value){
-		$Ds_model->$key = $value;
+		$deploystudio_model->$key = $value;
 	}
 
 	if(array_key_exists('dstudio-auto-started-workflow',$plist)){
 		$workflow_title = get_workflow_title($plist['dstudio-auto-started-workflow']);
-		$Ds_model->{'dstudio-auto-started-workflow'} = $workflow_title;
+		$deploystudio_model->{'dstudio-auto-started-workflow'} = $workflow_title;
 	}
 
 	if(array_key_exists('dstudio-last-workflow',$plist)){
 		$workflow_title = get_workflow_title($plist['dstudio-last-workflow']);
-		$Ds_model->{'dstudio-last-workflow'} = $workflow_title;
+		$deploystudio_model->{'dstudio-last-workflow'} = $workflow_title;
 	}
 
   // Save the data
-  $Ds_model->save();
+  $deploystudio_model->save();
   $error = 'DeployStudio data processed';
   return $error;
 }
@@ -51,16 +51,16 @@ function pull_ds_data(&$Ds_model)
  * @return mixed string if successfull, FALSE if failed
  * @author n8felton (Nathan Felton)
  **/
-function get_url($url)
+function get_deploystudio_url($url)
 {
-	$ds_username = conf('ds_username');
-	$ds_password = conf('ds_password');
+	$deploystudio_username = conf('deploystudio_username');
+	$deploystudio_password = conf('deploystudio_password');
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL,$url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 	curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-	curl_setopt($ch, CURLOPT_USERPWD, "$ds_username:$ds_password");
+	curl_setopt($ch, CURLOPT_USERPWD, "$deploystudio_username:$deploystudio_password");
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 	$return = curl_exec($ch);
@@ -73,11 +73,11 @@ function get_url($url)
  * @author n8felton (Nathan Felton)
  **/
 function get_workflow_title($workflow_id){
-	$ds_server = conf('ds_server');
-	$url = "{$ds_server}/workflows/get/entry?id={$workflow_id}";
-	$ds_auto_workflow_result = get_url($url);
+	$deploystudio_server = conf('deploystudio_server');
+	$url = "{$deploystudio_server}/workflows/get/entry?id={$workflow_id}";
+	$deploystudio_auto_workflow_result = get_deploystudio_url($url);
 	$workflow = new CFPropertyList();
-	$workflow->parse($ds_auto_workflow_result);
-	$ds_auto_workflow_result = $workflow->toArray();
-	return $ds_auto_workflow_result['title'];
+	$workflow->parse($deploystudio_auto_workflow_result);
+	$deploystudio_auto_workflow_result = $workflow->toArray();
+	return $deploystudio_auto_workflow_result['title'];
 }

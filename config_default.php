@@ -277,7 +277,7 @@
 	|
 	| A working DeployStudio server is required for use of this module. 
 	|
-	| To use the DeployStudio (DS) module, set 'ds_enable' to TRUE and
+	| To use the DeployStudio module, set 'deploystudio_enable' to TRUE and
 	| enter the server, username, and password for accessing your primary
 	| DeployStudio server.
 	|
@@ -286,10 +286,10 @@
 	| its data may not show in MunkiReport.
 	*/
 
-	$conf['ds_enable'] = FALSE;
-	$conf['ds_server'] = 'https://deploystudio.apple.com:60443/';
-	$conf['ds_username'] = 'deploystudio_user';
-	$conf['ds_password'] = 'deploystudio_password';
+	$conf['deploystudio_enable'] = FALSE;
+	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443/';
+	$conf['deploystudio_username'] = 'deploystudio_user';
+	$conf['deploystudio_password'] = 'deploystudio_password';
 
 	
 	/*

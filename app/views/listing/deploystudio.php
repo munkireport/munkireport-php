@@ -3,7 +3,7 @@
 <?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
-new Ds_model;
+new deploystudio_model;
 ?>
 
 <div class="container">

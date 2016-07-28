@@ -1,17 +1,16 @@
 <?php 
 
 /**
- * Warranty module class
+ * DeployStudio module class
  *
  * @package munkireport
  * @author tuxudo (John Eberle)
  **/
-class Ds_controller extends Module_controller
+class deploystudio_controller extends Module_controller
 {
 	function __construct()
 	{
 		// No authentication, the client needs to get here
-
 		// Store module path
 		$this->module_path = dirname(__FILE__);
 
@@ -19,7 +18,7 @@ class Ds_controller extends Module_controller
 
 	function index()
 	{
-		echo "You've loaded the ds (DeployStudio) module!";
+		echo "You've loaded the deploystudio module!";
 	}
 
 	/**
@@ -28,7 +27,7 @@ class Ds_controller extends Module_controller
 	 * @return void
 	 * @author tuxudo (John Eberle)
 	 **/
-	function recheck_ds($serial='')
+	function recheck_deploystudio($serial='')
 	{
 		// Authenticate
 		if( ! $this->authorized())
@@ -38,11 +37,11 @@ class Ds_controller extends Module_controller
 
 		if(authorized_for_serial($serial))
 		{
-			$ds = new Ds_model($serial);
-			$ds->run_ds_stats();
+			$deploystudio = new deploystudio_model($serial);
+			$deploystudio->run_deploystudio_stats();
 		}
 
-		redirect("clients/detail/$serial#tab_ds-tab");
+		redirect("clients/detail/$serial#tab_deploystudio-tab");
 	}
 
     /**
@@ -59,8 +58,8 @@ class Ds_controller extends Module_controller
             $obj->view('json', array('msg' => 'Not authorized'));
         }
 
-        $ds = new Ds_model($serial_number);
-        $obj->view('json', array('msg' => $ds->rs));
+        $deploystudio = new deploystudio_model($serial_number);
+        $obj->view('json', array('msg' => $deploystudio->rs));
 	}
 		
-} // END class Ds_module
+} // END class deploystudio_module

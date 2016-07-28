@@ -9,27 +9,27 @@ DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
 
 
-# Check if ds.txt exists
-if [ -e "$DIR/cache/ds.txt" ]; then
+# Check if deploystudio.txt exists
+if [ -e "$DIR/cache/deploystudio.txt" ]; then
 
 	# Get current time
 	TIME=$(date +%s)
 
 	# Get file modified time
-	FILEMTIME=$(stat -f "%Sm" -t "%s" "$DIR/cache/ds.txt")
+	FILEMTIME=$(stat -f "%Sm" -t "%s" "$DIR/cache/deploystudio.txt")
 
 	# Calculate the difference in seconds
 	DIFF=$(( $TIME - $FILEMTIME ))
 
 	if [ $DIFF -gt $CHECK ]; then
 		# Store date in file
-		date > "$DIR/cache/ds.txt"
+		date > "$DIR/cache/deploystudio.txt"
 	fi
 
 
 else
 
 	# Store date in file
-	date > "$DIR/cache/ds.txt"
+	date > "$DIR/cache/deploystudio.txt"
 	
 fi

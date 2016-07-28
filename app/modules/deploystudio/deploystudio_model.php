@@ -1,11 +1,11 @@
 <?php
-class Ds_model extends Model {
+class deploystudio_model extends Model {
 	
 	protected $error = '';
 	
 	function __construct($serial='')
 	{
-		parent::__construct('id', 'ds'); //primary key, tablename
+		parent::__construct('id', 'deploystudio'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['architecture'] = '';
@@ -36,6 +36,9 @@ class Ds_model extends Model {
 		
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
+        
+		// Add indexes
+		$this->idx[] = array('serial_number');
 		
 		// Create table if it does not exist
 		$this->create_table();
@@ -55,16 +58,16 @@ class Ds_model extends Model {
 	 * @return void
 	 * @author tuxudo (John Eberle)
 	 **/
-	function run_ds_stats()
+	function run_deploystudio_stats()
 	{		
         // Check if we should enable DeployStudio lookup
-        if (conf('ds_enable'))
+        if (conf('deploystudio_enable'))
             {
 
-                // Load ds helper
-                require_once(conf('application_path').'helpers/ds_helper.php');
+                // Load deploystudio helper
+                require_once(conf('application_path').'helpers/deploystudio_helper.php');
 
-                pull_ds_data($this);
+                pull_deploystudio_data($this);
 
                 // ^^ Comment and uncomment to turn off and on
             }
@@ -80,6 +83,6 @@ class Ds_model extends Model {
 	 **/
 	function process()
 	{
-		$this->run_ds_stats();
+		$this->run_deploystudio_stats();
 	}		
 }
