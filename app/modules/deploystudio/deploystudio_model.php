@@ -2,6 +2,7 @@
 class deploystudio_model extends Model {
 	
 	protected $error = '';
+	protected $module_dir;
 	
 	function __construct($serial='')
 	{
@@ -49,6 +50,8 @@ class deploystudio_model extends Model {
 		}
 		
 		$this->serial_number = $serial;
+		
+		$this->module_dir = dirname(__FILE__);
 		  
 	}
 
@@ -63,11 +66,11 @@ class deploystudio_model extends Model {
         // Check if we should enable DeployStudio lookup
         if (conf('deploystudio_enable'))
             {
-
+				
                 // Load deploystudio helper
-                require_once(conf('application_path').'helpers/deploystudio_helper.php');
-
-                pull_deploystudio_data($this);
+                require_once($this->module_dir.'/lib/deploystudio_helper.php');
+				$ds_helper = new munkireport\module\deploystudio\Deploystudio_helper;
+                $ds_helper->pull_deploystudio_data($this);
 
                 // ^^ Comment and uncomment to turn off and on
             }
