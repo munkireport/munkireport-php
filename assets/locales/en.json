@@ -215,9 +215,7 @@
         "dstudio-last-workflow-execution-date": "Last Workflow Execution Date",
         "dstudio-last-workflow-status": "Workflow Status",
         "dstudio-mac-addr": "MAC Address",
-        "no": "No",
-        "recheck": "Pull DeployStudio Data",
-        "yes": "Yes"
+        "recheck": "Pull DeployStudio Data"
     },
 	"displayname": "Display Name",
 	"edit": "Edit",
@@ -425,7 +423,7 @@
 			"bluetooth": "Bluetooth",
 			"clients": "Clients",
 			"certificate": "Certificates",
-			"ds": "DeployStudio",
+			"deploystudio": "DeployStudio",
 			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
@@ -480,6 +478,7 @@
 	},
 	"new_client": "New Client",
 	"new_client_plural": "New Clients",
+	"no": "No",
 	"no_clients": "No Clients",
 	"no_data": "No Data",
 	"no_errors_or_warnings": "No Errors or Warnings",
@@ -705,5 +704,6 @@
         "xauthtype": "802.11X Authentication Type",
         "wifiauthtype": "WiFi Authentication Type",
         "wifiinfo": "WiFi Information"
-    }
+    },
+	"yes": "Yes"
 }
