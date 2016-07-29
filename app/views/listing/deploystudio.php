@@ -67,7 +67,7 @@ new Deploystudio_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_deploystudio-tab');
 	        	$('td:eq(0)', nRow).html(link);
                 
 	        	// Workflow Status
@@ -78,20 +78,20 @@ new Deploystudio_model;
                 
 	        	// Disabled
                 var disabled=$('td:eq(6)', nRow).html();
-                disabled = disabled == 'YES' ? i18n.t('ds.yes') :
-                (disabled === 'NO' ? i18n.t('ds.no') : '')
+                disabled = disabled == 'YES' ? i18n.t('yes') :
+                (disabled === 'NO' ? i18n.t('no') : '')
                 $('td:eq(6)', nRow).html(disabled)
                 
 	        	// Auto-Disabled
                 var autodisabled=$('td:eq(8)', nRow).html();
-                autodisabled = autodisabled == 'YES' ? i18n.t('ds.yes') :
-                (autodisabled === 'NO' ? i18n.t('ds.no') : '')
+                autodisabled = autodisabled == 'YES' ? i18n.t('yes') :
+                (autodisabled === 'NO' ? i18n.t('no') : '')
                 $('td:eq(8)', nRow).html(autodisabled)
                 
 	        	// Auto-Reset
                 var autoreset=$('td:eq(9)', nRow).html();
-                autoreset = autoreset == 'YES' ? i18n.t('ds.yes') :
-                (autoreset === 'NO' ? i18n.t('ds.no') : '')
+                autoreset = autoreset == 'YES' ? i18n.t('yes') :
+                (autoreset === 'NO' ? i18n.t('no') : '')
                 $('td:eq(9)', nRow).html(autoreset)
 
 	        }
