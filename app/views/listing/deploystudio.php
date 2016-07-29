@@ -3,7 +3,7 @@
 <?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
-new deploystudio_model;
+new Deploystudio_model;
 ?>
 
 <div class="container">
@@ -15,15 +15,15 @@ new deploystudio_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-                <th data-i18n="ds.dstudio-last-workflow" data-colname='ds.dstudio-last-workflow'></th>
-		        <th data-i18n="ds.dstudio-last-workflow-duration" data-colname='ds.dstudio-last-workflow-duration'></th>
-		        <th data-i18n="ds.dstudio-last-workflow-execution-date" data-colname='ds.dstudio-last-workflow-execution-date'></th>
-		        <th data-i18n="ds.dstudio-last-workflow-status" data-colname='ds.dstudio-last-workflow-status'></th>
-		        <th data-i18n="ds.dstudio-disabled" data-colname='ds.dstudio-disabled'></th>
-		        <th data-i18n="ds.dstudio-group" data-colname='ds.dstudio-group'></th>	
-		        <th data-i18n="ds.dstudio-auto-disable" data-colname='ds.dstudio-auto-disable'></th>
-		        <th data-i18n="ds.dstudio-auto-reset-workflow" data-colname='ds.dstudio-auto-reset-workflow'></th>
-		        <th data-i18n="ds.dstudio-auto-started-workflow" data-colname='ds.dstudio-auto-started-workflow'></th>
+                <th data-i18n="ds.dstudio-last-workflow" data-colname='deploystudio.dstudio-last-workflow'></th>
+		        <th data-i18n="ds.dstudio-last-workflow-duration" data-colname='deploystudio.dstudio-last-workflow-duration'></th>
+		        <th data-i18n="ds.dstudio-last-workflow-execution-date" data-colname='deploystudio.dstudio-last-workflow-execution-date'></th>
+		        <th data-i18n="ds.dstudio-last-workflow-status" data-colname='deploystudio.dstudio-last-workflow-status'></th>
+		        <th data-i18n="ds.dstudio-disabled" data-colname='deploystudio.dstudio-disabled'></th>
+		        <th data-i18n="ds.dstudio-group" data-colname='deploystudio.dstudio-group'></th>	
+		        <th data-i18n="ds.dstudio-auto-disable" data-colname='deploystudio.dstudio-auto-disable'></th>
+		        <th data-i18n="ds.dstudio-auto-reset-workflow" data-colname='deploystudio.dstudio-auto-reset-workflow'></th>
+		        <th data-i18n="ds.dstudio-auto-started-workflow" data-colname='deploystudio.dstudio-auto-started-workflow'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
