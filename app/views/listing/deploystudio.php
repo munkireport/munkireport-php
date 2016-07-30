@@ -3,7 +3,7 @@
 <?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
-new deploystudio_model;
+new Deploystudio_model;
 ?>
 
 <div class="container">
@@ -15,15 +15,15 @@ new deploystudio_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-                <th data-i18n="ds.dstudio-last-workflow" data-colname='ds.dstudio-last-workflow'></th>
-		        <th data-i18n="ds.dstudio-last-workflow-duration" data-colname='ds.dstudio-last-workflow-duration'></th>
-		        <th data-i18n="ds.dstudio-last-workflow-execution-date" data-colname='ds.dstudio-last-workflow-execution-date'></th>
-		        <th data-i18n="ds.dstudio-last-workflow-status" data-colname='ds.dstudio-last-workflow-status'></th>
-		        <th data-i18n="ds.dstudio-disabled" data-colname='ds.dstudio-disabled'></th>
-		        <th data-i18n="ds.dstudio-group" data-colname='ds.dstudio-group'></th>	
-		        <th data-i18n="ds.dstudio-auto-disable" data-colname='ds.dstudio-auto-disable'></th>
-		        <th data-i18n="ds.dstudio-auto-reset-workflow" data-colname='ds.dstudio-auto-reset-workflow'></th>
-		        <th data-i18n="ds.dstudio-auto-started-workflow" data-colname='ds.dstudio-auto-started-workflow'></th>
+                <th data-i18n="ds.dstudio-last-workflow" data-colname='deploystudio.dstudio-last-workflow'></th>
+		        <th data-i18n="ds.dstudio-last-workflow-duration" data-colname='deploystudio.dstudio-last-workflow-duration'></th>
+		        <th data-i18n="ds.dstudio-last-workflow-execution-date" data-colname='deploystudio.dstudio-last-workflow-execution-date'></th>
+		        <th data-i18n="ds.dstudio-last-workflow-status" data-colname='deploystudio.dstudio-last-workflow-status'></th>
+		        <th data-i18n="ds.dstudio-disabled" data-colname='deploystudio.dstudio-disabled'></th>
+		        <th data-i18n="ds.dstudio-group" data-colname='deploystudio.dstudio-group'></th>	
+		        <th data-i18n="ds.dstudio-auto-disable" data-colname='deploystudio.dstudio-auto-disable'></th>
+		        <th data-i18n="ds.dstudio-auto-reset-workflow" data-colname='deploystudio.dstudio-auto-reset-workflow'></th>
+		        <th data-i18n="ds.dstudio-auto-started-workflow" data-colname='deploystudio.dstudio-auto-started-workflow'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -67,7 +67,7 @@ new deploystudio_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_deploystudio-tab');
 	        	$('td:eq(0)', nRow).html(link);
                 
 	        	// Workflow Status
@@ -78,20 +78,20 @@ new deploystudio_model;
                 
 	        	// Disabled
                 var disabled=$('td:eq(6)', nRow).html();
-                disabled = disabled == 'YES' ? i18n.t('ds.yes') :
-                (disabled === 'NO' ? i18n.t('ds.no') : '')
+                disabled = disabled == 'YES' ? i18n.t('yes') :
+                (disabled === 'NO' ? i18n.t('no') : '')
                 $('td:eq(6)', nRow).html(disabled)
                 
 	        	// Auto-Disabled
                 var autodisabled=$('td:eq(8)', nRow).html();
-                autodisabled = autodisabled == 'YES' ? i18n.t('ds.yes') :
-                (autodisabled === 'NO' ? i18n.t('ds.no') : '')
+                autodisabled = autodisabled == 'YES' ? i18n.t('yes') :
+                (autodisabled === 'NO' ? i18n.t('no') : '')
                 $('td:eq(8)', nRow).html(autodisabled)
                 
 	        	// Auto-Reset
                 var autoreset=$('td:eq(9)', nRow).html();
-                autoreset = autoreset == 'YES' ? i18n.t('ds.yes') :
-                (autoreset === 'NO' ? i18n.t('ds.no') : '')
+                autoreset = autoreset == 'YES' ? i18n.t('yes') :
+                (autoreset === 'NO' ? i18n.t('no') : '')
                 $('td:eq(9)', nRow).html(autoreset)
 
 	        }

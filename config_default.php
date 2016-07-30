@@ -142,10 +142,10 @@
 	| also used by the Business Units
 	|
 	*/
-	$conf['authorization']['delete_machine'] = array('admin', 'manager');
-	$conf['authorization']['global'] = array('admin');
+    $conf['authorization']['delete_machine'] = array('admin', 'manager');
+    $conf['authorization']['global'] = array('admin');
 
-	/*
+    /*
 	|===============================================
 	| Roles
 	|===============================================
@@ -155,7 +155,7 @@
 	*/
 	$conf['roles']['admin'] = array('*');
 
-	/*
+    /*
 	|===============================================
 	| Local groups
 	|===============================================
@@ -165,7 +165,7 @@
 	*/
 	//$conf['groups']['admin_users'] = array();
 
-	/*
+    /*
 	|===============================================
 	| Business Units
 	|===============================================
@@ -237,7 +237,7 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
 	*/
-	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+    $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
 	/*
 	|===============================================
@@ -310,7 +310,7 @@
 		"--silent",
 		"--show-error");
 
-	/*
+    /*
 	|===============================================
 	| Modules
 	|===============================================
@@ -324,7 +324,7 @@
 	| Machine and Reportdata
 	|
 	*/
-	$conf['modules'] = array('munkireport');
+    $conf['modules'] = array('munkireport', 'managedinstalls');
 
 
 	/*
@@ -356,10 +356,10 @@
 	| By default temperture units are displayed in Celsius °C.
 	|
 	*/
-	//$conf['temperature_unit'] = 'F';
+    //$conf['temperature_unit'] = 'F';
 
 
-	/*
+    /*
 	|===============================================
 	| Migrations
 	|===============================================
@@ -374,7 +374,7 @@
 	| to FALSE when you're done migrating.
 	|
 	*/
-	$conf['allow_migrations'] = FALSE;
+    $conf['allow_migrations'] = FALSE;
 
 
 	/*
@@ -392,7 +392,7 @@
 	|
 	|
 	*/
-	$conf['client_passphrases'] = array();
+    $conf['client_passphrases'] = array();
 
 	/*
 	|===============================================
@@ -411,9 +411,9 @@
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
 	|
 	*/
-	//$conf['proxy']['server'] = 'proxy.yoursite.org';
+    //$conf['proxy']['server'] = 'proxy.yoursite.org';
 
-	/*
+    /*
 	|===============================================
 	| Request timeout
 	|===============================================
@@ -423,7 +423,7 @@
 	| Timeout in seconds
 	|
 	*/
-	$conf['request_timeout'] = 5;
+    $conf['request_timeout'] = 5;
 	
 	
 	/*
@@ -460,7 +460,7 @@
 	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
 	*/
-	$conf['ip_ranges'] = array();
+    $conf['ip_ranges'] = array();
 
  	/*
 	|===============================================

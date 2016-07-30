@@ -2,7 +2,35 @@
 
 // Global munkireport object
 var mr = {
-        dt:{}
+        dt:{},
+        
+        // Integer or integer string OS Version to semantic OS version
+        integerToVersion: function(osvers)
+        {
+        	osvers = "" + osvers
+        	// If osvers contains a dot, don't convert
+        	if( osvers.indexOf(".") == -1)
+            {
+        		// Remove non-numerical string
+        		osvers = isNaN(osvers) ? "" : osvers;
+
+        		// Left pad with zeroes if necessary
+        		osvers = ("000000" + osvers).substr(-6)
+        		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+            }
+            return osvers
+        },
+        
+        // Get client detail link
+        getClientDetailLink: function(name, sn, hash)
+        {
+        	hash = (typeof hash === "undefined") ? "" : hash;
+        	return '<div class="machine">\
+            		<a class="btn btn-default btn-xs" href="'+appUrl+'/clients/detail/'+sn+hash+'">'+name+'</a>\
+            		<a href="'+appUrl+'/manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
+            		<i class="fa fa-times"></i></a></div>';
+        }
+
     };
 
 $(document).on('appReady', function(e, lang) {
@@ -16,7 +44,13 @@ $(document).on('appReady', function(e, lang) {
         menu: 'admin',
         i18n: 'systemstatus.menu_link',
         url: appUrl + '/system/show/status'
+    });
+    addMenuItem({
+        menu: 'report',
+        i18n: 'managedinstalls.installratio_report',
+        url: appUrl + '/module/managedinstalls/view/pkg_stats'
     }); 
+
 
 });
 
@@ -242,38 +276,6 @@ var showFilterModal = function(e){
 		$('#myModal').modal('show');
 
 	});
-}
-
-
-
-
-
-
-// Integer or integer string OS Version to semantic OS version
-function integer_to_version(osvers)
-{
-	osvers = "" + osvers
-	// If osvers contains a dot, don't convert
-	if( osvers.indexOf(".") == -1)
-    {
-		// Remove non-numerical string
-		osvers = isNaN(osvers) ? "" : osvers;
-
-		// Left pad with zeroes if necessary
-		osvers = ("000000" + osvers).substr(-6)
-		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
-    }
-    return osvers
-}
-
-// Get client detail link
-function get_client_detail_link(name, sn, baseurl, hash)
-{
-	hash = (typeof hash === "undefined") ? "" : hash;
-	return '<div class="machine">\
-    		<a class="btn btn-default btn-xs" href="'+baseurl+'clients/detail/'+sn+hash+'">'+name+'</a>\
-    		<a href="'+baseurl+'manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
-    		<i class="fa fa-times"></i></a></div>';
 }
 
 // Delete machine ajax call

@@ -1,7 +1,7 @@
 <div class="col-lg-4 col-md-6">
-    <div class="panel panel-default" id="pending-widget">
+    <div class="panel panel-default" id="failing-widget">
         <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-moon"></i> Clients with pending installs</h3>
+            <h3 class="panel-title"><i class="fa fa-moon"></i> <span data-i18n="managedinstalls.failing_clients"></span></h3>
         </div>
         <div class="list-group scroll-box"></div>
     </div><!-- /panel -->
@@ -11,10 +11,10 @@
 
 $(document).on('appUpdate', function(e, lang) {
 	
-	var box = $('#pending-widget div.scroll-box'),
+	var box = $('#failing-widget div.scroll-box'),
         hours = 24; // Hours back
 	
-	$.getJSON( appUrl + '/module/managedinstalls/get_clients/pending_install/'+hours, function( data ) {
+	$.getJSON( appUrl + '/module/managedinstalls/get_clients/install_failed/'+hours, function( data ) {
 		
 		box.empty();
 

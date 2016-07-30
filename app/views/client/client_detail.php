@@ -10,7 +10,7 @@
 // 'badge' => id of a badge for this tab
 $tab_list = array(
 	'summary' => array('view' => 'client/summary_tab', 'i18n' => 'client.tab.summary'),
-	'munki' => array('view' => 'client/munki_tab', 'i18n' => 'client.tab.munki'),
+	'munki' => array('view_path' => MODULE_PATH . 'munkireport/views/', 'view' => 'client_munki_tab', 'i18n' => 'client.tab.munki'),
 	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
 	'third-party-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 0), 'i18n' => 'client.tab.third_party_software', 'badge' => 'history-cnt-0'),
 	'inventory-items' => array('view' => 'client/inventory_items_tab', 'i18n' => 'client.tab.inventory_items', 'badge' => 'inventory-cnt'),

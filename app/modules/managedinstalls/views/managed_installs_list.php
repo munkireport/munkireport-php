@@ -4,7 +4,7 @@
 //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
-new Printer_model;
+new Managedinstalls_model;
 ?>
 
 <div class="container">
@@ -13,7 +13,7 @@ new Printer_model;
 
   	<div class="col-lg-12">
 
-	<h3>Printer report <span id="total-count" class='label label-primary'>…</span></h3>
+	<h3><span data-i18n="managedinstalls.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 
@@ -21,13 +21,12 @@ new Printer_model;
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-			<th data-i18n="printer.name" data-colname='printer.name'></th>
-			<th data-i18n="printer.ppd" data-colname='printer.ppd'></th>
-			<th data-i18n="printer.driver_version" data-colname='printer.driver_version'></th>
-			<th data-i18n="printer.url" data-colname='printer.URL'></th>
-			<th data-i18n="printer.default_set" data-colname='printer.default_set'></th>
-			<th data-i18n="printer.printer_status" data-colname='printer.printer_status'></th>
-			<th data-i18n="printer.printer_sharing" data-colname='printer.printer_sharing'></th>
+            <th data-i18n="name" data-colname='managedinstalls.name'></th>
+            <th data-i18n="displayname" data-colname='managedinstalls.display_name'></th>
+            <th data-i18n="version" data-colname='managedinstalls.version'></th>
+            <th data-i18n="status" data-colname='managedinstalls.status'></th>
+            <th data-i18n="type" data-colname='managedinstalls.type'></th>
+            <th data-i18n="size" data-colname='managedinstalls.size'></th>
 		  </tr>
 		</thead>
 
@@ -83,7 +82,7 @@ new Printer_model;
                 url: "<?=url('datatables/data')?>",
                 type: "POST",
                 data: function(d){
-                    d.mrColNotEmpty = "printer.name"
+                    d.mrColNotEmpty = "managedinstalls.name"
                 }
             },
             dom: mr.dt.buttonDom,
@@ -97,11 +96,13 @@ new Printer_model;
                 if(name == ''){name = "No Name"};
                 var sn=$('td:eq(1)', nRow).html();
                 if(sn){
-                  var link = mr.getClientDetailLink(name, sn, '#tab_printer-tab');
+                  var link = mr.getClientDetailLink(name, sn, '#tab_munki');
                   $('td:eq(0)', nRow).html(link);
                 } else {
                   $('td:eq(0)', nRow).html(name);
                 }
+                
+                $('td:last', nRow).html(fileSize($('td:last', nRow).html() * 1024));    
 
             } //end fnCreatedRow
 

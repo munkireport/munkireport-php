@@ -19,16 +19,17 @@
 $(document).on('appUpdate', function(e, lang) {
 	
 	
-	$.getJSON( appUrl + '/module/munkireport/get_pending_installs/munki', function( data ) {
+	$.getJSON( appUrl + '/module/managedinstalls/get_pending_installs/munki', function( data ) {
 		
         var box = $('#pending-munki-widget div.scroll-box').empty();
 
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>',
-                    url = appUrl+'/module/munkireport/pending#'+d.name;
+                    url = appUrl+'/module/managedinstalls/listing#'+d.name,
+					display_name = d.display_name || d.name;
                 
-				box.append('<a href="'+url+'" class="list-group-item">'+d.name+badge+'</a>');
+				box.append('<a href="'+url+'" class="list-group-item">'+display_name+' '+d.version+badge+'</a>');
 			});
 		}
 		else{
