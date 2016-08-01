@@ -45,11 +45,11 @@ class Profile_controller extends Module_controller
             {
                 $payload = rawurldecode($payload);
                 $items = $profile_item_obj->retrieve_many(
-                    'payload_name = ? GROUP BY serial_number', array($payload));
+                    'profile_name = ? AND payload_name = ?', array($name, $payload));
                     $data['name'] = $payload;
             } else {
                 $items = $profile_item_obj->retrieve_many(
-                    'profile_name = ? GROUP BY serial_number', array($name));
+                    'profile_name = ?', array($name));
                     $data['name'] = $name;
             }
             
@@ -65,7 +65,8 @@ class Profile_controller extends Module_controller
 
                 $instance['serial'] = $item->serial_number;
                 $instance['hostname'] = $machine->computer_name;
-                $instance['payload'] = $item->profile_name;
+				$instance['profile'] = $item->profile_name;
+				$instance['payload'] = $item->payload_name;
                 $data['profile_items'][] = $instance;
             }
             
