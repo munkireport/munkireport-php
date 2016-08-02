@@ -106,6 +106,7 @@
 			"ard": "ARD",
 			"bluetooth": "Bluetooth",
 			"certificates": "Certificates",
+			"deploystudio": "DeployStudio",
 			"displays": "Displays",
 			"ds": "Directory Services",
 			"gsx": "GSX",
@@ -187,6 +188,35 @@
 		"widget_info": "Total number of known external displays",
 		"widget_title": "External Displays Count"
 	},
+    "ds": {
+		"computername": "Computer Name",
+        "architecture": "Architecture",
+        "dstudio-auto-disable": "Auto Disable",
+        "dstudio-auto-reset-workflow": "Auto Reset Workflow",
+        "dstudio-auto-started-workflow": "Auto Started Workflow",
+        "dstudio-bootcamp-windows-computer-name": "Boot Camp Windows Name",
+        "dstudio-completed": "Completed",
+        "dstudio-disabled": "Disabled",
+        "dstudio-failed": "Failed",
+        "dstudio-group": "Group",
+        "dstudio-host-ard-field-1": "ARD Field 1",
+        "dstudio-host-ard-field-2": "ARD Field 2",
+        "dstudio-host-ard-field-3": "ARD Field 3",
+        "dstudio-host-ard-field-4": "ARD Field 4",
+        "dstudio-host-ard-ignore-empty-fields": "Ignore Empty ARD Fields",
+        "dstudio-host-delete-other-locations": "Delete Other Locations",
+        "dstudio-host-model-identifier": "Model Identifier",
+        "dstudio-hostname": "Hostname",
+        "dstudio-host-new-network-location": "New Network Location",
+        "dstudio-host-serial-number": "Serial Number",
+        "dstudio-host-type": "Host Type",
+        "dstudio-last-workflow": "Last Workflow Run",
+        "dstudio-last-workflow-duration": "Last Workflow Duration",
+        "dstudio-last-workflow-execution-date": "Last Workflow Execution Date",
+        "dstudio-last-workflow-status": "Workflow Status",
+        "dstudio-mac-addr": "MAC Address",
+        "recheck": "Pull DeployStudio Data"
+    },
 	"displayname": "Display Name",
 	"edit": "Edit",
 	"email": {
@@ -393,6 +423,7 @@
 			"bluetooth": "Bluetooth",
 			"clients": "Clients",
 			"certificate": "Certificates",
+			"deploystudio": "DeployStudio",
 			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
@@ -447,6 +478,7 @@
 	},
 	"new_client": "New Client",
 	"new_client_plural": "New Clients",
+	"no": "No",
 	"no_clients": "No Clients",
 	"no_data": "No Data",
 	"no_errors_or_warnings": "No Errors or Warnings",
@@ -672,5 +704,6 @@
         "xauthtype": "802.11X Authentication Type",
         "wifiauthtype": "WiFi Authentication Type",
         "wifiinfo": "WiFi Information"
-    }
+    },
+	"yes": "Yes"
 }

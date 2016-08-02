@@ -256,7 +256,7 @@
 	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the 
 	| Readme.md located in the GSX module.
 	|
-	| To use GSX module, set enable to TRUE and uncomment and
+	| To use the GSX module, set enable to TRUE and uncomment and
 	| fill out rest of configuration options. When setting the date format
 	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
 	| are required.
@@ -268,6 +268,29 @@
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
+
+
+	/*
+	|===============================================
+	| DeployStudio
+	|===============================================
+	|
+	| A working DeployStudio server is required for use of this module. 
+	|
+	| To use the DeployStudio module, set 'deploystudio_enable' to TRUE and
+	| enter the server, username, and password for accessing your primary
+	| DeployStudio server.
+	|
+	| This module currently only pulls data from the primary DeployStudio
+	| server. This means if a machine was imaged off of a replica server
+	| its data may not show in MunkiReport.
+	*/
+
+	$conf['deploystudio_enable'] = FALSE;
+	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443/';
+	$conf['deploystudio_username'] = 'deploystudio_user';
+	$conf['deploystudio_password'] = 'deploystudio_password';
+
 	
 	/*
 	|===============================================
