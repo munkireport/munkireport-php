@@ -95,6 +95,10 @@ $(document).on('appReady', function(e, lang) {
 			.attr('title', machineData.computer_name)
 			.data('placement', 'bottom')
 			.tooltip();
+		
+		// Add computername to pagetitle
+		var title = $('title').text();
+		$('title').text(machineData.computer_name + ' | ' + title)
 
 		// Format OS Version
 		$('.mr-os_version').html(mr.integerToVersion(machineData.os_version));
