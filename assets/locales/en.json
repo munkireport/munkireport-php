@@ -301,6 +301,9 @@
 	"inactive": "Inactive",
 	"info": "Information",
 	"installed": "Installed",
+	"inventory": {
+		"report": "Inventory Report"
+	},
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
