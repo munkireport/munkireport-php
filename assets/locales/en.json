@@ -97,6 +97,7 @@
 	"cert": {
 		"expired": "__name__ expired __moment__"
 	},
+	"cfbundlename": "CFBundleName",
 	"client": {
 		"activity": "Client Activity",
 		"comment": "Comments",
