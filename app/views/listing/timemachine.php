@@ -113,9 +113,9 @@ new Timemachine_model;
 	        	}
 	        	
 				// Format Check-In timestamp
-				var checkin = parseInt($('td:eq(7)', nRow).html());
+				var checkin = parseInt($('td:eq(10)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(7)', nRow).html(moment(date).fromNow());
+				$('td:eq(10)', nRow).html(moment(date).fromNow());
 		    }
 	    } );
 	    // Use hash as searchquery
