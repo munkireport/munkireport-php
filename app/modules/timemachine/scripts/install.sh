@@ -21,3 +21,10 @@ else
 	# Signal that we had an error
 	ERR=1
 fi
+
+# Attempt to delete the previous bash version of the timemachine script
+if [ -f ${MUNKIPATH}preflight.d/timemachine.sh ]
+then
+    echo "Uninstalling previous version of timemachine script"
+    rm -f "${MUNKIPATH}preflight.d/timemachine.sh"
+fi
