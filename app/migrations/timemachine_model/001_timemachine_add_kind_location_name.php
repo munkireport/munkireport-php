@@ -6,7 +6,7 @@ class Migration_timemachine_add_kind_location_name extends Model
 {
 	protected $columname1 = 'kind';
 	protected $columname2 = 'location_name';
-	protected $columnname3 = 'backup_location';
+	protected $columname3 = 'backup_location';
 
 	function __construct()
 	{
