@@ -103,8 +103,17 @@ class Migration_timemachine_add_kind_location_name extends Model
 
 				// MySQL drops the index as well -> check for other engines
 				$sql = sprintf('ALTER TABLE %s DROP COLUMN %s', 
-					$this->enquote($this->tablename), $this->enquote($this->columname));
+					$this->enquote($this->tablename), $this->enquote($this->columname1));
 				$this->exec($sql);
+
+				$sql = sprintf('ALTER TABLE %s DROP COLUMN %s', 
+					$this->enquote($this->tablename), $this->enquote($this->columname2));
+				$this->exec($sql);
+
+				$sql = sprintf('ALTER TABLE %s DROP COLUMN %s', 
+					$this->enquote($this->tablename), $this->enquote($this->columname3));
+				$this->exec($sql);
+
 		}
 	}
 }
