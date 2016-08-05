@@ -17,7 +17,7 @@ class Timemachine_model extends Model {
 		
 		
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
+		$this->schema_version = 1;
 		
 		//indexes to optimize queries
 		$this->idx[] = array('last_success');
