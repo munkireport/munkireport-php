@@ -63,7 +63,10 @@
 		"duration": "Backup duration",
 		"last_failure": "Last failed backup",
 		"last_failure_msg": "Message",
-		"last_success": "Last successful backup"
+		"last_success": "Last successful backup",
+        "kind": "Kind",
+        "location_name": "Name",
+        "backup_location": "Location"
 	},
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
