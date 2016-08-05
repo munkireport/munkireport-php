@@ -14,7 +14,11 @@
 
 </div>  <!-- /container -->
 
+<?php if(conf('google_maps_api_key')):?>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?=conf('google_maps_api_key')?>"></script>
+<?php else:?>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<?php endif?>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/googlemaps/markerclusterer.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.autoupdate.js"></script>
 

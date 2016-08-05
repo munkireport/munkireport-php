@@ -285,12 +285,28 @@
 	| server. This means if a machine was imaged off of a replica server
 	| its data may not show in MunkiReport.
 	*/
-
 	$conf['deploystudio_enable'] = FALSE;
 	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443/';
 	$conf['deploystudio_username'] = 'deploystudio_user';
 	$conf['deploystudio_password'] = 'deploystudio_password';
-
+	
+	/*
+	|===============================================
+	| Google Maps API Key
+	|===============================================
+	|
+	| To plot the location, you need to use the google maps API. To use the API
+	| you should obtain an API key. Without it, you may get blank maps and js
+	| errors.
+	|
+	| Obtain an API Key at the google site:
+	| https://console.developers.google.com/flows/enableapi?apiid=maps_backend&keyType=CLIENT_SIDE&reusekey=true
+	| And choose - Create browser API key
+	| Add the following line to your config.php file and insert your key.
+	| $conf['google_maps_api_key'] = 'YOUR_API_KEY';
+	|
+	*/
+	$conf['google_maps_api_key'] = '';
 	
 	/*
 	|===============================================
