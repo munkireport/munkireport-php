@@ -11,6 +11,10 @@ class Timemachine_model extends Model {
 		$this->rs['last_failure_msg'] = ''; // Message of the last failure
 		$this->rs['duration'] = 0; // Duration in seconds
 		$this->rs['timestamp'] = ''; // Timestamp of last update
+		$this->rs['kind'] = ''; // Kind of backup (Network, Local)
+		$this->rs['location_name'] = ''; // Name of the backup location
+		$this->rs['backup_location'] = ''; // Location of the backup
+		
 		
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -40,6 +44,16 @@ class Timemachine_model extends Model {
 	function process($data)
 	{		
 		
+        $translate = array(
+        'TM_KIND: ' => 'kind',
+        'TM_LOCATION: ' => 'backup_location',
+        'TM_NAME: ' => 'location_name');
+
+        //clear any previous data we had
+		foreach($translate as $search => $field) {
+			$this->$field = '';
+		}
+
 		// Parse log data
 		$start = ''; // Start date
         foreach(explode("\n", $data) as $line)
@@ -47,7 +61,17 @@ class Timemachine_model extends Model {
         	$date = substr($line, 0, 19);
         	$message = substr($line, 21);
         	
-
+			foreach($translate as $search => $field) {
+			    
+			    if(strpos($line, $search) === 0) {
+				    
+				    $value = substr($line, strlen($search));
+				    
+				    $this->$field = $value;
+				    break;
+			    }
+              }
+              
         	if( preg_match('/^Starting (automatic|manual) backup/', $message))
         	{
         		$start = $date;

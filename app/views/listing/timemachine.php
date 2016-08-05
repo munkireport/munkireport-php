@@ -25,6 +25,9 @@ new Timemachine_model;
 		        <th data-i18n="backup.duration" data-colname='timemachine.duration'></th>
 		        <th data-i18n="backup.last_failure" data-colname='timemachine.last_failure'></th>
 		        <th data-i18n="backup.last_failure_msg" data-colname='timemachine.last_failure_msg'></th>
+		        <th data-i18n="backup.kind" data-colname='timemachine.kind'></th>
+		        <th data-i18n="backup.location_name" data-colname='timemachine.location_name'></th>
+		        <th data-i18n="backup.backup_location" data-colname='timemachine.backup_location'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
@@ -89,7 +92,7 @@ new Timemachine_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = mr.getClientDetailLink(name, sn, '#tab_summary');
+	        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_summary');
 	        	$('td:eq(0)', nRow).html(link);
 
 	        	// Format start date
