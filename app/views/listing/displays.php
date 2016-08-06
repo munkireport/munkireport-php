@@ -82,6 +82,25 @@
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "displays.vendor"
+                    
+                    // Look for 'external' keyword
+                    if(d.search.value.match(/^external$/))
+                    {
+                        // Add column specific search
+                        d.columns[2].search.value = '= 1';
+                        // Clear global search
+                        d.search.value = '';
+                    }
+                    
+                    // Look for 'external' keyword
+                    if(d.search.value.match(/^internal/))
+                    {
+                        // Add column specific search
+                        d.columns[2].search.value = '= 0';
+                        // Clear global search
+                        d.search.value = '';
+                    }
+
                 }
             },
             dom: mr.dt.buttonDom,
@@ -95,7 +114,7 @@
                 if(name == ''){name = "No Name"};
                 var sn=$('td:eq(1)', nRow).html();
                 if(sn){
-                  var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_displays-tab');
+                  var link = mr.getClientDetailLink(name, sn, '#tab_displays-tab');
                   $('td:eq(0)', nRow).html(link);
                 } else {
                   $('td:eq(0)', nRow).html(name);

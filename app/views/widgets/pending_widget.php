@@ -14,13 +14,13 @@ $(document).on('appUpdate', function(e, lang) {
 	var box = $('#pending-widget div.scroll-box'),
         hours = 24; // Hours back
 	
-	$.getJSON( appUrl + '/module/munkireport/get_pending/'+hours, function( data ) {
+	$.getJSON( appUrl + '/module/managedinstalls/get_clients/pending_install/'+hours, function( data ) {
 		
 		box.empty();
 
 		if(data.length){
 			$.each(data, function(i,d){
-				var badge = '<span class="badge pull-right">'+d.pendinginstalls+'</span>',
+				var badge = '<span class="badge pull-right">'+d.count+'</span>',
                     url = appUrl+'/clients/detail/'+d.serial_number+'#tab_munki';
                 
                 d.computer_name = d.computer_name || i18n.t('empty');

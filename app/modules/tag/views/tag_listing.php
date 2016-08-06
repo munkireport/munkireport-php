@@ -77,7 +77,17 @@ $(document).on('appReady', function(e, lang) {
             url: "<?=url('datatables/data')?>",
             type: "POST",
             data: function(d){
-                d.mrColNotEmpty = "tag.id"
+                d.mrColNotEmpty = "tag.id";
+				
+				// Look for a bigger/smaller/equal statement
+				if(d.search.value.match(/^tag = .+$/))
+				{
+					// Add column specific search
+					d.columns[3].search.value = d.search.value.replace(/tag = /, '');
+					// Clear global search
+					d.search.value = '';
+				}
+
             }
         },
         dom: mr.dt.buttonDom,
@@ -89,7 +99,7 @@ $(document).on('appReady', function(e, lang) {
         	var name=$('td:eq(0)', nRow).html();
         	if(name == ''){name = "No Name"};
         	var sn=$('td:eq(1)', nRow).html();
-        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_summary');
+        	var link = mr.getClientDetailLink(name, sn, '#tab_summary');
         	$('td:eq(0)', nRow).html(link);
 			
 			// Format Check-In timestamp

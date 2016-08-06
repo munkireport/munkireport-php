@@ -43,14 +43,17 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
         // Initialize datatables
         $('.install-history-<?php echo $apple; ?>').dataTable(
 		{
-			"aaSorting": [[2,'asc']],
+			"order": [[2, 'desc']],
 			"fnDrawCallback": function( oSettings ){
 				// Update tab counter
 				$('#history-cnt-<?php echo $apple; ?>').html(oSettings.fnRecordsTotal());
 			},
 			"fnCreatedRow": function( nRow, aData, iDataIndex ){
-				// Add full time tooltip
-				$('time', nRow).tooltip();
+				// Format time and add full time tooltip
+				var time = $('time', nRow);
+				time
+					.text(moment(time.attr('datetime')).fromNow())
+					.tooltip();
 			}
         });
   });

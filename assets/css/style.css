@@ -1,5 +1,4 @@
 body {
-  padding-top: 60px;
   padding-bottom: 40px;
 }
 /* color for list group items */
@@ -180,4 +179,9 @@ svg .nv-label text
     max-width: 800px;
     max-height: 600px;
     overflow: scroll
+}
+
+.modal-body {
+    max-height: calc(100vh - 212px);
+    overflow-y: auto;
 }

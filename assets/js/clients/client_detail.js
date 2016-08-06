@@ -84,6 +84,10 @@ $(document).on('appReady', function(e, lang) {
 		$.each(machineData, function(prop, val){
 			$('.mr-'+prop).html(val);
 		});
+		
+		// Convert computer_model to link to everymac.com TODO: make this optional/configurable
+		var mmodel = $('.mr-machine_model').html();
+		$('.mr-machine_model').html('<a target="_blank" href="https://www.everymac.com/ultimate-mac-lookup/?search_keywords='+mmodel+'">'+mmodel+'</a>');
 
 		// Set computer name value and title
 		$('.mr-computer_name_input')
@@ -91,9 +95,13 @@ $(document).on('appReady', function(e, lang) {
 			.attr('title', machineData.computer_name)
 			.data('placement', 'bottom')
 			.tooltip();
+		
+		// Add computername to pagetitle
+		var title = $('title').text();
+		$('title').text(machineData.computer_name + ' | ' + title)
 
 		// Format OS Version
-		$('.mr-os_version').html(integer_to_version(machineData.os_version));
+		$('.mr-os_version').html(mr.integerToVersion(machineData.os_version));
 
 
 		// Format filesizes
@@ -420,6 +428,42 @@ $(document).on('appReady', function(e, lang) {
 		}
 
 	});
+	
+	// ------------------------------------ Hotkeys
+	// Use arrows to switch between tabs in client view
+	
+	$(document).bind('keydown', 'right', function(){
+
+		var activeTab = $('.client-tabs').find('li.active')
+		if(activeTab.length < 1){
+			activeTab = $('.client-tabs li:first');
+		}
+		var nextTab = activeTab.next('li:not(.divider)')
+		if(nextTab.length < 1){
+			nextTab = $('.client-tabs li:first');
+		}
+
+		$(nextTab).find('a').click();
+		return true;
+	});
+	
+	$(document).bind('keydown', 'left', function(){
+
+		var activeTab = $('.client-tabs').find('li.active')
+		if(activeTab.length < 1){
+			activeTab = $('.client-tabs li:first');
+		}
+		var prevTab = activeTab.prev('li:not(.divider)')
+		if(prevTab.length < 1){
+			prevTab = $('.client-tabs li:not(.divider):last');
+		}
+
+		$(prevTab).find('a').click();
+		return true;
+	});
+
+	
+	// ------------------------------------ End Hotkeys
 	
 	// ------------------------------------ Tags
 	var currentTags = {}
