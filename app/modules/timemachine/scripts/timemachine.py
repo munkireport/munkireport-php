@@ -26,7 +26,7 @@ out, err = sp.communicate()
 plist = plistlib.readPlistFromString(out)
 destinations = plist['Destinations']
 result = ''
-count = 0
+destinationCount = 0
 
 # Examine destinations for information.  May have multiple destinations.
 for destination in destinations:
