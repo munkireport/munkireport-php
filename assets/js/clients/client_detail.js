@@ -340,6 +340,11 @@ $(document).on('appReady', function(e, lang) {
 						.text(tmData.backup_location)))
 				.append($('<tr>')
 					.append($('<th>')
+						.text(i18n.t('backup.destinations')))
+					.append($('<td>')
+						.text(tmData.destinations)))
+				.append($('<tr>')
+					.append($('<th>')
 						.text(i18n.t('backup.last_failure_msg')))
 					.append($('<td>')
 						.text(tmData.last_failure_msg)));

@@ -67,6 +67,7 @@
         "kind": "Kind",
         "location_name": "Name",
         "backup_location": "Location"
+        "destinations": "Destinations"
 	},
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
@@ -353,6 +354,7 @@
 			"kind": "Kind",
 			"location_name": "Name",
 			"backup_location": "Location"
+			"destinations": "Destinations"
 		},
 		"username": "Username",
         "wifi": {

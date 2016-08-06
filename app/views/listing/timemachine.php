@@ -28,6 +28,7 @@ new Timemachine_model;
 		        <th data-i18n="backup.kind" data-colname='timemachine.kind'></th>
 		        <th data-i18n="backup.location_name" data-colname='timemachine.location_name'></th>
 		        <th data-i18n="backup.backup_location" data-colname='timemachine.backup_location'></th>
+		        <th data-i18n="backup.destinations" data-colname='timemachine.destinations'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>

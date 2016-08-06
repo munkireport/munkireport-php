@@ -26,9 +26,11 @@ out, err = sp.communicate()
 plist = plistlib.readPlistFromString(out)
 destinations = plist['Destinations']
 result = ''
+count = 0
 
 # Examine destinations for information.  May have multiple destinations.
 for destination in destinations:
+    destinationCount += 1
     if destination.get('LastDestination') == 1:
         if destination.get('Kind') == "Network":
             result += "TM_LOCATION: " + destination['URL'] + '\n'
@@ -40,14 +42,15 @@ for destination in destinations:
         result += "TM_KIND: " + destination['Kind'] + '\n'
         result += "TM_NAME: " + destination['Name'] + '\n'
 
+# Write to disk
+txtfile = open("%s/timemachine.txt" % cachedir, "w")
+txtfile.write("TM_DESTINATIONS: " + str(destinationCount) + '\n')
+
 # Store 7 days of relevant syslog events
 logproc = subprocess.Popen(['syslog', '-F', '$((Time)(utc)) $Message', '-k', 'Sender', 'com.apple.backupd', '-k', 'Time', 'ge', '-7d', '-k', 'Message', 'R', '^(Backup|Starting).*'], stdout=subprocess.PIPE)
 out, err = logproc.communicate()
 result += '\n' + out + '\n'
 
-
-# Write to disk
-txtfile = open("%s/timemachine.txt" % cachedir, "w")
 txtfile.write(result.encode('utf-8'))
 txtfile.close()
 

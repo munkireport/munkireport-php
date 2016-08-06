@@ -14,6 +14,7 @@ class Timemachine_model extends Model {
 		$this->rs['kind'] = ''; // Kind of backup (Network, Local)
 		$this->rs['location_name'] = ''; // Name of the backup location
 		$this->rs['backup_location'] = ''; // Location of the backup
+		$this->rs['destinations'] = 0; // Number of configured destinations
 		
 		
 		// Schema version, increment when creating a db migration
@@ -23,9 +24,6 @@ class Timemachine_model extends Model {
 		$this->idx[] = array('last_success');
 		$this->idx[] = array('last_failure');
 		$this->idx[] = array('timestamp');
-		$this->idx[] = array('kind');
-		$this->idx[] = array('location_name');
-		$this->idx[] = array('backup_location');
 		
 		// Create table if it does not exist
 		$this->create_table();
@@ -50,7 +48,8 @@ class Timemachine_model extends Model {
         $translate = array(
         'TM_KIND: ' => 'kind',
         'TM_LOCATION: ' => 'backup_location',
-        'TM_NAME: ' => 'location_name');
+        'TM_NAME: ' => 'location_name',
+        'TM_DESTINATIONS: ' => 'destinations');
 
         //clear any previous data we had
 		foreach($translate as $search => $field) {

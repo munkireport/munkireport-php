@@ -7,6 +7,7 @@ class Migration_timemachine_add_kind_location_name extends Model
 	protected $columname1 = 'kind';
 	protected $columname2 = 'location_name';
 	protected $columname3 = 'backup_location';
+	protected $columname4 = 'destinations';
 
 	function __construct()
 	{
@@ -56,6 +57,19 @@ class Migration_timemachine_add_kind_location_name extends Model
 		$idx_name = $this->tablename . '_' . $this->columname3;
 		$sql = sprintf("CREATE INDEX %s ON %s (%s)", 
 			$idx_name, $this->enquote($this->tablename), $this->columname3);
+
+		$this->exec($sql);
+
+		// Adding a column is simple...
+		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s INTEGER', 
+			$this->enquote($this->tablename), $this->enquote($this->columname4));
+
+		$this->exec($sql);
+
+		// so is adding an index...
+		$idx_name = $this->tablename . '_' . $this->columname3;
+		$sql = sprintf("CREATE INDEX %s ON %s (%s)", 
+			$idx_name, $this->enquote($this->tablename), $this->columname4);
 
 		$this->exec($sql);
 
