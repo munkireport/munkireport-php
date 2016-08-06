@@ -1,13 +1,14 @@
 <?php
 
-// Add uptime field
+// Add columns for timemachine
 
 class Migration_timemachine_add_kind_location_name extends Model 
 {
-	protected $columname1 = 'kind';
-	protected $columname2 = 'location_name';
-	protected $columname3 = 'backup_location';
-	protected $columname4 = 'destinations';
+	protected $columns = array(
+				'kind' => 'VARCHAR(255)',
+				'location_name' => 'VARCHAR(255)',
+				'backup_location' => 'VARCHAR(255)',
+				'destinations' => 'INT');
 
 	function __construct()
 	{
@@ -22,56 +23,23 @@ class Migration_timemachine_add_kind_location_name extends Model
 
 		// Wrap in transaction
 		$dbh->beginTransaction();
-
-		// Adding a column is simple...
-		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s VARCHAR(255)', 
-			$this->enquote($this->tablename), $this->enquote($this->columname1));
-
-		$this->exec($sql);
-
-		// so is adding an index...
-		$idx_name = $this->tablename . '_' . $this->columname1;
-		$sql = sprintf("CREATE INDEX %s ON %s (%s)", 
-			$idx_name, $this->enquote($this->tablename), $this->columname1);
-
-		$this->exec($sql);
 		
-		// Adding a column is simple...
-		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s VARCHAR(255)', 
-			$this->enquote($this->tablename), $this->enquote($this->columname2));
+		// Loop over columns
+		foreach($columns as $name => $type){
+			// Adding a column is simple...
+			$sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s', 
+				$this->enquote($this->tablename), $this->enquote($name), $type);
 
-		$this->exec($sql);
+			$this->exec($sql);
 
-		// so is adding an index...
-		$idx_name = $this->tablename . '_' . $this->columname2;
-		$sql = sprintf("CREATE INDEX %s ON %s (%s)", 
-			$idx_name, $this->enquote($this->tablename), $this->columname2);
+			// so is adding an index...
+			$idx_name = $this->tablename . '_' . $name;
+			$sql = sprintf("CREATE INDEX %s ON %s (%s)", 
+				$idx_name, $this->enquote($this->tablename), $name);
+			
+			$this->exec($sql);
 
-		// Adding a column is simple...
-		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s VARCHAR(255)', 
-			$this->enquote($this->tablename), $this->enquote($this->columname3));
-
-		$this->exec($sql);
-
-		// so is adding an index...
-		$idx_name = $this->tablename . '_' . $this->columname3;
-		$sql = sprintf("CREATE INDEX %s ON %s (%s)", 
-			$idx_name, $this->enquote($this->tablename), $this->columname3);
-
-		$this->exec($sql);
-
-		// Adding a column is simple...
-		$sql = sprintf('ALTER TABLE %s ADD COLUMN %s INTEGER', 
-			$this->enquote($this->tablename), $this->enquote($this->columname4));
-
-		$this->exec($sql);
-
-		// so is adding an index...
-		$idx_name = $this->tablename . '_' . $this->columname3;
-		$sql = sprintf("CREATE INDEX %s ON %s (%s)", 
-			$idx_name, $this->enquote($this->tablename), $this->columname4);
-
-		$this->exec($sql);
+		}
 
 		$dbh->commit();
 	}
@@ -116,18 +84,11 @@ class Migration_timemachine_add_kind_location_name extends Model
 			default: // MySQL (other engines?)
 
 				// MySQL drops the index as well -> check for other engines
-				$sql = sprintf('ALTER TABLE %s DROP COLUMN %s', 
-					$this->enquote($this->tablename), $this->enquote($this->columname1));
-				$this->exec($sql);
-
-				$sql = sprintf('ALTER TABLE %s DROP COLUMN %s', 
-					$this->enquote($this->tablename), $this->enquote($this->columname2));
-				$this->exec($sql);
-
-				$sql = sprintf('ALTER TABLE %s DROP COLUMN %s', 
-					$this->enquote($this->tablename), $this->enquote($this->columname3));
-				$this->exec($sql);
-
+				foreach($columns as $name => $type){
+					$sql = sprintf('ALTER TABLE %s DROP COLUMN %s', 
+						$this->enquote($this->tablename), $this->enquote($name));
+					$this->exec($sql);
+				}
 		}
 	}
 }
