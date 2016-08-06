@@ -328,6 +328,25 @@ $(document).on('appReady', function(e, lang) {
 						.text(i18n.t('backup.last_failure_msg')))
 					.append($('<td>')
 						.text(tmData.last_failure_msg)));
+
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.kind')))
+					.append($('<td>')
+						.text(tmData.kind)));
+
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.location_name')))
+					.append($('<td>')
+						.text(tmData.location_name)));
+
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.backup_location')))
+					.append($('<td>')
+						.text(tmData.backup_location)));
+
 		}
 		else{
 			$('table.mr-timemachine-table')
