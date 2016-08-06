@@ -322,31 +322,27 @@ $(document).on('appReady', function(e, lang) {
 							if(tmData.last_failure){
 								return moment(tmData.last_failure + 'Z').fromNow();
 							}
-						})))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.last_failure_msg')))
-					.append($('<td>')
-						.text(tmData.last_failure_msg)))
-
+						})))						
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.kind')))
 					.append($('<td>')
 						.text(tmData.kind)))
-
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.location_name')))
 					.append($('<td>')
 						.text(tmData.location_name)))
-
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.backup_location')))
 					.append($('<td>')
-						.text(tmData.backup_location)));
-
+						.text(tmData.backup_location)))
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.last_failure_msg')))
+					.append($('<td>')
+						.text(tmData.last_failure_msg)));
 		}
 		else{
 			$('table.mr-timemachine-table')
