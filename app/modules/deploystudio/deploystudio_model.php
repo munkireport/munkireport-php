@@ -40,6 +40,11 @@ class Deploystudio_model extends Model {
         
 		// Add indexes
 		$this->idx[] = array('serial_number');
+		$this->idx[] = array('dstudio-host-serial-number');
+		$this->idx[] = array('dstudio-hostname');
+		$this->idx[] = array('dstudio-mac-addr');
+		$this->idx[] = array('dstudio-last-workflow');
+		$this->idx[] = array('cn');
 		
 		// Create table if it does not exist
 		$this->create_table();
