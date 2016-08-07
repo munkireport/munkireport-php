@@ -39,7 +39,6 @@ class Deploystudio_model extends Model {
 		$this->schema_version = 0;
         
 		// Add indexes
-		$this->idx[] = array('serial_number');
 		$this->idx[] = array('dstudio-host-serial-number');
 		$this->idx[] = array('dstudio-hostname');
 		$this->idx[] = array('dstudio-mac-addr');
