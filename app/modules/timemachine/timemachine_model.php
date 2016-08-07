@@ -34,7 +34,7 @@ class Timemachine_model extends Model {
 		$this->create_table();
 		
 		if ($serial)
-			$this->retrieve_record($serial);
+			$this->retrieve_records($serial);
 		
 		$this->serial = $serial;
 		  
