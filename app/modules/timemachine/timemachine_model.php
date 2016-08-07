@@ -27,6 +27,7 @@ class Timemachine_model extends Model {
 		$this->idx[] = array('kind');
 		$this->idx[] = array('location_name');
 		$this->idx[] = array('backup_location');
+		$this->idx[] = array('destinations');
 		
 		// Create table if it does not exist
 		$this->create_table();
