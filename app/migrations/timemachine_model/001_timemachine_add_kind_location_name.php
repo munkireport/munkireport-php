@@ -38,9 +38,16 @@ class Migration_timemachine_add_kind_location_name extends Model
 				$idx_name, $this->enquote($this->tablename), $name);
 			
 			$this->exec($sql);
-
 		}
-
+		
+		// Drop UNIQUE index for serial_number
+		$sql = "ALTER TABLE timemachine DROP index serial_number";
+		$this->exec($sql);
+		
+		// Add INDEX for serial_number
+		$sql = "CREATE INDEX timemachine_serial_number ON timemachine (serial_number)";
+		$this->exec($sql);
+		
 		$dbh->commit();
 	}
 
