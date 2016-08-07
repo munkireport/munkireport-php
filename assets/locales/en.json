@@ -63,7 +63,11 @@
 		"duration": "Backup duration",
 		"last_failure": "Last failed backup",
 		"last_failure_msg": "Message",
-		"last_success": "Last successful backup"
+		"last_success": "Last successful backup",
+        "kind": "Kind",
+        "location_name": "Name",
+        "backup_location": "Location",
+        "destinations": "Destinations"
 	},
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
@@ -346,7 +350,11 @@
 			"last_failure": "Last failed backup",
 			"last_failure_msg": "Message",
 			"last_success": "Last successful backup",
-			"title": "Time Machine Report"
+			"title": "Time Machine Report",
+			"kind": "Kind",
+			"location_name": "Name",
+			"backup_location": "Location",
+			"destinations": "Destinations"
 		},
 		"username": "Username",
         "wifi": {
