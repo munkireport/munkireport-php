@@ -19,13 +19,13 @@ class Migration_timemachine_add_kind_location_name extends Model
 	public function up()
 	{
 		// Get database handle
-		$dbh = $this->getdbh();
+		$dbh = $this->getdbh();		
 
 		// Wrap in transaction
 		$dbh->beginTransaction();
 		
 		// Loop over columns
-		foreach($columns as $name => $type){
+		foreach($this->columns as $name => $type){
 			// Adding a column is simple...
 			$sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s', 
 				$this->enquote($this->tablename), $this->enquote($name), $type);
@@ -38,9 +38,16 @@ class Migration_timemachine_add_kind_location_name extends Model
 				$idx_name, $this->enquote($this->tablename), $name);
 			
 			$this->exec($sql);
-
 		}
-
+		
+		// Drop UNIQUE index for serial_number
+		$sql = "ALTER TABLE timemachine DROP index serial_number";
+		$this->exec($sql);
+		
+		// Add INDEX for serial_number
+		$sql = "CREATE INDEX timemachine_serial_number ON timemachine (serial_number)";
+		$this->exec($sql);
+		
 		$dbh->commit();
 	}
 
@@ -84,7 +91,7 @@ class Migration_timemachine_add_kind_location_name extends Model
 			default: // MySQL (other engines?)
 
 				// MySQL drops the index as well -> check for other engines
-				foreach($columns as $name => $type){
+				foreach($this->columns as $name => $type){
 					$sql = sprintf('ALTER TABLE %s DROP COLUMN %s', 
 						$this->enquote($this->tablename), $this->enquote($name));
 					$this->exec($sql);

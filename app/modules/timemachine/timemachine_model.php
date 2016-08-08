@@ -5,7 +5,7 @@ class Timemachine_model extends Model {
 	{
 		parent::__construct('id', 'timemachine'); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial;
 		$this->rs['last_success'] = ''; // Datetime of last successful backup
 		$this->rs['last_failure'] = ''; // Datetime of last failure
 		$this->rs['last_failure_msg'] = ''; // Message of the last failure
@@ -21,19 +21,18 @@ class Timemachine_model extends Model {
 		$this->schema_version = 1;
 		
 		//indexes to optimize queries
+		$this->idx[] = array('serial_number');
 		$this->idx[] = array('last_success');
 		$this->idx[] = array('last_failure');
 		$this->idx[] = array('timestamp');
 		$this->idx[] = array('kind');
 		$this->idx[] = array('location_name');
 		$this->idx[] = array('backup_location');
+		$this->idx[] = array('destinations');
 		
 		// Create table if it does not exist
 		$this->create_table();
-		
-		if ($serial)
-			$this->retrieve_record($serial);
-		
+				
 		$this->serial = $serial;
 		  
 	}

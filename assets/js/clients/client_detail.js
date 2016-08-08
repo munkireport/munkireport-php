@@ -296,64 +296,30 @@ $(document).on('appReady', function(e, lang) {
 			cpData = cpResp[0];
 		
 		// Draw timemachine unit
-		if(tmData.id !== '')
-		{
-			$('table.mr-timemachine-table')
-				.empty()
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.last_success')))
-					.append($('<td>')
-						.text(function(){
-							if(tmData.last_success){
-								return moment(tmData.last_success + 'Z').fromNow();
-							}
-						})))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.duration')))
-					.append($('<td>')
-						.text(moment.duration(tmData.duration, "seconds").humanize())))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.last_failure')))
-					.append($('<td>')
-						.text(function(){
-							if(tmData.last_failure){
-								return moment(tmData.last_failure + 'Z').fromNow();
-							}
-						})))						
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.kind')))
-					.append($('<td>')
-						.text(tmData.kind)))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.location_name')))
-					.append($('<td>')
-						.text(tmData.location_name)))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.backup_location')))
-					.append($('<td>')
-						.text(tmData.backup_location)))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.destinations')))
-					.append($('<td>')
-						.text(tmData.destinations)))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.last_failure_msg')))
-					.append($('<td>')
-						.text(tmData.last_failure_msg)));
+		var mr_table_data = '<tr><td>'+i18n.t('no_data')+'</td></tr>';
+		if(tmData){
+			mr_table_data = '';
+			$.each(tmData, function(index, item){
+				var last_success = i18n.t('never'),
+					last_failure = i18n.t('never');
+				if(item.last_success){
+					last_success = moment(item.last_success + 'Z').fromNow();
+				}
+				if(item.last_failure){
+					last_failure = moment(item.last_failure + 'Z').fromNow();
+				}
+				mr_table_data = mr_table_data + '<tr class="info"><th>'+i18n.t('backup.destination')+'</th><td>'+item.location_name+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_success')+'</th><td>'+last_success+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.duration')+'</th><td>'+moment.duration(+item.duration, "seconds").humanize()+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure')+'</th><td>'+last_failure+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure_msg')+'</th><td>'+item.last_failure_msg+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.kind')+'</th><td>'+item.kind+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.backup_location')+'</th><td>'+item.backup_location+'<td></tr>';
+			});
 		}
-		else{
-			$('table.mr-timemachine-table')
-				.empty()
-				.append('<tr><td>'+i18n.t('no_data')+'</td></tr>');
-		};
+		$('table.mr-timemachine-table')
+		.empty()
+		.append(mr_table_data);
 		
 		// Draw Crashplan Unit
 		var mr_table_data = '<tr><td>'+i18n.t('no_data')+'</td></tr>';
