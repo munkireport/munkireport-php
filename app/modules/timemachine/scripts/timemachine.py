@@ -31,16 +31,16 @@ destinationCount = 0
 # Examine destinations for information.  May have multiple destinations.
 for destination in destinations:
     destinationCount += 1
-    if destination.get('LastDestination') == 1:
-        if destination.get('Kind') == "Network":
-            result += "TM_LOCATION: " + destination['URL'] + '\n'
-        elif destination.get('Kind') == "Local":
-            result += "TM_LOCATION: " + destination['MountPoint'] + '\n'
-        else:
-            result += "TM_LOCATION: UNKNOWN" + '\n'
+#    if destination.get('LastDestination') == 1:
+    if destination.get('Kind') == "Network":
+        result += "TM_LOCATION: " + destination['URL'] + '\n'
+    elif destination.get('Kind') == "Local":
+        result += "TM_LOCATION: " + destination['MountPoint'] + '\n'
+    else:
+        result += "TM_LOCATION: UNKNOWN" + '\n'
 
-        result += "TM_KIND: " + destination['Kind'] + '\n'
-        result += "TM_NAME: " + destination['Name'] + '\n'
+    result += "TM_KIND: " + destination['Kind'] + '\n'
+    result += "TM_NAME: " + destination['Name'] + '\n'
 
 # Write to disk
 txtfile = open("%s/timemachine.txt" % cachedir, "w")
