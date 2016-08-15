@@ -44,6 +44,15 @@
 									<input type="password" id="loginpassword" name="password" class="form-control">
 								</div>
 							</div>
+			                                <?php
+			                                	if (!empty(conf('recaptchaloginpublickey')))
+			                                	{
+			                                    	echo "<div class=\"form-group\"><div class=\"col-lg-10 col-lg-offset-3\">";
+								echo "<div class=\"g-recaptcha\" data-sitekey=\"";
+			                                    	echo conf('recaptchaloginpublickey');
+			                                    	echo "\"></div></div></div>\r\n";
+			                                	}
+			                            	?>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
 								<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button> 

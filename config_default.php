@@ -48,7 +48,6 @@
 	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
 		. '://'.$_SERVER[ 'HTTP_HOST' ];
 
-
 	/*
 	|===============================================
 	| Subdirectory
@@ -134,6 +133,18 @@
 
 	/*
 	|===============================================
+	| reCaptcha Integration
+	|===============================================
+	|
+	| Enable reCaptcha Support on the Authentication Form
+    	| Request API keys from https://www.google.com/recaptcha
+    	|
+	*/
+    	$conf['recaptchaloginpublickey'] = '';
+    	$conf['recaptchaloginprivatekey'] = '';
+
+	/*
+	|===============================================
 	| Role Based Authorization
 	|===============================================
 	|
@@ -142,10 +153,10 @@
 	| also used by the Business Units
 	|
 	*/
-    $conf['authorization']['delete_machine'] = array('admin', 'manager');
-    $conf['authorization']['global'] = array('admin');
+	$conf['authorization']['delete_machine'] = array('admin', 'manager');
+    	$conf['authorization']['global'] = array('admin');
 
-    /*
+	/*
 	|===============================================
 	| Roles
 	|===============================================
@@ -155,7 +166,7 @@
 	*/
 	$conf['roles']['admin'] = array('*');
 
-    /*
+    	/*
 	|===============================================
 	| Local groups
 	|===============================================
@@ -165,7 +176,7 @@
 	*/
 	//$conf['groups']['admin_users'] = array();
 
-    /*
+    	/*
 	|===============================================
 	| Business Units
 	|===============================================
@@ -237,7 +248,7 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
 	*/
-    $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+    	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
 	/*
 	|===============================================
@@ -261,7 +272,6 @@
 	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
 	| are required.
 	*/
-
 	$conf['gsx_enable'] = FALSE;
 	//$conf['gsx_cert'] = '/Library/Keychains/GSX/certbundle.pem';
 	//$conf['gsx_cert_keypass'] = '';
@@ -269,7 +279,7 @@
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
 
-    /*
+    	/*
 	|===============================================
 	| Modules
 	|===============================================
@@ -283,8 +293,7 @@
 	| Machine and Reportdata
 	|
 	*/
-    $conf['modules'] = array('munkireport');
-
+    	$conf['modules'] = array('munkireport');
 
 	/*
 	|===============================================
@@ -315,10 +324,10 @@
 	| By default temperture units are displayed in Celsius °C.
 	|
 	*/
-    //$conf['temperature_unit'] = 'F';
+    	//$conf['temperature_unit'] = 'F';
 
 
-    /*
+    	/*
 	|===============================================
 	| Migrations
 	|===============================================
@@ -333,8 +342,7 @@
 	| to FALSE when you're done migrating.
 	|
 	*/
-    $conf['allow_migrations'] = FALSE;
-
+    	$conf['allow_migrations'] = FALSE;
 
 	/*
 	|===============================================
@@ -351,7 +359,7 @@
 	|
 	|
 	*/
-    $conf['client_passphrases'] = array();
+    	$conf['client_passphrases'] = array();
 
 	/*
 	|===============================================
@@ -370,9 +378,9 @@
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
 	|
 	*/
-    //$conf['proxy']['server'] = 'proxy.yoursite.org';
+    	//$conf['proxy']['server'] = 'proxy.yoursite.org';
 
-    /*
+    	/*
 	|===============================================
 	| Request timeout
 	|===============================================
@@ -382,8 +390,7 @@
 	| Timeout in seconds
 	|
 	*/
-    $conf['request_timeout'] = 5;
-
+    	$conf['request_timeout'] = 5;
 
  	/*
 	|===============================================
@@ -399,7 +406,7 @@
 	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
 	*/
-    $conf['ip_ranges'] = array();
+    	$conf['ip_ranges'] = array();
 
  	/*
 	|===============================================
@@ -424,7 +431,6 @@
 	| $conf['ipv4routers']['Link-local'] = array('169.254.%');
 	|
 	*/
-
 
 	/*
 	|===============================================
@@ -531,7 +537,6 @@
 	| the variables below. For enhanced security it is advised to put the
 	| webapp in a directory that is not visible to the internet.
 	*/
-
 	// Path to system folder, with trailing slash
 	$conf['system_path'] = APP_ROOT.'/system/';
 
@@ -547,12 +552,9 @@
 	// Path to modules directory, with trailing slash
 	$conf['module_path'] = $conf['application_path'] . "modules/";
 
-
-
 	// Routes
 	$conf['routes'] = array();
 	$conf['routes']['module(/.*)?']	= "module/load$1";
-
 
 	/*
 	|===============================================
@@ -606,7 +608,6 @@
 	//$conf['custom_css'] = '/custom.css';
 	//$conf['custom_js'] = '/custom.js';
 
-
 	/*
 	|===============================================
 	| Debugging
@@ -616,3 +617,4 @@
 	| FALSE in a production environment
 	*/
 	$conf['debug'] = FALSE;
+	
