@@ -29,6 +29,9 @@
 	
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
 
+<?php
+    	if (!empty(conf('recaptchaloginpublickey')))
+    		echo "	<script src='https://www.google.com/recaptcha/api.js'></script>"; ?>
 
 <?php
 	if (isset($scripts))
