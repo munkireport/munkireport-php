@@ -41,7 +41,7 @@
 
 	<?php if( isset($_SESSION['user'])):?>
 
-<header class="navbar navbar-inverse bs-docs-nav" role="banner">
+<header class="navbar navbar-inverse navbar-static-top bs-docs-nav" role="banner">
 	<div class="container">
 		<div class="navbar-header">
 			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
