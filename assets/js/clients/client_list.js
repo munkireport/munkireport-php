@@ -24,13 +24,15 @@ $(document).on('appReady', function(e, lang) {
 	mr.dt.buttonDom = "<'row'<'col-xs-6 col-md-8'lB r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>";
 	mr.dt.buttons = {
 		buttons: [
-			'edit',
 			'copyHtml5',
 			'excelHtml5',
 			'csvHtml5',
 			'print'
 		]
 	};
+	if( isAdmin){
+		mr.dt.buttons.buttons.unshift('edit');
+	}
 	
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
