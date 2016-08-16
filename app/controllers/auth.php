@@ -64,11 +64,22 @@ class auth extends Controller
 			//recaptcha enabled by admin; checking it
 		        if($recaptcharesponse)
 		        {
-		            $userip = $_SERVER["REMOTE_ADDR"];
-		            $secreykey = conf('recaptchaloginprivatekey');
-		            $request = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}");
-		
-		            if(!strstr($request, "true"))
+	                    $userip = $_SERVER["REMOTE_ADDR"];
+	                    $secreykey = conf('recaptchaloginprivatekey');
+	                    $url="https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}";
+	                
+	                    $options=array(
+	                    		'ssl'=>array(
+	                    		'cafile'            => './app/lib/ssl/cacert.pem',
+	                    		'verify_peer'       => true,
+	                    		'verify_peer_name'  => true,
+	                    	),
+	                    );
+	                
+	                    $context = stream_context_create( $options );
+	                    $res=json_decode( file_get_contents( $url, FILE_TEXT, $context ) );
+	
+	                    if( ! $res->success )
 		            {
 		            	//recaptcha failed to verify
 		                $recaptcharesponse = false;
@@ -447,11 +458,22 @@ class auth extends Controller
 			//recaptcha enabled by admin; checking for it
 		        if($recaptcharesponse)
 		        {
-		            $userip = $_SERVER["REMOTE_ADDR"];
-		            $secreykey = conf('recaptchaloginprivatekey');
-		            $request = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}");
-		
-		            if(!strstr($request, "true"))
+	                    $userip = $_SERVER["REMOTE_ADDR"];
+	                    $secreykey = conf('recaptchaloginprivatekey');
+	                    $url="https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}";
+	                
+	                    $options=array(
+	                    		'ssl'=>array(
+	                    		'cafile'            => './app/lib/ssl/cacert.pem',
+	                    		'verify_peer'       => true,
+	                    		'verify_peer_name'  => true,
+	                    	),
+	                    );
+	                
+	                    $context = stream_context_create( $options );
+	                    $res=json_decode( file_get_contents( $url, FILE_TEXT, $context ) );
+	
+	                    if( ! $res->success )
 		            {
 		                $recaptcharesponse = false;
 		            }
