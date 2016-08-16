@@ -455,14 +455,14 @@
 		"reports": {
 			"appVersions": "App Versions Report",
 			"backup": "Backup Report",
-			"clients": "Client report",
-			"configuration": "Configuration report",
-			"findmymac": "FindMyMac report",
-			"hardware": "Hardware report",
-			"location": "Location report",
-			"munki": "Munki report",
-			"network": "Network report",
-			"power": "Power report"
+			"clients": "Client Report",
+			"configuration": "Configuration Report",
+			"findmymac": "FindMyMac Report",
+			"hardware": "Hardware Report",
+			"location": "Location Report",
+			"munki": "Munki Report",
+			"network": "Network Report",
+			"power": "Power Report"
 		},
 		"user": {
 			"logout": "Sign Off"
