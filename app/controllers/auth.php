@@ -59,27 +59,18 @@ class auth extends Controller
 	        $recaptcharesponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
 	
 		//check for recaptcha
-		if(conf('recaptchaloginpublickey'))
+		if(!empty(conf('recaptchaloginpublickey')))
 		{
 			//recaptcha enabled by admin; checking it
-		        if($recaptcharesponse)
+		        if(!empty($recaptcharesponse))
 		        {
 	                    $userip = $_SERVER["REMOTE_ADDR"];
 	                    $secreykey = conf('recaptchaloginprivatekey');
 	                    $url="https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}";
 	                
-	                    $options=array(
-	                    		'ssl'=>array(
-	                    		'cafile'            => './app/lib/ssl/cacert.pem',
-	                    		'verify_peer'       => true,
-	                    		'verify_peer_name'  => true,
-	                    	),
-	                    );
-	                
-	                    $context = stream_context_create( $options );
-	                    $res=json_decode( file_get_contents( $url, FILE_TEXT, $context ) );
-	
-	                    if( ! $res->success )
+			    $response=json_decode(file_get_contents($url), true);
+			    
+        		    if($response['success'] == false)
 		            {
 		            	//recaptcha failed to verify
 		                $recaptcharesponse = false;
@@ -90,12 +81,12 @@ class auth extends Controller
 		                $recaptcharesponse = true;
 		            }
 		        }
+		}
 	        else
 	        {
 	        	//recaptcha not enabled by admin; skipping it
 	        	$recaptcharesponse = true;
 	        }
-		}
 
 		// User is a member of these groups
 		$groups = array();
@@ -450,65 +441,20 @@ class auth extends Controller
 
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
 		$data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
-	        $recaptcharesponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
-	
-		//check for recaptcha
-		if(conf('recaptchaloginpublickey'))
+		
+		if( $_POST && (! $data['login'] OR ! $password))
 		{
-			//recaptcha enabled by admin; checking for it
-		        if($recaptcharesponse)
-		        {
-	                    $userip = $_SERVER["REMOTE_ADDR"];
-	                    $secreykey = conf('recaptchaloginprivatekey');
-	                    $url="https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}";
-	                
-	                    $options=array(
-	                    		'ssl'=>array(
-	                    		'cafile'            => './app/lib/ssl/cacert.pem',
-	                    		'verify_peer'       => true,
-	                    		'verify_peer_name'  => true,
-	                    	),
-	                    );
-	                
-	                    $context = stream_context_create( $options );
-	                    $res=json_decode( file_get_contents( $url, FILE_TEXT, $context ) );
-	
-	                    if( ! $res->success )
-		            {
-		                $recaptcharesponse = false;
-		            }
-		            else
-		            {
-		                $recaptcharesponse = true;
-		            }
-		        }
-		}
-		else
-		{
-			//recaptcha not enabled by admin; skipping it
-			$recaptcharesponse = true;
+			error('Empty values are not allowed', 'auth.empty_not_allowed');
 		}
 
-		if( ! $recaptcharesponse )
+		if ($data['login'] && $password)
 		{
-			error('Invalid captcha response', 'auth.invalid_captcha');
+			$t_hasher = $this->load_phpass();
+			$data['generated_pwd'] = $t_hasher->HashPassword($password);
 		}
-		else
-		{
-			if( $_POST && (! $data['login'] OR ! $password))
-			{
-				error('Empty values are not allowed', 'auth.empty_not_allowed');
-			}
-	
-			if ($data['login'] && $password)
-			{
-				$t_hasher = $this->load_phpass();
-				$data['generated_pwd'] = $t_hasher->HashPassword($password);
-			}
-	
-			$obj = new View();
-			$obj->view('auth/generate_password', $data);
-		}
+
+		$obj = new View();
+		$obj->view('auth/generate_password', $data);
 	}
 
 	function load_phpass()
