@@ -64,22 +64,41 @@ class auth extends Controller
 			//recaptcha enabled by admin; checking it
 		        if(!empty($recaptcharesponse))
 		        {
-	                    $userip = $_SERVER["REMOTE_ADDR"];
-	                    $secreykey = conf('recaptchaloginprivatekey');
-	                    $url="https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}";
-	                
-			    $response=json_decode(file_get_contents($url), true);
+		        	//verifying recaptcha with google
+		        	try
+		        	{
+	                		$userip = $_SERVER["REMOTE_ADDR"];
+	                		$secreykey = conf('recaptchaloginprivatekey');
+	                    		$url = 'https://www.google.com/recaptcha/api/siteverify';
+				        $data = ['secret'   => $secreykey,
+				                 'response' => $_POST['g-recaptcha-response'],
+				                 'remoteip' => $userip];
+				        $options = [
+				            'http' => [
+				                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				                'method'  => 'POST',
+				                'content' => http_build_query($data) 
+				            ]
+				        ];
+				        $context  = stream_context_create($options);
+				        $result = file_get_contents($url, false, $context);
+					$result = json_decode($result)->success;
 			    
-        		    if($response['success'] == false)
-		            {
-		            	//recaptcha failed to verify
-		                $recaptcharesponse = false;
-		            }
-		            else
-		            {
-		            	//recaptcha verified successfully
-		                $recaptcharesponse = true;
-		            }
+					if($result != true)
+					{
+				        	//recaptcha failed to verify
+						$recaptcharesponse = false;
+					}
+					else
+					{
+						//recaptcha verified successfully
+						$recaptcharesponse = true;
+					}
+		        	}
+    				catch (Exception $e)
+    				{
+        				error('Invalid captcha response', 'auth.invalid_captcha');
+    				}
 		        }
 		}
 	        else
