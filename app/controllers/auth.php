@@ -84,7 +84,7 @@ class auth extends Controller
 				        $result = file_get_contents($url, false, $context);
 					$result = json_decode($result)->success;
 			    
-					if($result != true)
+					if($result != 1)
 					{
 				        	//recaptcha failed to verify
 						$recaptcharesponse = false;
