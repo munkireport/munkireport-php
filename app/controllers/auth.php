@@ -58,21 +58,33 @@ class auth extends Controller
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
 	        $recaptcharesponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
 	
-	        if($recaptcharesponse)
+		//check for recaptcha
+		if(conf('recaptchaloginpublickey'))
+		{
+			//recaptcha enabled by admin; checking it
+		        if($recaptcharesponse)
+		        {
+		            $userip = $_SERVER["REMOTE_ADDR"];
+		            $secreykey = conf('recaptchaloginprivatekey');
+		            $request = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}");
+		
+		            if(!strstr($request, "true"))
+		            {
+		            	//recaptcha failed to verify
+		                $recaptcharesponse = false;
+		            }
+		            else
+		            {
+		            	//recaptcha verified successfully
+		                $recaptcharesponse = true;
+		            }
+		        }
+	        else
 	        {
-	            $userip = $_SERVER["REMOTE_ADDR"];
-	            $secreykey = conf('recaptchaloginprivatekey');
-	            $request = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}");
-	
-	            if(!strstr($request, "true"))
-	            {
-	                $recaptcharesponse = false;
-	            }
-	            else
-	            {
-	                $recaptcharesponse = true;
-	            }
+	        	//recaptcha not enabled by admin; skipping it
+	        	$recaptcharesponse = true;
 	        }
+		}
 
 		// User is a member of these groups
 		$groups = array();
@@ -429,21 +441,31 @@ class auth extends Controller
 		$data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
 	        $recaptcharesponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
 	
-	        if($recaptcharesponse)
-	        {
-	            $userip = $_SERVER["REMOTE_ADDR"];
-	            $secreykey = conf('recaptchaloginprivatekey');
-	            $request = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}");
-	
-	            if(!strstr($request, "true"))
-	            {
-	                $recaptcharesponse = false;
-	            }
-	            else
-	            {
-	                $recaptcharesponse = true;
-	            }
-	        }
+		//check for recaptcha
+		if(conf('recaptchaloginpublickey'))
+		{
+			//recaptcha enabled by admin; checking for it
+		        if($recaptcharesponse)
+		        {
+		            $userip = $_SERVER["REMOTE_ADDR"];
+		            $secreykey = conf('recaptchaloginprivatekey');
+		            $request = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secreykey}&response={$recaptcharesponse}&remoteip={$userip}");
+		
+		            if(!strstr($request, "true"))
+		            {
+		                $recaptcharesponse = false;
+		            }
+		            else
+		            {
+		                $recaptcharesponse = true;
+		            }
+		        }
+		}
+		else
+		{
+			//recaptcha not enabled by admin; skipping it
+			$recaptcharesponse = true;
+		}
 
 		if( ! $recaptcharesponse )
 		{
