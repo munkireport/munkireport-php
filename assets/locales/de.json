@@ -97,6 +97,7 @@
   "cert": {
     "expired": "__name__ expired __moment__"
   },
+  "cfbundlename": "CFBundleName",
   "client": {
     "activity": "Clientaktivität",
     "comment": "Kommentar",
@@ -106,6 +107,7 @@
       "ard": "ARD",
       "bluetooth": "Bluetooth",
       "certificates": "Zertifikate",
+      "deploystudio": "DeployStudio",
       "displays": "Displays",
       "ds": "Verzeichnisdienste",
       "gsx": "GSX",
@@ -186,6 +188,11 @@
     "displays": "Bildschirme",
     "widget_info": "Gesamtanzahl bekannter externer Bildschirme",
     "widget_title": "Anzahl externer Bildschirme"
+  },
+  "ds": {
+    "computername": "Computername",
+    "architecture": "Architektur",
+    "recheck": "DeployStudio holen"
   },
   "displayname": "Anzeigename",
   "edit": "Editieren",
@@ -268,6 +275,9 @@
   "inactive": "Inaktiv",
   "info": "Information",
   "installed": "Installiert",
+  "inventory": {
+    "report": ""
+  },
   "last_seen": "Zuletzt gesehen",
   "last_user": "Letzter User",
   "listing": {
@@ -390,6 +400,7 @@
       "bluetooth": "Bluetooth",
       "clients": "Clients",
       "certificate": "Zertifikate",
+      "deploystudio": "DeployStudio",
       "directoryservice": "Verzeichnisdienste",
       "disk": "Festplatten",
       "displays": "Displays",
@@ -415,6 +426,7 @@
       "admin": "Admin"
     },
     "reports": {
+      "appVersions": "App Versions Report",
       "backup": "Backup-Bericht",
       "clients": "Client-Bericht",
       "configuration": "Konfigurations-Bericht",
@@ -444,6 +456,7 @@
   },
   "new_client": "Neuer Client",
   "new_client_plural": "Neue Clients",
+  "no": "nein",
   "no_clients": "Keine Clients",
   "no_data": "Keine Daten",
   "no_errors_or_warnings": "Keine Fehler oder Warnungen",
@@ -669,5 +682,6 @@
     "xauthtype": "802.11X Authentifizierungstyp",
     "wifiauthtype": "WiFi Authentifizierungstyp",
     "wifiinfo": "WiFi Information"
-  }
+  },
+  "yes": "Ja"
 }
