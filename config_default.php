@@ -269,6 +269,21 @@
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
 
+	
+	/*
+	|===============================================
+	| MunkiWebAdmin2 
+	|===============================================
+	|
+	| MunkiWebAdmin2 (MWA2) is a web-based administration tool for Munki
+	| that focuses on editing manifests and pkginfo files.
+	|
+	| To learn more about MWA2 visit: https://github.com/munki/mwa2
+	|
+	*/
+	$conf['mwa2_link'] = "http://127.0.0.1:8080/";
+   
+    
     /*
 	|===============================================
 	| Modules
