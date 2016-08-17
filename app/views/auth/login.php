@@ -10,7 +10,7 @@
 
 								<?php echo conf('sitename'); ?>
 
-								<?php if(empty($_SERVER['HTTPS'])): ?>
+								<?php if( empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off" ): ?>
 
 									<a href="<?php echo secure_url(); ?>"><i data-i18n="[title]auth.insecure" title="Insecure connection, switch to secure" class="text-danger fa fa-unlock-alt pull-right"></i></a>
 

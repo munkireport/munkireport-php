@@ -96,7 +96,7 @@ class Unserializer {
     }
 
     function parse_hash_core($size){
-        $result = [];
+        $result = array();
         $this->await('{');
         $is_array = TRUE;
         for ($i=0; $i < $size; $i++) { 

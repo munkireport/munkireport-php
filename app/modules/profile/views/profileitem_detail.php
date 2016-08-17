@@ -29,6 +29,7 @@
                   <tr>
                     <th>Hostname</th>
                     <th>Profile Name</th>
+                    <th>Payload Name</th>
                   </tr>
               </thead>
               <tbody>
@@ -40,6 +41,7 @@
                           <?php echo $item['hostname']; ?>
                         </a>
                       </td>
+                      <td><?php echo $item['profile']; ?></td>
                       <td><?php echo $item['payload']; ?></td>
                   </tr>
               <?php endforeach; ?>

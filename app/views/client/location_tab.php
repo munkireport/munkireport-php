@@ -49,7 +49,12 @@
 		</div>
 	</div>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<?php if(conf('google_maps_api_key')):?>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?=conf('google_maps_api_key')?>"></script>
+<?php else:?>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<?php endif?>
+
 <script>
 	
 $(document).on('appReady', function(e, lang) {

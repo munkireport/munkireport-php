@@ -1,13 +1,24 @@
-### 2.8.0-beta.1 (March 2, 2016)
+### 2.8.5 (April 4, 2016)
 
-#### :bangbang: THIS IS A BETA RELEASE :bangbang:
-Don't use in production unless you like to TiP(Test in Production)
-Please report back any issues you find with this release.
+FIXES since 2.8.4
+* WiFi module robustness thanks to @tuxudo and @kujeger 
+* documentation on GSX module thanks to @tuxudo and @gmarnin 
+* location report
+
+FIXES since 2.8.3
+* Location module packaging thanks to @clburlison
+
+FIXES since 2.8.2
+
+* SIP status thanks to @clburlison 
+* Wi-Fi module more robust thanks to @tuxudo
+* Location module packaging thanks to @clburlison
 
 FIXES
 
 * Markdown now accepts line breaks in client comments
 * FileVault 2 reporting fix for #375 and #378
+* curl options for submit.preflight thanks to @kujeger 
 
 NEW FEATURES
 
@@ -20,6 +31,7 @@ NEW FEATURES
 * Hotkey support
 * German localisation updates thanks to @fridomac 
 * French localisation updates thanks to @lolipale 
+* stretch map to viewport thanks to @rfitzwater
 
 ### 2.7.2 (December 12, 2015)
 
