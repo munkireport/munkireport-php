@@ -131,6 +131,14 @@
 				<li>
 					<a href="#" class="filter-popup"><i class="fa fa-filter"></i></a>
 				</li>
+				
+				<?php if(conf('mwa2_link')): ?>
+				
+				<li <?php echo $page==''?'class="active"':''; ?>>
+					<a href="<?php echo conf('mwa2_link'); ?>"> <i class="fa fa-pencil"></i> <span data-i18n="nav.main.mwa2">mwa2</span></a>
+				</li> 
+				  
+				<?php endif; ?>
 
 			</ul><!-- nav navbar-nav -->
 
