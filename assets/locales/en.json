@@ -368,6 +368,7 @@
 		},
 		"main": {
 		  "dashboard": "Dashboard",
+		  "mwa2": "MWA2",
 		  "reports": "Reports",
 		  "listings": "Listings",
 		  "admin": "Admin"
