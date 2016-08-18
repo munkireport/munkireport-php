@@ -60,7 +60,7 @@ out, err = logproc.communicate()
 found = re.findall(r'([\d\-]* [\d:]*Z Starting \D* backup\n[\s\S]*?[\d\-]* [\d:]*Z Backup \D*\.)', out)
 
 #Concatenate the found log block to the result
-result += '\n' + found[0] + '\n'
+result += '\n' + found[-1] + '\n'
 
 #Write out the result to file
 txtfile.write(result.encode('utf-8'))
