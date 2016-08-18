@@ -212,13 +212,24 @@ $(document).on('appReady', function(e, lang) {
 			}
 		});
 	});
-
+	
+	// Get mwa2Link
+	mr.mwa2Link = "<?=conf('mwa2_link')?>";
+	
 	// Get munkireport data TODO: move to client_detail.js
     $.getJSON(appUrl + '/module/munkireport/get_data/' + serialNumber, function(data){
 		// TODO: check for errors
 		$.each(data, function(prop, val){
 			$('#munki-'+prop).html(val);
 		});
+		
+		// Get mwa2 link
+		if(mr.mwa2Link){
+			$('#munki-manifestname').append(' <a class="btn btn-xs btn-info" target="_blank" href="'+mr.mwa2Link+'/manifests/#'+$('#munki-manifestname').text()+'"><i class="fa fa-arrow-circle-right"></span></a>');
+			$('#munki-manifestname a').tooltip(
+				{title: i18n.t('external.mwa_link')}
+			);
+		}
 
 		// Set times
 		var starttime = moment(data.starttime, "YYYY-MM-DD HH:mm:ss Z"),
