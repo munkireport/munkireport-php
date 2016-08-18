@@ -65,5 +65,3 @@ result += '\n' + found[0] + '\n'
 #Write out the result to file
 txtfile.write(result.encode('utf-8'))
 txtfile.close()
-
-exit(0)
