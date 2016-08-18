@@ -7,6 +7,7 @@ import sys
 import os
 import subprocess
 import plistlib
+import re
 
 # Skip manual check
 if len(sys.argv) > 1:
@@ -31,11 +32,16 @@ destinationCount = 0
 # Examine destinations for information.  May have multiple destinations.
 for destination in destinations:
     destinationCount += 1
-#    if destination.get('LastDestination') == 1:
     if destination.get('Kind') == "Network":
-        result += "TM_LOCATION: " + destination['URL'] + '\n'
+        try:
+            result += "TM_LOCATION: " + destination['URL'] + '\n'
+        except KeyError:
+            result += "TM_LOCATION: Undetected" + '\n'
     elif destination.get('Kind') == "Local":
-        result += "TM_LOCATION: " + destination['MountPoint'] + '\n'
+        try:
+            result += "TM_LOCATION: " + destination['MountPoint'] + '\n'
+        except KeyError:
+            result += "TM_LOCATION: Not Mounted" + '\n'
     else:
         result += "TM_LOCATION: UNKNOWN" + '\n'
 
@@ -46,21 +52,18 @@ for destination in destinations:
 txtfile = open("%s/timemachine.txt" % cachedir, "w")
 txtfile.write("TM_DESTINATIONS: " + str(destinationCount) + '\n')
 
-# Store 7 days of relevant syslog events
-logproc = subprocess.Popen(['syslog', '-F', '$((Time)(utc)) $Message', '-k', 'Sender', 'com.apple.backupd', '-k', 'Time', 'ge', '-7d', '-k', 'Message', 'R', '^(Backup|Starting).*'], stdout=subprocess.PIPE)
+# Filter the logs for the last run
+logproc = subprocess.Popen(['syslog', '-F', '$((Time)(utc)) $Message', '-k', 'Sender', 'com.apple.backupd', '-k', 'Time', 'ge', '-7d'], stdout=subprocess.PIPE)
 out, err = logproc.communicate()
-result += '\n' + out + '\n'
 
+#Use regex to capture a block of backup logs from "Starting automatic|manual backup to Backup completed|failed"
+found = re.findall(r'([\d\-]* [\d:]*Z Starting \D* backup\n[\s\S]*?[\d\-]* [\d:]*Z Backup \D*\.)', out)
+
+#Concatenate the found log block to the result
+result += '\n' + found[0] + '\n'
+
+#Write out the result to file
 txtfile.write(result.encode('utf-8'))
 txtfile.close()
 
 exit(0)
-
-
-
-
-
-
-
-
-
