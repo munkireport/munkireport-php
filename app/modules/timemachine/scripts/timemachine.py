@@ -47,6 +47,7 @@ for destination in destinations:
 
     result += "TM_KIND: " + destination['Kind'] + '\n'
     result += "TM_NAME: " + destination['Name'] + '\n'
+    result += "---------" + '\n'
 
 # Write to disk
 txtfile = open("%s/timemachine.txt" % cachedir, "w")

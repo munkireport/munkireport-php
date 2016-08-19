@@ -64,22 +64,24 @@ class Timemachine_model extends Model {
 
 		// Parse log data
 		$start = ''; // Start date
+		$disk_backup = ''; // boolean for disk backup
+		$network_backup = ''; //boolean for network backup
+		
         foreach(explode("\n", $data) as $line)
         {
         	$date = substr($line, 0, 19);
         	$message = substr($line, 21);
+
+        	if( preg_match('/^Attempting to soft mount network destination URL/', $message))
+        	{
+        		$network_backup = 1;
+        	}
+
+        	if( preg_match('/^Backing up to \/dev/', $message))
+        	{
+        		$disk_backup = 1;
+        	}
         	
-			foreach($translate as $search => $field) {
-			    
-			    if(strpos($line, $search) === 0) {
-				    
-				    $value = substr($line, strlen($search));
-				    
-				    $this->$field = $value;
-				    break;
-			    }
-              }
-              
         	if( preg_match('/^Starting (automatic|manual) backup/', $message))
         	{
         		$start = $date;
@@ -101,6 +103,33 @@ class Timemachine_model extends Model {
         		$this->last_failure = $date;
         		$this->last_failure_msg = $message;
         	}
+
+			foreach($translate as $search => $field) {
+			    
+          	   if((strpos($line, '---------') === 0) && ($this->kind)) 
+          	   {
+					if(($this->kind === 'Network') && ($network_backup)) 
+					{
+						//get a new id
+						$this->id = 0;
+						$this->save(); //the actual save
+						break;
+					}
+					elseif(($this->kind === 'Local') && ($disk_backup)) 
+					{
+						//get a new id
+						$this->id = 0;
+						$this->save(); //the actual save
+						break;
+					}
+				    break;
+				} elseif(strpos($line, $search) === 0) { //else if not separator and matches
+            		$value = substr($line, strlen($search)); //get the current value
+					$this->$field = $value;
+					break;
+			    }
+              }
+
         }
         
         // Only store if there is data
