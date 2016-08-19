@@ -53,6 +53,10 @@ class Timemachine_model extends Model {
         'TM_NAME: ' => 'location_name',
         'TM_DESTINATIONS: ' => 'destinations');
 
+		// Delete previous entries
+		$serial_number = $this->serial_number;
+		$this->delete_where('serial_number=?', $serial_number);
+
         //clear any previous data we had
 		foreach($translate as $search => $field) {
 			$this->$field = '';
