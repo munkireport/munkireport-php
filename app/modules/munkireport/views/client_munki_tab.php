@@ -225,7 +225,7 @@ $(document).on('appReady', function(e, lang) {
 		
 		// Get mwa2 link
 		if(mr.mwa2Link){
-			$('#munki-manifestname').append(' <a class="btn btn-xs btn-info" target="_blank" href="'+mr.mwa2Link+'/manifests/#'+$('#munki-manifestname').text()+'"><i class="fa fa-arrow-circle-right"></span></a>');
+			$('#munki-manifestname').append(' <a class="btn btn-xs btn-info" target="_blank" href="'+mr.mwa2Link+'manifests/#'+$('#munki-manifestname').text()+'"><i class="fa fa-arrow-circle-right"></span></a>');
 			$('#munki-manifestname a').tooltip(
 				{title: i18n.t('external.mwa_link')}
 			);
