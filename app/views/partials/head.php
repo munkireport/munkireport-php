@@ -131,7 +131,6 @@
 				<li>
 					<a href="#" class="filter-popup"><i class="fa fa-filter"></i></a>
 				</li>
-				
 
 			</ul><!-- nav navbar-nav -->
 
