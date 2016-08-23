@@ -18,13 +18,13 @@ new munkiinfo_model;
           <table id="pkg-stats-table" class="table table-striped">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Version</th>
-                <th>Displayname</th>
-                <th>Ratio</th>
-                <th>Installed</th>
-                <th>Pending</th>
-                <th>Failed</th>
+                <th data-i18n="name"></th>
+                <th data-i18n="version"></th>
+                <th data-i18n="displayname"></th>
+                <th data-i18n="ratio"></th>
+                <th data-i18n="installed"></th>
+                <th data-i18n="pending"></th>
+                <th data-i18n="failed"></th>
               </tr>
             </thead>
             <tbody>

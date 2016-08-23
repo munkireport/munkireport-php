@@ -244,6 +244,7 @@
 	"external": {
 		"mwa_link": "Open in Munki Web Admin"
 	},
+	"failed": "Failed",
 	"failing": "Failing!",
 	"filevault": {
 		"users": "FileVault Enabled users",
@@ -526,6 +527,7 @@
 	},
 	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
 	"pkg_failed_to_install_plural": "__count__ packages failed to install",
+	"ratio": "Ratio",
 	"reg_date": "Registration Date",
 	"remote_control": "Remote Control",
 	"report": {
