@@ -142,12 +142,6 @@ $(document).on('appReady', function(e, lang) {
 	$.getJSON(appUrl + '/module/managedinstalls/get_data/' + serialNumber, function(data){
 
 		var dataSet = [],
-			statusFormat = {
-				install_failed: {type: 'danger'},
-				install_succeeded: {type: 'success'},
-				installed: {type: 'info'},
-				pending_install: {type: 'warning'}
-			},
 			statusList = {
 				installed: 0,
 				install_succeeded: 0,
@@ -171,9 +165,9 @@ $(document).on('appReady', function(e, lang) {
 
 		// Show statusList
 		$('#managedinstalls-statuslist').empty();
-		for (var prop in statusFormat) {
+		for (var prop in mr.statusFormat) {
 			if(statusList[prop]){
-				var format = statusFormat[prop];
+				var format = mr.statusFormat[prop];
 				$('#managedinstalls-statuslist')
 					.append(' ')
 					.append($('<button>')
@@ -201,11 +195,11 @@ $(document).on('appReady', function(e, lang) {
 				$('td:eq(2)', nRow).html(fileSize(size * 1024, 0));
 				// add status labels
 					var status = $('td:eq(3)', nRow).text();
-					if(statusFormat[status]){
+					if(mr.statusFormat[status]){
 						$('td:eq(3)', nRow).empty()
 							.append($('<span>')
 								.addClass('label')
-								.addClass('label-' + statusFormat[status].type)
+								.addClass('label-' + mr.statusFormat[status].type)
 								.text(status));
 					}
 

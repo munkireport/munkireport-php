@@ -4,6 +4,17 @@
 var mr = {
         dt:{},
         
+        statusFormat: {
+            install_failed: {type: 'danger'},
+            install_succeeded: {type: 'success'},
+            installed: {type: 'info'},
+            pending_install: {type: 'warning'},
+            pending_removal: {type: 'warning'},
+            removed: {type: 'info'},
+            uninstall_failed: {type: 'danger'},
+            uninstalled: {type: 'success'}
+        },
+        
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)
         {

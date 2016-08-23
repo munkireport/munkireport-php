@@ -168,12 +168,14 @@ class managedinstalls_controller extends Module_controller
 	 * @param type var Description
 	 * @return {11:return type}
 	 */
-	public function listing($value='')
+	public function listing($name='', $version='')
 	{
 		if( ! $this->authorized())
 		{
 			redirect('auth/login');
 		}
+		$data['name'] = $name;
+		$data['version'] = $version;
 		$data['page'] = 'clients';
 		$data['scripts'] = array("clients/client_list.js");
         $obj = new View();
