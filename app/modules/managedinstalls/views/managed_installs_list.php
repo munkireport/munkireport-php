@@ -61,8 +61,19 @@ new Managedinstalls_model;
             hideThese = [], // Hidden columns
             col = 0, // Column counter
             columnDefs = [{ visible: false, targets: hideThese }], //Column Definitions
-            name = "<?=$name?>",
-            version = "<?=$version?>";
+            pkgName = "<?=$name?>",
+            pkgVersion = "<?=$version?>";
+        
+        if(pkgName){
+            // Set name on heading
+            $('h3>span:first').text(pkgName);
+            
+            if(pkgVersion){
+                $('h3>span:first').text(pkgName + ' ('+pkgVersion+')');
+            }
+        }
+        
+
 
         $('.table th').map(function(){
 
@@ -88,27 +99,21 @@ new Managedinstalls_model;
                     
                     d.where = [];
                     
-                    if(name){
+                    if(pkgName){
                         d.where.push({
                             table: 'managedinstalls',
                             column: 'name',
-                            value: name
+                            value: pkgName
                         });
                         
-                        if(version){
+                        if(pkgVersion){
                             d.where.push({
                                 table: 'managedinstalls',
                                 column: 'version',
-                                value: version
+                                value: pkgVersion
                             });
-                            name = name + ' ('+version+')'
                         }
-                        
-                        // Set name and version on heading
-                        $('h3>span:first').text(name);
                     }
-                        
-
                 }
             },
             dom: mr.dt.buttonDom,
