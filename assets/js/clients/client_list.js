@@ -210,7 +210,7 @@ $(function(){
 			ser = generateReportItem("Serial Number",
 				response.machine.serial_number),
 			osx = generateReportItem("Software",
-				"OS X " + response.machine.os_version);
+				"macOS " + response.machine.os_version);
 
 		$title.text(response.machine.machine_desc);
 		$div.append(img, cpu, ram, ser, osx);
