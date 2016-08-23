@@ -174,8 +174,8 @@ class managedinstalls_controller extends Module_controller
 		{
 			redirect('auth/login');
 		}
-		$data['name'] = $name;
-		$data['version'] = $version;
+		$data['name'] = rawurldecode($name);
+		$data['version'] = rawurldecode($version);
 		$data['page'] = 'clients';
 		$data['scripts'] = array("clients/client_list.js");
         $obj = new View();
