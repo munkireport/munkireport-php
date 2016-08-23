@@ -16,6 +16,11 @@ $(document).on('appUpdate', function(e, lang) {
 		
 		box.empty();
 		if(data.length){
+			// Sort on version number
+			data.sort(function(a,b){
+				return mr.naturalSort(a.name, b.name);
+			});
+
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>';
                 box.append('<a href="'+appUrl+'/show/listing/printers/#'+d.name+'" class="list-group-item">'+d.name+badge+'</a>')
