@@ -64,8 +64,8 @@ class Timemachine_model extends Model {
 
 		// Parse log data
 		$start = ''; // Start date
-		$disk_backup = ''; // boolean for disk backup
-		$network_backup = ''; //boolean for network backup
+		$disk_backup = False; // boolean for disk backup
+		$network_backup = False; //boolean for network backup
 		
         foreach(explode("\n", $data) as $line)
         {
@@ -74,19 +74,20 @@ class Timemachine_model extends Model {
 
         	if( preg_match('/^Attempting to soft mount network destination URL/', $message))
         	{
-        		$network_backup = 1;
+        		$network_backup = True;
         	}
 
         	if( preg_match('/^Backing up to \/dev/', $message))
         	{
-        		$disk_backup = 1;
+        		$disk_backup = True;
         	}
         	
         	if( preg_match('/^Starting (automatic|manual) backup/', $message))
         	{
         		$start = $date;
         	}
-        	elseif( preg_match('/^Backup completed successfully/', $message))
+        	
+        	if( preg_match('/^Backup completed successfully/', $message))
         	{
         		if($start)
         		{
@@ -96,39 +97,45 @@ class Timemachine_model extends Model {
         		{
         			$this->duration = 0;
         		}
-        		$this->last_success = $date;
+        		
         	}
-        	elseif( preg_match('/^Backup failed/', $message))
+        	
+        	if( preg_match('/^Backup failed/', $message))
         	{
         		$this->last_failure = $date;
         		$this->last_failure_msg = $message;
         	}
 
-			foreach($translate as $search => $field) {
-			    
+			foreach($translate as $search => $field) 
+			{	    
           	   if((strpos($line, '---------') === 0) && ($this->kind)) 
           	   {
-					if(($this->kind === 'Network') && ($network_backup)) 
+					if(($this->kind == 'Network') && ($network_backup)) 
 					{
+						$this->last_success = $date;
 						//get a new id
 						$this->id = 0;
 						$this->save(); //the actual save
 						break;
 					}
-					elseif(($this->kind === 'Local') && ($disk_backup)) 
+					elseif(($this->kind == 'Local') && ($disk_backup)) 
 					{
+						$this->last_success = $date;
 						//get a new id
 						$this->id = 0;
 						$this->save(); //the actual save
 						break;
 					}
 				    break;
-				} elseif(strpos($line, $search) === 0) { //else if not separator and matches
+				}    
+				elseif(strpos($line, $search) === 0) 
+				{ //else if not separator and matches
             		$value = substr($line, strlen($search)); //get the current value
 					$this->$field = $value;
 					break;
 			    }
-              }
+			    
+            }
 
         }
         
