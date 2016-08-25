@@ -56,6 +56,56 @@ class auth extends Controller
 
 		$login = isset($_POST['login']) ? $_POST['login'] : '';
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
+	        $recaptcharesponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
+	
+		//check for recaptcha
+		if(!empty(conf('recaptchaloginpublickey')))
+		{
+			//recaptcha enabled by admin; checking it
+		        if(!empty($recaptcharesponse))
+		        {
+		        	//verifying recaptcha with google
+		        	try
+		        	{
+	                		$userip = $_SERVER["REMOTE_ADDR"];
+	                		$secreykey = conf('recaptchaloginprivatekey');
+	                    		$url = 'https://www.google.com/recaptcha/api/siteverify';
+				        $data = ['secret'   => $secreykey,
+				                 'response' => $_POST['g-recaptcha-response'],
+				                 'remoteip' => $userip];
+				        $options = [
+				            'http' => [
+				                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				                'method'  => 'POST',
+				                'content' => http_build_query($data) 
+				            ]
+				        ];
+				        $context  = stream_context_create($options);
+				        $result = file_get_contents($url, false, $context);
+					$result = json_decode($result)->success;
+			    
+					if($result != 1)
+					{
+				        	//recaptcha failed to verify
+						$recaptcharesponse = false;
+					}
+					else
+					{
+						//recaptcha verified successfully
+						$recaptcharesponse = true;
+					}
+		        	}
+    				catch (Exception $e)
+    				{
+        				error('Invalid captcha response', 'auth.invalid_captcha');
+    				}
+		        }
+		}
+	        else
+	        {
+	        	//recaptcha not enabled by admin; skipping it
+	        	$recaptcharesponse = true;
+	        }
 
 		// User is a member of these groups
 		$groups = array();
@@ -73,7 +123,7 @@ class auth extends Controller
 					break 2;
 
 				case 'config': // Config authentication
-					if($login && $password)
+					if($login && $password && $recaptcharesponse)
 					{
 						if(isset($auth_data[$login]))
 						{
@@ -97,7 +147,7 @@ class auth extends Controller
 					break;
 
 				case 'ldap': // LDAP authentication
-					if ($login && $password)
+					if ($login && $password && $recaptcharesponse)
 					{
 						include_once (APP_PATH . '/lib/authLDAP/authLDAP.php');
 						$ldap_auth_obj = new Auth_ldap($auth_data);
@@ -157,7 +207,7 @@ class auth extends Controller
 
 				case 'AD': // Active Directory authentication
 					// Prevent empty values
-					if ($_POST && $login && $password)
+					if ($_POST && $login && $password && $recaptcharesponse)
 					{
 						//include the class and create a connection
 						//TODO: wrap this include somewhere else?
@@ -243,14 +293,21 @@ class auth extends Controller
 		// If POST and no other alerts, auth has failed
 		if($_POST && ! $GLOBALS['alerts'])
 		{
-			if( ! $login OR ! $password)
-			{
-				error('Empty values are not allowed', 'auth.empty_not_allowed');
-			}
-			else
-			{
-				error('Wrong username or password', 'auth.wrong_user_or_pass');
-			}
+	                if( ! $recaptcharesponse )
+	                {
+	                	error('Invalid captcha response', 'auth.invalid_captcha');
+	                }
+	                else
+	                {
+				if( ! $login OR ! $password )
+				{
+					error('Empty values are not allowed', 'auth.empty_not_allowed');
+				}
+				else
+				{
+					error('Wrong username or password', 'auth.wrong_user_or_pass');
+				}
+	                }
 		}
 
 		$data = array('login' => $login, 'url' => url("auth/login/$return"));
@@ -403,7 +460,7 @@ class auth extends Controller
 
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
 		$data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
-
+		
 		if( $_POST && (! $data['login'] OR ! $password))
 		{
 			error('Empty values are not allowed', 'auth.empty_not_allowed');
