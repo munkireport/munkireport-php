@@ -39,14 +39,12 @@ plist = plistlib.readPlistFromString(out)
 destinations = plist['Destinations']
 
 #Initialize variables
-destinationCount = 0
 result = ''
 isNetwork = False
 isLocal = False
 
 # Examine destinations for information.  May have multiple destinations.
 for destination in destinations:
-    destinationCount += 1
     if destination.get('Kind') == "Network":
         try:
             isNetwork = True
@@ -78,6 +76,5 @@ for destination in destinations:
 
 # Write to disk
 txtfile = open("%s/timemachine.txt" % cachedir, "w")
-txtfile.write("TM_DESTINATIONS: " + str(destinationCount) + '\n')
 txtfile.write(result.encode('utf-8'))
 txtfile.close()
