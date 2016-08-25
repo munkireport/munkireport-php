@@ -48,16 +48,7 @@ class Reportdata_model extends Model {
 	 **/
 	function register()
 	{
-		// Test for proxy
-		if(isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
-		{
-			$this->remote_ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-		}
-		else
-		{
-			$this->remote_ip = $_SERVER['REMOTE_ADDR'];
-		}
-
+		$this->remote_ip = getRemoteAddress();
 		$this->timestamp = time();
 
 		return $this;
