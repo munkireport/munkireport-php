@@ -14,7 +14,6 @@ class Timemachine_model extends Model {
 		$this->rs['kind'] = ''; // Kind of backup (Network, Local)
 		$this->rs['location_name'] = ''; // Name of the backup location
 		$this->rs['backup_location'] = ''; // Location of the backup
-		$this->rs['destinations'] = 0; // Number of configured destinations
 		
 		
 		// Schema version, increment when creating a db migration
@@ -28,13 +27,58 @@ class Timemachine_model extends Model {
 		$this->idx[] = array('kind');
 		$this->idx[] = array('location_name');
 		$this->idx[] = array('backup_location');
-		$this->idx[] = array('destinations');
 		
 		// Create table if it does not exist
 		$this->create_table();
 				
 		$this->serial = $serial;
 		  
+	}
+	
+	// Search for item in string and return value
+	function _stringToItem($line, $search)
+	{
+		if(strpos($line, $search) === 0) 
+		{
+			return substr($line, strlen($search));
+		}
+		return FALSE;
+	}
+	
+	// Save data if complete
+	function _saveIfComplete()
+	{
+		//Only store if there is data
+		print_r($this->rs);
+		if($this->last_success OR $this->last_failure )
+		{
+			$this->timestamp = time();
+			$this->save();
+		}
+
+	}
+	
+	// Reset Data
+	// don't reset serial number
+	function _resetModel()
+	{
+		foreach($this->rs as $key => $value)
+		{
+			if($key == 'serial_number')
+			{
+				continue;
+			}
+			
+			if(is_int($value))
+			{
+				$this->rs[$key] = 0;
+			}
+			else
+			{
+				$this->rs[$key] = '';
+			}
+			
+		}
 	}
 
 	// ------------------------------------------------------------------------
@@ -47,104 +91,82 @@ class Timemachine_model extends Model {
 	function process($data)
 	{		
 		
-        $translate = array(
-        'TM_KIND: ' => 'kind',
-        'TM_LOCATION: ' => 'backup_location',
-        'TM_NAME: ' => 'location_name',
-        'TM_DESTINATIONS: ' => 'destinations');
+		$translate = array(
+			'TM_KIND: ' => 'kind',
+			'TM_LOCATION: ' => 'backup_location',
+			'TM_NAME: ' => 'location_name'
+		);
 
 		// Delete previous entries
 		$serial_number = $this->serial_number;
 		$this->delete_where('serial_number=?', $serial_number);
-
-        //clear any previous data we had
-		foreach($translate as $search => $field) {
-			$this->$field = '';
-		}
-
-		// Parse log data
-		$start = ''; // Start date
-		$disk_backup = False; // boolean for disk backup
-		$network_backup = False; //boolean for network backup
 		
-        foreach(explode("\n", $data) as $line)
-        {
-        	$date = substr($line, 0, 19);
-        	$message = substr($line, 21);
+		// Parse log data
+		$inLocation = $locationFound = False;
+		$start = ''; // Start date
+				
+		foreach(explode("\n", $data) as $line)
+		{
+			// Check if we're in a location block
+			$locationFound = $this->_stringToItem($line, 'TM_LOCATION: ');
+			if( ! $inLocation && ! $locationFound)
+			{
+				continue;
+			}
+						
+			// Check if we found another location
+			if ($inLocation && $locationFound) {
+				$this->_saveIfComplete();
+				$this->_resetModel();
+			}
+			
+			$inLocation = True;
+			
+			$date = substr($line, 0, 19);
+			$message = substr($line, 21);
 
-        	if( preg_match('/^Attempting to soft mount network destination URL/', $message))
-        	{
-        		$network_backup = True;
-        	}
-
-        	if( preg_match('/^Backing up to \/dev/', $message))
-        	{
-        		$disk_backup = True;
-        	}
-        	
-        	if( preg_match('/^Starting (automatic|manual) backup/', $message))
-        	{
-        		$start = $date;
-        	}
-        	
-        	if( preg_match('/^Backup completed successfully/', $message))
-        	{
-        		if($start)
-        		{
-        			$this->duration = strtotime($date) - strtotime($start);
-        		}
-        		else
-        		{
-        			$this->duration = 0;
-        		}
-        		
-        	}
-        	
-        	if( preg_match('/^Backup failed/', $message))
-        	{
-        		$this->last_failure = $date;
-        		$this->last_failure_msg = $message;
-        	}
+			
+			if( preg_match('/^Starting (automatic|manual) backup/', $message))
+			{
+				$start = $date;
+				continue;
+			}
+			
+			if( preg_match('/^Backup completed successfully/', $message))
+			{
+				if($start)
+				{
+					$this->duration = strtotime($date) - strtotime($start);
+				}
+				else
+				{
+					$this->duration = 0;
+				}
+				$this->last_success = $date;
+				continue;
+			}
+			
+			if( preg_match('/^Backup failed/', $message))
+			{
+				$this->last_failure = $date;
+				$this->last_failure_msg = $message;
+				continue;
+			}
 
 			foreach($translate as $search => $field) 
-			{	    
-          	   if((strpos($line, '---------') === 0) && ($this->kind)) 
-          	   {
-					if(($this->kind == 'Network') && ($network_backup)) 
-					{
-						$this->last_success = $date;
-						//get a new id
-						$this->id = 0;
-						$this->save(); //the actual save
-						break;
-					}
-					elseif(($this->kind == 'Local') && ($disk_backup)) 
-					{
-						$this->last_success = $date;
-						//get a new id
-						$this->id = 0;
-						$this->save(); //the actual save
-						break;
-					}
-				    break;
-				}    
-				elseif(strpos($line, $search) === 0) 
-				{ //else if not separator and matches
-            		$value = substr($line, strlen($search)); //get the current value
-					$this->$field = $value;
+			{
+				if(strpos($line, $search) === 0) 
+				{
+					//get the current value
+					$this->$field = substr($line, strlen($search));
 					break;
-			    }
-			    
-            }
-
-        }
-        
-        // Only store if there is data
-        if($this->last_success OR $this->last_failure )
-        {
-			$this->timestamp = time();
-        	$this->save();
-        }
+				}
+			}
+		}
+		
+		$this->_saveIfComplete();
+		
+		//throw new Exception("Error Processing Request", 1);
 		
 	}
 
