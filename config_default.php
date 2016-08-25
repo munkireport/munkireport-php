@@ -154,7 +154,7 @@
 	|
 	*/
 	$conf['authorization']['delete_machine'] = array('admin', 'manager');
-    	$conf['authorization']['global'] = array('admin');
+	$conf['authorization']['global'] = array('admin');
 
 	/*
 	|===============================================
@@ -166,7 +166,7 @@
 	*/
 	$conf['roles']['admin'] = array('*');
 
-    	/*
+	/*
 	|===============================================
 	| Local groups
 	|===============================================
@@ -176,7 +176,7 @@
 	*/
 	//$conf['groups']['admin_users'] = array();
 
-    	/*
+	/*
 	|===============================================
 	| Business Units
 	|===============================================
@@ -248,7 +248,7 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
 	*/
-    	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
 	/*
 	|===============================================
@@ -278,8 +278,6 @@
 	//$conf['gsx_sold_to'] = '1234567890';
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
-
-<<<<<<< HEAD
 
 	/*
 	|===============================================
@@ -350,12 +348,8 @@
 	|
 	*/
 	//$conf['mwa2_link'] = "http://127.0.0.1:8080";
-   
-    
-    /*
-=======
-    	/*
->>>>>>> computeronix-patch-2
+
+	/*
 	|===============================================
 	| Modules
 	|===============================================
@@ -369,12 +363,7 @@
 	| Machine and Reportdata
 	|
 	*/
-<<<<<<< HEAD
-    $conf['modules'] = array('munkireport', 'managedinstalls');
-
-=======
-    	$conf['modules'] = array('munkireport');
->>>>>>> computeronix-patch-2
+	$conf['modules'] = array('munkireport', 'managedinstalls');
 
 	/*
 	|===============================================
@@ -402,13 +391,13 @@
 	|			$conf['temperature_unit'] = 'F';
 	|
 	| When not configured, the default behaviour applies.
-	| By default temperture units are displayed in Celsius °C.
+	| By default temperature units are displayed in Celsius °C.
 	|
 	*/
-    	//$conf['temperature_unit'] = 'F';
+	//$conf['temperature_unit'] = 'F';
 
 
-    	/*
+	/*
 	|===============================================
 	| Migrations
 	|===============================================
@@ -423,7 +412,7 @@
 	| to FALSE when you're done migrating.
 	|
 	*/
-    	$conf['allow_migrations'] = FALSE;
+	$conf['allow_migrations'] = FALSE;
 
 	/*
 	|===============================================
@@ -440,7 +429,7 @@
 	|
 	|
 	*/
-    	$conf['client_passphrases'] = array();
+	$conf['client_passphrases'] = array();
 
 	/*
 	|===============================================
@@ -459,9 +448,9 @@
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
 	|
 	*/
-    	//$conf['proxy']['server'] = 'proxy.yoursite.org';
+	//$conf['proxy']['server'] = 'proxy.yoursite.org';
 
-    	/*
+	/*
 	|===============================================
 	| Request timeout
 	|===============================================
@@ -471,8 +460,7 @@
 	| Timeout in seconds
 	|
 	*/
-<<<<<<< HEAD
-    $conf['request_timeout'] = 5;
+	$conf['request_timeout'] = 5;
 	
 	
 	/*
@@ -494,11 +482,7 @@
 	|	$conf['email']['locale'] = 'en';
 	*/
 
-=======
-    	$conf['request_timeout'] = 5;
->>>>>>> computeronix-patch-2
-
- 	/*
+	/*
 	|===============================================
 	| Dashboard - IP Ranges
 	|===============================================
@@ -602,7 +586,7 @@
 	*/
 	$conf['dashboard_layout'] = array(
 		array('client', 'messages'),
-        array('new_clients', 'pending_apple', 'pending_munki'),
+		array('new_clients', 'pending_apple', 'pending_munki'),
 		array('munki', 'disk_report','uptime')
 	);
 
