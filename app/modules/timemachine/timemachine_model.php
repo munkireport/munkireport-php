@@ -116,7 +116,7 @@ class Timemachine_model extends Model {
 						
 			// Check if we found another location
 			if ($inLocation && $locationFound) {
-				$this->_saveIfComplete();
+				$this->_saveIfComplete($locationFound);
 				$this->_resetModel();
 			}
 			
