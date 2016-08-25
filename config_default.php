@@ -137,11 +137,11 @@
 	|===============================================
 	|
 	| Enable reCaptcha Support on the Authentication Form
-    	| Request API keys from https://www.google.com/recaptcha
-    	|
+	| Request API keys from https://www.google.com/recaptcha
+	|
 	*/
-    	$conf['recaptchaloginpublickey'] = '';
-    	$conf['recaptchaloginprivatekey'] = '';
+	$conf['recaptchaloginpublickey'] = '';
+	$conf['recaptchaloginprivatekey'] = '';
 
 	/*
 	|===============================================
