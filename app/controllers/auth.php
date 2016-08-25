@@ -46,7 +46,8 @@ class auth extends Controller
 			redirect($return);
 		}
 
-		$check = FALSE;
+		$auth_verified = FALSE;
+		$pre_auth_failed = False;
 
 		// If no valid mechanisms found, bail
 		if ( ! $this->auth_mechanisms)
@@ -54,59 +55,33 @@ class auth extends Controller
 			redirect('auth/generate');
 		}
 
-		$login = isset($_POST['login']) ? $_POST['login'] : '';
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
-	        $recaptcharesponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
+		$login = post('login');
+		$password = post('password');
 	
 		//check for recaptcha
-		if(!empty(conf('recaptchaloginpublickey')))
+		if(conf('recaptchaloginpublickey'))
 		{
 			//recaptcha enabled by admin; checking it
-		        if(!empty($recaptcharesponse))
-		        {
-		        	//verifying recaptcha with google
-		        	try
-		        	{
-	                		$userip = $_SERVER["REMOTE_ADDR"];
-	                		$secreykey = conf('recaptchaloginprivatekey');
-	                    		$url = 'https://www.google.com/recaptcha/api/siteverify';
-				        $data = ['secret'   => $secreykey,
-				                 'response' => $_POST['g-recaptcha-response'],
-				                 'remoteip' => $userip];
-				        $options = [
-				            'http' => [
-				                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-				                'method'  => 'POST',
-				                'content' => http_build_query($data) 
-				            ]
-				        ];
-				        $context  = stream_context_create($options);
-				        $result = file_get_contents($url, false, $context);
-					$result = json_decode($result)->success;
-			    
-					if($result != 1)
-					{
-				        	//recaptcha failed to verify
-						$recaptcharesponse = false;
-					}
-					else
-					{
-						//recaptcha verified successfully
-						$recaptcharesponse = true;
-					}
-		        	}
-    				catch (Exception $e)
-    				{
-        				error('Invalid captcha response', 'auth.invalid_captcha');
-    				}
-		        }
+			if($response = post('g-recaptcha-response'))
+			{
+				include_once (APP_PATH . '/lib/munkireport/Recaptcha.php');
+				$recaptchaObj = new munkireport\Recaptcha(conf('recaptchaloginprivatekey'));
+				$remote_ip = getRemoteAddress();
+				
+				if( ! $recaptchaObj->verify($response, $remote_ip)){
+					error('', 'auth.capthca.invalid');
+					$pre_auth_failed = True;
+				}
+			}
+			else {
+				if($_POST)
+				{
+					error('', 'auth.captcha.empty');
+					$pre_auth_failed = True;
+				}
+			}
 		}
-	        else
-	        {
-	        	//recaptcha not enabled by admin; skipping it
-	        	$recaptcharesponse = true;
-	        }
-
+		
 		// User is a member of these groups
 		$groups = array();
 
@@ -114,23 +89,29 @@ class auth extends Controller
 		// Break when we have a match
 		foreach($this->auth_mechanisms as $mechanism => $auth_data)
 		{
+			// Check if pre-authentication is successful
+			if ($pre_auth_failed)
+			{
+				break;
+			}
+			
 			// Local is just a username => hash array
 			switch ($mechanism)
 			{
 				case 'noauth': // No authentication
-					$check = TRUE;
+					$auth_verified = TRUE;
 					$login = 'admin';
 					break 2;
 
 				case 'config': // Config authentication
-					if($login && $password && $recaptcharesponse)
+					if($login && $password)
 					{
 						if(isset($auth_data[$login]))
 						{
 							$t_hasher = $this->load_phpass();
-							$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
+							$auth_verified = $t_hasher->CheckPassword($password, $auth_data[$login]);
 							
-							if($check)
+							if($auth_verified)
 							{
 								// Get group memberships
 								foreach(conf('groups', array()) AS $groupname => $members)
@@ -147,7 +128,7 @@ class auth extends Controller
 					break;
 
 				case 'ldap': // LDAP authentication
-					if ($login && $password && $recaptcharesponse)
+					if ($login && $password)
 					{
 						include_once (APP_PATH . '/lib/authLDAP/authLDAP.php');
 						$ldap_auth_obj = new Auth_ldap($auth_data);
@@ -160,7 +141,7 @@ class auth extends Controller
 								$admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
 								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
 								{
-									$check = TRUE;
+									$auth_verified = TRUE;
 
 									// If business units enabled, get group memberships
 									if(conf('enable_business_units'))
@@ -186,7 +167,7 @@ class auth extends Controller
 									{
 										if (in_array($group, $admin_groups))
 										{
-											$check = TRUE;
+											$auth_verified = TRUE;
 
 											// If business units enabled, store group memberships
 											if(conf('enable_business_units'))
@@ -207,7 +188,7 @@ class auth extends Controller
 
 				case 'AD': // Active Directory authentication
 					// Prevent empty values
-					if ($_POST && $login && $password && $recaptcharesponse)
+					if ($_POST && $login && $password)
 					{
 						//include the class and create a connection
 						//TODO: wrap this include somewhere else?
@@ -235,7 +216,7 @@ class auth extends Controller
 								$admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
 								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
 								{
-									$check = TRUE;
+									$auth_verified = TRUE;
 
 									// If business units enabled, get group memberships
 									if(conf('enable_business_units'))
@@ -257,7 +238,7 @@ class auth extends Controller
 								{
 									if (in_array($group, $admin_groups))
 									{
-										$check = TRUE;
+										$auth_verified = TRUE;
 										break 3;
 									}
 								}
@@ -278,7 +259,7 @@ class auth extends Controller
 		} //end foreach loop
 
 		// If authentication succeeded, create session
-		if($check)
+		if($auth_verified)
 		{
 			$_SESSION['user'] = $login;
 			$_SESSION['groups'] = $groups;
@@ -293,21 +274,14 @@ class auth extends Controller
 		// If POST and no other alerts, auth has failed
 		if($_POST && ! $GLOBALS['alerts'])
 		{
-	                if( ! $recaptcharesponse )
-	                {
-	                	error('Invalid captcha response', 'auth.invalid_captcha');
-	                }
-	                else
-	                {
-				if( ! $login OR ! $password )
-				{
-					error('Empty values are not allowed', 'auth.empty_not_allowed');
-				}
-				else
-				{
-					error('Wrong username or password', 'auth.wrong_user_or_pass');
-				}
-	                }
+			if( ! $login OR ! $password )
+			{
+				error('Empty values are not allowed', 'auth.empty_not_allowed');
+			}
+			else
+			{
+				error('Wrong username or password', 'auth.wrong_user_or_pass');
+			}
 		}
 
 		$data = array('login' => $login, 'url' => url("auth/login/$return"));

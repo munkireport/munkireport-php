@@ -42,6 +42,10 @@
 	"auth": {
 		"addtoconfig": "Add this line to config.php:",
 		"back_to_site": "Back to site",
+		"captcha": {
+			"empty": "Please fill out captcha",
+			"invalid": "Invalid captcha response"
+		},
 		"empty_not_allowed": "Empty values are not allowed",
 		"error_contacting_AD": "An error ocurred while contacting AD",
 		"gen_other": "Generate another",

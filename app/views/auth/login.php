@@ -44,15 +44,13 @@
 									<input type="password" id="loginpassword" name="password" class="form-control">
 								</div>
 							</div>
-			                                <?php
-			                                	if (!empty(conf('recaptchaloginpublickey')))
-			                                	{
-			                                    	echo "<div class=\"form-group\"><div class=\"col-lg-10 col-lg-offset-2\">";
-								echo "<div class=\"g-recaptcha\" data-sitekey=\"";
-			                                    	echo conf('recaptchaloginpublickey');
-			                                    	echo "\"></div></div></div>\r\n";
-			                                	}
-			                            	?>
+					<?php if (conf('recaptchaloginpublickey')):?>
+							<div class="form-group">
+								<div class="col-lg-offset-2 col-lg-10">
+									<div class="g-recaptcha" data-size="normal" data-sitekey="<?=conf('recaptchaloginpublickey')?>"></div>
+								</div>
+							</div>
+					<?php endif?>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
 								<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button> 
