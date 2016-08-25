@@ -46,11 +46,11 @@ class Timemachine_model extends Model {
 	}
 	
 	// Save data if complete
-	function _saveIfComplete()
+	function _saveIfComplete($locationFound)
 	{
 		//Only store if there is data
-		print_r($this->rs);
-		if($this->last_success OR $this->last_failure )
+//		print_r($this->rs);
+		if($this->locationFound)
 		{
 			$this->timestamp = time();
 			$this->save();
@@ -164,8 +164,7 @@ class Timemachine_model extends Model {
 			}
 		}
 		
-		$this->_saveIfComplete();
-		
+		$this->_saveIfComplete($locationFound);
 		//throw new Exception("Error Processing Request", 1);
 		
 	}
