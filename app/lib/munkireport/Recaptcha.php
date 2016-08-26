@@ -24,18 +24,18 @@ class Recaptcha {
 		//verifying recaptcha with google
 		try
 		{
-			$data = [
+			$data = array(
 				'secret'   => $this->secret,
 				'response' => $recaptcharesponse,
 				'remoteip' => $userip,
-			];
-			$options = [
-				'http' => [
+			);
+			$options = array(
+				'http' => array(
 					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 					'method'  => 'POST',
 					'content' => http_build_query($data),
-				]
-			];
+				)
+			);
 			$context  = stream_context_create($options);
 			$result = file_get_contents($this->url, false, $context);
 			$this->json_result = json_decode($result);
