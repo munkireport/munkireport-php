@@ -35,7 +35,7 @@ NEW FEATURES
 * link to everymac.com in the client detail page
 * Add module templating (run build/add_module.sh module_name)
 * Managedinstalls module (replaces part of the munkireport module)
-* DeployStudio Module thanks to @tuxudo
+* DeployStudio Module thanks to @tuxudo and @n8felton
 * Add munkiprotocol listing (#462)
 * Add computername to page title (#444)
 * GoogleMaps API key (#510)
