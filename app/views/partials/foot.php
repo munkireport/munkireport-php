@@ -73,11 +73,11 @@
   
   <script>
   $(document).on('appUpdate', function(){
-      $.getJSON( appUrl + '/module/notification/runCheck', function( data ) {
+      //$.getJSON( appUrl + '/module/notification/runCheck', function( data ) {
           // Maybe add some counter to only run every 10 mins.
           // CHeck if the data contains errors
           // Check if there are desktop notifications
-      });
+      //});
   });
   </script>
 

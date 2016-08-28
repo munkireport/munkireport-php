@@ -30,11 +30,34 @@ if len(sys.argv) > 1:
 def _HalfGB(size):
     return size >> 29 << 29
 
+# Return OS X version
+def _OSVersion():
+    proc = subprocess.Popen(['/usr/bin/sw_vers','-productVersion'], stdout=subprocess.PIPE)
+    output = proc.stdout.read()
+
+    return output.split('.')[1]
+
 def _DictFromDiskutilList():
     """calls diskutil list -plist and returns as dict."""
 
     command = ["/usr/sbin/diskutil", "list", "-plist"]
     return _DictFromSubprocess(command)
+
+def _DictFromDiskutilList_SnowLeopard():
+    """as Snow Leopard delivers a different output from diskutil 
+    list we will mimic the output from newer versions of OS X
+
+    """
+    Partitions = _DictFromDiskutilList()["AllDisks"]
+    DiskArray = []
+
+    for Partition in Partitions:
+        DiskArray.append(_DictFromDiskutilInfo(Partition))
+
+    plist = [{'Content':'Guid', 'Partitions':DiskArray,}]
+    plistfile = '%s/cache/SL_tmpdisk.plist' % os.path.dirname(os.path.realpath(__file__))
+    plistlib.writePlist(plist, plistfile)
+    return plistlib.readPlist(plistfile)
 
 def _DictFromDiskutilInfo(deviceid):
     """calls diskutil info for a specific device id.
@@ -89,7 +112,10 @@ def filteredDiskInfo(deviceid):
 def AllDisksAndPartitions():
     """Returns list of all disks and partitions."""
     try:
-        return _DictFromDiskutilList()["AllDisksAndPartitions"]
+        if _OSVersion() == "6":
+            return _DictFromDiskutilList_SnowLeopard()
+        else:
+            return _DictFromDiskutilList()["AllDisksAndPartitions"]
     except KeyError:
         # TODO(user): fix errors to actually provide info...
         raise Exception("Unable to list all partitions.")

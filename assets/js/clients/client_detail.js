@@ -95,9 +95,13 @@ $(document).on('appReady', function(e, lang) {
 			.attr('title', machineData.computer_name)
 			.data('placement', 'bottom')
 			.tooltip();
+		
+		// Add computername to pagetitle
+		var title = $('title').text();
+		$('title').text(machineData.computer_name + ' | ' + title)
 
 		// Format OS Version
-		$('.mr-os_version').html(integer_to_version(machineData.os_version));
+		$('.mr-os_version').html(mr.integerToVersion(machineData.os_version));
 
 
 		// Format filesizes
@@ -290,7 +294,7 @@ $(document).on('appReady', function(e, lang) {
 		// Get the data out of the response array
 		var tmData = tmResp[0],
 			cpData = cpResp[0];
-		
+
 		// Draw timemachine unit
 		if(tmData.id !== '')
 		{
@@ -318,7 +322,27 @@ $(document).on('appReady', function(e, lang) {
 							if(tmData.last_failure){
 								return moment(tmData.last_failure + 'Z').fromNow();
 							}
-						})))
+						})))						
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.kind')))
+					.append($('<td>')
+						.text(tmData.kind)))
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.location_name')))
+					.append($('<td>')
+						.text(tmData.location_name)))
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.backup_location')))
+					.append($('<td>')
+						.text(tmData.backup_location)))
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.destinations')))
+					.append($('<td>')
+						.text(tmData.destinations)))
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.last_failure_msg')))
@@ -333,13 +357,16 @@ $(document).on('appReady', function(e, lang) {
 		
 		// Draw Crashplan Unit
 		var mr_table_data = '<tr><td>'+i18n.t('no_data')+'</td></tr>';
-		$.each(cpData, function(index, item){
-			mr_table_data = '<tr><th>'+i18n.t('backup.destination')+'</th><td>'+item.destination+'<td></tr>';
-			mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_success')+'</th><td>'+moment(item.last_success * 1000).fromNow()+'<td></tr>';
-			mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.duration')+'</th><td>'+moment.duration(item.duration, "seconds").humanize()+'<td></tr>';
-			mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure')+'</th><td>'+moment(item.last_failure * 1000).fromNow()+'<td></tr>';
-			mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure_msg')+'</th><td>'+item.reason+'<td></tr>';
-		});
+		if(cpData){
+			mr_table_data = '';
+			$.each(cpData, function(index, item){
+				mr_table_data = mr_table_data + '<tr class="info"><th>'+i18n.t('backup.destination')+'</th><td>'+item.destination+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_success')+'</th><td>'+moment(item.last_success * 1000).fromNow()+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.duration')+'</th><td>'+moment.duration(item.duration, "seconds").humanize()+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure')+'</th><td>'+moment(item.last_failure * 1000).fromNow()+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure_msg')+'</th><td>'+item.reason+'<td></tr>';
+			});
+		}
 		$('table.mr-crashplan-table')
 			.empty()
 			.append(mr_table_data)

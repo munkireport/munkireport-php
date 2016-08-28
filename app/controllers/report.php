@@ -76,8 +76,11 @@ class report extends Controller
 			$report = new Reportdata_model($_POST['serial']);
 			$report->machine_group = $this->group;
 			$report->register()->save();
-
-			$req_items = unserialize($_POST['items']); //Todo: check if array
+            
+			//$req_items = unserialize($_POST['items']); //Todo: check if array
+            include_once (APP_PATH . '/lib/munkireport/Unserializer.php');
+            $unserializer = new munkireport\Unserializer($_POST['items']);
+            $req_items = $unserializer->unserialize();
 
 			// Reset messages for this client
 			if(isset($req_items['msg']))
@@ -146,7 +149,10 @@ class report extends Controller
 	    	$this->error("No items in POST");
 	    }
 
-		$arr = @unserialize($_POST['items']);
+        include_once (APP_PATH . '/lib/munkireport/Unserializer.php');
+        $unserializer = new munkireport\Unserializer($_POST['items']);
+        $arr = $unserializer->unserialize();
+
 
 		if ( ! is_array($arr))
 		{
@@ -275,7 +281,7 @@ class report extends Controller
 
 		echo "Recorded this message: ".$data['msg']."\n";
 	}
-
+    
 	/**
 	 *
 	 * @param string message

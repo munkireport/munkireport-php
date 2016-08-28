@@ -25,10 +25,10 @@
 		var baseUrl = "<?php echo conf('subdirectory'); ?>",
 			appUrl = baseUrl + 'index.php?',
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
+			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
 	</script>
 	
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
-
 
 <?php
 	if (isset($scripts))
@@ -41,7 +41,7 @@
 
 	<?php if( isset($_SESSION['user'])):?>
 
-<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+<header class="navbar navbar-inverse navbar-static-top bs-docs-nav" role="banner">
 	<div class="container">
 		<div class="navbar-header">
 			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
@@ -57,12 +57,19 @@
 				<?php $page = $GLOBALS[ 'engine' ]->get_uri_string(); ?>
 
 				<li <?php echo $page==''?'class="active"':''; ?>>
-					<a href="<?php echo url(); ?>"><i class="fa fa-th-large"></i> <span data-i18n="nav.main.dashboard">Dashboard</span></a>
+					<a href="<?php echo url(); ?>">
+						<i class="fa fa-th-large"></i>
+						<span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
+					</a>
 				</li>
 
 				<?php $url = 'show/reports/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o"></i> <span data-i18n="nav.main.reports">Reports</span> <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-bar-chart-o"></i>
+						<span data-i18n="nav.main.reports"></span>
+						<b class="caret"></b>
+					</a>
 					<ul class="report dropdown-menu">
 
 						<?php foreach(scandir(conf('view_path').'report') AS $list_url): ?>
@@ -84,7 +91,11 @@
 
 				<?php $url = 'show/listing/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> <span data-i18n="nav.main.listings">Listings</span> <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-list-alt"></i>
+						<span data-i18n="nav.main.listings"></span>
+						<b class="caret"></b>
+					</a>
 					<ul class="listing dropdown-menu">
 
 						<?php foreach(scandir(conf('view_path').'listing') AS $list_url): ?>
@@ -107,10 +118,14 @@
 				<?php if($_SESSION['role'] == 'admin'):?>
 				<?php $url = 'admin/show/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> <span data-i18n="nav.main.admin"></span> <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-list-alt"></i>
+						<span data-i18n="nav.main.admin"></span>
+						<b class="caret"></b>
+					</a>
 					<ul class="admin dropdown-menu">
 
-						<?php foreach(scandir(conf('view_path').'admin') AS $list_url): ?>
+						<?php foreach(scandir(conf('view_path').'admin') as $list_url): ?>
 
 							<?php if( strpos($list_url, 'php')): ?>
 							<?php $page_url = $url.strtok($list_url, '.'); ?>
@@ -129,7 +144,9 @@
 				<?php endif?>
 
 				<li>
-					<a href="#" class="filter-popup"><i class="fa fa-filter"></i></a>
+					<a href="#" class="filter-popup">
+						<i class="fa fa-filter"></i>
+					</a>
 				</li>
 
 			</ul><!-- nav navbar-nav -->
@@ -137,7 +154,9 @@
 			<ul class="nav navbar-nav navbar-right">
 
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-globe"></i>
+					</a>
 					<ul class="dropdown-menu locale">
 
 							<?php foreach(scandir(APP_ROOT.'assets/locales') AS $list_url): ?>
@@ -158,9 +177,17 @@
 				<?php if( ! array_key_exists('auth_noauth', conf('auth'))): // Hide logout button if auth_noauth?>
 
 				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $_SESSION['user']; ?> <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-user"></i> <?php echo $_SESSION['user']; ?>
+						<b class="caret"></b>
+					</a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo url('auth/logout'); ?>"><i class="fa fa-power-off"></i> <span data-i18n="nav.user.logout">Sign Off</span></a></li>
+						<li>
+							<a href="<?php echo url('auth/logout'); ?>">
+								<i class="fa fa-power-off"></i>
+								<span data-i18n="nav.user.logout"></span>
+							</a>
+						</li>
 					</ul>
 				</li>
 

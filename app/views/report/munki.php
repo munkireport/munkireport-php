@@ -16,17 +16,20 @@
 
   </div>
   <div class="row">
+	  
+	  <?php $this->view('get_failing_widget', '', MODULE_PATH . 'managedinstalls/views/'); ?>
 
-    <?php $this->view('widgets/pending_widget'); ?>
+	  <?php $this->view('widgets/pending_widget'); ?>
+	
+	  <?php $this->view('widgets/manifests_widget'); ?>
+
+</div> <!-- /row -->
+ <div class="row">
 
     <?php $this->view('widgets/pending_munki_widget'); ?>
     
     <?php $this->view('widgets/pending_apple_widget'); ?>
 
-  </div> <!-- /row -->
-   <div class="row">
-
-    <?php $this->view('widgets/manifests_widget'); ?>
 
   </div> <!-- /row -->
 

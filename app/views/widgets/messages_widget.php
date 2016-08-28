@@ -77,7 +77,7 @@ $(document).on('appUpdate', function(){
 			msg = item.msg,
 			date = new Date(item.timestamp * 1000);
 
-		if(item.module == 'munkireport'){
+		if(item.module == 'munkireport' || item.module == 'managedinstalls'){
 			tab = '#tab_munki';
 			item.module = '';
 			item.data = item.data || '{}';

@@ -24,13 +24,10 @@ new munkiinfo_model;
 		        <th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
     			<th data-i18n="os.version" data-colname='machine.os_version'></th>
 		        <th data-i18n="munki.version" data-colname='munkireport.version'></th>
-		        <th data-i18n="last_seen" data-i18n="listing.munki.latest_run" data-sort="desc" data-colname='munkireport.timestamp'>Latest Run</th>
+		        <th data-i18n="last_seen" data-sort="desc" data-colname='reportdata.timestamp'></th>
 		        <th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
 		        <th data-i18n="error_plural" data-colname='munkireport.errors'></th>
 		        <th data-i18n="warning_plural" data-colname='munkireport.warnings'></th>
-		        <th data-i18n="listing.munki.pending_install_plural" data-colname='munkireport.pendinginstalls'></th>
-		        <th data-i18n="listing.munki.package_installed_plural" data-colname='munkireport.installresults'></th>
-		        <th data-i18n="listing.munki.package_removed_plural" data-colname='munkireport.removalresults'></th>
 				<th data-i18n="manifest.name" data-colname='munkireport.manifestname'></th>
 		      </tr>
 		    </thead>
@@ -109,23 +106,23 @@ new munkiinfo_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-                var link = get_client_detail_link(name, sn, appUrl + '/', '#tab_munki');
+                var link = mr.getClientDetailLink(name, sn, '#tab_munki');
 			$('td:eq(0)', nRow).html(link);
 
-			// Format date
-			date = $('td:eq(6)', nRow).text();
-	                $('td:eq(6)', nRow).html('never');
-	        	if(date){
-			$('td:eq(6)', nRow).html(moment(date).fromNow());
-	        	}
 
-                // Format OS Version
-                var osvers = $('td:eq(4)', nRow).html();
-                if( osvers > 0 && osvers.indexOf(".") == -1)
-                {
-                  osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
-                }
-                $('td:eq(4)', nRow).html(osvers);
+            // Format date
+            var checkin = parseInt($('td:eq(6)', nRow).html());
+            var date = new Date(checkin * 1000);
+            $('td:eq(6)', nRow).html(moment(date).fromNow());
+
+
+            // Format OS Version
+            var osvers = $('td:eq(4)', nRow).html();
+            if( osvers > 0 && osvers.indexOf(".") == -1)
+            {
+              osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+            }
+            $('td:eq(4)', nRow).html(osvers);
 
 		    }
 	    });

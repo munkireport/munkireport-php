@@ -116,7 +116,7 @@ while getopts b:m:p:r:c:v:i:nh flag; do
 done
 
 # build additional HTTP headers
-if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders)" = "1" ]; then
+if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders 2>/dev/null)" = "1" ]; then
 	BUNDLE_ID='ManagedInstalls'
 	MANAGED_INSTALLS_PLIST_PATHS=("${TARGET_VOLUME}/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "${TARGET_VOLUME}/Library/Preferences/${BUNDLE_ID}.plist")
 	ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'

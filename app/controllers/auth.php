@@ -46,7 +46,8 @@ class auth extends Controller
 			redirect($return);
 		}
 
-		$check = FALSE;
+		$auth_verified = FALSE;
+		$pre_auth_failed = False;
 
 		// If no valid mechanisms found, bail
 		if ( ! $this->auth_mechanisms)
@@ -54,9 +55,33 @@ class auth extends Controller
 			redirect('auth/generate');
 		}
 
-		$login = isset($_POST['login']) ? $_POST['login'] : '';
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
-
+		$login = post('login');
+		$password = post('password');
+	
+		//check for recaptcha
+		if(conf('recaptchaloginpublickey'))
+		{
+			//recaptcha enabled by admin; checking it
+			if($response = post('g-recaptcha-response'))
+			{
+				include_once (APP_PATH . '/lib/munkireport/Recaptcha.php');
+				$recaptchaObj = new munkireport\Recaptcha(conf('recaptchaloginprivatekey'));
+				$remote_ip = getRemoteAddress();
+				
+				if( ! $recaptchaObj->verify($response, $remote_ip)){
+					error('', 'auth.capthca.invalid');
+					$pre_auth_failed = True;
+				}
+			}
+			else {
+				if($_POST)
+				{
+					error('', 'auth.captcha.empty');
+					$pre_auth_failed = True;
+				}
+			}
+		}
+		
 		// User is a member of these groups
 		$groups = array();
 
@@ -64,11 +89,17 @@ class auth extends Controller
 		// Break when we have a match
 		foreach($this->auth_mechanisms as $mechanism => $auth_data)
 		{
+			// Check if pre-authentication is successful
+			if ($pre_auth_failed)
+			{
+				break;
+			}
+			
 			// Local is just a username => hash array
 			switch ($mechanism)
 			{
 				case 'noauth': // No authentication
-					$check = TRUE;
+					$auth_verified = TRUE;
 					$login = 'admin';
 					break 2;
 
@@ -78,9 +109,9 @@ class auth extends Controller
 						if(isset($auth_data[$login]))
 						{
 							$t_hasher = $this->load_phpass();
-							$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
+							$auth_verified = $t_hasher->CheckPassword($password, $auth_data[$login]);
 							
-							if($check)
+							if($auth_verified)
 							{
 								// Get group memberships
 								foreach(conf('groups', array()) AS $groupname => $members)
@@ -110,7 +141,7 @@ class auth extends Controller
 								$admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
 								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
 								{
-									$check = TRUE;
+									$auth_verified = TRUE;
 
 									// If business units enabled, get group memberships
 									if(conf('enable_business_units'))
@@ -136,7 +167,7 @@ class auth extends Controller
 									{
 										if (in_array($group, $admin_groups))
 										{
-											$check = TRUE;
+											$auth_verified = TRUE;
 
 											// If business units enabled, store group memberships
 											if(conf('enable_business_units'))
@@ -185,7 +216,7 @@ class auth extends Controller
 								$admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
 								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
 								{
-									$check = TRUE;
+									$auth_verified = TRUE;
 
 									// If business units enabled, get group memberships
 									if(conf('enable_business_units'))
@@ -207,7 +238,7 @@ class auth extends Controller
 								{
 									if (in_array($group, $admin_groups))
 									{
-										$check = TRUE;
+										$auth_verified = TRUE;
 										break 3;
 									}
 								}
@@ -228,7 +259,7 @@ class auth extends Controller
 		} //end foreach loop
 
 		// If authentication succeeded, create session
-		if($check)
+		if($auth_verified)
 		{
 			$_SESSION['user'] = $login;
 			$_SESSION['groups'] = $groups;
@@ -243,7 +274,7 @@ class auth extends Controller
 		// If POST and no other alerts, auth has failed
 		if($_POST && ! $GLOBALS['alerts'])
 		{
-			if( ! $login OR ! $password)
+			if( ! $login OR ! $password )
 			{
 				error('Empty values are not allowed', 'auth.empty_not_allowed');
 			}
@@ -403,7 +434,7 @@ class auth extends Controller
 
 		$password = isset($_POST['password']) ? $_POST['password'] : '';
 		$data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
-
+		
 		if( $_POST && (! $data['login'] OR ! $password))
 		{
 			error('Empty values are not allowed', 'auth.empty_not_allowed');

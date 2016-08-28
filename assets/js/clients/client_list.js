@@ -24,13 +24,15 @@ $(document).on('appReady', function(e, lang) {
 	mr.dt.buttonDom = "<'row'<'col-xs-6 col-md-8'lB r><'col-xs-6 col-md-4'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>";
 	mr.dt.buttons = {
 		buttons: [
-			'edit',
 			'copyHtml5',
 			'excelHtml5',
 			'csvHtml5',
 			'print'
 		]
 	};
+	if( isAdmin){
+		mr.dt.buttons.buttons.unshift('edit');
+	}
 	
 	// Datatables defaults
 	$.extend( true, $.fn.dataTable.defaults, {
@@ -208,7 +210,7 @@ $(function(){
 			ser = generateReportItem("Serial Number",
 				response.machine.serial_number),
 			osx = generateReportItem("Software",
-				"OS X " + response.machine.os_version);
+				"macOS " + response.machine.os_version);
 
 		$title.text(response.machine.machine_desc);
 		$div.append(img, cpu, ram, ser, osx);

@@ -7,12 +7,17 @@
  **/
 class munkiinfo_controller extends Module_controller
 {
+    
+    protected $module_path;
+    protected $view_path;
+
 
   /*** Protect methods with auth! ****/
   function __construct()
   {
     // Store module path
     $this->module_path = dirname(__FILE__);
+    $this->view_path = dirname(__FILE__) . '/views/';
   }
   /**
    * Default method
@@ -23,6 +28,27 @@ class munkiinfo_controller extends Module_controller
   {
     echo "You've loaded the munkiinfo module!";
   }
+  
+    /**
+    * undocumented function summary
+    *
+    * Undocumented function long description
+    *
+    * @param type var Description
+    * @return {11:return type}
+    */
+    public function listing($value='')
+    {
+        if( ! $this->authorized())
+        {
+            redirect('auth/login');
+        }
+        $data['page'] = 'clients';
+        $data['scripts'] = array("clients/client_list.js");
+        $obj = new View();
+        $obj->view('munkiprotocol_listing', $data, $this->view_path);
+    }
+
   
   /**
    * Get Munki Protocol Statistics
