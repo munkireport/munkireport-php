@@ -34,16 +34,6 @@ $(document).on('appReady', function(){
 			class: 'btn-warning',
 			url: appUrl + '/show/listing/munki#warnings',
 			name: 'warning'
-		},
-		{
-			class: 'btn-info',
-			url: appUrl + '/show/listing/munki#pendinginstalls',
-			name: 'pending'
-		},
-		{
-			class: 'btn-success',
-			url: appUrl + '/show/listing/munki#installresults',
-			name: 'installed'
 		}
 	]
 	

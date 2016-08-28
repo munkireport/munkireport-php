@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.8.5.1826';
+$GLOBALS['version'] = '2.9.0.2093';
 
 // Return version without commit count
 function get_version()
@@ -130,6 +130,22 @@ function url($url='', $fullurl = FALSE)
   return $s;
 }
 
+/**
+ * Retrieve Remote IP
+ *
+ * Take Proxy headers into account
+ *
+ * @return string IP address
+ */
+function getRemoteAddress()
+{
+	if(isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+	{
+		return $_SERVER["HTTP_X_FORWARDED_FOR"];
+	}
+	
+	return $_SERVER['REMOTE_ADDR'];
+}
 /**
  * Return a secure url
  *

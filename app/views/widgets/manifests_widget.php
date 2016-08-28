@@ -22,6 +22,12 @@ $(document).on('appUpdate', function(){
         var list = $('#manifests-widget div.scroll-box').empty();
         
         if(data.length){
+			
+			// Sort on manifestname
+			data.sort(function(a,b){
+				return mr.naturalSort(a.manifestname, b.manifestname);
+			});
+
             $.each(data, function(i,d){
                 var badge = '<span class="badge pull-right">'+d.count+'</span>';
                 list.append('<a href="'+appUrl+'/show/listing/munki/#'+d.manifestname+'" class="list-group-item">'+d.manifestname+badge+'</a>')

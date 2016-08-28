@@ -95,6 +95,10 @@
     "from_peers": "Depuis peers",
     "from_cache": "Depuis cache"
   },
+  "cert": {
+		"expiré": "__name__ expired __moment__"
+	},
+"cfbundlename": "Nom CFBundle",
   "client": {
     "activity": "Activité Client",
     "comment": "Commentaires",
@@ -104,6 +108,7 @@
       "ard": "ARD",
       "bluetooth": "Bluetooth",
       "certificates": "Certificats",
+"deploystudio": "DeployStudio",
       "displays": "Moniteurs",
       "ds": "Services d'annuaires",
       "gsx": "GSX",
@@ -124,7 +129,7 @@
     "installed_apple_software": "Logiciels Apple installés",
     "installed_third_party_software": "Logiciels tiers installés",
     "install_date": "Date de l'installation du client",
-    "no_install_history": "Pas de l'historique de l'installation",
+    "no_install_history": "Pas d'historique de l'installation",
     "panel_title": "Activité du client dans le dernier mois",
     "process_name": "Nom du processus",
     "total": "Nombre de clients"
@@ -156,9 +161,16 @@
       "title": "CrashPlan"
     }
   },
+  "danger": "Erreur",
+	"database": "Base de données",
   "date": {
     "year": "année"
   },
+  "db": {
+		"connectable": "pouvant être connecté",
+		"driver": "Pilote",
+		"writable": "Inscriptible"
+	},
   "delete": "Supprimer",
   "dialog": {
     "cancel": "Annuler",
@@ -178,20 +190,61 @@
     "widget_info": "Nombre total d'écrans externes connus",
     "widget_title": "Nombre d'écrans"
   },
-  "edit": "Modifier",
+ "ds": {
+		"computername": "Nom d'ordinateur",
+        "architecture": "Architecture",
+        "dstudio-auto-disable": "Désactivation auto",
+        "dstudio-auto-reset-workflow": "Initialisation Auto Workflow",
+        "dstudio-auto-started-workflow": "Démarrage Auto Workflow",
+        "dstudio-bootcamp-windows-computer-name": "Nom Windows Boot Camp",
+        "dstudio-completed": "Complété",
+        "dstudio-disabled": "Désactivé",
+        "dstudio-failed": "Echoué",
+        "dstudio-group": "Groupe",
+        "dstudio-host-ard-field-1": "ARD Info 1",
+        "dstudio-host-ard-field-2": "ARD Info 2",
+        "dstudio-host-ard-field-3": "ARD Info 3",
+        "dstudio-host-ard-field-4": "ARD Info 4",
+        "dstudio-host-ard-ignore-empty-fields": "Ignorer les champs ARD vides",
+        "dstudio-host-delete-other-locations": "Supprimer les autres emplacements",
+        "dstudio-host-model-identifier": "Identifiant du modèle",
+        "dstudio-hostname": "Nom de l'hôte",
+        "dstudio-host-new-network-location": "Nouvel emplacement réseau",
+        "dstudio-host-serial-number": "Numéro de série",
+        "dstudio-host-type": "Type d'hôte",
+        "dstudio-last-workflow": "Dernier workflow exécuté",
+        "dstudio-last-workflow-duration": "Durée du dernier workflow",
+        "dstudio-last-workflow-execution-date": "Date d'exécution du dernier workflow",
+        "dstudio-last-workflow-status": "Etat Workflow",
+        "dstudio-mac-addr": "Adresse MAC",
+        "recheck": "Pull DeployStudio Data"
+    },
+  "displayname": "Nom d'affichage",
+   "edit": "Modifier",
+  	"email": {
+		"email": "Email",
+		"show_machine_in_browser": "Voir la station dans le navigateur"
+	},
   "enabled": "Activé",
   "encrypted": "Crypté",
   "error": "Erreur",
   "error_plural": "Erreurs",
   "errors": {
     "title": "Erreurs",
-    "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas"
-  },
+    "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas",
+		"403": "Vous n'êtes pas autorisé à voir cette page",
+		"404": "Page non trouvée",
+		"426": "Vous devez visiter ce site à l'aide d'une connexion sécurisée.",
+ 	"loading": "Il y avait un problème avec la récupération de ces données: __error__"
+   },
   "event": "Événement",
   "event_plural": "Événements",
   "events": {
     "widget_title": "Événements dans la dernière heure"
   },
+"external": {
+		"mwa_link": "Ouvrir dans Munki Web Admin"
+	},
   "failing": "Défaillant !",
   "filevault": {
     "users": "Utilisateurs avec FileVault actif",
@@ -202,6 +255,24 @@
   "filter": {
     "title": "Appliquer filtres"
   },
+  "findmymac": {
+		"listing": {
+			"email": "Email",
+			"status": "Etat",
+			"title": "Rapport FindMyMac",
+			"ownerdisplayname": "Nom du propriétaire",
+			"personid": "ID ICloud",
+			"hostname": "Nom d'hôte iCloud"
+		},
+		"widget": {
+			"title": "Etat FindMyMac",
+			"enabled": "Activé",
+			"disabled": "Désactivé"
+		},
+		"client": {
+			"title": "FindMyMac"
+		}
+	},
   "free_disk_space": "Espace disque disponible",
   "free_disk_space_less_than": "Espace disque disponible < __gb__Go",
   "gsx": {
@@ -233,7 +304,11 @@
     "uuid": "UUID Matériel"
   },
   "inactive": "Inactif",
+  "info": "Information",
   "installed": "Installé",
+"inventory": {
+		"report": "Inventaire"
+	},
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
   "listing": {
@@ -246,12 +321,12 @@
       "mouse_battery": "Souris",
       "status": "Etat",
       "title": "Rapport Bluetooth",
-      "trackpad_battery": ""
+      "trackpad_battery": "Trackpad"
     },
     "certificate": {
       "commonname": "Nom commun",
       "expires": "Expire",
-      "title": "Rapport Certificat"
+      "title": "Rapport Certificats"
     },
     "checkin": "Enregistrement",
     "computername": "Nom",
@@ -275,7 +350,7 @@
       "last_failure": "Dernière sauvegarde échouée",
       "last_failure_msg": "Message",
       "last_success": "Dernière sauvegarde réussie",
-      "title": "Rapport Timemachine"
+      "title": "Rapport Time Machine"
     },
     "username": "Nom utilisateur",
     "wifi": {
@@ -304,9 +379,17 @@
     "report": "Rapport Localisation",
     "stalelocation": "Localisation obsolète"
   },
+  "loading": "Chargement des données depuis le serveur",
   "machine": {
     "hardware_widget_title": "Détails de l'appareil"
   },
+  "managedinstalls": {
+		"failing_clients": "Clients avec erreurs d'installation",
+		"installratio_report": "Rapport du ratio d'installation",
+		"no_managedinstalls": "Pas d'installation managée",
+		"report": "Rapport installations managées",
+		"title": "Installation managées"
+	},
   "manifest": {
     "name": "Nom du manifest"
   },
@@ -319,6 +402,7 @@
   "munki": {
     "error": "Erreur de Munki : __error__",
     "error_plural": "__count__ Erreurs de Munki",
+    "errors_and_warnings": "Erreurs et Alertes",
     "package_installed": "__pkg__ installé",
     "package_installed_plural": "__count__ paquets installés",
     "panel_title": "Statistique de Munki cette semaine",
@@ -347,9 +431,11 @@
       "bluetooth": "Bluetooth",
       "clients": "Clients",
       "certificate": "Certificats",
+"deploystudio": "DeployStudio",
       "directoryservice": "Service d'annuaire",
       "disk": "Disque",
       "displays": "Moniteurs",
+      "findmymac": "FindMyMac",
       "gsx": "GSX",
       "hardware": "Matériel",
       "inventory": "Inventaire",
@@ -371,9 +457,11 @@
       "admin": "Admin"
     },
     "reports": {
+"appVersions": "Versions des Apps",
       "backup": "Sauvegarde",
       "clients": "Client",
       "configuration": "Configuration",
+      "findmymac": "FindMyMac",
       "hardware": "Matériel",
       "location": "Localisation",
       "munki": "Munki",
@@ -397,10 +485,31 @@
     "outbound_traffic": "Trafic sortant",
     "remote_ip": "Adresse IP distante"
   },
-  "new_client": "Nouveau Client",
-  "new_client_plural": "Nouveaux Clients",
-  "no_clients": "Pas de Clients",
-  "no_data": "Pas de données",
+  "new_client": "Nouveau client",
+	"new_client_plural": "Nouveaux clients",
+"no": "Non",
+	"no_clients": "Pas de client",
+	"no_data": "Pas de données",
+	"no_errors_or_warnings": "Aucune erreur ni alertes",
+	"notification": {
+		"all_levels": "Tout niveaux",
+		"business_unit": "Divisions",
+		"business_units_all": "Toutes les divisions",
+		"confirm_delete": "Veuillez confirmer la suppression de la notification",
+		"edit": "Editer la notification",
+		"menu_link": "Gérer les notifications",
+		"new": "Nouvelle notification",
+		"notification_enabled": "Activée",
+		"notification_how": "Méthode",
+		"notification_module": "Module",
+		"notification_severity": "Niveau",
+		"notification_title": "Description",
+		"notification_who": "Adresse email",
+		"title": "Notifications",
+		"widget": {
+			"title": "Règles des notifications"
+		}
+},
   "on": "Activé",
   "off": "Désactivé",
   "os": {
@@ -408,12 +517,20 @@
   },
   "path": "Chemin",
   "pending": "En attente",
+  	"php": {
+		"dom": "Extension DOM",
+		"moreinfo": "Infos PHP avancées",
+		"pdo": "Extension PDO",
+		"pdodrivers": "Base de données pilotes PDO",
+		"php": "PHP",
+		"version": "Version"
+		},
   "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
   "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
   "reg_date": "Date d'enregistrement",
   "remote_control": "Contrôle à distance",
   "report": {
-    "generate": "Générer un Rapport"
+    "generate": "Générer un rapport"
   },
   "printer": {
     "default_set": "Ensemble par défaut",
@@ -450,6 +567,7 @@
     "smb_users": "Utilisateurs SMB"
   },
   "show": "Afficher",
+  "size": "Taille",
   "software": {
     "software": "Logiciel",
     "smc_version": "Version de la SMC",
@@ -475,9 +593,14 @@
     "used": "Utilisé",
     "volume_type": "Type de Volume"
   },
+  "success": "Succès",
   "system": {
-    "system": "Système"
-  },
+		"status": "Etat système Munkireport",
+		"system": "Système"
+	},
+	"systemstatus": {
+		"menu_link": "Voir l'état du système"
+	},
   "tag": {
     "listing": {
       "title": "Rapport Tags"
@@ -584,10 +707,12 @@
     "noise": "Niveau de bruit",
     "nonetworks": "Pas de réseaux",
     "rssilevel": "Niveau RSSI",
+    "sharing": "Partagé",
     "state": "Etat WiFi",
     "ssid": "SSID",
     "xauthtype": "Type Authentification 802.11X",
     "wifiauthtype": "Type Authentication WiFi",
     "wifiinfo": "Information WiFi"
-  }
+ },
+	"yes": "Oui"
 }

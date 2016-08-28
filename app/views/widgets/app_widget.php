@@ -38,6 +38,11 @@ $(document).on('appReady', function(){
                 // Empty old list
                 app.list.empty();
                 // Make a list item for every datapoint (d)
+                // Sort on version number (prefix with x to disable float comparison)
+                data.sort(function(a,b){
+                    return mr.naturalSort('x'+b.version, 'x'+a.version);
+                });
+
                 $.each(data, function(j, d){
                     app.list.append($('<a>')
                         .addClass('list-group-item')

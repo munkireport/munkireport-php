@@ -3,8 +3,7 @@ munkireport-php
 
 ![Dashboard view](https://github.com/munkireport/munkireport-php/wiki/assets/pics/dashboard.png)
 
-This is version 2 of munkireport-php, a reporting client for [munki](https://github.com/munki/munki/). The previous version of munkireport is still available on googlecode: [munkireport-php](https://code.google.com/p/munkireport-php/).
-I moved the project to github because github is just awesome!
+Munkireport-php is a reporting client for [munki](https://github.com/munki/munki/). The previous version of munkireport is still available on googlecode: [munkireport-php](https://code.google.com/p/munkireport-php/).
 
 This project is a complete rewrite from the previous version, which was a quick-and-dirty port from the original python based munkireport [https://code.google.com/p/munkireport/]. 
 
@@ -24,7 +23,7 @@ Setup
 
 Setup is easy, you could be running your own reportingserver within minutes! 
 
-Please read the [install manual](docs/setup.md)
+Please read the [install manual](https://github.com/munkireport/munkireport-php/wiki/Quick-demo)
 
 System Requirements
 ---
@@ -34,12 +33,11 @@ Apart from munki clients doing reporting, Munkireport relies on:
 ### Serverside:
 
 * A webserver (runs fine with Apache, IIS and nginx)
-* php version 5 with pdo-sqlite3 and libxml
+* php version 5.3 or higher with pdo-sqlite3 and libxml
 
 ### Clientside
 
 * a Modern webbrowser
-* For persistent storage (sorting and search in datatables) you need a browser that supports [localStorage](http://caniuse.com/#search=localstorage)
 
 Mailinglists
 ---

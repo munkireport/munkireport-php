@@ -120,7 +120,9 @@ class unit extends Controller
 			case 'machine_group':
 
 				// Convert to int
-				$value = intval($_POST['value']);
+				if(is_scalar($value)){
+					$value = intval($_POST['value']);
+				}
 				break;
 			
 			default:
@@ -131,6 +133,7 @@ class unit extends Controller
 
 		if( ! isset($out['error']))
 		{
+			// Create filter if it does not exist
 			if( ! isset($_SESSION['filter'][$filter]))
 			{
 				$_SESSION['filter'][$filter] = array();
@@ -150,7 +153,9 @@ class unit extends Controller
 				case 'add': // add to filter
 					$_SESSION['filter'][$filter][] = $value;
 					break;
-
+				case 'add_all': // add to filter
+					$_SESSION['filter'][$filter] = $value;
+					break;
 				case 'clear': // clear filter
 					$_SESSION['filter'][$filter] = array();
 					break;

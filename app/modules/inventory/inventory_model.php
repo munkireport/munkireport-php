@@ -11,10 +11,10 @@ class Inventory_model extends Model {
         $this->rs['version'] = '';
         $this->rs['bundleid'] = '';
         $this->rs['bundlename'] = '';
-        $this->rs['path'] = '';
+        $this->rs['path'] = ''; $this->rt['path'] = 'VARCHAR(1024)';
 
         // Schema version, increment when creating a db migration
-       $this->schema_version = 2;
+        $this->schema_version = 3;
 		
 		// Add indexes
 		$this->idx['serial'] = array('serial_number');
@@ -38,6 +38,33 @@ class Inventory_model extends Model {
             %s 
             GROUP BY name, version', $this->enquote($this->tablename), get_machine_group_filter('WHERE', 'r'));
         return $this->query($sql);
+    }
+    
+    // Override for retrieve_many that takes machine groups into account
+    function retrieve_many( $wherewhat='', $bindings='' ) 
+    {
+        $dbh = $this->getdbh();
+        if ( is_scalar( $bindings ) )
+        {
+            $bindings = $bindings !== '' ? array( $bindings ) : array();
+        }
+        $sql = 'SELECT * FROM '.$this->tablename;
+        $sql .= ' JOIN reportdata USING (serial_number)';
+        $sql .= get_machine_group_filter('WHERE');
+        if ( $wherewhat ) $sql .= ' AND '.$wherewhat;
+        $stmt = $this->prepare( $sql );
+        $this->execute($stmt, $bindings);
+        $arr=array();
+        $class=get_class( $this );
+        while ( $rs = $stmt->fetch( PDO::FETCH_ASSOC ) ) 
+        {
+            $myclass = new $class();
+            foreach ( $rs as $key => $val )
+                if ( array_key_exists($key, $myclass->rs) )
+                    $myclass->rs[$key] = is_scalar( $myclass->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
+            $arr[]=$myclass;
+        }
+        return $arr;
     }
     
     /**
