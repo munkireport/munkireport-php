@@ -30,17 +30,18 @@ class Deploystudio_helper {
     	$plist = $plist[0];
 
     	foreach($plist as $key=>$value){
-    		$deploystudio_model->$key = $value;
+            $safe_key = str_replace('-','_',$key);
+    		$deploystudio_model->$safe_key = $value;
     	}
 
     	if(array_key_exists('dstudio-auto-started-workflow',$plist)){
     		$workflow_title = $this->get_workflow_title($plist['dstudio-auto-started-workflow']);
-    		$deploystudio_model->{'dstudio-auto-started-workflow'} = $workflow_title;
+    		$deploystudio_model->{'dstudio_auto_started_workflow'} = $workflow_title;
     	}
 
     	if(array_key_exists('dstudio-last-workflow',$plist)){
     		$workflow_title = $this->get_workflow_title($plist['dstudio-last-workflow']);
-    		$deploystudio_model->{'dstudio-last-workflow'} = $workflow_title;
+    		$deploystudio_model->{'dstudio_last_workflow'} = $workflow_title;
     	}
 
       // Save the data

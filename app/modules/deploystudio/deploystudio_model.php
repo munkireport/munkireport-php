@@ -11,38 +11,38 @@ class Deploystudio_model extends Model {
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['architecture'] = '';
 		$this->rs['cn'] = '';
-		$this->rs['dstudio-auto-disable'] = '';
-		$this->rs['dstudio-auto-reset-workflow'] = '';
-		$this->rs['dstudio-auto-started-workflow'] = '';
-		$this->rs['dstudio-bootcamp-windows-computer-name'] = '';
-		$this->rs['dstudio-disabled'] = '';
-		$this->rs['dstudio-group'] = '';
-		$this->rs['dstudio-host-ard-field-1'] = '';
-		$this->rs['dstudio-host-ard-field-2'] = '';
-		$this->rs['dstudio-host-ard-field-3'] = '';
-		$this->rs['dstudio-host-ard-field-4'] = '';
-		$this->rs['dstudio-host-ard-ignore-empty-fields'] = '';
-		$this->rs['dstudio-host-delete-other-locations'] = '';
-		$this->rs['dstudio-host-model-identifier'] = '';
-		$this->rs['dstudio-host-new-network-location'] = '';
-		$this->rs['dstudio-host-primary-key'] = '';
-		$this->rs['dstudio-host-serial-number'] = '';
-		$this->rs['dstudio-host-type'] = '';
-		$this->rs['dstudio-hostname'] = '';
-		$this->rs['dstudio-last-workflow'] = '';
-		$this->rs['dstudio-last-workflow-duration'] = '';
-		$this->rs['dstudio-last-workflow-execution-date'] = '';
-		$this->rs['dstudio-last-workflow-status'] = '';
-		$this->rs['dstudio-mac-addr'] = '';
+		$this->rs['dstudio_auto_disable'] = '';
+		$this->rs['dstudio_auto_reset_workflow'] = '';
+		$this->rs['dstudio_auto_started_workflow'] = '';
+		$this->rs['dstudio_bootcamp_windows_computer_name'] = '';
+		$this->rs['dstudio_disabled'] = '';
+		$this->rs['dstudio_group'] = '';
+		$this->rs['dstudio_host_ard_field_1'] = '';
+		$this->rs['dstudio_host_ard_field_2'] = '';
+		$this->rs['dstudio_host_ard_field_3'] = '';
+		$this->rs['dstudio_host_ard_field_4'] = '';
+		$this->rs['dstudio_host_ard_ignore_empty_fields'] = '';
+		$this->rs['dstudio_host_delete_other_locations'] = '';
+		$this->rs['dstudio_host_model_identifier'] = '';
+		$this->rs['dstudio_host_new_network_location'] = '';
+		$this->rs['dstudio_host_primary_key'] = '';
+		$this->rs['dstudio_host_serial_number'] = '';
+		$this->rs['dstudio_host_type'] = '';
+		$this->rs['dstudio_hostname'] = '';
+		$this->rs['dstudio_last_workflow'] = '';
+		$this->rs['dstudio_last_workflow_duration'] = '';
+		$this->rs['dstudio_last_workflow_execution-date'] = '';
+		$this->rs['dstudio_last_workflow_status'] = '';
+		$this->rs['dstudio_mac_addr'] = '';
 		
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
         
 		// Add indexes
-		$this->idx[] = array('dstudio-host-serial-number');
-		$this->idx[] = array('dstudio-hostname');
-		$this->idx[] = array('dstudio-mac-addr');
-		$this->idx[] = array('dstudio-last-workflow');
+		$this->idx[] = array('dstudio_host_serial_number');
+		$this->idx[] = array('dstudio_hostname');
+		$this->idx[] = array('dstudio_mac_addr');
+		$this->idx[] = array('dstudio_last_workflow');
 		$this->idx[] = array('cn');
 		
 		// Create table if it does not exist
