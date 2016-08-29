@@ -6,7 +6,7 @@
  * @package munkireport
  * @author
  **/
-class kb_mouse_controller extends Module_controller
+class Kb_mouse_controller extends Module_controller
 {
 	
 	/*** Protect methods with auth! ****/
@@ -30,24 +30,18 @@ class kb_mouse_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    public function get_data($serial = '')
-    {
-		$out = array();
-		if( ! $this->authorized())
-		{
-			$out['error'] = 'Not authorized';
-		}
-		else
-		{
-			$prm = new kb_mouse_model;
-			foreach($prm->retrieve_records($serial) as $kb_mouse)
-			{
-				$out[] = $kb_mouse->rs;
-			}
-		}
-		
+ 	public function get_data()
+	{
 		$obj = new View();
-		$obj->view('json', array('msg' => $out));
-    }
+
+        	if( ! $this->authorized())
+        	{
+        	    $obj->view('json', array('msg' => 'Not authorized'));
+		    return;
+        	}
+
+        	$kbm = new Kb_mouse_model();
+        	$obj->view('json', array('msg' => $kbm->get_data()));
+	}
 		
-} // END class default_module
+} // END class Kb_mouse_module
