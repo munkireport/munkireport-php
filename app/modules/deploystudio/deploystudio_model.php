@@ -31,7 +31,7 @@ class Deploystudio_model extends Model {
 		$this->rs['dstudio_hostname'] = '';
 		$this->rs['dstudio_last_workflow'] = '';
 		$this->rs['dstudio_last_workflow_duration'] = '';
-		$this->rs['dstudio_last_workflow_execution-date'] = '';
+		$this->rs['dstudio_last_workflow_execution_date'] = '';
 		$this->rs['dstudio_last_workflow_status'] = '';
 		$this->rs['dstudio_mac_addr'] = '';
 		
