@@ -25,61 +25,11 @@
 			var scrollBox = $('#bluetooth-battery-widget .scroll-box').empty();
 
 			$.each(data, function(index, obj){
-
 				scrollBox
 					.append($('<a>')
 						.addClass('list-group-item')
 						.attr('href', appUrl + '/clients/detail/' + obj.serial_number + '#tab_summary')
-						.append(obj.computer_name)
-						.append($('<span>')
-							.addClass('pull-right')
-							.append($('<span>')
-								.addClass('label')
-								.addClass(function(){
-									if(obj.keyboard_battery > 39){
-										return 'label-success';
-									}
-									if(obj.keyboard_battery > 14){
-										return 'label-warning';
-									}
-									if(obj.keyboard_battery > -1){
-										return 'label-danger';
-									}
-									return 'label-default';
-								})
-								.append('<i class="fa fa-keyboard-o"></i>'))
-							.append(" ")
-							.append($('<span>')
-								.addClass('label')
-								.addClass(function(){
-									if(obj.mouse_battery > 39){
-										return 'label-success';
-									}
-									if(obj.mouse_battery > 14){
-										return 'label-warning';
-									}
-									if(obj.mouse_battery > -1){
-										return 'label-danger';
-									}
-									return 'label-default';
-								})
-							.append(' <i class="fa fa-hand-o-up"></i>'))
-							.append(" ")
-							.append($('<span>')
-								.addClass('label')
-								.addClass(function(){
-									if(obj.trackpad_battery > 39){
-										return 'label-success';
-									}
-									if(obj.trackpad_battery > 14){
-										return 'label-warning';
-									}
-									if(obj.trackpad_battery > -1){
-										return 'label-danger';
-									}
-									return 'label-default';
-								})
-								.append('<i class="fa fa-square-o"></i>'))));
+				.append(obj.computer_name));
 
 			});
 
