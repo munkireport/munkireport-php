@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Remove kb_mouse script
-rm -f "${MUNKIPATH}preflight.d/usb.sh"
+# Remove usb script
+rm -f "${MUNKIPATH}preflight.d/usb.py"
 
-# Remove kb_mouse_info.txt file
-rm -f "${CACHEPATH}usb_info.txt"
+# Remove usb_info.txt file
+rm -f "${CACHEPATH}usbinfo.plist"

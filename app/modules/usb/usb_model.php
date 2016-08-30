@@ -5,14 +5,14 @@ class Usb_model extends Model {
 	{
 		parent::__construct('id', 'usb'); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		//0 means not connected
-		$this->rs['ext_kb_st'] = '';
-		$this->rs['ext_kb_nm'] = ''; // string
-		$this->rs['ext_mouse_st'] = '';
-		$this->rs['ext_mouse_nm'] = ''; // string
-		$this->rs['int_tp_st'] = '';
-		$this->rs['int_tp_nm'] = ''; // string
+		$this->rs['serial_number'] = $serial;
+		$this->rs['name'] = '';
+		$this->rs['type'] = ''; // Mouse, Trackpad, Hub, etc.
+		$this->rs['manufacturer'] = '';
+		$this->rs['vendor_id'] = '';
+		$this->rs['device_speed'] = ''; // Speed
+		$this->rs['internal'] = 0; // True or False
+		$this->rs['media'] = 0; // True or False
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -20,10 +20,6 @@ class Usb_model extends Model {
 		// Create table if it does not exist
 		$this->create_table();
 
-		if ($serial)
-		{
-			$this->retrieve_record($serial);		
-		}
 		$this->serial_number = $serial;
 	}
 	
@@ -35,37 +31,82 @@ class Usb_model extends Model {
 	 * @param string data
 	 * @author miqviq
 	 **/
-	function process($data)
+	function process($plist)
 	{
-		// Translate strings to db fields
-        $translate = array(
-        	'EXT_KEYBOARD_STATUS:' => 'ext_kb_st',
-        	'EXT_KEYBOARD_NAME:' => 'ext_kb_nm',
-        	'EXT_MOUSE_STATUS:' => 'ext_mouse_st',
-        	'EXT_MOUSE_NAME:' => 'ext_mouse_nm',
-        	'INT_TRPAD_STATUS:' => 'int_tp_st',
-        	'INT_TRPAD_NAME:' => 'int_tp_nm');
-			
-		//clear any previous data we had
-		foreach($translate as $search => $field) {
-			$this->$field = '';
+		
+		if ( ! $plist){
+			throw new Exception("Error Processing Request: No property list found", 1);
 		}
 		
-		// Parse data
-		foreach(explode("\n", $data) as $line) {
-		    // Translate standard entries
-			foreach($translate as $search => $field) {
+		// Delete previous set
+		$this->delete_where('serial_number=?', $this->serial_number);
 
-			    if(strpos($line, $search) === 0) {
-
-				    $value = substr($line, strlen($search));
-
-				    $this->$field = $value;
-				    break;
-			    }
+		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+		$parser = new CFPropertyList();
+		$parser->parse($plist, CFPropertyList::FORMAT_XML);
+		$myList = $parser->toArray();
+		
+		$typeList = array(
+			'name' => '',
+			'type' => 'unknown', // Mouse, Trackpad, Hub, etc.
+			'manufacturer' => '',
+			'vendor_id' => '',
+			'device_speed' => '', // Speed
+			'internal' => 0, // True or False
+			'media' => 0, // True or False
+			
+		);
+		
+		foreach ($myList as $device) {
+			// Check if we have a name
+			if( ! isset($device['name'])){
+				continue;
 			}
+			// Check for BUS (TODO: other bus identifiers?)
+			if ($device['name'] == 'USB30Bus') {
+				continue;
+			}
+			
+			// Skip internal devices (?)
+			if ($device['internal']){
+				continue;
+			}
+			
+			foreach ($typeList as $key => $value) {
+				$this->rs[$key] = $value;
+				if(array_key_exists($key, $device))
+				{
+					$this->rs[$key] = $device[$key];
+				}
+			}
+			
+			// Determine type
+			if($this->media)
+			{
+				$this->type = 'drive';
+				if($this->name == 'Mass Storage')
+				{
+					$this->type = 'thumbdrive';
+				}
+			}
+			elseif(strpos($this->name, 'Mouse') !== False)
+			{
+				$this->type = 'mouse';
+			}
+			elseif(strpos($this->name, 'Keyboard') !== False)
+			{
+				$this->type = 'keyboard';
+			}
+			elseif(strpos($this->name, 'iPhone') !== False)
+			{
+				$this->type = 'iphone';
+			}
+			
+			// Save device
+			$this->id = '';
+			$this->save();
+		}
 
-		} //end foreach explode lines
-		$this->save();
+		throw new Exception("Error Processing Request", 1);
 	}
 }

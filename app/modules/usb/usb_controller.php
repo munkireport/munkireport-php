@@ -44,4 +44,4 @@ class Usb_controller extends Module_controller
         	$obj->view('json', array('msg' => $kbm->get_data()));
 	}
 		
-} // END class Kb_mouse_module
+} // END class usb_module
