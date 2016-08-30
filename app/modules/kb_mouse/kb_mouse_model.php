@@ -1,5 +1,5 @@
 <?php
-class kb_mouse_model extends Model {
+class Kb_mouse_model extends Model {
 
 	function __construct($serial='')
 	{
@@ -7,23 +7,24 @@ class kb_mouse_model extends Model {
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		//0 means not connected
-		$this->rs['ext_kb_st'] = 0; $this->rt['ext_kb_st'] = 'INTEGER';
+		$this->rs['ext_kb_st'] = '';
 		$this->rs['ext_kb_nm'] = ''; // string
-		$this->rs['ext_mouse_st'] = 0; $this->rt['ext_mouse_st'] = 'INTEGER';
+		$this->rs['ext_mouse_st'] = '';
 		$this->rs['ext_mouse_nm'] = ''; // string
-		$this->rs['int_tp_st'] = 0; $this->rt['int_tp_st'] = 'INTEGER';
+		$this->rs['int_tp_st'] = '';
 		$this->rs['int_tp_nm'] = ''; // string
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 1;
+		$this->schema_version = 0;
 
 		// Create table if it does not exist
 		$this->create_table();
 
-		if ($serial) {
+		if ($serial)
+		{
 			$this->retrieve_record($serial);		
-			$this->serial = $serial;
 		}
+		$this->serial_number = $serial;
 	}
 	
 	// ------------------------------------------------------------------------
@@ -47,7 +48,7 @@ class kb_mouse_model extends Model {
 			
 		//clear any previous data we had
 		foreach($translate as $search => $field) {
-			$this->$field = 0;
+			$this->$field = '';
 		}
 		
 		// Parse data
