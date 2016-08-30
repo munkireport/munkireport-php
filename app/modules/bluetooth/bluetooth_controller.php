@@ -56,7 +56,7 @@ class Bluetooth_controller extends Module_controller
     }
 	
 	/**
-	 * Get low battery_percenty devices
+	 * Get low battery devices
 	 *
 	 *
 	 **/

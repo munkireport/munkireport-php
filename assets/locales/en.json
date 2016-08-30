@@ -321,8 +321,9 @@
 			"title": "Apple Remote Desktop Report"
 		},
 		"bluetooth": {
-            "battery_percent": "Battery Percent",
-            "device_type": "Device Type",
+			"battery_percent": "Battery Percent",
+			"bluetooth_power": "Bluetooth Power",
+			"device_type": "Device Type",
 			"title": "Bluetooth report"
 		},
 		"certificate": {

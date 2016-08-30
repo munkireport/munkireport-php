@@ -63,17 +63,24 @@ new Bluetooth_model;
                 var link = mr.getClientDetailLink(name, sn, '#tab_summary');
                 $('td:eq(0)', nRow).html(link);
 
-                // Status
-                // var status=$('td:eq(3)', nRow).html();
-                // status = status == 1 ? '<span class="label label-success">'+i18n.t('on')+'</span>' :
-                // (status === '0' ? '<span class="label label-danger">'+i18n.t('off')+'</span>' : '')
-                // $('td:eq(3)', nRow).html(status)
-
-                // Format keyboard/mouse/trackpad percentage
-                var keyboard=$('td:eq(4)', nRow).html();
-                var cls = keyboard < 15 ? 'danger' : (keyboard < 40 ? 'warning' : 'success');
-                $('td:eq(4)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+keyboard+'%;">'+keyboard+'%</div></div>');
-
+                // Change `bluetooth_power` from database entry to i18n display name
+                // Battery Percent to On or Off instead of integer 0/1
+                // Format the battery percentage to contain the colored bar
+                var device_type=$('td:eq(3)', nRow).html();
+                var battery_percent=$('td:eq(4)', nRow).html();
+                if (device_type == 'bluetooth_power'){
+                    device_type = i18n.t('listing.bluetooth.bluetooth_power')
+                    battery_percent = battery_percent == 1 ? '<span class="label label-success">'+i18n.t('on')+'</span>' :
+                    (battery_percent === '0' ? '<span class="label label-danger">'+i18n.t('off')+'</span>' : '')
+                    $('td:eq(4)', nRow).html(battery_percent)
+                    $('td:eq(3)', nRow).html(device_type)
+                }
+                else {
+                    // Format keyboard/mouse/trackpad percentage
+                    var in_device=$('td:eq(4)', nRow).html();
+                    var cls = in_device < 15 ? 'danger' : (in_device < 40 ? 'warning' : 'success');
+                    $('td:eq(4)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+in_device+'%;">'+in_device+'%</div></div>');
+                }
             }
           } );
 
