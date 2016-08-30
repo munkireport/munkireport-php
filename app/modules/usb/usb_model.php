@@ -1,9 +1,9 @@
 <?php
-class Kb_mouse_model extends Model {
+class Usb_model extends Model {
 
 	function __construct($serial='')
 	{
-		parent::__construct('id', 'kb_mouse'); //primary key, tablename
+		parent::__construct('id', 'usb'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		//0 means not connected

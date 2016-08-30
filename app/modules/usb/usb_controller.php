@@ -1,12 +1,12 @@
 <?php 
 
 /**
- * kb_mouse status module class
+ * USB status module class
  *
  * @package munkireport
  * @author
  **/
-class Kb_mouse_controller extends Module_controller
+class Usb_controller extends Module_controller
 {
 	
 	/*** Protect methods with auth! ****/
@@ -23,7 +23,7 @@ class Kb_mouse_controller extends Module_controller
 	 **/
 	function index()
 	{
-		echo "You've loaded the kb_mouse module!";
+		echo "You've loaded the usb module!";
 	}
 
 	/**
@@ -40,7 +40,7 @@ class Kb_mouse_controller extends Module_controller
 		    return;
         	}
 
-        	$kbm = new Kb_mouse_model();
+        	$kbm = new Usb_model();
         	$obj->view('json', array('msg' => $kbm->get_data()));
 	}
 		

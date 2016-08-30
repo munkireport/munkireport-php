@@ -74,9 +74,9 @@ function check_KBnMouse {
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
 
-kb_mouse_file="$DIR/cache/kb_mouse_info.txt"
+kb_mouse_file="$DIR/cache/usb_info.txt"
 
-echo $(date '+STATUS_CHECKED_TIMESTAMP:%F %T') > "$DIR/cache/kb_mouse_info.txt"
+echo $(date '+STATUS_CHECKED_TIMESTAMP:%F %T') > "$DIR/cache/usb_info.txt"
 
 check_KBnMouse
 
