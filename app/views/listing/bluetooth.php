@@ -80,6 +80,7 @@ new Bluetooth_model;
                     var in_device=$('td:eq(4)', nRow).html();
                     var cls = in_device < 15 ? 'danger' : (in_device < 40 ? 'warning' : 'success');
                     $('td:eq(4)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+in_device+'%;">'+in_device+'%</div></div>');
+                    $('td:eq(3)', nRow).html(i18n.t(device_type));
                 }
             }
           } );

@@ -409,14 +409,15 @@ $(document).on('appReady', function(e, lang) {
 								return i18n.t('off');
 							}
 							return i18n.t('unknown');
-						})))
-						for (key in data){
-							var rows = ''
-							if (key != 'bluetooth_power'){
-								rows = rows + '<tr><th>'+key+'</th><td>'+data[key]+'%'+'</td></tr>'
-								$('table.mr-bluetooth-table').append(rows)
-							}
-						}
+						})));
+
+			for (key in data){
+				var rows = ''
+				if (key != 'bluetooth_power'){
+					rows = rows + '<tr><th>'+i18n.t(key)+'</th><td>'+data[key]+'%'+'</td></tr>'
+					$('table.mr-bluetooth-table').append(rows)
+				}
+			}
 		}
 		else{
 			$('table.mr-bluetooth-table')

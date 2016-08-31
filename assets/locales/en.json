@@ -313,6 +313,7 @@
 	"inventory": {
 		"report": "Inventory Report"
 	},
+	"keyboard": "Keyboard",
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
@@ -402,6 +403,7 @@
 		"pressure": "Memory Pressure"
 	},
 	"model": "Model",
+	"mouse": "Mouse",
 	"munki": {
 		"error": "Munki error: __error__",
 		"error_plural": "__count__ Munki errors",
@@ -619,6 +621,7 @@
 		"timemachine": "Timemachine"
 	},
 	"total_clients": "Total Clients",
+	"trackpad": "Trackpad",
 	"type": "Type",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
