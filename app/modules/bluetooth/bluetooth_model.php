@@ -67,7 +67,7 @@ class Bluetooth_model extends Model {
 		$this->delete_where('serial_number=?', $this->serial_number);
 		
 		// Check for old-style reports
-		if(strpos('<?xml', $plist) === False)
+		if(strpos($plist, '<?xml') === False)
 		{
 			// Load legacy support
 			require_once(APP_PATH . 'modules/bluetooth/lib/Bt_legacy_support.php');
@@ -82,7 +82,6 @@ class Bluetooth_model extends Model {
 			$mylist = $parser->toArray();
 		}
 		
-
 		foreach($mylist as $key => $value)
 		{
 			$this->device_type = strtolower($key);
