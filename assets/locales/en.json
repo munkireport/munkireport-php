@@ -313,6 +313,16 @@
 	"inventory": {
 		"report": "Inventory Report"
 	},
+    "kb_mouse": {
+		"kb_mouse": "Keyboard and Mouse",
+		"title": "Keyboard and Mouse",
+		"ext_kb_st": "Ext. KB Status",
+		"ext_kb_nm": "Ext. KB Name",
+		"ext_mouse_st": "Ext. Mouse Status",
+		"ext_mouse_nm": "Ext. Mouse Name",
+		"int_tp_st": "Int. TP Status",
+		"int_tp_nm": "Int. TP Name"
+    },
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
@@ -442,6 +452,7 @@
 			"gsx": "GSX",
 			"hardware": "Hardware",
 			"inventory": "Inventory",
+			"kb_mouse": "Keyboard and Mouse",
 			"location": "Location",
 			"munki": "Munki",
 			"network": "Network",
