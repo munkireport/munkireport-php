@@ -57,8 +57,10 @@ class Bt_legacy_support {
 					{
 						$value = $matches[1] == 'on' ? 1 : 0;
 					}
-
-					$out[$field] = intval($value);
+					
+					if($value > -1){
+						$out[$field] = intval($value);
+					}
 					break;
 				}
 			}
