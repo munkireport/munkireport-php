@@ -321,11 +321,10 @@
 			"title": "Apple Remote Desktop Report"
 		},
 		"bluetooth": {
-			"keyboard_battery": "Keyboard",
-			"mouse_battery": "Mouse",
-			"status": "Status",
-			"title": "Bluetooth report",
-			"trackpad_battery": "Trackpad"
+			"battery_percent": "Battery Percent",
+			"bluetooth_power": "Bluetooth Power",
+			"device_type": "Device Type",
+			"title": "Bluetooth report"
 		},
 		"certificate": {
 			"commonname": "Common Name",

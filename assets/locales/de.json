@@ -276,11 +276,7 @@
       "title": "Apple Remote Desktop Bericht"
     },
     "bluetooth": {
-      "keyboard_battery": "Tastatur",
-      "mouse_battery": "Maus",
-      "status": "Status",
-      "title": "Bluetooth Bericht",
-      "trackpad_battery": "Trackpad"
+      "title": "Bluetooth Bericht"
     },
     "certificate": {
       "commonname": "Common Name",

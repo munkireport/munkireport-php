@@ -210,11 +210,7 @@
       "title": "Apple Remote Desktop rapport"
     },
     "bluetooth": {
-      "keyboard_battery": "Toetsenbord",
-      "mouse_battery": "Muis",
-      "status": "Status",
-      "title": "Bluetooth rapport",
-      "trackpad_battery": "Trackpad"
+      "title": "Bluetooth rapport"
     },
     "certificate": {
       "commonname": "Common Name",

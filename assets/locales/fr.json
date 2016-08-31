@@ -317,11 +317,7 @@
       "title": "Rapport Apple Remote Desktop"
     },
     "bluetooth": {
-      "keyboard_battery": "Clavier",
-      "mouse_battery": "Souris",
-      "status": "Etat",
-      "title": "Rapport Bluetooth",
-      "trackpad_battery": "Trackpad"
+      "title": "Rapport Bluetooth"
     },
     "certificate": {
       "commonname": "Nom commun",

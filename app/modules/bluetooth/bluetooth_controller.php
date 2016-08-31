@@ -4,7 +4,7 @@
  * bluetooth status module class
  *
  * @package munkireport
- * @author
+ * @author clburlison
  **/
 class Bluetooth_controller extends Module_controller
 {
@@ -19,7 +19,6 @@ class Bluetooth_controller extends Module_controller
 	/**
 	 * Default method
 	 *
-	 * @author AvB
 	 **/
 	function index()
 	{
@@ -30,17 +29,30 @@ class Bluetooth_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial = '')
     {
-        $obj = new View();
 
-        if( ! $this->authorized())
+      $out = array();
+      $temp = array();
+      if( ! $this->authorized())
+      {
+        $out['error'] = 'Not authorized';
+      }
+      else
+      {
+        $bluetooth = new bluetooth_model;
+        foreach($bluetooth->retrieve_records($serial) as $prefs)
         {
-            $obj->view('json', array('msg' => 'Not authorized'));
+          $temp[] = $prefs->rs;
         }
+        foreach($temp as $value)
+        {
+          $out[$value['device_type']] = $value['battery_percent'];
+        }
+      }
 
-        $bt = new Bluetooth_model($serial_number);
-        $obj->view('json', array('msg' => $bt->rs));
+      $obj = new View();
+      $obj->view('json', array('msg' => $out));
     }
 	
 	/**
