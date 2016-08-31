@@ -15,18 +15,12 @@ class Bluetooth_model extends Model {
 
 		// Add indexes
 		$this->idx[] = array('serial_number');
+		$this->idx[] = array('device_type');
 
 		// Create table if it does not exist
 		$this->create_table();
 		
-		if ($serial)
-		{
-			$this->retrieve_record($serial);
-			if ( ! $this->rs['serial_number'])
-			{
-				$this->$serial = $serial;
-			}
-		}
+		$this->$serial = $serial;
 
 	}
 	
@@ -66,21 +60,32 @@ class Bluetooth_model extends Model {
 	function process($plist)
 	{
 		if ( ! $plist){
-			throw new Exception("Error Processing Request: No property list found", 1);
+			throw new Exception("Error Processing Request: No data found", 1);
 		}
 
 		// Delete previous set
 		$this->delete_where('serial_number=?', $this->serial_number);
 		
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-		$parser = new CFPropertyList();
-		$parser->parse($plist, CFPropertyList::FORMAT_XML);
-		$mylist = $parser->toArray();
+		// Check for old-style reports
+		if(strpos('<?xml', $plist) === False)
+		{
+			// Load legacy support
+			require_once(APP_PATH . 'modules/bluetooth/lib/Bt_legacy_support.php');
+			$bt = new munkireport\Bt_legacy_support($plist);
+			$mylist = $bt->toArray();
+		}
+		else
+		{
+			require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+			$parser = new CFPropertyList();
+			$parser->parse($plist, CFPropertyList::FORMAT_XML);
+			$mylist = $parser->toArray();
+		}
 		
 
 		foreach($mylist as $key => $value)
 		{
-			$this->device_type = $key;
+			$this->device_type = strtolower($key);
 			$this->battery_percent = $value;
 
 			$this->id = '';
