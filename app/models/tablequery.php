@@ -9,6 +9,12 @@ class Tablequery {
         $this->cfg = $cfg;
     }
     
+    // Clean unsafe strings
+    function dirify($string, $chars = '\w')
+    {
+        return preg_replace("/[^$chars]/", '', $string);
+    }
+    
 	// ------------------------------------------------------------------------
 
 	/**
@@ -92,7 +98,15 @@ class Tablequery {
         {
             foreach($cfg['where'] AS $entry)
             {
-                $my_where = sprintf("`%s`.`%s` = '%s'", $entry['table'], $entry['column'], $entry['value']);
+                $operator = isset($entry['operator']) ? $entry['operator'] : '=';
+
+                // Sanitize input
+                $entry['table'] = $this->dirify($entry['table']);
+                $entry['column'] = $this->dirify($entry['column']);
+                $entry['value'] = $this->dirify($entry['value']);
+                $operator = $this->dirify($operator, '!=<>');
+                
+                $my_where = sprintf("%s.%s $operator '%s'", $entry['table'], $entry['column'], $entry['value']);
                 if($where)
                 {
                     $where .= ' AND (' . $my_where . ')';

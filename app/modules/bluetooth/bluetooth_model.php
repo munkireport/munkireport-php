@@ -4,24 +4,23 @@ class Bluetooth_model extends Model {
 	function __construct($serial='')
 	{
 		parent::__construct('id', 'bluetooth'); //primary key, tablename
-		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		//-1 means unknown
-		$this->rs['bluetooth_status'] = '-1';
-		$this->rs['keyboard_battery'] = '-1';
-		$this->rs['mouse_battery'] = '-1';
-		$this->rs['trackpad_battery'] = '-1';
+		$this->rs['id'] = 0;
+		$this->rs['serial_number'] = $serial;
+		$this->rs['battery_percent'] = -1; //-1 means unknown
+		$this->rs['device_type'] = ''; // status, kb, mouse, trackpad
+
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 1;
+		$this->schema_version = 2;
+
+		// Add indexes
+		$this->idx[] = array('serial_number');
+		$this->idx[] = array('device_type');
 
 		// Create table if it does not exist
 		$this->create_table();
-
-		if ($serial)
-			$this->retrieve_record($serial);
 		
-		$this->serial = $serial;
+		$this->$serial = $serial;
 
 	}
 	
@@ -35,15 +34,13 @@ class Bluetooth_model extends Model {
 	{
 		$out = array();
 		$sql = "SELECT bluetooth.serial_number, machine.computer_name,
-							bluetooth.keyboard_battery, bluetooth.mouse_battery,
-							bluetooth.trackpad_battery
+						bluetooth.device_type, bluetooth.battery_percent
 						FROM bluetooth
 						LEFT JOIN reportdata USING (serial_number)
 						LEFT JOIN machine USING (serial_number)
-						WHERE ((bluetooth.keyboard_battery BETWEEN 0 AND 14)
-							OR (bluetooth.mouse_battery BETWEEN 0 AND 14)
-							OR (bluetooth.trackpad_battery BETWEEN 0 AND 14))
+						WHERE (`battery_percent` <= '15') AND  (`device_type` != 'bluetooth_power')
 						".get_machine_group_filter('AND');
+						
 		foreach($this->query($sql) as $obj)
 		{
 			$out[] = $obj;
@@ -51,57 +48,48 @@ class Bluetooth_model extends Model {
 		
 		return $out;
 	}
-
+	
 	// ------------------------------------------------------------------------
 
 	/**
 	 * Process data sent by postflight
 	 *
 	 * @param string data
-	 *
+	 * @author clburlison
 	 **/
-	function process($data)
+	function process($plist)
 	{
-		// Translate network strings to db fields
-        $translate = array(
-        	'Status = ' => 'bluetooth_status',
-        	'Keyboard = ' => 'keyboard_battery',
-        	'Mouse = ' => 'mouse_battery',
-        	'Trackpad = ' => 'trackpad_battery');
-			
-		//clear any previous data we had
-		foreach($translate as $search => $field) {
-			$this->$field = -1;
+		if ( ! $plist){
+			throw new Exception("Error Processing Request: No data found", 1);
 		}
-		// Parse data
-		foreach(explode("\n", $data) as $line) {
-		    // Translate standard entries
-			foreach($translate as $search => $field) {
 
-			    if(strpos($line, $search) === 0) {
+		// Delete previous set
+		$this->delete_where('serial_number=?', $this->serial_number);
+		
+		// Check for old-style reports
+		if(strpos($plist, '<?xml') === False)
+		{
+			// Load legacy support
+			require_once(APP_PATH . 'modules/bluetooth/lib/Bt_legacy_support.php');
+			$bt = new munkireport\Bt_legacy_support($plist);
+			$mylist = $bt->toArray();
+		}
+		else
+		{
+			require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+			$parser = new CFPropertyList();
+			$parser->parse($plist, CFPropertyList::FORMAT_XML);
+			$mylist = $parser->toArray();
+		}
+		
+		foreach($mylist as $key => $value)
+		{
+			$this->device_type = strtolower($key);
+			$this->battery_percent = $value;
 
-				    $value = trim(substr($line, strlen($search)));
-					
-					// Legacy client module
-					if($value == 'Disconnected')
-					{
-						$value = -1;
-					}
-					elseif(preg_match('/(\d+)% battery life remaining/', $value, $matches))
-					{
-						$value = $matches[1];
-					}
-					elseif(preg_match('/Bluetooth is (.+)/', $value, $matches))
-					{
-						$value = $matches[1] == 'on' ? 1 : 0;
-					}
+			$this->id = '';
+			$this->save();
+		}
 
-				    $this->$field = intval($value);
-				    break;
-			    }
-			}
-
-		} //end foreach explode lines
-		$this->save();
 	}
 }

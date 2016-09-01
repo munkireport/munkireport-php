@@ -313,6 +313,7 @@
 	"inventory": {
 		"report": "Inventory Report"
 	},
+	"keyboard": "Keyboard",
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
@@ -321,11 +322,10 @@
 			"title": "Apple Remote Desktop Report"
 		},
 		"bluetooth": {
-			"keyboard_battery": "Keyboard",
-			"mouse_battery": "Mouse",
-			"status": "Status",
-			"title": "Bluetooth report",
-			"trackpad_battery": "Trackpad"
+			"battery_percent": "Battery Percent",
+			"bluetooth_power": "Bluetooth Power",
+			"device_type": "Device Type",
+			"title": "Bluetooth report"
 		},
 		"certificate": {
 			"commonname": "Common Name",
@@ -403,6 +403,7 @@
 		"pressure": "Memory Pressure"
 	},
 	"model": "Model",
+	"mouse": "Mouse",
 	"munki": {
 		"error": "Munki error: __error__",
 		"error_plural": "__count__ Munki errors",
@@ -620,6 +621,7 @@
 		"timemachine": "Timemachine"
 	},
 	"total_clients": "Total Clients",
+	"trackpad": "Trackpad",
 	"type": "Type",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
