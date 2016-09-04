@@ -44,7 +44,7 @@ def bluetooth_devices(info):
     '''Creates a dictonary object from System Profiler output with useful
     data regarding bluetooth devices.'''
     devices = dict()
-    for device in info.get('device_title'):
+    for device in info.get('device_title', []):
         current = device.itervalues().next()
         if device.itervalues().next().get(
                 'device_minorClassOfDevice_string') in [
