@@ -31,8 +31,7 @@ class Migration_munkireport_new extends Model
     public function __construct()
     {
         $ctl = new Controller;
-        if( ! $ctl->authorized('global'))
-        {
+        if (! $ctl->authorized('global')) {
             throw new Exception("Only migrate in admin session", 1);
         }
 
@@ -52,9 +51,13 @@ class Migration_munkireport_new extends Model
         // ***** Add columns
 
         try {
-            foreach($this->addcols as $colname => $type){
-                $sql = sprintf('ALTER TABLE %s ADD COLUMN %s %s',
-                    $this->tablename, $colname, $type);
+            foreach ($this->addcols as $colname => $type) {
+                $sql = sprintf(
+                    'ALTER TABLE %s ADD COLUMN %s %s',
+                    $this->tablename,
+                    $colname,
+                    $type
+                );
                 $this->exec($sql);
             }
         } catch (Exception $e) {
@@ -72,12 +75,11 @@ class Migration_munkireport_new extends Model
         $managedinstalls = new Managedinstalls_model;
 
         // Lock tables
-        if ($this->get_driver() == 'mysql'){
+        if ($this->get_driver() == 'mysql') {
             $sql = "LOCK TABLES munkireport WRITE, managedinstalls WRITE,
                         migration WRITE, event WRITE, reportdata WRITE, munkiinfo WRITE";
             $this->exec($sql);
-        }
-        else{
+        } else {
             // Wrap in transaction
             $dbh->beginTransaction();
         }
@@ -104,13 +106,12 @@ class Migration_munkireport_new extends Model
                 FROM munkireport
                 WHERE report_plist != ''
                 LIMIT 50";
-        if($resultset = $this->query($sql)){
-            foreach($resultset as $arr)
-            {
-                $report = unserialize( $this->COMPRESS_ARRAY ? gzinflate( $arr->report_plist ) : $arr->report_plist );
+        if ($resultset = $this->query($sql)) {
+            foreach ($resultset as $arr) {
+                $report = unserialize($this->COMPRESS_ARRAY ? gzinflate($arr->report_plist) : $arr->report_plist);
 
                 // Load legacy support TODO: use autoloader
-                include_once (APP_PATH . '/lib/munkireport/Legacy_munkireport.php');
+                include_once(APP_PATH . '/lib/munkireport/Legacy_munkireport.php');
                 $legacyObj = new munkireport\Legacy_munkireport;
                 $install_list = $legacyObj->parse($report)->getList();
 
@@ -119,29 +120,35 @@ class Migration_munkireport_new extends Model
                 $managedinstalls->processData($install_list);
 
                 // Save errors and warnings
-                if(isset($report['Errors'])){
-                    $sql = sprintf("UPDATE munkireport SET error_json = ? WHERE serial_number = '%s'",
-                                $arr->serial_number);
-                    $stmt = $this->prepare( $sql );
+                if (isset($report['Errors'])) {
+                    $sql = sprintf(
+                        "UPDATE munkireport SET error_json = ? WHERE serial_number = '%s'",
+                        $arr->serial_number
+                    );
+                    $stmt = $this->prepare($sql);
                     $this->execute($stmt, array(json_encode($report['Errors'])));
                 }
 
-                if(isset($report['Warnings'])){
-                    $sql = sprintf("UPDATE munkireport SET warning_json = ? WHERE serial_number = '%s'",
-                                $arr->serial_number);
-                    $stmt = $this->prepare( $sql );
+                if (isset($report['Warnings'])) {
+                    $sql = sprintf(
+                        "UPDATE munkireport SET warning_json = ? WHERE serial_number = '%s'",
+                        $arr->serial_number
+                    );
+                    $stmt = $this->prepare($sql);
                     $this->execute($stmt, array(json_encode($report['Warnings'])));
                 }
 
                 // Reset report_plist
-                $sql = sprintf("UPDATE munkireport SET report_plist = '' WHERE serial_number = '%s'",
-                                $arr->serial_number);
+                $sql = sprintf(
+                    "UPDATE munkireport SET report_plist = '' WHERE serial_number = '%s'",
+                    $arr->serial_number
+                );
                 $this->exec($sql);
             }
 
-            if ($this->get_driver() == 'sqlite'){
+            if ($this->get_driver() == 'sqlite') {
               // Commit transaction
-              $dbh->commit();
+                $dbh->commit();
             }
 
             // Prevent migration to be marked complete
@@ -150,13 +157,11 @@ class Migration_munkireport_new extends Model
 
         // ***** Modify columns
 
-        if ($this->get_driver() == 'mysql')
-        {
-            // Drop columns
+        if ($this->get_driver() == 'mysql') {
+        // Drop columns
             $sql = sprintf('ALTER TABLE munkireport DROP %s', implode(', DROP ', $this->dropCols));
             $this->exec($sql);
-        }
-        else{
+        } else {
             //throw new Exception("SQLite migration not ready", 1);
 
             // Create a temporary table
@@ -210,7 +215,4 @@ class Migration_munkireport_new extends Model
 
         // No down
     }
-
-
-
 }

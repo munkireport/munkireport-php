@@ -1,15 +1,15 @@
 <?php
 class clients extends Controller
 {
-	function __construct()
-	{
-		if( ! $this->authorized())
-		{
-			redirect('auth/login');
-		}
-	} 
+    function __construct()
+    {
+        if (! $this->authorized()) {
+            redirect('auth/login');
+        }
+    }
 
-    function index() {
+    function index()
+    {
         
         $data['page'] = 'clients';
 
@@ -25,25 +25,24 @@ class clients extends Controller
      **/
     function get_data($serial_number = '')
     {
-    	$obj = new View();
+        $obj = new View();
         
-        if (authorized_for_serial($serial_number))
-        {
-			$machine = new Machine_model;
-			new Reportdata_model;
-			new Disk_report_model;
-			new Warranty_model;
-			new Localadmin_model;
-			new Security_model;
+        if (authorized_for_serial($serial_number)) {
+            $machine = new Machine_model;
+            new Reportdata_model;
+            new Disk_report_model;
+            new Warranty_model;
+            new Localadmin_model;
+            new Security_model;
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
-						r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
-						s.gatekeeper, s.sip, w.purchase_date, w.end_date,
-						w.status, l.users, d.TotalSize, d.FreeSpace,
-						d.SMARTStatus, d.CoreStorageEncrypted
+                        r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
+                        s.gatekeeper, s.sip, w.purchase_date, w.end_date,
+                        w.status, l.users, d.TotalSize, d.FreeSpace,
+                        d.SMARTStatus, d.CoreStorageEncrypted
                 FROM machine m 
-				LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
-				LEFT JOIN security s ON (m.serial_number = s.serial_number)
+                LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
+                LEFT JOIN security s ON (m.serial_number = s.serial_number)
                 LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
                 LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
                 LEFT JOIN diskreport d ON (m.serial_number = d.serial_number AND d.MountPoint = '/')
@@ -51,9 +50,7 @@ class clients extends Controller
                 ";
 
             $obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
-        }
-        else
-        {
+        } else {
             $obj->view('json', array('msg' => array()));
         }
     }
@@ -61,17 +58,15 @@ class clients extends Controller
     /**
      * Retrieve links from config
      *
-     * @author 
+     * @author
      **/
     function get_links()
     {
         $out = array();
-        if(conf('vnc_link'))
-        {
+        if (conf('vnc_link')) {
             $out['vnc'] = conf('vnc_link');
         }
-        if(conf('ssh_link'))
-        {
+        if (conf('ssh_link')) {
             $out['ssh'] = conf('ssh_link');
         }
 
@@ -80,51 +75,48 @@ class clients extends Controller
 
 
     }
-	
-	// ------------------------------------------------------------------------
+    
+    // ------------------------------------------------------------------------
 
-	/**
-	 * Detail page of a machine
-	 *
-	 * @param string serial
-	 * @return void
-	 * @author abn290
-	 **/
-	function detail($sn='')
-	{
-		$data = array('serial_number' => $sn);
-		$data['scripts'] = array("clients/client_detail.js");
+    /**
+     * Detail page of a machine
+     *
+     * @param string serial
+     * @return void
+     * @author abn290
+     **/
+    function detail($sn = '')
+    {
+        $data = array('serial_number' => $sn);
+        $data['scripts'] = array("clients/client_detail.js");
 
         $obj = new View();
 
         $machine = new Machine_model($sn);
 
         // Check if machine exists/is allowed for this user to view
-        if( ! $machine->id)
-        {
-        	$obj->view("client/client_dont_exist", $data);
-        }
-        else
-        {
+        if (! $machine->id) {
+            $obj->view("client/client_dont_exist", $data);
+        } else {
             $obj->view("client/client_detail", $data);
         }
-    	
-	}
+        
+    }
 
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	/**
-	 * List of machines
-	 *
-	 * @param string name of view
-	 * @return void
-	 * @author abn290
-	 **/
-	function show($view='')
-	{
-		$data['page'] = 'clients';
-		// TODO: Check if view exists
+    /**
+     * List of machines
+     *
+     * @param string name of view
+     * @return void
+     * @author abn290
+     **/
+    function show($view = '')
+    {
+        $data['page'] = 'clients';
+        // TODO: Check if view exists
         $obj = new View();
         $obj->view('client/'.$view, $data);
-	}
+    }
 }

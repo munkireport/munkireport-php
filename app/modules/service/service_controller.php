@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Service_controller class
@@ -8,21 +8,21 @@
  **/
 class Service_controller extends Module_controller
 {
-	function __construct()
-	{
+    function __construct()
+    {
         $this->module_path = dirname(__FILE__) .'/';
         $this->view_path = $this->module_path . 'views/';
-	}
+    }
 
-	/**
-	 * Default method
-	 *
-	 * @author AvB
-	 **/
-	function index()
-	{
-		echo "You've loaded the service report module!";
-	}
+    /**
+     * Default method
+     *
+     * @author AvB
+     **/
+    function index()
+    {
+        echo "You've loaded the service report module!";
+    }
 
     /**
      * Show detail information
@@ -31,8 +31,7 @@ class Service_controller extends Module_controller
      **/
     function show()
     {
-        if( ! $this->authorized())
-        {
+        if (! $this->authorized()) {
             redirect('auth/login');
         }
         
@@ -42,24 +41,21 @@ class Service_controller extends Module_controller
         $obj->view('services', $data, $this->view_path);
     }
 
-	/**
+    /**
      * Retrieve data in json format
      *
      * @return void
-     * @author 
+     * @author
      **/
     function get_data($serial_number = '')
     {
         $obj = new View();
 
-        if( ! $this->authorized())
-        {
+        if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $service = new Service_model;
         $obj->view('json', array('msg' => $service->retrieve_records($serial_number)));
     }
-
-
 } // END class Service_controller

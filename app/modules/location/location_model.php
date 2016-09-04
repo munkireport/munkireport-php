@@ -1,14 +1,16 @@
 <?php
-class Location_model extends Model {
+class Location_model extends Model
+{
 
     // Defaults array
     private $defaults = array();
 
-    function __construct($serial='')
+    function __construct($serial = '')
     {
         parent::__construct('id', 'location'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial;
+        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['address'] = '';
         $this->rs['altitude'] = 0;
         $this->rs['currentstatus'] = '';
@@ -34,39 +36,37 @@ class Location_model extends Model {
         // Create table if it does not exist
         $this->create_table();
 
-        if ($serial)
-        {
+        if ($serial) {
             $this->retrieve_record($serial);
         }
 
         $this->serial = $serial;
 
     }
-	
-	/**
-	 * Retrieve locations and names to render on a google map
-	 *
-	 *
-	 **/
-	public function get_map_data()
-	{
-		// FIXME Does not account for business units!!!
-		$out = array();
-		$filter = get_machine_group_filter();
-		$sql = "SELECT location.serial_number AS serial_number, latitude, longitude, long_username,
+    
+    /**
+     * Retrieve locations and names to render on a google map
+     *
+     *
+     **/
+    public function get_map_data()
+    {
+        // FIXME Does not account for business units!!!
+        $out = array();
+        $filter = get_machine_group_filter();
+        $sql = "SELECT location.serial_number AS serial_number, latitude, longitude, long_username,
 					computer_name
 				FROM location
 				LEFT JOIN reportdata USING (serial_number)
 				LEFT JOIN machine USING (serial_number)
 				$filter
 				AND currentstatus = 'Successful'";
-				
-		foreach($this->query($sql) as $obj)
-		{
-			$out[] = $obj;
-		}
-		return $out;
-	}
+                
+        foreach ($this->query($sql) as $obj) {
+            $out[] = $obj;
+        }
+        return $out;
+    }
 
     // ------------------------------------------------------------------------
 
@@ -74,10 +74,10 @@ class Location_model extends Model {
      * Process data sent by postflight
      *
      * @param string data
-     * 
+     *
      **/
     function process($data)
-    {       
+    {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data);
@@ -99,17 +99,14 @@ class Location_model extends Model {
             'StaleLocation' => 'stalelocation');
 
         // Parse data
-        foreach($translate as $search => $field) {
+        foreach ($translate as $search => $field) {
 
-            if (isset($plist[$search]))
-            {
+            if (isset($plist[$search])) {
                 $this->$field = $plist[$search];
+            } else {
+                $this->$field = $this->defaults[$field];
             }
-            else
-            {
-              $this->$field = $this->defaults[$field];
-            }
-        }       
+        }
 
         $this->save();
     }
