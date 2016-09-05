@@ -93,6 +93,8 @@ class Tablequery {
             $where = sprintf('WHERE %s IS NOT NULL', $cfg['mrColNotEmpty']);
         }
         
+        $bindings = array();
+        
         // Extra where clause (can only do is equal)
         if( is_array($cfg['where']))
         {
@@ -103,10 +105,10 @@ class Tablequery {
                 // Sanitize input
                 $entry['table'] = $this->dirify($entry['table']);
                 $entry['column'] = $this->dirify($entry['column']);
-                $entry['value'] = $this->dirify($entry['value']);
                 $operator = $this->dirify($operator, '!=<>');
-                
-                $my_where = sprintf("%s.%s $operator '%s'", $entry['table'], $entry['column'], $entry['value']);
+                $bindings[] = $entry['value'];
+
+                $my_where = sprintf("%s.%s $operator ?", $entry['table'], $entry['column']);
                 if($where)
                 {
                     $where .= ' AND (' . $my_where . ')';
@@ -147,7 +149,7 @@ class Tablequery {
             $err = $dbh->errorInfo();
             die($err[2]);
         }
-        $stmt->execute();// $bindings );
+        $stmt->execute($bindings);// $bindings );
         if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
         {
             $recordsTotal = $rs->count;
@@ -177,24 +179,10 @@ class Tablequery {
         }
 
         // Search
-        $sWhere = $where;
-        $bindings = array();
-        if($cfg['search'])
-        {
-            $sWhere = $where ? $where . " AND (" : "WHERE (";
-            foreach($formatted_columns AS $col)
-            {
-                $bindings[] = '%'.$cfg['search'].'%';
-                $sWhere .= $col." LIKE ? OR ";
-            }
-            $sWhere = substr_replace( $sWhere, "", -3 );
-            $sWhere .= ')';
-        }
-
         // Search columns overrides global search
+        $sWhere = $where;
         if($search_cols)
         {
-            $bindings = array();
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach ($search_cols as $pos => $val)
             {
@@ -214,6 +202,18 @@ class Tablequery {
             $sWhere = substr_replace( $sWhere, "", -3 );
             $sWhere .= ')';
         }
+        elseif($cfg['search'])
+        {
+            $sWhere = $where ? $where . " AND (" : "WHERE (";
+            foreach($formatted_columns AS $col)
+            {
+                $bindings[] = '%'.$cfg['search'].'%';
+                $sWhere .= $col." LIKE ? OR ";
+            }
+            $sWhere = substr_replace( $sWhere, "", -3 );
+            $sWhere .= ')';
+        }
+
 
         // Get filtered results count
         $recordsFiltered = $recordsTotal;
