@@ -64,7 +64,7 @@ class Profile_model extends Model
         //}
         
         // Translate profile strings to db fields
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
         $translate = array(
             'ProfileUUID = ' => 'profile_uuid',
             'ProfileName = ' => 'profile_name',

@@ -21,7 +21,7 @@ class Business_unit extends Model
         $this->create_table();
         
         if ($unitid and $property) {
-            $this->retrieve_one('unitid=? AND property=?', array($unitid, $property));
+            $this->retrieveOne('unitid=? AND property=?', array($unitid, $property));
             $this->unitid = $unitid;
             $this->property = $property;
         }
@@ -97,7 +97,7 @@ class Business_unit extends Model
     function get_machine_groups($id)
     {
         $out = array();
-        foreach ($this->retrieve_many('unitid=? AND property=?', array($id, 'machine_group')) as $obj) {
+        foreach ($this->retrieveMany('unitid=? AND property=?', array($id, 'machine_group')) as $obj) {
             $out[] = intval($obj->value);
         }
         return $out;

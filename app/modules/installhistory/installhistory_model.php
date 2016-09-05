@@ -34,7 +34,7 @@ class Installhistory_model extends Model
     function process($plist)
     {
         // Delete old data
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // Check if we're passed a plist (10.6 and higher)
         if (strpos($plist, '<?xml version="1.0" encoding="UTF-8"?>') === 0) {

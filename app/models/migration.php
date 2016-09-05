@@ -20,7 +20,7 @@ class Migration extends Model
         $this->create_table();
         
         if ($table_name) {
-            $this->retrieve_one('table_name=?', array($table_name));
+            $this->retrieveOne('table_name=?', array($table_name));
             $this->table_name = $table_name;
         }
         

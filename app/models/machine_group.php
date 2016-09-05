@@ -21,7 +21,7 @@ class Machine_group extends Model
         $this->create_table();
         
         if ($groupid and $property) {
-            $this->retrieve_one('groupid=? AND property=?', array($groupid, $property));
+            $this->retrieveOne('groupid=? AND property=?', array($groupid, $property));
             $this->groupid = $groupid;
             $this->property = $property;
         }

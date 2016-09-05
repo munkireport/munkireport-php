@@ -72,7 +72,7 @@ class Displays_info_model extends Model
       // if we didn't specify in the config that we like history then
       // we nuke any data we had with this computer's s/n
         if (! conf('keep_previous_displays')) {
-            $this->delete_where('serial_number=?', $this->serial_number);
+            $this->deleteWhere('serial_number=?', $this->serial_number);
             $this->display_serial = null; //get rid of any s/n that was left in memory
         }
       // Parse data
@@ -85,7 +85,7 @@ class Displays_info_model extends Model
                 if ((strpos($line, '----------') === 0) && ($this->display_serial)) {
                   //if we have not nuked the records, do a selective delete
                     if (conf('keep_previous_displays')) {
-                        $this->delete_where('serial_number=? AND display_serial=?', array($this->serial_number, $this->display_serial));
+                        $this->deleteWhere('serial_number=? AND display_serial=?', array($this->serial_number, $this->display_serial));
                     }
                   //get a new id
                     $this->id = 0;

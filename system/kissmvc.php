@@ -14,7 +14,7 @@ class Engine extends KISS_Engine
 
     }
 
-    function request_not_found($msg = '', $status_code = 404)
+    function requestNotFound($msg = '', $status_code = 404)
     {
         $data = array('status_code' => $status_code, 'msg' => '');
 
@@ -240,7 +240,7 @@ class Model extends KISS_Model
 
     /**
      * Retrieve one considering machine_group membership
-     * use this instead of retrieve_one
+     * use this instead of retrieveOne
      *
      * @return void
      * @author
@@ -257,14 +257,14 @@ class Model extends KISS_Model
         // Push serial number in front of the array
         array_unshift($bindings, $serial_number);
         
-        return $this->retrieve_one($where, $bindings);
+        return $this->retrieveOne($where, $bindings);
     }
 
     // ------------------------------------------------------------------------
     
     /**
      * Delete one considering machine_group membership
-     * use this instead of delete_where
+     * use this instead of deleteWhere
      *
      * @return void
      * @author
@@ -281,14 +281,14 @@ class Model extends KISS_Model
         // Push serial number in front of the array
         array_unshift($bindings, $serial_number);
         
-        return $this->delete_where($where, $bindings);
+        return $this->deleteWhere($where, $bindings);
     }
 
     // ------------------------------------------------------------------------
 
     /**
      * Retrieve many considering machine_group membership
-     * use this instead of retrieve_many
+     * use this instead of retrieveMany
      *
      * @return void
      * @author
@@ -305,7 +305,7 @@ class Model extends KISS_Model
         // Push serial number in front of the array
         array_unshift($bindings, $serial_number);
 
-        return $this->retrieve_many($where, $bindings);
+        return $this->retrieveMany($where, $bindings);
     }
 
 

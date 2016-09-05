@@ -39,7 +39,7 @@ class Event_model extends Model
                 return false;
             }
 
-            $this->retrieve_one('serial_number=? AND module=?', array($serial_number, $module));
+            $this->retrieveOne('serial_number=? AND module=?', array($serial_number, $module));
             $this->serial_number = $serial_number;
             $this->module = $module;
         }

@@ -100,7 +100,7 @@ class Servermetrics_model extends Model
     {
 
         // Delete previous set (this is expensive)
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
 
         try {
             foreach (json_decode($data) as $date => $values) {

@@ -64,7 +64,7 @@ class Bluetooth_model extends Model
         }
 
         // Delete previous set
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
         
         // Check for old-style reports
         if (strpos($plist, '<?xml') === false) {

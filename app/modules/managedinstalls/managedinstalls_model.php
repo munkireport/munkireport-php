@@ -195,7 +195,7 @@ class managedinstalls_model extends Model
     {
             
         // Remove previous data
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // List with fillable entries
         $fillable = array(

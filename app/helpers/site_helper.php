@@ -23,13 +23,13 @@ function uncaught_exception_handler($e)
     error('Uncaught Exception: '.$e->getMessage());
 
   // Write footer
-    die(View::do_fetch(conf('view_path').'partials/foot.php'));
+    die(View::doFetch(conf('view_path').'partials/foot.php'));
 }
 
 function custom_error($msg = '')
 {
     $vars['msg']=$msg;
-    die(View::do_fetch(APP_PATH.'errors/custom_error.php', $vars));
+    die(View::doFetch(APP_PATH.'errors/custom_error.php', $vars));
 }
 
 //===============================================
@@ -197,7 +197,7 @@ function post($what = '', $alt = '')
 function passphrase_to_group($passphrase)
 {
     $machine_group = new Machine_group;
-    if ($machine_group->retrieve_one('property=? AND value=?', array('key', $passphrase))) {
+    if ($machine_group->retrieveOne('property=? AND value=?', array('key', $passphrase))) {
         return $machine_group->groupid;
     }
 
@@ -251,7 +251,7 @@ function get_machine_group($serial_number = '')
 {
     if (! isset($GLOBALS['machine_groups'][$serial_number])) {
         $reportdata = new Reportdata_model;
-        if ($reportdata->retrieve_one('serial_number=?', $serial_number)) {
+        if ($reportdata->retrieveOne('serial_number=?', $serial_number)) {
             $GLOBALS['machine_groups'][$serial_number] = $reportdata->machine_group;
         } else {
             $GLOBALS['machine_groups'][$serial_number] = 0;

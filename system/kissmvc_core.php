@@ -37,17 +37,17 @@ abstract class KISS_Engine
     protected $params=array();
     protected $uri_string='';
     
-    function __construct($routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
+    public function __construct($routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
     {
         if ($_POST and get_magic_quotes_gpc()) {
-            $this->stripslashes_deep($_POST);
+            $this->stripslashesDeep($_POST);
         }
         
         $this->controller = $default_controller;
         $this->controller=$default_controller;
         $this->action=$default_action;
         
-        $this->_fetch_uri_string($uri_protocol);
+        $this->fetchUriString($uri_protocol);
                         
         //Process routes
         $req_uri = ltrim($this->uri_string, '/');
@@ -77,32 +77,39 @@ abstract class KISS_Engine
         //Route request to correct controller/action
         $controller_file = CONTROLLER_PATH.$this->controller.'.php'; //CONTROLLER CLASS FILE
         if (! preg_match('#^[A-Za-z0-9_-]+$#', $this->controller) or ! file_exists($controller_file)) {
-            $this->request_not_found('Controller file not found: '.$controller_file);
+            $this->requestNotFound('Controller file not found: '.$controller_file);
         }
         
         //Create controller obj
         require($controller_file);
         if (! class_exists($this->controller, false)) {
-            $this->request_not_found('Controller class not found: '.$this->controller);
+            $this->requestNotFound('Controller class not found: '.$this->controller);
         }
         $this->controller_obj = new $this->controller;
         
         //call controller function
-        if (! preg_match('#^[A-Za-z_][A-Za-z0-9_-]*$#', $this->action) or ! method_exists($this->controller_obj, $this->action)) {
-            $this->request_not_found('Invalid function name: '.$this->action);
+        if (! $this->validateAction() or ! method_exists($this->controller_obj, $this->action)) {
+            $this->requestNotFound('Invalid function name: '.$this->action);
         }
         call_user_func_array(array( $this->controller_obj, $this->action ), $this->params);
         
         return $this;
         
     }
+    
+    // Check if action contains valid chars
+    protected function validateAction()
+    {
+        return preg_match('#^[A-Za-z_][A-Za-z0-9_-]*$#', $this->action);
+    }
+    
     // The following three functions are blatantly copied from CodeIgniter (http://codeigniter.com)
-    public function _fetch_uri_string($uri_protocol)
+    protected function fetchUriString($uri_protocol)
     {
         if (strtoupper($uri_protocol) === 'AUTO') {
         // Let's try the REQUEST_URI first, this will work in most situations
-            if ($uri = $this->_detect_uri()) {
-                $this->_set_uri_string($uri);
+            if ($uri = $this->detectUri()) {
+                $this->setUriString($uri);
                 return;
             }
 
@@ -110,20 +117,20 @@ abstract class KISS_Engine
             // Note: some servers seem to have trouble with getenv() so we'll test it two ways
             $path = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : @getenv('PATH_INFO');
             if (trim($path, '/') != '' && $path !== '/index.php') {
-                $this->_set_uri_string($path);
+                $this->setUriString($path);
                 return;
             }
 
             // No PATH_INFO?... What about QUERY_STRING?
             $path = (isset($_SERVER['QUERY_STRING'])) ? $_SERVER['QUERY_STRING'] : @getenv('QUERY_STRING');
             if (trim($path, '/') != '') {
-                $this->_set_uri_string($path);
+                $this->setUriString($path);
                 return;
             }
 
             // As a last ditch effort lets try using the $_GET array
             if (is_array($_GET) && count($_GET) === 1 && trim(key($_GET), '/') != '') {
-                $this->_set_uri_string(key($_GET));
+                $this->setUriString(key($_GET));
                 return;
             }
 
@@ -135,12 +142,12 @@ abstract class KISS_Engine
         $uri = strtoupper($uri_protocol);
 
         if ($uri === 'REQUEST_URI') {
-            $this->_set_uri_string($this->_detect_uri());
+            $this->setUriString($this->detectUri());
             return;
         }
 
         $path = (isset($_SERVER[$uri])) ? $_SERVER[$uri] : @getenv($uri);
-        $this->_set_uri_string($path);
+        $this->setUriString($path);
     }
 
     // --------------------------------------------------------------------
@@ -151,7 +158,7 @@ abstract class KISS_Engine
      * @param   string
      * @return  void
      */
-    public function _set_uri_string($str)
+    public function setUriString($str)
     {
         // Filter out control characters
         //$str = remove_invisible_characters($str, FALSE);
@@ -170,7 +177,7 @@ abstract class KISS_Engine
      *
      * @return  string
      */
-    protected function _detect_uri()
+    protected function detectUri()
     {
         if (! isset($_SERVER['REQUEST_URI']) or ! isset($_SERVER['SCRIPT_NAME'])) {
             return '';
@@ -223,17 +230,17 @@ abstract class KISS_Engine
     
 
     //Override this function for your own custom 404 page
-    function request_not_found($msg = '')
+    public function requestNotFound($msg = '')
     {
         header("HTTP/1.0 404 Not Found");
         die('<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>'.$msg.'<p>The requested URL was not found on this server.</p><p>Please go <a href="javascript: history.back( 1 )">back</a> and try again.</p><hr /><p>Powered By: <a href="http://kissmvc.com">KISSMVC</a></p></body></html>');
     }
         
     // Recursively strip slashes
-    function stripslashes_deep($value)
+    public function stripslashesDeep($value)
     {
         $value = is_array($value) ?
-        array_map(array($this, 'stripslashes_deep'), $value) :
+        array_map(array($this, 'stripslashesDeep'), $value) :
         stripslashes($value);
         return $value;
     }
@@ -246,7 +253,7 @@ abstract class KISS_Engine
 
 abstract class KISS_Controller
 {
-    function __construct()
+    public function __construct()
     {
 
     }
@@ -261,7 +268,7 @@ abstract class KISS_View
     protected $file='';
     protected $vars=array();
 
-    function __construct($file = '', $vars = '')
+    public function __construct($file = '', $vars = '')
     {
         if ($file) {
             $this->file = $file;
@@ -272,32 +279,32 @@ abstract class KISS_View
         return $this;
     }
 
-    function __set($key, $var)
+    public function __set($key, $var)
     {
         return $this->set($key, $var);
     }
 
-    function set($key, $var)
+    public function set($key, $var)
     {
         $this->vars[$key]=$var;
         return $this;
     }
 
     //for adding to an array
-    function add($key, $var)
+    public function add($key, $var)
     {
         $this->vars[$key][]=$var;
     }
 
-    function view($file = '', $vars = '', $view_path = VIEW_PATH)
+    public function view($file = '', $vars = '', $view_path = VIEW_PATH)
     {
- //Bluebus addition
+        //Bluebus addition
         if (is_array($vars)) {
             $this->vars=array_merge($this->vars, $vars);
         }
         extract($this->vars);
         if ((bool) @ini_get('short_open_tag') === false) {
-            echo eval($this->short_open($view_path.$file.EXT));
+            echo eval($this->shortOpen($view_path.$file.EXT));
         } else {
             if (! @include($view_path.$file.EXT)) {
                 echo '<!-- Could not open '.$view_path.$file.EXT.'-->';
@@ -305,12 +312,12 @@ abstract class KISS_View
         }
     }
     
-    protected function short_open($file)
+    protected function shortOpen($file)
     {
         return '?>'.str_replace('<?php =', '<?php echo ', preg_replace('/<\?(?!php|xml)/i', '<?php ', file_get_contents($file)));
     }
 
-    function fetch($vars = '')
+    public function fetch($vars = '')
     {
         if (is_array($vars)) {
             $this->vars=array_merge($this->vars, $vars);
@@ -321,7 +328,7 @@ abstract class KISS_View
         return ob_get_clean();
     }
 
-    function dump($vars = '')
+    public function dump($vars = '')
     {
         if (is_array($vars)) {
             $this->vars=array_merge($this->vars, $vars);
@@ -330,7 +337,7 @@ abstract class KISS_View
         require($this->file);
     }
 
-    static function do_fetch($file = '', $vars = '')
+    public static function doFetch($file = '', $vars = '')
     {
         if (is_array($vars)) {
             extract($vars);
@@ -340,7 +347,7 @@ abstract class KISS_View
         return ob_get_clean();
     }
 
-    static function do_dump($file = '', $vars = '')
+    public static function doDump($file = '', $vars = '')
     {
         if (is_array($vars)) {
             extract($vars);
@@ -348,7 +355,7 @@ abstract class KISS_View
         require($file);
     }
 
-    static function do_fetch_str($str, $vars = '')
+    public static function doFetchStr($str, $vars = '')
     {
         if (is_array($vars)) {
             extract($vars);
@@ -358,7 +365,7 @@ abstract class KISS_View
         return ob_get_clean();
     }
 
-    static function do_dump_str($str, $vars = '')
+    public static function doDumpStr($str, $vars = '')
     {
         if (is_array($vars)) {
             extract($vars);
@@ -396,7 +403,7 @@ abstract class KISS_Model
     protected $COMPRESS_ARRAY=true;
     public $rs = array(); // for holding all object property variables
 
-    function __construct($pkname = '', $tablename = '', $dbhfnname = 'getdbh', $quote_style = 'MYSQL', $compress_array = true)
+    public function __construct($pkname = '', $tablename = '', $dbhfnname = 'getdbh', $quote_style = 'MYSQL', $compress_array = true)
     {
         $this->pkname=$pkname; //Name of auto-incremented Primary Key
         $this->tablename=$tablename; //Corresponding table in database
@@ -405,12 +412,12 @@ abstract class KISS_Model
         $this->COMPRESS_ARRAY=function_exists('gzdeflate') && $compress_array;
     }
 
-    function get($key)
+    public function get($key)
     {
         return array_key_exists($key, $this->rs) ? $this->rs[$key] : $key.' not found in '.$this->tablename.' model';
     }
 
-    function set($key, $val)
+    public function set($key, $val)
     {
         if (array_key_exists($key, $this->rs)) {
             $this->rs[$key] = $val;
@@ -418,12 +425,12 @@ abstract class KISS_Model
         return $this;
     }
 
-    function __get($key)
+    public function __get($key)
     {
         return $this->get($key);
     }
 
-    function __set($key, $val)
+    public function __set($key, $val)
     {
         return $this->set($key, $val);
     }
@@ -458,7 +465,7 @@ abstract class KISS_Model
      * @return PDOStatement PDO statement object
      * @author AvB
      **/
-    function prepare($sql, $driver_options = array())
+    public function prepare($sql, $driver_options = array())
     {
         $dbh = $this->getdbh();
 
@@ -475,7 +482,7 @@ abstract class KISS_Model
      *
      * @author AvB
      **/
-    function execute(&$stmt, $params = array())
+    public function execute(&$stmt, $params = array())
     {
         // Only execute with params if params passed
         $result = empty($params) ? $stmt->execute() : $stmt->execute($params);
@@ -490,9 +497,9 @@ abstract class KISS_Model
 
     //Inserts record into database with a new auto-incremented primary key
     //If the primary key is empty, then the PK column should have been set to auto increment
-    function create()
+    public function create()
     {
-        $dbh=$this->getdbh();
+        $dbh = $this->getdbh();
         $pkname=$this->pkname;
         $s1=$s2='';
         foreach ($this->rs as $k => $v) {
@@ -520,9 +527,9 @@ abstract class KISS_Model
         return $this;
     }
 
-    function retrieve($pkvalue)
+    public function retrieve($pkvalue)
     {
-        $dbh=$this->getdbh();
+        $dbh = $this->getdbh();
         $sql = 'SELECT * FROM '.$this->enquote($this->tablename).' WHERE '.$this->enquote($this->pkname).'=?';
         $stmt = $this->prepare($sql);
         $stmt->bindValue(1, ( int )$pkvalue);
@@ -538,9 +545,9 @@ abstract class KISS_Model
         return $this;
     }
 
-    function update()
+    public function update()
     {
-        $dbh=$this->getdbh();
+        $dbh = $this->getdbh();
         $s='';
         foreach ($this->rs as $k => $v) {
             $s .= ', '.$this->enquote($k).'=?';
@@ -556,9 +563,9 @@ abstract class KISS_Model
         return $this->execute($stmt);
     }
 
-    function delete()
+    public function delete()
     {
-        $dbh=$this->getdbh();
+        $dbh = $this->getdbh();
         $sql = 'DELETE FROM '.$this->enquote($this->tablename).' WHERE '.$this->enquote($this->pkname).'=?';
         $stmt = $this->prepare($sql);
         $stmt->bindValue(1, $this->rs[$this->pkname]);
@@ -567,7 +574,7 @@ abstract class KISS_Model
 
     //returns true if primary key is a positive integer
     //if checkdb is set to true, this function will return true if there exists such a record in the database
-    function exists($checkdb = false)
+    public function exists($checkdb = false)
     {
         if (( int )$this->rs[$this->pkname] < 1) {
             return false;
@@ -575,13 +582,13 @@ abstract class KISS_Model
         if (!$checkdb) {
             return true;
         }
-        $dbh=$this->getdbh();
+        $dbh = $this->getdbh();
         $sql = 'SELECT 1 FROM '.$this->enquote($this->tablename).' WHERE '.$this->enquote($this->pkname)."='".$this->rs[$this->pkname]."'";
         $result = $dbh->query($sql)->fetchAll();
         return count($result);
     }
 
-    function merge($arr)
+    public function merge($arr)
     {
         if (! is_array($arr)) {
             return $this;
@@ -594,9 +601,9 @@ abstract class KISS_Model
         return $this;
     }
 
-    function retrieve_one($wherewhat, $bindings)
+    public function retrieveOne($wherewhat, $bindings)
     {
-        $dbh=$this->getdbh();
+        $dbh = $this->getdbh();
         if (is_scalar($bindings)) {
             $bindings = $bindings !== '' ? array( $bindings ) : array();
         }
@@ -619,7 +626,7 @@ abstract class KISS_Model
         return $this;
     }
 
-    function retrieve_many($wherewhat = '', $bindings = '')
+    public function retrieveMany($wherewhat = '', $bindings = '')
     {
         $dbh = $this->getdbh();
         if (is_scalar($bindings)) {
@@ -645,9 +652,9 @@ abstract class KISS_Model
         return $arr;
     }
 
-    function select($selectwhat = '*', $wherewhat = '', $bindings = '', $pdo_fetch_mode = PDO::FETCH_ASSOC)
+    public function select($selectwhat = '*', $wherewhat = '', $bindings = '', $pdoFetch_mode = PDO::FETCH_ASSOC)
     {
-        $dbh=$this->getdbh();
+        $dbh = $this->getdbh();
         if (is_scalar($bindings)) {
             $bindings = $bindings !== '' ? array( $bindings ) : array();
         }
@@ -657,12 +664,12 @@ abstract class KISS_Model
         }
         $stmt = $this->prepare($sql);
         $this->execute($stmt, $bindings);
-        return $stmt->fetchAll($pdo_fetch_mode);
+        return $stmt->fetchAll($pdoFetch_mode);
     }
 
-    function delete_where($wherewhat, $bindings)
+    public function deleteWhere($wherewhat, $bindings)
     {
-        $dbh=$this->getdbh();
+        $dbh = $this->getdbh();
         if (is_scalar($bindings)) {
             $bindings = array( $bindings );
         }

@@ -42,8 +42,8 @@ class Inventory_model extends Model
         return $this->query($sql);
     }
     
-    // Override for retrieve_many that takes machine groups into account
-    function retrieve_many($wherewhat = '', $bindings = '')
+    // Override for retrieveMany that takes machine groups into account
+    function retrieveMany($wherewhat = '', $bindings = '')
     {
         $dbh = $this->getdbh();
         if (is_scalar($bindings)) {
@@ -119,7 +119,7 @@ class Inventory_model extends Model
         $inventory_list = $parser->toArray();
         if (count($inventory_list)) {
         // clear existing inventory items
-            $this->delete_where('serial_number=?', $this->serial_number);
+            $this->deleteWhere('serial_number=?', $this->serial_number);
             // insert current inventory items
             foreach ($inventory_list as $item) {
                 if (preg_match($regex, $item['bundleid'])) {

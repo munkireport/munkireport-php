@@ -34,7 +34,7 @@ class Service_model extends Model
     function process($data)
     {
         // Delete previous entries
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // Parse log data
         $start = ''; // Start date

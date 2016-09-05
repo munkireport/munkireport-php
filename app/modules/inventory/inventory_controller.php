@@ -51,12 +51,12 @@ class Inventory_controller extends Module_controller
             $data['name'] = $name;
             if ($version) {
                 $version = rawurldecode($version);
-                $items = $inventory_item_obj->retrieve_many(
+                $items = $inventory_item_obj->retrieveMany(
                     'name = ? AND version = ?',
                     array($name, $version)
                 );
             } else {
-                $items = $inventory_item_obj->retrieve_many(
+                $items = $inventory_item_obj->retrieveMany(
                     'name = ?',
                     array($name)
                 );

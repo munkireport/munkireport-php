@@ -41,13 +41,13 @@ class Profile_controller extends Module_controller
             $data['profile_name'] = $name;
             if ($payload) {
                 $payload = rawurldecode($payload);
-                $items = $profile_item_obj->retrieve_many(
+                $items = $profile_item_obj->retrieveMany(
                     'profile_name = ? AND payload_name = ?',
                     array($name, $payload)
                 );
                     $data['name'] = $payload;
             } else {
-                $items = $profile_item_obj->retrieve_many(
+                $items = $profile_item_obj->retrieveMany(
                     'profile_name = ?',
                     array($name)
                 );

@@ -312,14 +312,14 @@ class auth extends Controller
 
             // Lookup user in business units
             $bu = new Business_unit;
-            if ($bu->retrieve_one("property IN ('manager', 'user') AND value=?", $_SESSION['user'])) {
+            if ($bu->retrieveOne("property IN ('manager', 'user') AND value=?", $_SESSION['user'])) {
                 $_SESSION['role'] = $bu->property; // manager, user
                 $_SESSION['role_why'] = $_SESSION['user'].' found in Business Unit '. $bu->unitid;
                 $_SESSION['business_unit'] = $bu->unitid;
             } else {
                 // Lookup groups in Business Units
                 foreach ($_SESSION['groups'] as $group) {
-                    if ($bu->retrieve_one("property IN ('manager', 'user') AND value=?", '@' . $group)) {
+                    if ($bu->retrieveOne("property IN ('manager', 'user') AND value=?", '@' . $group)) {
                         $_SESSION['role'] = $bu->property; // manager, user
                         $_SESSION['role_why'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
                         $_SESSION['business_unit'] = $bu->unitid;

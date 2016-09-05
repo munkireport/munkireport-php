@@ -1,7 +1,7 @@
 <?php
 class admin extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
@@ -15,7 +15,7 @@ class admin extends Controller
 
     //===============================================================
 
-    function index()
+    public function index()
     {
         echo 'Admin';
     }
@@ -27,7 +27,7 @@ class admin extends Controller
      * @return void
      * @author
      **/
-    function get_business_units()
+    public function get_business_units()
     {
         $business_unit = new Business_unit;
         $machine_group = new Machine_group;
@@ -45,7 +45,7 @@ class admin extends Controller
      * @return void
      * @author
      **/
-    function save_machine_group()
+    public function save_machine_group()
     {
         if (isset($_POST['groupid'])) {
             $machine_group = new Machine_group;
@@ -68,7 +68,7 @@ class admin extends Controller
                 // Update business unit membership
                 if ($property == 'business_unit') {
                     $bu = new Business_unit;
-                    $bu->retrieve_one("property='machine_group' AND value=?", $_POST['groupid']);
+                    $bu->retrieveOne("property='machine_group' AND value=?", $_POST['groupid']);
                     $bu->unitid = $val;
                     $bu->property = 'machine_group';
                     $bu->value = $_POST['groupid'];
@@ -80,7 +80,7 @@ class admin extends Controller
                 if (is_scalar($val)) {
                     if ($val) {
                         $machine_group->id = '';
-                        $machine_group->retrieve_one('groupid=? AND property=?', array($groupid, $property));
+                        $machine_group->retrieveOne('groupid=? AND property=?', array($groupid, $property));
                         $machine_group->groupid = $groupid;
                         $machine_group->property = $property;
                         $machine_group->value = $val;
@@ -88,7 +88,7 @@ class admin extends Controller
                         $out[$property] = $val;
                     } else // Delete
                     {
-                        $machine_group->delete_where('groupid=? AND property=?', array($groupid, $property));
+                        $machine_group->deleteWhere('groupid=? AND property=?', array($groupid, $property));
                     }
                 } else //array data
                 {
@@ -116,16 +116,16 @@ class admin extends Controller
      *
      * @author
      **/
-    function remove_machine_group($groupid = '')
+    public function remove_machine_group($groupid = '')
     {
         $out = array();
 
         if ($groupid !== '') {
             $mg = new Machine_group;
-            if ($out['success'] = $mg->delete_where('groupid=?', $groupid)) {
+            if ($out['success'] = $mg->deleteWhere('groupid=?', $groupid)) {
             // Delete from business unit
                 $bu = new Business_unit;
-                $out['success'] = $bu->delete_where("property='machine_group' AND value=?", $groupid);
+                $out['success'] = $bu->deleteWhere("property='machine_group' AND value=?", $groupid);
             }
             // Reset group in report_data
             $rep = new Reportdata_model;
@@ -145,7 +145,7 @@ class admin extends Controller
      * @return void
      * @author
      **/
-    function save_business_unit()
+    public function save_business_unit()
     {
         $out = array();
 
@@ -221,7 +221,7 @@ class admin extends Controller
 
                 if (is_scalar($val)) {
                     $business_unit->id = '';
-                    $business_unit->retrieve_one('unitid=? AND property=?', array($unitid, $property));
+                    $business_unit->retrieveOne('unitid=? AND property=?', array($unitid, $property));
                     $business_unit->unitid = $unitid;
                     $business_unit->property = $property;
                     $business_unit->value = $val;
@@ -238,7 +238,7 @@ class admin extends Controller
                     // Translate property to db entry
                     $name =  $translate[$property];
 
-                    $business_unit->delete_where('unitid=? AND property=?', array($unitid, $name));
+                    $business_unit->deleteWhere('unitid=? AND property=?', array($unitid, $name));
 
                     foreach ($val as $entry) {
                     // Empty array placeholder
@@ -275,13 +275,13 @@ class admin extends Controller
      * @return void
      * @author
      **/
-    function remove_business_unit($unitid = '')
+    public function remove_business_unit($unitid = '')
     {
         $out = array();
 
         if ($unitid !== '') {
             $bu = new Business_unit;
-            $out['success'] = $bu->delete_where('unitid=?', $unitid);
+            $out['success'] = $bu->deleteWhere('unitid=?', $unitid);
         }
 
         $obj = new View();
@@ -299,7 +299,7 @@ class admin extends Controller
      * @return void
      * @author
      **/
-    function get_bu_data($unitid = "")
+    public function get_bu_data($unitid = "")
     {
         $obj = new View();
         $bu = new Business_unit;
@@ -314,7 +314,7 @@ class admin extends Controller
      * @return void
      * @author
      **/
-    function get_mg_data($groupid = "")
+    public function get_mg_data($groupid = "")
     {
         $out = array();
 
@@ -348,7 +348,7 @@ class admin extends Controller
      * @return void
      * @author
      **/
-    function show($which = '')
+    public function show($which = '')
     {
         if ($which) {
             $data['page'] = 'clients';

@@ -114,7 +114,7 @@ class Disk_report_model extends Model
         }
 
         // Delete previous set
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // Copy default values
         $empty = $this->rs;

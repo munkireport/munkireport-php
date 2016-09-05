@@ -37,7 +37,7 @@ class Crashplan_model extends Model
     {
         // Delete previous entries
         $serial_number = $this->serial_number;
-        $this->delete_where('serial_number=?', $serial_number);
+        $this->deleteWhere('serial_number=?', $serial_number);
         
         //
         $messages = array(

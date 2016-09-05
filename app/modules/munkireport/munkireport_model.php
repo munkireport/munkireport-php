@@ -198,7 +198,7 @@ class Munkireport_model extends Model
             $myHash = md5(serialize($install_list));
             $hashObj = new Hash();
             $bindings = array($this->serial_number, 'managedinstalls');
-            $hashObj->retrieve_one('serial=? AND name=?', $bindings);
+            $hashObj->retrieveOne('serial=? AND name=?', $bindings);
             
             // Compare hash with stored hash
             if ($hashObj->hash != $myHash) {

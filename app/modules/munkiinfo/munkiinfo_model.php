@@ -41,7 +41,7 @@ class munkiinfo_model extends Model
 
         $plist = $parser->toArray();
 
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
             $item = array_pop($plist);
 
             reset($item);

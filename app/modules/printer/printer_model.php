@@ -64,7 +64,7 @@ class Printer_model extends Model
     function process($data)
     {
         // Delete previous entries
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
         
         // Translate printer strings to db fields
         $translate = array(

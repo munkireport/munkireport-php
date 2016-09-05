@@ -22,7 +22,7 @@ class Hash extends Model
         $this->create_table();
         
         if ($serial and $name) {
-            $this->retrieve_one('serial=? AND name=?', array($serial, $name));
+            $this->retrieveOne('serial=? AND name=?', array($serial, $name));
             $this->serial = $serial;
             $this->name = $name;
         }
@@ -43,7 +43,7 @@ class Hash extends Model
     {
         $dbh=$this->getdbh();
         $out = array();
-        foreach ($this->retrieve_many('serial=?', $serial) as $obj) {
+        foreach ($this->retrieveMany('serial=?', $serial) as $obj) {
             $out[$obj->name] = $obj->hash;
         }
         return $out;
