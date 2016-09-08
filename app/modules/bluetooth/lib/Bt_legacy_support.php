@@ -26,9 +26,9 @@ class Bt_legacy_support {
 		// Translate network strings to db fields
 		$translate = array(
 			'Status = ' => 'bluetooth_power',
-			'Keyboard = ' => 'keyboard',
-			'Mouse = ' => 'mouse',
-			'Trackpad = ' => 'trackpad');
+			'Keyboard = ' => 'apple wireless keyboard',
+			'Mouse = ' => 'apple magic mouse',
+			'Trackpad = ' => 'apple wireless trackpad');
 			
 		//clear any previous data we had
 		foreach($translate as $search => $field) {
