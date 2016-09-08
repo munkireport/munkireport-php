@@ -414,7 +414,7 @@ $(document).on('appReady', function(e, lang) {
 			for (key in data){
 				var rows = ''
 				if (key != 'bluetooth_power'){
-					rows = rows + '<tr><th>'+i18n.t(key)+'</th><td>'+data[key]+'%'+'</td></tr>'
+					rows = rows + '<tr><th>'+i18n.t('bluetooth.'+key)+'</th><td>'+data[key]+'%'+'</td></tr>'
 					$('table.mr-bluetooth-table').append(rows)
 				}
 			}
