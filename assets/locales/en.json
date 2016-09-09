@@ -269,18 +269,18 @@
 		"listing": {
 			"email": "Email",
 			"status": "Status",
-			"title": "FindMyMac report",
+			"title": "Find My Mac report",
 			"ownerdisplayname": "Owner Display Name",
 			"personid": "iCloud PersonID",
 			"hostname": "iCloud Hostname"
 		},
 		"widget": {
-			"title": "FindMyMac Status",
+			"title": "Find My Mac Status",
 			"enabled": "Enabled",
 			"disabled": "Disabled"
 		},
 		"client": {
-			"title": "FindMyMac"
+			"title": "Find My Mac"
 		}
 	},
 	"free_disk_space": "Free Disk Space",
@@ -446,7 +446,7 @@
 			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
-			"findmymac": "FindMyMac",
+			"findmymac": "Find My Mac",
 			"gsx": "GSX",
 			"hardware": "Hardware",
 			"inventory": "Inventory",
@@ -472,7 +472,7 @@
 			"backup": "Backup Report",
 			"clients": "Client Report",
 			"configuration": "Configuration Report",
-			"findmymac": "FindMyMac Report",
+			"findmymac": "Find My Mac Report",
 			"hardware": "Hardware Report",
 			"location": "Location Report",
 			"munki": "Munki Report",
