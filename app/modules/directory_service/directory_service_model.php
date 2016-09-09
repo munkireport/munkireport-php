@@ -131,38 +131,35 @@ class Directory_service_model extends Model
                                 'Namespace mode = ' => 'namespacemode');
 
         //clear any previous data we had
-            foreach ($translate as $search => $field) {
-                if (array_key_exists($field, $this->rt) && $this->rt[$field] == 'BOOL') {
-                    $this->$field = 0;
-                } else {
-                    $this->$field = '';
-                }
+        foreach ($translate as $search => $field) {
+            if (array_key_exists($field, $this->rt) && $this->rt[$field] == 'BOOL') {
+                $this->$field = 0;
+            } else {
+                $this->$field = '';
             }
+        }
 
         // Parse data
-            foreach (explode("\n", $data) as $line) {
-                // Translate standard entries
-                foreach ($translate as $search => $field) {
-                
-                    if (strpos($line, $search) === 0) {
+        foreach (explode("\n", $data) as $line) {
+            // Translate standard entries
+            foreach ($translate as $search => $field) {
+                if (strpos($line, $search) === 0) {
+                    $value = substr($line, strlen($search));
                     
-                        $value = substr($line, strlen($search));
-                    
-                        // use bool when possible
-                        if (strpos($value, 'Enabled') === 0) {
-                            $this->$field = 1;
-                            break;
-                        } elseif (strpos($value, 'Disabled') === 0) {
-                            $this->$field = 0;
-                            break;
-                        }
-                    
-                        $this->$field = $value;
+                    // use bool when possible
+                    if (strpos($value, 'Enabled') === 0) {
+                        $this->$field = 1;
+                        break;
+                    } elseif (strpos($value, 'Disabled') === 0) {
+                        $this->$field = 0;
                         break;
                     }
+                    
+                    $this->$field = $value;
+                    break;
                 }
-            
-            } //end foreach explode lines
+            }
+        } //end foreach explode lines
             $this->save();
     }
 }
