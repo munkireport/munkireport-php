@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.9.0.2122';
+$GLOBALS['version'] = '2.9.0.2140';
 
 // Return version without commit count
 function get_version()
@@ -300,7 +300,6 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
     {
         return '';
     }
-
 }
 
 /**

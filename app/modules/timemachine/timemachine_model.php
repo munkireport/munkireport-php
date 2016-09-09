@@ -30,7 +30,6 @@ class Timemachine_model extends Model
         }
         
         $this->serial = $serial;
-          
     }
 
     // ------------------------------------------------------------------------
@@ -70,7 +69,6 @@ class Timemachine_model extends Model
             $this->timestamp = time();
             $this->save();
         }
-        
     }
 
     /**

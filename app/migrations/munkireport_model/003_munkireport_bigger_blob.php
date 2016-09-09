@@ -8,7 +8,6 @@ class Migration_munkireport_bigger_blob extends Model
             $sql = 'ALTER TABLE `munkireport` CHANGE `report_plist` `report_plist` MEDIUMBLOB  NULL';
             $this->exec($sql);
         }
-
     }// End function up()
 
     /**

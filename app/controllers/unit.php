@@ -26,7 +26,6 @@ class unit extends Controller
         } else {
             $obj->view('dashboard/dashboard', $data);
         }
-        
     }
 
     /**
@@ -146,7 +145,6 @@ class unit extends Controller
 
             // Return current filter array
             $out[$filter] = $_SESSION['filter'][$filter];
-
         }
         
         $obj = new View();

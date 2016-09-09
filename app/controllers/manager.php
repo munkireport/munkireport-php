@@ -94,7 +94,6 @@ class manager extends Controller
                 // Return status
                 $status['status'] = 'success';
                 $status['rowcount'] = $cnt;
-                
             } catch (Exception $e) {
                 $status['status'] = 'error';
                 $status['message'] = $e->getMessage();
@@ -103,6 +102,5 @@ class manager extends Controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $status));
-        
     }
 }

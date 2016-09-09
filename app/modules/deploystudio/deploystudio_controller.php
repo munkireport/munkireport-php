@@ -13,7 +13,6 @@ class deploystudio_controller extends Module_controller
         // No authentication, the client needs to get here
         // Store module path
         $this->module_path = dirname(__FILE__);
-
     }
 
     function index()

@@ -14,7 +14,6 @@ class Warranty_controller extends Module_controller
 
         // Store module path
         $this->module_path = dirname(__FILE__);
-
     }
 
     function index()
@@ -60,7 +59,6 @@ class Warranty_controller extends Module_controller
         $out = array('date' => estimate_manufactured_date($serial_number));
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
     
     /**
@@ -124,6 +122,5 @@ class Warranty_controller extends Module_controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 } // END class Warranty_module

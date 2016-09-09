@@ -60,16 +60,12 @@ class managedinstalls_controller extends Module_controller
             $out = array();
             
             foreach ($model->get_pending_installs($type, $hoursBack) as $obj) {
-                
                 $out[] = $obj;
-            
             }
-    
         }
         
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
     
     // ------------------------------------------------------------------------
@@ -95,7 +91,6 @@ class managedinstalls_controller extends Module_controller
                 $status = $rs->status == 'install_succeeded' ? 'installed' : $rs->status;
                 $key = $rs->name . $rs->version;
                 if (isset($out[$key])) {
-                    
                     if (isset($out[$key][$status])) {
                         // $key exists, add count
                         $out[$key][$status] += $rs->count;
@@ -115,7 +110,6 @@ class managedinstalls_controller extends Module_controller
 
         $obj = new View();
         $obj->view('json', array('msg' => array_values($out)));
-
     }
 
     
@@ -141,7 +135,6 @@ class managedinstalls_controller extends Module_controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
     
     /**
@@ -199,6 +192,5 @@ class managedinstalls_controller extends Module_controller
         
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 } // END class default_module

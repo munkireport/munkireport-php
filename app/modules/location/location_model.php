@@ -41,7 +41,6 @@ class Location_model extends Model
         }
 
         $this->serial = $serial;
-
     }
     
     /**
@@ -100,7 +99,6 @@ class Location_model extends Model
 
         // Parse data
         foreach ($translate as $search => $field) {
-
             if (isset($plist[$search])) {
                 $this->$field = $plist[$search];
             } else {

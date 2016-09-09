@@ -56,6 +56,5 @@ class Event_controller extends Module_controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 } // END class Event_controller

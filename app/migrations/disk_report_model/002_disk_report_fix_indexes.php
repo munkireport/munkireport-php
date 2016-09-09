@@ -19,7 +19,6 @@ class Migration_disk_report_fix_indexes extends Model
         $this->idx[] = array('VolumeType');
         $this->idx[] = array('MountPoint');
         $this->idx[] = array('VolumeName');
-
     }
 
     /**
@@ -62,13 +61,10 @@ class Migration_disk_report_fix_indexes extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER");
-                
         }
 
         // Call set indexes()
         $this->set_indexes($sql);
-
-
     }// End function up()
 
     /**

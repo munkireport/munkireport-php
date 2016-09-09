@@ -68,7 +68,6 @@ class Profile_controller extends Module_controller
                 $instance['payload'] = $item->payload_name;
                 $data['profile_items'][] = $instance;
             }
-            
         }
 
         $obj = new View();

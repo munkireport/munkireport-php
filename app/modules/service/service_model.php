@@ -21,7 +21,6 @@ class Service_model extends Model
         
         // Create table if it does not exist
         $this->create_table();
-                  
     }
 
     // ------------------------------------------------------------------------
@@ -54,7 +53,6 @@ class Service_model extends Model
                     $this->id = '';
                     $this->timestamp = time();
                     $this->create();
-
                 }
             }
         }

@@ -56,7 +56,6 @@ class Servermetrics_model extends Model
         $this->create_table();
 
         $this->serial_number = $serial;
-
     }
     // ------------------------------------------------------------------------
 
@@ -82,7 +81,6 @@ class Servermetrics_model extends Model
                 $row = array_map('floatval', $row);
                 $out[$key] = $row;
             }
-
         }
 
         return $out;
@@ -114,6 +112,5 @@ class Servermetrics_model extends Model
         } catch (Exception $e) {
             echo 'Failed to decode data';
         }
-
     }
 }

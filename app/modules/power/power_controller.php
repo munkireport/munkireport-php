@@ -41,7 +41,6 @@ class Power_controller extends Module_controller
         
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 
 
@@ -69,6 +68,5 @@ class Power_controller extends Module_controller
 			 			".get_machine_group_filter();
         $obj = new View();
         $obj->view('json', array('msg' => current($queryobj->query($sql))));
-
     }
 } // END class default_module

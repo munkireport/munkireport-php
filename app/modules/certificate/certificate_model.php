@@ -22,7 +22,6 @@ class Certificate_model extends Model
         
         // Create table if it does not exist
         $this->create_table();
-                  
     }
 
     // ------------------------------------------------------------------------
@@ -127,9 +126,7 @@ class Certificate_model extends Model
                 }
                 $this->store_event($type, $msg, $data);
             }
-            
         }
-
     } // end process()
 
     /**

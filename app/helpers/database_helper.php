@@ -47,7 +47,6 @@ function create_table($model)
 
     // Set indexes
     $model->set_indexes();
-
 }
 
 /**

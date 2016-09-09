@@ -51,7 +51,6 @@ class I18next
         
         // Check if there are params
         if ($params) {
-            
             $paramsArray = json_decode($params, true);
             
             // Check if there is a count param

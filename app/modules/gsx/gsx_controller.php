@@ -14,7 +14,6 @@ class gsx_controller extends Module_controller
 
         // Store module path
         $this->module_path = dirname(__FILE__);
-
     }
 
     function index()
@@ -39,7 +38,6 @@ class gsx_controller extends Module_controller
             $gsx = new gsx_model($serial);
             //$gsx->get_gsx_stats($force=TRUE);
                     $gsx->run_gsx_stats();
-
         }
 
         redirect("clients/detail/$serial#tab_gsx-tab");
@@ -62,7 +60,6 @@ class gsx_controller extends Module_controller
         
         $gsx = new gsx_model;
         $obj->view('json', array('msg' =>$gsx->getGSXSupportStats()));
-
     }
     
     /**

@@ -94,7 +94,6 @@ class Reportdata_model extends Model
             } else {
                 $out[$obj->machine_group] = $obj->machine_group;
             }
-
         }
 
         return $out;

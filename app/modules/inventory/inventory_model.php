@@ -97,7 +97,6 @@ class Inventory_model extends Model
             $match
         );
         return $this->query($sql, $app);
-
     }
     
     function process($data)

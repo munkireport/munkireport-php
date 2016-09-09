@@ -69,8 +69,6 @@ class Migration_network_model_fix_ipv4router extends Model
 
         // Commit changes
         $dbh->commit();
-
-
     }// End function up()
 
     public function down()

@@ -161,7 +161,6 @@ class report extends Controller
             // All models should be part of a module
             if (substr($name, -6) == '_model') {
                 $module = substr($name, 0, -6);
-                
             } else // Legacy clients
             {
                 $module = $name;
@@ -195,7 +194,6 @@ class report extends Controller
             }
 
             try {
-                
                 $class->process($val['data']);
         
                 // Store hash
@@ -203,7 +201,6 @@ class report extends Controller
                 $hash->hash = $val['hash'];
                 $hash->timestamp = time();
                 $hash->save();
-                   
             } catch (Exception $e) {
                 $this->msg("An error occurred while processing: $classname");
                 $this->msg("Error: " . $e->getMessage());
@@ -218,7 +215,6 @@ class report extends Controller
                 // Remove alert from array
                 unset($GLOBALS['alerts'][$type]);
             }
-
         }
     }
 

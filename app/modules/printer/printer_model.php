@@ -24,7 +24,6 @@ class Printer_model extends Model
         }
         
         $this->serial = $serial;
-          
     }
     
     
@@ -84,9 +83,7 @@ class Printer_model extends Model
         foreach (explode("\n", $data) as $line) {
             // Translate standard entries
             foreach ($translate as $search => $field) {
-                
                 if (strpos($line, $search) === 0) {
-                    
                     $value = substr($line, strlen($search));
                     
                     $this->$field = $value;
@@ -99,11 +96,9 @@ class Printer_model extends Model
                     break;
                 }
             }
-            
         } //end foreach explode lines
         
         
     //	throw new Exception("Error Processing Request", 1);
-        
     }
 }

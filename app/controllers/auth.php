@@ -34,7 +34,6 @@ class auth extends Controller
         if (func_get_args()) {
             $return_parts = func_get_args();
             $return = implode('/', $return_parts);
-
         }
         
         if ($this->authorized()) {

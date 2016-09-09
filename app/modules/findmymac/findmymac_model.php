@@ -23,7 +23,6 @@ class findmymac_model extends Model
         }
         
         $this->serial = $serial;
-            
     }
     
     // ------------------------------------------------------------------------
@@ -46,24 +45,21 @@ class findmymac_model extends Model
                     'hostname = ' => 'hostname');
 
         //clear any previous data we had
-                foreach ($translate as $search => $field) {
-                    $this->$field = '';
-                }
+        foreach ($translate as $search => $field) {
+            $this->$field = '';
+        }
         // Parse data
-                foreach (explode("\n", $data) as $line) {
-                        // Translate standard entries
-                    foreach ($translate as $search => $field) {
-                    
-                        if (strpos($line, $search) === 0) {
+        foreach (explode("\n", $data) as $line) {
+        // Translate standard entries
+            foreach ($translate as $search => $field) {
+                if (strpos($line, $search) === 0) {
+                    $value = substr($line, strlen($search));
                         
-                            $value = substr($line, strlen($search));
-                        
-                            $this->$field = $value;
-                            break;
-                        }
-                    }
-                
-                } //end foreach explode lines
+                    $this->$field = $value;
+                    break;
+                }
+            }
+        } //end foreach explode lines
 
                 $this->save();
     }

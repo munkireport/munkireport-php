@@ -35,7 +35,6 @@ class findmymac_controller extends Module_controller
                       COUNT(CASE WHEN `status` = 'Disabled' THEN 1 END) AS Disabled
                       FROM findmymac";
         $obj->view('json', array('msg' => current($queryobj->query($sql))));
-
     }
     
   /**

@@ -73,7 +73,6 @@ class Migration_machine_osversion_integer extends Model
                         if (! $changed) {
                             throw new Exception('Could not create temporary table as machine table is in an unknown state.');
                         }
-
                     }
 
                     // Create temp table in correct format

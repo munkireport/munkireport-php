@@ -43,6 +43,5 @@ class Displays_info_controller extends Module_controller
         
         $dim = new Displays_info_model();
         $obj->view('json', array('msg' => $dim->get_count($type)));
-
     }
 } // END class default_module

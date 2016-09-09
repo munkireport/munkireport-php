@@ -56,7 +56,6 @@ class wifi_controller extends Module_controller
         
         $wifi = new wifi_model;
         $obj->view('json', array('msg' =>$wifi->get_wifi_state()));
-
     }
     
     /**
@@ -76,7 +75,6 @@ class wifi_controller extends Module_controller
         
         $wifi = new wifi_model;
         $obj->view('json', array('msg' => $wifi->get_wifi_name()));
-
     }
 
     /**

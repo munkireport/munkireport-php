@@ -57,7 +57,6 @@ class Deploystudio_model extends Model
         $this->serial_number = $serial;
         
         $this->module_dir = dirname(__FILE__);
-          
     }
 
      /**

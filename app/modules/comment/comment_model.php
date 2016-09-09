@@ -25,6 +25,5 @@ class Comment_model extends Model
         
         // Create table if it does not exist
         $this->create_table();
-                  
     }
 }

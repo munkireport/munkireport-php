@@ -65,8 +65,6 @@ class Migration_multiple_disks_addition extends Model
         $this->idx[] = array('MountPoint');
         $this->idx[] = array('VolumeName');
         $this->set_indexes();
-
-
     }// End function up()
 
     public function down()

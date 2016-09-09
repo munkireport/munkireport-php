@@ -59,7 +59,6 @@ class system extends Controller
         // Get size
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
     
     //===============================================================

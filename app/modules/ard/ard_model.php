@@ -31,7 +31,6 @@ class Ard_model extends Model
         }
         
         $this->serial = $serial;
-          
     }
 
     function process($data)

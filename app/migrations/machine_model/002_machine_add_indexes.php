@@ -29,8 +29,6 @@ class Migration_machine_add_indexes extends Model
 
         // Commit changes
         $dbh->commit();
-
-
     }// End function up()
 
     public function down()
@@ -53,7 +51,6 @@ class Migration_machine_add_indexes extends Model
 
             default:
                 $sql = 'UNKNOWN DRIVER';
-                
         }
 
         // Wrap in transaction

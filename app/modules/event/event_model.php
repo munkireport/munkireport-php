@@ -72,7 +72,6 @@ class Event_model extends Model
         $stmt = $this->prepare($sql);
 
         return $stmt->execute($where_params);
-
     }
     
     /**
@@ -101,6 +100,5 @@ class Event_model extends Model
      **/
     function danger($module, $msg)
     {
-
     }
 } // END class

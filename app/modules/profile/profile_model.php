@@ -29,7 +29,6 @@ class Profile_model extends Model
         }
         
         $this->serial = $serial;
-          
     }
     // ------------------------------------------------------------------------
     /**
@@ -82,19 +81,15 @@ class Profile_model extends Model
                     $this->save(); //the actual save
                     $this->profile_uuid = null; //unset the display s/n to avoid writing twice if multiple separators are passed
                     break;
-
                 } elseif (strpos($line, $search) === 0) { //else if not separator and matches
                     $value = substr($line, strlen($search)); //get the current value
                     $this->$field = $value;
                     break;
                 }
-
             } //end foreach translate
 
          //timestamp added by the server
             $this->timestamp = time();
-
         } //end foreach explode lines
-        
     }
 }

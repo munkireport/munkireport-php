@@ -26,7 +26,6 @@ class Warranty_model extends Model
         }
         
         $this->serial_number = $serial;
-          
     }
     
     /**
@@ -132,7 +131,6 @@ class Warranty_model extends Model
             default:
                 // Unknown status
                 alert('warranty: unknown status: '.$this->status, 'warning');
-
         }
         $this->check_status($force = true);
 

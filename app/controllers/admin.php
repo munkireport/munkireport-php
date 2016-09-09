@@ -106,7 +106,6 @@ class admin extends Controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 
     //===============================================================
@@ -134,7 +133,6 @@ class admin extends Controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 
     //===============================================================
@@ -211,7 +209,6 @@ class admin extends Controller
                 // Set new machine_groups to list
                 $_POST['machine_groups'] = $groups;
                 unset($_POST['iteminfo']);
-
             }
             foreach ($_POST as $property => $val) {
             // Skip unitid
@@ -253,18 +250,14 @@ class admin extends Controller
                         $business_unit->save();
                         $out[$property][] = is_numeric($entry) ? 0 + $entry : $entry;
                     }
-
-
                 }
             }
-
         } else {
             $out['error'] = 'Unitid missing';
         }
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 
     //===============================================================
@@ -286,8 +279,6 @@ class admin extends Controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
-
     }
 
     //===============================================================

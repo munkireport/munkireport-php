@@ -83,7 +83,6 @@ class Machine_group extends Model
             }
 
             $out[$obj->groupid]['groupid'] = intval($obj->groupid);
-
         }
 
         if (! isset($obj)) {
@@ -95,6 +94,5 @@ class Machine_group extends Model
         } else {
             return array_values($out);
         }
-        
     }
 }

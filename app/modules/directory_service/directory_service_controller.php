@@ -42,7 +42,6 @@ class Directory_service_controller extends Module_controller
         
         $dm = new Directory_service_model();
         $obj->view('json', array('msg' => $dm->get_bound_stats()));
-        
     }
 
     /**
@@ -61,6 +60,5 @@ class Directory_service_controller extends Module_controller
         
         $dm = new Directory_service_model();
         $obj->view('json', array('msg' => $dm->get_modified_computernames()));
-        
     }
 } // END class default_module

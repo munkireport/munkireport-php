@@ -13,7 +13,6 @@ class Inventory_controller extends Module_controller
     {
         
         echo "You've loaded the inventory module!";
-    
     }
     
     /**
@@ -31,7 +30,6 @@ class Inventory_controller extends Module_controller
         $inventory_item_obj = new Inventory_model();
         $obj = new View();
         $obj->view('json', array('msg' => $inventory_item_obj->appVersions($app)));
-
     }
 
     // Todo: move expensive data objects to view
@@ -78,7 +76,6 @@ class Inventory_controller extends Module_controller
                 $instance['path'] = $item->path;
                 $data['inventory_items'][] = $instance;
             }
-            
         }
 
         $obj = new View();

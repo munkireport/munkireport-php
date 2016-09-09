@@ -23,7 +23,6 @@ class Crashplan_model extends Model
         
         // Create table if it does not exist
         $this->create_table();
-                  
     }
 
     // ------------------------------------------------------------------------
@@ -84,7 +83,6 @@ class Crashplan_model extends Model
         } else {
             $this->delete_event();
         }
-    
     } // end process()
     
     /**

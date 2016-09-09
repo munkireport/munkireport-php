@@ -96,7 +96,6 @@ class Machine_controller extends Module_controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 
     /**
@@ -135,7 +134,6 @@ class Machine_controller extends Module_controller
                 foreach ($tmp as $mem => $memcnt) {
                     $out[] = array('physical_memory' => $mem, 'count' => $memcnt);
                 }
-
         }
 
         $obj = new View();

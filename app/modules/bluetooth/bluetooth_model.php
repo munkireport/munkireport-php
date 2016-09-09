@@ -22,7 +22,6 @@ class Bluetooth_model extends Model
         $this->create_table();
         
         $this->$serial = $serial;
-
     }
     
     /**
@@ -86,6 +85,5 @@ class Bluetooth_model extends Model
             $this->id = '';
             $this->save();
         }
-
     }
 }

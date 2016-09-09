@@ -54,7 +54,6 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                     $dbh->exec($sql);
 
                     $dbh->commit();
-
                 } catch (Exception $e) {
                     $dbh->rollBack();
                     $this->errors .= "Failed: " . $e->getMessage();
@@ -78,7 +77,6 @@ class Migration_bluetooth_model_columns_to_integers extends Model
             default:
                 # code...
                 break;
-
         }//end switch
     }// End function up()
 
@@ -135,7 +133,6 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                     $dbh->exec($sql);
 
                     $dbh->commit();
-
                 } catch (Exception $e) {
                     $dbh->rollBack();
                     $this->errors .= "Failed: " . $e->getMessage();
@@ -185,7 +182,5 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                 # code...
                 break;
         }
-        
-
     }
 }

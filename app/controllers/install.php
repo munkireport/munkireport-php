@@ -38,7 +38,6 @@ class install extends Controller
                 break;
             default:
                 echo implode("\n", $modules);
-
         }
     }
 
@@ -62,7 +61,6 @@ class install extends Controller
             if (is_file(conf('module_path').$module.'/scripts/install.sh')) {
                 $modules[] = $module;
             }
-            
         }
 
         return $modules;
@@ -134,7 +132,6 @@ class install extends Controller
         // new content modified, so output content
         echo $content;
         exit;
-        
     }
 
     function plist()

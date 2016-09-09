@@ -59,6 +59,5 @@ class datatables extends Controller
                 'draw' => intval($cfg['draw'])
             ));
         }
-
     }
 }

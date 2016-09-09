@@ -13,7 +13,6 @@ class Migration_inventoryitem_rename_serialcolumn extends Model
     function __construct()
     {
         parent::__construct('id', 'inventoryitem'); //primary key, tablename
-
     }
 
     /**
@@ -57,7 +56,6 @@ class Migration_inventoryitem_rename_serialcolumn extends Model
                     $this->set_indexes($sql);
                     
                     $dbh->commit();
-
                 } catch (Exception $e) {
                     $dbh->rollBack();
                     $this->errors .= "Failed: " . $e->getMessage();
@@ -75,11 +73,7 @@ class Migration_inventoryitem_rename_serialcolumn extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER", 1);
-                
         }
-
-
-
     }// End function up()
 
     /**
@@ -124,7 +118,6 @@ class Migration_inventoryitem_rename_serialcolumn extends Model
 
                     
                     $dbh->commit();
-
                 } catch (Exception $e) {
                     $dbh->rollBack();
                     $this->errors .= "Failed: " . $e->getMessage();
@@ -142,8 +135,6 @@ class Migration_inventoryitem_rename_serialcolumn extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER", 1);
-                
         }
-
     }
 }

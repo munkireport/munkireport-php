@@ -63,7 +63,6 @@ class Business_unit extends Model
             }
 
             $out[$obj->unitid]['unitid'] = $obj->unitid;
-
         }
 
         if ($unitid && $out) {
@@ -71,8 +70,6 @@ class Business_unit extends Model
         } else {
             return array_values($out);
         }
-        
-        
     }
 
     /**

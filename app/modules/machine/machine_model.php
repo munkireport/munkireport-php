@@ -60,7 +60,6 @@ class Machine_model extends Model
         }
 
         $this->serial = $serial;
-
     }
     
     /**
@@ -85,7 +84,6 @@ class Machine_model extends Model
         }
         
         return $out;
-    
     }
     
     /**

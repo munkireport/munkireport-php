@@ -47,6 +47,5 @@ class Hash extends Model
             $out[$obj->name] = $obj->hash;
         }
         return $out;
-        
     }
 }

@@ -100,7 +100,6 @@ class Comment_controller extends Module_controller
      **/
     function update()
     {
-
     }
 
     /**
@@ -109,6 +108,5 @@ class Comment_controller extends Module_controller
      **/
     function delete()
     {
-
     }
 } // END class Certificate_controller

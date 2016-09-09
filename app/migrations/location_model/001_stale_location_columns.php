@@ -110,6 +110,5 @@ class Migration_stale_location_columns extends Model
                 # code here...
                 break;
         }
-
     }
 }

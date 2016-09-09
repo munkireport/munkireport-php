@@ -19,7 +19,6 @@ class Migration_directory_service_fix_indexes extends Model
         $this->idx[] = array('which_directory_service');
         $this->idx[] = array('directory_service_comments');
         $this->idx[] = array('allowedadmingroups');
-
     }
 
     /**
@@ -62,13 +61,10 @@ class Migration_directory_service_fix_indexes extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER");
-                
         }
 
         // Call set indexes()
         $this->set_indexes($sql);
-
-
     }// End function up()
 
     /**

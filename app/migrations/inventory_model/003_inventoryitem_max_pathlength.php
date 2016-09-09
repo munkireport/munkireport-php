@@ -13,7 +13,6 @@ class Migration_inventoryitem_max_pathlength extends Model
     function __construct()
     {
         parent::__construct('id', 'inventoryitem'); //primary key, tablename
-
     }
 
     /**
@@ -39,11 +38,7 @@ class Migration_inventoryitem_max_pathlength extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER", 1);
-                
         }
-
-
-
     }// End function up()
 
     /**
@@ -68,8 +63,6 @@ class Migration_inventoryitem_max_pathlength extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER", 1);
-                
         }
-
     }
 }

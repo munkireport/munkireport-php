@@ -15,7 +15,6 @@ class clients extends Controller
 
         $obj = new View();
         $obj->view('client/client_list', $data);
-    
     }
 
     /**
@@ -72,8 +71,6 @@ class clients extends Controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
-
     }
     
     // ------------------------------------------------------------------------
@@ -100,7 +97,6 @@ class clients extends Controller
         } else {
             $obj->view("client/client_detail", $data);
         }
-        
     }
 
     // ------------------------------------------------------------------------

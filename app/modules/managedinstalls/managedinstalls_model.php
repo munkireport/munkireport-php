@@ -36,7 +36,6 @@ class managedinstalls_model extends Model
                 $this->serial_number = $serial_number;
             }
         }
-            
     }
     
     /**
@@ -122,7 +121,6 @@ class managedinstalls_model extends Model
             GROUP BY m.status, m.name, m.display_name, m.version
             ORDER BY m.version DESC";
         return $this->query($sql, $bindings);
-            
     }
     // ------------------------------------------------------------------------
     
@@ -212,7 +210,6 @@ class managedinstalls_model extends Model
         
         # Loop through list
         foreach ($mylist as $name => $props) {
-            
             // Get an instance of the fillable array
             $temp = $fillable;
             
@@ -246,7 +243,6 @@ class managedinstalls_model extends Model
             if ($this->status == 'install_succeeded') {
                 $new_installs[] = $temp;
             }
-
         }
         
         // Store apropriate event:
@@ -263,7 +259,5 @@ class managedinstalls_model extends Model
                 json_encode($msg)
             );
         }
-
-
     }
 }

@@ -35,7 +35,6 @@ function get_gsx_stats(&$gsx_model)
         $result = $gsx->warrantyStatus($gsx_model->serial_number, $sold_to);
     } // Catch errors
     catch (Exception $e) {
-        
         // If obsolete, process and run stock warranty lookup
         if ($e->getMessage() === "The serial number entered has been marked as obsolete. If you feel this is in error, please verify and re-enter the serial number.") {
         // Load warranty_helper and run stock warranty functions

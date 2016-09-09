@@ -15,7 +15,6 @@ class Migration_bluetooth_all_devices_in_seperate_db_row extends Model
 
         $sql = "DROP table bluetooth";
         $dbh->exec($sql);
-
     }// End function up()
 
     public function down()

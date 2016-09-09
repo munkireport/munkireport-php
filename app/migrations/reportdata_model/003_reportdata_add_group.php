@@ -13,7 +13,6 @@ class Migration_reportdata_add_group extends Model
         $this->idx[] = array('remote_ip');
         $this->idx[] = array('reg_timestamp');
         $this->idx[] = array('timestamp');
-
     }
 
     public function up()

@@ -12,7 +12,6 @@ class Migration_munkireport_add_unique_index extends Model
 
         $sql = 'CREATE UNIQUE INDEX serial_number ON munkireport (serial_number)';
         $this->exec($sql);
-
     }// End function up()
 
     public function down()
@@ -33,11 +32,9 @@ class Migration_munkireport_add_unique_index extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER");
-                
         }
 
         // Execute sql query
         $this->exec($sql);
-
     }
 }

@@ -21,7 +21,6 @@ class Localadmin_model extends Model
         }
         
         $this->serial = $serial;
-          
     }
     
     // ------------------------------------------------------------------------

@@ -69,7 +69,6 @@ class Legacy_munkireport
         }
         
         return $this;
-
     }
 
     /**
@@ -88,7 +87,6 @@ class Legacy_munkireport
             $this->install_list[$name] = $this->filter_item($item);
             $this->install_list[$name]['status'] = $status;
             $this->install_list[$name]['type'] = $item_type;
-            
         }
     }
     

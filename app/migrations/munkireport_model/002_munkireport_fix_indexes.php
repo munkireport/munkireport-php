@@ -30,7 +30,6 @@ class Migration_munkireport_fix_indexes extends Model
         $this->idx[] = array('pendingremovals');
         $this->idx[] = array('itemstoinstall');
         $this->idx[] = array('appleupdates');
-
     }
 
     /**
@@ -73,13 +72,10 @@ class Migration_munkireport_fix_indexes extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER", 1);
-                
         }
 
         // Call set indexes()
         $this->set_indexes($sql);
-
-
     }// End function up()
 
     /**

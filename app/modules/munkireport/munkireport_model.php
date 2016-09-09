@@ -42,7 +42,6 @@ class Munkireport_model extends Model
                 $this->serial_number = $serial_number;
             }
         }
-
     }
     
     /**
@@ -188,7 +187,6 @@ class Munkireport_model extends Model
         
         // Legacy support: check if we got an old style report
         if (array_key_exists('ManagedInstalls', $mylist)) {
-            
             // Load legacy support TODO: use autoloader
             include_once(APP_PATH . '/lib/munkireport/Legacy_munkireport.php');
             $legacyObj = new munkireport\Legacy_munkireport;
@@ -212,10 +210,7 @@ class Munkireport_model extends Model
                 $hashObj->name = 'managedinstalls';
                 $hashObj->hash = $myHash;
                 $hashObj->save();
-                
             }
-            
-
         }
 
         

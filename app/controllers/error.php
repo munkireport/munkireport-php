@@ -3,7 +3,6 @@ class error extends Controller
 {
     function __construct()
     {
-
     }
 
     /**
@@ -16,6 +15,5 @@ class error extends Controller
         $obj = new View();
 
         $obj->view('error/client_error', $data);
-        
     }
 }

@@ -64,7 +64,6 @@ class Disk_report_controller extends Module_controller
                 $out['stats'] = $disk_report->get_filevault_stats($mount_point);
 
         $obj->view('json', array('msg' => $out));
-
     }
 
     /**
@@ -92,7 +91,6 @@ class Disk_report_controller extends Module_controller
                 );
 
                 $obj->view('json', array('msg' => $out));
-
     }
     
     /**
@@ -112,6 +110,5 @@ class Disk_report_controller extends Module_controller
         
         $disk_report = new Disk_report_model;
         $obj->view('json', array('msg' =>$disk_report->getSmartStats()));
-
     }
 } // END class disk_report_module

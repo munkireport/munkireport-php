@@ -58,7 +58,6 @@ function check_warranty_status(&$warranty_model)
     }
 
     return $error;
-
 }
 
 /**
@@ -118,7 +117,6 @@ function model_description_lookup($serial)
     }
 
     return 'unknown_model';
-
 }
 
 /**
@@ -160,7 +158,6 @@ function get_url($url, $options = array())
 
     $context = stream_context_create($context_options);
     return @file_get_contents($url, false, $context);
-
 }
 
 /**
@@ -196,9 +193,7 @@ function add_proxy_server(&$context_options)
 
         // Add authentication header
         $context_options['http']['header'] .= "Proxy-Authorization: Basic $auth\r\n";
-
     }
 
     return true;
-
 }

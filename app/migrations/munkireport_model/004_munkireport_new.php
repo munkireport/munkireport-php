@@ -91,13 +91,10 @@ class Migration_munkireport_new extends Model
                     WHERE report_plist != ''";
             $resultset = $this->query($sql);
             $count = $resultset[0]->count;
-
-            
         } catch (Exception $e) {
             // report_plist not found?
             // we're done..
             return;
-            
         }
         
 
@@ -192,16 +189,12 @@ class Migration_munkireport_new extends Model
             // Rename temp table
             $sql = "ALTER TABLE munkireport_temp RENAME TO munkireport";
             $this->exec($sql);
-
         }
 
         // Commit transaction
         $dbh->commit();
 
         //throw new Exception("Error Processing Request", 1);
-
-
-
     }// End function up()
 
     /**

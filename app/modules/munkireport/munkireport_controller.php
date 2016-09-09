@@ -93,6 +93,5 @@ class Munkireport_controller extends Module_controller
         
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 } // END class default_module

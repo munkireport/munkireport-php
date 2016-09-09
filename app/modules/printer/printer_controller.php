@@ -65,6 +65,5 @@ class Printer_controller extends Module_controller
         
         $printers = new Printer_model;
         $obj->view('json', array('msg' => $printers->get_printers()));
-
     }
 } // END class default_module

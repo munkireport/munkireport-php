@@ -51,7 +51,6 @@ class Migration_cleanup_hash_table extends Model
             $this->errors .= "Failed: " . $e->getMessage();
             return false;
         }
-
     }// End function up()
 
     public function down()

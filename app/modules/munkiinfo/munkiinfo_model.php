@@ -24,7 +24,6 @@ class munkiinfo_model extends Model
           
             $this->serial = $serial;
         }
-
     }
 
   /**
@@ -51,7 +50,6 @@ class munkiinfo_model extends Model
 
                 $this->id = '';
                 $this->save();
-
         }
     }
 }

@@ -47,14 +47,12 @@ class ArrayToPlist
         
         //echo "$parent\n";
         foreach ($item as $key => $value) {
-            
             if (is_scalar($value)) {
                 if ($parent == 'CFDictionary') {
                     $dict->add($key, $this->typeValue($value));
                 } else {
                     $dict->add($this->typeValue($value));
                 }
-                
             } else {
                 if ($this->has_string_keys($value)) {
                     if ($parent == 'CFArray') {

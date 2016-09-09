@@ -31,7 +31,6 @@ class Displays_info_model extends Model
         }
 
         $this->serial = $serial;
-
     } //end construct
     
     /**
@@ -79,7 +78,6 @@ class Displays_info_model extends Model
         foreach (explode("\n", $data) as $line) {
           // Translate standard entries
             foreach ($translate as $search => $field) {
-
               //the separator is what triggers the save for each display
               //making sure we have a valid s/n.
                 if ((strpos($line, '----------') === 0) && ($this->display_serial)) {
@@ -92,7 +90,6 @@ class Displays_info_model extends Model
                     $this->save(); //the actual save
                     $this->display_serial = null; //unset the display s/n to avoid writing twice if multiple separators are passed
                     break;
-
                 } elseif (strpos($line, $search) === 0) { //else if not separator and matches
                     $value = substr($line, strlen($search)); //get the current value
                   // use bool for Type
@@ -107,13 +104,10 @@ class Displays_info_model extends Model
                     $this->$field = $value;
                     break;
                 }
-
             } //end foreach translate
 
         //timestamp added by the server
             $this->timestamp = time();
-
         } //end foreach explode lines
-
     } //process function end
 } // Displays_info_model end

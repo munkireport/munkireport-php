@@ -18,7 +18,6 @@ class Migration_network_fix_indexes extends Model
         // Set indexes
         $this->idx[] = array('serial_number');
         $this->idx[] = array('serial_number', 'service');
-
     }
 
     /**
@@ -61,13 +60,10 @@ class Migration_network_fix_indexes extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER", 1);
-                
         }
 
         // Call set indexes()
         $this->set_indexes($sql);
-
-
     }// End function up()
 
     /**

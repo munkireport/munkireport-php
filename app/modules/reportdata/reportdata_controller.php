@@ -15,7 +15,6 @@ class Reportdata_controller extends Module_controller
         }
 
         header('Access-Control-Allow-Origin: *');
-
     }
 
     function index()
@@ -93,7 +92,6 @@ class Reportdata_controller extends Module_controller
                 break;
             default:
                 die('Unknown database driver');
-
         }
         //echo $sql;
         $dates = array();
@@ -176,6 +174,5 @@ class Reportdata_controller extends Module_controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
-
     }
 } // END class Reportdata_controller

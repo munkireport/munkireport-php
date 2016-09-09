@@ -18,7 +18,6 @@ class Migration_filevault_status_fix_indexes extends Model
         // Set indexes
         $this->idx[] = array('filevault_status');
         $this->idx[] = array('filevault_users');
-
     }
 
     /**
@@ -61,13 +60,10 @@ class Migration_filevault_status_fix_indexes extends Model
 
             default:
                 throw new Exception("UNKNOWN DRIVER");
-                
         }
 
         // Call set indexes()
         $this->set_indexes($sql);
-
-
     }// End function up()
 
     /**

@@ -31,7 +31,6 @@ class Disk_report_model extends Model
 
         // Create table if it does not exist
         $this->create_table();
-
     }
     
     /**
@@ -183,9 +182,7 @@ class Disk_report_model extends Model
                 } else {
                     $this->store_event($type, $msg, $data);
                 }
-
             }
-            
         }
     }
 }

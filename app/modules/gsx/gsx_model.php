@@ -42,7 +42,6 @@ class gsx_model extends Model
         }
         
         $this->serial_number = $serial;
-
     }
     
     /**
