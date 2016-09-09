@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Certificate_controller class
@@ -8,33 +8,32 @@
  **/
 class Certificate_controller extends Module_controller
 {
-	function __construct()
-	{
-		$this->module_path = dirname(__FILE__);
-	}
+    function __construct()
+    {
+        $this->module_path = dirname(__FILE__);
+    }
 
-	/**
-	 * Default method
-	 *
-	 * @author AvB
-	 **/
-	function index()
-	{
-		echo "You've loaded the certificate report module!";
-	}
+    /**
+     * Default method
+     *
+     * @author AvB
+     **/
+    function index()
+    {
+        echo "You've loaded the certificate report module!";
+    }
 
-	/**
+    /**
      * Retrieve data in json format
      *
      * @return void
-     * @author 
+     * @author
      **/
     function get_data($serial_number = '')
     {
         $obj = new View();
 
-        if( ! $this->authorized())
-        {
+        if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
@@ -51,8 +50,7 @@ class Certificate_controller extends Module_controller
     {
         $obj = new View();
 
-        if( ! $this->authorized())
-        {
+        if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
@@ -60,5 +58,4 @@ class Certificate_controller extends Module_controller
         $cert = new Certificate_model;
         $obj->view('json', array('msg' => $cert->get_stats()));
     }
-
 } // END class Certificate_controller

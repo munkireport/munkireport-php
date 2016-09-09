@@ -2,75 +2,69 @@
 
 // Add indexes to searchable fields in machine
 
-class Migration_machine_add_indexes extends Model 
+class Migration_machine_add_indexes extends Model
 {
-	
-	private $fields = array('hostname', 'machine_model', 'machine_desc', 
-			'current_processor_speed', 'cpu_arch', 'os_version', 
-			'physical_memory', 'platform_UUID', 'number_processors', 
-			'SMC_version_system', 'boot_rom_version', 'bus_speed', 
-			'computer_name', 'l2_cache', 'machine_name', 'packages');
-	
-	public function up()
-	{
-		// Get database handle
-		$dbh = $this->getdbh();
+    
+    private $fields = array('hostname', 'machine_model', 'machine_desc',
+            'current_processor_speed', 'cpu_arch', 'os_version',
+            'physical_memory', 'platform_UUID', 'number_processors',
+            'SMC_version_system', 'boot_rom_version', 'bus_speed',
+            'computer_name', 'l2_cache', 'machine_name', 'packages');
+    
+    public function up()
+    {
+        // Get database handle
+        $dbh = $this->getdbh();
 
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		// Wrap in transaction
-		$dbh->beginTransaction();
+        // Wrap in transaction
+        $dbh->beginTransaction();
 
-		foreach($this->fields as $field)
-		{
-			$sql = "CREATE INDEX machine_$field ON machine ($field)";
-			$this->exec($sql);
-		}
-
-
-		// Commit changes
-		$dbh->commit();
+        foreach ($this->fields as $field) {
+            $sql = "CREATE INDEX machine_$field ON machine ($field)";
+            $this->exec($sql);
+        }
 
 
-	}// End function up()
+        // Commit changes
+        $dbh->commit();
 
-	public function down()
-	{
-		// Get database handle
-		$dbh = $this->getdbh();
 
-		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }// End function up()
 
-		switch ($this->get_driver())
-		{
-			case 'sqlite':
+    public function down()
+    {
+        // Get database handle
+        $dbh = $this->getdbh();
 
-				$sql = 'DROP INDEX machine_%s';
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-				break;
+        switch ($this->get_driver()) {
+            case 'sqlite':
+                $sql = 'DROP INDEX machine_%s';
 
-			case 'mysql':
+                break;
 
-				$sql = 'DROP INDEX machine_%s ON munkireport';
+            case 'mysql':
+                $sql = 'DROP INDEX machine_%s ON munkireport';
 
-				break;
+                break;
 
-			default:
+            default:
+                $sql = 'UNKNOWN DRIVER';
+                
+        }
 
-				$sql = 'UNKNOWN DRIVER';
-				
-		}
+        // Wrap in transaction
+        $dbh->beginTransaction();
 
-		// Wrap in transaction
-		$dbh->beginTransaction();
+        foreach ($this->fields as $field) {
+            $sql = sprintf($sql, $field);
+            $this->exec($sql);
+        }
 
-		foreach($this->fields as $field)
-		{
-			$sql = sprintf($sql, $field);
-			$this->exec($sql);
-		}
-
-		// Commit changes
-		$dbh->commit();
-	}
+        // Commit changes
+        $dbh->commit();
+    }
 }

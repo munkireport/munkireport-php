@@ -4,10 +4,9 @@ class Migration_munkireport_bigger_blob extends Model
 {
     public function up()
     {
-        if ($this->get_driver() == 'mysql')
-        {
+        if ($this->get_driver() == 'mysql') {
             $sql = 'ALTER TABLE `munkireport` CHANGE `report_plist` `report_plist` MEDIUMBLOB  NULL';
-            $this->exec($sql); 
+            $this->exec($sql);
         }
 
     }// End function up()
@@ -20,11 +19,9 @@ class Migration_munkireport_bigger_blob extends Model
      **/
     public function down()
     {
-        if ($this->get_driver() == 'mysql')
-        {
+        if ($this->get_driver() == 'mysql') {
             $sql = 'ALTER TABLE `munkireport` CHANGE `report_plist` `report_plist` BLOB  NULL';
-            $this->exec($sql); 
+            $this->exec($sql);
         }
     }
-
 }

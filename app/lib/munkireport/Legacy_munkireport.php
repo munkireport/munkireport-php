@@ -8,9 +8,10 @@ namespace munkireport;
  * Converts standard ManagedInstalls plist to something
  * used in 004_munkireport_new migration and munkireport_model
  *
- * 
+ *
  */
-class Legacy_munkireport {
+class Legacy_munkireport
+{
     
     private $install_list = array();
     
@@ -39,31 +40,31 @@ class Legacy_munkireport {
     public function parse(&$report)
     {
         
-        if(isset($report['ManagedInstalls'])){
+        if (isset($report['ManagedInstalls'])) {
             $this->add_items($report['ManagedInstalls'], 'installed', 'munki');
         }
-        if(isset($report['AppleUpdates'])){
+        if (isset($report['AppleUpdates'])) {
             $this->add_items($report['AppleUpdates'], 'pending_install', 'applesus');
         }
-        if(isset($report['ProblemInstalls'])){
+        if (isset($report['ProblemInstalls'])) {
             $this->add_items($report['ProblemInstalls'], 'install_failed', 'munki');
         }
-        if(isset($report['ItemsToRemove'])){
+        if (isset($report['ItemsToRemove'])) {
             $this->add_items($report['ItemsToRemove'], 'pending_removal', 'munki');
         }
-        if(isset($report['ItemsToInstall'])){
+        if (isset($report['ItemsToInstall'])) {
             $this->add_items($report['ItemsToInstall'], 'pending_install', 'munki');
         }
         // Removed items
-        if(isset($report['RemovedItems'])){
+        if (isset($report['RemovedItems'])) {
             $this->add_removeditems($report['RemovedItems']);
         }
 
         // Update install_list with results
-        if(isset($report['RemovalResults'])){
+        if (isset($report['RemovalResults'])) {
             $this->remove_result($report['RemovalResults']);
         }
-        if(isset($report['InstallResults'])){
+        if (isset($report['InstallResults'])) {
             $this->install_result($report['InstallResults']);
         }
         
@@ -76,12 +77,11 @@ class Legacy_munkireport {
      */
     public function add_items($item_list, $status, $item_type)
     {
-        foreach($item_list as $item){
+        foreach ($item_list as $item) {
             // Check if applesus item
-            if(isset($item['productKey'])){
+            if (isset($item['productKey'])) {
                 $name = $item['productKey'];
-            }
-            else{
+            } else {
                 $name = $item['name'];
             }
             
@@ -93,26 +93,27 @@ class Legacy_munkireport {
     }
     
     // """Add removed item to list and set status"""
-    public function add_removeditems($item_list){
+    public function add_removeditems($item_list)
+    {
         
-        foreach($item_list as $item){
+        foreach ($item_list as $item) {
             $this->install_list[$item] = array('name' => $item, 'status' => 'removed',
                 'installed'=> 0, 'display_name'=> $item, 'type'=> 'munki');
         }
     }
     
     // """Update list according to result"""
-    public function remove_result($item_list){
+    public function remove_result($item_list)
+    {
         
-        foreach($item_list as $item){
+        foreach ($item_list as $item) {
             #install_list[item['name']]['time'] = item.time
             $listItem = &$this->install_list[$item['name']];
             
-            if ($item['status'] == 0){
+            if ($item['status'] == 0) {
                 $listItem['installed'] = false;
                 $listItem['status'] = 'uninstalled';
-            }
-            else{
+            } else {
                 $listItem['status'] = 'uninstall_failed';
             }
             // Sometimes an item is only in RemovalResults, so we have to add
@@ -122,47 +123,47 @@ class Legacy_munkireport {
             $listItem['type'] = 'munki';
             
             // Fix display name
-            if( ! isset($listItem['display_name'])){
+            if (! isset($listItem['display_name'])) {
                 $listItem['display_name'] = $item['display_name'];
             }
         }
     }
     
     // """Update list according to result"""
-    public function install_result($item_list){
-        foreach($item_list as $item){
+    public function install_result($item_list)
+    {
+        foreach ($item_list as $item) {
             #install_list[item['name']]['time'] = item.time
             
             // Check if applesus item
-            if(isset($item['productKey'])){
+            if (isset($item['productKey'])) {
                 $name = $item['productKey'];
                 // Store extra props
                 $this->install_list[$name]['display_name'] = $item['name'];
                 $this->install_list[$name]['version'] = $item['version'];
                 $this->install_list[$name]['type'] = 'applesus';
-            }
-            else{
+            } else {
                 $name = $item['name'];
             }
                 
-            if ($item['status'] == 0){
+            if ($item['status'] == 0) {
                 $this->install_list[$name]['installed'] = true;
                 $this->install_list[$name]['status'] = 'install_succeeded';
-            }
-            else{
+            } else {
                 $this->install_list[$name]['status'] = 'install_failed';
             }
         }
     }
     
     // """Only return specified keys"""
-    public function filter_item($item){
+    public function filter_item($item)
+    {
         $keys = array("display_name", "installed_version", "installed_size",
                 "version_to_install", "installed", "note");
 
         $out = array();
         foreach ($keys as $key) {
-            if(isset($item[$key])){
+            if (isset($item[$key])) {
                 $out[$key] = $item[$key];
             }
         }
