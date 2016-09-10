@@ -1,7 +1,7 @@
 <?php
 class install extends Controller
 {
-    function __construct()
+    public function __construct()
     {
     }
     
@@ -10,7 +10,7 @@ class install extends Controller
      *
      * @author Bochoven, A.E. van
      **/
-    function index()
+    public function index()
     {
         $this->modules();
     }
@@ -21,9 +21,9 @@ class install extends Controller
      * @param optional string format the output
      * @author
      **/
-    function dump_modules($format = '')
+    public function dump_modules($format = '')
     {
-        $modules = $this->_get_modules();
+        $modules = $this->get_modules();
 
         switch ($format) {
             case 'config':
@@ -46,7 +46,7 @@ class install extends Controller
      *
      * @author AvB
      **/
-    function _get_modules()
+    private function get_modules()
     {
         $modules = array();
 
@@ -71,7 +71,7 @@ class install extends Controller
      *
      * @author Bochoven, A.E. van
      **/
-    function modules()
+    public function modules()
     {
         
         $data['install_scripts'] = array();
@@ -134,7 +134,7 @@ class install extends Controller
         exit;
     }
 
-    function plist()
+    public function plist()
     {
         $obj = new View();
         $obj->view('install/install_plist');

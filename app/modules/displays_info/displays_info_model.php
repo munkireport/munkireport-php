@@ -3,7 +3,7 @@
 class Displays_info_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'displays'); //primary key, tablename
           $this->rs['id'] = '';
@@ -57,7 +57,7 @@ class Displays_info_model extends Model
      * @param string data
      * @author Noel B.A.
      **/
-    function process($data)
+    public function process($data)
     {
 
       // translate array used to match data to db fields

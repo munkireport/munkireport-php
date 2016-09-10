@@ -3,7 +3,7 @@
 class Reportdata_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'reportdata'); //primary key, tablename
         $this->rs['id'] = '';
@@ -49,7 +49,7 @@ class Reportdata_model extends Model
      * @return object this
      * @author AvB
      **/
-    function register()
+    public function register()
     {
         $this->remote_ip = getRemoteAddress();
         $this->timestamp = time();
@@ -75,7 +75,7 @@ class Reportdata_model extends Model
      * @return array machine_groups
      * @author AvB
      **/
-    function get_groups($count = false)
+    public function get_groups($count = false)
     {
         if ($count) {
             $out = array();
@@ -146,7 +146,7 @@ class Reportdata_model extends Model
     }
 
 
-    function process($plist)
+    public function process($plist)
     {
         // Check if uptime is set to determine this is a new client
         $new_client = $this->uptime ? false : true;

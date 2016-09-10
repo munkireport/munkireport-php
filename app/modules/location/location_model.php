@@ -5,7 +5,7 @@ class Location_model extends Model
     // Defaults array
     private $defaults = array();
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'location'); //primary key, tablename
         $this->rs['id'] = '';
@@ -75,7 +75,7 @@ class Location_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();

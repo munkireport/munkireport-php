@@ -8,7 +8,7 @@
  **/
 class Reportdata_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
@@ -17,7 +17,7 @@ class Reportdata_controller extends Module_controller
         header('Access-Control-Allow-Origin: *');
     }
 
-    function index()
+    public function index()
     {
         echo "You've loaded the Reportdata module!";
     }
@@ -27,7 +27,7 @@ class Reportdata_controller extends Module_controller
      *
      * @author
      **/
-    function get_groups()
+    public function get_groups()
     {
         $reportdata = new Reportdata_model();
         $obj = new View();
@@ -60,7 +60,7 @@ class Reportdata_controller extends Module_controller
      * REST API for retrieving registration dates
      *
      **/
-    function new_clients()
+    public function new_clients()
     {
         $reportdata = new Reportdata_model();
         new Machine_model();
@@ -121,7 +121,7 @@ class Reportdata_controller extends Module_controller
      * @return void
      * @author AvB
      **/
-    function ip()
+    public function ip()
     {
         $ip_arr = array();
         

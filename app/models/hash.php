@@ -3,7 +3,7 @@
 class Hash extends Model
 {
     
-    function __construct($serial = '', $name = '')
+    public function __construct($serial = '', $name = '')
     {
         parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
@@ -39,7 +39,7 @@ class Hash extends Model
      * @return array
      * @author abn290
      **/
-    function all($serial)
+    public function all($serial)
     {
         $dbh=$this->getdbh();
         $out = array();

@@ -10,7 +10,7 @@ class Munkireport_controller extends Module_controller
 {
     
     /*** Protect methods with auth! ****/
-    function __construct()
+    public function __construct()
     {
         // Store module path
         $this->module_path = dirname(__FILE__) .'/';
@@ -22,7 +22,7 @@ class Munkireport_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the munkireport module!";
     }
@@ -31,7 +31,7 @@ class Munkireport_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
 

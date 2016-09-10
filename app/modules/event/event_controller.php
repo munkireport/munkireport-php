@@ -8,7 +8,7 @@
  **/
 class Event_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             $out['items'] = array();
@@ -21,7 +21,7 @@ class Event_controller extends Module_controller
         }
     }
 
-    function index()
+    public function index()
     {
         echo "You've loaded the Event module!";
     }
@@ -31,7 +31,7 @@ class Event_controller extends Module_controller
      *
      * @author AvB
      **/
-    function get($minutes = 60, $type = 'all', $module = 'all', $limit = 0)
+    public function get($minutes = 60, $type = 'all', $module = 'all', $limit = 0)
     {
         $queryobj = new Event_model();
         $queryobj = new Reportdata_model();

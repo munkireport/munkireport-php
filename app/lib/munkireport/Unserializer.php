@@ -20,7 +20,7 @@ class Unserializer
         $this->str = $s;
     }
 
-    function await($symbol, $n = 1)
+    public function await($symbol, $n = 1)
     {
         #result = $this->take(len(symbol))
         $result = substr($this->str, $this->position, $n);
@@ -30,14 +30,14 @@ class Unserializer
         }
     }
     
-    function take($n = 1)
+    public function take($n = 1)
     {
         $result = substr($this->str, $this->position, $n);
         $this->position += $n;
         return $result;
     }
     
-    function take_while_not($stopsymbol, $typecast = '')
+    public function take_while_not($stopsymbol, $typecast = '')
     {
         
         $stopsymbol_position = strpos($this->str, $stopsymbol, $this->position);
@@ -53,12 +53,12 @@ class Unserializer
         return $result;
     }
 
-    function get_rest()
+    public function get_rest()
     {
         return substr($this->str, $this->position);
     }
 
-    function unserialize()
+    public function unserialize()
     {
                 
         $t = $this->take();
@@ -101,7 +101,7 @@ class Unserializer
         }
     }
 
-    function parse_hash_core($size)
+    public function parse_hash_core($size)
     {
         $result = array();
         $this->await('{');

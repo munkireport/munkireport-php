@@ -3,7 +3,7 @@
 class Inventory_model extends Model
 {
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'inventoryitem'); //primary key, tablename
         $this->rs['id'] = 0;
@@ -32,7 +32,7 @@ class Inventory_model extends Model
      * @return array
      * @author
      **/
-    function select_all()
+    public function select_all()
     {
         $sql = sprintf('SELECT name, version, COUNT(i.id) AS num_installs
             FROM %s i 
@@ -43,7 +43,7 @@ class Inventory_model extends Model
     }
     
     // Override for retrieveMany that takes machine groups into account
-    function retrieveMany($wherewhat = '', $bindings = '')
+    public function retrieveMany($wherewhat = '', $bindings = '')
     {
         $dbh = $this->getdbh();
         if (is_scalar($bindings)) {
@@ -99,7 +99,7 @@ class Inventory_model extends Model
         return $this->query($sql, $app);
     }
     
-    function process($data)
+    public function process($data)
     {
         //list of bundleids to ignore
         $bundleid_ignorelist = is_array(conf('bundleid_ignorelist')) ? conf('bundleid_ignorelist') : array();

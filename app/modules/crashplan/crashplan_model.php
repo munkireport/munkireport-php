@@ -2,7 +2,7 @@
 class Crashplan_model extends Model
 {
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'crashplan'); //primary key, tablename
         $this->rs['id'] = '';
@@ -32,7 +32,7 @@ class Crashplan_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
         // Delete previous entries
         $serial_number = $this->serial_number;
@@ -91,7 +91,7 @@ class Crashplan_model extends Model
      * @return void
      * @author
      **/
-    function get_stats($hours)
+    public function get_stats($hours)
     {
         $now = time();
         $today = $now - 3600 * 24;

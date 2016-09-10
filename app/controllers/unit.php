@@ -1,14 +1,14 @@
 <?php
 class unit extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             redirect('auth/login');
         }
     }
 
-    function index()
+    public function index()
     {
         $data = array('session' => $_SESSION);
 
@@ -33,7 +33,7 @@ class unit extends Controller
      *
      * @author
      **/
-    function get_data()
+    public function get_data()
     {
         $out = array();
 
@@ -55,7 +55,7 @@ class unit extends Controller
      *
      * @author
      **/
-    function get_machine_groups()
+    public function get_machine_groups()
     {
         $out = array();
 
@@ -95,7 +95,7 @@ class unit extends Controller
      *
      * @author
      **/
-    function set_filter()
+    public function set_filter()
     {
         $out = array();
 
@@ -152,7 +152,7 @@ class unit extends Controller
     }
 
 
-    function listing($which = '')
+    public function listing($which = '')
     {
         if ($which) {
             $data['page'] = 'clients';
@@ -167,7 +167,7 @@ class unit extends Controller
         $obj->view($view, $data);
     }
 
-    function reports($which = 'default')
+    public function reports($which = 'default')
     {
         if ($which) {
             $data['page'] = 'clients';

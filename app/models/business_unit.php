@@ -3,7 +3,7 @@
 class Business_unit extends Model
 {
     
-    function __construct($unitid = '', $property = '')
+    public function __construct($unitid = '', $property = '')
     {
         parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
@@ -38,7 +38,7 @@ class Business_unit extends Model
      * @return array
      * @author abn290
      **/
-    function all($unitid = '')
+    public function all($unitid = '')
     {
         $out = array();
         $where = $unitid ? 'unitid=?' : '';
@@ -78,7 +78,7 @@ class Business_unit extends Model
      * @return integer max unitid
      * @author AvB
      **/
-    function get_max_unitid()
+    public function get_max_unitid()
     {
         $sql = 'SELECT MAX(unitid) AS max FROM '.$this->enquote($this->tablename);
         $result = $this->query($sql);
@@ -91,7 +91,7 @@ class Business_unit extends Model
      * @return array machine group ids
      * @author
      **/
-    function get_machine_groups($id)
+    public function get_machine_groups($id)
     {
         $out = array();
         foreach ($this->retrieveMany('unitid=? AND property=?', array($id, 'machine_group')) as $obj) {

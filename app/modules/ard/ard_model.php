@@ -2,7 +2,7 @@
 class Ard_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'ard'); //primary key, tablename
         $this->rs['id'] = 0;
@@ -33,7 +33,7 @@ class Ard_model extends Model
         $this->serial = $serial;
     }
 
-    function process($data)
+    public function process($data)
     {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();

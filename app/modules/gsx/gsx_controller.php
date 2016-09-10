@@ -8,7 +8,7 @@
  **/
 class gsx_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         // No authentication, the client needs to get here
 
@@ -16,7 +16,7 @@ class gsx_controller extends Module_controller
         $this->module_path = dirname(__FILE__);
     }
 
-    function index()
+    public function index()
     {
         echo "You've loaded the GSX module!";
     }
@@ -27,7 +27,7 @@ class gsx_controller extends Module_controller
      * @return void
      * @author John Eberle
      **/
-    function recheck_gsx($serial = '')
+    public function recheck_gsx($serial = '')
     {
         // Authenticate
         if (! $this->authorized()) {
@@ -49,7 +49,7 @@ class gsx_controller extends Module_controller
      * @return void
      * @author John Eberle (tuxudo)
      **/
-    function get_GSX_Support_Stats()
+    public function get_GSX_Support_Stats()
     {
         $obj = new View();
 

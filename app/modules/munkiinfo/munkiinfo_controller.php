@@ -13,7 +13,7 @@ class munkiinfo_controller extends Module_controller
 
 
   /*** Protect methods with auth! ****/
-    function __construct()
+    public function __construct()
     {
       // Store module path
         $this->module_path = dirname(__FILE__);
@@ -24,7 +24,7 @@ class munkiinfo_controller extends Module_controller
    *
    * @author
    **/
-    function index()
+    public function index()
     {
         echo "You've loaded the munkiinfo module!";
     }
@@ -54,7 +54,7 @@ class munkiinfo_controller extends Module_controller
    *
    * @author erikng
    **/
-    function get_protocol_stats()
+    public function get_protocol_stats()
     {
 
         if (! $this->authorized()) {

@@ -1,14 +1,14 @@
 <?php
 class clients extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             redirect('auth/login');
         }
     }
 
-    function index()
+    public function index()
     {
         
         $data['page'] = 'clients';
@@ -22,7 +22,7 @@ class clients extends Controller
      *
      * @author AvB
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
         
@@ -59,7 +59,7 @@ class clients extends Controller
      *
      * @author
      **/
-    function get_links()
+    public function get_links()
     {
         $out = array();
         if (conf('vnc_link')) {
@@ -82,7 +82,7 @@ class clients extends Controller
      * @return void
      * @author abn290
      **/
-    function detail($sn = '')
+    public function detail($sn = '')
     {
         $data = array('serial_number' => $sn);
         $data['scripts'] = array("clients/client_detail.js");
@@ -108,7 +108,7 @@ class clients extends Controller
      * @return void
      * @author abn290
      **/
-    function show($view = '')
+    public function show($view = '')
     {
         $data['page'] = 'clients';
         // TODO: Check if view exists

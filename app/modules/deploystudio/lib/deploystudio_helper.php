@@ -11,7 +11,7 @@ class Deploystudio_helper
      * @author tuxudo (John Eberle)
      * Idea provided by @n8felton
      **/
-    function pull_deploystudio_data(&$deploystudio_model)
+    public function pull_deploystudio_data(&$deploystudio_model)
     {
         // Error message
         $error = '';
@@ -58,7 +58,7 @@ class Deploystudio_helper
      * @return mixed string if successfull, FALSE if failed
      * @author n8felton (Nathan Felton)
      **/
-    function get_deploystudio_url($url)
+    public function get_deploystudio_url($url)
     {
         $deploystudio_username = conf('deploystudio_username');
         $deploystudio_password = conf('deploystudio_password');
@@ -79,7 +79,7 @@ class Deploystudio_helper
      * @param UUID of DeployStudio workflow
      * @author n8felton (Nathan Felton)
      **/
-    function get_workflow_title($workflow_id)
+    public function get_workflow_title($workflow_id)
     {
         $deploystudio_server = conf('deploystudio_server');
         $url = "{$deploystudio_server}/workflows/get/entry?id={$workflow_id}";

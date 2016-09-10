@@ -20,7 +20,7 @@ class Bt_legacy_support
         $this->data = $data;
     }
     
-    function toArray()
+    public function toArray()
     {
         $out = array();
         

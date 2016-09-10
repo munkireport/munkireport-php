@@ -1,7 +1,7 @@
 <?php
 class system extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
@@ -119,7 +119,7 @@ class system extends Controller
      * @return void
      * @author
      **/
-    function show($which = '')
+    public function show($which = '')
     {
         if ($which) {
             $data['page'] = 'clients';

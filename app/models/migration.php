@@ -8,7 +8,7 @@
  **/
 class Migration extends Model
 {
-    function __construct($table_name = '')
+    public function __construct($table_name = '')
     {
         parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';

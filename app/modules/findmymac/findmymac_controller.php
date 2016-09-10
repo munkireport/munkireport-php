@@ -10,7 +10,7 @@ class findmymac_controller extends Module_controller
 {
     
     /*** Protect methods with auth! ****/
-    function __construct()
+    public function __construct()
     {
         // Store module path
         $this->module_path = dirname(__FILE__);
@@ -21,7 +21,7 @@ class findmymac_controller extends Module_controller
    *
    * @author clburlison
    **/
-    function get_stats()
+    public function get_stats()
     {
         $obj = new View();
         if (! $this->authorized()) {

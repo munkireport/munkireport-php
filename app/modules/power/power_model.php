@@ -1,7 +1,7 @@
 <?php
 class Power_model extends Model
 {
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'power'); //primary key, tablename
         $this->rs['id'] = '';
@@ -53,7 +53,7 @@ class Power_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
         // If data is empty, remove record
         if (! $data) {

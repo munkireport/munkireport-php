@@ -10,7 +10,7 @@ class Machine_controller extends Module_controller
 {
     
     /*** Protect methods with auth! ****/
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
@@ -26,7 +26,7 @@ class Machine_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the hardware module!";
     }
@@ -61,7 +61,7 @@ class Machine_controller extends Module_controller
      * @return void
      * @author
      **/
-    function report($serial_number = '')
+    public function report($serial_number = '')
     {
         $machine = new Machine_model($serial_number);
         $obj = new View();
@@ -74,7 +74,7 @@ class Machine_controller extends Module_controller
      * @return void
      * @author
      **/
-    function new_clients()
+    public function new_clients()
     {
         $lastweek = time() - 60 * 60 * 24 * 7;
         $out = array();
@@ -104,7 +104,7 @@ class Machine_controller extends Module_controller
      * @param string $format Format output. Possible values: flotr, none
      * @author AvB
      **/
-    function get_memory_stats($format = 'none')
+    public function get_memory_stats($format = 'none')
     {
         $out = array();
 
@@ -145,7 +145,7 @@ class Machine_controller extends Module_controller
      *
      * @author AvB
      **/
-    function hw()
+    public function hw()
     {
         $out = array();
         $machine = new Machine_model();
@@ -169,7 +169,7 @@ class Machine_controller extends Module_controller
      *
      * @author AvB
      **/
-    function os()
+    public function os()
     {
         $out = array();
         $machine = new Machine_model();

@@ -2,7 +2,7 @@
 class Filevault_status_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'filevault_status'); //primary key, tablename
         $this->rs['id'] = '';
@@ -36,7 +36,7 @@ class Filevault_status_model extends Model
      * @param string data
      * @author gmarnin
      **/
-    function process($data)
+    public function process($data)
     {
         // process copied from network model. Translate strings to db fields. needed? . error proof?
             $translate = array('fv_users = ' => 'filevault_users');

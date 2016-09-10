@@ -10,7 +10,7 @@ class Migration_disk_report_fix_indexes extends Model
      * Set up tablename and indexes
      *
      **/
-    function __construct()
+    public function __construct()
     {
         parent::__construct('id', 'diskreport'); //primary key, tablename
 

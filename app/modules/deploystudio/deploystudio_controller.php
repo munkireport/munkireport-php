@@ -8,14 +8,14 @@
  **/
 class deploystudio_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         // No authentication, the client needs to get here
         // Store module path
         $this->module_path = dirname(__FILE__);
     }
 
-    function index()
+    public function index()
     {
         echo "You've loaded the deploystudio module!";
     }
@@ -26,7 +26,7 @@ class deploystudio_controller extends Module_controller
      * @return void
      * @author tuxudo (John Eberle)
      **/
-    function recheck_deploystudio($serial = '')
+    public function recheck_deploystudio($serial = '')
     {
         // Authenticate
         if (! $this->authorized()) {

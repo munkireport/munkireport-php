@@ -3,7 +3,7 @@
 class Machine_group extends Model
 {
     
-    function __construct($groupid = '', $property = '')
+    public function __construct($groupid = '', $property = '')
     {
         parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
@@ -35,7 +35,7 @@ class Machine_group extends Model
      * @return integer max groupid
      * @author AvB
      **/
-    function get_max_groupid()
+    public function get_max_groupid()
     {
         $sql = 'SELECT MAX(groupid) AS max FROM '.$this->enquote($this->tablename);
         $result = $this->query($sql);
@@ -48,7 +48,7 @@ class Machine_group extends Model
      * @return void
      * @author
      **/
-    function get_group_ids()
+    public function get_group_ids()
     {
         $out = array();
         $sql = "SELECT groupid FROM $this->tablename GROUP BY groupid";
@@ -68,7 +68,7 @@ class Machine_group extends Model
      * @return array
      * @author abn290
      **/
-    function all($groupid = '')
+    public function all($groupid = '')
     {
         $out = array();
         $where = $groupid !== '' ? 'groupid=?' : '';

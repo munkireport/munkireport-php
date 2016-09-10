@@ -4,7 +4,7 @@ class Migration_machine_add_buildversion extends Model
 {
     protected $columname = 'buildversion';
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct('id', 'machine'); //primary key, tablename
 

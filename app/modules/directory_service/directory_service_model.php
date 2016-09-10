@@ -2,7 +2,7 @@
 class Directory_service_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'directoryservice'); //primary key, tablename
         $this->rs['id'] = '';
@@ -101,7 +101,7 @@ class Directory_service_model extends Model
      * @param string data
      * @author gmarnin
      **/
-    function process($data)
+    public function process($data)
     {
         
         // process copied from network model. Translate strings to db fields. needed? . error proof?

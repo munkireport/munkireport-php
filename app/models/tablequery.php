@@ -5,13 +5,13 @@ class Tablequery
     
     private $cfg = array();
 
-    function __construct($cfg = '')
+    public function __construct($cfg = '')
     {
         $this->cfg = $cfg;
     }
     
     // Clean unsafe strings
-    function dirify($string, $chars = '\w')
+    public function dirify($string, $chars = '\w')
     {
         return preg_replace("/[^$chars]/", '', $string);
     }
@@ -25,7 +25,7 @@ class Tablequery
      * @return array
      * @author abn290
      **/
-    function fetch($cfg)
+    public function fetch($cfg)
     {
         
         // Quick debug

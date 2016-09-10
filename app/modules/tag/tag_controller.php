@@ -8,7 +8,7 @@
  **/
 class Tag_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             $obj = new View();
@@ -25,12 +25,12 @@ class Tag_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the Tag module!";
     }
     
-    function listing()
+    public function listing()
     {
         $data['page'] = '';
         $obj = new View();
@@ -42,7 +42,7 @@ class Tag_controller extends Module_controller
      * Create a Tag
      *
      **/
-    function save()
+    public function save()
     {
         $out = array();
 
@@ -77,7 +77,7 @@ class Tag_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    function retrieve($serial_number = '')
+    public function retrieve($serial_number = '')
     {
         $out = array();
 
@@ -94,7 +94,7 @@ class Tag_controller extends Module_controller
      * Delete Tag
      *
      **/
-    function delete($serial_number = '', $id = -1)
+    public function delete($serial_number = '', $id = -1)
     {
         $out = array();
         

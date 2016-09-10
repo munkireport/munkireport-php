@@ -8,7 +8,7 @@
  **/
 class Ard_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->module_path = dirname(__FILE__);
     }
@@ -18,7 +18,7 @@ class Ard_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the ard module!";
     }
@@ -27,7 +27,7 @@ class Ard_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
 

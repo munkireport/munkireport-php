@@ -1,7 +1,7 @@
 <?php
 class manager extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
@@ -15,14 +15,14 @@ class manager extends Controller
     
     //===============================================================
     
-    function index()
+    public function index()
     {
         echo 'Manager';
     }
 
     //===============================================================
     
-    function delete_machine($serial_number = '')
+    public function delete_machine($serial_number = '')
     {
         
         $status = array('status' => 'undefined', 'rowcount' => 0);

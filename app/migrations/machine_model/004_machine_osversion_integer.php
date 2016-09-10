@@ -7,7 +7,7 @@
 class Migration_machine_osversion_integer extends Model
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct('id', 'machine'); //primary key, tablename
 

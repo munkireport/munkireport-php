@@ -2,7 +2,7 @@
 class Certificate_model extends Model
 {
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'certificate'); //primary key, tablename
         $this->rs['id'] = '';
@@ -31,7 +31,7 @@ class Certificate_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
         // Delete previous set
         $this->deleteWhere('serial_number=?', $this->serial_number);
@@ -135,7 +135,7 @@ class Certificate_model extends Model
      * @return void
      * @author
      **/
-    function get_stats()
+    public function get_stats()
     {
         $now = time();
         $three_months = $now + 3600 * 24 * 30 * 3;

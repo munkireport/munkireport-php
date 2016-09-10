@@ -6,7 +6,7 @@ require('kissmvc_core.php');
 //===============================================================
 class Engine extends KISS_Engine
 {
-    function __construct(&$routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
+    public function __construct(&$routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
     {
         $GLOBALS[ 'engine' ] = $this;
 
@@ -14,7 +14,7 @@ class Engine extends KISS_Engine
 
     }
 
-    function requestNotFound($msg = '', $status_code = 404)
+    public function requestNotFound($msg = '', $status_code = 404)
     {
         $data = array('status_code' => $status_code, 'msg' => '');
 
@@ -28,7 +28,7 @@ class Engine extends KISS_Engine
         exit;
     }
 
-    function get_uri_string()
+    public function get_uri_string()
     {
         return $this->uri_string;
     }
@@ -46,7 +46,7 @@ class Controller extends KISS_Controller
      * @return boolean TRUE on authorized
      * @author AvB
      **/
-    function authorized($what = '')
+    public function authorized($what = '')
     {
         if (! isset($_SESSION)) {
             ini_set('session.use_cookies', 1);
@@ -95,7 +95,7 @@ class Model extends KISS_Model
     protected $errors = '';
 
 
-    function save()
+    public function save()
     {
         // one function to either create or update!
         if ($this->rs[$this->pkname] == '') {
@@ -133,7 +133,7 @@ class Model extends KISS_Model
      *
      * @return integer schema version number
      **/
-    function get_version()
+    public function get_version()
     {
         return $this->schema_version;
     }
@@ -143,7 +143,7 @@ class Model extends KISS_Model
      *
      * @return string table name
      **/
-    function get_table_name()
+    public function get_table_name()
     {
         return $this->tablename;
     }
@@ -153,7 +153,7 @@ class Model extends KISS_Model
      *
      * @return string table name
      **/
-    function get_pkname()
+    public function get_pkname()
     {
         return $this->pkname;
     }
@@ -163,7 +163,7 @@ class Model extends KISS_Model
      *
      * @return string driver
      **/
-    function get_driver()
+    public function get_driver()
     {
         return $this->getdbh()->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
@@ -173,7 +173,7 @@ class Model extends KISS_Model
      *
      * @return string errors
      **/
-    function get_errors()
+    public function get_errors()
     {
         return $this->errors;
     }
@@ -183,7 +183,7 @@ class Model extends KISS_Model
      *
      * @return string errors
      **/
-    function get_indexes()
+    public function get_indexes()
     {
         return $this->idx;
     }
@@ -193,7 +193,7 @@ class Model extends KISS_Model
      *
      * @return string errors
      **/
-    function get_types()
+    public function get_types()
     {
         return $this->rt;
     }
@@ -207,7 +207,7 @@ class Model extends KISS_Model
      * @return array
      * @author
      **/
-    function query($sql, $bindings = array())
+    public function query($sql, $bindings = array())
     {
         if (is_scalar($bindings)) {
             $bindings=$bindings ? array( $bindings ) : array();
@@ -228,7 +228,7 @@ class Model extends KISS_Model
      *
      * @author AvB
      **/
-    function exec($sql)
+    public function exec($sql)
     {
         $dbh = $this->getdbh();
 
@@ -245,7 +245,7 @@ class Model extends KISS_Model
      * @return void
      * @author
      **/
-    function retrieve_record($serial_number, $where = '', $bindings = array())
+    public function retrieve_record($serial_number, $where = '', $bindings = array())
     {
         if (! authorized_for_serial($serial_number)) {
             return false;
@@ -269,7 +269,7 @@ class Model extends KISS_Model
      * @return void
      * @author
      **/
-    function delete_record($serial_number, $where = '', $bindings = array())
+    public function delete_record($serial_number, $where = '', $bindings = array())
     {
         if (! authorized_for_serial($serial_number)) {
             return false;
@@ -293,7 +293,7 @@ class Model extends KISS_Model
      * @return void
      * @author
      **/
-    function retrieve_records($serial_number, $where = '', $bindings = array())
+    public function retrieve_records($serial_number, $where = '', $bindings = array())
     {
         if (! authorized_for_serial($serial_number)) {
             return array();
@@ -319,7 +319,7 @@ class Model extends KISS_Model
      * @return void
      * @author abn290
      **/
-    function count($wherewhat = '', $bindings = '')
+    public function count($wherewhat = '', $bindings = '')
     {
         $dbh = $this->getdbh();
         if (is_scalar($bindings)) {
@@ -345,7 +345,7 @@ class Model extends KISS_Model
      * @return string database type
      * @author AvB
      **/
-    function get_type($val = '')
+    public function get_type($val = '')
     {
         return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'MEDIUMBLOB'));
     }
@@ -356,7 +356,7 @@ class Model extends KISS_Model
      * @return string index name
      * @author
      **/
-    function get_index_name($idx_data = array())
+    public function get_index_name($idx_data = array())
     {
         return $this->tablename . '_' . join('_', $idx_data);
     }
@@ -373,7 +373,7 @@ class Model extends KISS_Model
      * @return boolean TRUE on success, FALSE if failed
      * @author bochoven
      **/
-    function create_table()
+    public function create_table()
     {
         // Check if we instantiated this table before
         if (isset($GLOBALS['tables'][$this->tablename])) {
@@ -486,7 +486,7 @@ class Model extends KISS_Model
      * @param string optional provide alternative create index
      * @author bochoven
      **/
-    function set_indexes($sql = "CREATE INDEX %s ON %s (%s)")
+    public function set_indexes($sql = "CREATE INDEX %s ON %s (%s)")
     {
         $dbh = $this->getdbh();
         
@@ -504,7 +504,7 @@ class Model extends KISS_Model
      * @return void
      * @author
      **/
-    function get_schema_version()
+    public function get_schema_version()
     {
         // Get schema versions
         if (! isset($GLOBALS['schema_versions'])) {
@@ -566,7 +566,7 @@ class Module_controller extends Controller
     // Module, override in child object
     protected $module_path;
 
-    function get_script($name = '')
+    public function get_script($name = '')
     {
         // Check if script dir exists
         if (is_readable($this->module_path . '/scripts/')) {

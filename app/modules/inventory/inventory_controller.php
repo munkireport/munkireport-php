@@ -2,14 +2,14 @@
 class Inventory_controller extends Module_controller
 {
     // Require authentication
-    function __construct()
+    public function __construct()
     {
         // Store module path
         $this->module_path = dirname(__FILE__) .'/';
         $this->view_path = $this->module_path . 'views/';
     }
 
-    function index()
+    public function index()
     {
         
         echo "You've loaded the inventory module!";
@@ -33,7 +33,7 @@ class Inventory_controller extends Module_controller
     }
 
     // Todo: move expensive data objects to view
-    function items($name = '', $version = '')
+    public function items($name = '', $version = '')
     {
         // Protect this handler
         if (! $this->authorized()) {

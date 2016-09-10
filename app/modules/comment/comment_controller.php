@@ -8,7 +8,7 @@
  **/
 class Comment_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             $obj = new View();
@@ -24,7 +24,7 @@ class Comment_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the comment module!";
     }
@@ -33,7 +33,7 @@ class Comment_controller extends Module_controller
      * Create a comment
      *
      **/
-    function save()
+    public function save()
     {
         $out = array();
 
@@ -72,7 +72,7 @@ class Comment_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    function retrieve($serial_number = '', $section = '')
+    public function retrieve($serial_number = '', $section = '')
     {
         $out = array();
 
@@ -98,7 +98,7 @@ class Comment_controller extends Module_controller
      * Update comment
      *
      **/
-    function update()
+    public function update()
     {
     }
 
@@ -106,7 +106,7 @@ class Comment_controller extends Module_controller
      * Delete comment
      *
      **/
-    function delete()
+    public function delete()
     {
     }
 } // END class Certificate_controller

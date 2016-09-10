@@ -9,7 +9,7 @@ class Servermetrics_controller extends Module_controller
 {
     
     /*** Protect methods with auth! ****/
-    function __construct()
+    public function __construct()
     {
         // Store module path
         $this->module_path = dirname(__FILE__) .'/';
@@ -20,7 +20,7 @@ class Servermetrics_controller extends Module_controller
      *
      * @author
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the servermetrics module!";
     }
@@ -31,7 +31,7 @@ class Servermetrics_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_data($serial_number = '', $hours = 24)
+    public function get_data($serial_number = '', $hours = 24)
     {
         $obj = new View();
 
@@ -48,7 +48,7 @@ class Servermetrics_controller extends Module_controller
      *
      * @author AvB
      **/
-    function report($serial_number = '')
+    public function report($serial_number = '')
     {
         if (! $this->authorized()) {
             redirect('auth/login');

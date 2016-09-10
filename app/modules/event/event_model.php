@@ -11,7 +11,7 @@
  **/
 class Event_model extends Model
 {
-    function __construct($serial_number = '', $module = '')
+    public function __construct($serial_number = '', $module = '')
     {
         parent::__construct('id', 'event'); //primary key, tablename
         $this->rs['id'] = '';
@@ -54,7 +54,7 @@ class Event_model extends Model
      * @param string optional module
      * @author
      **/
-    function reset($serial_number = '', $module = '')
+    public function reset($serial_number = '', $module = '')
     {
         if (! authorized_for_serial($serial_number)) {
             return false;
@@ -98,7 +98,7 @@ class Event_model extends Model
      * @param string type
      * @author AvB
      **/
-    function danger($module, $msg)
+    public function danger($module, $msg)
     {
     }
 } // END class

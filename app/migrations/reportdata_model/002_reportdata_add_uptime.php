@@ -6,7 +6,7 @@ class Migration_reportdata_add_uptime extends Model
 {
     protected $columname = 'uptime';
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->tablename = 'reportdata';

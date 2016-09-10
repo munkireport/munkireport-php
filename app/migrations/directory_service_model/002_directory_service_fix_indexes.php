@@ -11,7 +11,7 @@ class Migration_directory_service_fix_indexes extends Model
      * Set up tablename and indexes
      *
      **/
-    function __construct()
+    public function __construct()
     {
         parent::__construct('id', 'directoryservice'); //primary key, tablename
 

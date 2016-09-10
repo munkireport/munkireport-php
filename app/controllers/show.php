@@ -1,19 +1,19 @@
 <?php
 class show extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             redirect('auth/login');
         }
     }
 
-    function index()
+    public function index()
     {
         redirect('show/dashboard');
     }
 
-    function dashboard($which = '')
+    public function dashboard($which = '')
     {
         $data = array('session' => $_SESSION);
 
@@ -36,7 +36,7 @@ class show extends Controller
         $obj->view($view, $data);
     }
 
-    function listing($which = '')
+    public function listing($which = '')
     {
         if ($which) {
             $data['page'] = 'clients';
@@ -51,7 +51,7 @@ class show extends Controller
         $obj->view($view, $data);
     }
 
-    function reports($which = 'default')
+    public function reports($which = 'default')
     {
         if ($which) {
             $data['page'] = 'clients';
@@ -65,7 +65,7 @@ class show extends Controller
         $obj->view($view, $data);
     }
 
-    function custom($which = 'default')
+    public function custom($which = 'default')
     {
         if ($which) {
             $data['args'] = func_get_args();

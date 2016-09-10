@@ -8,7 +8,7 @@
  **/
 class Warranty_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         // No authentication, the client needs to get here
 
@@ -16,7 +16,7 @@ class Warranty_controller extends Module_controller
         $this->module_path = dirname(__FILE__);
     }
 
-    function index()
+    public function index()
     {
         echo "You've loaded the warranty module!";
     }
@@ -27,7 +27,7 @@ class Warranty_controller extends Module_controller
      * @return void
      * @author AvB
      **/
-    function recheck_warranty($serial = '')
+    public function recheck_warranty($serial = '')
     {
         // Authenticate
         if (! $this->authorized()) {
@@ -48,7 +48,7 @@ class Warranty_controller extends Module_controller
      * @return void
      * @author
      **/
-    function estimate_manufactured_date($serial_number = '')
+    public function estimate_manufactured_date($serial_number = '')
     {
         // Authenticate
         if (! $this->authorized()) {
@@ -82,7 +82,7 @@ class Warranty_controller extends Module_controller
      *
      * @author AvB
      **/
-    function age()
+    public function age()
     {
         // Authenticate
         if (! $this->authorized()) {

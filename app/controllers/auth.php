@@ -7,7 +7,7 @@ class auth extends Controller
     // Authentication mechanisms available
     public $auth_mechanisms = array();
 
-    function __construct()
+    public function __construct()
     {
         if (conf('auth_secure') && empty($_SERVER['HTTPS'])) {
             redirect('error/client_error/426'); // Switch protocol
@@ -24,12 +24,12 @@ class auth extends Controller
 
     //===============================================================
 
-    function index()
+    public function index()
     {
         redirect('auth/login');
     }
 
-    function login($return = '')
+    public function login($return = '')
     {
         if (func_get_args()) {
             $return_parts = func_get_args();
@@ -247,7 +247,7 @@ class auth extends Controller
      * Set session properties
      *
      **/
-    function set_session_props($show = false)
+    public function set_session_props($show = false)
     {
         // Initialize session
         $this->authorized();
@@ -347,7 +347,7 @@ class auth extends Controller
         }
     }
 
-    function logout()
+    public function logout()
     {
         // Initialize session
         $this->authorized();
@@ -357,7 +357,7 @@ class auth extends Controller
         redirect('');
     }
 
-    function generate()
+    public function generate()
     {
         // Add a reason why generate is called
         $data = array('reason' => empty($this->auth_mechanisms) ? 'noauth' : 'none');
@@ -378,7 +378,7 @@ class auth extends Controller
         $obj->view('auth/generate_password', $data);
     }
 
-    function load_phpass()
+    public function load_phpass()
     {
         require(APP_PATH . '/lib/phpass-0.3/PasswordHash.php');
         return new PasswordHash(8, true);

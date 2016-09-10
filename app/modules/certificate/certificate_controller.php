@@ -8,7 +8,7 @@
  **/
 class Certificate_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->module_path = dirname(__FILE__);
     }
@@ -18,7 +18,7 @@ class Certificate_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the certificate report module!";
     }
@@ -29,7 +29,7 @@ class Certificate_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
 
@@ -46,7 +46,7 @@ class Certificate_controller extends Module_controller
      * Get stats
      *
      **/
-    function get_stats()
+    public function get_stats()
     {
         $obj = new View();
 

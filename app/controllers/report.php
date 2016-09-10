@@ -10,7 +10,7 @@ class report extends Controller
      *
      * @author AvB
      **/
-    function __construct()
+    public function __construct()
     {
         // Flag we're on report authorization
         $GLOBALS['auth'] = 'report';
@@ -43,7 +43,7 @@ class report extends Controller
      *
      * @author AvB
      **/
-    function hash_check()
+    public function hash_check()
     {
         // Check if we have a serial and data
         if (! isset($_POST['serial'])) {
@@ -124,7 +124,7 @@ class report extends Controller
      *
      * @author AvB
      **/
-    function check_in()
+    public function check_in()
     {
         if (! isset($_POST['items'])) {
             $this->error("No items in POST");
@@ -227,7 +227,7 @@ class report extends Controller
      *
      * @author AvB
      **/
-    function broken_client()
+    public function broken_client()
     {
         // At least, we need a serial number
         if (! isset($_POST['serial'])) {
@@ -256,7 +256,7 @@ class report extends Controller
      * @param boolean exit or not
      * @author AvB
      **/
-    function msg($msg = 'No message', $exit = false)
+    public function msg($msg = 'No message', $exit = false)
     {
         echo('Server '.$msg."\n");
         if ($exit) {
@@ -271,7 +271,7 @@ class report extends Controller
      * @param string message
      * @author AvB
      **/
-    function error($msg)
+    public function error($msg)
     {
         echo serialize(array('error' =>$msg));
         exit();

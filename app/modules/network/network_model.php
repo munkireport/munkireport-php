@@ -3,7 +3,7 @@
 class Network_model extends Model
 {
     
-    function __construct($serial_number = '')
+    public function __construct($serial_number = '')
     {
         parent::__construct('id', strtolower('network')); //primary key, tablename
         $this->rs['id'] = '';
@@ -41,7 +41,7 @@ class Network_model extends Model
      * @param string data
      * @author abn290
      **/
-    function process($data)
+    public function process($data)
     {
         // Translate network strings to db fields
         $translate = array(

@@ -4,7 +4,7 @@ class Migration_add_filevault_users extends Model
 {
     protected $columname = 'filevault_users';
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->tablename = 'filevault_status';

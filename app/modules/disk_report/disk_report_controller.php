@@ -8,7 +8,7 @@
  **/
 class Disk_report_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->module_path = dirname(__FILE__);
     }
@@ -18,7 +18,7 @@ class Disk_report_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the disk report module!";
     }
@@ -29,7 +29,7 @@ class Disk_report_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
 
@@ -51,7 +51,7 @@ class Disk_report_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_filevault_stats($mount_point = '/')
+    public function get_filevault_stats($mount_point = '/')
     {
         $obj = new View();
 
@@ -72,7 +72,7 @@ class Disk_report_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_stats($mount_point = '/')
+    public function get_stats($mount_point = '/')
     {
         $obj = new View();
 
@@ -99,7 +99,7 @@ class Disk_report_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_smart_stats()
+    public function get_smart_stats()
     {
         $obj = new View();
 

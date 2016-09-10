@@ -5,7 +5,7 @@ class Migration_stale_location_columns extends Model
     protected $columname1 = 'stalelocation';
     protected $columname2 = 'lastlocationrun';
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->tablename = 'location';

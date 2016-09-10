@@ -4,7 +4,7 @@ class gsx_model extends Model
     
     protected $error = '';
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'gsx'); //primary key, tablename
         $this->rs['id'] = '';
@@ -101,7 +101,7 @@ class gsx_model extends Model
      * @author John Eberle
      **/
     //function get_gsx_stats($force = FALSE)
-    function run_gsx_stats()
+    public function run_gsx_stats()
     {
         // Check if we should enable GSX lookup
         // Useful for stopping lookups if IP address changes
@@ -122,7 +122,7 @@ class gsx_model extends Model
      * @return void
      * @author John Eberle
      **/
-    function process()
+    public function process()
     {
         $this->run_gsx_stats();
     }

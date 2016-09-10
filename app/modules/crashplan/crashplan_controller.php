@@ -8,7 +8,7 @@
  **/
 class Crashplan_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->module_path = dirname(__FILE__) .'/';
         $this->view_path = $this->module_path . 'views/';
@@ -19,12 +19,12 @@ class Crashplan_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the Crashplan module!";
     }
     
-    function listing()
+    public function listing()
     {
         if (! $this->authorized()) {
             redirect('auth/login');
@@ -41,7 +41,7 @@ class Crashplan_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_stats($hours = 24)
+    public function get_stats($hours = 24)
     {
         $obj = new View();
 
@@ -61,7 +61,7 @@ class Crashplan_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
 

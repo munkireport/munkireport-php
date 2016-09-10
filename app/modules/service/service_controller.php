@@ -8,7 +8,7 @@
  **/
 class Service_controller extends Module_controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->module_path = dirname(__FILE__) .'/';
         $this->view_path = $this->module_path . 'views/';
@@ -19,7 +19,7 @@ class Service_controller extends Module_controller
      *
      * @author AvB
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the service report module!";
     }
@@ -29,7 +29,7 @@ class Service_controller extends Module_controller
      *
      * @author AvB
      **/
-    function show()
+    public function show()
     {
         if (! $this->authorized()) {
             redirect('auth/login');
@@ -47,7 +47,7 @@ class Service_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
 

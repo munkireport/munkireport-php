@@ -2,7 +2,7 @@
 class Machine_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'machine'); //primary key, tablename
         $this->rs['id'] = '';
@@ -140,7 +140,7 @@ class Machine_model extends Model
      * @param string data
      * @author abn290
      **/
-    function process($plist)
+    public function process($plist)
     {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();

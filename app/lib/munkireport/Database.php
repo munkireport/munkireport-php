@@ -94,7 +94,7 @@ class Database
      *
      * @return string driver
      **/
-    function get_driver()
+    public function get_driver()
     {
         return $this->getDBH()->getAttribute(\PDO::ATTR_DRIVER_NAME);
     }

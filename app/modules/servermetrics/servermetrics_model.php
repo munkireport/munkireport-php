@@ -3,7 +3,7 @@ class Servermetrics_model extends Model
 {
 
     // Field order as sent by postflight and served by get_data().
-    var     $keys = array(
+    private $keys = array(
         'afp_sessions',
         'smb_sessions',
         'caching_cache_toclients',
@@ -22,7 +22,7 @@ class Servermetrics_model extends Model
         'memory_inactive'
     );
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'servermetrics'); //primary key, tablename
         $this->rs['id'] = '';
@@ -65,7 +65,7 @@ class Servermetrics_model extends Model
      * @return array data
      * @author
      **/
-    function get_data($serial_number, $hours = 24)
+    public function get_data($serial_number, $hours = 24)
     {
         $out = array();
 
@@ -94,7 +94,7 @@ class Servermetrics_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
 
         // Delete previous set (this is expensive)

@@ -2,7 +2,7 @@
 class wifi_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'wifi'); //primary key, tablename
         $this->rs['id'] = 0;
@@ -47,7 +47,7 @@ class wifi_model extends Model
      * Get WiFi state for widget
      *
      **/
-    public function get_wifi_state()
+    public public function get_wifi_state()
     {
         $sql = "SELECT COUNT(CASE WHEN state = 'running' THEN 1 END) AS connected,
 				COUNT(CASE WHEN state = 'init' THEN 1 END) AS on_not_connected,
@@ -85,7 +85,7 @@ class wifi_model extends Model
     }
     
     
-    function process($data)
+    public function process($data)
     {
         // Translate network strings to db fields
         $translate = array(

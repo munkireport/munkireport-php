@@ -1,14 +1,14 @@
 <?php
 class datatables extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
         }
     }
 
-    function data()
+    public function data()
     {
         // Sanitize the GET variables here.
         $cfg = array(

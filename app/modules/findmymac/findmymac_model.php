@@ -1,7 +1,7 @@
 <?php
 class findmymac_model extends Model
 {
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'findmymac'); //primary key, tablename
         $this->rs['id'] = '';
@@ -33,7 +33,7 @@ class findmymac_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
 
         // Translate network strings to db fields

@@ -2,7 +2,7 @@
 class Bluetooth_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'bluetooth'); //primary key, tablename
         $this->rs['id'] = 0;
@@ -56,7 +56,7 @@ class Bluetooth_model extends Model
      * @param string data
      * @author clburlison
      **/
-    function process($plist)
+    public function process($plist)
     {
         if (! $plist) {
             throw new Exception("Error Processing Request: No data found", 1);

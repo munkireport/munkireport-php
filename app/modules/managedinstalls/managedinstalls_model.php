@@ -2,7 +2,7 @@
 class managedinstalls_model extends Model
 {
         
-    function __construct($serial_number = '')
+    public function __construct($serial_number = '')
     {
         parent::__construct('id', 'managedinstalls'); //primary key, tablename
         $this->rs['id'] = '';
@@ -168,7 +168,7 @@ class managedinstalls_model extends Model
      * @param string data property list
      *
      **/
-    function process($data)
+    public function process($data)
     {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();

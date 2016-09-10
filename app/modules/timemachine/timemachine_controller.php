@@ -9,7 +9,7 @@ class Timemachine_controller extends Module_controller
 {
     
     /*** Protect methods with auth! ****/
-    function __construct()
+    public function __construct()
     {
         // Store module path
         $this->module_path = dirname(__FILE__) .'/';
@@ -20,7 +20,7 @@ class Timemachine_controller extends Module_controller
      *
      * @author
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the timemachine module!";
     }
@@ -32,7 +32,7 @@ class Timemachine_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
 
@@ -51,7 +51,7 @@ class Timemachine_controller extends Module_controller
      * @return void
      * @author
      **/
-    function get_stats($hours = 24)
+    public function get_stats($hours = 24)
     {
         $obj = new View();
 

@@ -2,7 +2,7 @@
 class Timemachine_model extends Model
 {
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'timemachine'); //primary key, tablename
         $this->rs['id'] = '';
@@ -39,7 +39,7 @@ class Timemachine_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
         
         // Parse log data
@@ -77,7 +77,7 @@ class Timemachine_model extends Model
      * @return void
      * @author
      **/
-    function get_stats($hours)
+    public function get_stats($hours)
     {
         $now = time();
         $today = date('Y-m-d H:i:s', $now - 3600 * 24);

@@ -10,7 +10,7 @@ class Migration_inventoryitem_max_pathlength extends Model
      * Set up tablename and indexes
      *
      **/
-    function __construct()
+    public function __construct()
     {
         parent::__construct('id', 'inventoryitem'); //primary key, tablename
     }

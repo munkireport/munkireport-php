@@ -9,7 +9,7 @@ class Profile_controller extends Module_controller
 {
     
     /*** Protect methods with auth! ****/
-    function __construct()
+    public function __construct()
     {
         // Store module path
         $this->module_path = dirname(__FILE__) .'/';
@@ -20,12 +20,12 @@ class Profile_controller extends Module_controller
      *
      * @author
      **/
-    function index()
+    public function index()
     {
         echo "You've loaded the profile module!";
     }
 
-    function items($name = '', $payload = '')
+    public function items($name = '', $payload = '')
     {
         // Protect this handler
         if (! $this->authorized()) {

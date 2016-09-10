@@ -13,7 +13,7 @@ class managedinstalls_controller extends Module_controller
     protected $view_path;
     
     /*** Protect methods with auth! ****/
-    function __construct()
+    public function __construct()
     {
         // Store module path
         $this->module_path = dirname(__FILE__);

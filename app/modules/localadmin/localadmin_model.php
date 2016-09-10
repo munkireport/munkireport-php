@@ -2,7 +2,7 @@
 class Localadmin_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'localadmin'); //primary key, tablename
         $this->rs['id'] = '';
@@ -31,7 +31,7 @@ class Localadmin_model extends Model
      * @param string data
      * @author AvB
      **/
-    function process($data)
+    public function process($data)
     {
         $this->users = trim($data);
         $this->save();

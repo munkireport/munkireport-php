@@ -2,7 +2,7 @@
 class Installhistory_model extends Model
 {
 
-    function __construct($serial_number = '')
+    public function __construct($serial_number = '')
     {
         parent::__construct('id', 'installhistory'); //primary key, tablename
         $this->rs['id'] = '';
@@ -30,7 +30,7 @@ class Installhistory_model extends Model
      * @param string data
      * @author abn290
      **/
-    function process($plist)
+    public function process($plist)
     {
         // Delete old data
         $this->deleteWhere('serial_number=?', $this->serial_number);

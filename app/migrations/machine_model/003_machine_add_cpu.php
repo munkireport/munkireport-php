@@ -4,7 +4,7 @@ class Migration_machine_add_cpu extends Model
 {
     protected $columname = 'cpu';
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->tablename = 'machine';

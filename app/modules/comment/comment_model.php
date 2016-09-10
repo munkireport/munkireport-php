@@ -2,7 +2,7 @@
 class Comment_model extends Model
 {
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'comment'); //primary key, tablename
         $this->rs['id'] = '';

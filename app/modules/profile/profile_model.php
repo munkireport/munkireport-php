@@ -1,7 +1,7 @@
 <?php
 class Profile_model extends Model
 {
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'profile'); //primary key, tablename
         $this->rs['id'] = '';
@@ -37,7 +37,7 @@ class Profile_model extends Model
      * @param json string json_string
      *
      **/
-    function json_to_html($json_string)
+    public function json_to_html($json_string)
     {
         # Try to make it prettier
         $json_string = str_replace('\n', '<br />', $json_string);
@@ -53,7 +53,7 @@ class Profile_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
         // If data is empty, remove record
         //if( ! $data)

@@ -2,7 +2,7 @@
 class Munkireport_model extends Model
 {
 
-    function __construct($serial_number = '')
+    public function __construct($serial_number = '')
     {
         parent::__construct('id', 'munkireport'); //primary key, tablename
         $this->rs['id'] = 0;
@@ -107,7 +107,7 @@ class Munkireport_model extends Model
     }
 
     
-    function process($plist)
+    public function process($plist)
     {
         $this->timestamp = date('Y-m-d H:i:s');
         

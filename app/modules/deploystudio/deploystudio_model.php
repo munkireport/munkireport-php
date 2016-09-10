@@ -5,7 +5,7 @@ class Deploystudio_model extends Model
     protected $error = '';
     protected $module_dir;
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'deploystudio'); //primary key, tablename
         $this->rs['id'] = '';
@@ -65,7 +65,7 @@ class Deploystudio_model extends Model
      * @return void
      * @author tuxudo (John Eberle)
      **/
-    function run_deploystudio_stats()
+    public function run_deploystudio_stats()
     {
         // Check if we should enable DeployStudio lookup
         if (conf('deploystudio_enable')) {
@@ -86,7 +86,7 @@ class Deploystudio_model extends Model
      * @return void
      * @author tuxudo (John Eberle)
      **/
-    function process()
+    public function process()
     {
         $this->run_deploystudio_stats();
     }

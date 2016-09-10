@@ -2,7 +2,7 @@
 class munkiinfo_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
           parent::__construct('id', 'munkiinfo'); //primary key, tablename
           $this->rs['id'] = 0;
@@ -32,7 +32,7 @@ class munkiinfo_model extends Model
    * @param string data
    * @author erikng
    **/
-    function process($plist)
+    public function process($plist)
     {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();

@@ -2,7 +2,7 @@
 class Disk_report_model extends Model
 {
 
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'diskreport'); //primary key, tablename
         $this->rs['id'] = '';
@@ -56,7 +56,7 @@ class Disk_report_model extends Model
      * @return array
      * @author
      **/
-    function get_stats($mountpoint = '/', $level1 = 5, $level2 = 10)
+    public function get_stats($mountpoint = '/', $level1 = 5, $level2 = 10)
     {
         // Convert to GB
         $level1 = $level1 . '000000000';
@@ -96,7 +96,7 @@ class Disk_report_model extends Model
      * @param string data
      * @author abn290
      **/
-    function process($plist)
+    public function process($plist)
     {
 
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');

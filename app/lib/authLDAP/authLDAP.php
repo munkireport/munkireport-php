@@ -310,7 +310,7 @@ class Auth_ldap
      * @param   array $filter  array of field/pattern pairs, null for no filter
      * @return  array of userinfo (refer getUserData for internal userinfo details)
      */
-    function retrieveUsers($start = 0, $limit = -1, $filter = array()) {
+    public function retrieveUsers($start = 0, $limit = -1, $filter = array()) {
         if(!$this->_openLDAP()) return false;
 
         if(is_null($this->users)) {
@@ -428,7 +428,7 @@ class Auth_ldap
          // see https://github.com/adldap/adLDAP/issues/22
          return preg_replace_callback(
              '/([\x00-\x1F\*\(\)\\\\])/',
-             function ($matches) {
+             public function ($matches) {
                  return "\\".join("", unpack("H2", $matches[1]));
              },
              $string

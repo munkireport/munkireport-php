@@ -2,7 +2,7 @@
 class Service_model extends Model
 {
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'service'); //primary key, tablename
         $this->rs['id'] = '';
@@ -30,7 +30,7 @@ class Service_model extends Model
      * @param string data
      *
      **/
-    function process($data)
+    public function process($data)
     {
         // Delete previous entries
         $this->deleteWhere('serial_number=?', $this->serial_number);

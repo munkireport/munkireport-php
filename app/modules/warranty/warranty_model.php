@@ -4,7 +4,7 @@ class Warranty_model extends Model
     
     protected $error = '';
     
-    function __construct($serial = '')
+    public function __construct($serial = '')
     {
         parent::__construct('id', 'warranty'); //primary key, tablename
         $this->rs['id'] = '';
@@ -65,7 +65,7 @@ class Warranty_model extends Model
      * @return void
      * @author AvB
      **/
-    function check_status($force = false)
+    public function check_status($force = false)
     {
         // Check if record exists
         if (! $force && $this->id) {
@@ -99,7 +99,7 @@ class Warranty_model extends Model
      * @return void
      * @author
      **/
-    function process()
+    public function process()
     {
 
         alert("warranty: current status: $this->status");
