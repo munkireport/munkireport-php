@@ -249,7 +249,7 @@
 	"event": "Event",
 	"event_plural": "Events",
 	"events": {
-		"widget_title": "Events generated in the last hour"
+		"widget_title": "Recently generated events"
 	},
 	"external": {
 		"mwa_link": "Open in Munki Web Admin"
