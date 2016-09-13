@@ -30,7 +30,7 @@ $(document).on('appReady', function(e, lang) {
 			'print'
 		]
 	};
-	if( isAdmin){
+	if( isAdmin || isManager){
 		mr.dt.buttons.buttons.unshift('edit');
 	}
 	
