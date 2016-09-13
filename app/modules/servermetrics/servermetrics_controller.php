@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Servermetrics list module class
  *
@@ -7,36 +7,35 @@
  **/
 class Servermetrics_controller extends Module_controller
 {
-	
-	/*** Protect methods with auth! ****/
-	function __construct()
-	{
-		// Store module path
+    
+    /*** Protect methods with auth! ****/
+    public function __construct()
+    {
+        // Store module path
         $this->module_path = dirname(__FILE__) .'/';
         $this->view_path = $this->module_path . 'views/';
-	}
-	/**
-	 * Default method
-	 *
-	 * @author
-	 **/
-	function index()
-	{
-		echo "You've loaded the servermetrics module!";
-	}
+    }
+    /**
+     * Default method
+     *
+     * @author
+     **/
+    public function index()
+    {
+        echo "You've loaded the servermetrics module!";
+    }
 
     /**
      * Retrieve data in json format
      *
      * @return void
-     * @author 
+     * @author
      **/
-    function get_data($serial_number = '', $hours = 24)
+    public function get_data($serial_number = '', $hours = 24)
     {
         $obj = new View();
 
-        if( ! $this->authorized())
-        {
+        if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
         }
 
@@ -49,10 +48,9 @@ class Servermetrics_controller extends Module_controller
      *
      * @author AvB
      **/
-    function report($serial_number = '')
+    public function report($serial_number = '')
     {
-        if( ! $this->authorized())
-        {
+        if (! $this->authorized()) {
             redirect('auth/login');
         }
 
@@ -61,6 +59,4 @@ class Servermetrics_controller extends Module_controller
         $obj = new View();
         $obj->view('report', $data, $this->view_path);
     }
-
-	
 } // END class Servermetrics_controller

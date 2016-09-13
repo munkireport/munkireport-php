@@ -394,7 +394,7 @@ $(document).on('appReady', function(e, lang) {
 	// Get Bluetooth data
 	$.getJSON( appUrl + '/module/bluetooth/get_data/' + serialNumber, function( data ) {
 		if(data.id !== '')
-		{
+		{	
 			$('table.mr-bluetooth-table')
 				.empty()
 				.append($('<tr>')
@@ -402,44 +402,22 @@ $(document).on('appReady', function(e, lang) {
 						.text(i18n.t('bluetooth.status')))
 					.append($('<td>')
 						.text(function(){
-							if(data.bluetooth_status == 1){
+							if(data.bluetooth_power == 1){
 								return i18n.t('on');
 							}
-							if(data.bluetooth_status == 0){
+							if(data.bluetooth_power == 0){
 								return i18n.t('off');
 							}
 							return i18n.t('unknown');
-						})))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('bluetooth.keyboard')))
-					.append($('<td>')
-						.text(function(){
-							if(data.keyboard_battery == -1){
-								return i18n.t('disconnected')
-							}
-							return i18n.t('battery.life_remaining', {"percent": data.keyboard_battery})
-						})))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('bluetooth.mouse')))
-					.append($('<td>')
-						.text(function(){
-							if(data.mouse_battery == -1){
-								return i18n.t('disconnected')
-							}
-							return i18n.t('battery.life_remaining', {"percent": data.mouse_battery})
-						})))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('bluetooth.trackpad')))
-					.append($('<td>')
-						.text(function(){
-							if(data.trackpad_battery == -1){
-								return i18n.t('disconnected')
-							}
-							return i18n.t('battery.life_remaining', {"percent": data.trackpad_battery})
 						})));
+
+			for (key in data){
+				var rows = ''
+				if (key != 'bluetooth_power'){
+					rows = rows + '<tr><th>'+i18n.t('bluetooth.'+key)+'</th><td>'+data[key]+'%'+'</td></tr>'
+					$('table.mr-bluetooth-table').append(rows)
+				}
+			}
 		}
 		else{
 			$('table.mr-bluetooth-table')

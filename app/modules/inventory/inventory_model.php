@@ -1,26 +1,28 @@
 <?php
 
-class Inventory_model extends Model {
+class Inventory_model extends Model
+{
     
-    function __construct($serial='')
+    public function __construct($serial = '')
     {
-		parent::__construct('id', 'inventoryitem'); //primary key, tablename
+        parent::__construct('id', 'inventoryitem'); //primary key, tablename
         $this->rs['id'] = 0;
         $this->rs['serial_number'] = (string) $serial;
         $this->rs['name'] = '';
         $this->rs['version'] = '';
         $this->rs['bundleid'] = '';
         $this->rs['bundlename'] = '';
-        $this->rs['path'] = ''; $this->rt['path'] = 'VARCHAR(1024)';
+        $this->rs['path'] = '';
+        $this->rt['path'] = 'VARCHAR(1024)';
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 3;
-		
-		// Add indexes
-		$this->idx['serial'] = array('serial_number');
-		$this->idx['name_version'] = array('name', 'version');
+        
+        // Add indexes
+        $this->idx['serial'] = array('serial_number');
+        $this->idx['name_version'] = array('name', 'version');
 
-		// Create table if it does not exist
+        // Create table if it does not exist
         $this->create_table();
     }
 
@@ -28,9 +30,9 @@ class Inventory_model extends Model {
      * Select all entries
      *
      * @return array
-     * @author 
+     * @author
      **/
-    function select_all()
+    public function select_all()
     {
         $sql = sprintf('SELECT name, version, COUNT(i.id) AS num_installs
             FROM %s i 
@@ -40,28 +42,30 @@ class Inventory_model extends Model {
         return $this->query($sql);
     }
     
-    // Override for retrieve_many that takes machine groups into account
-    function retrieve_many( $wherewhat='', $bindings='' ) 
+    // Override for retrieveMany that takes machine groups into account
+    public function retrieveMany($wherewhat = '', $bindings = '')
     {
         $dbh = $this->getdbh();
-        if ( is_scalar( $bindings ) )
-        {
+        if (is_scalar($bindings)) {
             $bindings = $bindings !== '' ? array( $bindings ) : array();
         }
         $sql = 'SELECT * FROM '.$this->tablename;
         $sql .= ' JOIN reportdata USING (serial_number)';
         $sql .= get_machine_group_filter('WHERE');
-        if ( $wherewhat ) $sql .= ' AND '.$wherewhat;
-        $stmt = $this->prepare( $sql );
+        if ($wherewhat) {
+            $sql .= ' AND '.$wherewhat;
+        }
+        $stmt = $this->prepare($sql);
         $this->execute($stmt, $bindings);
         $arr=array();
-        $class=get_class( $this );
-        while ( $rs = $stmt->fetch( PDO::FETCH_ASSOC ) ) 
-        {
+        $class=get_class($this);
+        while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $myclass = new $class();
-            foreach ( $rs as $key => $val )
-                if ( array_key_exists($key, $myclass->rs) )
-                    $myclass->rs[$key] = is_scalar( $myclass->rs[$key] ) ? $val : unserialize( $this->COMPRESS_ARRAY ? gzinflate( $val ) : $val );
+            foreach ($rs as $key => $val) {
+                if (array_key_exists($key, $myclass->rs)) {
+                    $myclass->rs[$key] = is_scalar($myclass->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val);
+                }
+            }
             $arr[]=$myclass;
         }
         return $arr;
@@ -76,28 +80,27 @@ class Inventory_model extends Model {
     {
         // Detect wildcard character
         $match = 'AND i.name = ?';
-        if(preg_match('/[_%]/', $app))
-        {
+        if (preg_match('/[_%]/', $app)) {
             $match = 'AND i.name LIKE ?';
         }
         
-        $sql = sprintf('SELECT version, COUNT(i.id) AS count
+        $sql = sprintf(
+            'SELECT version, COUNT(i.id) AS count
             FROM %s i 
             LEFT JOIN reportdata r ON (r.serial_number = i.serial_number)
             %s 
             %s
             GROUP BY version
-            ORDER BY version DESC', 
-            $this->enquote($this->tablename), 
+            ORDER BY version DESC',
+            $this->enquote($this->tablename),
             get_machine_group_filter('WHERE', 'r'),
             $match
         );
         return $this->query($sql, $app);
-
     }
     
-    function process($data)
-    {    
+    public function process($data)
+    {
         //list of bundleids to ignore
         $bundleid_ignorelist = is_array(conf('bundleid_ignorelist')) ? conf('bundleid_ignorelist') : array();
         $regex = '/^'.implode('|', $bundleid_ignorelist).'$/';
@@ -109,21 +112,19 @@ class Inventory_model extends Model {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse(
-            $data, CFPropertyList::FORMAT_XML);
+            $data,
+            CFPropertyList::FORMAT_XML
+        );
         $inventory_list = $parser->toArray();
-        if (count($inventory_list))
-        {
-            // clear existing inventory items
-            $this->delete_where('serial_number=?', $this->serial_number);
+        if (count($inventory_list)) {
+        // clear existing inventory items
+            $this->deleteWhere('serial_number=?', $this->serial_number);
             // insert current inventory items
-            foreach ($inventory_list as $item)
-            {
-                if (preg_match($regex, $item['bundleid']))
-                {
+            foreach ($inventory_list as $item) {
+                if (preg_match($regex, $item['bundleid'])) {
                     continue;
                 }
-                if (preg_match($path_regex, $item['path']))
-                {
+                if (preg_match($path_regex, $item['path'])) {
                     continue;
                 }
 

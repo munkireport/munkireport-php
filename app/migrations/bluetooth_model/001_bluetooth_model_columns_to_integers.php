@@ -31,12 +31,9 @@ class Migration_bluetooth_model_columns_to_integers extends Model
         $sql = "UPDATE bluetooth SET trackpad_battery = REPLACE(trackpad_battery, '% battery life remaining', '')";
         $dbh->exec($sql);
         
-        switch ($this->get_driver())
-        {
+        switch ($this->get_driver()) {
             case 'sqlite':
-            
-                try 
-                {
+                try {
                     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // Wrap in transaction
@@ -47,29 +44,25 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                     $dbh->exec($sql);
                     
                     // Copy data to temp table
-					$sql = "INSERT INTO bluetooth_temp SELECT * FROM bluetooth";
-					$dbh->exec($sql);
+                    $sql = "INSERT INTO bluetooth_temp SELECT * FROM bluetooth";
+                    $dbh->exec($sql);
                     
                     $sql = "DROP table bluetooth";
-					$dbh->exec($sql);
+                    $dbh->exec($sql);
 
-					$sql = "ALTER TABLE bluetooth_temp RENAME TO bluetooth";
-					$dbh->exec($sql);
+                    $sql = "ALTER TABLE bluetooth_temp RENAME TO bluetooth";
+                    $dbh->exec($sql);
 
-					$dbh->commit();
-
-                }
-                catch (Exception $e)
-                {
+                    $dbh->commit();
+                } catch (Exception $e) {
                     $dbh->rollBack();
-					$this->errors .= "Failed: " . $e->getMessage();
-					return FALSE;
+                    $this->errors .= "Failed: " . $e->getMessage();
+                    return false;
                 }
                 
                 break;
 
             case 'mysql':
-
                 // Set columns to INT
                 $sql = "ALTER TABLE bluetooth MODIFY bluetooth_status INT";
                 $dbh->exec($sql);
@@ -84,7 +77,6 @@ class Migration_bluetooth_model_columns_to_integers extends Model
             default:
                 # code...
                 break;
-
         }//end switch
     }// End function up()
 
@@ -93,11 +85,9 @@ class Migration_bluetooth_model_columns_to_integers extends Model
         // Get database handle
         $dbh = $this->getdbh();
         
-        switch ($this->get_driver())
-        {
+        switch ($this->get_driver()) {
             case 'sqlite':
-                try 
-                {
+                try {
                     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // Wrap in transaction
@@ -143,18 +133,14 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                     $dbh->exec($sql);
 
                     $dbh->commit();
-
-                }
-                catch (Exception $e)
-                {
+                } catch (Exception $e) {
                     $dbh->rollBack();
                     $this->errors .= "Failed: " . $e->getMessage();
-                    return FALSE;
+                    return false;
                 }
                 break;
 
             case 'mysql':
-            
                 // Set columns back to VARCHAR
                 $sql = "ALTER TABLE bluetooth MODIFY bluetooth_status VARCHAR(255)";
                 $dbh->exec($sql);
@@ -196,7 +182,5 @@ class Migration_bluetooth_model_columns_to_integers extends Model
                 # code...
                 break;
         }
-        
-
     }
 }

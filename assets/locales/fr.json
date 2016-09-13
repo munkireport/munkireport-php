@@ -43,6 +43,10 @@
   "auth": {
     "addtoconfig": "Ajoutez cette ligne dans config.php:",
     "back_to_site": "Retour au site",
+"captcha": {
+			"empty": "Merci de remplir le captcha",
+			"invalid": "Réponse invalide"
+		},
     "empty_not_allowed": "Les valeurs non définies ne sont pas permises",
     "error_contacting_AD": "Une erreur est survenue en contactant l'AD",
     "gen_other": "Créer une autre",
@@ -98,6 +102,7 @@
   "cert": {
 		"expiré": "__name__ expired __moment__"
 	},
+"cfbundlename": "Nom CFBundle",
   "client": {
     "activity": "Activité Client",
     "comment": "Commentaires",
@@ -107,6 +112,7 @@
       "ard": "ARD",
       "bluetooth": "Bluetooth",
       "certificates": "Certificats",
+"deploystudio": "DeployStudio",
       "displays": "Moniteurs",
       "ds": "Services d'annuaires",
       "gsx": "GSX",
@@ -188,6 +194,35 @@
     "widget_info": "Nombre total d'écrans externes connus",
     "widget_title": "Nombre d'écrans"
   },
+ "ds": {
+		"computername": "Nom d'ordinateur",
+        "architecture": "Architecture",
+        "dstudio-auto-disable": "Désactivation auto",
+        "dstudio-auto-reset-workflow": "Initialisation Auto Workflow",
+        "dstudio-auto-started-workflow": "Démarrage Auto Workflow",
+        "dstudio-bootcamp-windows-computer-name": "Nom Windows Boot Camp",
+        "dstudio-completed": "Complété",
+        "dstudio-disabled": "Désactivé",
+        "dstudio-failed": "Echoué",
+        "dstudio-group": "Groupe",
+        "dstudio-host-ard-field-1": "ARD Info 1",
+        "dstudio-host-ard-field-2": "ARD Info 2",
+        "dstudio-host-ard-field-3": "ARD Info 3",
+        "dstudio-host-ard-field-4": "ARD Info 4",
+        "dstudio-host-ard-ignore-empty-fields": "Ignorer les champs ARD vides",
+        "dstudio-host-delete-other-locations": "Supprimer les autres emplacements",
+        "dstudio-host-model-identifier": "Identifiant du modèle",
+        "dstudio-hostname": "Nom de l'hôte",
+        "dstudio-host-new-network-location": "Nouvel emplacement réseau",
+        "dstudio-host-serial-number": "Numéro de série",
+        "dstudio-host-type": "Type d'hôte",
+        "dstudio-last-workflow": "Dernier workflow exécuté",
+        "dstudio-last-workflow-duration": "Durée du dernier workflow",
+        "dstudio-last-workflow-execution-date": "Date d'exécution du dernier workflow",
+        "dstudio-last-workflow-status": "Etat Workflow",
+        "dstudio-mac-addr": "Adresse MAC",
+        "recheck": "Pull DeployStudio Data"
+    },
   "displayname": "Nom d'affichage",
    "edit": "Modifier",
   	"email": {
@@ -211,6 +246,9 @@
   "events": {
     "widget_title": "Événements dans la dernière heure"
   },
+"external": {
+		"mwa_link": "Ouvrir dans Munki Web Admin"
+	},
   "failing": "Défaillant !",
   "filevault": {
     "users": "Utilisateurs avec FileVault actif",
@@ -272,6 +310,9 @@
   "inactive": "Inactif",
   "info": "Information",
   "installed": "Installé",
+"inventory": {
+		"report": "Inventaire"
+	},
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
   "listing": {
@@ -280,11 +321,7 @@
       "title": "Rapport Apple Remote Desktop"
     },
     "bluetooth": {
-      "keyboard_battery": "Clavier",
-      "mouse_battery": "Souris",
-      "status": "Etat",
-      "title": "Rapport Bluetooth",
-      "trackpad_battery": "Trackpad"
+      "title": "Rapport Bluetooth"
     },
     "certificate": {
       "commonname": "Nom commun",
@@ -394,6 +431,7 @@
       "bluetooth": "Bluetooth",
       "clients": "Clients",
       "certificate": "Certificats",
+"deploystudio": "DeployStudio",
       "directoryservice": "Service d'annuaire",
       "disk": "Disque",
       "displays": "Moniteurs",
@@ -419,6 +457,7 @@
       "admin": "Admin"
     },
     "reports": {
+"appVersions": "Versions des Apps",
       "backup": "Sauvegarde",
       "clients": "Client",
       "configuration": "Configuration",
@@ -448,6 +487,7 @@
   },
   "new_client": "Nouveau client",
 	"new_client_plural": "Nouveaux clients",
+"no": "Non",
 	"no_clients": "Pas de client",
 	"no_data": "Pas de données",
 	"no_errors_or_warnings": "Aucune erreur ni alertes",
@@ -673,5 +713,6 @@
     "xauthtype": "Type Authentification 802.11X",
     "wifiauthtype": "Type Authentication WiFi",
     "wifiinfo": "Information WiFi"
-  }
+ },
+	"yes": "Oui"
 }

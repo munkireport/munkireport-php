@@ -2,7 +2,8 @@
 
 namespace munkireport;
 
-class Database {
+class Database
+{
     
     private $config, $dbh, $error;
 
@@ -20,20 +21,17 @@ class Database {
      */
     public function connect()
     {
-        try
-		{
-			$this->dbh = new \PDO(
-				$this->config['pdo_dsn'],
-				$this->config['pdo_user'],
-				$this->config['pdo_pass'],
-				$this->config['pdo_opts']
-			);
-		}
-		catch (\PDOException $e)
-		{
-			$this->error = $e->getMessage();
-            return FALSE;
-		}
+        try {
+            $this->dbh = new \PDO(
+                $this->config['pdo_dsn'],
+                $this->config['pdo_user'],
+                $this->config['pdo_pass'],
+                $this->config['pdo_opts']
+            );
+        } catch (\PDOException $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
         return $this;
     }
     
@@ -46,8 +44,8 @@ class Database {
      */
     public function getDBH()
     {
-        if(! $this->dbh){
-            if( ! $this->connect()){
+        if (! $this->dbh) {
+            if (! $this->connect()) {
                 return false;
             }
         }
@@ -65,19 +63,17 @@ class Database {
     public function isWritable()
     {
         $dbh = $this->getDBH();
-        if(! $dbh){
-            return FALSE;
+        if (! $dbh) {
+            return false;
         }
         
-        try{
+        try {
             $dbh->exec("CREATE TABLE mr_temp (id TEXT)");
             $dbh->exec("DROP TABLE mr_temp");
             return true;
-        }
-        catch (\PDOException $e)
-        {
+        } catch (\PDOException $e) {
             $this->error = $e->getMessage();
-            return FALSE;
+            return false;
         }
     }
     
@@ -98,9 +94,8 @@ class Database {
      *
      * @return string driver
      **/
-    function get_driver()
+    public function get_driver()
     {
         return $this->getDBH()->getAttribute(\PDO::ATTR_DRIVER_NAME);
     }
-
 }

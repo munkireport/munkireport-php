@@ -2,7 +2,8 @@
 
 namespace munkireport\module\deploystudio;
 
-class Deploystudio_helper {
+class Deploystudio_helper
+{
     
     /**
      *
@@ -10,43 +11,44 @@ class Deploystudio_helper {
      * @author tuxudo (John Eberle)
      * Idea provided by @n8felton
      **/
-    function pull_deploystudio_data(&$deploystudio_model)
+    public function pull_deploystudio_data(&$deploystudio_model)
     {
-    	// Error message
-    	$error = '';
+        // Error message
+        $error = '';
 
-    	$deploystudio_server = conf('deploystudio_server');
+        $deploystudio_server = conf('deploystudio_server');
 
-    	// Get computer data from DeployStudio
-    	$url = "{$deploystudio_server}/computers/get/entry?id={$deploystudio_model->serial_number}";
-    	$deploystudio_computer_result = $this->get_deploystudio_url($url);
+        // Get computer data from DeployStudio
+        $url = "{$deploystudio_server}/computers/get/entry?id={$deploystudio_model->serial_number}";
+        $deploystudio_computer_result = $this->get_deploystudio_url($url);
 
-    	require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-    	$plist = new \CFPropertyList();
-    	$plist->parse($deploystudio_computer_result);
+        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+        $plist = new \CFPropertyList();
+        $plist->parse($deploystudio_computer_result);
 
-    	$plist = $plist->toArray();
-    	$plist = array_values($plist);
-    	$plist = $plist[0];
+        $plist = $plist->toArray();
+        $plist = array_values($plist);
+        $plist = $plist[0];
 
-    	foreach($plist as $key=>$value){
-    		$deploystudio_model->$key = $value;
-    	}
+        foreach ($plist as $key => $value) {
+            $safe_key = str_replace('-', '_', $key);
+            $deploystudio_model->$safe_key = $value;
+        }
 
-    	if(array_key_exists('dstudio-auto-started-workflow',$plist)){
-    		$workflow_title = $this->get_workflow_title($plist['dstudio-auto-started-workflow']);
-    		$deploystudio_model->{'dstudio-auto-started-workflow'} = $workflow_title;
-    	}
+        if (array_key_exists('dstudio-auto-started-workflow', $plist)) {
+            $workflow_title = $this->get_workflow_title($plist['dstudio-auto-started-workflow']);
+            $deploystudio_model->{'dstudio_auto_started_workflow'} = $workflow_title;
+        }
 
-    	if(array_key_exists('dstudio-last-workflow',$plist)){
-    		$workflow_title = $this->get_workflow_title($plist['dstudio-last-workflow']);
-    		$deploystudio_model->{'dstudio-last-workflow'} = $workflow_title;
-    	}
+        if (array_key_exists('dstudio-last-workflow', $plist)) {
+            $workflow_title = $this->get_workflow_title($plist['dstudio-last-workflow']);
+            $deploystudio_model->{'dstudio_last_workflow'} = $workflow_title;
+        }
 
       // Save the data
-      $deploystudio_model->save();
-      $error = 'DeployStudio data processed';
-      return $error;
+        $deploystudio_model->save();
+        $error = 'DeployStudio data processed';
+        return $error;
     }
 
 
@@ -56,20 +58,20 @@ class Deploystudio_helper {
      * @return mixed string if successfull, FALSE if failed
      * @author n8felton (Nathan Felton)
      **/
-    function get_deploystudio_url($url)
+    public function get_deploystudio_url($url)
     {
-    	$deploystudio_username = conf('deploystudio_username');
-    	$deploystudio_password = conf('deploystudio_password');
+        $deploystudio_username = conf('deploystudio_username');
+        $deploystudio_password = conf('deploystudio_password');
 
-    	$ch = curl_init();
-    	curl_setopt($ch, CURLOPT_URL,$url);
-    	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-    	curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    	curl_setopt($ch, CURLOPT_USERPWD, "$deploystudio_username:$deploystudio_password");
-    	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    	$return = curl_exec($ch);
-    	return $return;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "$deploystudio_username:$deploystudio_password");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $return = curl_exec($ch);
+        return $return;
     }
 
     /**
@@ -77,14 +79,14 @@ class Deploystudio_helper {
      * @param UUID of DeployStudio workflow
      * @author n8felton (Nathan Felton)
      **/
-    function get_workflow_title($workflow_id){
-    	$deploystudio_server = conf('deploystudio_server');
-    	$url = "{$deploystudio_server}/workflows/get/entry?id={$workflow_id}";
-    	$deploystudio_auto_workflow_result = $this->get_deploystudio_url($url);
-    	$workflow = new \CFPropertyList();
-    	$workflow->parse($deploystudio_auto_workflow_result);
-    	$deploystudio_auto_workflow_result = $workflow->toArray();
-    	return $deploystudio_auto_workflow_result['title'];
+    public function get_workflow_title($workflow_id)
+    {
+        $deploystudio_server = conf('deploystudio_server');
+        $url = "{$deploystudio_server}/workflows/get/entry?id={$workflow_id}";
+        $deploystudio_auto_workflow_result = $this->get_deploystudio_url($url);
+        $workflow = new \CFPropertyList();
+        $workflow->parse($deploystudio_auto_workflow_result);
+        $deploystudio_auto_workflow_result = $workflow->toArray();
+        return $deploystudio_auto_workflow_result['title'];
     }
-
 }

@@ -1,428 +1,386 @@
 <?php
 class auth extends Controller
 {
-	// Authentication mechanisms we handle
-	public $mechanisms = array('noauth', 'config', 'ldap', 'AD');
+    // Authentication mechanisms we handle
+    public $mechanisms = array('noauth', 'config', 'ldap', 'AD');
 
-	// Authentication mechanisms available
-	public $auth_mechanisms = array();
+    // Authentication mechanisms available
+    public $auth_mechanisms = array();
 
-	function __construct()
-	{
-		if(conf('auth_secure') && empty($_SERVER['HTTPS']))
-		{
-			redirect('error/client_error/426'); // Switch protocol
-		}
-		// Check if there's a valid auth mechanism in config
-		$auth_mechanisms = array();
-		$authSettings = conf('auth');
-		foreach($this->mechanisms as $mech)
-		{
-			if (isset($authSettings["auth_$mech"]) && is_array($authSettings["auth_$mech"]))
-			{
-				$this->auth_mechanisms[$mech] = $authSettings["auth_$mech"];
-			}
-		}
-	}
+    public function __construct()
+    {
+        if (conf('auth_secure') && empty($_SERVER['HTTPS'])) {
+            redirect('error/client_error/426'); // Switch protocol
+        }
+        // Check if there's a valid auth mechanism in config
+        $auth_mechanisms = array();
+        $authSettings = conf('auth');
+        foreach ($this->mechanisms as $mech) {
+            if (isset($authSettings["auth_$mech"]) && is_array($authSettings["auth_$mech"])) {
+                $this->auth_mechanisms[$mech] = $authSettings["auth_$mech"];
+            }
+        }
+    }
 
-	//===============================================================
+    //===============================================================
 
-	function index()
-	{
-		redirect('auth/login');
-	}
+    public function index()
+    {
+        redirect('auth/login');
+    }
 
-	function login($return = '')
-	{
-		if(func_get_args())
-		{
-			$return_parts = func_get_args();
-			$return = implode('/', $return_parts);
+    public function login($return = '')
+    {
+        if (func_get_args()) {
+            $return_parts = func_get_args();
+            $return = implode('/', $return_parts);
+        }
+        
+        if ($this->authorized()) {
+            redirect($return);
+        }
 
-		}
-		
-		if($this->authorized())
-		{
-			redirect($return);
-		}
+        $auth_verified = false;
+        $pre_auth_failed = false;
 
-		$check = FALSE;
+        // If no valid mechanisms found, bail
+        if (! $this->auth_mechanisms) {
+            redirect('auth/generate');
+        }
 
-		// If no valid mechanisms found, bail
-		if ( ! $this->auth_mechanisms)
-		{
-			redirect('auth/generate');
-		}
+        $login = post('login');
+        $password = post('password');
+    
+        //check for recaptcha
+        if (conf('recaptchaloginpublickey')) {
+        //recaptcha enabled by admin; checking it
+            if ($response = post('g-recaptcha-response')) {
+                include_once(APP_PATH . '/lib/munkireport/Recaptcha.php');
+                $recaptchaObj = new munkireport\Recaptcha(conf('recaptchaloginprivatekey'));
+                $remote_ip = getRemoteAddress();
+                
+                if (! $recaptchaObj->verify($response, $remote_ip)) {
+                    error('', 'auth.capthca.invalid');
+                    $pre_auth_failed = true;
+                }
+            } else {
+                if ($_POST) {
+                    error('', 'auth.captcha.empty');
+                    $pre_auth_failed = true;
+                }
+            }
+        }
+        
+        // User is a member of these groups
+        $groups = array();
 
-		$login = isset($_POST['login']) ? $_POST['login'] : '';
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
+        // Loop through authentication mechanisms
+        // Break when we have a match
+        foreach ($this->auth_mechanisms as $mechanism => $auth_data) {
+        // Check if pre-authentication is successful
+            if ($pre_auth_failed) {
+                break;
+            }
+            
+            // Local is just a username => hash array
+            switch ($mechanism) {
+                case 'noauth': // No authentication
+                    $auth_verified = true;
+                    $login = 'admin';
+                    break 2;
 
-		// User is a member of these groups
-		$groups = array();
+                case 'config': // Config authentication
+                    if ($login && $password) {
+                        if (isset($auth_data[$login])) {
+                            $t_hasher = $this->load_phpass();
+                            $auth_verified = $t_hasher->CheckPassword($password, $auth_data[$login]);
+                            
+                            if ($auth_verified) {
+                            // Get group memberships
+                                foreach (conf('groups', array()) as $groupname => $members) {
+                                    if (in_array($login, $members)) {
+                                        $groups[] = $groupname;
+                                    }
+                                }
+                            }
+                            break 2;
+                        }
+                    }
+                    break;
 
-		// Loop through authentication mechanisms
-		// Break when we have a match
-		foreach($this->auth_mechanisms as $mechanism => $auth_data)
-		{
-			// Local is just a username => hash array
-			switch ($mechanism)
-			{
-				case 'noauth': // No authentication
-					$check = TRUE;
-					$login = 'admin';
-					break 2;
+                case 'ldap': // LDAP authentication
+                    if ($login && $password) {
+                        include_once(APP_PATH . '/lib/authLDAP/authLDAP.php');
+                        $ldap_auth_obj = new Auth_ldap($auth_data);
+                        if ($ldap_auth_obj->authenticate($login, $password)) {
+                        //alert('Authenticated');
+                            // Check user against users list
+                            if (isset($auth_data['mr_allowed_users'])) {
+                                $admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
+                                if (in_array(strtolower($login), array_map('strtolower', $admin_users))) {
+                                    $auth_verified = true;
 
-				case 'config': // Config authentication
-					if($login && $password)
-					{
-						if(isset($auth_data[$login]))
-						{
-							$t_hasher = $this->load_phpass();
-							$check = $t_hasher->CheckPassword($password, $auth_data[$login]);
-							
-							if($check)
-							{
-								// Get group memberships
-								foreach(conf('groups', array()) AS $groupname => $members)
-								{
-									if(in_array($login, $members))
-									{
-										$groups[] = $groupname;
-									}
-								}
-							}
-							break 2;
-						}
-					}
-					break;
+                                    // If business units enabled, get group memberships
+                                    if (conf('enable_business_units')) {
+                                        if ($user_data = $ldap_auth_obj->getUserData($login)) {
+                                            $groups = $user_data['grps'];
+                                        }
+                                    }
 
-				case 'ldap': // LDAP authentication
-					if ($login && $password)
-					{
-						include_once (APP_PATH . '/lib/authLDAP/authLDAP.php');
-						$ldap_auth_obj = new Auth_ldap($auth_data);
-						if ($ldap_auth_obj->authenticate($login, $password))
-						{
-							//alert('Authenticated');
-							// Check user against users list
-							if(isset($auth_data['mr_allowed_users']))
-							{
-								$admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
-								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
-								{
-									$check = TRUE;
+                                    break 2;
+                                }
+                            }
+                            // Check user against group list
+                            if (isset($auth_data['mr_allowed_groups'])) {
+                            // Set mr_allowed_groups to array
+                                $admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
+                                // Get groups from AD
+                                if ($user_data = $ldap_auth_obj->getUserData($login)) {
+                                    foreach ($user_data['grps'] as $group) {
+                                        if (in_array($group, $admin_groups)) {
+                                            $auth_verified = true;
 
-									// If business units enabled, get group memberships
-									if(conf('enable_business_units'))
-									{
-										if( $user_data = $ldap_auth_obj->getUserData($login))
-										{
-											$groups = $user_data['grps'];
-										}
-									}
+                                            // If business units enabled, store group memberships
+                                            if (conf('enable_business_units')) {
+                                                $groups = $user_data['grps'];
+                                            }
+                                            
+                                            break 3;
+                                        }
+                                    }
+                                }
+                            }//end group list check
+                            // Not in users list or group list
+                            error('Not authorized', 'auth.not_authorized');
+                            break;
+                        }
+                    }
 
-									break 2;
-								}
-							}
-							// Check user against group list
-							if(isset($auth_data['mr_allowed_groups']))
-							{
-								// Set mr_allowed_groups to array
-								$admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
-								// Get groups from AD
-								if( $user_data = $ldap_auth_obj->getUserData($login))
-								{
-									foreach ($user_data['grps'] as $group)
-									{
-										if (in_array($group, $admin_groups))
-										{
-											$check = TRUE;
+                case 'AD': // Active Directory authentication
+                    // Prevent empty values
+                    if ($_POST && $login && $password) {
+                    //include the class and create a connection
+                        //TODO: wrap this include somewhere else?
+                        include_once(APP_PATH . '/lib/adLDAP/adLDAP.php');
+                        try {
+                            $adldap = new adLDAP($auth_data);
+                        } catch (adLDAPException $e) {
+                            error('An error ocurred while contacting AD', 'error_contacting_AD');
+                            // When in debug mode, show additional info
+                            if (conf('debug')) {
+                                error($e->getMessage());
+                            }
+                            break 2;
+                        }
+                        // If nothing has failed to this point, authenticate user
+                        if ($adldap->authenticate($login, $password)) {
+                        // Check user against userlist
+                            if (isset($auth_data['mr_allowed_users'])) {
+                                $admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
+                                if (in_array(strtolower($login), array_map('strtolower', $admin_users))) {
+                                    $auth_verified = true;
 
-											// If business units enabled, store group memberships
-											if(conf('enable_business_units'))
-											{
-												$groups = $user_data['grps'];
-											}
-											
-											break 3;
-										}
-									}
-								}
-							}//end group list check
-							// Not in users list or group list
-							error('Not authorized', 'auth.not_authorized');
-							break;
-						}
-					}
+                                    // If business units enabled, get group memberships
+                                    if (conf('enable_business_units')) {
+                                        $groups = $adldap->user()->groups($login);
+                                    }
 
-				case 'AD': // Active Directory authentication
-					// Prevent empty values
-					if ($_POST && $login && $password)
-					{
-						//include the class and create a connection
-						//TODO: wrap this include somewhere else?
-						include_once (APP_PATH . '/lib/adLDAP/adLDAP.php');
-						try
-						{
-							$adldap = new adLDAP($auth_data);
-						}
-						catch (adLDAPException $e)
-						{
-							error('An error ocurred while contacting AD', 'error_contacting_AD');
-							// When in debug mode, show additional info
-							if (conf('debug'))
-							{
-								error($e->getMessage());
-							}
-							break 2;
-						}
-						// If nothing has failed to this point, authenticate user
-						if ($adldap->authenticate($login, $password))
-						{
-							// Check user against userlist
-							if(isset($auth_data['mr_allowed_users']))
-							{
-								$admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
-								if (in_array(strtolower($login),array_map('strtolower', $admin_users)))
-								{
-									$check = TRUE;
+                                    break 2;
+                                }
+                            }
+                            // Check user against group list
+                            if (isset($auth_data['mr_allowed_groups'])) {
+                            // Set mr_allowed_groups to array
+                                $admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
+                                // Get groups from AD
+                                $groups = $adldap->user()->groups($login);
+                                foreach ($groups as $group) {
+                                    if (in_array($group, $admin_groups)) {
+                                        $auth_verified = true;
+                                        break 3;
+                                    }
+                                }
+                            }//end group list check
 
-									// If business units enabled, get group memberships
-									if(conf('enable_business_units'))
-									{
-										$groups = $adldap->user()->groups($login);
-									}
+                            // Not in users list or group list
+                            error('Not authorized', 'auth.not_authorized');
+                            break;
+                        }
+                        break;
+                    }
+                    break; //end of AD method
 
-									break 2;
-								}
-							}
-							// Check user against group list
-							if(isset($auth_data['mr_allowed_groups']))
-							{
-								// Set mr_allowed_groups to array
-								$admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
-								// Get groups from AD
-								$groups = $adldap->user()->groups($login);
-								foreach ($groups as $group)
-								{
-									if (in_array($group, $admin_groups))
-									{
-										$check = TRUE;
-										break 3;
-									}
-								}
-							}//end group list check
+                default:
+                    die('Unknown authentication mechanism: '.$mechanism);
+                    break;
+            } //end switch
+        } //end foreach loop
 
-							// Not in users list or group list
-							error('Not authorized', 'auth.not_authorized');
-							break;
-						}
-						break;
-					}
-					break; //end of AD method
+        // If authentication succeeded, create session
+        if ($auth_verified) {
+            $_SESSION['user'] = $login;
+            $_SESSION['groups'] = $groups;
+            $_SESSION['auth'] = $mechanism;
+            
+            $this->set_session_props();
 
-				default:
-					die( 'Unknown authentication mechanism: '.$mechanism);
-					break;
-			} //end switch
-		} //end foreach loop
+            session_regenerate_id();
+            redirect($return);
+        }
 
-		// If authentication succeeded, create session
-		if($check)
-		{
-			$_SESSION['user'] = $login;
-			$_SESSION['groups'] = $groups;
-			$_SESSION['auth'] = $mechanism;
-			
-			$this->set_session_props();
+        // If POST and no other alerts, auth has failed
+        if ($_POST && ! $GLOBALS['alerts']) {
+            if (! $login or ! $password) {
+                error('Empty values are not allowed', 'auth.empty_not_allowed');
+            } else {
+                error('Wrong username or password', 'auth.wrong_user_or_pass');
+            }
+        }
 
-			session_regenerate_id();
-			redirect($return);
-		}
+        $data = array('login' => $login, 'url' => url("auth/login/$return"));
 
-		// If POST and no other alerts, auth has failed
-		if($_POST && ! $GLOBALS['alerts'])
-		{
-			if( ! $login OR ! $password)
-			{
-				error('Empty values are not allowed', 'auth.empty_not_allowed');
-			}
-			else
-			{
-				error('Wrong username or password', 'auth.wrong_user_or_pass');
-			}
-		}
+        $obj = new View();
+        $obj->view('auth/login', $data);
+    }
 
-		$data = array('login' => $login, 'url' => url("auth/login/$return"));
+    /**
+     * Set session properties
+     *
+     **/
+    public function set_session_props($show = false)
+    {
+        // Initialize session
+        $this->authorized();
 
-		$obj = new View();
-		$obj->view('auth/login', $data);
-	}
+        // Check if we are in a session
+        if (! isset($_SESSION['auth'])) {
+            $msg = array('error' => 'unauthorized');
+            $obj = new View();
+            $obj->view('json', array('msg' => $msg));
+            return;
+        }
 
-	/**
-	 * Set session properties
-	 *
-	 **/
-	function set_session_props($show = false)
-	{
-		// Initialize session
-		$this->authorized();
+        // Default role is user
+        $_SESSION['role'] = 'user';
+        $_SESSION['role_why'] = 'Default role';
 
-		// Check if we are in a session
-		if( ! isset($_SESSION['auth']))
-		{
-			$msg = array('error' => 'unauthorized');
-			$obj = new View();
-	        $obj->view('json', array('msg' => $msg));
-			return;
-		}
+        // Find role in config for current user
+        foreach (conf('roles', array()) as $role => $members) {
+        // Check for wildcard
+            if (in_array('*', $members)) {
+                $_SESSION['role'] = $role;
+                $_SESSION['role_why'] = 'Matched on wildcard (*) in '.$role;
+                break;
+            }
 
-		// Default role is user
-		$_SESSION['role'] = 'user';
-		$_SESSION['role_why'] = 'Default role';
+            // Check if user or group is present in members
+            foreach ($members as $member) {
+                if (strpos($member, '@') === 0) {
+                    // groups (start with @)
+                    if (in_array(substr($member, 1), $_SESSION['groups'])) {
+                        $_SESSION['role'] = $role;
+                        $_SESSION['role_why'] = 'member of ' . $member;
 
-		// Find role in config for current user
-		foreach(conf('roles', array()) AS $role => $members)
-		{
-			// Check for wildcard
-			if(in_array('*', $members))
-			{
-				$_SESSION['role'] = $role;
-				$_SESSION['role_why'] = 'Matched on wildcard (*) in '.$role;
-				break;
-			}
+                        break 2;
+                    }
+                } else {
+                    // user
+                    if ($member == $_SESSION['user']) {
+                        $_SESSION['role'] = $role;
+                        $_SESSION['role_why'] = $member. ' in "'.$role.'" role array';
+                        break 2;
+                    }
+                }
+            }
+        }
 
-			// Check if user or group is present in members
-			foreach($members as $member)
-			{
-				if(strpos($member, '@') === 0)
-				{
-					// groups (start with @)
-					if(in_array(substr($member, 1), $_SESSION['groups']))
-					{
-						$_SESSION['role'] = $role;
-						$_SESSION['role_why'] = 'member of ' . $member;
+        // Check if Business Units are enabled in the config file
+        $bu_enabled = conf('enable_business_units', false);
 
-						break 2;
-					}
-				}
-				else
-				{
-					// user
-					if($member == $_SESSION['user'])
-					{
-						$_SESSION['role'] = $role;
-						$_SESSION['role_why'] = $member. ' in "'.$role.'" role array';
-						break 2;
-					}
-				}
-			}
-		}
+        // Check if user is global admin
+        if ($_SESSION['auth'] == 'noauth' or $_SESSION['role'] == 'admin') {
+            unset($_SESSION['business_unit']);
+        } elseif (! $bu_enabled) {
+        // Regular user w/o business units enabled
+            unset($_SESSION['business_unit']);
+        } elseif ($bu_enabled) {
+        // Authorized user, not in business unit
+            $_SESSION['role'] = 'nobody';
+            $_SESSION['role_why'] = 'Default role for Business Units';
+            $_SESSION['business_unit'] = 0;
 
-		// Check if Business Units are enabled in the config file
-		$bu_enabled = conf('enable_business_units', FALSE);
+            // Lookup user in business units
+            $bu = new Business_unit;
+            if ($bu->retrieveOne("property IN ('manager', 'user') AND value=?", $_SESSION['user'])) {
+                $_SESSION['role'] = $bu->property; // manager, user
+                $_SESSION['role_why'] = $_SESSION['user'].' found in Business Unit '. $bu->unitid;
+                $_SESSION['business_unit'] = $bu->unitid;
+            } else {
+                // Lookup groups in Business Units
+                foreach ($_SESSION['groups'] as $group) {
+                    if ($bu->retrieveOne("property IN ('manager', 'user') AND value=?", '@' . $group)) {
+                        $_SESSION['role'] = $bu->property; // manager, user
+                        $_SESSION['role_why'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
+                        $_SESSION['business_unit'] = $bu->unitid;
+                        break;
+                    }
+                }
+            }
+        }
 
-		// Check if user is global admin
-		if($_SESSION['auth'] == 'noauth' OR $_SESSION['role'] == 'admin')
-		{
-			unset($_SESSION['business_unit']);
-		}
-		elseif( ! $bu_enabled)
-		{
-			// Regular user w/o business units enabled
-			unset($_SESSION['business_unit']);
-		}
-		elseif($bu_enabled)
-		{
-			// Authorized user, not in business unit
-			$_SESSION['role'] = 'nobody';
-			$_SESSION['role_why'] = 'Default role for Business Units';
-			$_SESSION['business_unit'] = 0;
+        // Set machine_groups
+        if ($_SESSION['role'] == 'admin' or ! $bu_enabled) {
+        // Can access all defined groups (from machine_group)
+            // and used groups (from reportdata)
+            $mg = new Machine_group;
+            $report = new Reportdata_model;
+            $_SESSION['machine_groups'] = array_unique(array_merge($report->get_groups(), $mg->get_group_ids()));
+        } else {
+            // Only get machine_groups for business unit
+            $_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
+        }
 
-			// Lookup user in business units
-			$bu = new Business_unit;
-			if($bu->retrieve_one("property IN ('manager', 'user') AND value=?", $_SESSION['user']))
-			{
-				$_SESSION['role'] = $bu->property; // manager, user
-				$_SESSION['role_why'] = $_SESSION['user'].' found in Business Unit '. $bu->unitid;
-				$_SESSION['business_unit'] = $bu->unitid;
-			}
-			else
-			{
-				// Lookup groups in Business Units
-				foreach($_SESSION['groups'] AS $group)
-				{
-					if($bu->retrieve_one("property IN ('manager', 'user') AND value=?", '@' . $group))
-					{
-						$_SESSION['role'] = $bu->property; // manager, user
-						$_SESSION['role_why'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
-						$_SESSION['business_unit'] = $bu->unitid;
-						break;
-					}
-				}
-			}
-		}
+        // Show current session info
+        if ($show) {
+            $obj = new View();
+            $obj->view('json', array('msg' => $_SESSION));
+        }
+    }
 
-		// Set machine_groups
-		if($_SESSION['role'] == 'admin' OR ! $bu_enabled)
-		{
-			// Can access all defined groups (from machine_group)
-			// and used groups (from reportdata)
-			$mg = new Machine_group;
-			$report = new Reportdata_model;
-			$_SESSION['machine_groups'] = array_unique(array_merge($report->get_groups(), $mg->get_group_ids()));
-		}
-		else
-		{
-			// Only get machine_groups for business unit
-			$_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
-		}
+    public function logout()
+    {
+        // Initialize session
+        $this->authorized();
 
-		// Show current session info
-		if($show)
-		{
-			$obj = new View();
-	        $obj->view('json', array('msg' => $_SESSION));
-		}
-	}
+        // Destroy session;
+        session_destroy();
+        redirect('');
+    }
 
-	function logout()
-	{
-		// Initialize session
-		$this->authorized();
+    public function generate()
+    {
+        // Add a reason why generate is called
+        $data = array('reason' => empty($this->auth_mechanisms) ? 'noauth' : 'none');
 
-		// Destroy session;
-		session_destroy();
-		redirect('');
-	}
+        $password = isset($_POST['password']) ? $_POST['password'] : '';
+        $data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
+        
+        if ($_POST && (! $data['login'] or ! $password)) {
+            error('Empty values are not allowed', 'auth.empty_not_allowed');
+        }
 
-	function generate()
-	{
-		// Add a reason why generate is called
-		$data = array('reason' => empty($this->auth_mechanisms) ? 'noauth' : 'none');
+        if ($data['login'] && $password) {
+            $t_hasher = $this->load_phpass();
+            $data['generated_pwd'] = $t_hasher->HashPassword($password);
+        }
 
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
-		$data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
+        $obj = new View();
+        $obj->view('auth/generate_password', $data);
+    }
 
-		if( $_POST && (! $data['login'] OR ! $password))
-		{
-			error('Empty values are not allowed', 'auth.empty_not_allowed');
-		}
-
-		if ($data['login'] && $password)
-		{
-			$t_hasher = $this->load_phpass();
-			$data['generated_pwd'] = $t_hasher->HashPassword($password);
-		}
-
-		$obj = new View();
-		$obj->view('auth/generate_password', $data);
-	}
-
-	function load_phpass()
-	{
-		require(APP_PATH . '/lib/phpass-0.3/PasswordHash.php');
-		return new PasswordHash(8, TRUE);
-	}
-
+    public function load_phpass()
+    {
+        require(APP_PATH . '/lib/phpass-0.3/PasswordHash.php');
+        return new PasswordHash(8, true);
+    }
 }

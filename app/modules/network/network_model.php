@@ -1,10 +1,11 @@
 <?php
 
-class Network_model extends Model {
+class Network_model extends Model
+{
     
-    function __construct($serial_number='')
+    public function __construct($serial_number = '')
     {
-		parent::__construct('id', strtolower('network')); //primary key, tablename
+        parent::__construct('id', strtolower('network')); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial_number;
         $this->rs['service'] = ''; // Service name
@@ -27,8 +28,8 @@ class Network_model extends Model {
 
         $this->idx[] = array('serial_number');
         $this->idx[] = array('serial_number', 'service');
-				
-		// Create table if it does not exist
+                
+        // Create table if it does not exist
         $this->create_table();
                 
         return $this;
@@ -40,93 +41,83 @@ class Network_model extends Model {
      * @param string data
      * @author abn290
      **/
-    function process($data)
+    public function process($data)
     {
         // Translate network strings to db fields
         $translate = array(
-        	'Ethernet Address: ' => 'ethernet',
-        	'Client ID: ' => 'clientid',
-        	'Wi-Fi ID: ' => 'ethernet',
-        	'IP address: ' => 'ipv4ip',
-        	'Subnet mask: ' => 'ipv4mask',
-        	'Router: ' => 'ipv4router',
-        	'IPv6: ' => 'ipv6conf',
-        	'IPv6 IP address: ' => 'ipv6ip',
-        	'IPv6 Prefix Length: ' => 'ipv6prefixlen',
-        	'IPv6 Router: ' => 'ipv6router');
+            'Ethernet Address: ' => 'ethernet',
+            'Client ID: ' => 'clientid',
+            'Wi-Fi ID: ' => 'ethernet',
+            'IP address: ' => 'ipv4ip',
+            'Subnet mask: ' => 'ipv4mask',
+            'Router: ' => 'ipv4router',
+            'IPv6: ' => 'ipv6conf',
+            'IPv6 IP address: ' => 'ipv6ip',
+            'IPv6 Prefix Length: ' => 'ipv6prefixlen',
+            'IPv6 Router: ' => 'ipv6router');
 
         // ipv4 dhcp configuration strings
-        // Unfortunately you cannot detect if IPv4 is off with 
+        // Unfortunately you cannot detect if IPv4 is off with
         // netwerksetup -getinfo
         $ipv4conf = array(
-        	'DHCP Configuration' => 'dhcp',
-        	'Manually Using DHCP Router Configuration' => 'manual',
-        	'BOOTP Configuration' => 'bootp',
-        	'Manual Configuration' => 'manual');
+            'DHCP Configuration' => 'dhcp',
+            'Manually Using DHCP Router Configuration' => 'manual',
+            'BOOTP Configuration' => 'bootp',
+            'Manual Configuration' => 'manual');
         
         $services = array();
         $order = 1; // Service order
 
         // Parse network data
-        foreach(explode("\n", $data) as $line)
-        {
-            if( preg_match('/^Service: (.*)$/', $line, $result))
-            {
-            	$service = $result[1];
-            	$services[$service] = $this->rs; // Copy db fields
+        foreach (explode("\n", $data) as $line) {
+            if (preg_match('/^Service: (.*)$/', $line, $result)) {
+                $service = $result[1];
+                $services[$service] = $this->rs; // Copy db fields
                 $services[$service]['order'] = $order++;
-            	continue;
+                continue;
             }
 
             // Skip lines before service starts
-            if ( ! isset($service))
-            {
-            	continue;
+            if (! isset($service)) {
+                continue;
             }
 
             // Translate standard entries
-            foreach($translate as $search => $field)
-            {
-            	if(strpos($line, $search) === 0)
-            	{
-            		$services[$service][$field] = substr($line, strlen($search));
-            		break;
-            	}
+            foreach ($translate as $search => $field) {
+                if (strpos($line, $search) === 0) {
+                    $services[$service][$field] = substr($line, strlen($search));
+                    break;
+                }
             }
 
-            if(strpos($line, 'disabled'))
-            {
-            	$services[$service]['status'] = 0;
+            if (strpos($line, 'disabled')) {
+                $services[$service]['status'] = 0;
                 echo "$service disabled";
-            	continue;
+                continue;
             }
 
             // Look through the standard ipv4 config strings
-            foreach($ipv4conf as $search => $field)
-            {
-            	if(strpos($line, $search) === 0)
-            	{
-            		$services[$service]['ipv4conf'] = $field;
-            		break;
-            	}
+            foreach ($ipv4conf as $search => $field) {
+                if (strpos($line, $search) === 0) {
+                    $services[$service]['ipv4conf'] = $field;
+                    break;
+                }
             }
         }
 
         //print_r($services);
 
         // Delete previous entries
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // Now only store entries with a valid ethernet address
-        foreach( $services as $service => $data)
-        {
-            if( $data['ethernet'] && strlen($data['ethernet']) == 17)
-        	{
-        		$this->merge($data);
+        foreach ($services as $service => $data) {
+            if ($data['ethernet'] && strlen($data['ethernet']) == 17) {
+                $this->merge($data);
                 $this->id = '';
-        		$this->service = $service;
-        		$this->save();
-        	}
+                $this->service = $service;
+                $this->save();
+            }
         }
     }
 }

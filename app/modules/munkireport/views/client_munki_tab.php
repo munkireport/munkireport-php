@@ -142,12 +142,6 @@ $(document).on('appReady', function(e, lang) {
 	$.getJSON(appUrl + '/module/managedinstalls/get_data/' + serialNumber, function(data){
 
 		var dataSet = [],
-			statusFormat = {
-				install_failed: {type: 'danger'},
-				install_succeeded: {type: 'success'},
-				installed: {type: 'info'},
-				pending_install: {type: 'warning'}
-			},
 			statusList = {
 				installed: 0,
 				install_succeeded: 0,
@@ -171,9 +165,9 @@ $(document).on('appReady', function(e, lang) {
 
 		// Show statusList
 		$('#managedinstalls-statuslist').empty();
-		for (var prop in statusFormat) {
+		for (var prop in mr.statusFormat) {
 			if(statusList[prop]){
-				var format = statusFormat[prop];
+				var format = mr.statusFormat[prop];
 				$('#managedinstalls-statuslist')
 					.append(' ')
 					.append($('<button>')
@@ -201,24 +195,35 @@ $(document).on('appReady', function(e, lang) {
 				$('td:eq(2)', nRow).html(fileSize(size * 1024, 0));
 				// add status labels
 					var status = $('td:eq(3)', nRow).text();
-					if(statusFormat[status]){
+					if(mr.statusFormat[status]){
 						$('td:eq(3)', nRow).empty()
 							.append($('<span>')
 								.addClass('label')
-								.addClass('label-' + statusFormat[status].type)
+								.addClass('label-' + mr.statusFormat[status].type)
 								.text(status));
 					}
 
 			}
 		});
 	});
-
+	
+	// Get mwa2Link
+	mr.mwa2Link = "<?=conf('mwa2_link')?>";
+	
 	// Get munkireport data TODO: move to client_detail.js
     $.getJSON(appUrl + '/module/munkireport/get_data/' + serialNumber, function(data){
 		// TODO: check for errors
 		$.each(data, function(prop, val){
 			$('#munki-'+prop).html(val);
 		});
+		
+		// Get mwa2 link
+		if(mr.mwa2Link){
+			$('#munki-manifestname').append(' <a class="btn btn-xs btn-info" target="_blank" href="'+mr.mwa2Link+'/manifests/#'+$('#munki-manifestname').text()+'"><i class="fa fa-arrow-circle-right"></span></a>');
+			$('#munki-manifestname a').tooltip(
+				{title: i18n.t('external.mwa_link')}
+			);
+		}
 
 		// Set times
 		var starttime = moment(data.starttime, "YYYY-MM-DD HH:mm:ss Z"),

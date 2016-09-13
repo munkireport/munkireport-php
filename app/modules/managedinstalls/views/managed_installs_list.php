@@ -12,7 +12,7 @@ new Managedinstalls_model;
   <div class="row">
 
   	<div class="col-lg-12">
-
+        
 	<h3><span data-i18n="managedinstalls.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
@@ -60,7 +60,20 @@ new Managedinstalls_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
+            columnDefs = [{ visible: false, targets: hideThese }], //Column Definitions
+            pkgName = "<?=$name?>",
+            pkgVersion = "<?=$version?>";
+        
+        if(pkgName){
+            // Set name on heading
+            $('h3>span:first').text(pkgName);
+            
+            if(pkgVersion){
+                $('h3>span:first').text(pkgName + ' ('+pkgVersion+')');
+            }
+        }
+        
+
 
         $('.table th').map(function(){
 
@@ -82,7 +95,25 @@ new Managedinstalls_model;
                 url: "<?=url('datatables/data')?>",
                 type: "POST",
                 data: function(d){
-                    d.mrColNotEmpty = "managedinstalls.name"
+                    d.mrColNotEmpty = "managedinstalls.name";
+                    
+                    d.where = [];
+                    
+                    if(pkgName){
+                        d.where.push({
+                            table: 'managedinstalls',
+                            column: 'name',
+                            value: pkgName
+                        });
+                        
+                        if(pkgVersion){
+                            d.where.push({
+                                table: 'managedinstalls',
+                                column: 'version',
+                                value: pkgVersion
+                            });
+                        }
+                    }
                 }
             },
             dom: mr.dt.buttonDom,
@@ -100,6 +131,15 @@ new Managedinstalls_model;
                   $('td:eq(0)', nRow).html(link);
                 } else {
                   $('td:eq(0)', nRow).html(name);
+                }
+                
+                var status = $('td:eq(5)', nRow).text();
+                if(mr.statusFormat[status]){
+                    $('td:eq(5)', nRow).empty()
+                        .append($('<span>')
+                            .addClass('label')
+                            .addClass('label-' + mr.statusFormat[status].type)
+                            .text(status));
                 }
                 
                 $('td:last', nRow).html(fileSize($('td:last', nRow).html() * 1024));    

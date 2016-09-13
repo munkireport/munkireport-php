@@ -18,13 +18,13 @@ new munkiinfo_model;
           <table id="pkg-stats-table" class="table table-striped">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Displayname</th>
-                <th>Version</th>
-                <th>Ratio</th>
-                <th>Installed</th>
-                <th>Pending</th>
-                <th>Failed</th>
+                <th data-i18n="name"></th>
+                <th data-i18n="version"></th>
+                <th data-i18n="displayname"></th>
+                <th data-i18n="ratio"></th>
+                <th data-i18n="installed"></th>
+                <th data-i18n="pending"></th>
+                <th data-i18n="failed"></th>
               </tr>
             </thead>
             <tbody>
@@ -43,7 +43,7 @@ $(document).on('appReady', function(e, lang) {
             
         var dataSet = [],
             displayNames = {},
-            linkUrl = appUrl + '/module/managedinstalls/listing#';
+            linkUrl = appUrl + '/module/managedinstalls/listing/';
 
         $.each(data, function(index, val){
             if(val.name){
@@ -55,8 +55,8 @@ $(document).on('appReady', function(e, lang) {
                     pct = total ? Math.round((total - pending - failed)/total * 100) : 0;
                 dataSet.push([
                     val.name,
-                    displayname,
                     val.version || '',
+                    displayname,
                     pct + '%',
                     installed,
                     pending,
@@ -72,8 +72,10 @@ $(document).on('appReady', function(e, lang) {
             serverSide: false,
             order: [0,'asc'],
             createdRow: function( nRow, aData, iDataIndex ) {
-                var name=$('td:eq(0)', nRow).html();
+                var name=$('td:eq(0)', nRow).text(),
+                    version=$('td:eq(1)', nRow).text();
                 $('td:eq(0)', nRow).html('<a href="'+linkUrl+name+'">'+name+'</a>');
+                $('td:eq(1)', nRow).html('<a href="'+linkUrl+name+'/'+version+'">'+version+'</a>');
 
             },
             drawCallback: function( oSettings ) {

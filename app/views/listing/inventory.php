@@ -19,6 +19,7 @@ new Inventory_model;
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+			<th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
                 <th data-i18n="name" data-colname='inventoryitem.name'></th>
                 <th data-i18n="version" data-colname='inventoryitem.version'></th>
@@ -86,16 +87,16 @@ new Inventory_model;
 	        	$('td:eq(0)', nRow).html(link);
                 
                 // Get name link
-                var appname=$('td:eq(2)', nRow).html();
-                $('td:eq(2)', nRow).html(
+                var appname=$('td:eq(3)', nRow).html();
+                $('td:eq(3)', nRow).html(
                     $('<a>')
                         .attr('href', appUrl+'/module/inventory/items/'+appname)
                         .text(appname)
                 )
                 
                 // Get name/version link
-                var version=$('td:eq(3)', nRow).html();
-                $('td:eq(3)', nRow).html(
+                var version=$('td:eq(4)', nRow).html();
+                $('td:eq(4)', nRow).html(
                     $('<a>')
                         .attr('href', appUrl+'/module/inventory/items/'+appname+'/'+version)
                         .text(version)
