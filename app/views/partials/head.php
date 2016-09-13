@@ -36,6 +36,7 @@
 			appUrl = baseUrl + 'index.php?',
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
+			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
 	</script>
 
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
