@@ -95,12 +95,29 @@ class Power_model extends Model {
 			    }
 			} 
 		} //end foreach explode lines
+
+		if ( $this->condition === "No Battery") {
+			$this->manufacture_date = '';
+			$this->design_capacity = 0;
+			$this->max_capacity = 0;
+			$this->current_capacity = 0;
+			$this->cycle_count = 0;
+			$this->temperature = 0;
+		}
 		
 		// Calculate maximum capacity as percentage of original capacity
-		$this->max_percent = round(($this->max_capacity / $this->design_capacity * 100 ), 0 );
+		if ( $this->design_capacity > 0) {
+			$this->max_percent = round(($this->max_capacity / $this->design_capacity * 100 ), 0 );
+		} else {
+			$this->max_percent = 0;
+		}
 		
 		// Calculate percentage of current maximum capacity
-		$this->current_percent = round(($this->current_capacity / $this->max_capacity * 100 ), 0 );
+		if ( $this->max_capacity > 0) {
+			$this->current_percent = round(($this->current_capacity / $this->max_capacity * 100 ), 0 );
+		} else {
+			$this->current_percent = 0;
+		}	
 		
 		// Convert battery manufacture date to calendar date.
 		// Bits 0...4 => day (value 1-31; 5 bits)
