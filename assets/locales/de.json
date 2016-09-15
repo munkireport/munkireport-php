@@ -42,6 +42,10 @@
   "auth": {
     "addtoconfig": "Fügen Sie diese Zeile zur config.php hinzu:",
     "back_to_site": "Zurück zur Seite",
+    "captcha": {
+      "empty": "Bitte Captcha ausfüllen",
+      "invalid": "Falsche Captcha-Antwort"
+    },
     "empty_not_allowed": "Leere Werte sind nicht erlaubt",
     "error_contacting_AD": "Es ist ein Fehler bei der Verbindung mit der AD aufgetreten",
     "gen_other": "Weitere erstellen",
@@ -192,7 +196,7 @@
   "ds": {
     "computername": "Computername",
     "architecture": "Architektur",
-    "recheck": "DeployStudio holen"
+    "recheck": "DeployStudio-Daten holen"
   },
   "displayname": "Anzeigename",
   "edit": "Editieren",
@@ -214,7 +218,11 @@
   "events": {
     "widget_title": "Ereignisse der letzten Stunde"
   },
-  "failing": "Fehlgeschlagen!",
+  "external": {
+    "mwa_link": "In Munki Web Admin öffnen"
+  },
+  "failed": "Fehlgeschlagen",
+  "failing": "Schlägt fehl!",
   "filevault": {
     "users": "User bei denen FileVault aktiv ist",
     "widget": {
@@ -276,8 +284,9 @@
   "info": "Information",
   "installed": "Installiert",
   "inventory": {
-    "report": ""
+    "report": "Inventar Report"
   },
+  "keyboard": "Tastatur",
   "last_seen": "Zuletzt gesehen",
   "last_user": "Letzter User",
   "listing": {
@@ -286,6 +295,9 @@
       "title": "Apple Remote Desktop Bericht"
     },
     "bluetooth": {
+      "battery_percent": "Batteriestatus",
+      "bluetooth_power": "Bluetooth Status",
+      "device_type": "Gerätetyp",
       "title": "Bluetooth Bericht"
     },
     "certificate": {
@@ -364,6 +376,7 @@
     "pressure": "Speicherdruck"
   },
   "model": "Modell",
+  "mouse": "Maus",
   "munki": {
     "error": "Munki-Fehler: __error__",
     "error_plural": "__count__ Munki-Fehler",
@@ -492,6 +505,7 @@
   },
   "pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
   "pkg_failed_to_install_plural": "__count__ Pakete wurden nicht installiert",
+  "ratio": "Verhältnis",
   "reg_date": "Registrierungsdatum",
   "remote_control": "Fernsteuerung",
   "report": {
@@ -580,6 +594,7 @@
     "timemachine": "Time Machine"
   },
   "total_clients": "Gesamte Anzahl Clients",
+  "trackpad": "Trackpad",
   "type": "Typ",
   "unavailable": "Nicht verfügbar",
   "unauthorized": "Sie sind nicht autorisiert",
