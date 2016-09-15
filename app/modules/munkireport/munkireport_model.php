@@ -11,8 +11,8 @@ class Munkireport_model extends Model {
 		$this->rs['errors'] = 0;
 		$this->rs['warnings'] = 0;
 		$this->rs['manifestname'] = '';
-		$this->rs['error_json'] = ''; $this->rt['errors'] = 'BLOB'; // JSON object errors
-		$this->rs['warning_json'] = ''; $this->rt['warnings'] = 'BLOB'; // JSON object with warnings
+		$this->rs['error_json'] = ''; $this->rt['error_json'] = 'BLOB'; // JSON object errors
+		$this->rs['warning_json'] = ''; $this->rt['warning_json'] = 'BLOB'; // JSON object with warnings
 		$this->rs['starttime'] = '';
 		$this->rs['endtime'] = '';
 		$this->rs['timestamp'] = '';
