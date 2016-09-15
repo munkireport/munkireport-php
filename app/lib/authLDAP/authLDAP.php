@@ -428,7 +428,7 @@ class Auth_ldap
          // see https://github.com/adldap/adLDAP/issues/22
          return preg_replace_callback(
              '/([\x00-\x1F\*\(\)\\\\])/',
-             public function ($matches) {
+             function ($matches) {
                  return "\\".join("", unpack("H2", $matches[1]));
              },
              $string
