@@ -77,11 +77,12 @@ class Migration_munkireport_fix_type extends Model
             // Rename temp table
             $sql = "ALTER TABLE munkireport_temp RENAME TO munkireport";
             $this->exec($sql);
+            
+            // Commit transaction
+            $dbh->commit();
 
         }
 
-        // Commit transaction
-        $dbh->commit();
 
         //throw new Exception("Error Processing Request", 1);
 
