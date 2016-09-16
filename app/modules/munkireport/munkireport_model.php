@@ -2,21 +2,20 @@
 class Munkireport_model extends Model
 {
 
-    public function __construct($serial_number = '')
+    public function __construct($serial_number='')
     {
         parent::__construct('id', 'munkireport'); //primary key, tablename
         $this->rs['id'] = 0;
-        $this->rs['serial_number'] = $serial_number;
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial_number; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['runtype'] = '';
         $this->rs['version'] = '';
         $this->rs['errors'] = 0;
         $this->rs['warnings'] = 0;
         $this->rs['manifestname'] = '';
         $this->rs['error_json'] = '';
-        $this->rt['errors'] = 'BLOB'; // JSON object errors
+        $this->rt['error_json'] = 'BLOB'; // JSON object errors
         $this->rs['warning_json'] = '';
-        $this->rt['warnings'] = 'BLOB'; // JSON object with warnings
+        $this->rt['warning_json'] = 'BLOB'; // JSON object with warnings
         $this->rs['starttime'] = '';
         $this->rs['endtime'] = '';
         $this->rs['timestamp'] = '';
@@ -54,11 +53,11 @@ class Munkireport_model extends Model
         $out = array();
         $filter = get_machine_group_filter();
         $sql = "SELECT COUNT(1) AS count, manifestname 
-			FROM munkireport
-			LEFT JOIN reportdata USING (serial_number)
-			$filter
-			GROUP BY manifestname
-			ORDER BY count DESC";
+            FROM munkireport
+            LEFT JOIN reportdata USING (serial_number)
+            $filter
+            GROUP BY manifestname
+            ORDER BY count DESC";
             
         foreach ($this->query($sql) as $obj) {
             $obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown';
@@ -77,11 +76,11 @@ class Munkireport_model extends Model
     {
         $filter = get_machine_group_filter();
         $sql = "SELECT version, COUNT(1) AS count
-				FROM munkireport
-				LEFT JOIN reportdata USING (serial_number)
-				$filter
-				GROUP BY version
-				ORDER BY COUNT DESC";
+                FROM munkireport
+                LEFT JOIN reportdata USING (serial_number)
+                $filter
+                GROUP BY version
+                ORDER BY COUNT DESC";
         return $this->query($sql);
     }
         
@@ -96,12 +95,12 @@ class Munkireport_model extends Model
     {
         $timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
         $sql = "SELECT 
-			SUM(errors > 0) as error, 
-			SUM(warnings > 0) as warning
-			FROM munkireport
-			LEFT JOIN reportdata USING (serial_number)
-			".get_machine_group_filter()."
-			AND munkireport.timestamp > '$timestamp'";
+            SUM(errors > 0) as error, 
+            SUM(warnings > 0) as warning
+            FROM munkireport
+            LEFT JOIN reportdata USING (serial_number)
+            ".get_machine_group_filter()."
+            AND munkireport.timestamp > '$timestamp'";
 
         return current($this->query($sql));
     }
