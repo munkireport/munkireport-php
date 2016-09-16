@@ -78,6 +78,16 @@ class Migration_munkireport_fix_type extends Model
             $sql = "ALTER TABLE munkireport_temp RENAME TO munkireport";
             $this->exec($sql);
             
+            // Add indexes
+            $this->idx[] = array('timestamp');
+            $this->idx[] = array('runtype');
+            $this->idx[] = array('version');
+            $this->idx[] = array('errors');
+            $this->idx[] = array('warnings');
+            $this->idx[] = array('manifestname');
+            $sql = 'CREATE INDEX IF NOT EXISTS %s ON %s (%s)';
+            $this->set_indexes($sql);
+            
             // Commit transaction
             $dbh->commit();
 
