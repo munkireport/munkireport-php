@@ -27,7 +27,7 @@ class Munkireport_model extends Model {
 		$this->idx[] = array('warnings');
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 4;
+		$this->schema_version = 5;
 
 		// Create table if it does not exist
         $this->create_table();
