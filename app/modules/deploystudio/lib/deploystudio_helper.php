@@ -2,6 +2,8 @@
 
 namespace munkireport\module\deploystudio;
 
+use Exception;
+
 class Deploystudio_helper
 {
     
@@ -21,6 +23,10 @@ class Deploystudio_helper
         // Get computer data from DeployStudio
         $url = "{$deploystudio_server}/computers/get/entry?id={$deploystudio_model->serial_number}";
         $deploystudio_computer_result = $this->get_deploystudio_url($url);
+        
+        if(! $deploystudio_computer_result){
+            throw new Exception("No data received from deploystudio server", 1);
+        }
 
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $plist = new \CFPropertyList();
