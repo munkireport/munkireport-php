@@ -111,7 +111,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	// Get deploystudio data
 	$.getJSON( appUrl + '/module/deploystudio/get_data/' + serialNumber, function( data ) {
-		if( ! data['dstudio-host-primary-key']){
+		if( ! data['dstudio_host_primary_key']){
 			$('#ds-msg').text(i18n.t('no_data'));
 		}
 		else{
