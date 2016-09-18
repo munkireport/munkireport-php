@@ -1,6 +1,6 @@
-	<?$this->view('partials/head')?>
+	<?php $this->view('partials/head')?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
 new Bluetooth_model;

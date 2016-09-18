@@ -134,4 +134,4 @@ $(document).on('appReady', function(e, lang) {
 } );
 </script>
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot')?>

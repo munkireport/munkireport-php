@@ -124,5 +124,5 @@ new Timemachine_model;
 	} );
 </script>
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot')?>
 
