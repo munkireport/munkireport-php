@@ -75,9 +75,15 @@
   },
   "bluetooth": {
     "all_ok": "Aucun périphérique Bluetooth avec batterie faible",
+"apple wireless keyboard": "Clavier Apple sans fil",
+		"apple wireless trackpad": "Trackpad Apple sans fil",
+		"apple magic mouse": "Apple Magic Mouse",
     "bluetooth": "Bluetooth",
     "bluetooth_battery_widget": "État de la batterie Bluetooth",
     "keyboard": "État du clavier",
+"magic keyboard": "Magic Keyboard",
+"magic trackpad 2": "Magic Trackpad 2",
+		"magic mouse 2": "Magic Mouse 2",
     "mouse": "État de la souris",
     "panel_title": "Périphériques Bluetooth avec moins de 15% batterie",
     "status": "État Bluetooth",
@@ -313,6 +319,7 @@
 "inventory": {
 		"report": "Inventaire"
 	},
+"keyboard": "Clavier",
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
   "listing": {
@@ -321,6 +328,9 @@
       "title": "Rapport Apple Remote Desktop"
     },
     "bluetooth": {
+"battery_percent": "Pourcentage batterie",
+	"bluetooth_power": "Puissance Bluetooth",
+	"device_type": "Type p�riph�rique",
       "title": "Rapport Bluetooth"
     },
     "certificate": {
@@ -431,7 +441,7 @@
       "bluetooth": "Bluetooth",
       "clients": "Clients",
       "certificate": "Certificats",
-"deploystudio": "DeployStudio",
+	"deploystudio": "DeployStudio",
       "directoryservice": "Service d'annuaire",
       "disk": "Disque",
       "displays": "Moniteurs",
@@ -527,6 +537,7 @@
 		},
   "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
   "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
+"ratio": "Ratio",
   "reg_date": "Date d'enregistrement",
   "remote_control": "Contrôle à distance",
   "report": {
@@ -615,6 +626,7 @@
     "timemachine": "Time Machine"
   },
   "total_clients": "Nombre Clients",
+"trackpad": "Trackpad",
   "type": "Type",
   "unavailable": "Indisponible",
   "unauthorized": "Vous n'êtes pas autorisé",
