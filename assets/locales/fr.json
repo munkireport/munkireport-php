@@ -74,16 +74,16 @@
     "life_remaining": "Durée restante de la batterie __percent__%"
   },
   "bluetooth": {
-    "all_ok": "Aucun périphérique Bluetooth avec batterie faible",
-"apple wireless keyboard": "Clavier Apple sans fil",
-		"apple wireless trackpad": "Trackpad Apple sans fil",
-		"apple magic mouse": "Apple Magic Mouse",
-    "bluetooth": "Bluetooth",
-    "bluetooth_battery_widget": "État de la batterie Bluetooth",
-    "keyboard": "État du clavier",
-"magic keyboard": "Magic Keyboard",
-"magic trackpad 2": "Magic Trackpad 2",
-		"magic mouse 2": "Magic Mouse 2",
+	"all_ok": "Aucun périphérique Bluetooth avec batterie faible",
+	"apple wireless keyboard": "Clavier Apple sans fil",
+	"apple wireless trackpad": "Trackpad Apple sans fil",
+	"apple magic mouse": "Apple Magic Mouse",
+    	"bluetooth": "Bluetooth",
+	 "bluetooth_battery_widget": "État de la batterie Bluetooth",
+    	"keyboard": "État du clavier",
+	"magic keyboard": "Magic Keyboard",
+	"magic trackpad 2": "Magic Trackpad 2",
+	"magic mouse 2": "Magic Mouse 2",
     "mouse": "État de la souris",
     "panel_title": "Périphériques Bluetooth avec moins de 15% batterie",
     "status": "État Bluetooth",
@@ -330,7 +330,7 @@
     "bluetooth": {
 "battery_percent": "Pourcentage batterie",
 	"bluetooth_power": "Puissance Bluetooth",
-	"device_type": "Type p�riph�rique",
+	"device_type": "Type périphérique",
       "title": "Rapport Bluetooth"
     },
     "certificate": {
