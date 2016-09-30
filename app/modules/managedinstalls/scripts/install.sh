@@ -16,7 +16,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}postflight.d/managedinstalls.py"
 
 	# Set preference to include this file in the preflight check
-	setreportpref "managedinstalls" "${MUNKIPATH}postflight.d/cache/managedinstalls.plist"
+	setreportpref "managedinstalls" "${POSTFLIGHT_CACHEPATH}managedinstalls.plist"
 
 else
 	echo "Failed to download all required components!"

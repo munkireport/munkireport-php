@@ -16,7 +16,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}postflight.d/munkireport.py"
 
 	# Set preference to include this file in the preflight check
-	setreportpref "munkireport" "${MUNKIPATH}postflight.d/cache/munkireport.plist"
+	setreportpref "munkireport" "${POSTFLIGHT_CACHEPATH}munkireport.plist"
 
 else
 	echo "Failed to download all required components!"
@@ -25,4 +25,3 @@ else
 	# Signal that we had an error
 	ERR=1
 fi
-
