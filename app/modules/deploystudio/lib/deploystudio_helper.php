@@ -41,7 +41,9 @@ class Deploystudio_helper {
 
     	if(array_key_exists('dstudio-last-workflow',$plist)){
     		$workflow_title = $this->get_workflow_title($plist['dstudio-last-workflow']);
-    		$deploystudio_model->{'dstudio_last_workflow'} = $workflow_title;
+            if($workflow_title != NULL){
+    		    $deploystudio_model->{'dstudio_last_workflow'} = $workflow_title;
+            }
     	}
 
       // Save the data
