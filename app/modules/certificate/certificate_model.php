@@ -66,23 +66,23 @@ class Certificate_model extends Model
                     
                     // Check for errors
                     if ($this->cert_exp_time < $now) {
-                        $errors[] = [
-                        'type' => 'danger',
-                        'msg' => 'cert.expired',
-                        'data' => json_encode(array(
-                            'name' => $this->cert_cn,
-                            'timestamp' => $this->cert_exp_time
-                        ))
-                        ];
+                        $errors[] = array(
+                            'type' => 'danger',
+                            'msg' => 'cert.expired',
+                            'data' => json_encode(array(
+                                'name' => $this->cert_cn,
+                                'timestamp' => $this->cert_exp_time
+                            ))
+                        );
                     } elseif ($this->cert_exp_time < $four_weeks) {
-                        $errors[] = [
-                        'type' => 'warning',
-                        'msg' => 'cert.expire_warning',
-                        'data' => json_encode(array(
-                            'name' => $this->cert_cn,
-                            'timestamp' => $this->cert_exp_time
-                        ))
-                        ];
+                        $errors[] = array(
+                            'type' => 'warning',
+                            'msg' => 'cert.expire_warning',
+                            'data' => json_encode(array(
+                                'name' => $this->cert_cn,
+                                'timestamp' => $this->cert_exp_time
+                            ))
+                        );
                     }
                 }
             }
@@ -97,7 +97,7 @@ class Certificate_model extends Model
             } else {
                 // Loop through errors and submit stats
                 $error_count = 0;
-                $last_error = [];
+                $last_error = array();
                 $warning_count = 0;
                 // Search through errors and warnings
                 foreach ($errors as $error) {
