@@ -78,7 +78,7 @@
 
         oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "displays.vendor"
