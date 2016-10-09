@@ -64,7 +64,7 @@ new wifi_model;
 	    oTable = $('.table').dataTable( {
 	        columnDefs: columnDefs,
 	        ajax: {
-                url: "<?php echo url('datatables/data'); ?>",
+                url: appUrl + '/datatables/data',
                 type: "POST"
             },
             dom: mr.dt.buttonDom,

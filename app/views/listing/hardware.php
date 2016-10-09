@@ -59,7 +59,7 @@ new Reportdata_model;
 	    oTable = $('.table').dataTable( {
             columnDefs: columnDefs,
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     

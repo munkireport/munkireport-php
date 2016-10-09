@@ -303,20 +303,13 @@ abstract class KISS_View
             $this->vars=array_merge($this->vars, $vars);
         }
         extract($this->vars);
-        if ((bool) @ini_get('short_open_tag') === false) {
-            echo eval($this->shortOpen($view_path.$file.EXT));
-        } else {
-            if (! @include($view_path.$file.EXT)) {
-                echo '<!-- Could not open '.$view_path.$file.EXT.'-->';
-            }
+        
+        if (! @include($view_path.$file.EXT)) {
+            echo '<!-- Could not open '.$view_path.$file.EXT.'-->';
         }
+        
     }
     
-    protected function shortOpen($file)
-    {
-        return '?>'.str_replace('<?php =', '<?php echo ', preg_replace('/<\?(?!php|xml)/i', '<?php ', file_get_contents($file)));
-    }
-
     public function fetch($vars = '')
     {
         if (is_array($vars)) {

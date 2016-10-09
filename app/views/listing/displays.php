@@ -78,7 +78,7 @@
 
         oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "displays.vendor"
@@ -208,6 +208,27 @@
                 	break;
                 case "26cd":
                 	vendor="iiyama"
+                	break;
+                case "7fff":
+                    vendor="Haier"
+                    break;
+                case "3e8d":
+                	vendor="Optoma"
+                	break;
+                case "5262":
+                	vendor="Toshiba"
+                	break;
+                case "34a9":
+                    vendor="Panasonic"
+                    break;
+                case "5e3":
+                	vendor="Flanders Scientific"
+                	break;
+                case "30ae":
+                	vendor="Lenovo"
+                	break;
+                case "469":
+                	vendor="Asus"
                 	break;
                 }
                 $('td:eq(3)', nRow).html(vendor)

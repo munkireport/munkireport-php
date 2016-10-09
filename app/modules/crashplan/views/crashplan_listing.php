@@ -77,7 +77,7 @@ $(document).on('appReady', function(e, lang) {
 
     oTable = $('.table').dataTable( {
         ajax: {
-            url: "<?=url('datatables/data')?>",
+            url: appUrl + '/datatables/data',
             type: "POST",
             data: function(d){
                 d.mrColNotEmpty = "crashplan.id"
@@ -134,4 +134,4 @@ $(document).on('appReady', function(e, lang) {
 } );
 </script>
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot')?>

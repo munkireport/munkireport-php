@@ -17,19 +17,19 @@
 		</div>
 	</div>
 
-	<?foreach(conf('dashboard_layout', array()) AS $row):?>
+	<?php foreach(conf('dashboard_layout', array()) AS $row):?>
 
 	<div class="row">
 
-		<?foreach($row as $item):?>
+		<?php foreach($row as $item):?>
 
 		<?php $this->view("widgets/${item}_widget"); ?>
 
-		<?endforeach?>
+		<?php endforeach?>
 
 	</div> <!-- /row -->
 
-	<?endforeach?>
+	<?php endforeach?>
 
 </div>	<!-- /container -->
 
