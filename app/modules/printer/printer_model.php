@@ -13,9 +13,18 @@ class Printer_model extends Model
         $this->rs['default_set'] = '';
         $this->rs['printer_status'] = '';
         $this->rs['printer_sharing'] = '';
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
         
+        $this->idx[] = array('serial_number');
+        $this->idx[] = array('name');
+        $this->idx[] = array('ppd');
+        $this->idx[] = array('url');
+        $this->idx[] = array('default_set');
+        $this->idx[] = array('printer_status');
+        $this->idx[] = array('printer_sharing');
+
+        // Schema version, increment when creating a db migration
+        $this->schema_version = 1;
+
         // Create table if it does not exist
         $this->create_table();
         
