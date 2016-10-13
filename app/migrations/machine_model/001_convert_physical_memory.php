@@ -1,31 +1,28 @@
 <?php
 
-class Migration_convert_physical_memory extends Model 
+class Migration_convert_physical_memory extends Model
 {
-	
-	public function up()
-	{
-		// Get database handle
-		$dbh = $this->getdbh();
+    
+    public function up()
+    {
+        // Get database handle
+        $dbh = $this->getdbh();
 
-		switch ($this->get_driver())
-		{
-			case 'sqlite':
+        switch ($this->get_driver()) {
+            case 'sqlite':
+                try {
+                    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-				try 
-				{  
-		  			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    // Wrap in transaction
+                    $dbh->beginTransaction();
 
-					// Wrap in transaction
-					$dbh->beginTransaction();
+                    // Remove 'GB' from physical memory entries
+                    $sql = "UPDATE machine SET physical_memory = CAST(physical_memory AS INTEGER)";
+                    $dbh->exec($sql);
 
-					// Remove 'GB' from physical memory entries
-					$sql = "UPDATE machine SET physical_memory = CAST(physical_memory AS INTEGER)";
-					$dbh->exec($sql);
-
-					// Set physical_memory column to INTEGER affinity
-					// Unfortunately this is not very simple
-					$sql = "CREATE TABLE machine_temp (
+                    // Set physical_memory column to INTEGER affinity
+                    // Unfortunately this is not very simple
+                    $sql = "CREATE TABLE machine_temp (
 								id INTEGER PRIMARY KEY, 
 								serial_number VARCHAR(255) UNIQUE, 
 								hostname VARCHAR(255), 
@@ -45,63 +42,57 @@ class Migration_convert_physical_memory extends Model
 								l2_cache VARCHAR(255), 
 								machine_name VARCHAR(255), 
 								packages VARCHAR(255))";
-					$dbh->exec($sql);
+                    $dbh->exec($sql);
 
-					$sql = "INSERT INTO machine_temp SELECT * FROM machine";
-					$dbh->exec($sql);
+                    $sql = "INSERT INTO machine_temp SELECT * FROM machine";
+                    $dbh->exec($sql);
 
-					$sql = "DROP table machine";
-					$dbh->exec($sql);
+                    $sql = "DROP table machine";
+                    $dbh->exec($sql);
 
-					$sql = "ALTER TABLE machine_temp RENAME TO machine";
-					$dbh->exec($sql);
+                    $sql = "ALTER TABLE machine_temp RENAME TO machine";
+                    $dbh->exec($sql);
 
-					$dbh->commit();
-				}
-				catch (Exception $e) 
-				{
-					$dbh->rollBack();
-					$this->errors .= "Failed: " . $e->getMessage();
-					return FALSE;
-				}
-				break;
+                    $dbh->commit();
+                } catch (Exception $e) {
+                    $dbh->rollBack();
+                    $this->errors .= "Failed: " . $e->getMessage();
+                    return false;
+                }
+                break;
 
-			case 'mysql':
+            case 'mysql':
+                // Remove 'GB' from physical memory entries
+                $sql = "UPDATE machine SET physical_memory = SUBSTRING_INDEX(physical_memory, ' ', 1)";
+                $dbh->exec($sql);
 
-				// Remove 'GB' from physical memory entries
-				$sql = "UPDATE machine SET physical_memory = SUBSTRING_INDEX(physical_memory, ' ', 1)";
-				$dbh->exec($sql);
+                // Set physical_memory column to INT
+                $sql = "ALTER TABLE machine MODIFY physical_memory INT";
+                $dbh->exec($sql);
 
-				// Set physical_memory column to INT
-				$sql = "ALTER TABLE machine MODIFY physical_memory INT";
-				$dbh->exec($sql);
+                break;
 
-				break;
+            default:
+                # code...
+                break;
+        }
+    }// End function up()
 
-			default:
+    public function down()
+    {
+        // Get database handle
+        $dbh = $this->getdbh();
 
-				# code...
-				break;
-		}
-	}// End function up()
+        switch ($this->get_driver()) {
+            case 'sqlite':
+                try {
+                    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	public function down()
-	{
-		// Get database handle
-		$dbh = $this->getdbh();
+                    // Wrap in transaction
+                    $dbh->beginTransaction();
 
-		switch ($this->get_driver())
-		{
-			case 'sqlite':
-				try 
-				{  
-					$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-					// Wrap in transaction
-					$dbh->beginTransaction();
-
-					// Convert physical_memory column to VARCHAR
-					$sql = "CREATE TABLE machine_temp (
+                    // Convert physical_memory column to VARCHAR
+                    $sql = "CREATE TABLE machine_temp (
 								id INTEGER PRIMARY KEY, 
 								serial_number VARCHAR(255) UNIQUE, 
 								hostname VARCHAR(255), 
@@ -121,46 +112,43 @@ class Migration_convert_physical_memory extends Model
 								l2_cache VARCHAR(255), 
 								machine_name VARCHAR(255), 
 								packages VARCHAR(255))";
-					$this->query($sql);
+                    $this->query($sql);
 
-					$sql = "INSERT INTO machine_temp SELECT * FROM machine";
-					$this->query($sql);
+                    $sql = "INSERT INTO machine_temp SELECT * FROM machine";
+                    $this->query($sql);
 
-					$sql = "DROP table machine";
-					$this->query($sql);
-					
-					$sql = "ALTER TABLE machine_temp RENAME TO machine";
-					$this->query($sql);
+                    $sql = "DROP table machine";
+                    $this->query($sql);
+                    
+                    $sql = "ALTER TABLE machine_temp RENAME TO machine";
+                    $this->query($sql);
 
-					// Add GB to physical memory entries
-					$sql = "UPDATE machine SET physical_memory = physical_memory || ' GB'";
-					$this->query($sql);
+                    // Add GB to physical memory entries
+                    $sql = "UPDATE machine SET physical_memory = physical_memory || ' GB'";
+                    $this->query($sql);
 
-					$dbh->commit();
-				}
-				catch (Exception $e) 
-				{
-					$dbh->rollBack();
-					$this->errors .= "Failed: " . $e->getMessage();
-					return FALSE;
-				}
-				break;
+                    $dbh->commit();
+                } catch (Exception $e) {
+                    $dbh->rollBack();
+                    $this->errors .= "Failed: " . $e->getMessage();
+                    return false;
+                }
+                break;
 
-			case 'mysql':
-				
-				// Convert physical_memory column to VARCHAR
-				$sql = "ALTER TABLE machine MODIFY physical_memory VARCHAR(255)";
-				$this->query($sql);
+            case 'mysql':
+                // Convert physical_memory column to VARCHAR
+                $sql = "ALTER TABLE machine MODIFY physical_memory VARCHAR(255)";
+                $this->query($sql);
 
-				// Add GB to physical memory entries
-				$sql = "UPDATE machine SET physical_memory = CONCAT(physical_memory, ' GB')";
-				$this->query($sql);
+                // Add GB to physical memory entries
+                $sql = "UPDATE machine SET physical_memory = CONCAT(physical_memory, ' GB')";
+                $this->query($sql);
 
-				break;
+                break;
 
-			default:
-				# code...
-				break;
-		}
-	}
+            default:
+                # code...
+                break;
+        }
+    }
 }

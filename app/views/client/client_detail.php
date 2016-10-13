@@ -49,7 +49,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 						<i class="fa fa-list fa-fw"></i>
 					</button>
 					<ul class="dropdown-menu client-tabs" role="tablist">
-							<?foreach($tab_list as $name => $data):?>
+							<?php foreach($tab_list as $name => $data):?>
 
 								<li>
 									<a href="#<?php echo $name?>" data-toggle="tab"><span data-i18n="<?php echo $data['i18n']?>"></span>
@@ -59,7 +59,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 									</a>
 								</li>
 
-							<?endforeach?>
+							<?php endforeach?>
 
 							<li class="divider"></li>
 						</ul>
@@ -86,13 +86,13 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 			<div class="tab-content">
 
-			<?foreach($tab_list as $name => $data):?>
+			<?php foreach($tab_list as $name => $data):?>
 
-				<div class="tab-pane <?if(isset($data['class'])):?>active<?endif?>" id='<?php echo $name?>'>
+				<div class="tab-pane <?php if(isset($data['class'])):?>active<?php endif?>" id='<?php echo $name?>'>
 					<?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:VIEW_PATH);?>
 				</div>
 
-			<?endforeach?>
+			<?php endforeach?>
 
 			</div>
 	    </div> <!-- /span 12 -->

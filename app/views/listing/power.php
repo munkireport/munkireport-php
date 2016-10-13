@@ -87,7 +87,7 @@ new Power_model;
         
 	    oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "power.condition";
@@ -209,4 +209,4 @@ new Power_model;
 	} );
 </script>
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot')?>

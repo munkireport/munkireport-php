@@ -39,6 +39,7 @@ Data can be viewed under the GSX tab on the client details page or using the GSX
 Remarks
 ---
 
+* Requires the SOAP extension installed in php http://php.net/manual/en/book.soap.php
 * The client triggers the server to do a lookup once a day
 * Obsolete Macs are not available from Apple and are instead processed using the warranty module's backend
 

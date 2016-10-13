@@ -71,7 +71,7 @@ $(document).on('appReady', function(e, lang) {
 
     oTable = $('.table').dataTable( {
         ajax: {
-            url: "<?=url('datatables/data')?>",
+            url: appUrl + '/datatables/data',
             type: "POST"
         },
         dom: mr.dt.buttonDom,

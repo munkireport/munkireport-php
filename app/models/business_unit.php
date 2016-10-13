@@ -1,10 +1,11 @@
 <?php
 
-class Business_unit extends Model {
+class Business_unit extends Model
+{
     
-    function __construct($unitid='', $property='')
+    public function __construct($unitid = '', $property = '')
     {
-		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+        parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['unitid'] = 0;
         $this->rs['property'] = '';
@@ -16,12 +17,11 @@ class Business_unit extends Model {
         // Table version. Increment when creating a db migration
         $this->schema_version = 0;
 
-		// Create table if it does not exist
+        // Create table if it does not exist
         $this->create_table();
         
-        if($unitid and $property)
-        {
-            $this->retrieve_one('unitid=? AND property=?', array($unitid, $property));
+        if ($unitid and $property) {
+            $this->retrieveOne('unitid=? AND property=?', array($unitid, $property));
             $this->unitid = $unitid;
             $this->property = $property;
         }
@@ -29,29 +29,26 @@ class Business_unit extends Model {
         return $this;
     }
     
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	/**
-	 * Retrieve all entries for unitid or all entries if unitid = empty
-	 *
-	 * @param integer unitid
-	 * @return array
-	 * @author abn290
-	 **/
-    function all($unitid = '')
+    /**
+     * Retrieve all entries for unitid or all entries if unitid = empty
+     *
+     * @param integer unitid
+     * @return array
+     * @author abn290
+     **/
+    public function all($unitid = '')
     {
         $out = array();
         $where = $unitid ? 'unitid=?' : '';
-        foreach($this->select( 'unitid, property, value', $where, $unitid, PDO::FETCH_OBJ ) as $obj)
-        {
-            // Initialize
-            if ( ! isset($out[$obj->unitid]))
-            {
+        foreach ($this->select('unitid, property, value', $where, $unitid, PDO::FETCH_OBJ) as $obj) {
+        // Initialize
+            if (! isset($out[$obj->unitid])) {
                 $out[$obj->unitid] = array('users' => array(), 'managers' => array(), 'machine_groups' => array());
             }
 
-            switch($obj->property)
-            {
+            switch ($obj->property) {
                 case 'user':
                     $out[$obj->unitid]['users'][] = $obj->value;
                     break;
@@ -66,19 +63,13 @@ class Business_unit extends Model {
             }
 
             $out[$obj->unitid]['unitid'] = $obj->unitid;
-
         }
 
-        if($unitid && $out)
-        {
+        if ($unitid && $out) {
             return $out[$unitid];
-        }
-        else
-        {
+        } else {
             return array_values($out);
         }
-        
-        
     }
 
     /**
@@ -87,9 +78,9 @@ class Business_unit extends Model {
      * @return integer max unitid
      * @author AvB
      **/
-    function get_max_unitid()
+    public function get_max_unitid()
     {
-        $sql = 'SELECT MAX(unitid) AS max FROM '.$this->enquote( $this->tablename );
+        $sql = 'SELECT MAX(unitid) AS max FROM '.$this->enquote($this->tablename);
         $result = $this->query($sql);
         return intval($result[0]->max);
     }
@@ -98,16 +89,14 @@ class Business_unit extends Model {
      * Get machinegroups for id
      *
      * @return array machine group ids
-     * @author 
+     * @author
      **/
-    function get_machine_groups($id)
+    public function get_machine_groups($id)
     {
         $out = array();
-        foreach($this->retrieve_many('unitid=? AND property=?', array($id, 'machine_group')) AS $obj)
-        {
+        foreach ($this->retrieveMany('unitid=? AND property=?', array($id, 'machine_group')) as $obj) {
             $out[] = intval($obj->value);
         }
         return $out;
     }
-
 }

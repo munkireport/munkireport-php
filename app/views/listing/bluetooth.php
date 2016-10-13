@@ -1,6 +1,6 @@
-	<?$this->view('partials/head')?>
+	<?php $this->view('partials/head')?>
 
-<? //Initialize models needed for the table
+<?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
 new Bluetooth_model;
@@ -72,7 +72,7 @@ $(document).on('appReady', function(e, lang) {
 
 	oTable = $('.table').dataTable( {
 	  ajax: {
-		  url: "<?php echo url('datatables/data'); ?>",
+		  url: appUrl + '/datatables/data',
 		  type: "POST",
 		  data: function(d){
 	  

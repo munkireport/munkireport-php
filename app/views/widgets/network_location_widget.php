@@ -25,7 +25,7 @@
 		$(document).on('appReady', function() {
 
 			//drawGraph("<?php echo url('module/reportdata/ip'); ?>", '#ip-plot', pieOptions, parms);
-		    function isnotzero(point)
+		    public function isnotzero(point)
 		    {
 		    	return point.cnt > 0;
 		    }

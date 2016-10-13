@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Comment_controller class
@@ -8,33 +8,32 @@
  **/
 class Comment_controller extends Module_controller
 {
-	function __construct()
-	{
-        if( ! $this->authorized())
-        {
-			$obj = new View();
-			$obj->view('json', array('msg' => array('error' =>'Not authorized')));
-			die();
+    public function __construct()
+    {
+        if (! $this->authorized()) {
+            $obj = new View();
+            $obj->view('json', array('msg' => array('error' =>'Not authorized')));
+            die();
         }
 
         $this->module_path = dirname(__FILE__);
-	}
+    }
 
-	/**
-	 * Default method
-	 *
-	 * @author AvB
-	 **/
-	function index()
-	{
-		echo "You've loaded the comment module!";
-	}
+    /**
+     * Default method
+     *
+     * @author AvB
+     **/
+    public function index()
+    {
+        echo "You've loaded the comment module!";
+    }
 
     /**
      * Create a comment
      *
      **/
-    function save()
+    public function save()
     {
         $out = array();
 
@@ -43,10 +42,8 @@ class Comment_controller extends Module_controller
         $section = post('section');
         $text = post('text');
         $html = post('html');
-        if( $serial_number AND $section AND $text)
-        {
-            if( authorized_for_serial($serial_number))
-            {
+        if ($serial_number and $section and $text) {
+            if (authorized_for_serial($serial_number)) {
                 $comment = new Comment_model;
                 $comment->retrieve_record($serial_number, 'section=?', array($section));
                 $comment->serial_number = $serial_number;
@@ -58,15 +55,11 @@ class Comment_controller extends Module_controller
                 $comment->save();
 
                 $out['status'] = 'saved';
-            }
-            else
-            {
+            } else {
                 $out['status'] = 'error';
                 $out['msg'] = 'Not authorized for this serial';
             }
-        }
-        else
-        {
+        } else {
             $out['status'] = 'error';
             $out['msg'] = 'Missing data';
         }
@@ -75,11 +68,11 @@ class Comment_controller extends Module_controller
         $obj->view('json', array('msg' => $out));
     }
 
-	/**
+    /**
      * Retrieve data in json format
      *
      **/
-    function retrieve($serial_number = '', $section = '')
+    public function retrieve($serial_number = '', $section = '')
     {
         $out = array();
 
@@ -87,17 +80,12 @@ class Comment_controller extends Module_controller
         $bindings = $section ? array($section) : array();
 
         $comment = new Comment_model;
-        if($section)
-        {
-            if($comment->retrieve_record($serial_number, $where, $bindings))
-            {
+        if ($section) {
+            if ($comment->retrieve_record($serial_number, $where, $bindings)) {
                 $out = $comment->rs;
             }
-        }
-        else
-        {
-            foreach($comment->retrieve_records($serial_number, $where, $bindings) AS $obj)
-            {
+        } else {
+            foreach ($comment->retrieve_records($serial_number, $where, $bindings) as $obj) {
                 $out[] = $obj->rs;
             }
         }
@@ -110,21 +98,15 @@ class Comment_controller extends Module_controller
      * Update comment
      *
      **/
-    function update()
+    public function update()
     {
-
     }
 
     /**
      * Delete comment
      *
      **/
-    function delete()
+    public function delete()
     {
-
     }
-    
-
-
-
 } // END class Certificate_controller

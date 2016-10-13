@@ -5,6 +5,7 @@ BASEURL="<?php echo conf('webhost') . conf('subdirectory'); ?>"
 TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 CACHEPATH="${MUNKIPATH}preflight.d/cache/"
+POSTFLIGHT_CACHEPATH="${MUNKIPATH}postflight.d/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREFLIGHT=1
 PREF_CMDS=( ) # Pref commands array
@@ -103,7 +104,7 @@ while getopts b:m:p:r:c:v:i:nh flag; do
 			PREFPATH="${TARGET_VOLUME}/Library/Preferences/MunkiReport"
 			PREFLIGHT=0
 			BUILDPKG=1
-			
+
 			;;
 		n)
 			PREFLIGHT=0
@@ -198,6 +199,7 @@ if [ $BUILDPKG = 1 ]; then
 	STOREPATH=${MUNKIPATH}
 	MUNKIPATH='$3/usr/local/munki/'
 	CACHEPATH="\$3${CACHEPATH}"
+	POSTFLIGHT_CACHEPATH="\$3${POSTFLIGHT_CACHEPATH}"
 fi
 
 # Capture uninstall scripts

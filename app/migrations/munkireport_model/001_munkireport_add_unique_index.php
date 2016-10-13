@@ -2,46 +2,39 @@
 
 // Add UNIQUE index to serial_number column
 
-class Migration_munkireport_add_unique_index extends Model 
+class Migration_munkireport_add_unique_index extends Model
 {
-	
-	public function up()
-	{
-		// Get database handle
-		$dbh = $this->getdbh();
+    
+    public function up()
+    {
+        // Get database handle
+        $dbh = $this->getdbh();
 
-		$sql = 'CREATE UNIQUE INDEX serial_number ON munkireport (serial_number)';
-		$this->exec($sql);
+        $sql = 'CREATE UNIQUE INDEX serial_number ON munkireport (serial_number)';
+        $this->exec($sql);
+    }// End function up()
 
-	}// End function up()
+    public function down()
+    {
+        // Get database handle
+        $dbh = $this->getdbh();
 
-	public function down()
-	{
-		// Get database handle
-		$dbh = $this->getdbh();
+        switch ($this->get_driver()) {
+            case 'sqlite':
+                $sql = 'DROP INDEX munkireport.serial_number';
 
-		switch ($this->get_driver())
-		{
-			case 'sqlite':
+                break;
 
-				$sql = 'DROP INDEX munkireport.serial_number';
+            case 'mysql':
+                $sql = 'DROP INDEX serial_number ON munkireport';
 
-				break;
+                break;
 
-			case 'mysql':
+            default:
+                throw new Exception("UNKNOWN DRIVER");
+        }
 
-				$sql = 'DROP INDEX serial_number ON munkireport';
-
-				break;
-
-			default:
-
-				throw new Exception("UNKNOWN DRIVER");
-				
-		}
-
-		// Execute sql query
-		$this->exec($sql);
-
-	}
+        // Execute sql query
+        $this->exec($sql);
+    }
 }

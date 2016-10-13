@@ -7,9 +7,10 @@ namespace munkireport;
  *
  * Based on the python unserializer
  * Does not convert objects
- * 
+ *
  */
-class Unserializer {
+class Unserializer
+{
     
     private $position, $str;
     
@@ -19,41 +20,46 @@ class Unserializer {
         $this->str = $s;
     }
 
-    function await($symbol, $n = 1){
+    public function await($symbol, $n = 1)
+    {
         #result = $this->take(len(symbol))
-        $result = substr($this->str,$this->position, $n);
+        $result = substr($this->str, $this->position, $n);
         $this->position += $n;
-        if ($result != $symbol){
+        if ($result != $symbol) {
             throw new \Exception(sprintf('Next is `%s` not `%s`', $result, $symbol), 1);
         }
     }
     
-    function take($n = 1){
-        $result = substr($this->str,$this->position, $n);
+    public function take($n = 1)
+    {
+        $result = substr($this->str, $this->position, $n);
         $this->position += $n;
         return $result;
     }
     
-    function take_while_not($stopsymbol, $typecast=''){
+    public function take_while_not($stopsymbol, $typecast = '')
+    {
         
         $stopsymbol_position = strpos($this->str, $stopsymbol, $this->position);
-        if($stopsymbol_position === FALSE){
+        if ($stopsymbol_position === false) {
             throw new \Exception(sprintf('No `%s`', $stopsymbol), 1);
         }
-        $result = substr($this->str,$this->position, $stopsymbol_position - $this->position);
+        $result = substr($this->str, $this->position, $stopsymbol_position - $this->position);
 
         $this->position = $stopsymbol_position + 1;
-        if($typecast){
+        if ($typecast) {
             settype($result, $typecast);
-        }    
-        return $result;        
+        }
+        return $result;
     }
 
-    function get_rest(){
-        return substr($this->str,$this->position);
+    public function get_rest()
+    {
+        return substr($this->str, $this->position);
     }
 
-    function unserialize(){
+    public function unserialize()
+    {
                 
         $t = $this->take();
         
@@ -95,19 +101,20 @@ class Unserializer {
         }
     }
 
-    function parse_hash_core($size){
+    public function parse_hash_core($size)
+    {
         $result = array();
         $this->await('{');
-        $is_array = TRUE;
-        for ($i=0; $i < $size; $i++) { 
+        $is_array = true;
+        for ($i=0; $i < $size; $i++) {
             $k = $this->unserialize();
             $v = $this->unserialize();
             $result[$k] = $v;
             if ($is_array && $k !== $i) {
-                $is_array = FALSE;
+                $is_array = false;
             }
         }
-        if ($is_array){
+        if ($is_array) {
             $result = array_values($result);
         }
         $this->await('}');

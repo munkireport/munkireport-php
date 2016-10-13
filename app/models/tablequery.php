@@ -1,34 +1,35 @@
 <?php
 
-class Tablequery {
+class Tablequery
+{
     
     private $cfg = array();
 
-    function __construct($cfg='')
+    public function __construct($cfg = '')
     {
         $this->cfg = $cfg;
     }
     
     // Clean unsafe strings
-    function dirify($string, $chars = '\w')
+    public function dirify($string, $chars = '\w')
     {
         return preg_replace("/[^$chars]/", '', $string);
     }
     
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	/**
-	 * Retrieve all entries for serial
-	 *
-	 * @param string serial
-	 * @return array
-	 * @author abn290
-	 **/
-    function fetch($cfg)
+    /**
+     * Retrieve all entries for serial
+     *
+     * @param string serial
+     * @return array
+     * @author abn290
+     **/
+    public function fetch($cfg)
     {
         
         // Quick debug
-        $debug = FALSE;
+        $debug = false;
         
         $dbh = getdbh();
 
@@ -48,26 +49,24 @@ class Tablequery {
         $tables['reportdata'] = 1;
 
         $formatted_columns = $columns = $search_cols = array();
-        foreach($cfg['columns'] AS $pos => $column)
-        {
+        foreach ($cfg['columns'] as $pos => $column) {
             $tbl_col_array = explode('.', $column['name']);
-            if(count($tbl_col_array) == 2)
-            {
-                // Store table name
+            if (count($tbl_col_array) == 2) {
+            // Store table name
                 $tables[$tbl_col_array[0]] = 1;
                 // Format column name
-                $formatted_columns[$pos] = sprintf('`%s`.`%s`', 
-                    $tbl_col_array[0], $tbl_col_array[1]);
-            }
-            else
-            {
+                $formatted_columns[$pos] = sprintf(
+                    '`%s`.`%s`',
+                    $tbl_col_array[0],
+                    $tbl_col_array[1]
+                );
+            } else {
                 $formatted_columns[$pos] = sprintf('`%s`', $column['name']);
             }
             $columns[$pos] = $column['name'];
             
             // Check if search in column
-            if(isset($column['search']['value']) && $column['search']['value'])
-            {
+            if (isset($column['search']['value']) && $column['search']['value']) {
                 $search_cols[$pos] = $column['search']['value'];
             }
         }
@@ -81,25 +80,21 @@ class Tablequery {
         $from = 'FROM ' . array_shift($tbl_list);
 
         // Join
-        foreach($tbl_list as $name)
-        {
+        foreach ($tbl_list as $name) {
             $from .= " LEFT JOIN $name USING (serial_number)";
         }
 
         // Where not empty
         $where = '';
-        if( $cfg['mrColNotEmpty'])
-        {
+        if ($cfg['mrColNotEmpty']) {
             $where = sprintf('WHERE %s IS NOT NULL', $cfg['mrColNotEmpty']);
         }
         
         $bindings = array();
         
         // Extra where clause (can only do is equal)
-        if( is_array($cfg['where']))
-        {
-            foreach($cfg['where'] AS $entry)
-            {
+        if (is_array($cfg['where'])) {
+            foreach ($cfg['where'] as $entry) {
                 $operator = isset($entry['operator']) ? $entry['operator'] : '=';
 
                 // Sanitize input
@@ -109,29 +104,22 @@ class Tablequery {
                 $bindings[] = $entry['value'];
 
                 $my_where = sprintf("%s.%s $operator ?", $entry['table'], $entry['column']);
-                if($where)
-                {
+                if ($where) {
                     $where .= ' AND (' . $my_where . ')';
-                }
-                else
-                {
+                } else {
                     $where = 'WHERE (' .$my_where . ')';
                 }
             }
         }
 
         // Business unit filter (assumes we are selecting the reportdata table)
-        if($machine_groups = get_filtered_groups())
-        {
-            // Todo: We should check if a requested machine_group is allowed
+        if ($machine_groups = get_filtered_groups()) {
+        // Todo: We should check if a requested machine_group is allowed
 
             $bu_where = 'reportdata.machine_group IN ('. implode(', ', $machine_groups). ')';
-            if($where)
-            {
+            if ($where) {
                 $where .= ' AND (' . $bu_where . ')';
-            }
-            else
-            {
+            } else {
                 $where = 'WHERE (' .$bu_where . ')';
             }
         }
@@ -142,37 +130,37 @@ class Tablequery {
             $from
             $where";
             
-        if($debug) print $sql;
+        if ($debug) {
+            print $sql;
+        }
         
-        if( ! $stmt = $dbh->prepare( $sql ))
-        {
+        if (! $stmt = $dbh->prepare($sql)) {
             $err = $dbh->errorInfo();
             die($err[2]);
         }
         $stmt->execute($bindings);// $bindings );
-        if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
-        {
+        if ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
             $recordsTotal = $rs->count;
-        }   
+        }
 
         // Paging
-        $sLimit = sprintf(' LIMIT %d,%d', 
-            $cfg['start'], $cfg['length']);
+        $sLimit = sprintf(
+            ' LIMIT %d,%d',
+            $cfg['start'],
+            $cfg['length']
+        );
 
         // Show all
-        if( $cfg['length'] == -1 )
-        {
+        if ($cfg['length'] == -1) {
             $sLimit = '';
         }
 
         // Ordering
         $sOrder = "";
-        if(count($cfg['order']))
-        {
+        if (count($cfg['order'])) {
             $sOrder = "ORDER BY  ";
             $order_arr = array();
-            foreach($cfg['order'] AS $order_entry)
-            {
+            foreach ($cfg['order'] as $order_entry) {
                 $order_arr[] = sprintf('%s %s', $formatted_columns[$order_entry['column']], $order_entry['dir']);
             }
             $sOrder = "ORDER BY  ".implode(',', $order_arr);
@@ -181,65 +169,53 @@ class Tablequery {
         // Search
         // Search columns overrides global search
         $sWhere = $where;
-        if($search_cols)
-        {
+        if ($search_cols) {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
-            foreach ($search_cols as $pos => $val)
-            {
-                if(preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val))
-                {
+            foreach ($search_cols as $pos => $val) {
+                if (preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val)) {
                     // Special case, use unquoted
                     $compstr = $val;
-                }
-                else
-                {
+                } else {
                     $bindings[] = $val;
                     $compstr = " = ?";
                 }
                 
                 $sWhere .= $formatted_columns[$pos].$compstr." OR ";
             }
-            $sWhere = substr_replace( $sWhere, "", -3 );
+            $sWhere = substr_replace($sWhere, "", -3);
             $sWhere .= ')';
-        }
-        elseif($cfg['search'])
-        {
+        } elseif ($cfg['search']) {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
-            foreach($formatted_columns AS $col)
-            {
+            foreach ($formatted_columns as $col) {
                 $bindings[] = '%'.$cfg['search'].'%';
                 $sWhere .= $col." LIKE ? OR ";
             }
-            $sWhere = substr_replace( $sWhere, "", -3 );
+            $sWhere = substr_replace($sWhere, "", -3);
             $sWhere .= ')';
         }
 
 
         // Get filtered results count
         $recordsFiltered = $recordsTotal;
-        if( $sWhere)
-        {
+        if ($sWhere) {
             $sql = "
                 SELECT COUNT(*) as count
                 $from
                 $sWhere";
 
-            if($debug)
-            {
+            if ($debug) {
                 echo "\nFiltered count: $sql";
                 print_r($bindings);
             }
 
-            if( ! $stmt = $dbh->prepare( $sql ))
-            {
+            if (! $stmt = $dbh->prepare($sql)) {
                 $err = $dbh->errorInfo();
-				die($err[2]);
+                die($err[2]);
             }
             $stmt->execute($bindings);//  );
-            if( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
-            {
+            if ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
                 $recordsFiltered = $rs->count;
-            }   
+            }
         }
         
         $output["recordsTotal"] = $recordsTotal;
@@ -254,28 +230,25 @@ class Tablequery {
         $sLimit
         ";
 
-        if($debug) echo "\nFiltered: $sql";
+        if ($debug) {
+            echo "\nFiltered: $sql";
+        }
 
         // When in debug mode, send sql as well
-        if(conf('debug'))
-        {
+        if (conf('debug')) {
             $output['sql'] = str_replace("\n", '', $sql);
         }
         
-        if( ! $stmt = $dbh->prepare( $sql ))
-        {
+        if (! $stmt = $dbh->prepare($sql)) {
             $err = $dbh->errorInfo();
-			die($err[2]);
+            die($err[2]);
         }
         $stmt->execute($bindings);// $bindings );
         $arr=array();
-        while ( $rs = $stmt->fetch( PDO::FETCH_NUM ) )
-        {
+        while ($rs = $stmt->fetch(PDO::FETCH_NUM)) {
             $output['data'][] = $rs;
-        }        
+        }
 
         return $output;
-        
     }
-
 }
