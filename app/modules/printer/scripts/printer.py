@@ -45,7 +45,7 @@ for printer in printers:
     if printer.get('uri'):
         result += 'Name: ' + printer['_name'] + '\n'
         result += 'PPD: ' + printer['ppd'] + '\n'
-        result += 'Driver Version: ' + printer['ppdfileversion'] + '\n'
+        result += 'Driver Version: ' + printer.get('ppdfileversion', '') + '\n'
         result += 'URL: ' + printer['uri'] + '\n'
         result += 'Default Set: ' + printer['default'] + '\n'
         result += 'Printer Status: ' + printer['status'] + '\n'
