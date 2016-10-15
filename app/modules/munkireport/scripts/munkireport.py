@@ -1,7 +1,8 @@
 #!/usr/bin/python
 """
 Filter the result of /Library/Managed Installs/MANAGED_INSTALL_REPORT.plist
-to only the parts that represent the installed items
+to these items: 'EndTime', 'StartTime', 'ManifestName', 'ManagedInstallVersion'
+'Errors', 'Warnings', 'RunType'
 """
 
 import plistlib
