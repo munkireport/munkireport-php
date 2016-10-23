@@ -249,22 +249,26 @@ def process(serial, items):
         display_detail('Server info: %s' % result['info'])
         
     # Retrieve hashes that need updating
+    total_size = 0
     for i in items.keys():
         if i in result:
-            display_detail('Need to update %s' % i)
             if items[i].get('path'):
                 try:
                     f = open(items[i]['path'], "r")
                     items[i]['data'] = f.read()
                 except:
                     display_warning("Can't open %s" % items[i]['path'])
-
+                    del items[i]
+                    continue
+            size = len(items[i]['data'])
+            display_detail('Need to update %s (%s)' % (i, sizeof_fmt(size)))
+            total_size = total_size + size
         else: # delete items that don't have to be uploaded
             del items[i]
 
     # Send new files with hashes
     if len(items):
-        display_detail('Sending items')
+        display_detail('Sending items (%s)' % sizeof_fmt(total_size))
         response = curl(checkurl, {'serial': serial,\
              'items': serialize(items),\
              'passphrase': passphrase})
@@ -399,6 +403,12 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
             except Exception, e:
                 display_warning("%s: %s" % (script, str(e)))
 
+def sizeof_fmt(num):
+    for unit in ['B','KB','MB','GB','TB','PB','EB','ZB']:
+        if abs(num) < 1000.0:
+            return "%.0f%s" % (num, unit)
+        num /= 1000.0
+    return "%.1f%s" % (num, 'YB')
 
 
 # End of reportcommon
