@@ -108,7 +108,7 @@ def curl(url, values):
         raise CurlError(connection.error.code(), 
                         connection.error.localizedDescription())
 
-    if connection.response != None:
+    if connection.response != None and connection.status != 200:
         munkicommon.display_detail('Status: %s', connection.status)
         munkicommon.display_detail('Headers: %s', connection.headers)
     if connection.redirection != []:
