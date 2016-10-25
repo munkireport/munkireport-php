@@ -19,7 +19,12 @@ class Filevault_escrow_model extends Model
         $this->rs['HddSerial'] = '';
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
+        $this->schema_version = 1;
+        
+        //indexes to optimize queries
+        $this->idx[] = array('EnabledDate');
+        $this->idx[] = array('EnabledUser');
+        $this->idx[] = array('HddSerial');
         
         // Create table if it does not exist
         $this->create_table();
