@@ -5,7 +5,8 @@ class sccm_status_model extends Model {
         {
                 parent::__construct('id', 'sccm_status'); //primary key, tablename
                 $this->rs['id'] = '';
-                $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+                $this->rs['serial_number'] = $serial;
+                $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
                 $this->rs['agent_status'] = '';
                 $this->rs['mgmt_point'] = '';
                 $this->rs['enrollment_name'] = '';
@@ -45,33 +46,32 @@ class sccm_status_model extends Model {
         function process($data)
         {               
                 // Translate network strings to db fields
-        $translate = array(
-                'Status = ' => 'agent_status',
-                'Management_Point = ' => 'mgmt_point',
-                'Enrollment_User_Name = ' => 'enrollment_name',
-                'Enrollment_Server_Address = ' => 'enrollment_server',
-                'Last_Check_In_Time = ' => 'last_checkin',
-                'Client_Certificate_Expiry_Date = ' => 'cert_exp');
+                $translate = array(
+                        'Status = ' => 'agent_status',
+                        'Management_Point = ' => 'mgmt_point',
+                        'Enrollment_User_Name = ' => 'enrollment_name',
+                        'Enrollment_Server_Address = ' => 'enrollment_server',
+                        'Last_Check_In_Time = ' => 'last_checkin',
+                        'Client_Certificate_Expiry_Date = ' => 'cert_exp');
 
-//clear any previous data we had
-                foreach($translate as $search => $field) {
-                        $this->$field = '';
-                }
-                // Parse data
-                foreach(explode("\n", $data) as $line) {
-                    // Translate standard entries
+                        //clear any previous data we had
                         foreach($translate as $search => $field) {
-                            
-                            if(strpos($line, $search) === 0) {
-                                    
-                                    $value = substr($line, strlen($search));
-                                    
-                                    $this->$field = $value;
-                                    break;
-                            }
-                        } 
-                    
-                } //end foreach explode lines
-                $this->save();
+                                $this->$field = '';
+                        }
+                
+                        // Parse data
+                        foreach(explode("\n", $data) as $line) {
+                                // Translate standard entries
+                                foreach($translate as $search => $field) {
+                                        if(strpos($line, $search) === 0) {
+                                                
+                                            $value = substr($line, strlen($search));
+                                                
+                                            $this->$field = $value;
+                                            break;
+                                        }
+                                }
+                        } //end foreach explode lines
+                        $this->save();
         }
 }
