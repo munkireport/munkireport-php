@@ -16,6 +16,14 @@ class sccm_status_model extends Model {
                 // Schema version, increment when creating a db migration
                 $this->schema_version = 0;
                 
+                //indexes to optimize queries
+                $this->idx[] = array('agent_status');
+                $this->idx[] = array('mgmt_point');
+                $this->idx[] = array('enrollment_name');
+                $this->idx[] = array('enrollment_server');
+                $this->idx[] = array('last_checkin');
+                $this->idx[] = array('cert_exp');
+                
                 // Create table if it does not exist
                 $this->create_table();
                 
