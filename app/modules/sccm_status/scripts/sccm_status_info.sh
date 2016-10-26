@@ -21,13 +21,13 @@ DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
 
 # Location of our output
-sccm_file="/usr/local/munki/preflight.d/cache/sccm_status.txt"
+sccm_file="$DIR/cache/sccm_status.txt"
 
 # Location of the SCCM Plist
-ccmpref="/var/root/Library/Preferences/com.microsoft.ccmclient"
+ccmpref="com.microsoft.ccmclient"
 
 # Lets get the enrollment status
-status=`defaults read $ccmpref EnrollmentStatus`
+status=`defaults read $ccmpref EnrollmentStatus 2>/dev/null || echo 0`
 
 getmoreinfo() # If we are enrolled, lets pull some more info
 {
@@ -55,13 +55,12 @@ echo "Client_Certificate_Expiry_Date = $certexp"
 }
 
 # Determine if we are enrolled
-if [ $status = "0" ]; 
+if [ "$status" = "0" ]; 
 	then
 	echo "Status = Not Enrolled" > "$sccm_file"
-elif [ $status = "1" ];
+elif [ "$status" = "1" ];
 	then
 	getmoreinfo > "$sccm_file"
 fi 
-
 
 exit 0
