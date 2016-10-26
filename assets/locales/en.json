@@ -558,12 +558,15 @@
 		"url": "URL"
 	},	
 	"sccm_status": {
+		"title": "SCCM Agent Status",
+		"titleheader": "SCCM Agent Information:",
 		"agent_status": "SCCM Agent Status",
 		"mgmt_point": "Management Point",
 		"enrollment_name": "Enrollment User Name",
 		"enrollment_server": "Enrollment Server ",
 		"last_checkin": "Last SCCM Check In",
-		"cert_exp": "SCCM Client Cert Expiry"
+		"cert_exp": "SCCM Client Cert Expiry",
+		"enrollment_status": "Enrollment Status"
 	},
 	"security": {
 		"security": "Security",
