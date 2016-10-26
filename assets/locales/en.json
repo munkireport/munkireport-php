@@ -555,6 +555,14 @@
 		"tab_title": "Installed Printers",
 		"url": "URL"
 	},	
+	"sccm_status": {
+		"agent_status": "SCCM Agent Status",
+		"mgmt_point": "Management Point",
+		"enrollment_name": "Enrollment User Name",
+		"enrollment_server": "Enrollment Server ",
+		"last_checkin": "Last SCCM Check In",
+		"cert_exp": "SCCM Client Cert Expiry"
+	},
 	"security": {
 		"security": "Security",
 		"gatekeeper": "Gatekeeper Status",
