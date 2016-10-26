@@ -40,7 +40,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	// Get wifi data
 	$.getJSON( appUrl + '/module/sccm_status/get_data/' + serialNumber, function( data ) {
-		if( data.enrollment_server){
+		if( data.agent_status){
 
 			// Add strings
 			$('#sccm-agent_status').text(data.agent_status);
