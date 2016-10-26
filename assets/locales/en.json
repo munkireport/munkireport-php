@@ -129,6 +129,7 @@
 			"power": "Power",
 			"printers": "Printers",
 			"profiles": "Profiles",
+			"sccm_status": "SCCM Status",
 			"serverstats": "Server Statistics",
 			"summary": "Summary",
 			"third_party_software": "Third Party Software",
@@ -456,6 +457,7 @@
 			"power": "Power",
 			"printers": "Printers",
 			"profile": "Profiles",
+			"sccm_status": "SCCM Status",
 			"security": "Security",
 			"timemachine": "Time Machine",
 			"warranty": "Warranty",
@@ -555,6 +557,17 @@
 		"tab_title": "Installed Printers",
 		"url": "URL"
 	},	
+	"sccm_status": {
+		"title": "SCCM Agent Status",
+		"titleheader": "SCCM Agent Information:",
+		"agent_status": "SCCM Agent Status",
+		"mgmt_point": "Management Point",
+		"enrollment_name": "Enrollment User Name",
+		"enrollment_server": "Enrollment Server ",
+		"last_checkin": "Last SCCM Check In",
+		"cert_exp": "SCCM Client Cert Expiry",
+		"enrollment_status": "Enrollment Status"
+	},
 	"security": {
 		"security": "Security",
 		"gatekeeper": "Gatekeeper Status",
