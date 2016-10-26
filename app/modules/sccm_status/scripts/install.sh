@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # bluetooth controller
-CTL="${BASEURL}index.php?/module/sccmstatus/"
+CTL="${BASEURL}index.php?/module/sccm_status/"
 
 # Get the scripts in the proper directories
 ${CURL} "${CTL}get_script/sccm_status_info.sh" -o "${MUNKIPATH}preflight.d/sccm_status_info.sh"
