@@ -17,14 +17,14 @@ new Sccm_status_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='machine.serial_number'>Serial</th>
-		        <th data-colname='sccm_status.agent_status'>SCCM Agent Status</th> 
-		        <th data-colname='sccm_status.mgmt_point'>Management Point</th>
-		        <th data-colname='sccm_status.enrollment_name'>Enrollment User Name</th>
-		        <th data-colname='sccm_status.enrollment_server'>Enrollment Server</th>
-				<th data-colname='sccm_status.last_checkin'>Last SCCM Check In</th>
-				<th data-colname='sccm_statis.cert_exp'>SCCM Client Cert Expiry</th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
+		        <th data-colname='sccm_status.agent_status'></th> 
+		        <th data-colname='sccm_status.mgmt_point'></th>
+		        <th data-colname='sccm_status.enrollment_name'></th>
+		        <th data-colname='sccm_status.enrollment_server'></th>
+				<th data-colname='sccm_status.last_checkin'></th>
+				<th data-colname='sccm_statis.cert_exp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
