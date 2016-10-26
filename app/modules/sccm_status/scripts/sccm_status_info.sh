@@ -24,7 +24,7 @@ mkdir -p "$DIR/cache"
 sccm_file="/usr/local/munki/preflight.d/cache/sccm_status.txt"
 
 # Location of the SCCM Plist
-ccmpref="/var/root/Library/Preferences/com.microsoft.ccmclient.plist"
+ccmpref="/var/root/Library/Preferences/com.microsoft.ccmclient"
 
 # Lets get the enrollment status
 status=`defaults read $ccmpref EnrollmentStatus`
