@@ -1,5 +1,5 @@
 <?php //Initialize models needed for the table
-$sccm_status = "";
+$sccm_status = new sccm_status_model($serial_number);
 ?>
 	<h2 data-i18n="sccm_status.title"></h2>
 
