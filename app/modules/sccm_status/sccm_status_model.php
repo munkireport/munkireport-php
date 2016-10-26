@@ -1,7 +1,7 @@
 <?php
 class sccm_status_model extends Model {
 
-        function __construct($serial='')
+        public function __construct($serial='')
         {
                 parent::__construct('id', 'sccm_status'); //primary key, tablename
                 $this->rs['id'] = '';
@@ -43,7 +43,7 @@ class sccm_status_model extends Model {
          * @param string data
          * 
          **/
-        function process($data)
+        public function process($data)
         {               
                 // Translate network strings to db fields
                 $translate = array(
