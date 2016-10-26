@@ -12,24 +12,24 @@ new Sccm_status_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Directory Services report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3>SCCM Agent Status report <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
-		        <th data-colname='sccm_status.agent_status'></th> 
-		        <th data-colname='sccm_status.mgmt_point'></th>
-		        <th data-colname='sccm_status.enrollment_name'></th>
-		        <th data-colname='sccm_status.enrollment_server'></th>
-				<th data-colname='sccm_status.last_checkin'></th>
-				<th data-colname='sccm_statis.cert_exp'></th>
+		        <th data-i18n="sccm_status.agent_status" data-colname='sccm_status.agent_status'></th> 
+		        <th data-i18n="sccm_status_.mgmt_point" data-colname='sccm_status.mgmt_point'></th>
+		        <th data-i18n="sccm_status.enrollment_name" data-colname='sccm_status.enrollment_name'></th>
+		        <th data-i18n="sccm_status.enrollment_server" data-colname='sccm_status.enrollment_server'></th>
+				<th data-i18n="sccm_status.last_checkin" data-colname='sccm_status.last_checkin'></th>
+				<th data-i18n="sccm_status.cert_exp" data-colname='sccm_status.cert_exp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="5" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="8" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
