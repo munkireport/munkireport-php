@@ -20,8 +20,9 @@ class cleanup extends Controller
 
 		//Clean days number
 		$clean_days = conf('clean_days');
+		$orphan_cleanup = conf('orphan_cleanup');
 		
-		if($clean_days <= 0) {
+		if($clean_days <= 0 && $orphan_cleanup <= 0) {
 			die('Admin:clean: Computer Cleanup Disabled.');
 		}
 	
@@ -76,28 +77,43 @@ class cleanup extends Controller
 				} else {
 					$serial = 'serial_number';
 				}
-								
+				
+				if($clean_days > 0) {
+					//cleans up records where serial number is older than x days
+					$sql = "DELETE FROM $table WHERE `$serial` IN ((select * from (SELECT munkireport.serial_number FROM munkireport WHERE UNIX_TIMESTAMP(STR_TO_DATE(munkireport.timestamp,'%Y-%m-%d %h:%i:%s')) < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL $clean_days day))) as t))";
+					if (! $stmt = $dbh->prepare($sql)) {
+						die('Prepare '.$sql.' failed');
+					}
+					
+					$stmt->bindValue(1, '');
+					$stmt->execute();
+					$cnt += $stmt->rowCount();
+				}
+				
+				//cleans up records where serial number is not in munkireport table
+				if($orphan_cleanup == 1) {
+					$sql = "DELETE FROM $table WHERE `$serial` NOT IN ((select * from (SELECT munkireport.serial_number FROM munkireport) as t))";
+					if (! $stmt = $dbh->prepare($sql)) {
+						die('Prepare '.$sql.' failed');
+					}
+					
+					$stmt->bindValue(1, '');
+					$stmt->execute();
+					$cnt += $stmt->rowCount();
+				}
+			}
+			
+			if($clean_days > 0) {
+				$table = "munkireport";
+				$serial = 'serial_number';
 				$sql = "DELETE FROM $table WHERE `$serial` IN ((select * from (SELECT munkireport.serial_number FROM munkireport WHERE UNIX_TIMESTAMP(STR_TO_DATE(munkireport.timestamp,'%Y-%m-%d %h:%i:%s')) < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL $clean_days day))) as t))";
 				if (! $stmt = $dbh->prepare($sql)) {
 					die('Prepare '.$sql.' failed');
 				}
-				
 				$stmt->bindValue(1, '');
 				$stmt->execute();
 				$cnt += $stmt->rowCount();
 			}
-			
-			$table = "munkireport";
-			$serial = 'serial_number';
-			
-			$sql = "DELETE FROM $table WHERE `$serial` IN ((select * from (SELECT munkireport.serial_number FROM munkireport WHERE UNIX_TIMESTAMP(STR_TO_DATE(munkireport.timestamp,'%Y-%m-%d %h:%i:%s')) < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL $clean_days day))) as t))";
-			if (! $stmt = $dbh->prepare($sql)) {
-				die('Prepare '.$sql.' failed');
-			}
-			
-			$stmt->bindValue(1, '');
-			$stmt->execute();
-			$cnt += $stmt->rowCount();
 			
 			$dbh->commit();
 
