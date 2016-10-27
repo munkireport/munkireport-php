@@ -396,6 +396,21 @@
 	*/
 	//$conf['temperature_unit'] = 'F';
 
+	/*
+	|===============================================
+	| Clean Stale Machines (x Days and Older Delete)
+	|===============================================
+	|
+	| Clean Stale Machines
+	|
+	|			$conf['clean_days'] = 0;
+	|
+	| When not configured, set to zero or less, the default behaviour applies.
+	| By default no machines will be deleted
+	| If set, any machine x days and older will be removed.
+	|
+	*/
+	$conf['clean_days'] = 0;
 
 	/*
 	|===============================================
