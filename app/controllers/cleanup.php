@@ -80,7 +80,7 @@ class cleanup extends Controller
 				
 				if($clean_days > 0) {
 					//cleans up records where serial number is older than x days
-					$sql = "DELETE FROM $table WHERE `$serial` IN ((select * from (SELECT munkireport.serial_number FROM munkireport WHERE UNIX_TIMESTAMP(STR_TO_DATE(munkireport.timestamp,'%Y-%m-%d %h:%i:%s')) < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL $clean_days day))) as t))";
+					$sql = "DELETE FROM $table WHERE `$serial` IN ((select * from (SELECT munkireport.serial_number FROM munkireport WHERE UNIX_TIMESTAMP(STR_TO_DATE(munkireport.timestamp,'%Y-%m-%d %H:%i:%s')) < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL $clean_days day))) as t))";
 					if (! $stmt = $dbh->prepare($sql)) {
 						die('Prepare '.$sql.' failed');
 					}
