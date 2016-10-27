@@ -20,7 +20,7 @@ new Sccm_status_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
 		        <th data-i18n="sccm_status.agent_status" data-colname='sccm_status.agent_status'></th> 
-		        <th data-i18n="sccm_status_.mgmt_point" data-colname='sccm_status.mgmt_point'></th>
+		        <th data-i18n="sccm_status.mgmt_point" data-colname='sccm_status.mgmt_point'></th>
 		        <th data-i18n="sccm_status.enrollment_name" data-colname='sccm_status.enrollment_name'></th>
 		        <th data-i18n="sccm_status.enrollment_server" data-colname='sccm_status.enrollment_server'></th>
 		        <th data-i18n="sccm_status.last_checkin" data-colname='sccm_status.last_checkin'></th>
