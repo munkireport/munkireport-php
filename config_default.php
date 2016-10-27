@@ -414,6 +414,22 @@
 
 	/*
 	|===============================================
+	| Clean Orphan Records
+	|===============================================
+	|
+	| Clean Orphan Machines
+	|
+	|			$conf['orphan_records'] = 0;
+	|
+	| When not configured, set to zero or less, the default behaviour applies.
+	| By default no records will be deleted
+	| If set, any record with serial number that is NOT IN munkireport database will be removed.
+	|
+	*/
+	$conf['orphan_records'] = 0;
+
+	/*
+	|===============================================
 	| Migrations
 	|===============================================
 	|
