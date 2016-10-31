@@ -1,12 +1,5 @@
 <?php $this->view('partials/head', array('scripts' => array("clients/client_list.js"))); ?>
 
-<?php //Initialize models needed for the table
-new Machine_model;
-new Reportdata_model;
-new Munkireport_model;
-new munkiinfo_model;
-?>
-
 <div class="container">
 
   <div class="row">
