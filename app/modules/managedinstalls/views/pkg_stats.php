@@ -41,9 +41,9 @@ $(document).on('appReady', function(e, lang) {
         $.each(data, function(index, val){
             if(val.name){
                 var displayname = (val.display_name || val.name),
-                    installed = val.installed || 0,
-                    pending = val.pending_install || 0,
-                    failed = val.install_failed || 0,
+                    installed = +val.installed || 0,
+                    pending = +val.pending_install || 0,
+                    failed = +val.install_failed || 0,
                     total = installed + pending + failed,
                     pct = total ? Math.round((total - pending - failed)/total * 100) : 0;
                 dataSet.push([
