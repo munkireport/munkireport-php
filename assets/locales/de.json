@@ -77,8 +77,8 @@
     "bluetooth": "Bluetooth",
     "bluetooth_battery_widget": "Bluetooth Batteriestatus",
     "keyboard": "Tastatur",
-    "mouse": "Maus",
-    "panel_title": "Bluetooth-Geräta mit weniger als 15% Batterie",
+    "mouse": "Maus Status",
+    "panel_title": "Bluetooth-Geräte mit weniger als 15% Batterie",
     "status": "Bluetooth Status",
     "trackpad": "Trackpad Status"
   },
@@ -123,6 +123,7 @@
       "power": "Strom",
       "printers": "Drucker",
       "profiles": "Profile",
+      "sccm_status": "SCCM Status",
       "serverstats": "Server Statistik",
       "summary": "Zusammenfassung",
       "third_party_software": "Drittanbieter-Software",
@@ -423,6 +424,7 @@
       "power": "Strom",
       "printers": "Printers",
       "profile": "Profile",
+      "sccm_status": "SCCM Status",
       "security": "Sicherheit",
       "timemachine": "Time Machine",
       "warranty": "Garantie",
@@ -501,6 +503,7 @@
     "pdo": "PDO Extension",
     "pdodrivers": "PDO Database drivers",
     "php": "PHP",
+    "soap": "SOAP Extension (wird für GSX Modul gebraucht)",
     "version": "Version"
   },
   "pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
@@ -520,6 +523,17 @@
     "printer_status": "Druckerstatus",
     "tab_title": "Installierte Drucker",
     "url": "URL"
+  },
+  "sccm_status": {
+    "title": "SCCM Agent Status",
+    "titleheader": "SCCM Agent Information",
+    "agent_status": "SCCM Agent Status",
+    "mgmt_point": "Management Point",
+    "enrollment_name": "Enrollment User Name",
+    "enrollment_server": "Enrollment Server",
+    "last_checkin": "Letzter SCCM Check In",
+    "cert_exp": "SCCM Client Cert Ablauf",
+    "enrollment_status": "Enrollment Status"
   },
   "security": {
     "security": "Security",
