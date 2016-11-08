@@ -103,20 +103,26 @@ function model_description_lookup($serial)
     if (strpos($serial, 'VMWV') === 0) {
         return 'VMware virtual machine';
     }
-    $snippet = substr($serial, 8);
-    $url = sprintf('http://support-sp.apple.com/sp/product?cc=%s&lang=en_US', $snippet);
-
+    
+    $url = sprintf('https://km.support.apple.com/kb/index?page=categorydata&serialnumber=%s', $serial);
     $result = get_url($url);
 
     if ($result === false) {
         return 'model_lookup_failed';
     }
-
-    if (preg_match('#<configCode>(.*)</configCode>#', $result, $matches)) {
-        return($matches[1]);
+    
+    try {
+        $categorydata = json_decode($result);
+        if(isset($categorydata->name)){
+            return $categorydata->name;
+        }
+        else{
+            return 'unknown_model';
+        }
+    } catch (Exception $e) {
+        return 'model_lookup_failed';
     }
-
-    return 'unknown_model';
+    
 }
 
 /**

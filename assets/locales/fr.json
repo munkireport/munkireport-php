@@ -409,6 +409,7 @@
     "pressure": "Pression sur la mémoire"
   },
   "model": "Modèle",
+  "mouse": " Souris",
   "munki": {
     "error": "Erreur de Munki : __error__",
     "error_plural": "__count__ Erreurs de Munki",
@@ -533,6 +534,7 @@
 		"pdo": "Extension PDO",
 		"pdodrivers": "Base de données pilotes PDO",
 		"php": "PHP",
+		"soap": "Extension SOAP (requis pour le module GSX)",
 		"version": "Version"
 		},
   "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",

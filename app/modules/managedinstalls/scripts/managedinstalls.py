@@ -11,11 +11,8 @@ import os
 DEBUG = False
 MANAGED_INSTALL_REPORT = '/Library/Managed Installs/ManagedInstallReport.plist'
 
-# Skip manual check
+# Don't skip manual check
 if len(sys.argv) > 1:
-    if sys.argv[1] == 'manualcheck':
-        print 'Manual check: skipping'
-        exit(0)
     if sys.argv[1] == 'debug':
         print '**** DEBUGGING ENABLED ****'
         DEBUG = True

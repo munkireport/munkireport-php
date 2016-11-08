@@ -90,6 +90,7 @@ $(document).on('appReady', function(e, lang) {
         var list = {
             'php.version': data.Core['PHP Version'],
             'php.dom': data.dom['DOM/XML'] || false,
+            'php.soap': data.soap['Soap Client'] || false,
             'php.pdo': data.PDO['PDO support'] || false,
             'php.pdodrivers': data.PDO['PDO drivers'] || false
         };
