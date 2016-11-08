@@ -42,6 +42,10 @@
   "auth": {
     "addtoconfig": "Fügen Sie diese Zeile zur config.php hinzu:",
     "back_to_site": "Zurück zur Seite",
+    "captcha": {
+      "empty": "Bitte Captcha ausfüllen",
+      "invalid": "Falsche Captcha-Antwort"
+    },
     "empty_not_allowed": "Leere Werte sind nicht erlaubt",
     "error_contacting_AD": "Es ist ein Fehler bei der Verbindung mit der AD aufgetreten",
     "gen_other": "Weitere erstellen",
@@ -73,8 +77,8 @@
     "bluetooth": "Bluetooth",
     "bluetooth_battery_widget": "Bluetooth Batteriestatus",
     "keyboard": "Tastatur",
-    "mouse": "Maus",
-    "panel_title": "Bluetooth-Geräta mit weniger als 15% Batterie",
+    "mouse": "Maus Status",
+    "panel_title": "Bluetooth-Geräte mit weniger als 15% Batterie",
     "status": "Bluetooth Status",
     "trackpad": "Trackpad Status"
   },
@@ -97,6 +101,7 @@
   "cert": {
     "expired": "__name__ expired __moment__"
   },
+  "cfbundlename": "CFBundleName",
   "client": {
     "activity": "Clientaktivität",
     "comment": "Kommentar",
@@ -106,6 +111,7 @@
       "ard": "ARD",
       "bluetooth": "Bluetooth",
       "certificates": "Zertifikate",
+      "deploystudio": "DeployStudio",
       "displays": "Displays",
       "ds": "Verzeichnisdienste",
       "gsx": "GSX",
@@ -117,6 +123,7 @@
       "power": "Strom",
       "printers": "Drucker",
       "profiles": "Profile",
+      "sccm_status": "SCCM Status",
       "serverstats": "Server Statistik",
       "summary": "Zusammenfassung",
       "third_party_software": "Drittanbieter-Software",
@@ -187,6 +194,11 @@
     "widget_info": "Gesamtanzahl bekannter externer Bildschirme",
     "widget_title": "Anzahl externer Bildschirme"
   },
+  "ds": {
+    "computername": "Computername",
+    "architecture": "Architektur",
+    "recheck": "DeployStudio-Daten holen"
+  },
   "displayname": "Anzeigename",
   "edit": "Editieren",
   "email": {
@@ -207,7 +219,11 @@
   "events": {
     "widget_title": "Ereignisse der letzten Stunde"
   },
-  "failing": "Fehlgeschlagen!",
+  "external": {
+    "mwa_link": "In Munki Web Admin öffnen"
+  },
+  "failed": "Fehlgeschlagen",
+  "failing": "Schlägt fehl!",
   "filevault": {
     "users": "User bei denen FileVault aktiv ist",
     "widget": {
@@ -268,6 +284,10 @@
   "inactive": "Inaktiv",
   "info": "Information",
   "installed": "Installiert",
+  "inventory": {
+    "report": "Inventar Report"
+  },
+  "keyboard": "Tastatur",
   "last_seen": "Zuletzt gesehen",
   "last_user": "Letzter User",
   "listing": {
@@ -276,6 +296,9 @@
       "title": "Apple Remote Desktop Bericht"
     },
     "bluetooth": {
+      "battery_percent": "Batteriestatus",
+      "bluetooth_power": "Bluetooth Status",
+      "device_type": "Gerätetyp",
       "title": "Bluetooth Bericht"
     },
     "certificate": {
@@ -354,6 +377,7 @@
     "pressure": "Speicherdruck"
   },
   "model": "Modell",
+  "mouse": "Maus",
   "munki": {
     "error": "Munki-Fehler: __error__",
     "error_plural": "__count__ Munki-Fehler",
@@ -386,6 +410,7 @@
       "bluetooth": "Bluetooth",
       "clients": "Clients",
       "certificate": "Zertifikate",
+      "deploystudio": "DeployStudio",
       "directoryservice": "Verzeichnisdienste",
       "disk": "Festplatten",
       "displays": "Displays",
@@ -399,6 +424,7 @@
       "power": "Strom",
       "printers": "Printers",
       "profile": "Profile",
+      "sccm_status": "SCCM Status",
       "security": "Sicherheit",
       "timemachine": "Time Machine",
       "warranty": "Garantie",
@@ -411,6 +437,7 @@
       "admin": "Admin"
     },
     "reports": {
+      "appVersions": "App Versions Report",
       "backup": "Backup-Bericht",
       "clients": "Client-Bericht",
       "configuration": "Konfigurations-Bericht",
@@ -440,6 +467,7 @@
   },
   "new_client": "Neuer Client",
   "new_client_plural": "Neue Clients",
+  "no": "nein",
   "no_clients": "Keine Clients",
   "no_data": "Keine Daten",
   "no_errors_or_warnings": "Keine Fehler oder Warnungen",
@@ -475,10 +503,12 @@
     "pdo": "PDO Extension",
     "pdodrivers": "PDO Database drivers",
     "php": "PHP",
+    "soap": "SOAP Extension (wird für GSX Modul gebraucht)",
     "version": "Version"
   },
   "pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
   "pkg_failed_to_install_plural": "__count__ Pakete wurden nicht installiert",
+  "ratio": "Verhältnis",
   "reg_date": "Registrierungsdatum",
   "remote_control": "Fernsteuerung",
   "report": {
@@ -493,6 +523,17 @@
     "printer_status": "Druckerstatus",
     "tab_title": "Installierte Drucker",
     "url": "URL"
+  },
+  "sccm_status": {
+    "title": "SCCM Agent Status",
+    "titleheader": "SCCM Agent Information",
+    "agent_status": "SCCM Agent Status",
+    "mgmt_point": "Management Point",
+    "enrollment_name": "Enrollment User Name",
+    "enrollment_server": "Enrollment Server",
+    "last_checkin": "Letzter SCCM Check In",
+    "cert_exp": "SCCM Client Cert Ablauf",
+    "enrollment_status": "Enrollment Status"
   },
   "security": {
     "security": "Security",
@@ -567,6 +608,7 @@
     "timemachine": "Time Machine"
   },
   "total_clients": "Gesamte Anzahl Clients",
+  "trackpad": "Trackpad",
   "type": "Typ",
   "unavailable": "Nicht verfügbar",
   "unauthorized": "Sie sind nicht autorisiert",
@@ -665,5 +707,6 @@
     "xauthtype": "802.11X Authentifizierungstyp",
     "wifiauthtype": "WiFi Authentifizierungstyp",
     "wifiinfo": "WiFi Information"
-  }
+  },
+  "yes": "Ja"
 }
