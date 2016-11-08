@@ -129,7 +129,6 @@
 			"power": "Power",
 			"printers": "Printers",
 			"profiles": "Profiles",
-			"sccm_status": "SCCM Status",
 			"serverstats": "Server Statistics",
 			"summary": "Summary",
 			"third_party_software": "Third Party Software",
@@ -169,6 +168,11 @@
 		},
 		"client": {
 			"title": "CrashPlan"
+		}
+	},
+	"backup2go": {
+		"widget": {
+			"title": "Backup2go Status"
 		}
 	},
 	"danger": "Error",
@@ -328,6 +332,13 @@
 			"text": "Text __number__",
 			"title": "Apple Remote Desktop Report"
 		},
+		"backup2go": {
+			"title": "Backup2go",
+			"date": "Last successfull backup",
+			"widget": {
+				"title": "Notification rules"
+			}
+		},
 		"bluetooth": {
 			"battery_percent": "Battery Percent",
 			"bluetooth_power": "Bluetooth Power",
@@ -366,12 +377,12 @@
 		"username": "Username",
         "wifi": {
             "apmode": "AP Mode",
-            "authtype": "802.11X Auth Type", 
-            "channel": "Channel", 
-            "lasttx": "Last Tx Rate (Mbps)", 
-            "linkauthtype": "Link Auth Type", 
-            "maxtx": "Max Tx Rate (Mbps)", 
-            "noise": "Noise", 
+            "authtype": "802.11X Auth Type",
+            "channel": "Channel",
+            "lasttx": "Last Tx Rate (Mbps)",
+            "linkauthtype": "Link Auth Type",
+            "maxtx": "Max Tx Rate (Mbps)",
+            "noise": "Noise",
             "state": "WiFi State"
         }
 	},
@@ -441,6 +452,7 @@
 		"listings": {
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
+			"backup2go": "Archiware Backup2Go",
 			"clients": "Clients",
 			"certificate": "Certificates",
 			"deploystudio": "DeployStudio",
@@ -457,7 +469,6 @@
 			"power": "Power",
 			"printers": "Printers",
 			"profile": "Profiles",
-			"sccm_status": "SCCM Status",
 			"security": "Security",
 			"timemachine": "Time Machine",
 			"warranty": "Warranty",
@@ -479,7 +490,8 @@
 			"location": "Location Report",
 			"munki": "Munki Report",
 			"network": "Network Report",
-			"power": "Power Report"
+			"power": "Power Report",
+			"backup2go" : "Backup2go"
 		},
 		"user": {
 			"logout": "Sign Off"
@@ -536,7 +548,6 @@
 		"pdo": "PDO Extension",
 		"pdodrivers": "PDO Database drivers",
 		"php": "PHP",
-		"soap": "SOAP Extension (required for GSX module)",
 		"version": "Version"
 	},
 	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
@@ -556,17 +567,6 @@
 		"printer_status": "Printer Status",
 		"tab_title": "Installed Printers",
 		"url": "URL"
-	},	
-	"sccm_status": {
-		"title": "SCCM Agent Status",
-		"titleheader": "SCCM Agent Information:",
-		"agent_status": "SCCM Agent Status",
-		"mgmt_point": "Management Point",
-		"enrollment_name": "Enrollment User Name",
-		"enrollment_server": "Enrollment Server ",
-		"last_checkin": "Last SCCM Check In",
-		"cert_exp": "SCCM Client Cert Expiry",
-		"enrollment_status": "Enrollment Status"
 	},
 	"security": {
 		"security": "Security",
@@ -716,7 +716,10 @@
 			"lastweek": "Latest backup more than a day ago",
 			"title": "Timemachine Status",
 			"today": "Backed up today",
-			"week_plus": "Latest backup more than a week ago"
+			"week_plus": "Latest backup more than a week ago",
+			"b2g_ok": "Latest backup within 2 weeks",
+			"b2g_warning": "Latest backup within 4 weeks",
+			"b2g_danger": "Latest backup older then 4 weeks"
 		},
         "warrantysupport":{
             "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
