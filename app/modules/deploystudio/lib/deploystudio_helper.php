@@ -17,7 +17,8 @@ class Deploystudio_helper
     {
         // Error message
         $error = '';
-
+        
+        # Trim off any slashes on the right (DeployStudio does not handle double slashes well)
         $deploystudio_server = rtrim(conf('deploystudio_server'), '/');
 
         // Get computer data from DeployStudio
