@@ -334,7 +334,7 @@
 		},
 		"backup2go": {
 			"title": "Backup2go",
-			"date": "Last successfull backup",
+			"date": "Last successful backup",
 			"widget": {
 				"title": "Notification rules"
 			}

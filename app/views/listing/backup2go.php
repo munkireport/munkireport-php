@@ -9,7 +9,8 @@ new Backup2go_Model;
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-		  <h3><span data-i18n="listing.backup2go.title"></h3>
+            
+            <h3><span data-i18n="listing.backup2go.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 		  
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -22,7 +23,7 @@ new Backup2go_Model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="7" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="4" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -60,7 +61,7 @@ new Backup2go_Model;
 
 	    oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
 					d.mrColNotEmpty = "backup2go.backupdate"
@@ -77,7 +78,7 @@ new Backup2go_Model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = mr.getClientDetailLink(name, sn, '#tab_storage-tab');
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_summary');
 	        	$('td:eq(0)', nRow).html(link);
 
 				//-- set col 2: serialnumber
@@ -92,33 +93,23 @@ new Backup2go_Model;
 	        	var backupdate=$('td:eq(3)', nRow).html(); //date of backup
 				
 				if(backupdate !== "" && !isNaN(backupdate)){
-					var d = new Date();
-					var nowdate = Math.round(d.getTime() / 1000);
-					
-					//calculate the days between
-					result = Math.round((nowdate - backupdate));
-					var days = Math.floor(result / 60 / 60 / 24);
-
-					//define naming
-					if(days == 0){
-						text_days = "today";
-					} else if(days == 1){
-						text_days = "yesterday";
-					} else {
-						text_days = days + " days ago";
-					}
-
+                    
+                    var date = new Date(backupdate * 1000);
+                    var bdate = moment(date);
+                    var now = moment();
+                    var days = now.diff(bdate, "days")
+                    
 					if(days < 14){
 						cls = 'success ';
-					} else if (days > 14 && days < 28){
+					} else if (days >= 14 && days < 28){
 						cls = 'warning';
-					} else if (days > 28){
+					} else if (days >= 28){
 						cls = 'danger';
 					}
 
-					$('td:eq(3)', nRow).html('<div><div class="label label-'+cls+'" style="float: left; height: 100%; width: 100%; line-height: 1.5;">'+text_days+'</div></div>');
+					$('td:eq(3)', nRow).html('<span class="label label-'+cls+'">'+bdate.fromNow()+'</span>');
 				} else {
-					$('td:eq(3)', nRow).html('<div><div class="label "  style="width: 100%;float: left;">Unknown</div></div>');
+					$('td:eq(3)', nRow).html('<span class="label">Unknown</span>');
 				}
 
 		    }
