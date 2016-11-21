@@ -4,7 +4,7 @@
 //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
-new Ard_model;
+new Backup2go_Model;
 ?>
 <div class="container">
     <div class="row">
