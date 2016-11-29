@@ -359,7 +359,8 @@ function delete_machine(obj)
 			.find('td > div')
 			.slideUp(600,function(){
 				// After hide animation is done, redraw table
-				oTable.fnDraw();
+                var oTable = $('.table').DataTable();
+                oTable.ajax.reload();
 			});
 		}
 	  	else

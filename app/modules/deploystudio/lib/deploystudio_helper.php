@@ -17,8 +17,9 @@ class Deploystudio_helper
     {
         // Error message
         $error = '';
-
-        $deploystudio_server = conf('deploystudio_server');
+        
+        # Trim off any slashes on the right (DeployStudio does not handle double slashes well)
+        $deploystudio_server = rtrim(conf('deploystudio_server'), '/');
 
         // Get computer data from DeployStudio
         $url = "{$deploystudio_server}/computers/get/entry?id={$deploystudio_model->serial_number}";

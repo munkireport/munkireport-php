@@ -9,7 +9,8 @@
   <div class="row">
 
     <?php $this->view('widgets/timemachine_widget'); ?>
-	<?php $this->view('crashplan_widget', '', MODULE_PATH . 'crashplan/views/'); ?>
+		<?php $this->view('crashplan_widget', '', MODULE_PATH . 'crashplan/views/'); ?>
+		<?php $this->view('backup2go_widget', '', MODULE_PATH . 'backup2go/views/'); ?>
 
   </div>
 

@@ -295,7 +295,7 @@
 	| its data may not show in MunkiReport.
 	*/
 	$conf['deploystudio_enable'] = FALSE;
-	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443/';
+	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443'; // no trailing slash
 	$conf['deploystudio_username'] = 'deploystudio_user';
 	$conf['deploystudio_password'] = 'deploystudio_password';
 	

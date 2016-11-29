@@ -160,7 +160,7 @@ def DiskReport():
         if getattr(disk, 'Partitions', None):
             for partition in disk.Partitions:
 
-                if partition.Content == 'Apple_HFS':
+                if partition.Content == 'Apple_HFS' and partition.get('MountPoint'):
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
                     if diskInfo['BusProtocol'] == 'Disk Image':
                         # Skip Disk Images
@@ -190,7 +190,7 @@ def DiskReport():
                     volumeList.append(diskInfo)
 
         else:
-            if disk.Content == 'Apple_HFS':
+            if disk.Content == 'Apple_HFS' and disk.get('MountPoint'):
                 diskInfo = filteredDiskInfo(disk.DeviceIdentifier)
 
                 if diskInfo['BusProtocol'] == 'Disk Image':
