@@ -24,7 +24,7 @@ class Deploystudio_helper
         // Get computer data from DeployStudio
         $url = "{$deploystudio_server}/computers/get/entry?id={$deploystudio_model->serial_number}";
         $deploystudio_computer_result = $this->get_deploystudio_url($url);
-        
+
         if(! $deploystudio_computer_result){
             throw new Exception("No data received from deploystudio server", 1);
         }
@@ -34,6 +34,10 @@ class Deploystudio_helper
         $plist->parse($deploystudio_computer_result);
 
         $plist = $plist->toArray();
+        if( ! $plist){
+            throw new Exception("Machine not found in deploystudio server", 1);
+        }
+        
         $plist = array_values($plist);
         $plist = $plist[0];
 
