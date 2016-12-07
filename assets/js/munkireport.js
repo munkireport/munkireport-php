@@ -106,8 +106,8 @@ $(document).on('appReady', function(e, lang) {
     
     // Set color for svg text to base color defined in body
     var bodyColor = $('body').css('color');
-    $('head').append('<style>text{fill:'+bodyColor+'}</style>');
-    $('head').append('<style>svg .nvd3.nv-pie .nv-pie-title{fill:'+bodyColor+'}</style>');
+    $('head').append('<style>text, svg .nvd3.nv-pie .nv-pie-title, .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{fill:'+bodyColor+'}</style>');
+    
     
     addMenuItem({
         menu: 'admin',
