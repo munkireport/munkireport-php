@@ -103,6 +103,12 @@ $(document).on('appReady', function(e, lang) {
     //     i18n: 'notification.menu_link',
     //     url: appUrl + '/module/notification/manage'
     // });
+    
+    // Set color for svg text to base color defined in body
+    var bodyColor = $('body').css('color');
+    $('head').append('<style>text{fill:'+bodyColor+'}</style>');
+    $('head').append('<style>svg .nvd3.nv-pie .nv-pie-title{fill:'+bodyColor+'}</style>');
+    
     addMenuItem({
         menu: 'admin',
         i18n: 'systemstatus.menu_link',
