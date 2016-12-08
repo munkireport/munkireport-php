@@ -1,6 +1,6 @@
 <div class="col-md-6">
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" id="os-widget">
 
 		<div class="panel-heading">
 
@@ -10,8 +10,8 @@
 
 		<div class="panel-body">
 			
-			<div id="os-plot"></div>
-
+			<svg id="os-plot" class="center-block" style="width:100%"></svg>
+			
 		</div>
 
 	</div><!-- /panel -->
@@ -19,26 +19,77 @@
 </div><!-- /col-lg-4 -->
 
 <script>
-$(document).on('appReady appUpdate', function(e, lang) {
+$(document).on('appReady', function(e, lang) {
+			
+	var height = 400;
+	var chart;
+	var osData = [{
+		      "key": " ",
+		      "color": "#1f77b4",
+		      "values": []
+		  }];
 
-	// Clone barOptions
-    var myOptions = jQuery.extend(true, {}, horBarOptions);
-	myOptions.legend = {show: false}
-	myOptions.callBack = resizeBox;
-    myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
-		label = mr.integerToVersion(obj.data[v].label)
-		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/clients'); ?>#' + label + '">' + label + '</a>';
-	}
+	nv.addGraph(function() {
+	  chart = nv.models.multiBarHorizontalChart()
+	      .x(function(d) { return mr.integerToVersion(d.label) })
+	      .y(function(d) { return d.count })
+	      .margin({top: 20, right: 10, bottom: 20, left: 70})
+	      .showValues(true)
+		  .valueFormat(d3.format(''))
+	      .tooltips(false)
+	      .showControls(false)
+		  .showLegend(false)
+		  .height(height);
 
-	// Resize the container after we know how many items we have
-	function resizeBox(obj)
-	{
-		$('#os-plot').height(obj.length * 25 + 50);
-	}
+	  chart.yAxis
+	      .tickFormat(d3.format(''));
 
-	var parms = {}
-	// HW Plot
-	drawGraph("<?php echo url('module/machine/os'); ?>", '#os-plot', myOptions, parms);
+	  d3.select('#os-widget svg')
+		  .attr('height', height)
+	      .datum(osData)
+	      .call(chart);
+
+		// visit page on click
+		chart.multibar.dispatch.on("elementClick", function(e) {
+		    var label = mr.integerToVersion(e.data.label);
+			window.location.href = appUrl + '/show/listing/clients#' + label;
+		    //console.log(e.point.label);
+		});
+
+		nv.utils.windowResize(chart.update);
+		drawGraph();
+
+	});
+	
+	
+	// Get data and update graph
+	var drawGraph = function(){
+		var url = appUrl + '/module/machine/os';
+		d3.json(url, function(data) {
+			osData[0].values = data;
+			height = data.length * 26 + 40;
+			
+			chart.height(height);
+			console.log(data.length)
+			d3.select('#os-widget svg')
+				.attr('height', height)
+				.datum(osData)
+				.transition()
+				.duration(500)
+				.call(chart);
+				
+			chart.update();
+			
+			
+		});
+
+	};
+	
+	// update chart data
+	$(document).on('appUpdate', function(){drawGraph()});
 
 });
+
+
+
 </script>

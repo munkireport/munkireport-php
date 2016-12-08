@@ -180,18 +180,11 @@ class Machine_controller extends Module_controller
 				GROUP BY os_version
 				ORDER BY os_version ASC";
 
-        $os_array = array();
         foreach ($machine->query($sql) as $obj) {
-            $obj->os_version = $obj->os_version ? $obj->os_version : '0.0.0';
-            $os_array[$obj->os_version] = $obj->count;
+            $obj->os_version = $obj->os_version ? $obj->os_version : '0';
+            $out[] = array('label' => $obj->os_version, 'count' => intval($obj->count));
         }
 
-        // Convert to flotr array
-        $cnt = 0;
-        foreach ($os_array as $os => $count) {
-            $os = $os == '0' ? 'Unknown' : $os;
-            $out[] = array('label' => $os, 'data' => array(array(intval($count), $cnt++)));
-        }
 
         $obj = new View();
         $obj->view('json', array('msg' => $out));
