@@ -1,6 +1,6 @@
 <div class="col-md-6">
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" id="memory-widget">
 
 		<div class="panel-heading">
 
@@ -10,7 +10,7 @@
 
 		<div class="panel-body">
 			
-			<div id="memory-plot"></div>
+			<svg style="width:100%"></svg>
 
 		</div>
 
@@ -20,25 +20,70 @@
 
 <script>
 $(document).on('appReady', function(e, lang) {
+	
+	var height = 400;
+	var chart;
+	var osData = [{
+			  "key": " ",
+			  "color": "#1f77b4",
+			  "values": []
+		  }];
+		  
+	// Get data and update graph
+  	var drawGraph = function(){
+  		var url = appUrl + '/module/machine/get_memory_stats';
+  		d3.json(url, function(data) {
+  			osData[0].values = data;
+  			height = data.length * 26 + 40;
+  			
+  			chart.height(height);
+  			d3.select('#memory-widget svg')
+  				.attr('height', height)
+  				.datum(osData)
+  				.transition()
+  				.duration(500)
+  				.call(chart);
+  				
+  			chart.update();
+  			
+  		});
+  	};
+	
+	nv.addGraph(function() {
+	  chart = nv.models.multiBarHorizontalChart()
+		  .x(function(d) { return d.label + ' GB' })
+		  .y(function(d) { return d.count })
+		  .margin({top: 20, right: 10, bottom: 20, left: 70})
+		  .showValues(true)
+		  .valueFormat(d3.format(''))
+		  .tooltips(false)
+		  .showControls(false)
+		  .showLegend(false)
+		  .height(height);
 
-	// Clone barOptions
-    var myOptions = jQuery.extend(true, {}, horBarOptions);
-	myOptions.legend = {show: false}
-	myOptions.callBack = resizeBox;
-    myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
-		label = obj.data[v].label
-		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/hardware'); ?>#' + encodeURIComponent('memory = ') + parseInt(label) + 'GB">' + label + '</a>';
-	}
+	  chart.yAxis
+		  .tickFormat(d3.format(''));
 
-	// Resize the container after we know how many items we have
-	function resizeBox(obj)
-	{
-		$('#memory-plot').height(obj.length * 25 + 50);
-	}
+	  d3.select('#memory-widget svg')
+		  .attr('height', height)
+		  .datum(osData)
+		  .call(chart);
 
-	var parms = {}
-	// HW Plot
-	drawGraph("<?php echo url('module/machine/get_memory_stats/flotr'); ?>", '#memory-plot', myOptions, parms);
+		// visit page on click
+		chart.multibar.dispatch.on("elementClick", function(e) {
+			var label = e.data.label;
+			window.location.href = appUrl + '/show/listing/hardware#' + encodeURIComponent('memory = ') + parseInt(label) + 'GB' ;
+		});
+
+		nv.utils.windowResize(chart.update);
+		drawGraph();
+
+	});
+	
+	// update chart data
+	$(document).on('appUpdate', function(){drawGraph()});
+
+	
 
 });
 </script>

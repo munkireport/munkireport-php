@@ -10,7 +10,7 @@
 
 		<div class="panel-body">
 			
-			<svg id="os-plot" class="center-block" style="width:100%"></svg>
+			<svg style="width:100%"></svg>
 			
 		</div>
 

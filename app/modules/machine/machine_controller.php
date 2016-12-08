@@ -132,7 +132,7 @@ class Machine_controller extends Module_controller
                 
             default:
                 foreach ($tmp as $mem => $memcnt) {
-                    $out[] = array('physical_memory' => $mem, 'count' => $memcnt);
+                    $out[] = array('label' => $mem, 'count' => $memcnt);
                 }
         }
 
@@ -157,7 +157,7 @@ class Machine_controller extends Module_controller
 			ORDER BY count DESC";
         $cnt = 0;
         foreach ($machine->query($sql) as $obj) {
-            $out[] = array('label' => $obj->machine_name, 'data' => array(array($cnt++, intval($obj->count))));
+            $out[] = array('label' => $obj->machine_name, 'count' => intval($obj->count));
         }
 
         $obj = new View();

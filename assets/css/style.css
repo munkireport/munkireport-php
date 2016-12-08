@@ -32,12 +32,6 @@ a.list-group-item-danger > .badge
   max-height: 200px; overflow-y: scroll;
 }
 
-/* Fix bleeding in legend color box */
-.flotr-legend-color-box *
-{
-  box-sizing: content-box;
-}
-
 /* Fix paging */
 .paging_bootstrap ul.pagination
 {
