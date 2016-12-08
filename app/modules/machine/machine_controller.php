@@ -178,7 +178,7 @@ class Machine_controller extends Module_controller
 				LEFT JOIN reportdata USING (serial_number)
 				".get_machine_group_filter()."
 				GROUP BY os_version
-				ORDER BY os_version ASC";
+				ORDER BY os_version DESC";
 
         foreach ($machine->query($sql) as $obj) {
             $obj->os_version = $obj->os_version ? $obj->os_version : '0';
