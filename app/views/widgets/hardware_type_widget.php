@@ -4,7 +4,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-desktop"></i> Hardware type breakdown</h3>
+			<h3 class="panel-title"><i class="fa fa-desktop"></i> <span data-i18n="machine.hardware_type_title"></span></h3>
 
 		</div>
 

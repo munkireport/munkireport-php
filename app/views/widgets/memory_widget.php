@@ -4,7 +4,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-lightbulb-o"></i> Memory breakdown</h3>
+			<h3 class="panel-title"><i class="fa fa-lightbulb-o"></i> <span data-i18n="widget.memory.title"></span></h3>
 		
 		</div>
 

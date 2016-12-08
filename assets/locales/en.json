@@ -403,6 +403,7 @@
 	},
 	"loading": "Loading data from server",
 	"machine": {
+		"hardware_type_title": "Hardware type breakdown",
 		"hardware_widget_title": "Hardware model breakdown"
 	},
 	"managedinstalls": {
@@ -676,6 +677,7 @@
 		"est_purchase_date": "Est. Purchase Date",
 		"expired": "Expired on __date__",
 		"expires_in": "Expires in __date__",
+		"installed_memory_title": "Installed Memory",
 		"no_alerts": "No Warranty Alerts",
 		"recheck": "Recheck Warranty Status",
 		"supported_no_applecare": "Supported until __date__. No Applecare",
@@ -704,17 +706,57 @@
 			"title": "Certificates"
 		},
 		"duplicate_computernames": {
-			"notfound": "No duplicates found"
+			"notfound": "No duplicates found",
+			"title": "Duplicate Computer Names"
+		},
+		"manifest": {
+			"title": "Manifests"
+		},
+		"memory": {
+			"title": "Memory breakdown"
+		},
+		"modified_computernames": {
+			"title": "Not matching AD Names",
+			"tooltip": "Computers where the computer name doesn't match the AD name"
 		},
 		"munki": {
-			"no_updates_pending": "No Updates Pending"
+			"no_updates_pending": "No Updates Pending",
+			"title": "Munki"
 		},
 		"munkiinfo": {
 			"munkiprotocol": {
 				"localrepo": "local repo",
 				"http": "http",
-				"https": "https"
+				"https": "https",
+				"title": "Munki Protocol",
+				"tooltip": "Munki Protocol among all clients"
 			}
+		},
+		"munki_versions": {
+			"title": "Munki versions",
+			"tooltip": "Munki versions among all clients"
+		},
+		"network_location": {
+			"title": "Network locations"
+		},
+		"network_vlan": {
+			"title": "Network vlans"
+		},
+		"new_clients": {
+			"no_new_clients": "No new clients",
+			"title": "New clients",
+			"tooltip": "Clients registered this week"
+		},
+		"os": {
+			"title": "OS breakdown"
+		},
+		"pending_apple": {
+			"title": "Pending Apple Updates",
+			"tooltip": "Pending Apple Updates for this week"
+		},
+		"pending_munki": {
+			"title": "Pending Installs",
+			"tooltip": "Pending installs for this week"
 		},
 		"power": {
 			"missing": "Missing",

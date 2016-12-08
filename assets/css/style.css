@@ -8,6 +8,10 @@
     cursor: pointer;
 }
 
+/* Panel title */
+.panel-title{
+    line-height: 1.1;
+}
 
 body {
   padding-bottom: 40px;

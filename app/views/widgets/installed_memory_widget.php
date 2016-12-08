@@ -4,7 +4,7 @@
 		
 		<div class="panel-heading">
 			
-			<h3 class="panel-title"><i class="fa fa-tasks"></i> Installed Memory</h3>
+			<h3 class="panel-title"><i class="fa fa-tasks"></i> <span data-i18n="warranty.installed_memory_title"></span></h3>
 			
 		</div>
 		

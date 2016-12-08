@@ -2,9 +2,9 @@
 
     <div class="panel panel-default" id="pending-apple-widget">
 
-		<div class="panel-heading" data-container="body" title="Pending Apple Updates for this week">
+		<div class="panel-heading" data-container="body" data-i18n="[title]widget.pending_apple.tooltip">
 
-			<h3 class="panel-title"><i class="fa fa-apple"></i> Pending Apple Updates</h3>
+			<h3 class="panel-title"><i class="fa fa-apple"></i> <span data-i18n="widget.pending_apple.title"></span></h3>
 		
 		</div>
 
