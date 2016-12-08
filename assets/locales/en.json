@@ -750,6 +750,9 @@
 		"os": {
 			"title": "OS breakdown"
 		},
+		"pending": {
+			"title": "Clients with pending installs"
+		},
 		"pending_apple": {
 			"title": "Pending Apple Updates",
 			"tooltip": "Pending Apple Updates for this week"
@@ -759,12 +762,18 @@
 			"tooltip": "Pending installs for this week"
 		},
 		"power": {
+			"health": {
+				"title": "Battery Health",
+				"tooltip": "Battery health status listing"
+			},
 			"missing": "Missing",
 			"normal": "Normal",
 			"now": "Replace Now",
 			"service": "Service Now",
 			"soon": "Service Soon",
-			"nobattery": "No Battery"
+			"nobattery": "No Battery",
+			"title": "Battery Condition",
+			"tooltip": "Battery condition listing"
 		},
 		"timemachine": {
 			"lastweek": "Latest backup more than a day ago",
@@ -776,6 +785,7 @@
 			"b2g_danger": "Latest backup older then 4 weeks"
 		},
         "warrantysupport":{
+			"title": "Counts Supported, Vintage, Obsolete, and Unknown support status",
             "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
             "warrentysupportstatus": "Warranty Support Status"
         }

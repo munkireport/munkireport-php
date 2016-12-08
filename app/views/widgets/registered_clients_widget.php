@@ -4,7 +4,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="widget.registered.title">Registered clients</span></h3>
+			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="widget.registered.title"></span></h3>
 
 		</div>
 
