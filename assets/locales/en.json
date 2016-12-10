@@ -178,6 +178,8 @@
 	"danger": "Error",
 	"database": "Database",
 	"date": {
+		"day": "Day",
+		"day_plural": "Days",
 		"year": "year"
 	},
 	"db": {
@@ -783,6 +785,12 @@
 			"b2g_ok": "Latest backup within 2 weeks",
 			"b2g_warning": "Latest backup within 4 weeks",
 			"b2g_danger": "Latest backup older then 4 weeks"
+		},
+		"uptime": {
+			"title": "Uptime"
+		},
+		"warranty": {
+			"title": "Warranty status"
 		},
         "warrantysupport":{
 			"title": "Counts Supported, Vintage, Obsolete, and Unknown support status",
