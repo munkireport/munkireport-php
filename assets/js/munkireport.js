@@ -120,6 +120,13 @@ var mr = {
             
         },
         
+        // Get preference for graph in this order: conf, default for graph, default
+        getGraphPref: function(setting, graphName, conf){
+            if(conf[setting]) return conf[setting];
+            if(mr.graph[graphName] && mr.graph[graphName][setting]) return mr.graph[graphName][setting];
+            mr.graph[setting];
+        },
+        
         // Add nvd3 graph
         addGraph: function(conf){
             // Sanity check
@@ -130,7 +137,7 @@ var mr = {
             
             // Assemble svg identifier
             conf.svg = '#' + conf.widget + ' svg';
-            
+
             nv.addGraph(function() {
               conf.chart = nv.models.multiBarHorizontalChart()
                   .x(function(d) { return conf.labelModifier ? conf.labelModifier(d.label) : d.label })
@@ -141,7 +148,7 @@ var mr = {
                   .tooltips(false)
                   .showControls(false)
                   .showLegend(false)
-                  .barColor(conf.barColor ? conf.barColor : mr.graph.barColor)
+                  .barColor(mr.getGraphPref('barColor', conf.widget, conf))//conf.barColor ? conf.barColor : (graphSettings.barColor ? mr.graph.barColor))
                   .height(0);
 
               conf.chart.yAxis
