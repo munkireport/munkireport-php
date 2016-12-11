@@ -15,6 +15,11 @@ var mr = {
             uninstalled: {type: 'success'}
         },
         
+        // Graphing defaults
+        graph: {
+            barColor: ['steelBlue']
+        },
+        
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)
         {
@@ -102,7 +107,7 @@ var mr = {
                 height = data.length * 26 + 40;
                 conf.chart.height(height);
                 
-                d3.select(conf.widget)
+                d3.select(conf.widget + ' svg')
                     .attr('height', height)
                     .datum(graphData)
                     .transition()
@@ -121,19 +126,19 @@ var mr = {
               conf.chart = nv.models.multiBarHorizontalChart()
                   .x(function(d) { return conf.labelModifier ? conf.labelModifier(d.label) : d.label })
                   .y(function(d) { return d.count })
-                  .margin(conf.margin)
+                  .margin(conf.margin ? conf.margin : {top: 20, right: 10, bottom: 20, left: 70})
                   .showValues(true)
                   .valueFormat(d3.format(''))
                   .tooltips(false)
                   .showControls(false)
                   .showLegend(false)
-                  .barColor(d3.scale.category20().range())
+                  .barColor(conf.barColor ? conf.barColor : mr.graph.barColor)
                   .height(0);
 
               conf.chart.yAxis
                   .tickFormat(d3.format(''));
                   
-              d3.select(conf.widget)
+              d3.select(conf.widget + ' svg')
                   .attr('height', 0)
                   .datum([{"key": " ","values": []}])
                   .call(conf.chart);
@@ -172,7 +177,6 @@ $(document).on('appReady', function(e, lang) {
     // Set color for svg text to base color defined in body
     var bodyColor = $('body').css('color');
     $('head').append('<style>text, svg .nvd3.nv-pie .nv-pie-title, .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{fill:'+bodyColor+'}</style>');
-    
     
     addMenuItem({
         menu: 'admin',
@@ -535,42 +539,5 @@ String.prototype.pluralize = function(count, plural)
     plural = this + 's';
 
   return (count == 1 ? this : plural)
-}
-
-
-// Generate nice colors
-// Adapted from http://krazydad.com/tutorials/makecolors.php
-if(typeof window.makeColorGradient !== 'function')
-{
-	window.makeColorGradient = function(len, reverse)
-	{
-		var center = 128,
-			width = 127,
-			frequency1 = .4,
-			frequency2 = frequency1,
-			frequency3 = frequency1;
-		var out = []
-		if(reverse)
-		{
-			var phase1 = 2,
-				phase2 = phase1 - 2,
-				phase3 = phase1 - 4;
-		}
-		else
-		{
-			var phase1 = -2,
-				phase2 = phase1 + 2,
-				phase3 = phase1 + 4;
-		}
-		for (var i = 0; i < len; ++i)
-		{
-		   var red = Math.round(Math.sin(frequency1*i + phase1) * width + center);
-		   var grn = Math.round(Math.sin(frequency2*i + phase2) * width + center);
-		   var blu = Math.round(Math.sin(frequency3*i + phase3) * width + center);
-		   out.push('rgb('+red+','+grn+','+blu+')')
-		}
-
-		return out
-	}
 }
 

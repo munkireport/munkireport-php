@@ -23,7 +23,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	var conf = {
 		url: appUrl + '/module/machine/get_memory_stats', // Url for json
-		widget: '#memory-widget svg', // Widget id
+		widget: '#memory-widget', // Widget id
 		margin: {top: 20, right: 10, bottom: 20, left: 70},
 		elementClickCallback: function(e){
 			var label = e.data.label;
