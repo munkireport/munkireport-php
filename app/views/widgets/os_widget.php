@@ -23,7 +23,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	var conf = {
 		url: appUrl + '/module/machine/os', // Url for json
-		widget: '#os-widget', // Widget id
+		widget: 'os-widget', // Widget id
 		elementClickCallback: function(e){
 			var label = mr.integerToVersion(e.data.label);
 			window.location.href = appUrl + '/show/listing/clients#' + label;

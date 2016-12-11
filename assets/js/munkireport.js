@@ -107,7 +107,7 @@ var mr = {
                 height = data.length * 26 + 40;
                 conf.chart.height(height);
                 
-                d3.select(conf.widget + ' svg')
+                d3.select(conf.svg)
                     .attr('height', height)
                     .datum(graphData)
                     .transition()
@@ -122,6 +122,15 @@ var mr = {
         
         // Add nvd3 graph
         addGraph: function(conf){
+            // Sanity check
+            if( ! conf.widget){
+                alert('no widget provided for addGraph');
+                return;
+            };
+            
+            // Assemble svg identifier
+            conf.svg = '#' + conf.widget + ' svg';
+            
             nv.addGraph(function() {
               conf.chart = nv.models.multiBarHorizontalChart()
                   .x(function(d) { return conf.labelModifier ? conf.labelModifier(d.label) : d.label })
@@ -138,7 +147,7 @@ var mr = {
               conf.chart.yAxis
                   .tickFormat(d3.format(''));
                   
-              d3.select(conf.widget + ' svg')
+              d3.select(conf.svg)
                   .attr('height', 0)
                   .datum([{"key": " ","values": []}])
                   .call(conf.chart);

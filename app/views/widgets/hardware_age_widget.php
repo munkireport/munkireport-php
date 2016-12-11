@@ -23,7 +23,7 @@ $(document).on('appReady', function() {
 	
 	var conf = {
 		url: appUrl + '/module/warranty/age', // Url for json
-		widget: '#hardware-age-widget', // Widget id
+		widget: 'hardware-age-widget', // Widget id
 		margin: {top: 20, right: 10, bottom: 20, left: 70},
 		elementClickCallback: function(e){
 			window.location.href = appUrl + '/show/listing/warranty';

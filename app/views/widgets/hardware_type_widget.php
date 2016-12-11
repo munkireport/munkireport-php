@@ -23,7 +23,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	var conf = {
 		url: appUrl + '/module/machine/hw', // Url for json
-		widget: '#hardware-type-widget', // Widget id
+		widget: 'hardware-type-widget', // Widget id
 		margin: {top: 20, right: 10, bottom: 20, left: 90},
 	};
 
