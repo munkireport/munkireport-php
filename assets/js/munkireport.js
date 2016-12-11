@@ -20,6 +20,22 @@ var mr = {
             barColor: ['steelBlue']
         },
         
+        // Localstorage handler
+        state: function(id, data){
+            
+            if( data == undefined)
+            {
+              // Get data
+              return JSON.parse( localStorage.getItem(id) );
+
+            }
+            else
+            {
+              // Set data
+              localStorage.setItem( id, JSON.stringify(data) );
+            }
+        },
+        
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)
         {
@@ -178,21 +194,27 @@ var mr = {
 
             });
 
+        },
+        
+        // Set color for svg text to base color defined in body
+        adjustGraphColor: function() {
+            
+            var bodyColor = $('body').css('color');
+            $('head').append('<style>text, svg .nvd3.nv-pie .nv-pie-title, .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{fill:'+bodyColor+'}</style>');
+
         }
 
     };
 
 $(document).on('appReady', function(e, lang) {
     
+    mr.adjustGraphColor();
+
     // addMenuItem({
     //     menu: 'admin',
     //     i18n: 'notification.menu_link',
     //     url: appUrl + '/module/notification/manage'
     // });
-    
-    // Set color for svg text to base color defined in body
-    var bodyColor = $('body').css('color');
-    $('head').append('<style>text, svg .nvd3.nv-pie .nv-pie-title, .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{fill:'+bodyColor+'}</style>');
     
     addMenuItem({
         menu: 'admin',
@@ -209,6 +231,25 @@ $(document).on('appReady', function(e, lang) {
 });
 
 $( document ).ready(function() {
+    
+    // Get global state
+    var state = mr.state('global');
+    if(state){
+        if(state.theme){
+            var theme_file = baseUrl + 'assets/themes/' + state.theme + '/bootstrap.min.css';
+            $('#bootstrap-stylesheet').attr('href', theme_file);
+            mr.adjustGraphColor();
+        }
+    }
+    
+    // Theme switcher
+    $('a[data-switch]').on('click', function(){
+        var theme = $(this).data('switch');
+        var theme_file = baseUrl + 'assets/themes/' + theme + '/bootstrap.min.css';
+        $('#bootstrap-stylesheet').attr('href', theme_file);
+        mr.state('global', {theme: theme});        
+   });
+    
     $.i18n.init({
         debug: munkireport.debug,
         useLocalStorage: false,
@@ -465,21 +506,21 @@ function delete_machine(obj)
 // This function is used by datatables
 function state(id, data)
 {
-	// Create unique id for this page
-	path = location.pathname + location.search
+    // Create unique id for this page
+    path = location.pathname + location.search
 
-	// Strip host information and index.php
-	path = path.replace(/.*index\.php\??/, '')
+    // Strip host information and index.php
+    path = path.replace(/.*index\.php\??/, '')
 
-	// Strip serial number from detail page, we don't want to store
-	// sorting information for every unique client
-	path = path.replace(/(.*\/clients\/detail\/).+$/, '$1')
+    // Strip serial number from detail page, we don't want to store
+    // sorting information for every unique client
+    path = path.replace(/(.*\/clients\/detail\/).+$/, '$1')
 
-	// Strip inventory item from page, no unique sort per item
-	path = path.replace(/(.*\/inventory\/items\/).+$/, '$1')
+    // Strip inventory item from page, no unique sort per item
+    path = path.replace(/(.*\/inventory\/items\/).+$/, '$1')
 
-	// Append id to page path
-	id = path + id
+    // Append id to page path
+    id = path + id
 
 	if( data == undefined)
 	{
