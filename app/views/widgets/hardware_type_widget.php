@@ -21,60 +21,13 @@
 <script>
 $(document).on('appReady', function(e, lang) {
 	
-	var height = 400;
-	var chart;
-	var osData = [{
-			  "key": " ",
-			  "color": "#1f77b4",
-			  "values": []
-		  }];
-		  
-	// Get data and update graph
-	var drawGraph = function(){
-		var url = appUrl + '/module/machine/hw';
-		d3.json(url, function(data) {
-			osData[0].values = data;
-			
-			d3.select('#hardware-type-widget svg')
-				.datum(osData)
-				.transition()
-				.duration(500)
-				.call(chart);
-				
-			chart.update();
-			
-		});
+	var conf = {
+		url: appUrl + '/module/machine/hw', // Url for json
+		widget: '#hardware-type-widget svg', // Widget id
+		margin: {top: 20, right: 10, bottom: 20, left: 90},
 	};
 
+	mr.addGraph(conf);
 	
-	nv.addGraph(function() {
-		chart = nv.models.discreteBarChart()
-			.x(function(d) { return d.label })
-			.y(function(d) { return d.count })
-			.staggerLabels(true)
-			.valueFormat(d3.format(''))
-			.tooltips(false)
-			.showValues(true)
-			.height(height);
-	
-		chart.yAxis
-			.tickFormat(d3.format(''));
-
-	  d3.select('#hardware-type-widget svg')
-		  .attr('height', height)
-	    .datum(osData)
-	    .transition().duration(500)
-	    .call(chart)
-	    ;
-
-	  nv.utils.windowResize(chart.update);
-	  drawGraph();
-
-	});
-	
-		
-	// update chart data
-	$(document).on('appUpdate', function(){drawGraph()});
-
 });
 </script>

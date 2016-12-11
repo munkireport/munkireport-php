@@ -92,6 +92,71 @@ var mr = {
                 if (oFxNcL < oFyNcL) { return -1; }
                 else if (oFxNcL > oFyNcL) { return 1; }
             }
+        }, // End naturalSort
+        
+        // Draw graph for nvd3 and update graph
+        drawGraph: function(conf){
+            var graphData = [{"key": " ", "values": []}];
+            d3.json(conf.url, function(data) {
+                graphData[0].values = data;
+                height = data.length * 26 + 40;
+                conf.chart.height(height);
+                
+                d3.select(conf.widget)
+                    .attr('height', height)
+                    .datum(graphData)
+                    .transition()
+                    .duration(500)
+                    .call(conf.chart);
+                    
+                conf.chart.update();
+                
+            });
+            
+        },
+        
+        // Add nvd3 graph
+        addGraph: function(conf){
+            nv.addGraph(function() {
+              conf.chart = nv.models.multiBarHorizontalChart()
+                  .x(function(d) { return conf.labelModifier ? conf.labelModifier(d.label) : d.label })
+                  .y(function(d) { return d.count })
+                  .margin(conf.margin)
+                  .showValues(true)
+                  .valueFormat(d3.format(''))
+                  .tooltips(false)
+                  .showControls(false)
+                  .showLegend(false)
+                  .barColor(d3.scale.category20().range())
+                  .height(0);
+
+              conf.chart.yAxis
+                  .tickFormat(d3.format(''));
+                  
+              d3.select(conf.widget)
+                  .attr('height', 0)
+                  .datum([{"key": " ","values": []}])
+                  .call(conf.chart);
+            
+            // Callback for click events
+              if(conf.elementClickCallback){
+                  // visit page on click
+                  conf.chart.multibar.dispatch.on("elementClick", function(e) {
+                      conf.elementClickCallback(e)
+                  });
+              }
+                
+                // Call the munkireport drawGraph routine
+                mr.drawGraph(conf);
+                
+                // update chart data on appUpdate
+                $(document).on('appUpdate', function(){mr.drawGraph(conf)});
+                
+                // update chart data on Resize
+                nv.utils.windowResize(conf.chart.update);
+
+            });
+
         }
 
     };
