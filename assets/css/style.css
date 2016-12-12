@@ -158,10 +158,6 @@ table.table thead th{
 }
 
 /* Donut chart title */
-svg .nvd3.nv-pie .nv-pie-title
-{
-  fill: #333;
-}
 svg .nv-label text
 {
   font-size: .8em;

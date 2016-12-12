@@ -195,20 +195,27 @@ var mr = {
             });
 
         },
-        
-        // Set color for svg text to base color defined in body
-        adjustGraphColor: function() {
-            
-            var bodyColor = $('body').css('color');
-            $('head').append('<style>text, svg .nvd3.nv-pie .nv-pie-title, .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{fill:'+bodyColor+'}</style>');
-
+                
+        loadTheme: function() {
+            // Get global state
+            var state = mr.state('global');
+            if(state){
+                if(state.theme){
+                    var theme_dir = baseUrl + 'assets/themes/' + state.theme + '/';
+                    var theme_file = theme_dir + 'bootstrap.min.css';
+                    $('#bootstrap-stylesheet').attr('href', theme_dir + 'bootstrap.min.css');
+                    $('#nvd3-override-stylesheet').attr('href', theme_dir + 'nvd3.override.css');
+                }
+            }
         }
 
     };
 
+// Load theme files
+mr.loadTheme();
+
 $(document).on('appReady', function(e, lang) {
     
-    mr.adjustGraphColor();
 
     // addMenuItem({
     //     menu: 'admin',
@@ -230,24 +237,15 @@ $(document).on('appReady', function(e, lang) {
 
 });
 
+
 $( document ).ready(function() {
     
-    // Get global state
-    var state = mr.state('global');
-    if(state){
-        if(state.theme){
-            var theme_file = baseUrl + 'assets/themes/' + state.theme + '/bootstrap.min.css';
-            $('#bootstrap-stylesheet').attr('href', theme_file);
-            mr.adjustGraphColor();
-        }
-    }
     
     // Theme switcher
     $('a[data-switch]').on('click', function(){
         var theme = $(this).data('switch');
-        var theme_file = baseUrl + 'assets/themes/' + theme + '/bootstrap.min.css';
-        $('#bootstrap-stylesheet').attr('href', theme_file);
-        mr.state('global', {theme: theme});        
+        mr.state('global', {theme: theme});
+        mr.loadTheme();
    });
     
     $.i18n.init({
