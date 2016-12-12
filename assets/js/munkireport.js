@@ -36,6 +36,19 @@ var mr = {
             }
         },
         
+        // Set Preference handler (uses localstorage)
+        setPref: function(key, val){
+            var globalPrefs = mr.state('global') || {};
+            globalPrefs[key] = val;
+            mr.state('global', globalPrefs);
+        },
+        
+        // Get Preference handler (uses localstorage)
+        getPref: function(key){
+            var globalPrefs = mr.state('global') || {};
+            return globalPrefs[key];
+        },
+        
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)
         {
@@ -198,15 +211,15 @@ var mr = {
                 
         loadTheme: function() {
             // Get global state
-            var state = mr.state('global');
-            if(state){
-                if(state.theme){
-                    var theme_dir = baseUrl + 'assets/themes/' + state.theme + '/';
-                    var theme_file = theme_dir + 'bootstrap.min.css';
-                    $('#bootstrap-stylesheet').attr('href', theme_dir + 'bootstrap.min.css');
-                    $('#nvd3-override-stylesheet').attr('href', theme_dir + 'nvd3.override.css');
-                }
-            }
+            var theme = mr.getPref('theme') || 'Default';
+            var theme_dir = baseUrl + 'assets/themes/' + theme + '/';
+            var theme_file = theme_dir + 'bootstrap.min.css';
+            $('#bootstrap-stylesheet').attr('href', theme_dir + 'bootstrap.min.css');
+            $('#nvd3-override-stylesheet').attr('href', theme_dir + 'nvd3.override.css');
+            
+            // Add active to menu item
+            $('[data-switch]').parent().removeClass('active');
+            $('[data-switch="'+theme+'"]').parent().addClass('active');
         }
 
     };
@@ -243,8 +256,7 @@ $( document ).ready(function() {
     
     // Theme switcher
     $('a[data-switch]').on('click', function(){
-        var theme = $(this).data('switch');
-        mr.state('global', {theme: theme});
+        mr.setPref('theme', $(this).data('switch'));
         mr.loadTheme();
    });
     
