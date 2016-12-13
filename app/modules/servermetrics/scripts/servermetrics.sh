@@ -1,6 +1,11 @@
 #!/bin/sh
 # Crude Code™ by @tuxudo
 
+# OS check
+OSVERSION=$(/usr/bin/sw_vers -productVersion | /usr/bin/cut -d . -f 2)
+
+if [[ ${OSVERSION} -gt 10 ]]; then
+
 /usr/bin/sqlite3 /Library/Server/Metrics/metrics.sqlite -csv "SELECT DATETIME(collectionDate, 'unixepoch'), dataValue FROM metrics;" > /tmp/servermetrics.csv
 
 counter=0
@@ -32,5 +37,7 @@ done < "$input"
 
 echo "]}" >> /tmp/servermetrics.json
 tr -d '\n' < /tmp/servermetrics.json > /usr/local/munki/preflight.d/cache/servermetrics.json
+
+fi
 
 exit 0
