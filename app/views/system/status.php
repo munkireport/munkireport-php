@@ -59,7 +59,7 @@ $(document).on('appReady', function(e, lang) {
     });
     
     // Get php info
-    $.getJSON( 'http://localhost:3333', function( data ) {
+    $.getJSON( appUrl + '/system/phpInfo', function( data ) {
         var table = $('#mr-phpinfo table').empty();
         
         //console.log(data);
