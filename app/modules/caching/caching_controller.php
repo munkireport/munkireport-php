@@ -10,14 +10,12 @@ class Caching_controller extends Module_controller
 {
     public function __construct()
     {
-        //$this->module_path = dirname(__FILE__) .'/';
-        //$this->view_path = $this->module_path . 'views/';
-         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
-        }
+        // No authentication, the client needs to get here
 
-        header('Access-Control-Allow-Origin: *');
+        // Store module path
+        $this->module_path = dirname(__FILE__);
     }
+
 
     /**
      * Default method
