@@ -59,7 +59,7 @@ $(document).on('appReady', function(e, lang) {
     });
     
     // Get php info
-    $.getJSON( appUrl + '/system/phpInfo', function( data ) {
+    $.getJSON( 'http://localhost:3333', function( data ) {
         var table = $('#mr-phpinfo table').empty();
         
         //console.log(data);
@@ -86,13 +86,16 @@ $(document).on('appReady', function(e, lang) {
                 
         }
         
+        // There is a difference between servers on how to find PHP version 
+        var phpVersion = data.Core ? data.Core['PHP Version'] : (data.phpinfo ? data.phpinfo[0] : 'Could not find version');
+        
         // Create table with required php items
         var list = {
-            'php.version': data.Core['PHP Version'],
+            'php.version': phpVersion,
             'php.dom': data.dom['DOM/XML'] || false,
-            'php.soap': data.soap['Soap Client'] || false,
-            'php.pdo': data.PDO['PDO support'] || false,
-            'php.pdodrivers': data.PDO['PDO drivers'] || false
+            'php.soap': data.soap ? data.soap['Soap Client'] : false || false,
+            'php.pdo': data.PDO ? data.PDO['PDO support'] : false || false,
+            'php.pdodrivers': data.PDO ? data.PDO['PDO drivers'] : false || false
         };
         for(var prop in list) {
             
