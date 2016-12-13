@@ -173,7 +173,7 @@
 
 							<?php foreach(scandir(APP_ROOT.'assets/themes') AS $theme): ?>
 
-								<?php if( strpos($theme, '.') === false):?>
+								<?php if( $theme != 'fonts' && strpos($theme, '.') === false):?>
 
 								<li><a data-switch="<?php echo $theme; ?>" href="#"><?php echo $theme; ?></a></li>
 
