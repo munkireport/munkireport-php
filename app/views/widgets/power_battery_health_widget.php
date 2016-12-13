@@ -2,9 +2,9 @@
 
 	<div class="panel panel-default" id="power-battery-health-widget">
 
-		<div class="panel-heading" data-container="body" title="Battery health status listing">
+		<div class="panel-heading" data-container="body" data-i18n="[title]widget.power.health.tooltip">
 
-			<h3 class="panel-title"><i class="fa fa-medkit"></i> Battery Health %</h3>
+			<h3 class="panel-title"><i class="fa fa-medkit"></i> <span data-i18n="widget.power.health.title"></span> %</h3>
 
 		</div>
 

@@ -1,16 +1,16 @@
 <div class="col-sm-6">
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" id='hardware-age-widget'>
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="widget.age.title">Hardware Age</span></h3>
+			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="widget.age.title"></span></h3>
 
 		</div>
 
 		<div class="panel-body">
 
-			<div id="age-plot"></div>
+			<svg style="width:100%"></svg>
 
 		</div>
 
@@ -20,26 +20,20 @@
 
 <script>
 $(document).on('appReady', function() {
+	
+	var conf = {
+		url: appUrl + '/module/warranty/age', // Url for json
+		widget: 'hardware-age-widget', // Widget id
+		margin: {top: 20, right: 10, bottom: 20, left: 70},
+		elementClickCallback: function(e){
+			window.location.href = appUrl + '/show/listing/warranty';
+		},
+		labelModifier: function(label){
+			return label + ' ' + i18n.t('date.year');
+		}
+	};
 
-	// Clone barOptions
-    var myOptions = jQuery.extend(true, {}, horBarOptions);
-	myOptions.legend = {show: false}
-	myOptions.callBack = resizeAgeBox;
-	myOptions.reverseColors = true;
-    myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
-		label = obj.data[v].label
-		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/warranty'); ?>">' + label + ' ' + i18n.t('date.year') + '</a>';
-	}
-
-	// Resize the container after we know how many items we have
-	function resizeAgeBox(obj)
-	{
-		$('#age-plot').height(obj.length * 25 + 50);
-	}
-
-	var parms = {}
-	// HW Plot
-	drawGraph("<?php echo url('module/warranty/age'); ?>", '#age-plot', myOptions, parms);
+	mr.addGraph(conf);
 
 });
 </script>

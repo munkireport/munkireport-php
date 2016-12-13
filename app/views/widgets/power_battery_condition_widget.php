@@ -2,9 +2,9 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading" data-container="body" title="Battery condition listing">
+				<div class="panel-heading" data-container="body" data-i18n="[title]widget.power.tooltip">
 
-					<h3 class="panel-title"><i class="fa fa-flash"></i> Battery Condition</h3>
+					<h3 class="panel-title"><i class="fa fa-flash"></i> <span data-i18n="widget.power.title"></span></h3>
 
 				</div>
 

@@ -6,9 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title><?php echo conf('sitename'); ?></title>
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
+	<link rel="stylesheet" id="bootstrap-stylesheet" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
+	<link rel="stylesheet" id="nvd3-override-stylesheet" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
 	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/datatables.min.css" />
 	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
   <!--favicons-->
@@ -163,6 +164,26 @@
 			</ul><!-- nav navbar-nav -->
 
 			<ul class="nav navbar-nav navbar-right">
+			
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-wrench"></i>
+					</a>
+					<ul class="dropdown-menu theme">
+
+							<?php foreach(scandir(APP_ROOT.'assets/themes') AS $theme): ?>
+
+								<?php if( strpos($theme, '.') === false):?>
+
+								<li><a data-switch="<?php echo $theme; ?>" href="#"><?php echo $theme; ?></a></li>
+
+								<?php endif; ?>
+
+							<?php endforeach; ?>
+
+						</ul>
+				</li>
+
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">

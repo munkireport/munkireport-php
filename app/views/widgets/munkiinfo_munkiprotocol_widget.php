@@ -2,9 +2,9 @@
 
 	<div class="panel panel-default" id="munkiinfo-munkiprotocol-widget">
 
-	  <div class="panel-heading" data-container="body" title="Munki Protocol among all clients">
+	  <div class="panel-heading" data-container="body" data-i18n="[title]widget.munkiinfo.munkiprotocol.tooltip">
 
-	    <h3 class="panel-title"><i class="fa fa-magic"></i> Munki Protocol</h3>
+	    <h3 class="panel-title"><i class="fa fa-magic"></i> <span data-i18n="widget.munkiinfo.munkiprotocol.title"></span></h3>
 
 	  </div>
 

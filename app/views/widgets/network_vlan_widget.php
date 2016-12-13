@@ -4,7 +4,7 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-globe"></i> Network vlans</h3>
+					<h3 class="panel-title"><i class="fa fa-globe"></i> <span data-i18n="widget.network_vlan.title"></span></h3>
 				
 				</div>
 

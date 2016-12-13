@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 	<div class="panel panel-default" id="warranty-support-gsx-widget">
-		<div class="panel-heading" data-container="body" title="Counts Supported, Vintage, Obsolete, and Unknown support status">
+		<div class="panel-heading" data-container="body" data-i18n="[title]widget.warrantysupport.tooltip">
 			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="widget.warrantysupport.warrentysupportstatus"></span></h3>
 		</div>
 

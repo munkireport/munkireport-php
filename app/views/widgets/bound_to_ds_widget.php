@@ -2,9 +2,9 @@
 
 	<div class="panel panel-default" id="bound-to-ds-widget">
 
-	  <div class="panel-heading" data-container="body" data-i18n="[title]widget.bound_to_ds.info" title="Totals since this data is being collected">
+	  <div class="panel-heading" data-container="body" data-i18n="[title]widget.bound_to_ds.info">
 
-	    <h3 class="panel-title"><i class="fa fa-bullseye"></i> <span data-i18n="widget.bound_to_ds.title">Bound to a Directory Service</span></h3>
+	    <h3 class="panel-title"><i class="fa fa-bullseye"></i> <span data-i18n="widget.bound_to_ds.title"></span></h3>
 
 	  </div>
 

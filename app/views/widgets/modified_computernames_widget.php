@@ -2,9 +2,9 @@
 
 	<div class="panel panel-default" id="modified-computernames-widget">
 
-		<div id="modified-computer-names" class="panel-heading" data-container="body" title="Computers where the computer name doesn't match the AD name">
+		<div id="modified-computer-names" class="panel-heading" data-container="body" data-i18n="[title]widget.modified_computernames.tooltip">
 
-			<h3 class="panel-title"><i class="fa fa-code-fork"></i> Not matching AD Names <span class="counter badge pull-right"></span></h3>
+			<div class="panel-title"><i class="fa fa-code-fork"></i> <span data-i18n="widget.modified_computernames.title"></span> <span class="counter badge pull-right"></span></div>
 
 		</div>
 

@@ -4,7 +4,7 @@
 
 		<div class="panel-heading" data-container="body">
 
-			<h3 class="panel-title"><i class="fa fa-power-off"></i> Uptime</h3>
+			<h3 class="panel-title"><i class="fa fa-power-off"></i> <span data-i18n="widget.uptime.title"></span></h3>
 
 		</div>
 
@@ -12,15 +12,15 @@
 
 			<a href="" class="btn btn-danger">
 				<span class="bigger-150"> 0 </span><br>
-				7 Days +
+				7 <span data-i18n="date.day_plural"></span> +
 			</a>
 			<a href="" class="btn btn-warning">
 				<span class="bigger-150"> 0 </span><br>
-				< 7 Days
+				< 7 <span data-i18n="date.day_plural"></span>
 			</a>
 			<a href="" class="btn btn-success">
 				<span class="bigger-150"> 0 </span><br>
-				< 1 Day
+				< 1 <span data-i18n="date.day"></span>
 			</a>
 
 		</div>
@@ -44,9 +44,9 @@ $(document).on('appReady', function(e, lang) {
 	    		return;
 	    	}
 
-			panelBody.find('a.btn-success span').text(data.oneday);
-			panelBody.find('a.btn-warning span').text(data.oneweek);
-			panelBody.find('a.btn-danger span').text(data.oneweekplus);
+			panelBody.find('a.btn-success span.bigger-150').text(data.oneday);
+			panelBody.find('a.btn-warning span.bigger-150').text(data.oneweek);
+			panelBody.find('a.btn-danger span.bigger-150').text(data.oneweekplus);
 			
 	    });
 	});

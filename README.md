@@ -72,7 +72,7 @@ Munkireport-php makes use of these fine software packages:
 * [phpserialize](https://github.com/sdfsdhgjkbmnmxc/phpserialize) for serializing client data
 * [jQuery](http://jquery.com) for easy javascript
 * [Datatables](http://datatables.net) table display
-* [Flotr2](http://www.humblesoftware.com/flotr2/) and [nvd3](https://github.com/nvd3-community/nvd3) for graphs
+* [nvd3](https://github.com/nvd3-community/nvd3) for graphs
 * [Moment.js](http://momentjs.com) for displaying time
 * [Bootstrap 3.0](http://getbootstrap.com) the main webframework
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/) for icons

@@ -4,7 +4,7 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-hdd-o"></i> <span data-i18n="free_disk_space">Free Disk Space</span></h3>
+					<h3 class="panel-title"><i class="fa fa-hdd-o"></i> <span data-i18n="free_disk_space"></span></h3>
 
 				</div>
 
