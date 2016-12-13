@@ -701,6 +701,7 @@
 			"info": "Totals since this data is being collected",
 			"title": "Bound to a Directory Service"
 		},
+		"caching": "Caching Bytes Served",
 		"certificate": {
 			"expired": "Expired",
 			"ok": "Valid for more than three months",
