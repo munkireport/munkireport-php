@@ -75,7 +75,7 @@ new Network_model;
 
 	    oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST"
             },
             dom: mr.dt.buttonDom,
@@ -87,7 +87,7 @@ new Network_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_network-tab');
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_network-tab');
 	        	$('td:eq(0)', nRow).html(link);
 
 	        	// Status

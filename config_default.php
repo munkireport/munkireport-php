@@ -48,7 +48,6 @@
 	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
 		. '://'.$_SERVER[ 'HTTP_HOST' ];
 
-
 	/*
 	|===============================================
 	| Subdirectory
@@ -103,8 +102,8 @@
 	|		$conf['auth']['auth_ldap']['mr_allowed_groups'] = array('group1','group2'); // For group based access, fill in groups.
 	|
 	|		Optional items:
-	|		$default_conf['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))'; // LDAP filter to search for user accounts.
-	|		$default_conf['groupfilter'] = '(&(objectClass=posixGroup)(memberUID=%{uid}))'; // LDAP filter to search for groups.
+	|		$conf['auth']['auth_ldap']['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))'; // LDAP filter to search for user accounts.
+	|		$conf['auth']['auth_ldap']['groupfilter'] = '(&(objectClass=posixGroup)(memberUID=%{uid}))'; // LDAP filter to search for groups.
 	|		$conf['auth']['auth_ldap']['port']        = 389; // LDAP port.
 	|		$conf['auth']['auth_ldap']['version']     = 3; // Use LDAP version 1, 2 or 3.
 	|		$conf['auth']['auth_ldap']['starttls']    = FALSE; // Set to TRUE to use TLS.
@@ -134,6 +133,18 @@
 
 	/*
 	|===============================================
+	| reCaptcha Integration
+	|===============================================
+	|
+	| Enable reCaptcha Support on the Authentication Form
+	| Request API keys from https://www.google.com/recaptcha
+	|
+	*/
+	$conf['recaptchaloginpublickey'] = '';
+	$conf['recaptchaloginprivatekey'] = '';
+
+	/*
+	|===============================================
 	| Role Based Authorization
 	|===============================================
 	|
@@ -142,10 +153,10 @@
 	| also used by the Business Units
 	|
 	*/
-    $conf['authorization']['delete_machine'] = array('admin', 'manager');
-    $conf['authorization']['global'] = array('admin');
+	$conf['authorization']['delete_machine'] = array('admin', 'manager');
+	$conf['authorization']['global'] = array('admin');
 
-    /*
+	/*
 	|===============================================
 	| Roles
 	|===============================================
@@ -155,7 +166,7 @@
 	*/
 	$conf['roles']['admin'] = array('*');
 
-    /*
+	/*
 	|===============================================
 	| Local groups
 	|===============================================
@@ -165,7 +176,7 @@
 	*/
 	//$conf['groups']['admin_users'] = array();
 
-    /*
+	/*
 	|===============================================
 	| Business Units
 	|===============================================
@@ -237,9 +248,108 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
 	|
 	*/
-    $conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
 
-    /*
+	/*
+	|===============================================
+	| GSX lookups
+	|===============================================
+	|
+	| Access to GSX and certificates are required for use of this module
+	|
+	| The GSX module is designed to be used in place of the warranty module.
+	| While both the warranty and GSX modules can be enabled at the same
+	| time it is recommended that only one be enabled at a time to prevent
+	| the warranty module from overwriting the data provided by the GSX module.
+	|
+	| Use GSX article OP1474 and 
+	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
+	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the 
+	| Readme.md located in the GSX module.
+	|
+	| To use the GSX module, set enable to TRUE and uncomment and
+	| fill out rest of configuration options. When setting the date format
+	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
+	| are required.
+	*/
+	$conf['gsx_enable'] = FALSE;
+	//$conf['gsx_cert'] = '/Library/Keychains/GSX/certbundle.pem';
+	//$conf['gsx_cert_keypass'] = '';
+	//$conf['gsx_sold_to'] = '1234567890';
+	//$conf['gsx_username'] = 'steve@apple.com';
+	//$conf['gsx_date_format'] = 'm/d/y';
+
+	/*
+	|===============================================
+	| DeployStudio
+	|===============================================
+	|
+	| A working DeployStudio server is required for use of this module. 
+	|
+	| To use the DeployStudio module, set 'deploystudio_enable' to TRUE and
+	| enter the server, username, and password for accessing your primary
+	| DeployStudio server.
+	|
+	| This module currently only pulls data from the primary DeployStudio
+	| server. This means if a machine was imaged off of a replica server
+	| its data may not show in MunkiReport.
+	*/
+	$conf['deploystudio_enable'] = FALSE;
+	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443'; // no trailing slash
+	$conf['deploystudio_username'] = 'deploystudio_user';
+	$conf['deploystudio_password'] = 'deploystudio_password';
+	
+	/*
+	|===============================================
+	| Google Maps API Key
+	|===============================================
+	|
+	| To plot the location, you need to use the google maps API. To use the API
+	| you should obtain an API key. Without it, you may get blank maps and js
+	| errors.
+	|
+	| Obtain an API Key at the google site:
+	| https://console.developers.google.com/flows/enableapi?apiid=maps_backend&keyType=CLIENT_SIDE&reusekey=true
+	| And choose - Create browser API key
+	| Add the following line to your config.php file and insert your key.
+	| $conf['google_maps_api_key'] = 'YOUR_API_KEY';
+	|
+	*/
+	$conf['google_maps_api_key'] = '';
+	
+	/*
+	|===============================================
+	| Curl
+	|===============================================
+	|
+	| Define path to the curl binary and add options
+	| this is used by the installer script.
+	| Override to use custom path and add or remove options, some environments
+	| may need to add "--insecure" if the servercertificate is not to be 
+	| checked.
+	|
+	*/
+	$conf['curl_cmd'] = array(
+		"/usr/bin/curl",
+		"--fail",
+		"--silent",
+		"--show-error");
+
+	
+	/*
+	|===============================================
+	| MunkiWebAdmin2 
+	|===============================================
+	|
+	| MunkiWebAdmin2 (MWA2) is a web-based administration tool for Munki
+	| that focuses on editing manifests and pkginfo files.
+	|
+	| To learn more about MWA2 visit: https://github.com/munki/mwa2
+	|
+	*/
+	//$conf['mwa2_link'] = "http://127.0.0.1:8080";
+
+	/*
 	|===============================================
 	| Modules
 	|===============================================
@@ -253,8 +363,7 @@
 	| Machine and Reportdata
 	|
 	*/
-    $conf['modules'] = array('munkireport');
-
+	$conf['modules'] = array('munkireport', 'managedinstalls');
 
 	/*
 	|===============================================
@@ -282,13 +391,13 @@
 	|			$conf['temperature_unit'] = 'F';
 	|
 	| When not configured, the default behaviour applies.
-	| By default temperture units are displayed in Celsius °C.
+	| By default temperature units are displayed in Celsius °C.
 	|
 	*/
-    //$conf['temperature_unit'] = 'F';
+	//$conf['temperature_unit'] = 'F';
 
 
-    /*
+	/*
 	|===============================================
 	| Migrations
 	|===============================================
@@ -303,8 +412,7 @@
 	| to FALSE when you're done migrating.
 	|
 	*/
-    $conf['allow_migrations'] = FALSE;
-
+	$conf['allow_migrations'] = FALSE;
 
 	/*
 	|===============================================
@@ -321,7 +429,7 @@
 	|
 	|
 	*/
-    $conf['client_passphrases'] = array();
+	$conf['client_passphrases'] = array();
 
 	/*
 	|===============================================
@@ -340,9 +448,9 @@
 	| $conf['proxy']['port'] = 8080; // Optional, defaults to 8080
 	|
 	*/
-    //$conf['proxy']['server'] = 'proxy.yoursite.org';
+	//$conf['proxy']['server'] = 'proxy.yoursite.org';
 
-    /*
+	/*
 	|===============================================
 	| Request timeout
 	|===============================================
@@ -352,10 +460,29 @@
 	| Timeout in seconds
 	|
 	*/
-    $conf['request_timeout'] = 5;
+	$conf['request_timeout'] = 5;
+	
+	
+	/*
+	|===============================================
+	| Email Settings
+	|===============================================
+	|
+	| These settings are used for email notifications
+	| Only smtp is supported at the moment.
+	|
+	| 	$conf['email']['use_smtp'] = true;
+	| 	$conf['email']['from'] = array('noreply@example.com' => 'Munkireport Mailer');
+	|	$conf['email']['smtp_host'] = 'smtp1.example.com;smtp2.example.com';
+	|	$conf['email']['smtp_auth'] = true;
+	|	$conf['email']['smtp_username'] = 'user@example.com';
+	|	$conf['email']['smtp_password'] = 'secret';
+	|	$conf['email']['smtp_secure'] = 'tls';
+	|	$conf['email']['smtp_port'] = 587;
+	|	$conf['email']['locale'] = 'en';
+	*/
 
-
- 	/*
+	/*
 	|===============================================
 	| Dashboard - IP Ranges
 	|===============================================
@@ -369,7 +496,7 @@
 	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
 	|
 	*/
-    $conf['ip_ranges'] = array();
+    	$conf['ip_ranges'] = array();
 
  	/*
 	|===============================================
@@ -394,7 +521,6 @@
 	| $conf['ipv4routers']['Link-local'] = array('169.254.%');
 	|
 	*/
-
 
 	/*
 	|===============================================
@@ -426,6 +552,7 @@
 	|	munki
 	|	power_battery_condition
 	|	power_battery_health
+	|	wifi_state
 	|
 	| Small horizontal / medium vertical widgets:
 	|	network_location
@@ -451,6 +578,7 @@
 	|	hardware_model
 	|	memory
 	|	os
+	|	printer
 	|
 	| Responsive horizontal widgets:
 	|	network_vlan
@@ -458,7 +586,7 @@
 	*/
 	$conf['dashboard_layout'] = array(
 		array('client', 'messages'),
-        array('new_clients', 'pending_apple', 'pending_munki'),
+		array('new_clients', 'pending_apple', 'pending_munki'),
 		array('munki', 'disk_report','uptime')
 	);
 
@@ -499,7 +627,6 @@
 	| the variables below. For enhanced security it is advised to put the
 	| webapp in a directory that is not visible to the internet.
 	*/
-
 	// Path to system folder, with trailing slash
 	$conf['system_path'] = APP_ROOT.'/system/';
 
@@ -515,12 +642,9 @@
 	// Path to modules directory, with trailing slash
 	$conf['module_path'] = $conf['application_path'] . "modules/";
 
-
-
 	// Routes
 	$conf['routes'] = array();
 	$conf['routes']['module(/.*)?']	= "module/load$1";
-
 
 	/*
 	|===============================================
@@ -574,7 +698,6 @@
 	//$conf['custom_css'] = '/custom.css';
 	//$conf['custom_js'] = '/custom.js';
 
-
 	/*
 	|===============================================
 	| Debugging
@@ -584,3 +707,4 @@
 	| FALSE in a production environment
 	*/
 	$conf['debug'] = FALSE;
+	

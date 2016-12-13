@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Ard_controller class
@@ -8,32 +8,32 @@
  **/
 class Ard_controller extends Module_controller
 {
-	function __construct()
-	{
-		$this->module_path = dirname(__FILE__);
-	}
+    public function __construct()
+    {
+        $this->module_path = dirname(__FILE__);
+    }
 
-	/**
-	 * Default method
-	 *
-	 * @author AvB
-	 **/
-	function index()
-	{
-		echo "You've loaded the ard module!";
-	}
+    /**
+     * Default method
+     *
+     * @author AvB
+     **/
+    public function index()
+    {
+        echo "You've loaded the ard module!";
+    }
 
-	/**
+    /**
      * Retrieve data in json format
      *
      **/
-    function get_data($serial_number = '')
+    public function get_data($serial_number = '')
     {
         $obj = new View();
 
-        if( ! $this->authorized())
-        {
+        if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $ard = new Ard_model($serial_number);

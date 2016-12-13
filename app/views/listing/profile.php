@@ -31,8 +31,9 @@
 
 		<tbody>
 	<?php $profile_item_obj = new Profile_model();
-	$items = $profile_item_obj->select('profile_name, (select COUNT(DISTINCT serial_number) from profile p2 where profile.profile_name = p2.profile_name) AS num_profiles, payload_name, serial_number, GROUP_CONCAT(payload_data) as payload_data', '1 GROUP BY profile_name, payload_name, serial_number');
-
+    $sql = 'profile_name, COUNT(DISTINCT serial_number) AS num_profiles, payload_name, GROUP_CONCAT(DISTINCT payload_data) as payload_data';
+    $where = '1 GROUP BY profile_name, payload_name';
+	$items = $profile_item_obj->select($sql, $where);
 	$profile = array();
 	$profilecount = array();
 	$payloaddata = array();
@@ -40,7 +41,6 @@
 	{
 		$name = $item['profile_name'];
 		$version = $item['payload_name'];
-		$serialnumber = $item['serial_number'];
 		$profiles = $item['num_profiles'];
 		$profile[$name][$version] = $profiles;
 		$payloaddata[$name][$version] = $profile_item_obj->json_to_html($item['payload_data']);

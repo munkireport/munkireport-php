@@ -80,7 +80,7 @@ new Printer_model;
 
         oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "printer.name"
@@ -97,7 +97,7 @@ new Printer_model;
                 if(name == ''){name = "No Name"};
                 var sn=$('td:eq(1)', nRow).html();
                 if(sn){
-                  var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_printer-tab');
+                  var link = mr.getClientDetailLink(name, sn, '#tab_printer-tab');
                   $('td:eq(0)', nRow).html(link);
                 } else {
                   $('td:eq(0)', nRow).html(name);

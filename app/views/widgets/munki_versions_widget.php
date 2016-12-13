@@ -22,6 +22,10 @@ $(document).on('appUpdate', function(){
         var list = $('#munki-versions-widget div.scroll-box').empty();
         
         if(data.length){
+			// Sort on version number
+			data.sort(function(a,b){
+				return mr.naturalSort(b.version, a.version);
+			});
             $.each(data, function(i,d){
                 var badge = '<span class="badge pull-right">'+d.count+'</span>';
 				d.version = d.version || i18n.t('unknown');

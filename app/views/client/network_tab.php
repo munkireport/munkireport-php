@@ -1,7 +1,7 @@
 <?php
 $nw = new Network_model();?>
 
-<?php foreach($nw->retrieve_many(
+<?php foreach($nw->retrieveMany(
 		'serial_number=? ORDER BY `order`', array($serial_number)) as $item): ?>
 
 <h2><?php echo $item->service; ?> (<?php echo $item->order; ?>)

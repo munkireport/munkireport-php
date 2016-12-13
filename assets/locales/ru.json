@@ -74,11 +74,7 @@
 			"text": "Текст __number__"
 		},
 		"bluetooth": {
-			"keyboard_battery": "Клавиатура",
-			"mouse_battery": "Мышь",
-			"status": "Статус",
-			"title": "Отчет по Bluetooth",
-			"trackpad_battery": "Трекпад"
+			"title": "Отчет по Bluetooth"
 		},
 		"computername": "Имя",
 		"hardware": {
@@ -111,6 +107,7 @@
 			"displays": "Мониторы",
 			"hardware": "Аппаратные средства",
 			"inventory": "Инвентарь",
+			"location": "Location",
 			"munki": "Munki",
 			"network": "Сеть",
 			"security": "Безопасность",

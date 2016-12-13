@@ -10,7 +10,7 @@
 
 								<?php echo conf('sitename'); ?>
 
-								<?php if(empty($_SERVER['HTTPS'])): ?>
+								<?php if( empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off" ): ?>
 
 									<a href="<?php echo secure_url(); ?>"><i data-i18n="[title]auth.insecure" title="Insecure connection, switch to secure" class="text-danger fa fa-unlock-alt pull-right"></i></a>
 
@@ -44,6 +44,13 @@
 									<input type="password" id="loginpassword" name="password" class="form-control">
 								</div>
 							</div>
+					<?php if (conf('recaptchaloginpublickey')):?>
+							<div class="form-group">
+								<div class="col-lg-offset-2 col-lg-10">
+									<div class="g-recaptcha" data-size="normal" data-sitekey="<?=conf('recaptchaloginpublickey')?>"></div>
+								</div>
+							</div>
+					<?php endif?>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
 								<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button> 
@@ -56,8 +63,13 @@
 			</div>
 		</div>
 	</div><!-- /container -->
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
+	<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
+	<script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
+	
+	<?php if (conf('recaptchaloginpublickey')):?>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<?php endif?>
+
   <script>
     $.i18n.init({
         useLocalStorage: false,

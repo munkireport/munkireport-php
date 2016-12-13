@@ -2,36 +2,33 @@
 
 // Rename serial column to serial_number
 
-class Migration_inventoryitem_rename_serialcolumn extends Model 
+class Migration_inventoryitem_rename_serialcolumn extends Model
 {
-	/**
-	 * Constructor
-	 *
-	 * Set up tablename and indexes
-	 *
-	 **/
-	function __construct()
-	{
-		parent::__construct('id', 'inventoryitem'); //primary key, tablename
+    /**
+     * Constructor
+     *
+     * Set up tablename and indexes
+     *
+     **/
+    public function __construct()
+    {
+        parent::__construct('id', 'inventoryitem'); //primary key, tablename
+    }
 
-	}
+    /**
+     * Migrate up
+     *
+     * Migrates this table to the current version
+     *
+     **/
+    public function up()
+    {
+        // Get database handle
+        $dbh = $this->getdbh();
 
-	/**
-	 * Migrate up
-	 *
-	 * Migrates this table to the current version
-	 *
-	 **/
-	public function up()
-	{
-		// Get database handle
-		$dbh = $this->getdbh();
-
-		switch ($this->get_driver())
-		{
+        switch ($this->get_driver()) {
             case 'sqlite':
-                try 
-                {
+                try {
                     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // Wrap in transaction
@@ -59,52 +56,40 @@ class Migration_inventoryitem_rename_serialcolumn extends Model
                     $this->set_indexes($sql);
                     
                     $dbh->commit();
-
-                }
-                catch (Exception $e)
-                {
+                } catch (Exception $e) {
                     $dbh->rollBack();
                     $this->errors .= "Failed: " . $e->getMessage();
-                    return FALSE;
+                    return false;
                 }
                 break;
 
-			case 'mysql':
-
-				$sql = 'ALTER TABLE inventoryitem CHANGE serial serial_number VARCHAR(255)';
+            case 'mysql':
+                $sql = 'ALTER TABLE inventoryitem CHANGE serial serial_number VARCHAR(255)';
                 $dbh->exec($sql);
                 
                 // No need to rebuild indexes, they stay intact.
                 
-				break;
+                break;
 
-			default:
+            default:
+                throw new Exception("UNKNOWN DRIVER", 1);
+        }
+    }// End function up()
 
-				throw new Exception("UNKNOWN DRIVER", 1);
-				
-		}
-
-
-
-	}// End function up()
-
-	/**
-	 * Migrate down
-	 *
-	 * Migrates this table to the previous version
-	 *
-	 **/
-	public function down()
-	{
+    /**
+     * Migrate down
+     *
+     * Migrates this table to the previous version
+     *
+     **/
+    public function down()
+    {
         // Get database handle
         $dbh = $this->getdbh();
 
-        switch ($this->get_driver())
-        {
+        switch ($this->get_driver()) {
             case 'sqlite':
-
-                try 
-                {
+                try {
                     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // Wrap in transaction
@@ -133,18 +118,14 @@ class Migration_inventoryitem_rename_serialcolumn extends Model
 
                     
                     $dbh->commit();
-
-                }
-                catch (Exception $e)
-                {
+                } catch (Exception $e) {
                     $dbh->rollBack();
                     $this->errors .= "Failed: " . $e->getMessage();
-                    return FALSE;
+                    return false;
                 }
                 break;
 
             case 'mysql':
-
                 $sql = 'ALTER TABLE inventoryitem CHANGE serial_number serial VARCHAR(255)';
                 $dbh->exec($sql);
                 
@@ -153,10 +134,7 @@ class Migration_inventoryitem_rename_serialcolumn extends Model
                 break;
 
             default:
-
                 throw new Exception("UNKNOWN DRIVER", 1);
-                
         }
-
-	}
+    }
 }

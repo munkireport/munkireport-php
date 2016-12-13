@@ -1,3 +1,83 @@
+### 2.9.0 (August 28, 2016)
+
+FIXES
+
+* Improved tag search (#372)
+* SIP status reporting improved thanks to @clburlison
+* Update for GSX module thanks to @tuxudo
+* Scrollable modal window, fixes #461
+* Fix several deep links, #460, #462
+* French localisation updates thanks to @lolipale
+* German localisation updates thanks to @fridomac 
+* Event widget only shows 50 events
+* Increase inventorypath limit to 1024 chars, fixes #478
+* Fix target volume (#492)
+* Fix for Obsolete machines (#496) thanks to @tuxudo
+* Removed "~VIN," from machine description (#498) thanks to @tuxudo
+* Added WiFi hardware check (#499) thanks to @tuxudo
+* Fix marker images for location reporting
+* Disk reporting on Snow Leopard thanks to @Steffan-Ravn
+* Last seen column in munki listing (#334)
+* Custom unserializer (due security issues with native `unserialize()`)
+* Improve Profile listing query (#491)
+* Improved inventory listing
+* Only show edit button when admin (#311)
+
+NEW FEATURES
+
+* curl configuration item, addresses #374
+* FindMyMac module thanks to @clburlison
+* check/uncheck all in filter
+* Event reporting for certificate module
+* Preference for ScriptTimeOut #472
+* Support ManagedInstallDir relocation thanks to @weswhet
+* Munkireport System status page - basic reporting on db status and php
+* link to everymac.com in the client detail page
+* Add module templating (run build/add_module.sh module_name)
+* Managedinstalls module (replaces part of the munkireport module)
+* DeployStudio Module thanks to @tuxudo and @n8felton
+* Add munkiprotocol listing (#462)
+* Add computername to page title (#444)
+* GoogleMaps API key (#510)
+* Support for multiple CrashPlan destinations
+* Munki Web Admin 2 links thanks to @gmarnin
+* ReCaptcha for login thanks to @computeronix
+
+### 2.8.5 (April 4, 2016)
+
+FIXES since 2.8.4
+* WiFi module robustness thanks to @tuxudo and @kujeger 
+* documentation on GSX module thanks to @tuxudo and @gmarnin 
+* location report
+
+FIXES since 2.8.3
+* Location module packaging thanks to @clburlison
+
+FIXES since 2.8.2
+
+* SIP status thanks to @clburlison 
+* Wi-Fi module more robust thanks to @tuxudo
+* Location module packaging thanks to @clburlison
+
+FIXES
+
+* Markdown now accepts line breaks in client comments
+* FileVault 2 reporting fix for #375 and #378
+* curl options for submit.preflight thanks to @kujeger 
+
+NEW FEATURES
+
+* Location module - thanks to @clburlison and @gmarnin
+* GSX module thanks to @tuxudo 
+* Security module thanks to @gmarnin
+* Munkiinfo module thanks to @erikng and @clburlison 
+* Wi-Fi module thanks to @tuxudo
+* Printer widget thanks to @tuxudo
+* Hotkey support
+* German localisation updates thanks to @fridomac 
+* French localisation updates thanks to @lolipale 
+* stretch map to viewport thanks to @rfitzwater
+
 ### 2.7.2 (December 12, 2015)
 
 FIXES

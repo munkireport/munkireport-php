@@ -8,3 +8,7 @@ config.php
 *.DS_Store
 
 *.zip
+
+vendor/*
+
+composer.lock

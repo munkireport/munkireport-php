@@ -5,7 +5,7 @@
 					<img class="img-responsive" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=<?php echo substr($serial_number, 8); ?>&amp;size=240x240" />
 				</div>
 				<div class="col-xs-6" style="font-size: 1.4em; overflow: hidden">
-					<span class="label label-info">OS X <span class="mr-os_version"></span></span><br>
+					<span class="label label-info">macOS <span class="mr-os_version"></span></span><br>
 					<span class="label label-info"><span class="mr-physical_memory"></span> GB</span><br>
 					<span class="label label-info"><span class="mr-serial_number"></span></span><br>
 					<span class="label label-info"><span class="mr-remote_ip"></span></span><br>
@@ -81,7 +81,7 @@
 			<h4 data-i18n="software.software"></h4>
 			<table>
 				<tr>
-					<th data-i18n="os.version"></th><td>OS X <span class="mr-os_version"></span></td>
+					<th data-i18n="os.version"></th><td>macOS <span class="mr-os_version"></span></td>
 				</tr>
 				<tr>
 					<th data-i18n="buildversion"></th><td class="mr-buildversion"></td>
@@ -174,6 +174,18 @@
 		<div class="col-lg-4">
 			<h4><i class="fa fa-comment-o fa-fixed"></i> <span data-i18n="client.comment"></span></h4>
 			<div class="comment" data-section="client"></div>
+			</table>
+		</div>
+		
+		<div class="col-lg-4">
+			<h4><i class="fa fa-key fa-fixed"></i> <span data-i18n="security.security"></span></h4>
+			<table>
+				<tr>
+					<th data-i18n="security.gatekeeper"></th><td class="mr-gatekeeper"></td>
+				</tr>
+				<tr>
+					<th data-i18n="security.sip"></th><td class="mr-sip"></td>
+				</tr>
 			</table>
 		</div>
 		

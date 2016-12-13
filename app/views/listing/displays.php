@@ -78,10 +78,29 @@
 
         oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "displays.vendor"
+                    
+                    // Look for 'external' keyword
+                    if(d.search.value.match(/^external$/))
+                    {
+                        // Add column specific search
+                        d.columns[2].search.value = '= 1';
+                        // Clear global search
+                        d.search.value = '';
+                    }
+                    
+                    // Look for 'external' keyword
+                    if(d.search.value.match(/^internal/))
+                    {
+                        // Add column specific search
+                        d.columns[2].search.value = '= 0';
+                        // Clear global search
+                        d.search.value = '';
+                    }
+
                 }
             },
             dom: mr.dt.buttonDom,
@@ -95,7 +114,7 @@
                 if(name == ''){name = "No Name"};
                 var sn=$('td:eq(1)', nRow).html();
                 if(sn){
-                  var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/', '#tab_displays-tab');
+                  var link = mr.getClientDetailLink(name, sn, '#tab_displays-tab');
                   $('td:eq(0)', nRow).html(link);
                 } else {
                   $('td:eq(0)', nRow).html(name);
@@ -189,6 +208,27 @@
                 	break;
                 case "26cd":
                 	vendor="iiyama"
+                	break;
+                case "7fff":
+                    vendor="Haier"
+                    break;
+                case "3e8d":
+                	vendor="Optoma"
+                	break;
+                case "5262":
+                	vendor="Toshiba"
+                	break;
+                case "34a9":
+                    vendor="Panasonic"
+                    break;
+                case "5e3":
+                	vendor="Flanders Scientific"
+                	break;
+                case "30ae":
+                	vendor="Lenovo"
+                	break;
+                case "469":
+                	vendor="Asus"
                 	break;
                 }
                 $('td:eq(3)', nRow).html(vendor)

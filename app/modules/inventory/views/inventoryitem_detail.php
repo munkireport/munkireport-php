@@ -27,12 +27,12 @@
           <table class='table table-striped table-condensed table-bordered'>
               <thead>
                   <tr>
-                    <th>Hostname</th>
-                    <th>Username</th>
-                    <th>Version</th>
-                    <th>BundleID</th>
-                    <th>CFBundleName</th>
-                    <th>Path</th>
+                    <th data-i18n="listing.computername"></th>
+                    <th data-i18n="listing.username"></th>
+                    <th data-i18n="version"></th>
+                    <th data-i18n="bundle_id"></th>
+                    <th data-i18n="cfbundlename"></th>
+                    <th data-i18n="path"></th>
                   </tr>
               </thead>
               <tbody>

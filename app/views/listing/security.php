@@ -5,6 +5,7 @@ new Machine_model;
 new Reportdata_model;
 new Filevault_status_model;
 new Localadmin_model;
+new Security_model;
 ?>
 
 <div class="container">
@@ -25,6 +26,8 @@ new Localadmin_model;
 		        <th data-i18n="filevault.users" data-colname='filevault_status.filevault_users'></th>
 		        <th data-i18n="type"data-colname='machine.machine_name'></th>
                 <th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+                <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
+                <th data-i18n="security.sip" data-colname='security.sip'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -73,7 +76,7 @@ new Localadmin_model;
 
 	    oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     // Look for a bigger/smaller/equal statement
@@ -109,7 +112,7 @@ new Localadmin_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = get_client_detail_link(name, sn, '<?php echo url(); ?>/');
+	        	var link = mr.getClientDetailLink(name, sn);
 	        	$('td:eq(0)', nRow).html(link);
                 var enc = $('td:eq(6)', nRow).html();
                 $('td:eq(6)', nRow).html(function(){

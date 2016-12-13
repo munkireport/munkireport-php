@@ -8,15 +8,15 @@
     "sLengthMenu":     "_MENU_ enregistrements par page",
     "sLoadingRecords": "Chargement...",
     "sSearch":         "Rechercher",
-    "sZeroRecords":    "Pas d'enregistrements correspondants trouvés",
+    "sZeroRecords":    "Aucun enregistrement correspondant trouvé",
     "oPaginate": {
         "sFirst":    "Première",
-        "sLast":     "Derinère",
+        "sLast":     "Dernière",
         "sNext":     "Suivante",
         "sPrevious": "Précédente"
     },
     "oAria": {
         "sSortAscending":  ": activer pour faire un tri de la colonne ascendant",
-        "sSortDescending": ": activer pour faire un tri de la colonne decendant"
+        "sSortDescending": ": activer pour faire un tri de la colonne descendant"
     }
 }

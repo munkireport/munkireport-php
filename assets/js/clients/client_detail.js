@@ -84,6 +84,10 @@ $(document).on('appReady', function(e, lang) {
 		$.each(machineData, function(prop, val){
 			$('.mr-'+prop).html(val);
 		});
+		
+		// Convert computer_model to link to everymac.com TODO: make this optional/configurable
+		var mmodel = $('.mr-machine_model').html();
+		$('.mr-machine_model').html('<a target="_blank" href="https://www.everymac.com/ultimate-mac-lookup/?search_keywords='+mmodel+'">'+mmodel+'</a>');
 
 		// Set computer name value and title
 		$('.mr-computer_name_input')
@@ -91,9 +95,13 @@ $(document).on('appReady', function(e, lang) {
 			.attr('title', machineData.computer_name)
 			.data('placement', 'bottom')
 			.tooltip();
+		
+		// Add computername to pagetitle
+		var title = $('title').text();
+		$('title').text(machineData.computer_name + ' | ' + title)
 
 		// Format OS Version
-		$('.mr-os_version').html(integer_to_version(machineData.os_version));
+		$('.mr-os_version').html(mr.integerToVersion(machineData.os_version));
 
 
 		// Format filesizes
@@ -286,7 +294,7 @@ $(document).on('appReady', function(e, lang) {
 		// Get the data out of the response array
 		var tmData = tmResp[0],
 			cpData = cpResp[0];
-		
+
 		// Draw timemachine unit
 		if(tmData.id !== '')
 		{
@@ -314,7 +322,27 @@ $(document).on('appReady', function(e, lang) {
 							if(tmData.last_failure){
 								return moment(tmData.last_failure + 'Z').fromNow();
 							}
-						})))
+						})))						
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.kind')))
+					.append($('<td>')
+						.text(tmData.kind)))
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.location_name')))
+					.append($('<td>')
+						.text(tmData.location_name)))
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.backup_location')))
+					.append($('<td>')
+						.text(tmData.backup_location)))
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.destinations')))
+					.append($('<td>')
+						.text(tmData.destinations)))
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.last_failure_msg')))
@@ -329,13 +357,16 @@ $(document).on('appReady', function(e, lang) {
 		
 		// Draw Crashplan Unit
 		var mr_table_data = '<tr><td>'+i18n.t('no_data')+'</td></tr>';
-		$.each(cpData, function(index, item){
-			mr_table_data = '<tr><th>'+i18n.t('backup.destination')+'</th><td>'+item.destination+'<td></tr>';
-			mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_success')+'</th><td>'+moment(item.last_success * 1000).fromNow()+'<td></tr>';
-			mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.duration')+'</th><td>'+moment.duration(item.duration, "seconds").humanize()+'<td></tr>';
-			mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure')+'</th><td>'+moment(item.last_failure * 1000).fromNow()+'<td></tr>';
-			mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure_msg')+'</th><td>'+item.reason+'<td></tr>';
-		});
+		if(cpData){
+			mr_table_data = '';
+			$.each(cpData, function(index, item){
+				mr_table_data = mr_table_data + '<tr class="info"><th>'+i18n.t('backup.destination')+'</th><td>'+item.destination+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_success')+'</th><td>'+moment(item.last_success * 1000).fromNow()+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.duration')+'</th><td>'+moment.duration(item.duration, "seconds").humanize()+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure')+'</th><td>'+moment(item.last_failure * 1000).fromNow()+'<td></tr>';
+				mr_table_data = mr_table_data + '<tr><th>'+i18n.t('backup.last_failure_msg')+'</th><td>'+item.reason+'<td></tr>';
+			});
+		}
 		$('table.mr-crashplan-table')
 			.empty()
 			.append(mr_table_data)
@@ -363,7 +394,7 @@ $(document).on('appReady', function(e, lang) {
 	// Get Bluetooth data
 	$.getJSON( appUrl + '/module/bluetooth/get_data/' + serialNumber, function( data ) {
 		if(data.id !== '')
-		{
+		{	
 			$('table.mr-bluetooth-table')
 				.empty()
 				.append($('<tr>')
@@ -371,44 +402,22 @@ $(document).on('appReady', function(e, lang) {
 						.text(i18n.t('bluetooth.status')))
 					.append($('<td>')
 						.text(function(){
-							if(data.bluetooth_status == 1){
+							if(data.bluetooth_power == 1){
 								return i18n.t('on');
 							}
-							if(data.bluetooth_status == 0){
+							if(data.bluetooth_power == 0){
 								return i18n.t('off');
 							}
 							return i18n.t('unknown');
-						})))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('bluetooth.keyboard')))
-					.append($('<td>')
-						.text(function(){
-							if(data.keyboard_battery == -1){
-								return i18n.t('disconnected')
-							}
-							return i18n.t('battery.life_remaining', {"percent": data.keyboard_battery})
-						})))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('bluetooth.mouse')))
-					.append($('<td>')
-						.text(function(){
-							if(data.mouse_battery == -1){
-								return i18n.t('disconnected')
-							}
-							return i18n.t('battery.life_remaining', {"percent": data.mouse_battery})
-						})))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('bluetooth.trackpad')))
-					.append($('<td>')
-						.text(function(){
-							if(data.trackpad_battery == -1){
-								return i18n.t('disconnected')
-							}
-							return i18n.t('battery.life_remaining', {"percent": data.trackpad_battery})
 						})));
+
+			for (key in data){
+				var rows = ''
+				if (key != 'bluetooth_power'){
+					rows = rows + '<tr><th>'+i18n.t('bluetooth.'+key)+'</th><td>'+data[key]+'%'+'</td></tr>'
+					$('table.mr-bluetooth-table').append(rows)
+				}
+			}
 		}
 		else{
 			$('table.mr-bluetooth-table')
@@ -420,6 +429,42 @@ $(document).on('appReady', function(e, lang) {
 		}
 
 	});
+	
+	// ------------------------------------ Hotkeys
+	// Use arrows to switch between tabs in client view
+	
+	$(document).bind('keydown', 'right', function(){
+
+		var activeTab = $('.client-tabs').find('li.active')
+		if(activeTab.length < 1){
+			activeTab = $('.client-tabs li:first');
+		}
+		var nextTab = activeTab.next('li:not(.divider)')
+		if(nextTab.length < 1){
+			nextTab = $('.client-tabs li:first');
+		}
+
+		$(nextTab).find('a').click();
+		return true;
+	});
+	
+	$(document).bind('keydown', 'left', function(){
+
+		var activeTab = $('.client-tabs').find('li.active')
+		if(activeTab.length < 1){
+			activeTab = $('.client-tabs li:first');
+		}
+		var prevTab = activeTab.prev('li:not(.divider)')
+		if(prevTab.length < 1){
+			prevTab = $('.client-tabs li:not(.divider):last');
+		}
+
+		$(prevTab).find('a').click();
+		return true;
+	});
+
+	
+	// ------------------------------------ End Hotkeys
 	
 	// ------------------------------------ Tags
 	var currentTags = {}

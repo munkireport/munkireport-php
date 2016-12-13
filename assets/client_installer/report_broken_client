@@ -26,7 +26,7 @@ SERIAL=`ioreg -c IOPlatformExpertDevice | grep IOPlatformSerialNumber | awk '{pr
 NAME=`scutil --get ComputerName`
 
 BASEURL=$(defaults read /Library/Preferences/MunkiReport BaseUrl)
-SUBMITURL="${BASEURL}/report/broken_client"
+SUBMITURL="${BASEURL}index.php?/report/broken_client"
 
 # Application paths
 CURL="/usr/bin/curl"

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Warranty module class
@@ -8,133 +8,119 @@
  **/
 class Warranty_controller extends Module_controller
 {
-	function __construct()
-	{
-		// No authentication, the client needs to get here
+    public function __construct()
+    {
+        // No authentication, the client needs to get here
 
-		// Store module path
-		$this->module_path = dirname(__FILE__);
+        // Store module path
+        $this->module_path = dirname(__FILE__);
+    }
 
-	}
+    public function index()
+    {
+        echo "You've loaded the warranty module!";
+    }
 
-	function index()
-	{
-		echo "You've loaded the warranty module!";
-	}
+    /**
+     * Force recheck warranty
+     *
+     * @return void
+     * @author AvB
+     **/
+    public function recheck_warranty($serial = '')
+    {
+        // Authenticate
+        if (! $this->authorized()) {
+            die('Authenticate first.'); // Todo: return json?
+        }
 
-	/**
-	 * Force recheck warranty
-	 *
-	 * @return void
-	 * @author AvB
-	 **/
-	function recheck_warranty($serial='')
-	{
-		// Authenticate
-		if( ! $this->authorized())
-		{
-			die('Authenticate first.'); // Todo: return json?
-		}
+        if (authorized_for_serial($serial)) {
+            $warranty = new Warranty_model($serial);
+            $warranty->check_status($force = true);
+        }
 
-		if(authorized_for_serial($serial))
-		{
-			$warranty = new Warranty_model($serial);
-			$warranty->check_status($force=TRUE);
-		}
+        redirect("clients/detail/$serial");
+    }
 
-		redirect("clients/detail/$serial");
-	}
+    /**
+     * Get estimate_manufactured_date
+     *
+     * @return void
+     * @author
+     **/
+    public function estimate_manufactured_date($serial_number = '')
+    {
+        // Authenticate
+        if (! $this->authorized()) {
+            die('Authenticate first.'); // Todo: return json?
+        }
 
-	/**
-	 * Get estimate_manufactured_date
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	function estimate_manufactured_date($serial_number='')
-	{
-		// Authenticate
-		if( ! $this->authorized())
-		{
-			die('Authenticate first.'); // Todo: return json?
-		}
+        require_once(conf('application_path') . "helpers/warranty_helper.php");
+        $out = array('date' => estimate_manufactured_date($serial_number));
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
+    }
+    
+    /**
+     * Get Warranty statistics
+     *
+     * @param bool $alert Filter on 30 days
+     **/
+    public function get_stats($alert = false)
+    {
+        $obj = new View();
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authorized')));
+        } else {
+            $wm = new Warranty_model();
+            $obj->view('json', array('msg' => $wm->get_stats($alert)));
+        }
+    }
 
-		require_once(conf('application_path') . "helpers/warranty_helper.php");
-		$out = array('date' => estimate_manufactured_date($serial_number));
-		$obj = new View();
-		$obj->view('json', array('msg' => $out));
+    /**
+     * Generate age data for age widget
+     *
+     * @author AvB
+     **/
+    public function age()
+    {
+        // Authenticate
+        if (! $this->authorized()) {
+            die('Authenticate first.'); // Todo: return json?
+        }
 
-	}
-	
-	/**
-	 * Get Warranty statistics
-	 *
-	 * @param bool $alert Filter on 30 days
-	 **/
-	public function get_stats($alert=FALSE)
-	{
-		$obj = new View();
-		if( ! $this->authorized())
-		{
-			$obj->view('json', array('msg' => array('error' => 'Not authorized')));
-		}
-		else
-		{
-			$wm = new Warranty_model();
-			$obj->view('json', array('msg' => $wm->get_stats($alert)));
-		}
-	}
+        $out = array();
+        $warranty = new Warranty_model();
 
-	/**
-	 * Generate age data for age widget
-	 *
-	 * @author AvB
-	 **/
-	function age()
-	{
-		// Authenticate
-		if( ! $this->authorized())
-		{
-			die('Authenticate first.'); // Todo: return json?
-		}
+        // Time calculations differ between sql implementations
+        switch ($warranty->get_driver()) {
+            case 'sqlite':
+                $agesql = "CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', purchase_date) AS INT)";
+                break;
+            case 'mysql':
+                $agesql = "TIMESTAMPDIFF(YEAR,purchase_date,CURDATE())";
+                break;
+            default: // FIXME for other DB engines
+                $agesql = "SUBSTR(purchase_date, 1, 4)";
+        }
 
-		$out = array();
-		$warranty = new Warranty_model();
+        // Get filter for business units
+        $where = get_machine_group_filter();
 
-		// Time calculations differ between sql implementations
-		switch($warranty->get_driver())
-		{
-			case 'sqlite':
-				$agesql = "CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', purchase_date) AS INT)";
-				break;
-			case 'mysql':
-				$agesql = "TIMESTAMPDIFF(YEAR,purchase_date,CURDATE())";
-				break;
-			default: // FIXME for other DB engines
-				$agesql = "SUBSTR(purchase_date, 1, 4)";
-		}
-
-		// Get filter for business units
-		$where = get_machine_group_filter();
-
-		$sql = "SELECT count(1) as count, 
+        $sql = "SELECT count(1) as count, 
 				$agesql AS age 
 				FROM warranty
 				LEFT JOIN reportdata USING (serial_number)
 				$where
 				GROUP by age 
 				ORDER BY age DESC";
-		$cnt = 0;
-		foreach ($warranty->query($sql) as $obj)
-		{
-			$obj->age = $obj->age ? $obj->age : '<1';
-			$out[] = array('label' => $obj->age, 'data' => array(array(intval($obj->count), $cnt++)));
-		}
+        $cnt = 0;
+        foreach ($warranty->query($sql) as $obj) {
+            $obj->age = $obj->age ? $obj->age : '<1';
+            $out[] = array('label' => $obj->age, 'data' => array(array(intval($obj->count), $cnt++)));
+        }
 
-		$obj = new View();
-		$obj->view('json', array('msg' => $out));
-
-	}
-
-	
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
+    }
 } // END class Warranty_module

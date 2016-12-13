@@ -2,8 +2,126 @@
 
 // Global munkireport object
 var mr = {
-        dt:{}
+        dt:{},
+        
+        statusFormat: {
+            install_failed: {type: 'danger'},
+            install_succeeded: {type: 'success'},
+            installed: {type: 'info'},
+            pending_install: {type: 'warning'},
+            pending_removal: {type: 'warning'},
+            removed: {type: 'info'},
+            uninstall_failed: {type: 'danger'},
+            uninstalled: {type: 'success'}
+        },
+        
+        // Integer or integer string OS Version to semantic OS version
+        integerToVersion: function(osvers)
+        {
+        	osvers = "" + osvers
+        	// If osvers contains a dot, don't convert
+        	if( osvers.indexOf(".") == -1)
+            {
+        		// Remove non-numerical string
+        		osvers = isNaN(osvers) ? "" : osvers;
+
+        		// Left pad with zeroes if necessary
+        		osvers = ("000000" + osvers).substr(-6)
+        		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+            }
+            return osvers
+        },
+        
+        // Get client detail link
+        getClientDetailLink: function(name, sn, hash)
+        {
+        	hash = (typeof hash === "undefined") ? "" : hash;
+        	return '<div class="machine">\
+            		<a class="btn btn-default btn-xs" href="'+appUrl+'/clients/detail/'+sn+hash+'">'+name+'</a>\
+            		<a href="'+appUrl+'/manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
+            		<i class="fa fa-times"></i></a></div>';
+        },
+        
+        /*
+         * Natural Sort algorithm for Javascript - Version 0.8.1 - Released under MIT license
+         * Author: Jim Palmer (based on chunking idea from Dave Koelle)
+         */
+        naturalSort: function(a, b) {
+            var re = /(^([+\-]?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?(?=\D|\s|$))|^0x[\da-fA-F]+$|\d+)/g,
+                sre = /^\s+|\s+$/g,   // trim pre-post whitespace
+                snre = /\s+/g,        // normalize all whitespace to single ' ' character
+                dre = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/,
+                hre = /^0x[0-9a-f]+$/i,
+                ore = /^0/,
+                insensitive = true,
+                i = function(s) {
+                    return (insensitive && ('' + s).toLowerCase() || '' + s).replace(sre, '');
+                },
+                // convert all to strings strip whitespace
+                x = i(a),
+                y = i(b),
+                // chunk/tokenize
+                xN = x.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
+                yN = y.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
+                // numeric, hex or date detection
+                xD = parseInt(x.match(hre), 16) || (xN.length !== 1 && Date.parse(x)),
+                yD = parseInt(y.match(hre), 16) || xD && y.match(dre) && Date.parse(y) || null,
+                normChunk = function(s, l) {
+                    // normalize spaces; find floats not starting with '0', string or 0 if not defined (Clint Priest)
+                    return (!s.match(ore) || l == 1) && parseFloat(s) || s.replace(snre, ' ').replace(sre, '') || 0;
+                },
+                oFxNcL, oFyNcL;
+            // first try and sort Hex codes or Dates
+            if (yD) {
+                if (xD < yD) { return -1; }
+                else if (xD > yD) { return 1; }
+            }
+            // natural sorting through split numeric strings and default strings
+            for(var cLoc = 0, xNl = xN.length, yNl = yN.length, numS = Math.max(xNl, yNl); cLoc < numS; cLoc++) {
+                oFxNcL = normChunk(xN[cLoc] || '', xNl);
+                oFyNcL = normChunk(yN[cLoc] || '', yNl);
+                // handle numeric vs string comparison - number < string - (Kyle Adams)
+                if (isNaN(oFxNcL) !== isNaN(oFyNcL)) {
+                    return isNaN(oFxNcL) ? 1 : -1;
+                }
+                // if unicode use locale comparison
+                if (/[^\x00-\x80]/.test(oFxNcL + oFyNcL) && oFxNcL.localeCompare) {
+                    var comp = oFxNcL.localeCompare(oFyNcL);
+                    return comp / Math.abs(comp);
+                }
+                if (oFxNcL < oFyNcL) { return -1; }
+                else if (oFxNcL > oFyNcL) { return 1; }
+            }
+        }
+
     };
+
+$(document).on('appReady', function(e, lang) {
+    
+    // addMenuItem({
+    //     menu: 'admin',
+    //     i18n: 'notification.menu_link',
+    //     url: appUrl + '/module/notification/manage'
+    // });
+    
+    // Set color for svg text to base color defined in body
+    var bodyColor = $('body').css('color');
+    $('head').append('<style>text{fill:'+bodyColor+'}</style>');
+    $('head').append('<style>svg .nvd3.nv-pie .nv-pie-title{fill:'+bodyColor+'}</style>');
+    
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'systemstatus.menu_link',
+        url: appUrl + '/system/show/status'
+    });
+    addMenuItem({
+        menu: 'report',
+        i18n: 'managedinstalls.installratio_report',
+        url: appUrl + '/module/managedinstalls/view/pkg_stats'
+    }); 
+
+
+});
 
 $( document ).ready(function() {
     $.i18n.init({
@@ -32,6 +150,25 @@ $( document ).ready(function() {
 
         // Activate filter
         $('a.filter-popup').click(showFilterModal);
+        
+        // *******   Define hotkeys  *******
+        // Dashboard
+        $(document).bind('keydown', 'd', function(){
+            window.location = appUrl + '/show/dashboard';
+            return true;
+        });
+        
+        // Client listing
+        $(document).bind('keydown', 'c', function(){
+            window.location = appUrl + '/show/listing/clients';
+            return true;
+        });
+        
+        // search
+        $(document).bind('keydown', '/', function(){
+            $('input[type="search"]').focus();
+            return false;
+        });
 
         // Trigger appReady
         $(document).trigger('appReady', [i18n.lng()]);
@@ -115,6 +252,8 @@ var updateHash = function(e){
 var showFilterModal = function(e){
 
 	e.preventDefault();
+    
+    var mgList = [];
 
 	var updateGroup = function(){
 
@@ -129,7 +268,23 @@ var showFilterModal = function(e){
 			// Update all
 			$(document).trigger('appUpdate');
 		})
-	}
+	};
+    
+    var updateAll = function() {
+        
+        var checked = this.checked,
+            settings = {
+                filter: 'machine_group',
+                value: mgList,
+                action: checked ? 'clear' : 'add_all'
+            }
+            
+        $.post(appUrl + '/unit/set_filter', settings, function(){
+			// Update all
+            $('#myModal .modal-body input[type=checkbox]').prop('checked', checked);
+			$(document).trigger('appUpdate');
+		})
+    };
 
 	// Get all business units and machine_groups
 	var defer = $.when(
@@ -156,10 +311,21 @@ var showFilterModal = function(e){
 		$('#myModal button.ok')
 			.off()
 			.click(function(){$('#myModal').modal('hide')});
-
+        
+        // Add check/uncheck all
+        $('#myModal .modal-body')
+            .append($('<div>')
+                .addClass('checkbox')
+                .append($('<label>')
+                    .append($('<input>')
+                        .change(updateAll)
+                        .attr('type', 'checkbox'))
+                    .append('Check/uncheck all')))
+                    
 		// Add machine groups
 		$.each(mg_data, function(index, obj){
 			if(obj.groupid !== undefined){
+                mgList.push(obj.groupid);
 				$('#myModal .modal-body')
 					.append($('<div>')
 						.addClass('checkbox')
@@ -181,38 +347,6 @@ var showFilterModal = function(e){
 	});
 }
 
-
-
-
-
-
-// Integer or integer string OS Version to semantic OS version
-function integer_to_version(osvers)
-{
-	osvers = "" + osvers
-	// If osvers contains a dot, don't convert
-	if( osvers.indexOf(".") == -1)
-    {
-		// Remove non-numerical string
-		osvers = isNaN(osvers) ? "" : osvers;
-
-		// Left pad with zeroes if necessary
-		osvers = ("000000" + osvers).substr(-6)
-		osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
-    }
-    return osvers
-}
-
-// Get client detail link
-function get_client_detail_link(name, sn, baseurl, hash)
-{
-	hash = (typeof hash === "undefined") ? "" : hash;
-	return '<div class="machine">\
-    		<a class="btn btn-default btn-xs" href="'+baseurl+'clients/detail/'+sn+hash+'">'+name+'</a>\
-    		<a href="'+baseurl+'manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
-    		<i class="fa fa-times"></i></a></div>';
-}
-
 // Delete machine ajax call
 function delete_machine(obj)
 {
@@ -231,7 +365,8 @@ function delete_machine(obj)
 			.find('td > div')
 			.slideUp(600,function(){
 				// After hide animation is done, redraw table
-				oTable.fnDraw();
+                var oTable = $('.table').DataTable();
+                oTable.ajax.reload();
 			});
 		}
 	  	else
