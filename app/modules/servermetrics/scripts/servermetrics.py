@@ -12,6 +12,7 @@ import re
 import ccl_asldb
 import json
 import platform
+import subprocess
 
 # Event Type strings to array position logformat 1
 EVENTS = {  'filesharing.sessions.afp': 0,
@@ -65,6 +66,11 @@ def __main__():
     logFormat = 1
     if getOsVersion() < 10:
         logFormat = 0
+
+    if getOsVersion() < 11:
+        #If on 10.11 or higher, parse the /Library/Server/Metrics/metrics.sqlite file for information
+        subprocess.call(['./servermetrics.sh'])
+        return
 
     # Set path according to logformat
     if logFormat == 0:
