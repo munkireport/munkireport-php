@@ -12,11 +12,18 @@ def curl(url):
 def find_body_color(css_data):
     urls = re.findall(r'body.*{[^}]+\scolor:\s?(.+);', css_data)
     return urls[0]
+    
+def find_background_color(css_data):
+    urls = re.findall(r'body.*{[^}]+\sbackground-color:\s?(.+);', css_data)
+    return urls[0]
 
-def write_override(fileName, bodyColor):
-    with open(fileName), "w+") as f:
+def write_override(fileName, bodyColor, backgroundColor):
+    with open(fileName, "w+") as f:
         f.write("text, svg .nvd3.nv-pie .nv-pie-title, .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{\n")
         f.write("   fill: %s;\n" % bodyColor)
+        f.write("}\n")
+        f.write(".nvtooltip, .nvtooltip table{\n")
+        f.write("   background-color: %s;\n" % backgroundColor)
         f.write("}\n")
 
 
@@ -32,7 +39,7 @@ js = curl(bootstrap_base_url + 'js/bootstrap.min.js')
 with open(os.path.join(basedir, 'assets', 'js', 'bootstrap.min.js'),"w+") as f:
     f.write(js)
 fileName = os.path.join(basedir, 'assets', 'themes', 'Default', 'nvd3.override.css')
-write_override(fileName, '#333')
+write_override(fileName, '#333', '#fff')
 
 print 'Getting themes'
 jsondata = curl(bootswatch_url)
@@ -61,7 +68,8 @@ for item in data['themes']:
     css_data = curl(item['css'])
     
     bodyColor = find_body_color(css_data)
+    backgroundColor = find_background_color(css_data)
 
-    print 'color: %s' % bodyColor
-    fileName = os.path.join(item_dir, 'nvd3.override.css'
-    write_override(fileName, bodyColor)
+    print 'color: %s; background-color: %s' % (bodyColor, backgroundColor)
+    fileName = os.path.join(item_dir, 'nvd3.override.css')
+    write_override(fileName, bodyColor, backgroundColor)
