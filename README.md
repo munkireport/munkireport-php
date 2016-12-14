@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/munkireport/munkireport-php.png?label=ready&title=Ready)](https://waffle.io/munkireport/munkireport-php)
 munkireport-php
 ===============
 
