@@ -152,8 +152,9 @@ table.table thead th{
 
 /* Client detail header */
 .form-control[readonly] {
-  background-color:inherit;
-  font-size: 1.2em;
+    background-color:inherit;
+    color:inherit;
+    font-size: 1.2em;
 }
 
 /* Donut chart title */
