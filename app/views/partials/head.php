@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
 	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/datatables.min.css" />
+	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/colReorder.dataTables.min.css" />
 	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
   <!--favicons-->
 	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo conf('subdirectory'); ?>assets/images/favicons/apple-touch-icon.png">
