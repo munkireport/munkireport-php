@@ -15,6 +15,40 @@ var mr = {
             uninstalled: {type: 'success'}
         },
         
+        // Graphing defaults
+        graph: {
+            barColor: ['steelBlue']
+        },
+        
+        // Localstorage handler
+        state: function(id, data){
+            
+            if( data == undefined)
+            {
+              // Get data
+              return JSON.parse( localStorage.getItem(id) );
+
+            }
+            else
+            {
+              // Set data
+              localStorage.setItem( id, JSON.stringify(data) );
+            }
+        },
+        
+        // Set Preference handler (uses localstorage)
+        setPref: function(key, val){
+            var globalPrefs = mr.state('global') || {};
+            globalPrefs[key] = val;
+            mr.state('global', globalPrefs);
+        },
+        
+        // Get Preference handler (uses localstorage)
+        getPref: function(key){
+            var globalPrefs = mr.state('global') || {};
+            return globalPrefs[key];
+        },
+        
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)
         {
@@ -92,22 +126,115 @@ var mr = {
                 if (oFxNcL < oFyNcL) { return -1; }
                 else if (oFxNcL > oFyNcL) { return 1; }
             }
+        }, // End naturalSort
+        
+        // Draw graph for nvd3 and update graph
+        drawGraph: function(conf){
+            var graphData = [{"key": " ", "values": []}];
+            d3.json(conf.url, function(data) {
+                graphData[0].values = data;
+                height = data.length * 26 + 40;
+                conf.chart.height(height);
+                
+                d3.select(conf.svg)
+                    .attr('height', height)
+                    .datum(graphData)
+                    .transition()
+                    .duration(500)
+                    .call(conf.chart);
+                    
+                conf.chart.update();
+                
+            });
+            
+        },
+        
+        // Get preference for graph in this order: conf, default for graph, default
+        getGraphPref: function(setting, graphName, conf){
+            if(conf[setting]) return conf[setting];
+            if(mr.graph[graphName] && mr.graph[graphName][setting]) return mr.graph[graphName][setting];
+            mr.graph[setting];
+        },
+        
+        // Add nvd3 graph
+        addGraph: function(conf){
+            // Sanity check
+            if( ! conf.widget){
+                alert('no widget provided for addGraph');
+                return;
+            };
+            
+            // Assemble svg identifier
+            conf.svg = '#' + conf.widget + ' svg';
+
+            nv.addGraph(function() {
+              conf.chart = nv.models.multiBarHorizontalChart()
+                  .x(function(d) { return conf.labelModifier ? conf.labelModifier(d.label) : d.label })
+                  .y(function(d) { return d.count })
+                  .margin(conf.margin ? conf.margin : {top: 20, right: 10, bottom: 20, left: 70})
+                  .showValues(true)
+                  .valueFormat(d3.format(''))
+                  .tooltips(false)
+                  .showControls(false)
+                  .showLegend(false)
+                  .barColor(mr.getGraphPref('barColor', conf.widget, conf))//conf.barColor ? conf.barColor : (graphSettings.barColor ? mr.graph.barColor))
+                  .height(0);
+
+              conf.chart.yAxis
+                  .tickFormat(d3.format(''));
+                  
+              d3.select(conf.svg)
+                  .attr('height', 0)
+                  .datum([{"key": " ","values": []}])
+                  .call(conf.chart);
+            
+            // Callback for click events
+              if(conf.elementClickCallback){
+                  // visit page on click
+                  conf.chart.multibar.dispatch.on("elementClick", function(e) {
+                      conf.elementClickCallback(e)
+                  });
+              }
+                
+                // Call the munkireport drawGraph routine
+                mr.drawGraph(conf);
+                
+                // update chart data on appUpdate
+                $(document).on('appUpdate', function(){mr.drawGraph(conf)});
+                
+                // update chart data on Resize
+                nv.utils.windowResize(conf.chart.update);
+
+            });
+
+        },
+                
+        loadTheme: function() {
+            // Get global state
+            var theme = mr.getPref('theme') || 'Default';
+            var theme_dir = baseUrl + 'assets/themes/' + theme + '/';
+            var theme_file = theme_dir + 'bootstrap.min.css';
+            $('#bootstrap-stylesheet').attr('href', theme_dir + 'bootstrap.min.css');
+            $('#nvd3-override-stylesheet').attr('href', theme_dir + 'nvd3.override.css');
+            
+            // Add active to menu item
+            $('[data-switch]').parent().removeClass('active');
+            $('[data-switch="'+theme+'"]').parent().addClass('active');
         }
 
     };
 
+// Load theme files
+mr.loadTheme();
+
 $(document).on('appReady', function(e, lang) {
     
+
     // addMenuItem({
     //     menu: 'admin',
     //     i18n: 'notification.menu_link',
     //     url: appUrl + '/module/notification/manage'
     // });
-    
-    // Set color for svg text to base color defined in body
-    var bodyColor = $('body').css('color');
-    $('head').append('<style>text{fill:'+bodyColor+'}</style>');
-    $('head').append('<style>svg .nvd3.nv-pie .nv-pie-title{fill:'+bodyColor+'}</style>');
     
     addMenuItem({
         menu: 'admin',
@@ -123,7 +250,16 @@ $(document).on('appReady', function(e, lang) {
 
 });
 
+
 $( document ).ready(function() {
+    
+    
+    // Theme switcher
+    $('a[data-switch]').on('click', function(){
+        mr.setPref('theme', $(this).data('switch'));
+        mr.loadTheme();
+   });
+    
     $.i18n.init({
         debug: munkireport.debug,
         useLocalStorage: false,
@@ -380,21 +516,21 @@ function delete_machine(obj)
 // This function is used by datatables
 function state(id, data)
 {
-	// Create unique id for this page
-	path = location.pathname + location.search
+    // Create unique id for this page
+    path = location.pathname + location.search
 
-	// Strip host information and index.php
-	path = path.replace(/.*index\.php\??/, '')
+    // Strip host information and index.php
+    path = path.replace(/.*index\.php\??/, '')
 
-	// Strip serial number from detail page, we don't want to store
-	// sorting information for every unique client
-	path = path.replace(/(.*\/clients\/detail\/).+$/, '$1')
+    // Strip serial number from detail page, we don't want to store
+    // sorting information for every unique client
+    path = path.replace(/(.*\/clients\/detail\/).+$/, '$1')
 
-	// Strip inventory item from page, no unique sort per item
-	path = path.replace(/(.*\/inventory\/items\/).+$/, '$1')
+    // Strip inventory item from page, no unique sort per item
+    path = path.replace(/(.*\/inventory\/items\/).+$/, '$1')
 
-	// Append id to page path
-	id = path + id
+    // Append id to page path
+    id = path + id
 
 	if( data == undefined)
 	{
@@ -472,198 +608,3 @@ String.prototype.pluralize = function(count, plural)
   return (count == 1 ? this : plural)
 }
 
-// Draw a formatted graph with flotr2
-// Handle resize events
-// url: the url where the data comes from
-// id: the jquery string for the domelement (eg #barchart)
-// options: the flotr2 options for a particular chart
-// parms: extra parameters to send to the server
-function drawGraph(url, id, options, parms)
-{
-	$.getJSON(url, {'req':JSON.stringify(parms)}, function(data) {
-
-		// Create a tick array to get labels on ticks
-		// (a modification to flotr2.js)
-		if(options.yaxis && options.yaxis.tickFormatter)
-		{
-			options.yaxis.ticks = data.map(function(x){
-				return [x.data[0][1]]
-			})
-		}
-		if(options.callBack){options.callBack(data)}
-
-		options.colors = makeColorGradient(data.length, options.reverseColors);
-		options.resolution = getScale();
-
-		// preventDefault by default for mobile events.  Turn off to enable scroll.
-		options.preventDefault = false;
-
-		//dumpj(options.colors)
-		chartObjects[id] = Flotr.draw($(id)[0], data, options);
-
-		var myWidth = $(id).width()
-		// Bind resize
-		$(window).resize(function() {
-			if( $(id).width() != myWidth)
-			{
-				Flotr.draw($(id)[0], data, options);
-				myWidth = $(id).width()
-			}
-		});
-	});
-}
-
-// Get correct scale for screen resolution
-// Adapted from http://www.html5rocks.com/en/tutorials/canvas/hidpi/
-var scale = 0;
-function getScale()
-{
-	if( scale == 0)
-	{
-		var canvas = document.createElement('canvas'),
-		context = canvas.getContext('2d'),
-
-		devicePixelRatio = window.devicePixelRatio || 1,
-	    backingStoreRatio = context.webkitBackingStorePixelRatio ||
-	                        context.mozBackingStorePixelRatio ||
-	                        context.msBackingStorePixelRatio ||
-	                        context.oBackingStorePixelRatio ||
-	                        context.backingStorePixelRatio || 1;
-
-	    scale = devicePixelRatio / backingStoreRatio;
-	}
-
-	return scale
-
-}
-
-// Generate nice colors
-// Adapted from http://krazydad.com/tutorials/makecolors.php
-if(typeof window.makeColorGradient !== 'function')
-{
-	window.makeColorGradient = function(len, reverse)
-	{
-		var center = 128,
-			width = 127,
-			frequency1 = .4,
-			frequency2 = frequency1,
-			frequency3 = frequency1;
-		var out = []
-		if(reverse)
-		{
-			var phase1 = 2,
-				phase2 = phase1 - 2,
-				phase3 = phase1 - 4;
-		}
-		else
-		{
-			var phase1 = -2,
-				phase2 = phase1 + 2,
-				phase3 = phase1 + 4;
-		}
-		for (var i = 0; i < len; ++i)
-		{
-		   var red = Math.round(Math.sin(frequency1*i + phase1) * width + center);
-		   var grn = Math.round(Math.sin(frequency2*i + phase2) * width + center);
-		   var blu = Math.round(Math.sin(frequency3*i + phase3) * width + center);
-		   out.push('rgb('+red+','+grn+','+blu+')')
-		}
-
-		return out
-	}
-}
-
-// Global variables
-var chartObjects = {}, // Holds instantiated chart objects
-	barOptions = {
-
-	    	bars: {
-	            show: true,
-	            lineWidth: 0,
-	            fillOpacity: 0.8,
-	            barWidth: 0.9,
-	            lineWidth: 0
-			},
-			markers: {
-				show: true,
-				fontSize: 9,
-				position: 'ct'
-			},
-			xaxis:
-			{
-				showLabels: false
-			},
-			yaxis: {
-				min: 0
-			},
-			grid:
-			{
-				verticalLines : false
-			},
-		    legend: {
-				position : 'ne',
-				backgroundColor: 'white',
-				outlineColor: 'white'
-			},
-			shadowSize: 0
-
-	    },
-	    horBarOptions = {
-
-	    	bars: {
-	            show: true,
-	            lineWidth: 0,
-	            fillOpacity: 0.8,
-	            barWidth: 0.9,
-	            horizontal: true
-			},
-			markers: {
-				show: true,
-				fontSize: 10,
-				position: 'm',
-				labelFormatter: function(obj){
-					return (Math.round(obj.x*100)/100)+'';
-				}
-			},
-			yaxis: {},
-			xaxis: {
-				min: 0
-			},
-			grid:
-			{
-		      horizontalLines : false,
-			},
-		    legend: {
-				position : 'ne',
-				backgroundColor: 'white',
-				outlineColor: 'white'
-			},
-			shadowSize: 0
-
-	    },
-		pieOptions = {
-
-	        pie: {
-	            show: true,
-	            explode: 5,
-	            sizeRatio: .9 / getScale(), // Bug in flotr2
-	            labelRadius: 1/3,
-	            labelFormatter: function(total, value) {
-					return "<div style='font-size:150%; text-align:center; padding:2px; color:white;'>" + value + "</div>";
-				}
-
-	        },
-	        shadowSize: 0,
-	        grid : {
-		      verticalLines : false,
-		      horizontalLines : false,
-		      outlineWidth: 0
-		    },
-			xaxis : { showLabels : false },
-		    yaxis : { showLabels : false },
-		    legend: {
-				position : 'ne',
-				backgroundColor: 'white',
-				outlineColor: 'white'
-			},
-	    };

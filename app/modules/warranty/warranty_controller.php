@@ -113,11 +113,11 @@ class Warranty_controller extends Module_controller
 				LEFT JOIN reportdata USING (serial_number)
 				$where
 				GROUP by age 
-				ORDER BY age DESC";
+				ORDER BY age ASC";
         $cnt = 0;
         foreach ($warranty->query($sql) as $obj) {
             $obj->age = $obj->age ? $obj->age : '<1';
-            $out[] = array('label' => $obj->age, 'data' => array(array(intval($obj->count), $cnt++)));
+            $out[] = array('label' => $obj->age, 'count' => intval($obj->count));
         }
 
         $obj = new View();

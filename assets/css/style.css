@@ -1,3 +1,18 @@
+/* Remove tick lines in OS widget */
+#os-widget .nv-x.nv-axis line {
+    stroke: none;
+    fill: none;
+}
+
+#os-widget .nv-bar{
+    cursor: pointer;
+}
+
+/* Panel title */
+.panel-title{
+    line-height: 1.1;
+}
+
 body {
   padding-bottom: 40px;
 }
@@ -19,12 +34,6 @@ a.list-group-item-danger > .badge
 .scroll-box
 {
   max-height: 200px; overflow-y: scroll;
-}
-
-/* Fix bleeding in legend color box */
-.flotr-legend-color-box *
-{
-  box-sizing: content-box;
 }
 
 /* Fix paging */
@@ -80,7 +89,6 @@ h2 {
   margin-bottom: 20px;
   font-size: 21px;
   line-height: 40px;
-  color: #333;
   border: 0;
   border-bottom: 1px solid #e5e5e5
 }
@@ -144,15 +152,12 @@ table.table thead th{
 
 /* Client detail header */
 .form-control[readonly] {
-  background-color:inherit;
-  font-size: 1.2em;
+    background-color:inherit;
+    color:inherit;
+    font-size: 1.2em;
 }
 
 /* Donut chart title */
-svg .nvd3.nv-pie .nv-pie-title
-{
-  fill: #333;
-}
 svg .nv-label text
 {
   font-size: .8em;

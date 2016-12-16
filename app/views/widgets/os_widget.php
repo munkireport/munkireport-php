@@ -1,17 +1,17 @@
 <div class="col-md-6">
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" id="os-widget">
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-apple"></i> OS breakdown</h3>
+			<h3 class="panel-title"><i class="fa fa-apple"></i> <span data-i18n="widget.os.title"></span></h3>
 		
 		</div>
 
 		<div class="panel-body">
 			
-			<div id="os-plot"></div>
-
+			<svg style="width:100%"></svg>
+			
 		</div>
 
 	</div><!-- /panel -->
@@ -19,26 +19,22 @@
 </div><!-- /col-lg-4 -->
 
 <script>
-$(document).on('appReady appUpdate', function(e, lang) {
+$(document).on('appReady', function(e, lang) {
+	
+	var conf = {
+		url: appUrl + '/module/machine/os', // Url for json
+		widget: 'os-widget', // Widget id
+		elementClickCallback: function(e){
+			var label = mr.integerToVersion(e.data.label);
+			window.location.href = appUrl + '/show/listing/clients#' + label;
+		},
+		labelModifier: function(label){
+			return mr.integerToVersion(label)
+		}
+	};
 
-	// Clone barOptions
-    var myOptions = jQuery.extend(true, {}, horBarOptions);
-	myOptions.legend = {show: false}
-	myOptions.callBack = resizeBox;
-    myOptions.yaxis.tickFormatter = function(v, obj){//(v, {min : axis.min, max : axis.max})
-		label = mr.integerToVersion(obj.data[v].label)
-		return '<a class = "btn btn-default btn-xs" href="<?php echo url('show/listing/clients'); ?>#' + label + '">' + label + '</a>';
-	}
-
-	// Resize the container after we know how many items we have
-	function resizeBox(obj)
-	{
-		$('#os-plot').height(obj.length * 25 + 50);
-	}
-
-	var parms = {}
-	// HW Plot
-	drawGraph("<?php echo url('module/machine/os'); ?>", '#os-plot', myOptions, parms);
+	mr.addGraph(conf);
 
 });
+
 </script>

@@ -4,7 +4,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-umbrella"></i> Warranty status</h3>
+			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="widget.warranty.title"></span></h3>
 		
 		</div>
 

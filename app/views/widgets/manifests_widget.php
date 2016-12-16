@@ -4,7 +4,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-book"></i> Manifests</h3>
+			<h3 class="panel-title"><i class="fa fa-book"></i> <span data-i18n="widget.manifest.title"></span></h3>
 		
 		</div>
 

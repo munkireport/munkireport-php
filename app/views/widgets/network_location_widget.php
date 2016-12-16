@@ -4,7 +4,7 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-globe"></i> Network locations</h3>
+					<h3 class="panel-title"><i class="fa fa-globe"></i> <span data-i18n="widget.network_location.title"></span></h3>
 				
 				</div>
 
@@ -24,7 +24,6 @@
 
 		$(document).on('appReady', function() {
 
-			//drawGraph("<?php echo url('module/reportdata/ip'); ?>", '#ip-plot', pieOptions, parms);
 		    function isnotzero(point)
 		    {
 		    	return point.cnt > 0;

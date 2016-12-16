@@ -1,16 +1,16 @@
 <div class="col-lg-6 col-md-6">
 
-	<div class="panel panel-default">
+	<div class="panel panel-default" id="hardware-type-widget">
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-desktop"></i> Hardware type breakdown</h3>
+			<h3 class="panel-title"><i class="fa fa-desktop"></i> <span data-i18n="machine.hardware_type_title"></span></h3>
 
 		</div>
 
 		<div class="panel-body">
 
-			<div style="height: 200px" id="hw-plot"></div>
+			<svg style="width:100%"></svg>
 
 		</div>
 
@@ -20,17 +20,14 @@
 
 <script>
 $(document).on('appReady', function(e, lang) {
+	
+	var conf = {
+		url: appUrl + '/module/machine/hw', // Url for json
+		widget: 'hardware-type-widget', // Widget id
+		margin: {top: 20, right: 10, bottom: 20, left: 90},
+	};
 
-	// Copy barOptions
-    myOptions = jQuery.extend({}, barOptions);
-    myOptions.legend.labelFormatter = function(label, series) {
-			// series is the series object for the label
-			return '<a href="<?php echo url('show/listing/hardware'); ?>#' + label + '">' + label + '</a>';
-			}
-
-	var parms = {}
-	// HW Plot
-	drawGraph("<?php echo url('module/machine/hw'); ?>", '#hw-plot', myOptions, parms);
-
+	mr.addGraph(conf);
+	
 });
 </script>

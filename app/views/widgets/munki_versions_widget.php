@@ -2,9 +2,9 @@
 
 	<div class="panel panel-default" id="munki-versions-widget">
 
-		<div class="panel-heading" data-container="body" title="Munki versions among all clients">
+		<div class="panel-heading" data-container="body" data-i18n="[title]widget.munki_versions.tooltip">
 
-	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> Munki versions</h3>
+	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> <span data-i18n="widget.munki_versions.title"></span></h3>
 
 		</div>
 		
