@@ -1,5 +1,10 @@
 <?php $this->view('partials/head'); ?>
 
+<?php
+	include_once(APP_PATH . '/lib/munkireport/Widgets.php');
+	$widgetObj = new munkireport\Widgets(); 
+?>
+
 <div class="container">
 
 	<?php foreach(conf('dashboard_layout', array()) AS $row):?>
@@ -8,7 +13,10 @@
 
 		<?php foreach($row as $item):?>
 
-		<?php $this->view("widgets/${item}_widget"); ?>
+		<?php 
+			$widget = $widgetObj->get($item);
+			$this->view($widget->file, $widget->vars, $widget->path); 
+		?>
 
 		<?php endforeach?>
 
