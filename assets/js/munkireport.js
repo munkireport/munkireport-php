@@ -194,6 +194,8 @@ var mr = {
                   conf.chart.multibar.dispatch.on("elementClick", function(e) {
                       conf.elementClickCallback(e)
                   });
+                  
+                  d3.select(conf.svg).attr("class", "clickLabels");
               }
                 
                 // Call the munkireport drawGraph routine
