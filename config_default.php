@@ -685,6 +685,17 @@
 	*/
 	$conf['timezone'] = @date_default_timezone_get();
 
+
+	/*
+	|===============================================
+	| Custom folder
+	|===============================================
+	|
+	| Use a custom folder to host your custom js, css and modules
+	|
+	*/
+	//$conf['custom_folder'] = '/custom/';
+
 	/*
 	|===============================================
 	| Custom css and js

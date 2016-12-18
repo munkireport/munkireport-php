@@ -787,6 +787,10 @@
 			"b2g_warning": "Latest backup within 4 weeks",
 			"b2g_danger": "Latest backup older then 4 weeks"
 		},
+		"unknown": {
+			"alert": "This widget cannot be found",
+			"title": "Unknown widget"
+		},
 		"uptime": {
 			"title": "Uptime"
 		},
