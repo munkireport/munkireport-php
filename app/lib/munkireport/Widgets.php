@@ -26,7 +26,7 @@ class Widgets
         // Get widgets in custom modules
         if(conf('custom_folder')){
             
-            $customPath = APP_ROOT . conf('custom_folder');
+            $customPath = conf('custom_folder');
             
             $this->searchWidgetsInModules($customPath);
             

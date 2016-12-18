@@ -691,10 +691,12 @@
 	| Custom folder
 	|===============================================
 	|
-	| Use a custom folder to host your custom js, css and modules
+	| Absolute path to folder with custom items.
+	| This folder will be searched for widgets, both in views/widgets
+	| and in modules/{modulename}/views
 	|
 	*/
-	//$conf['custom_folder'] = '/custom/';
+	//$conf['custom_folder'] = APP_ROOT . '/custom/';
 
 	/*
 	|===============================================
