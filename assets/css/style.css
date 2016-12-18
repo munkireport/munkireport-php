@@ -4,7 +4,7 @@
     fill: none;
 }
 
-#os-widget .nv-bar{
+svg.clickLabels .nv-bar{
     cursor: pointer;
 }
 
