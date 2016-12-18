@@ -36,7 +36,7 @@ class Widgets
             }
         }
         // Get widgets in modules
-        $this->searchWidgetsInModules(conf(module_path));
+        $this->searchWidgetsInModules(conf('module_path'));
         
         // Get widgets in widget directory
         $this->searchWidgetsInFolder(conf('view_path') . 'widgets/');
@@ -52,6 +52,12 @@ class Widgets
         $this->widgetNotFound->vars = array('widgetName' => $widgetName);
         
         return $this->widgetNotFound;
+    }
+    
+    public function view($viewObj, $widgetName)
+    {
+        $widget = $this->get($widgetName);
+        $viewObj->view($widget->file, $widget->vars, $widget->path); 
     }
     
     private function searchWidgetsInModules($basePath)

@@ -8,9 +8,9 @@
 
   <div class="row">
 
-    <?php $this->view('widgets/power_battery_health_widget'); ?>
+    <?php $widget->view($this, 'power_battery_health'); ?>
 
-    <?php $this->view('widgets/power_battery_condition_widget'); ?>
+    <?php $widget->view($this, 'power_battery_condition'); ?>
 
   </div> <!-- /row -->
 

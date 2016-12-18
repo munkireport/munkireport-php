@@ -8,7 +8,7 @@
 
   <div class="row">
 
-		<?php $this->view('widgets/findmymac_widget'); ?>
+		<?php $widget->view($this, 'findmymac'); ?>
 
   </div> <!-- /row -->
 
