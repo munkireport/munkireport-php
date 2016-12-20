@@ -6,23 +6,23 @@
 
 <div class="container">
 
-  <div class="row">
-
-    <?php $this->view('widgets/registered_clients_widget'); ?>
+	<div class="row">
+		
+		<?php $widget->view($this, 'registered_clients'); ?>
 
   </div>
   
   <div class="row">
 	
-  <?php $this->view('widgets/client_widget'); ?>
+  <?php $widget->view($this, 'client'); ?>
 
-  <?php $this->view('widgets/filevault_widget'); ?>
+  <?php $widget->view($this, 'filevault'); ?>
 
   </div> <!-- /row -->
 
   <div class="row">
 
-    <?php $this->view('widgets/os_widget'); ?>
+    <?php $widget->view($this, 'os'); ?>
 
   </div> <!-- /row -->
 

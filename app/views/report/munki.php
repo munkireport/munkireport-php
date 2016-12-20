@@ -8,27 +8,27 @@
 
   <div class="row">
 
-    <?php $this->view('widgets/munki_widget'); ?>
+    <?php $widget->view($this, 'munki'); ?>
 
-    <?php $this->view('widgets/munki_versions_widget'); ?>
+    <?php $widget->view($this, 'munki_versions'); ?>
     
-    <?php $this->view('widgets/munkiinfo_munkiprotocol_widget'); ?>
+    <?php $widget->view($this, 'munkiinfo_munkiprotocol'); ?>
 
   </div>
   <div class="row">
 	  
-	  <?php $this->view('get_failing_widget', '', MODULE_PATH . 'managedinstalls/views/'); ?>
+	  <?php $widget->view($this, 'get_failing'); ?>
 
-	  <?php $this->view('widgets/pending_widget'); ?>
+	  <?php $widget->view($this, 'pending'); ?>
 	
-	  <?php $this->view('widgets/manifests_widget'); ?>
+	  <?php $widget->view($this, 'manifests'); ?>
 
 </div> <!-- /row -->
  <div class="row">
 
-    <?php $this->view('widgets/pending_munki_widget'); ?>
+    <?php $widget->view($this, 'pending_munki'); ?>
     
-    <?php $this->view('widgets/pending_apple_widget'); ?>
+    <?php $widget->view($this, 'pending_apple'); ?>
 
 
   </div> <!-- /row -->
