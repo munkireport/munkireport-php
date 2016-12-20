@@ -1,5 +1,5 @@
-/* Remove tick lines in OS widget */
-#os-widget .nv-x.nv-axis line {
+/* Remove tick lines in multiBarHorizontalChart */
+g.nv-multiBarHorizontalChart .nv-x.nv-axis line {
     stroke: none;
     fill: none;
 }

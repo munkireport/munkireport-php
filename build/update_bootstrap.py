@@ -22,6 +22,7 @@ def write_override(fileName, bodyColor, backgroundColor):
         f.write("text, svg .nvd3.nv-pie .nv-pie-title, .nvd3 .nv-discretebar .nv-groups text, .nvd3 .nv-multibarHorizontal .nv-groups text{\n")
         f.write("   fill: %s;\n" % bodyColor)
         f.write("}\n")
+        f.write(".nvd3 .nv-axis path{stroke: %s}\n" % bodyColor)
         f.write(".nvtooltip, .nvtooltip table{\n")
         f.write("   background-color: %s;\n" % backgroundColor)
         f.write("}\n")
