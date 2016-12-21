@@ -584,7 +584,9 @@
   "security": {
     "security": "Sécurité",
     "gatekeeper": "Etat Gatekeeper",
-    "sip": "Etat SIP"
+    "sip": "Etat SIP",
+    "ssh_users": "SSH Users",
+    "ard_users": "ARD Users"
   },
   "serial": "Numéro de série",
   "servermetrics": {
