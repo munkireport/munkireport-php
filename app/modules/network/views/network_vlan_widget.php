@@ -1,6 +1,6 @@
 		<div class="col-lg-12">
 
-			<div class="panel panel-default">
+			<div class="panel panel-default" id="network-vlan-widget">
 
 				<div class="panel-heading">
 
@@ -8,7 +8,7 @@
 				
 				</div>
 
-				<div id="ip-panel" class="panel-body" style="overflow-x: auto; padding: 0">
+				<div class="panel-body" style="overflow-x: auto; padding: 0">
 					
 					<svg style="height: 200px" id="ip-plot"></svg>
 
@@ -29,7 +29,7 @@
 		    d3.json(url, function(err, data){
 
 		    	var minWidth = data.length * 60 + 175
-		    	var panelWidth = d3.select('#ip-panel').style("width");
+		    	var panelWidth = d3.select('#network-vlan-widget .panel-body').style("width");
 
 		    	var width = Math.max(minWidth, parseInt(panelWidth))
 
@@ -45,6 +45,7 @@
 			            .staggerLabels(true)
 			            .valueFormat(d3.format(','))
 			            .showValues(true)
+						.color(mr.getGraphPref('barColor', 'network-vlan-widget', []))
 			            .duration(250)
 				        ;
 					chart.tooltip.enabled(false);
@@ -54,7 +55,7 @@
 			            .call(chart)
 			            ;
 			        nv.utils.windowResize(function(){
-			        	panelWidth = d3.select('#ip-panel').style("width");
+			        	panelWidth = d3.select('#network-vlan-widget .panel-body').style("width");
 						width = Math.max(minWidth, parseInt(panelWidth))
 						d3.select('#ip-plot')
 							.style("width", width + "px")
@@ -64,12 +65,6 @@
 
 			        return chart;
 		       	});
-
-		    	
-
-
-
-
 			});
 
 		});
