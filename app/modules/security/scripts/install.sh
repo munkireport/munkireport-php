@@ -1,8 +1,8 @@
 #!/bin/bash
 
 MODULE_NAME="security"
-MODULESCRIPT="security.sh"
-MODULE_CACHE_FILE="security.txt"
+MODULESCRIPT="security.py"
+MODULE_CACHE_FILE="security.plist"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 
