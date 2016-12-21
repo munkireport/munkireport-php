@@ -153,7 +153,7 @@ var mr = {
         getGraphPref: function(setting, graphName, conf){
             if(conf[setting]) return conf[setting];
             if(mr.graph[graphName] && mr.graph[graphName][setting]) return mr.graph[graphName][setting];
-            mr.graph[setting];
+            return mr.graph[setting];
         },
         
         // Add nvd3 graph
