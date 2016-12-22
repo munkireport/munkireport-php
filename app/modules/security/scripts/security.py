@@ -14,7 +14,10 @@ def gatekeeper_check():
     if float(os.uname()[2][0:2]) >= 11:
         sp = subprocess.Popen(['spctl', '--status'], stdout=subprocess.PIPE)
         out, err = sp.communicate()
-        return out.split()[1]
+        if "enabled" in out:
+            return "Active"
+        else:
+            return "Disabled"
     else:
         return "Not Supported"
 
@@ -25,9 +28,10 @@ def sip_check():
     if float(os.uname()[2][0:2]) >= 15:
         sp = subprocess.Popen(['csrutil', 'status'], stdout=subprocess.PIPE)
         out, err = sp.communicate()
-        return out.split()[4].strip('.')
-    else:
-        return out.split()[4].strip('.')
+        if "enabled" in out:
+            return "Active"
+        else:
+            return "Disabled"
 
 
 def ssh_access_check():
