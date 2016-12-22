@@ -138,13 +138,13 @@ new Security_model;
                     }
                     return '<span class="label label-danger">'+i18n.t('Disabled')+'</span>';
 		});
-		var firmwarepw = $('td:eq(9)', nRow).html();
-		$('td:eq(9)', nRow).html(function(){
-		    if(firmwarepw = 'Yes'){
-			    return '<span class="label label-success">'+i18n.t('Enabled')+'</span>';
-			}
-		    return '<span class="label label-danger">'+i18n.t('Disabled')+'</span>';
-		});
+                 var firmwarepw = $('td:eq(11)', nRow).html();
+                 $('td:eq(11)', nRow).html(function(){
+                     if( firmwarepw == 'Yes'){
+                         return '<span class="label label-success">'+i18n.t('Enabled')+'</span>';
+                     }
+                     return '<span class="label label-danger">'+i18n.t('Disabled')+'</span>';
+                 });
 		    }
 	    } );
 	} );
