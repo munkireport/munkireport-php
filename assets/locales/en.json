@@ -589,7 +589,8 @@
 		"gatekeeper": "Gatekeeper Status",
 		"sip": "SIP Status",
 		"ssh_users": "SSH Users",
-		"ard_users": "ARD Users"
+		"ard_users": "ARD Users",
+		"firmwarepw": "Firmware Password"
 	},
 	"serial": "Serial Number",
 	"servermetrics": {
