@@ -10,8 +10,9 @@ class Security_model extends Model
 	$this->rs['sip'] = '';
 	$this->rs['ssh_users'] = '';
 	$this->rs['ard_users'] = '';
+	$this->rs['firmwarepw'] = '';
         // Schema version, increment when creating a db migration
-        $this->schema_version = 002;
+        $this->schema_version = 003;
         
         // Create table if it does not exist
         $this->create_table();
@@ -40,7 +41,7 @@ class Security_model extends Model
 
 	$plist = $parser->toArray();
 
-	foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users') as $item) {
+	foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw') as $item) {
 		if (isset($plist[$item])) {
 			$this->$item = $plist[$item];
 		} else {
