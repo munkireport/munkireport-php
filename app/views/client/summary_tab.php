@@ -186,6 +186,12 @@
 				<tr>
 					<th data-i18n="security.sip"></th><td class="mr-sip"></td>
 				</tr>
+				<tr>
+					<th data-i18n="security.ssh_users"></th><td class="mr-ssh_users"></td>
+				</tr>
+				<tr>
+					<th data-i18n="security.ard_users"></th><td class="mr-ard_users"></td>
+				</tr>
 			</table>
 		</div>
 		

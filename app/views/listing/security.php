@@ -27,7 +27,9 @@ new Security_model;
 		        <th data-i18n="type"data-colname='machine.machine_name'></th>
                 <th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
                 <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
-                <th data-i18n="security.sip" data-colname='security.sip'></th>
+		<th data-i18n="security.sip" data-colname='security.sip'></th>
+		<th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
+		<th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -120,6 +122,20 @@ new Security_model;
                         return '<span class="label label-success">'+i18n.t('encrypted')+'</span>';
                     }
                     return '<span class="label label-danger">'+i18n.t('unencrypted')+'</span>';
+		});
+                var gk = $('td:eq(7)', nRow).html();
+                $('td:eq(7)', nRow).html(function(){
+                    if( gk == 'enabled'){
+                        return '<span class="label label-success">'+i18n.t('Enabled')+'</span>';
+                    }
+		    return '<span class="label label-danger">'+i18n.t('Disabled')+'</span>';
+		});
+		var sip = $('td:eq(8)', nRow).html();
+                $('td:eq(8)', nRow).html(function(){
+                    if( sip == 'enabled'){
+                        return '<span class="label label-success">'+i18n.t('Enabled')+'</span>';
+                    }
+                    return '<span class="label label-danger">'+i18n.t('Disabled')+'</span>';
                 });
 		    }
 	    } );
