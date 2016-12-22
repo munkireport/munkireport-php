@@ -192,6 +192,9 @@
 				<tr>
 					<th data-i18n="security.ard_users"></th><td class="mr-ard_users"></td>
 				</tr>
+				<tr>
+					<th data-i18n="security.firmwarepw"></th><td class="mr-firmwarepw"></td>
+				</tr>
 			</table>
 		</div>
 		
