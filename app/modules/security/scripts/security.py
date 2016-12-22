@@ -125,6 +125,14 @@ def permissions_bitmask(user_mask):
     return
 
 
+def firmware_pw_check():
+    """Checks to see if a firmware password is set"""
+    sp = subprocess.Popen(['firmwarepasswd', '-check'], stdout=subprocess.PIPE)
+    out, err = sp.communicate()
+
+    return out.split()[2]
+
+
 def main():
     """main"""
 
@@ -145,6 +153,7 @@ def main():
     result.update({'sip': sip_check()})
     result.update({'ssh_users': ssh_access_check()})
     result.update({'ard_users': ard_access_check()})
+    result.update({'firmwarepw': firmware_pw_check()})
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')
