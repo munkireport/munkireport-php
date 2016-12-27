@@ -19,7 +19,7 @@
 					<a id="sip-Active" class="btn btn-success hide">
 						<span class="sip-count bigger-150"></span><br>
 						<span class="sip-label"></span>
-						<span data-i18n="security.sip_enabled"></span>
+						<span data-i18n="security.sip_active"></span>
 					</a>
 
           <span id="sip-nodata" data-i18n="no_clients"></span>

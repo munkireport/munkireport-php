@@ -542,6 +542,9 @@
     "ssh_users": "SSH Users",
     "ard_users": "ARD Users",
     "firmwarepw": "Firmware Password"
+    "sip_status": "SIP Status",
+    "sip_enabled": "SIP Active",
+    "sip_disabled": "SIP Disabled"
   },
   "serial": "Seriennummer",
   "servermetrics": {
@@ -563,7 +566,6 @@
     "smb_users": "SMB Benutzer"
   },
   "show": "Anzeigen",
-  "sip_status": "SIP Status",
   "size": "Größe",
   "software": {
     "software": "Software",
