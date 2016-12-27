@@ -55,7 +55,9 @@ class Security_model extends Model
     {
 	$sql = "SELECT COUNT(CASE WHEN sip = 'Active' THEN 1 END) AS Active,
 		COUNT(CASE WHEN sip = 'Disabled' THEN 1 END) AS Disabled
-		FROM security";
+		FROM security
+		LEFT JOIN reportdata USING(serial_number)
+		".get_machine_group_filter();
 	return current($this->query($sql));
     }
 }
