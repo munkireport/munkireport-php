@@ -59,48 +59,61 @@ def ssh_access_check():
 
 def ard_access_check():
     """Check for local users who have ARD permissions
+    First we need to check if all users are allowed. If not, we look for granular permissions.
     There are two methods to do this. One is to look for the bitmask in navprivs
     in the local directory. The second is to read the same bitmask from the
     plist below. I'm not entirely sure which one is more accurate so for now
     I'm going to include both and refactor later.
     Thanks to @frogor and @foigus for their work on the bitmask and for example code."""
 
-    # First method: local directory
-    sp = subprocess.Popen(['dscl', '.', '-list', '/Users'], stdout=subprocess.PIPE)
+    # Zeroth method: check if all users are permitted.
+    # Thank you to @steffan for pointing out this plist key!
+    plist_path = '/Library/Preferences/com.apple.RemoteManagement.plist'
+
+    # plist lib likes to barf on binary plists, so hack around it by converting to xml
+    # TODO - make this not hacky...
+    sp = subprocess.Popen(['plutil', '-convert', 'xml1', plist_path])
     out, err = sp.communicate()
-
-    user_list = out.split()
-
-    for user in user_list:
-        if user[0] in '_':
-            continue
-        else:
-            args = '/Users/' + user
-            sp = subprocess.Popen(['dscl', '.', '-read', args, 'naprivs'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-            out, err = sp.communicate()
-        if out not in 'No such key':
-            bitmask = out.split()
-            permissions_bitmask(bitmask[1])
-        else:
-            pass
-
-
-    plist_path = '/Library/Application Support/Apple/Remote Desktop/Client/Settings.plist'
     plist = plistlib.readPlist(plist_path)
 
-    ard_users = ''
+    if plist['ARD_AllLocalUsers']:
+        return "All users permitted"
+    else:
+        # First method: local directory
+        sp = subprocess.Popen(['dscl', '.', '-list', '/Users'], stdout=subprocess.PIPE)
+        out, err = sp.communicate()
 
-    for entry in plist['AuthSharedSecretList']:
-        user = plist['AuthSharedSecretList'][entry][2]
-        bitmask = plist['AuthSharedSecretList'][entry][1]
-        permissions_bitmask(bitmask)
-        ard_users += user + ' '
+        user_list = out.split()
 
-    # Sometimes the plist will have duplicate entries - only return each username once.
-    # We do this by putting into a set which forces things to be unique and then joining
-    # back to a string.
-    unique_ard_users = set(ard_users.split())
-    return " ".join(unique_ard_users)
+        for user in user_list:
+            if user[0] in '_':
+                continue
+            else:
+                args = '/Users/' + user
+                sp = subprocess.Popen(['dscl', '.', '-read', args, 'naprivs'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+                out, err = sp.communicate()
+            if out not in 'No such key':
+                bitmask = out.split()
+                permissions_bitmask(bitmask[1])
+            else:
+                pass
+
+        plist_path = '/Library/Application Support/Apple/Remote Desktop/Client/Settings.plist'
+        plist = plistlib.readPlist(plist_path)
+
+        ard_users = ''
+
+        for entry in plist['AuthSharedSecretList']:
+            user = plist['AuthSharedSecretList'][entry][2]
+            bitmask = plist['AuthSharedSecretList'][entry][1]
+            permissions_bitmask(bitmask)
+            ard_users += user + ' '
+
+        # Sometimes the plist will have duplicate entries - only return each username once.
+        # We do this by putting into a set which forces things to be unique and then joining
+        # back to a string.
+        unique_ard_users = set(ard_users.split())
+        return " ".join(unique_ard_users)
 
 
 def permissions_bitmask(user_mask):
