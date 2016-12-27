@@ -35,10 +35,26 @@ def sip_check():
 
 
 def ssh_access_check():
-    """Check for users who can log in via SSH using the built-in group. This will not 
+    """Check for users who can log in via SSH using the built-in group. This will not
     cover any users who are granted SSH via an AD/OD group."""
 
-    sp = subprocess.Popen(['dscl', '.', '-list', '/Users'], stdout=subprocess.PIPE)
+    #Check first that SSH is enabled!
+    sp = subprocess.Popen(['systemsetup', '-getremotelogin'], stdout=subprocess.PIPE)
+    out, err = sp.communicate()
+
+    if "Off" in out:
+        return "SSH Disabled"
+
+    # First we need to check if SSH is open to all users - if so, the ssh group will
+    # named com.apple.access_ssh-disabled
+    sp = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
+    out, err = sp.communicate()
+
+    if "com.apple.access_ssh-disabled" in out:
+        return "All users permitted"
+    
+    # Now that we know SSH is enabled and not open to all users, enumerate users.
+    sp = subprocess.Popen(['dscl', '.', 'list', '/Users'], stdout=subprocess.PIPE)
     out, err = sp.communicate()
 
     user_list = out.split()
