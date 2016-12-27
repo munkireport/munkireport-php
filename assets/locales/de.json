@@ -538,10 +538,12 @@
   "security": {
     "security": "Security",
     "gatekeeper": "Gatekeeper Status",
+    "gatekeeper_active": "Gatekeeper Active",
+    "gatekeeper_disabled": "Gatekeeper Disabled",
     "sip": "SIP Status",
     "ssh_users": "SSH Users",
     "ard_users": "ARD Users",
-    "firmwarepw": "Firmware Password"
+    "firmwarepw": "Firmware Password",
     "sip_status": "SIP Status",
     "sip_enabled": "SIP Active",
     "sip_disabled": "SIP Disabled"

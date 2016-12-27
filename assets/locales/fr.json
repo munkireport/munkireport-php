@@ -584,6 +584,8 @@
   "security": {
     "security": "Sécurité",
     "gatekeeper": "Etat Gatekeeper",
+    "gatekeeper_active": "Gatekeeper Active",
+    "gatekeeper_disabled": "Gatekeeper Disabled",
     "sip": "Etat SIP",
     "ssh_users": "SSH Users",
     "ard_users": "ARD Users",
