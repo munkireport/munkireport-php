@@ -4,7 +4,7 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-lock"></i> <span data-i18n="sip_status"></span></h3>
+					<h3 class="panel-title"><i class="fa fa-lock"></i> <span data-i18n="security.sip_status"></span></h3>
 
 				</div>
 
@@ -14,12 +14,12 @@
 					<a id="sip-Disabled" class="btn btn-danger hide">
 						<span class="sip-count bigger-150"></span><br>
 						<span class="sip-label"></span>
-						<span data-i18n="sip.disabled"></span>
+						<span data-i18n="security.sip_disabled"></span>
 					</a>
 					<a id="sip-Active" class="btn btn-success hide">
 						<span class="sip-count bigger-150"></span><br>
 						<span class="sip-label"></span>
-						<span data-i18n="sip.enabled"></span>
+						<span data-i18n="security.sip_enabled"></span>
 					</a>
 
           <span id="sip-nodata" data-i18n="no_clients"></span>
@@ -34,16 +34,16 @@
 $(document).on('appUpdate', function(e, lang) {
 
     $.getJSON( appUrl + '/module/security/get_sip_stats', function( data ) {
-	console.log( data );
-    	if(data.error){
+	    
+	if(data.error){
     		//alert(data.error);
     		return;
     	}
 
-			// Set labels
-			$('#sip-Disabled span.sip-label').text('SIP Disabled') //TODO make this locale based
-			$('#sip-Active span.sip-label').text('SIP Active') // TODO make this locale based
-
+	// Set URLs. TODO - once filtered update this to deep link
+	var url = appUrl + '/show/listing/security'
+	$('#sip-Disabled').attr('href', url)
+	$('#sip-Active').attr('href', url)
 
         // Show no clients span
         $('#sip-nodata').removeClass('hide');
