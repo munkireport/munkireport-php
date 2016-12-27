@@ -50,4 +50,12 @@ class Security_model extends Model
 	}
 	$this->save();
     }
+
+    public function get_sip_stats()
+    {
+	$sql = "SELECT COUNT(CASE WHEN sip = 'Active' THEN 1 END) AS Active,
+		COUNT(CASE WHEN sip = 'Disabled' THEN 1 END) AS Disabled
+		FROM security";
+	return current($this->query($sql));
+    }
 }
