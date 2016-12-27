@@ -544,6 +544,7 @@
 	|	bound_to_ds
 	|	client (two items)
 	|	external_displays_count
+	|	gatekeeper
 	|	hardware_model
 	|	smart_status
 	|	disk_report
@@ -552,6 +553,7 @@
 	|	munki
 	|	power_battery_condition
 	|	power_battery_health
+	|	sip
 	|	wifi_state
 	|
 	| Small horizontal / medium vertical widgets:
