@@ -35,20 +35,26 @@ class Security_model extends Model
      **/
     public function process($data)
     {
-	require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-	$parser = new CFPropertyList();
-	$parser->parse($data);
-
-	$plist = $parser->toArray();
-
-	foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw') as $item) {
-		if (isset($plist[$item])) {
-			$this->$item = $plist[$item];
-		} else {
-			$this->$item = '';
-		}
+	if (strpos($plist, '<?xml') === false) {
+		// old style txt file data has been passed - throw an error.
+		throw new Exception("Error Processing Request: old format data found, please update the security module", 1);	
 	}
-	$this->save();
+	else {
+		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+		$parser = new CFPropertyList();
+		$parser->parse($data);
+
+		$plist = $parser->toArray();
+
+		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw') as $item) {
+			if (isset($plist[$item])) {
+				$this->$item = $plist[$item];
+			} else {
+				$this->$item = '';
+			}
+		}
+		$this->save();
+	}
     }
 
     public function get_sip_stats()
