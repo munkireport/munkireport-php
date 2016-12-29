@@ -32,6 +32,8 @@ def sip_check():
             return "Active"
         else:
             return "Disabled"
+    else:
+        return "Not Supported"
 
 
 def ssh_access_check():
@@ -52,7 +54,7 @@ def ssh_access_check():
 
     if "com.apple.access_ssh-disabled" in out:
         return "All users permitted"
-    
+
     # Now that we know SSH is enabled and not open to all users, enumerate users.
     sp = subprocess.Popen(['dscl', '.', 'list', '/Users'], stdout=subprocess.PIPE)
     out, err = sp.communicate()
@@ -75,19 +77,15 @@ def ssh_access_check():
 
 def ard_access_check():
     """Check for local users who have ARD permissions
-    First we need to check if all users are allowed. If not, we look for granular permissions.
-    There are two methods to do this. One is to look for the bitmask in navprivs
-    in the local directory. The second is to read the same bitmask from the
-    plist below. I'm not entirely sure which one is more accurate so for now
-    I'm going to include both and refactor later.
-    Thanks to @frogor and @foigus for their work on the bitmask and for example code."""
+    First we need to check if all users are allowed. If not, we look for granular permissions
+    in the directory. Thank you @frogor and @foigus for help on the directory part."""
 
-    # Zeroth method: check if all users are permitted.
+    # First method: check if all users are permitted.
     # Thank you to @steffan for pointing out this plist key!
     plist_path = '/Library/Preferences/com.apple.RemoteManagement.plist'
 
     # plist lib likes to barf on binary plists, so hack around it by converting to xml
-    # TODO - make this not hacky...
+    # TODO - use foundationplist to avoid conversion
     sp = subprocess.Popen(['plutil', '-convert', 'xml1', plist_path])
     out, err = sp.communicate()
     plist = plistlib.readPlist(plist_path)
@@ -95,12 +93,12 @@ def ard_access_check():
     if plist['ARD_AllLocalUsers']:
         return "All users permitted"
     else:
-        # First method: local directory
+        # Second method - check local directory for naprivs
         sp = subprocess.Popen(['dscl', '.', '-list', '/Users'], stdout=subprocess.PIPE)
         out, err = sp.communicate()
 
         user_list = out.split()
-
+        ard_users = []
         for user in user_list:
             if user[0] in '_':
                 continue
@@ -109,53 +107,11 @@ def ard_access_check():
                 sp = subprocess.Popen(['dscl', '.', '-read', args, 'naprivs'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
                 out, err = sp.communicate()
             if out not in 'No such key':
-                bitmask = out.split()
-                permissions_bitmask(bitmask[1])
+                ard_users.append(user)
             else:
                 pass
 
-        plist_path = '/Library/Application Support/Apple/Remote Desktop/Client/Settings.plist'
-        plist = plistlib.readPlist(plist_path)
-
-        ard_users = ''
-
-        for entry in plist['AuthSharedSecretList']:
-            user = plist['AuthSharedSecretList'][entry][2]
-            bitmask = plist['AuthSharedSecretList'][entry][1]
-            permissions_bitmask(bitmask)
-            ard_users += user + ' '
-
-        # Sometimes the plist will have duplicate entries - only return each username once.
-        # We do this by putting into a set which forces things to be unique and then joining
-        # back to a string.
-        unique_ard_users = set(ard_users.split())
-        return " ".join(unique_ard_users)
-
-
-def permissions_bitmask(user_mask):
-    """Takes a given bitmask from the plist and calculates the permissions the user has.
-    The plist structure is some sort of hash for each user as the key, followed by a
-    password hash, the bitmask, and the short username."""
-
-    permissions = {
-        "kPrivSTUserHasAccess":   0x80000000,
-        "kPrivSTTextMessages":    0x00000001,
-        "kPrivSTControlObserve":  0x00000002,
-        "kPrivSTSendFiles":       0x00000004,
-        "kPrivSTDeleteFiles":     0x00000008,
-        "kPrivSTGenerateReports": 0x00000010,
-        "kPrivSTOpenQuitApps":    0x00000020,
-        "kPrivSTChangeSettings":  0x00000040,
-        "kPrivSTRestartShutDown": 0x00000080,
-        "kPrivSTObserveOnly":     0x00000100,
-        "kPrivSTShowObserve":     0x40000000,
-    }
-
-    perms = set()
-    for n, m in permissions.items():
-        if m & int(user_mask):
-            perms.add(n)
-    return
+        return " ".join(ard_users)
 
 
 def firmware_pw_check():
