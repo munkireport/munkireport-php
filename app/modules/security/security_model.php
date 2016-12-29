@@ -35,12 +35,46 @@ class Security_model extends Model
      **/
     public function process($data)
     {
+	// If we are passed something other than a plist, the client the old data format.
+	// Process it using the old way!
+	if (strpos($data, '<?xml') === false) {    
+        // Delete previous entries
+        $this->deleteWhere('serial_number=?', $this->serial_number);
+        
+        // Translate security strings to db fields
+        $translate = array(
+            'Gatekeeper: ' => 'gatekeeper',
+            'SIP: ' => 'sip');
+	//clear any previous data we had
+        foreach ($translate as $search => $field) {
+            $this->$field = '';
+        }
+        // Parse data
+        foreach (explode("\n", $data) as $line) {
+            // Translate standard entries
+            foreach ($translate as $search => $field) {
+                if (strpos($line, $search) === 0) {
+                    $value = substr($line, strlen($search));
+                    
+                    $this->$field = $value;
+                    # Check if this is the last field
+                    if ($field == 'sip') {
+                        $this->id = '';
+                        $this->save();
+                    }
+                    break;
+                }
+            }
+	}
+	}
+
+	else { // we have been sent a plist - process it the new way.
 	require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 	$parser = new CFPropertyList();
 	$parser->parse($data);
 
 	$plist = $parser->toArray();
-
+	$this->deleteWhere('serial_number=?', $this->serial_number);
 	foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw') as $item) {
 		if (isset($plist[$item])) {
 			$this->$item = $plist[$item];
@@ -50,7 +84,7 @@ class Security_model extends Model
 	}
 	$this->save();
     }
-
+    }
     public function get_sip_stats()
     {
 	$sql = "SELECT COUNT(CASE WHEN sip = 'Active' THEN 1 END) AS Active,
