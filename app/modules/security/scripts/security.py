@@ -115,11 +115,24 @@ def ard_access_check():
 
 
 def firmware_pw_check():
-    """Checks to see if a firmware password is set"""
-    sp = subprocess.Popen(['firmwarepasswd', '-check'], stdout=subprocess.PIPE)
-    out, err = sp.communicate()
+    """Checks to see if a firmware password is set.
+    The command firmwarepassword appeared in 10.10, so we use nvram for older versions.
+    Thank you @steffan for this check."""
+    if float(os.uname()[2][0:2]) >= 14:
+        sp = subprocess.Popen(['firmwarepasswd', '-check'], stdout=subprocess.PIPE)
+        out, err = sp.communicate()
+        firmwarepw = out.split()[2]
 
-    return out.split()[2]
+    else:
+        sp = subprocess.Popen(['nvram', 'security-mode'], stdout=subprocess.PIPE)
+        mode_out, mode_err = sp.communicate()
+
+        if "none" in mode_out or "Error getting variable" in mode_err:
+                firmwarepw="No"
+        else:
+                firmwarepw="Yes"
+
+    return firmwarepw
 
 
 def main():
