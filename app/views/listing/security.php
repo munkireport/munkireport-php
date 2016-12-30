@@ -126,14 +126,14 @@ new Security_model;
 		});
                 var gk = $('td:eq(7)', nRow).html();
                 $('td:eq(7)', nRow).html(function(){
-                    if( gk == 'enabled'){
+                    if( gk == 'Active'){
                         return '<span class="label label-success">'+i18n.t('Enabled')+'</span>';
                     }
 		    return '<span class="label label-danger">'+i18n.t('Disabled')+'</span>';
 		});
 		var sip = $('td:eq(8)', nRow).html();
                 $('td:eq(8)', nRow).html(function(){
-                    if( sip == 'enabled'){
+                    if( sip == 'Active'){
                         return '<span class="label label-success">'+i18n.t('Enabled')+'</span>';
                     }
                     return '<span class="label label-danger">'+i18n.t('Disabled')+'</span>';
