@@ -8,6 +8,7 @@ echo "Test script to get sample random password and date into MR. Does not set F
 # echo "***** Sample Firmware Script | Escrows Firmware Password to MunkiReport *****"
 
 # to do:
+# add firmwarepasswd commands to set password
 # add check to make sure MR is reachable 
 # add check to make confirm password matches what was set
 # let the users write their own script
@@ -32,8 +33,6 @@ PasswordSet=`/usr/sbin/firmwarepasswd -check`
 else
 	echo "macOS version is not supported. Requires 10.10 +"; exit 1
 fi
-
-
 
 # generate random password. 
 # also works: openssl rand -base64 5 
