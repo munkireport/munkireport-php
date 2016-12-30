@@ -14,6 +14,8 @@ echo "Test script to get sample random password and date into MR. Does not set F
 # add check to make confirm password matches what was set
 # let the users write their own script
 
+# handful of sanity checks:
+
 # must run this script as root
 	if [ $USER != root ]; then
 		echo "\n *** Please run this script with root privileges, exiting ***\n"; exit 1
@@ -35,6 +37,24 @@ PasswordSet=`/usr/sbin/firmwarepasswd -check`
 else
 	echo "macOS version is not supported. Requires 10.10 +"; exit 1
 fi
+
+# check we have an ip address
+allPorts=$(/usr/sbin/networksetup -listallhardwareports | awk -F' ' '/Device:/{print $NF}')
+
+while read Port; do
+    if [[ $(ifconfig "$Port" 2>/dev/null | awk '/status:/{print $NF}') == "active" ]]; then
+        ActivePort="$Port"
+        break
+    fi
+done  < <(printf '%s\n' "$allPorts")
+
+MacIP=`/usr/sbin/ipconfig getifaddr $ActivePort | awk  'BEGIN { FS = "." } ; { print $1"." }'`
+	# echo "IP address is: $MacIP"	
+	if [ "${MacIP}" != "192." ]; then
+		echo "\n *** Mac isn't on network based on IP. Need to be on network to escrow password . exiting ***\n"; exit 1
+	else 
+	echo "IP address looks good!"
+	fi
 
 # generate random password. 
 # also works: openssl rand -base64 5 
