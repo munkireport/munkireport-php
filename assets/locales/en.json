@@ -294,6 +294,10 @@
 	"filter": {
 		"title": "Set filters"
 	},
+	"firmware": {
+		"enabled_date": "Enable Date",
+		"firmware_password": "Firmware Password"
+	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
 	"gsx": {
