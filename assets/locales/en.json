@@ -121,6 +121,7 @@
 			"displays": "Displays",
 			"ds": "Directory Services",
 			"gsx": "GSX",
+			"firmware_escrow": "Firmware Escrow",
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
 			"location": "Location",
@@ -289,6 +290,9 @@
 		"client": {
 			"title": "Find My Mac"
 		}
+	},
+	"filter": {
+		"title": "Set filters"
 	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
