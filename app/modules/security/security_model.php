@@ -35,7 +35,7 @@ class Security_model extends Model
      **/
     public function process($data)
     {
-	if (strpos($plist, '<?xml') === false) {
+	if (strpos($data, '<?xml') === false) {
 		// old style txt file data has been passed - throw an error.
 		throw new Exception("Error Processing Request: old format data found, please update the security module", 1);	
 	}
@@ -75,5 +75,15 @@ class Security_model extends Model
                 LEFT JOIN reportdata USING(serial_number)
                 ".get_machine_group_filter();
         return current($this->query($sql));
+    }
+
+    public function get_firmwarepw_stats()
+    {
+	$sql = "SELECT COUNT(CASE WHEN firmwarepw = 'Yes' THEN 1 END) AS enabled,
+		COUNT(CASE WHEN firmwarepw = 'No' THEN 1 END) AS disabled
+		FROM security
+		LEFT JOIN reportdata USING(serial_number)
+		".get_machine_group_filter();
+	return current($this->query($sql));
     }
 }
