@@ -1,9 +1,10 @@
 #!/bin/sh
 
-#set -x
+# set -x
 
 # @gmarnin 12-30-2016
 
+echo ""
 echo "Test script to get sample random password and date into MR. Does not set Firmware password yet"
 # echo "***** Sample Firmware Script | Escrows Firmware Password to MunkiReport *****"
 
@@ -19,10 +20,11 @@ echo "Test script to get sample random password and date into MR. Does not set F
 	fi
 
 # firmwarepasswd only works on 10.10+ so bail if on 10.9 or lower
-OS=`$(sw_vers -productVersion | cut -d . -f 2)`
+OS=`/usr/bin/sw_vers -productVersion | cut -d . -f 2`
 
-if [ "$OS" -ge "10" ]; then
+if [[ "$OS" -ge "10" ]]; then
 # check if firmware is already set. bail if it is.
+# echo "Our OS version is $OS"
 PasswordSet=`/usr/sbin/firmwarepasswd -check`
 
 	if [[ "$PasswordSet" == "Password Enabled: Yes" ]]; then
