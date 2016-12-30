@@ -83,35 +83,37 @@ def ard_access_check():
     # First method: check if all users are permitted.
     # Thank you to @steffan for pointing out this plist key!
     plist_path = '/Library/Preferences/com.apple.RemoteManagement.plist'
-
-    # plist lib likes to barf on binary plists, so hack around it by converting to xml
-    # TODO - use foundationplist to avoid conversion
-    sp = subprocess.Popen(['plutil', '-convert', 'xml1', plist_path])
-    out, err = sp.communicate()
-    plist = plistlib.readPlist(plist_path)
-
-    if plist['ARD_AllLocalUsers']:
-        return "All users permitted"
-    else:
-        # Second method - check local directory for naprivs
-        sp = subprocess.Popen(['dscl', '.', '-list', '/Users'], stdout=subprocess.PIPE)
+    if os.path.exists(plist_path):
+        # plist lib likes to barf on binary plists, so hack around it by converting to xml
+        # TODO - use foundationplist to avoid conversion
+        sp = subprocess.Popen(['plutil', '-convert', 'xml1', plist_path])
         out, err = sp.communicate()
+        plist = plistlib.readPlist(plist_path)
 
-        user_list = out.split()
-        ard_users = []
-        for user in user_list:
-            if user[0] in '_':
-                continue
-            else:
-                args = '/Users/' + user
-                sp = subprocess.Popen(['dscl', '.', '-read', args, 'naprivs'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-                out, err = sp.communicate()
-            if out not in 'No such key':
-                ard_users.append(user)
-            else:
-                pass
+        if plist['ARD_AllLocalUsers']:
+            return "All users permitted"
+        else:
+            # Second method - check local directory for naprivs
+            sp = subprocess.Popen(['dscl', '.', '-list', '/Users'], stdout=subprocess.PIPE)
+            out, err = sp.communicate()
 
-        return " ".join(ard_users)
+            user_list = out.split()
+            ard_users = []
+            for user in user_list:
+                if user[0] in '_':
+                    continue
+                else:
+                    args = '/Users/' + user
+                    sp = subprocess.Popen(['dscl', '.', '-read', args, 'naprivs'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+                    out, err = sp.communicate()
+                if out not in 'No such key':
+                    ard_users.append(user)
+                else:
+                    pass
+            return " ".join(ard_users)
+    else:
+        # plist_path does not exist, which indicates that ARD is not enabled.
+        return "ARD Disabled"
 
 
 def firmware_pw_check():
