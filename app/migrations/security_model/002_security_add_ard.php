@@ -18,7 +18,7 @@ class Migration_security_add_ard extends Model
 
 		$dbh->beginTransaction();
 		$sql = sprintf(
-			'ALTER TABLE %s ADD COLUMN %s VARCHAR DEFAULT NULL',
+			'ALTER TABLE %s ADD COLUMN %s VARCHAR(255) DEFAULT NULL',
 			$this->enquote($this->tablename),
 			$this->enquote($this->columnname)
 		);
