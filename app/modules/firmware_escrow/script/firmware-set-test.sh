@@ -10,7 +10,6 @@ echo "Test script to get sample random password and date into MR. Does not set F
 
 # to do:
 # add firmwarepasswd commands to set password
-# add check to make sure MR is reachable 
 # add check to make confirm password matches what was set
 # let the users write their own script
 
@@ -51,7 +50,7 @@ done  < <(printf '%s\n' "$allPorts")
 MacIP=`/usr/sbin/ipconfig getifaddr $ActivePort | awk  'BEGIN { FS = "." } ; { print $1"." }'`
 	# echo "IP address is: $MacIP"	
 	if [ "${MacIP}" != "192." ]; then
-		echo "\n *** Mac isn't on network based on IP. Need to be on network to escrow password . exiting ***\n"; exit 1
+		echo "\n *** Mac isn't on network based on IP. Need to be on network to escrow password. exiting ***\n"; exit 1
 	else 
 	echo "IP address looks good!"
 	fi
