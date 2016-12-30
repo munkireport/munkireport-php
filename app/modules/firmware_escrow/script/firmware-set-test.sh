@@ -7,6 +7,7 @@
 echo "Test script to get sample random password and date into MR. Does not set Firmware password yet"
 # echo "***** Sample Firmware Script | Escrows Firmware Password to MunkiReport *****"
 
+# firmwarepasswd only works on 10.10+ so bail if on 10.9 or lower
 # add check to test if firmware is already set
 # add check to make sure MR is reachable 
 # add check to make confirm password matches what was set
