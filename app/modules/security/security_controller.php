@@ -90,4 +90,27 @@ class Security_controller extends Module_controller
 
         $obj->view('json', array('msg' => $out));
     }
+
+    /**
+     * Get firmware password statistics
+     *
+     * @return void
+     * @author rickheil
+     **/
+    public function get_firmwarepw_stats()
+    {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+                $sip_report = new Security_model;
+
+                $out = array();
+                $out['stats'] = $sip_report->get_firmwarepw_stats();
+
+
+        $obj->view('json', array('msg' => $out));
+    }
 } // END class default_module
