@@ -48,9 +48,12 @@ def ssh_access_check():
         return "SSH Disabled"
 
     else:
-        # First we need to check if SSH is open to all users - if so, the ssh group will
-        # named com.apple.access_ssh-disabled, or neither of the below groups will exist
-        # (this will be the case if SSH is enabled with systemsetup and not a prefpane)
+        # First we need to check if SSH is open to all users. A few ways  to tell:
+        # -on 10.8 and older, systemsetup will show as on but the access_ssh groups are not present
+        # -on 10.9, systemsetup will show as on and list all users in access_ssh
+        # -on 10.10 and newer, systemsetup will show as on and access_ssh-disabled will be present
+        # Note for 10.10 and newer - root will show up as authorized if systemsetup was used to turn
+        # on SSH, and not if pref pane was used.
 
         sp = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
         out, err = sp.communicate()
