@@ -495,7 +495,8 @@
 			"munki": "Munki Report",
 			"network": "Network Report",
 			"power": "Power Report",
-			"backup2go" : "Backup2go"
+			"backup2go" : "Backup2go",
+			"security": "Security Report"
 		},
 		"user": {
 			"logout": "Sign Off"
@@ -585,6 +586,7 @@
 	  "enrollment_status": "Enrollment Status"
 	},
 	"security": {
+		"report": "Security Report",
 		"security": "Security",
 		"gatekeeper": "Gatekeeper Status",
 		"gatekeeper_active": "Gatekeeper Active",

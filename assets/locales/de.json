@@ -446,7 +446,8 @@
       "location": "Standort-Bericht",
       "munki": "Munki-Bericht",
       "network": "Netzwerk-Bericht",
-      "power": "Strom-Bericht"
+      "power": "Strom-Bericht",
+      "security": "Security Report"
     },
     "user": {
       "logout": "Abmelden"
