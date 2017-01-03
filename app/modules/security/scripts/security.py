@@ -47,33 +47,42 @@ def ssh_access_check():
     if "Off" in out:
         return "SSH Disabled"
 
-    # First we need to check if SSH is open to all users - if so, the ssh group will
-    # named com.apple.access_ssh-disabled
-    sp = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
-    out, err = sp.communicate()
+    else:
+        # First we need to check if SSH is open to all users - if so, the ssh group will
+        # named com.apple.access_ssh-disabled, or neither of the below groups will exist
+        # (this will be the case if SSH is enabled with systemsetup and not a prefpane)
 
-    if "com.apple.access_ssh-disabled" in out:
-        return "All users permitted"
+        sp = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
+        out, err = sp.communicate()
 
-    # Now that we know SSH is enabled and not open to all users, enumerate users.
-    sp = subprocess.Popen(['dscl', '.', 'list', '/Users'], stdout=subprocess.PIPE)
-    out, err = sp.communicate()
+        if "com.apple.access_ssh-disabled" in out:
+            # if this group exists, all users are permitted to access SSH
+            return "All users permitted"
 
-    user_list = out.split()
-    ssh_users = ''
-
-    for user in user_list:
-        if user[0] in '_': # filter out system users that start with _
-            continue
-        else:
-            sp = subprocess.Popen(['dsmemberutil', 'checkmembership', '-U', user, '-G', 'com.apple.access_ssh'], stdout=subprocess.PIPE)
+        elif "com.apple.access_ssh" in out:
+            # if this group exists, SSH is enabled but only some users are permitted
+            sp = subprocess.Popen(['dscl', '.', 'list', '/Users'], stdout=subprocess.PIPE)
             out, err = sp.communicate()
-            if 'is a member' in out:
-                ssh_users += user + ' '
-            else:
-                pass
-    return ssh_users.strip()
 
+            user_list = out.split()
+            ssh_users = ''
+
+            for user in user_list:
+                if user[0] in '_': # filter out system users that start with _
+                    continue
+                else:
+                    sp = subprocess.Popen(['dsmemberutil', 'checkmembership', '-U', user, '-G', 'com.apple.access_ssh'], stdout=subprocess.PIPE)
+                    out, err = sp.communicate()
+                    if 'is a member' in out:
+                        ssh_users += user + ' '
+                    else:
+                        pass
+            return ssh_users.strip()
+
+        else:
+            # if neither SSH group exists but SSH is enabled, it was turned on with
+            # systemsetup and all users are enabled.
+            return "All users permitted"
 
 def ard_access_check():
     """Check for local users who have ARD permissions
@@ -126,13 +135,13 @@ def firmware_pw_check():
         firmwarepw = out.split()[2]
 
     else:
-        sp = subprocess.Popen(['nvram', 'security-mode'], stdout=subprocess.PIPE)
+        sp = subprocess.Popen(['nvram', 'security-mode'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         mode_out, mode_err = sp.communicate()
 
         if "none" in mode_out or "Error getting variable" in mode_err:
-                firmwarepw="No"
+            firmwarepw = "No"
         else:
-                firmwarepw="Yes"
+            firmwarepw = "Yes"
 
     return firmwarepw
 
