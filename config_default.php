@@ -544,6 +544,7 @@
 	|	bound_to_ds
 	|	client (two items)
 	|	external_displays_count
+	|	firmwarepw
 	|	gatekeeper
 	|	hardware_model
 	|	smart_status
