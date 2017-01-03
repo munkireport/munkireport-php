@@ -2,14 +2,15 @@
 
 # set -x
 
-# @gmarnin 12-30-2016
+# @gmarnin 1-3-2016
 
 echo ""
-echo "Test script to get sample random password and date into MR. Does not set Firmware password yet"
+echo "Untested test script to get sample random password and date into MR. Firmware password will be set"
+echo ""
 # echo "***** Sample Firmware Script | Escrows Firmware Password to MunkiReport *****"
 
 # to do:
-# add firmwarepasswd commands to set password
+# record the mode: sudo /usr/sbin/firmwarepasswd -mode (see line ~90)
 # add check to make confirm password matches what was set
 # let the users write their own script
 
@@ -29,7 +30,7 @@ if [[ "$OS" -ge "10" ]]; then
 PasswordSet=`/usr/sbin/firmwarepasswd -check`
 
 	if [[ "$PasswordSet" == "Password Enabled: Yes" ]]; then
-		echo "Firmware password is already set"; exit 1
+		echo "Firmware password is already set"; exit 
 	else
 		echo "Firmware password is not set"
 	fi
@@ -49,7 +50,7 @@ done  < <(printf '%s\n' "$allPorts")
 
 MacIP=`/usr/sbin/ipconfig getifaddr $ActivePort | awk  'BEGIN { FS = "." } ; { print $1"." }'`
 	# echo "IP address is: $MacIP"	
-	if [ "${MacIP}" != "192." ]; then
+	if [ "${MacIP}" != "172." ]; then
 		echo "\n *** Mac isn't on network based on IP. Need to be on network to escrow password. exiting ***\n"; exit 1
 	else 
 	echo "IP address looks good!"
@@ -64,9 +65,34 @@ EnabledDate=`date +%Y-%m-%d\ %H:%M:%S`
 # tmp is not a good location but works for testing
 printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\n" > /tmp/firmware_results.txt
 
-# echo "Password secret is: $Password"
+# echo password for testing so we know what it is
+echo "Firmware Password is: $Password"
 
-echo "Submitting Firmware Escrow Report"
+# set the firmware password.
+# Untested
+spawn firmwarepasswd -setpasswd
+expect {
+    "Enter password:" {
+        send "$Password"\r
+        exp_continue
+    }
+    "Enter new password:" {
+        send "$Password"\r
+        exp_continue
+    }
+    "Re-enter new password:" {
+        send "$Password"\r
+        exp_continue
+    }
+}
+
+# To do
+#Mode=`/usr/sbin/firmwarepasswd -mode` 
+#printf "Mode = $Mode\n" > /tmp/firmware_results.txt
+#printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\nFirmwareMode = $Mode\n" > /tmp/firmware_results.txt
+
+
+echo "Submitting Firmware Password Escrow Report"
 
 # add firmware_escrow pref to MunkiReport configuration plist
 /usr/bin/defaults write /Library/Preferences/MunkiReport ReportItems -dict-add firmware_escrow /tmp/firmware_results.txt
@@ -79,6 +105,5 @@ echo "Submitting Firmware Escrow Report"
 
 echo ""
 echo "Please confirm the firmware password is on the MunkiReport server."
-
 
 exit 0
