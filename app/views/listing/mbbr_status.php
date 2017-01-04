@@ -12,7 +12,7 @@ new mbbr_status_model;
 
     <div class="col-lg-12">
 
-          <h3><span data-i18n="listing.mbbr_status.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+          <h3>MBBR Status<span id="total-count" class='label label-primary'>…</span></h3>
 
           <table class="table table-striped table-condensed table-bordered">
             <thead>
@@ -20,9 +20,9 @@ new mbbr_status_model;
                 <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
                 <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
                 <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-                <th data-i18n="listing.mbbr_status.text" data-i18n-options='{"number":1}' data-colname='mbbr_status.Entitlement status'></th>
-                <th data-i18n="listing.mbbr_status.text" data-i18n-options='{"number":2}' data-colname='mbbr_status.Machine ID'></th>
-                <th data-i18n="listing.mbbr_status.text" data-i18n-options='{"number":3}' data-colname='mbbr_status.Installation token'></th>
+                <th data-i18n="listing.mbbr_status.text" data-i18n-options='{"number":1}' data-colname='mbbr_status.entitlement_status'></th>
+                <th data-i18n="listing.mbbr_status.text" data-i18n-options='{"number":2}' data-colname='mbbr_status.machine_id'></th>
+                <th data-i18n="listing.mbbr_status.text" data-i18n-options='{"number":3}' data-colname='mbbr_status.install_token'></th>
               </tr>
             </thead>
             <tbody>

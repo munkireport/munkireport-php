@@ -7,15 +7,15 @@ class mbbr_status_model extends Model
         $this->rs['id'] = 0;
         $this->rs['serial_number'] = $serial;
         $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-        $this->rs['Entitlement status'] = '';
-        $this->rs['Machine ID'] = '';
-        $this->rs['Installation token'] = '';
+        $this->rs['entitlement_status'] = '';
+        $this->rs['machine_id'] = '';
+        $this->rs['install_token'] = '';
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
         // Add indexes
-        $this->idx[] = array('Entitlement status');
-        $this->idx[] = array('Machine ID');
-        $this->idx[] = array('Installation token');
+        $this->idx[] = array('entitlement_status');
+        $this->idx[] = array('machine_id');
+        $this->idx[] = array('install_token');
 
         // Create table if it does not exist
         $this->create_table();
@@ -32,8 +32,14 @@ class mbbr_status_model extends Model
         $parser = new CFPropertyList();
         $parser->parse($data);
 
+        $translate = array(
+          'Entitlement Status' => 'entitlement_status',
+          'Machine ID' => 'machine_id'
+          'Installation token' => 'install_token'
+        );
+
         $plist = $parser->toArray();
-        foreach (array('Entitlement status', 'Machine ID', 'Installation token' ) as $item) {
+        foreach (array('entitlement_status', 'machine_id', 'install_token' ) as $item) {
             if (isset($plist[$item])) {
                 $this->$item = $plist[$item];
             } else {

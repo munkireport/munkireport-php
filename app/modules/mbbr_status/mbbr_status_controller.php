@@ -1,4 +1,3 @@
-
 <?php
 /**
  * mbbr_status_controller class
@@ -15,7 +14,7 @@ class mbbr_status_controller extends Module_controller
     /**
      * Default method
      *
-     * @author AvB
+     * @author cleavenworth
      **/
     public function index()
     {
