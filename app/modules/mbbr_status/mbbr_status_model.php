@@ -30,18 +30,18 @@ class mbbr_status_model extends Model
     {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
-        $parser->parse($data);
+        $parser->parse($data, CFPropertyList);
 
         $translate = array(
-          'Entitlement Status' => 'entitlement_status',
-          'Machine ID' => 'machine_id'
+          'Entitlement status' => 'entitlement_status',
+          'Machine ID' => 'machine_id',
           'Installation token' => 'install_token'
         );
 
         $plist = $parser->toArray();
-        foreach (array('entitlement_status', 'machine_id', 'install_token' ) as $item) {
-            if (isset($plist[$item])) {
-                $this->$item = $plist[$item];
+        foreach ($translate as $search => $item) {
+            if (isset($plist[$search])) {
+                $this->$item = $plist[$search];
             } else {
                 $this->$item = '';
             }

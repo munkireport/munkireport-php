@@ -124,6 +124,7 @@
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
 			"location": "Location",
+			"mbbr_status": "Malwarebytes Status",
 			"munki": "Managed Software",
 			"network": "Network Interfaces",
 			"power": "Power",
@@ -418,6 +419,13 @@
 	"manifest": {
 		"name": "Manifest Name"
 	},
+	"mbbr_status": {
+			"title": "Malwarebytes Status",
+			"report": "Malwarebytes Status Report",
+			"entitlement_status": "Entitlement Status",
+			"install_token": "Install Token",
+			"machine_id": "Machine ID"
+		},
 	"memory": {
 		"memory": "Memory",
 		"usage": "Memory Usage",
@@ -467,6 +475,7 @@
 			"hardware": "Hardware",
 			"inventory": "Inventory",
 			"location": "Location",
+			"mbbr_status": "Malwarebytes",
 			"munki": "Munki",
 			"network": "Network",
 			"power": "Power",

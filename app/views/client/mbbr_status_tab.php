@@ -1,4 +1,4 @@
-	<h2 data-i18n=mbbr_status.mbbr_status"></h2>
+	<h2 data-i18n="client.tab.mbbr_status"></h2>
 
 	<div id="mbbr_status-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
 
@@ -25,11 +25,12 @@
 	</div>
 
 <script>
+
 $(document).on('appReady', function(e, lang) {
 
 	// Get mbbr_status data
 	$.getJSON( appUrl + '/module/mbbr_status/get_data/' + serialNumber, function( data ) {
-		if( ! data.state){
+		if( ! data.entitlement_status){
 			$('#mbbr_status-msg').text(i18n.t('no_data'));
 		}
 		else{
@@ -39,9 +40,9 @@ $(document).on('appReady', function(e, lang) {
 			$('#mbbr_status-view').removeClass('hide');
 
 			// Add strings
-			$('#mbbr_status-entitlement_status').text(data.ssid);
-			$('#mbbr_status-machine_id').text(data.bssid);
-			$('#mbbr_status-install_token').text(data.state);
+			$('#mbbr_status-entitlement_status').text(data.entitlement_status);
+			$('#mbbr_status-machine_id').text(data.machine_id);
+			$('#mbbr_status-install_token').text(data.install_token);
 
 		}
 
