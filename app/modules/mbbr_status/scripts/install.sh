@@ -1,8 +1,8 @@
 #!/bin/bash
 
 MODULE_NAME="mbbr_status"
-MODULESCRIPT="mbbr_status"
-PREF_FILE="/Library/Preferences/com.malwarebytes.plist"
+MODULESCRIPT="mbbr_status.py"
+PREF_FILE="com.malwarebytes.plist"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 

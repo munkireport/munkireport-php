@@ -21,5 +21,5 @@ for i in keylist:
         mbbrdata[key] = value
 
 print 'Writing to plist...'
-plistlib.writePlist(mbbrdata, '/Library/Preferences/com.malwarebytes.plist')
+plistlib.writePlist(mbbrdata, 'com.malwarebytes.plist')
 print 'Done.'
