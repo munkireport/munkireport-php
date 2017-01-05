@@ -7,7 +7,10 @@ CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 
 # Get the scripts in the proper directories
 "${CURL[@]}" "${CTL}get_script/appusage" -o "${MUNKIPATH}preflight.d/appusage"
+
+if [[ ! -f '/Library/Application Support/crankd/ApplicationUsage.py' ]] || [[ ! -f '/Library/Application Support/crankd/ApplicationUsage.py' ]] ; then
 "${CURL[@]}" "${CTL}get_script/crankd_payload.zip" -o "/tmp/crankd_payload.zip"
+fi
 
 # Check exit status of curl
 if [ $? = 0 ]; then
@@ -43,13 +46,14 @@ if [ $? = 0 ]; then
 
 	# Check if ApplicationUsage.py is already installed, if not install
 	if [ ! -f '/Library/Application Support/crankd/ApplicationUsage.py' ]; then
+	unzip -qq -o /tmp/crankd_payload.zip -d /tmp/
 	cp -f '/tmp/payload/Library/Application Support/crankd/ApplicationUsage.py' '/Library/Application Support/crankd/ApplicationUsage.py'
 	cp -f '/tmp/payload/Library/Application Support/crankd/NSWorkspaceHandler.py' '/Library/Application Support/crankd/NSWorkspaceHandler.py'
 	cp -f /tmp/payload/Library/Preferences/com.googlecode.pymacadmin.crankd.plist /Library/Preferences/com.googlecode.pymacadmin.crankd.plist
 	fi
 
 	# Start crankd daemon - cuz restarting is no fun :P
-	/bin/launchctl load -w /Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist
+	/bin/launchctl load -w /Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist 2>/dev/null
 
 	if [ -f /tmp/crankd_payload.zip ]; then
 	# Clean up
