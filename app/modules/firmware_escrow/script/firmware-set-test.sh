@@ -68,23 +68,21 @@ printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\n" > /tmp/firmw
 # echo password for testing so we know what it is
 echo "Firmware Password is: $Password"
 
-# set the firmware password.
-# Untested
-spawn firmwarepasswd -setpasswd
-expect {
-    "Enter password:" {
-        send "$Password"\r
-        exp_continue
-    }
-    "Enter new password:" {
-        send "$Password"\r
-        exp_continue
-    }
-    "Re-enter new password:" {
-        send "$Password"\r
-        exp_continue
-    }
-}
+# set the firmware password
+/usr/bin/expect <<END 
+spawn /usr/sbin/firmwarepasswd -setpasswd 
+
+   expect "Setting Firmware Password\r\nEnter new password:" 
+        send "$Password\r"
+
+   expect "Enter new password:" 
+        send "$Password\r"
+
+   expect "Re-enter new password:" 
+        send "$Password\r"
+
+   expect eof
+END
 
 # To do
 #Mode=`/usr/sbin/firmwarepasswd -mode` 
@@ -105,5 +103,8 @@ echo "Submitting Firmware Password Escrow Report"
 
 echo ""
 echo "Please confirm the firmware password is on the MunkiReport server."
+echo ""
+echo "NOTE: Must restart before changes will take effect"
+echo ""
 
 exit 0
