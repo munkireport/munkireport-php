@@ -330,6 +330,16 @@
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
+		appusage": {
+			"appname": "App Name",
+			"appusage": "App Usage",
+			"appusagereport": "App Usage Report",
+			"count": "Count",
+			"event": "Event",
+			"lastevent": "Last Event",
+			"launch": "Launch",
+			"quit": "Quit"
+		},
 		"ard": {
 			"text": "Text __number__",
 			"title": "Apple Remote Desktop Report"
