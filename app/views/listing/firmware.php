@@ -22,6 +22,7 @@ new Firmware_escrow_model;
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="firmware.enabled_date" data-colname='firmware_escrow.enabled_date'></th>
 		        <th data-i18n="firmware.firmware_password" data-colname='firmware_escrow.firmware_password'></th>
+		        <th data-i18n="firmware.firmware_mode" data-colname='firmware_escrow.firmware_mode'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

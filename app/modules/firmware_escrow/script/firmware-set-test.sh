@@ -10,7 +10,6 @@ echo ""
 echo "Firmware password will be set"
 
 # to do:
-# record the mode: sudo /usr/sbin/firmwarepasswd -mode (see line ~90)
 # add check to make confirm password matches what was set
 # retry escrowing password if first try fails
 # let the users write their own script
@@ -64,7 +63,7 @@ Password=`cat /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | fold -w 6 | head -n 1
 EnabledDate=`date +%Y-%m-%d\ %H:%M:%S`
 
 # tmp is not a good location but works for testing
-printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\n" > /tmp/firmware_results.txt
+# printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\n" > /tmp/firmware_results.txt
 
 # echo password for testing so we know what it is, just in case
 echo "Firmware Password is: $Password"
@@ -85,11 +84,9 @@ spawn /usr/sbin/firmwarepasswd -setpasswd
    expect eof
 END
 
-# to do
-#Mode=`/usr/sbin/firmwarepasswd -mode` 
-#printf "Mode = $Mode\n" > /tmp/firmware_results.txt
-#printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\nFirmwareMode = $Mode\n" > /tmp/firmware_results.txt
-
+Mode=`/usr/sbin/firmwarepasswd -mode` 
+printf "Mode = $Mode\n" > /tmp/firmware_results.txt
+printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\nFirmwareMode = $Mode\n" > /tmp/firmware_results.txt
 
 echo "Submitting Firmware Password Escrow Report"
 

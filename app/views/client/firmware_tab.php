@@ -16,5 +16,9 @@ $report = new Reportdata_model($serial_number);
 					<td>Firmware Password</td>
 					<td><?php echo $firmware_escrow->firmware_password; ?></td>
 				</tr>
+				<tr>
+					<td>Firmware Mode</td>
+					<td><?php echo $firmware_escrow->firmware_mode; ?></td>
+				</tr>
 			</tbody>
 		</table>

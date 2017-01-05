@@ -12,6 +12,7 @@ class Firmware_escrow_model extends Model
         $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['enabled_date'] = '';
         $this->rs['firmware_password'] = '';
+        $this->rs['firmware_mode'] = '';
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
@@ -41,7 +42,8 @@ class Firmware_escrow_model extends Model
         // Translate network strings to db fields
                 $translate = array(
                     'EnabledDate = ' => 'enabled_date',
-                    'FirmwarePassword = ' => 'firmware_password');
+                    'FirmwarePassword = ' => 'firmware_password',
+                    'FirmwareMode = ' => 'firmware_mode');
 
         //clear any previous data we had
         foreach ($translate as $search => $field) {
