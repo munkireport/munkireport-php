@@ -1,10 +1,10 @@
-/* Remove tick lines in OS widget */
-#os-widget .nv-x.nv-axis line {
+/* Remove tick lines in multiBarHorizontalChart */
+g.nv-multiBarHorizontalChart .nv-x.nv-axis line {
     stroke: none;
     fill: none;
 }
 
-#os-widget .nv-bar{
+svg.clickLabels .nv-bar{
     cursor: pointer;
 }
 
@@ -89,7 +89,6 @@ h2 {
   margin-bottom: 20px;
   font-size: 21px;
   line-height: 40px;
-  color: #333;
   border: 0;
   border-bottom: 1px solid #e5e5e5
 }
@@ -153,8 +152,9 @@ table.table thead th{
 
 /* Client detail header */
 .form-control[readonly] {
-  background-color:inherit;
-  font-size: 1.2em;
+    background-color:inherit;
+    color:inherit;
+    font-size: 1.2em;
 }
 
 /* Donut chart title */

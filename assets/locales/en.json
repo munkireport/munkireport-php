@@ -552,6 +552,7 @@
 		"pdo": "PDO Extension",
 		"pdodrivers": "PDO Database drivers",
 		"php": "PHP",
+		"soap": "SOAP Extension",
 		"version": "Version"
 	},
 	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
@@ -785,6 +786,10 @@
 			"b2g_ok": "Latest backup within 2 weeks",
 			"b2g_warning": "Latest backup within 4 weeks",
 			"b2g_danger": "Latest backup older then 4 weeks"
+		},
+		"unknown": {
+			"alert": "This widget cannot be found",
+			"title": "Unknown widget"
 		},
 		"uptime": {
 			"title": "Uptime"

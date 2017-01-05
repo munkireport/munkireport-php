@@ -8,7 +8,7 @@
 
 		<?php foreach($row as $item):?>
 
-		<?php $this->view("widgets/${item}_widget"); ?>
+		<?php $widget->view($this, $item); ?>
 
 		<?php endforeach?>
 

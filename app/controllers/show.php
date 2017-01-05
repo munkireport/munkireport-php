@@ -15,7 +15,12 @@ class show extends Controller
 
     public function dashboard($which = '')
     {
-        $data = array('session' => $_SESSION);
+        include_once(APP_PATH . '/lib/munkireport/Widgets.php');
+        
+        $data = array(
+            'session' => $_SESSION,
+            'widget' => new munkireport\Widgets(),
+        );
 
         if ($which) {
             $view = 'dashboard/'.$which;
@@ -53,6 +58,12 @@ class show extends Controller
 
     public function reports($which = 'default')
     {
+        include_once(APP_PATH . '/lib/munkireport/Widgets.php');
+        
+        $data = array(
+            'widget' => new munkireport\Widgets(),
+        );
+        
         if ($which) {
             $data['page'] = 'clients';
             $view = 'report/'.$which;

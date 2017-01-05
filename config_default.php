@@ -685,6 +685,19 @@
 	*/
 	$conf['timezone'] = @date_default_timezone_get();
 
+
+	/*
+	|===============================================
+	| Custom folder
+	|===============================================
+	|
+	| Absolute path to folder with custom items.
+	| This folder will be searched for widgets, both in views/widgets
+	| and in modules/{modulename}/views
+	|
+	*/
+	//$conf['custom_folder'] = APP_ROOT . '/custom/';
+
 	/*
 	|===============================================
 	| Custom css and js
