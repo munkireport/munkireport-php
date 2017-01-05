@@ -1,4 +1,4 @@
-<div class="col-md-6">
+<div class="col-md-4">
 		<div class="panel panel-default"  id="appusage-widget">
             <div class="panel-heading" data-container="body" title="Most frequently used apps">
                 <h3 class="panel-title"><i class="fa fa-rocket"></i> <span data-i18n="listing.appusage.appusage"></span></h3>
