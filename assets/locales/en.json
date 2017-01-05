@@ -463,6 +463,7 @@
 	        "ru": "Русский"
 		},
 		"listings": {
+			"appusage": "App Usage",
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
 			"backup2go": "Archiware Backup2Go",
