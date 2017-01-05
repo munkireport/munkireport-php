@@ -2,7 +2,8 @@
 
 namespace munkireport\email;
 
-class Email {
+class Email
+{
     
     private $config;
 
@@ -14,7 +15,7 @@ class Email {
     /**
      * Send email
      *
-     * Send email 
+     * Send email
      *
      * @param array $email Email properties
      **/
@@ -22,8 +23,8 @@ class Email {
     {
         $out = array('error' => 0, 'error_msg' => '');
         
-        include_once (APP_PATH . '/lib/phpmailer/class.phpmailer.php');
-        include_once (APP_PATH . '/lib/phpmailer/class.smtp.php');
+        include_once(APP_PATH . '/lib/phpmailer/class.phpmailer.php');
+        include_once(APP_PATH . '/lib/phpmailer/class.smtp.php');
         $mail = new \PHPMailer;
         
         // Get from
@@ -40,8 +41,7 @@ class Email {
         $mail->setFrom($from_addr, $from_name);
         
         // Add recipient(s)
-        foreach($email['to'] as $to_addr => $to_name)
-        {
+        foreach ($email['to'] as $to_addr => $to_name) {
             $mail->addAddress($to_addr, $to_name);
         }
 
@@ -49,7 +49,7 @@ class Email {
         $mail->Subject = $email['subject'];
         $mail->Body    = $email['content'];
 
-        if( ! $mail->send()) {
+        if (! $mail->send()) {
             $out['error'] = 1;
             $out['error_msg'] = $mail->ErrorInfo;
         }

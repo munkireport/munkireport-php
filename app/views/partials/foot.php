@@ -56,15 +56,18 @@
   <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/datatables.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/moment.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/flotr2.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/d3/d3.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/nv.d3.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.hotkeys/jquery.hotkeys.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.settings.js"></script>
+
   <script>
 
 
   </script>
+  
+
   <?php if(conf('custom_js')): ?> 
   <script src="<?php echo conf('custom_js'); ?>"></script>
   <?php endif; ?>

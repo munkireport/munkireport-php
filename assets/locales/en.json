@@ -74,9 +74,15 @@
 	},
 	"bluetooth": {
 		"all_ok": "No bluetooth devices with low battery",
+		"apple wireless keyboard": "Apple Wireless Keyboard",
+		"apple wireless trackpad": "Apple Wireless Trackpad",
+		"apple magic mouse": "Apple Magic Mouse",
 		"bluetooth": "Bluetooth",
 		"bluetooth_battery_widget": "Bluetooth battery status",
 		"keyboard": "Keyboard Status",
+		"magic keyboard": "Magic Keyboard",
+		"magic trackpad 2": "Magic Trackpad 2",
+		"magic mouse 2": "Magic Mouse 2",
 		"mouse": "Mouse Status",
 		"panel_title": "Bluetooth devices with less than 15% battery life",
 		"status": "Bluetooth Status",
@@ -164,9 +170,16 @@
 			"title": "CrashPlan"
 		}
 	},
+	"backup2go": {
+		"widget": {
+			"title": "Backup2go Status"
+		}
+	},
 	"danger": "Error",
 	"database": "Database",
 	"date": {
+		"day": "Day",
+		"day_plural": "Days",
 		"year": "year"
 	},
 	"db": {
@@ -243,7 +256,7 @@
 	"event": "Event",
 	"event_plural": "Events",
 	"events": {
-		"widget_title": "Events generated in the last hour"
+		"widget_title": "Recently generated events"
 	},
 	"external": {
 		"mwa_link": "Open in Munki Web Admin"
@@ -263,18 +276,18 @@
 		"listing": {
 			"email": "Email",
 			"status": "Status",
-			"title": "FindMyMac report",
+			"title": "Find My Mac report",
 			"ownerdisplayname": "Owner Display Name",
 			"personid": "iCloud PersonID",
 			"hostname": "iCloud Hostname"
 		},
 		"widget": {
-			"title": "FindMyMac Status",
+			"title": "Find My Mac Status",
 			"enabled": "Enabled",
 			"disabled": "Disabled"
 		},
 		"client": {
-			"title": "FindMyMac"
+			"title": "Find My Mac"
 		}
 	},
 	"free_disk_space": "Free Disk Space",
@@ -313,6 +326,7 @@
 	"inventory": {
 		"report": "Inventory Report"
 	},
+	"keyboard": "Keyboard",
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
@@ -320,12 +334,18 @@
 			"text": "Text __number__",
 			"title": "Apple Remote Desktop Report"
 		},
+		"backup2go": {
+			"title": "Backup2go",
+			"date": "Last successful backup",
+			"widget": {
+				"title": "Notification rules"
+			}
+		},
 		"bluetooth": {
-			"keyboard_battery": "Keyboard",
-			"mouse_battery": "Mouse",
-			"status": "Status",
-			"title": "Bluetooth report",
-			"trackpad_battery": "Trackpad"
+			"battery_percent": "Battery Percent",
+			"bluetooth_power": "Bluetooth Power",
+			"device_type": "Device Type",
+			"title": "Bluetooth report"
 		},
 		"certificate": {
 			"commonname": "Common Name",
@@ -359,12 +379,12 @@
 		"username": "Username",
         "wifi": {
             "apmode": "AP Mode",
-            "authtype": "802.11X Auth Type", 
-            "channel": "Channel", 
-            "lasttx": "Last Tx Rate (Mbps)", 
-            "linkauthtype": "Link Auth Type", 
-            "maxtx": "Max Tx Rate (Mbps)", 
-            "noise": "Noise", 
+            "authtype": "802.11X Auth Type",
+            "channel": "Channel",
+            "lasttx": "Last Tx Rate (Mbps)",
+            "linkauthtype": "Link Auth Type",
+            "maxtx": "Max Tx Rate (Mbps)",
+            "noise": "Noise",
             "state": "WiFi State"
         }
 	},
@@ -385,6 +405,7 @@
 	},
 	"loading": "Loading data from server",
 	"machine": {
+		"hardware_type_title": "Hardware type breakdown",
 		"hardware_widget_title": "Hardware model breakdown"
 	},
 	"managedinstalls": {
@@ -403,6 +424,7 @@
 		"pressure": "Memory Pressure"
 	},
 	"model": "Model",
+	"mouse": "Mouse",
 	"munki": {
 		"error": "Munki error: __error__",
 		"error_plural": "__count__ Munki errors",
@@ -433,13 +455,14 @@
 		"listings": {
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
+			"backup2go": "Archiware Backup2Go",
 			"clients": "Clients",
 			"certificate": "Certificates",
 			"deploystudio": "DeployStudio",
 			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
-			"findmymac": "FindMyMac",
+			"findmymac": "Find My Mac",
 			"gsx": "GSX",
 			"hardware": "Hardware",
 			"inventory": "Inventory",
@@ -449,6 +472,7 @@
 			"power": "Power",
 			"printers": "Printers",
 			"profile": "Profiles",
+			"sccm_status": "SCCM Status",
 			"security": "Security",
 			"timemachine": "Time Machine",
 			"warranty": "Warranty",
@@ -465,12 +489,13 @@
 			"backup": "Backup Report",
 			"clients": "Client Report",
 			"configuration": "Configuration Report",
-			"findmymac": "FindMyMac Report",
+			"findmymac": "Find My Mac Report",
 			"hardware": "Hardware Report",
 			"location": "Location Report",
 			"munki": "Munki Report",
 			"network": "Network Report",
-			"power": "Power Report"
+			"power": "Power Report",
+			"backup2go" : "Backup2go"
 		},
 		"user": {
 			"logout": "Sign Off"
@@ -527,6 +552,7 @@
 		"pdo": "PDO Extension",
 		"pdodrivers": "PDO Database drivers",
 		"php": "PHP",
+		"soap": "SOAP Extension",
 		"version": "Version"
 	},
 	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
@@ -546,7 +572,18 @@
 		"printer_status": "Printer Status",
 		"tab_title": "Installed Printers",
 		"url": "URL"
-	},	
+	},
+	"sccm_status": {
+	  "title": "SCCM Agent Status",
+	  "titleheader": "SCCM Agent Information",
+	  "agent_status": "SCCM Agent Status",
+	  "mgmt_point": "Management Point",
+	  "enrollment_name": "Enrollment User Name",
+	  "enrollment_server": "Enrollment Server",
+	  "last_checkin": "Last SCCM Check In",
+	  "cert_exp": "SCCM Client Certificate Expiration",
+	  "enrollment_status": "Enrollment Status"
+	},
 	"security": {
 		"security": "Security",
 		"gatekeeper": "Gatekeeper Status",
@@ -620,6 +657,7 @@
 		"timemachine": "Timemachine"
 	},
 	"total_clients": "Total Clients",
+	"trackpad": "Trackpad",
 	"type": "Type",
 	"unavailable": "Unavailable",
 	"unauthorized": "You are not authorized",
@@ -642,6 +680,7 @@
 		"est_purchase_date": "Est. Purchase Date",
 		"expired": "Expired on __date__",
 		"expires_in": "Expires in __date__",
+		"installed_memory_title": "Installed Memory",
 		"no_alerts": "No Warranty Alerts",
 		"recheck": "Recheck Warranty Status",
 		"supported_no_applecare": "Supported until __date__. No Applecare",
@@ -670,33 +709,96 @@
 			"title": "Certificates"
 		},
 		"duplicate_computernames": {
-			"notfound": "No duplicates found"
+			"notfound": "No duplicates found",
+			"title": "Duplicate Computer Names"
+		},
+		"manifest": {
+			"title": "Manifests"
+		},
+		"memory": {
+			"title": "Memory breakdown"
+		},
+		"modified_computernames": {
+			"title": "Not matching AD Names",
+			"tooltip": "Computers where the computer name doesn't match the AD name"
 		},
 		"munki": {
-			"no_updates_pending": "No Updates Pending"
+			"no_updates_pending": "No Updates Pending",
+			"title": "Munki"
 		},
 		"munkiinfo": {
 			"munkiprotocol": {
 				"localrepo": "local repo",
 				"http": "http",
-				"https": "https"
+				"https": "https",
+				"title": "Munki Protocol",
+				"tooltip": "Munki Protocol among all clients"
 			}
 		},
+		"munki_versions": {
+			"title": "Munki versions",
+			"tooltip": "Munki versions among all clients"
+		},
+		"network_location": {
+			"title": "Network locations"
+		},
+		"network_vlan": {
+			"title": "Network vlans"
+		},
+		"new_clients": {
+			"no_new_clients": "No new clients",
+			"title": "New clients",
+			"tooltip": "Clients registered this week"
+		},
+		"os": {
+			"title": "OS breakdown"
+		},
+		"pending": {
+			"title": "Clients with pending installs"
+		},
+		"pending_apple": {
+			"title": "Pending Apple Updates",
+			"tooltip": "Pending Apple Updates for this week"
+		},
+		"pending_munki": {
+			"title": "Pending Installs",
+			"tooltip": "Pending installs for this week"
+		},
 		"power": {
+			"health": {
+				"title": "Battery Health",
+				"tooltip": "Battery health status listing"
+			},
 			"missing": "Missing",
 			"normal": "Normal",
 			"now": "Replace Now",
 			"service": "Service Now",
 			"soon": "Service Soon",
-			"nobattery": "No Battery"
+			"nobattery": "No Battery",
+			"title": "Battery Condition",
+			"tooltip": "Battery condition listing"
 		},
 		"timemachine": {
 			"lastweek": "Latest backup more than a day ago",
 			"title": "Timemachine Status",
 			"today": "Backed up today",
-			"week_plus": "Latest backup more than a week ago"
+			"week_plus": "Latest backup more than a week ago",
+			"b2g_ok": "Latest backup within 2 weeks",
+			"b2g_warning": "Latest backup within 4 weeks",
+			"b2g_danger": "Latest backup older then 4 weeks"
+		},
+		"unknown": {
+			"alert": "This widget cannot be found",
+			"title": "Unknown widget"
+		},
+		"uptime": {
+			"title": "Uptime"
+		},
+		"warranty": {
+			"title": "Warranty status"
 		},
         "warrantysupport":{
+			"title": "Counts Supported, Vintage, Obsolete, and Unknown support status",
             "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
             "warrentysupportstatus": "Warranty Support Status"
         }

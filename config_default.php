@@ -295,7 +295,7 @@
 	| its data may not show in MunkiReport.
 	*/
 	$conf['deploystudio_enable'] = FALSE;
-	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443/';
+	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443'; // no trailing slash
 	$conf['deploystudio_username'] = 'deploystudio_user';
 	$conf['deploystudio_password'] = 'deploystudio_password';
 	
@@ -684,6 +684,19 @@
 	|
 	*/
 	$conf['timezone'] = @date_default_timezone_get();
+
+
+	/*
+	|===============================================
+	| Custom folder
+	|===============================================
+	|
+	| Absolute path to folder with custom items.
+	| This folder will be searched for widgets, both in views/widgets
+	| and in modules/{modulename}/views
+	|
+	*/
+	//$conf['custom_folder'] = APP_ROOT . '/custom/';
 
 	/*
 	|===============================================

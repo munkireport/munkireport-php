@@ -39,6 +39,7 @@ Data can be viewed under the GSX tab on the client details page or using the GSX
 Remarks
 ---
 
+* Requires the SOAP extension installed in php http://php.net/manual/en/book.soap.php
 * The client triggers the server to do a lookup once a day
 * Obsolete Macs are not available from Apple and are instead processed using the warranty module's backend
 
@@ -46,7 +47,7 @@ Configuration
 ---
 
 Before you use the GSX module, you need to configure the config.php file with your GSX account information.
-See: https://github.com/munkireport/munkireport-php/blob/master/config_default.php#L244-L266
+See: https://github.com/munkireport/munkireport-php/blob/master/config_default.php#L255-L280
 
 Making the certbundle.pem
 ---

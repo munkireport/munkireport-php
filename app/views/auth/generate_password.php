@@ -9,9 +9,9 @@
 							<legend data-i18n="auth.generate_hash">
 								Generate password hash
 							</legend>
-							<?foreach($GLOBALS['alerts'] AS $type => $list):?>
+							<?php foreach($GLOBALS['alerts'] AS $type => $list):?>
 
-						    	<?foreach ($list AS $msg):?>
+						    	<?php foreach ($list AS $msg):?>
 
 								<p class="text-<?php echo $type; ?>"><?php echo $msg; ?></p>
 

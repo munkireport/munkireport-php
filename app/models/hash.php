@@ -1,10 +1,11 @@
 <?php
 
-class Hash extends Model {
+class Hash extends Model
+{
     
-    function __construct($serial='', $name='')
+    public function __construct($serial = '', $name = '')
     {
-		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+        parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial'] = '';
         $this->rs['name'] = '';
@@ -17,12 +18,11 @@ class Hash extends Model {
         // Table version. Increment when creating a db migration
         $this->schema_version = 1;
 
-		// Create table if it does not exist
+        // Create table if it does not exist
         $this->create_table();
         
-        if($serial and $name)
-        {
-            $this->retrieve_one('serial=? AND name=?', array($serial, $name));
+        if ($serial and $name) {
+            $this->retrieveOne('serial=? AND name=?', array($serial, $name));
             $this->serial = $serial;
             $this->name = $name;
         }
@@ -30,25 +30,22 @@ class Hash extends Model {
         return $this;
     }
     
-	// ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
-	/**
-	 * Retrieve all entries for serial
-	 *
-	 * @param string serial
-	 * @return array
-	 * @author abn290
-	 **/
-    function all($serial)
+    /**
+     * Retrieve all entries for serial
+     *
+     * @param string serial
+     * @return array
+     * @author abn290
+     **/
+    public function all($serial)
     {
-		$dbh=$this->getdbh();
+        $dbh=$this->getdbh();
         $out = array();
-        foreach($this->retrieve_many( 'serial=?', $serial ) as $obj)
-        {
+        foreach ($this->retrieveMany('serial=?', $serial) as $obj) {
             $out[$obj->name] = $obj->hash;
         }
         return $out;
-        
     }
-
 }

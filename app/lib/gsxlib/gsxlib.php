@@ -145,12 +145,12 @@ class GsxLib
 
     }
 
-    function getClient()
+    public function getClient()
     {
         return $this->client;
     }
 
-    function setClient($client)
+    public function setClient($client)
     {
         $this->client = $client;
     }
@@ -634,7 +634,7 @@ class GsxLib
 
 class GsxException extends Exception
 {
-    function __construct($message, $request = NULL)
+    public function __construct($message, $request = NULL)
     {
         $this->request = $request;
         $this->message = $message;

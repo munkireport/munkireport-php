@@ -6,12 +6,13 @@
 
 <div class="container">
 
-  <div class="row">
+	<div class="row">
 
-    <?php $this->view('widgets/timemachine_widget'); ?>
-	<?php $this->view('crashplan_widget', '', MODULE_PATH . 'crashplan/views/'); ?>
+		<?php $widget->view($this, 'timemachine'); ?>
+		<?php $widget->view($this, 'crashplan'); ?>
+		<?php $widget->view($this, 'backup2go'); ?>
 
-  </div>
+	</div>
 
 </div>  <!-- /container -->
 

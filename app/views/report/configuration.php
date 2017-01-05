@@ -8,27 +8,27 @@
 
   <div class="row">
 
-	<?php $this->view('widgets/duplicated_computernames_widget'); ?>
-
-	<?php $this->view('widgets/modified_computernames_widget'); ?>
-
-	<?php $this->view('widgets/certificate_widget'); ?>
+	<?php $widget->view($this, 'duplicated_computernames'); ?>
+	
+	<?php $widget->view($this, 'modified_computernames'); ?>
+	
+	<?php $widget->view($this, 'tag'); ?>
 
   </div> <!-- /row -->
 
   <div class="row">
 
-	  <?php $this->view('tag_widget', '', MODULE_PATH . 'tag/views/'); ?>
+	  <?php $widget->view($this, 'certificate'); ?>
 
-	  <?php $this->view('widgets/bound_to_ds_widget'); ?>
+	  <?php $widget->view($this, 'bound_to_ds'); ?>
+	  
+	  <?php $widget->view($this, 'findmymac'); ?>
 
   </div> <!-- /row -->
   
   <div class="row">
-
-	<?php $this->view('widgets/bound_to_ds_widget'); ?>
 	
-	<?php $this->view('widgets/printer_widget'); ?>
+	<?php $widget->view($this, 'printer'); ?>
 
   </div> <!-- /row -->
 

@@ -53,7 +53,7 @@
 					<?php endif?>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button> 
+								<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button>
 								</div>
 							</div>
 			            </fieldset>
@@ -65,7 +65,8 @@
 	</div><!-- /container -->
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
-	
+	<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.js"></script>
+
 	<?php if (conf('recaptchaloginpublickey')):?>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<?php endif?>

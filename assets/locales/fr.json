@@ -43,6 +43,10 @@
   "auth": {
     "addtoconfig": "Ajoutez cette ligne dans config.php:",
     "back_to_site": "Retour au site",
+"captcha": {
+			"empty": "Merci de remplir le captcha",
+			"invalid": "Réponse invalide"
+		},
     "empty_not_allowed": "Les valeurs non définies ne sont pas permises",
     "error_contacting_AD": "Une erreur est survenue en contactant l'AD",
     "gen_other": "Créer une autre",
@@ -70,10 +74,16 @@
     "life_remaining": "Durée restante de la batterie __percent__%"
   },
   "bluetooth": {
-    "all_ok": "Aucun périphérique Bluetooth avec batterie faible",
-    "bluetooth": "Bluetooth",
-    "bluetooth_battery_widget": "État de la batterie Bluetooth",
-    "keyboard": "État du clavier",
+	"all_ok": "Aucun périphérique Bluetooth avec batterie faible",
+	"apple wireless keyboard": "Clavier Apple sans fil",
+	"apple wireless trackpad": "Trackpad Apple sans fil",
+	"apple magic mouse": "Apple Magic Mouse",
+    	"bluetooth": "Bluetooth",
+	 "bluetooth_battery_widget": "État de la batterie Bluetooth",
+    	"keyboard": "État du clavier",
+	"magic keyboard": "Magic Keyboard",
+	"magic trackpad 2": "Magic Trackpad 2",
+	"magic mouse 2": "Magic Mouse 2",
     "mouse": "État de la souris",
     "panel_title": "Périphériques Bluetooth avec moins de 15% batterie",
     "status": "État Bluetooth",
@@ -161,6 +171,11 @@
       "title": "CrashPlan"
     }
   },
+	"backup2go": {
+		"widget": {
+			"title": "Etat Backup2go"
+		}
+	},
   "danger": "Erreur",
 	"database": "Base de données",
   "date": {
@@ -245,6 +260,7 @@
 "external": {
 		"mwa_link": "Ouvrir dans Munki Web Admin"
 	},
+  "failed": "Echoué",
   "failing": "Défaillant !",
   "filevault": {
     "users": "Utilisateurs avec FileVault actif",
@@ -259,7 +275,7 @@
 		"listing": {
 			"email": "Email",
 			"status": "Etat",
-			"title": "Rapport FindMyMac",
+			"title": "Rapport Find My Mac",
 			"ownerdisplayname": "Nom du propriétaire",
 			"personid": "ID ICloud",
 			"hostname": "Nom d'hôte iCloud"
@@ -309,6 +325,7 @@
 "inventory": {
 		"report": "Inventaire"
 	},
+"keyboard": "Clavier",
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
   "listing": {
@@ -316,12 +333,18 @@
       "text": "Texte __number__",
       "title": "Rapport Apple Remote Desktop"
     },
+		"backup2go": {
+			"title": "Backup2go",
+			"date": "Dernière sauvegarde réussie",
+			"widget": {
+				"title": "Règles de notifications"
+			}
+		},
     "bluetooth": {
-      "keyboard_battery": "Clavier",
-      "mouse_battery": "Souris",
-      "status": "Etat",
-      "title": "Rapport Bluetooth",
-      "trackpad_battery": "Trackpad"
+"battery_percent": "Pourcentage batterie",
+	"bluetooth_power": "Puissance Bluetooth",
+	"device_type": "Type périphérique",
+      "title": "Rapport Bluetooth"
     },
     "certificate": {
       "commonname": "Nom commun",
@@ -399,6 +422,7 @@
     "pressure": "Pression sur la mémoire"
   },
   "model": "Modèle",
+  "mouse": " Souris",
   "munki": {
     "error": "Erreur de Munki : __error__",
     "error_plural": "__count__ Erreurs de Munki",
@@ -429,13 +453,14 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "bluetooth": "Bluetooth",
+      "backup2go": "Archiware Backup2Go",
       "clients": "Clients",
       "certificate": "Certificats",
-"deploystudio": "DeployStudio",
+      "deploystudio": "DeployStudio",
       "directoryservice": "Service d'annuaire",
       "disk": "Disque",
       "displays": "Moniteurs",
-      "findmymac": "FindMyMac",
+      "findmymac": "Find My Mac",
       "gsx": "GSX",
       "hardware": "Matériel",
       "inventory": "Inventaire",
@@ -445,6 +470,7 @@
       "power": "Alimentation",
       "printers": "Imprimantes",
       "profile": "Profils",
+      "sccm_status": "Etat SCCM",
       "security": "Sécurité",
       "timemachine": "Time Machine",
       "warranty": "Garantie",
@@ -466,7 +492,8 @@
       "location": "Localisation",
       "munki": "Munki",
       "network": "Réseau",
-      "power": "Alimentation"
+      "power": "Alimentation",
+      "backup2go" : "Backup2go"
     },
     "user": {
       "logout": "Se déconnecter"
@@ -527,6 +554,7 @@
 		},
   "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
   "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
+"ratio": "Ratio",
   "reg_date": "Date d'enregistrement",
   "remote_control": "Contrôle à distance",
   "report": {
@@ -542,6 +570,17 @@
     "tab_title": "Imprimantes installées",
     "url": "URL"
   },
+	"sccm_status": {
+	  "title": "Etat agent SCCM",
+	  "titleheader": "Information agent SCCM",
+	  "agent_status": "Etat agent SCCM",
+	  "mgmt_point": "Point de gestion",
+	  "enrollment_name": "Nom d'inscription de l'utilisateur",
+	  "enrollment_server": "Inscription serveur",
+	  "last_checkin": "Dernier test SCCM",
+	  "cert_exp": "Expiration du certificat client SCCM",
+	  "enrollment_status": "Etat de l'inscription"
+	},
   "security": {
     "security": "Sécurité",
     "gatekeeper": "Etat Gatekeeper",
@@ -615,6 +654,7 @@
     "timemachine": "Time Machine"
   },
   "total_clients": "Nombre Clients",
+"trackpad": "Trackpad",
   "type": "Type",
   "unavailable": "Indisponible",
   "unauthorized": "Vous n'êtes pas autorisé",
@@ -689,7 +729,10 @@
       "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
       "title": "État Time Machine",
       "today": "Sauvegardé aujourd'hui",
-      "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
+      "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine",
+      "b2g_ok": "Dernière sauvegarde de 2 semaines",
+	  "b2g_warning": "Dernière sauvegarde de 4 semaines",
+	  "b2g_danger": "Dernière sauvegarde de plus de 4 semaines"
     },
     "warrantysupport": {
       "warrantyinfo": "Comptes pris en charge, Vintage, Obsolètes et Etat du support inconnu",
@@ -716,3 +759,4 @@
  },
 	"yes": "Oui"
 }
+

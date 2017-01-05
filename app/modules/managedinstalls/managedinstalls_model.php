@@ -1,11 +1,12 @@
 <?php
-class managedinstalls_model extends Model {
+class managedinstalls_model extends Model
+{
         
-	function __construct($serial_number='')
-	{
-		parent::__construct('id', 'managedinstalls'); //primary key, tablename
-		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial_number;
+    public function __construct($serial_number = '')
+    {
+        parent::__construct('id', 'managedinstalls'); //primary key, tablename
+        $this->rs['id'] = '';
+        $this->rs['serial_number'] = $serial_number;
         $this->rs['name'] = '';
         $this->rs['display_name'] = '';
         $this->rs['version'] = '';
@@ -23,37 +24,33 @@ class managedinstalls_model extends Model {
         $this->idx[] = array('status');
         $this->idx[] = array('type');
 
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-		
-		// Create table if it does not exist
-		$this->create_table();
-		
-        if ($serial_number)
-		{
-		    $this->retrieve_record($serial_number);
-            if ( ! $this->rs['serial_number'])
-            {
+        // Schema version, increment when creating a db migration
+        $this->schema_version = 0;
+        
+        // Create table if it does not exist
+        $this->create_table();
+        
+        if ($serial_number) {
+            $this->retrieve_record($serial_number);
+            if (! $this->rs['serial_number']) {
                 $this->serial_number = $serial_number;
             }
-		}
-			
-	}
+        }
+    }
     
     /**
      * Get statistics
      *
-     * 
+     *
      *
      * @param integer $hours hours
      * @return {11:return type}
      */
     public function get_stats($hours = 24)
     {
-        if($hours > 0){
+        if ($hours > 0) {
             $timestamp = time() - 60 * 60 * $hours;
-        }
-        else{
+        } else {
             $timestamp = 0;
         }
         
@@ -94,23 +91,23 @@ class managedinstalls_model extends Model {
         return $this->query($sql, array($type));
     }
 
-	
+    
     // ------------------------------------------------------------------------
     
     /**
-     * Get package statistics   
+     * Get package statistics
      *
      * Get statistics about a packat
      *
      * @param string name Package name or nothing for all packages
      * @return {11:return type}
      */
-    public function get_pkg_stats($pkg='')
+    public function get_pkg_stats($pkg = '')
     {
         $where = '';
         $bindings = array();
         
-        if($pkg){
+        if ($pkg) {
             $where = 'AND m.name = ?';
             $bindings[] = $pkg;
         }
@@ -124,7 +121,6 @@ class managedinstalls_model extends Model {
             GROUP BY m.status, m.name, m.display_name, m.version
             ORDER BY m.version DESC";
         return $this->query($sql, $bindings);
-            
     }
     // ------------------------------------------------------------------------
     
@@ -144,7 +140,7 @@ class managedinstalls_model extends Model {
      *
      * @param int $hours Amount of hours to look back in history
      **/
-    public function get_clients($status, $hours=24)
+    public function get_clients($status, $hours = 24)
     {
         $timestamp = time() - 60 * 60 * $hours;
         $out = array();
@@ -165,21 +161,20 @@ class managedinstalls_model extends Model {
 
     
     // ------------------------------------------------------------------------
-	
-	/**
-	 * Process data sent by postflight
-	 *
-	 * @param string data property list
-	 * 
-	 **/
-	function process($data)
-	{		
+    
+    /**
+     * Process data sent by postflight
+     *
+     * @param string data property list
+     *
+     **/
+    public function process($data)
+    {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();
-        if( ! $mylist)
-        {
+        if (! $mylist) {
             throw new Exception("No Data in report", 1);
         }
                 
@@ -198,7 +193,7 @@ class managedinstalls_model extends Model {
     {
             
         // Remove previous data
-        $this->delete_where('serial_number=?', $this->serial_number);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // List with fillable entries
         $fillable = array(
@@ -214,8 +209,7 @@ class managedinstalls_model extends Model {
         $new_installs = array();
         
         # Loop through list
-        foreach($mylist as $name => $props){
-            
+        foreach ($mylist as $name => $props) {
             // Get an instance of the fillable array
             $temp = $fillable;
             
@@ -224,22 +218,21 @@ class managedinstalls_model extends Model {
             
             // Copy values and correct type
             foreach ($temp as $key => $value) {
-                if(array_key_exists($key, $props)){
+                if (array_key_exists($key, $props)) {
                     $temp[$key] = $props[$key];
                     settype($temp[$key], gettype($value));
                 }
             }
             
             // Set version
-            if(isset($props['installed_version'])){
+            if (isset($props['installed_version'])) {
                 $temp['version'] = $props['installed_version'];
-            }
-            elseif(isset($props['version_to_install'])){
+            } elseif (isset($props['version_to_install'])) {
                 $temp['version'] = $props['version_to_install'];
             }
             
             // Set installed size
-            if(isset($props['installed_size'])){
+            if (isset($props['installed_size'])) {
                 $temp['size'] = $props['installed_size'];
             }
                         
@@ -247,18 +240,16 @@ class managedinstalls_model extends Model {
             $this->merge($temp)->save();
             
             // Store new installs
-            if($this->status == 'install_succeeded'){
+            if ($this->status == 'install_succeeded') {
                 $new_installs[] = $temp;
             }
-
         }
         
         // Store apropriate event:
-        if($new_installs)
-        {
+        if ($new_installs) {
             $count = count($new_installs);
             $msg = array('count' => $count);
-            if($count == 1){
+            if ($count == 1) {
                 $pkg = array_pop($new_installs);
                 $msg['pkg'] = $pkg['display_name'] . ' ' . $pkg['version'];
             }
@@ -268,7 +259,5 @@ class managedinstalls_model extends Model {
                 json_encode($msg)
             );
         }
-
-
-	}
+    }
 }

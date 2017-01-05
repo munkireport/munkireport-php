@@ -76,7 +76,7 @@ new Security_model;
 
 	    oTable = $('.table').dataTable( {
             ajax: {
-                url: "<?=url('datatables/data')?>",
+                url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     // Look for a bigger/smaller/equal statement
