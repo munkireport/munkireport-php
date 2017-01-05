@@ -6,8 +6,11 @@ MODULE_CACHE_FILE="appusage.txt"
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 
 # Get the scripts in the proper directories
-"${CURL[@]}" "${CTL}get_script/${MODULESCRIPT}" -o "${MUNKIPATH}preflight.d/appusage"
-"${CURL[@]}" "${CTL}get_script/${MODULESCRIPT}" -o "/tmp/crankd_payload.zip"
+"${CURL[@]}" "${CTL}get_script/appusage" -o "${MUNKIPATH}preflight.d/appusage"
+
+if [ ! -f '/Library/Application Support/crankd/ApplicationUsage.py' ]; then
+"${CURL[@]}" "${CTL}get_script/crankd_payload.zip" -o "/tmp/crankd_payload.zip"
+fi
 
 # Check exit status of curl
 if [ $? = 0 ]; then
@@ -15,8 +18,10 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/appusage"
 	touch "${CACHEPATH}${MODULE_CACHE_FILE}"
 
+	# Check if crankd is already installed
+	if [ -f /tmp/crankd_payload.zip ]; then
 	# Unzip crankd and install
-	unzip /tmp/crankd_payload.zip -d /tmp/
+	unzip -qq -o /tmp/crankd_payload.zip -d /tmp/
 
 	# Create directories 
 	mkdir -p '/Library/Application Support/crankd/PyMacAdmin/crankd/handlers/'
@@ -47,6 +52,7 @@ if [ $? = 0 ]; then
 	# Clean up
 	rm -rf /tmp/payload/
 	rm -f /tmp/crankd_payload.zip
+	fi
 
 	# Set preference to include this file in the preflight check
 	setreportpref $MODULE_NAME "${CACHEPATH}${MODULE_CACHE_FILE}"

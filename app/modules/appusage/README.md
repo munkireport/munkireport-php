@@ -1,5 +1,5 @@
 App Usage module
-Idea and request by @gmarnin
+Idea and collaboration by @gmarnin
 
 ===============
 
@@ -17,3 +17,5 @@ The results are stored in the table:
 * last_time_epoch - UNIX time of app event
 * last_time - Human readable last time of app event
 * number_time - How many times the app was launched or quitted
+
+Uses crankd (https://github.com/MacSysadmin/pymacadmin) and ApplicationUsage.py (https://github.com/google/macops/tree/master/crankd) for application usage gathering. Will automatically install if not already installed. 
