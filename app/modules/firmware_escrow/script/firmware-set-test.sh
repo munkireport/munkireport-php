@@ -5,13 +5,14 @@
 # @gmarnin 1-3-2016
 
 echo ""
-echo "Untested test script to get sample random password and date into MR. Firmware password will be set"
+echo "***** Sample Firmware Script | Escrows Firmware Password to MunkiReport *****"
 echo ""
-# echo "***** Sample Firmware Script | Escrows Firmware Password to MunkiReport *****"
+echo "Firmware password will be set"
 
 # to do:
 # record the mode: sudo /usr/sbin/firmwarepasswd -mode (see line ~90)
 # add check to make confirm password matches what was set
+# retry escrowing password if first try fails
 # let the users write their own script
 
 # handful of sanity checks:
@@ -65,7 +66,7 @@ EnabledDate=`date +%Y-%m-%d\ %H:%M:%S`
 # tmp is not a good location but works for testing
 printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\n" > /tmp/firmware_results.txt
 
-# echo password for testing so we know what it is
+# echo password for testing so we know what it is, just in case
 echo "Firmware Password is: $Password"
 
 # set the firmware password
@@ -84,7 +85,7 @@ spawn /usr/sbin/firmwarepasswd -setpasswd
    expect eof
 END
 
-# To do
+# to do
 #Mode=`/usr/sbin/firmwarepasswd -mode` 
 #printf "Mode = $Mode\n" > /tmp/firmware_results.txt
 #printf "EnabledDate = $EnabledDate\nFirmwarePassword = $Password\nFirmwareMode = $Mode\n" > /tmp/firmware_results.txt
