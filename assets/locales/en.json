@@ -330,7 +330,7 @@
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
-		appusage": {
+		appusage: {
 			"appname": "App Name",
 			"appusage": "App Usage",
 			"appusagereport": "App Usage Report",
