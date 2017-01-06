@@ -8,7 +8,7 @@ CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 # Get the scripts in the proper directories
 "${CURL[@]}" "${CTL}get_script/appusage" -o "${MUNKIPATH}preflight.d/appusage"
 
-if [[ ! -f '/Library/Application Support/crankd/ApplicationUsage.py' ]] || [[ ! -f '/Library/Application Support/crankd/ApplicationUsage.py' ]] ; then
+if [ ! -f '/Library/Application Support/crankd/ApplicationUsage.py' ] || [ ! -f '/Library/Application Support/crankd/ApplicationUsage.py' ] ; then
 "${CURL[@]}" "${CTL}get_script/crankd_payload.zip" -o "/tmp/crankd_payload.zip"
 fi
 
