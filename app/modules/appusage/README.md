@@ -1,9 +1,9 @@
-App Usage module
+# App Usage module
 Idea and collaboration by @gmarnin
 
 ===============
 
-Reports app usage and when app was last opened
+Reports app usage and when app was last opened and closed
 
 
 The results are stored in the table:
@@ -18,4 +18,5 @@ The results are stored in the table:
 * last_time - Human readable last time of app event
 * number_time - How many times the app was launched or quitted
 
-Uses crankd (https://github.com/MacSysadmin/pymacadmin) and ApplicationUsage.py (https://github.com/google/macops/tree/master/crankd) for application usage gathering. Will automatically install if not already installed. 
+#Dependencies
+Uses [crankd] (https://github.com/MacSysadmin/pymacadmin) and [ApplicationUsage.py] (https://github.com/google/macops/tree/master/crankd) for application usage gathering. Will automatically install all required files if they are not already installed. 
