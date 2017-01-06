@@ -16,6 +16,7 @@ fi
 if [ $? = 0 ]; then
 	# Make executable
 	chmod a+x "${MUNKIPATH}preflight.d/appusage"
+	mkdir -p "${CACHEPATH}"
 	touch "${CACHEPATH}${MODULE_CACHE_FILE}"
 
 	# Check if crankd is already installed, if not install
