@@ -54,6 +54,8 @@ if [ $? = 0 ]; then
 	fi
 
 	# Start crankd daemon - cuz restarting is no fun :P
+    # or reload it to pickup ApplicationUsage.py
+    /bin/launchctl unload /Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist 2>/dev/null
 	/bin/launchctl load -w /Library/LaunchDaemons/com.googlecode.pymacadmin.crankd.plist 2>/dev/null
 
 	if [ -f /tmp/crankd_payload.zip ]; then
