@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# set -x
-
 # @gmarnin 1-3-2016
 
 echo ""
