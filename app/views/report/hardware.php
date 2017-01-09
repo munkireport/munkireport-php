@@ -8,29 +8,29 @@
 
  	<div class="row">
 
-		<?php $this->view('widgets/installed_memory_widget'); ?>
+		<?php $widget->view($this, 'installed_memory'); ?>
 
-		<?php $this->view('widgets/smart_status_widget'); ?>
+		<?php $widget->view($this, 'smart_status'); ?>
 
-		<?php $this->view('widgets/external_displays_count_widget'); ?>
-
-	</div> <!-- /row -->
-
-	<div class="row">
-
-		<?php $this->view('widgets/hardware_model_widget'); ?>
-
-		<?php $this->view('widgets/hardware_warranty_widget'); ?>
+		<?php $widget->view($this, 'external_displays_count'); ?>
 
 	</div> <!-- /row -->
 
 	<div class="row">
 
-		<?php $this->view('widgets/hardware_type_widget'); ?>
+		<?php $widget->view($this, 'hardware_model'); ?>
 
-		<?php $this->view('widgets/hardware_age_widget'); ?>
+		<?php $widget->view($this, 'hardware_warranty'); ?>
 
-		<?php $this->view('widgets/memory_widget'); ?>
+	</div> <!-- /row -->
+
+	<div class="row">
+
+		<?php $widget->view($this, 'hardware_type'); ?>
+
+		<?php $widget->view($this, 'hardware_age'); ?>
+
+		<?php $widget->view($this, 'memory'); ?>
 
 	</div> <!-- /row -->
 

@@ -1,16 +1,16 @@
 <?php $this->view('partials/head', array(
-  "scripts" => array(
+"scripts" => array(
     "clients/client_list.js"
   )
 ))?>
 
 <div class="container">
 
-  <div class="row">
+    <div class="row">
+    
+        <?php $widget->view($this, 'app'); ?>
 
-    <?php $this->view('widgets/app_widget')?>
-
-  </div> <!-- /row -->
+    </div> <!-- /row -->
 
 </div>  <!-- /container -->
 

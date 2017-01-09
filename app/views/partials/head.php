@@ -6,9 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title><?php echo conf('sitename'); ?></title>
-	<link rel="stylesheet" id="bootstrap-stylesheet" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/Default/bootstrap.min.css" id="bootstrap-stylesheet" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
-	<link rel="stylesheet" id="nvd3-override-stylesheet" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/Default/nvd3.override.css" id="nvd3-override-stylesheet" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
 	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/datatables.min.css" />
 	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
@@ -173,7 +173,7 @@
 
 							<?php foreach(scandir(APP_ROOT.'assets/themes') AS $theme): ?>
 
-								<?php if( strpos($theme, '.') === false):?>
+								<?php if( $theme != 'fonts' && strpos($theme, '.') === false):?>
 
 								<li><a data-switch="<?php echo $theme; ?>" href="#"><?php echo $theme; ?></a></li>
 
