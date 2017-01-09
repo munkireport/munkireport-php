@@ -14,7 +14,7 @@ if [ ! -f /Library/Server/Caching/Logs/Metrics.sqlite ]; then
     echo "Error: Caching metrics database not found! Is caching turned on?"
 
 else
-    /usr/bin/sqlite3 /Library/Server/Caching/Logs/Metrics.sqlite "SELECT * FROM statsData;" > /usr/local/munki/preflight.d/cache/cache_metrics.txt
+    /usr/bin/sqlite3 /Library/Server/Caching/Logs/Metrics.sqlite "SELECT * FROM statsData;" > /usr/local/munki/preflight.d/cache/caching.txt
 fi
 
 fi

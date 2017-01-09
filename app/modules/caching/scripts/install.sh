@@ -1,8 +1,17 @@
 #!/bin/bash
 
+# Check if caching is enabled, only install if it is
+if [ ! -f /Library/Server/Caching/Logs/Metrics.sqlite ]; then
+
+	echo "Error: Caching metrics database not found! Is caching turned on?"
+	
+	# Signal that we had an error
+	ERR=1
+else
+
 MODULE_NAME="caching"
-MODULESCRIPT="caching_metrics_dump"
-MODULE_CACHE_FILE="cache_metrics.txt"
+MODULESCRIPT="caching"
+MODULE_CACHE_FILE="caching.txt"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 
@@ -24,4 +33,5 @@ else
 
 	# Signal that we had an error
 	ERR=1
+fi
 fi
