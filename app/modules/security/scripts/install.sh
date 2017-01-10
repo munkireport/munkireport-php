@@ -1,10 +1,20 @@
 #!/bin/bash
 
 MODULE_NAME="security"
-MODULESCRIPT="security.sh"
-MODULE_CACHE_FILE="security.txt"
+MODULESCRIPT="security.py"
+MODULE_CACHE_FILE="security.plist"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
+
+# Remove old versions of the script and cache file
+if [ -f "${MUNKIPATH}preflight.d/security.sh" ]; then
+	rm "${MUNKIPATH}preflight.d/security.sh"
+fi
+
+if [ -f "${CACHEPATH}security.txt" ]; then
+	rm "${CACHEPATH}security.txt"
+fi
+
 
 # Get the scripts in the proper directories
 "${CURL[@]}" "${CTL}get_script/${MODULESCRIPT}" -o "${MUNKIPATH}preflight.d/${MODULESCRIPT}"
