@@ -76,7 +76,7 @@ for vga in plist[0]['_items']:
                 result += '\n----------\n'
 
             except KeyError, error:
-                result += '\nAn error ocurred while reading this display\n'
+                result += '\An error ocurred while reading this display\n'
 
 ##############
 
