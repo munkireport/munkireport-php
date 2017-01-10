@@ -13,6 +13,11 @@ counter=0
 input="/tmp/servermetrics.csv"
 while IFS='' read -r line || [[ -n "$line" ]]; do
 
+LINETEST=$(cut -f2 -d',' <<< $line)
+if [[ -z $LINETEST ]]; then
+line="$line 0.0"
+fi
+
 if [[ "$counter" == 0 ]]; then
 counter=2
 echo '{'${line/$','/$': ['} > /tmp/servermetrics.json
