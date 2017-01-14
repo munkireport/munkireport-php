@@ -406,7 +406,8 @@
 	"loading": "Loading data from server",
 	"machine": {
 		"hardware_type_title": "Hardware type breakdown",
-		"hardware_widget_title": "Hardware model breakdown"
+		"hardware_widget_title": "Hardware model breakdown",
+		"model": "Model"
 	},
 	"managedinstalls": {
 		"failing_clients": "Clients with failing installs",

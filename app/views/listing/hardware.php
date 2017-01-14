@@ -16,15 +16,16 @@ new Reportdata_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
-		        <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'>Description</th>
-		        <th data-i18n="memory.memory" data-colname='machine.physical_memory'>Memory</th>
-		        <th data-colname='machine.number_processors'>Processors</th>
-		        <th data-colname='machine.cpu_arch'>CPU</th>
-		        <th data-colname='machine.current_processor_speed'>Speed</th>
-		        <th data-colname='machine.boot_rom_version'>Boot ROM</th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+                <th data-i18n="machine.model" data-colname='machine.machine_model'></th>
+                <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'></th>
+		        <th data-i18n="memory.memory" data-colname='machine.physical_memory'></th>
+		        <th data-colname='machine.number_processors'></th>
+		        <th data-colname='machine.cpu_arch'></th>
+		        <th data-colname='machine.current_processor_speed'></th>
+		        <th data-colname='machine.boot_rom_version'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -96,8 +97,8 @@ new Reportdata_model;
 	        	var link = mr.getClientDetailLink(name, sn);
 	        	$('td:eq(0)', nRow).html(link);
 
-	        	var mem=$('td:eq(4)', nRow).html();
-	        	$('td:eq(4)', nRow).html(parseInt(mem) + ' GB');
+	        	var mem=$('td:eq(5)', nRow).html();
+	        	$('td:eq(5)', nRow).html(parseInt(mem) + ' GB');
 	        }
 	    });
 
