@@ -22,10 +22,10 @@ new Reportdata_model;
                 <th data-i18n="machine.model" data-colname='machine.machine_model'></th>
                 <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'></th>
 		        <th data-i18n="memory.memory" data-colname='machine.physical_memory'></th>
-		        <th data-colname='machine.number_processors'></th>
-		        <th data-colname='machine.cpu_arch'></th>
-		        <th data-colname='machine.current_processor_speed'></th>
-		        <th data-colname='machine.boot_rom_version'></th>
+		        <th data-i18n="machine.cores" data-colname='machine.number_processors'></th>
+		        <th data-i18n="machine.arch" data-colname='machine.cpu_arch'></th>
+		        <th data-i18n="machine.cpu_speed" data-colname='machine.current_processor_speed'></th>
+		        <th data-i18n="machine.rom_version" data-colname='machine.boot_rom_version'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
