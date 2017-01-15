@@ -68,7 +68,7 @@ new Reportdata_model;
                     if(d.search.value.match(/^\d+GB memory \d+GB$/))
                     {
                         // Add column specific search
-                        d.columns[4].search.value = d.search.value.replace(/(\d+GB) memory (\d+GB)/, function(m, from, to){return ' BETWEEN ' + parseInt(from) + ' AND ' + parseInt(to)});
+                        d.columns[5].search.value = d.search.value.replace(/(\d+GB) memory (\d+GB)/, function(m, from, to){return ' BETWEEN ' + parseInt(from) + ' AND ' + parseInt(to)});
                         // Clear global search
                         d.search.value = '';
 
@@ -78,7 +78,7 @@ new Reportdata_model;
                     if(d.search.value.match(/^memory [<>=] \d+GB$/))
                     {
                         // Add column specific search
-                        d.columns[4].search.value = d.search.value.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + parseInt(content)});
+                        d.columns[5].search.value = d.search.value.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + parseInt(content)});
                         // Clear global search
                         d.search.value = '';
 
