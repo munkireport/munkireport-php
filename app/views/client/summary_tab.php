@@ -11,7 +11,7 @@
 					<span class="label label-info"><span class="mr-remote_ip"></span></span><br>
 				</div>
 			</div>
-			<span class="mr-machine_desc"></span>
+			<span class="mr-machine_desc"></span> <a class="mr-refresh-desc" href=""><i class="fa fa-refresh"></i></a>
 		</div>
 		<div class="col-lg-4">
 			<h4 class="mr-computer_name"></h4>
