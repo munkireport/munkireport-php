@@ -7,12 +7,21 @@ class Security_model extends Model
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['gatekeeper'] = '';
-	$this->rs['sip'] = '';
-	$this->rs['ssh_users'] = '';
-	$this->rs['ard_users'] = '';
-	$this->rs['firmwarepw'] = '';
+    	$this->rs['sip'] = '';
+    	$this->rs['ssh_users'] = '';
+    	$this->rs['ard_users'] = '';
+    	$this->rs['firmwarepw'] = '';
+        
+        // Add indexes
+        $this->idx[] = array('serial_number');
+        $this->idx[] = array('gatekeeper');
+        $this->idx[] = array('sip');
+        $this->idx[] = array('ssh_users');
+        $this->idx[] = array('ard_users');
+        $this->idx[] = array('firmwarepw');
+
         // Schema version, increment when creating a db migration
-        $this->schema_version = 003;
+        $this->schema_version = 4;
         
         // Create table if it does not exist
         $this->create_table();
