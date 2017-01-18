@@ -161,6 +161,11 @@ function get_url($url, $options = array())
     if (conf('proxy')) {
         add_proxy_server($context_options);
     }
+    
+    // Add optional ssl settings
+    if (conf('ssl_options')) {
+        $context_options['ssl'] = conf('ssl_options');
+    }
 
     $context = stream_context_create($context_options);
     return @file_get_contents($url, false, $context);
