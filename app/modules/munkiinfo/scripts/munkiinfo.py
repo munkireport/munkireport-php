@@ -11,10 +11,16 @@ from Foundation import CFPreferencesCopyAppValue
 
 sys.path.append('/usr/local/munki')
 try:
-    from munkilib import munkicommon
-except ImportError, msg:
-    print "%s" % msg
-    exit(1)
+    from munkilib import prefs
+except ImportError:
+    # Legacy support
+    try:
+        from munkilib import munkicommon as prefs
+    except ImportError, msg:
+        print "%s" % msg
+        exit(1)
+
+
 
 def pref_to_str(pref_value):
     """If the value of a preference is None return an empty string type
@@ -77,13 +83,13 @@ def formated_prefs():
     """Formated dictionary object for output to plist"""
     my_dict = {}
     for pref in munki_prefs():
-        pref_value = pref_to_str(munkicommon.pref(pref))
+        pref_value = pref_to_str(prefs.pref(pref))
         my_dict.update({pref: pref_value})
     return my_dict
 
 def get_munkiprotocol():
     """The protocol munki is using"""
-    software_repo_url = pref_to_str(munkicommon.pref('SoftwareRepoURL'))
+    software_repo_url = pref_to_str(prefs.pref('SoftwareRepoURL'))
     try:
         url_parse = urlparse.urlparse(software_repo_url)
         return url_parse.scheme
