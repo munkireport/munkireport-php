@@ -19,4 +19,4 @@ The results are stored in the table:
 * number_time - How many times the app was launched or quitted
 
 #Dependencies
-Uses [crankd] (https://github.com/MacSysadmin/pymacadmin) and [ApplicationUsage.py] (https://github.com/google/macops/tree/master/crankd) for application usage gathering. Will automatically install all required files if they are not already installed. 
+Uses [crankd] (https://github.com/MacSysadmin/pymacadmin) and [ApplicationUsage.py] (https://github.com/google/macops/tree/master/crankd) for application usage gathering. 
