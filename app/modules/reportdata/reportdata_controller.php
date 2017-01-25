@@ -88,7 +88,7 @@ class Reportdata_controller extends Module_controller
 							ON (r.serial_number = m.serial_number)
                         $where
 						GROUP BY date, machine_name
-						ORDER BY machine_name, reg_timestamp";
+						ORDER BY date, machine_name";
                 break;
             default:
                 die('Unknown database driver');
