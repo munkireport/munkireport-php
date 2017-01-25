@@ -98,9 +98,16 @@ class Reportdata_controller extends Module_controller
         $out = array();
         
         foreach ($reportdata->query($sql) as $event) {
-        // Store date
+            // Store date
             $d = new DateTime( $event->date );
             $lastDayOfTheMonth = $d->format( 'Y-m-t' );
+            
+            // Check if this is the first run
+            if( ! $dates){
+                $firstDayOfTheMonth = $d->format( 'Y-m-01' );
+                array_push($dates, $firstDayOfTheMonth);
+            }
+            
             $pos = array_search($lastDayOfTheMonth, $dates);
             if ($pos === false) {
                 array_push($dates, $lastDayOfTheMonth);
@@ -116,6 +123,12 @@ class Reportdata_controller extends Module_controller
         // Replace last date with current date
         if(array_pop($dates)){
             array_push($dates, date('Y-m-d'));
+        }
+        
+        // Prepend all types with 0
+        foreach($out as $type => $data)
+        {
+            $out[$type][0] = 0;
         }
 
         $obj = new View();
