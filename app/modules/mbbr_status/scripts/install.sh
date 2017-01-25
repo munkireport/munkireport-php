@@ -2,7 +2,6 @@
 
 MODULE_NAME="mbbr_status"
 MODULESCRIPT="mbbr_status.py"
-PREF_FILE="/Library/Preferences/com.malwarebytes.plist"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 
@@ -15,7 +14,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/${MODULESCRIPT}"
 
 	# Set preference to include this file in the preflight check
-	setreportpref $MODULE_NAME "${PREF_FILE}"
+	setreportpref $MODULE_NAME "${CACHEPATH}malwarebytes.plist"
 
 else
 	echo "Failed to download all required components!"
