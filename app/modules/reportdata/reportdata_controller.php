@@ -110,7 +110,12 @@ class Reportdata_controller extends Module_controller
             $out[$event->type][$pos] = intval($event->cnt);
         }
         
+        // Sort machine types
         ksort($out);
+        
+        // Replace last date with current date
+        array_pop($dates);
+        array_push($dates, date('Y-m-d');
 
         $obj = new View();
         $obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
