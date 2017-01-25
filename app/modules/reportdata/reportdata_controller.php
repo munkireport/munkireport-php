@@ -88,7 +88,7 @@ class Reportdata_controller extends Module_controller
 							ON (r.serial_number = m.serial_number)
                         $where
 						GROUP BY date, machine_name
-						ORDER BY date, machine_name";
+						ORDER BY date";
                 break;
             default:
                 die('Unknown database driver');
@@ -109,7 +109,8 @@ class Reportdata_controller extends Module_controller
 
             $out[$event->type][$pos] = intval($event->cnt);
         }
-
+        
+        ksort($out);
 
         $obj = new View();
         $obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
