@@ -80,15 +80,15 @@ class Reportdata_controller extends Module_controller
 						ORDER BY date";
                 break;
             case 'mysql':
-                $sql = "SELECT DATE(FROM_UNIXTIME(reg_timestamp)) AS date, 
+                $sql = "SELECT CONCAT(YEAR(DATE(FROM_UNIXTIME(reg_timestamp))), '-', MONTH(DATE(FROM_UNIXTIME(reg_timestamp)))) AS date, 
 						COUNT(*) AS cnt,
 						machine_name AS type
 						FROM reportdata r
 						LEFT JOIN machine m 
 							ON (r.serial_number = m.serial_number)
-						$where
+                        $where
 						GROUP BY date, machine_name
-						ORDER BY date";
+						ORDER BY reg_timestamp";
                 break;
             default:
                 die('Unknown database driver');
@@ -99,9 +99,11 @@ class Reportdata_controller extends Module_controller
         
         foreach ($reportdata->query($sql) as $event) {
         // Store date
-            $pos = array_search($event->date, $dates);
+            $d = new DateTime( $event->date );
+            $lastDayOfTheMonth = $d->format( 'Y-m-t' );
+            $pos = array_search($lastDayOfTheMonth, $dates);
             if ($pos === false) {
-                array_push($dates, $event->date);
+                array_push($dates, $lastDayOfTheMonth);
                 $pos = count($dates) - 1;
             }
 
