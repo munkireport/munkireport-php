@@ -80,7 +80,7 @@ class Reportdata_controller extends Module_controller
 						ORDER BY date";
                 break;
             case 'mysql':
-                $sql = "SELECT CONCAT(YEAR(DATE(FROM_UNIXTIME(reg_timestamp))), '-', MONTH(DATE(FROM_UNIXTIME(reg_timestamp)))) AS date, 
+                $sql = "SELECT DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date, 
 						COUNT(*) AS cnt,
 						machine_name AS type
 						FROM reportdata r
