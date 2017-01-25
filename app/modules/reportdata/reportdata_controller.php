@@ -69,7 +69,7 @@ class Reportdata_controller extends Module_controller
 
         switch ($reportdata->get_driver()) {
             case 'sqlite':
-                $sql = "SELECT DATE(reg_timestamp, 'unixepoch') AS date,
+                $sql = "SELECT strftime('%Y-%m', DATE(reg_timestamp, 'unixepoch')) AS date,
 						COUNT(*) AS cnt,
 						machine_name AS type
 						FROM reportdata r
@@ -114,8 +114,9 @@ class Reportdata_controller extends Module_controller
         ksort($out);
         
         // Replace last date with current date
-        array_pop($dates);
-        array_push($dates, date('Y-m-d'));
+        if(array_pop($dates)){
+            array_push($dates, date('Y-m-d'));
+        }
 
         $obj = new View();
         $obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
