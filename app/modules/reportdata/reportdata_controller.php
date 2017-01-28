@@ -104,8 +104,9 @@ class Reportdata_controller extends Module_controller
             
             // Check if this is the first run
             if( ! $dates){
-                $firstDayOfTheMonth = $d->format( 'Y-m-01' );
-                array_push($dates, $firstDayOfTheMonth);
+                // Subtract 16 days and format to last day of the month
+                $lastDayOfTheMonthBefore = $d->sub(new DateInterval('P16D'))->format( 'Y-m-t' );
+                array_push($dates, $lastDayOfTheMonthBefore);
             }
             
             $pos = array_search($lastDayOfTheMonth, $dates);

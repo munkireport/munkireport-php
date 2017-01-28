@@ -55,7 +55,14 @@ $(document).on('appReady', function() {
             	.showMaxMin(false);
 
             chart.yAxis.showMaxMin(false);
-
+			
+            var tooltip = chart.interactiveLayer.tooltip;
+            tooltip.headerFormatter(function (d) { 
+				//return d;
+				return moment(d, moment.localeData()._longDateFormat.L).format('MMMM YYYY'); 
+			});
+			
+			
             //chart.yAxis.tickFormat(function(d) { return d3.format(',.0f')});
             d3.select('#chart1')
                 .datum(graphData)
