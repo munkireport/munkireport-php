@@ -55,7 +55,7 @@ $(document).on('appReady', function() {
 			chart.xAxis.tickFormat(function(d, e) {
 				if(e == undefined){ return d}
 				if(moment(d).month()){
-					return moment(d).format("MMMM");
+					return moment(d).format("MMM YYYY");
 				}
 				return moment(d).format("YYYY") 
 			});			
