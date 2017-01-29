@@ -25,6 +25,7 @@ $(document).on('appReady', function() {
 
     var url = appUrl + '/module/reportdata/new_clients'
     var chart;
+
     d3.json(url, function(err, data){
 
         var graphData = [],
@@ -42,7 +43,7 @@ $(document).on('appReady', function() {
             }
             graphData.push(temp);
         }
-
+		
         nv.addGraph(function() {
             chart = nv.models.stackedAreaChart()
                 .useInteractiveGuideline(true)
@@ -51,19 +52,24 @@ $(document).on('appReady', function() {
                 .controlLabels(i18n.t('chart.stackedarea', {returnObjectTrees: true}))
                 .color(keyColor)
                 .duration(300);
-            chart.xAxis.tickFormat(function(d) { return moment(d).format("l") })
-            	.showMaxMin(false);
+			chart.xAxis.tickFormat(function(d, e) {
+				if(e == undefined){ return d}
+				if(moment(d).month()){
+					return moment(d).format("MMMM");
+				}
+				return moment(d).format("YYYY") 
+			});			
+			
+            chart.xAxis.showMaxMin(false);
 
             chart.yAxis.showMaxMin(false);
 			
             var tooltip = chart.interactiveLayer.tooltip;
-            tooltip.headerFormatter(function (d) { 
-				//return d;
-				return moment(d, moment.localeData()._longDateFormat.L).format('MMMM YYYY'); 
+			tooltip.headerFormatter(function (d) { 
+				return moment(d).format('MMMM YYYY'); 
 			});
 			
 			
-            //chart.yAxis.tickFormat(function(d) { return d3.format(',.0f')});
             d3.select('#chart1')
                 .datum(graphData)
                 .transition().duration(1000)
