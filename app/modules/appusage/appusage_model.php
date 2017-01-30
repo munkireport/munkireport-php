@@ -11,7 +11,6 @@ class Appusage_model extends Model
         $this->rs['app_version'] = "";
         $this->rs['app_name'] = "";
         $this->rs['app_path'] = "";
-        $this->rs['last_time_epoch'] = 0;
         $this->rs['last_time'] = "";
         $this->rs['number_times'] = 0;
 
@@ -24,7 +23,6 @@ class Appusage_model extends Model
         $this->idx[] = array('app_version');
         $this->idx[] = array('app_path');
         $this->idx[] = array('app_name');
-        $this->idx[] = array('last_time_epoch');
         $this->idx[] = array('last_time');
         $this->idx[] = array('number_times');
 
@@ -86,7 +84,6 @@ class Appusage_model extends Model
                 $app_name_full = substr($app_array, 0, -4);
                 $this->app_name = $app_name_full;
                 
-                $this->last_time_epoch = $appusage_line[4];
                 $this->number_times = $appusage_line[5];
             
                 $dt = new DateTime("@$appusage_line[4]");

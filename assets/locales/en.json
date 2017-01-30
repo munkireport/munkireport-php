@@ -707,6 +707,10 @@
 		"app": {
 			"versions": "Known versions of __app__"
 		},
+        "appusage": {
+            "title": "App Usage",
+            "tooltip": "Most frequently used apps"
+        },
 		"bound_to_ds": {
 			"bound": "Bound",
 			"notbound": "Not Bound",

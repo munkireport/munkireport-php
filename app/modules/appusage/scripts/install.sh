@@ -21,7 +21,6 @@ if [ $? = 0 ]; then
 else
 	echo "Failed to download all required components!"
 	rm -f "${MUNKIPATH}preflight.d/appusage"
-	rm -rf "/tmp/payload/"
 
 	# Signal that we had an error
 	ERR=1

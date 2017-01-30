@@ -1,6 +1,6 @@
 <div class="col-md-4">
 		<div class="panel panel-default"  id="appusage-widget">
-            <div class="panel-heading" data-container="body" title="Most frequently used apps">
+            <div class="panel-heading" data-container="body" data-i18n="[title]widget.appusage.tooltip">
                 <h3 class="panel-title"><i class="fa fa-rocket"></i> <span data-i18n="listing.appusage.appusage"></span></h3>
             </div>
     <div class="list-group scroll-box"></div>
