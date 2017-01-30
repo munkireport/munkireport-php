@@ -54,9 +54,7 @@ $(document).on('appReady', function() {
 			.x(function (d) { return d.key })
 			.y(function (d) { return d.y })
 			.donut(true)
-			.arcsRadius(arcRadius1)
-			.showLabels(false)
-			.growOnHover(false);
+			.showLabels(false);
 		
 		chart.title(" ");
 		chart.legend.updateState(false);
