@@ -5,5 +5,11 @@ if [ ! -f /private/var/db/application_usage.sqlite ]; then
     echo "Error: App usage database not found!"
 
 else
-    /usr/bin/sqlite3 /private/var/db/application_usage.sqlite "SELECT * FROM application_usage;" > /usr/local/munki/preflight.d/cache/appusage.txt
+    /usr/bin/sqlite3 /private/var/db/application_usage.sqlite <<!
+.headers off
+.mode csv
+.output /usr/local/munki/preflight.d/cache/appusage.csv
+SELECT event, bundle_id, app_version, app_path, number_times, last_time  FROM application_usage;
+!
+
 fi

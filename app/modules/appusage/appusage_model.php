@@ -68,12 +68,15 @@ class Appusage_model extends Model
     {
         // Delete previous entries
         $this->deleteWhere('serial_number=?', $this->serial_number);
-
-        // Parse data
-        foreach(explode("\n", $data) as $line) {
-            $appusage_line = explode("|", $line);
+        
+        // Split into lines
+        foreach(str_getcsv($data, "\n") as $line)
+        {
+            // Split line
+            $appusage_line = str_getcsv($line);
             
-            if (! empty($line)) {
+            if (! empty($appusage_line))
+            {
                 $this->event = $appusage_line[0];
                 $this->bundle_id = $appusage_line[1];
                 $this->app_version = $appusage_line[2];
@@ -84,14 +87,13 @@ class Appusage_model extends Model
                 $app_name_full = substr($app_array, 0, -4);
                 $this->app_name = $app_name_full;
                 
-                $this->number_times = $appusage_line[5];
-            
-                $dt = new DateTime("@$appusage_line[4]");
+                $this->number_times = $appusage_line[4];
+                $dt = new DateTime('@'.$appusage_line[5]);
                 $this->last_time = ($dt->format('Y-m-d H:i:s'));
                 
                 $this->id = '';
                 $this->create(); 
             }
-        } //end foreach explode lines
+        }
     } // end process()
 }

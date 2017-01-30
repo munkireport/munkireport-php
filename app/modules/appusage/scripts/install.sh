@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MODULE_NAME="appusage"
-MODULE_CACHE_FILE="appusage.txt"
+MODULE_CACHE_FILE="appusage.csv"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 
