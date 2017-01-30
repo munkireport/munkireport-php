@@ -14,6 +14,7 @@ $tab_list = array(
 	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
 	'third-party-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 0), 'i18n' => 'client.tab.third_party_software', 'badge' => 'history-cnt-0'),
 	'inventory-items' => array('view' => 'client/inventory_items_tab', 'i18n' => 'client.tab.inventory_items', 'badge' => 'inventory-cnt'),
+	'appusage-tab' => array('view' => 'client/appusage_tab', 'i18n' => 'listing.appusage.appusage'),
 	'location-tab' => array('view' => 'client/location_tab', 'i18n' => 'client.tab.location'),
 	'network-tab' => array('view' => 'client/network_tab', 'i18n' => 'client.tab.network', 'badge' => 'network-cnt'),
 	'wifi-tab' => array('view' => 'client/wifi_tab', 'i18n' => 'client.tab.wifi'),

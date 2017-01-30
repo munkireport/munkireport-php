@@ -330,6 +330,16 @@
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
+		"appusage": {
+			"appname": "App Name",
+			"appusage": "App Usage",
+			"appusagereport": "App Usage Report",
+			"count": "Count",
+			"event": "Event",
+			"lastevent": "Last Event",
+			"launch": "Launch",
+			"quit": "Quit"
+		},
 		"ard": {
 			"text": "Text __number__",
 			"title": "Apple Remote Desktop Report"
@@ -458,6 +468,7 @@
 	        "ru": "Русский"
 		},
 		"listings": {
+			"appusage": "App Usage",
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
 			"backup2go": "Archiware Backup2Go",
@@ -711,6 +722,10 @@
 		"app": {
 			"versions": "Known versions of __app__"
 		},
+        "appusage": {
+            "title": "App Usage",
+            "tooltip": "Most frequently used apps"
+        },
 		"bound_to_ds": {
 			"bound": "Bound",
 			"notbound": "Not Bound",

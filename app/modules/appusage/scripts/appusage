@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# crankd check
+if [ ! -f /private/var/db/application_usage.sqlite ]; then
+    echo "Error: App usage database not found!"
+
+else
+    /usr/bin/sqlite3 /private/var/db/application_usage.sqlite "SELECT * FROM application_usage;" > /usr/local/munki/preflight.d/cache/appusage.txt
+fi
