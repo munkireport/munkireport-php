@@ -38,15 +38,20 @@
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
+			
+			// Load theme files
+			var settings = JSON.parse( localStorage.getItem('global') ) || {};
+			var theme = settings['theme'] || 'Default';
+			var theme_dir = baseUrl + 'assets/themes/' + theme + '/';
+			var theme_file = theme_dir + 'bootstrap.min.css';
+			var bs_stylesheet = document.getElementById('bootstrap-stylesheet');
+			bs_stylesheet.href = theme_dir + 'bootstrap.min.css';
+			var nvd3_override_stylesheet = document.getElementById('nvd3-override-stylesheet');
+			nvd3_override_stylesheet.href = theme_dir + 'nvd3.override.css';
+
 	</script>
 
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.settings.js"></script>
-	
-	<script>
-		// Load theme files
-		mr.loadTheme();
-	</script>
+	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>	
 
 <?php
 	if (isset($scripts))
