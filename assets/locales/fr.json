@@ -234,7 +234,7 @@
         "dstudio-last-workflow-execution-date": "Date d'exécution du dernier workflow",
         "dstudio-last-workflow-status": "Etat Workflow",
         "dstudio-mac-addr": "Adresse MAC",
-        "recheck": "Pull DeployStudio Data"
+        "recheck": "Données DeployStudio"
     },
   "displayname": "Nom d'affichage",
    "edit": "Modifier",
@@ -331,6 +331,16 @@
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
   "listing": {
+"appusage": {
+			"appname": "Nom Applications",
+			"appusage": "Usage Applications",
+			"appusagereport": "Rapport Usage Applications",
+			"count": "Compteur",
+			"event": "Evènement",
+			"lastevent": "Dernier évènement",
+			"launch": "Lancer",
+			"quit": "Quitter"
+		},
     "ard": {
       "text": "Texte __number__",
       "title": "Rapport Apple Remote Desktop"
@@ -406,8 +416,13 @@
   },
   "loading": "Chargement des données depuis le serveur",
   "machine": {
-	"hardware_type_title": "Répartition par matériel",
-    	"hardware_widget_title": "Détails de l'appareil"
+		"arch": "Arch",
+		"cores": "Cores",
+		"cpu_speed": "Fréquence CPU",
+		"hardware_type_title": "Répartition par matériel",
+    		"hardware_widget_title": "Détails de l'appareil",
+		"model": "Modéle",
+		"rom_version": "Version ROM"
   },
   "managedinstalls": {
 		"failing_clients": "Clients avec erreurs d'installation",
@@ -454,6 +469,7 @@
         "ru": "Русский"
     },
     "listings": {
+	"appusage": "Usage Applications",
       "ard": "Apple Remote Desktop",
       "bluetooth": "Bluetooth",
       "backup2go": "Archiware Backup2Go",
@@ -586,9 +602,19 @@
 	  "enrollment_status": "Etat de l'inscription"
 	},
   "security": {
-    "security": "Sécurité",
-    "gatekeeper": "Etat Gatekeeper",
-    "sip": "Etat SIP"
+	"report": "Rapport Sécurité",
+    	"security": "Sécurité",
+	"gatekeeper": "Etat Gatekeeper",
+	"gatekeeper_active": "Gatekeeper sctif",
+	"gatekeeper_disabled": "Gatekeeper désactivé",
+	"sip": "Etat SIP",
+	"ssh_users": "Utilisateurs SSH",
+	"ard_users": "Utilisateurs ARD",
+	"firmwarepw": "Mot de passe firmware",
+	"sip_status": "Etat SIP",
+	"sip_active": "SIP actif",
+	"sip_disabled": "SIP désactivé"
+
   },
   "serial": "Numéro de série",
   "servermetrics": {
@@ -695,6 +721,10 @@
     },
     "app": {
       "versions": "Versions connues du __app__"
+},
+        "appusage": {
+            "title": "Usages Applications",
+            "tooltip": "Applications les plus utilisées"
     },
     "bound_to_ds": {
       "bound": "Lié",
