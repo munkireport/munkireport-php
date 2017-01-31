@@ -59,14 +59,7 @@
   <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/d3/d3.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/nv.d3.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.hotkeys/jquery.hotkeys.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.settings.js"></script>
-
-  <script>
-
-
-  </script>
-  
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.hotkeys/jquery.hotkeys.js"></script>  
 
   <?php if(conf('custom_js')): ?> 
   <script src="<?php echo conf('custom_js'); ?>"></script>
