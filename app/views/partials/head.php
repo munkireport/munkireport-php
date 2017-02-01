@@ -6,9 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title><?php echo conf('sitename'); ?></title>
-	<link rel="stylesheet" id="bootstrap-stylesheet" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/<?php echo sess_get('theme', 'Default')?>/bootstrap.min.css" id="bootstrap-stylesheet" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
-	<link rel="stylesheet" id="nvd3-override-stylesheet" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/<?php echo sess_get('theme', 'Default')?>/nvd3.override.css" id="nvd3-override-stylesheet" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
 	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/datatables.min.css" />
 	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
@@ -38,17 +38,6 @@
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
-			
-			// Load theme files
-			var settings = JSON.parse( localStorage.getItem('global') ) || {};
-			var theme = settings['theme'] || 'Default';
-			var theme_dir = baseUrl + 'assets/themes/' + theme + '/';
-			var theme_file = theme_dir + 'bootstrap.min.css';
-			var bs_stylesheet = document.getElementById('bootstrap-stylesheet');
-			bs_stylesheet.href = theme_dir + 'bootstrap.min.css';
-			var nvd3_override_stylesheet = document.getElementById('nvd3-override-stylesheet');
-			nvd3_override_stylesheet.href = theme_dir + 'nvd3.override.css';
-
 	</script>
 
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>	
@@ -58,6 +47,7 @@
 		foreach($scripts as $script): ?>
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/<?php echo $script; ?>" type="text/javascript"></script>
 <?php endforeach; ?>
+
 </head>
 
 <body>
