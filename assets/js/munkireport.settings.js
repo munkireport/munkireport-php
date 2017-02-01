@@ -1,5 +1,6 @@
 // Global munkireport object
 var mr = {
+        debug: false,
         dt:{},
         
         statusFormat: {
@@ -222,6 +223,9 @@ var mr = {
             // Add active to menu item
             $('[data-switch]').parent().removeClass('active');
             $('[data-switch="'+theme+'"]').parent().addClass('active');
+            
+            // Store theme in session
+            $.post( appUrl + "/settings/theme", { set: theme });
         }
 
     };
