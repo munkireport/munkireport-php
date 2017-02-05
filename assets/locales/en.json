@@ -422,7 +422,7 @@
 		"hardware_widget_title": "Hardware model breakdown",
 		"model": "Model",
 		"rom_version": "ROM Version",
-		"screensize_widget_title": "Screensize breakdown"
+		"base_model_widget_title": "Base model breakdown"
 	},
 	"managedinstalls": {
 		"failing_clients": "Clients with failing installs",

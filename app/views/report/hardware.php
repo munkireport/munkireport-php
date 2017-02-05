@@ -20,7 +20,7 @@
 
 		<?php $widget->view($this, 'hardware_model'); ?>
 		
-		<?php $widget->view($this, 'screen_size_breakdown'); ?>
+		<?php $widget->view($this, 'hardware_basemodel'); ?>
 
 		<?php $widget->view($this, 'hardware_warranty'); ?>
 
