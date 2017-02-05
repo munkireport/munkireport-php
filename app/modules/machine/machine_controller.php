@@ -47,11 +47,11 @@ class Machine_controller extends Module_controller
      * Get model statistics
      *
      **/
-    public function get_model_stats()
+    public function get_model_stats($summary="")
     {
         $machine = new Machine_model();
         $obj = new View();
-        $obj->view('json', array('msg' => $machine->get_model_stats()));
+        $obj->view('json', array('msg' => $machine->get_model_stats($summary)));
     }
 
 
