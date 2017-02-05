@@ -61,7 +61,7 @@ class Machine_model extends Model
 
         $this->serial = $serial;
     }
-    
+
     /**
      * Get duplicate computernames
      *
@@ -78,14 +78,14 @@ class Machine_model extends Model
 				GROUP BY computer_name
 				HAVING count > 1
 				ORDER BY count DESC";
-                
+
         foreach ($this->query($sql) as $obj) {
             $out[] = $obj;
         }
-        
+
         return $out;
     }
-    
+
     /**
      * Get model statistics
      *
@@ -98,14 +98,14 @@ class Machine_model extends Model
 				FROM machine
 				LEFT JOIN reportdata USING (serial_number)
 				$filter
-				GROUP BY machine_desc 
+				GROUP BY machine_desc
 				ORDER BY count DESC";
-        
+
         foreach ($this->query($sql) as $obj) {
             $obj->label = $obj->label ? $obj->label : 'Unknown';
             $out[] = $obj;
         }
-        
+
         // Check if we need to convert to summary (Model + screen size)
         if($summary){
             $model_list = array();
@@ -125,29 +125,29 @@ class Machine_model extends Model
                 else
                 {
                     $name = $obj->label;
-                    
+
                 }
                 if(! isset($model_list[$name.$suffix]))
                 {
                     $model_list[$name.$suffix] = 0;
                 }
                 $model_list[$name.$suffix] += $obj->count;
-                
+
             }
             // Erase out
             $out = array();
             // Sort model list
-            asort($model_list);
+            arsort($model_list);
             // Add entries to $out
             foreach ($model_list as $key => $count)
             {
                 $out[] = array('label' => $key, 'count' => $count);
             }
         }
-        
+
         return $out;
     }
-    
+
     /**
      * Get memory statistics
      *
@@ -167,7 +167,7 @@ class Machine_model extends Model
             $obj->physical_memory = intval($obj->physical_memory);
             $out[] = $obj;
         }
-        
+
         return $out;
     }
 
@@ -209,7 +209,7 @@ class Machine_model extends Model
                 $mult = $mult / 100;
             }
         }
-        
+
         // Dirify buildversion
         if (isset($mylist['buildversion'])) {
             $mylist['buildversion'] = preg_replace('/[^A-Za-z0-9]/', '', $mylist['buildversion']);
