@@ -117,7 +117,7 @@ class Machine_model extends Model
                 {
                     $name = $matches[1];
                     // Find suffix
-                    if(preg_match('/(\d+-inch)/', $matches[2], $matches))
+                    if(preg_match('/([\d\.]+-inch)/', $matches[2], $matches))
                     {
                         $suffix = ' ('.$matches[1].')';
                     }
