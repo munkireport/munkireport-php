@@ -165,6 +165,7 @@ class Machine_model extends Model
 
         foreach ($this->query($sql) as $obj) {
             $obj->physical_memory = intval($obj->physical_memory);
+            $obj->count = intval($obj->count);
             $out[] = $obj;
         }
 

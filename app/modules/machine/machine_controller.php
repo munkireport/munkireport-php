@@ -132,7 +132,7 @@ class Machine_controller extends Module_controller
 
             default:
                 foreach ($tmp as $mem => $memcnt) {
-                    $out[] = array('label' => $mem, 'count' => intval($memcnt));
+                    $out[] = array('label' => $mem, 'count' => $memcnt);
                 }
         }
 
