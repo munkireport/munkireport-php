@@ -8,7 +8,7 @@
  **/
 class Machine_controller extends Module_controller
 {
-    
+
     /*** Protect methods with auth! ****/
     public function __construct()
     {
@@ -30,7 +30,7 @@ class Machine_controller extends Module_controller
     {
         echo "You've loaded the hardware module!";
     }
-    
+
     /**
      * Get duplicate computernames
      *
@@ -42,7 +42,7 @@ class Machine_controller extends Module_controller
         $obj = new View();
         $obj->view('json', array('msg' => $machine->get_duplicate_computernames()));
     }
-    
+
     /**
      * Get model statistics
      *
@@ -84,7 +84,7 @@ class Machine_controller extends Module_controller
         $filter = get_machine_group_filter('AND');
 
         $sql = "SELECT machine.serial_number, computer_name, reg_timestamp
-			FROM machine 
+			FROM machine
 			LEFT JOIN reportdata USING (serial_number)
 			WHERE reg_timestamp > $lastweek
 			$filter
@@ -119,7 +119,7 @@ class Machine_controller extends Module_controller
                 $tmp[$obj->physical_memory] = $obj->count;
             }
         }
-        
+
         switch ($format) {
             case 'flotr':
                 krsort($tmp);
@@ -129,10 +129,10 @@ class Machine_controller extends Module_controller
                     $out[] = array('label' => $mem . ' GB', 'data' => array(array(intval($memcnt), $cnt++)));
                 }
                 break;
-                
+
             default:
                 foreach ($tmp as $mem => $memcnt) {
-                    $out[] = array('label' => $mem, 'count' => $memcnt);
+                    $out[] = array('label' => $mem, 'count' => intval($memcnt));
                 }
         }
 
@@ -149,11 +149,11 @@ class Machine_controller extends Module_controller
     {
         $out = array();
         $machine = new Machine_model();
-        $sql = "SELECT machine_name, count(1) as count 
+        $sql = "SELECT machine_name, count(1) as count
 			FROM machine
 			LEFT JOIN reportdata USING (serial_number)
 			".get_machine_group_filter()."
-			GROUP BY machine_name 
+			GROUP BY machine_name
 			ORDER BY count DESC";
         $cnt = 0;
         foreach ($machine->query($sql) as $obj) {
@@ -173,7 +173,7 @@ class Machine_controller extends Module_controller
     {
         $out = array();
         $machine = new Machine_model();
-        $sql = "SELECT count(1) as count, os_version 
+        $sql = "SELECT count(1) as count, os_version
 				FROM machine
 				LEFT JOIN reportdata USING (serial_number)
 				".get_machine_group_filter()."
