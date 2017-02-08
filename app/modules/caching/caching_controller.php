@@ -44,14 +44,12 @@ class Caching_controller extends Module_controller
         $caching = new Caching_model;
         $obj->view('json', array('msg' => $caching->retrieve_records($serial_number)));
     }
-    
-    
+     
     /**
      * REST API for retrieving caching data for chart
      * @tuxudo
-     * Chart widget/client tab doesn't exist because I couldn't get it to work :/
-     * But it returns pretty data comprising of date, from cache, from peers, and from origin :D
-     *
+     * Don't know how to make the graph work :(
+     * 
      **/
     public function caching_graph()
     {
@@ -65,7 +63,6 @@ class Caching_controller extends Module_controller
             case 'sqlite':
                 $sql = "SELECT DATE(collectiondateepoch, 'unixepoch') AS date,
 						sum(bytesfromcachetoclients) AS fromcache,
-						sum(bytesfrompeerstoclients) AS frompeers,
 						sum(bytesfromorigintoclients) AS fromorigin
 						FROM caching
                         GROUP BY date
@@ -74,7 +71,6 @@ class Caching_controller extends Module_controller
             case 'mysql':
                 $sql = "SELECT DATE(FROM_UNIXTIME(collectiondateepoch)) AS date, 
 						sum(bytesfromcachetoclients) AS fromcache,
-						sum(bytesfrompeerstoclients) AS frompeers,
 						sum(bytesfromorigintoclients) AS fromorigin
 						FROM caching
                         GROUP BY date
@@ -85,18 +81,30 @@ class Caching_controller extends Module_controller
         }
         $dates = array();
         $cache = array();
-        $peers = array();
         $origin = array();
                 
         foreach ($cachingdata->query($sql) as $event) {
             $dates[] = $event->date;
             $cache[] = $event->fromcache;
-            $peers[] = $event->frompeers;
             $origin[] = $event->fromorigin;
         }
-
+        
+        $numbervar = range(1,count($dates));
+        
+        $cacheassoc = array();
+        foreach ($numbervar as $i => $value) {
+            $cacheassoc[$value] = intval($cache[$i]);
+        }
+        
+        $originassoc = array();
+        foreach ($numbervar as $i => $value) {
+            $originassoc[$value] = intval($origin[$i]);
+        }
+        
+        $out = array('cache' => $cacheassoc, 'origin' => $originassoc);
+        
         $obj = new View();
-        $obj->view('json', array('msg' => array('dates' => $dates, 'cache' => $cache, 'peers' => $peers, 'origin' => $origin)));
+        $obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
     }
     
     

@@ -741,7 +741,11 @@
 			"info": "Totals since this data is being collected",
 			"title": "Bound to a Directory Service"
 		},
-		"caching": "Caching Bytes Served",
+		"caching": {
+			"graph_title": "Historical Caching Bytes Served",
+			"title": "Caching Bytes Served",
+			"tooltip": "Data that has been served from OS X Server's Caching Server"
+        },
 		"certificate": {
 			"expired": "Expired",
 			"ok": "Valid for more than three months",
