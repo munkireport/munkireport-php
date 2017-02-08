@@ -105,9 +105,17 @@
 	"buildversion": "Build Version",
 	"caching": {
 		"bytes_served": "Caching – Bytes Served",
+		"client_requests": "Requests From Clients",
+		"date": "Date",
 		"from_origin": "From Origin",
 		"from_peers": "From Peers",
-		"from_cache": "From Cache"
+		"from_cache": "From Cache",
+		"peer_requests": "Requests From Peers",
+		"purged_1": "Purged Younger Than 1 Day",
+		"purged_7": "Purged Younger Than 7 Days",
+		"purged_30": "Purged Younger Than 30 Days",
+		"reporttitle": "Caching Server Report",
+		"total_purged": "Total Purged"
 	},
 	"cert": {
 		"expired": "__name__ expired __moment__"
@@ -747,6 +755,11 @@
 			"info": "Totals since this data is being collected",
 			"title": "Bound to a Directory Service"
 		},
+		"caching": {
+			"graph_title": "Historical Caching Bytes Served",
+			"title": "Caching Bytes Served",
+			"tooltip": "Data that has been served from OS X Server's Caching Server"
+        },
 		"certificate": {
 			"expired": "Expired",
 			"ok": "Valid for more than three months",
