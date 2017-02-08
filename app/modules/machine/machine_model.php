@@ -61,7 +61,7 @@ class Machine_model extends Model
 
         $this->serial = $serial;
     }
-    
+
     /**
      * Get duplicate computernames
      *
@@ -78,37 +78,76 @@ class Machine_model extends Model
 				GROUP BY computer_name
 				HAVING count > 1
 				ORDER BY count DESC";
-                
+
         foreach ($this->query($sql) as $obj) {
             $out[] = $obj;
         }
-        
+
         return $out;
     }
-    
+
     /**
      * Get model statistics
      *
      **/
-    public function get_model_stats()
+    public function get_model_stats($summary)
     {
         $out = array();
         $filter = get_machine_group_filter();
-        $sql = "SELECT count(*) AS count, machine_desc 
+        $sql = "SELECT count(*) AS count, machine_desc AS label
 				FROM machine
 				LEFT JOIN reportdata USING (serial_number)
 				$filter
-				GROUP BY machine_desc 
+				GROUP BY machine_desc
 				ORDER BY count DESC";
-        
+
         foreach ($this->query($sql) as $obj) {
-            $obj->machine_desc = $obj->machine_desc ? $obj->machine_desc : 'Unknown';
+            $obj->label = $obj->label ? $obj->label : 'Unknown';
             $out[] = $obj;
         }
-        
+
+        // Check if we need to convert to summary (Model + screen size)
+        if($summary){
+            $model_list = array();
+            foreach ($out as $key => $obj) {
+                // Mac mini Server (Late 2012)
+                //
+                $suffix = "";
+                if(preg_match('/^(.+) \((.+)\)/', $obj->label, $matches))
+                {
+                    $name = $matches[1];
+                    // Find suffix
+                    if(preg_match('/([\d\.]+-inch)/', $matches[2], $matches))
+                    {
+                        $suffix = ' ('.$matches[1].')';
+                    }
+                }
+                else
+                {
+                    $name = $obj->label;
+
+                }
+                if(! isset($model_list[$name.$suffix]))
+                {
+                    $model_list[$name.$suffix] = 0;
+                }
+                $model_list[$name.$suffix] += $obj->count;
+
+            }
+            // Erase out
+            $out = array();
+            // Sort model list
+            arsort($model_list);
+            // Add entries to $out
+            foreach ($model_list as $key => $count)
+            {
+                $out[] = array('label' => $key, 'count' => $count);
+            }
+        }
+
         return $out;
     }
-    
+
     /**
      * Get memory statistics
      *
@@ -126,9 +165,10 @@ class Machine_model extends Model
 
         foreach ($this->query($sql) as $obj) {
             $obj->physical_memory = intval($obj->physical_memory);
+            $obj->count = intval($obj->count);
             $out[] = $obj;
         }
-        
+
         return $out;
     }
 
@@ -170,7 +210,7 @@ class Machine_model extends Model
                 $mult = $mult / 100;
             }
         }
-        
+
         // Dirify buildversion
         if (isset($mylist['buildversion'])) {
             $mylist['buildversion'] = preg_replace('/[^A-Za-z0-9]/', '', $mylist['buildversion']);

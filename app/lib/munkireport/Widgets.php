@@ -23,6 +23,12 @@ class Widgets
             'path' => conf('view_path') . 'widgets/',
         );
         
+        // Get widgets in modules
+        $this->searchWidgetsInModules(conf('module_path'));
+        
+        // Get widgets in widget directory
+        $this->searchWidgetsInFolder(conf('view_path') . 'widgets/');
+        
         // Get widgets in custom modules
         if(conf('custom_folder')){
             
@@ -35,11 +41,6 @@ class Widgets
                 $this->searchWidgetsInFolder($customPath.'views/widgets/');
             }
         }
-        // Get widgets in modules
-        $this->searchWidgetsInModules(conf('module_path'));
-        
-        // Get widgets in widget directory
-        $this->searchWidgetsInFolder(conf('view_path') . 'widgets/');
     }
     
     public function get($widgetName)

@@ -1,65 +1,4 @@
 <?php
-<<<<<<< HEAD
-class Deploystudio_model extends Model {
-	
-	protected $error = '';
-	protected $module_dir;
-	
-	function __construct($serial='')
-	{
-		parent::__construct('id', 'deploystudio'); //primary key, tablename
-		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['architecture'] = '';
-		$this->rs['cn'] = '';
-		$this->rs['dstudio_auto_disable'] = '';
-		$this->rs['dstudio_auto_reset_workflow'] = '';
-		$this->rs['dstudio_auto_started_workflow'] = '';
-		$this->rs['dstudio_bootcamp_windows_computer_name'] = '';
-		$this->rs['dstudio_disabled'] = '';
-		$this->rs['dstudio_group'] = '';
-		$this->rs['dstudio_host_ard_field_1'] = '';
-		$this->rs['dstudio_host_ard_field_2'] = '';
-		$this->rs['dstudio_host_ard_field_3'] = '';
-		$this->rs['dstudio_host_ard_field_4'] = '';
-		$this->rs['dstudio_host_ard_ignore_empty_fields'] = '';
-		$this->rs['dstudio_host_delete_other_locations'] = '';
-		$this->rs['dstudio_host_model_identifier'] = '';
-		$this->rs['dstudio_host_new_network_location'] = '';
-		$this->rs['dstudio_host_primary_key'] = '';
-		$this->rs['dstudio_host_serial_number'] = '';
-		$this->rs['dstudio_host_type'] = '';
-		$this->rs['dstudio_hostname'] = '';
-		$this->rs['dstudio_last_workflow'] = '';
-		$this->rs['dstudio_last_workflow_duration'] = '';
-		$this->rs['dstudio_last_workflow_execution-date'] = '';
-		$this->rs['dstudio_last_workflow_status'] = '';
-		$this->rs['dstudio_mac_addr'] = '';
-		
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-        
-		// Add indexes
-		$this->idx[] = array('dstudio_host_serial_number');
-		$this->idx[] = array('dstudio_hostname');
-		$this->idx[] = array('dstudio_mac_addr');
-		$this->idx[] = array('dstudio_last_workflow');
-		$this->idx[] = array('cn');
-		
-		// Create table if it does not exist
-		$this->create_table();
-		
-		if ($serial)
-		{
-			$this->retrieve_record($serial);
-		}
-		
-		$this->serial_number = $serial;
-		
-		$this->module_dir = dirname(__FILE__);
-		  
-	}
-=======
 class Deploystudio_model extends Model
 {
     
@@ -119,7 +58,6 @@ class Deploystudio_model extends Model
         
         $this->module_dir = dirname(__FILE__);
     }
->>>>>>> munkireport/wip
 
      /**
      * Get DeployStudio data

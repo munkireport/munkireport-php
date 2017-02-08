@@ -49,7 +49,6 @@
 
   <script>
     $('.mr-alert').prependTo('body>div.container:first');
-	var munkireport = { debug: <?php echo conf('debug') ? 'true' : 'false'; ?>, subdirectory: "<?php echo conf('subdirectory'); ?>" }
   </script>
 
 
@@ -63,8 +62,8 @@
   <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.settings.js"></script>
 
   <script>
-
-
+    // Inject debug value from php
+    mr.debug = <?php echo conf('debug') ? 'true' : 'false'; ?>;
   </script>
   
 
@@ -73,6 +72,10 @@
   <?php endif; ?>
 
   <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.js"></script>
+  
+  <?php if(isset($recaptcha) && conf('recaptchaloginpublickey')):?>
+      <script src='https://www.google.com/recaptcha/api.js'></script>
+  <?php endif?>
   
   <script>
   $(document).on('appUpdate', function(){

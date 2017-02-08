@@ -41,22 +41,6 @@ class Deploystudio_helper
         $plist = array_values($plist);
         $plist = $plist[0];
 
-<<<<<<< HEAD
-    	foreach($plist as $key=>$value){
-            $safe_key = str_replace('-','_',$key);
-    		$deploystudio_model->$safe_key = $value;
-    	}
-
-    	if(array_key_exists('dstudio-auto-started-workflow',$plist)){
-    		$workflow_title = $this->get_workflow_title($plist['dstudio-auto-started-workflow']);
-    		$deploystudio_model->{'dstudio_auto_started_workflow'} = $workflow_title;
-    	}
-
-    	if(array_key_exists('dstudio-last-workflow',$plist)){
-    		$workflow_title = $this->get_workflow_title($plist['dstudio-last-workflow']);
-    		$deploystudio_model->{'dstudio_last_workflow'} = $workflow_title;
-    	}
-=======
         foreach ($plist as $key => $value) {
             $safe_key = str_replace('-', '_', $key);
             $deploystudio_model->$safe_key = $value;
@@ -71,7 +55,6 @@ class Deploystudio_helper
             $workflow_title = $this->get_workflow_title($plist['dstudio-last-workflow']);
             $deploystudio_model->{'dstudio_last_workflow'} = $workflow_title;
         }
->>>>>>> munkireport/wip
 
       // Save the data
         $deploystudio_model->save();

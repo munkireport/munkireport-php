@@ -19,6 +19,8 @@
 	<div class="row">
 
 		<?php $widget->view($this, 'hardware_model'); ?>
+		
+		<?php $widget->view($this, 'hardware_basemodel'); ?>
 
 		<?php $widget->view($this, 'hardware_warranty'); ?>
 
