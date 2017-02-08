@@ -79,7 +79,7 @@ class Bluetooth_model extends Model
         }
         
         foreach ($mylist as $key => $value) {
-            $this->device_type = strtolower($key);
+            $this->device_type = str_replace(' ', '_', strtolower($key));
             $this->battery_percent = $value;
 
             $this->id = '';
