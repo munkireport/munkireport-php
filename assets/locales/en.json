@@ -238,7 +238,8 @@
         "dstudio-last-workflow-execution-date": "Last Workflow Execution Date",
         "dstudio-last-workflow-status": "Workflow Status",
         "dstudio-mac-addr": "MAC Address",
-        "recheck": "Pull DeployStudio Data"
+        "recheck": "Pull DeployStudio Data",
+        "report": "DeployStudio Report"
     },
 	"displayname": "Display Name",
 	"edit": "Edit",
@@ -509,16 +510,24 @@
 		"reports": {
 			"appVersions": "App Versions Report",
 			"backup": "Backup Report",
+			"backup2go" : "Backup2Go Report",
 			"clients": "Client Report",
 			"configuration": "Configuration Report",
+			"directoryservice": "Directory Services Report",
+			"disk": "Disk Report",
 			"findmymac": "Find My Mac Report",
+			"gsx": "GSX Report",
 			"hardware": "Hardware Report",
 			"location": "Location Report",
 			"munki": "Munki Report",
 			"network": "Network Report",
 			"power": "Power Report",
-			"backup2go" : "Backup2Go Report",
-			"security": "Security Report"
+			"printer": "Printer Report",
+			"profile": "Profile Report",
+			"sccm": "SCCM Agent Status Report",
+			"security": "Security Report",
+			"warranty": "Warranty Report",
+			"wifi": "WiFi Report"
 		},
 		"user": {
 			"logout": "Sign Off"

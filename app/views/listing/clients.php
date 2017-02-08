@@ -14,7 +14,7 @@ new Munkireport_model;
 
 	<div class="col-lg-12">
 
-	  <h3>Clients report <span id="total-count" class='label label-primary'>…</span></h3>
+	  <h3><span data-i18n="nav.reports.client"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 
@@ -23,9 +23,9 @@ new Munkireport_model;
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
 			<th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
-      <th data-colname='machine.os_version'>OS</th>
+			<th data-colname='machine.os_version'>OS</th>
 			<th data-i18n="buildversion" data-colname='machine.buildversion'>Type</th>
-      <th data-colname='machine.machine_name'>Type</th>
+			<th data-colname='machine.machine_name'>Type</th>
 			<th data-colname='warranty.status'>Warranty status</th>
 			<th data-colname='reportdata.uptime'>Uptime</th>
 			<th data-colname='reportdata.timestamp'>Check-in</th>
