@@ -113,45 +113,14 @@ class Caching_controller extends Module_controller
 
         $queryobj = new Caching_model();
         
-        $sql = "SELECT 	round((sum(bytesfromcachetoclients)/1024/1024.0),4) AS fromcache,
-						round((sum(bytesfrompeerstoclients)/1024/1024.0),4) AS frompeers,
-						round((sum(bytesfromorigintoclients)/1024/1024.0),4) AS fromorigin
+        $sql = "SELECT 	sum(bytesfromcachetoclients) AS fromcache,
+						sum(bytesfrompeerstoclients) AS frompeers,
+						sum(bytesfromorigintoclients) AS fromorigin
 						FROM caching
                         LEFT JOIN reportdata USING (serial_number)
                         ".get_machine_group_filter();
         
         $caching_array = $queryobj->query($sql);
-            
-        if ( $caching_array[0]->fromcache <= 1 ) {  //format fromcache
-            $caching_array[0]->fromcache = (round($caching_array[0]->fromcache * 1024, 2))."KB";
-        } elseif ( $caching_array[0]->fromcache <= 1023 ) {  
-            $caching_array[0]->fromcache = (round($caching_array[0]->fromcache, 2))."MB";
-        } elseif ( $caching_array[0]->fromcache <= 1048575 ) {  
-            $caching_array[0]->fromcache = (round($caching_array[0]->fromcache / 1024, 2))."GB";
-        }elseif ( $caching_array[0]->fromcache >= 1048576 ) {  
-            $caching_array[0]->fromcache = (round($caching_array[0]->fromcache / 1024 / 1024, 2))."TB";
-        }
-             
-        //if ( $caching_array[0]->frompeers <= 1 ) {  //format frompeers
-        //    $caching_array[0]->frompeers = (round($caching_array[0]->frompeers * 1024, 2))."KB";
-        //} elseif ( $caching_array[0]->frompeers <= 1023 ) {  
-        //    $caching_array[0]->frompeers = (round($caching_array[0]->frompeers, 2))."MB";
-        //} elseif ( $caching_array[0]->frompeers <= 1048575 ) {  
-        //    $caching_array[0]->frompeers = (round($caching_array[0]->frompeers / 1024, 2))."GB";
-        //}elseif ( $caching_array[0]->frompeers >= 1048576 ) {  
-        //    $caching_array[0]->frompeers = (round($caching_array[0]->frompeers / 1024 / 1024, 2))."TB";
-        //}
-        // Peers is turned off because it isn't used in the widget
-        
-        if ( $caching_array[0]->fromorigin <= 1 ) {  //format fromorigin
-            $caching_array[0]->fromorigin = (round($caching_array[0]->fromorigin * 1024, 2))."KB";
-        } elseif ( $caching_array[0]->fromorigin <= 1023 ) {  
-            $caching_array[0]->fromorigin = (round($caching_array[0]->fromorigin, 2))."MB";
-        } elseif ( $caching_array[0]->fromorigin <= 1048575 ) {  
-            $caching_array[0]->fromorigin = (round($caching_array[0]->fromorigin / 1024, 2))."GB";
-        }elseif ( $caching_array[0]->fromorigin >= 1048576 ) {  
-            $caching_array[0]->fromorigin = (round($caching_array[0]->fromorigin / 1024 / 1024, 2))."TB";
-        }
                 
         $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
