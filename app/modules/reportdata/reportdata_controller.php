@@ -69,7 +69,7 @@ class Reportdata_controller extends Module_controller
 
         switch ($reportdata->get_driver()) {
             case 'sqlite':
-                $sql = "SELECT DATE(reg_timestamp, 'unixepoch') AS date,
+                $sql = "SELECT strftime('%Y-%m', DATE(reg_timestamp, 'unixepoch')) AS date,
 						COUNT(*) AS cnt,
 						machine_name AS type
 						FROM reportdata r
@@ -80,13 +80,13 @@ class Reportdata_controller extends Module_controller
 						ORDER BY date";
                 break;
             case 'mysql':
-                $sql = "SELECT DATE(FROM_UNIXTIME(reg_timestamp)) AS date, 
+                $sql = "SELECT DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date, 
 						COUNT(*) AS cnt,
 						machine_name AS type
 						FROM reportdata r
 						LEFT JOIN machine m 
 							ON (r.serial_number = m.serial_number)
-						$where
+                        $where
 						GROUP BY date, machine_name
 						ORDER BY date";
                 break;
@@ -98,16 +98,39 @@ class Reportdata_controller extends Module_controller
         $out = array();
         
         foreach ($reportdata->query($sql) as $event) {
-        // Store date
-            $pos = array_search($event->date, $dates);
+            // Store date
+            $d = new DateTime( $event->date );
+            $lastDayOfTheMonth = $d->format( 'Y-m-t' );
+            
+            // Check if this is the first run
+            if( ! $dates){
+                // Subtract 16 days and format to last day of the month
+                $lastDayOfTheMonthBefore = $d->sub(new DateInterval('P16D'))->format( 'Y-m-t' );
+                array_push($dates, $lastDayOfTheMonthBefore);
+            }
+            
+            $pos = array_search($lastDayOfTheMonth, $dates);
             if ($pos === false) {
-                array_push($dates, $event->date);
+                array_push($dates, $lastDayOfTheMonth);
                 $pos = count($dates) - 1;
             }
 
             $out[$event->type][$pos] = intval($event->cnt);
         }
-
+        
+        // Sort machine types
+        ksort($out);
+        
+        // Replace last date with current date
+        if(array_pop($dates)){
+            array_push($dates, date('Y-m-d'));
+        }
+        
+        // Prepend all types with 0
+        foreach($out as $type => $data)
+        {
+            $out[$type][0] = 0;
+        }
 
         $obj = new View();
         $obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));

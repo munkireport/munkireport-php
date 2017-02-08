@@ -179,6 +179,8 @@
   "danger": "Erreur",
 	"database": "Base de données",
   "date": {
+	"day": "jour",
+	"day_plural": "jours",
     "year": "année"
   },
   "db": {
@@ -232,7 +234,7 @@
         "dstudio-last-workflow-execution-date": "Date d'exécution du dernier workflow",
         "dstudio-last-workflow-status": "Etat Workflow",
         "dstudio-mac-addr": "Adresse MAC",
-        "recheck": "Pull DeployStudio Data"
+        "recheck": "Données DeployStudio"
     },
   "displayname": "Nom d'affichage",
    "edit": "Modifier",
@@ -329,6 +331,16 @@
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
   "listing": {
+"appusage": {
+			"appname": "Nom Applications",
+			"appusage": "Usage Applications",
+			"appusagereport": "Rapport Usage Applications",
+			"count": "Compteur",
+			"event": "Evènement",
+			"lastevent": "Dernier évènement",
+			"launch": "Lancer",
+			"quit": "Quitter"
+		},
     "ard": {
       "text": "Texte __number__",
       "title": "Rapport Apple Remote Desktop"
@@ -404,7 +416,13 @@
   },
   "loading": "Chargement des données depuis le serveur",
   "machine": {
-    "hardware_widget_title": "Détails de l'appareil"
+		"arch": "Arch",
+		"cores": "Cores",
+		"cpu_speed": "Fréquence CPU",
+		"hardware_type_title": "Répartition par matériel",
+    		"hardware_widget_title": "Détails de l'appareil",
+		"model": "Modéle",
+		"rom_version": "Version ROM"
   },
   "managedinstalls": {
 		"failing_clients": "Clients avec erreurs d'installation",
@@ -451,6 +469,7 @@
         "ru": "Русский"
     },
     "listings": {
+	"appusage": "Usage Applications",
       "ard": "Apple Remote Desktop",
       "bluetooth": "Bluetooth",
       "backup2go": "Archiware Backup2Go",
@@ -550,6 +569,7 @@
 		"pdo": "Extension PDO",
 		"pdodrivers": "Base de données pilotes PDO",
 		"php": "PHP",
+		"soap": "Extension SOAP",
 		"version": "Version"
 		},
   "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
@@ -582,9 +602,19 @@
 	  "enrollment_status": "Etat de l'inscription"
 	},
   "security": {
-    "security": "Sécurité",
-    "gatekeeper": "Etat Gatekeeper",
-    "sip": "Etat SIP"
+	"report": "Rapport Sécurité",
+    	"security": "Sécurité",
+	"gatekeeper": "Etat Gatekeeper",
+	"gatekeeper_active": "Gatekeeper sctif",
+	"gatekeeper_disabled": "Gatekeeper désactivé",
+	"sip": "Etat SIP",
+	"ssh_users": "Utilisateurs SSH",
+	"ard_users": "Utilisateurs ARD",
+	"firmwarepw": "Mot de passe firmware",
+	"sip_status": "Etat SIP",
+	"sip_active": "SIP actif",
+	"sip_disabled": "SIP désactivé"
+
   },
   "serial": "Numéro de série",
   "servermetrics": {
@@ -691,6 +721,10 @@
     },
     "app": {
       "versions": "Versions connues du __app__"
+},
+        "appusage": {
+            "title": "Usages Applications",
+            "tooltip": "Applications les plus utilisées"
     },
     "bound_to_ds": {
       "bound": "Lié",
@@ -705,25 +739,74 @@
       "title": "Certificats"
     },
     "duplicate_computernames": {
-      "notfound": "Pas de doublons trouvés"
+      "notfound": "Pas de doublons trouvés",
+	"title": "Nom des ordinateurs dupliqués"
+	},
+	"manifest": {
+	"title": "Manifests"
+		},
+	"memory": {
+		"title": "Répartition par mémoire"
+		},
+		"modified_computernames": {
+			"title": "Pas de concordance avec les noms AD",
+			"tooltip": "Ordinateurs ne correspondants pas au nom AD"
     },
     "munki": {
-      "no_updates_pending": "Pas de mise à jour en attente"
+      "no_updates_pending": "Pas de mise à jour en attente",
+	"title": "Munki"
     },
     "munkiinfo": {
       "munkiprotocol": {
         "localrepo": "repo local",
         "http": "http",
-        "https": "https"
+        "https": "https",
+	"title": "Protocole Munki",
+	"tooltip": "Protocole Munki entre tous les clients"
       }
     },
+	"munki_versions": {
+			"title": "Versions Munki",
+			"tooltip": "Versions Munki entre tous les clients"
+		},
+		"network_location": {
+			"title": "Emplacements réseau"
+		},
+		"network_vlan": {
+			"title": "Vlans réseau"
+		},
+		"new_clients": {
+			"no_new_clients": "Pas de nouveau client",
+			"title": "Nouveaux clients",
+			"tooltip": "Clients enregistrés cette semaine"
+		},
+		"os": {
+			"title": "Répartition par OS"
+		},
+		"pending": {
+			"title": "Clients avec installation en attente"
+		},
+		"pending_apple": {
+			"title": "Mises à jour Apple en attente",
+			"tooltip": "Mises à jour Apple en attente pour cette semaine"
+		},
+		"pending_munki": {
+			"title": "Installations en attente",
+			"tooltip": "Installation en attente pour cette semaine"
+		},
     "power": {
+"health": {
+				"title": "Etat de santé de la batterie",
+				"tooltip": "Etat de santé de la batterie"
+			},
       "missing": "Manquant",
       "normal": "Normal",
       "now": "A remplacer maintenant",
       "service": "A entretenir maintenant",
       "soon": "A entretenir bientôt",
-      "nobattery": "Pas de batterie"
+      "nobattery": "Pas de batterie",
+	"title": "Etat de la batterie",
+			"tooltip": "Etat de la batterie"
     },
     "timemachine": {
       "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
@@ -733,9 +816,20 @@
       "b2g_ok": "Dernière sauvegarde de 2 semaines",
 	  "b2g_warning": "Dernière sauvegarde de 4 semaines",
 	  "b2g_danger": "Dernière sauvegarde de plus de 4 semaines"
+},
+		"unknown": {
+			"alert": "Ce widget ne peut être trouvé",
+			"title": "Widget inconnu"
+		},
+		"uptime": {
+			"title": "Temps de fonctionnement"
+		},
+		"warranty": {
+			"title": "Etat de la garantie"
     },
     "warrantysupport": {
-      "warrantyinfo": "Comptes pris en charge, Vintage, Obsolètes et Etat du support inconnu",
+	"title": "Comptes pris en charge, Vintage, Obsolètes, et état du support inconnu",
+      "warrantyinfo": "Comptes pris en charge, Vintage, Obsolètes et état du support inconnu",
       "warrentysupportstatus": "Etat de la garantie du support"
     }
   },
@@ -759,4 +853,3 @@
  },
 	"yes": "Oui"
 }
-

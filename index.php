@@ -52,6 +52,40 @@ function conf($cf_item, $default = '')
 }
 
 /**
+ * Get session item
+ * @param string session item
+ * @param string default value (optional)
+ * @author AvB
+ **/
+function sess_get($sess_item, $default = '')
+{
+	if (! isset($_SESSION))
+	{
+		return $default;
+	}
+	
+	return array_key_exists($sess_item, $_SESSION) ? $_SESSION[$sess_item] : $default;
+}
+
+/**
+ * Set session item
+ * @param string session item
+ * @param string value
+ * @author AvB
+ **/
+function sess_set($sess_item, $value)
+{
+	if (! isset($_SESSION))
+	{
+		return false;
+	}
+	
+	$_SESSION[$sess_item] = $value;
+	
+	return true;
+}
+
+/**
  * Fatal error, show message and die
  *
  * @author AvB

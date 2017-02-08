@@ -5,6 +5,7 @@ mr.loadTheme();
 
 $(document).on('appReady', function(e, lang) {
     
+    $('html.no-js').removeClass('no-js');
 
     // addMenuItem({
     //     menu: 'admin',
@@ -37,9 +38,9 @@ $( document ).ready(function() {
    });
     
     $.i18n.init({
-        debug: munkireport.debug,
+        debug: mr.debug,
         useLocalStorage: false,
-        resGetPath: munkireport.subdirectory + "assets/locales/__lng__.json",
+        resGetPath: baseUrl + "assets/locales/__lng__.json",
         fallbackLng: 'en',
         useDataAttrOptions: true
     }, function() {

@@ -330,6 +330,16 @@
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
+		"appusage": {
+			"appname": "App Name",
+			"appusage": "App Usage",
+			"appusagereport": "App Usage Report",
+			"count": "Count",
+			"event": "Event",
+			"lastevent": "Last Event",
+			"launch": "Launch",
+			"quit": "Quit"
+		},
 		"ard": {
 			"text": "Text __number__",
 			"title": "Apple Remote Desktop Report"
@@ -405,8 +415,14 @@
 	},
 	"loading": "Loading data from server",
 	"machine": {
+		"arch": "Arch",
+		"cores": "Cores",
+		"cpu_speed": "CPU Speed",
 		"hardware_type_title": "Hardware type breakdown",
-		"hardware_widget_title": "Hardware model breakdown"
+		"hardware_widget_title": "Hardware model breakdown",
+		"model": "Model",
+		"rom_version": "ROM Version",
+		"base_model_widget_title": "Base model breakdown"
 	},
 	"managedinstalls": {
 		"failing_clients": "Clients with failing installs",
@@ -453,6 +469,7 @@
 	        "ru": "Русский"
 		},
 		"listings": {
+			"appusage": "App Usage",
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
 			"backup2go": "Archiware Backup2Go",
@@ -495,7 +512,8 @@
 			"munki": "Munki Report",
 			"network": "Network Report",
 			"power": "Power Report",
-			"backup2go" : "Backup2go"
+			"backup2go" : "Backup2go",
+			"security": "Security Report"
 		},
 		"user": {
 			"logout": "Sign Off"
@@ -585,9 +603,18 @@
 	  "enrollment_status": "Enrollment Status"
 	},
 	"security": {
+		"report": "Security Report",
 		"security": "Security",
 		"gatekeeper": "Gatekeeper Status",
-		"sip": "SIP Status"
+		"gatekeeper_active": "Gatekeeper Active",
+		"gatekeeper_disabled": "Gatekeeper Disabled",
+		"sip": "SIP Status",
+		"ssh_users": "SSH Users",
+		"ard_users": "ARD Users",
+		"firmwarepw": "Firmware Password",
+		"sip_status": "SIP Status",
+		"sip_active": "SIP Active",
+		"sip_disabled": "SIP Disabled"
 	},
 	"serial": "Serial Number",
 	"servermetrics": {
@@ -696,6 +723,10 @@
 		"app": {
 			"versions": "Known versions of __app__"
 		},
+        "appusage": {
+            "title": "App Usage",
+            "tooltip": "Most frequently used apps"
+        },
 		"bound_to_ds": {
 			"bound": "Bound",
 			"notbound": "Not Bound",

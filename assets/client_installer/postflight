@@ -2,7 +2,14 @@
 # encoding: utf-8
 '''Postflight script'''
 
-from munkilib import munkicommon
+try:
+    from munkilib import info
+    from munkilib import osutils
+except ImportError:
+    # Legacy support
+    from munkilib import munkicommon as info
+    from munkilib import munkicommon as osutils
+
 from munkilib import reportcommon
 from munkilib import FoundationPlist
 import hashlib
@@ -31,13 +38,13 @@ def main():
     reportcommon.rundir(postflightscriptdir, runtype, False)
 
     # Get serial
-    hardware_info = munkicommon.get_hardware_info()
+    hardware_info = info.get_hardware_info()
     hardware_info['computer_name'] = reportcommon.get_computername()
     hardware_info['cpu'] = reportcommon.get_cpuinfo()
     hardware_info['cpu_arch'] = os.uname()[4]
     hardware_info['hostname'] = os.uname()[1]
     hardware_info['os_version'] = \
-        munkicommon.getOsVersion(only_major_minor=False)
+        osutils.getOsVersion(only_major_minor=False)
     hardware_info['buildversion'] = \
         reportcommon.get_buildversion()
     serial = hardware_info.get('serial_number', 'NO_SERIAL')
@@ -45,7 +52,7 @@ def main():
 
     items = {} # item list
     report_info = {}
-    report_info['console_user'] = "%s" % munkicommon.getconsoleuser()
+    report_info['console_user'] = "%s" % osutils.getconsoleuser()
     report_info['runtype'] = runtype
     report_info['runstate'] = 'done'
     report_info['uptime'] = reportcommon.get_uptime()

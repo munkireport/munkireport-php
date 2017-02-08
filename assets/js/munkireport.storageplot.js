@@ -108,6 +108,9 @@ var drawStoragePlots = function(serialNumber, divid) {
 				    .datum(fill)
 				    .transition().duration(1200)
 				    .call(chart);
+                
+                // Remove fill from labels
+                d3.selectAll('#'+id+' .nv-pieLabels text').style('fill', null);
 
 				return chart;
 
