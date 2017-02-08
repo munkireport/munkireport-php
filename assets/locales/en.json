@@ -728,10 +728,10 @@
 		"app": {
 			"versions": "Known versions of __app__"
 		},
-        "appusage": {
-            "title": "App Usage",
-            "tooltip": "Most frequently used apps"
-        },
+		"appusage": {
+			"title": "App Usage",
+			"tooltip": "Most frequently used apps"
+		},
 		"bound_to_ds": {
 			"bound": "Bound",
 			"notbound": "Not Bound",
@@ -813,6 +813,9 @@
 			"nobattery": "No Battery",
 			"title": "Battery Condition",
 			"tooltip": "Battery condition listing"
+		},
+		"registered": {
+			"title": "Client Registration Over Time"
 		},
 		"timemachine": {
 			"lastweek": "Latest backup more than a day ago",
