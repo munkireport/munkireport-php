@@ -2,12 +2,6 @@
 
 		<table class="table table-striped">
 			<tbody>
-			<thead>
-				<tr>
-					<th data-i18n="sccm_status.titleheader"></th>
-					<th>Value</th>
-				</tr>
-			</thead>
 				<tr>
 					<td data-i18n="sccm_status.enrollment_status"></td>
 					<td id="sccm-agent_status"></td>
