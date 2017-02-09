@@ -11,16 +11,16 @@ new Reportdata_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Hardware report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="nav.reports.hardware"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 		  
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-                <th data-i18n="machine.model" data-colname='machine.machine_model'></th>
-                <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'></th>
+		        <th data-i18n="machine.model" data-colname='machine.machine_model'></th>
+		        <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'></th>
 		        <th data-i18n="memory.memory" data-colname='machine.physical_memory'></th>
 		        <th data-i18n="machine.cores" data-colname='machine.number_processors'></th>
 		        <th data-i18n="machine.arch" data-colname='machine.cpu_arch'></th>
@@ -30,7 +30,7 @@ new Reportdata_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
