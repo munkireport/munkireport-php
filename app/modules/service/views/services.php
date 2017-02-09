@@ -18,16 +18,16 @@ new Service_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
 		        <th data-i18n="service.name" data-colname='service.service_name'></th>
 		        <th data-i18n="service.status" data-colname='service.service_state'></th>
-				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
+		        <th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="6" class="dataTables_empty">Loading data from server</td>
+					<td colspan="5" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>

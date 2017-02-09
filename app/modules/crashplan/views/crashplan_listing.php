@@ -22,19 +22,19 @@ new Crashplan_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
 		        <th data-i18n="backup.destination" data-colname='crashplan.destination'></th>
-                <th data-i18n="backup.last_success" data-colname='crashplan.last_success'></th>
-                <th data-i18n="backup.duration" data-colname='crashplan.duration'></th>
-                <th data-i18n="backup.last_failure" data-colname='crashplan.last_failure'></th>
-                <th data-i18n="backup.last_failure_msg" data-colname='crashplan.reason'></th>
-				<th data-i18n="listing.checkin" data-colname='crashplan.timestamp'></th>
+		        <th data-i18n="backup.last_success" data-colname='crashplan.last_success'></th>
+		        <th data-i18n="backup.duration" data-colname='crashplan.duration'></th>
+		        <th data-i18n="backup.last_failure" data-colname='crashplan.last_failure'></th>
+		        <th data-i18n="backup.last_failure_msg" data-colname='crashplan.reason'></th>
+		        <th data-i18n="listing.checkin" data-colname='crashplan.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="6" class="dataTables_empty">Loading data from server</td>
+					<td colspan="8" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>

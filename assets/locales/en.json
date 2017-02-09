@@ -63,26 +63,31 @@
 		"wrong_user_or_pass": "Wrong username or password"
 	},
 	"backup":{
-		"destination": "Backup Destination",
+		"backup_location": "Backup location",
+		"destination": "Backup destination",
+		"destinations": "Backup destinations",
 		"duration": "Backup duration",
 		"last_failure": "Last failed backup",
 		"last_failure_msg": "Message",
-		"last_success": "Last successful backup"
+		"last_success": "Last successful backup",
+		"location_name": "Location name",
+		"kind": "Backup kind"
 	},
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
 	},
 	"bluetooth": {
 		"all_ok": "No bluetooth devices with low battery",
-		"apple wireless keyboard": "Apple Wireless Keyboard",
-		"apple wireless trackpad": "Apple Wireless Trackpad",
-		"apple magic mouse": "Apple Magic Mouse",
+		"apple_wireless_keyboard": "Apple Wireless Keyboard",
+		"apple_wireless_trackpad": "Apple Wireless Trackpad",
+		"apple_wireless_mouse": "Apple Wireless Mouse",
+		"apple_magic_mouse": "Apple Magic Mouse",
 		"bluetooth": "Bluetooth",
 		"bluetooth_battery_widget": "Bluetooth battery status",
 		"keyboard": "Keyboard Status",
-		"magic keyboard": "Magic Keyboard",
-		"magic trackpad 2": "Magic Trackpad 2",
-		"magic mouse 2": "Magic Mouse 2",
+		"magic_keyboard": "Magic Keyboard",
+		"magic_trackpad_2": "Magic Trackpad 2",
+		"magic_mouse_2": "Magic Mouse 2",
 		"mouse": "Mouse Status",
 		"panel_title": "Bluetooth devices with less than 15% battery life",
 		"status": "Bluetooth Status",
@@ -100,9 +105,17 @@
 	"buildversion": "Build Version",
 	"caching": {
 		"bytes_served": "Caching – Bytes Served",
+		"client_requests": "Requests From Clients",
+		"date": "Date",
 		"from_origin": "From Origin",
 		"from_peers": "From Peers",
-		"from_cache": "From Cache"
+		"from_cache": "From Cache",
+		"peer_requests": "Requests From Peers",
+		"purged_1": "Purged Younger Than 1 Day",
+		"purged_7": "Purged Younger Than 7 Days",
+		"purged_30": "Purged Younger Than 30 Days",
+		"reporttitle": "Caching Server Report",
+		"total_purged": "Total Purged"
 	},
 	"cert": {
 		"expired": "__name__ expired __moment__"
@@ -172,7 +185,7 @@
 	},
 	"backup2go": {
 		"widget": {
-			"title": "Backup2go Status"
+			"title": "Backup2Go Status"
 		}
 	},
 	"danger": "Error",
@@ -233,7 +246,8 @@
         "dstudio-last-workflow-execution-date": "Last Workflow Execution Date",
         "dstudio-last-workflow-status": "Workflow Status",
         "dstudio-mac-addr": "MAC Address",
-        "recheck": "Pull DeployStudio Data"
+        "recheck": "Pull DeployStudio Data",
+        "report": "DeployStudio Report"
     },
 	"displayname": "Display Name",
 	"edit": "Edit",
@@ -266,7 +280,7 @@
 	"filevault": {
 		"users": "FileVault Enabled users",
 		"widget": {
-			"title": "Filevault 2 status"
+			"title": "FileVault 2 status"
 		}
 	},
 	"filter": {
@@ -276,7 +290,7 @@
 		"listing": {
 			"email": "Email",
 			"status": "Status",
-			"title": "Find My Mac report",
+			"title": "Find My Mac Report",
 			"ownerdisplayname": "Owner Display Name",
 			"personid": "iCloud PersonID",
 			"hostname": "iCloud Hostname"
@@ -345,17 +359,17 @@
 			"title": "Apple Remote Desktop Report"
 		},
 		"backup2go": {
-			"title": "Backup2go",
-			"date": "Last successful backup",
+			"title": "Backup2Go Report",
+			"date": "Last Successful Backup",
 			"widget": {
-				"title": "Notification rules"
+				"title": "Notification Rules"
 			}
 		},
 		"bluetooth": {
 			"battery_percent": "Battery Percent",
 			"bluetooth_power": "Bluetooth Power",
 			"device_type": "Device Type",
-			"title": "Bluetooth report"
+			"title": "Bluetooth Report"
 		},
 		"certificate": {
 			"commonname": "Common Name",
@@ -380,10 +394,10 @@
 			"pending_removal_plural": "Pending removals"
 		},
 		"timemachine": {
-			"duration": "Backup duration",
-			"last_failure": "Last failed backup",
+			"duration": "Backup Duration",
+			"last_failure": "Last Failed Backup",
 			"last_failure_msg": "Message",
-			"last_success": "Last successful backup",
+			"last_success": "Last Successful Backup",
 			"title": "Time Machine Report"
 		},
 		"username": "Username",
@@ -418,17 +432,17 @@
 		"arch": "Arch",
 		"cores": "Cores",
 		"cpu_speed": "CPU Speed",
-		"hardware_type_title": "Hardware type breakdown",
-		"hardware_widget_title": "Hardware model breakdown",
+		"hardware_type_title": "Hardware Type breakdown",
+		"hardware_widget_title": "Hardware Model Breakdown",
 		"model": "Model",
 		"rom_version": "ROM Version",
-		"base_model_widget_title": "Base model breakdown"
+		"base_model_widget_title": "Base Model Breakdown"
 	},
 	"managedinstalls": {
 		"failing_clients": "Clients with failing installs",
 		"installratio_report": "Installation Ratio Report",
 		"no_managedinstalls": "No Managed Installs",
-		"report": "Managedinstalls Report",
+		"report": "Managed Installs Report",
 		"title": "Managed Installs"
 	},
 	"manifest": {
@@ -504,16 +518,24 @@
 		"reports": {
 			"appVersions": "App Versions Report",
 			"backup": "Backup Report",
+			"backup2go" : "Backup2Go Report",
 			"clients": "Client Report",
 			"configuration": "Configuration Report",
+			"directoryservice": "Directory Services Report",
+			"disk": "Disk Report",
 			"findmymac": "Find My Mac Report",
+			"gsx": "GSX Report",
 			"hardware": "Hardware Report",
 			"location": "Location Report",
 			"munki": "Munki Report",
 			"network": "Network Report",
 			"power": "Power Report",
-			"backup2go" : "Backup2go",
-			"security": "Security Report"
+			"printer": "Printer Report",
+			"profile": "Profile Report",
+			"sccm": "SCCM Agent Status Report",
+			"security": "Security Report",
+			"warranty": "Warranty Report",
+			"wifi": "WiFi Report"
 		},
 		"user": {
 			"logout": "Sign Off"
@@ -554,7 +576,7 @@
 		"notification_who": "Email address",
 		"title": "Notifications",
 		"widget": {
-			"title": "Notification rules"
+			"title": "Notification Rules"
 		}
 	},
 	"on": "On",
@@ -672,7 +694,7 @@
 	},
 	"tag": {
 		"listing": {
-			"title": "Tag report"
+			"title": "Tag Report"
 		},
 		"name": "Tag Name",
 		"widget_title": "Tags"
@@ -681,7 +703,7 @@
 		"add_tag": "Add Tag"
 	},
 	"timemachine": {
-		"timemachine": "Timemachine"
+		"timemachine": "Time Machine"
 	},
 	"total_clients": "Total Clients",
 	"trackpad": "Trackpad",
@@ -723,16 +745,21 @@
 		"app": {
 			"versions": "Known versions of __app__"
 		},
-        "appusage": {
-            "title": "App Usage",
-            "tooltip": "Most frequently used apps"
-        },
+		"appusage": {
+			"title": "App Usage",
+			"tooltip": "Most frequently used apps"
+		},
 		"bound_to_ds": {
 			"bound": "Bound",
 			"notbound": "Not Bound",
 			"info": "Totals since this data is being collected",
 			"title": "Bound to a Directory Service"
 		},
+		"caching": {
+			"graph_title": "Historical Caching Bytes Served",
+			"title": "Caching Bytes Served",
+			"tooltip": "Data that has been served from OS X Server's Caching Server"
+        },
 		"certificate": {
 			"expired": "Expired",
 			"ok": "Valid for more than three months",
@@ -747,10 +774,10 @@
 			"title": "Manifests"
 		},
 		"memory": {
-			"title": "Memory breakdown"
+			"title": "Memory Breakdown"
 		},
 		"modified_computernames": {
-			"title": "Not matching AD Names",
+			"title": "Not Matching AD Names",
 			"tooltip": "Computers where the computer name doesn't match the AD name"
 		},
 		"munki": {
@@ -767,29 +794,29 @@
 			}
 		},
 		"munki_versions": {
-			"title": "Munki versions",
+			"title": "Munki Versions",
 			"tooltip": "Munki versions among all clients"
 		},
 		"network_location": {
-			"title": "Network locations"
+			"title": "Network Locations"
 		},
 		"network_vlan": {
-			"title": "Network vlans"
+			"title": "Network VLANss"
 		},
 		"new_clients": {
 			"no_new_clients": "No new clients",
-			"title": "New clients",
+			"title": "New Clients",
 			"tooltip": "Clients registered this week"
 		},
 		"os": {
-			"title": "OS breakdown"
+			"title": "OS Breakdown"
 		},
 		"pending": {
-			"title": "Clients with pending installs"
+			"title": "Clients With Pending Installs"
 		},
 		"pending_apple": {
 			"title": "Pending Apple Updates",
-			"tooltip": "Pending Apple Updates for this week"
+			"tooltip": "Pending Apple updates for this week"
 		},
 		"pending_munki": {
 			"title": "Pending Installs",
@@ -809,6 +836,9 @@
 			"title": "Battery Condition",
 			"tooltip": "Battery condition listing"
 		},
+		"registered": {
+			"title": "Client Registration Over Time"
+		},
 		"timemachine": {
 			"lastweek": "Latest backup more than a day ago",
 			"title": "Timemachine Status",
@@ -826,7 +856,7 @@
 			"title": "Uptime"
 		},
 		"warranty": {
-			"title": "Warranty status"
+			"title": "Warranty Status"
 		},
         "warrantysupport":{
 			"title": "Counts Supported, Vintage, Obsolete, and Unknown support status",

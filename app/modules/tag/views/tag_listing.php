@@ -31,7 +31,7 @@ new Tag_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="6" class="dataTables_empty">Loading data from server</td>
+					<td colspan="5" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>
