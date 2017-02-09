@@ -558,6 +558,7 @@
 			"profile": "Profile Report",
 			"sccm": "SCCM Agent Status Report",
 			"security": "Security Report",
+			"server": "Server Report",
 			"warranty": "Warranty Report",
 			"wifi": "WiFi Report"
 		},
