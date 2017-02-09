@@ -1,0 +1,80 @@
+<?php
+class Munkireportinfo_model extends Model 
+{
+
+        public function __construct($serial='')
+        {
+                parent::__construct('id', 'munkireportinfo'); //primary key, tablename
+                $this->rs['id'] = 0;
+                $this->rs['serial_number'] = $serial;
+                $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+                $this->rs['version'] = 0;
+                $this->rs['baseurl'] = '';
+                $this->rs['passphrase'] = '';
+                $this->rs['reportitems'] = '';
+                $this->rt['reportitems'] = 'VARCHAR(1024)';
+
+                // Schema version, increment when creating a db migration
+                $this->schema_version = 0;
+                
+                //indexes to optimize queries
+                $this->idx[] = array('version');
+                $this->idx[] = array('baseurl');
+                $this->idx[] = array('passphrase');
+                $this->idx[] = array('reportitems');
+                
+                // Create table if it does not exist
+                $this->create_table();
+                
+                if ($serial) {
+                        $this->retrieve_record($serial);
+                }
+                
+                $this->serial = $serial;
+        }
+        
+        // ------------------------------------------------------------------------
+
+        /**
+         * Process data sent by postflight
+         *
+         * @param string data
+         * 
+         **/
+        public function process($data)
+        {        
+            
+            if (! $data) {
+                throw new Exception("Error Processing Request: No data found", 1);
+            }    
+            
+            // Process incoming MunkiReport.plist
+            require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+            $parser = new CFPropertyList();
+            $parser->parse($data);
+            
+            $plist = array_change_key_case($parser->toArray(), CASE_LOWER);
+
+            foreach (array('baseurl', 'passphrase', 'version', 'reportitems') as $item) {
+                if (isset($plist[$item])) {
+                    if ($item == 'reportitems'){
+                        $modulelist = implode(", ",array_keys($plist["reportitems"]));
+                        $this->$item = $modulelist;
+                        // Check if both GSX and warranty modules are enabled. They should not be
+                        // the warranty module runs after then GSX module and can overwrite actual
+                        // data with estimated data, such as warranty expiration dates.
+                        if (strpos( $modulelist, "gsx" ) !== false  && strpos( $modulelist , "warranty" ) !== false ) {
+                            print_r("***** You should not have both the GSX and Warranty modules enabled at the same time. Please disable the Warranty module *****\r\n");  
+                        }
+                    } else {    
+                        $this->$item = $plist[$item];
+                    }
+                } else {
+                    $this->$item = '';
+                }
+            }
+
+            // Save the data
+            $this->save();  
+        }
+}

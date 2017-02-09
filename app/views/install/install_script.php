@@ -248,6 +248,7 @@ if [ $ERR = 0 ]; then
 		for i in "${PREF_CMDS[@]}";
 			do echo $i >> $SCRIPTDIR/postinstall
 		done
+        echo "defaults write ${PREFPATH} Version ${VERSION}" >> $SCRIPTDIR/postinstall
 		chmod +x $SCRIPTDIR/postinstall
 
 
@@ -273,6 +274,7 @@ if [ $ERR = 0 ]; then
 
 		# Set munkireport version file
 		touch "${MUNKIPATH}munkireport-${VERSION}"
+        defaults write ${PREFPATH} Version ${VERSION} 
 
 		echo "Installation of MunkiReport v${VERSION} complete."
 		echo 'Running the preflight script for initialization'
