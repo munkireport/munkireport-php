@@ -82,9 +82,9 @@ class Caching_controller extends Module_controller
                         SUM(importsbyhttp) AS 'importsbyhttp',
                         SUM(importsbyxpc) AS 'importsbyxpc'
                         FROM caching 
-                        WHERE serial_number is '$serial_number'
+                        WHERE serial_number = '$serial_number'
                         GROUP BY groupdate
-                        ORDER BY serial_number";
+                        ORDER BY groupdate";
         
         $caching_tab = $queryobj->query($sql);
                 
