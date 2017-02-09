@@ -26,10 +26,14 @@ SERIAL=`ioreg -c IOPlatformExpertDevice | grep IOPlatformSerialNumber | awk '{pr
 NAME=`scutil --get ComputerName`
 
 BASEURL=$(defaults read /Library/Preferences/MunkiReport BaseUrl)
-SUBMITURL="${BASEURL}index.php?/report/broken_client"
+PASSPHRASE=$(defaults read /Library/Preferences/MunkiReport Passphrase 2>/dev/null)
+SUBMITURL="${BASEURL}/report/broken_client"
 
 # Application paths
 CURL="/usr/bin/curl"
+
+# Check if passphrase is set and submit it
+if [[ ${PASSPHRASE} == "" ]] ; then
 
 $CURL --max-time 5 --silent \
     -d msg="$MSG" \
@@ -38,5 +42,18 @@ $CURL --max-time 5 --silent \
     -d serial="$SERIAL" \
     -d name="$NAME" \
     "$SUBMITURL"
+
+# Has passphrase
+else
+
+$CURL --max-time 5 --silent \
+    -d msg="$MSG" \
+    -d module="$MODULE" \
+    -d type="$TYPE" \
+    -d serial="$SERIAL" \
+    -d passphrase="$PASSPHRASE" \
+    -d name="$NAME" \
+    "$SUBMITURL"
+fi
 
 exit 0
