@@ -491,6 +491,14 @@
 		"warning_plural": "__count__ Munki warnings",
 		"additional_info": "Additional Munki Info"
 	},
+	"munkireportinfo": {
+		"baseurl": "MunkiReport URL",
+		"clienttabtitle": "MunkiReport",
+		"passphrase": "Passprase",
+		"reportitems": "Installed Modules",
+		"reporttitle": "MunkiReport Report",
+		"version": "Version"
+	},
 	"name": "Name",
 	"nav": {
 		"admin": {
@@ -522,6 +530,7 @@
 			"inventory": "Inventory",
 			"location": "Location",
 			"munki": "Munki",
+			"munkireportinfo": "MunkiReport",
 			"network": "Network",
 			"power": "Power",
 			"printers": "Printers",
