@@ -28,6 +28,7 @@ $tab_list = array(
 	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles'),
 	'sccm_status-tab' => array('view' => 'client/sccm_status_tab', 'i18n' => 'sccm_status.title'),
 	'caching-tab' => array('view' => 'client/caching_tab', 'i18n' => 'caching.client_tab_title'),
+	'usb-tab' => array('view' => 'client/usb_tab', 'i18n' => 'nav.listing.usb')
 		);
 
 // Add custom tabs
