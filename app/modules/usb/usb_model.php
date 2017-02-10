@@ -78,11 +78,11 @@ class Usb_model extends Model {
 				continue;
 			}
             
-			// Check for USB Bus and exclude
-			if ($device['name'] == 'USB30Bus' || $device['name'] == 'USB20Bus' || $device['name'] == 'USB11Bus' || $device['name'] == 'USBBus') {
+			// Check for USB Bus, and exclude
+			if ($device['name'] == 'USB30Bus' || $device['name'] == 'USB20Bus' || $device['name'] == 'USB11Bus' || $device['name'] == 'USBBus' || $device['name'] == 'UHCI Root Hub Simulation' || $device['name'] == 'EHCI Root Hub Simulation') {
 				continue;
 			}
-			
+			 
 			// Skip internal devices (?)
 			//if ($device['internal']){
 				//continue;
@@ -139,6 +139,9 @@ class Usb_model extends Model {
 				$device['type'] = 'Audio Device';
 			}
 			else if (stripos($device['name'], 'Camera') !== false) {
+				$device['type'] = 'Camera';
+			}
+			else if (stripos($device['name'], 'Video') !== false) {
 				$device['type'] = 'Camera';
 			}
 			else if (stripos($device['name'], 'Display') !== false) {
