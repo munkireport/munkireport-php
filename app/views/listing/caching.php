@@ -118,50 +118,36 @@ new Caching_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-                var link = mr.getClientDetailLink(name, sn, '#tab_caching');
+                var link = mr.getClientDetailLink(name, sn, '#tab_caching-tab');
 			$('td:eq(0)', nRow).html(link);
 
             // Format byte size
             var checkin = parseInt($('td:eq(3)', nRow).html());
-            var mbyte = (checkin / 1024 / 1024);
-            var mbyterounded = (Math.round(mbyte * 100) / 100) + "MB";
-            $('td:eq(3)', nRow).html(mbyterounded);
+            $('td:eq(3)', nRow).html(fileSize(checkin, 2));
                 
             // Format byte size
             var checkin = parseInt($('td:eq(4)', nRow).html());
-            var mbyte = (checkin / 1024 / 1024);
-            var mbyterounded = (Math.round(mbyte * 100) / 100) + "MB";
-            $('td:eq(4)', nRow).html(mbyterounded);
+            $('td:eq(4)', nRow).html(fileSize(checkin, 2));
 
             // Format byte size
             var checkin = parseInt($('td:eq(5)', nRow).html());
-            var mbyte = (checkin / 1024 / 1024);
-            var mbyterounded = (Math.round(mbyte * 100) / 100) + "MB";
-            $('td:eq(5)', nRow).html(mbyterounded);
-                
+            $('td:eq(5)', nRow).html(fileSize(checkin, 2));
+
             // Format byte size
             var checkin = parseInt($('td:eq(8)', nRow).html());
-            var mbyte = (checkin / 1024 / 1024);
-            var mbyterounded = (Math.round(mbyte * 100) / 100) + "MB";
-            $('td:eq(8)', nRow).html(mbyterounded);
+            $('td:eq(8)', nRow).html(fileSize(checkin, 2));
                 
             // Format byte size
             var checkin = parseInt($('td:eq(9)', nRow).html());
-            var mbyte = (checkin / 1024 / 1024);
-            var mbyterounded = (Math.round(mbyte * 100) / 100) + "MB";
-            $('td:eq(9)', nRow).html(mbyterounded);
+            $('td:eq(9)', nRow).html(fileSize(checkin, 2));
                 
             // Format byte size
             var checkin = parseInt($('td:eq(10)', nRow).html());
-            var mbyte = (checkin / 1024 / 1024);
-            var mbyterounded = (Math.round(mbyte * 100) / 100) + "MB";
-            $('td:eq(10)', nRow).html(mbyterounded);
+            $('td:eq(10)', nRow).html(fileSize(checkin, 2));
                 
             // Format byte size
             var checkin = parseInt($('td:eq(11)', nRow).html());
-            var mbyte = (checkin / 1024 / 1024);
-            var mbyterounded = (Math.round(mbyte * 100) / 100) + "MB";
-            $('td:eq(11)', nRow).html(mbyterounded);
+            $('td:eq(11)', nRow).html(fileSize(checkin, 2));
 		    }
 	    });
 
