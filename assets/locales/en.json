@@ -703,8 +703,8 @@
 	"softwareupdate": {
 		"automaticcheckenabled": "Auto Check Enabled",
 		"automaticdownload": "Auto Download",
-        "catalogurl": "Catalog URL",
-        "clienttabtitle": "Software Updates",
+		"catalogurl": "Catalog URL",
+		"clienttabtitle": "Software Updates",
 		"configdatainstall": "Auto Install XProtect",
 		"criticalupdateinstall": "Install Critical",
 		"lastattemptsystemversion": "Version Attempted",
