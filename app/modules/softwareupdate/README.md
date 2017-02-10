@@ -20,3 +20,7 @@ Reports on the status of software updates on the client
 * recommendedupdates - varchar(255) - names of items needs updated
 * mrxprotect - varchar(255) - date of last XProtect update installation
 * catalogurl - varchar(255) - current catalog URL, default is blank
+
+
+###Note 
+Blank data entries within the listing or client tab mean the key is either not supported on that version of macOS or the key is set to the default vaule. When set to the default vaule, the state is not written to disk.
