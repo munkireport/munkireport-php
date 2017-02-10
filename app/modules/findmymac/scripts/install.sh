@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/findmymac/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/findmymac.sh" -o "${MUNKIPATH}preflight.d/findmymac.sh"
+"${CURL[@]}" "${CTL}get_script/findmymac.sh" -o "${MUNKIPATH}preflight.d/findmymac.sh"
 
 # Check exit status of curl
 if [ $? = 0 ]; then
