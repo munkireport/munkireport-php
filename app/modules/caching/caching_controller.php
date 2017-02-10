@@ -84,7 +84,7 @@ class Caching_controller extends Module_controller
                         FROM caching 
                         WHERE serial_number = '$serial_number'
                         GROUP BY groupdate
-                        ORDER BY groupdate";
+                        ORDER BY groupdate DESC";
         
         $caching_tab = $queryobj->query($sql);
                 
