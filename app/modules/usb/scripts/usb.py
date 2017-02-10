@@ -44,6 +44,12 @@ def flatten_usb_info(array):
                 device['manufacturer'] = obj[item]
             elif item == 'device_speed':
                 device['device_speed'] = obj[item]
+            elif item == 'bus_power':
+                device['bus_power'] = obj[item]
+            elif item == 'bus_power_used':
+                device['bus_power_used'] = obj[item]
+            elif item == 'extra_current_used':
+                device['extra_current_used'] = obj[item]
             elif item == 'Built-in_Device' and obj[item] == 'Yes':
                 device['internal'] = 1
             elif item == 'Media':

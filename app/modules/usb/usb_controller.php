@@ -4,7 +4,7 @@
  * USB status module class
  *
  * @package munkireport
- * @author
+ * @author miqviq
  **/
 class Usb_controller extends Module_controller
 {
@@ -18,8 +18,8 @@ class Usb_controller extends Module_controller
 
 	/**
 	 * Default method
-	 *
 	 * @author miqviq
+	 *
 	 **/
 	function index()
 	{
@@ -30,18 +30,25 @@ class Usb_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
- 	public function get_data()
-	{
-		$obj = new View();
+    public function get_data($serial_number = '')
+    {
+        $obj = new View();
 
-        	if( ! $this->authorized())
-        	{
-        	    $obj->view('json', array('msg' => 'Not authorized'));
-		    return;
-        	}
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+        
+        $queryobj = new Usb_model();
+        
+        $sql = "SELECT name, type, manufacturer, vendor_id, device_speed, internal, media, bus_power, bus_power_used, extra_current_used
+                        FROM usb 
+                        WHERE serial_number = '$serial_number'";
+        
+        $usb_tab = $queryobj->query($sql);
 
-        	$kbm = new Usb_model();
-        	$obj->view('json', array('msg' => $kbm->get_data()));
-	}
+        $usb = new Usb_model;
+        //$obj->view('json', array('msg' => $usb->retrieve_records($serial_number)));
+        $obj->view('json', array('msg' => current(array('msg' => $usb_tab)))); 
+    }
 		
-} // END class usb_module
+} // END class Usb_controller
