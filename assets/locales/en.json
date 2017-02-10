@@ -491,6 +491,14 @@
 		"warning_plural": "__count__ Munki warnings",
 		"additional_info": "Additional Munki Info"
 	},
+	"munkireportinfo": {
+		"baseurl": "MunkiReport URL",
+		"clienttabtitle": "MunkiReport",
+		"passphrase": "Passprase",
+		"reportitems": "Installed Modules",
+		"reporttitle": "MunkiReport Report",
+		"version": "Version"
+	},
 	"name": "Name",
 	"nav": {
 		"admin": {
@@ -522,6 +530,7 @@
 			"inventory": "Inventory",
 			"location": "Location",
 			"munki": "Munki",
+			"munkireportinfo": "MunkiReport",
 			"network": "Network",
 			"power": "Power",
 			"printers": "Printers",
@@ -529,6 +538,7 @@
 			"sccm_status": "SCCM Status",
 			"security": "Security",
 			"timemachine": "Time Machine",
+			"usb": "USB Devices",
 			"warranty": "Warranty",
 			"wifi": "WiFi"
 		},
@@ -738,6 +748,22 @@
 	"unencrypted": "Unencrypted",
 	"unknown": "Unknown",
 	"unsupported": "Not Supported",
+	"usb": {
+		"bus_power": "Available mAh",
+		"bus_power_used": "Used mAh",
+		"camera": "Camera",
+        "clienttab": "USB Devices",
+		"device_speed": "USB Protocol",
+		"extra_current_used": "Extra mAh",
+		"internal": "Internal",
+		"manufacturer": "Manufacturer",
+		"media": "Removable Media",
+		"name": "Device Name",
+		"reporttitle": "USB Devices Report",
+		"title": "Keyboard and Mouse",
+		"type": "Device Type",
+		"vendor_id": "Vendor ID"
+	},  
 	"uptime": "Uptime",
 	"user": {
 		"user": "User",
