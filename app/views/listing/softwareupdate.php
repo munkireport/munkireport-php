@@ -37,7 +37,7 @@ new Softwareupdate_model;
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="18" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="16" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 
