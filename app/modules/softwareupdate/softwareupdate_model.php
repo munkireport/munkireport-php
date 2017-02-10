@@ -93,11 +93,14 @@ class Softwareupdate_model extends Model
                         
                     } else if ($item == 'automaticcheckenabled' || $item == 'automaticdownload' || $item == 'configdatainstall' || $item == 'criticalupdateinstall' || $item == 'lastsessionsuccessful' || $item == 'skiplocalcdn'){ 
                         
-                        if ($plist[$item] != "1"){
-                           $this->$item = 0;
+                        if ($plist[$item] == "1"){
+                           $this->$item = 1;
                         }
-                        else{
-                            $this->$item = $plist[$item];
+                        else if ($plist[$item] != "0"){
+                            $this->$item = 0;
+                        }
+                        else {
+                            $this->$item = -1;
                         }
                         
                     } else {    
