@@ -42,7 +42,7 @@ class Usb_model extends Model {
 	 * Process data sent by postflight
 	 *
 	 * @param string data
-	 * @author miqviq
+	 * @author miqviq, revamped by tuxudo
 	 **/
 	function process($plist)
 	{
@@ -99,45 +99,52 @@ class Usb_model extends Model {
 			}
             
             // Set device types
-			if (strpos($device['name'], 'iSight') !== false) {
+			if (stripos($device['name'], 'iSight') !== false) {
 				$device['type'] = 'Camera';
 			}
-			else if (strpos($device['name'], 'Hub') !== false) {
+			else if (stripos($device['name'], 'Hub') !== false) {
 				$device['type'] = 'USB Hub';
 			}
-			else if (strpos($device['name'], 'Keyboard') !== false) {
+			else if (stripos($device['name'], 'Keyboard') !== false) {
 				$device['type'] = 'Keyboard';
 			}
-			else if (strpos($device['name'], 'IR Receiver') !== false) {
+			else if (stripos($device['name'], 'IR Receiver') !== false) {
 				$device['type'] = 'IR Receiver';
 			}
-			else if (strpos($device['name'], 'Bluetooth') !== false) {
+			else if (stripos($device['name'], 'Bluetooth') !== false) {
 				$device['type'] = 'Bluetooth Controller';
 			}
-			else if (strpos($device['name'], 'iPhone') !== false) {
+			else if (stripos($device['name'], 'iPhone') !== false) {
 				$device['type'] = 'iPhone';
 			}
-			else if (strpos($device['name'], 'iPad') !== false) {
+			else if (stripos($device['name'], 'iPad') !== false) {
 				$device['type'] = 'iPad';
 			}
-			else if (strpos($device['name'], 'iPod') !== false) {
+			else if (stripos($device['name'], 'iPod') !== false) {
 				$device['type'] = 'iPod';
 			}
-			else if (strpos($device['name'], 'Mouse') !== false) {
+			else if (stripos($device['name'], 'Mouse') !== false) {
 				$device['type'] = 'Mouse';
 			}
-			else if (strpos($device['name'], 'Card Reader') !== false) {
+			else if (stripos($device['name'], 'Card Reader') !== false) {
 				$device['type'] = 'Mass Storage';
 			}
-			else if (strpos($device['manufacturer'], 'DisplayLink') !== false) {
-				$device['type'] = 'Display';
+			else if (stripos($device['manufacturer'], 'DisplayLink') !== false) {
+				$device['type'] = 'Display'; // Set by manufacturer
 			}
-			else if (strpos($device['name'], 'UPS') !== false) {
+			else if (stripos($device['name'], 'UPS') !== false) {
 				$device['type'] = 'UPS';
 			}
-			else if (strpos($device['name'], 'audio') !== false) {
+			else if (stripos($device['name'], 'audio') !== false) {
 				$device['type'] = 'Audio Device';
 			}
+			else if (stripos($device['name'], 'Camera') !== false) {
+				$device['type'] = 'Camera';
+			}
+			else if (stripos($device['name'], 'Display') !== false) {
+				$device['type'] = 'Display';
+			}
+
             
             // Check for Mass Storage
             if ($device['media'] == 1 ) {
@@ -150,8 +157,14 @@ class Usb_model extends Model {
 			}
             
             // Override Internal T/F based on name
-            if (strpos($device['name'], 'Internal') !== false) {
+            if (stripos($device['name'], 'Internal') !== false) {
 				$device['internal'] = 1;
+			}
+            
+			// Set manufacturer from vendor ID if it's blank
+			if (! array_key_exists("manufacturer",$device)) {
+				preg_match('/\((.*?)\)/s', $device['vendor_id'], $manufactureroutput);
+				$device['manufacturer'] = $manufactureroutput[1];
 			}
             
 			foreach ($typeList as $key => $value) {
@@ -166,7 +179,5 @@ class Usb_model extends Model {
 			$this->id = '';
 			$this->save();
 		}
-
-		//throw new Exception("Error Processing Request", 1);
 	}
 }
