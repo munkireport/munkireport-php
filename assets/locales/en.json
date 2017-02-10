@@ -538,6 +538,7 @@
 			"sccm_status": "SCCM Status",
 			"security": "Security",
 			"timemachine": "Time Machine",
+			"usb": "USB Devices",
 			"warranty": "Warranty",
 			"wifi": "WiFi"
 		},
@@ -567,6 +568,7 @@
 			"profile": "Profile Report",
 			"sccm": "SCCM Agent Status Report",
 			"security": "Security Report",
+			"server": "Server Report",
 			"warranty": "Warranty Report",
 			"wifi": "WiFi Report"
 		},
@@ -746,6 +748,22 @@
 	"unencrypted": "Unencrypted",
 	"unknown": "Unknown",
 	"unsupported": "Not Supported",
+	"usb": {
+		"bus_power": "Available mAh",
+		"bus_power_used": "Used mAh",
+		"camera": "Camera",
+        "clienttab": "USB Devices",
+		"device_speed": "USB Protocol",
+		"extra_current_used": "Extra mAh",
+		"internal": "Internal",
+		"manufacturer": "Manufacturer",
+		"media": "Removable Media",
+		"name": "Device Name",
+		"reporttitle": "USB Devices Report",
+		"title": "Keyboard and Mouse",
+		"type": "Device Type",
+		"vendor_id": "Vendor ID"
+	},  
 	"uptime": "Uptime",
 	"user": {
 		"user": "User",
