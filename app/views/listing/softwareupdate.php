@@ -116,6 +116,24 @@ new Softwareupdate_model;
                 var link = mr.getClientDetailLink(name, sn, '#tab_softwareupdate-tab');
 	        	$('td:eq(0)', nRow).html(link);
                 
+	        	// Format XProtect Install timestamp
+				var checkin = $('td:eq(3)', nRow).html();
+	        	if(checkin !== "" ){
+	        	$('td:eq(3)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow());
+                }
+                
+                // Format Successful Date timestamp
+				var checkin = $('td:eq(4)', nRow).html();
+	        	if(checkin !== "" ){
+	        	$('td:eq(4)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow());
+                }
+                
+				// Format Background Successful Date timestamp
+				var checkin = $('td:eq(5)', nRow).html();
+	        	if(checkin !== "" ){
+	        	$('td:eq(5)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow());
+                }
+                
 	        	// automaticcheckenabled
 	        	var automaticcheckenabled=$('td:eq(9)', nRow).html();
 	        	automaticcheckenabled = automaticcheckenabled == '1' ? i18n.t('yes') :

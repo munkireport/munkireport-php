@@ -86,7 +86,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	// Get softwareupdate data
 	$.getJSON( appUrl + '/module/softwareupdate/get_data/' + serialNumber, function( data ) {
-		if( ! data.mrxprotect){
+		if( ! data.lastsuccessfuldate){
 			$('#softwareupdate-msg').text(i18n.t('no_data'));
 		}
 		else{
@@ -144,17 +144,30 @@ $(document).on('appReady', function(e, lang) {
 				 $('#softwareupdate-skiplocalcdn').text("");
 			}
             
+            // Formate dates
+            if(data.lastsuccessfuldate !== "" ){
+	        	$('#softwareupdate-lastsuccessfuldate').html('<span title="' + data.lastsuccessfuldate + '">' + moment(data.lastsuccessfuldate).fromNow());
+            }
+            if(data.lastbackgroundccdsuccessfuldate !== "" ){
+	        	$('#softwareupdate-lastbackgroundccdsuccessfuldate').html('<span title="' + data.lastbackgroundccdsuccessfuldate + '">' + moment(data.lastbackgroundccdsuccessfuldate).fromNow());
+            }
+            if(data.lastbackgroundsuccessfuldate !== "" ){
+	        	$('#softwareupdate-lastbackgroundsuccessfuldate').html('<span title="' + data.lastbackgroundsuccessfuldate + '">' + moment(data.lastbackgroundsuccessfuldate).fromNow());
+            }
+            if(data.lastfullsuccessfuldate !== "" ){
+	        	$('#softwareupdate-lastfullsuccessfuldate').html('<span title="' + data.lastfullsuccessfuldate + '">' + moment(data.lastfullsuccessfuldate).fromNow());
+            }
+            if(data.mrxprotect !== "" ){
+	        	$('#softwareupdate-mrxprotect').html('<span title="' + data.mrxprotect + '">' + moment(data.mrxprotect).fromNow());
+            }
+            
+            // Add data
 			$('#softwareupdate-lastattemptsystemversion').text(data.lastattemptsystemversion);
-			$('#softwareupdate-lastbackgroundccdsuccessfuldate').text(data.lastbackgroundccdsuccessfuldate);
-			$('#softwareupdate-lastbackgroundsuccessfuldate').text(data.lastbackgroundsuccessfuldate);
-			$('#softwareupdate-lastfullsuccessfuldate').text(data.lastfullsuccessfuldate);  
 			$('#softwareupdate-lastrecommendedupdatesavailable').text(data.lastrecommendedupdatesavailable);
 			$('#softwareupdate-lastresultcode').text(data.lastresultcode);
-			$('#softwareupdate-lastsuccessfuldate').text(data.lastsuccessfuldate);  
 			$('#softwareupdate-lastupdatesavailable').text(data.lastupdatesavailable);
 			$('#softwareupdate-recommendedupdates').text(data.recommendedupdates);
 			$('#softwareupdate-inactiveupdates').text(data.inactiveupdates);
-			$('#softwareupdate-mrxprotect').text(data.mrxprotect);  
 			$('#softwareupdate-catalogurl').text(data.catalogurl);  
             
 			// Update the tab badge count
