@@ -55,6 +55,17 @@ class Munkireportinfo_model extends Model
             
             $plist = array_change_key_case($parser->toArray(), CASE_LOWER);
 
+            // Convert version to int
+            if (isset($plist['version'])) {
+            $digits = explode('.', $plist['version']);
+            $mult = 10000;
+            $plist['version'] = 0;
+            foreach ($digits as $digit) {
+                $plist['version'] += $digit * $mult;
+                $mult = $mult / 100;
+            }
+            }
+            
             foreach (array('baseurl', 'passphrase', 'version', 'reportitems') as $item) {
                 if (isset($plist[$item])) {
                     if ($item == 'reportitems'){
@@ -68,18 +79,7 @@ class Munkireportinfo_model extends Model
                         // data with estimated data, such as warranty expiration dates.
                         if (strpos($modulelistproper, "gsx") !== false && strpos($modulelistproper , "warranty") !== false ){
                             print_r("***** You should not have both the GSX and Warranty modules enabled at the same time. Please disable the Warranty module *****\r\n");  
-                        }
-                    else if ($item == 'version'){
-                        // Convert OS version to int
-                        $digits = explode('.', $item);
-                        $mult = 10000;
-                        $item = 0;
-                        foreach ($digits as $digit) {
-                            $item += $digit * $mult;
-                            $mult = $mult / 100;
-                        }
-                    }
-                        
+                        }                        
                     } else {    
                         $this->$item = $plist[$item];
                     }

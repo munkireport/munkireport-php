@@ -27,6 +27,44 @@ class Usb_controller extends Module_controller
 	}
 
 	/**
+     * Get USB device names for widget
+     *
+     * @return void
+     * @author John Eberle (tuxudo)
+     **/
+     public function get_usb_devices()
+     {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $usb = new Usb_model;
+        $obj->view('json', array('msg' => $usb->get_usb_devices()));
+     }
+    
+     /**
+     * Get USB device types for widget
+     *
+     * @return void
+     * @author John Eberle (tuxudo)
+     **/
+     public function get_usb_types()
+     {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $usb = new Usb_model;
+        $obj->view('json', array('msg' => $usb->get_usb_types()));
+     }
+    
+	/**
      * Retrieve data in json format
      *
      **/

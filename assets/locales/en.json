@@ -446,6 +446,7 @@
 		"latitudeaccuracy": "Latitude Accuracy",
 		"longitude": "Longitude",
 		"longitudeaccuracy": "Longitude Accuracy",
+		"never": "Never",
 		"report": "Location Report",
 		"stalelocation": "Stale Location"
 	},
@@ -530,13 +531,14 @@
 			"inventory": "Inventory",
 			"location": "Location",
 			"munki": "Munki",
-			"munkireportinfo": "MunkiReport",
+			"mrinfo": "MunkiReport",
 			"network": "Network",
 			"power": "Power",
 			"printers": "Printers",
 			"profile": "Profiles",
 			"sccm_status": "SCCM Status",
 			"security": "Security",
+			"softwareupdate": "Software Update",
 			"timemachine": "Time Machine",
 			"usb": "USB Devices",
 			"warranty": "Warranty",
@@ -563,6 +565,7 @@
 			"location": "Location Report",
 			"munki": "Munki Report",
 			"network": "Network Report",
+			"peripheral": "Peripheral Report",
 			"power": "Power Report",
 			"printer": "Printer Report",
 			"profile": "Profile Report",
@@ -699,6 +702,28 @@
 		"smc_version": "SMC Version",
 		"boot_rom_version": "Boot ROM Version"
 	},
+	"softwareupdate": {
+		"automaticcheckenabled": "Auto Check Enabled",
+		"automaticdownload": "Auto Download",
+		"catalogurl": "Catalog URL",
+		"clienttabtitle": "Software Updates",
+		"configdatainstall": "Auto Install XProtect",
+		"criticalupdateinstall": "Install Critical",
+		"inactiveupdates": "Ignored Updates",
+		"lastattemptsystemversion": "Version Attempted",
+		"lastbackgroundccdsuccessfuldate": "Background CCD Success Date",
+		"lastbackgroundsuccessfuldate": "Background Success Date",
+		"lastfullsuccessfuldate": "Full Success Date",
+		"lastrecommendedupdatesavailable": "Recommended Available Updates",
+		"lastresultcode": "Result Code",
+		"lastsessionsuccessful": "Session Successful",
+		"lastsuccessfuldate": "Successful Date",
+		"lastupdatesavailable": "Updates Available",
+		"mrxprotect": "XProtect Install",
+		"reporttitle": "Software Update Report",
+		"skiplocalcdn": "Skip Local CDN",
+		"recommendedupdates": "Recommended Updates"
+	},
 	"status": "Status",
 	"storage": {
 		"bus_protocol": "BUS Protocol",
@@ -759,9 +784,11 @@
 		"manufacturer": "Manufacturer",
 		"media": "Removable Media",
 		"name": "Device Name",
+		"nousb": "No USB Devices Detected",
 		"reporttitle": "USB Devices Report",
 		"title": "Keyboard and Mouse",
 		"type": "Device Type",
+		"usbtype": "USB Device Types",
 		"vendor_id": "Vendor ID"
 	},  
 	"uptime": "Uptime",
@@ -797,7 +824,7 @@
 			"versions": "Known versions of __app__"
 		},
 		"appusage": {
-			"title": "App Usage",
+			"title": "Application Usage",
 			"tooltip": "Most frequently used apps"
 		},
 		"bound_to_ds": {
