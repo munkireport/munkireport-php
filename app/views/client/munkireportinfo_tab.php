@@ -39,10 +39,10 @@ $(document).on('appReady', function(e, lang) {
 			// Hide
 			$('#munkireportinfo-msg').text('');
 			$('#munkireportinfo-view').removeClass('hide');
-			
+			            
 			// Add strings
 			$('#munkireportinfo-baseurl').text(data.baseurl);
-			$('#munkireportinfo-version').text(data.version);
+			$('#munkireportinfo-version').text(mr.integerToVersion(data.version));
 			$('#munkireportinfo-passphrase').text(data.passphrase);
 			$('#munkireportinfo-reportitems').text(data.reportitems);      
 		}

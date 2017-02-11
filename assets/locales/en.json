@@ -530,7 +530,7 @@
 			"inventory": "Inventory",
 			"location": "Location",
 			"munki": "Munki",
-			"munkireportinfo": "MunkiReport",
+			"mrinfo": "MunkiReport",
 			"network": "Network",
 			"power": "Power",
 			"printers": "Printers",
