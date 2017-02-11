@@ -82,12 +82,14 @@ class Usb_model extends Model {
 			if ($device['name'] == 'USB30Bus' || $device['name'] == 'USB20Bus' || $device['name'] == 'USB11Bus' || $device['name'] == 'USBBus' || $device['name'] == 'UHCI Root Hub Simulation' || $device['name'] == 'EHCI Root Hub Simulation') {
 				continue;
 			}
-			 
-			// Skip internal devices (?)
-			//if ($device['internal']){
-				//continue;
-			//}
             
+			// Skip internal devices if value is TRUE
+			if (!conf('usb_internal')) {
+    			if ($device['internal']){
+					continue;
+    			}
+			}
+			 
             // Adjust names
 			$device['name'] = str_replace(array('bluetooth_device','hub_device','composite_device'), array('Bluetooth USB Host Controller','USB Hub','Composite Device'), $device['name']);
             

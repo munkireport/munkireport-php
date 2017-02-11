@@ -301,6 +301,17 @@
 	
 	/*
 	|===============================================
+	| USB Devices
+	|===============================================
+	|
+	| By default the USB module will list all USB devices. Setting usb_internal 
+	| to FALSE will skip all interal devices.
+	|
+	*/
+	$conf['usb_internal'] = TRUE;
+
+	/*
+	|===============================================
 	| Google Maps API Key
 	|===============================================
 	|
