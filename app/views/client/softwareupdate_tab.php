@@ -97,49 +97,49 @@ $(document).on('appReady', function(e, lang) {
 			
 			// Add strings
 			if(data.automaticcheckenabled === "1" || data.automaticcheckenabled === 1) {
-				 $('#softwareupdate-automaticcheckenabled').text("Yes");
+				 $('#softwareupdate-automaticcheckenabled').text(i18n.t('yes'));
 			} else if(data.automaticcheckenabled === "0" || data.automaticcheckenabled === 0) {
-				 $('#softwareupdate-automaticcheckenabled').text("No");
+				 $('#softwareupdate-automaticcheckenabled').text(i18n.t('no'));
 			} else{
 				 $('#softwareupdate-automaticcheckenabled').text("");
 			}
             
 			if(data.automaticdownload === "1" || data.automaticdownload === 1) {
-				 $('#softwareupdate-automaticdownload').text("Yes");
+				 $('#softwareupdate-automaticdownload').text(i18n.t('yes'));
 			} else if(data.automaticdownload === "0" || data.automaticdownload === 0) {
-				 $('#softwareupdate-automaticdownload').text("No");
+				 $('#softwareupdate-automaticdownload').text(i18n.t('no'));
 			} else{
 				 $('#softwareupdate-automaticdownload').text("");
 			}
             
 			if(data.configdatainstall === "1" || data.configdatainstall === 1) {
-				 $('#softwareupdate-configdatainstall').text("Yes");
+				 $('#softwareupdate-configdatainstall').text(i18n.t('yes'));
 			} else if(data.configdatainstall === "0" || data.configdatainstall === 0) {
-				 $('#softwareupdate-configdatainstall').text("No");
+				 $('#softwareupdate-configdatainstall').text(i18n.t('no'));
 			} else{
 				 $('#softwareupdate-configdatainstall').text("");
 			}
             
 			if(data.criticalupdateinstall === "1" || data.criticalupdateinstall === 1) {
-				 $('#softwareupdate-criticalupdateinstall').text("Yes");
+				 $('#softwareupdate-criticalupdateinstall').text(i18n.t('yes'));
 			} else if(data.criticalupdateinstall === "0" || data.criticalupdateinstall === 0) {
-				 $('#softwareupdate-criticalupdateinstall').text("No");
+				 $('#softwareupdate-criticalupdateinstall').text(i18n.t('no'));
 			} else{
 				 $('#softwareupdate-criticalupdateinstall').text("");
 			}
             
 			if(data.lastsessionsuccessful === "1" || data.lastsessionsuccessful === 1) {
-				 $('#softwareupdate-lastsessionsuccessful').text("Yes");
+				 $('#softwareupdate-lastsessionsuccessful').text(i18n.t('yes'));
 			} else if(data.lastsessionsuccessful === "0" || data.lastsessionsuccessful === 0) {
-				 $('#softwareupdate-lastsessionsuccessful').text("No");
+				 $('#softwareupdate-lastsessionsuccessful').text(i18n.t('no'));
 			} else{
 				 $('#softwareupdate-lastsessionsuccessful').text("");
 			}
             
 			if(data.skiplocalcdn === "1" || data.skiplocalcdn === 1) {
-				 $('#softwareupdate-skiplocalcdn').text("Yes");
+				 $('#softwareupdate-skiplocalcdn').text(i18n.t('yes'));
 			} else if(data.skiplocalcdn === "0" || data.skiplocalcdn === 0) {
-				 $('#softwareupdate-skiplocalcdn').text("No");
+				 $('#softwareupdate-skiplocalcdn').text(i18n.t('no'));
 			} else{
 				 $('#softwareupdate-skiplocalcdn').text("");
 			}
