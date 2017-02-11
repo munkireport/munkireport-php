@@ -530,13 +530,14 @@
 			"inventory": "Inventory",
 			"location": "Location",
 			"munki": "Munki",
-			"munkireportinfo": "MunkiReport",
+			"mrinfo": "MunkiReport",
 			"network": "Network",
 			"power": "Power",
 			"printers": "Printers",
 			"profile": "Profiles",
 			"sccm_status": "SCCM Status",
 			"security": "Security",
+			"softwareupdate": "Software Update",
 			"timemachine": "Time Machine",
 			"usb": "USB Devices",
 			"warranty": "Warranty",
@@ -699,6 +700,28 @@
 		"smc_version": "SMC Version",
 		"boot_rom_version": "Boot ROM Version"
 	},
+	"softwareupdate": {
+		"automaticcheckenabled": "Auto Check Enabled",
+		"automaticdownload": "Auto Download",
+		"catalogurl": "Catalog URL",
+		"clienttabtitle": "Software Updates",
+		"configdatainstall": "Auto Install XProtect",
+		"criticalupdateinstall": "Install Critical",
+		"inactiveupdates": "Ignored Updates",
+		"lastattemptsystemversion": "Version Attempted",
+		"lastbackgroundccdsuccessfuldate": "Background CCD Success Date",
+		"lastbackgroundsuccessfuldate": "Background Success Date",
+		"lastfullsuccessfuldate": "Full Success Date",
+		"lastrecommendedupdatesavailable": "Recommended Available Updates",
+		"lastresultcode": "Result Code",
+		"lastsessionsuccessful": "Session Successful",
+		"lastsuccessfuldate": "Successful Date",
+		"lastupdatesavailable": "Updates Available",
+		"mrxprotect": "XProtect Install",
+		"reporttitle": "Software Update Report",
+		"skiplocalcdn": "Skip Local CDN",
+		"recommendedupdates": "Recommended Updates"
+	},
 	"status": "Status",
 	"storage": {
 		"bus_protocol": "BUS Protocol",
@@ -797,7 +820,7 @@
 			"versions": "Known versions of __app__"
 		},
 		"appusage": {
-			"title": "App Usage",
+			"title": "Application Usage",
 			"tooltip": "Most frequently used apps"
 		},
 		"bound_to_ds": {
