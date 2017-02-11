@@ -530,7 +530,7 @@
 			"inventory": "Inventory",
 			"location": "Location",
 			"munki": "Munki",
-			"munkireportinfo": "MunkiReport",
+			"mrinfo": "MunkiReport",
 			"network": "Network",
 			"power": "Power",
 			"printers": "Printers",
@@ -820,7 +820,7 @@
 			"versions": "Known versions of __app__"
 		},
 		"appusage": {
-			"title": "App Usage",
+			"title": "Application Usage",
 			"tooltip": "Most frequently used apps"
 		},
 		"bound_to_ds": {
