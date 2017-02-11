@@ -54,6 +54,7 @@ new Reportdata_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
+            runtypes = [], // Array for runtype column 
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -76,6 +77,18 @@ new Reportdata_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
+                    
+                    d.mrColNotEmpty = "FreeSpace";
+                    
+                    // Check for column in search
+                    if(d.search.value){
+                        $.each(d.columns, function(index, item){
+                            if(item.name == 'diskreport.' + d.search.value){
+                                d.columns[index].search.value = '> 0';
+                            }
+                        });
+
+                    }
             
                     // Look for 'between' statement todo: make generic
                     if(d.search.value.match(/^\d+GB freespace \d+GB$/))

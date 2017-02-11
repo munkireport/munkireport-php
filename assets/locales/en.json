@@ -63,15 +63,15 @@
 		"wrong_user_or_pass": "Wrong username or password"
 	},
 	"backup":{
-		"backup_location": "Backup location",
-		"destination": "Backup destination",
-		"destinations": "Backup destinations",
-		"duration": "Backup duration",
-		"last_failure": "Last failed backup",
+		"backup_location": "Backup Location",
+		"destination": "Backup Destination",
+		"destinations": "Backup Destinations",
+		"duration": "Backup Duration",
+		"last_failure": "Last Failed Backup",
 		"last_failure_msg": "Message",
-		"last_success": "Last successful backup",
-		"location_name": "Location name",
-		"kind": "Backup kind"
+		"last_success": "Last Successful Backup",
+		"location_name": "Location Name",
+		"kind": "Backup Kind"
 	},
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
@@ -300,9 +300,9 @@
 	"failed": "Failed",
 	"failing": "Failing!",
 	"filevault": {
-		"users": "FileVault Enabled users",
+		"users": "FileVault Enabled Users",
 		"widget": {
-			"title": "FileVault 2 status"
+			"title": "FileVault 2 Status"
 		}
 	},
 	"filter": {
@@ -400,6 +400,22 @@
 		},
 		"checkin": "Check-in",
 		"computername": "Name",
+		"directoryservice": {
+            "boundstatus": "Bound Status",
+            "ad_domain": "AD Domain",
+            "computeraccount": "Computer Account",
+            "ad_comments": "AD Comments",
+            "mobileaccount": "Mobile Account",
+            "networkprotocol": "Network Protocol",
+			"admin_groups": "Allowed Admin Groups"
+		},
+		"displays": {
+            "detected": "Detected",
+            "machineserial": "Machine Serial",
+            "model": "Model",
+            "nativeresolution": "Native Resolution",
+			"vendor": "Vendor"
+		},
 		"hardware": {
 			"description": "Description"
 		},
@@ -415,6 +431,21 @@
 			"pending_removal": "Pending removal",
 			"pending_removal_plural": "Pending removals"
 		},
+		"power": {
+            "capacity": "Capacity (mAh)",
+            "charged": "Charged %",
+            "condition": "Condition",
+            "current": "Current (mAh)",
+            "cycles": "Cycles",
+            "designed": "Designed (mAh)",
+            "health": "Health %",
+            "failedbattery": "Failed Battery",
+            "manufactured": "Manufactured"
+        },
+		"profile": {
+            "payload": "Payloads",
+            "profilename": "Profile Name"
+		},
 		"timemachine": {
 			"duration": "Backup Duration",
 			"last_failure": "Last Failed Backup",
@@ -423,6 +454,10 @@
 			"title": "Time Machine Report"
 		},
 		"username": "Username",
+        "warranty": {
+            "purchased": "Purchased",
+            "expires": "Warranty Expires"
+        },
         "wifi": {
             "apmode": "AP Mode",
             "authtype": "802.11X Auth Type",
@@ -468,6 +503,7 @@
 		"title": "Managed Installs"
 	},
 	"manifest": {
+        "manifest": "Manifest",
 		"name": "Manifest Name"
 	},
 	"memory": {
@@ -589,7 +625,8 @@
 		"traffic": "Network Traffic",
 		"inbound_traffic": "Inbound Traffic",
 		"outbound_traffic": "Outbound Traffic",
-		"remote_ip": "Remote IP Address"
+		"remote_ip": "Remote IP Address",
+		"service": "Service"
 	},
 	"new_client": "New Client",
 	"new_client_plural": "New Clients",
