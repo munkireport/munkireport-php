@@ -96,49 +96,49 @@ $(document).on('appReady', function(e, lang) {
 			$('#softwareupdate-view').removeClass('hide');
 			
 			// Add strings
-			if(data.automaticcheckenabled === "1"){
+			if(data.automaticcheckenabled === "1" || data.automaticcheckenabled === 1) {
 				 $('#softwareupdate-automaticcheckenabled').text("Yes");
-			} else if(data.automaticcheckenabled === "0") {
+			} else if(data.automaticcheckenabled === "0" || data.automaticcheckenabled === 0) {
 				 $('#softwareupdate-automaticcheckenabled').text("No");
 			} else{
 				 $('#softwareupdate-automaticcheckenabled').text("");
 			}
             
-			if(data.automaticdownload === "1"){
+			if(data.automaticdownload === "1" || data.automaticdownload === 1) {
 				 $('#softwareupdate-automaticdownload').text("Yes");
-			} else if(data.automaticdownload === "0") {
+			} else if(data.automaticdownload === "0" || data.automaticdownload === 0) {
 				 $('#softwareupdate-automaticdownload').text("No");
 			} else{
 				 $('#softwareupdate-automaticdownload').text("");
 			}
             
-			if(data.configdatainstall === "1"){
+			if(data.configdatainstall === "1" || data.configdatainstall === 1) {
 				 $('#softwareupdate-configdatainstall').text("Yes");
-			} else if(data.configdatainstall === "0") {
+			} else if(data.configdatainstall === "0" || data.configdatainstall === 0) {
 				 $('#softwareupdate-configdatainstall').text("No");
 			} else{
 				 $('#softwareupdate-configdatainstall').text("");
 			}
             
-			if(data.criticalupdateinstall === "1"){
+			if(data.criticalupdateinstall === "1" || data.criticalupdateinstall === 1) {
 				 $('#softwareupdate-criticalupdateinstall').text("Yes");
-			} else if(data.criticalupdateinstall === "0") {
+			} else if(data.criticalupdateinstall === "0" || data.criticalupdateinstall === 0) {
 				 $('#softwareupdate-criticalupdateinstall').text("No");
 			} else{
 				 $('#softwareupdate-criticalupdateinstall').text("");
 			}
             
-			if(data.lastsessionsuccessful === "1"){
+			if(data.lastsessionsuccessful === "1" || data.lastsessionsuccessful === 1) {
 				 $('#softwareupdate-lastsessionsuccessful').text("Yes");
-			} else if(data.lastsessionsuccessful === "0") {
+			} else if(data.lastsessionsuccessful === "0" || data.lastsessionsuccessful === 0) {
 				 $('#softwareupdate-lastsessionsuccessful').text("No");
 			} else{
 				 $('#softwareupdate-lastsessionsuccessful').text("");
 			}
             
-			if(data.skiplocalcdn === "1"){
+			if(data.skiplocalcdn === "1" || data.skiplocalcdn === 1) {
 				 $('#softwareupdate-skiplocalcdn').text("Yes");
-			} else if(data.skiplocalcdn === "0") {
+			} else if(data.skiplocalcdn === "0" || data.skiplocalcdn === 0) {
 				 $('#softwareupdate-skiplocalcdn').text("No");
 			} else{
 				 $('#softwareupdate-skiplocalcdn').text("");

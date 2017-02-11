@@ -78,6 +78,26 @@ class Softwareupdate_model extends Model
             $parser->parse($data);
             
             $plist = array_change_key_case($parser->toArray(), CASE_LOWER);
+            
+            // Fill in missing keys
+            if( ! array_key_exists("automaticcheckenabled",$plist)){
+                $plist["automaticcheckenabled"] = -1;
+            }
+            if( ! array_key_exists("automaticdownload",$plist)){
+                $plist["automaticdownload"] = -1;
+            }
+            if( ! array_key_exists("configdatainstall",$plist)){
+                $plist["configdatainstall"] = -1;
+            }
+            if( ! array_key_exists("criticalupdateinstall",$plist)){
+                $plist["criticalupdateinstall"] = -1;
+            }
+            if( ! array_key_exists("lastsessionsuccessful",$plist)){
+                $plist["lastsessionsuccessful"] = -1;
+            }
+            if( ! array_key_exists("skiplocalcdn",$plist)){
+                $plist["skiplocalcdn"] = -1;
+            }
                         
             foreach (array('automaticcheckenabled', 'automaticdownload', 'configdatainstall', 'criticalupdateinstall','lastattemptsystemversion','lastbackgroundccdsuccessfuldate','lastbackgroundsuccessfuldate','lastfullsuccessfuldate','lastrecommendedupdatesavailable','lastresultcode','lastsessionsuccessful','lastsuccessfuldate','lastupdatesavailable','skiplocalcdn','recommendedupdates','mrxprotect','catalogurl','inactiveupdates') as $item) {
                 if (isset($plist[$item])) {                    
@@ -100,30 +120,26 @@ class Softwareupdate_model extends Model
                         $this->$item = $inactiveupdateslistproper;                        
                         
                     } else if ($item == 'automaticcheckenabled' || $item == 'automaticdownload' || $item == 'configdatainstall' || $item == 'criticalupdateinstall' || $item == 'lastsessionsuccessful' || $item == 'skiplocalcdn'){ 
-                        
-                        //var_dump($plist[$item]);
-                        
+                                                
                         if ($plist[$item] == "1"){
                            $this->$item = "1";
-                                                    var_dump($this->$item);
                         }
                         else if ($plist[$item] == "0"){
                             $this->$item = "0";
-                                                    var_dump($this->$item);
                         }
                         else {
                             $this->$item = "-1";
-                                                    var_dump($this->$item);
                         }
                         
                     } else {    
                         $this->$item = $plist[$item];
                     }
+                    
                 } else {
                     $this->$item = '';
                 }
             }
-
+            
             // Save the data
             $this->save();  
         }
