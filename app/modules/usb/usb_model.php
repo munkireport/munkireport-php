@@ -38,6 +38,53 @@ class Usb_model extends Model {
 	
 	// ------------------------------------------------------------------------
 
+    
+     /**
+     * Get USB device names for widget
+     *
+     **/
+     public function get_usb_devices()
+     {
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN name <> '' AND name IS NOT NULL THEN 1 END) AS count, name 
+                FROM usb
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter()."
+                GROUP BY name
+                ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->name = $obj->name ? $obj->name : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+    
+     /**
+     * Get USB device types for widget
+     *
+     **/
+     public function get_usb_types()
+     {
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN type <> '' AND type IS NOT NULL THEN 1 END) AS count, type 
+                FROM usb
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter()."
+                GROUP BY type
+                ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->type = $obj->type ? $obj->type : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+    
 	/**
 	 * Process data sent by postflight
 	 *
