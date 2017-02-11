@@ -80,15 +80,23 @@ $(document).on('appReady', function(e, lang) {
 			$('#location-longitudeaccuracy').text(data.longitudeaccuracy + 'm');
 			
 			// Format LastRun date
-			var mydate = moment(data.lastrun, "YYYY-MM-DD HH:mm:ss Z");
-			$('#location-lastrun').append('<time title="'+mydate.format('LLLL')+'" >'+mydate.fromNow()+'</time>');
-			$('#location-lastrun time').tooltip().css('cursor', 'pointer');
-			
+			if(data.lastrun !== "" ){
+               var mydate = moment(data.lastrun, "YYYY-MM-DD HH:mm:ss Z");
+               $('#location-lastrun').append('<time title="'+mydate.format('LLLL')+'" >'+mydate.fromNow()+'</time>');
+               $('#location-lastrun time').tooltip().css('cursor', 'pointer');
+            } else {
+               $('#location-lastrun').html(i18n.t('location.never'));
+            }
+            
 			// Format LastLocationRun date
-			var mydate = moment(data.lastlocationrun, "YYYY-MM-DD HH:mm:ss Z");
-			$('#location-lastlocationrun').append('<time title="'+mydate.format('LLLL')+'" >'+mydate.fromNow()+'</time>');
-			$('#location-lastlocationrun time').tooltip().css('cursor', 'pointer');
-			
+			if(data.lastlocationrun !== "" ){
+               var mydate = moment(data.lastlocationrun, "YYYY-MM-DD HH:mm:ss Z");
+               $('#location-lastlocationrun').append('<time title="'+mydate.format('LLLL')+'" >'+mydate.fromNow()+'</time>');
+               $('#location-lastlocationrun time').tooltip().css('cursor', 'pointer');
+            } else {
+               $('#location-lastlocationrun').html(i18n.t('location.never'));
+            }
+            
 			// Create google maps instance
 			var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
 			var mapOptions = {
