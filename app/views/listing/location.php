@@ -67,23 +67,12 @@ new Location_model;
             var sn=$('td:eq(1)', nRow).html();
             var link = mr.getClientDetailLink(name, sn, '#tab_location-tab');
             $('td:eq(0)', nRow).html(link);
-            
-            // Format Last Run date
-            var date=$('td:eq(3)', nRow).html();
-            if(date){
-              a = moment(date)
-              b = a.diff(moment(), 'years', true)
-              if(a.diff(moment(), 'years', true) < -4)
-              {
-                $('td:eq(3)', nRow).addClass('danger')
-              }
-              if(Math.round(b) == 4)
-              {
-                
-              }
-              $('td:eq(3)', nRow).addClass('text-right').html(moment(date).fromNow());
+              
+            // Format Last Run Date timestamp
+            var checkin = $('td:eq(3)', nRow).html();
+            if(checkin !== "" ){
+	        	$('td:eq(3)', nRow).html('<span title="' + checkin.replace(' +0000', 'GMT') + '">' + moment(checkin.replace(' +0000', 'Z')).fromNow());
             }
-
           }
       });
   });
