@@ -29,8 +29,8 @@ $tab_list = array(
 	'sccm_status-tab' => array('view' => 'client/sccm_status_tab', 'i18n' => 'sccm_status.title'),
 	'caching-tab' => array('view' => 'client/caching_tab', 'i18n' => 'caching.client_tab_title'),
 	'munkireportinfo-tab' => array('view' => 'client/munkireportinfo_tab', 'i18n' => 'munkireportinfo.clienttabtitle'),
-	'usb-tab' => array('view' => 'client/usb_tab', 'i18n' => 'nav.listings.usb')
-		);
+	'usb-tab' => array('view' => 'client/usb_tab', 'i18n' => 'nav.listings.usb', 'badge' => 'usb-cnt'),
+	);
 
 // Add custom tabs
 $tab_list = array_merge($tab_list, conf('client_tabs', array()));
