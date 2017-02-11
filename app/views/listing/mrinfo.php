@@ -103,7 +103,11 @@ new Munkireportinfo_model;
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
                 var link = mr.getClientDetailLink(name, sn, '#tab_munkireportinfo-tab');
-			$('td:eq(0)', nRow).html(link);
+                $('td:eq(0)', nRow).html(link);
+                
+                // Format Version
+				var version = mr.integerToVersion($('td:eq(2)', nRow).html());
+				$('td:eq(2)', nRow).html(version);
 		    }
 	    });
 
