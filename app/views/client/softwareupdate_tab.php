@@ -57,7 +57,7 @@
 					<th data-i18n="softwareupdate.lastupdatesavailable"></th>
 					<td id="softwareupdate-lastupdatesavailable"></td>
 				</tr>
-                				<tr>
+				<tr>
 					<th data-i18n="softwareupdate.recommendedupdates"></th>
 					<td id="softwareupdate-recommendedupdates"></td>
 				</tr>
@@ -65,9 +65,7 @@
 					<th data-i18n="softwareupdate.skiplocalcdn"></th>
 					<td id="softwareupdate-skiplocalcdn"></td>
 				</tr>
-
-
-                				<tr>
+				<tr>
 					<th data-i18n="softwareupdate.lastattemptsystemversion"></th>
 					<td id="softwareupdate-lastattemptsystemversion"></td>
 				</tr>
@@ -96,38 +94,50 @@ $(document).on('appReady', function(e, lang) {
 			// Add strings
 			if(data.automaticcheckenabled === "1"){
 				 $('#softwareupdate-automaticcheckenabled').text("Yes");
-			} else {
+			} else if(data.automaticcheckenabled === "0") {
 				 $('#softwareupdate-automaticcheckenabled').text("No");
+			} else{
+				 $('#softwareupdate-automaticcheckenabled').text("");
 			}
             
 			if(data.automaticdownload === "1"){
 				 $('#softwareupdate-automaticdownload').text("Yes");
-			} else {
+			} else if(data.automaticdownload === "0") {
 				 $('#softwareupdate-automaticdownload').text("No");
+			} else{
+				 $('#softwareupdate-automaticdownload').text("");
 			}
             
 			if(data.configdatainstall === "1"){
 				 $('#softwareupdate-configdatainstall').text("Yes");
-			} else {
+			} else if(data.configdatainstall === "0") {
 				 $('#softwareupdate-configdatainstall').text("No");
+			} else{
+				 $('#softwareupdate-configdatainstall').text("");
 			}
             
 			if(data.criticalupdateinstall === "1"){
 				 $('#softwareupdate-criticalupdateinstall').text("Yes");
-			} else {
+			} else if(data.criticalupdateinstall === "0") {
 				 $('#softwareupdate-criticalupdateinstall').text("No");
+			} else{
+				 $('#softwareupdate-criticalupdateinstall').text("");
 			}
             
 			if(data.lastsessionsuccessful === "1"){
 				 $('#softwareupdate-lastsessionsuccessful').text("Yes");
-			} else {
+			} else if(data.lastsessionsuccessful === "0") {
 				 $('#softwareupdate-lastsessionsuccessful').text("No");
+			} else{
+				 $('#softwareupdate-lastsessionsuccessful').text("");
 			}
             
 			if(data.skiplocalcdn === "1"){
 				 $('#softwareupdate-skiplocalcdn').text("Yes");
-			} else {
+			} else if(data.skiplocalcdn === "0") {
 				 $('#softwareupdate-skiplocalcdn').text("No");
+			} else{
+				 $('#softwareupdate-skiplocalcdn').text("");
 			}
             
 			$('#softwareupdate-lastattemptsystemversion').text(data.lastattemptsystemversion);
