@@ -44,7 +44,6 @@ class Appusage_model extends Model
 				    LEFT JOIN reportdata USING (serial_number)
                     ".get_machine_group_filter()."
                     AND event = 'launch'
-                    GROUP BY app_name
                     ORDER BY count DESC";
 
         foreach ($this->query($sql) as $obj) {
