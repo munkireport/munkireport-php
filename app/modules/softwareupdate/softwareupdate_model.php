@@ -28,7 +28,7 @@ class Softwareupdate_model extends Model
                 // Schema version, increment when creating a db migration
                 $this->schema_version = 0;
                 
-                //indexes to optimize queries
+                // Indexes to optimize queries
                 $this->idx[] = array('automaticcheckenabled');
                 $this->idx[] = array('automaticdownload');
                 $this->idx[] = array('configdatainstall');
@@ -101,18 +101,18 @@ class Softwareupdate_model extends Model
                         
                     } else if ($item == 'automaticcheckenabled' || $item == 'automaticdownload' || $item == 'configdatainstall' || $item == 'criticalupdateinstall' || $item == 'lastsessionsuccessful' || $item == 'skiplocalcdn'){ 
                         
-                        var_dump($plist[$item]);
+                        //var_dump($plist[$item]);
                         
                         if ($plist[$item] == "1"){
-                           $this->$item = 1;
+                           $this->$item = "1";
                                                     var_dump($this->$item);
                         }
                         else if ($plist[$item] == "0"){
-                            $this->$item = 0;
+                            $this->$item = "0";
                                                     var_dump($this->$item);
                         }
                         else {
-                            $this->$item = -1;
+                            $this->$item = "-1";
                                                     var_dump($this->$item);
                         }
                         
