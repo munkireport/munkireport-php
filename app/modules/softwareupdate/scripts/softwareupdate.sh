@@ -48,7 +48,5 @@ fi
 
 XProtectCheck
 
-echo "$result"
-
 # Write out date for MunkiReport to pickup
 defaults write /Library/Preferences/com.apple.SoftwareUpdate.plist MRXprotect "$result"

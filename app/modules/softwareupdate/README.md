@@ -8,12 +8,12 @@ Reports on the status of software updates on the client
 * configdatainstall - int - automatic downloads of XProtect and GateKeeper data enabled
 * criticalupdateinstall - int - automatica downloads of critical updates enabled
 * lastattemptsystemversion - varchar(255) - last version and build of OS X that attempted an update
-* lastbackgroundccdsuccessfuldate - varchar(255) - last backgroud update seccessful date
-* lastbackgroundsuccessfuldate - varchar(255) - last backgroud update seccessful date
-* lastfullsuccessfuldate - varchar(255) - date of last seccessful update
+* lastbackgroundccdsuccessfuldate - varchar(255) - last backgroud update successful date
+* lastbackgroundsuccessfuldate - varchar(255) - last backgroud update successful date
+* lastfullsuccessfuldate - varchar(255) - date of last successful update
 * lastrecommendedupdatesavailable - int - number of last recommended updates
 * lastresultcode - int - last result code from update
-* lastsessionsuccessful - int - last session seccessful
+* lastsessionsuccessful - int - last session successful
 * lastsuccessfuldate - varchar(255) - last successful session date
 * lastupdatesavailable - int - number of last available updates
 * skiplocalcdn - int - skip the local CDN when downloading updates
