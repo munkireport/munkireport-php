@@ -21,7 +21,7 @@ elif [[ ${osvers_major} -eq 10 ]] && [[ ${osvers_minor} -ge 6 ]] && [[ ${osvers_
    # XProtect.meta.plist file and report the date when the file was last modified
    # in a human-readable date format. This will apply to Macs running Mac OS X 10.6.x
    # through OS X 10.8.5.
-
+   
   last_xprotect_update_epoch_time=`/bin/date -jf "%s" $(/usr/bin/stat -s /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/XProtect.meta.plist | tr ' ' '\n' | awk -F= '/st_mtime/{print $NF}') +%s`
   last_xprotect_update_human_readable_time=`/bin/date -r "$last_xprotect_update_epoch_time" '+%m-%d-%Y %H:%M:%S'`
   result="$last_xprotect_update_human_readable_time"
@@ -34,6 +34,11 @@ elif [[ ${osvers_major} -eq 10 ]] && [[ ${osvers_minor} -ge 9 ]]; then
    # date format. This will apply to Macs running OS X 10.9.0 and later.
 
   last_xprotect_update_epoch_time=$(printf "%s\n" `for i in $(pkgutil --pkgs=".*XProtect.*"); do pkgutil --pkg-info $i | awk '/install-time/ {print $2}'; done` | sort -n | tail -1)
+  
+  if [[ -z $last_xprotect_update_epoch_time ]]; then
+    last_xprotect_update_epoch_time=`/bin/date -jf "%s" $(/usr/bin/stat -s /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/XProtect.meta.plist | tr ' ' '\n' | awk -F= '/st_mtime/{print $NF}') +%s`
+  fi
+  
   last_xprotect_update_human_readable_time=`/bin/date -r "$last_xprotect_update_epoch_time" '+%Y-%m-%d %H:%M:%S'`
   result="$last_xprotect_update_human_readable_time"
   
@@ -42,6 +47,8 @@ fi
 }
 
 XProtectCheck
+
+echo "$result"
 
 # Write out date for MunkiReport to pickup
 defaults write /Library/Preferences/com.apple.SoftwareUpdate.plist MRXprotect "$result"

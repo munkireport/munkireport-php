@@ -105,7 +105,7 @@ class Softwareupdate_model extends Model
                         if ($plist[$item] == "1"){
                            $this->$item = 1;
                         }
-                        else if ($plist[$item] != "0"){
+                        else if ($plist[$item] == "0"){
                             $this->$item = 0;
                         }
                         else {
