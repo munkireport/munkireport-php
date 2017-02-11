@@ -5,22 +5,21 @@ class Softwareupdate_model extends Model
         {
                 parent::__construct('id', 'softwareupdate'); //primary key, tablename
                 $this->rs['id'] = 0;
-                $this->rs['serial_number'] = $serial;
-                $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-                $this->rs['automaticcheckenabled'] = 0;
-                $this->rs['automaticdownload'] = 0;
-                $this->rs['configdatainstall'] = 0;
-                $this->rs['criticalupdateinstall'] = 0;
+                $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+                $this->rs['automaticcheckenabled'] = 0; $this->rt['automaticcheckenabled'] = 'INT';
+                $this->rs['automaticdownload'] = 0; $this->rt['automaticdownload'] = 'INT';
+                $this->rs['configdatainstall'] = 0; $this->rt['configdatainstall'] = 'INT';
+                $this->rs['criticalupdateinstall'] = 0; $this->rt['criticalupdateinstall'] = 'INT';
                 $this->rs['lastattemptsystemversion'] = '';
                 $this->rs['lastbackgroundccdsuccessfuldate'] = '';
                 $this->rs['lastbackgroundsuccessfuldate'] = '';
                 $this->rs['lastfullsuccessfuldate'] = '';
-                $this->rs['lastrecommendedupdatesavailable'] = 0;
-                $this->rs['lastresultcode'] = 0;
-                $this->rs['lastsessionsuccessful'] = 0;
+                $this->rs['lastrecommendedupdatesavailable'] = 0; $this->rt['lastrecommendedupdatesavailable'] = 'INT';
+                $this->rs['lastresultcode'] = 0; $this->rt['lastresultcode'] = 'INT';
+                $this->rs['lastsessionsuccessful'] = 0; $this->rt['lastsessionsuccessful'] = 'INT';
                 $this->rs['lastsuccessfuldate'] = '';
-                $this->rs['lastupdatesavailable'] = 0;
-                $this->rs['skiplocalcdn'] = 0;
+                $this->rs['lastupdatesavailable'] = 0; $this->rt['lastupdatesavailable'] = 'INT';
+                $this->rs['skiplocalcdn'] = 0; $this->rt['skiplocalcdn'] = 'INT';
                 $this->rs['recommendedupdates'] = '';
                 $this->rs['mrxprotect'] = '';
                 $this->rs['catalogurl'] = '';
@@ -102,14 +101,19 @@ class Softwareupdate_model extends Model
                         
                     } else if ($item == 'automaticcheckenabled' || $item == 'automaticdownload' || $item == 'configdatainstall' || $item == 'criticalupdateinstall' || $item == 'lastsessionsuccessful' || $item == 'skiplocalcdn'){ 
                         
+                        var_dump($plist[$item]);
+                        
                         if ($plist[$item] == "1"){
                            $this->$item = 1;
+                                                    var_dump($this->$item);
                         }
                         else if ($plist[$item] == "0"){
                             $this->$item = 0;
+                                                    var_dump($this->$item);
                         }
                         else {
                             $this->$item = -1;
+                                                    var_dump($this->$item);
                         }
                         
                     } else {    
