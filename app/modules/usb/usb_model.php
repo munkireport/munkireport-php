@@ -38,11 +38,58 @@ class Usb_model extends Model {
 	
 	// ------------------------------------------------------------------------
 
+    
+     /**
+     * Get USB device names for widget
+     *
+     **/
+     public function get_usb_devices()
+     {
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN name <> '' AND name IS NOT NULL THEN 1 END) AS count, name 
+                FROM usb
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter()."
+                GROUP BY name
+                ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->name = $obj->name ? $obj->name : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+    
+     /**
+     * Get USB device types for widget
+     *
+     **/
+     public function get_usb_types()
+     {
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN type <> '' AND type IS NOT NULL THEN 1 END) AS count, type 
+                FROM usb
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter()."
+                GROUP BY type
+                ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->type = $obj->type ? $obj->type : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+    
 	/**
 	 * Process data sent by postflight
 	 *
 	 * @param string data
-	 * @author miqviq
+	 * @author miqviq, revamped by tuxudo
 	 **/
 	function process($plist)
 	{
@@ -78,16 +125,18 @@ class Usb_model extends Model {
 				continue;
 			}
             
-			// Check for USB Bus and exclude
-			if ($device['name'] == 'USB30Bus' || $device['name'] == 'USB20Bus' || $device['name'] == 'USB11Bus' || $device['name'] == 'USBBus') {
+			// Check for USB Bus, and exclude
+			if ($device['name'] == 'USB30Bus' || $device['name'] == 'USB20Bus' || $device['name'] == 'USB11Bus' || $device['name'] == 'USBBus' || $device['name'] == 'UHCI Root Hub Simulation' || $device['name'] == 'EHCI Root Hub Simulation') {
 				continue;
 			}
-			
-			// Skip internal devices (?)
-			//if ($device['internal']){
-				//continue;
-			//}
             
+			// Skip internal devices if value is TRUE
+			if (!conf('usb_internal')) {
+    			if ($device['internal']){
+					continue;
+    			}
+			}
+			 
             // Adjust names
 			$device['name'] = str_replace(array('bluetooth_device','hub_device','composite_device'), array('Bluetooth USB Host Controller','USB Hub','Composite Device'), $device['name']);
             
@@ -99,45 +148,55 @@ class Usb_model extends Model {
 			}
             
             // Set device types
-			if (strpos($device['name'], 'iSight') !== false) {
+			if (stripos($device['name'], 'iSight') !== false) {
 				$device['type'] = 'Camera';
 			}
-			else if (strpos($device['name'], 'Hub') !== false) {
+			else if (stripos($device['name'], 'Hub') !== false) {
 				$device['type'] = 'USB Hub';
 			}
-			else if (strpos($device['name'], 'Keyboard') !== false) {
+			else if (stripos($device['name'], 'Keyboard') !== false) {
 				$device['type'] = 'Keyboard';
 			}
-			else if (strpos($device['name'], 'IR Receiver') !== false) {
+			else if (stripos($device['name'], 'IR Receiver') !== false) {
 				$device['type'] = 'IR Receiver';
 			}
-			else if (strpos($device['name'], 'Bluetooth') !== false) {
+			else if (stripos($device['name'], 'Bluetooth') !== false) {
 				$device['type'] = 'Bluetooth Controller';
 			}
-			else if (strpos($device['name'], 'iPhone') !== false) {
+			else if (stripos($device['name'], 'iPhone') !== false) {
 				$device['type'] = 'iPhone';
 			}
-			else if (strpos($device['name'], 'iPad') !== false) {
+			else if (stripos($device['name'], 'iPad') !== false) {
 				$device['type'] = 'iPad';
 			}
-			else if (strpos($device['name'], 'iPod') !== false) {
+			else if (stripos($device['name'], 'iPod') !== false) {
 				$device['type'] = 'iPod';
 			}
-			else if (strpos($device['name'], 'Mouse') !== false) {
+			else if (stripos($device['name'], 'Mouse') !== false) {
 				$device['type'] = 'Mouse';
 			}
-			else if (strpos($device['name'], 'Card Reader') !== false) {
+			else if (stripos($device['name'], 'Card Reader') !== false) {
 				$device['type'] = 'Mass Storage';
 			}
-			else if (strpos($device['manufacturer'], 'DisplayLink') !== false) {
-				$device['type'] = 'Display';
+			else if (stripos($device['manufacturer'], 'DisplayLink') !== false) {
+				$device['type'] = 'Display'; // Set by manufacturer
 			}
-			else if (strpos($device['name'], 'UPS') !== false) {
+			else if (stripos($device['name'], 'UPS') !== false) {
 				$device['type'] = 'UPS';
 			}
-			else if (strpos($device['name'], 'audio') !== false) {
+			else if (stripos($device['name'], 'audio') !== false) {
 				$device['type'] = 'Audio Device';
 			}
+			else if (stripos($device['name'], 'Camera') !== false) {
+				$device['type'] = 'Camera';
+			}
+			else if (stripos($device['name'], 'Video') !== false) {
+				$device['type'] = 'Camera';
+			}
+			else if (stripos($device['name'], 'Display') !== false) {
+				$device['type'] = 'Display';
+			}
+
             
             // Check for Mass Storage
             if ($device['media'] == 1 ) {
@@ -150,8 +209,14 @@ class Usb_model extends Model {
 			}
             
             // Override Internal T/F based on name
-            if (strpos($device['name'], 'Internal') !== false) {
+            if (stripos($device['name'], 'Internal') !== false) {
 				$device['internal'] = 1;
+			}
+            
+			// Set manufacturer from vendor ID if it's blank
+			if (! array_key_exists("manufacturer",$device)) {
+				preg_match('/\((.*?)\)/s', $device['vendor_id'], $manufactureroutput);
+				$device['manufacturer'] = $manufactureroutput[1];
 			}
             
 			foreach ($typeList as $key => $value) {
@@ -166,7 +231,5 @@ class Usb_model extends Model {
 			$this->id = '';
 			$this->save();
 		}
-
-		//throw new Exception("Error Processing Request", 1);
 	}
 }

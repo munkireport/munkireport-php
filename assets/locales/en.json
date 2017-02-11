@@ -782,9 +782,11 @@
 		"manufacturer": "Manufacturer",
 		"media": "Removable Media",
 		"name": "Device Name",
+		"nousb": "No USB Devices Detected",
 		"reporttitle": "USB Devices Report",
 		"title": "Keyboard and Mouse",
 		"type": "Device Type",
+		"usbtype": "USB Device Types",
 		"vendor_id": "Vendor ID"
 	},  
 	"uptime": "Uptime",
