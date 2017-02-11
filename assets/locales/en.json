@@ -707,6 +707,7 @@
 		"clienttabtitle": "Software Updates",
 		"configdatainstall": "Auto Install XProtect",
 		"criticalupdateinstall": "Install Critical",
+		"inactiveupdates": "Ignored Updates",
 		"lastattemptsystemversion": "Version Attempted",
 		"lastbackgroundccdsuccessfuldate": "Background CCD Success Date",
 		"lastbackgroundsuccessfuldate": "Background Success Date",

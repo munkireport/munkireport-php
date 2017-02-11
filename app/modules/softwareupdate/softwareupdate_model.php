@@ -24,6 +24,7 @@ class Softwareupdate_model extends Model
                 $this->rs['recommendedupdates'] = '';
                 $this->rs['mrxprotect'] = '';
                 $this->rs['catalogurl'] = '';
+                $this->rs['inactiveupdates'] = '';
 
                 // Schema version, increment when creating a db migration
                 $this->schema_version = 0;
@@ -45,6 +46,7 @@ class Softwareupdate_model extends Model
                 $this->idx[] = array('skiplocalcdn');
                 $this->idx[] = array('recommendedupdates');
                 $this->idx[] = array('mrxprotect');
+                $this->idx[] = array('inactiveupdates');
                 
                 // Create table if it does not exist
                 $this->create_table();
@@ -78,7 +80,7 @@ class Softwareupdate_model extends Model
             
             $plist = array_change_key_case($parser->toArray(), CASE_LOWER);
                         
-            foreach (array('automaticcheckenabled', 'automaticdownload', 'configdatainstall', 'criticalupdateinstall','lastattemptsystemversion','lastbackgroundccdsuccessfuldate','lastbackgroundsuccessfuldate','lastfullsuccessfuldate','lastrecommendedupdatesavailable','lastresultcode','lastsessionsuccessful','lastsuccessfuldate','lastupdatesavailable','skiplocalcdn','recommendedupdates','mrxprotect','catalogurl') as $item) {
+            foreach (array('automaticcheckenabled', 'automaticdownload', 'configdatainstall', 'criticalupdateinstall','lastattemptsystemversion','lastbackgroundccdsuccessfuldate','lastbackgroundsuccessfuldate','lastfullsuccessfuldate','lastrecommendedupdatesavailable','lastresultcode','lastsessionsuccessful','lastsuccessfuldate','lastupdatesavailable','skiplocalcdn','recommendedupdates','mrxprotect','catalogurl','inactiveupdates') as $item) {
                 if (isset($plist[$item])) {                    
                     if ($item == 'recommendedupdates'){
                                                 
@@ -90,6 +92,13 @@ class Softwareupdate_model extends Model
                     } else if ($item == 'lastbackgroundccdsuccessfuldate' || $item == 'lastbackgroundsuccessfuldate' || $item == 'lastfullsuccessfuldate' || $item == 'lastsuccessfuldate'){ 
                         
                         $this->$item = date('Y-m-d H:i:s', $plist[$item]);
+                        
+                    } else if ($item == 'inactiveupdates'){ 
+                        
+                        $inactiveupdateslist = $plist["inactiveupdates"];                        
+                        sort($inactiveupdateslist);
+                        $inactiveupdateslistproper = implode(", ",$inactiveupdateslist);
+                        $this->$item = $inactiveupdateslistproper;                        
                         
                     } else if ($item == 'automaticcheckenabled' || $item == 'automaticdownload' || $item == 'configdatainstall' || $item == 'criticalupdateinstall' || $item == 'lastsessionsuccessful' || $item == 'skiplocalcdn'){ 
                         

@@ -61,6 +61,10 @@
 					<th data-i18n="softwareupdate.recommendedupdates"></th>
 					<td id="softwareupdate-recommendedupdates"></td>
 				</tr>
+                <tr>
+					<th data-i18n="softwareupdate.inactiveupdates"></th>
+					<td id="softwareupdate-inactiveupdates"></td>
+				</tr>
 				<tr>
 					<th data-i18n="softwareupdate.skiplocalcdn"></th>
 					<td id="softwareupdate-skiplocalcdn"></td>
@@ -149,6 +153,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#softwareupdate-lastsuccessfuldate').text(data.lastsuccessfuldate);  
 			$('#softwareupdate-lastupdatesavailable').text(data.lastupdatesavailable);
 			$('#softwareupdate-recommendedupdates').text(data.recommendedupdates);
+			$('#softwareupdate-inactiveupdates').text(data.inactiveupdates);
 			$('#softwareupdate-mrxprotect').text(data.mrxprotect);  
 			$('#softwareupdate-catalogurl').text(data.catalogurl);  
             

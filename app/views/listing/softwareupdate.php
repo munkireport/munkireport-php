@@ -22,6 +22,7 @@ new Softwareupdate_model;
 			<th data-i18n="softwareupdate.mrxprotect" data-colname='softwareupdate.mrxprotect'></th>
 			<th data-i18n="softwareupdate.lastsuccessfuldate" data-colname='softwareupdate.lastsuccessfuldate'></th>
 			<th data-i18n="softwareupdate.lastbackgroundsuccessfuldate" data-colname='softwareupdate.lastbackgroundsuccessfuldate'></th>
+			<th data-i18n="softwareupdate.inactiveupdates" data-colname='softwareupdate.inactiveupdates'></th>
 			<th data-i18n="softwareupdate.catalogurl" data-colname='softwareupdate.catalogurl'></th>
 			<th data-i18n="softwareupdate.lastupdatesavailable" data-colname='softwareupdate.lastupdatesavailable'></th>
 			<th data-i18n="softwareupdate.automaticcheckenabled" data-colname='softwareupdate.automaticcheckenabled'></th>
@@ -116,40 +117,40 @@ new Softwareupdate_model;
 	        	$('td:eq(0)', nRow).html(link);
                 
 	        	// automaticcheckenabled
-	        	var automaticcheckenabled=$('td:eq(8)', nRow).html();
+	        	var automaticcheckenabled=$('td:eq(9)', nRow).html();
 	        	automaticcheckenabled = automaticcheckenabled == '1' ? i18n.t('yes') :
 	        	(automaticcheckenabled === '0' ? i18n.t('no') : '')
-	        	$('td:eq(8)', nRow).html(automaticcheckenabled)
+	        	$('td:eq(9)', nRow).html(automaticcheckenabled)
                 
 	        	// automaticdownload
-	        	var automaticdownload=$('td:eq(9)', nRow).html();
+	        	var automaticdownload=$('td:eq(10)', nRow).html();
 	        	automaticdownload = automaticdownload == '1' ? i18n.t('yes') :
 	        	(automaticdownload === '0' ? i18n.t('no') : '')
-	        	$('td:eq(9)', nRow).html(automaticdownload)
+	        	$('td:eq(10)', nRow).html(automaticdownload)
                 
 	        	// configdatainstall
-	        	var configdatainstall=$('td:eq(10)', nRow).html();
+	        	var configdatainstall=$('td:eq(11)', nRow).html();
 	        	configdatainstall = configdatainstall == '1' ? i18n.t('yes') :
 	        	(configdatainstall === '0' ? i18n.t('no') : '')
-	        	$('td:eq(10)', nRow).html(configdatainstall)
+	        	$('td:eq(11)', nRow).html(configdatainstall)
                 
 	        	// criticalupdateinstall
-	        	var criticalupdateinstall=$('td:eq(11)', nRow).html();
+	        	var criticalupdateinstall=$('td:eq(12)', nRow).html();
 	        	criticalupdateinstall = criticalupdateinstall == '1' ? i18n.t('yes') :
 	        	(criticalupdateinstall === '0' ? i18n.t('no') : '')
-	        	$('td:eq(11)', nRow).html(criticalupdateinstall)
+	        	$('td:eq(12)', nRow).html(criticalupdateinstall)
                 
 	        	// lastsessionsuccessful
-	        	var lastsessionsuccessful=$('td:eq(13)', nRow).html();
+	        	var lastsessionsuccessful=$('td:eq(14)', nRow).html();
 	        	lastsessionsuccessful = lastsessionsuccessful == '1' ? i18n.t('yes') :
 	        	(lastsessionsuccessful === '0' ? i18n.t('no') : '')
-	        	$('td:eq(13)', nRow).html(lastsessionsuccessful)
+	        	$('td:eq(14)', nRow).html(lastsessionsuccessful)
                 
 	        	// skiplocalcdn
-	        	var skiplocalcdn=$('td:eq(14)', nRow).html();
+	        	var skiplocalcdn=$('td:eq(15)', nRow).html();
 	        	skiplocalcdn = skiplocalcdn == '1' ? i18n.t('yes') :
 	        	(skiplocalcdn === '0' ? i18n.t('no') : '')
-	        	$('td:eq(14)', nRow).html(skiplocalcdn)
+	        	$('td:eq(15)', nRow).html(skiplocalcdn)
 		    }
 	    });
 
