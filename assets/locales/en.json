@@ -564,6 +564,7 @@
 			"location": "Location Report",
 			"munki": "Munki Report",
 			"network": "Network Report",
+			"peripheral": "Peripheral Report",
 			"power": "Power Report",
 			"printer": "Printer Report",
 			"profile": "Profile Report",
