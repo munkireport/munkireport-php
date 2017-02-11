@@ -21,13 +21,13 @@ new Power_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-colname='power.design_capacity'>Designed (mAh)</th>
-		        <th data-colname='power.max_capacity'>Capacity (mAh)</th>
-		        <th data-colname='power.cycle_count'>Cycles</th>
-		        <th data-colname='power.max_percent'>Health %</th>
-		        <th data-colname='power.condition'>Condition</th>
-		        <th data-colname='power.current_capacity'>Current (mAh)</th>
-		        <th data-colname='power.current_percent'>Charged %</th>
+		        <th data-i18n="listing.power.designed" data-colname='power.design_capacity'></th>
+		        <th data-i18n="listing.power.capacity" data-colname='power.max_capacity'></th>
+		        <th data-i18n="listing.power.cycles" data-colname='power.cycle_count'></th>
+		        <th data-i18n="listing.power.health" data-colname='power.max_percent'></th>
+		        <th data-i18n="listing.power.condition" data-colname='power.condition'></th>
+		        <th data-i18n="listing.power.current" data-colname='power.current_capacity'></th>
+		        <th data-i18n="listing.power.charged" data-colname='power.current_percent'></th>
 				<?php
 					$temperature_unit=conf('temperature_unit');
 					if ( $temperature_unit == "F" ) {
@@ -36,8 +36,8 @@ new Power_model;
 						echo "<th data-colname='power.temperature'>Temp°C</th>";
 					}
 				?>
-		        <th data-colname='power.manufacture_date'>Manufactured</th> 
-		        <th data-sort="desc" data-colname='power.timestamp'>Check-In</th> 
+		        <th data-i18n="listing.power.manufactured" data-colname='power.manufacture_date'>Manufactured</th> 
+		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th> 
 		        <th data-hide="1" data-colname='machine.machine_model'>Model ( col 13 hidden )</th>
 		      </tr>
 		    </thead>
@@ -181,6 +181,9 @@ new Power_model;
 				}
 	        	// Format Manufacture date
 	        	var date=$('td:eq(11)', nRow).html();
+                if(date === '1980-00-00'){
+	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('widget.power.nobattery'));
+                } else {
 	        	if(date){
 	        		a = moment(date)
 	        		b = a.diff(moment(), 'years', true)
@@ -192,12 +195,13 @@ new Power_model;
 	        		{
 	        			
 	        		}
-	        		$('td:eq(11)', nRow).addClass('text-right').html(moment(date).fromNow());
+	        		$('td:eq(11)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow());
 	        	}
+                }
 				// Format Check-In timestamp
 				var checkin = parseInt($('td:eq(12)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(12)', nRow).html(moment(date).fromNow());
+				$('td:eq(12)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
 		    }
 	    } );
 	    // Use hash as searchquery

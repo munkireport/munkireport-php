@@ -19,11 +19,11 @@ new Appusage_model;
 		      	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		      	<th data-i18n="listing.appusage.event" data-colname='appusage.event'></th>
 		      	<th data-i18n="listing.appusage.appname" data-colname='appusage.app_name'></th>
-			<th data-i18n="listing.appusage.lastevent" data-colname='appusage.last_time'></th>
+		      	<th data-i18n="listing.appusage.lastevent" data-colname='appusage.last_time'></th>
 		      	<th data-i18n="listing.appusage.count" data-colname='appusage.number_times'></th>
-			<th data-i18n="version" data-colname='appusage.app_version'></th>      
-			<th data-i18n="path" data-colname='appusage.app_path'></th>      
-			<th data-i18n="bundle_id" data-colname='appusage.bundle_id'></th>
+		      	<th data-i18n="version" data-colname='appusage.app_version'></th>      
+		      	<th data-i18n="path" data-colname='appusage.app_path'></th>      
+		      	<th data-i18n="bundle_id" data-colname='appusage.bundle_id'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

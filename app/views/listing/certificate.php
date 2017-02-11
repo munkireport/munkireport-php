@@ -13,7 +13,6 @@ new Certificate_model;
 
   	<div class="col-lg-12">
 	
-
 		  <h3><span data-i18n="listing.certificate.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
@@ -96,13 +95,13 @@ new Certificate_model;
 				var date = new Date(checkin * 1000);
 				var diff = moment().diff(date, 'days');
 				var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
-				$('td:eq(4)', nRow).html('<span class="label label-'+cls+'">'+moment(date).fromNow()+'</span>');
+				$('td:eq(4)', nRow).html('<span class="label label-'+cls+'"><span title="'+date+'">'+moment(date).fromNow()+'</span>');
 
 	        	
 				// Format Check-In timestamp
 				var checkin = parseInt($('td:eq(5)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(5)', nRow).html(moment(date).fromNow());
+				$('td:eq(5)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
 		    }
 	    } );
 	    // Use hash as searchquery
