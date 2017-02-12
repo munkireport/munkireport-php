@@ -732,7 +732,7 @@
 	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
 	"pkg_failed_to_install_plural": "__count__ packages failed to install",
 	"power": {
-		"manufacture_date": "Manufacture Date",
+		"manufacture_date": "Manufactured",
 		"design_capacity": "Design Capacity (mAh)",
 		"max_capacity": "Full Charge Capacity (mAh)",
 		"max_percent": "Health %",

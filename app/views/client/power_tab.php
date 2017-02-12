@@ -63,11 +63,29 @@ $(document).on('appReady', function(e, lang) {
 			$('#power-view').removeClass('hide');
 
             // Add strings
-			$('#power-manufacture_date').text(data.manufacture_date);
 			$('#power-design_capacity').text(data.design_capacity);
 			$('#power-max_capacity').text(data.max_capacity);
 			$('#power-current_capacity').text(data.current_capacity);
 			$('#power-cycle_count').text(data.cycle_count);
+
+            // Format Manufacture date
+            if(data.manufacture_date === '1980-00-00'){
+	        		$('#power-manufacture_date').addClass('danger').html(i18n.t('widget.power.now'));
+            } else {
+	        	if(data.manufacture_date){
+	        		a = moment(data.manufacture_date)
+	        		b = a.diff(moment(), 'years', true)
+	        		if(a.diff(moment(), 'years', true) < -4)
+	        		{
+	        			$('#power-manufacture_date').addClass('danger')
+	        		}
+	        		if(Math.round(b) == 4)
+	        		{
+	        			
+	        		}
+	        		$('#power-manufacture_date').html('<span title="'+data.manufacture_date+'">'+moment(data.manufacture_date).fromNow());
+	        	}
+            }
             
             // Format battery condition
             data.condition = data.condition == 'Normal' ? '<span class="label label-success">Normal</span>' : 

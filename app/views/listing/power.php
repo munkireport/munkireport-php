@@ -36,9 +36,8 @@ new Power_model;
 						echo "<th data-colname='power.temperature'>Temp°C</th>";
 					}
 				?>
-		        <th data-i18n="listing.power.manufactured" data-colname='power.manufacture_date'>Manufactured</th> 
+		        <th data-i18n="listing.power.manufactured" data-colname='power.manufacture_date'></th> 
 		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th> 
-		        <th data-hide="1" data-colname='machine.machine_model'>Model ( col 13 hidden )</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -143,12 +142,12 @@ new Power_model;
 	        	$('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+max_percent+'%;">'+max_percent+'%</div></div>');
 				// Format battery condition
 	        	var status=$('td:eq(7)', nRow).html();
-	        	status = status == 'Normal' ? '<span class="label label-success" data-i18n="widget.normal"></span>' : 
-	        	status = status == 'Replace Soon' ? '<span class="label label-warning" data-i18n="widget.soon"></span>' : 
-	        	status = status == 'Service Battery' ? '<span class="label label-warning" data-i18n="widget.service"></span>' : 
-	        	status = status == 'Check Battery' ? '<span class="label label-warning" data-i18n="widget.check"></span>' : 
-	        	status = status == 'Replace Now' ? '<span class="label label-danger" data-i18n="widget.now"></span>' : 
-	        		(status === 'No Battery' ? '<span class="label label-danger" data-i18n="widget.powernobattery"></span>' : '')
+	        	status = status == 'Normal' ? '<span class="label label-success">Normal</span>' : 
+	        	status = status == 'Replace Soon' ? '<span class="label label-warning">Replace Soon</span>' : 
+	        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
+	        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
+	        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
+	        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
 	        	// Format current charge
 	        	var fs=$('td:eq(8)', nRow).html();
