@@ -17,15 +17,15 @@
 
 		<thead>
 		  <tr>
-			<th data-colname='machine.computer_name'>On computer</th>
-			<th data-colname='reportdata.serial_number'>Computer serial</th>
-			<th data-colname='displays.type'>Type</th>
-			<th data-colname='displays.vendor'>Vendor</th>
-			<th data-colname='displays.model'>Model</th>
-			<th data-colname='displays.display_serial'>Serial number</th>
-			<th data-colname='displays.manufactured'>Manufactured</th>
-			<th data-colname='displays.native'>Native resolution</th>
-			<th data-sort="desc" data-colname='displays.timestamp'>Detected</th>
+			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+			<th data-i18n="listing.displays.machineserial" data-colname='reportdata.serial_number'></th>
+			<th data-i18n="type" data-colname='displays.type'></th>
+			<th data-i18n="listing.displays.vendor" data-colname='displays.vendor'></th>
+			<th data-i18n="listing.displays.model" data-colname='displays.model'></th>
+			<th data-i18n="serial" data-colname='displays.display_serial'></th>
+			<th data-i18n="listing.power.manufactured" data-colname='displays.manufactured'></th>
+			<th data-i18n="listing.displays.nativeresolution" data-colname='displays.native'</th>
+			<th data-i18n="listing.displays.detected" data-sort="desc" data-colname='displays.timestamp'></th>
 		  </tr>
 		</thead>
 
@@ -237,7 +237,7 @@
                 	vendor="Westinghouse"
                 	break;
                 }
-                $('td:eq(3)', nRow).html(vendor)
+                $('td:eq(3)', nRow).html(vendor);
 
                 // Format manufactured from unix to human friendly and the title to relative
                 date = $('td:eq(6)', nRow).html();

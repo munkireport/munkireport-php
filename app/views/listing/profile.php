@@ -17,8 +17,8 @@
 
 		<thead>
 		  <tr>
-			<th data-colname='machine#computer_name' class="col-md-4">Profile Name</th>
-			<th data-colname='profile#payload_name' class="col-md-8">Payloads</th>
+			<th data-i18n="listing.profile.profilename" data-colname='machine#computer_name' class="col-md-4"></th>
+			<th data-i18n="listing.profile.payload" data-colname='profile#payload_name' class="col-md-8"></th>
 			<!--<th data-colname='profile#profile_UUID'>UUID</th>
 			<th data-colname='profile#profile_name'>Profile Name</th>
 			<th data-colname='profile#payload_name'>Payload Name</th>
