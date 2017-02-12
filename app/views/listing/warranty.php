@@ -12,7 +12,7 @@ new Reportdata_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Warranty report <span id="total-count" class='label label-primary'>…</span></span></h3>
+		  <h3><span data-i18n="nav.reports.warranty"></span> <span id="total-count" class='label label-primary'>…</span></span></h3>
 		  
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>

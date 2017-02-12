@@ -1,5 +1,6 @@
 // Global munkireport object
 var mr = {
+        debug: false,
         dt:{},
         
         statusFormat: {
@@ -172,12 +173,14 @@ var mr = {
                   .margin(conf.margin ? conf.margin : {top: 20, right: 10, bottom: 20, left: 70})
                   .showValues(true)
                   .valueFormat(d3.format(''))
-                  .tooltips(false)
                   .showControls(false)
                   .showLegend(false)
                   .barColor(mr.getGraphPref('barColor', conf.widget, conf))//conf.barColor ? conf.barColor : (graphSettings.barColor ? mr.graph.barColor))
                   .height(0);
 
+              // Hide tooltips
+              conf.chart.tooltip.enabled(false);
+              
               conf.chart.yAxis
                   .tickFormat(d3.format(''));
                   
@@ -220,6 +223,9 @@ var mr = {
             // Add active to menu item
             $('[data-switch]').parent().removeClass('active');
             $('[data-switch="'+theme+'"]').parent().addClass('active');
+            
+            // Store theme in session
+            $.post( appUrl + "/settings/theme", { set: theme });
         }
 
     };

@@ -466,10 +466,15 @@ $(document).on('appReady', function(e, lang) {
 	
 	// ------------------------------------ End Hotkeys
 	
+	
+	// ------------------------------------ Refresh machine description
+	
+	$('.mr-refresh-desc').attr('href', appUrl + '/module/warranty/recheck_warranty/' + serialNumber);
+	
 	// ------------------------------------ Tags
 	var currentTags = {}
 		tagsRetrieved = false;
-	$('.mr-machine_desc')
+	$('.mr-refresh-desc')
 		.after($('<div>').append($('<select>')
 			.addClass('tags')
 			.attr("data-role", "tagsinput")

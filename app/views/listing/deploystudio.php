@@ -9,13 +9,13 @@ new Deploystudio_model;
 <div class="container">
   <div class="row">
   	<div class="col-lg-12">
-		  <h3>DeployStudio report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="ds.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-                <th data-i18n="ds.dstudio-last-workflow" data-colname='deploystudio.dstudio_last_workflow'></th>
+		        <th data-i18n="ds.dstudio-last-workflow" data-colname='deploystudio.dstudio_last_workflow'></th>
 		        <th data-i18n="ds.dstudio-last-workflow-duration" data-colname='deploystudio.dstudio_last_workflow_duration'></th>
 		        <th data-i18n="ds.dstudio-last-workflow-execution-date" data-colname='deploystudio.dstudio_last_workflow_execution_date'></th>
 		        <th data-i18n="ds.dstudio-last-workflow-status" data-colname='deploystudio.dstudio_last_workflow_status'></th>
