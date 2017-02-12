@@ -1,128 +1,211 @@
-<?php
-	$directoryservice = new Directory_service_model($serial_number)
-?>
+	<h2 data-i18n="directoryservice.clienttabtitle"></h2>
+	
+	<div id="directoryservice-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
+	
+	<div id="directoryservice-view" class="row hide">
+		<div class="col-md-6">
+			<table class="table table-striped">
+				<tr>
+					<th data-i18n="directoryservice.which_directory_service"></th>
+					<td id="directoryservice-which_directory_service"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.directory_service_comments"></th>
+					<td id="directoryservice-directory_service_comments"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.adforest"></th>
+					<td id="directoryservice-adforest"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.addomain"></th>
+					<td id="directoryservice-addomain"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.computeraccount"></th>
+					<td id="directoryservice-computeraccount"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.createmobileaccount"></th>
+					<td id="directoryservice-createmobileaccount"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.requireconfirmation"></th>
+					<td id="directoryservice-requireconfirmation"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.forcehomeinstartup"></th>
+					<td id="directoryservice-forcehomeinstartup"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.mounthomeassharepoint"></th>
+					<td id="directoryservice-mounthomeassharepoint"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.usewindowsuncpathforhome"></th>
+					<td id="directoryservice-usewindowsuncpathforhome"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.networkprotocoltobeused"></th>
+					<td id="directoryservice-networkprotocoltobeused"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.defaultusershell"></th>
+					<td id="directoryservice-defaultusershell"></td>
+				</tr>
+                <tr>
+					<th data-i18n="directoryservice.mappinguidtoattribute"></th>
+					<td id="directoryservice-mappinguidtoattribute"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.mappingusergidtoattribute"></th>
+					<td id="directoryservice-mappingusergidtoattribute"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.mappinggroupgidtoattr"></th>
+					<td id="directoryservice-mappinggroupgidtoattr"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.generatekerberosauth"></th>
+					<td id="directoryservice-generatekerberosauth"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.preferreddomaincontroller"></th>
+					<td id="directoryservice-preferreddomaincontroller"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.allowedadmingroups"></th>
+					<td id="directoryservice-allowedadmingroups"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.authenticationfromanydomain"></th>
+					<td id="directoryservice-authenticationfromanydomain"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.packetsigning"></th>
+					<td id="directoryservice-packetsigning"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.packetencryption"></th>
+					<td id="directoryservice-packetencryption"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.passwordchangeinterval"></th>
+					<td id="directoryservice-passwordchangeinterval"></td>
+				</tr>
+                <tr>
+					<th data-i18n="directoryservice.restrictdynamicdnsupdates"></th>
+					<td id="directoryservice-restrictdynamicdnsupdates"></td>
+				</tr>
+				<tr>
+					<th data-i18n="directoryservice.namespacemode"></th>
+					<td id="directoryservice-namespacemode"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<div style="height: 512px" id="map-canvas"></div>
+		</div>
+	</div>
 
-	<h2>Directory Service
-		<?php
-			if (strcasecmp($directoryservice->which_directory_service,'LDAPv3') == 0) {
-				echo '<span class="label label-success nw-dsenabled"> LDAPv3</span>';
+<script>
+$(document).on('appReady', function(e, lang) {
+	
+	// Get directory_service data
+	$.getJSON( appUrl + '/module/directory_service/get_data/' + serialNumber, function( data ) {
+		if( ! data.addomain){
+			$('#directoryservice-msg').text(i18n.t('no_data'));
+		}
+		else{
+			
+			// Hide
+			$('#directoryservice-msg').text('');
+			$('#directoryservice-view').removeClass('hide');
+
+            // Add strings
+			$('#directoryservice-which_directory_service').text(data.which_directory_service);
+			$('#directoryservice-directory_service_comments').text(data.directory_service_comments);
+			$('#directoryservice-adforest').text(data.adforest);
+			$('#directoryservice-addomain').text(data.addomain);
+			$('#directoryservice-computeraccount').text(data.computeraccount);
+			$('#directoryservice-createmobileaccount').text(data.createmobileaccount);
+			$('#directoryservice-requireconfirmation').text(data.requireconfirmation);
+			$('#directoryservice-forcehomeinstartup').text(data.forcehomeinstartup);
+			$('#directoryservice-mounthomeassharepoint').text(data.mounthomeassharepoint);
+			$('#directoryservice-usewindowsuncpathforhome').text(data.usewindowsuncpathforhome);
+			$('#directoryservice-networkprotocoltobeused').text(data.networkprotocoltobeused);
+			$('#directoryservice-defaultusershell').text(data.defaultusershell);
+			$('#directoryservice-mappinguidtoattribute').text(data.mappinguidtoattribute);
+			$('#directoryservice-mappingusergidtoattribute').text(data.mappingusergidtoattribute);
+			$('#directoryservice-mappinggroupgidtoattr').text(data.mappinggroupgidtoattr);
+			$('#directoryservice-generatekerberosauth').text(data.generatekerberosauth);
+			$('#directoryservice-preferreddomaincontroller').text(data.preferreddomaincontroller);
+			$('#directoryservice-allowedadmingroups').text(data.allowedadmingroups);
+			$('#directoryservice-authenticationfromanydomain').text(data.authenticationfromanydomain);
+			$('#directoryservice-packetsigning').text(data.packetsigning);
+			$('#directoryservice-passwordchangeinterval').text(data.passwordchangeinterval);
+			$('#directoryservice-restrictdynamicdnsupdates').text(data.restrictdynamicdnsupdates);
+			$('#directoryservice-namespacemode').text(data.namespacemode);
+            
+			if(data.createmobileaccount === "1" || data.createmobileaccount === 1) {
+				 $('#directoryservice-createmobileaccount').text(i18n.t('yes'));
+			} else if(data.createmobileaccount === "0" || data.createmobileaccount === 0) {
+				 $('#directoryservice-createmobileaccount').text(i18n.t('no'));
+			} else{
+				 $('#directoryservice-createmobileaccount').text("");
 			}
-			if (strcasecmp($directoryservice->which_directory_service,'Active Directory') == 0)  {
-				echo '<span class="label label-success nw-dsenabled"> Active Directory</span>';
+            
+			if(data.requireconfirmation === "1" || data.requireconfirmation === 1) {
+				 $('#directoryservice-requireconfirmation').text(i18n.t('yes'));
+			} else if(data.requireconfirmation === "0" || data.requireconfirmation === 0) {
+				 $('#directoryservice-requireconfirmation').text(i18n.t('no'));
+			} else{
+				 $('#directoryservice-createmobileaccount').text("");
 			}
-		?>
-	</h2>
+            
+			if(data.forcehomeinstartup === "1" || data.forcehomeinstartup === 1) {
+				 $('#directoryservice-forcehomeinstartup').text(i18n.t('yes'));
+			} else if(data.forcehomeinstartup === "0" || data.forcehomeinstartup === 0) {
+				 $('#directoryservice-forcehomeinstartup').text(i18n.t('no'));
+			} else{
+				 $('#directoryservice-createmobileaccount').text("");
+			}
+          
+			if(data.mounthomeassharepoint === "1" || data.mounthomeassharepoint === 1) {
+				 $('#directoryservice-mounthomeassharepoint').text(i18n.t('yes'));
+			} else if(data.mounthomeassharepoint === "0" || data.mounthomeassharepoint === 0) {
+				 $('#directoryservice-mounthomeassharepoint').text(i18n.t('no'));
+			} else{
+				 $('#directoryservice-mounthomeassharepoint').text("");
+			}
+            
+			if(data.usewindowsuncpathforhome === "1" || data.usewindowsuncpathforhome === 1) {
+				 $('#directoryservice-usewindowsuncpathforhome').text(i18n.t('yes'));
+			} else if(data.usewindowsuncpathforhome === "0" || data.usewindowsuncpathforhome === 0) {
+				 $('#directoryservice-usewindowsuncpathforhome').text(i18n.t('no'));
+			} else{
+				 $('#directoryservice-usewindowsuncpathforhome').text("");
+			}
 
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Active Directory Option</th>
-					<th>Value</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Active Directory Comments</td>
-					<td><?php echo $directoryservice->directory_service_comments ? $directoryservice->directory_service_comments : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Active Directory Forest</td>
-					<td><?php echo $directoryservice->adforest ? $directoryservice->adforest : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Active Directory Domain</td>
-					<td><?php echo $directoryservice->addomain ? $directoryservice->addomain : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Computer Account</td>
-					<td><?php echo $directoryservice->computeraccount ? $directoryservice->computeraccount : ''; ?></td>
-				</tr>
-				<td><h4>Advanced Options - User Experience</h4></td><td></td>
-				<tr>
-					<td>Create mobile account at login</td>
-					<td><?php echo ($directoryservice->createmobileaccount == 1) ? 'Enabled' : 'Disabled'; ?></td>
-				</tr>
-				<tr>
-					<td>Require confirmation</td>
-					<td><?php echo ($directoryservice->requireconfirmation == 1) ? 'Enabled' : 'Disabled'; ?></td>
-				</tr>
-				<tr>
-					<td>Force home to startup disk</td>
-					<td><?php echo ($directoryservice->forcehomeinstartup == 1) ? 'Enabled' : 'Disabled'; ?></td>
-				</tr>
-				<tr>
-					<td>Mount home as sharepoint</td>
-					<td><?php echo ($directoryservice->mounthomeassharepoint == 1) ? 'Enabled' : 'Disabled'; ?></td>
-				</tr>
-				<tr>
-					<td>Use Windows UNC path for home</td>
-					<td><?php echo ($directoryservice->usewindowsuncpathforhome == 1) ? 'Enabled' : 'Disabled'; ?></td>
-				</tr>
-				<tr>
-					<td>Network protocol to be used</td>
-					<td><?php echo $directoryservice->networkprotocoltobeused ? $directoryservice->networkprotocoltobeused : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Default user Shell</td>
-					<td><?php echo $directoryservice->defaultusershell ? $directoryservice->defaultusershell : ''; ?></td>
-				</tr>
-				<td><h4>Advanced Options - Mappings</h4></td><td></td>
-				<tr>
-					<td>Mapping UID to attribute</td>
-					<td><?php echo $directoryservice->mappinguidtoattribute ? $directoryservice->mappinguidtoattribute : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Mapping user GID to attribute</td>
-					<td><?php echo $directoryservice->mappingusergidtoattribute ? $directoryservice->mappingusergidtoattribute : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Mapping group GID to attribute</td>
-					<td><?php echo $directoryservice->mappinggroupgidtoattr ? $directoryservice->mappinggroupgidtoattr : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Generate Kerberos authority</td>
-					<td><?php echo ($directoryservice->generatekerberosauth == 1) ? 'Enabled' : 'Disabled'; ?></td>
-				</tr>
-				<td><h4>Advanced Options - Administrative</h4></td><td></td>
-				<tr>
-					<td>Preferred Domain controller</td>
-					<td><?php echo $directoryservice->preferreddomaincontroller ? $directoryservice->preferreddomaincontroller : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Allowed admin groups</td>
-					<td><?php echo $directoryservice->allowedadmingroups ? $directoryservice->allowedadmingroups : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Authentication from any domain</td>
-					<td><?php echo ($directoryservice->authenticationfromanydomain == 1) ? 'Enabled' : 'Disabled'; ?></td>
-				</tr>
-				<tr>
-					<td>Packet signing</td>
-					<td><?php echo $directoryservice->packetsigning ? $directoryservice->packetsigning : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Packet encryption</td>
-					<td><?php echo $directoryservice->packetencryption ? $directoryservice->packetencryption : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Password change interval</td>
-					<td><?php echo $directoryservice->passwordchangeinterval ? $directoryservice->passwordchangeinterval : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Restrict Dynamic DNS updates</td>
-					<td><?php echo $directoryservice->restrictdynamicdnsupdates ? $directoryservice->restrictdynamicdnsupdates : ''; ?></td>
-				</tr>
-				<tr>
-					<td>Namespace mode</td>
-					<td><?php echo $directoryservice->namespacemode ? $directoryservice->namespacemode : ''; ?></td>
-				</tr>
-			</tbody>
+			if(data.generatekerberosauth === "1" || data.generatekerberosauth === 1) {
+				 $('#directoryservice-generatekerberosauth').text(i18n.t('yes'));
+			} else if(data.generatekerberosauth === "0" || data.generatekerberosauth === 0) {
+				 $('#directoryservice-generatekerberosauth').text(i18n.t('no'));
+			} else{
+				 $('#directoryservice-createmobileaccount').text("");
+			}
 
-		</table>
+			if(data.authenticationfromanydomain === "1" || data.authenticationfromanydomain === 1) {
+				 $('#directoryservice-authenticationfromanydomain').text(i18n.t('yes'));
+			} else if(data.authenticationfromanydomain === "0" || data.authenticationfromanydomain === 0) {
+				 $('#directoryservice-authenticationfromanydomain').text(i18n.t('no'));
+			} else{
+				 $('#directoryservice-authenticationfromanydomain').text("");
+			}  
+		}
 
-<script type="text/javascript" charset="utf-8">
-	// Set directory count in tab header
-    $(document).on('appReady', function(e, lang) {
-        $('#directory-cnt').html($('.nw-dsenabled').length)
-    } );
+	});
+	
+});
+
 </script>

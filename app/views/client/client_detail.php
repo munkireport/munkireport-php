@@ -18,7 +18,7 @@ $tab_list = array(
 	'location-tab' => array('view' => 'client/location_tab', 'i18n' => 'client.tab.location'),
 	'network-tab' => array('view' => 'client/network_tab', 'i18n' => 'client.tab.network', 'badge' => 'network-cnt'),
 	'wifi-tab' => array('view' => 'client/wifi_tab', 'i18n' => 'client.tab.wifi'),
-	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds', 'badge' => 'directory-cnt'),
+	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds'),
 	'displays-tab' => array('view' => 'client/displays_tab', 'i18n' => 'client.tab.displays', 'badge' => 'displays-cnt'),
 	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
 	'gsx-tab' => array('view' => 'client/gsx_tab', 'i18n' => 'client.tab.gsx'),

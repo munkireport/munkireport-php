@@ -2,13 +2,13 @@
 <table class="appusage table table-striped table-bordered">
 	<thead>
 		<tr>
-            <th data-i18n="listing.appusage.appname">App Name</th>
-            <th data-i18n="listing.appusage.event">Event</th>
-            <th data-i18n="listing.appusage.lastevent">Last Event</th>
-            <th data-i18n="listing.appusage.count">Count</th>
-            <th data-i18n="version">Version</th>
-            <th data-i18n="path">Path</th>
-            <th data-i18n="bundle_id">BundleID</th>
+            <th data-i18n="listing.appusage.appname"></th>
+            <th data-i18n="listing.appusage.event"></th>
+            <th data-i18n="listing.appusage.lastevent"></th>
+            <th data-i18n="listing.appusage.count"></th>
+            <th data-i18n="version"></th>
+            <th data-i18n="path"></th>
+            <th data-i18n="bundle_id"></th>
 		</tr>
 	</thead>
 	<tbody>
