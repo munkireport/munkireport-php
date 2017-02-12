@@ -147,6 +147,7 @@ new Power_model;
 	        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
 	        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
 	        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
+	        	status = status == '' ? '<span class="label label-danger">Replace Now</span>' : 
 	        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
 	        	// Format current charge
