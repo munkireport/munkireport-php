@@ -1012,6 +1012,7 @@
 			"tooltip": "Pending installs for this week"
 		},
 		"power": {
+			"check": "Check Battery",
 			"health": {
 				"title": "Battery Health",
 				"tooltip": "Battery health status listing"
@@ -1020,7 +1021,7 @@
 			"normal": "Normal",
 			"now": "Replace Now",
 			"service": "Service Now",
-			"soon": "Service Soon",
+			"soon": "Replace Soon",
 			"nobattery": "No Battery",
 			"title": "Battery Condition",
 			"tooltip": "Battery condition listing"

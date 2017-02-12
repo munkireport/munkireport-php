@@ -143,12 +143,12 @@ new Power_model;
 	        	$('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+max_percent+'%;">'+max_percent+'%</div></div>');
 				// Format battery condition
 	        	var status=$('td:eq(7)', nRow).html();
-	        	status = status == 'Normal' ? '<span class="label label-success">Normal</span>' : 
-	        	status = status == 'Replace Soon' ? '<span class="label label-warning">Replace Soon</span>' : 
-	        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
-	        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
-	        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
-	        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
+	        	status = status == 'Normal' ? '<span class="label label-success" data-i18n="widget.normal"></span>' : 
+	        	status = status == 'Replace Soon' ? '<span class="label label-warning" data-i18n="widget.soon"></span>' : 
+	        	status = status == 'Service Battery' ? '<span class="label label-warning" data-i18n="widget.service"></span>' : 
+	        	status = status == 'Check Battery' ? '<span class="label label-warning" data-i18n="widget.check"></span>' : 
+	        	status = status == 'Replace Now' ? '<span class="label label-danger" data-i18n="widget.now"></span>' : 
+	        		(status === 'No Battery' ? '<span class="label label-danger" data-i18n="widget.powernobattery"></span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
 	        	// Format current charge
 	        	var fs=$('td:eq(8)', nRow).html();
@@ -182,7 +182,7 @@ new Power_model;
 	        	// Format Manufacture date
 	        	var date=$('td:eq(11)', nRow).html();
                 if(date === '1980-00-00'){
-	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('widget.power.nobattery'));
+	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('widget.power.now'));
                 } else {
 	        	if(date){
 	        		a = moment(date)
