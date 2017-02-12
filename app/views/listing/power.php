@@ -166,7 +166,7 @@ new Power_model;
 					if ( temperature == 0 || temperature == "" ){
 						temperature = "";
 					} else {
-						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1);
+						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1)+"°F";
 					}
 					$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 				} else {
@@ -175,7 +175,7 @@ new Power_model;
 					if ( temperature == 0 || temperature == "" ){
 						temperature = "";
 					} else {
-				       	temperature = (temperature / 100).toFixed(1);
+				       	temperature = (temperature / 100).toFixed(1)+"°C";
 					}
 		        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 				}

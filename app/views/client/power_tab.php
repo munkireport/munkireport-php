@@ -108,10 +108,10 @@ $(document).on('appReady', function(e, lang) {
             if (data.temperature !== 0){
             // Use the hijacked ID key in the JSON return for C/F
             if (data.id === "C"){
-				var outtemp = (data.temperature / 100)+"° C";
+				var outtemp = (data.temperature / 100)+"°C";
 				$('#power-temperature').text(outtemp);  
             } else if (data.id === "F"){
-				var outtemp = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"° F";
+				var outtemp = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
 				$('#power-temperature').text(outtemp); 
             } else {
 				$('#power-temperature').text(data.temperature);  
