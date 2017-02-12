@@ -68,7 +68,15 @@ $(document).on('appReady', function(e, lang) {
 			$('#power-max_capacity').text(data.max_capacity);
 			$('#power-current_capacity').text(data.current_capacity);
 			$('#power-cycle_count').text(data.cycle_count);
-			$('#power-condition').text(data.condition); 
+            
+            // Format battery condition
+            data.condition = data.condition == 'Normal' ? '<span class="label label-success">Normal</span>' : 
+            data.condition = data.condition == 'Replace Soon' ? '<span class="label label-warning">Replace Soon</span>' : 
+            data.condition = data.condition == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
+            data.condition = data.condition == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
+            data.condition = data.condition == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
+            (data.condition === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
+            $('#power-condition').html(data.condition)
             
             // Format battery health
             var cls = data.max_percent > 89 ? 'success' : (data.max_percent > 79 ? 'warning' : 'danger');
