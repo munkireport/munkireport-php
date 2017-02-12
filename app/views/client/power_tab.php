@@ -66,11 +66,17 @@ $(document).on('appReady', function(e, lang) {
 			$('#power-manufacture_date').text(data.manufacture_date);
 			$('#power-design_capacity').text(data.design_capacity);
 			$('#power-max_capacity').text(data.max_capacity);
-			$('#power-max_percent').text(data.max_percent);
 			$('#power-current_capacity').text(data.current_capacity);
-			$('#power-current_percent').text(data.current_percent);
 			$('#power-cycle_count').text(data.cycle_count);
 			$('#power-condition').text(data.condition); 
+            
+            // Format battery health
+            var cls = data.max_percent > 89 ? 'success' : (data.max_percent > 79 ? 'warning' : 'danger');
+            $('#power-max_percent').html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+data.max_percent+'%;">'+data.max_percent+'%</div></div>');
+            
+            // Format battery charge
+            var cls = data.current_percent > 89 ? 'success' : (data.current_percent > 79 ? 'warning' : 'danger');
+            $('#power-current_percent').html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+data.current_percent+'%;">'+data.current_percent+'%</div></div>');
             
             // Use the hijacked ID key in the JSON return for C/F
             if (data.id === "C"){

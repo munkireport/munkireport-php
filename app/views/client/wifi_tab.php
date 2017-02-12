@@ -3,7 +3,7 @@
 	<div id="wifi-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
 	
 	<div id="wifi-view" class="row hide">
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<table class="table table-striped">
 				<tr>
 					<th data-i18n="wifi.ssid"></th>
