@@ -36,6 +36,7 @@ class Directory_service_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $dm = new Directory_service_model($serial_number);

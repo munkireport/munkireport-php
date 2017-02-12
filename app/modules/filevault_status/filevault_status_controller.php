@@ -36,6 +36,7 @@ class Filevault_status_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $filevault_escrow = new Filevault_escrow_model($serial_number);

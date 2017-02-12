@@ -226,7 +226,7 @@ $(document).on('appReady', function(e, lang) {
 			endtime = moment(data.endtime, "YYYY-MM-DD HH:mm:ss Z"),
 			duration = endtime.diff(starttime, 'seconds');
 
-		$('#munki-starttime').html('<span title="'+data.starttime+'">'+starttime.fromNow());
+		$('#munki-starttime').html('<span title="'+data.starttime+'"></span>'+starttime.fromNow());
 		$('#munki-duration').html(moment.duration(duration, "seconds").humanize());
 
 		// Handle Errors and Warnings

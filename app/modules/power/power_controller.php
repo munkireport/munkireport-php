@@ -34,6 +34,7 @@ class Power_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $power = new Power_model($serial_number);
