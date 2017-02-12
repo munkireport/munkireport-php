@@ -104,6 +104,8 @@ $(document).on('appReady', function(e, lang) {
             var cls = data.current_percent > 89 ? 'success' : (data.current_percent > 79 ? 'warning' : 'danger');
             $('#power-current_percent').html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+data.current_percent+'%;">'+data.current_percent+'%</div></div>');
             
+            // Format temperature
+            if (data.temperature !== 0){
             // Use the hijacked ID key in the JSON return for C/F
             if (data.id === "C"){
 				var outtemp = (data.temperature / 100)+"° C";
@@ -113,6 +115,9 @@ $(document).on('appReady', function(e, lang) {
 				$('#power-temperature').text(outtemp); 
             } else {
 				$('#power-temperature').text(data.temperature);  
+            }
+            } else {
+                $('#power-temperature').text("");
             }
 		}
 	});
