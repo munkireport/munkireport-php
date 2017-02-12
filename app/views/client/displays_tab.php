@@ -1,99 +1,148 @@
-<?php
-	$display = new Displays_info_model();
-	$sql = "SELECT *
-					FROM displays
-					WHERE serial_number = '$serial_number'
-					ORDER BY type";
-?>
 
-	<h2>Displays</h2>
-		<?php foreach($display->query($sql) as $obj): ?>
-			<span class="label label-success nw-displayscount"></span>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>
-							<?php
-								switch ($obj->vendor) {
-									case "610":
-										echo "Apple";
-										break;
-									case "10ac":
-										echo "Dell";
-										break;
-									case "5c23":
-										echo "Wacom";
-										break;
-									case "4d10":
-										echo "Sharp";
-										break;
-									case "1e6d":
-										echo "LG";
-										break;
-									case "38a3":
-										echo "NEC";
-										break;
-									case "4c49":
-										echo "SMART Technologies";
-										break;
-									case "9d1":
-										echo "BenQ";
-										break;
-									case "4dd9":
-										echo "Sony";
-										break;
-									case "472":
-										echo "Acer";
-										break;
-									case "22f0":
-										echo "HP";
-										break;
-									case "34ac":
-										echo "Mitsubishi";
-										break;
-									case "5a63":
-										echo "ViewSonic";
-										break;
-									case "4c2d":
-										echo "Samsung";
-										break;
-									case "593a":
-										echo "Vizio";
-										break;
-									case "d82":
-										echo "CompuLab";
-										break;
-								}
-							?>
-							<?php echo $obj->model; ?> (<?php echo ($obj->type == 0) ? 'Built-in' : 'External'; ?>)
-						</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Serial</td>
-						<td><?php echo $obj->display_serial; ?></td>
-					</tr>
-					<tr>
-						<td>Manufacture date</td>
-						<td><?php echo $obj->manufactured; ?></td>
-					</tr>
-					<tr>
-						<td>Native resolution</td>
-						<td><?php echo $obj->native; ?></td>
-					</tr>
-					<tr>
-						<td>Was connected</td>
-						<td><time title="<?php echo strftime('%c',$obj->timestamp); ?>" datetime="<?php echo date('c',$obj->timestamp); ?>"></time></td>
-					</tr>
-				</tbody>
-			</table>
-		<?php endforeach; ?>
+<div id="displays-tab"></div>
+<h2 data-i18n="displays.displays"></h2>
 
-<script type="text/javascript" charset="utf-8">
-	// Set displays count in tab header
-	$(document).ready(function() {
-		$('#displays-cnt').html($('.nw-displayscount').length)
-	} );
+<script>
+$(document).on('appReady', function(){
+	$.getJSON(appUrl + '/module/displays_info/get_data/' + serialNumber, function(data){
+		// Set count of displays
+		$('#displays-cnt').text(data.length);
+		var skipThese = ['id', 'serial_number', 'model'];
+		$.each(data, function(i,d){
+			
+			// Generate rows from data
+			var rows = ''
+			for (var prop in d){
+				// Skip skipThese
+				if(skipThese.indexOf(prop) == -1){
+                    if(prop == 'type' && d[prop] == 1){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>'+i18n.t('displays.internal')+'</td></tr>';
+                    }
+					else if(prop == 'type' && d[prop] == 0){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>'+i18n.t('displays.external')+'</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "610"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Apple</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "10ac"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Dell</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "5c23"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Wacom</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "4d10"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Sharp</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "1e6d"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>LG</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "38a3"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>NEC</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "4c49"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>SMART Technologies</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "9d1"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>BenQ</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "4dd9"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Sony</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "472"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Acer</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "22f0"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>HP</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "34ac"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Mitsubishi</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "5a63"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>ViewSonic</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "4c2d"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Samsung</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "593a"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Vizio</td></tr>';
+                    } 
+                    else if(prop == 'vendor' && d[prop] == "d82"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>CompuLab</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "3023"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>LaCie</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "3698"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Matrox</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "4ca3"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Epson</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "170e"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Extron</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "e11"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Compaq</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "24d3"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>ASK Proxima</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "410c"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Philips</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "15c3"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Eizo</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "26cd"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>iiyama</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "7fff"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Haier</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "3e8d"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Optoma</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "5262"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Toshiba</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "34a9"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Panasonic</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "5e3"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Flanders Scientific</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "30ae"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Lenovo</td></tr>';
+                    } 
+                     else if(prop == 'vendor' && d[prop] == "469"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Asus</td></tr>';
+                    }
+                    else if(prop == 'vendor' && d[prop] == "4249"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Insignia</td></tr>';
+                    }
+                    else if(prop == 'vendor' && d[prop] == "5c85"){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>Westinghouse</td></tr>';
+                    } 
+                    else if(prop == 'timestamp'){
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td><span title="'+moment.unix(d[prop]).fromNow()+'">'+moment.unix(d[prop]).format("YYYY/MM/DD - HH:MM:SS")+'</td></tr>';
+                    } 
+                    else {
+					   rows = rows + '<tr><th>'+i18n.t('displays.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
+					}
+				}
+			}
+			$('#displays-tab')
+				.append($('<h4>')
+					.append($('<i>')
+						.addClass('fa fa-desktop'))
+					.append(' '+d.model))
+				.append($('<div style="max-width:370px;">')
+					.addClass('table-responsive')
+					.append($('<table>')
+						.addClass('table table-striped table-condensed max-width: 200px')
+						.append($('<tbody>')
+							.append(rows))))
+		})
+	});
+});
 </script>

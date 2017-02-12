@@ -230,6 +230,12 @@
                 case "469":
                 	vendor="Asus"
                 	break;
+                case "4249":
+                	vendor="Insignia"
+                	break;
+                case "5c85":
+                	vendor="Westinghouse"
+                	break;
                 }
                 $('td:eq(3)', nRow).html(vendor)
 
