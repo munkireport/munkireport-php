@@ -104,13 +104,13 @@ $(document).on('appReady', function(e, lang) {
 	        		{
 	        			
 	        		}
-	        		$('td:eq(4)', nRow).addClass('text-right').html(moment(date).fromNow());
+	        		$('td:eq(4)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow() + '</span>');
 	        	}
 
 	        	// Format expiration date
 	        	var date=$('td:eq(5)', nRow).html();
 	        	if(date){
-	        		$('td:eq(5)', nRow).addClass('text-right').html(moment(date).fromNow());
+	        		$('td:eq(5)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow() + '</span>');
 	        	}
 		    }
 	    });

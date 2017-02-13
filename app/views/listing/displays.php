@@ -122,8 +122,8 @@
 
                 // Internal vs External
                 var status=$('td:eq(2)', nRow).html();
-                status = status == 1 ? 'External' :
-                  (status == '0' ? 'Internal' : '')
+                status = status == 1 ? i18n.t('displays.external') : //ex
+                  (status == '0' ? i18n.t('displays.internal') : '')
                 $('td:eq(2)', nRow).html(status)
 
                 // Translating vendors column

@@ -71,29 +71,28 @@ new Deploystudio_model;
 	        	$('td:eq(0)', nRow).html(link);
                 
 	        	// Workflow Status
-                var status=$('td:eq(5)', nRow).html();
-                status = status == 'completed' ? '<span class="label label-success">'+i18n.t('ds.dstudio-completed')+'</span>' :
-                (status === 'failed' ? '<span class="label label-danger">'+i18n.t('ds.dstudio-failed')+'</span>' : '')
-                $('td:eq(5)', nRow).html(status)
+	        	var status=$('td:eq(5)', nRow).html();
+	        	status = status == 'completed' ? '<span class="label label-success">'+i18n.t('ds.dstudio-completed')+'</span>' :
+	        	(status === 'failed' ? '<span class="label label-danger">'+i18n.t('ds.dstudio-failed')+'</span>' : '')
+	        	$('td:eq(5)', nRow).html(status)
                 
 	        	// Disabled
-                var disabled=$('td:eq(6)', nRow).html();
-                disabled = disabled == 'YES' ? i18n.t('yes') :
-                (disabled === 'NO' ? i18n.t('no') : '')
-                $('td:eq(6)', nRow).html(disabled)
+	        	var disabled=$('td:eq(6)', nRow).html();
+	        	disabled = disabled == 'YES' ? i18n.t('yes') :
+	        	(disabled === 'NO' ? i18n.t('no') : '')
+	        	$('td:eq(6)', nRow).html(disabled)
                 
 	        	// Auto-Disabled
-                var autodisabled=$('td:eq(8)', nRow).html();
-                autodisabled = autodisabled == 'YES' ? i18n.t('yes') :
-                (autodisabled === 'NO' ? i18n.t('no') : '')
-                $('td:eq(8)', nRow).html(autodisabled)
+	        	var autodisabled=$('td:eq(8)', nRow).html();
+	        	autodisabled = autodisabled == 'YES' ? i18n.t('yes') :
+	        	(autodisabled === 'NO' ? i18n.t('no') : '')
+	        	$('td:eq(8)', nRow).html(autodisabled)
                 
 	        	// Auto-Reset
-                var autoreset=$('td:eq(9)', nRow).html();
-                autoreset = autoreset == 'YES' ? i18n.t('yes') :
-                (autoreset === 'NO' ? i18n.t('no') : '')
-                $('td:eq(9)', nRow).html(autoreset)
-
+	        	var autoreset=$('td:eq(9)', nRow).html();
+	        	autoreset = autoreset == 'YES' ? i18n.t('yes') :
+	        	(autoreset === 'NO' ? i18n.t('no') : '')
+	        	$('td:eq(9)', nRow).html(autoreset)
 	        }
 	    });
 	});

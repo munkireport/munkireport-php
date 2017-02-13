@@ -680,7 +680,7 @@
 		"ip_address": "IP Address",
 		"network": "Network",
 		"mask": "Mask",
-		"prefix_length": "Prefix length",
+		"prefix_length": "Prefix Length",
 		"router": "Router",
 		"traffic": "Network Traffic",
 		"inbound_traffic": "Inbound Traffic",
