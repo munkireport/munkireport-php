@@ -36,9 +36,8 @@ new Power_model;
 						echo "<th data-colname='power.temperature'>Temp°C</th>";
 					}
 				?>
-		        <th data-i18n="listing.power.manufactured" data-colname='power.manufacture_date'>Manufactured</th> 
+		        <th data-i18n="listing.power.manufactured" data-colname='power.manufacture_date'></th> 
 		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th> 
-		        <th data-hide="1" data-colname='machine.machine_model'>Model ( col 13 hidden )</th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -148,6 +147,7 @@ new Power_model;
 	        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
 	        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
 	        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
+	        	status = status == '' ? '<span class="label label-danger">Replace Now</span>' : 
 	        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
 	        	// Format current charge
@@ -166,7 +166,7 @@ new Power_model;
 					if ( temperature == 0 || temperature == "" ){
 						temperature = "";
 					} else {
-						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1);
+						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1)+"°F";
 					}
 					$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 				} else {
@@ -175,14 +175,14 @@ new Power_model;
 					if ( temperature == 0 || temperature == "" ){
 						temperature = "";
 					} else {
-				       	temperature = (temperature / 100).toFixed(1);
+				       	temperature = (temperature / 100).toFixed(1)+"°C";
 					}
 		        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 				}
 	        	// Format Manufacture date
 	        	var date=$('td:eq(11)', nRow).html();
                 if(date === '1980-00-00'){
-	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('widget.power.nobattery'));
+	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('widget.power.now'));
                 } else {
 	        	if(date){
 	        		a = moment(date)

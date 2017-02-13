@@ -7,7 +7,7 @@
 				<pre id="munkireport-errors" class="hide alert alert-danger"></pre>
 				<pre id="munkireport-warnings" class="hide alert alert-warning"></pre>
 
-			<p><i data-i18n="no_errors_or_warnings" id="munkireport-no-errors">Loading</i></p>
+			<p><i data-i18n="no_errors_or_warnings" data-i18n="listing.loading" id="munkireport-no-errors"></i></p>
 
 	</div><!-- </div class="col-lg-6"> -->
 
@@ -16,45 +16,41 @@
 		<h2>Munki</h2>
 		<table class="table table-striped">
 			<tr>
-				<th>Version</th>
+				<th data-i18n="version"></th>
 				<td id="munki-version"></td>
 			</tr>
 			<tr>
-				<th>SoftwareRepoURL</th>
+				<th data-i18n="munkiinfo.softwarerepourl"></th>
 				<td><div id="munkiinfo-SoftwareRepoURL"></div></td>
 			</tr>
 			<tr>
-				<th>AppleCatalogURL</th>
+				<th data-i18n="munkiinfo.applecatalog"></th>
 				<td><div id="munkiinfo-AppleCatalogURL"></div></td>
 			</tr>
 			<tr>
-				<th>Manifest</th>
+				<th data-i18n="munkiinfo.manifest"></th>
 				<td id="munki-manifestname"></td>
 			</tr>
 			<tr>
-				<th>LocalOnlyManifest</th>
+				<th data-i18n="munkiinfo.localonlymanifest"></th>
 				<td><div id="munkiinfo-LocalOnlyManifest"></div></td>
 			</tr>
 			<tr>
-				<th>Run Type</th>
+				<th data-i18n="munki.run_type"></th>
 				<td id="munki-runtype"></td>
 			</tr>
 			<tr>
-				<th>Start</th>
+				<th data-i18n="munkiinfo.start"></th>
 				<td id="munki-starttime"></td>
 			</tr>
 			<tr>
-				<th>Duration</th>
+				<th data-i18n="munkiinfo.duration"></th>
 				<td id="munki-duration"></td>
 			</tr>
 		</table>
 		<button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munki.additional_info"></span></button>
 
 	</div><!-- </div class="col-lg-6"> -->
-
-
-
-
 
 <script>
 $(document).on('appReady', function(){
@@ -117,11 +113,11 @@ $(document).on('appReady', function(){
 			<table id="managedinstalls-table" class="table table-striped">
 		      <thead>
 		        <tr>
-		          <th>Name</th>
-				  <th>Version</th>
-				  <th>Size</th>
-				  <th>Status</th>
-				  <th>Type</th>
+		          <th data-i18n="name"></th>
+				  <th data-i18n="version"></th>
+				  <th data-i18n="size"></th>
+				  <th data-i18n="status"></th>
+				  <th data-i18n="type"></th>
 		        </tr>
 		      </thead>
 		      <tbody>
@@ -230,7 +226,7 @@ $(document).on('appReady', function(e, lang) {
 			endtime = moment(data.endtime, "YYYY-MM-DD HH:mm:ss Z"),
 			duration = endtime.diff(starttime, 'seconds');
 
-		$('#munki-starttime').html(starttime.fromNow());
+		$('#munki-starttime').html('<span title="'+data.starttime+'"></span>'+starttime.fromNow());
 		$('#munki-duration').html(moment.duration(duration, "seconds").humanize());
 
 		// Handle Errors and Warnings

@@ -1,5 +1,7 @@
-	<h2 data-i18n="sccm_status.title"></h2>
+<h2 data-i18n="sccm_status.title"></h2>
+	<div id="sccm_status-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
 
+    <div id="sccm_stats-view" class="row hide">
 		<table class="table table-striped">
 			<tbody>
 				<tr>
@@ -28,13 +30,19 @@
 				</tr>
 			</tbody>
 		</table>
-
+    </div>
 <script>
 $(document).on('appReady', function(e, lang) {
 	
-	// Get wifi data
+	// Get SCCM data
 	$.getJSON( appUrl + '/module/sccm_status/get_data/' + serialNumber, function( data ) {
-		if( data.agent_status){
+        
+		if( ! data.agent_status){
+			$('#sccm_status-msg').text(i18n.t('no_data'));
+        }else{
+			// Hide
+			$('#sccm_status-msg').text('');
+			$('#sccm_status-view').removeClass('hide');
 
 			// Add strings
 			$('#sccm-agent_status').text(data.agent_status);
@@ -44,9 +52,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#sccm-cert_exp').text(data.cert_exp);
 			$('#sccm-enrollment_server').text(data.enrollment_server);
 		}
-
 	});
-	
 });
 
 </script>

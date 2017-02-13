@@ -26,6 +26,27 @@ class Displays_info_controller extends Module_controller
         echo "You've loaded the displays module!";
     }
     
+     /**
+     * Get displays for serial_number
+     *
+     * @param string $serial serial number
+     **/
+    public function get_data($serial = '')
+    {
+        $out = array();
+        if (! $this->authorized()) {
+            $out['error'] = 'Not authorized';
+        } else {
+            $prm = new Displays_info_model;
+            foreach ($prm->retrieve_records($serial) as $display) {
+                $out[] = $display->rs;
+            }
+        }
+        
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
+    }
+    
     /**
      * Get count of  displays
      *

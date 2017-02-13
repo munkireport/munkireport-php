@@ -2,8 +2,8 @@
 <table class="profile table table-striped table-bordered">
 	<thead>
 		<tr>
-      <th data-i18n="name">Name</th>
-      <th data-i18n="payload">Payload</th>
+      <th data-i18n="name"></th>
+      <th data-i18n="payload"></th>
 		</tr>
 	</thead>
 	<tbody>
