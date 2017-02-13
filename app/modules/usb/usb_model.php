@@ -98,8 +98,8 @@ class Usb_model extends Model {
 			throw new Exception("Error Processing Request: No property list found", 1);
 		}
 		
-		// Delete previous set
-        $this->deleteWhere('serial_number=?', $this->serial_number);
+		// Delete previous set        
+		$this->deleteWhere('serial_number=?', $this->serial_number);
 
 		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
@@ -124,9 +124,10 @@ class Usb_model extends Model {
 			if( ! array_key_exists("name",$device)){
 				continue;
 			}
-            
-			// Check for USB Bus, and exclude
-			if ($device['name'] == 'USB30Bus' || $device['name'] == 'USB20Bus' || $device['name'] == 'USB11Bus' || $device['name'] == 'USBBus' || $device['name'] == 'UHCI Root Hub Simulation' || $device['name'] == 'EHCI Root Hub Simulation') {
+                        
+			// Check for USB bus devices and simulated USB devices to exclude
+            $excludeusb = array("USB30Bus","USB20Bus","USBBus","USB11Bus","UHCI Root Hub Simulation","EHCI Root Hub Simulation");
+            if (in_array($device['name'], $excludeusb)) {
 				continue;
 			}
             

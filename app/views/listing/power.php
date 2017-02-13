@@ -152,7 +152,7 @@ new Power_model;
 	        	status = status == 'Check Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.check')+'</span>' : 
 	        	status = status == 'Replace Now' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
 	        	status = status == '' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
-	        		(status === 'No Battery' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : '')
+	        	(status === 'No Battery' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
                 
 	        	// Format current charge
@@ -164,10 +164,10 @@ new Power_model;
 	        	$('td:eq(9)', nRow).addClass('text-right');
                 
 	        	// Format temperature
-				// Check config for temperature_unit °C or °F
-				// °C * 9/5 + 32 = °F
-				var temperature_unit = "<?=conf('temperature_unit')?>";
-				if ( temperature_unit == "F" ){
+	        	// Check config for temperature_unit °C or °F
+	        	// °C * 9/5 + 32 = °F
+	        	var temperature_unit = "<?=conf('temperature_unit')?>";
+	        	if ( temperature_unit == "F" ){
 					// Fahrenheit
 					var temperature=$('td:eq(10)', nRow).html();
 					if ( temperature == 0 || temperature == "" ){
@@ -175,8 +175,8 @@ new Power_model;
 					} else {
 						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1)+"°F";
 					}
-					$('td:eq(10)', nRow).html(temperature).addClass('text-right');
-				} else {
+	        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
+	        	} else {
 					// Celsius
 		        	var temperature=$('td:eq(10)', nRow).html();
 					if ( temperature == 0 || temperature == "" ){
