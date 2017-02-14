@@ -104,17 +104,39 @@
   },
   "buildversion": "Build Version",
   "caching": {
+    "bytesdropped": "Verlorene Bytes",
+    "bytesfromcachetoclients": "Bytes vom Cache zu Clients",
+    "bytesfromcachetopeers": "Bytes vom Cache zu Peers",
+    "bytesfromorigintoclients": "Bytes von der Quelle zu Clients",
+    "bytesfromorigintopeers": "Bytes von er Quelle zu Peers",
+    "bytesfrompeerstoclients": "Bytes von Peers zu Clients",
+    "bytesimportedbyxpc": "Von XPC importierte Bytes",
+    "bytesimportedbyhttp": "Von HTTP importierte Byte",
+    "bytespurgedtotal": "Insgesamt gelöschte Bytes",
+    "bytespurgedyoungerthan1day": "Vor weniger als 1 Tag gelöschte Bytes",
+    "bytespurgedyoungerthan7days": "Vor weniger als 7 Tagen gelöschte Bytes",
+    "bytespurgedyoungerthan30days": "Vor weniger als 30 Tagen gelöschte Bytes",
     "bytes_served": "CachingServer – Übertragene Bytes",
     "client_requests": "Anfragen von Clients",
+    "client_tab_title": "Caching Server",
     "date": "Datum",
     "from_origin": "Herkunft",
     "from_peers": "Von Peers",
     "from_cache": "Aus dem Cache",
+    "importsbyhttp": "Importe durch HTT",
+    "importsbyxpc": "Importe duech XPC",
     "peer_requests": "Anfragen von Peers",
     "purged_1": "Gesäubert vor weniger als 1 Tag",
     "purged_7": "Gesäubert vor weniger als 7 Tagen",
     "purged_30": "Gesäubert vor weniger als 30 Tagen",
+    "repliesfromcachetoclients": "Antworten vom Cache zu Clients",
+    "repliesfromcachetopeers": "Antworten vom Cache zu Peers",
+    "repliesfrompeerstoclients": "Antworten von Peers zu Clients",
+    "repliesfromorigintoclients": "Antworten der Quelle zu Clients",
+    "repliesfromorigintopeers": "Antworten der Quelle zu Peers",
     "reporttitle": "Caching Server-Report",
+    "requestsfromclients": "Anfragen von Clients",
+    "requestsfrompeers": "Anfragen von Peers",
     "total_purged": "Gesamt gesäubert"
   },
   "cert": {
@@ -185,7 +207,7 @@
   },
   "backup2go": {
     "widget": {
-      "title": ""
+      "title": "Backup2Go-Status"
     }
   },
   "danger": "Fehler",
@@ -215,9 +237,48 @@
   "disabled": "Deaktiviert",
   "disconnected": "Getrennt",
   "displays": {
+    "internal": "Eingebaut",
     "displays": "Bildschirme",
+    "display_serial": "Seriennummer",
+    "external": "Extern",
+    "vendor": "Hersteller",
+    "model": "Modell",
+    "manufactured": "Herstellungsdatum",
+    "native": "Native Auflösung",
+    "timestamp": "Zuletzt verbunden",
+    "type": "Typ",
     "widget_info": "Gesamtanzahl bekannter externer Bildschirme",
     "widget_title": "Anzahl externer Bildschirme"
+  },
+  "directoryservice": {
+    "clienttabtitle": "Verzeichnisdienst",
+    "which_directory_service": "Benutzter Verzeichnisdienst",
+    "directory_service_comments": "Active Directory Kommentare",
+    "adforest": "Active Directory Baum",
+    "addomain": "Active Directory Domain",
+    "computeraccount": "Computerkonto",
+    "user_experience": "Erweiterte Optionen - User Experience",
+    "createmobileaccount": "Mobilen Account bei der Anmeldung erstellen",
+    "requireconfirmation": "Bestätigung einholen",
+    "forcehomeinstartup": "Homeverzeichnis auf Startup Disk",
+    "mounthomeassharepoint": "Homeverzeichnis als Share mounten",
+    "usewindowsuncpathforhome": "Windows UNC Pfad als Homeverzeichnis",
+    "networkprotocoltobeused": "Netzwerkprotokoll",
+    "defaultusershell": "Standard-Usershell",
+    "mappings": "Erweiterte Optionen - Mappings",
+    "mappinguidtoattribute": "UID an Attribut mappen",
+    "mappingusergidtoattribute": "User GUID an Attribut mappen",
+    "mappinggroupgidtoattr": "Group GUID an Attribut mappen",
+    "generatekerberosauth": "Kerberos Authority generieren ",
+    "administrative": "Erweiterte Optionen - Administration",
+    "preferreddomaincontroller": "Bevorzugter Domain Controller",
+    "allowedadmingroups": "Erlaubte Admin-Gruppen",
+    "authenticationfromanydomain": "Authentifizierung aus jeder Domain erlauben",
+    "packetsigning": "Packet Signing",
+    "packetencryption": "Packet Encryption",
+    "passwordchangeinterval": "Passwortwechselintervall",
+    "restrictdynamicdnsupdates": "Dynamische DNS-Updates beschränken",
+    "namespacemode": "Namespace Mode"
   },
   "ds": {
     "computername": "Computername",
@@ -251,6 +312,16 @@
   "failed": "Fehlgeschlagen",
   "failing": "Schlägt fehl!",
   "filevault": {
+    "status_last_checkin": "Status am ",
+    "enableddate": "Verschlüsselt seit",
+    "encrypted": "Verschlüsselt",
+    "filevault_users": "Aktiviert für User",
+    "recoverykey": "Persönlicher Wiederherstellungsschlüssel",
+    "lvguuid": "Logical Volume Group UUID",
+    "lvuuid": "Logical Volume UUID",
+    "pvuuid": "Physical Volume UUID",
+    "hddserial": "Hard Drive Seriennummer",
+    "unencrypted": "Unverschlüsselt",
     "users": "User bei denen FileVault aktiv ist",
     "widget": {
       "title": "Filevault 2 status"
@@ -318,7 +389,7 @@
   "last_user": "Letzter User",
   "listing": {
     "appusage": {
-      "appname": "",
+      "appname": "App Name",
       "appusage": "App Benutzung",
       "appusagereport": "App-Benutzungs-Report",
       "count": "Anzahl",
@@ -332,7 +403,7 @@
       "title": "Apple Remote Desktop-Report"
     },
     "backup2go": {
-      "title": "",
+      "title": "Backup2Go-Report",
       "date": "Letztes erfolgreiches Backup",
       "widget": {
         "title": "Benachrichtigung-Regeln"
@@ -351,6 +422,22 @@
     },
     "checkin": "Check-in",
     "computername": "Name",
+    "directoryservice": {
+      "boundstatus": "Bindungs-Status",
+      "ad_domain": "AD Domain",
+      "computeraccount": "Computerkonto",
+      "ad_comments": "AD Kommentare",
+      "mobileaccount": "Mobiler Account",
+      "networkprotocol": "Netzwerkprotokoll",
+      "admin_groups": "Admin-Gruppen"
+    },
+    "displays": {
+      "detected": "Erkannt",
+      "machineserial": "Maschinen-Seriennummer",
+      "model": "Modell",
+      "nativeresolution": "Native Auflösung",
+      "vendor": "Hersteller"
+    },
     "hardware": {
       "description": "Beschreibung"
     },
@@ -366,6 +453,21 @@
       "pending_removal": "Ausstehende Deinstallation",
       "pending_removal_plural": "Ausstehende Deinstallationen"
     },
+    "power": {
+      "capacity": "Kapazität (mAh)",
+      "charged": "Geladen %",
+      "condition": "Zustand",
+      "current": "Stromstärke (mAh)",
+      "cycles": "Zyklen",
+      "designed": "Ursprünglich (mAh)",
+      "health": "Gesundheit %",
+      "failedbattery": "Defekte Batterie",
+      "manufactured": "Hergestellt"
+    },
+    "profile": {
+      "payload": "Payloads",
+      "profilename": "Profilename"
+    },
     "timemachine": {
       "duration": "Backupdauer",
       "last_failure": "Letztes fehlgeschlagenes Backup",
@@ -374,6 +476,10 @@
       "title": "Timemachine-Report"
     },
     "username": "Benutzername",
+    "warranty": {
+      "purchased": "Gekauft",
+      "expires": "Garantie läuft ab"
+    },
     "wifi": {
       "apmode": "AP Modus",
       "authtype": "802.11X Authentifizierungstyp",
@@ -397,6 +503,7 @@
     "latitudeaccuracy": "Genauigkeit des Breitengrades",
     "longitude": "Längengrad",
     "longitudeaccuracy": "Genauigkeit des Längengrades",
+    "never": "Niemals",
     "report": "Standortreport",
     "stalelocation": "Veralteter Standort"
   },
@@ -408,7 +515,7 @@
     "hardware_type_title": "Aufstellung der Hardware-Typen",
     "hardware_widget_title": "Aufstellung der Hardware-Modelle",
     "model": "Modell",
-    "rom_version": "",
+    "rom_version": "ROM Version",
     "base_model_widget_title": "Aufstellung der Basis-Modelle"
   },
   "managedinstalls": {
@@ -419,6 +526,7 @@
     "title": "Verwaltete Installs"
   },
   "manifest": {
+    "manifest": "Manifest",
     "name": "Manifest Name"
   },
   "memory": {
@@ -442,6 +550,22 @@
     "warning_plural": "__count__ Munki-Warnungen",
     "additional_info": "Weitere Munki Infos"
   },
+  "munkiinfo": {
+    "softwarerepourl": "Software Repo URL",
+    "duration": "Dauer",
+    "applecatalog": "Apple Catalog URL",
+    "manifest": "Manifest",
+    "localonlymanifest": "Local Only Manifest",
+    "start": "Start"
+  },
+  "munkireportinfo": {
+    "baseurl": "MunkiReport URL",
+    "clienttabtitle": "MunkiReport",
+    "passphrase": "Passphrase",
+    "reportitems": "Installierte Module",
+    "reporttitle": "MunkiReport-Report",
+    "version": "Version"
+  },
   "name": "Name",
   "nav": {
     "admin": {
@@ -459,7 +583,8 @@
       "appusage": "App-Benutzung",
       "ard": "Apple Remote Desktop",
       "bluetooth": "Bluetooth",
-      "backup2go": "",
+      "backup2go": "Archiware Backup2Go",
+      "caching": "Caching",
       "clients": "Clients",
       "certificate": "Zertifikate",
       "deploystudio": "DeployStudio",
@@ -472,13 +597,16 @@
       "inventory": "Inventar",
       "location": "Location",
       "munki": "Munki",
+      "mrinfo": "MunkiReport",
       "network": "Netzwerk",
       "power": "Strom",
       "printers": "Printers",
       "profile": "Profile",
       "sccm_status": "SCCM Status",
       "security": "Sicherheit",
+      "softwareupdate": "Software Update",
       "timemachine": "Time Machine",
+      "usb": "USB Devices",
       "warranty": "Garantie",
       "wifi": "WiFi"
     },
@@ -491,22 +619,25 @@
     "reports": {
       "appVersions": "App Versions Report",
       "backup": "Backup-Report",
-      "backup2go": "",
+      "backup2go": "Backup2Go-Report",
+      "caching": "Caching",
       "clients": "Client-Report",
       "configuration": "Konfigurations-Report",
-      "directoryservice": "",
-      "disk": "",
+      "directoryservice": "Directory Services-Report",
+      "disk": "Disk-Report",
       "findmymac": "Meinen Mac suchen-Report",
-      "gsx": "",
+      "gsx": "GSX-Report",
       "hardware": "Hardware-Report",
       "location": "Standort-Report",
       "munki": "Munki-Report",
       "network": "Netzwerk-Report",
-      "power": "Stromversorgung-Report",
+      "peripheral": "Peripheriegeräte-Report",
+      "power": "Stromversorgungs-Report",
       "printer": "Drucker-Report",
       "profile": "Profile-Report",
       "sccm": "SCCM-Agent-Status-Report",
       "security": "Sicherheits-Report",
+      "server": "Server-Report",
       "warranty": "Garantie-Report",
       "wifi": "Wifi-Report"
     },
@@ -525,7 +656,8 @@
     "traffic": "Netzwerkverkehr",
     "inbound_traffic": "Ankommender Verkehr",
     "outbound_traffic": "Ausgehender Verkehr",
-    "remote_ip": "Remote IP Adresse"
+    "remote_ip": "Remote IP Adresse",
+    "service": "Service"
   },
   "new_client": "Neuer Client",
   "new_client_plural": "Neue Clients",
@@ -570,6 +702,17 @@
   },
   "pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
   "pkg_failed_to_install_plural": "__count__ Pakete wurden nicht installiert",
+  "power": {
+    "manufacture_date": "Hergestellt ",
+    "design_capacity": "Ursprüngliche Kapazität (mAh)",
+    "max_capacity": "Volle Ladung (mAh)",
+    "max_percent": "Gesundheit %",
+    "current_capacity": "Verbleibende Ladung (mAh)",
+    "current_percent": "Geladen %",
+    "cycle_count": "Anzahl der Ladezyklen",
+    "temperature": "Termperatur",
+    "condition": "Zustand"
+  },
   "ratio": "Verhältnis",
   "reg_date": "Registrierungsdatum",
   "remote_control": "Fernsteuerung",
@@ -579,7 +722,11 @@
   "printer": {
     "default_set": "Standarddrucker",
     "driver_version": "Treiberversion",
+    "error": "Fehler",
+    "idle": "Idle",
+    "in_use": "in Benutzung",
     "name": "Druckername",
+    "offline": "Offline",
     "ppd": "PPD",
     "printer_sharing": "Printer Sharing",
     "printer_status": "Druckerstatus",
@@ -600,14 +747,14 @@
   "security": {
     "report": "Sicherheits-Report",
     "security": "Security",
-    "gatekeeper": "",
+    "gatekeeper": "Gatekeeper-Status",
     "gatekeeper_active": "Gatekeeper aktiv",
     "gatekeeper_disabled": "Gatekeeper deaktiviert",
-    "sip": "",
+    "sip": "SIP-Status",
     "ssh_users": "SSH-Benutzer",
     "ard_users": "ARD-Benutzer",
     "firmwarepw": "Firmware-Passwort",
-    "sip_status": "",
+    "sip_status": "SIP-Status",
     "sip_active": "SIP aktiv",
     "sip_disabled": "SIP deaktiviert"
   },
@@ -636,6 +783,28 @@
     "software": "Software",
     "smc_version": "SMC Version",
     "boot_rom_version": "Boot ROM Version"
+  },
+  "softwareupdate": {
+    "automaticcheckenabled": "Auto Check aktivier",
+    "automaticdownload": "Auto Download",
+    "catalogurl": "Catalog URL",
+    "clienttabtitle": "Software Updates",
+    "configdatainstall": "XProtect automatisch installieren",
+    "criticalupdateinstall": "Kritische Updates installieren",
+    "inactiveupdates": "Ignorierte Updates",
+    "lastattemptsystemversion": "Versuchte Version",
+    "lastbackgroundccdsuccessfuldate": "Datum des letzten Erfolgreichen Hintergrund-CCD",
+    "lastbackgroundsuccessfuldate": "Erfolgreicher Hintergrund-Check",
+    "lastfullsuccessfuldate": "Vollständig erfolgreich",
+    "lastrecommendedupdatesavailable": "Empfohlene Updates",
+    "lastresultcode": "Result Code",
+    "lastsessionsuccessful": "Session erfolgreich",
+    "lastsuccessfuldate": "Erfolgreich am",
+    "lastupdatesavailable": "Updates verfügbar",
+    "mrxprotect": "XProtect Install",
+    "reporttitle": "Software Update-Report",
+    "skiplocalcdn": "Skip Local CDN",
+    "recommendedupdates": "Empfohlene Updates"
   },
   "status": "Status",
   "storage": {
@@ -686,6 +855,24 @@
   "unencrypted": "Unverschlüsselt",
   "unknown": "Unbekannt",
   "unsupported": "Nicht unterstützt",
+  "usb": {
+    "bus_power": "mAh verfügbar",
+    "bus_power_used": "mAh benutzt",
+    "camera": "Kamera",
+    "clienttab": "USB Devices",
+    "device_speed": "USB Protokoll",
+    "extra_current_used": "Extra mAh",
+    "internal": "Intern",
+    "manufacturer": "Hersteller",
+    "media": "Removable Media",
+    "name": "Device-Name",
+    "nousb": "Keine USB-Devices erkannt",
+    "reporttitle": "USB Devices-Report",
+    "title": "Tastatur und Maus",
+    "type": "Device-Typ",
+    "usbtype": "USB-Device-Typen",
+    "vendor_id": "Vendor ID"
+  },
   "uptime": "Uptime",
   "user": {
     "user": "Benutzer",
@@ -744,7 +931,7 @@
       "title": "Doppelte Computernamen"
     },
     "manifest": {
-      "title": ""
+      "title": "Manifests"
     },
     "memory": {
       "title": "Aufstellung der Speicherausstattung"
@@ -755,7 +942,7 @@
     },
     "munki": {
       "no_updates_pending": "Keine anstehenden Updates",
-      "title": ""
+      "title": "Munki"
     },
     "munkiinfo": {
       "munkiprotocol": {
@@ -796,6 +983,7 @@
       "tooltip": "Anstehende Installationen diese Woche"
     },
     "power": {
+      "check": "Batterie prüfen",
       "health": {
         "title": "Batterie-Gesundheit",
         "tooltip": "Liste des Batteriegesundheits-Status"
@@ -826,14 +1014,14 @@
       "title": "Unbekanntes Widget"
     },
     "uptime": {
-      "title": ""
+      "title": "Uptime"
     },
     "warranty": {
-      "title": ""
+      "title": "Garantie-Status"
     },
     "warrantysupport": {
-      "title": "",
-      "warrantyinfo": "Zählt Unterstützt, Vintage, Obsolet und Unbekannten Supportstatus",
+      "title": "Anzahl Unterstützt, Vintage, Obsolet und Unbekannter Support-Status",
+      "warrantyinfo": "Anzahl Unterstützt, Vintage, Obsolet und Unbekannter Support-Status",
       "warrentysupportstatus": "Garantieabdeckungsstatus"
     }
   },
