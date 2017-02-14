@@ -78,16 +78,16 @@
   },
   "bluetooth": {
     "all_ok": "Keine Bluetooth-Geräte mit niedrigem Batteriestand",
-    "apple_wireless_keyboard": "",
-    "apple_wireless_trackpad": "",
-    "apple_wireless_mouse": "",
-    "apple_magic_mouse": "",
+    "apple_wireless_keyboard": "Apple Wireless Keyboard",
+    "apple_wireless_trackpad": "Apple Wireless Trackpad",
+    "apple_wireless_mouse": "Apple Wireless Mouse",
+    "apple_magic_mouse": "Apple Magic Mouse",
     "bluetooth": "Bluetooth",
     "bluetooth_battery_widget": "Bluetooth Batteriestatus",
     "keyboard": "Tastatur",
-    "magic_keyboard": "",
-    "magic_trackpad_2": "",
-    "magic_mouse_2": "",
+    "magic_keyboard": "Magic Keyboard",
+    "magic_trackpad_2": "Magic Trackpad 2",
+    "magic_mouse_2": "Magic Mouse 2",
     "mouse": "Maus Status",
     "panel_title": "Bluetooth-Geräte mit weniger als 15% Batterie",
     "status": "Bluetooth Status",
@@ -185,7 +185,7 @@
   },
   "backup2go": {
     "widget": {
-      "title": ""
+      "title": "Backup2Go Status"
     }
   },
   "danger": "Fehler",
@@ -318,7 +318,7 @@
   "last_user": "Letzter User",
   "listing": {
     "appusage": {
-      "appname": "",
+      "appname": "App Name",
       "appusage": "App Benutzung",
       "appusagereport": "App-Benutzungs-Report",
       "count": "Anzahl",
@@ -332,7 +332,7 @@
       "title": "Apple Remote Desktop-Report"
     },
     "backup2go": {
-      "title": "",
+      "title": "Backup2Go Report",
       "date": "Letztes erfolgreiches Backup",
       "widget": {
         "title": "Benachrichtigung-Regeln"
@@ -408,7 +408,7 @@
     "hardware_type_title": "Aufstellung der Hardware-Typen",
     "hardware_widget_title": "Aufstellung der Hardware-Modelle",
     "model": "Modell",
-    "rom_version": "",
+    "rom_version": "ROM Version",
     "base_model_widget_title": "Aufstellung der Basis-Modelle"
   },
   "managedinstalls": {
@@ -459,7 +459,7 @@
       "appusage": "App-Benutzung",
       "ard": "Apple Remote Desktop",
       "bluetooth": "Bluetooth",
-      "backup2go": "",
+      "backup2go": "Archiware Backup2Go",
       "clients": "Clients",
       "certificate": "Zertifikate",
       "deploystudio": "DeployStudio",
@@ -491,13 +491,13 @@
     "reports": {
       "appVersions": "App Versions Report",
       "backup": "Backup-Report",
-      "backup2go": "",
+      "backup2go": "Backup2Go Report",
       "clients": "Client-Report",
       "configuration": "Konfigurations-Report",
-      "directoryservice": "",
-      "disk": "",
+      "directoryservice": "Directory Services-Report",
+      "disk": "Disk-Report",
       "findmymac": "Meinen Mac suchen-Report",
-      "gsx": "",
+      "gsx": "GSX-Report",
       "hardware": "Hardware-Report",
       "location": "Standort-Report",
       "munki": "Munki-Report",
@@ -600,14 +600,14 @@
   "security": {
     "report": "Sicherheits-Report",
     "security": "Security",
-    "gatekeeper": "",
+    "gatekeeper": "Gatekeeper-Status",
     "gatekeeper_active": "Gatekeeper aktiv",
     "gatekeeper_disabled": "Gatekeeper deaktiviert",
-    "sip": "",
+    "sip": "SIP-Status",
     "ssh_users": "SSH-Benutzer",
     "ard_users": "ARD-Benutzer",
     "firmwarepw": "Firmware-Passwort",
-    "sip_status": "",
+    "sip_status": "SIP-Status",
     "sip_active": "SIP aktiv",
     "sip_disabled": "SIP deaktiviert"
   },
@@ -690,7 +690,7 @@
   "user": {
     "user": "Benutzer",
     "users": "Benutzer",
-    "local_admins": "Lokaler Admins"
+    "local_admins": "Lokale Admins"
   },
   "verified": "Verifiziert",
   "version": "Version",
@@ -744,7 +744,7 @@
       "title": "Doppelte Computernamen"
     },
     "manifest": {
-      "title": ""
+      "title": "Manifests"
     },
     "memory": {
       "title": "Aufstellung der Speicherausstattung"
@@ -755,7 +755,7 @@
     },
     "munki": {
       "no_updates_pending": "Keine anstehenden Updates",
-      "title": ""
+      "title": "Munki"
     },
     "munkiinfo": {
       "munkiprotocol": {
@@ -826,13 +826,13 @@
       "title": "Unbekanntes Widget"
     },
     "uptime": {
-      "title": ""
+      "title": "Uptime"
     },
     "warranty": {
-      "title": ""
+      "title": "Garantie-Status"
     },
     "warrantysupport": {
-      "title": "",
+      "title": "Anzahl Unterstüzter, Vintage und Obsolet",
       "warrantyinfo": "Zählt Unterstützt, Vintage, Obsolet und Unbekannten Supportstatus",
       "warrentysupportstatus": "Garantieabdeckungsstatus"
     }
