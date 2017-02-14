@@ -63,20 +63,31 @@
     "wrong_user_or_pass": "Falscher Benutzername oder falches Kennwort"
   },
   "backup": {
+    "backup_location": "Backuport",
     "destination": "Backupziel",
+    "destinations": "Backupziele",
     "duration": "Dauer des Backups",
     "last_failure": "Letztes Fehlgeschlagenes Backup",
     "last_failure_msg": "Fehlermeldung",
-    "last_success": "Letztes Erfolgreiches Backup"
+    "last_success": "Letztes Erfolgreiches Backup",
+    "location_name": "Name des Backup-Orts",
+    "kind": "Backup-Art"
   },
   "battery": {
     "life_remaining": "__percent__% verbleibende Batterielaufzeit"
   },
   "bluetooth": {
     "all_ok": "Keine Bluetooth-Geräte mit niedrigem Batteriestand",
+    "apple_wireless_keyboard": "",
+    "apple_wireless_trackpad": "",
+    "apple_wireless_mouse": "",
+    "apple_magic_mouse": "",
     "bluetooth": "Bluetooth",
     "bluetooth_battery_widget": "Bluetooth Batteriestatus",
     "keyboard": "Tastatur",
+    "magic_keyboard": "",
+    "magic_trackpad_2": "",
+    "magic_mouse_2": "",
     "mouse": "Maus Status",
     "panel_title": "Bluetooth-Geräte mit weniger als 15% Batterie",
     "status": "Bluetooth Status",
@@ -94,9 +105,17 @@
   "buildversion": "Build Version",
   "caching": {
     "bytes_served": "CachingServer – Übertragene Bytes",
+    "client_requests": "Anfragen von Clients",
+    "date": "Datum",
     "from_origin": "Herkunft",
     "from_peers": "Von Peers",
-    "from_cache": "Aus dem Cache"
+    "from_cache": "Aus dem Cache",
+    "peer_requests": "Anfragen von Peers",
+    "purged_1": "Gesäubert vor weniger als 1 Tag",
+    "purged_7": "Gesäubert vor weniger als 7 Tagen",
+    "purged_30": "Gesäubert vor weniger als 30 Tagen",
+    "reporttitle": "Caching Server-Report",
+    "total_purged": "Gesamt gesäubert"
   },
   "cert": {
     "expired": "__name__ expired __moment__"
@@ -123,7 +142,6 @@
       "power": "Strom",
       "printers": "Drucker",
       "profiles": "Profile",
-      "sccm_status": "SCCM Status",
       "serverstats": "Server Statistik",
       "summary": "Zusammenfassung",
       "third_party_software": "Drittanbieter-Software",
@@ -165,9 +183,16 @@
       "title": "CrashPlan"
     }
   },
+  "backup2go": {
+    "widget": {
+      "title": ""
+    }
+  },
   "danger": "Fehler",
   "database": "Datenbank",
   "date": {
+    "day": "Tag",
+    "day_plural": "Tage",
     "year": "Jahr"
   },
   "db": {
@@ -197,7 +222,8 @@
   "ds": {
     "computername": "Computername",
     "architecture": "Architektur",
-    "recheck": "DeployStudio-Daten holen"
+    "recheck": "DeployStudio-Daten holen",
+    "report": "DeployStudio-Report"
   },
   "displayname": "Anzeigename",
   "edit": "Editieren",
@@ -291,20 +317,37 @@
   "last_seen": "Zuletzt gesehen",
   "last_user": "Letzter User",
   "listing": {
+    "appusage": {
+      "appname": "",
+      "appusage": "App Benutzung",
+      "appusagereport": "App-Benutzungs-Report",
+      "count": "Anzahl",
+      "event": "Ereignis",
+      "lastevent": "Letztes Ereignis",
+      "launch": "Start",
+      "quit": "Beendigung"
+    },
     "ard": {
       "text": "Text __number__",
-      "title": "Apple Remote Desktop Bericht"
+      "title": "Apple Remote Desktop-Report"
+    },
+    "backup2go": {
+      "title": "",
+      "date": "Letztes erfolgreiches Backup",
+      "widget": {
+        "title": "Benachrichtigung-Regeln"
+      }
     },
     "bluetooth": {
       "battery_percent": "Batteriestatus",
       "bluetooth_power": "Bluetooth Status",
       "device_type": "Gerätetyp",
-      "title": "Bluetooth Bericht"
+      "title": "Bluetooth-Report"
     },
     "certificate": {
       "commonname": "Common Name",
       "expires": "Ablaufdatum",
-      "title": "Zertifikatsbericht"
+      "title": "Zertifikats-Report"
     },
     "checkin": "Check-in",
     "computername": "Name",
@@ -328,7 +371,7 @@
       "last_failure": "Letztes fehlgeschlagenes Backup",
       "last_failure_msg": "Fehlermeldung",
       "last_success": "Letztes erfolgreiches Backup",
-      "title": "Timemachine Bericht"
+      "title": "Timemachine-Report"
     },
     "username": "Benutzername",
     "wifi": {
@@ -359,13 +402,20 @@
   },
   "loading": "Lade Daten vom Server",
   "machine": {
-    "hardware_widget_title": "Liste der Hardwaremodelle"
+    "arch": "Architektur",
+    "cores": "Kerne",
+    "cpu_speed": "CPU Geschwindigkeit",
+    "hardware_type_title": "Aufstellung der Hardware-Typen",
+    "hardware_widget_title": "Aufstellung der Hardware-Modelle",
+    "model": "Modell",
+    "rom_version": "",
+    "base_model_widget_title": "Aufstellung der Basis-Modelle"
   },
   "managedinstalls": {
     "failing_clients": "Clients mit fehlgeschlagenen Installationen",
-    "installratio_report": "Installationsquoten Bericht",
+    "installratio_report": "Installationsquoten-Report",
     "no_managedinstalls": "Keine verwalteten Installationen",
-    "report": "Verwaltete Installationen Bericht",
+    "report": "Verwaltete Installationen-Report",
     "title": "Verwaltete Installs"
   },
   "manifest": {
@@ -406,8 +456,10 @@
       "ru": "Русский"
     },
     "listings": {
+      "appusage": "App-Benutzung",
       "ard": "Apple Remote Desktop",
       "bluetooth": "Bluetooth",
+      "backup2go": "",
       "clients": "Clients",
       "certificate": "Zertifikate",
       "deploystudio": "DeployStudio",
@@ -438,15 +490,25 @@
     },
     "reports": {
       "appVersions": "App Versions Report",
-      "backup": "Backup-Bericht",
-      "clients": "Client-Bericht",
-      "configuration": "Konfigurations-Bericht",
-      "findmymac": "Meinen Mac suchen Bericht",
-      "hardware": "Hardware-Bericht",
-      "location": "Standort-Bericht",
-      "munki": "Munki-Bericht",
-      "network": "Netzwerk-Bericht",
-      "power": "Strom-Bericht"
+      "backup": "Backup-Report",
+      "backup2go": "",
+      "clients": "Client-Report",
+      "configuration": "Konfigurations-Report",
+      "directoryservice": "",
+      "disk": "",
+      "findmymac": "Meinen Mac suchen-Report",
+      "gsx": "",
+      "hardware": "Hardware-Report",
+      "location": "Standort-Report",
+      "munki": "Munki-Report",
+      "network": "Netzwerk-Report",
+      "power": "Stromversorgung-Report",
+      "printer": "Drucker-Report",
+      "profile": "Profile-Report",
+      "sccm": "SCCM-Agent-Status-Report",
+      "security": "Sicherheits-Report",
+      "warranty": "Garantie-Report",
+      "wifi": "Wifi-Report"
     },
     "user": {
       "logout": "Abmelden"
@@ -536,7 +598,18 @@
     "enrollment_status": "Enrollment Status"
   },
   "security": {
-    "security": "Security"
+    "report": "Sicherheits-Report",
+    "security": "Security",
+    "gatekeeper": "",
+    "gatekeeper_active": "Gatekeeper aktiv",
+    "gatekeeper_disabled": "Gatekeeper deaktiviert",
+    "sip": "",
+    "ssh_users": "SSH-Benutzer",
+    "ard_users": "ARD-Benutzer",
+    "firmwarepw": "Firmware-Passwort",
+    "sip_status": "",
+    "sip_active": "SIP aktiv",
+    "sip_disabled": "SIP deaktiviert"
   },
   "serial": "Seriennummer",
   "servermetrics": {
@@ -544,7 +617,7 @@
   },
   "service": {
     "listing": {
-      "title": "Dienste-Bericht"
+      "title": "Dienste-Report"
     },
     "name": "Dienstname",
     "status": "Dienststatus",
@@ -629,13 +702,14 @@
     "est_purchase_date": "ungef. Kaufdatum",
     "expired": "Abgelaufen am __date__",
     "expires_in": "Läuft ab __date__",
+    "installed_memory_title": "Installierter Speicher",
     "no_alerts": "Keine Garantiewarnung",
     "recheck": "Garantieabdeckung erneut prüfen",
     "supported_no_applecare": "Unterstützt bis __date__. Kein Applecare",
     "supported_until": "Unterstützt bis __date__",
     "unregistered": "Nicht registriert",
     "warranty": "Garantie",
-    "widget_title": "Hardware Warranty"
+    "widget_title": "Hardwaregarantie"
   },
   "widget": {
     "age": {
@@ -644,11 +718,20 @@
     "app": {
       "versions": "Bekannte Versionen von __app__"
     },
+    "appusage": {
+      "title": "App Benutzung",
+      "tooltip": "Meistgenutzte Apps"
+    },
     "bound_to_ds": {
       "bound": "Angebunden",
       "notbound": "Nicht angebunden",
       "info": "Gesamt seit diese Daten gesammelt werden",
       "title": "An Verzeichnisdienst angebunden"
+    },
+    "caching": {
+      "graph_title": "Aus dem Cache genutzte Bytes",
+      "title": "Cachenutzung in Bytes",
+      "tooltip": "Daten, die aus dem Caching-Server von OSX-Server genutzt wurden"
     },
     "certificate": {
       "expired": "Abgelaufen",
@@ -657,33 +740,99 @@
       "title": "Zertifikate"
     },
     "duplicate_computernames": {
-      "notfound": "Keine Duplikate gefunden"
+      "notfound": "Keine Duplikate gefunden",
+      "title": "Doppelte Computernamen"
+    },
+    "manifest": {
+      "title": ""
+    },
+    "memory": {
+      "title": "Aufstellung der Speicherausstattung"
+    },
+    "modified_computernames": {
+      "title": "Nicht übereinstimmende ARD Namen",
+      "tooltip": "Computer, bei denen der ARD Name nicht mit AD übereinstimmt"
     },
     "munki": {
-      "no_updates_pending": "Keine anstehenden Updates"
+      "no_updates_pending": "Keine anstehenden Updates",
+      "title": ""
     },
     "munkiinfo": {
       "munkiprotocol": {
         "localrepo": "Lokales repo",
         "http": "http",
-        "https": "https"
+        "https": "https",
+        "title": "Munki Protokoll",
+        "tooltip": "Munki Protokoll aller Clients"
       }
     },
+    "munki_versions": {
+      "title": "Munki-Versionen",
+      "tooltip": "Munki-Versionen aller Clients"
+    },
+    "network_location": {
+      "title": "Netzwerkumgebungen"
+    },
+    "network_vlan": {
+      "title": "Netzwerk-VLANs"
+    },
+    "new_clients": {
+      "no_new_clients": "keine neuen Clients",
+      "title": "Neue Clients",
+      "tooltip": "Neue Clients diese Woche"
+    },
+    "os": {
+      "title": "Aufstellung der OS Versionen"
+    },
+    "pending": {
+      "title": "Clients mit anstehenden Installationen"
+    },
+    "pending_apple": {
+      "title": "Anstehende Apple Updates",
+      "tooltip": "Diese Woche anstehende Apple Updates"
+    },
+    "pending_munki": {
+      "title": "Anstehende Installationen",
+      "tooltip": "Anstehende Installationen diese Woche"
+    },
     "power": {
+      "health": {
+        "title": "Batterie-Gesundheit",
+        "tooltip": "Liste des Batteriegesundheits-Status"
+      },
       "missing": "Fehlt",
       "normal": "Normal",
       "now": "Jetzt austauschen",
       "service": "Jetzt zur Wartung",
       "soon": "Wartung steht an",
-      "nobattery": "Keine Batterie"
+      "nobattery": "Keine Batterie",
+      "title": "Batterie-Zustand",
+      "tooltip": "Liste des Batteriezustands"
+    },
+    "registered": {
+      "title": "Zeitachse der Clientregistrierung"
     },
     "timemachine": {
       "lastweek": "Letztes Backup vor mehr als einem Tag",
       "title": "Time Machine Status",
       "today": "Backup heute",
-      "week_plus": "Letztes Backup vor mehr als einer Woche"
+      "week_plus": "Letztes Backup vor mehr als einer Woche",
+      "b2g_ok": "Letztes Backup vor 2 Wochen",
+      "b2g_warning": "Letztes Backup vor 4 Wochen",
+      "b2g_danger": "Letztes Backup vor mehr als 4 Wochen"
+    },
+    "unknown": {
+      "alert": "Dieses Widget konnte nicht gefunden werden",
+      "title": "Unbekanntes Widget"
+    },
+    "uptime": {
+      "title": ""
+    },
+    "warranty": {
+      "title": ""
     },
     "warrantysupport": {
+      "title": "",
       "warrantyinfo": "Zählt Unterstützt, Vintage, Obsolet und Unbekannten Supportstatus",
       "warrentysupportstatus": "Garantieabdeckungsstatus"
     }
