@@ -43,7 +43,7 @@ class Migration_add_columns_for_pmset_data extends Model
         foreach (array('hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage') as $item) {
                         
             // Adding a column is simple...
-            if ($item == "voltage"){}
+            if ($item == "voltage"){
                 $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' FLOAT',
                 $this->enquote($this->tablename)
