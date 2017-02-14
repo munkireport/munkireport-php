@@ -807,7 +807,7 @@
       "soon": "Wartung steht an",
       "nobattery": "Keine Batterie",
       "title": "Batterie-Zustand",
-      "tooltip": "LIste des Batteriezustands"
+      "tooltip": "Liste des Batteriezustands"
     },
     "registered": {
       "title": "Zeitachse der Clientregistrierung"
