@@ -3,7 +3,6 @@
 class Migration_add_columns_for_pmset_data extends Model
 {
     protected $columname1 = 'sleep_prevented_by'; //varchar(1024)
-    protected $columname2 = 'voltage'; //float
 
     public function __construct()
     {
@@ -40,34 +39,21 @@ class Migration_add_columns_for_pmset_data extends Model
 
         $this->exec($sql);
         
-        // Adding a column is simple...
-        $sql = sprintf(
-            'ALTER TABLE %s ADD COLUMN %s FLOAT',
-            $this->enquote($this->tablename),
-            $this->enquote($this->columname2)
-        );
-
-        $this->exec($sql);
-
-        // so is adding an index...
-        $idx_name = $this->tablename . '_' . $this->columname2;
-        $sql = sprintf(
-            "CREATE INDEX %s ON %s (%s)",
-            $idx_name,
-            $this->enquote($this->tablename),
-            $this->columname2
-        );
-
-        $this->exec($sql);
-        
         // Add new VARCHAR(255) columes
-        foreach (array('hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging') as $item) {
+        foreach (array('hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage') as $item) {
                         
             // Adding a column is simple...
+            if ($item == "voltage"){}
+                $sql = sprintf(
+                'ALTER TABLE %s ADD COLUMN '.$item.' FLOAT',
+                $this->enquote($this->tablename)
+            ); 
+            }else{    
             $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(255)',
                 $this->enquote($this->tablename)
             );
+            }
             $this->exec($sql);
             
             // ...so is adding an index
