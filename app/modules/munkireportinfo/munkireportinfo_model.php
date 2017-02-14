@@ -66,6 +66,11 @@ class Munkireportinfo_model extends Model
             }
             }
             
+            // Set default version value
+            if(empty($plist[version])){
+                $plist['version'] = 0;
+            }
+                
             foreach (array('baseurl', 'passphrase', 'version', 'reportitems') as $item) {
                 if (isset($plist[$item])) {
                     if ($item == 'reportitems'){
