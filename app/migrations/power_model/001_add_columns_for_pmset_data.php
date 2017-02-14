@@ -2,8 +2,6 @@
 
 class Migration_add_columns_for_pmset_data extends Model
 {
-    protected $columname1 = 'sleep_prevented_by'; //varchar(1024)
-
     public function __construct()
     {
         parent::__construct();
@@ -12,35 +10,14 @@ class Migration_add_columns_for_pmset_data extends Model
 
     public function up()
     {
-                
         // Get database handle
         $dbh = $this->getdbh();
 
         // Wrap in transaction
         $dbh->beginTransaction();
         
-        // Adding a column is simple...
-        $sql = sprintf(
-            'ALTER TABLE %s ADD COLUMN %s VARCHAR(1024)',
-            $this->enquote($this->tablename),
-            $this->enquote($this->columname1)
-        );
-
-        $this->exec($sql);
-
-        // so is adding an index...
-        $idx_name = $this->tablename . '_' . $this->columname1;
-        $sql = sprintf(
-            "CREATE INDEX %s ON %s (%s)",
-            $idx_name,
-            $this->enquote($this->tablename),
-            $this->columname1
-        );
-
-        $this->exec($sql);
-        
-        // Add new VARCHAR(255) columes
-        foreach (array('hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage') as $item) {
+        // Add new columes
+        foreach (array('hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage','sleep_prevented_by') as $item) {
                         
             // Adding a column is simple...
             if ($item == "voltage"){
@@ -48,6 +25,11 @@ class Migration_add_columns_for_pmset_data extends Model
                 'ALTER TABLE %s ADD COLUMN '.$item.' FLOAT',
                 $this->enquote($this->tablename)
             ); 
+            } else if ($item == "sleep_prevented_by") {    
+            $sql = sprintf(
+                'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(1024)',
+                $this->enquote($this->tablename)
+            );
             } else {    
             $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(255)',
