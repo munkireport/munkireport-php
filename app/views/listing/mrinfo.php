@@ -106,8 +106,12 @@ new Munkireportinfo_model;
                 $('td:eq(0)', nRow).html(link);
                 
                 // Format Version
-				var version = mr.integerToVersion($('td:eq(2)', nRow).html());
-				$('td:eq(2)', nRow).html(version);
+				var version = $('td:eq(2)', nRow).html();
+				if (version != "-9876543" && (version)) {
+				$('td:eq(2)', nRow).html(mr.integerToVersion(version));
+				} else {
+                  $('td:eq(2)', nRow).html('');  
+                }
 		    }
 	    });
 
