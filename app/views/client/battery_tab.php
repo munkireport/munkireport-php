@@ -1,0 +1,377 @@
+	<h2 data-i18n="power.battery"></h2>
+	
+	<div id="battery-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
+	
+	<div id="battery-view" class="row hide">
+		<div class="col-md-4">
+			<table class="table table-striped">
+				<tr>
+					<th data-i18n="power.manufacture_date"></th>
+					<td id="battery-manufacture_date"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.design_capacity"></th>
+					<td id="battery-design_capacity"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.max_capacity"></th>
+					<td id="battery-max_capacity"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.max_percent"></th>
+					<td id="battery-max_percent"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.current_capacity"></th>
+					<td id="battery-current_capacity"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.current_percent"></th>
+					<td id="battery-current_percent"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.cycle_count"></th>
+					<td id="battery-cycle_count"></td>
+				</tr>
+                <tr>
+					<th data-i18n="power.designcyclecount"></th>
+					<td id="battery-designcyclecount"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.condition"></th>
+					<td id="battery-condition"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.temperature"></th>
+					<td id="battery-temperature"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.externalconnected"></th>
+					<td id="battery-externalconnected"></td>
+				</tr>
+                <tr>
+					<th data-i18n="power.ischarging"></th>
+					<td id="battery-ischarging"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.fullycharged"></th>
+					<td id="battery-fullycharged"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.avgtimetofull"></th>
+					<td id="battery-avgtimetofull"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.avgtimetoempty"></th>
+					<td id="battery-avgtimetoempty"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.timeremaining"></th>
+					<td id="battery-timeremaining"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.instanttimetoempty"></th>
+					<td id="battery-instanttimetoempty"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.voltage"></th>
+					<td id="battery-voltage"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.cellvoltage"></th>
+					<td id="battery-cellvoltage"></td>
+				</tr>
+                	<tr>
+					<th data-i18n="power.amperage"></th>
+					<td id="battery-amperage"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.instantamperage"></th>
+					<td id="battery-instantamperage"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.permanentfailurestatus"></th>
+					<td id="battery-permanentfailurestatus"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.manufacturer"></th>
+					<td id="battery-manufacturer"></td>
+				</tr>
+                <tr>
+					<th data-i18n="power.batteryserialnumber"></th>
+					<td id="battery-batteryserialnumber"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.packreserve"></th>
+					<td id="battery-packreserve"></td>
+                </tr>
+			</table>
+		</div>
+        <div  class="col-md-4">
+			<table class="table table-striped">
+				<tr>
+					<th data-i18n="power.adapter_wattage"></th>
+					<td id="battery-wattage"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.adapter_id"></th>
+					<td id="battery-adapter_id"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.family_code"></th>
+					<td id="battery-family_code"></td>
+				</tr>
+					<tr>
+					<th data-i18n="power.adapter_serial_number"></th>
+					<td id="battery-adapter_serial_number"></td>
+				</tr>
+			</table>
+        </div>
+	</div>
+
+<script>
+$(document).on('appReady', function(e, lang) {
+	
+	// Get power data
+	$.getJSON( appUrl + '/module/power/get_data/' + serialNumber, function( data ) {
+		if( data.condition == ''){
+			$('#battery-msg').text(i18n.t('no_data'));
+		}
+		else{
+			
+			// Hide
+			$('#battery-msg').text('');
+			$('#battery-view').removeClass('hide');
+
+            // Add strings
+                
+			$('#battery-adapter_id').text(data.adapter_id);
+			$('#battery-family_code').text(data.family_code);
+			$('#battery-adapter_serial_number').text(data.adapter_serial_number);
+
+			// Format wattage
+            if (data.wattage != "-9876543" && (data.wattage)) {
+            $('#battery-wattage').html(data.wattage+" "+i18n.t('power.watts'));
+            } else {
+	        	$('#battery-wattage').html('');  
+            }
+            
+			// Format timeremaining                         
+			if(data.timeremaining == "-9876543" || data.timeremaining == -9876543 || data.manufacture_date == '1980-00-00' || data.fullycharged == 'Yes') {
+				 $('#battery-timeremaining').text('');
+            } else {
+				 $('#battery-timeremaining').html('<span title="'+data.timeremaining+' '+i18n.t('power.minutes')+'">'+moment.duration(data.timeremaining, "minutes").humanize());
+			}  
+                        
+			// Format instanttimetoempty                         
+			if(data.instanttimetoempty == "-9876543" || data.instanttimetoempty == -9876543) {
+				 $('#battery-instanttimetoempty').text('');
+            } else {
+				 $('#battery-instanttimetoempty').html('<span title="'+data.instanttimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(data.instanttimetoempty, "minutes").humanize());
+			}  
+                       
+			// Format avgtimetofull                         
+			if(data.avgtimetofull == "-9876543" || data.avgtimetofull == -9876543) {
+				 $('#battery-avgtimetofull').text('');
+            } else {
+				 $('#battery-avgtimetofull').html('<span title="'+data.avgtimetofull+' '+i18n.t('power.minutes')+'">'+moment.duration(data.avgtimetofull, "minutes").humanize());
+			}  
+                       			
+			// Format avgtimetoempty                         
+			if(data.avgtimetoempty == "-9876543" || data.avgtimetoempty == -9876543) {
+				 $('#battery-avgtimetoempty').text('');
+            } else {
+				 $('#battery-avgtimetoempty').html('<span title="'+data.avgtimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(data.avgtimetoempty, "minutes").humanize());
+			}  
+                       			
+			// Format ischarging
+			if(data.ischarging === "Yes") {
+				 $('#battery-ischarging').text(i18n.t('yes'));
+			} else if(data.ischarging === "No") {
+				 $('#battery-ischarging').text(i18n.t('no'));
+			} else{
+				 $('#battery-ischarging').text("");
+			}
+		                       			
+			// Format fullycharged
+			if(data.fullycharged === "Yes") {
+				 $('#battery-fullycharged').text(i18n.t('yes'));
+			} else if(data.fullycharged === "No") {
+				 $('#battery-fullycharged').text(i18n.t('no'));
+			} else{
+				 $('#battery-fullycharged').text("");
+			}
+              			
+			// Format permanentfailurestatus
+            if (data.permanentfailurestatus != "-9876543" && (data.permanentfailurestatus)) {
+				 $('#battery-permanentfailurestatus').text("");
+            } else if(data.permanentfailurestatus === "1" || data.permanentfailurestatus === 1) {
+				 $('#battery-permanentfailurestatus').addClass('danger').html(i18n.t('yes'));
+			} else if(data.permanentfailurestatus === "0" || data.permanentfailurestatus === 0) {
+				 $('#battery-permanentfailurestatus').html(i18n.t('no'));
+			} else{
+				 $('#battery-permanentfailurestatus').text('');
+			}
+                    			
+			// Format externalconnected
+			if(data.externalconnected === "Yes") {
+				 $('#battery-externalconnected').text(i18n.t('yes'));
+			} else if(data.externalconnected === "No") {
+				 $('#battery-externalconnected').text(i18n.t('no'));
+			} else{
+				 $('#battery-externalconnected').text("");
+			}
+            
+            // Format batteryserialnumber
+            if (data.batteryserialnumber != "-9876543" && (data.batteryserialnumber)) {
+            $('#battery-batteryserialnumber').html(data.batteryserialnumber);
+            } else {
+	        	$('#battery-batteryserialnumber').html('');  
+            }           
+                                                 
+            // Format packreserve
+            if (data.packreserve != "-9876543" && (data.packreserve)) {
+            $('#battery-packreserve').html(data.packreserve+" mAh");
+            } else {
+	        	$('#battery-packreserve').html('');  
+            }           
+                                                 
+            // Format manufacturer
+            if (data.manufacturer != "-9876543" && (data.manufacturer)) {
+            $('#battery-manufacturer').html(data.manufacturer);
+            } else {
+	        	$('#battery-manufacturer').html('');  
+            }           
+                                                 
+            // Format cell voltage
+            if (data.cellvoltage != "." && (data.cellvoltage)) {
+            $('#battery-cellvoltage').html(data.cellvoltage+"v");
+            } else {
+	        	$('#battery-cellvoltage').html('');  
+            }           
+                                      
+            // Format voltage
+            if (data.voltage != "-9876540" && (data.voltage)) {
+            $('#battery-voltage').html(data.voltage+"v");
+            } else {
+	        	$('#battery-voltage').html('');  
+            }           
+                                                  
+            // Format instantamperage
+            if (data.instantamperage != "-9876543" && (data.instantamperage)) {
+            $('#battery-instantamperage').html(data.instantamperage+"A");
+            } else {
+	        	$('#battery-instantamperage').html('');  
+            }           
+                                                
+            // Format amperage
+            if (data.amperage != "-9876543" && (data.amperage)) {
+            $('#battery-amperage').html(data.amperage+"A");
+            } else {
+	        	$('#battery-amperage').html('');  
+            }           
+            
+            // Format cycle count
+            if (data.cycle_count != "-9876543" && (data.cycle_count)) {
+            $('#battery-cycle_count').html(data.cycle_count);
+            } else {
+	        	$('#battery-cycle_count').html('');  
+            }           
+                        
+            // Format designcyclecount
+            if (data.designcyclecount != "-9876543" && (data.designcyclecount)) {
+            $('#battery-designcyclecount').html(data.designcyclecount);
+            } else {
+	        	$('#battery-designcyclecount').html('');  
+            }           
+            
+            // Format designed capacity
+            if (data.design_capacity != "-9876543" && (data.design_capacity)) {
+            $('#battery-design_capacity').html(data.design_capacity+' mAh');
+            } else {
+	        	$('#battery-design_capacity').html('');  
+            }     
+            
+            // Format current capacity
+            if (data.current_capacity != "-9876543" && (data.current_capacity)) {
+            $('#battery-current_capacity').html(data.current_capacity+' mAh');
+            } else {
+	        	$('#battery-current_capacity').html('');  
+            }   
+            
+            // Format max capacity
+            if (data.max_capacity != "-9876543" && (data.max_capacity)) {
+            $('#battery-max_capacity').html(data.max_capacity+' mAh');
+            } else {
+	        	$('#battery-max_capacity').html('');  
+            }
+
+            // Format Manufacture date
+            if(data.manufacture_date === '1980-00-00'){
+	        		$('#battery-manufacture_date').addClass('danger').html(i18n.t('widget.power.now'));
+            } else {
+	        	if(data.manufacture_date){
+	        		a = moment(data.manufacture_date)
+	        		b = a.diff(moment(), 'years', true)
+	        		if(a.diff(moment(), 'years', true) < -4)
+	        		{
+	        			$('#battery-manufacture_date').addClass('danger')
+	        		}
+	        		if(Math.round(b) == 4)
+	        		{
+	        			
+	        		}
+	        		$('#battery-manufacture_date').html('<span title="'+data.manufacture_date+'">'+moment(data.manufacture_date).fromNow());
+	        	}
+            }
+            
+            // Format battery condition
+            data.condition = data.condition == 'Normal' ? '<span class="label label-success">'+i18n.t('widget.power.normal')+'</span>' : 
+            data.condition = data.condition == 'Replace Soon' ? '<span class="label label-warning">'+i18n.t('widget.power.service')+'</span>' : 
+            data.condition = data.condition == 'Service Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.check')+'</span>' : 
+            data.condition = data.condition == 'Check Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.now')+'</span>' : 
+            data.condition = data.condition == 'Replace Now' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
+            (data.condition === 'No Battery' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : '')
+            $('#battery-condition').html(data.condition)
+            
+            // Format battery health
+            if (data.max_percent != "-9876543" && (data.max_percent)) {
+            var cls = data.max_percent > 89 ? 'success' : (data.max_percent > 79 ? 'warning' : 'danger');
+            $('#battery-max_percent').html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+data.max_percent+'%;">'+data.max_percent+'%</div></div>');
+            } else {
+	        	$('#battery-max_percent').html('');  
+            }
+            
+            // Format battery charge
+            if (data.current_percent != "-9876543" && (data.current_percent)) {
+            var cls = data.current_percent > 89 ? 'success' : (data.current_percent > 79 ? 'warning' : 'danger');
+            $('#battery-current_percent').html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+data.current_percent+'%;">'+data.current_percent+'%</div></div>');
+            } else {
+	        	$('#battery-current_percent').html('');  
+            }
+            
+            // Format temperature
+            if (data.temperature != "-9876543" && (data.temperature)) {
+            if (data.temperature !== 0){
+            if (data.temp_format === "C"){
+				var outtemp_c = (data.temperature / 100)+"°C";
+				var outtemp_f = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
+				$('#battery-temperature').html('<span title="'+outtemp_f+'">'+outtemp_c+'</span>')
+            } else if (data.temp_format === "F"){
+				var outtemp_c = (data.temperature / 100)+"°C";
+				var outtemp_f = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
+				$('#battery-temperature').html('<span title="'+outtemp_c+'">'+outtemp_f+'</span>')
+            } else {
+				$('#battery-temperature').text(data.temperature);  
+            }
+            } else {
+                $('#battery-temperature').text("");
+            }
+            } else {
+	        	$('#battery-temperature').html('');  
+            }
+        }
+	});
+});
+
+</script>
