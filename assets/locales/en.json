@@ -590,7 +590,7 @@
 	"munkireportinfo": {
 		"baseurl": "MunkiReport URL",
 		"clienttabtitle": "MunkiReport",
-		"passphrase": "Passprase",
+		"passphrase": "Passphrase",
 		"reportitems": "Installed Modules",
 		"reporttitle": "MunkiReport Report",
 		"version": "Version"
