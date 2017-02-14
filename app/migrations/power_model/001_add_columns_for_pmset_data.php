@@ -48,7 +48,7 @@ class Migration_add_columns_for_pmset_data extends Model
                 'ALTER TABLE %s ADD COLUMN '.$item.' FLOAT',
                 $this->enquote($this->tablename)
             ); 
-            }else{    
+            } else {    
             $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(255)',
                 $this->enquote($this->tablename)
