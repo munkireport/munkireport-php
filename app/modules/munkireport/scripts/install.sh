@@ -8,7 +8,7 @@ rm -f "${MUNKIPATH}preflight.d/cache/munkireport.plist"
 CTL="${BASEURL}index.php?/module/munkireport/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/munkireport.py" -o "${MUNKIPATH}postflight.d/munkireport.py"
+"${CURL[@]}" "${CTL}get_script/munkireport.py" -o "${MUNKIPATH}postflight.d/munkireport.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

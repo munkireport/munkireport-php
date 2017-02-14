@@ -9,27 +9,27 @@ class Caching_model extends Model
         $this->rs['collectiondate'] = ""; // Date when data was written
         $this->rs['expirationdate'] = ""; // Date when data will expire
         $this->rs['collectiondateepoch'] = 0; // Date when data will expire
-        $this->rs['requestsfrompeers'] = 0;
-        $this->rs['requestsfromclients'] = 0;
-        $this->rs['bytespurgedyoungerthan1day'] = 0;
-        $this->rs['bytespurgedyoungerthan7days'] = 0;
-        $this->rs['bytespurgedyoungerthan30days'] = 0;
-        $this->rs['bytespurgedtotal'] = 0;
-        $this->rs['bytesfrompeerstoclients'] = 0;
-        $this->rs['bytesfromorigintopeers'] = 0;
-        $this->rs['bytesfromorigintoclients'] = 0;
-        $this->rs['bytesfromcachetopeers'] = 0;
-        $this->rs['bytesfromcachetoclients'] = 0;
-        $this->rs['bytesdropped'] = 0;
-        $this->rs['repliesfrompeerstoclients'] = 0;
-        $this->rs['repliesfromorigintopeers'] = 0;
-        $this->rs['repliesfromorigintoclients'] = 0;
-        $this->rs['repliesfromcachetopeers'] = 0;
-        $this->rs['repliesfromcachetoclients'] = 0;
-        $this->rs['bytesimportedbyxpc'] = 0;
-        $this->rs['bytesimportedbyhttp'] = 0;
-        $this->rs['importsbyxpc'] = 0;
-        $this->rs['importsbyhttp'] = 0;
+        $this->rs['requestsfrompeers'] = 0; $this->rt['requestsfrompeers'] = 'BIGINT';
+        $this->rs['requestsfromclients'] = 0; $this->rt['requestsfromclients'] = 'BIGINT';
+        $this->rs['bytespurgedyoungerthan1day'] = 0; $this->rt['bytespurgedyoungerthan1day'] = 'BIGINT';
+        $this->rs['bytespurgedyoungerthan7days'] = 0; $this->rt['bytespurgedyoungerthan7days'] = 'BIGINT';
+        $this->rs['bytespurgedyoungerthan30days'] = 0; $this->rt['bytespurgedyoungerthan30days'] = 'BIGINT';
+        $this->rs['bytespurgedtotal'] = 0; $this->rt['bytespurgedtotal'] = 'BIGINT';
+        $this->rs['bytesfrompeerstoclients'] = 0; $this->rt['bytesfrompeerstoclients'] = 'BIGINT';
+        $this->rs['bytesfromorigintopeers'] = 0; $this->rt['bytesfromorigintopeers'] = 'BIGINT';
+        $this->rs['bytesfromorigintoclients'] = 0; $this->rt['bytesfromorigintoclients'] = 'BIGINT';
+        $this->rs['bytesfromcachetopeers'] = 0; $this->rt['bytesfromcachetopeers'] = 'BIGINT';
+        $this->rs['bytesfromcachetoclients'] = 0; $this->rt['bytesfromcachetoclients'] = 'BIGINT';
+        $this->rs['bytesdropped'] = 0; $this->rt['bytesdropped'] = 'BIGINT';
+        $this->rs['repliesfrompeerstoclients'] = 0; $this->rt['repliesfrompeerstoclients'] = 'BIGINT';
+        $this->rs['repliesfromorigintopeers'] = 0; $this->rt['repliesfromorigintopeers'] = 'BIGINT';
+        $this->rs['repliesfromorigintoclients'] = 0; $this->rt['repliesfromorigintoclients'] = 'BIGINT';
+        $this->rs['repliesfromcachetopeers'] = 0; $this->rt['repliesfromcachetopeers'] = 'BIGINT';
+        $this->rs['repliesfromcachetoclients'] = 0; $this->rt['repliesfromcachetoclients'] = 'BIGINT';
+        $this->rs['bytesimportedbyxpc'] = 0; $this->rt['bytesimportedbyxpc'] = 'BIGINT';
+        $this->rs['bytesimportedbyhttp'] = 0; $this->rt['bytesimportedbyhttp'] = 'BIGINT';
+        $this->rs['importsbyxpc'] = 0; $this->rt['importsbyxpc'] = 'BIGINT';
+        $this->rs['importsbyhttp'] = 0; $this->rt['importsbyhttp'] = 'BIGINT';
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;

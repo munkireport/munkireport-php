@@ -3,7 +3,7 @@
 	<div id="wifi-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
 	
 	<div id="wifi-view" class="row hide">
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<table class="table table-striped">
 				<tr>
 					<th data-i18n="wifi.ssid"></th>
@@ -74,14 +74,14 @@ $(document).on('appReady', function(e, lang) {
 			$('#wifi-ssid').text(data.ssid);
 			$('#wifi-bssid').text(data.bssid);
 			$('#wifi-state').text(data.state);
-      $('#wifi-apmode').text(data.op_mode);
-      $('#wifi-xauthtype').text(data.x802_11_auth);
-      $('#wifi-wifiauthtype').text(data.link_auth);
-      $('#wifi-lasttrx').text(data.lasttxrate);
-      $('#wifi-maxtrx').text(data.maxrate);
-      $('#wifi-rssilevel').text(data.agrctlrssi);
-      $('#wifi-channel').text(data.channel);
-      $('#wifi-noise').text(data.agrctlnoise);
+			$('#wifi-apmode').text(data.op_mode);
+			$('#wifi-xauthtype').text(data.x802_11_auth);
+			$('#wifi-wifiauthtype').text(data.link_auth);
+			$('#wifi-lasttrx').text(data.lasttxrate);
+			$('#wifi-maxtrx').text(data.maxrate);
+			$('#wifi-rssilevel').text(data.agrctlrssi);
+			$('#wifi-channel').text(data.channel);
+			$('#wifi-noise').text(data.agrctlnoise);
       
 		}
 

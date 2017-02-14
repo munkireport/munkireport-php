@@ -63,15 +63,15 @@
 		"wrong_user_or_pass": "Wrong username or password"
 	},
 	"backup":{
-		"backup_location": "Backup location",
-		"destination": "Backup destination",
-		"destinations": "Backup destinations",
-		"duration": "Backup duration",
-		"last_failure": "Last failed backup",
+		"backup_location": "Backup Location",
+		"destination": "Backup Destination",
+		"destinations": "Backup Destinations",
+		"duration": "Backup Duration",
+		"last_failure": "Last Failed Backup",
 		"last_failure_msg": "Message",
-		"last_success": "Last successful backup",
-		"location_name": "Location name",
-		"kind": "Backup kind"
+		"last_success": "Last Successful Backup",
+		"location_name": "Location Name",
+		"kind": "Backup Kind"
 	},
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
@@ -94,7 +94,7 @@
 		"trackpad": "Trackpad Status"
 	},
 	"boot_time": "Booted",
-	"bundle_id": "BundleID",
+	"bundle_id": "Bundle ID",
 	"business_unit": {
 		"disabled": "Business Units Disabled",
 		"machine_group": "Machine Group",
@@ -104,17 +104,39 @@
 	},
 	"buildversion": "Build Version",
 	"caching": {
+		"bytesdropped": "Bytes Dropped",
+		"bytesfromcachetoclients": "Bytes from Cache to Clients",
+		"bytesfromcachetopeers": "Bytes from Cache to Peers",
+		"bytesfromorigintoclients": "Bytes from Origin to Clients",
+		"bytesfromorigintopeers": "Bytes from Origin to Peers",
+		"bytesfrompeerstoclients": "Bytes from Peers to Clients",
+		"bytesimportedbyxpc": "Bytes Imported by XPC",
+		"bytesimportedbyhttp": "Bytes Imported by HTTP",
+		"bytespurgedtotal": "Total Bytes Purged",
+		"bytespurgedyoungerthan1day": "Bytes Purged Younger than 1 Day",
+		"bytespurgedyoungerthan7days": "Bytes Purged Younger than 7 Days",
+		"bytespurgedyoungerthan30days": "Bytes Purged Younger than 30 Days",
 		"bytes_served": "Caching – Bytes Served",
 		"client_requests": "Requests From Clients",
+		"client_tab_title": "Caching Server",
 		"date": "Date",
 		"from_origin": "From Origin",
 		"from_peers": "From Peers",
 		"from_cache": "From Cache",
+		"importsbyhttp": "Imports by HTTP",
+		"importsbyxpc": "Imports by XPC",
 		"peer_requests": "Requests From Peers",
 		"purged_1": "Purged Younger Than 1 Day",
 		"purged_7": "Purged Younger Than 7 Days",
 		"purged_30": "Purged Younger Than 30 Days",
+		"repliesfromcachetoclients": "Replies from Cache to Clients",
+		"repliesfromcachetopeers": "Replies from Cache to Peers",
+		"repliesfrompeerstoclients": "Replies from Peers to Clients",
+		"repliesfromorigintoclients": "Replies from Origin to Clients",
+		"repliesfromorigintopeers": "Replies from Origin to Peers",
 		"reporttitle": "Caching Server Report",
+		"requestsfromclients": "Requests from Clients",
+		"requestsfrompeers": "Requests from Peers",
 		"total_purged": "Total Purged"
 	},
 	"cert": {
@@ -164,7 +186,7 @@
 		}
 	},
 	"configuration": "Configuration",
-    "connected": "Connected",
+	"connected": "Connected",
 	"cpu": {
 		"arch": "CPU Architecture",
 		"core": "core",
@@ -215,40 +237,79 @@
 	"disabled": "Disabled",
 	"disconnected": "Disconnected",
 	"displays": {
+		"internal": "Built-In",
 		"displays": "Displays",
+		"display_serial": "Serial",
+		"external": "External",
+		"vendor": "Vendor",
+		"model": "Model",
+		"manufactured": "Manufacture Date",
+		"native": "Native Resolution",
+		"timestamp": "Was Last Connected",
+		"type": "Type",
 		"widget_info": "Total number of known external displays",
 		"widget_title": "External Displays Count"
 	},
-    "ds": {
+	"directoryservice": {
+		"clienttabtitle": "Directory Service",
+		"which_directory_service": "Directory Service Used",
+		"directory_service_comments": "Active Directory Comments",
+		"adforest": "Active Directory Forest",
+		"addomain": "Active Directory Domain",
+		"computeraccount": "Computer Account",
+		"user_experience": "Advanced Options - User Experience",
+		"createmobileaccount": "Create Mobile Account at Login",
+		"requireconfirmation": "Require Confirmation",
+		"forcehomeinstartup": "Force Home to Startup Disk",
+		"mounthomeassharepoint": "Mount Home as Sharepoint",
+		"usewindowsuncpathforhome": "Use Windows UNC Path for Home",
+		"networkprotocoltobeused": "Network Protocol to be Used",
+		"defaultusershell": "Default User Shell",
+		"mappings": "Advanced Options - Mappings",
+		"mappinguidtoattribute": "Mapping UID to Attribute",
+		"mappingusergidtoattribute": "Mapping User GID to Attribute",
+		"mappinggroupgidtoattr": "Mapping Group GID to Attribute",
+		"generatekerberosauth": "Generate Kerberos Authority",
+		"administrative": "Advanced Options - Administrative",
+		"preferreddomaincontroller": "Preferred Domain Controller",
+		"allowedadmingroups": "Allowed Admin Groups",
+		"authenticationfromanydomain": "Authentication From Any Domain",
+		"packetsigning": "Packet Signing",
+		"packetencryption": "Packet Encryption",
+		"passwordchangeinterval": "Password Change Interval",
+		"restrictdynamicdnsupdates": "Restrict Dynamic DNS Updates",
+		"namespacemode": "Namespace Mode"
+	},
+	"ds": {
 		"computername": "Computer Name",
-        "architecture": "Architecture",
-        "dstudio-auto-disable": "Auto Disable",
-        "dstudio-auto-reset-workflow": "Auto Reset Workflow",
-        "dstudio-auto-started-workflow": "Auto Started Workflow",
-        "dstudio-bootcamp-windows-computer-name": "Boot Camp Windows Name",
-        "dstudio-completed": "Completed",
-        "dstudio-disabled": "Disabled",
-        "dstudio-failed": "Failed",
-        "dstudio-group": "Group",
-        "dstudio-host-ard-field-1": "ARD Field 1",
-        "dstudio-host-ard-field-2": "ARD Field 2",
-        "dstudio-host-ard-field-3": "ARD Field 3",
-        "dstudio-host-ard-field-4": "ARD Field 4",
-        "dstudio-host-ard-ignore-empty-fields": "Ignore Empty ARD Fields",
-        "dstudio-host-delete-other-locations": "Delete Other Locations",
-        "dstudio-host-model-identifier": "Model Identifier",
-        "dstudio-hostname": "Hostname",
-        "dstudio-host-new-network-location": "New Network Location",
-        "dstudio-host-serial-number": "Serial Number",
-        "dstudio-host-type": "Host Type",
-        "dstudio-last-workflow": "Last Workflow Run",
-        "dstudio-last-workflow-duration": "Last Workflow Duration",
-        "dstudio-last-workflow-execution-date": "Last Workflow Execution Date",
-        "dstudio-last-workflow-status": "Workflow Status",
-        "dstudio-mac-addr": "MAC Address",
-        "recheck": "Pull DeployStudio Data",
-        "report": "DeployStudio Report"
-    },
+		"architecture": "Architecture",
+		"dstudio-auto-disable": "Auto Disable",
+		"dstudio-auto-reset-workflow": "Auto Reset Workflow",
+		"dstudio-auto-started-workflow": "Auto Started Workflow",
+		"dstudio-bootcamp-windows-computer-name": "Boot Camp Windows Name",
+		"dstudio-completed": "Completed",
+		"dstudio-disabled": "Disabled",
+		"dstudio-failed": "Failed",
+		"dstudio-group": "Group",
+		"dstudio-host-ard-field-1": "ARD Field 1",
+		"dstudio-host-ard-field-2": "ARD Field 2",
+		"dstudio-host-ard-field-3": "ARD Field 3",
+		"dstudio-host-ard-field-4": "ARD Field 4",
+		"dstudio-host-ard-ignore-empty-fields": "Ignore Empty ARD Fields",
+		"dstudio-host-delete-other-locations": "Delete Other Locations",
+		"dstudio-host-model-identifier": "Model Identifier",
+		"dstudio-hostname": "Hostname",
+		"dstudio-host-new-network-location": "New Network Location",
+		"dstudio-host-serial-number": "Serial Number",
+		"dstudio-host-type": "Host Type",
+		"dstudio-last-workflow": "Last Workflow Run",
+		"dstudio-last-workflow-duration": "Last Workflow Duration",
+		"dstudio-last-workflow-execution-date": "Last Workflow Execution Date",
+		"dstudio-last-workflow-status": "Workflow Status",
+		"dstudio-mac-addr": "MAC Address",
+		"recheck": "Pull DeployStudio Data",
+		"report": "DeployStudio Report"
+	},
 	"displayname": "Display Name",
 	"edit": "Edit",
 	"email": {
@@ -278,9 +339,20 @@
 	"failed": "Failed",
 	"failing": "Failing!",
 	"filevault": {
+		"status_last_checkin": "Status as of ",
+		"enableddate": "Enable Date",
+		"encrypted": "Encrypted",
+		"filevault_users": "Enabled User(s)",
+		"recoverykey": "Personal Recovery Key",
+		"lvguuid": "Logical Volume Group UUID",
+		"lvuuid": "Logical Volume UUID",
+		"pvuuid": "Physical Volume UUID",
+		"hddserial": "Hard Drive Serial Number",
+		"unencrypted": "Unencrypted",
 		"users": "FileVault Enabled users",
+		"users": "FileVault Enabled Users",
 		"widget": {
-			"title": "FileVault 2 status"
+			"title": "FileVault 2 Status"
 		}
 	},
 	"filter": {
@@ -378,6 +450,22 @@
 		},
 		"checkin": "Check-in",
 		"computername": "Name",
+		"directoryservice": {
+            "boundstatus": "Bound Status",
+            "ad_domain": "AD Domain",
+            "computeraccount": "Computer Account",
+            "ad_comments": "AD Comments",
+            "mobileaccount": "Mobile Account",
+            "networkprotocol": "Network Protocol",
+			"admin_groups": "Allowed Admin Groups"
+		},
+		"displays": {
+            "detected": "Detected",
+            "machineserial": "Machine Serial",
+            "model": "Model",
+            "nativeresolution": "Native Resolution",
+			"vendor": "Vendor"
+		},
 		"hardware": {
 			"description": "Description"
 		},
@@ -393,6 +481,21 @@
 			"pending_removal": "Pending removal",
 			"pending_removal_plural": "Pending removals"
 		},
+		"power": {
+            "capacity": "Capacity (mAh)",
+            "charged": "Charged %",
+            "condition": "Condition",
+            "current": "Current (mAh)",
+            "cycles": "Cycles",
+            "designed": "Designed (mAh)",
+            "health": "Health %",
+            "failedbattery": "Failed Battery",
+            "manufactured": "Manufactured"
+        },
+		"profile": {
+            "payload": "Payloads",
+            "profilename": "Profile Name"
+		},
 		"timemachine": {
 			"duration": "Backup Duration",
 			"last_failure": "Last Failed Backup",
@@ -401,6 +504,10 @@
 			"title": "Time Machine Report"
 		},
 		"username": "Username",
+        "warranty": {
+            "purchased": "Purchased",
+            "expires": "Warranty Expires"
+        },
         "wifi": {
             "apmode": "AP Mode",
             "authtype": "802.11X Auth Type",
@@ -424,6 +531,7 @@
 		"latitudeaccuracy": "Latitude Accuracy",
 		"longitude": "Longitude",
 		"longitudeaccuracy": "Longitude Accuracy",
+		"never": "Never",
 		"report": "Location Report",
 		"stalelocation": "Stale Location"
 	},
@@ -446,6 +554,7 @@
 		"title": "Managed Installs"
 	},
 	"manifest": {
+        "manifest": "Manifest",
 		"name": "Manifest Name"
 	},
 	"memory": {
@@ -469,6 +578,23 @@
 		"warning_plural": "__count__ Munki warnings",
 		"additional_info": "Additional Munki Info"
 	},
+	"munkiinfo": {
+		"softwarerepourl": "Software Repo URL",
+		"localonlymanifest": "Run Type",
+		"duration": "Duration",
+		"applecatalog": "Apple Catalog URL",
+		"manifest": "Manifest",
+		"localonlymanifest": "Local Only Manifest",
+		"start": "Start"
+	},
+	"munkireportinfo": {
+		"baseurl": "MunkiReport URL",
+		"clienttabtitle": "MunkiReport",
+		"passphrase": "Passprase",
+		"reportitems": "Installed Modules",
+		"reporttitle": "MunkiReport Report",
+		"version": "Version"
+	},
 	"name": "Name",
 	"nav": {
 		"admin": {
@@ -487,6 +613,7 @@
 			"ard": "Apple Remote Desktop",
 			"bluetooth": "Bluetooth",
 			"backup2go": "Archiware Backup2Go",
+			"caching": "Caching",
 			"clients": "Clients",
 			"certificate": "Certificates",
 			"deploystudio": "DeployStudio",
@@ -499,13 +626,16 @@
 			"inventory": "Inventory",
 			"location": "Location",
 			"munki": "Munki",
+			"mrinfo": "MunkiReport",
 			"network": "Network",
 			"power": "Power",
 			"printers": "Printers",
 			"profile": "Profiles",
 			"sccm_status": "SCCM Status",
 			"security": "Security",
+			"softwareupdate": "Software Update",
 			"timemachine": "Time Machine",
+			"usb": "USB Devices",
 			"warranty": "Warranty",
 			"wifi": "WiFi"
 		},
@@ -519,6 +649,7 @@
 			"appVersions": "App Versions Report",
 			"backup": "Backup Report",
 			"backup2go" : "Backup2Go Report",
+			"caching": "Caching",
 			"clients": "Client Report",
 			"configuration": "Configuration Report",
 			"directoryservice": "Directory Services Report",
@@ -529,11 +660,13 @@
 			"location": "Location Report",
 			"munki": "Munki Report",
 			"network": "Network Report",
+			"peripheral": "Peripheral Report",
 			"power": "Power Report",
 			"printer": "Printer Report",
 			"profile": "Profile Report",
 			"sccm": "SCCM Agent Status Report",
 			"security": "Security Report",
+			"server": "Server Report",
 			"warranty": "Warranty Report",
 			"wifi": "WiFi Report"
 		},
@@ -552,7 +685,8 @@
 		"traffic": "Network Traffic",
 		"inbound_traffic": "Inbound Traffic",
 		"outbound_traffic": "Outbound Traffic",
-		"remote_ip": "Remote IP Address"
+		"remote_ip": "Remote IP Address",
+		"service": "Service"
 	},
 	"new_client": "New Client",
 	"new_client_plural": "New Clients",
@@ -597,6 +731,17 @@
 	},
 	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
 	"pkg_failed_to_install_plural": "__count__ packages failed to install",
+	"power": {
+		"manufacture_date": "Manufactured",
+		"design_capacity": "Design Capacity (mAh)",
+		"max_capacity": "Full Charge Capacity (mAh)",
+		"max_percent": "Health %",
+		"current_capacity": "Charge Remaining (mAh)",
+		"current_percent": "Charged %",
+		"cycle_count": "Cycle Count",
+		"temperature": "Temperature",
+		"condition": "Condition"
+	},
 	"ratio": "Ratio",
 	"reg_date": "Registration Date",
 	"remote_control": "Remote Control",
@@ -606,7 +751,11 @@
 	"printer": {
 		"default_set": "Default Set",
 		"driver_version": "Driver Version",
+		"error": "Error",
+		"idle": "Idle",
+		"in_use": "In Use",
 		"name": "Printer Name",
+		"offline": "Offline",
 		"ppd": "PPD",
 		"printer_sharing": "Printer Sharing",
 		"printer_status": "Printer Status",
@@ -614,15 +763,15 @@
 		"url": "URL"
 	},
 	"sccm_status": {
-	  "title": "SCCM Agent Status",
-	  "titleheader": "SCCM Agent Information",
-	  "agent_status": "SCCM Agent Status",
-	  "mgmt_point": "Management Point",
-	  "enrollment_name": "Enrollment User Name",
-	  "enrollment_server": "Enrollment Server",
-	  "last_checkin": "Last SCCM Check In",
-	  "cert_exp": "SCCM Client Certificate Expiration",
-	  "enrollment_status": "Enrollment Status"
+		"title": "SCCM Agent Status",
+		"titleheader": "SCCM Agent Information",
+		"agent_status": "SCCM Agent Status",
+		"mgmt_point": "Management Point",
+		"enrollment_name": "Enrollment User Name",
+		"enrollment_server": "Enrollment Server",
+		"last_checkin": "Last SCCM Check In",
+		"cert_exp": "SCCM Client Certificate Expiration",
+		"enrollment_status": "Enrollment Status"
 	},
 	"security": {
 		"report": "Security Report",
@@ -663,6 +812,28 @@
 		"software": "Software",
 		"smc_version": "SMC Version",
 		"boot_rom_version": "Boot ROM Version"
+	},
+	"softwareupdate": {
+		"automaticcheckenabled": "Auto Check Enabled",
+		"automaticdownload": "Auto Download",
+		"catalogurl": "Catalog URL",
+		"clienttabtitle": "Software Updates",
+		"configdatainstall": "Auto Install XProtect",
+		"criticalupdateinstall": "Install Critical",
+		"inactiveupdates": "Ignored Updates",
+		"lastattemptsystemversion": "Version Attempted",
+		"lastbackgroundccdsuccessfuldate": "Background CCD Success Date",
+		"lastbackgroundsuccessfuldate": "Background Success Date",
+		"lastfullsuccessfuldate": "Full Success Date",
+		"lastrecommendedupdatesavailable": "Recommended Available Updates",
+		"lastresultcode": "Result Code",
+		"lastsessionsuccessful": "Session Successful",
+		"lastsuccessfuldate": "Successful Date",
+		"lastupdatesavailable": "Updates Available",
+		"mrxprotect": "XProtect Install",
+		"reporttitle": "Software Update Report",
+		"skiplocalcdn": "Skip Local CDN",
+		"recommendedupdates": "Recommended Updates"
 	},
 	"status": "Status",
 	"storage": {
@@ -713,6 +884,24 @@
 	"unencrypted": "Unencrypted",
 	"unknown": "Unknown",
 	"unsupported": "Not Supported",
+	"usb": {
+		"bus_power": "Available mAh",
+		"bus_power_used": "Used mAh",
+		"camera": "Camera",
+		"clienttab": "USB Devices",
+		"device_speed": "USB Protocol",
+		"extra_current_used": "Extra mAh",
+		"internal": "Internal",
+		"manufacturer": "Manufacturer",
+		"media": "Removable Media",
+		"name": "Device Name",
+		"nousb": "No USB Devices Detected",
+		"reporttitle": "USB Devices Report",
+		"title": "Keyboard and Mouse",
+		"type": "Device Type",
+		"usbtype": "USB Device Types",
+		"vendor_id": "Vendor ID"
+	},  
 	"uptime": "Uptime",
 	"user": {
 		"user": "User",
@@ -746,7 +935,7 @@
 			"versions": "Known versions of __app__"
 		},
 		"appusage": {
-			"title": "App Usage",
+			"title": "Application Usage",
 			"tooltip": "Most frequently used apps"
 		},
 		"bound_to_ds": {
@@ -759,7 +948,7 @@
 			"graph_title": "Historical Caching Bytes Served",
 			"title": "Caching Bytes Served",
 			"tooltip": "Data that has been served from OS X Server's Caching Server"
-        },
+		},
 		"certificate": {
 			"expired": "Expired",
 			"ok": "Valid for more than three months",
@@ -786,11 +975,11 @@
 		},
 		"munkiinfo": {
 			"munkiprotocol": {
-				"localrepo": "local repo",
+				"localrepo": "Local Repo",
 				"http": "http",
 				"https": "https",
 				"title": "Munki Protocol",
-				"tooltip": "Munki Protocol among all clients"
+				"tooltip": "Munki protocol among all clients"
 			}
 		},
 		"munki_versions": {
@@ -801,7 +990,7 @@
 			"title": "Network Locations"
 		},
 		"network_vlan": {
-			"title": "Network VLANss"
+			"title": "Network VLANs"
 		},
 		"new_clients": {
 			"no_new_clients": "No new clients",
@@ -823,6 +1012,7 @@
 			"tooltip": "Pending installs for this week"
 		},
 		"power": {
+			"check": "Check Battery",
 			"health": {
 				"title": "Battery Health",
 				"tooltip": "Battery health status listing"
@@ -831,7 +1021,7 @@
 			"normal": "Normal",
 			"now": "Replace Now",
 			"service": "Service Now",
-			"soon": "Service Soon",
+			"soon": "Replace Soon",
 			"nobattery": "No Battery",
 			"title": "Battery Condition",
 			"tooltip": "Battery condition listing"
@@ -858,29 +1048,29 @@
 		"warranty": {
 			"title": "Warranty Status"
 		},
-        "warrantysupport":{
+		"warrantysupport":{
 			"title": "Counts Supported, Vintage, Obsolete, and Unknown support status",
-            "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
-            "warrentysupportstatus": "Warranty Support Status"
-        }
-	},
-    "wifi": {
-        "apmode": "Access Point Mode",
-        "bssid": "BSSID",
-        "channel": "Channel",
-        "extrssi": "External RSSI",
-        "lasttrx": "Last Transmit Rate (Mbps)",
-        "maxtrx": "Maximum Transmit Rate (Mbps)",
-        "networks": "WiFi Networks",
-        "noise": "Noise Level",
-        "nonetworks": "No Networks",
-        "rssilevel": "RSSI Level",
-        "sharing": "Sharing",
-        "state": "WiFi State",
-        "ssid": "SSID",
-        "xauthtype": "802.11X Authentication Type",
-        "wifiauthtype": "WiFi Authentication Type",
-        "wifiinfo": "WiFi Information"
-    },
+			"warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
+			"warrentysupportstatus": "Warranty Support Status"
+			}
+		},
+		"wifi": {
+			"apmode": "Access Point Mode",
+			"bssid": "BSSID",
+			"channel": "Channel",
+			"extrssi": "External RSSI",
+			"lasttrx": "Last Transmit Rate (Mbps)",
+			"maxtrx": "Maximum Transmit Rate (Mbps)",
+			"networks": "WiFi Networks",
+			"noise": "Noise Level",
+			"nonetworks": "No Networks",
+			"rssilevel": "RSSI Level",
+			"sharing": "Sharing",
+			"state": "WiFi State",
+			"ssid": "SSID",
+			"xauthtype": "802.11X Authentication Type",
+			"wifiauthtype": "WiFi Authentication Type",
+			"wifiinfo": "WiFi Information"
+		},
 	"yes": "Yes"
 }

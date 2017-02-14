@@ -17,15 +17,15 @@
 
 		<thead>
 		  <tr>
-			<th data-colname='machine.computer_name'>On computer</th>
-			<th data-colname='reportdata.serial_number'>Computer serial</th>
-			<th data-colname='displays.type'>Type</th>
-			<th data-colname='displays.vendor'>Vendor</th>
-			<th data-colname='displays.model'>Model</th>
-			<th data-colname='displays.display_serial'>Serial number</th>
-			<th data-colname='displays.manufactured'>Manufactured</th>
-			<th data-colname='displays.native'>Native resolution</th>
-			<th data-sort="desc" data-colname='displays.timestamp'>Detected</th>
+			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+			<th data-i18n="listing.displays.machineserial" data-colname='reportdata.serial_number'></th>
+			<th data-i18n="type" data-colname='displays.type'></th>
+			<th data-i18n="listing.displays.vendor" data-colname='displays.vendor'></th>
+			<th data-i18n="listing.displays.model" data-colname='displays.model'></th>
+			<th data-i18n="serial" data-colname='displays.display_serial'></th>
+			<th data-i18n="listing.power.manufactured" data-colname='displays.manufactured'></th>
+			<th data-i18n="listing.displays.nativeresolution" data-colname='displays.native'</th>
+			<th data-i18n="listing.displays.detected" data-sort="desc" data-colname='displays.timestamp'></th>
 		  </tr>
 		</thead>
 
@@ -132,106 +132,7 @@
                 // https://github.com/GNOME/gnome-desktop/blob/master/libgnome-desktop/gnome-pnp-ids.c
                 // https://www.opensource.apple.com/source/xnu/xnu-124.7/iokit/Families/IOGraphics/AppleDDCDisplay.cpp
                 var vendor=$('td:eq(3)', nRow).html();
-                switch (vendor)
-                {
-                case "610":
-                  vendor="Apple"
-                  break;
-                case "10ac":
-                  vendor="Dell"
-                  break;
-                case "5c23":
-                  vendor="Wacom"
-                  break;
-                case "4d10":
-                  vendor="Sharp"
-                  break;
-                case "1e6d":
-                  vendor="LG"
-                  break;
-                case "38a3":
-                  vendor="NEC"
-                  break;
-                case "4c49":
-                  vendor="SMART Technologies"
-                  break;
-                case "9d1":
-                  vendor="BenQ"
-                  break;
-                case "4dd9":
-                  vendor="Sony"
-                  break;
-                case "472":
-                  vendor="Acer"
-                  break;
-                case "22f0":
-                	vendor="HP"
-                	break;
-                case "34ac":
-                	vendor="Mitsubishi"
-                	break;
-                case "5a63":
-                	vendor="ViewSonic"
-                	break;
-                case "4c2d":
-                	vendor="Samsung"
-                	break;
-                case "593a":
-                	vendor="Vizio"
-                	break;
-                case "d82":
-                	vendor="CompuLab"
-                	break;
-                case "3023":
-                	vendor="LaCie"
-                	break;
-                case "3698":
-                	vendor="Matrox"
-                	break;
-                case "4ca3":
-                	vendor="Epson"
-                	break;
-                case "170e":
-                	vendor="Extron"
-                	break;
-                case "e11":
-                	vendor="Compaq"
-                	break;
-                case "24d3":
-                	vendor="ASK Proxima"
-                	break;
-                case "410c":
-                	vendor="Philips"
-                	break;
-                case "15c3":
-                	vendor="Eizo"
-                	break;
-                case "26cd":
-                	vendor="iiyama"
-                	break;
-                case "7fff":
-                    vendor="Haier"
-                    break;
-                case "3e8d":
-                	vendor="Optoma"
-                	break;
-                case "5262":
-                	vendor="Toshiba"
-                	break;
-                case "34a9":
-                    vendor="Panasonic"
-                    break;
-                case "5e3":
-                	vendor="Flanders Scientific"
-                	break;
-                case "30ae":
-                	vendor="Lenovo"
-                	break;
-                case "469":
-                	vendor="Asus"
-                	break;
-                }
-                $('td:eq(3)', nRow).html(vendor)
+                $('td:eq(3)', nRow).html(mr.display_vendors[vendor] || vendor);
 
                 // Format manufactured from unix to human friendly and the title to relative
                 date = $('td:eq(6)', nRow).html();

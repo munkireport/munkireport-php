@@ -33,6 +33,7 @@ class wifi_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $wifi = new wifi_model($serial_number);

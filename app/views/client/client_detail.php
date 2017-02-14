@@ -18,7 +18,7 @@ $tab_list = array(
 	'location-tab' => array('view' => 'client/location_tab', 'i18n' => 'client.tab.location'),
 	'network-tab' => array('view' => 'client/network_tab', 'i18n' => 'client.tab.network', 'badge' => 'network-cnt'),
 	'wifi-tab' => array('view' => 'client/wifi_tab', 'i18n' => 'client.tab.wifi'),
-	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds', 'badge' => 'directory-cnt'),
+	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds'),
 	'displays-tab' => array('view' => 'client/displays_tab', 'i18n' => 'client.tab.displays', 'badge' => 'displays-cnt'),
 	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
 	'gsx-tab' => array('view' => 'client/gsx_tab', 'i18n' => 'client.tab.gsx'),
@@ -27,7 +27,11 @@ $tab_list = array(
 	'printer-tab' => array('view' => 'client/printer_tab', 'i18n' => 'client.tab.printers', 'badge' => 'printer-cnt'),
 	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles'),
 	'sccm_status-tab' => array('view' => 'client/sccm_status_tab', 'i18n' => 'sccm_status.title'),
-		);
+	'caching-tab' => array('view' => 'client/caching_tab', 'i18n' => 'caching.client_tab_title'),
+	'munkireportinfo-tab' => array('view' => 'client/munkireportinfo_tab', 'i18n' => 'munkireportinfo.clienttabtitle'),
+	'usb-tab' => array('view' => 'client/usb_tab', 'i18n' => 'nav.listings.usb', 'badge' => 'usb-cnt'),
+	'softwareupdate-tab' => array('view' => 'client/softwareupdate_tab', 'i18n' => 'softwareupdate.clienttabtitle', 'badge' => 'softwareupdate-cnt'),
+	);
 
 // Add custom tabs
 $tab_list = array_merge($tab_list, conf('client_tabs', array()));
