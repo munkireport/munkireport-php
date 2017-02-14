@@ -203,15 +203,16 @@ class Usb_model extends Model {
             if ($device['media'] == 1 ) {
 				$device['type'] = 'Mass Storage';
 			}
-                        
-            // Adjust Apple vendor ID
-            if ($device['vendor_id'] == 'apple_vendor_id' ) {
-				$device['vendor_id'] = '0x05ac (Apple, Inc.)';
-			}
-            
+                                    
             // Override Internal T/F based on name
             if (stripos($device['name'], 'Internal') !== false) {
 				$device['internal'] = 1;
+			}
+            
+            // Adjust Apple vendor ID
+            if (array_key_exists('vendor_id',$device)) {
+            if ($device['vendor_id'] == 'apple_vendor_id') {
+				$device['vendor_id'] = '0x05ac (Apple, Inc.)';
 			}
             
 			// Set manufacturer from vendor ID if it's blank
@@ -219,6 +220,7 @@ class Usb_model extends Model {
 				preg_match('/\((.*?)\)/s', $device['vendor_id'], $manufactureroutput);
 				$device['manufacturer'] = $manufactureroutput[1];
 			}
+            }
             
 			foreach ($typeList as $key => $value) {
 				$this->rs[$key] = $value;

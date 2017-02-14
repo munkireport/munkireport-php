@@ -42,9 +42,15 @@ $(document).on('appReady', function(e, lang) {
 			            
 			// Add strings
 			$('#munkireportinfo-baseurl').text(data.baseurl);
-			$('#munkireportinfo-version').text(mr.integerToVersion(data.version));
 			$('#munkireportinfo-passphrase').text(data.passphrase);
-			$('#munkireportinfo-reportitems').text(data.reportitems);      
+			$('#munkireportinfo-reportitems').text(data.reportitems); 
+            
+            // Format version
+            if (data.version != "-9876543" && (data.version)) {
+			$('#munkireportinfo-version').text(mr.integerToVersion(data.version));
+            } else {
+	        	$('#munkireportinfo-version').html('');  
+            }
 		}
 
 	});

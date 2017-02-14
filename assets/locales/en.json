@@ -580,7 +580,6 @@
 	},
 	"munkiinfo": {
 		"softwarerepourl": "Software Repo URL",
-		"localonlymanifest": "Run Type",
 		"duration": "Duration",
 		"applecatalog": "Apple Catalog URL",
 		"manifest": "Manifest",
@@ -590,7 +589,7 @@
 	"munkireportinfo": {
 		"baseurl": "MunkiReport URL",
 		"clienttabtitle": "MunkiReport",
-		"passphrase": "Passprase",
+		"passphrase": "Passphrase",
 		"reportitems": "Installed Modules",
 		"reporttitle": "MunkiReport Report",
 		"version": "Version"
@@ -901,7 +900,7 @@
 		"type": "Device Type",
 		"usbtype": "USB Device Types",
 		"vendor_id": "Vendor ID"
-	},  
+	},
 	"uptime": "Uptime",
 	"user": {
 		"user": "User",
