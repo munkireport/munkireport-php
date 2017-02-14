@@ -13,7 +13,7 @@ new Power_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Power report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="nav.reports.power"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -21,13 +21,13 @@ new Power_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-colname='power.design_capacity'>Designed (mAh)</th>
-		        <th data-colname='power.max_capacity'>Capacity (mAh)</th>
-		        <th data-colname='power.cycle_count'>Cycles</th>
-		        <th data-colname='power.max_percent'>Health %</th>
-		        <th data-colname='power.condition'>Condition</th>
-		        <th data-colname='power.current_capacity'>Current (mAh)</th>
-		        <th data-colname='power.current_percent'>Charged %</th>
+		        <th data-i18n="listing.power.designed" data-colname='power.design_capacity'></th>
+		        <th data-i18n="listing.power.capacity" data-colname='power.max_capacity'></th>
+		        <th data-i18n="listing.power.cycles" data-colname='power.cycle_count'></th>
+		        <th data-i18n="listing.power.health" data-colname='power.max_percent'></th>
+		        <th data-i18n="listing.power.condition" data-colname='power.condition'></th>
+		        <th data-i18n="listing.power.current" data-colname='power.current_capacity'></th>
+		        <th data-i18n="listing.power.charged" data-colname='power.current_percent'></th>
 				<?php
 					$temperature_unit=conf('temperature_unit');
 					if ( $temperature_unit == "F" ) {
@@ -36,9 +36,8 @@ new Power_model;
 						echo "<th data-colname='power.temperature'>Temp°C</th>";
 					}
 				?>
-		        <th data-colname='power.manufacture_date'>Manufactured</th> 
-		        <th data-sort="desc" data-colname='power.timestamp'>Check-In</th> 
-		        <th data-hide="1" data-colname='machine.machine_model'>Model ( col 13 hidden )</th>
+		        <th data-i18n="listing.power.manufactured" data-colname='power.manufacture_date'></th> 
+		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th> 
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -148,6 +147,7 @@ new Power_model;
 	        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
 	        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
 	        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
+	        	status = status == '' ? '<span class="label label-danger">Replace Now</span>' : 
 	        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
 	        	// Format current charge
@@ -166,7 +166,7 @@ new Power_model;
 					if ( temperature == 0 || temperature == "" ){
 						temperature = "";
 					} else {
-						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1);
+						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1)+"°F";
 					}
 					$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 				} else {
@@ -175,12 +175,15 @@ new Power_model;
 					if ( temperature == 0 || temperature == "" ){
 						temperature = "";
 					} else {
-				       	temperature = (temperature / 100).toFixed(1);
+				       	temperature = (temperature / 100).toFixed(1)+"°C";
 					}
 		        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 				}
 	        	// Format Manufacture date
 	        	var date=$('td:eq(11)', nRow).html();
+                if(date === '1980-00-00'){
+	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('widget.power.now'));
+                } else {
 	        	if(date){
 	        		a = moment(date)
 	        		b = a.diff(moment(), 'years', true)
@@ -192,12 +195,13 @@ new Power_model;
 	        		{
 	        			
 	        		}
-	        		$('td:eq(11)', nRow).addClass('text-right').html(moment(date).fromNow());
+	        		$('td:eq(11)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow());
 	        	}
+                }
 				// Format Check-In timestamp
 				var checkin = parseInt($('td:eq(12)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(12)', nRow).html(moment(date).fromNow());
+				$('td:eq(12)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
 		    }
 	    } );
 	    // Use hash as searchquery

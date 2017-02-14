@@ -12,17 +12,17 @@ new Reportdata_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Warranty report <span id="total-count" class='label label-primary'>…</span></span></h3>
+		  <h3><span data-i18n="nav.reports.warranty"></span> <span id="total-count" class='label label-primary'>…</span></span></h3>
 		  
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
-		        <th data-colname='warranty.status'>Warranty status</th>
-		        <th data-colname='warranty.purchase_date'>Purchased</th>
-		        <th data-colname='warranty.end_date'>Warranty Expires</th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="gsx.warrantystatus" data-colname='warranty.status'></th>
+		        <th data-i18n="listing.warranty.purchased" data-colname='warranty.purchase_date'></th>
+		        <th data-i18n="listing.warranty.expires" data-colname='warranty.end_date'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

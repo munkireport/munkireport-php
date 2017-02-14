@@ -2,6 +2,7 @@
 
 <?php //Initialize models needed for the table
 new Machine_model;
+new Reportdata_model;
 new Location_model;
 ?>
 
@@ -26,7 +27,7 @@ new Location_model;
         </thead>
         <tbody>
           <tr>
-          <td data-i18n="listing.loading" colspan="7" class="dataTables_empty"></td>
+          <td data-i18n="listing.loading" colspan="6" class="dataTables_empty"></td>
         </tr>
         </tbody>
       </table>
@@ -36,57 +37,82 @@ new Location_model;
 
 <script type="text/javascript">
 
-  $(document).on('appUpdate', function(e){
+	$(document).on('appUpdate', function(e){
 
-    var oTable = $('.table').DataTable();
-    oTable.ajax.reload();
-    return;
+		var oTable = $('.table').DataTable();
+		oTable.ajax.reload();
+		return;
 
-  });
+	});
 
-  $(document).on('appReady', function(e, lang) {
-    // Get column names from data attribute
-    var columnDefs = [],
-            col = 0; // Column counter
-    $('.table th').map(function(){
-              columnDefs.push({name: $(this).data('colname'), targets: col});
-              col++;
-    });
-      oTable = $('.table').dataTable( {
-          columnDefs: columnDefs,
-          ajax: {
+	$(document).on('appReady', function(e, lang) {
+
+        // Get modifiers from data attribute
+        var mySort = [], // Initial sort
+            hideThese = [], // Hidden columns
+            col = 0, // Column counter
+            runtypes = [], // Array for runtype column 
+            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
+
+        $('.table th').map(function(){
+
+            columnDefs.push({name: $(this).data('colname'), targets: col});
+
+            if($(this).data('sort')){
+              mySort.push([col, $(this).data('sort')])
+            }
+
+            if($(this).data('hide')){
+              hideThese.push(col);
+            }
+
+            col++
+        });
+
+	    oTable = $('.table').dataTable( {
+            ajax: {
                 url: appUrl + '/datatables/data',
-                type: "POST"
+                type: "POST",
+                data: function(d){
+                     d.mrColNotEmpty = "lastrun";
+                    
+                    // Check for column in search
+                    if(d.search.value){
+                        $.each(d.columns, function(index, item){
+                            if(item.name == 'location.' + d.search.value){
+                                d.columns[index].search.value = '> 0';
+                            }
+                        });
+
+                    }
+        		    // IDK what this does
+                    if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
+                        var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+                        d.search.value = search;
+                    }                    
+                }
             },
             dom: mr.dt.buttonDom,
             buttons: mr.dt.buttons,
-          createdRow: function( nRow, aData, iDataIndex ) {
-            // Update name in first column to link
-            var name=$('td:eq(0)', nRow).html();
-            if(name == ''){name = "No Name"};
-            var sn=$('td:eq(1)', nRow).html();
-            var link = mr.getClientDetailLink(name, sn, '#tab_location-tab');
-            $('td:eq(0)', nRow).html(link);
-            
-            // Format Last Run date
-            var date=$('td:eq(3)', nRow).html();
-            if(date){
-              a = moment(date)
-              b = a.diff(moment(), 'years', true)
-              if(a.diff(moment(), 'years', true) < -4)
-              {
-                $('td:eq(3)', nRow).addClass('danger')
-              }
-              if(Math.round(b) == 4)
-              {
+            order: mySort,
+            columnDefs: columnDefs,
+		    createdRow: function( nRow, aData, iDataIndex ) {
+	        	// Update name in first column to link
+	        	var name=$('td:eq(0)', nRow).html();
+	        	if(name == ''){name = "No Name"};
+	        	var sn=$('td:eq(1)', nRow).html();
+                var link = mr.getClientDetailLink(name, sn, '#tab_location-tab');
+	        	$('td:eq(0)', nRow).html(link);
                 
-              }
-              $('td:eq(3)', nRow).addClass('text-right').html(moment(date).fromNow());
-            }
+	        	//Format Last Run Date timestamp
+	        	var checkin = $('td:eq(3)', nRow).html();
+	        	if(checkin !== "" ){
+	        	$('td:eq(3)', nRow).html('<span title="' + checkin.replace(' +0000', 'GMT') + '">' + moment(checkin.replace(' +0000', 'Z')).fromNow());
+	        	}
+		    }
+	    });
 
-          }
-      });
-  });
+	});
 </script>
 
 <?php $this->view('partials/foot'); ?>

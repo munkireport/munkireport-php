@@ -12,10 +12,10 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
 <table class="install-history-<?php echo $apple; ?> table table-striped">
 	<thead>
 		<tr>
-			<th data-i18n="name">Name</th>
-			<th data-i18n="version">Version</th>
-			<th data-i18n="client.install_date">Install Date</th>
-			<th data-i18n="client.process_name">Process Name</th>
+			<th data-i18n="name"></th>
+			<th data-i18n="version"></th>
+			<th data-i18n="client.install_date"></th>
+			<th data-i18n="client.process_name"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -32,7 +32,7 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
 	</tbody>
 </table>
 <?php else: ?>
-<p><i data-i18n="client.no_install_history">No install history</i></p>
+<p><i data-i18n="client.no_install_history"></i></p>
 <?php endif ?>
 
 <script>

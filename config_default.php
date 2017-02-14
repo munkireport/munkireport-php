@@ -301,6 +301,17 @@
 	
 	/*
 	|===============================================
+	| USB Devices
+	|===============================================
+	|
+	| By default the USB module will list all USB devices. Setting usb_internal 
+	| to FALSE will skip all interal devices.
+	|
+	*/
+	$conf['usb_internal'] = TRUE;
+
+	/*
+	|===============================================
 	| Google Maps API Key
 	|===============================================
 	|
@@ -449,6 +460,23 @@
 	|
 	*/
 	//$conf['proxy']['server'] = 'proxy.yoursite.org';
+	
+	/*
+	|===============================================
+	| SSL settings
+	|===============================================
+	|
+	| If you need to augment the ssl options to get the machine_model_lookup to
+	| work, you can add them here. See also https://secure.php.net/manual/en/context.ssl.php
+	|
+	| For example php on macOS server 12 cannot lookup the certificate for support.apple.com
+	| to fix that, you can override the cafile directive:
+	|
+	|    $conf['ssl_options'] = array(
+	|        'cafile' => '/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/pip/_vendor/certifi/cacert.pem',
+	|    );
+	*/
+	$conf['ssl_options']  = array();
 
 	/*
 	|===============================================
@@ -544,6 +572,8 @@
 	|	bound_to_ds
 	|	client (two items)
 	|	external_displays_count
+	|	firmwarepw
+	|	gatekeeper
 	|	hardware_model
 	|	smart_status
 	|	disk_report
@@ -552,6 +582,7 @@
 	|	munki
 	|	power_battery_condition
 	|	power_battery_health
+	|	sip
 	|	wifi_state
 	|
 	| Small horizontal / medium vertical widgets:

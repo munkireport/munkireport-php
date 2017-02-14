@@ -66,6 +66,10 @@ def __main__():
     if getOsVersion() < 10:
         logFormat = 0
 
+    if getOsVersion() >= 11:
+        #If on 10.11 or higher, skip rest of this script
+        return
+
     # Set path according to logformat
     if logFormat == 0:
         input_dir = '/var/log/performance/'

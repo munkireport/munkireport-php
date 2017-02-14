@@ -13,28 +13,29 @@ new munkiinfo_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Munki report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="nav.reports.munki"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 		  
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
-		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
-    			<th data-i18n="os.version" data-colname='machine.os_version'></th>
-		        <th data-i18n="munki.version" data-colname='munkireport.version'></th>
-		        <th data-i18n="last_seen" data-sort="desc" data-colname='reportdata.timestamp'></th>
-		        <th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
-		        <th data-i18n="error_plural" data-colname='munkireport.errors'></th>
-		        <th data-i18n="warning_plural" data-colname='munkireport.warnings'></th>
-				<th data-i18n="manifest.name" data-colname='munkireport.manifestname'></th>
+		      	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		      	<th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		      	<th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
+		      	<th data-i18n="os.version" data-colname='machine.os_version'></th>
+		      	<th data-i18n="munki.version" data-colname='munkireport.version'></th>
+		      	<th data-i18n="munki.munkiprotocol" data-colname='munkiinfo.munkiinfo_value'></th>
+		      	<th data-i18n="last_seen" data-sort="desc" data-colname='reportdata.timestamp'></th>
+		      	<th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
+		      	<th data-i18n="error_plural" data-colname='munkireport.errors'></th>
+		      	<th data-i18n="warning_plural" data-colname='munkireport.warnings'></th>
+		      	<th data-i18n="manifest.name" data-colname='munkireport.manifestname'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
-				</tr>
+					<td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
+		    	</tr>
 		    </tbody>
 		  </table>
     </div> <!-- /span 12 -->
@@ -113,7 +114,7 @@ new munkiinfo_model;
             // Format date
             var checkin = parseInt($('td:eq(6)', nRow).html());
             var date = new Date(checkin * 1000);
-            $('td:eq(6)', nRow).html(moment(date).fromNow());
+            $('td:eq(6)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
 
 
             // Format OS Version

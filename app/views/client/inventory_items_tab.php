@@ -2,10 +2,10 @@
 <table class="inventory table table-striped table-bordered">
 	<thead>
 		<tr>
-      <th data-i18n="name">Name</th>
-      <th data-i18n="version">Version</th>
-      <th data-i18n="bundle_id">BundleID</th>
-      <th data-i18n="path">Path</th>
+      <th data-i18n="name"></th>
+      <th data-i18n="version"></th>
+      <th data-i18n="bundle_id"></th>
+      <th data-i18n="path"></th>
 		</tr>
 	</thead>
 	<tbody>

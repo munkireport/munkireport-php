@@ -25,6 +25,7 @@ new Managedinstalls_model;
             <th data-i18n="displayname" data-colname='managedinstalls.display_name'></th>
             <th data-i18n="version" data-colname='managedinstalls.version'></th>
             <th data-i18n="status" data-colname='managedinstalls.status'></th>
+            <th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
             <th data-i18n="type" data-colname='managedinstalls.type'></th>
             <th data-i18n="size" data-colname='managedinstalls.size'></th>
 		  </tr>
@@ -142,6 +143,12 @@ new Managedinstalls_model;
                             .text(status));
                 }
                 
+                // Format Check-In timestamp
+                var checkin = parseInt($('td:eq(6)', nRow).html());
+                var date = new Date(checkin * 1000);
+                $('td:eq(6)', nRow).html(moment(date).fromNow());
+                
+                // Format filesize
                 $('td:last', nRow).html(fileSize($('td:last', nRow).html() * 1024));    
 
             } //end fnCreatedRow

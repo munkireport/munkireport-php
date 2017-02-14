@@ -11,25 +11,26 @@ new Reportdata_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Hardware report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="nav.reports.hardware"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 		  
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
-		        <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'>Description</th>
-		        <th data-i18n="memory.memory" data-colname='machine.physical_memory'>Memory</th>
-		        <th data-colname='machine.number_processors'>Processors</th>
-		        <th data-colname='machine.cpu_arch'>CPU</th>
-		        <th data-colname='machine.current_processor_speed'>Speed</th>
-		        <th data-colname='machine.boot_rom_version'>Boot ROM</th>
+		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="machine.model" data-colname='machine.machine_model'></th>
+		        <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'></th>
+		        <th data-i18n="memory.memory" data-colname='machine.physical_memory'></th>
+		        <th data-i18n="machine.cores" data-colname='machine.number_processors'></th>
+		        <th data-i18n="machine.arch" data-colname='machine.cpu_arch'></th>
+		        <th data-i18n="machine.cpu_speed" data-colname='machine.current_processor_speed'></th>
+		        <th data-i18n="machine.rom_version" data-colname='machine.boot_rom_version'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -67,7 +68,7 @@ new Reportdata_model;
                     if(d.search.value.match(/^\d+GB memory \d+GB$/))
                     {
                         // Add column specific search
-                        d.columns[4].search.value = d.search.value.replace(/(\d+GB) memory (\d+GB)/, function(m, from, to){return ' BETWEEN ' + parseInt(from) + ' AND ' + parseInt(to)});
+                        d.columns[5].search.value = d.search.value.replace(/(\d+GB) memory (\d+GB)/, function(m, from, to){return ' BETWEEN ' + parseInt(from) + ' AND ' + parseInt(to)});
                         // Clear global search
                         d.search.value = '';
 
@@ -77,7 +78,7 @@ new Reportdata_model;
                     if(d.search.value.match(/^memory [<>=] \d+GB$/))
                     {
                         // Add column specific search
-                        d.columns[4].search.value = d.search.value.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + parseInt(content)});
+                        d.columns[5].search.value = d.search.value.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + parseInt(content)});
                         // Clear global search
                         d.search.value = '';
 
@@ -96,8 +97,8 @@ new Reportdata_model;
 	        	var link = mr.getClientDetailLink(name, sn);
 	        	$('td:eq(0)', nRow).html(link);
 
-	        	var mem=$('td:eq(4)', nRow).html();
-	        	$('td:eq(4)', nRow).html(parseInt(mem) + ' GB');
+	        	var mem=$('td:eq(5)', nRow).html();
+	        	$('td:eq(5)', nRow).html(parseInt(mem) + ' GB');
 	        }
 	    });
 

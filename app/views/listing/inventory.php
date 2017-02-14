@@ -19,15 +19,15 @@ new Inventory_model;
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
-			<th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-                <th data-i18n="name" data-colname='inventoryitem.name'></th>
-                <th data-i18n="version" data-colname='inventoryitem.version'></th>
+		    	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		    	<th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		    	<th data-i18n="name" data-colname='inventoryitem.name'></th>
+		    	<th data-i18n="version" data-colname='inventoryitem.version'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="4" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="5" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

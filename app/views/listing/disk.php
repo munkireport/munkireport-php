@@ -12,7 +12,7 @@ new Reportdata_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Disk report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="nav.reports.diskreport"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -31,7 +31,7 @@ new Reportdata_model;
 		    <tbody>
 		    	<tr>
 					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
-				</tr>
+		    	</tr>
 		    </tbody>
 		  </table>
     </div> <!-- /span 12 -->
@@ -54,6 +54,7 @@ new Reportdata_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
+            runtypes = [], // Array for runtype column 
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -76,6 +77,18 @@ new Reportdata_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
+                    
+                    d.mrColNotEmpty = "FreeSpace";
+                    
+                    // Check for column in search
+                    if(d.search.value){
+                        $.each(d.columns, function(index, item){
+                            if(item.name == 'diskreport.' + d.search.value){
+                                d.columns[index].search.value = '> 0';
+                            }
+                        });
+
+                    }
             
                     // Look for 'between' statement todo: make generic
                     if(d.search.value.match(/^\d+GB freespace \d+GB$/))

@@ -12,21 +12,21 @@ new Directory_service_model;
 
   	<div class="col-lg-12">
 
-		  <h3>Directory Services report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="nav.reports.directoryservices"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'>Name</th>
-		        <th data-i18n="serial" data-colname='reportdata.serial_number'>Serial</th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
-		        <th data-colname='directoryservice.which_directory_service'>Bound Status</th> 
-		        <th data-colname='directoryservice.addomain'>AD Domain</th>
-		        <th data-colname='directoryservice.computeraccount'>Computer Account</th>
-		        <th data-colname='directoryservice.directory_service_comments'>AD Comments</th>
-				<th data-colname='directoryservice.createmobileaccount'>Mobile account</th>
-				<th data-colname='directoryservice.networkprotocoltobeused'>Network protocol</th>
-				<th data-colname='directoryservice.allowedadmingroups'>Allowed admin groups</th>
+		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="listing.directoryservice.boundstatus" data-colname='directoryservice.which_directory_service'></th> 
+		        <th data-i18n="listing.directoryservice.ad_domain" data-colname='directoryservice.addomain'></th>
+		        <th data-i18n="listing.directoryservice.computeraccount" data-colname='directoryservice.computeraccount'></th>
+		        <th data-i18n="listing.directoryservice.ad_comments" data-colname='directoryservice.directory_service_comments'></th>
+		        <th data-i18n="listing.directoryservice.mobileaccount" data-colname='directoryservice.createmobileaccount'></th>
+		        <th data-i18n="listing.directoryservice.networkprotocol" data-colname='directoryservice.networkprotocoltobeused'></th>
+		        <th data-i18n="listing.directoryservice.admin_groups" data-colname='directoryservice.allowedadmingroups'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -93,8 +93,8 @@ new Directory_service_model;
 	        	
 	        	// Translate bool. todo function for any bool we find
                 var status=$('td:eq(7)', nRow).html();
-                status = status == 1 ? 'Yes' : 
-                (status === '0' ? 'No' : '')
+                status = status == 1 ? i18n.t('yes') : 
+                (status === '0' ? i18n.t('no') : '')
                 $('td:eq(7)', nRow).html(status)
 
 		    }

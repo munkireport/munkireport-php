@@ -536,9 +536,7 @@
     "enrollment_status": "Enrollment Status"
   },
   "security": {
-    "security": "Security",
-    "gatekeeper": "Gatekeeper Status",
-    "sip": "SIP Status"
+    "security": "Security"
   },
   "serial": "Seriennummer",
   "servermetrics": {

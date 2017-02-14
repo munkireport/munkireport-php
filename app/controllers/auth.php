@@ -380,7 +380,7 @@ class auth extends Controller
 
     public function load_phpass()
     {
-        require(APP_PATH . '/lib/phpass-0.3/PasswordHash.php');
-        return new PasswordHash(8, true);
+        require(APP_PATH . '/lib/phpass-0.3.5/src/Hautelook/Phpass/PasswordHash.php');
+        return new Hautelook\Phpass\PasswordHash(8, true);
     }
 }

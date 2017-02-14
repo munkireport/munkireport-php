@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/sccm_status/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/sccm_status_info.sh" -o "${MUNKIPATH}preflight.d/sccm_status_info.sh"
+"${CURL[@]}" "${CTL}get_script/sccm_status_info.sh" -o "${MUNKIPATH}preflight.d/sccm_status_info.sh"
 
 # Check exit status of curl
 if [ $? = 0 ]; then
