@@ -121,12 +121,18 @@ class Usb_model extends Model {
 		
 		foreach ($myList as $device) {
 			// Check if we have a name
-			if( ! array_key_exists("name",$device)){
+			if( ! array_key_exists("name", $device)){
 				continue;
 			}
-                        
+            
+			// Skip Bus types USB31Bus, USB11Bus, etc.
+			if(preg_match('/^USB(\d+)?Bus$/', $device['name']))
+			{
+				continue;
+			}
+			
 			// Check for USB bus devices and simulated USB devices to exclude
-            $excludeusb = array("USB31Bus","USB30Bus","USB20Bus","USBBus","USB11Bus","UHCI Root Hub Simulation","EHCI Root Hub Simulation");
+            $excludeusb = array("UHCI Root Hub Simulation","EHCI Root Hub Simulation");
             if (in_array($device['name'], $excludeusb)) {
 				continue;
 			}
@@ -147,6 +153,9 @@ class Usb_model extends Model {
 			} else {
 				$device['device_speed'] = 'USB 1.1';
 			}
+			
+			// Make sure manufacturer is set
+			$device['manufacturer'] = isset($device['manufacturer']) ? $device['manufacturer'] : '';
             
             // Set device types
 			if (stripos($device['name'], 'iSight') !== false) {
