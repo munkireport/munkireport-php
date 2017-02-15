@@ -85,7 +85,6 @@ class Power_model extends Model
         $this->rs['packreserve'] = -9876543;
         $this->rs['avgtimetofull'] = -9876543;
         $this->rs['instantamperage'] = -9876543;
-        $this->rs['amperage'] = -9876543;
         $this->rs['designcyclecount'] = -9876543;
         $this->rs['avgtimetoempty'] = -9876543;
         
@@ -221,7 +220,6 @@ class Power_model extends Model
             '      "BatterySerialNumber" = ' => 'batteryserialnumber',
             '      "InstantAmperage" = ' => 'instantamperage',
             '      "FullyCharged" = ' => 'fullycharged',
-            '      "Amperage" = ' => 'amperage',
             '      "IsCharging" = ' => 'ischarging',
             '      "DesignCycleCount9C" = ' => 'designcyclecount',
             '      "AvgTimeToEmpty" = ' => 'avgtimetoempty'
@@ -307,7 +305,6 @@ class Power_model extends Model
         $this->packreserve = -9876543;
         $this->avgtimetofull = -9876543;
         $this->instantamperage = -9876543;
-        $this->amperage = -9876543;
         $this->designcyclecount = -9876543;
         $this->avgtimetoempty = -9876543;
         

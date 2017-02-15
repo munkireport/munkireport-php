@@ -81,10 +81,6 @@
 					<th data-i18n="power.cellvoltage"></th>
 					<td id="battery-cellvoltage"></td>
 				</tr>
-                	<tr>
-					<th data-i18n="power.amperage"></th>
-					<td id="battery-amperage"></td>
-				</tr>
 				<tr>
 					<th data-i18n="power.instantamperage"></th>
 					<td id="battery-instantamperage"></td>
@@ -262,14 +258,7 @@ $(document).on('appReady', function(e, lang) {
             $('#battery-instantamperage').html(data.instantamperage+"A");
             } else {
 	        	$('#battery-instantamperage').html('');  
-            }           
-                                                
-            // Format amperage
-            if (data.amperage != "-9876543" && (data.amperage)) {
-            $('#battery-amperage').html(data.amperage+"A");
-            } else {
-	        	$('#battery-amperage').html('');  
-            }           
+            }                    
             
             // Format cycle count
             if (data.cycle_count != "-9876543" && (data.cycle_count)) {
