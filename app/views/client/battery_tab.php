@@ -358,16 +358,14 @@ $(document).on('appReady', function(e, lang) {
             // Format temperature
             if (data.temperature != "-9876543" && (data.temperature)) {
             if (data.temperature !== 0){
-            if (data.temp_format === "C"){
-				var outtemp_c = (data.temperature / 100)+"°C";
-				var outtemp_f = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
-				$('#battery-temperature').html('<span title="'+outtemp_f+'">'+outtemp_c+'</span>')
-            } else if (data.temp_format === "F"){
+            if (data.temp_format === "F"){
 				var outtemp_c = (data.temperature / 100)+"°C";
 				var outtemp_f = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
 				$('#battery-temperature').html('<span title="'+outtemp_c+'">'+outtemp_f+'</span>')
             } else {
-				$('#battery-temperature').text(data.temperature);  
+				var outtemp_c = (data.temperature / 100)+"°C";
+				var outtemp_f = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
+				$('#battery-temperature').html('<span title="'+outtemp_f+'">'+outtemp_c+'</span>')
             }
             } else {
                 $('#battery-temperature').text("");
