@@ -26,16 +26,12 @@ class Migration_add_columns_for_pmset_data extends Model
                 $this->enquote($this->tablename)
             ); 
             $this->exec($sql);
-                                print_r($sql);
-                echo '<br/>';
 
             } else if ($item === "sleep_prevented_by") {    
             $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' TEXT',
                 $this->enquote($this->tablename)
             );
-                print_r($sql);
-                echo '<br/>';
                 
             $this->exec($sql);
 
@@ -46,8 +42,6 @@ class Migration_add_columns_for_pmset_data extends Model
             );
             $this->exec($sql);
 
-                                print_r($sql);
-                echo '<br/>';
             }
             
             // Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
@@ -59,8 +53,6 @@ class Migration_add_columns_for_pmset_data extends Model
                 $this->enquote($this->tablename)
             );
             $this->exec($sql); 
-                                print_r($sql);
-                echo '<br/>';
             }
         }
         
@@ -74,8 +66,6 @@ class Migration_add_columns_for_pmset_data extends Model
             );
             $this->exec($sql);
 
-                            print_r($sql);
-                echo '<br/>';
 			// Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
             $excludeindex = array('haltlevel','haltafter','haltremain','ups_percent','lessbright');
             if (! in_array($item, $excludeindex)) {
@@ -85,10 +75,7 @@ class Migration_add_columns_for_pmset_data extends Model
                 "CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);  
-                                print_r($sql);
-                echo '<br/>';
-                
+            $this->exec($sql);                  
             }            
         }
         $dbh->commit();
