@@ -17,34 +17,45 @@ class Migration_add_columns_for_pmset_data extends Model
         $dbh->beginTransaction();
         
         // Add new columes
-        foreach (array('hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage','sleep_prevented_by') as $item) {
+        foreach (array('sleep_prevented_by','hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage') as $item) {
                         
             // Adding a column is simple...
-            if ($item == "voltage"){
+            if ($item === "voltage"){
                 $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' FLOAT',
                 $this->enquote($this->tablename)
             ); 
-            } else if ($item == "sleep_prevented_by") {    
+            $this->exec($sql);
+
+            } else if ($item === "sleep_prevented_by") {    
             $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(1024)',
                 $this->enquote($this->tablename)
             );
+            $this->exec($sql);
+
             } else {    
             $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(255)',
                 $this->enquote($this->tablename)
             );
-            }
             $this->exec($sql);
+
+            }
             
+            // Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
+            $excludeindex = array('ups_charging_status','ups_name');
+            if (! in_array($item, $excludeindex)) {
+                
+            // ...so is adding an index
             // ...so is adding an index
             $sql = sprintf("CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
             );
             $this->exec($sql);  
+            }
         }
-
+        
         // Add new INT(11) columns
         foreach (array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','ring','dps','reduce','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','instantamperage','amperage','designcyclecount','avgtimetoempty') as $item) {
             
@@ -55,14 +66,19 @@ class Migration_add_columns_for_pmset_data extends Model
             );
             $this->exec($sql);
 
+			// Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
+            $excludeindex = array('haltlevel','haltafter','haltremain','ups_percent','lessbright','ring','dps','reduce');
+            if (! in_array($item, $excludeindex)) {
+                
             // ...so is adding an index
             $sql = sprintf(
                 "CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);     
+            $this->exec($sql);  
+                
+            }            
         }
-
         $dbh->commit();
     }
 
