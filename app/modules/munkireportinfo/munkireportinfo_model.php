@@ -11,8 +11,7 @@ class Munkireportinfo_model extends Model
                 $this->rs['version'] = -9876543;
                 $this->rs['baseurl'] = '';
                 $this->rs['passphrase'] = '';
-                $this->rs['reportitems'] = '';
-                $this->rt['reportitems'] = 'VARCHAR(1024)';
+                $this->rs['reportitems'] = ''; $this->rt['reportitems'] = 'TEXT';
 
                 // Schema version, increment when creating a db migration
                 $this->schema_version = 0;
