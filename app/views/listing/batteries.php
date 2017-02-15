@@ -238,7 +238,7 @@ new Power_model;
 				// Format wattage
 	        	var wattage=$('td:eq(12)', nRow).html();
                 if (wattage != "-9876543" && (wattage)) {
-	        	$('td:eq(12)', nRow).html(wattage+'W');
+	        	$('td:eq(12)', nRow).html(wattage+" "+i18n.t('power.watts'));
                 } else {
                   $('td:eq(12)', nRow).html('');  
                 }

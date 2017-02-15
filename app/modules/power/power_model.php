@@ -88,6 +88,13 @@ class Power_model extends Model
         // Schema version, increment when creating a db migration
         $this->schema_version = 1;
         
+        // Indexes to optimize queries
+        // MySQL allows for a maximum of 64 indexes per table, not all columns are indexed.
+        // Some lesser used, more static columns have been omitted
+        foreach (array('manufacture_date','design_capacity','max_capacity','current_capacity','current_percent','cycle_count','temperature','condition','hibernatefile','combined_sys_load','user_sys_load','thermal_level','battery_level','active_profile','standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','externalconnected','timeremaining','instanttimetoempty','cellvoltage','voltage','permanentfailurestatus','manufacturer','packreserve','avgtimetofull','batteryserialnumber','amperage','fullycharged','ischarging','designcyclecount','avgtimetoempty') as $item) {
+        $this->idx[] = array($item);
+        }
+        
         // Create table if it does not exist
         $this->create_table();
         

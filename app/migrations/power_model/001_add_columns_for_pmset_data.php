@@ -45,7 +45,7 @@ class Migration_add_columns_for_pmset_data extends Model
             }
             
             // Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
-            $excludeindex = array('ups_charging_status','ups_name','sleep_prevented_by');
+            $excludeindex = array('schedule','ups_charging_status','ups_name','sleep_prevented_by','adapter_id','family_code','adapter_serial_number');
             if (! in_array($item, $excludeindex)) {
                 
             // ...so is adding an index
@@ -67,7 +67,7 @@ class Migration_add_columns_for_pmset_data extends Model
             $this->exec($sql);
 
 			// Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
-            $excludeindex = array('haltlevel','haltafter','haltremain','ups_percent','lessbright');
+            $excludeindex = array('haltlevel','haltafter','haltremain','ups_percent','lessbright','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit',);
             if (! in_array($item, $excludeindex)) {
                 
             // ...so is adding an index
