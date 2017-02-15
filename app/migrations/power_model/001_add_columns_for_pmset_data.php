@@ -31,7 +31,7 @@ class Migration_add_columns_for_pmset_data extends Model
 
             } else if ($item === "sleep_prevented_by") {    
             $sql = sprintf(
-                'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(1024)',
+                'ALTER TABLE %s ADD COLUMN '.$item.' TEXT',
                 $this->enquote($this->tablename)
             );
                 print_r($sql);
@@ -51,7 +51,7 @@ class Migration_add_columns_for_pmset_data extends Model
             }
             
             // Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
-            $excludeindex = array('ups_charging_status','ups_name');
+            $excludeindex = array('ups_charging_status','ups_name','sleep_prevented_by');
             if (! in_array($item, $excludeindex)) {
                 
             // ...so is adding an index

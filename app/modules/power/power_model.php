@@ -16,7 +16,7 @@ class Power_model extends Model
         $this->rs['temperature'] = -9876543;
         $this->rs['condition'] = '';
         $this->rs['timestamp'] = -9876543; // Unix time when the report was uploaded
-        $this->rs['sleep_prevented_by'] = ''; $this->rt['sleep_prevented_by'] = 'VARCHAR(1024)';
+        $this->rs['sleep_prevented_by'] = ''; $this->rt['sleep_prevented_by'] = 'TEXT';
         $this->rs['hibernatefile'] = '';
         $this->rs['schedule'] = '';
         $this->rs['adapter_id'] = '';
