@@ -81,7 +81,7 @@ class Power_model extends Model
         $this->rs['permanentfailurestatus'] = -9876543;
         $this->rs['packreserve'] = -9876543;
         $this->rs['avgtimetofull'] = -9876543;
-        $this->rs['amperage'] = -9876543;
+        $this->rs['amperage'] = -9876543; $this->rt['amperage'] = 'FLOAT';
         $this->rs['designcyclecount'] = -9876543;
         $this->rs['avgtimetoempty'] = -9876543;
         
@@ -389,8 +389,12 @@ class Power_model extends Model
         // Format voltage
         if ($this->voltage !== '-9876543') {
         $this->voltage = substr_replace($this->voltage, ".", -3, 0);
-        //$this->voltage = '12.22';
-        }     
+        }
+        
+        // Format amperage
+        if ($this->amperage !== '-9876543') {
+        $this->amperage = substr_replace($this->amperage, ".", -3, 0);
+        }
         
         // Format manufacturer
         $this->manufacturer = str_replace('"', '', $this->manufacturer);

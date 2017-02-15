@@ -17,10 +17,10 @@ class Migration_add_columns_for_pmset_data extends Model
         $dbh->beginTransaction();
         
         // Add new columes
-        foreach (array('sleep_prevented_by','hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage') as $item) {
+        foreach (array('sleep_prevented_by','hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage','amperage') as $item) {
                         
             // Adding a column is simple...
-            if ($item === "voltage"){
+            if ($item === "voltage" || $item === 'amperage'){
                 $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' FLOAT',
                 $this->enquote($this->tablename)
@@ -57,7 +57,7 @@ class Migration_add_columns_for_pmset_data extends Model
         }
         
         // Add new INT(11) columns
-        foreach (array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','amperage','designcyclecount','avgtimetoempty') as $item) {
+        foreach (array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','designcyclecount','avgtimetoempty') as $item) {
             
             // Adding a column is simple...
             $sql = sprintf(

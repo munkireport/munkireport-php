@@ -74,16 +74,20 @@
 					<td id="battery-instanttimetoempty"></td>
 				</tr>
 				<tr>
+					<th id="battery-watt-label"></th>
+					<td id="battery-watts"></td>
+				</tr>
+				<tr>
+					<th data-i18n="power.amperage"></th>
+					<td id="battery-amperage"></td>
+				</tr>
+				<tr>
 					<th data-i18n="power.voltage"></th>
 					<td id="battery-voltage"></td>
 				</tr>
 				<tr>
 					<th data-i18n="power.cellvoltage"></th>
 					<td id="battery-cellvoltage"></td>
-				</tr>
-				<tr>
-					<th data-i18n="power.amperage"></th>
-					<td id="battery-amperage"></td>
 				</tr>
 				<tr>
 					<th data-i18n="power.permanentfailurestatus"></th>
@@ -248,16 +252,28 @@ $(document).on('appReady', function(e, lang) {
                                       
             // Format voltage
             if (data.voltage != "-9876540" && (data.voltage)) {
-            $('#battery-voltage').html(data.voltage+"v");
+            $('#battery-voltage').html(data.voltage+" "+i18n.t('power.volts'));
             } else {
 	        	$('#battery-voltage').html('');  
             }           
                                                   
             // Format amperage
-            if (data.amperage != "-9876543" && (data.amperage)) {
-            $('#battery-amperage').html(data.amperage+"A");
+            if (data.amperage != "-9876540" && (data.amperage)) {
+            $('#battery-amperage').html(data.amperage+" "+i18n.t('power.amps'));
             } else {
 	        	$('#battery-amperage').html('');  
+            }                    
+                                                    
+            // Calculate charge/discharge watts
+            if (data.amperage != "-9876540" && (data.amperage) && data.voltage != "-9876540" && (data.voltage)) {
+            $('#battery-watts').html((data.amperage*data.voltage).toFixed(2)+" "+i18n.t('power.watts'));
+                if (data.amperage >= 0) {
+                  $('#battery-watt-label').html(i18n.t('power.charging_watt'));  
+                } else {
+                  $('#battery-watt-label').html(i18n.t('power.discharging_watt')); 
+                }
+            } else {
+	        	$('#battery-watts').html('');  
             }                    
             
             // Format cycle count
