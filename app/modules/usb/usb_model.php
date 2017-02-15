@@ -126,7 +126,7 @@ class Usb_model extends Model {
 			}
                         
 			// Check for USB bus devices and simulated USB devices to exclude
-            $excludeusb = array("USB30Bus","USB20Bus","USBBus","USB11Bus","UHCI Root Hub Simulation","EHCI Root Hub Simulation");
+            $excludeusb = array("USB31Bus","USB30Bus","USB20Bus","USBBus","USB11Bus","UHCI Root Hub Simulation","EHCI Root Hub Simulation");
             if (in_array($device['name'], $excludeusb)) {
 				continue;
 			}
@@ -196,6 +196,10 @@ class Usb_model extends Model {
 			}
 			else if (stripos($device['name'], 'Display') !== false) {
 				$device['type'] = 'Display';
+			}
+			else if (stripos($device['name'], 'iBridge') !== false) {
+				$device['type'] = 'TouchBar';
+				$device['name'] = 'TouchBar';
 			}
 
             
