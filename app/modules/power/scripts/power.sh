@@ -15,17 +15,17 @@ powerfile="$DIR/cache/powerinfo.txt"
 
 # Gather standard powerer information and settings
 pmset_general=$(pmset -g 2>/dev/null)
-pmset_schedule=$(pmset -g sched | sed -e 's/  /schedule: /g' 2>/dev/null)
-pmset_ups=$(pmset -g ups | sed -e 's/on//g' -e 's/off//g' 2>/dev/null)
+pmset_schedule=$(pmset -g sched 2>/dev/null | sed -e 's/  /schedule: /g')
+pmset_ups=$(pmset -g ups 2>/dev/null | sed -e 's/on//g' -e 's/off//g')
 pmset_stats=$(pmset -g stats 2>/dev/null)
-pmset_adapter=$(pmset -g adapter | sed -e 's/W//g' 2>/dev/null)
-pmset_therm=$(pmset -g therm | sed -E $'s/CPU_Scheduler_Limit/\\\nCPU_Scheduler_Limit/g' 2>/dev/null)
+pmset_adapter=$(pmset -g adapter 2>/dev/null | sed -e 's/W//g')
+pmset_therm=$(pmset -g therm 2>/dev/null | sed -E $'s/CPU_Scheduler_Limit/\\\nCPU_Scheduler_Limit/g')
 pmset_sysload=$(pmset -g sysload 2>/dev/null)
 pmset_assertions=$(pmset -g assertions 2>/dev/null)
-pmset_accps=$(pmset -g accps | grep -v "InternalBattery" | sed -e 's/ -/UPS Name: /g' 2>/dev/null)
-pmset_ups_name=$(pmset -g accps | grep -v "InternalBattery" | sed -e 's/ -/XWXWXW UPS Name: /g' | awk -v FS="(XWXWXW|;)" '{print substr($2, 1, length($2)-4)}' 2>/dev/null)
-pmset_ups_percent=$(pmset -g accps | grep -v "InternalBattery" | awk 'match($0,"%;"){print substr($0,RSTART-4,4)}' | awk -F' ' '{printf "%s%s\n", $1, $2}' 2>/dev/null)
-pmset_ups_charging_status=$(pmset -g accps | grep -v "InternalBattery" | grep -v "ow drawing from" | grep -o '.....$' | awk -F' ' '{printf "%s%s\n", $1, $2}' 2>/dev/null)
+pmset_accps=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | sed -e 's/ -/UPS Name: /g')
+pmset_ups_name=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | sed -e 's/ -/XWXWXW UPS Name: /g' | awk -v FS="(XWXWXW|;)" '{print substr($2, 1, length($2)-4)}')
+pmset_ups_percent=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | awk 'match($0,"%;"){print substr($0,RSTART-4,4)}' | awk -F' ' '{printf "%s%s\n", $1, $2}')
+pmset_ups_charging_status=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | grep -v "ow drawing from" | grep -o '.....$' | awk -F' ' '{printf "%s%s\n", $1, $2}')
 
 pmset_ups_percent_out="UPS Percent: "$pmset_ups_percent
 pmset_ups_charging_status_out="UPS Status: "$pmset_ups_charging_status
@@ -40,7 +40,8 @@ if [ -z "$AppleSmartBattery" ]; then
 
 else
 
-battery_text=$(ioreg -n AppleSmartBattery -r | sed -e 's/" = 65535/" = -9876543/g')
+battery_text1=$(ioreg -n AppleSmartBattery -r | sed -e 's/" = 65535/" = -9876543/g')
+battery_text2=$(system_profiler SPPowerDataType)
 
 ## Battery Condition
 BatteryInstalled=$(echo "$AppleSmartBattery" | grep "BatteryInstalled" | awk '{ print $NF }' | awk -F' ' '{printf "%s%s\n", $1, $2}')
@@ -57,7 +58,7 @@ else
 	condition="condition = No Battery"
 fi
 
-battery_info="${battery_text}\n${condition}"
+battery_info="${battery_text1}\n${battery_text2}\n${condition}"
 
 fi 
 

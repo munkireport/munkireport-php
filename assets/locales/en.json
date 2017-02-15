@@ -823,7 +823,7 @@
 		"packreserve": "Battery Reserve Power",
 		"avgtimetofull": "Average Time to Full",
 		"batteryserialnumber": "Battery Serial Number",
-		"instantamperage": "Amperage",
+		"amperage": "Amperage",
 		"fullycharged": "Fully Charged",
 		"ischarging": "Is Charging",
 		"designcyclecount": "Design Cycle Count",

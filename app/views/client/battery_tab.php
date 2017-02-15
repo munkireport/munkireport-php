@@ -82,8 +82,8 @@
 					<td id="battery-cellvoltage"></td>
 				</tr>
 				<tr>
-					<th data-i18n="power.instantamperage"></th>
-					<td id="battery-instantamperage"></td>
+					<th data-i18n="power.amperage"></th>
+					<td id="battery-amperage"></td>
 				</tr>
 				<tr>
 					<th data-i18n="power.permanentfailurestatus"></th>
@@ -253,11 +253,11 @@ $(document).on('appReady', function(e, lang) {
 	        	$('#battery-voltage').html('');  
             }           
                                                   
-            // Format instantamperage
-            if (data.instantamperage != "-9876543" && (data.instantamperage)) {
-            $('#battery-instantamperage').html(data.instantamperage+"A");
+            // Format amperage
+            if (data.amperage != "-9876543" && (data.amperage)) {
+            $('#battery-amperage').html(data.amperage+"A");
             } else {
-	        	$('#battery-instantamperage').html('');  
+	        	$('#battery-amperage').html('');  
             }                    
             
             // Format cycle count
