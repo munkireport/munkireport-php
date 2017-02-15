@@ -59,9 +59,6 @@ class Power_model extends Model
         $this->rs['haltafter'] = -9876543;
         $this->rs['haltremain'] = -9876543;
         $this->rs['lessbright'] = -9876543;
-        $this->rs['ring'] = -9876543;
-        $this->rs['dps'] = -9876543;
-        $this->rs['reduce'] = -9876543;
         $this->rs['sleep_count'] = -9876543;
         $this->rs['dark_wake_count'] = -9876543;
         $this->rs['user_wake_count'] = -9876543;
@@ -179,9 +176,6 @@ class Power_model extends Model
             '  haltafter		' => 'haltafter',
             '  haltremain		' => 'haltremain',
             ' lessbright           ' => 'lessbright',
-            ' ring                 ' => 'ring',
-            ' dps                  ' => 'dps',
-            ' reduce               ' => 'reduce',
             'Sleep Count:' => 'sleep_count',
             'Dark Wake Count:' => 'dark_wake_count',
             'User Wake Count:' => 'user_wake_count',
@@ -279,9 +273,6 @@ class Power_model extends Model
         $this->haltafter = -9876543;
         $this->haltremain = -9876543;
         $this->lessbright = -9876543;
-        $this->ring = -9876543;
-        $this->dps = -9876543;
-        $this->reduce = -9876543;
         $this->sleep_count = -9876543;
         $this->dark_wake_count = -9876543;
         $this->user_wake_count = -9876543;

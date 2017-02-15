@@ -57,7 +57,7 @@ class Migration_add_columns_for_pmset_data extends Model
         }
         
         // Add new INT(11) columns
-        foreach (array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','ring','dps','reduce','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','instantamperage','designcyclecount','avgtimetoempty') as $item) {
+        foreach (array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','instantamperage','designcyclecount','avgtimetoempty') as $item) {
             
             // Adding a column is simple...
             $sql = sprintf(
@@ -67,7 +67,7 @@ class Migration_add_columns_for_pmset_data extends Model
             $this->exec($sql);
 
 			// Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
-            $excludeindex = array('haltlevel','haltafter','haltremain','ups_percent','lessbright','ring','dps','reduce');
+            $excludeindex = array('haltlevel','haltafter','haltremain','ups_percent','lessbright');
             if (! in_array($item, $excludeindex)) {
                 
             // ...so is adding an index
