@@ -112,9 +112,9 @@ new munkiinfo_model;
 
 
             // Format date
-            var checkin = parseInt($('td:eq(6)', nRow).html());
+            var checkin = parseInt($('td:eq(7)', nRow).html());
             var date = new Date(checkin * 1000);
-            $('td:eq(6)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
+            $('td:eq(7)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
 
 
             // Format OS Version
