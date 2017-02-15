@@ -17,7 +17,7 @@ class Migration_add_columns_for_pmset_data extends Model
         $dbh->beginTransaction();
         
         // Add new columes
-        foreach (array('sleep_prevented_by','hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage','amperage') as $item) {
+        foreach (array('hibernatefile','schedule','adapter_id','family_code','adapter_serial_number','combined_sys_load','user_sys_load','thermal_level','battery_level','ups_name','active_profile','ups_charging_status','externalconnected','cellvoltage','manufacturer','batteryserialnumber','fullycharged','ischarging','voltage','amperage','sleep_prevented_by') as $item) {
                         
             // Adding a column is simple...
             if ($item === "voltage" || $item === 'amperage'){
@@ -47,7 +47,6 @@ class Migration_add_columns_for_pmset_data extends Model
             $excludeindex = array('ups_charging_status','ups_name');
             if (! in_array($item, $excludeindex)) {
                 
-            // ...so is adding an index
             // ...so is adding an index
             $sql = sprintf("CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
