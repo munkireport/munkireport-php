@@ -20,7 +20,6 @@ class Munkireportinfo_model extends Model
                 $this->idx[] = array('version');
                 $this->idx[] = array('baseurl');
                 $this->idx[] = array('passphrase');
-                $this->idx[] = array('reportitems');
                 
                 // Create table if it does not exist
                 $this->create_table();
