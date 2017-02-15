@@ -40,54 +40,6 @@ if [ -z "$AppleSmartBattery" ]; then
 
 else
 
-## Battery ManufactureDate
-#ManufactureDate=$(echo "$AppleSmartBattery" | grep "ManufactureDate" | awk '{ print $NF }')
-#if [[ -z $ManufactureDate ]] ; then
-#manufacture_date="manufacture_date = "
-#else
-#manufacture_date="manufacture_date = $ManufactureDate"
-#fi
-
-## Battery's original design capacity
-#DesignCapacity=$(echo "$AppleSmartBattery" | grep "DesignCapacity" | awk '{ print $NF }')
-#if [[ -z $DesignCapacity ]] ; then
-#design_capacity="design_capacity = -9876543"
-#else
-#design_capacity="design_capacity = $DesignCapacity"
-#fi
-
-## Battery's current maximum capacity
-#MaxCapacity=$(echo "$AppleSmartBattery" | grep "MaxCapacity" | awk '{ print $NF }')
-#if [[ -z $MaxCapacity ]] ; then
-#max_capacity="max_capacity = -9876543"
-#else
-#max_capacity="max_capacity = $MaxCapacity"
-#fi
-
-## Battery's current capacity
-#CurrentCapacity=$(echo "$AppleSmartBattery" | grep "CurrentCapacity" | awk '{ print $NF }')
-#if [[ -z $MaxCapacity ]] ; then
-#current_capacity="current_capacity = -9876543"
-#else
-#current_capacity="current_capacity = $CurrentCapacity"
-#fi
-
-## Cycle count
-#CycleCount=$(echo "$AppleSmartBattery" | grep '"CycleCount" =' | awk '{ print $NF }')
-#if [[ -z $CycleCount ]] ; then
-#cycle_count="cycle_count = -9876543"
-#else
-#cycle_count="cycle_count = $CycleCount"
-#fi
-
-## Battery Temperature
-#Temperature=$(echo "$AppleSmartBattery" | grep "Temperature" | awk '{ print $NF }')
-#if [[ -z $Temperature ]] ; then
-#temperature="temperature = -9876543"
-#else
-#temperature="temperature = $Temperature"
-#fi
-
 battery_text=$(ioreg -n AppleSmartBattery -r | sed -e 's/" = 65535/" = -9876543/g')
 
 ## Battery Condition
@@ -105,7 +57,6 @@ else
 	condition="condition = No Battery"
 fi
 
-#battery_info="${manufacture_date}\n${design_capacity}\n${max_capacity}\n${current_capacity}\n${cycle_count}\n${temperature}\n${condition}"
 battery_info="${battery_text}\n${condition}"
 
 fi 
