@@ -25,8 +25,8 @@ class Migration_add_columns_for_pmset_data extends Model
                 'ALTER TABLE %s ADD COLUMN '.$item.' FLOAT',
                 $this->enquote($this->tablename)
             ); 
-            $this->exec($sql);
-
+            $this->exec($sql);   
+            
             } else if ($item === "sleep_prevented_by") {    
             $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' TEXT',
@@ -40,19 +40,18 @@ class Migration_add_columns_for_pmset_data extends Model
                 'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(255)',
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);
-
+            $this->exec($sql);   
             }
             
             // Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
-            $excludeindex = array('schedule','ups_charging_status','ups_name','sleep_prevented_by','adapter_id','family_code','adapter_serial_number');
+            $excludeindex = array('combined_sys_load','user_sys_load','thermal_level','battery_level','schedule','ups_charging_status','ups_name','sleep_prevented_by','adapter_id','family_code','adapter_serial_number');
             if (! in_array($item, $excludeindex)) {
                 
             // ...so is adding an index
             $sql = sprintf("CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql); 
+            $this->exec($sql);   
             }
         }
         
@@ -64,8 +63,8 @@ class Migration_add_columns_for_pmset_data extends Model
                 'ALTER TABLE %s ADD COLUMN '.$item.' INT(11)',
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);
-
+            $this->exec($sql);   
+            
 			// Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
             $excludeindex = array('haltlevel','haltafter','haltremain','ups_percent','lessbright','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit',);
             if (! in_array($item, $excludeindex)) {
@@ -75,19 +74,21 @@ class Migration_add_columns_for_pmset_data extends Model
                 "CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);                  
+            $this->exec($sql);   
             }            
         }
         
         // Add indexes for exising columns
-        foreach (array('manufacture_date','design_capacity','max_capacity','current_capacity','current_percent','cycle_count','temperature','condition') as $item) {
+        foreach (array('manufacture_date','design_capacity','max_capacity','max_percent','current_capacity','current_percent','cycle_count','temperature','condition','timestamp') as $item) {
             
             // Add the index
             $sql = sprintf(
-                "CREATE INDEX ".$item." ON %s (".$item.")",
+                
+                "ALTER TABLE %s ADD INDEX(`".$item."`)",
+                //"CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);                  
+            $this->exec($sql);   
         }
         
         $dbh->commit();
