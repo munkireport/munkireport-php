@@ -84,9 +84,19 @@ class Migration_add_columns_for_pmset_data extends Model
             // Add the index
             $sql = sprintf(
                 
-                "ALTER TABLE %s ADD INDEX(`".$item."`)",
-                //"CREATE INDEX ".$item." ON %s (".$item.")",
-                $this->enquote($this->tablename)
+                // sqlite and MySQL have slightly different create index values
+                switch ($this->get_driver()) {
+                case 'sqlite':
+                    "CREATE INDEX ".$item." ON %s (".$item.")",
+                    $this->enquote($this->tablename)
+                    break;
+                case 'mysql':
+                    "ALTER TABLE %s ADD INDEX(`".$item."`)",
+                    $this->enquote($this->tablename)
+                default:
+                    # code here...or a happy dance for lack of a database(?)
+                    break;
+                }
             );
             $this->exec($sql);   
         }
