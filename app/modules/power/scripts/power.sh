@@ -27,9 +27,9 @@ pmset_adapter=$(pmset -g adapter 2>/dev/null | sed -e 's/W//g' -e 's/"//g')
 pmset_therm=$(pmset -g therm 2>/dev/null | sed -E $'s/CPU_Scheduler_Limit/\\\nCPU_Scheduler_Limit/g' | sed -e 's/"//g' )
 pmset_sysload=$(pmset -g sysload 2>/dev/null | sed -e 's/"//g')
 pmset_assertions=$(pmset -g assertions 2>/dev/null | sed -e 's/"//g')
-pmset_accps=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | sed -e 's/ -/UPS Name: /g' -e 's/"//g')
+pmset_accps=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | grep -v "Mouse" | grep -v "Keyboard" | sed -e 's/ -/UPS Name: /g' -e 's/"//g')
 pmset_ups_name=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | sed -e 's/ -/XWXWXW UPS Name: /g' -e 's/"//g' | awk -v FS="(XWXWXW|;)" '{print substr($2, 1, length($2)-4)}')
-pmset_ups_percent=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | awk 'match($0,"%;"){print substr($0,RSTART-4,4)}' | awk -F' ' '{printf "%s%s\n", $1, $2}' | sed -e 's/"//g')
+pmset_ups_percent=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | grep -v "Mouse" | grep -v "Keyboard" | awk 'match($0,"%;"){print substr($0,RSTART-4,4)}' | awk -F' ' '{printf "%s%s\n", $1, $2}' | sed -e 's/"//g' -e 's/(//g' -e 's/)//g')
 pmset_ups_charging_status=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | grep -v "ow drawing from" | grep -o '.....$' | awk -F' ' '{printf "%s%s\n", $1, $2}' | sed -e 's/"//g')
 
 pmset_ups_percent_out="UPS Percent: "$pmset_ups_percent
