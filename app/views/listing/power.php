@@ -90,7 +90,7 @@ new Power_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    d.mrColNotEmpty = "power.hibernatefile";
+                    d.mrColNotEmpty = "power.hibernatemode";
                     
                 }
             },
