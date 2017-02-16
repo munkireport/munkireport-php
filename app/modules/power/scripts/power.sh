@@ -62,7 +62,6 @@ if [ "$BatteryInstalled" == Yes ]; then
 else
 	condition="condition = No Battery"
 fi
-condition="condition = Normal"
 
 battery_info="${condition}${nl}${battery_text1}${nl}${battery_text2}"
 

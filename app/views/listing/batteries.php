@@ -161,10 +161,14 @@ new Power_model;
 	        	var status=$('td:eq(7)', nRow).html();
 	        	status = status == 'Normal' ? '<span class="label label-success">'+i18n.t('widget.power.normal')+'</span>' : 
 	        	status = status == 'Replace Soon' ? '<span class="label label-warning">'+i18n.t('widget.power.soon')+'</span>' : 
+	        	status = status == 'ReplaceSoon' ? '<span class="label label-warning">'+i18n.t('widget.power.soon')+'</span>' : 
 	        	status = status == 'Service Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.service')+'</span>' : 
+	        	status = status == 'ServiceBattery' ? '<span class="label label-warning">'+i18n.t('widget.power.service')+'</span>' : 
 	        	status = status == 'Check Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.check')+'</span>' : 
+	        	status = status == 'CheckBattery' ? '<span class="label label-warning">'+i18n.t('widget.power.check')+'</span>' : 
 	        	status = status == 'Replace Now' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
-	        	status = status == '' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
+	        	status = status == 'ReplaceNow' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
+	        	status = status == '' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : 
 	        	(status === 'No Battery' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
                 
