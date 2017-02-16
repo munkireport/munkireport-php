@@ -11,21 +11,26 @@ fi
 # Create cache dir if it does not exist
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
-powerfile="$DIR/cache/powerinfo.txt"
+powerfile="$DIR/cache/powerinfo.xml"
 
+# vvv New line variable vvv # no touchy
+nl='
+'
+# ^^^ New line variable ^^^ # no touchy
+ 
 # Gather standard powerer information and settings
-pmset_general=$(pmset -g 2>/dev/null)
-pmset_schedule=$(pmset -g sched 2>/dev/null | sed -e 's/  /schedule: /g')
-pmset_ups=$(pmset -g ups 2>/dev/null | sed -e 's/on//g' -e 's/off//g')
-pmset_stats=$(pmset -g stats 2>/dev/null)
-pmset_adapter=$(pmset -g adapter 2>/dev/null | sed -e 's/W//g')
-pmset_therm=$(pmset -g therm 2>/dev/null | sed -E $'s/CPU_Scheduler_Limit/\\\nCPU_Scheduler_Limit/g')
-pmset_sysload=$(pmset -g sysload 2>/dev/null)
-pmset_assertions=$(pmset -g assertions 2>/dev/null)
-pmset_accps=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | sed -e 's/ -/UPS Name: /g')
-pmset_ups_name=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | sed -e 's/ -/XWXWXW UPS Name: /g' | awk -v FS="(XWXWXW|;)" '{print substr($2, 1, length($2)-4)}')
-pmset_ups_percent=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | awk 'match($0,"%;"){print substr($0,RSTART-4,4)}' | awk -F' ' '{printf "%s%s\n", $1, $2}')
-pmset_ups_charging_status=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | grep -v "ow drawing from" | grep -o '.....$' | awk -F' ' '{printf "%s%s\n", $1, $2}')
+pmset_general=$(pmset -g 2>/dev/null | sed -e 's/"//g')
+pmset_schedule=$(pmset -g sched 2>/dev/null | sed -e 's/  /schedule: /g' -e 's/"//g')
+pmset_ups=$(pmset -g ups 2>/dev/null | sed -e 's/on//g' -e 's/off//g' -e 's/"//g')
+pmset_stats=$(pmset -g stats 2>/dev/null | sed -e 's/"//g')
+pmset_adapter=$(pmset -g adapter 2>/dev/null | sed -e 's/W//g' -e 's/"//g')
+pmset_therm=$(pmset -g therm 2>/dev/null | sed -E $'s/CPU_Scheduler_Limit/\\\nCPU_Scheduler_Limit/g' | sed -e 's/"//g' )
+pmset_sysload=$(pmset -g sysload 2>/dev/null | sed -e 's/"//g')
+pmset_assertions=$(pmset -g assertions 2>/dev/null | sed -e 's/"//g')
+pmset_accps=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | sed -e 's/ -/UPS Name: /g' -e 's/"//g')
+pmset_ups_name=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | sed -e 's/ -/XWXWXW UPS Name: /g' -e 's/"//g' | awk -v FS="(XWXWXW|;)" '{print substr($2, 1, length($2)-4)}')
+pmset_ups_percent=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | awk 'match($0,"%;"){print substr($0,RSTART-4,4)}' | awk -F' ' '{printf "%s%s\n", $1, $2}' | sed -e 's/"//g')
+pmset_ups_charging_status=$(pmset -g accps 2>/dev/null | grep -v "InternalBattery" | grep -v "ow drawing from" | grep -o '.....$' | awk -F' ' '{printf "%s%s\n", $1, $2}' | sed -e 's/"//g')
 
 pmset_ups_percent_out="UPS Percent: "$pmset_ups_percent
 pmset_ups_charging_status_out="UPS Status: "$pmset_ups_charging_status
@@ -40,14 +45,14 @@ if [ -z "$AppleSmartBattery" ]; then
 
 else
 
-battery_text1=$(ioreg -n AppleSmartBattery -r | sed -e 's/" = 65535/" = -9876543/g')
-battery_text2=$(system_profiler SPPowerDataType)
+battery_text1=$(ioreg -n AppleSmartBattery -r | sed -e 's/" = 65535/" = -9876543/g' -e 's/"//g')
+battery_text2=$(system_profiler SPPowerDataType | grep 'Amperage')
 
 ## Battery Condition
 BatteryInstalled=$(echo "$AppleSmartBattery" | grep "BatteryInstalled" | awk '{ print $NF }' | awk -F' ' '{printf "%s%s\n", $1, $2}')
 if [ "$BatteryInstalled" == Yes ]; then
 	Condition=`system_profiler SPPowerDataType | grep 'Condition' | awk '{$1=""; print}' | awk -F' ' '{printf "%s%s\n", $1, $2}'`  ## print all except first column
-	condition="condition = $Condition"
+	condition="condition = ${Condition}"
     
     ## Sometimes an inserted battery will show up as blank
     if [[ -z "${Condition}" ]]; then
@@ -57,13 +62,25 @@ if [ "$BatteryInstalled" == Yes ]; then
 else
 	condition="condition = No Battery"
 fi
+condition="condition = Normal"
 
-battery_info="${battery_text1}\n${battery_text2}\n${condition}"
+battery_info="${condition}${nl}${battery_text1}${nl}${battery_text2}"
 
 fi 
 
-final_stats="\n${battery_info}\n${pmset_general}\n${pmset_schedule}\n${pmset_ups}\n${pmset_stats}\n${pmset_adapter}\n${pmset_therm}\n${pmset_sysload}\n${pmset_assertions}\n$pmset_accps\n${pmset_ups_name}\n${pmset_ups_percent_out}\n${pmset_ups_charging_status_out}"
+final_stats="${nl}${battery_info}${nl}${pmset_general}${nl}${pmset_schedule}${nl}${pmset_ups}${nl}${pmset_stats}${nl}${pmset_adapter}${nl}${pmset_therm}${nl}${pmset_sysload}${nl}${pmset_assertions}${nl}${pmset_accps}${nl}${pmset_ups_name}${nl}${pmset_ups_percent_out}${nl}${pmset_ups_charging_status_out}"
 
-echo -e "${final_stats}" > "$powerfile"
+#echo -e "${final_stats}" > "$powerfile"
+
+# Delete the old file or plistbuddy will complain :/
+rm "$powerfile" 2>/dev/null
+
+# Turn the final_stats text mess into a pretty XML file for uploading
+for TRANSLATE in '      ManufactureDate = ' '      DesignCapacity = ' '      MaxCapacity = ' '      CurrentCapacity = ' '      CycleCount = ' '      Temperature = ' 'condition = ' ' standbydelay         ' ' standby              ' ' womp                 ' ' halfdim              ' ' hibernatefile        ' ' gpuswitch            ' ' sms                  ' ' networkoversleep     ' ' disksleep            ' ' sleep                ' ' autopoweroffdelay    ' ' hibernatemode        ' ' autopoweroff         ' ' ttyskeepawake        ' ' displaysleep         ' ' acwake               ' ' lidwake              ' ' Sleep On Power Button ' ' powernap             ' ' autorestart          ' ' DestroyFVKeyOnStandby		' 'schedule: ' '  haltlevel		' '  haltafter		' '  haltremain		' ' lessbright           ' 'Sleep Count:' 'Dark Wake Count:' 'User Wake Count:' ' attage = ' ' AdapterID = ' ' Family Code = ' ' Serial Number = ' 'CPU_Scheduler_Limit 	= ' '	CPU_Available_CPUs 	= ' '	CPU_Speed_Limit 	= ' '   BackgroundTask                 ' '   ApplePushServiceTask           ' '   UserIsActive                   ' '   PreventUserIdleDisplaySleep    ' '   PreventSystemSleep             ' '   ExternalMedia                  ' '   PreventUserIdleSystemSleep     ' '   NetworkClientActive            ' '  combined level = ' '  - user level = ' '  - battery level = ' '  - thermal level = ' ' UPS Name:' 'Now drawing from ' 'UPS Percent: ' 'UPS Status: ' '      ExternalConnected = ' '      TimeRemaining = ' '      InstantTimeToEmpty = ' '      CellVoltage = ' '      Voltage = ' '      PermanentFailureStatus = ' '      Manufacturer = ' '      PackReserve = ' '      AvgTimeToFull = ' '      BatterySerialNumber = ' '      Amperage (mA): ' '      FullyCharged = ' '      IsCharging = ' '      DesignCycleCount9C = ' '      AvgTimeToEmpty = '
+do 
+	OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${final_stats}" | sed -e "s/${TRANSLATE}//g" )
+    OUTKEY=$(awk -F' ' '{printf "%s%s\n", $1, $2}' <<< "${TRANSLATE}" | tr -cd '[[:alnum:]]' )
+    /usr/libexec/plistbuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$powerfile" 1>/dev/null
+done
 
 exit 0

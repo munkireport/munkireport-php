@@ -132,195 +132,117 @@ class Power_model extends Model
     {
         // If data is empty, remove record
         if (! $data) {
-            $this->delete();
-            return;
-        }
+            throw new Exception("Error Processing Power Module Request: No data found", 1);
+        } 
 
+        // Array of ints for nulling with -9876543
+        $ints =  array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','designcyclecount','avgtimetoempty','voltage','amperage','temperature','cycle_count','current_percent','current_capacity','max_percent','max_capacity','design_capacity');
+        
+        // Process incoming powerinfo.xml
+        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+        $parser = new CFPropertyList();
+        $parser->parse($data, CFPropertyList::FORMAT_XML);
+        $plist = $parser->toArray();
+        
         // Translate battery strings to db fields
         $translate = array(
-            'manufacture_date = ' => 'manufacture_date', // keeping in for legacy power.sh
-            'design_capacity = ' => 'design_capacity', // keeping in for legacy power.sh
-            'max_capacity = ' => 'max_capacity', // keeping in for legacy power.sh
-            'current_capacity = ' => 'current_capacity', // keeping in for legacy power.sh
-            'cycle_count = ' => 'cycle_count', // keeping in for legacy power.sh
-            'temperature = ' => 'temperature', // keeping in for legacy power.sh
-            '      "ManufactureDate" = ' => 'manufacture_date',
-            '      "DesignCapacity" = ' => 'design_capacity',
-            '      "MaxCapacity" = ' => 'max_capacity',
-            '      "CurrentCapacity" = ' => 'current_capacity',
-            '      "CycleCount" = ' => 'cycle_count',
-            '      "Temperature" = ' => 'temperature',
-            '      "ManufactureDate" = ' => 'manufacture_date',
-            '      "DesignCapacity" = ' => 'design_capacity',
-            '      "MaxCapacity" = ' => 'max_capacity',
-            '      "CurrentCapacity" = ' => 'current_capacity',
-            '      "CycleCount" = ' => 'cycle_count',
-            '      "Temperature" = ' => 'temperature',
-            'condition = ' => 'condition',
-            ' standbydelay         ' => 'standbydelay',
-            ' standby              ' => 'standby',
-            ' womp                 ' => 'womp',
-            ' halfdim              ' => 'halfdim',
-            ' hibernatefile        ' => 'hibernatefile',
-            ' gpuswitch            ' => 'gpuswitch',
-            ' sms                  ' => 'sms',
-            ' networkoversleep     ' => 'networkoversleep',
-            ' disksleep            ' => 'disksleep',
-            ' sleep                ' => 'sleep',
-            ' autopoweroffdelay    ' => 'autopoweroffdelay',
-            ' hibernatemode        ' => 'hibernatemode',
-            ' autopoweroff         ' => 'autopoweroff',
-            ' ttyskeepawake        ' => 'ttyskeepawake',
-            ' displaysleep         ' => 'displaysleep',
-            ' acwake               ' => 'acwake',
-            ' lidwake              ' => 'lidwake',
-            ' Sleep On Power Button ' => 'sleep_on_power_button',
-            ' powernap             ' => 'powernap',
-            ' autorestart          ' => 'autorestart',
-            ' DestroyFVKeyOnStandby		' => 'destroyfvkeyonstandby',
-            'schedule: ' => 'schedule',
-            '  haltlevel		' => 'haltlevel',
-            '  haltafter		' => 'haltafter',
-            '  haltremain		' => 'haltremain',
-            ' lessbright           ' => 'lessbright',
-            'Sleep Count:' => 'sleep_count',
-            'Dark Wake Count:' => 'dark_wake_count',
-            'User Wake Count:' => 'user_wake_count',
-            ' attage = ' => 'wattage',
-            ' AdapterID = ' => 'adapter_id',
-            ' Family Code = ' => 'family_code',
-            ' Serial Number = ' => 'adapter_serial_number',
-            'CPU_Scheduler_Limit 	= ' => 'cpu_scheduler_limit',
-            '	CPU_Available_CPUs 	= ' => 'cpu_available_cpus',
-            '	CPU_Speed_Limit 	= ' => 'cpu_speed_limit',
-            '   BackgroundTask                 ' => 'backgroundtask',
-            '   ApplePushServiceTask           ' => 'applepushservicetask',
-            '   UserIsActive                   ' => 'userisactive',
-            '   PreventUserIdleDisplaySleep    ' => 'preventuseridledisplaysleep',
-            '   PreventSystemSleep             ' => 'preventsystemsleep',
-            '   ExternalMedia                  ' => 'externalmedia',
-            '   PreventUserIdleSystemSleep     ' => 'preventuseridlesystemsleep',
-            '   NetworkClientActive            ' => 'networkclientactive',
-            '  combined level = ' => 'combined_sys_load',
-            '  - user level = ' => 'user_sys_load',
-            '  - battery level = ' => 'battery_level',
-            '  - thermal level = ' => 'thermal_level',
-            ' UPS Name:' => 'ups_name',
-            'Now drawing from ' => 'active_profile',      
-            'UPS Percent: ' => 'ups_percent',   
-            'UPS Status: ' => 'ups_charging_status',
-            '      "ExternalConnected" = ' => 'externalconnected',
-            '      "TimeRemaining" = ' => 'timeremaining',
-            '      "InstantTimeToEmpty" = ' => 'instanttimetoempty',
-            '      "CellVoltage" = ' => 'cellvoltage',
-            '      "Voltage" = ' => 'voltage',
-            '      "PermanentFailureStatus" = ' => 'permanentfailurestatus',
-            '      "Manufacturer" = ' => 'manufacturer',
-            '      "PackReserve" = ' => 'packreserve',
-            '      "AvgTimeToFull" = ' => 'avgtimetofull',
-            '      "BatterySerialNumber" = ' => 'batteryserialnumber',
-            '      Amperage (mA): ' => 'amperage',
-            '      "FullyCharged" = ' => 'fullycharged',
-            '      "IsCharging" = ' => 'ischarging',
-            '      "DesignCycleCount9C" = ' => 'designcyclecount',
-            '      "AvgTimeToEmpty" = ' => 'avgtimetoempty'
+            'ManufactureDate' => 'manufacture_date',
+            'DesignCapacity' => 'design_capacity',
+            'CurrentCapacity' => 'current_capacity',
+            'CycleCount' => 'cycle_count',
+            'Temperature' => 'temperature',
+            'MaxCapacity' => 'max_capacity',
+            'condition' => 'condition',
+            'standbydelay' => 'standbydelay',
+            'standby' => 'standby',
+            'womp' => 'womp',
+            'halfdim' => 'halfdim',
+            'hibernatefile' => 'hibernatefile',
+            'gpuswitch' => 'gpuswitch',
+            'sms' => 'sms',
+            'networkoversleep' => 'networkoversleep',
+            'disksleep' => 'disksleep',
+            'sleep' => 'sleep',
+            'autopoweroffdelay' => 'autopoweroffdelay',
+            'hibernatemode' => 'hibernatemode',
+            'autopoweroff' => 'autopoweroff',
+            'ttyskeepawake' => 'ttyskeepawake',
+            'displaysleep' => 'displaysleep',
+            'acwake' => 'acwake',
+            'lidwake' => 'lidwake',
+            'SleepOn' => 'sleep_on_power_button',
+            'powernap' => 'powernap',
+            'autorestart' => 'autorestart',
+            'DestroyFVKeyOnStandby' => 'destroyfvkeyonstandby',
+            'schedule' => 'schedule',
+            'haltlevel' => 'haltlevel',
+            'haltafter' => 'haltafter',
+            'haltremain' => 'haltremain',
+            'lessbright' => 'lessbright',
+            'SleepCount' => 'sleep_count',
+            'DarkWake' => 'dark_wake_count',
+            'UserWake' => 'user_wake_count',
+            'attage' => 'wattage', // This is spelled correctly
+            'AdapterID' => 'adapter_id',
+            'FamilyCode' => 'family_code',
+            'SerialNumber' => 'adapter_serial_number',
+            'CPUSchedulerLimit' => 'cpu_scheduler_limit',
+            'CPUAvailableCPUs' => 'cpu_available_cpus',
+            'CPUSpeedLimit' => 'cpu_speed_limit',
+            'BackgroundTask' => 'backgroundtask',
+            'ApplePushServiceTask' => 'applepushservicetask',
+            'UserIsActive' => 'userisactive',
+            'PreventUserIdleDisplaySleep' => 'preventuseridledisplaysleep',
+            'PreventSystemSleep' => 'preventsystemsleep',
+            'ExternalMedia' => 'externalmedia',
+            'PreventUserIdleSystemSleep' => 'preventuseridlesystemsleep',
+            'NetworkClientActive' => 'networkclientactive',
+            'combinedlevel' => 'combined_sys_load',
+            'user' => 'user_sys_load',
+            'battery' => 'battery_level',
+            'thermal' => 'thermal_level',
+            'UPSName' => 'ups_name',
+            'Nowdrawing' => 'active_profile',      
+            'UPSPercent' => 'ups_percent',   
+            'UPSStatus' => 'ups_charging_status',
+            'ExternalConnected' => 'externalconnected',
+            'TimeRemaining' => 'timeremaining',
+            'InstantTimeToEmpty' => 'instanttimetoempty',
+            'CellVoltage' => 'cellvoltage',
+            'Voltage' => 'voltage',
+            'PermanentFailureStatus' => 'permanentfailurestatus',
+            'Manufacturer' => 'manufacturer',
+            'PackReserve' => 'packreserve',
+            'AvgTimeToFull' => 'avgtimetofull',
+            'BatterySerialNumber' => 'batteryserialnumber',
+            'AmperagemA' => 'amperage',
+            'FullyCharged' => 'fullycharged',
+            'IsCharging' => 'ischarging',
+            'DesignCycleCount9C' => 'designcyclecount',
+            'AvgTimeToEmpty' => 'avgtimetoempty'
         );
 
-        // Reset values
-        $this->manufacture_date = '';
-        $this->design_capacity = -9876543;
-        $this->max_capacity = -9876543;
-        $this->max_percent = -9876543;
-        $this->current_capacity = -9876543;
-        $this->current_percent = -9876543;
-        $this->cycle_count = -9876543;
-        $this->temperature = -9876543;
-        $this->condition = '';
-        $this->timestamp = -9876543;
-        $this->sleep_prevented_by = '';
-        $this->hibernatefile = '';
-        $this->schedule = '';
-        $this->adapter_id = '';
-        $this->family_code = '';
-        $this->adapter_serial_number = '';
-        $this->combined_sys_load = '';
-        $this->user_sys_load = '';
-        $this->thermal_level = '';
-        $this->battery_level = '';
-        $this->ups_name = '';
-        $this->active_profile = '';
-        $this->ups_charging_status = '';
-        $this->externalconnected = '';
-        $this->cellvoltage = '';
-        $this->manufacturer = '';
-        $this->batteryserialnumber = '';
-        $this->fullycharged = '';
-        $this->ischarging = '';
-        $this->standbydelay = -9876543;
-        $this->standby = -9876543;
-        $this->womp = -9876543;
-        $this->halfdim = -9876543;
-        $this->gpuswitch = -9876543;
-        $this->sms = -9876543;
-        $this->networkoversleep = -9876543;
-        $this->disksleep = -9876543;
-        $this->sleep = -9876543;
-        $this->autopoweroffdelay = -9876543;
-        $this->hibernatemode = -9876543;
-        $this->autopoweroff = -9876543;
-        $this->ttyskeepawake = -9876543;
-        $this->displaysleep = -9876543;
-        $this->acwake = -9876543;
-        $this->lidwake = -9876543;
-        $this->sleep_on_power_button = -9876543;
-        $this->autorestart = -9876543;
-        $this->destroyfvkeyonstandby = -9876543;
-        $this->powernap = -9876543;
-        $this->haltlevel = -9876543;
-        $this->haltafter = -9876543;
-        $this->haltremain = -9876543;
-        $this->lessbright = -9876543;
-        $this->sleep_count = -9876543;
-        $this->dark_wake_count = -9876543;
-        $this->user_wake_count = -9876543;
-        $this->wattage = -9876543;
-        $this->backgroundtask = -9876543;
-        $this->applepushservicetask = -9876543;
-        $this->userisactive = -9876543;
-        $this->preventuseridledisplaysleep = -9876543;
-        $this->preventsystemsleep = -9876543;
-        $this->externalmedia = -9876543;
-        $this->preventuseridlesystemsleep = -9876543;
-        $this->networkclientactive = -9876543;
-        $this->cpu_scheduler_limit = -9876543;
-        $this->cpu_available_cpus = -9876543;
-        $this->cpu_speed_limit = -9876543;
-        $this->ups_percent = -9876543;
-        $this->timeremaining = -9876543;
-        $this->instanttimetoempty = -9876543;
-        $this->voltage = -9876543;
-        $this->permanentfailurestatus = -9876543;
-        $this->packreserve = -9876543;
-        $this->avgtimetofull = -9876543;
-        $this->amperage = -9876543;
-        $this->designcyclecount = -9876543;
-        $this->avgtimetoempty = -9876543;
-        
-        // Parse data
-        foreach(explode("\n", $data) as $line) {
-            // Translate standard entries
-            foreach($translate as $search => $field) {
-                
-                if(strpos($line, $search) === 0) {
-                    
-                    $value = substr($line, strlen($search));
-                    
-                    $this->$field = $value;
-                    break;
+        // Traverse the xml with translations
+        foreach ($translate as $search => $field) {  
+                // If key is not empty, save it to the object
+                if (! empty($plist[$search])) {  
+                        $this->$field = $plist[$search];
+                } else {
+                    // Else, check if key is an int  
+                    if (in_array($field, $ints) && $plist[$search] != "0"){
+                        // Set the int to fake null of -9876543
+                        $this->$field = -9876543;
+                    } else if (in_array($field, $ints) && $plist[$search] == "0"){
+                        // Set the int to fake null of -9876543
+                        $this->$field = $plist[$search];
+                    } else {  
+                        // Else, null the value
+                        $this->$field = '';
+                    }
                 }
-            } 
-        } //end foreach explode lines
-
+        }
+          
+        // Check if no battery is inserted and adjust values
         if ( $this->condition == "No Battery") {
             $this->condition = 'No Battery';
             $this->manufacture_date = '1980-00-00';
@@ -387,7 +309,7 @@ class Power_model extends Model
             $cellvoltageout = array();
             foreach ($cellvoltagearray as $cell) {
                 if ($cell !== "0") {
-                       array_push($cellvoltageout, substr_replace($cell, ".", -3, 0));
+                       array_push($cellvoltageout, ($cell / 1000));
                 }
             }
             $this->cellvoltage = implode($cellvoltageout,'v, ');
@@ -395,7 +317,7 @@ class Power_model extends Model
         
         // Format voltage
         if ($this->voltage !== '-9876543') {
-        $this->voltage = substr_replace($this->voltage, ".", -3, 0);
+        $this->voltage = ($this->voltage / 1000);
         }
         
         // Format amperage

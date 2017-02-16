@@ -265,6 +265,7 @@ $(document).on('appReady', function(e, lang) {
             }                    
                                                     
             // Calculate charge/discharge watts
+            // null amperage and voltage is -9876540
             if (data.amperage != "-9876540" && (data.amperage) && data.voltage != "-9876540" && (data.voltage)) {
             $('#battery-watts').html((data.amperage*data.voltage).toFixed(2)+" "+i18n.t('power.watts'));
                 if (data.amperage >= 0) {

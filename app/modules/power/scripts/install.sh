@@ -12,7 +12,12 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/power.sh"
 
 	# Set preference to include this file in the preflight check
-	setreportpref "power" "${CACHEPATH}powerinfo.txt"
+	setreportpref "power" "${CACHEPATH}powerinfo.xml"
+    
+    # Delete the older style cached file
+    if [[ -f "${MUNKIPATH}preflight.d/cache/powerinfo.txt" ]] ; then
+         rm -f "${MUNKIPATH}preflight.d/cache/powerinfo.txt"
+    fi
 
 else
 	echo "Failed to download all required components!"

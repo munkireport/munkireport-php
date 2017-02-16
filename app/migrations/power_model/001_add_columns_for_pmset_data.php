@@ -78,6 +78,18 @@ class Migration_add_columns_for_pmset_data extends Model
             $this->exec($sql);                  
             }            
         }
+        
+        // Add indexes for exising columns
+        foreach (array('manufacture_date','design_capacity','max_capacity','current_capacity','current_percent','cycle_count','temperature','condition') as $item) {
+            
+            // Add the index
+            $sql = sprintf(
+                "CREATE INDEX ".$item." ON %s (".$item.")",
+                $this->enquote($this->tablename)
+            );
+            $this->exec($sql);                  
+        }
+        
         $dbh->commit();
     }
 
