@@ -101,6 +101,7 @@ new Appusage_model;
                 // Event type
                 var autoreset=$('td:eq(2)', nRow).html();
                 autoreset = autoreset == 'launch' ? i18n.t('listing.appusage.launch') :
+                autoreset = autoreset == 'activation' ? i18n.t('listing.appusage.activation') :
                 (autoreset === 'quit' ? i18n.t('listing.appusage.quit') : '')
                 $('td:eq(2)', nRow).html(autoreset)
                 
