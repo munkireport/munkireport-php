@@ -133,9 +133,44 @@ class Power_model extends Model
         // If data is empty, throw error
         if (! $data) {
             throw new Exception("Error Processing Power Module Request: No data found", 1);
-        } else if (substr( $data, 0, 30 ) != '<?xml version="1.0" encoding="' ) {  // If data is not XML, throw error          
-            throw new Exception("Error Processing Power Module Request: Uploaded data is not XML, update your client's modules", 1);
-        }
+        } else if (substr( $data, 0, 30 ) != '<?xml version="1.0" encoding="' ) { // Else if old style text, process with old text based handler
+
+        // Translate network strings to db fields
+        $translate = array(
+            'manufacture_date = ' => 'manufacture_date',
+            'design_capacity = ' => 'design_capacity',
+            'max_capacity = ' => 'max_capacity',
+            'current_capacity = ' => 'current_capacity',
+            'cycle_count = ' => 'cycle_count',
+            'temperature = ' => 'temperature',
+            'condition = ' => 'condition');
+        // Reset values
+        $this->manufacture_date = '';
+        $this->design_capacity = 1;
+        $this->max_capacity = 1;
+        $this->max_percent = 100;
+        $this->current_capacity = 0;
+        $this->current_percent = 0;
+        $this->cycle_count = 0;
+        $this->temperature = 0;
+        $this->condition = '';
+        $this->timestamp = 0;
+        // Parse data
+        foreach(explode("\n", $data) as $line) {
+            // Translate standard entries
+            foreach($translate as $search => $field) {
+                
+                if(strpos($line, $search) === 0) {
+                    
+                    $value = substr($line, strlen($search));
+                    
+                    $this->$field = $value;
+                    break;
+                }
+            } 
+        } //end foreach explode lines 
+            
+        } else { // Else process with new XML handler
 
         // Array of ints for nulling with -9876543
         $ints =  array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','designcyclecount','avgtimetoempty','voltage','amperage','temperature','cycle_count','current_percent','current_capacity','max_percent','max_capacity','design_capacity');
@@ -242,6 +277,7 @@ class Power_model extends Model
                         $this->$field = '';
                     }
                 }
+            }
         }
           
         // Check if no battery is inserted and adjust values
