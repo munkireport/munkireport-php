@@ -12,7 +12,7 @@ class Migration_add_columns_for_pmset_data extends Model
     {
         // Get database handle
         $dbh = $this->getdbh();
-
+        
         // Wrap in transaction
         $dbh->beginTransaction();
         
@@ -25,8 +25,8 @@ class Migration_add_columns_for_pmset_data extends Model
                 'ALTER TABLE %s ADD COLUMN '.$item.' FLOAT',
                 $this->enquote($this->tablename)
             ); 
-            $this->exec($sql);   
-            
+            $this->exec($sql); 
+                            
             } else if ($item === "sleep_prevented_by") {    
             $sql = sprintf(
                 'ALTER TABLE %s ADD COLUMN '.$item.' TEXT',
@@ -40,7 +40,8 @@ class Migration_add_columns_for_pmset_data extends Model
                 'ALTER TABLE %s ADD COLUMN '.$item.' VARCHAR(255)',
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);   
+            $this->exec($sql); 
+
             }
             
             // Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
@@ -51,7 +52,8 @@ class Migration_add_columns_for_pmset_data extends Model
             $sql = sprintf("CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);   
+            $this->exec($sql); 
+
             }
         }
         
@@ -64,7 +66,7 @@ class Migration_add_columns_for_pmset_data extends Model
                 $this->enquote($this->tablename)
             );
             $this->exec($sql);   
-            
+
 			// Exclude come columns from being indexed, otherwise MySQL will complain about too many indexes
             $excludeindex = array('haltlevel','haltafter','haltremain','ups_percent','lessbright','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit',);
             if (! in_array($item, $excludeindex)) {
@@ -74,28 +76,30 @@ class Migration_add_columns_for_pmset_data extends Model
                 "CREATE INDEX ".$item." ON %s (".$item.")",
                 $this->enquote($this->tablename)
             );
-            $this->exec($sql);   
+            $this->exec($sql); 
+
             }            
         }
         
         // Add indexes for exising columns
         foreach (array('manufacture_date','design_capacity','max_capacity','max_percent','current_capacity','current_percent','cycle_count','temperature','condition','timestamp') as $item) {
             
-            // Add the index
-            $sql = sprintf(
-                
-                // sqlite and MySQL have slightly different create index values
-                if ( $this->get_driver() == 'sqlite') {
+            // sqlite and MySQL have slightly different create index values
+            if ( $this->get_driver() == 'sqlite') {
+                // Add the index
+                $sql = sprintf(    
                     "CREATE INDEX ".$item." ON %s (".$item.")",
                     $this->enquote($this->tablename)
-
-                } else {
+                );
+             } else {
+                // Add the index
+                $sql = sprintf(    
                     "ALTER TABLE %s ADD INDEX(`".$item."`)",
                     $this->enquote($this->tablename)
-                } 
-            );
-            
+                );
+             } 
             $this->exec($sql);
+
         }
         
         $dbh->commit();
