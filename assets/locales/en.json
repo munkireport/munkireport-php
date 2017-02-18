@@ -858,6 +858,7 @@
 			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
+			"fan_temps": "Fans and Temperatures",
 			"findmymac": "Find My Mac",
 			"gsx": "GSX",
 			"hardware": "Hardware",
