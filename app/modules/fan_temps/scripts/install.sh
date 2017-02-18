@@ -27,7 +27,7 @@ then
 	exit 1
 else
 	# Unzip the executable
-	unzip  -fo "/tmp/smckit.zip""${MUNKIPATH}/smckit"
+	unzip  -fo "/tmp/smckit.zip" "${MUNKIPATH}/smckit"
 
 	# Make executable
 	chmod a+x "${MUNKIPATH}preflight.d/fan_temps.sh"
