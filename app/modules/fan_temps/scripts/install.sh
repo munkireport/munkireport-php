@@ -23,15 +23,15 @@ if [ "${?}" != 0 ]
 then
 	echo "Failed to download all required components!"
 	rm -f "${MUNKIPATH}preflight.d/fan_temps.sh"
-	rm -f "${MUNKIPATH}/smckit"
+	rm -f "${MUNKIPATH}smckit"
 	exit 1
 else
 	# Unzip the executable
-	unzip  -fo "/tmp/smckit.zip" -d "${MUNKIPATH}/smckit"
+	unzip  -foqq "/tmp/smckit.zip" -d "${MUNKIPATH}smckit"
 
 	# Make executable
 	chmod a+x "${MUNKIPATH}preflight.d/fan_temps.sh"
-	chmod a+x "${MUNKIPATH}/smckit"
+	chmod a+x "${MUNKIPATH}smckit"
 
 	# Set preference to include this file in the preflight check
 	setreportpref "fan_temps" "${CACHEPATH}fan_temps.xml"
