@@ -16,22 +16,25 @@ NW_CTL="${BASEURL}index.php?/module/fan_temps/"
 
 # Get the script in the proper directory
 ${CURL} -s "${NW_CTL}get_script/fan_temps.sh" -o "${MUNKIPATH}preflight.d/fan_temps.sh"
-${CURL} -s "${NW_CTL}get_script/smckit.zip" -o "/tmp/smckit.zip"
+${CURL} -s "${NW_CTL}get_script/smckit.zip" -o "${MUNKIPATH}smckit.zip"
 
 
 if [ "${?}" != 0 ]
 then
 	echo "Failed to download all required components!"
 	rm -f "${MUNKIPATH}preflight.d/fan_temps.sh"
-	rm -f "${MUNKIPATH}smckit"
+	rm -f "${MUNKIPATH}smckit.zip"
 	exit 1
 else
 	# Unzip the executable
-	unzip  -foqq "/tmp/smckit.zip" -d "${MUNKIPATH}smckit"
+	unzip  -foqq "${MUNKIPATH}smckit.zip" -d "${MUNKIPATH}smckit"
 
 	# Make executable
 	chmod a+x "${MUNKIPATH}preflight.d/fan_temps.sh"
 	chmod a+x "${MUNKIPATH}smckit"
+    
+	# Clean up
+	rm -f "${MUNKIPATH}smckit.zip"
 
 	# Set preference to include this file in the preflight check
 	setreportpref "fan_temps" "${CACHEPATH}fan_temps.xml"
