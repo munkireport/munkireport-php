@@ -33,7 +33,7 @@ class Appusage_model extends Model
     // ------------------------------------------------------------------------
     
     /**
-     * Get printer names for widget
+     * Get applications names for widget
      *
      **/    
     public function get_applaunch()
