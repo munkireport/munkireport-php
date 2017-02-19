@@ -94,14 +94,15 @@ new Appusage_model;
 	        	var event = parseInt($('td:eq(4)', nRow).html());
 	        	var date = new Date(event * 1000);
 	        	$('td:eq(4)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date).fromNow()+'</span>');
-                
+
 	        	// Get name link
 	        	var appname=$('td:eq(3)', nRow).html();
 	        	$('td:eq(3)', nRow).html($('<a>').attr('href', appUrl+'/module/inventory/items/'+appname).text(appname))
-                
+
 	        	// Event type
 	        	var autoreset=$('td:eq(2)', nRow).html();
 	        	autoreset = autoreset == 'launch' ? i18n.t('listing.appusage.launch') :
+	        	autoreset = autoreset == 'activation' ? i18n.t('listing.appusage.activation') :
 	        	(autoreset === 'quit' ? i18n.t('listing.appusage.quit') : '')
 	        	$('td:eq(2)', nRow).html(autoreset)
                 

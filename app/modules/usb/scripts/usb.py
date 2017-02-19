@@ -52,7 +52,7 @@ def flatten_usb_info(array):
                 device['extra_current_used'] = obj[item]
             elif item == 'Built-in_Device' and obj[item] == 'Yes':
                 device['internal'] = 1
-            elif item == 'Media' or 'removable_media' :
+            elif item == 'Media' or item == 'removable_media' :
                 device['media'] = 1
         out.append(device)
     return out
