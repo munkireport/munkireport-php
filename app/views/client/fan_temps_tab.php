@@ -23,6 +23,8 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('fans.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (d[prop] == "false"){
 					   rows = rows + '<tr><th>'+i18n.t('fans.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
+                    } else if ((i18n.t('fans.'+prop).length) == 4){
+					   // Hide rows that are only the sensor code
                     } else {
 					   temperature_f = ((d[prop] * 9/5 ) + 32 ).toFixed(2);
 					   if (d['temperature_unit'] == "F"){

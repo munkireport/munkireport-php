@@ -237,6 +237,28 @@ class Fan_temps_model extends Model {
 		$this->rs['tp4p'] = -9876540; $this->rt['tp4p'] = 'FLOAT';
 		$this->rs['tp5p'] = -9876540; $this->rt['tp5p'] = 'FLOAT';
 		$this->rs['ts0c'] = -9876540; $this->rt['ts0c'] = 'FLOAT';
+		$this->rs['tl1p'] = -9876540; $this->rt['tl1p'] = 'FLOAT';
+		$this->rs['tgvp'] = -9876540; $this->rt['tgvp'] = 'FLOAT';
+		$this->rs['tarc'] = -9876540; $this->rt['tarc'] = 'FLOAT';
+		$this->rs['talc'] = -9876540; $this->rt['talc'] = 'FLOAT';
+		$this->rs['ttrd'] = -9876540; $this->rt['ttrd'] = 'FLOAT';
+		$this->rs['ttld'] = -9876540; $this->rt['ttld'] = 'FLOAT';
+		$this->rs['th0n'] = -9876540; $this->rt['th0n'] = 'FLOAT';
+		$this->rs['ts2p'] = -9876540; $this->rt['ts2p'] = 'FLOAT';
+		$this->rs['tg0t'] = -9876540; $this->rt['tg0t'] = 'FLOAT';
+		$this->rs['tc2p'] = -9876540; $this->rt['tc2p'] = 'FLOAT';
+		$this->rs['tc3p'] = -9876540; $this->rt['tc3p'] = 'FLOAT';
+		$this->rs['tg0p'] = -9876540; $this->rt['tg0p'] = 'FLOAT';
+		$this->rs['ta2p'] = -9876540; $this->rt['ta2p'] = 'FLOAT';
+		$this->rs['tg0r'] = -9876540; $this->rt['tg0r'] = 'FLOAT';
+		$this->rs['tg1p'] = -9876540; $this->rt['tg1p'] = 'FLOAT';
+		$this->rs['tg1r'] = -9876540; $this->rt['tg1r'] = 'FLOAT';
+		$this->rs['tm0r'] = -9876540; $this->rt['tm0r'] = 'FLOAT';
+		$this->rs['tm1r'] = -9876540; $this->rt['tm1r'] = 'FLOAT';
+		$this->rs['te0t'] = -9876540; $this->rt['te0t'] = 'FLOAT';
+		$this->rs['tp0t'] = -9876540; $this->rt['tp0t'] = 'FLOAT';
+		$this->rs['tmap'] = -9876540; $this->rt['tmap'] = 'FLOAT';
+		$this->rs['th1r'] = -9876540; $this->rt['th1r'] = 'FLOAT';
 		
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
@@ -319,35 +341,35 @@ class Fan_temps_model extends Model {
         
         // Translate fan_temp strings to db fields
         $translate = array(
-        	'AMBIENTAIR0TA0P' => 'ambient_air_0',
-        	'AMBIENTAIR1TA1P' => 'ambient_air_1',
-        	'CPU0DIETC0F' => 'cpu_0_die',
-        	'CPU0DIODETC0D' => 'cpu_0_diode',
-        	'CPU0HEATSINKTC0H' => 'cpu_0_heatsink',
-        	'CPU0PROXIMITYTC0P' => 'cpu_0_proximity',
-        	'ENCLOSUREBASE0TB0T' => 'enclosure_base_0',
-        	'ENCLOSUREBASE1TB1T' => 'enclosure_base_1',
-        	'ENCLOSUREBASE2TB2T' => 'enclosure_base_2',
-        	'ENCLOSUREBASE3TB3T' => 'enclosure_base_3',
-        	'GPU0DIODETG0D' => 'gpu_0_diode',
-        	'GPU0HEATSINKTG0H' => 'gpu_0_heatsink',
-        	'GPU0PROXIMITYTG0P' => 'gpu_0_proximity',
-        	'HDDPROXIMITYTH0P' => 'hdd_proximity',
-        	'HEATSINK0Th0H' => 'heatsink_0',
-        	'HEATSINK1Th1H' => 'heatsink_1',
-        	'HEATSINK2Th2H' => 'heatsink_2',
-        	'MEMSLOT0TM0S' => 'mem_slot_0',
-        	'MEMSLOTSPROXIMITYTM0P' => 'mem_slots_proximity',
-        	'PALMRESTTs0P' => 'palm_rest',
-        	'LCDPROXIMITYTL0P' => 'lcd_proximity',
-        	'MISCPROXIMITYTm0P' => 'misc_proximity',
-        	'NORTHBRIDGETN0H' => 'northbridge',
-        	'NORTHBRIDGEDIODETN0D' => 'northbridge_diode',
-        	'NORTHBRIDGEPROXIMITYTN0P' => 'northbridge_proximity',
-        	'ODDPROXIMITYTO0P' => 'odd_proximity',
-        	'PWRSUPPLYPROXIMITYTp0P' => 'pwr_supply_proximity',
-        	'THUNDERBOLT0TI0P' => 'thunderbolt_0',
-        	'THUNDERBOLT1TI1P' => 'thunderbolt_1',
+        	'TA0P' => 'ambient_air_0',
+        	'TA1P' => 'ambient_air_1',
+        	'TC0F' => 'cpu_0_die',
+        	'TC0D' => 'cpu_0_diode',
+        	'TC0H' => 'cpu_0_heatsink',
+        	'TC0P' => 'cpu_0_proximity',
+        	'TB0T' => 'enclosure_base_0',
+        	'TB1T' => 'enclosure_base_1',
+        	'TB2T' => 'enclosure_base_2',
+        	'TB3T' => 'enclosure_base_3',
+        	'TG0D' => 'gpu_0_diode',
+        	'TG0H' => 'gpu_0_heatsink',
+        	'TG0P' => 'gpu_0_proximity',
+        	'TH0P' => 'hdd_proximity',
+        	'Th0H' => 'heatsink_0',
+        	'Th1H' => 'heatsink_1',
+        	'Th2H' => 'heatsink_2',
+        	'TM0S' => 'mem_slot_0',
+        	'TM0P' => 'mem_slots_proximity',
+        	'Ts0P' => 'palm_rest',
+        	'TL0P' => 'lcd_proximity',
+        	'Tm0P' => 'misc_proximity',
+        	'TN0H' => 'northbridge',
+        	'TN0D' => 'northbridge_diode',
+        	'TN0P' => 'northbridge_proximity',
+        	'TO0P' => 'odd_proximity',
+        	'Tp0P' => 'pwr_supply_proximity',
+        	'TI0P' => 'thunderbolt_0',
+        	'TI1P' => 'thunderbolt_1',
         	'FAN0' => 'fan_0',
         	'FAN1' => 'fan_1',
         	'FAN2' => 'fan_2',
@@ -541,6 +563,28 @@ class Fan_temps_model extends Model {
         	'Tp4P' => 'tp4p',
         	'Tp5P' => 'tp5p',
         	'TS0C' => 'ts0c',
+        	'TL1p' => 'tl1p',
+        	'TGVP' => 'tgvp',
+        	'TaRC' => 'tarc',
+        	'TaLC' => 'talc',
+        	'TTRD' => 'ttrd',
+        	'TTLD' => 'ttld',
+        	'Th0N' => 'th0n',
+        	'TS2P' => 'ts2p',
+        	'TG0T' => 'tg0t',
+        	'TC2P' => 'tc2p',
+        	'TC3P' => 'tc3p',
+        	'TG0C' => 'tg0c',
+        	'TA2p' => 'ta2p',
+        	'TG0r' => 'tg0r',
+        	'TG1p' => 'tg1p',
+        	'TG1r' => 'tg1r',
+        	'TM0r' => 'tm0r',
+        	'TM1r' => 'tm1r',
+        	'Te0t' => 'te0t',
+        	'Tp0t' => 'tp0t',
+        	'TMAP' => 'tamp',
+        	'TH1R' => 'th1r',
         	'fanlable0' => 'fanlable0',
         	'fanlable1' => 'fanlable1',
         	'fanlable2' => 'fanlable2',
