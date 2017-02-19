@@ -22,40 +22,34 @@ new Fan_temps_model;
 		        <th data-i18n="fans.fan_0" data-colname='fan_temps.fan_0'></th>
 		        <th data-i18n="fans.fan_1" data-colname='fan_temps.fan_1'></th>
 		        <th data-i18n="fans.fan_2" data-colname='fan_temps.fan_2'></th>
-		        <th data-i18n="fans.ambient_air_1" data-colname='fan_temps.ambient_air_0'></th>
-		        <th data-i18n="fans.ambient_air_1" data-colname='fan_temps.ambient_air_1'></th>
-		        <th data-i18n="fans.cpu_0_die" data-colname='fan_temps.cpu_0_die'></th>
-		        <th data-i18n="fans.cpu_0_diode" data-colname='fan_temps.cpu_0_diode'></th>
-		        <th data-i18n="fans.cpu_0_heatsink" data-colname='fan_temps.cpu_0_heatsink'></th>
-		        <th data-i18n="fans.cpuproximity_short" data-colname='fan_temps.cpu_0_proximity'></th>
-		        <th data-i18n="fans.enclosure_base_0" data-colname='fan_temps.enclosure_base_0'></th>
-		        <th data-i18n="fans.enclosure_base_1" data-colname='fan_temps.enclosure_base_1'></th>
-		        <th data-i18n="fans.enclosure_base_2" data-colname='fan_temps.enclosure_base_2'></th>
-		        <th data-i18n="fans.enclosure_base_3" data-colname='fan_temps.enclosure_base_3'></th>
-		        <th data-i18n="fans.gpu_0_diode" data-colname='fan_temps.gpu_0_diode'></th>
-		        <th data-i18n="fans.gpu_0_heatsink" data-colname='fan_temps.gpu_0_heatsink'></th>
-		        <th data-i18n="fans.gpuproximity_short" data-colname='fan_temps.gpu_0_proximity'></th>
-		        <th data-i18n="fans.lcproximity_shortd" data-colname='fan_temps.lcd_proximity'></th>
-		        <th data-i18n="fans.hddproximity_short" data-colname='fan_temps.hdd_proximity'></th>
-		        <th data-i18n="fans.oddproximity_short" data-colname='fan_temps.odd_proximity'></th>
-		        <th data-i18n="fans.heatsink_0" data-colname='fan_temps.heatsink_0'></th>
-		        <th data-i18n="fans.heatsink_1" data-colname='fan_temps.heatsink_1'></th>
-		        <th data-i18n="fans.heatsink_2" data-colname='fan_temps.heatsink_2'></th>
-		        <th data-i18n="fans.mem_slot_0" data-colname='fan_temps.mem_slot_0'></th>
-		        <th data-i18n="fans.memoryslotproxi_short" data-colname='fan_temps.mem_slots_proximity'></th>
-		        <th data-i18n="fans.palm_rest" data-colname='fan_temps.palm_rest'></th>
-		        <th data-i18n="fans.miscproximity_short" data-colname='fan_temps.misc_proximity'></th>
-		        <th data-i18n="fans.northbridge" data-colname='fan_temps.northbridge'></th>
-		        <th data-i18n="fans.northbridgediode_short" data-colname='fan_temps.northbridge_diode'></th>
-		        <th data-i18n="fans.northbridgeproximity_short" data-colname='fan_temps.northbridge_proximity'></th>
-		        <th data-i18n="fans.powersupplyproximity_short" data-colname='fan_temps.pwr_supply_proximity'></th>
-		        <th data-i18n="fans.thunderbolt_0" data-colname='fan_temps.thunderbolt_0'></th>
-		        <th data-i18n="fans.thunderbolt_1" data-colname='fan_temps.thunderbolt_1'></th>
+		        <th data-i18n="fans.ta0p" data-colname='fan_temps.ta0p'></th>
+		        <th data-i18n="fans.tc0f" data-colname='fan_temps.tc0f'></th>
+		        <th data-i18n="fans.tc0d" data-colname='fan_temps.tc0d'></th>
+		        <th data-i18n="fans.tc0p_short" data-colname='fan_temps.tc0p'></th>
+		        <th data-i18n="fans.tb0t" data-colname='fan_temps.tb0t'></th>
+		        <th data-i18n="fans.tb1t" data-colname='fan_temps.tb1t'></th>
+		        <th data-i18n="fans.tb2t" data-colname='fan_temps.tb2t'></th>
+		        <th data-i18n="fans.tg0d" data-colname='fan_temps.tg0d'></th>
+		        <th data-i18n="fans.tg0h" data-colname='fan_temps.tg0h'></th>
+		        <th data-i18n="fans.tg0p_short" data-colname='fan_temps.tg0p'></th>
+		        <th data-i18n="fans.tl0p_short" data-colname='fan_temps.tl0p'></th>
+		        <th data-i18n="fans.th0p_short" data-colname='fan_temps.th0p'></th>
+		        <th data-i18n="fans.th0h" data-colname='fan_temps.th0h'></th>
+		        <th data-i18n="fans.th1h" data-colname='fan_temps.th0h'></th>
+		        <th data-i18n="fans.th2h" data-colname='fan_temps.th2h'></th>
+		        <th data-i18n="fans.tm0s" data-colname='fan_temps.tm0s'></th>
+		        <th data-i18n="fans.tm0p_short" data-colname='fan_temps.tm0p'></th>
+		        <th data-i18n="fans.ts0p" data-colname='fan_temps.ts0p'></th>
+		        <th data-i18n="fans.tm0p_short" data-colname='fan_temps.tm0p'></th>
+		        <th data-i18n="fans.tn0h" data-colname='fan_temps.tn0h'></th>
+		        <th data-i18n="fans.tn0d_short" data-colname='fan_temps.tn0d'></th>
+		        <th data-i18n="fans.tn0p_short" data-colname='fan_temps.tn0p'></th>
+		        <th data-i18n="fans.tp0p_short" data-colname='fan_temps.tp0p'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="34" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="28" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -155,8 +149,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(5)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(5)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -164,13 +158,12 @@ new Fan_temps_model;
 				 }
 			}
                              
-			// ambient air 1
 			var columnvar=$('td:eq(6)', nRow).html();
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(6)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(6)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -178,13 +171,12 @@ new Fan_temps_model;
 				 }
 			}
                              
-			// cpu die
 			var columnvar=$('td:eq(7)', nRow).html();
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(7)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(7)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -192,13 +184,12 @@ new Fan_temps_model;
 				 }
 			}
                               
-			// cpu diode
 			var columnvar=$('td:eq(8)', nRow).html();
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(8)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(8)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -206,13 +197,12 @@ new Fan_temps_model;
 				 }
 			}
                              
-			// cpu heatsink
 			var columnvar=$('td:eq(9)', nRow).html();
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(9)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(9)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -220,13 +210,12 @@ new Fan_temps_model;
 				 }
 			}
                               
-			// cpu proxi
 			var columnvar=$('td:eq(10)', nRow).html();
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(10)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(10)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -239,8 +228,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(11)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(11)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -253,8 +242,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(12)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(12)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -267,8 +256,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(13)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(13)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -281,8 +270,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(14)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(14)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -295,8 +284,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(15)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(15)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -309,8 +298,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(16)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(16)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -323,8 +312,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(17)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(17)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -337,8 +326,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(18)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(18)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -351,8 +340,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(19)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(19)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -365,8 +354,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(20)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(20)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -379,8 +368,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(21)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(21)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -393,8 +382,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(22)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(22)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -407,8 +396,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(23)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(23)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -421,8 +410,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(24)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(24)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -435,8 +424,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(25)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(25)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -449,8 +438,8 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(26)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(26)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
@@ -463,100 +452,14 @@ new Fan_temps_model;
 			if(columnvar === "-9876540" || columnvar === -9876540) {
 				 $('td:eq(27)', nRow).html('');
 			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
+				 temperature_c = parseFloat((columnvar * 1).toFixed(2))+"°C";
+				 temperature_f = parseFloat(((columnvar * 9/5 ) + 32 ).toFixed(2))+"°F";
 				 if ( temperature_unit == "F" ){
 				      $('td:eq(27)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
 				 } else{
 				      $('td:eq(27)', nRow).html('<span title="'+temperature_f+'">'+temperature_c+'</span>');
 				 }
-			}
-                                          
-			// 
-			var columnvar=$('td:eq(28)', nRow).html();
-			if(columnvar === "-9876540" || columnvar === -9876540) {
-				 $('td:eq(28)', nRow).html('');
-			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
-				 if ( temperature_unit == "F" ){
-				      $('td:eq(28)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
-				 } else{
-				      $('td:eq(28)', nRow).html('<span title="'+temperature_f+'">'+temperature_c+'</span>');
-				 }
-			}
-                                          
-			// 
-			var columnvar=$('td:eq(29)', nRow).html();
-			if(columnvar === "-9876540" || columnvar === -9876540) {
-				 $('td:eq(29)', nRow).html('');
-			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
-				 if ( temperature_unit == "F" ){
-				      $('td:eq(29)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
-				 } else{
-				      $('td:eq(29)', nRow).html('<span title="'+temperature_f+'">'+temperature_c+'</span>');
-				 }
-			}
-                                          
-			// 
-			var columnvar=$('td:eq(30)', nRow).html();
-			if(columnvar === "-9876540" || columnvar === -9876540) {
-				 $('td:eq(30)', nRow).html('');
-			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
-				 if ( temperature_unit == "F" ){
-				      $('td:eq(30)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
-				 } else{
-				      $('td:eq(30)', nRow).html('<span title="'+temperature_f+'">'+temperature_c+'</span>');
-				 }
-			}
-                                          
-			// 
-			var columnvar=$('td:eq(31)', nRow).html();
-			if(columnvar === "-9876540" || columnvar === -9876540) {
-				 $('td:eq(31)', nRow).html('');
-			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
-				 if ( temperature_unit == "F" ){
-				      $('td:eq(31)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
-				 } else{
-				      $('td:eq(31)', nRow).html('<span title="'+temperature_f+'">'+temperature_c+'</span>');
-				 }
-			}
-                                          
-			// 
-			var columnvar=$('td:eq(32)', nRow).html();
-			if(columnvar === "-9876540" || columnvar === -9876540) {
-				 $('td:eq(32)', nRow).html('');
-			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
-				 if ( temperature_unit == "F" ){
-				      $('td:eq(32)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
-				 } else{
-				      $('td:eq(32)', nRow).html('<span title="'+temperature_f+'">'+temperature_c+'</span>');
-				 }
-			}
-                                          
-			// 
-			var columnvar=$('td:eq(33)', nRow).html();
-			if(columnvar === "-9876540" || columnvar === -9876540) {
-				 $('td:eq(33)', nRow).html('');
-			} else{				 
-				 temperature_c = (columnvar * 1).toFixed(1)+"°C";
-				 temperature_f = ((columnvar * 9/5 ) + 32 ).toFixed(2)+"°F";
-				 if ( temperature_unit == "F" ){
-				      $('td:eq(33)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>');
-				 } else{
-				      $('td:eq(33)', nRow).html('<span title="'+temperature_f+'">'+temperature_c+'</span>');
-				 }
-			}
-             
-                
+			}        
                 
 		    }
 	    });
