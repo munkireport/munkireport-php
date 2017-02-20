@@ -157,79 +157,37 @@ class Usb_model extends Model {
 			// Make sure manufacturer is set
 			$device['manufacturer'] = isset($device['manufacturer']) ? $device['manufacturer'] : '';
             
-            // Set device types
-			if (stripos($device['name'], 'iSight') !== false) {
-				$device['type'] = 'Camera';
+            // Map name to device type
+			$device_types = array(
+				'Camera' => array('isight', 'camera', 'video'),
+				'USB Hub' => array('hub'),
+				'Keyboard' => array('keyboard'),
+				'IR Receiver' => array('ir receiver'),
+				'Bluetooth Controller' => array('bluetooth'),
+				'iPhone' => array('iphone'),
+				'iPad' => array('ipad'),
+				'iPod' => array('ipod'),
+				'Mouse' => array('mouse'),
+				'Mass Storage' => array('card reader', 'os x install disk', 'apple usb superdrive'),
+				'Display' => array('displaylink', 'display', 'monitor'),
+				'Ethernet' => array('ethernet'),
+				'Network' => array('network', 'ethernet', 'modem'),
+				'UPS' => array('ups'),
+				'Audio Device' => array('audio'),
+				'TouchBar' => array('ibridge')
+			);
+			$search = '/.*'.strtolower($device['name']).'.*/';
+			foreach($device_types as $type => $list){
+				if (preg_grep($search, $list)){
+					$device['type'] = $type;
+					break;
+				}
 			}
-			else if (stripos($device['name'], 'Camera') !== false) {
-				$device['type'] = 'Camera';
-			}
-			else if (stripos($device['name'], 'Video') !== false) {
-				$device['type'] = 'Camera';
-			}
-			else if (stripos($device['name'], 'Hub') !== false) {
-				$device['type'] = 'USB Hub';
-			}
-			else if (stripos($device['name'], 'Keyboard') !== false) {
-				$device['type'] = 'Keyboard';
-			}
-			else if (stripos($device['name'], 'IR Receiver') !== false) {
-				$device['type'] = 'IR Receiver';
-			}
-			else if (stripos($device['name'], 'Bluetooth') !== false) {
-				$device['type'] = 'Bluetooth Controller';
-			}
-			else if (stripos($device['name'], 'iPhone') !== false) {
-				$device['type'] = 'iPhone';
-			}
-			else if (stripos($device['name'], 'iPad') !== false) {
-				$device['type'] = 'iPad';
-			}
-			else if (stripos($device['name'], 'iPod') !== false) {
-				$device['type'] = 'iPod';
-			}
-			else if (stripos($device['name'], 'Mouse') !== false) {
-				$device['type'] = 'Mouse';
-			}
-			else if (stripos($device['name'], 'Card Reader') !== false) {
-				$device['type'] = 'Mass Storage';
-			}
-			else if (stripos($device['name'], 'OS X Install Disk') !== false) {
-				$device['type'] = 'Mass Storage';
-			}
-			else if (stripos($device['name'], 'Apple USB SuperDrive') !== false) {
-				$device['type'] = 'Mass Storage';
-			}
-			else if (stripos($device['manufacturer'], 'DisplayLink') !== false) {
-				$device['type'] = 'Display'; // Set by manufacturer
-			}
-			else if (stripos($device['name'], 'Display') !== false) {
-				$device['type'] = 'Display';
-			}
-			else if (stripos($device['name'], 'Monitor') !== false) {
-				$device['type'] = 'Display';
-			}
-			else if (stripos($device['name'], 'Ethernet') !== false) {
-				$device['type'] = 'Network';
-			}
-			else if (stripos($device['name'], 'Network') !== false) {
-				$device['type'] = 'Network';
-			}
-			else if (stripos($device['name'], 'Modem') !== false) {
-				$device['type'] = 'Network';
-			}
-			else if (stripos($device['name'], 'UPS') !== false) {
-				$device['type'] = 'UPS';
-			}
-			else if (stripos($device['name'], 'audio') !== false) {
-				$device['type'] = 'Audio Device';
-			}
-			else if (stripos($device['name'], 'iBridge') !== false) {
-				$device['type'] = 'TouchBar';
+			
+			if (stripos($device['name'], 'iBridge') !== false) {
 				$device['name'] = 'TouchBar';
 			}
 
-            
             // Check for Mass Storage
             if ($device['media'] == 1 ) {
 				$device['type'] = 'Mass Storage';
