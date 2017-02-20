@@ -161,6 +161,12 @@ class Usb_model extends Model {
 			if (stripos($device['name'], 'iSight') !== false) {
 				$device['type'] = 'Camera';
 			}
+			else if (stripos($device['name'], 'Camera') !== false) {
+				$device['type'] = 'Camera';
+			}
+			else if (stripos($device['name'], 'Video') !== false) {
+				$device['type'] = 'Camera';
+			}
 			else if (stripos($device['name'], 'Hub') !== false) {
 				$device['type'] = 'USB Hub';
 			}
@@ -188,23 +194,35 @@ class Usb_model extends Model {
 			else if (stripos($device['name'], 'Card Reader') !== false) {
 				$device['type'] = 'Mass Storage';
 			}
+			else if (stripos($device['name'], 'OS X Install Disk') !== false) {
+				$device['type'] = 'Mass Storage';
+			}
+			else if (stripos($device['name'], 'Apple USB SuperDrive') !== false) {
+				$device['type'] = 'Mass Storage';
+			}
 			else if (stripos($device['manufacturer'], 'DisplayLink') !== false) {
 				$device['type'] = 'Display'; // Set by manufacturer
+			}
+			else if (stripos($device['name'], 'Display') !== false) {
+				$device['type'] = 'Display';
+			}
+			else if (stripos($device['name'], 'Monitor') !== false) {
+				$device['type'] = 'Display';
+			}
+			else if (stripos($device['name'], 'Ethernet') !== false) {
+				$device['type'] = 'Network';
+			}
+			else if (stripos($device['name'], 'Network') !== false) {
+				$device['type'] = 'Network';
+			}
+			else if (stripos($device['name'], 'Modem') !== false) {
+				$device['type'] = 'Network';
 			}
 			else if (stripos($device['name'], 'UPS') !== false) {
 				$device['type'] = 'UPS';
 			}
 			else if (stripos($device['name'], 'audio') !== false) {
 				$device['type'] = 'Audio Device';
-			}
-			else if (stripos($device['name'], 'Camera') !== false) {
-				$device['type'] = 'Camera';
-			}
-			else if (stripos($device['name'], 'Video') !== false) {
-				$device['type'] = 'Camera';
-			}
-			else if (stripos($device['name'], 'Display') !== false) {
-				$device['type'] = 'Display';
 			}
 			else if (stripos($device['name'], 'iBridge') !== false) {
 				$device['type'] = 'TouchBar';
