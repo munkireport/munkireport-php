@@ -140,6 +140,7 @@ class Power_model extends Model
             'manufacture_date = ' => 'manufacture_date',
             'design_capacity = ' => 'design_capacity',
             'max_capacity = ' => 'max_capacity',
+            'max_percent = ' => 'max_percent',
             'current_capacity = ' => 'current_capacity',
             'cycle_count = ' => 'cycle_count',
             'temperature = ' => 'temperature',

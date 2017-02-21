@@ -273,9 +273,13 @@ $(document).on('appReady', function(e, lang) {
                 } else {
                   $('#battery-watt-label').html(i18n.t('power.discharging_watt')); 
                 }
+            } else if (data.amperage == "0" || data.amperage == 0 ) {
+	        	$('#battery-watts').html('');  
+	        	$('#battery-watt-label').html(i18n.t('power.watts'));  
             } else {
 	        	$('#battery-watts').html('');  
-            }                    
+	        	$('#battery-watts-label').html(i18n.t('power.watts'));  
+            }    
             
             // Format cycle count
             if (data.cycle_count != "-9876543" && (data.cycle_count)) {
