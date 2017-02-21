@@ -2,7 +2,7 @@
 
 # Munki database check
 
-MANAGEDINSTALLDIR=$(defaults read /Library/Preferences/ManagedInstalls.plist ManagedInstallDir)
+MANAGEDINSTALLDIR=$(defaults read /Library/Preferences/ManagedInstalls ManagedInstallDir)
 
 if [[ -f "${MANAGEDINSTALLDIR}"/application_usage.sqlite ]]; then
 
