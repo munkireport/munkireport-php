@@ -38,17 +38,17 @@ def flatten_usb_info(array):
                 out = out + flatten_usb_info(obj['_items'])
             elif item == '_name':
                 device['name'] = obj[item]
-            elif item == 'vendor_id':
+            elif item == 'vendor_id' or item == 'b_vendor_id':
                 device['vendor_id'] = obj[item]
-            elif item == 'manufacturer':
+            elif item == 'manufacturer' or item == 'f_manufacturer':
                 device['manufacturer'] = obj[item]
-            elif item == 'device_speed':
+            elif item == 'device_speed' or item == 'e_device_speed':
                 device['device_speed'] = obj[item]
-            elif item == 'bus_power':
+            elif item == 'bus_power' or item == 'h_bus_power':
                 device['bus_power'] = obj[item]
-            elif item == 'bus_power_used':
+            elif item == 'bus_power_used' or item == 'j_bus_power_used':
                 device['bus_power_used'] = obj[item]
-            elif item == 'extra_current_used':
+            elif item == 'extra_current_used' or item == 'k_extra_current_used':
                 device['extra_current_used'] = obj[item]
             elif item == 'Built-in_Device' and obj[item] == 'Yes':
                 device['internal'] = 1
