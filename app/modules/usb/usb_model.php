@@ -16,6 +16,8 @@ class Usb_model extends Model {
 		$this->rs['bus_power'] = 0; // True or False
 		$this->rs['bus_power_used'] = 0; // True or False
 		$this->rs['extra_current_used'] = 0; // True or False
+		$this->rs['usb_serial_number'] = ''; // USB device serial number
+		$this->rs['printer_id'] = ''; $this->rt['printer_id'] = 'TEXT'; // 1284 Device ID information, only used by printers
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -29,6 +31,8 @@ class Usb_model extends Model {
 		$this->idx[] = array('internal');
 		$this->idx[] = array('bus_power');
 		$this->idx[] = array('bus_power_used');
+		$this->idx[] = array('extra_current_used');
+		$this->idx[] = array('usb_serial_number');
         
 		// Create table if it does not exist
 		$this->create_table();
@@ -105,7 +109,7 @@ class Usb_model extends Model {
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();
-		
+        		
 		$typeList = array(
 			'name' => '',
 			'type' => 'unknown', // Mouse, Trackpad, Hub, etc.
@@ -116,7 +120,9 @@ class Usb_model extends Model {
 			'media' => 0, // True or False
 			'bus_power' => 0,
 			'bus_power_used' => 0,
-			'extra_current_used' => 0
+			'extra_current_used' => 0,
+			'usb_serial_number' => '',
+			'printer_id' => ''
 		);
 		
 		foreach ($myList as $device) {
@@ -132,7 +138,7 @@ class Usb_model extends Model {
 			}
 			
 			// Check for USB bus devices and simulated USB devices to exclude
-            $excludeusb = array("UHCI Root Hub Simulation","EHCI Root Hub Simulation");
+            $excludeusb = array("OHCI Root Hub Simulation","UHCI Root Hub Simulation","EHCI Root Hub Simulation","RHCI Root Hub Simulation","XHCI Root Hub Simulation","XHCI Root Hub SS Simulation","XHCI Root Hub USB 2.0 Simulation");
             if (in_array($device['name'], $excludeusb)) {
 				continue;
 			}
@@ -156,6 +162,9 @@ class Usb_model extends Model {
 			
 			// Make sure manufacturer is set
 			$device['manufacturer'] = isset($device['manufacturer']) ? $device['manufacturer'] : '';
+            
+			// Make sure printer_id is set
+			$device['printer_id'] = isset($device['printer_id']) ? $device['printer_id'] : '';
             
             // Set device types
 			if (stripos($device['name'], 'iSight') !== false) {
@@ -224,6 +233,9 @@ class Usb_model extends Model {
 			else if (stripos($device['name'], 'audio') !== false) {
 				$device['type'] = 'Audio Device';
 			}
+			else if ($device['printer_id'] !== '') {
+				$device['type'] = 'Printer';
+			}
 			else if (stripos($device['name'], 'iBridge') !== false) {
 				$device['type'] = 'TouchBar';
 				$device['name'] = 'TouchBar';
@@ -247,7 +259,7 @@ class Usb_model extends Model {
 			}
             
 			// Set manufacturer from vendor ID if it's blank
-			if (! array_key_exists("manufacturer",$device)) {
+			if ($device['manufacturer'] == '') {
 				preg_match('/\((.*?)\)/s', $device['vendor_id'], $manufactureroutput);
 				$device['manufacturer'] = $manufactureroutput[1];
 			}

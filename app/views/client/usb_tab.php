@@ -6,7 +6,7 @@ $(document).on('appReady', function(){
 	$.getJSON(appUrl + '/module/usb/get_data/' + serialNumber, function(data){
 		// Set count of USB devices
 		$('#usb-cnt').text(data.length);
-		var skipThese = ['id','serial_number','name'];
+		var skipThese = ['id','name','printer_id'];
 		$.each(data, function(i,d){
 			
 			// Generate rows from data
