@@ -169,7 +169,7 @@ new Smart_stats_model;
                                 
 	        	var status=$('td:eq(19)', nRow).html();
                 if (status != "-9876540" ){
-                    $('td:eq(14)', nRow).html(status)
+                    $('td:eq(19)', nRow).html(status)
                 } else {
                     $('td:eq(19)', nRow).html("")
                 }
