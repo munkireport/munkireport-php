@@ -28,6 +28,8 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
                     } else if (prop == "error_poh" || prop == "error_count"){ // Formate SMART Errors
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td class="danger">'+d[prop]+'</td></tr>';
+                    } else if (prop == "total_lbas_written" || prop == "total_lbas_read"){ // Formate LBAs Read/Written
+					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+fileSize(d[prop] * 512)+'">'+d[prop]+'</span></td></tr>';
                     } else if (prop == "timestamp"){ // Format timestamp
 					   var timestamp = (d[prop] * 1000)
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+moment(timestamp).format("YYYY-MM-DD H:mm:ss")+'</td></tr>';
