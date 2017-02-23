@@ -48,7 +48,7 @@ Power module
 * batteryserialnumber - VARCHAR(255) - Serial number of battery
 * fullycharged - VARCHAR(255) - Is battery fully charged
 * ischarging - VARCHAR(255) - Is battery charging
-* standbydelay - INT(11) - Minutes until standby
+* standbydelay - INT(11) - Seconds until standby
 * standby - INT(11) - Standby enabled
 * womp - INT(11) - Wake-on-Magic-Packet enabled
 * halfdim - INT(11) - Dim display on this power source

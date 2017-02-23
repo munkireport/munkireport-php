@@ -814,6 +814,8 @@
 		"discharging_watt": "Discharging at",
 		"minute": "minute",
 		"minutes": "minutes",
+		"second": "second",
+		"seconds": "seconds",
 		"discreet": "Discreet GPU",
 		"externalconnected": "Power Adapter Connected",
 		"timeremaining": "Estimated Time Remaining",

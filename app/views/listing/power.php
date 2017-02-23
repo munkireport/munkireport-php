@@ -184,11 +184,11 @@ new Power_model;
 			if(columnvar === "-9876543" || columnvar === -9876543) {
 				 $('td:eq(10)', nRow).html('');
 			} else if(columnvar === "1" || columnvar === 1) {
-				 $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.minute'));
+				 $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.second'));
 			} else if(columnvar === "0" || columnvar === 0) {
 				 $('td:eq(10)', nRow).html(i18n.t('power.never'));
 			} else{				 
-				 $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.minutes'));
+				 $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.seconds'));
 			}
                 
 	        	// womp
