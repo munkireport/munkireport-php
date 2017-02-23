@@ -12,7 +12,7 @@ fi
 # Create cache dir if it does not exist
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
-powerfile="$DIR/cache/powerinfo.xml"
+powerfile="$DIR/cache/powerinfo.plist"
 
 # vvv New line variable vvv # no touchy
 nl='
@@ -75,7 +75,7 @@ rm "$powerfile" 2>/dev/null
 
 # Check if on 10.6 or 10.7, they output slightly different formatted information
 if [[ $(/usr/bin/sw_vers -productVersion | /usr/bin/cut -d . -f 2) -lt 8 ]]; then
-# Turn the final_stats text mess into a pretty XML file for uploading
+# Turn the final_stats text mess into a pretty PLIST file for uploading
 for TRANSLATE in '      ManufactureDate = ' '      DesignCapacity = ' '      MaxCapacity = ' '      CurrentCapacity = ' '      CycleCount = ' '      Temperature = ' 'condition = ' ' standbydelay         ' ' standby              ' ' womp		' ' halfdim	' ' hibernatefile	' ' gpuswitch            ' ' sms		' ' networkoversleep	' ' disksleep	' ' sleep		' ' autopoweroffdelay    ' ' hibernatemode	' ' autopoweroff         ' ' ttyskeepawake	' ' displaysleep	' ' acwake		' ' lidwake	' ' Sleep On Power Button ' ' powernap             ' ' autorestart	' ' DestroyFVKeyOnStandby		' 'schedule: ' '  haltlevel		' '  haltafter		' '  haltremain		' ' lessbright           ' 'Sleep Count:' 'Dark Wake Count:' 'User Wake Count:' ' attage = ' ' AdapterID = ' ' Family Code = ' ' Serial Number = ' 'CPU_Scheduler_Limit 	= ' '	CPU_Available_CPUs 	= ' '	CPU_Speed_Limit 	= ' '   BackgroundTask                 ' '   ApplePushServiceTask                    ' '   UserIsActive                            ' '   PreventUserIdleDisplaySleep             ' '   PreventSystemSleep                      ' '   ExternalMedia                           ' '   PreventUserIdleSystemSleep              ' '   NetworkClientActive            ' '  combined level = ' '  - user level = ' '  - battery level = ' '  - thermal level = ' ' UPS Name:' 'Now drawing from ' 'UPS Percent: ' 'UPS Status: ' '      ExternalConnected = ' '      TimeRemaining = ' '      InstantTimeToEmpty = ' '      CellVoltage = ' '      Voltage = ' '      PermanentFailureStatus = ' '      Manufacturer = ' '      PackReserve = ' '      AvgTimeToFull = ' '      BatterySerialNumber = ' '      Amperage (mA): ' '      FullyCharged = ' '      IsCharging = ' '      DesignCycleCount9C = ' '      AvgTimeToEmpty = '
 do 
     OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${final_stats}" | sed -e "s/${TRANSLATE}//g" )
@@ -85,7 +85,7 @@ done
 
 # Else on 10.8+
 else
-# Turn the final_stats text mess into a pretty XML file for uploading
+# Turn the final_stats text mess into a pretty PLIST file for uploading
 for TRANSLATE in '      ManufactureDate = ' '      DesignCapacity = ' '      MaxCapacity = ' '      CurrentCapacity = ' '      CycleCount = ' '      Temperature = ' 'condition = ' ' standbydelay         ' ' standby              ' ' womp                 ' ' halfdim              ' ' hibernatefile        ' ' gpuswitch            ' ' sms                  ' ' networkoversleep     ' ' disksleep            ' ' sleep                ' ' autopoweroffdelay    ' ' hibernatemode        ' ' autopoweroff         ' ' ttyskeepawake        ' ' displaysleep         ' ' acwake               ' ' lidwake              ' ' Sleep On Power Button ' ' powernap             ' ' autorestart          ' ' DestroyFVKeyOnStandby		' 'schedule: ' '  haltlevel		' '  haltafter		' '  haltremain		' ' lessbright           ' 'Sleep Count:' 'Dark Wake Count:' 'User Wake Count:' ' attage = ' ' AdapterID = ' ' Family Code = ' ' Serial Number = ' 'CPU_Scheduler_Limit 	= ' '	CPU_Available_CPUs 	= ' '	CPU_Speed_Limit 	= ' '   BackgroundTask                 ' '   ApplePushServiceTask           ' '   UserIsActive                   ' '   PreventUserIdleDisplaySleep    ' '   PreventSystemSleep             ' '   ExternalMedia                  ' '   PreventUserIdleSystemSleep     ' '   NetworkClientActive            ' '  combined level = ' '  - user level = ' '  - battery level = ' '  - thermal level = ' ' UPS Name:' 'Now drawing from ' 'UPS Percent: ' 'UPS Status: ' '      ExternalConnected = ' '      TimeRemaining = ' '      InstantTimeToEmpty = ' '      CellVoltage = ' '      Voltage = ' '      PermanentFailureStatus = ' '      Manufacturer = ' '      PackReserve = ' '      AvgTimeToFull = ' '      BatterySerialNumber = ' '      Amperage (mA): ' '      FullyCharged = ' '      IsCharging = ' '      DesignCycleCount9C = ' '      AvgTimeToEmpty = '
 do 
     OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${final_stats}" | sed -e "s/${TRANSLATE}//g" )
