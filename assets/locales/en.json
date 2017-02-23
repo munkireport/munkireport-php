@@ -626,6 +626,7 @@
 			"hardware": "Hardware",
 			"inventory": "Inventory",
 			"location": "Location",
+			"managed_installs": "Managed Installs",
 			"munki": "Munki",
 			"mrinfo": "MunkiReport",
 			"network": "Network",
