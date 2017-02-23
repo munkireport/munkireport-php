@@ -166,14 +166,6 @@ class Usb_model extends Model {
 			// Make sure printer_id is set
 			$device['printer_id'] = isset($device['printer_id']) ? $device['printer_id'] : '';
             
-			// Set device types based on other criteria
-			if (stripos($device['manufacturer'], 'DisplayLink') !== false) {
-				$device['type'] = 'Display'; // Set by manufacturer instead of name
-
-      } else if ($device['printer_id'] !== '') {
-				$device['type'] = 'Printer'; // Set type to printer if printer_id field is not blank
-
-      } else {
 			// Map name to device type
 			$device_types = array(
 				'Camera' => array('isight', 'camera', 'video'),
@@ -201,7 +193,12 @@ class Usb_model extends Model {
 				}
 			}
 			
-			if (stripos($device['name'], 'iBridge') !== false) {
+			// Set device types based on other criteria
+			if (stripos($device['manufacturer'], 'DisplayLink') !== false) {
+				$device['type'] = 'Display'; // Set by manufacturer instead of name
+			} else if ($device['printer_id'] !== '') {
+				$device['type'] = 'Printer'; // Set type to printer if printer_id field is not blank
+			} else if (stripos($device['name'], 'iBridge') !== false) {
 				$device['name'] = 'TouchBar';
 			}
 
