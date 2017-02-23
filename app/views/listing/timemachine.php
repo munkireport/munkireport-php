@@ -113,7 +113,7 @@ new Timemachine_model;
 	        	// Format Check-In timestamp
 	        	var checkin = parseInt($('td:eq(7)', nRow).html());
 	        	var date = new Date(checkin * 1000);
-	        	$('td:eq(7)', nRow).html('<span title="'+i18n.t('checkin')+'+ moment(date).format('llll') + '">'+moment(date).fromNow()+'</span>');
+	        	$('td:eq(7)', nRow).html('<span title="'+i18n.t('checkin')+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery

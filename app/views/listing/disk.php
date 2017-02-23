@@ -146,7 +146,7 @@ new Reportdata_model;
 	        	
 	        	// Alert on SMART failures
 	        	var smartstatus=$('td:eq(8)', nRow).html();
-	        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">+i18n.t('failing')+</span>' : 
+	        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">'+i18n.t('failing')+'</span>' : 
 	        		(smartstatus)
 	        	$('td:eq(8)', nRow).html(smartstatus)
                 
