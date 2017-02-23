@@ -250,7 +250,7 @@ new Power_model;
 	        	columnvar = columnvar == '1' ? i18n.t('yes') :
 	        	(columnvar === '0' ? i18n.t('no') : '')
 	        	$('td:eq(19)', nRow).html(columnvar)
-                                                                               
+                                                                              
                 // sleep on power buton
 	        	var columnvar=$('td:eq(20)', nRow).html();
 	        	columnvar = columnvar == '1' ? i18n.t('yes') :

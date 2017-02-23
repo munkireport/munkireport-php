@@ -107,7 +107,7 @@ new Location_model;
 	        	//Format Last Run Date timestamp
 	        	var checkin = $('td:eq(3)', nRow).html();
 	        	if(checkin !== "" ){
-	        	$('td:eq(3)', nRow).html('<span title="' + checkin.replace(' +0000', 'GMT') + '">' + moment(checkin.replace(' +0000', 'Z')).fromNow());
+	        	$('td:eq(3)', nRow).html('<span title="' + checkin.replace(' +0000', 'GMT') + '">' + moment(checkin.replace(' +0000', 'Z')).fromNow()+'</span>');
 	        	}
 		    }
 	    });

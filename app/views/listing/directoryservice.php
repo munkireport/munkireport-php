@@ -92,11 +92,10 @@ new Directory_service_model;
 	        	$('td:eq(0)', nRow).html(link);
 	        	
 	        	// Translate bool. todo function for any bool we find
-                var status=$('td:eq(7)', nRow).html();
-                status = status == 1 ? i18n.t('yes') : 
-                (status === '0' ? i18n.t('no') : '')
-                $('td:eq(7)', nRow).html(status)
-
+	        	var status=$('td:eq(7)', nRow).html();
+	        	status = status == 1 ? i18n.t('yes') : 
+	        	(status === '0' ? i18n.t('no') : '')
+	        	$('td:eq(7)', nRow).html(status)
 		    }
 	    } );
 	} );

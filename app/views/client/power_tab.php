@@ -229,7 +229,8 @@ $(document).on('appReady', function(e, lang) {
 			$('#power-msg').text('');
 			$('#power-view').removeClass('hide');
 
-            // Add strings
+			// Add strings
+
 			$('#power-sleep_prevented_by').text(data.sleep_prevented_by);
 			$('#power-hibernatefile').text(data.hibernatefile);
 			$('#power-schedule').text(data.schedule);
@@ -275,6 +276,7 @@ $(document).on('appReady', function(e, lang) {
 			} else{
 				 $('#power-cpu_scheduler_limit').text(data.cpu_scheduler_limit+'%');
 			}
+
             
 			if(data.cpu_speed_limit === "-9876543" || data.cpu_speed_limit === -9876543) {
 				 $('#power-cpu_speed_limit').text('');
@@ -514,7 +516,7 @@ $(document).on('appReady', function(e, lang) {
             
             // Unhide and fill out UPS if UPS is present
             if (data.ups_percent != "-9876543" && (data.ups_percent)) {
-                $('#power-ups').removeClass('hide'); // unhide UPS table
+	        	$('#power-ups').removeClass('hide'); // unhide UPS table
 	        	$('#power-ups_percent').text(data.ups_percent+'%');
 	        	$('#power-haltlevel').text(data.haltlevel+'%');
 	        	//$('#power-haltafter').text(data.haltafter);
@@ -553,6 +555,7 @@ $(document).on('appReady', function(e, lang) {
 	        	$('#power-haltremain').html('');
 	        	$('#power-ups_charging_status').text('');
 	        	$('#power-ups_name').text("");
+
             }
 		}
 	});

@@ -78,7 +78,7 @@ class Usb_controller extends Module_controller
         
         $queryobj = new Usb_model();
         
-        $sql = "SELECT name, type, manufacturer, vendor_id, device_speed, internal, media, bus_power, bus_power_used, extra_current_used
+        $sql = "SELECT name, type, manufacturer, vendor_id, device_speed, internal, media, bus_power, bus_power_used, extra_current_used, usb_serial_number
                         FROM usb 
                         WHERE serial_number = '$serial_number'";
         

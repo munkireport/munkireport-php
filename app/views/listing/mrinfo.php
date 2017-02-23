@@ -86,7 +86,7 @@ new Munkireportinfo_model;
                         });
 
                     }
-        		    // IDK what this does
+        		    // Format version
                     if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
@@ -102,12 +102,16 @@ new Munkireportinfo_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-                var link = mr.getClientDetailLink(name, sn, '#tab_munkireportinfo-tab');
-                $('td:eq(0)', nRow).html(link);
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_munkireportinfo-tab');
+	        	$('td:eq(0)', nRow).html(link);
                 
                 // Format Version
-				var version = mr.integerToVersion($('td:eq(2)', nRow).html());
-				$('td:eq(2)', nRow).html(version);
+                var version = $('td:eq(2)', nRow).html();
+                if (version != "-9876543" && (version)) {
+                  $('td:eq(2)', nRow).html(mr.integerToVersion(version));
+                } else {
+                  $('td:eq(2)', nRow).html('');  
+                }
 		    }
 	    });
 

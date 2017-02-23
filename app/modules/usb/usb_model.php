@@ -16,6 +16,8 @@ class Usb_model extends Model {
 		$this->rs['bus_power'] = 0; // True or False
 		$this->rs['bus_power_used'] = 0; // True or False
 		$this->rs['extra_current_used'] = 0; // True or False
+		$this->rs['usb_serial_number'] = ''; // USB device serial number
+		$this->rs['printer_id'] = ''; $this->rt['printer_id'] = 'TEXT'; // 1284 Device ID information, only used by printers
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -29,6 +31,8 @@ class Usb_model extends Model {
 		$this->idx[] = array('internal');
 		$this->idx[] = array('bus_power');
 		$this->idx[] = array('bus_power_used');
+		$this->idx[] = array('extra_current_used');
+		$this->idx[] = array('usb_serial_number');
         
 		// Create table if it does not exist
 		$this->create_table();
@@ -105,7 +109,7 @@ class Usb_model extends Model {
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();
-		
+        		
 		$typeList = array(
 			'name' => '',
 			'type' => 'unknown', // Mouse, Trackpad, Hub, etc.
@@ -116,17 +120,25 @@ class Usb_model extends Model {
 			'media' => 0, // True or False
 			'bus_power' => 0,
 			'bus_power_used' => 0,
-			'extra_current_used' => 0
+			'extra_current_used' => 0,
+			'usb_serial_number' => '',
+			'printer_id' => ''
 		);
 		
 		foreach ($myList as $device) {
 			// Check if we have a name
-			if( ! array_key_exists("name",$device)){
+			if( ! array_key_exists("name", $device)){
 				continue;
 			}
-                        
+            
+			// Skip Bus types USB31Bus, USB11Bus, etc.
+			if(preg_match('/^USB(\d+)?Bus$/', $device['name']))
+			{
+				continue;
+			}
+			
 			// Check for USB bus devices and simulated USB devices to exclude
-            $excludeusb = array("USB30Bus","USB20Bus","USBBus","USB11Bus","UHCI Root Hub Simulation","EHCI Root Hub Simulation");
+            $excludeusb = array("OHCI Root Hub Simulation","UHCI Root Hub Simulation","EHCI Root Hub Simulation","RHCI Root Hub Simulation","XHCI Root Hub Simulation","XHCI Root Hub SS Simulation","XHCI Root Hub USB 2.0 Simulation");
             if (in_array($device['name'], $excludeusb)) {
 				continue;
 			}
@@ -138,87 +150,83 @@ class Usb_model extends Model {
     			}
 			}
 			 
-            // Adjust names
+			// Adjust names
 			$device['name'] = str_replace(array('bluetooth_device','hub_device','composite_device'), array('Bluetooth USB Host Controller','USB Hub','Composite Device'), $device['name']);
             
-            // Adjust USB speeds
+			// Adjust USB speeds
 			if (array_key_exists("device_speed",$device)) {
 				$device['device_speed'] = str_replace(array('low_speed','full_speed','high_speed','super_speed'), array('USB 1.0','USB 1.1','USB 2.0','USB 3.x'), $device['device_speed']);
 			} else {
 				$device['device_speed'] = 'USB 1.1';
 			}
+			
+			// Make sure manufacturer is set
+			$device['manufacturer'] = isset($device['manufacturer']) ? $device['manufacturer'] : '';
             
-            // Set device types
-			if (stripos($device['name'], 'iSight') !== false) {
-				$device['type'] = 'Camera';
+			// Make sure printer_id is set
+			$device['printer_id'] = isset($device['printer_id']) ? $device['printer_id'] : '';
+            
+			// Set device types based on other criteria
+			if (stripos($device['manufacturer'], 'DisplayLink') !== false) {
+				$device['type'] = 'Display'; // Set by manufacturer instead of name
+
+      } else if ($device['printer_id'] !== '') {
+				$device['type'] = 'Printer'; // Set type to printer if printer_id field is not blank
+
+      } else {
+			// Map name to device type
+			$device_types = array(
+				'Camera' => array('isight', 'camera', 'video'),
+				'USB Hub' => array('hub'),
+				'Keyboard' => array('keyboard'),
+				'IR Receiver' => array('ir receiver'),
+				'Bluetooth Controller' => array('bluetooth'),
+				'iPhone' => array('iphone'),
+				'iPad' => array('ipad'),
+				'iPod' => array('ipod'),
+				'Mouse' => array('mouse'),
+				'Mass Storage' => array('card reader', 'os x install disk', 'apple usb superdrive'),
+				'Display' => array('displaylink', 'display', 'monitor'),
+				'Ethernet' => array('ethernet'),
+				'Network' => array('network', 'ethernet', 'modem'),
+				'UPS' => array('ups'),
+				'Audio Device' => array('audio'),
+				'TouchBar' => array('ibridge')
+			);
+			$search = '/.*'.strtolower($device['name']).'.*/';
+			foreach($device_types as $type => $list){
+				if (preg_grep($search, $list)){
+					$device['type'] = $type;
+					break;
+				}
 			}
-			else if (stripos($device['name'], 'Hub') !== false) {
-				$device['type'] = 'USB Hub';
-			}
-			else if (stripos($device['name'], 'Keyboard') !== false) {
-				$device['type'] = 'Keyboard';
-			}
-			else if (stripos($device['name'], 'IR Receiver') !== false) {
-				$device['type'] = 'IR Receiver';
-			}
-			else if (stripos($device['name'], 'Bluetooth') !== false) {
-				$device['type'] = 'Bluetooth Controller';
-			}
-			else if (stripos($device['name'], 'iPhone') !== false) {
-				$device['type'] = 'iPhone';
-			}
-			else if (stripos($device['name'], 'iPad') !== false) {
-				$device['type'] = 'iPad';
-			}
-			else if (stripos($device['name'], 'iPod') !== false) {
-				$device['type'] = 'iPod';
-			}
-			else if (stripos($device['name'], 'Mouse') !== false) {
-				$device['type'] = 'Mouse';
-			}
-			else if (stripos($device['name'], 'Card Reader') !== false) {
-				$device['type'] = 'Mass Storage';
-			}
-			else if (stripos($device['manufacturer'], 'DisplayLink') !== false) {
-				$device['type'] = 'Display'; // Set by manufacturer
-			}
-			else if (stripos($device['name'], 'UPS') !== false) {
-				$device['type'] = 'UPS';
-			}
-			else if (stripos($device['name'], 'audio') !== false) {
-				$device['type'] = 'Audio Device';
-			}
-			else if (stripos($device['name'], 'Camera') !== false) {
-				$device['type'] = 'Camera';
-			}
-			else if (stripos($device['name'], 'Video') !== false) {
-				$device['type'] = 'Camera';
-			}
-			else if (stripos($device['name'], 'Display') !== false) {
-				$device['type'] = 'Display';
+			
+			if (stripos($device['name'], 'iBridge') !== false) {
+				$device['name'] = 'TouchBar';
 			}
 
-            
             // Check for Mass Storage
             if ($device['media'] == 1 ) {
 				$device['type'] = 'Mass Storage';
 			}
-                        
-            // Adjust Apple vendor ID
-            if ($device['vendor_id'] == 'apple_vendor_id' ) {
-				$device['vendor_id'] = '0x05ac (Apple, Inc.)';
-			}
-            
+                                    
             // Override Internal T/F based on name
             if (stripos($device['name'], 'Internal') !== false) {
 				$device['internal'] = 1;
 			}
             
+            // Adjust Apple vendor ID
+            if (array_key_exists('vendor_id',$device)) {
+            if ($device['vendor_id'] == 'apple_vendor_id') {
+				$device['vendor_id'] = '0x05ac (Apple, Inc.)';
+			}
+            
 			// Set manufacturer from vendor ID if it's blank
-			if (! array_key_exists("manufacturer",$device)) {
+			if ($device['manufacturer'] == '') {
 				preg_match('/\((.*?)\)/s', $device['vendor_id'], $manufactureroutput);
 				$device['manufacturer'] = $manufactureroutput[1];
 			}
+            }
             
 			foreach ($typeList as $key => $value) {
 				$this->rs[$key] = $value;
