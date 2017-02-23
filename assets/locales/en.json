@@ -897,6 +897,7 @@
 		"name": "Device Name",
 		"nousb": "No USB Devices Detected",
 		"reporttitle": "USB Devices Report",
+		"usb_serial_number": "Device Serial Number",
 		"title": "Keyboard and Mouse",
 		"type": "Device Type",
 		"usbtype": "USB Device Types",

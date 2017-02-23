@@ -50,6 +50,10 @@ def flatten_usb_info(array):
                 device['bus_power_used'] = obj[item]
             elif item == 'extra_current_used' or item == 'k_extra_current_used':
                 device['extra_current_used'] = obj[item]
+            elif item == 'serial_num' or item == 'd_serial_num':
+                device['usb_serial_number'] = obj[item]
+            elif item == '1284DeviceID' or item == 'm_1284DeviceID':
+                device['printer_id'] = obj[item]
             elif item == 'Built-in_Device' and obj[item] == 'Yes':
                 device['internal'] = 1
             elif item == 'Media' or item == 'removable_media' :

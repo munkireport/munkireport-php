@@ -6,7 +6,7 @@ $(document).on('appReady', function(){
 	$.getJSON(appUrl + '/module/usb/get_data/' + serialNumber, function(data){
 		// Set count of USB devices
 		$('#usb-cnt').text(data.length);
-		var skipThese = ['id','serial_number','name'];
+		var skipThese = ['id','name','printer_id'];
 		$.each(data, function(i,d){
 			
 			// Generate rows from data
@@ -25,6 +25,9 @@ $(document).on('appReady', function(){
                     } 
                     else if(prop == 'media' && d[prop] == 0){
 					   rows = rows + '<tr><th>'+i18n.t('usb.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
+                    }
+                    else if(prop == 'usb_serial_number' && d[prop] == ''){
+					   // Do nothing for a blank device serial number
                     } 
                     else {
                         rows = rows + '<tr><th>'+i18n.t('usb.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
