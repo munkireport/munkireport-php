@@ -130,37 +130,44 @@ new Power_model;
 	        	// Format designed capacity
 	        	var fs=$('td:eq(3)', nRow).html();
 	        	$('td:eq(3)', nRow).addClass('text-right');
+                
 	        	// Format maximum capacity
 	        	var fs=$('td:eq(4)', nRow).html();
 	        	$('td:eq(4)', nRow).addClass('text-right');
+                
 	        	// Format cycles
 	        	var fs=$('td:eq(5)', nRow).html();
 	        	$('td:eq(5)', nRow).addClass('text-right');
+                
 	        	// Format battery health
 	        	var max_percent=$('td:eq(6)', nRow).html();
 	        	var cls = max_percent > 89 ? 'success' : (max_percent > 79 ? 'warning' : 'danger');
 	        	$('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+max_percent+'%;">'+max_percent+'%</div></div>');
+                
 				// Format battery condition
 	        	var status=$('td:eq(7)', nRow).html();
-	        	status = status == 'Normal' ? '<span class="label label-success">Normal</span>' : 
-	        	status = status == 'Replace Soon' ? '<span class="label label-warning">Replace Soon</span>' : 
-	        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
-	        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
-	        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
-	        	status = status == '' ? '<span class="label label-danger">Replace Now</span>' : 
-	        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
+	        	status = status == 'Normal' ? '<span class="label label-success">'+i18n.t('widget.power.normal')+'</span>' : 
+	        	status = status == 'Replace Soon' ? '<span class="label label-warning">'+i18n.t('widget.power.soon')+'</span>' : 
+	        	status = status == 'Service Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.service')+'</span>' : 
+	        	status = status == 'Check Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.check')+'</span>' : 
+	        	status = status == 'Replace Now' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
+	        	status = status == '' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
+	        	(status === 'No Battery' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
+                
 	        	// Format current charge
 	        	var fs=$('td:eq(8)', nRow).html();
 	        	$('td:eq(8)', nRow).addClass('text-right');
+                
 	        	// Format percentage
 	        	var fs=$('td:eq(9)', nRow).html();
 	        	$('td:eq(9)', nRow).addClass('text-right');
+                
 	        	// Format temperature
-				// Check config for temperature_unit °C or °F
-				// °C * 9/5 + 32 = °F
-				var temperature_unit = "<?=conf('temperature_unit')?>";
-				if ( temperature_unit == "F" ){
+	        	// Check config for temperature_unit °C or °F
+	        	// °C * 9/5 + 32 = °F
+	        	var temperature_unit = "<?=conf('temperature_unit')?>";
+	        	if ( temperature_unit == "F" ){
 					// Fahrenheit
 					var temperature=$('td:eq(10)', nRow).html();
 					if ( temperature == 0 || temperature == "" ){
@@ -168,8 +175,8 @@ new Power_model;
 					} else {
 						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1)+"°F";
 					}
-					$('td:eq(10)', nRow).html(temperature).addClass('text-right');
-				} else {
+	        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
+	        	} else {
 					// Celsius
 		        	var temperature=$('td:eq(10)', nRow).html();
 					if ( temperature == 0 || temperature == "" ){
@@ -179,6 +186,7 @@ new Power_model;
 					}
 		        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
 				}
+                
 	        	// Format Manufacture date
 	        	var date=$('td:eq(11)', nRow).html();
                 if(date === '1980-00-00'){
@@ -195,13 +203,14 @@ new Power_model;
 	        		{
 	        			
 	        		}
-	        		$('td:eq(11)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow());
+	        		$('td:eq(11)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
 	        	}
                 }
+                
 				// Format Check-In timestamp
 				var checkin = parseInt($('td:eq(12)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(12)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
+				$('td:eq(12)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery

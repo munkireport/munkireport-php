@@ -75,43 +75,42 @@ new Backup2go_Model;
 	        	//this is responsible for the output of the table
 
 				//-- set col 1: computername
-	        	var name=$('td:eq(0)', nRow).html();
-	        	if(name == ''){name = "No Name"};
-	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = mr.getClientDetailLink(name, sn, '#tab_summary');
-	        	$('td:eq(0)', nRow).html(link);
+				var name=$('td:eq(0)', nRow).html();
+				if(name == ''){name = "No Name"};
+				var sn=$('td:eq(1)', nRow).html();
+				var link = mr.getClientDetailLink(name, sn, '#tab_summary');
+				$('td:eq(0)', nRow).html(link);
 
 				//-- set col 2: serialnumber
-	        	var serialnumber=$('td:eq(1)', nRow).html();
-	        	$('td:eq(1)', nRow).html(serialnumber);
+				var serialnumber=$('td:eq(1)', nRow).html();
+				$('td:eq(1)', nRow).html(serialnumber);
 
 				//-- set col 3: user
-	        	var user=$('td:eq(2)', nRow).html();
-	        	$('td:eq(2)', nRow).html(user);
+				var user=$('td:eq(2)', nRow).html();
+				$('td:eq(2)', nRow).html(user);
 
 				//-- set col 4: last backup date
-	        	var backupdate=$('td:eq(3)', nRow).html(); //date of backup
+				var backupdate=$('td:eq(3)', nRow).html(); //date of backup
 				
 				if(backupdate !== "" && !isNaN(backupdate)){
                     
-                    var date = new Date(backupdate * 1000);
-                    var bdate = moment(date);
-                    var now = moment();
-                    var days = now.diff(bdate, "days")
+					var date = new Date(backupdate * 1000);
+					var bdate = moment(date);
+					var now = moment();
+					var days = now.diff(bdate, "days")
                     
 					if(days < 14){
-						cls = 'success ';
+					   cls = 'success ';
 					} else if (days >= 14 && days < 28){
-						cls = 'warning';
+					   cls = 'warning';
 					} else if (days >= 28){
-						cls = 'danger';
+					   cls = 'danger';
 					}
 
 					$('td:eq(3)', nRow).html('<span class="label label-'+cls+'"><span title="'+backupdate+''+bdate.fromNow()+'</span>');
 				} else {
-					$('td:eq(3)', nRow).html('<span class="label">Unknown</span>');
+					$('td:eq(3)', nRow).html('<span class="label">'+i18n.t('unknown')+'</span>');
 				}
-
 		    }
 	    });
 	});

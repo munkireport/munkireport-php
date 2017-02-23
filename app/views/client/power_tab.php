@@ -58,15 +58,15 @@ $(document).on('appReady', function(e, lang) {
 		}
 		else{
 			
-			// Hide
-			$('#power-msg').text('');
-			$('#power-view').removeClass('hide');
+            // Hide
+            $('#power-msg').text('');
+            $('#power-view').removeClass('hide');
 
             // Add strings
-			$('#power-design_capacity').text(data.design_capacity);
-			$('#power-max_capacity').text(data.max_capacity);
-			$('#power-current_capacity').text(data.current_capacity);
-			$('#power-cycle_count').text(data.cycle_count);
+            $('#power-design_capacity').text(data.design_capacity);
+            $('#power-max_capacity').text(data.max_capacity);
+            $('#power-current_capacity').text(data.current_capacity);
+            $('#power-cycle_count').text(data.cycle_count);
 
             // Format Manufacture date
             if(data.manufacture_date === '1980-00-00'){
@@ -88,12 +88,13 @@ $(document).on('appReady', function(e, lang) {
             }
             
             // Format battery condition
-            data.condition = data.condition == 'Normal' ? '<span class="label label-success">Normal</span>' : 
-            data.condition = data.condition == 'Replace Soon' ? '<span class="label label-warning">Replace Soon</span>' : 
-            data.condition = data.condition == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
-            data.condition = data.condition == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
-            data.condition = data.condition == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
-            (data.condition === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
+            data.condition = data.condition == 'Normal' ? '<span class="label label-success">'+i18n.t('widget.power.normal')+'</span>' : 
+            data.condition = data.condition == 'Replace Soon' ? '<span class="label label-warning">'+i18n.t('widget.power.soon')+'</span>' : 
+            data.condition = data.condition == 'Service Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.service')+'</span>' : 
+            data.condition = data.condition == 'Check Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.check')+'</span>' : 
+            data.condition = data.condition == 'Replace Now' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
+            data.condition = data.condition == '' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
+            (data.condition === 'No Battery' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : '')
             $('#power-condition').html(data.condition)
             
             // Format battery health
@@ -106,18 +107,18 @@ $(document).on('appReady', function(e, lang) {
             
             // Format temperature
             if (data.temperature !== 0){
-            // Use the hijacked ID key in the JSON return for C/F
-            if (data.id === "C"){
-				var outtemp = (data.temperature / 100)+"°C";
-				$('#power-temperature').text(outtemp);  
-            } else if (data.id === "F"){
-				var outtemp = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
-				$('#power-temperature').text(outtemp); 
+              // Use the hijacked ID key in the JSON return for C/F
+              if (data.id === "C"){
+			    	      var outtemp = (data.temperature / 100)+"°C";
+				          $('#power-temperature').text(outtemp);  
+               } else if (data.id === "F"){
+			        	  var outtemp = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
+				          $('#power-temperature').text(outtemp); 
+               } else {
+			           	$('#power-temperature').text(data.temperature);  
+               }
             } else {
-				$('#power-temperature').text(data.temperature);  
-            }
-            } else {
-                $('#power-temperature').text("");
+               $('#power-temperature').text("");
             }
 		}
 	});
