@@ -357,12 +357,12 @@ class Power_model extends Model
         
         // Format voltage
         if ($this->voltage !== '-9876543') {
-        $this->voltage = ($this->voltage / 1000);
+             $this->voltage = ($this->voltage / 1000);
         }
         
-        // Format amperage
+        // Format amperage 
         if ($this->amperage !== '-9876543') {
-        $this->amperage = substr_replace($this->amperage, ".", -3, 0);
+             $this->amperage = ($this->amperage / 1000);
         }
         
         // Format manufacturer

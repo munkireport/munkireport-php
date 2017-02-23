@@ -3,7 +3,7 @@
 	<div id="battery-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
 	
 	<div id="battery-view" class="row hide">
-		<div class="col-md-4">
+		<div class="col-md-5">
 			<table class="table table-striped">
 				<tr>
 					<th data-i18n="power.manufacture_date"></th>
@@ -160,28 +160,28 @@ $(document).on('appReady', function(e, lang) {
 			if(data.timeremaining == "-9876543" || data.timeremaining == -9876543 || data.manufacture_date == '1980-00-00' || data.fullycharged == 'Yes') {
 				 $('#battery-timeremaining').text('');
             } else {
-				 $('#battery-timeremaining').html('<span title="'+data.timeremaining+' '+i18n.t('power.minutes')+'">'+moment.duration(data.timeremaining, "minutes").humanize());
+				 $('#battery-timeremaining').html('<span title="'+data.timeremaining+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.timeremaining, "minutes").humanize());
 			}  
                         
 			// Format instanttimetoempty                         
 			if(data.instanttimetoempty == "-9876543" || data.instanttimetoempty == -9876543) {
 				 $('#battery-instanttimetoempty').text('');
             } else {
-				 $('#battery-instanttimetoempty').html('<span title="'+data.instanttimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(data.instanttimetoempty, "minutes").humanize());
+				 $('#battery-instanttimetoempty').html('<span title="'+data.instanttimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.instanttimetoempty, "minutes").humanize());
 			}  
                        
 			// Format avgtimetofull                         
 			if(data.avgtimetofull == "-9876543" || data.avgtimetofull == -9876543) {
 				 $('#battery-avgtimetofull').text('');
             } else {
-				 $('#battery-avgtimetofull').html('<span title="'+data.avgtimetofull+' '+i18n.t('power.minutes')+'">'+moment.duration(data.avgtimetofull, "minutes").humanize());
+				 $('#battery-avgtimetofull').html('<span title="'+data.avgtimetofull+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetofull, "minutes").humanize());
 			}  
                        			
 			// Format avgtimetoempty                         
 			if(data.avgtimetoempty == "-9876543" || data.avgtimetoempty == -9876543) {
 				 $('#battery-avgtimetoempty').text('');
             } else {
-				 $('#battery-avgtimetoempty').html('<span title="'+data.avgtimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(data.avgtimetoempty, "minutes").humanize());
+				 $('#battery-avgtimetoempty').html('<span title="'+data.avgtimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetoempty, "minutes").humanize());
 			}  
                        			
 			// Format ischarging
@@ -366,8 +366,7 @@ $(document).on('appReady', function(e, lang) {
             }
             
             // Format temperature
-            if (data.temperature != "-9876543" && (data.temperature)) {
-            if (data.temperature !== 0){
+            if (data.temperature != "-9876543" && (data.temperature) && data.temperature !== 0) {
             if (data.temp_format === "F"){
 				var outtemp_c = (data.temperature / 100)+"°C";
 				var outtemp_f = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";
@@ -379,9 +378,6 @@ $(document).on('appReady', function(e, lang) {
             }
             } else {
                 $('#battery-temperature').text("");
-            }
-            } else {
-	        	$('#battery-temperature').html('');  
             }
         }
 	});
