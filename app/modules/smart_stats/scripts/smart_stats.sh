@@ -13,7 +13,7 @@ nl='
 # Create cache dir if it does not exist
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
-smart_stats_file="$DIR/cache/smart_stats.xml"
+smart_stats_file="$DIR/cache/smart_stats.plist"
 
 # Set smartctl path
 if [[ -f /usr/local/sbin/smartctl ]]; then
@@ -47,7 +47,7 @@ DISKPROPER=$(echo $DISK | tr -cd '[[:alnum:]]')
 
 SMARTSTATS="${nl}${SMARTATTRIBUTES}${nl}${SMARTINFO}${nl}${SMARTERRORS}${nl}${SMARTERRORCOUNT}${nl}Disk Number: ${DISKPROPER}"
 
-# Make a dict for the drive in the XML file
+# Make a dict for the drive in the PLIST file
 /usr/libexec/plistbuddy -c "add :${DISKARRAY} dict" "${smart_stats_file}" 1>/dev/null
 
 for TRANSLATE in 'Model Family:     ' 'Device Model:     ' 'Serial Number:    ' 'LU WWN Device Id: ' 'Firmware Version: ' 'User Capacity:    ' 'Sector Size:      ' 'Rotation Rate:    ' 'Form Factor:      ' 'Device is:        ' 'ATA Version is:   ' 'SATA Version is:  ' 'SMART is: ' 'SMART support is: ' 'ErrorPoH- ' 'error_count ' 'Disk Number: ' 'Raw_Read_Error_Rate ' 'Throughput_Performance ' 'Spin_Up_Time ' 'Start_Stop_Count ' 'Reallocated_Sector_Ct ' 'Read_Channel_Margin ' 'Seek_Error_Rate ' 'Seek_Time_Performance ' 'Power_On_Hours ' 'Spin_Retry_Count ' 'Calibration_Retry_Count ' 'Power_Cycle_Count ' 'Read_Soft_Error_Rate ' 'Program_Fail_Count_Chip ' 'Erase_Fail_Count_Chip ' 'Wear_Leveling_Count ' 'Used_Rsvd_Blk_Cnt_Chip ' 'Used_Rsvd_Blk_Cnt_Tot ' 'Unused_Rsvd_Blk_Cnt_Tot ' 'Program_Fail_Cnt_Total ' 'Erase_Fail_Count_Total ' 'Runtime_Bad_Block ' 'End-to-End_Error ' 'Reported_Uncorrect ' 'Command_Timeout ' 'High_Fly_Writes ' 'Airflow_Temperature_Cel ' 'G-Sense_Error_Rate ' 'Power-Off_Retract_Count ' 'Load_Cycle_Count ' 'Temperature_Celsius ' 'Hardware_ECC_Recovered ' 'Reallocated_Event_Count ' 'Current_Pending_Sector ' 'Offline_Uncorrectable ' 'UDMA_Error_Count ' 'Multi_Zone_Error_Rate ' 'Soft_Read_Error_Rate ' 'Data_Address_Mark_Errs ' 'Run_Out_Cancel ' 'Soft_ECC_Correction ' 'Thermal_Asperity_Rate ' 'Flying_Height ' 'Spin_High_Current ' 'Spin_Buzz ' 'Offline_Seek_Performnce ' 'Disk_Shift ' 'Loaded_Hours ' 'Power_On_Hours_and_Msec ' 'Load_Retry_Count ' 'Load_Friction ' 'Load-in_Time ' 'Torq-amp_Count ' 'Head_Amplitude ' 'Available_Reservd_Space ' 'Media_Wearout_Indicator ' 'Head_Flying_Hours ' 'Total_LBAs_Written ' 'Total_LBAs_Read ' 'Read_Error_Retry_Rate ' 'Host_Reads_MiB ' 'Host_Writes_MiB ' 'Grown_Failing_Block_Ct ' 'Unexpect_Power_Loss_Ct ' 'Non4k_Aligned_Access ' 'SATA_Iface_Downshift ' 'Factory_Bad_Block_Ct ' 'Percent_Lifetime_Used ' 'Write_Error_Rate ' 'Success_RAIN_Recov_Cnt ' 'Total_Host_Sector_Write ' 'Host_Program_Page_Count ' 'Bckgnd_Program_Page_Cnt ' 'Perc_Rated_Life_Used ' 'Reallocate_NAND_Blk_Cnt ' 'Ave_Block-Erase_Count ' 'Unused_Reserve_NAND_Blk ' 'SATA_Interfac_Downshift ' 'SSD_Life_Left ' 'Life_Curve_Status ' 'SuperCap_Health ' 'Lifetime_Writes_GiB ' 'Lifetime_Reads_GiB ' 'Uncorrectable_Error_Cnt ' 'ECC_Error_Rate ' 'CRC_Error_Count ' 'Supercap_Status ' 'Exception_Mode_Status ' 'POR_Recovery_Count ' 'Total_Reads_GiB ' 'Total_Writes_GiB ' 'Thermal_Throttle ' 'Perc_Write-Erase_Count ' 'Perc_Avail_Resrvd_Space ' 'Perc_Write-Erase_Ct_BC ' 'SATA_PHY_Error ' 'Avg_Write-Erase_Count ' 'Free_Fall_Sensor '

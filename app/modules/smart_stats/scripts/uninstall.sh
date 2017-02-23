@@ -4,4 +4,4 @@
 rm -f "${MUNKIPATH}preflight.d/smart_stats.sh"
 
 # Remove smart_stats.txt
-rm -f "${CACHEPATH}smart_stats.xml"
+rm -f "${CACHEPATH}smart_stats.plist"

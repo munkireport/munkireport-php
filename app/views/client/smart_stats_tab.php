@@ -32,7 +32,7 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+fileSize(d[prop] * 512)+'">'+d[prop]+'</span></td></tr>';
                     } else if (prop == "timestamp"){ // Format timestamp
 					   var timestamp = (d[prop] * 1000)
-					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+moment(timestamp).format("YYYY-MM-DD H:mm:ss")+'</td></tr>';
+					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+moment(+timestamp).format("YYYY-MM-DD H:mm:ss")+'</td></tr>';
                     } else if (prop == "airflow_temperature_cel" || prop == "temperature_celsius"){ // Formate temperatures
 					   temperature_f = parseFloat(((d[prop] * 9/5 ) + 32 ).toFixed(2));
 					   if (d['temperature_unit'] == "F"){

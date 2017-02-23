@@ -24,5 +24,5 @@ else
 	fi
 
 	# Set preference to include this file in the preflight check
-	setreportpref "smart_stats" "${CACHEPATH}smart_stats.xml"
+	setreportpref "smart_stats" "${CACHEPATH}smart_stats.plist"
 fi
