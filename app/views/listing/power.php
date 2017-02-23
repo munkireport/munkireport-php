@@ -13,36 +13,38 @@ new Power_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.power"></span> <span id="total-count" class='label label-primary'>…</span></h3>
-
+	<h3><span data-i18n="nav.reports.power"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+        
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="listing.power.designed" data-colname='power.design_capacity'></th>
-		        <th data-i18n="listing.power.capacity" data-colname='power.max_capacity'></th>
-		        <th data-i18n="listing.power.cycles" data-colname='power.cycle_count'></th>
-		        <th data-i18n="listing.power.health" data-colname='power.max_percent'></th>
-		        <th data-i18n="listing.power.condition" data-colname='power.condition'></th>
-		        <th data-i18n="listing.power.current" data-colname='power.current_capacity'></th>
-		        <th data-i18n="listing.power.charged" data-colname='power.current_percent'></th>
-				<?php
-					$temperature_unit=conf('temperature_unit');
-					if ( $temperature_unit == "F" ) {
-						echo "<th data-colname='power.temperature'>Temp°F</th>";
-					} else {
-						echo "<th data-colname='power.temperature'>Temp°C</th>";
-					}
-				?>
-		        <th data-i18n="listing.power.manufactured" data-colname='power.manufacture_date'></th> 
-		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th> 
+		        <th data-i18n="power.active_profile" data-colname='power.active_profile'></th>
+		        <th data-i18n="power.sleep" data-colname='power.sleep'></th>
+		        <th data-i18n="power.disksleep" data-colname='power.disksleep'></th>
+		        <th data-i18n="power.displaysleep" data-colname='power.displaysleep'></th> 
+		        <th data-i18n="power.powernap" data-colname='power.powernap'></th>
+		        <th data-i18n="power.hibernatemode" data-colname='power.hibernatemode'></th>
+		        <th data-i18n="power.standby" data-colname='power.standby'></th>
+		        <th data-i18n="power.standbydelay" data-colname='power.standbydelay'></th>
+		        <th data-i18n="power.womp_short" data-colname='power.womp'></th>
+		        <th data-i18n="power.networkoversleep" data-colname='power.networkoversleep'></th>
+		        <th data-i18n="power.ttyskeepawake" data-colname='power.ttyskeepawake'></th>
+		        <th data-i18n="power.sms_short" data-colname='power.sms'></th>
+		        <th data-i18n="power.gpuswitch" data-colname='power.gpuswitch'></th>
+		        <th data-i18n="power.autopoweroff" data-colname='power.autopoweroff'></th>
+		        <th data-i18n="power.autorestart" data-colname='power.autorestart'></th>
+		        <th data-i18n="power.acwake" data-colname='power.acwake'></th>
+		        <th data-i18n="power.lidwake" data-colname='power.lidwake'></th>
+		        <th data-i18n="power.sleep_on_power_button" data-colname='power.sleep_on_power_button'></th>
+		        <th data-i18n="power.destroyfvkeyonstandby_short" data-colname='power.destroyfvkeyonstandby'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="13" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="22" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -89,30 +91,8 @@ new Power_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    d.mrColNotEmpty = "power.condition";
+                    d.mrColNotEmpty = "power.hibernatemode";
                     
-                    // Look for 'between' statement todo: make generic
-                    if(d.search.value.match(/^\d+% max_percent \d+%$/))
-                    {
-                        // Add column specific search
-                        d.columns[6].search.value = d.search.value.replace(/(\d+%) max_percent (\d+%)/, function(m, from, to){return ' BETWEEN ' + parseInt(from) + ' AND ' + parseInt(to)});
-                        // Clear global search
-                        d.search.value = '';
-
-                        //dumpj(d)
-                    }
-
-                    // Look for a bigger/smaller/equal statement
-                    if(d.search.value.match(/^max_percent [<>=] \d+%$/))
-                    {
-                        // Add column specific search
-                        d.columns[6].search.value = d.search.value.replace(/.*([<>=] )(\d+%)$/, function(m, o, content){return o + parseInt(content)});
-                        // Clear global search
-                        d.search.value = '';
-
-                        //dumpj(out)
-                    }
-
                 }
             },
             dom: mr.dt.buttonDom,
@@ -126,82 +106,163 @@ new Power_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_power-tab');
 	        	$('td:eq(0)', nRow).html(link);
-			
-	        	// Format designed capacity
-	        	var fs=$('td:eq(3)', nRow).html();
-	        	$('td:eq(3)', nRow).addClass('text-right');
-	        	// Format maximum capacity
-	        	var fs=$('td:eq(4)', nRow).html();
-	        	$('td:eq(4)', nRow).addClass('text-right');
-	        	// Format cycles
-	        	var fs=$('td:eq(5)', nRow).html();
-	        	$('td:eq(5)', nRow).addClass('text-right');
-	        	// Format battery health
-	        	var max_percent=$('td:eq(6)', nRow).html();
-	        	var cls = max_percent > 89 ? 'success' : (max_percent > 79 ? 'warning' : 'danger');
-	        	$('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+max_percent+'%;">'+max_percent+'%</div></div>');
-				// Format battery condition
-	        	var status=$('td:eq(7)', nRow).html();
-	        	status = status == 'Normal' ? '<span class="label label-success">Normal</span>' : 
-	        	status = status == 'Replace Soon' ? '<span class="label label-warning">Replace Soon</span>' : 
-	        	status = status == 'Service Battery' ? '<span class="label label-warning">Service Battery</span>' : 
-	        	status = status == 'Check Battery' ? '<span class="label label-warning">Check Battery</span>' : 
-	        	status = status == 'Replace Now' ? '<span class="label label-danger">Replace Now</span>' : 
-	        	status = status == '' ? '<span class="label label-danger">Replace Now</span>' : 
-	        		(status === 'No Battery' ? '<span class="label label-danger">No Battery</span>' : '')
-	        	$('td:eq(7)', nRow).html(status)
-	        	// Format current charge
-	        	var fs=$('td:eq(8)', nRow).html();
-	        	$('td:eq(8)', nRow).addClass('text-right');
-	        	// Format percentage
-	        	var fs=$('td:eq(9)', nRow).html();
-	        	$('td:eq(9)', nRow).addClass('text-right');
-	        	// Format temperature
-				// Check config for temperature_unit °C or °F
-				// °C * 9/5 + 32 = °F
-				var temperature_unit = "<?=conf('temperature_unit')?>";
-				if ( temperature_unit == "F" ){
-					// Fahrenheit
-					var temperature=$('td:eq(10)', nRow).html();
-					if ( temperature == 0 || temperature == "" ){
-						temperature = "";
-					} else {
-						temperature = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1)+"°F";
-					}
-					$('td:eq(10)', nRow).html(temperature).addClass('text-right');
-				} else {
-					// Celsius
-		        	var temperature=$('td:eq(10)', nRow).html();
-					if ( temperature == 0 || temperature == "" ){
-						temperature = "";
-					} else {
-				       	temperature = (temperature / 100).toFixed(1)+"°C";
-					}
-		        	$('td:eq(10)', nRow).html(temperature).addClass('text-right');
-				}
-	        	// Format Manufacture date
-	        	var date=$('td:eq(11)', nRow).html();
-                if(date === '1980-00-00'){
-	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('widget.power.now'));
-                } else {
-	        	if(date){
-	        		a = moment(date)
-	        		b = a.diff(moment(), 'years', true)
-	        		if(a.diff(moment(), 'years', true) < -4)
-	        		{
-	        			$('td:eq(11)', nRow).addClass('danger')
-	        		}
-	        		if(Math.round(b) == 4)
-	        		{
-	        			
-	        		}
-	        		$('td:eq(11)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow());
-	        	}
-                }
-				// Format Check-In timestamp
-				var checkin = parseInt($('td:eq(12)', nRow).html());
-				var date = new Date(checkin * 1000);
-				$('td:eq(12)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
+                                
+	        	// active power profile
+	        	var columnvar=$('td:eq(3)', nRow).html();
+			if(columnvar === "AC Power") {
+				 $('td:eq(3)', nRow).html(i18n.t('power.ac_power'));
+			} else if(columnvar === "Battery Power") {
+				 $('td:eq(3)', nRow).html(i18n.t('power.battery_power'));
+			} else{				 
+				 $('td:eq(3)', nRow).html(columnvar);
+			}     
+                
+	        	// sleep
+	        	var columnvar=$('td:eq(4)', nRow).html();
+			if(columnvar === "-9876543" || columnvar === -9876543) {
+				 $('td:eq(4)', nRow).html('');
+			} else if(columnvar === "1" || columnvar === 1) {
+				 $('td:eq(4)', nRow).html(columnvar+' '+i18n.t('power.minute'));
+			} else if(columnvar === "0" || columnvar === 0) {
+				 $('td:eq(4)', nRow).html(i18n.t('power.never'));
+			} else{				 
+				 $('td:eq(4)', nRow).html(columnvar+' '+i18n.t('power.minutes'));
+			} 
+                
+	        	// disk sleep
+	        	var columnvar=$('td:eq(5)', nRow).html();
+			if(columnvar === "-9876543" || columnvar === -9876543) {
+				 $('td:eq(5)', nRow).html('');
+			} else if(columnvar === "1" || columnvar === 1) {
+				 $('td:eq(5)', nRow).html(columnvar+' '+i18n.t('power.minute'));
+			} else if(columnvar === "0" || columnvar === 0) {
+				 $('td:eq(5)', nRow).html(i18n.t('power.never'));
+			} else{				 
+				 $('td:eq(5)', nRow).html(columnvar+' '+i18n.t('power.minutes'));
+			}
+                                
+	        	// display sleep
+	        	var columnvar=$('td:eq(6)', nRow).html();
+			if(columnvar === "-9876543" || columnvar === -9876543) {
+				 $('td:eq(6)', nRow).html('');
+			} else if(columnvar === "1" || columnvar === 1) {
+				 $('td:eq(6)', nRow).html(columnvar+' '+i18n.t('power.minute'));
+			} else if(columnvar === "0" || columnvar === 0) {
+				 $('td:eq(6)', nRow).html(i18n.t('power.never'));
+			} else{				 
+				 $('td:eq(6)', nRow).html(columnvar+' '+i18n.t('power.minutes'));
+			}
+                
+	        	// powernap
+	        	var columnvar=$('td:eq(7)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(7)', nRow).html(columnvar)                
+                
+                // hibernate mode
+                var columnvar=$('td:eq(8)', nRow).html();
+                if(columnvar === "25" || columnvar === 25 || columnvar === "1" || columnvar === 1) {
+				 $('td:eq(8)', nRow).html(i18n.t('power.hibernate')+' ('+columnvar+')');
+			} else if(columnvar === "3" || columnvar === 3) {
+				 $('td:eq(8)', nRow).html(i18n.t('power.safe_sleep')+' ('+columnvar+')');
+			} else if(columnvar === "0" || columnvar === 0) {
+				 $('td:eq(8)', nRow).html(i18n.t('power.sleep')+' ('+columnvar+')');
+			} else if(columnvar === "-9876543" || columnvar === -9876543) {
+				 $('td:eq(8)', nRow).html('');
+			} else{
+				 $('td:eq(8)', nRow).columnvar;
+			}  
+                                                                
+                // standby
+	        	var columnvar=$('td:eq(9)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(9)', nRow).html(columnvar)
+                
+	        	// standby delay
+	        	var columnvar=$('td:eq(10)', nRow).html();
+			if(columnvar === "-9876543" || columnvar === -9876543) {
+				 $('td:eq(10)', nRow).html('');
+			} else if(columnvar === "1" || columnvar === 1) {
+				 $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.second'));
+			} else if(columnvar === "0" || columnvar === 0) {
+				 $('td:eq(10)', nRow).html(i18n.t('power.never'));
+			} else{				 
+				 $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.seconds'));
+			}
+                
+	        	// womp
+	        	var columnvar=$('td:eq(11)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(11)', nRow).html(columnvar)
+                
+                // network over sleep
+	        	var columnvar=$('td:eq(12)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(12)', nRow).html(columnvar)
+                                
+                // tty keep awake
+	        	var columnvar=$('td:eq(13)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(13)', nRow).html(columnvar)
+                                                
+                // sms
+	        	var columnvar=$('td:eq(14)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(14)', nRow).html(columnvar)
+               
+                // gpu switch
+	        	var columnvar=$('td:eq(15)', nRow).html();
+			if(columnvar === "2" || columnvar === 2) {
+				 $('td:eq(15)', nRow).html(i18n.t('power.auto_gpu'));
+			} else if(columnvar === "1" || columnvar === 1) {
+				 $('td:eq(15)', nRow).html(i18n.t('power.discreet'));
+			} else if(columnvar === "0" || columnvar === 0) {
+				 $('td:eq(15)', nRow).html(i18n.t('power.integrated'));
+			} else{
+				 $('td:eq(15)', nRow).html("");
+			} 
+
+                // auto power off
+	        	var columnvar=$('td:eq(16)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(16)', nRow).html(columnvar)
+                                                                               
+                // auto restart
+	        	var columnvar=$('td:eq(17)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(17)', nRow).html(columnvar)
+                                                                                
+                // ac wake
+	        	var columnvar=$('td:eq(18)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(18)', nRow).html(columnvar)
+                                                                               
+                // lid wake
+	        	var columnvar=$('td:eq(19)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(19)', nRow).html(columnvar)
+                                                                              
+                // sleep on power buton
+	        	var columnvar=$('td:eq(20)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(20)', nRow).html(columnvar)
+                                                                               
+                // destroy filevault keys
+	        	var columnvar=$('td:eq(21)', nRow).html();
+	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	(columnvar === '0' ? i18n.t('no') : '')
+	        	$('td:eq(21)', nRow).html(columnvar)
+               
 		    }
 	    } );
 	    // Use hash as searchquery

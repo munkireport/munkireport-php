@@ -113,26 +113,26 @@ new Softwareupdate_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-                var link = mr.getClientDetailLink(name, sn, '#tab_softwareupdate-tab');
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_softwareupdate-tab');
 	        	$('td:eq(0)', nRow).html(link);
                 
 	        	// Format XProtect Install timestamp
-				var checkin = $('td:eq(3)', nRow).html();
+	        	var checkin = $('td:eq(3)', nRow).html();
 	        	if(checkin !== "" ){
-	        	$('td:eq(3)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow());
-                }
+                    $('td:eq(3)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow()+'</span>');
+	        	}
                 
-                // Format Successful Date timestamp
-				var checkin = $('td:eq(4)', nRow).html();
+	        	// Format Successful Date timestamp
+	        	var checkin = $('td:eq(4)', nRow).html();
 	        	if(checkin !== "" ){
-	        	$('td:eq(4)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow());
-                }
+                    $('td:eq(4)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow()+'</span>');
+	        	}
                 
-				// Format Background Successful Date timestamp
-				var checkin = $('td:eq(5)', nRow).html();
+	        	// Format Background Successful Date timestamp
+	        	var checkin = $('td:eq(5)', nRow).html();
 	        	if(checkin !== "" ){
-	        	$('td:eq(5)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow());
-                }
+                    $('td:eq(5)', nRow).html('<span title="' + checkin + '">' + moment(checkin).fromNow()+'</span>');
+	        	}
                 
 	        	// automaticcheckenabled
 	        	var automaticcheckenabled=$('td:eq(9)', nRow).html();

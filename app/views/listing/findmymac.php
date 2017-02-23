@@ -82,8 +82,8 @@ new findmymac_model;
 								
                 // Status
                 var status=$('td:eq(3)', nRow).html();
-                status = status == 'Enabled' ? '<span class="label label-danger">'+i18n.t('Enabled')+'</span>' :
-                (status === 'Disabled' ? '<span class="label label-success">'+i18n.t('Disabled')+'</span>' : '')
+                status = status == 'Enabled' ? '<span class="label label-danger">'+i18n.t('enabled')+'</span>' :
+                (status === 'Disabled' ? '<span class="label label-success">'+i18n.t('disabled')+'</span>' : '')
                 $('td:eq(3)', nRow).html(status)
                     
             }

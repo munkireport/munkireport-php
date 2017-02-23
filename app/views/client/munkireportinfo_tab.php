@@ -22,7 +22,6 @@
 					<td id="munkireportinfo-reportitems"></td>
 				</tr>
 			</table>
-            <div id="munkireport-modules"></div>
 		</div>
 	</div>
 

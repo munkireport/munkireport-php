@@ -91,17 +91,16 @@ new Certificate_model;
 	        	$('td:eq(0)', nRow).html(link);
 
 	        	// Format expiration date
-				var checkin = parseInt($('td:eq(4)', nRow).html());
-				var date = new Date(checkin * 1000);
-				var diff = moment().diff(date, 'days');
-				var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
-				$('td:eq(4)', nRow).html('<span class="label label-'+cls+'"><span title="'+date+'">'+moment(date).fromNow()+'</span>');
-
+	        	var checkin = parseInt($('td:eq(4)', nRow).html());
+	        	var date = new Date(checkin * 1000);
+	        	var diff = moment().diff(date, 'days');
+	        	var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
+	        	$('td:eq(4)', nRow).html('<span class="label label-'+cls+'"><span title="'+date+'">'+moment(date).fromNow()+'</span>');
 	        	
-				// Format Check-In timestamp
-				var checkin = parseInt($('td:eq(5)', nRow).html());
-				var date = new Date(checkin * 1000);
-				$('td:eq(5)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
+	        	// Format Check-In timestamp
+	        	var checkin = parseInt($('td:eq(5)', nRow).html());
+	        	var date = new Date(checkin * 1000);
+	        	$('td:eq(5)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery

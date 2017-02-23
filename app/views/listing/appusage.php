@@ -19,7 +19,7 @@ new Appusage_model;
 		      	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		      	<th data-i18n="listing.appusage.event" data-colname='appusage.event'></th>
 		      	<th data-i18n="listing.appusage.appname" data-colname='appusage.app_name'></th>
-		      	<th data-i18n="listing.appusage.lastevent" data-colname='appusage.last_time'></th>
+		      	<th data-i18n="listing.appusage.lastevent" data-colname='appusage.last_time_epoch'></th>
 		      	<th data-i18n="listing.appusage.count" data-colname='appusage.number_times'></th>
 		      	<th data-i18n="version" data-colname='appusage.app_version'></th>      
 		      	<th data-i18n="path" data-colname='appusage.app_path'></th>      
@@ -90,20 +90,21 @@ new Appusage_model;
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_appusage-tab');
 	        	$('td:eq(0)', nRow).html(link);
                 
-                // Get name link
-                var appname=$('td:eq(3)', nRow).html();
-                $('td:eq(3)', nRow).html(
-                    $('<a>')
-                        .attr('href', appUrl+'/module/inventory/items/'+appname)
-                        .text(appname)
-                )
-                
-                // Event type
-                var autoreset=$('td:eq(2)', nRow).html();
-                autoreset = autoreset == 'launch' ? i18n.t('listing.appusage.launch') :
-                autoreset = autoreset == 'activation' ? i18n.t('listing.appusage.activation') :
-                (autoreset === 'quit' ? i18n.t('listing.appusage.quit') : '')
-                $('td:eq(2)', nRow).html(autoreset)
+	        	// Format date
+	        	var event = parseInt($('td:eq(4)', nRow).html());
+	        	var date = new Date(event * 1000);
+	        	$('td:eq(4)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date).fromNow()+'</span>');
+
+	        	// Get name link
+	        	var appname=$('td:eq(3)', nRow).html();
+	        	$('td:eq(3)', nRow).html($('<a>').attr('href', appUrl+'/module/inventory/items/'+appname).text(appname))
+
+	        	// Event type
+	        	var autoreset=$('td:eq(2)', nRow).html();
+	        	autoreset = autoreset == 'launch' ? i18n.t('listing.appusage.launch') :
+	        	autoreset = autoreset == 'activation' ? i18n.t('listing.appusage.activation') :
+	        	(autoreset === 'quit' ? i18n.t('listing.appusage.quit') : '')
+	        	$('td:eq(2)', nRow).html(autoreset)
                 
 		    }
 	    } );
