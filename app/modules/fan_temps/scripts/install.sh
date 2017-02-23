@@ -43,6 +43,6 @@ else
 	fi
     
 	# Set preference to include this file in the preflight check
-	setreportpref "fan_temps" "${CACHEPATH}fan_temps.xml"
+	setreportpref "fan_temps" "${CACHEPATH}fan_temps.plist"
 fi
 fi
