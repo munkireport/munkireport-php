@@ -16,5 +16,5 @@ The table provides the following information 'fan_temps':
 Remarks
 ---
 
-* Uses smckit to get data from SMC - https://github.com/beltex/SMCKit/
+* Uses smckit to get data from SMC - [https://github.com/beltex/SMCKit/](https://github.com/beltex/SMCKit/)
 * Because smckit is written in Swift, this modules required 10.9 or higher
