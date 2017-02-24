@@ -177,9 +177,9 @@ class Usb_model extends Model {
 				'iPad' => 'ipad',
 				'iPod' => 'ipod',
 				'Mouse' => 'mouse',
-				'Mass Storage' => 'card reader|os x install disk|apple usb superdrive',
+				'Mass Storage' => 'card reader|os x install disk|apple usb superdrive',
 				'Display' => 'displaylink|display|monitor',
-				'Ethernet' => 'ethernet',
+				'Composite Device' => 'composite device',
 				'Network' => 'network|ethernet|modem',
 				'UPS' => 'ups',
 				'Audio Device' => 'audio',
@@ -198,8 +198,6 @@ class Usb_model extends Model {
 				$device['type'] = 'Display'; // Set by manufacturer instead of name
 			} else if ($device['printer_id'] !== '') {
 				$device['type'] = 'Printer'; // Set type to printer if printer_id field is not blank
-			} else if (stripos($device['name'], 'iBridge') !== false) {
-				$device['name'] = 'TouchBar';
 			}
 
             // Check for Mass Storage
