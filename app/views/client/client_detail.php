@@ -24,6 +24,7 @@ $tab_list = array(
 	'gsx-tab' => array('view' => 'client/gsx_tab', 'i18n' => 'client.tab.gsx'),
 	'deploystudio-tab' => array('view' => 'client/deploystudio_tab', 'i18n' => 'client.tab.deploystudio'),
 	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
+	'battery-tab' => array('view' => 'client/battery_tab', 'i18n' => 'power.battery'),
 	'printer-tab' => array('view' => 'client/printer_tab', 'i18n' => 'client.tab.printers', 'badge' => 'printer-cnt'),
 	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles'),
 	'sccm_status-tab' => array('view' => 'client/sccm_status_tab', 'i18n' => 'sccm_status.title'),

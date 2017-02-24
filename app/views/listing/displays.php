@@ -24,7 +24,7 @@
 			<th data-i18n="listing.displays.model" data-colname='displays.model'></th>
 			<th data-i18n="serial" data-colname='displays.display_serial'></th>
 			<th data-i18n="listing.power.manufactured" data-colname='displays.manufactured'></th>
-			<th data-i18n="listing.displays.nativeresolution" data-colname='displays.native'</th>
+			<th data-i18n="listing.displays.nativeresolution" data-colname='displays.native'></th>
 			<th data-i18n="listing.displays.detected" data-sort="desc" data-colname='displays.timestamp'></th>
 		  </tr>
 		</thead>
@@ -122,8 +122,8 @@
 
                 // Internal vs External
                 var status=$('td:eq(2)', nRow).html();
-                status = status == 1 ? 'External' :
-                  (status == '0' ? 'Internal' : '')
+                status = status == 1 ? i18n.t('displays.external') : //ex
+                (status == '0' ? i18n.t('displays.internal') : '')
                 $('td:eq(2)', nRow).html(status)
 
                 // Translating vendors column

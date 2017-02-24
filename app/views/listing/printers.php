@@ -103,6 +103,26 @@ new Printer_model;
                   $('td:eq(0)', nRow).html(name);
                 }
 
+                // Default Set
+                var defaultset=$('td:eq(6)', nRow).html();
+                defaultset = defaultset == 'yes' ? i18n.t('yes') :
+                (defaultset === 'no' ? i18n.t('no') : '')
+                $('td:eq(6)', nRow).html(defaultset)
+                
+                // Printer Status
+                var printerstatus=$('td:eq(7)', nRow).html();
+                printerstatus = printerstatus == 'idle' ? i18n.t('printer.idle') :
+                printerstatus = printerstatus == 'error' ? i18n.t('printer.error') : 
+                printerstatus = printerstatus == 'in use' ? i18n.t('printer.in_use') : 
+                (printerstatus === 'offline' ? i18n.t('printer.offline') : '')
+                $('td:eq(7)', nRow).html(printerstatus)
+                
+                // Sharing
+                var printersharing=$('td:eq(8)', nRow).html();
+                printersharing = printersharing == 'yes' ? i18n.t('yes') :
+                (printersharing === 'no' ? i18n.t('no') : '')
+                $('td:eq(8)', nRow).html(printersharing)
+                
             } //end fnCreatedRow
 
         }); //end oTable

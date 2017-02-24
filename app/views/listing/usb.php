@@ -25,15 +25,12 @@ new Usb_model;
 			<th data-i18n="usb.device_speed" data-colname='usb.device_speed'></th>
 			<th data-i18n="usb.internal" data-colname='usb.internal'></th>
 			<th data-i18n="usb.media" data-colname='usb.media'></th>
-			<th data-i18n="usb.bus_power" data-colname='usb.bus_power'></th>
-			<th data-i18n="usb.bus_power_used" data-colname='usb.bus_power_used'></th>
-			<th data-i18n="usb.extra_current_used" data-colname='usb.extra_current_used'></th>
 		  </tr>
 		</thead>
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 

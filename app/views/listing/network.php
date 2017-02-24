@@ -92,10 +92,9 @@ new Network_model;
 
 	        	// Status
 	        	var status=$('td:eq(4)', nRow).html();
-	        	status = status == 1 ? '<span class="label label-success">Enabled</span>' : 
-	        		(status === '0' ? '<span class="label label-danger">Disabled</span>' : '')
+	        	status = status == 1 ? '<span class="label label-success">'+i18n.t('enabled')+'</span>' : 
+	        	(status === '0' ? '<span class="label label-danger">'+i18n.t('disabled')+'</span>' : '')
 	        	$('td:eq(4)', nRow).html(status)
-
 		    }
 	    } );
 	} );

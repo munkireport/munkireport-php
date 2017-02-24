@@ -93,7 +93,7 @@ new Munkireport_model;
 				// Format date
 				var checkin = parseInt($('td:eq(8)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(8)', nRow).html(moment(date).fromNow());
+				$('td:eq(8)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 
 				// Format OS Version
 				var osvers = mr.integerToVersion($('td:eq(3)', nRow).html());
@@ -106,7 +106,7 @@ new Munkireport_model;
 				}
 				else
 				{
-				  $('td:eq(7)', nRow).html('<span title="Booted: ' + moment(date).subtract( uptime, 'seconds').format('llll') + '">' + moment().subtract(uptime, 'seconds').fromNow(true) + '</span>');
+				  $('td:eq(7)', nRow).html('<span title="'+i18n.t('boot_time')+': '+moment(date).subtract( uptime, 'seconds').format('llll')+'">'+moment().subtract(uptime, 'seconds').fromNow(true)+'</span>');
 				}
 			}
 		});

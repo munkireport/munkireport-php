@@ -26,11 +26,12 @@ new Reportdata_model;
 		        <th data-i18n="storage.free" data-colname='diskreport.FreeSpace'></th>
 		        <th data-i18n="storage.total_size" data-colname='diskreport.TotalSize'></th>
 		    	<th data-i18n="storage.smartstatus" data-colname='diskreport.SMARTStatus'></th>
+		    	<th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
 		    	</tr>
 		    </tbody>
 		  </table>
@@ -145,10 +146,15 @@ new Reportdata_model;
 	        	
 	        	// Alert on SMART failures
 	        	var smartstatus=$('td:eq(8)', nRow).html();
-	        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">Failing</span>' : 
+	        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">'+i18n.t('failing')+'</span>' : 
 	        		(smartstatus)
 	        	$('td:eq(8)', nRow).html(smartstatus)
-
+                
+	        	// Encryption Station
+	        	var encryptionstatus=$('td:eq(9)', nRow).html();
+	        	encryptionstatus = encryptionstatus == '1' ? i18n.t('storage.encrypted') :
+	        	(encryptionstatus === '0' ? i18n.t('storage.not_encrypted') : '')
+	        	$('td:eq(9)', nRow).html(encryptionstatus)
 		    }
 
 	    });

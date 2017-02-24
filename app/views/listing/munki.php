@@ -90,11 +90,33 @@ new munkiinfo_model;
                         });
 
                     }
+                    
+                    // Look for the protocol
+                    if(d.search.value.match(/^protocol = .+$/))
+                    {
+                        //console.log(d.search.value)
+
+                        // Add column specific search
+                        d.columns[6].search.value = d.search.value.replace(/.*= (.+)$/, '$1');
+                        // Clear global search
+                        d.search.value = '';
+                        //console.log(d.columns[6].search.value)
+                    }
+                    
         		    // OS version
                     if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
                     }
+                    
+                    // Only search this key
+                    d.where = [
+                        {
+                            table: 'munkiinfo',
+                            column: 'munkiinfo_key',
+                            value: 'munkiprotocol'
+                        }
+                    ];
                     
                 }
             },
@@ -107,24 +129,21 @@ new munkiinfo_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-                var link = mr.getClientDetailLink(name, sn, '#tab_munki');
-			$('td:eq(0)', nRow).html(link);
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_munki');
+	        	$('td:eq(0)', nRow).html(link);
 
+	        	// Format date
+	        	var checkin = parseInt($('td:eq(7)', nRow).html());
+	        	var date = new Date(checkin * 1000);
+	        	$('td:eq(7)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
 
-            // Format date
-            var checkin = parseInt($('td:eq(7)', nRow).html());
-            var date = new Date(checkin * 1000);
-            $('td:eq(7)', nRow).html('<span title="'+date+'">'+moment(date).fromNow());
-
-
-            // Format OS Version
-            var osvers = $('td:eq(4)', nRow).html();
-            if( osvers > 0 && osvers.indexOf(".") == -1)
-            {
-              osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
-            }
-            $('td:eq(4)', nRow).html(osvers);
-
+	        	// Format OS Version
+	        	var osvers = $('td:eq(4)', nRow).html();
+	        	if( osvers > 0 && osvers.indexOf(".") == -1)
+	        	{
+	        	     osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+	        	}
+	        	$('td:eq(4)', nRow).html(osvers);
 		    }
 	    });
 
