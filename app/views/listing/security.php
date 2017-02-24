@@ -117,27 +117,37 @@ new Security_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn);
 	        	$('td:eq(0)', nRow).html(link);
+                
                 var enc = $('td:eq(6)', nRow).html();
                 $('td:eq(6)', nRow).html(function(){
                     if( enc == 1){
                         return '<span class="label label-success">'+i18n.t('encrypted')+'</span>';
                     }
                     return '<span class="label label-danger">'+i18n.t('unencrypted')+'</span>';
-		});
+                });
+                
                 var gk = $('td:eq(7)', nRow).html();
                 $('td:eq(7)', nRow).html(function(){
-                    if( gk == 'Active'){
+                  if( gk == 'Active'){
                         return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                    } else if( gk == 'Not Supported'){
+                        return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
+                    } else {
+                        return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
                     }
-		    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-		});
-		var sip = $('td:eq(8)', nRow).html();
+                });
+                
+                var sip = $('td:eq(8)', nRow).html();
                 $('td:eq(8)', nRow).html(function(){
                     if( sip == 'Active'){
                         return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                    } else if( sip == 'Not Supported'){
+                        return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
+                    } else {
+                        return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
                     }
-                    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-		});
+                });
+                
                  var firmwarepw = $('td:eq(11)', nRow).html();
                  $('td:eq(11)', nRow).html(function(){
                      if( firmwarepw == 'Yes'){
@@ -145,6 +155,7 @@ new Security_model;
                      }
                      return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
                  });
+                
 		    }
 	    } );
 	} );
