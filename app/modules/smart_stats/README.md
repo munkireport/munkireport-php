@@ -28,9 +28,9 @@ All other table columns correspond with SMART attributes.
 
 ##Dependency
 
-smart_stats module required smartctl, a part of smartmontools: [https://www.smartmontools.org/]()
+smart_stats module required smartctl, a part of smartmontools: [https://www.smartmontools.org/](https://www.smartmontools.org/)
 
-Download the latest version of smartmontools for macOS here: [https://sourceforge.net/projects/smartmontools/files/latest/download?source=files]()
+Download the latest version of smartmontools for macOS from the official repository here: [https://sourceforge.net/projects/smartmontools/files/latest/download?source=files](https://sourceforge.net/projects/smartmontools/files/latest/download?source=files)
  
 ##Notes
 
