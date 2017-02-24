@@ -168,26 +168,26 @@ class Usb_model extends Model {
             
 			// Map name to device type
 			$device_types = array(
-				'Camera' => array('isight', 'camera', 'video'),
-				'USB Hub' => array('hub'),
-				'Keyboard' => array('keyboard'),
-				'IR Receiver' => array('ir receiver'),
-				'Bluetooth Controller' => array('bluetooth'),
-				'iPhone' => array('iphone'),
-				'iPad' => array('ipad'),
-				'iPod' => array('ipod'),
-				'Mouse' => array('mouse'),
-				'Mass Storage' => array('card reader', 'os x install disk', 'apple usb superdrive'),
-				'Display' => array('displaylink', 'display', 'monitor'),
-				'Ethernet' => array('ethernet'),
-				'Network' => array('network', 'ethernet', 'modem'),
-				'UPS' => array('ups'),
-				'Audio Device' => array('audio'),
-				'TouchBar' => array('ibridge')
+				'Camera' => 'isight|camera|video',
+				'USB Hub' => 'hub',
+				'Keyboard' => 'keyboard',
+				'IR Receiver' => 'ir receiver',
+				'Bluetooth Controller' => 'bluetooth',
+				'iPhone' => 'iphone',
+				'iPad' => 'ipad',
+				'iPod' => 'ipod',
+				'Mouse' => 'mouse',
+				'Mass Storage' => 'card reader|os x install disk|apple usb superdrive',
+				'Display' => 'displaylink|display|monitor',
+				'Ethernet' => 'ethernet',
+				'Network' => 'network|ethernet|modem',
+				'UPS' => 'ups',
+				'Audio Device' => 'audio',
+				'TouchBar' => 'ibridge'
 			);
-			$search = '/.*'.strtolower($device['name']).'.*/';
-			foreach($device_types as $type => $list){
-				if (preg_grep($search, $list)){
+			$device_name = strtolower($device['name']);
+			foreach($device_types as $type => $pattern){
+				if (preg_match('/'.$pattern.'/', $device_name)){
 					$device['type'] = $type;
 					break;
 				}
