@@ -30,7 +30,7 @@ $(document).on('appReady', function(){
 					.append($('<i>')
 						.addClass('fa fa-folder-open'))
 					.append(' '+d.name))
-				.append($('<div style="max-width:400px;">')
+				.append($('<div style="max-width:850px;">')
 					.addClass('table-responsive')
 					.append($('<table>')
 						.addClass('table table-striped table-condensed')
