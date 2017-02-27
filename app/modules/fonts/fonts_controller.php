@@ -49,23 +49,22 @@ class Fonts_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    public function get_data($serial_number = '')
-    {
+     public function get_data($serial_number = '')
+     {
         $obj = new View();
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
-        
-        $queryobj = new Fonts_model();
-        
-        $sql = "SELECT * FROM fonts WHERE serial_number = '$serial_number'";
-        
-        $fonts_tab = $queryobj->query($sql);
 
-        $fonts = new Fonts_model;
-        $obj->view('json', array('msg' => current(array('msg' => $fonts_tab)))); 
-    }
+        $queryobj = new Fonts_model;
+        $fonts_tab = array();
+        foreach($queryobj->retrieve_records($serial_number) as $fontEntry) {
+            $fonts_tab[] = $fontEntry->rs;
+        }
+
+        $obj->view('json', array('msg' => $fonts_tab));
+     }
 		
 } // END class Usb_controller
