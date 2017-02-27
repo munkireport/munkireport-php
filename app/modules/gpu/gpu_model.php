@@ -89,7 +89,6 @@ class Gpu_model extends Model {
 			'model' => '',
 			'vendor' => '',
 			'vram' => '',
-			'vram_shared' => '',
 			'pcie_width' => '',
 			'slot_name' => '',
 			'device_id' => '',
