@@ -49,23 +49,22 @@ class Network_shares_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    public function get_data($serial_number = '')
-    {
+     public function get_data($serial_number = '')
+     {
         $obj = new View();
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
-        
-        $queryobj = new Network_shares_model();
-        
-        $sql = "SELECT * FROM network_shares WHERE serial_number = '$serial_number'";
-        
-        $network_shares_tab = $queryobj->query($sql);
 
-        $network_shares = new Network_shares_model;
-        $obj->view('json', array('msg' => current(array('msg' => $network_shares_tab)))); 
-    }
+        $queryobj = new Network_shares_model;
+        $network_shares_tab = array();
+        foreach($queryobj->retrieve_records($serial_number) as $shareEntry) {
+            $network_shares_tab[] = $shareEntry->rs;
+        }
+
+        $obj->view('json', array('msg' => $network_shares_tab));
+     }
 		
 } // END class Network_shares_controller
