@@ -630,6 +630,7 @@
 			"munki": "Munki",
 			"mrinfo": "MunkiReport",
 			"network": "Network",
+			"network_shares": "Network Shares",
 			"power": "Power",
 			"printers": "Printers",
 			"profile": "Profiles",
@@ -689,6 +690,16 @@
 		"outbound_traffic": "Outbound Traffic",
 		"remote_ip": "Remote IP Address",
 		"service": "Service"
+	},
+	"network_shares": {
+		"clienttab": "Network Shares",
+		"noshares": "No Network Shares",
+		"reporttitle": "Network Shares Report",
+		"name": "Name",
+		"mntfromname": "Path",
+		"fstypename": "Type",
+		"fsmtnonname": "Mount Directory",
+		"automounted": "Automount"
 	},
 	"new_client": "New Client",
 	"new_client_plural": "New Clients",

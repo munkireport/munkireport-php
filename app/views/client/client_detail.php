@@ -32,6 +32,7 @@ $tab_list = array(
 	'munkireportinfo-tab' => array('view' => 'client/munkireportinfo_tab', 'i18n' => 'munkireportinfo.clienttabtitle'),
 	'usb-tab' => array('view' => 'client/usb_tab', 'i18n' => 'nav.listings.usb', 'badge' => 'usb-cnt'),
 	'softwareupdate-tab' => array('view' => 'client/softwareupdate_tab', 'i18n' => 'softwareupdate.clienttabtitle', 'badge' => 'softwareupdate-cnt'),
+	'network_shares-tab' => array('view' => 'client/network_shares_tab', 'i18n' => 'network_shares.clienttab', 'badge' => 'network_shares-cnt'),
 	);
 
 // Add custom tabs
