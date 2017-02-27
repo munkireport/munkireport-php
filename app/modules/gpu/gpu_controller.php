@@ -49,23 +49,22 @@ class Gpu_controller extends Module_controller
      * Retrieve data in json format
      *
      **/
-    public function get_data($serial_number = '')
-    {
+     public function get_data($serial_number = '')
+     {
         $obj = new View();
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
-        
-        $queryobj = new Gpu_model();
-        
-        $sql = "SELECT * FROM gpu WHERE serial_number = '$serial_number'";
-        
-        $gpu_tab = $queryobj->query($sql);
 
-        $gpu = new Gpu_model;
-        $obj->view('json', array('msg' => current(array('msg' => $gpu_tab)))); 
-    }
+        $queryobj = new Gpu_model;
+        $gpu_tab = array();
+        foreach($queryobj->retrieve_records($serial_number) as $gpuEntry) {
+            $gpu_tab[] = $gpuEntry->rs;
+        }
+
+        $obj->view('json', array('msg' => $gpu_tab));
+     }
 		
 } // END class Gpu_controller
