@@ -55,6 +55,7 @@ class Gpu_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
         $queryobj = new Gpu_model();
