@@ -27,3 +27,5 @@ Database:
 * trademark - text - font trademark
 
 See options in config to disable collection of system fonts.
+
+Due to limitations with how the script is ran, it does not list details about user installed fonts (~/Library/Fonts). Only those in /Library/Fonts/ and /System/Library/Fonts/ are listed.
