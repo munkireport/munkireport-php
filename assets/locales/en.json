@@ -389,6 +389,7 @@
 		"vram_short": "VRAM",
 		"vram_shared": "Shared Video Memory",
 		"vram_shared_short": "VRAM Shared",
+		"shared": "Shared",
 		"pcie_width": "PCIe Lane Width",
 		"slot_name": "Slot Name",
 		"device_id": "Device ID",

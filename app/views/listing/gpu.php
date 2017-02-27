@@ -21,7 +21,6 @@ new Gpu_model;
 			<th data-i18n="gpu.model" data-colname='gpu.model'></th>
 			<th data-i18n="gpu.vendor" data-colname='gpu.vendor'></th>
 			<th data-i18n="gpu.vram_short" data-colname='gpu.vram'></th>
-			<th data-i18n="gpu.vram_shared_short" data-colname='gpu.vram_shared'></th>
 			<th data-i18n="gpu.pcie_width" data-colname='gpu.pcie_width'></th>
 			<th data-i18n="gpu.slot_name" data-colname='gpu.slot_name'></th>
 			<th data-i18n="gpu.device_id" data-colname='gpu.device_id'></th>
@@ -34,7 +33,7 @@ new Gpu_model;
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="13" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 

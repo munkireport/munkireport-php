@@ -9,7 +9,6 @@ class Gpu_model extends Model {
 		$this->rs['model'] = '';
 		$this->rs['vendor'] = '';
 		$this->rs['vram'] = '';
-		$this->rs['vram_shared'] = '';
 		$this->rs['pcie_width'] = '';
 		$this->rs['slot_name'] = '';
 		$this->rs['device_id'] = '';
@@ -25,7 +24,6 @@ class Gpu_model extends Model {
 		$this->idx[] = array('model');
 		$this->idx[] = array('vendor');
 		$this->idx[] = array('vram');
-		$this->idx[] = array('vram_shared');
 		$this->idx[] = array('pcie_width');
 		$this->idx[] = array('slot_name');
 		$this->idx[] = array('device_id');
@@ -115,7 +113,12 @@ class Gpu_model extends Model {
 				}
 			}
 			
-			// Save GPU
+            // Set VRAM from shared VRAM
+			if( array_key_exists("vram_shared", $device)){
+				$this->rs['vram'] = ($device['vram_shared']." (Shared)");
+			}
+            
+			// Save the GPU
 			$this->id = '';
 			$this->save();
 		}
