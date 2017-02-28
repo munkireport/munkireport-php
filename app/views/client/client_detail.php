@@ -20,6 +20,7 @@ $tab_list = array(
 	'wifi-tab' => array('view' => 'client/wifi_tab', 'i18n' => 'client.tab.wifi'),
 	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds'),
 	'displays-tab' => array('view' => 'client/displays_tab', 'i18n' => 'client.tab.displays', 'badge' => 'displays-cnt'),
+	'gpu-tab' => array('view' => 'client/gpu_tab', 'i18n' => 'nav.listings.gpu'),
 	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
 	'gsx-tab' => array('view' => 'client/gsx_tab', 'i18n' => 'client.tab.gsx'),
 	'deploystudio-tab' => array('view' => 'client/deploystudio_tab', 'i18n' => 'client.tab.deploystudio'),
