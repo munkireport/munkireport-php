@@ -11,14 +11,14 @@ else
 NW_CTL="${BASEURL}index.php?/module/fan_temps/"
 
 # Get the script in the proper directory
-${CURL} -s "${NW_CTL}get_script/fan_temps.sh" -o "${MUNKIPATH}preflight.d/fan_temps.sh"
+"${CURL[@]}"  -s "${NW_CTL}get_script/fan_temps.sh" -o "${MUNKIPATH}preflight.d/fan_temps.sh"
 
 # Uncomment next line if upgrading smckit
 # rm -f "${MUNKIPATH}smckit"
 
 # Only download smckit.zip if smckit doesn't existi
 if [ ! -f "${MUNKIPATH}smckit" ]; then
-	CURL} -s "${NW_CTL}get_script/smckit.zip" -o "${MUNKIPATH}smckit.zip"
+    "${CURL[@]}"  -s "${NW_CTL}get_script/smckit.zip" -o "${MUNKIPATH}smckit.zip"
 fi
 
 if [ "${?}" != 0 ]
