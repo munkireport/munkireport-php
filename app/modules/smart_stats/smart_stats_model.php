@@ -316,24 +316,30 @@ class Smart_stats_model extends Model {
         foreach ($translate as $search => $field) {  
                 // If key is empty, is not a string, and is not zero
                 if (empty($plist[$disk_id][$search]) && ! in_array($field, $strings) && $plist[$disk_id][$search] != "0") {  
-                        $this->$field = -9876540;
+                    $this->$field = -9876540;
+                   
+                // Head_Flying_Hours can sometimes a string    
+                } else if ($search == "Head_Flying_Hours" && stripos($plist[$disk_id][$search], 'h') !== false) {
+                    
+                    $headhours = explode("h+",$plist[$disk_id][$search]);
+                    $this->$field = $headhours[0];
                     
                 // If key is not empty save it to the object
                 } else if (! empty($plist[$disk_id][$search])) {  
-                        $this->$field = $plist[$disk_id][$search];
+                    $this->$field = $plist[$disk_id][$search];
                     
                 // Else, check if key is an int  
-                } else {
-                    if ( ! in_array($field, $strings) && $plist[$disk_id][$search] != "0"){
-                        // Set the int to fake null of -9876540
-                        $this->$field = -9876540;
-                    } else if ( ! in_array($field, $strings) && $plist[$disk_id][$search] == "0"){
-                        // Set the int to 0
-                        $this->$field = $plist[$disk_id][$search];
-                    } else {  
-                        // Else, null the value
-                        $this->$field = '';
-                    }
+                } else if ( ! in_array($field, $strings) && $plist[$disk_id][$search] != "0"){
+                    // Set the int to fake null of -9876540
+                    $this->$field = -9876540;
+                    
+                } else if ( ! in_array($field, $strings) && $plist[$disk_id][$search] == "0"){
+                    // Set the int to 0
+                    $this->$field = $plist[$disk_id][$search];
+                    
+                } else {  
+                    // Else, null the value
+                    $this->$field = '';
                 }
             }
          
