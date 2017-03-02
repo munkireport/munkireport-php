@@ -11,7 +11,6 @@ class show extends Controller
         include_once(APP_PATH . '/lib/munkireport/Listings.php');
         $this->data = array(
             'session' => $_SESSION,
-            'listing' => new munkireport\Listings(),
         );
     }
 

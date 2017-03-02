@@ -110,6 +110,9 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="listing dropdown-menu">
+
+						<?php include_once(APP_PATH . '/lib/munkireport/Listings.php'); ?>
+						<?php $listing = new munkireport\Listings; //ugly, I know..?>
 						<?php foreach($listing->get() as $list_item): ?>
 
 									<li<?php echo substr_compare( $page, $list_item->name, -strlen( $list_item->name ) ) === 0 ?' class="active"':''; ?>>
