@@ -27,7 +27,7 @@ $(document).on('appUpdate', function(e, lang) {
 		var notbound = data.total - data.arebound;
 		
 		var panel = $('#bound-to-ds-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/directoryservice';
+			baseUrl = appUrl + '/show/listing/directory_service/directoryservice';
 		panel.empty();
 		
 		// Set statuses

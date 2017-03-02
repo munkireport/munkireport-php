@@ -29,7 +29,7 @@ $(document).on('appUpdate', function(e, lang) {
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>',
-					url = appUrl+'/show/listing/warranty#'+d.status;
+					url = appUrl+'/show/listing/warranty/warranty#'+d.status;
 				
 				box.append('<a href="'+url+'" class="list-group-item">'+expires+' ('+d.status+')'+badge+'</a>')
 			});

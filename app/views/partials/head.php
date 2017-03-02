@@ -40,7 +40,7 @@
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
 	</script>
 
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>	
+	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
 
 <?php
 	if (isset($scripts))
@@ -111,21 +111,13 @@
 					</a>
 					<ul class="listing dropdown-menu">
 
-						<?php foreach(scandir(conf('view_path').'listing') AS $list_url): ?>
+						<?php include_once(APP_PATH . '/lib/munkireport/Listings.php'); ?>
+						<?php $listing = new munkireport\Listings; //ugly, I know..?>
+						<?php foreach($listing->get() as $list_item): ?>
 
-							<?php if( strpos($list_url, 'php')): ?>
-								<?php $module_name = str_replace(".php", "", $list_url); ?>
-								
-								<?php if( !conf('hide_nonactive_modules') || in_array($module_name, conf('modules', array())) ): ?>
-									<?php $page_url = $url.strtok($list_url, '.'); ?>
-
-									<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-									<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.listings.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+									<li<?php echo substr_compare( $page, $list_item->name, -strlen( $list_item->name ) ) === 0 ?' class="active"':''; ?>>
+									<a href="<?php echo url('show/listing/'.$list_item->module.'/'.$list_item->name); ?>" data-i18n="nav.listings.<?php echo $list_item->name; ?>"></a>
 									</li>
-									
-								<?php endif; ?>
-
-							<?php endif; ?>
 
 						<?php endforeach; ?>
 
@@ -170,7 +162,7 @@
 			</ul><!-- nav navbar-nav -->
 
 			<ul class="nav navbar-nav navbar-right">
-			
+
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-wrench"></i>
