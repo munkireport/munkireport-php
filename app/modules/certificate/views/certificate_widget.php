@@ -9,15 +9,15 @@
                 </div>
 
                 <div class="list-group scroll-box">
-                    <a id="cert-ok" href="<?=url('show/listing/certificate')?>" class="list-group-item list-group-item-success hide">
+                    <a id="cert-ok" href="<?=url('show/listing/certificate/certificate')?>" class="list-group-item list-group-item-success hide">
                         <span class="badge">0</span>
                         <span data-i18n="widget.certificate.ok"></span>
                     </a>
-                    <a id="cert-soon" href="<?=url('show/listing/certificate')?>" class="list-group-item list-group-item-warning hide">
+                    <a id="cert-soon" href="<?=url('show/listing/certificate/certificate')?>" class="list-group-item list-group-item-warning hide">
                         <span class="badge">0</span>
                         <span data-i18n="widget.certificate.soon"></span>
                     </a>
-                    <a id="cert-expired" href="<?=url('show/listing/certificate')?>" class="list-group-item list-group-item-danger hide">
+                    <a id="cert-expired" href="<?=url('show/listing/certificate/certificate')?>" class="list-group-item list-group-item-danger hide">
                         <span class="badge">0</span>
                         <span data-i18n="widget.certificate.expired"></span>
                     </a>

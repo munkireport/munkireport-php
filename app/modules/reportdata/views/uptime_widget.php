@@ -33,7 +33,7 @@
 $(document).on('appReady', function(e, lang) {
 	
 	var panelBody = $('#uptime-widget div.panel-body');
-	panelBody.find('a.btn').attr('href', appUrl + '/show/listing/clients');
+	panelBody.find('a.btn').attr('href', appUrl + '/show/listing/reportdata/clients');
 	
 	$(document).on('appUpdate', function(e, lang) {
 

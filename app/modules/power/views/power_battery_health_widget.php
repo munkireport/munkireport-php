@@ -41,7 +41,7 @@ $(document).on('appUpdate', function(e, lang) {
 			
 			// render entries
 			$.each(entries, function(i, o){
-				body.append('<a href="'+appUrl+'/show/listing/power/#'+encodeURIComponent(o.link)+'" class="btn '+o.class+'"><span class="bigger-150">'+o.count+'</span><br>'+o.name+'</a> ');
+				body.append('<a href="'+appUrl+'/show/listing/power/power/#'+encodeURIComponent(o.link)+'" class="btn '+o.class+'"><span class="bigger-150">'+o.count+'</span><br>'+o.name+'</a> ');
 			});
 		}
 		else{

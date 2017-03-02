@@ -27,7 +27,7 @@ $(document).on('appReady', function(e, lang) {
 		margin: {top: 20, right: 10, bottom: 20, left: 70},
 		elementClickCallback: function(e){
 			var label = e.data.label;
-			window.location.href = appUrl + '/show/listing/hardware#' + encodeURIComponent('memory = ') + parseInt(label) + 'GB' ;
+			window.location.href = appUrl + '/show/listing/machine/hardware#' + encodeURIComponent('memory = ') + parseInt(label) + 'GB' ;
 		},
 		labelModifier: function(label){
 			return label + ' GB';

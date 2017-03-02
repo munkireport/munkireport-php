@@ -73,7 +73,7 @@ $( document ).ready(function() {
         
         // Client listing
         $(document).bind('keydown', 'c', function(){
-            window.location = appUrl + '/show/listing/clients';
+            window.location = appUrl + '/show/listing/reportdata/clients';
             return true;
         });
         
