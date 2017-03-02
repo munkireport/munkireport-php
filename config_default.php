@@ -82,6 +82,16 @@
 
 	/*
 	|===============================================
+	| Hide Non-active Modules
+	|===============================================
+	|
+	| When true, modules that are not in conf['modules'] will not be shown
+	|	in the 'Listings' menu.
+	*/
+	$conf['hide_nonactive_modules'] = FALSE;
+
+	/*
+	|===============================================
 	| Authentication
 	|===============================================
 	|
