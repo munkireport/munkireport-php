@@ -18,7 +18,7 @@ new Caching_model;
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-			<th data-i18n="caching.date" data-colname='caching.collectiondate'></th>
+			<th data-i18n="caching.date" data-colname='caching.collectiondateepoch'></th>
 			<th data-i18n="caching.from_cache" data-colname='caching.bytesfromcachetoclients'></th>
 			<th data-i18n="caching.from_peers" data-colname='caching.bytesfrompeerstoclients'></th>
 			<th data-i18n="caching.from_origin" data-colname='caching.bytesfromorigintoclients'></th>
@@ -92,21 +92,6 @@ new Caching_model;
                         });
 
                     }
-        		    // OS version
-                    if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
-                        var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
-                        d.search.value = search;
-                    }
-                    
-                    // Only show machines that cache
-                    //d.where = [
-                    //    {
-                    //        table: 'caching',
-                    //        column: 'bytesdropped',
-                    //        value: '0'
-                    //    }
-                    //];
-                    
                 }
             },
             dom: mr.dt.buttonDom,
@@ -119,35 +104,40 @@ new Caching_model;
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
                 var link = mr.getClientDetailLink(name, sn, '#tab_caching-tab');
-			$('td:eq(0)', nRow).html(link);
+	        	$('td:eq(0)', nRow).html(link);
 
-            // Format byte size
-            var checkin = parseInt($('td:eq(3)', nRow).html());
-            $('td:eq(3)', nRow).html(fileSize(checkin, 2));
+	        	// Format date
+	        	var event = parseInt($('td:eq(2)', nRow).html());
+	        	var date = new Date(event * 1000);
+	        	$('td:eq(2)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
                 
-            // Format byte size
-            var checkin = parseInt($('td:eq(4)', nRow).html());
-            $('td:eq(4)', nRow).html(fileSize(checkin, 2));
+	        	// Format byte size
+	        	var checkin = parseInt($('td:eq(3)', nRow).html());
+	        	$('td:eq(3)', nRow).html(fileSize(checkin, 2));
+                
+	        	// Format byte size
+	        	var checkin = parseInt($('td:eq(4)', nRow).html());
+	        	$('td:eq(4)', nRow).html(fileSize(checkin, 2));
 
-            // Format byte size
-            var checkin = parseInt($('td:eq(5)', nRow).html());
-            $('td:eq(5)', nRow).html(fileSize(checkin, 2));
+	        	// Format byte size
+	        	var checkin = parseInt($('td:eq(5)', nRow).html());
+	        	$('td:eq(5)', nRow).html(fileSize(checkin, 2));
 
-            // Format byte size
-            var checkin = parseInt($('td:eq(8)', nRow).html());
-            $('td:eq(8)', nRow).html(fileSize(checkin, 2));
+	        	// Format byte size
+	        	var checkin = parseInt($('td:eq(8)', nRow).html());
+	        	$('td:eq(8)', nRow).html(fileSize(checkin, 2));
                 
-            // Format byte size
-            var checkin = parseInt($('td:eq(9)', nRow).html());
-            $('td:eq(9)', nRow).html(fileSize(checkin, 2));
+	        	// Format byte size
+	        	var checkin = parseInt($('td:eq(9)', nRow).html());
+	        	$('td:eq(9)', nRow).html(fileSize(checkin, 2));
                 
-            // Format byte size
-            var checkin = parseInt($('td:eq(10)', nRow).html());
-            $('td:eq(10)', nRow).html(fileSize(checkin, 2));
+	        	// Format byte size
+	        	var checkin = parseInt($('td:eq(10)', nRow).html());
+	        	$('td:eq(10)', nRow).html(fileSize(checkin, 2));
                 
-            // Format byte size
-            var checkin = parseInt($('td:eq(11)', nRow).html());
-            $('td:eq(11)', nRow).html(fileSize(checkin, 2));
+	        	// Format byte size
+	        	var checkin = parseInt($('td:eq(11)', nRow).html());
+	        	$('td:eq(11)', nRow).html(fileSize(checkin, 2));
 		    }
 	    });
 

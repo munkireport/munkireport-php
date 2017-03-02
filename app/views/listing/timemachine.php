@@ -95,7 +95,7 @@ new Timemachine_model;
 	        	// Format start date
 	        	var date = $('td:eq(3)', nRow).html();
 	        	if(date){
-		        	$('td:eq(3)', nRow).html(moment(date + 'Z').fromNow());
+		        	$('td:eq(3)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date + 'Z').fromNow()+'</span>');
 		        }
 
 	        	// Format duration
@@ -104,15 +104,16 @@ new Timemachine_model;
 	        	  	$('td:eq(4)', nRow).html(moment.duration(duration, "seconds").humanize());
 	        	}
 
+	        	// Format last failed date
 	        	var date = $('td:eq(5)', nRow).html();
 	        	if(date){
-		        	$('td:eq(5)', nRow).html(moment(date + 'Z').fromNow());
+		        	$('td:eq(5)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date + 'Z').fromNow()+'</span>');
 	        	}
 	        	
-				// Format Check-In timestamp
-				var checkin = parseInt($('td:eq(7)', nRow).html());
-				var date = new Date(checkin * 1000);
-				$('td:eq(7)', nRow).html(moment(date).fromNow());
+	        	// Format Check-In timestamp
+	        	var checkin = parseInt($('td:eq(7)', nRow).html());
+	        	var date = new Date(checkin * 1000);
+	        	$('td:eq(7)', nRow).html('<span title="'+i18n.t('checkin')+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery
