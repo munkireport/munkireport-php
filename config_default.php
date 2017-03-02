@@ -82,13 +82,13 @@
 
 	/*
 	|===============================================
-	| Show Unused Modules
+	| Hide Non-active Modules
 	|===============================================
 	|
-	| When false, modules that are not in conf['modules'] will not be shown
+	| When true, modules that are not in conf['modules'] will not be shown
 	|	in the 'Listings' menu.
 	*/
-	$conf['show_unused_modules'] = TRUE;
+	$conf['hide_nonactive_modules'] = FALSE;
 
 	/*
 	|===============================================

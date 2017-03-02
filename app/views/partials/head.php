@@ -116,7 +116,7 @@
 							<?php if( strpos($list_url, 'php')): ?>
 								<?php $module_name = str_replace(".php", "", $list_url); ?>
 								
-								<?php if( in_array($module_name, conf('modules', array())) || conf('show_unused_modules') ): ?>
+								<?php if( !conf('hide_nonactive_modules') || in_array($module_name, conf('modules', array())) ): ?>
 									<?php $page_url = $url.strtok($list_url, '.'); ?>
 
 									<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
