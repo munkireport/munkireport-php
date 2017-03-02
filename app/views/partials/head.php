@@ -114,11 +114,16 @@
 						<?php foreach(scandir(conf('view_path').'listing') AS $list_url): ?>
 
 							<?php if( strpos($list_url, 'php')): ?>
-							<?php $page_url = $url.strtok($list_url, '.'); ?>
+								<?php $module_name = str_replace(".php", "", $list_url); ?>
+								
+								<?php if( in_array($module_name, conf('modules', array())) || conf('show_unused_modules') ): ?>
+									<?php $page_url = $url.strtok($list_url, '.'); ?>
 
-							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-								<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.listings.<?php echo $name = strtok($list_url, '.'); ?>"></a>
-							</li>
+									<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
+									<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.listings.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+									</li>
+									
+								<?php endif; ?>
 
 							<?php endif; ?>
 

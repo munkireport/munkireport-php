@@ -82,6 +82,16 @@
 
 	/*
 	|===============================================
+	| Show Unused Modules
+	|===============================================
+	|
+	| When false, modules that are not in conf['modules'] will not be shown
+	|	in the 'Listings' menu.
+	*/
+	$conf['show_unused_modules'] = TRUE;
+
+	/*
+	|===============================================
 	| Authentication
 	|===============================================
 	|
