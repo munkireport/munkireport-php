@@ -110,24 +110,11 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="listing dropdown-menu">
+						<?php foreach($listing->get() as $list_item): ?>
 
-						<?php var_dump($listing)?>
-
-						<?php foreach(scandir(conf('view_path').'listing') AS $list_url): ?>
-
-							<?php if( strpos($list_url, 'php')): ?>
-								<?php $module_name = str_replace(".php", "", $list_url); ?>
-
-								<?php if( !conf('hide_inactive_modules') || in_array($module_name, conf('modules', array())) ): ?>
-									<?php $page_url = $url.strtok($list_url, '.'); ?>
-
-									<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-									<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.listings.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+									<li<?php echo substr_compare( $page, $list_item->name, -strlen( $list_item->name ) ) === 0 ?' class="active"':''; ?>>
+									<a href="<?php echo url('show/listing/'.$list_item->module.'/'.$list_item->name); ?>" data-i18n="nav.listings.<?php echo $list_item->name; ?>"></a>
 									</li>
-
-								<?php endif; ?>
-
-							<?php endif; ?>
 
 						<?php endforeach; ?>
 

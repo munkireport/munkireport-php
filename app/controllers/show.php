@@ -45,19 +45,21 @@ class show extends Controller
         $obj->view($view, $this->data);
     }
 
-    public function listing($which = '')
+    public function listing($module = '', $name = '')
     {
-        if ($which) {
-            $data['page'] = 'clients';
-            $data['scripts'] = array("clients/client_list.js");
-            $view = 'listing/'.$which;
+        if ($module && $name) {
+            $this->data['page'] = 'clients';
+            $this->data['scripts'] = array("clients/client_list.js");
+            $viewpath = conf('module_path') . $module . '/views/';
+            $view = $name.'_listing';
         } else {
-            $data = array('status_code' => 404);
+            $this->data = array('status_code' => 404);
             $view = 'error/client_error';
+            $viewpath = conf('view_path');
         }
 
         $obj = new View();
-        $obj->view($view, $data);
+        $obj->view($view, $this->data, $viewpath);
     }
 
     public function reports($which = 'default')

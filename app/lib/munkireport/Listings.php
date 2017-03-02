@@ -13,23 +13,22 @@ class Listings
 
     private $listingList = array();
     private $allowedModules = 'all';
+    private $alwaysShowTheseModules = array(
+      'machine',
+      'reportdata',
+      'tag'
+    );
 
     public function __construct()
     {
 
         // Populate allowedModules if hide_inactive_modules is true
         if(conf('hide_inactive_modules')){
-          $this->allowedModules = conf('modules', array()) + array(
-            'machine',
-            'reportdata'
-          );
+          $this->allowedModules = conf('modules', array()) + $this->alwaysShowTheseModules;
         }
 
         // Get Listings in modules
         $this->searchListingsInModules(conf('module_path'));
-
-        // Get Listings in Listing directory
-        $this->searchListingsInFolder(conf('view_path') . 'listing/');
 
         // Get Listings in custom modules
         if(conf('custom_folder')){
@@ -40,20 +39,14 @@ class Listings
 
             if (is_dir($customPath.'views/listing/'))
             {
-                $this->searchListingsInFolder($customPath.'views/listing/');
+                $this->searchListingsInFolder($customPath.'views/listing/', 'custom');
             }
         }
     }
 
     public function get()
     {
-
-    }
-
-    public function view($viewObj, $listingName)
-    {
-        $listing = $this->get($listingName);
-        $viewObj->view($listing->file, $listing->vars, $listing->path);
+        return $this->listingList;
     }
 
     private function searchListingsInModules($basePath)
@@ -72,21 +65,21 @@ class Listings
             // Find a views folder
             if (is_dir($basePath.$module.'/views/'))
             {
-                $this->searchListingsInFolder($basePath.$module.'/views/');
+                $this->searchListingsInFolder($basePath.$module.'/views/', $module);
             }
         }
     }
 
-    private function searchListingsInFolder($viewpath)
+    private function searchListingsInFolder($viewpath, $module)
     {
         foreach (scandir($viewpath) as $view)
         {
             if(preg_match('/(.*)_listing.php/', $view, $matches))
             {
                 // Found a Listing, add it to ListingList
-                $this->ListingList[$matches[1]] = (object) array(
-                    'file' => $matches[1].'_listing',
-                    'path' => $viewpath,
+                $this->listingList[$matches[1]] = (object) array(
+                    'name' => $matches[1],
+                    'module' => $module,
                 );
             }
         }
