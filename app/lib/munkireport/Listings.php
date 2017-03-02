@@ -42,6 +42,11 @@ class Listings
                 $this->searchListingsInFolder($customPath.'views/listing/', 'custom');
             }
         }
+
+        // Sort on name
+        usort($this->listingList, function($a, $b){
+            return strcmp($a->name, $b->name);
+        });
     }
 
     public function get()
