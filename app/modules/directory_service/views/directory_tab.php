@@ -1,7 +1,7 @@
 	<h2 data-i18n="directoryservice.clienttabtitle"></h2>
-	
+
 	<div id="directoryservice-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
-	
+
 	<div id="directoryservice-view" class="row hide">
 		<div class="col-md-6">
 			<table class="table table-striped">
@@ -104,20 +104,19 @@
 			</table>
 		</div>
 		<div class="col-md-6">
-			<div style="height: 512px" id="map-canvas"></div>
 		</div>
 	</div>
 
 <script>
 $(document).on('appReady', function(e, lang) {
-	
+
 	// Get directory_service data
 	$.getJSON( appUrl + '/module/directory_service/get_data/' + serialNumber, function( data ) {
 		if( ! data.addomain){
 			$('#directoryservice-msg').text(i18n.t('no_data'));
 		}
 		else{
-			
+
 			// Hide
 			$('#directoryservice-msg').text('');
 			$('#directoryservice-view').removeClass('hide');
@@ -146,7 +145,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#directoryservice-passwordchangeinterval').text(data.passwordchangeinterval);
 			$('#directoryservice-restrictdynamicdnsupdates').text(data.restrictdynamicdnsupdates);
 			$('#directoryservice-namespacemode').text(data.namespacemode);
-            
+
 			if(data.createmobileaccount === "1" || data.createmobileaccount === 1) {
 				 $('#directoryservice-createmobileaccount').text(i18n.t('yes'));
 			} else if(data.createmobileaccount === "0" || data.createmobileaccount === 0) {
@@ -154,7 +153,7 @@ $(document).on('appReady', function(e, lang) {
 			} else{
 				 $('#directoryservice-createmobileaccount').text("");
 			}
-            
+
 			if(data.requireconfirmation === "1" || data.requireconfirmation === 1) {
 				 $('#directoryservice-requireconfirmation').text(i18n.t('yes'));
 			} else if(data.requireconfirmation === "0" || data.requireconfirmation === 0) {
@@ -162,7 +161,7 @@ $(document).on('appReady', function(e, lang) {
 			} else{
 				 $('#directoryservice-createmobileaccount').text("");
 			}
-            
+
 			if(data.forcehomeinstartup === "1" || data.forcehomeinstartup === 1) {
 				 $('#directoryservice-forcehomeinstartup').text(i18n.t('yes'));
 			} else if(data.forcehomeinstartup === "0" || data.forcehomeinstartup === 0) {
@@ -170,7 +169,7 @@ $(document).on('appReady', function(e, lang) {
 			} else{
 				 $('#directoryservice-createmobileaccount').text("");
 			}
-          
+
 			if(data.mounthomeassharepoint === "1" || data.mounthomeassharepoint === 1) {
 				 $('#directoryservice-mounthomeassharepoint').text(i18n.t('yes'));
 			} else if(data.mounthomeassharepoint === "0" || data.mounthomeassharepoint === 0) {
@@ -178,7 +177,7 @@ $(document).on('appReady', function(e, lang) {
 			} else{
 				 $('#directoryservice-mounthomeassharepoint').text("");
 			}
-            
+
 			if(data.usewindowsuncpathforhome === "1" || data.usewindowsuncpathforhome === 1) {
 				 $('#directoryservice-usewindowsuncpathforhome').text(i18n.t('yes'));
 			} else if(data.usewindowsuncpathforhome === "0" || data.usewindowsuncpathforhome === 0) {
@@ -201,11 +200,11 @@ $(document).on('appReady', function(e, lang) {
 				 $('#directoryservice-authenticationfromanydomain').text(i18n.t('no'));
 			} else{
 				 $('#directoryservice-authenticationfromanydomain').text("");
-			}  
+			}
 		}
 
 	});
-	
+
 });
 
 </script>
