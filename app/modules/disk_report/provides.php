@@ -1,6 +1,9 @@
 <?php
 
 return array(
+    'client_tabs' => array(
+        'storage-tab' => array('view' => 'storage_tab', 'i18n' => 'storage.storage'),
+    ),
     'listings' => array(
         array('view' => 'disk_listing'),
     ),
