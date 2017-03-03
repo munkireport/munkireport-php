@@ -58,6 +58,24 @@ class Modules
         }
     }
 
+    //  Get listings info
+    public function getListingDropdownData($page)
+    {
+        $out = array();
+        foreach( $this->getInfo('listings') as $module => $listings){
+            foreach($listings as $listingInfo){
+                $name = str_replace('_listing', '', $listingInfo['view']);
+                $out[] = (object) array(
+                  'url' => url('show/listing/'.$module.'/'.$name),
+                  'name' => $name,
+                  'class' => substr_compare( $page, $name, -strlen( $name ) ) === 0 ? 'active' : '',
+                );
+            }
+        }
+
+        return $out;
+    }
+
     private function collectModuleInfo($basePath)
     {
         foreach (scandir($basePath) as $module) {
