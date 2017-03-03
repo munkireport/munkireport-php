@@ -13,8 +13,7 @@ $tab_list = array(
 );
 
 // Include module tabs
-include_once(APP_PATH . '/lib/munkireport/Modules.php');
-$modules = new munkireport\Modules;
+$modules = getMrModuleObj();
 $modules->addTabs($tab_list);
 
 // Add custom tabs

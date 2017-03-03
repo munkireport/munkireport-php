@@ -111,12 +111,11 @@
 					</a>
 					<ul class="listing dropdown-menu">
 
-						<?php include_once(APP_PATH . '/lib/munkireport/Listings.php'); ?>
-						<?php $listing = new munkireport\Listings; //ugly, I know..?>
-						<?php foreach($listing->get() as $list_item): ?>
+						<?php $modules = getMrModuleObj(); ?>
+						<?php foreach($modules->getListingDropdownData($page) as $list_item): ?>
 
-									<li<?php echo substr_compare( $page, $list_item->name, -strlen( $list_item->name ) ) === 0 ?' class="active"':''; ?>>
-									<a href="<?php echo url('show/listing/'.$list_item->module.'/'.$list_item->name); ?>" data-i18n="nav.listings.<?php echo $list_item->name; ?>"></a>
+									<li class="<?=$list_item->class?>">
+									<a href="<?=$list_item->url?>" data-i18n="nav.listings.<?=$list_item->name?>"></a>
 									</li>
 
 						<?php endforeach; ?>
