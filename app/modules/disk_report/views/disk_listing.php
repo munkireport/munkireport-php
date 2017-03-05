@@ -12,7 +12,7 @@ new Reportdata_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.diskreport"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="nav.reports.disk"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -47,7 +47,7 @@ new Reportdata_model;
 		oTable.ajax.reload();
 		return;
 
-	});		
+	});
 
 	$(document).on('appReady', function(e, lang) {
 
@@ -55,7 +55,7 @@ new Reportdata_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -78,9 +78,9 @@ new Reportdata_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    
+
                     d.mrColNotEmpty = "FreeSpace";
-                    
+
                     // Check for column in search
                     if(d.search.value){
                         $.each(d.columns, function(index, item){
@@ -90,7 +90,7 @@ new Reportdata_model;
                         });
 
                     }
-            
+
                     // Look for 'between' statement todo: make generic
                     if(d.search.value.match(/^\d+GB freespace \d+GB$/))
                     {
@@ -126,7 +126,7 @@ new Reportdata_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_storage-tab');
 	        	$('td:eq(0)', nRow).html(link);
-	        	
+
 	        	// is SSD ?
 	        	var volumeType=$('td:eq(4)', nRow).html();
 	        	$('td:eq(4)', nRow).html(volumeType.toUpperCase())
@@ -135,7 +135,7 @@ new Reportdata_model;
 	        	var disk=$('td:eq(5)', nRow).html();
 	        	var cls = disk > 90 ? 'danger' : (disk > 80 ? 'warning' : 'success');
 	        	$('td:eq(5)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
-	        	
+
 	        	// Format filesize
 	        	var fs=$('td:eq(6)', nRow).html();
 	        	$('td:eq(6)', nRow).addClass('text-right').html(fileSize(fs, 0));
@@ -143,13 +143,13 @@ new Reportdata_model;
 	        	// Format filesize
 	        	var fs=$('td:eq(7)', nRow).html();
 	        	$('td:eq(7)', nRow).addClass('text-right').html(fileSize(fs, 0));
-	        	
+
 	        	// Alert on SMART failures
 	        	var smartstatus=$('td:eq(8)', nRow).html();
-	        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">'+i18n.t('failing')+'</span>' : 
+	        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">'+i18n.t('failing')+'</span>' :
 	        		(smartstatus)
 	        	$('td:eq(8)', nRow).html(smartstatus)
-                
+
 	        	// Encryption Station
 	        	var encryptionstatus=$('td:eq(9)', nRow).html();
 	        	encryptionstatus = encryptionstatus == '1' ? i18n.t('storage.encrypted') :
