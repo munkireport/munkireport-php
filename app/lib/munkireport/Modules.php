@@ -12,8 +12,7 @@ class Modules
 {
 
     private $moduleList = array();
-    private $allowedModules = 'all';
-    private $alwaysShowTheseModules = array(
+    private $allowedModules = array(
       'machine',
       'reportdata',
       'tag'
@@ -23,15 +22,19 @@ class Modules
     {
         // Populate allowedModules if hide_inactive_modules is true
         if(conf('hide_inactive_modules')){
-          $this->allowedModules = array_merge(conf('modules', array()), $this->alwaysShowTheseModules);
+            $skipInactiveModules = True;
+            $this->allowedModules = array_merge($this->allowedModules, conf('modules', array()));
+        }
+        else{
+            $skipInactiveModules = False;
         }
 
         // Get Modules in app/modules
-        $this->collectModuleInfo(conf('module_path'));
+        $this->collectModuleInfo(conf('module_path'), $skipInactiveModules);
 
         // Get Module info in custom folder
         if(conf('custom_folder')){
-            $this->collectModuleInfo(conf('custom_folder').'modules/');
+            $this->collectModuleInfo(conf('custom_folder').'modules/', $skipInactiveModules);
         }
     }
 
@@ -153,12 +156,12 @@ class Modules
         return $out;
     }
 
-    private function collectModuleInfo($basePath)
+    private function collectModuleInfo($basePath, $skipInactiveModules = False)
     {
         foreach (scandir($basePath) as $module) {
 
-            // Skip disallowed modules
-            if( is_array($this->allowedModules) &&  ! in_array($module, $this->allowedModules)){
+            // Skip inactive modules
+            if( $skipInactiveModules && ! in_array($module, $this->allowedModules)){
                 continue;
             }
 
