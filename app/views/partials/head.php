@@ -53,6 +53,8 @@
 <body>
 
 	<?php if( isset($_SESSION['user'])):?>
+	<?php $modules = getMrModuleObj(); ?>
+
 
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
 	<div class="container">
@@ -85,16 +87,11 @@
 					</a>
 					<ul class="report dropdown-menu">
 
-						<?php foreach(scandir(conf('view_path').'report') AS $list_url): ?>
+						<?php foreach($modules->getDropdownData('reports', 'show/report', $page) as $item): ?>
 
-							<?php if( strpos($list_url, 'php')): ?>
-							<?php $page_url = $url.strtok($list_url, '.'); ?>
-
-							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-								<a href="<?php echo url($page_url); ?>" data-i18n="nav.reports.<?php echo $name = strtok($list_url, '.'); ?>"><?php echo ucfirst($name); ?></a>
+							<li class="<?=$item->class?>">
+							<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
 							</li>
-
-							<?php endif; ?>
 
 						<?php endforeach; ?>
 
@@ -111,13 +108,11 @@
 					</a>
 					<ul class="listing dropdown-menu">
 
-						<?php include_once(APP_PATH . '/lib/munkireport/Listings.php'); ?>
-						<?php $listing = new munkireport\Listings; //ugly, I know..?>
-						<?php foreach($listing->get() as $list_item): ?>
+						<?php foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item): ?>
 
-									<li<?php echo substr_compare( $page, $list_item->name, -strlen( $list_item->name ) ) === 0 ?' class="active"':''; ?>>
-									<a href="<?php echo url('show/listing/'.$list_item->module.'/'.$list_item->name); ?>" data-i18n="nav.listings.<?php echo $list_item->name; ?>"></a>
-									</li>
+							<li class="<?=$item->class?>">
+							<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
+							</li>
 
 						<?php endforeach; ?>
 

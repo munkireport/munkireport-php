@@ -1,7 +1,7 @@
 	<h2 data-i18n="wifi.wifiinfo"></h2>
-	
+
 	<div id="wifi-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
-	
+
 	<div id="wifi-view" class="row hide">
 		<div class="col-md-5">
 			<table class="table table-striped">
@@ -52,24 +52,23 @@
 			</table>
 		</div>
 		<div class="col-md-6">
-			<div style="height: 512px" id="map-canvas"></div>
 		</div>
 	</div>
 
 <script>
 $(document).on('appReady', function(e, lang) {
-	
+
 	// Get wifi data
 	$.getJSON( appUrl + '/module/wifi/get_data/' + serialNumber, function( data ) {
 		if( ! data.state){
 			$('#wifi-msg').text(i18n.t('no_data'));
 		}
 		else{
-			
+
 			// Hide
 			$('#wifi-msg').text('');
 			$('#wifi-view').removeClass('hide');
-			
+
 			// Add strings
 			$('#wifi-ssid').text(data.ssid);
 			$('#wifi-bssid').text(data.bssid);
@@ -82,11 +81,11 @@ $(document).on('appReady', function(e, lang) {
 			$('#wifi-rssilevel').text(data.agrctlrssi);
 			$('#wifi-channel').text(data.channel);
 			$('#wifi-noise').text(data.agrctlnoise);
-      
+
 		}
 
 	});
-	
+
 });
 
 </script>

@@ -1,17 +1,14 @@
 <?php
 class show extends Controller
 {
-    private $data;
-
+    private $modules;
     public function __construct()
     {
         if (! $this->authorized()) {
             redirect('auth/login');
         }
-        include_once(APP_PATH . '/lib/munkireport/Listings.php');
-        $this->data = array(
-            'session' => $_SESSION,
-        );
+
+        $this->modules = $modules = getMrModuleObj();
     }
 
     public function index()
@@ -23,7 +20,7 @@ class show extends Controller
     {
         include_once(APP_PATH . '/lib/munkireport/Widgets.php');
 
-        $this->data['widget'] = new munkireport\Widgets();
+        $data['widget'] = new munkireport\Widgets();
 
         if ($which) {
             $view = 'dashboard/'.$which;
@@ -36,32 +33,32 @@ class show extends Controller
         }
 
         if (! file_exists(VIEW_PATH.$view.EXT)) {
-            $this->data = array('status_code' => 404);
+            $data = array('status_code' => 404);
             $view = 'error/client_error';
         }
 
         $obj = new View();
-        $obj->view($view, $this->data);
+        $obj->view($view, $data);
     }
 
     public function listing($module = '', $name = '')
     {
-        if ($module && $name) {
-            $this->data['page'] = 'clients';
-            $this->data['scripts'] = array("clients/client_list.js");
-            $viewpath = conf('module_path') . $module . '/views/';
-            $view = $name.'_listing';
+        if ($listing = $this->modules->getListing($module, $name)) {
+            $data['page'] = 'clients';
+            $data['scripts'] = array("clients/client_list.js");
+            $viewpath = $listing->view_path;
+            $view = $listing->view;
         } else {
-            $this->data = array('status_code' => 404);
+            $data = array('status_code' => 404);
             $view = 'error/client_error';
             $viewpath = conf('view_path');
         }
 
         $obj = new View();
-        $obj->view($view, $this->data, $viewpath);
+        $obj->view($view, $data, $viewpath);
     }
 
-    public function reports($which = 'default')
+    public function report($module = '', $name = '')
     {
         include_once(APP_PATH . '/lib/munkireport/Widgets.php');
 
@@ -69,16 +66,18 @@ class show extends Controller
             'widget' => new munkireport\Widgets(),
         );
 
-        if ($which) {
+        if ($report = $this->modules->getReport($module, $name)) {
             $data['page'] = 'clients';
-            $view = 'report/'.$which;
+            $viewpath = $report->view_path;
+            $view = $report->view;
         } else {
             $data = array('status_code' => 404);
             $view = 'error/client_error';
+            $viewpath = conf('view_path');
         }
 
         $obj = new View();
-        $obj->view($view, $data);
+        $obj->view($view, $data, $viewpath);
     }
 
     public function custom($which = 'default')

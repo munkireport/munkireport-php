@@ -14,7 +14,7 @@ new Munkireport_model;
 
 	<div class="col-lg-12">
 
-	  <h3><span data-i18n="nav.reports.client"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+	  <h3><span data-i18n="nav.reports.clients"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 
@@ -76,7 +76,7 @@ new Munkireport_model;
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
                     }
-                  
+
                 }
             },
             dom: mr.dt.buttonDom,
