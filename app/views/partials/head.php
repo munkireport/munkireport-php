@@ -115,7 +115,7 @@
 						<?php foreach($modules->getListingDropdownData($page) as $list_item): ?>
 
 									<li class="<?=$list_item->class?>">
-									<a href="<?=$list_item->url?>" data-i18n="nav.listings.<?=$list_item->name?>"></a>
+									<a href="<?=$list_item->url?>" data-i18n="<?=$list_item->i18n?>"></a>
 									</li>
 
 						<?php endforeach; ?>
