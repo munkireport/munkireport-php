@@ -7,4 +7,7 @@ return array(
     'listings' => array(
         array('view' => 'location_listing'),
     ),
+    'reports' => array(
+        'location' => array('view' => 'location'),
+    ),
 );

@@ -9,4 +9,7 @@ return array(
         array('view' => 'gatekeeper_widget'),
         array('view' => 'sip_widget'),
     ),
+    'reports' => array(
+        'security' => array('view' => 'security'),
+    ),
 );

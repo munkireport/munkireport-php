@@ -11,4 +11,7 @@ return array(
         array('view' => 'usb_devices_widget'),
         array('view' => 'usb_types_widget'),
     ),
+    'reports' => array(
+        'peripheral' => array('view' => 'peripheral'),
+    ),
 );

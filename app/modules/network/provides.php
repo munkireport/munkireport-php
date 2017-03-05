@@ -11,4 +11,7 @@ return array(
         array('view' => 'network_location_widget'),
         array('view' => 'network_vlan_widget'),
     ),
+    'reports' => array(
+        'network' => array('view' => 'network'),
+    ),
 );

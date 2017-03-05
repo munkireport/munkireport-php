@@ -14,4 +14,7 @@ return array(
     'widgets' => array(
         array('view' => 'app_widget'),
     ),
+    'reports' => array(
+        'appVersions' => array('view' => 'appVersions'),
+    )
 );

@@ -13,4 +13,7 @@ return array(
         array('view' => 'power_battery_condition_widget'),
         array('view' => 'power_battery_health_widget'),
     ),
+    'reports' => array(
+        'power' => array('view' => 'power'),
+    ),
 );

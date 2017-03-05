@@ -15,6 +15,6 @@ return array(
 
     ),
     'reports' => array(
-        array('view' => 'pkg_stats'),
+        array('view' => 'pkg_stats', 'i18n' => 'managedinstalls.installratio_report'),
     ),
 );

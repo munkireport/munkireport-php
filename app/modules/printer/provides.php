@@ -10,4 +10,7 @@ return array(
     'widgets' => array(
         array('view' => 'printer_widget'),
     ),
+    'reports' => array(
+        'printer' => array('view' => 'printer_report', 'i18n' => 'nav.reports.printer'),
+    ),
 );

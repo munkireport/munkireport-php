@@ -12,4 +12,7 @@ return array(
         array('view' => 'munki_versions_widget'),
         array('view' => 'munki_widget'),
     ),
+    'reports' => array(
+        'munki' => array('view' => 'munki'),
+    ),
 );

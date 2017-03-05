@@ -9,4 +9,7 @@ return array(
         array('view' => 'registered_clients_widget'),
         array('view' => 'uptime_widget'),
     ),
+    'reports' => array(
+        'clients' => array('view' => 'clients'),
+    ),
 );

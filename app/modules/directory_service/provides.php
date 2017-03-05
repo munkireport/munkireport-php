@@ -11,4 +11,7 @@ return array(
         array('view' => 'bound_to_ds_widget'),
         array('view' => 'modified_computernames_widget'),
     ),
+    'reports' => array(
+        'directory_service' => array('view' => 'directory_service_report', 'i18n' => 'nav.reports.directoryservice'),
+    ),
 );

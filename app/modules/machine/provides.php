@@ -14,4 +14,8 @@ return array(
       array('view' => 'new_clients_widget'),
       array('view' => 'os_widget'),
     ),
+    'reports' => array(
+        'hardware' => array('view' => 'hardware'),
+        'backup' => array('view' => 'backup_report')
+    )
 );

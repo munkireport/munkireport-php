@@ -23,7 +23,7 @@ class Modules
     {
         // Populate allowedModules if hide_inactive_modules is true
         if(conf('hide_inactive_modules')){
-          $this->allowedModules = conf('modules', array()) + $this->alwaysShowTheseModules;
+          $this->allowedModules = array_merge(conf('modules', array()), $this->alwaysShowTheseModules);
         }
 
         // Get Modules in app/modules
@@ -76,6 +76,17 @@ class Modules
         return False;
     }
 
+    public function getReport($module, $name)
+    {
+        if(isset($this->moduleList[$module]['reports'][$name])){
+            return (object) array(
+                'view_path' => $this->getPath($module, '/views/'),
+                'view' => $this->moduleList[$module]['reports'][$name]['view'],
+            );
+        }
+        return False;
+    }
+
     public function getPath($module, $append = '')
     {
         if( isset( $this->moduleList[$module]['path'])){
@@ -94,6 +105,33 @@ class Modules
             }
         }
     }
+
+    /**
+     * Get data to create dropdown nav
+     *
+     * @param string $kind 'reports' or 'listings'
+     * @param string $baseUrl 'show/report' or 'show/listing'
+     * @param $page current page url path
+     * @return array
+     */
+    public function getDropdownData($kind, $baseUrl, $page)
+    {
+        $out = array();
+        foreach( $this->getInfo($kind) as $module => $kindArray){
+            foreach($kindArray as $itemName => $itemData){
+                $i18n = isset($itemData['i18n']) ? $itemData['i18n'] : 'nav.' . $kind . '.' . $itemName;
+                $out[] = (object) array(
+                  'url' => url($baseUrl.'/'.$module.'/'.$itemName),
+                  'name' => $itemName,
+                  'class' => substr_compare( $page, $itemName, -strlen( $itemName ) ) === 0 ? 'active' : '',
+                  'i18n' => $i18n,
+                );
+            }
+        }
+
+        return $out;
+    }
+
 
     //  Get listings info
     public function getListingDropdownData($page)

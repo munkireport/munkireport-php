@@ -10,4 +10,7 @@ return array(
     'widgets' => array(
         array('view' => 'caching_widget'),
     ),
+    'reports' => array(
+        'caching' => array('view' => 'server', 'i18n' => 'caching.reporttitle'),
+    ),
 );

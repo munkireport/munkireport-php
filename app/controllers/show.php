@@ -58,7 +58,7 @@ class show extends Controller
         $obj->view($view, $data, $viewpath);
     }
 
-    public function reports($which = 'default')
+    public function report($module = '', $name = '')
     {
         include_once(APP_PATH . '/lib/munkireport/Widgets.php');
 
@@ -66,16 +66,18 @@ class show extends Controller
             'widget' => new munkireport\Widgets(),
         );
 
-        if ($which) {
+        if ($report = $this->modules->getReport($module, $name)) {
             $data['page'] = 'clients';
-            $view = 'report/'.$which;
+            $viewpath = $report->view_path;
+            $view = $report->view;
         } else {
             $data = array('status_code' => 404);
             $view = 'error/client_error';
+            $viewpath = conf('view_path');
         }
 
         $obj = new View();
-        $obj->view($view, $data);
+        $obj->view($view, $data, $viewpath);
     }
 
     public function custom($which = 'default')
