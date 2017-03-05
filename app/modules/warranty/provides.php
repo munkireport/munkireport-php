@@ -2,7 +2,7 @@
 
 return array(
     'listings' => array(
-        array('view' => 'warranty_listing'),
+        'warranty' => array('view' => 'warranty_listing'),
     ),
     'widgets' => array(
         array('view' => 'hardware_age_widget'),

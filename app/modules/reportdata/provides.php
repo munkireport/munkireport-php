@@ -2,7 +2,7 @@
 
 return array(
     'listings' => array(
-        array('view' => 'clients_listing'),
+        'clients' => array('view' => 'clients_listing'),
     ),
     'widgets' => array(
         array('view' => 'client_widget'),

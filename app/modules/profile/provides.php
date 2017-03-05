@@ -5,6 +5,6 @@ return array(
         'profile-tab' => array('view' => 'profile_tab', 'i18n' => 'client.tab.profiles'),
     ),
     'listings' => array(
-        array('view' => 'profile_listing'),
+        'profile' => array('view' => 'profile_listing'),
     ),
 );

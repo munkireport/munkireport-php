@@ -2,6 +2,6 @@
 
 return array(
     'listings' => array(
-        array('view' => 'ard_listing'),
+        'ard' => array('view' => 'ard_listing'),
     ),
 );

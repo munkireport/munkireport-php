@@ -9,7 +9,7 @@ return array(
         ),
     ),
     'listings' => array(
-        array('view' => 'inventory_listing'),
+        'inventory' => array('view' => 'inventory_listing'),
     ),
     'widgets' => array(
         array('view' => 'app_widget'),

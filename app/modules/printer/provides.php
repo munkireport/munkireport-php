@@ -5,7 +5,7 @@ return array(
         'printer-tab' => array('view' => 'printer_tab', 'i18n' => 'client.tab.printers', 'badge' => 'printer-cnt'),
     ),
     'listings' => array(
-        array('view' => 'printers_listing'),
+        'printers' => array('view' => 'printers_listing'),
     ),
     'widgets' => array(
         array('view' => 'printer_widget'),

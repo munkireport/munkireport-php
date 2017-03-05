@@ -2,7 +2,7 @@
 
 return array(
     'listings' => array(
-        array('view' => 'hardware_listing'),
+        'hardware' => array('view' => 'hardware_listing'),
     ),
     'widgets' => array(
       array('view' => 'duplicated_computernames_widget'),

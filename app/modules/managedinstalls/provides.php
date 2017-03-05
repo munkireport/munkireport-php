@@ -2,7 +2,7 @@
 
 return array(
     'listings' => array(
-        array('view' => 'managed_installs_listing'),
+        'managed_installs' => array('view' => 'managed_installs_listing'),
     ),
     'widgets' => array(
         array('view' => 'get_failing_widget'),

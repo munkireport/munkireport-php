@@ -5,7 +5,7 @@ return array(
         'wifi-tab' => array('view' => 'wifi_tab', 'i18n' => 'client.tab.wifi'),
     ),
     'listings' => array(
-        array('view' => 'wifi_listing'),
+        'wifi' => array('view' => 'wifi_listing'),
     ),
     'widgets' => array(
         array('view' => 'wifi_networks_widget'),

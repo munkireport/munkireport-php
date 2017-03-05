@@ -5,7 +5,7 @@ return array(
         'location-tab' => array('view' => 'location_tab', 'i18n' => 'client.tab.location'),
     ),
     'listings' => array(
-        array('view' => 'location_listing'),
+        'location' => array('view' => 'location_listing'),
     ),
     'reports' => array(
         'location' => array('view' => 'location'),

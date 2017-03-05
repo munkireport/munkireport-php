@@ -108,10 +108,10 @@
 					</a>
 					<ul class="listing dropdown-menu">
 
-						<?php foreach($modules->getListingDropdownData($page) as $list_item): ?>
+						<?php foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item): ?>
 
-							<li class="<?=$list_item->class?>">
-							<a href="<?=$list_item->url?>" data-i18n="<?=$list_item->i18n?>"></a>
+							<li class="<?=$item->class?>">
+							<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
 							</li>
 
 						<?php endforeach; ?>

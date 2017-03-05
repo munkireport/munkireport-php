@@ -2,7 +2,7 @@
 
 return array(
     'listings' => array(
-        array('view' => 'security_listing'),
+        'security' => array('view' => 'security_listing'),
     ),
     'widgets' => array(
         array('view' => 'firmwarepw_widget'),

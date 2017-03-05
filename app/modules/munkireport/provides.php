@@ -5,7 +5,7 @@ return array(
         'munki' => array('view' => 'client_munki_tab', 'i18n' => 'client.tab.munki'),
     ),
     'listings' => array(
-        array('view' => 'munki_listing'),
+        'munki' => array('view' => 'munki_listing'),
     ),
     'widgets' => array(
         array('view' => 'manifests_widget'),
