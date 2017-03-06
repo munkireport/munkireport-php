@@ -33,7 +33,6 @@ $tab_list = array(
 	'munkireportinfo-tab' => array('view' => 'client/munkireportinfo_tab', 'i18n' => 'munkireportinfo.clienttabtitle'),
 	'usb-tab' => array('view' => 'client/usb_tab', 'i18n' => 'nav.listings.usb', 'badge' => 'usb-cnt'),
 	'softwareupdate-tab' => array('view' => 'client/softwareupdate_tab', 'i18n' => 'softwareupdate.clienttabtitle', 'badge' => 'softwareupdate-cnt'),
-	'fonts-tab' => array('view' => 'client/fonts_tab', 'i18n' => 'fonts.clienttitle', 'badge' => 'fonts-cnt'),
 );
 
 // Add custom tabs
