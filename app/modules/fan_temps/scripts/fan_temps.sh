@@ -16,7 +16,7 @@ MACHINE_MODEL=$(/usr/sbin/sysctl hw.model)
 # Check for Xserve, they don't report fan data correctly
 if [[ "${MACHINE_MODEL}" == *"Xserve"* ]] ; then
 # Gather fan and temperature data
-FANDATA=$(/usr/local/munki/smckit -tudm |  tr -d '\000' | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | sed -e 's/Disc in ODD:/DiscIn/g' -e 's/)//' | cut -d "(" -f2 | awk -F' ' '{printf "%s %s\n", $1, $2" "$3" "$4}')
+FANDATA=$(/usr/local/munki/smckit -tudm |  tr -d '\000' | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | sed  -e 's/°C //' -e 's/Disc in ODD:/DiscIn/g' -e 's/)//' | cut -d "(" -f2 | awk -F' ' '{printf "%s %s\n", $1, $2" "$3" "$4}')
 
 # If not an Xserve
 else
