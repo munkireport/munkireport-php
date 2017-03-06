@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.13.0.2477';
+$GLOBALS['version'] = '2.13.0.2521';
 
 // Return version without commit count
 function get_version()
@@ -130,7 +130,7 @@ function getRemoteAddress()
     if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
         return $_SERVER["HTTP_X_FORWARDED_FOR"];
     }
-    
+
     return $_SERVER['REMOTE_ADDR'];
 }
 /**
@@ -372,4 +372,17 @@ function truncate_string($string, $limit = 100, $break = ".", $pad = "...")
     }
 
     return $string;
+}
+
+// Create a singleton moduleObj
+function getMrModuleObj()
+{
+    static $moduleObj;
+
+    if( ! $moduleObj){
+      include_once(APP_PATH . '/lib/munkireport/Modules.php');
+      $moduleObj = new munkireport\Modules;
+    }
+
+    return $moduleObj;
 }

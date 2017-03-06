@@ -2,7 +2,7 @@
 
 # Munki database check
 
-MANAGEDINSTALLDIR=$(defaults read /Library/Preferences/ManagedInstalls.plist ManagedInstallDir)
+MANAGEDINSTALLDIR=$(/usr/bin/python -c "from Foundation import CFPreferencesCopyAppValue; print CFPreferencesCopyAppValue('ManagedInstallDir', 'ManagedInstalls')")
 
 if [[ -f "${MANAGEDINSTALLDIR}"/application_usage.sqlite ]]; then
 

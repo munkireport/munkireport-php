@@ -1,11 +1,14 @@
 <?php
 class show extends Controller
 {
+    private $modules;
     public function __construct()
     {
         if (! $this->authorized()) {
             redirect('auth/login');
         }
+
+        $this->modules = $modules = getMrModuleObj();
     }
 
     public function index()
@@ -16,11 +19,8 @@ class show extends Controller
     public function dashboard($which = '')
     {
         include_once(APP_PATH . '/lib/munkireport/Widgets.php');
-        
-        $data = array(
-            'session' => $_SESSION,
-            'widget' => new munkireport\Widgets(),
-        );
+
+        $data['widget'] = new munkireport\Widgets();
 
         if ($which) {
             $view = 'dashboard/'.$which;
@@ -41,39 +41,43 @@ class show extends Controller
         $obj->view($view, $data);
     }
 
-    public function listing($which = '')
+    public function listing($module = '', $name = '')
     {
-        if ($which) {
+        if ($listing = $this->modules->getListing($module, $name)) {
             $data['page'] = 'clients';
             $data['scripts'] = array("clients/client_list.js");
-            $view = 'listing/'.$which;
+            $viewpath = $listing->view_path;
+            $view = $listing->view;
         } else {
             $data = array('status_code' => 404);
             $view = 'error/client_error';
+            $viewpath = conf('view_path');
         }
 
         $obj = new View();
-        $obj->view($view, $data);
+        $obj->view($view, $data, $viewpath);
     }
 
-    public function reports($which = 'default')
+    public function report($module = '', $name = '')
     {
         include_once(APP_PATH . '/lib/munkireport/Widgets.php');
-        
+
         $data = array(
             'widget' => new munkireport\Widgets(),
         );
-        
-        if ($which) {
+
+        if ($report = $this->modules->getReport($module, $name)) {
             $data['page'] = 'clients';
-            $view = 'report/'.$which;
+            $viewpath = $report->view_path;
+            $view = $report->view;
         } else {
             $data = array('status_code' => 404);
             $view = 'error/client_error';
+            $viewpath = conf('view_path');
         }
 
         $obj = new View();
-        $obj->view($view, $data);
+        $obj->view($view, $data, $viewpath);
     }
 
     public function custom($which = 'default')
