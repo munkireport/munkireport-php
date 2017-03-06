@@ -33,8 +33,6 @@ $tab_list = array(
 	'munkireportinfo-tab' => array('view' => 'client/munkireportinfo_tab', 'i18n' => 'munkireportinfo.clienttabtitle'),
 	'usb-tab' => array('view' => 'client/usb_tab', 'i18n' => 'nav.listings.usb', 'badge' => 'usb-cnt'),
 	'softwareupdate-tab' => array('view' => 'client/softwareupdate_tab', 'i18n' => 'softwareupdate.clienttabtitle', 'badge' => 'softwareupdate-cnt'),
-	'homebrew-tab' => array('view' => 'client/homebrew_tab', 'i18n' => 'homebrew.clienttitle', 'badge' => 'homebrew-cnt'),
-	'homebrew_info-tab' => array('view' => 'client/homebrew_info_tab', 'i18n' => 'homebrew_info.clienttitle'),
 	);
 
 // Add custom tabs
