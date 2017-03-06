@@ -20,7 +20,7 @@ $(document).on('appUpdate', function(e, lang) {
     	}
 		
 		var panel = $('#warranty-support-gsx-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/gsx';
+			baseUrl = appUrl + '/show/listing/gsx/gsx';
 		panel.empty();
 		
 		// Set statuses

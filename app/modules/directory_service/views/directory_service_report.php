@@ -9,26 +9,10 @@
   <div class="row">
 
 	<?php $widget->view($this, 'duplicated_computernames'); ?>
-	
+
 	<?php $widget->view($this, 'modified_computernames'); ?>
-	
-	<?php $widget->view($this, 'tag'); ?>
 
-  </div> <!-- /row -->
-
-  <div class="row">
-
-	  <?php $widget->view($this, 'certificate'); ?>
-
-	  <?php $widget->view($this, 'bound_to_ds'); ?>
-	  
-	  <?php $widget->view($this, 'findmymac'); ?>
-
-  </div> <!-- /row -->
-  
-  <div class="row">
-	
-	<?php $widget->view($this, 'printer'); ?>
+    <?php $widget->view($this, 'bound_to_ds'); ?>
 
   </div> <!-- /row -->
 

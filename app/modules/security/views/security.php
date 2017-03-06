@@ -20,6 +20,7 @@
 
 		<?php $widget->view($this, 'firmwarepw'); ?>
 
+		<?php $widget->view($this, 'findmymac'); ?>
 
 	</div> <!-- /row -->
 

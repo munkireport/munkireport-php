@@ -41,7 +41,7 @@ $(document).on('appUpdate', function(e, lang) {
     	}
 
 	// Set URLs. TODO - once filtered update this to deep link
-	var url = appUrl + '/show/listing/security'
+	var url = appUrl + '/show/listing/security/security'
 	$('#firmwarepw-disabled').attr('href', url)
 	$('#firmwarepw-enabled').attr('href', url)
 

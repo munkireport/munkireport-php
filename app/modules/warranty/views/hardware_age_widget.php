@@ -26,7 +26,7 @@ $(document).on('appReady', function() {
 		widget: 'hardware-age-widget', // Widget id
 		margin: {top: 20, right: 10, bottom: 20, left: 70},
 		elementClickCallback: function(e){
-			window.location.href = appUrl + '/show/listing/warranty';
+			window.location.href = appUrl + '/show/listing/warranty/warranty';
 		},
 		labelModifier: function(label){
 			return label + ' ' + i18n.t('date.year');

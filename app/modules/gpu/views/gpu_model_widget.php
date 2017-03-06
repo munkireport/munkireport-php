@@ -18,7 +18,7 @@ $(document).on('appUpdate', function(e, lang) {
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>';
-                box.append('<a href="'+appUrl+'/show/listing/gpu/#'+d.model+'" class="list-group-item">'+d.model+badge+'</a>')
+                box.append('<a href="'+appUrl+'/show/listing/gpu/gpu/#'+d.model+'" class="list-group-item">'+d.model+badge+'</a>')
 			});
 		}
 		else{

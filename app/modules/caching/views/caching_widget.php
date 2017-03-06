@@ -18,7 +18,7 @@ $(document).on('appUpdate', function(e, lang) {
     	}
 		
 		var panel = $('#caching-widget div.panel-body'),
-		baseUrl = appUrl + '/show/listing/caching';
+		baseUrl = appUrl + '/show/listing/caching/caching';
 		panel.empty();
 		
 		// Set statuses
