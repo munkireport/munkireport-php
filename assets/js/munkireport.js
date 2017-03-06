@@ -40,6 +40,10 @@ $( document ).ready(function() {
     }, function() {
         $('body').i18n();
 
+        // Sort menus
+        mr.sortMenu('ul.report');
+        mr.sortMenu('ul.listing');
+
         // Check if current locale is available (FIXME: check loaded locale)
         if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
         {
