@@ -50,10 +50,14 @@ class Fan_temps_model extends Model {
 		$this->rs['ta2p'] = -9876540; $this->rt['ta2p'] = 'FLOAT';
 		$this->rs['ta0p2'] = -9876540; $this->rt['ta0p2'] = 'FLOAT';
 		$this->rs['ta1p2'] = -9876540; $this->rt['ta1p2'] = 'FLOAT';
+		$this->rs['ta0g'] = -9876540; $this->rt['ta0g'] = 'FLOAT';
+		$this->rs['ta2g'] = -9876540; $this->rt['ta2g'] = 'FLOAT';
 		$this->rs['ta0s'] = -9876540; $this->rt['ta0s'] = 'FLOAT';
 		$this->rs['ta1s'] = -9876540; $this->rt['ta1s'] = 'FLOAT';
 		$this->rs['ta2s'] = -9876540; $this->rt['ta2s'] = 'FLOAT';
 		$this->rs['ta3s'] = -9876540; $this->rt['ta3s'] = 'FLOAT';
+		$this->rs['ta4s'] = -9876540; $this->rt['ta4s'] = 'FLOAT';
+		$this->rs['ta5s'] = -9876540; $this->rt['ta5s'] = 'FLOAT';
 		$this->rs['talc'] = -9876540; $this->rt['talc'] = 'FLOAT';
 		$this->rs['tarc'] = -9876540; $this->rt['tarc'] = 'FLOAT';
 		$this->rs['tb0p'] = -9876540; $this->rt['tb0p'] = 'FLOAT';
@@ -91,6 +95,7 @@ class Fan_temps_model extends Model {
 		$this->rs['tc1c2'] = -9876540; $this->rt['tc1c2'] = 'FLOAT';
 		$this->rs['tc2c2'] = -9876540; $this->rt['tc2c2'] = 'FLOAT';
 		$this->rs['tc3c2'] = -9876540; $this->rt['tc3c2'] = 'FLOAT';
+		$this->rs['tc2d'] = -9876540; $this->rt['tc2d'] = 'FLOAT';
 		$this->rs['tcac'] = -9876540; $this->rt['tcac'] = 'FLOAT';
 		$this->rs['tcad'] = -9876540; $this->rt['tcad'] = 'FLOAT';
 		$this->rs['tcag'] = -9876540; $this->rt['tcag'] = 'FLOAT';
@@ -130,6 +135,7 @@ class Fan_temps_model extends Model {
 		$this->rs['terg'] = -9876540; $this->rt['terg'] = 'FLOAT';
 		$this->rs['tetp'] = -9876540; $this->rt['tetp'] = 'FLOAT';
 		$this->rs['tg0d'] = -9876540; $this->rt['tg0d'] = 'FLOAT';
+		$this->rs['tg0g'] = -9876540; $this->rt['tg0g'] = 'FLOAT';
 		$this->rs['tg0h'] = -9876540; $this->rt['tg0h'] = 'FLOAT';
 		$this->rs['tg0p'] = -9876540; $this->rt['tg0p'] = 'FLOAT';
         $this->rs['tg0p2'] = -9876540; $this->rt['tg0p2'] = 'FLOAT';
@@ -165,6 +171,7 @@ class Fan_temps_model extends Model {
 		$this->rs['th1c'] = -9876540; $this->rt['th1c'] = 'FLOAT';
 		$this->rs['th1c2'] = -9876540; $this->rt['th1c2'] = 'FLOAT';
 		$this->rs['th1f'] = -9876540; $this->rt['th1f'] = 'FLOAT';
+		$this->rs['th1g'] = -9876540; $this->rt['th1g'] = 'FLOAT';
 		$this->rs['th1h'] = -9876540; $this->rt['th1h'] = 'FLOAT';
 		$this->rs['th1o'] = -9876540; $this->rt['th1o'] = 'FLOAT';
 		$this->rs['th1p'] = -9876540; $this->rt['th1p'] = 'FLOAT';
@@ -172,10 +179,12 @@ class Fan_temps_model extends Model {
 		$this->rs['th1v'] = -9876540; $this->rt['th1v'] = 'FLOAT';
 		$this->rs['th1x'] = -9876540; $this->rt['th1x'] = 'FLOAT';
 		$this->rs['th2f'] = -9876540; $this->rt['th2f'] = 'FLOAT';
+		$this->rs['th2g'] = -9876540; $this->rt['th2g'] = 'FLOAT';
 		$this->rs['th2h'] = -9876540; $this->rt['th2h'] = 'FLOAT';
 		$this->rs['th2p'] = -9876540; $this->rt['th2p'] = 'FLOAT';
 		$this->rs['th2v'] = -9876540; $this->rt['th2v'] = 'FLOAT';
 		$this->rs['th3f'] = -9876540; $this->rt['th3f'] = 'FLOAT';
+		$this->rs['th3g'] = -9876540; $this->rt['th3g'] = 'FLOAT';
 		$this->rs['th3p'] = -9876540; $this->rt['th3p'] = 'FLOAT';
 		$this->rs['th3c'] = -9876540; $this->rt['th3c'] = 'FLOAT';
 		$this->rs['th4f'] = -9876540; $this->rt['th4f'] = 'FLOAT';
@@ -205,7 +214,6 @@ class Fan_temps_model extends Model {
 		$this->rs['tm0r'] = -9876540; $this->rt['tm0r'] = 'FLOAT';
 		$this->rs['tm1p'] = -9876540; $this->rt['tm1p'] = 'FLOAT';
 		$this->rs['tm1r'] = -9876540; $this->rt['tm1r'] = 'FLOAT';
-		$this->rs['tm1s'] = -9876540; $this->rt['tm1s'] = 'FLOAT';
 		$this->rs['tm2p'] = -9876540; $this->rt['tm2p'] = 'FLOAT';
 		$this->rs['tm3p'] = -9876540; $this->rt['tm3p'] = 'FLOAT';
 		$this->rs['tm4p'] = -9876540; $this->rt['tm4p'] = 'FLOAT';
@@ -213,8 +221,18 @@ class Fan_temps_model extends Model {
 		$this->rs['tm6p'] = -9876540; $this->rt['tm6p'] = 'FLOAT';
 		$this->rs['tm7p'] = -9876540; $this->rt['tm7p'] = 'FLOAT';
 		$this->rs['tm8p'] = -9876540; $this->rt['tm8p'] = 'FLOAT';
-		$this->rs['tm8s'] = -9876540; $this->rt['tm8s'] = 'FLOAT';
 		$this->rs['tm9p'] = -9876540; $this->rt['tm9p'] = 'FLOAT';
+		$this->rs['tmas'] = -9876540; $this->rt['tmas'] = 'FLOAT';
+		$this->rs['tmbs'] = -9876540; $this->rt['tmbs'] = 'FLOAT';
+		$this->rs['tmcs'] = -9876540; $this->rt['tmcs'] = 'FLOAT';
+		$this->rs['tm1s'] = -9876540; $this->rt['tm1s'] = 'FLOAT';
+		$this->rs['tm2s'] = -9876540; $this->rt['tm2s'] = 'FLOAT';
+		$this->rs['tm3s'] = -9876540; $this->rt['tm3s'] = 'FLOAT';
+		$this->rs['tm4s'] = -9876540; $this->rt['tm4s'] = 'FLOAT';
+		$this->rs['tm5s'] = -9876540; $this->rt['tm5s'] = 'FLOAT';
+		$this->rs['tm6s'] = -9876540; $this->rt['tm6s'] = 'FLOAT';
+		$this->rs['tm7s'] = -9876540; $this->rt['tm7s'] = 'FLOAT';
+        $this->rs['tm8s'] = -9876540; $this->rt['tm8s'] = 'FLOAT';
 		$this->rs['tm9s'] = -9876540; $this->rt['tm9s'] = 'FLOAT';
 		$this->rs['tma1'] = -9876540; $this->rt['tma1'] = 'FLOAT';
 		$this->rs['tma2'] = -9876540; $this->rt['tma2'] = 'FLOAT';
@@ -225,7 +243,6 @@ class Fan_temps_model extends Model {
 		$this->rs['tmb2'] = -9876540; $this->rt['tmb2'] = 'FLOAT';
 		$this->rs['tmb3'] = -9876540; $this->rt['tmb3'] = 'FLOAT';
 		$this->rs['tmb4'] = -9876540; $this->rt['tmb4'] = 'FLOAT';
-		$this->rs['tmbs'] = -9876540; $this->rt['tmbs'] = 'FLOAT';
 		$this->rs['tmhs'] = -9876540; $this->rt['tmhs'] = 'FLOAT';
 		$this->rs['tmlb'] = -9876540; $this->rt['tmlb'] = 'FLOAT';
 		$this->rs['tmls'] = -9876540; $this->rt['tmls'] = 'FLOAT';
@@ -246,8 +263,11 @@ class Fan_temps_model extends Model {
 		$this->rs['tp0p'] = -9876540; $this->rt['tp0p'] = 'FLOAT';
 		$this->rs['tp0p2'] = -9876540; $this->rt['tp0p2'] = 'FLOAT';
 		$this->rs['tp0t'] = -9876540; $this->rt['tp0t'] = 'FLOAT';
+		$this->rs['tp0g'] = -9876540; $this->rt['tp0g'] = 'FLOAT';
 		$this->rs['tp1c'] = -9876540; $this->rt['tp1c'] = 'FLOAT';
+		$this->rs['tp1g'] = -9876540; $this->rt['tp1g'] = 'FLOAT';
 		$this->rs['tp1p'] = -9876540; $this->rt['tp1p'] = 'FLOAT';
+		$this->rs['tp2g'] = -9876540; $this->rt['tp2g'] = 'FLOAT';
 		$this->rs['tp2h'] = -9876540; $this->rt['tp2h'] = 'FLOAT';
 		$this->rs['tp2p'] = -9876540; $this->rt['tp2p'] = 'FLOAT';
 		$this->rs['tp3h'] = -9876540; $this->rt['tp3h'] = 'FLOAT';
@@ -598,6 +618,26 @@ class Fan_temps_model extends Model {
         	'Tp0t' => 'tp0t',
         	'TMAP' => 'tamp',
         	'TH1R' => 'th1r',
+        	'TA0G' => 'ta0g',
+        	'TA2G' => 'ta2g',
+        	'TA4S' => 'ta4s',
+        	'TA5S' => 'ta5s',
+        	'TC2D' => 'tc2d',
+        	'TG0G' => 'tg0g',
+        	'TH1G' => 'th1g',
+        	'TH2G' => 'th2g',
+        	'TH3G' => 'th3g',
+        	'TM2S' => 'tm2s',
+        	'TM3S' => 'tm3s',
+        	'TM4S' => 'tm4s',
+        	'TM5S' => 'tm5s',
+        	'TM6S' => 'tm6s',
+        	'TM7S' => 'tm7s',
+        	'TMAS' => 'tmas',
+        	'TMCS' => 'tmcs',
+        	'Tp0G' => 'tp0g',
+        	'Tp1G' => 'tp1g',
+        	'Tp2G' => 'tp2g',
         	'FAN_0_Label' => 'fanlabel0',
         	'FAN_1_Label' => 'fanlabel1',
         	'FAN_2_Label' => 'fanlabel2',
