@@ -27,12 +27,33 @@ class Modules
             $this->skipInactiveModules = True;
         }
 
-        $this->moduleSearchPaths = array(conf('module_path'));
-        // Get Module info in custom folder
+        // Custom modules go first
         if(conf('custom_folder')){
-            $this->moduleSearchPaths[] = conf('custom_folder').'modules/';
+            $this->moduleSearchPaths['custom'] = conf('custom_folder').'modules/';
         }
 
+        // And then built-in modules
+        $this->moduleSearchPaths['builtin'] = conf('module_path');
+
+
+    }
+
+    /**
+     * Retrieve moduleModelPath
+     *
+     *
+     * @param type var Description
+     * @return return type
+     */
+    public function getModuleModelPath($moduleName, &$modelPath)
+    {
+        foreach ($this->moduleSearchPaths as $type => $path) {
+            if ( file_exists($path . $moduleName . '/' . $moduleName . '_model.php')) {
+                $modelPath = $path . $moduleName . '/' . $moduleName . '_model.php';
+                return True;
+            }
+        }
+        return False;
     }
 
     /**
