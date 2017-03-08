@@ -225,6 +225,18 @@ class Modules
         return $out;
     }
 
+    public function getModuleLocales($lang='en')
+    {
+        $localeList = array();
+        foreach( $this->moduleList as $module => $info){
+            $localePath = sprintf('%s/locales/%s.json', $info['path'], $lang);
+            if(is_file($localePath)){
+                $localeList[] = sprintf('"%s": %s', $module, file_get_contents($localePath));
+            }
+        }
+        return '{'.implode(",\n", $localeList).'}';
+    }
+
 
     private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
     {
@@ -238,7 +250,7 @@ class Modules
                 }
 
                 // Find provides.php
-                if (is_file($basePath.$module.'/provides.php'))
+                if (is_file($basePath.$module.'/provides.php') && ! isset($this->moduleList[$module]))
                 {
                     $this->moduleList[$module] = require $basePath.$module.'/provides.php';
                     $this->moduleList[$module]['path'] = $basePath.$module.'/';
