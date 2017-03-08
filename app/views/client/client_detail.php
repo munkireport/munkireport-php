@@ -13,7 +13,7 @@ $tab_list = array(
 );
 
 // Include module tabs
-$modules = getMrModuleObj();
+$modules = getMrModuleObj()->loadInfo();
 $modules->addTabs($tab_list);
 
 // Add custom tabs

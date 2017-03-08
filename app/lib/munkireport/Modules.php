@@ -12,30 +12,55 @@ class Modules
 {
 
     private $moduleList = array();
+    private $moduleSearchPaths = array();
     private $allowedModules = array(
       'machine',
       'reportdata',
       'tag'
     );
+    private $skipInactiveModules = False;
 
     public function __construct()
     {
         // Populate allowedModules if hide_inactive_modules is true
         if(conf('hide_inactive_modules')){
-            $skipInactiveModules = True;
-            $this->allowedModules = array_merge($this->allowedModules, conf('modules', array()));
-        }
-        else{
-            $skipInactiveModules = False;
+            $this->skipInactiveModules = True;
         }
 
-        // Get Modules in app/modules
-        $this->collectModuleInfo(conf('module_path'), $skipInactiveModules);
-
+        $this->moduleSearchPaths = array(conf('module_path'));
         // Get Module info in custom folder
         if(conf('custom_folder')){
-            $this->collectModuleInfo(conf('custom_folder').'modules/', $skipInactiveModules);
+            $this->moduleSearchPaths[] = conf('custom_folder').'modules/';
         }
+
+    }
+
+    /**
+     * Load Module info
+     *
+     * Load info from provides.php
+     *
+     * @param boolean $allModules If true, don't mind $skipInactiveModules
+     * @return none
+     */
+    public function loadInfo($allModules = False)
+    {
+        if($allModules){
+            $skipInactiveModules = False;
+        }else{
+            $skipInactiveModules = $this->skipInactiveModules;
+        }
+
+        if($skipInactiveModules){
+            $allowedModules = array_merge($this->allowedModules, conf('modules', array()));
+        }else{
+            $allowedModules = array(); // No need to set this.
+        }
+
+        $this->collectModuleInfo($this->moduleSearchPaths, $skipInactiveModules, $allowedModules);
+
+        return $this;
+
     }
 
     // Return info about $about
@@ -156,20 +181,24 @@ class Modules
         return $out;
     }
 
-    private function collectModuleInfo($basePath, $skipInactiveModules = False)
+
+    private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
     {
-        foreach (scandir($basePath) as $module) {
+        foreach ($modulePaths as $basePath)
+        {
+            foreach (scandir($basePath) as $module) {
 
-            // Skip inactive modules
-            if( $skipInactiveModules && ! in_array($module, $this->allowedModules)){
-                continue;
-            }
+                // Skip inactive modules
+                if( $skipInactiveModules && ! in_array($module, $allowedModules)){
+                    continue;
+                }
 
-            // Find provides.php
-            if (is_file($basePath.$module.'/provides.php'))
-            {
-                $this->moduleList[$module] = require $basePath.$module.'/provides.php';
-                $this->moduleList[$module]['path'] = $basePath.$module.'/';
+                // Find provides.php
+                if (is_file($basePath.$module.'/provides.php'))
+                {
+                    $this->moduleList[$module] = require $basePath.$module.'/provides.php';
+                    $this->moduleList[$module]['path'] = $basePath.$module.'/';
+                }
             }
         }
     }

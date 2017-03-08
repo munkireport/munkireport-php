@@ -53,7 +53,7 @@
 <body>
 
 	<?php if( isset($_SESSION['user'])):?>
-	<?php $modules = getMrModuleObj(); ?>
+	<?php $modules = getMrModuleObj()->loadInfo(); ?>
 
 
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
