@@ -57,6 +57,29 @@ class Modules
     }
 
     /**
+     * Retrieve list of all available modules
+     *
+     */
+    public function getModuleList()
+    {
+        $modules = array();
+        foreach ($this->moduleSearchPaths as $path)
+        {
+            foreach (scandir($path) as $module)
+            {
+                if (is_file($path.$module.'/scripts/install.sh')) {
+                    // Don't overwrite custom modules
+                    if( ! isset($modules[$module]))
+                    {
+                        $modules[$module] = $path.$module;
+                    }
+                }
+            }
+        }
+        return $modules;
+    }
+
+    /**
      * Load Module info
      *
      * Load info from provides.php
