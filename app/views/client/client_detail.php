@@ -50,7 +50,6 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 							<?php endforeach?>
 
-							<li class="divider"></li>
 						</ul>
 				</div><!-- /btn-group -->
 

@@ -43,6 +43,7 @@ $( document ).ready(function() {
         // Sort menus
         mr.sortMenu('ul.report');
         mr.sortMenu('ul.listing');
+        mr.sortMenu('ul.client-tabs');
 
         // Check if current locale is available (FIXME: check loaded locale)
         if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
