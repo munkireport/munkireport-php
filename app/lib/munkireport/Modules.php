@@ -57,6 +57,23 @@ class Modules
     }
 
     /**
+     * Retrieve moduleControllerPath
+     *
+     *
+     * @param type var Description
+     * @return return type
+     */
+    public function getmoduleControllerPath($moduleName, &$controllerPath)
+    {
+        foreach ($this->moduleSearchPaths as $type => $path) {
+            if ( file_exists($path . $moduleName . '/' . $moduleName . '_controller.php')) {
+                $controllerPath = $path . $moduleName . '/' . $moduleName . '_controller.php';
+                return True;
+            }
+        }
+        return False;
+    }
+    /**
      * Retrieve list of all available modules
      *
      */
