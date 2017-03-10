@@ -1,0 +1,10 @@
+{
+    "clienttab": "Network Shares",
+    "noshares": "No Network Shares",
+    "reporttitle": "Network Shares Report",
+    "name": "Name",
+    "mntfromname": "Path",
+    "fstypename": "Type",
+    "fsmtnonname": "Mount Directory",
+    "automounted": "Automount"
+}
