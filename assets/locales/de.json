@@ -76,23 +76,6 @@
   "battery": {
     "life_remaining": "__percent__% verbleibende Batterielaufzeit"
   },
-  "bluetooth": {
-    "all_ok": "Keine Bluetooth-Geräte mit niedrigem Batteriestand",
-    "apple_wireless_keyboard": "",
-    "apple_wireless_trackpad": "",
-    "apple_wireless_mouse": "",
-    "apple_magic_mouse": "",
-    "bluetooth": "Bluetooth",
-    "bluetooth_battery_widget": "Bluetooth Batteriestatus",
-    "keyboard": "Tastatur",
-    "magic_keyboard": "",
-    "magic_trackpad_2": "",
-    "magic_mouse_2": "",
-    "mouse": "Maus Status",
-    "panel_title": "Bluetooth-Geräte mit weniger als 15% Batterie",
-    "status": "Bluetooth Status",
-    "trackpad": "Trackpad Status"
-  },
   "boot_time": "Startzeit",
   "bundle_id": "BundleID",
   "business_unit": {
@@ -150,7 +133,6 @@
     "tab": {
       "apple_software": "Apple Software",
       "ard": "ARD",
-      "bluetooth": "Bluetooth",
       "certificates": "Zertifikate",
       "deploystudio": "DeployStudio",
       "displays": "Displays",
@@ -409,12 +391,6 @@
         "title": "Benachrichtigung-Regeln"
       }
     },
-    "bluetooth": {
-      "battery_percent": "Batteriestatus",
-      "bluetooth_power": "Bluetooth Status",
-      "device_type": "Gerätetyp",
-      "title": "Bluetooth-Report"
-    },
     "certificate": {
       "commonname": "Common Name",
       "expires": "Ablaufdatum",
@@ -582,7 +558,6 @@
     "listings": {
       "appusage": "App-Benutzung",
       "ard": "Apple Remote Desktop",
-      "bluetooth": "Bluetooth",
       "backup2go": "Archiware Backup2Go",
       "caching": "Caching",
       "clients": "Clients",

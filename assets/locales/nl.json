@@ -68,16 +68,6 @@
   "battery": {
     "life_remaining": "__percent__% battery life remaining"
   },
-  "bluetooth": {
-    "all_ok": "No bluetooth devices with low battery",
-    "bluetooth": "Bluetooth",
-    "bluetooth_battery_widget": "Bluetooth battery status",
-    "keyboard": "Keyboard Status",
-    "mouse": "Mouse Status",
-    "panel_title": "Bluetooth devices with less than 15% battery life",
-    "status": "Bluetooth Status",
-    "trackpad": "Trackpad Status"
-  },
   "boot_time": "Opgestart",
   "bundle_id": "BundleID",
   "business_unit": {
@@ -101,7 +91,6 @@
     "tab": {
       "apple_software": "Apple Software",
       "ard": "ARD",
-      "bluetooth": "Bluetooth",
       "certificates": "Certificaten",
       "displays": "Beeldschermen",
       "ds": "Directory Services",
@@ -209,9 +198,6 @@
       "text": "Tekst __number__",
       "title": "Apple Remote Desktop rapport"
     },
-    "bluetooth": {
-      "title": "Bluetooth rapport"
-    },
     "certificate": {
       "commonname": "Common Name",
       "expires": "Expires",
@@ -281,7 +267,6 @@
     },
     "listings": {
       "ard": "Apple Remote Desktop",
-      "bluetooth": "Bluetooth",
       "clients": "Clients",
       "certificate": "Certificaten",
       "directoryservice": "Directoryservice",

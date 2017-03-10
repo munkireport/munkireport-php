@@ -76,23 +76,6 @@
 	"battery": {
 		"life_remaining": "__percent__% battery life remaining"
 	},
-	"bluetooth": {
-		"all_ok": "No bluetooth devices with low battery",
-		"apple_wireless_keyboard": "Apple Wireless Keyboard",
-		"apple_wireless_trackpad": "Apple Wireless Trackpad",
-		"apple_wireless_mouse": "Apple Wireless Mouse",
-		"apple_magic_mouse": "Apple Magic Mouse",
-		"bluetooth": "Bluetooth",
-		"bluetooth_battery_widget": "Bluetooth battery status",
-		"keyboard": "Keyboard Status",
-		"magic_keyboard": "Magic Keyboard",
-		"magic_trackpad_2": "Magic Trackpad 2",
-		"magic_mouse_2": "Magic Mouse 2",
-		"mouse": "Mouse Status",
-		"panel_title": "Bluetooth devices with less than 15% battery life",
-		"status": "Bluetooth Status",
-		"trackpad": "Trackpad Status"
-	},
 	"boot_time": "Booted",
 	"bundle_id": "Bundle ID",
 	"business_unit": {
@@ -150,7 +133,6 @@
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",
-			"bluetooth": "Bluetooth",
 			"certificates": "Certificates",
 			"deploystudio": "DeployStudio",
 			"displays": "Displays",
@@ -447,22 +429,12 @@
 			"launch": "Launch",
 			"quit": "Quit"
 		},
-		"ard": {
-			"text": "Text __number__",
-			"title": "Apple Remote Desktop Report"
-		},
 		"backup2go": {
 			"title": "Backup2Go Report",
 			"date": "Last Successful Backup",
 			"widget": {
 				"title": "Notification Rules"
 			}
-		},
-		"bluetooth": {
-			"battery_percent": "Battery Percent",
-			"bluetooth_power": "Bluetooth Power",
-			"device_type": "Device Type",
-			"title": "Bluetooth Report"
 		},
 		"certificate": {
 			"commonname": "Common Name",
@@ -631,7 +603,6 @@
 		"listings": {
 			"appusage": "App Usage",
 			"ard": "Apple Remote Desktop",
-			"bluetooth": "Bluetooth",
 			"backup2go": "Archiware Backup2Go",
 			"batteries": "Batteries",
 			"caching": "Caching",

@@ -77,23 +77,6 @@
   "battery": {
     "life_remaining": "Durée restante de la batterie __percent__%"
   },
-  "bluetooth": {
-	"all_ok": "Aucun périphérique Bluetooth avec batterie faible",
-	"apple_wireless_keyboard": "Clavier Apple sans fil",
-	"apple_wireless_trackpad": "Trackpad Apple sans fil",
-	"apple_wireless_mouse": "Souris Apple sans fil",
-	"apple_magic_mouse": "Apple Magic Mouse",
-    	"bluetooth": "Bluetooth",
-	"bluetooth_battery_widget": "État de la batterie Bluetooth",
-    	"keyboard": "État du clavier",
-	"magic_keyboard": "Magic Keyboard",
-	"magic_trackpad_2": "Magic Trackpad 2",
-	"magic_mouse_2": "Magic Mouse 2",
-	"mouse": "État de la souris",
-	"panel_title": "Périphériques Bluetooth avec moins de 15% batterie",
-	"status": "État Bluetooth",
-	"trackpad": "État Trackpad"
-  },
   "boot_time": "Démarré",
   "bundle_id": "BundleID",
   "business_unit": {
@@ -151,7 +134,6 @@
     "tab": {
       "apple_software": "Logiciels Apple",
       "ard": "ARD",
-      "bluetooth": "Bluetooth",
       "certificates": "Certificats",
 "deploystudio": "DeployStudio",
       "displays": "Moniteurs",
@@ -437,12 +419,6 @@
 				"title": "Règles de notifications"
 			}
 		},
-    "bluetooth": {
-"battery_percent": "Pourcentage batterie",
-	"bluetooth_power": "Puissance Bluetooth",
-	"device_type": "Type périphérique",
-      "title": "Rapport Bluetooth"
-    },
     "certificate": {
       "commonname": "Nom commun",
       "expires": "Expire",
@@ -609,7 +585,6 @@
     "listings": {
 	"appusage": "Usage Applications",
       "ard": "Apple Remote Desktop",
-      "bluetooth": "Bluetooth",
       "backup2go": "Archiware Backup2Go",
       "caching": "Mise en cache",
       "clients": "Clients",
@@ -901,7 +876,7 @@
 		"type": "Type de périphérique",
 		"usbtype": "Type de périphérique USB",
 		"vendor_id": "ID Vendeur"
-	},  
+	},
   "uptime": "En fonction depuis",
   "user": {
     "user": "Utilisateur",
