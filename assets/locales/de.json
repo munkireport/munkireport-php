@@ -178,36 +178,6 @@
     "widget_info": "Gesamtanzahl bekannter externer Bildschirme",
     "widget_title": "Anzahl externer Bildschirme"
   },
-  "directoryservice": {
-    "clienttabtitle": "Verzeichnisdienst",
-    "which_directory_service": "Benutzter Verzeichnisdienst",
-    "directory_service_comments": "Active Directory Kommentare",
-    "adforest": "Active Directory Baum",
-    "addomain": "Active Directory Domain",
-    "computeraccount": "Computerkonto",
-    "user_experience": "Erweiterte Optionen - User Experience",
-    "createmobileaccount": "Mobilen Account bei der Anmeldung erstellen",
-    "requireconfirmation": "Bestätigung einholen",
-    "forcehomeinstartup": "Homeverzeichnis auf Startup Disk",
-    "mounthomeassharepoint": "Homeverzeichnis als Share mounten",
-    "usewindowsuncpathforhome": "Windows UNC Pfad als Homeverzeichnis",
-    "networkprotocoltobeused": "Netzwerkprotokoll",
-    "defaultusershell": "Standard-Usershell",
-    "mappings": "Erweiterte Optionen - Mappings",
-    "mappinguidtoattribute": "UID an Attribut mappen",
-    "mappingusergidtoattribute": "User GUID an Attribut mappen",
-    "mappinggroupgidtoattr": "Group GUID an Attribut mappen",
-    "generatekerberosauth": "Kerberos Authority generieren ",
-    "administrative": "Erweiterte Optionen - Administration",
-    "preferreddomaincontroller": "Bevorzugter Domain Controller",
-    "allowedadmingroups": "Erlaubte Admin-Gruppen",
-    "authenticationfromanydomain": "Authentifizierung aus jeder Domain erlauben",
-    "packetsigning": "Packet Signing",
-    "packetencryption": "Packet Encryption",
-    "passwordchangeinterval": "Passwortwechselintervall",
-    "restrictdynamicdnsupdates": "Dynamische DNS-Updates beschränken",
-    "namespacemode": "Namespace Mode"
-  },
   "displayname": "Anzeigename",
   "edit": "Editieren",
   "email": {
@@ -316,15 +286,6 @@
     },
     "checkin": "Check-in",
     "computername": "Name",
-    "directoryservice": {
-      "boundstatus": "Bindungs-Status",
-      "ad_domain": "AD Domain",
-      "computeraccount": "Computerkonto",
-      "ad_comments": "AD Kommentare",
-      "mobileaccount": "Mobiler Account",
-      "networkprotocol": "Netzwerkprotokoll",
-      "admin_groups": "Admin-Gruppen"
-    },
     "displays": {
       "detected": "Erkannt",
       "machineserial": "Maschinen-Seriennummer",
@@ -476,7 +437,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "directoryservice": "Verzeichnisdienste",
       "disk": "Festplatten",
       "displays": "Displays",
       "findmymac": "Meinen Mac suchen",
@@ -509,7 +469,6 @@
       "backup": "Backup-Report",
       "clients": "Client-Report",
       "configuration": "Konfigurations-Report",
-      "directoryservice": "Directory Services-Report",
       "disk": "Disk-Report",
       "findmymac": "Meinen Mac suchen-Report",
       "gsx": "GSX-Report",
@@ -791,12 +750,6 @@
     "app": {
       "versions": "Bekannte Versionen von __app__"
     },
-    "bound_to_ds": {
-      "bound": "Angebunden",
-      "notbound": "Nicht angebunden",
-      "info": "Gesamt seit diese Daten gesammelt werden",
-      "title": "An Verzeichnisdienst angebunden"
-    },
     "duplicate_computernames": {
       "notfound": "Keine Duplikate gefunden",
       "title": "Doppelte Computernamen"
@@ -806,10 +759,6 @@
     },
     "memory": {
       "title": "Aufstellung der Speicherausstattung"
-    },
-    "modified_computernames": {
-      "title": "Nicht übereinstimmende ARD Namen",
-      "tooltip": "Computer, bei denen der ARD Name nicht mit AD übereinstimmt"
     },
     "munki": {
       "no_updates_pending": "Keine anstehenden Updates",

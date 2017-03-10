@@ -179,36 +179,6 @@
     "widget_info": "Nombre total d'écrans externes connus",
 "widget_title": "Nombre d'écrans"
 },
-"directoryservice": {
-		"clienttabtitle": "Service d'annuaire",
-		"which_directory_service": "Service d'annuaire utilisé",
-		"directory_service_comments": "Commentaires Active Directory",
-		"adforest": "Forêt Active Directory",
-		"addomain": "Domaine Active Directory",
-		"computeraccount": "Compte d'ordinateur",
-		"user_experience": "Options avancées - Expérience utilisateur",
-		"createmobileaccount": "Créer un compte mobile lors de l'ouverture de session",
-		"requireconfirmation": "Exiger une confirmation",
-		"forcehomeinstartup": "Forcer l'utilisation du répertoire de départ sur le disque de démarrage",
-		"mounthomeassharepoint": "Monter le répertoire de départ comme un point de partage",
-		"usewindowsuncpathforhome": "Utiliser le chemin UNC pour déduire l'emplacement du répertoire de départ réseau",
-		"networkprotocoltobeused": "Protocole réseau utilisé",
-		"defaultusershell": "Shell utilisateur par défaut",
-		"mappings": "Options avancées - Mappages",
-		"mappinguidtoattribute": "Mappage UID à attribuer",
-		"mappingusergidtoattribute": "Mappage du GID utilisateur à attribuer",
-		"mappinggroupgidtoattr": "Mappage du GID du groupe à attribuer",
-		"generatekerberosauth": "Générer l'autorité Kerberos",
-		"administrative": "Options avancées - Administratif",
-		"preferreddomaincontroller": "Préférer ce serveur de domaine",
-		"allowedadmingroups": "Permettre l'administration par le groupe administrateurs",
-		"authenticationfromanydomain": "Authentification depuis n'importe quel domaine",
-		"packetsigning": "Signature des paquets",
-		"packetencryption": "Cryptage des paquets",
-		"passwordchangeinterval": "Intervalle de changement de mot de passe",
-		"restrictdynamicdnsupdates": "Limiter les mises à jour DNS dynamiques",
-		"namespacemode": "Espace de noms"
-  },
   "displayname": "Nom d'affichage",
    "edit": "Modifier",
   	"email": {
@@ -320,15 +290,6 @@
     },
     "checkin": "Enregistrement",
 "computername": "Name",
-	"directoryservice": {
-        "boundstatus": "Etat liaison",
-        "ad_domain": "Domaine AD",
-        "computeraccount": "Compte d'ordinateur",
-        "ad_comments": "Commentaires AD",
-        "mobileaccount": "Compte mobile",
-        "networkprotocol": "Protocole réseau",
-	"admin_groups": "Groupes admin autorisés"
-	},
 "displays": {
 	"detected": "Détecté",
 	"machineserial": "N° de série",
@@ -479,7 +440,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "directoryservice": "Service d'annuaire",
       "disk": "Disque",
       "displays": "Moniteurs",
       "findmymac": "Find My Mac",
@@ -512,7 +472,6 @@
       "backup": "Sauvegarde",
       "clients": "Client",
       "configuration": "Configuration",
-      "directoryservice": "Services d'annuaire",
       "disk": "Disque",
       "findmymac": "FindMyMac",
       "gsx": "GSX",
@@ -796,12 +755,6 @@
     "app": {
       "versions": "Versions connues du __app__"
 },
-    "bound_to_ds": {
-      "bound": "Lié",
-      "notbound": "Non lié",
-      "info": "Cumuls depuis que ces données sont collectées",
-      "title": "Lié à un service d'annuaire"
-},
     "duplicate_computernames": {
       "notfound": "Pas de doublons trouvés",
 	"title": "Nom des ordinateurs dupliqués"
@@ -812,10 +765,6 @@
 	"memory": {
 		"title": "Répartition par mémoire"
 		},
-		"modified_computernames": {
-			"title": "Pas de concordance avec les noms AD",
-			"tooltip": "Ordinateurs ne correspondants pas au nom AD"
-    },
     "munki": {
       "no_updates_pending": "Pas de mise à jour en attente",
 	"title": "Munki"

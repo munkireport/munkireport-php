@@ -98,7 +98,6 @@
 			"apple_software": "Apple Software",
 			"ard": "ARD",
 			"displays": "Displays",
-			"ds": "Directory Services",
 			"gsx": "GSX",
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
@@ -177,36 +176,6 @@
 		"type": "Type",
 		"widget_info": "Total number of known external displays",
 		"widget_title": "External Displays Count"
-	},
-	"directoryservice": {
-		"clienttabtitle": "Directory Service",
-		"which_directory_service": "Directory Service Used",
-		"directory_service_comments": "Active Directory Comments",
-		"adforest": "Active Directory Forest",
-		"addomain": "Active Directory Domain",
-		"computeraccount": "Computer Account",
-		"user_experience": "Advanced Options - User Experience",
-		"createmobileaccount": "Create Mobile Account at Login",
-		"requireconfirmation": "Require Confirmation",
-		"forcehomeinstartup": "Force Home to Startup Disk",
-		"mounthomeassharepoint": "Mount Home as Sharepoint",
-		"usewindowsuncpathforhome": "Use Windows UNC Path for Home",
-		"networkprotocoltobeused": "Network Protocol to be Used",
-		"defaultusershell": "Default User Shell",
-		"mappings": "Advanced Options - Mappings",
-		"mappinguidtoattribute": "Mapping UID to Attribute",
-		"mappingusergidtoattribute": "Mapping User GID to Attribute",
-		"mappinggroupgidtoattr": "Mapping Group GID to Attribute",
-		"generatekerberosauth": "Generate Kerberos Authority",
-		"administrative": "Advanced Options - Administrative",
-		"preferreddomaincontroller": "Preferred Domain Controller",
-		"allowedadmingroups": "Allowed Admin Groups",
-		"authenticationfromanydomain": "Authentication From Any Domain",
-		"packetsigning": "Packet Signing",
-		"packetencryption": "Packet Encryption",
-		"passwordchangeinterval": "Password Change Interval",
-		"restrictdynamicdnsupdates": "Restrict Dynamic DNS Updates",
-		"namespacemode": "Namespace Mode"
 	},
 	"displayname": "Display Name",
 	"edit": "Edit",
@@ -336,15 +305,6 @@
 	"listing": {
 		"checkin": "Check-in",
 		"computername": "Name",
-		"directoryservice": {
-            "boundstatus": "Bound Status",
-            "ad_domain": "AD Domain",
-            "computeraccount": "Computer Account",
-            "ad_comments": "AD Comments",
-            "mobileaccount": "Mobile Account",
-            "networkprotocol": "Network Protocol",
-			"admin_groups": "Allowed Admin Groups"
-		},
 		"displays": {
             "detected": "Detected",
             "machineserial": "Machine Serial",
@@ -497,7 +457,6 @@
 			"ard": "Apple Remote Desktop",
 			"batteries": "Batteries",
 			"clients": "Clients",
-			"directoryservice": "Directory Service",
 			"disk": "Disk",
 			"displays": "Displays",
 			"findmymac": "Find My Mac",
@@ -535,7 +494,6 @@
 			"backup": "Backup Report",
 			"clients": "Client Report",
 			"configuration": "Configuration Report",
-			"directoryservice": "Directory Services Report",
 			"disk": "Disk Report",
 			"findmymac": "Find My Mac Report",
 			"gsx": "GSX Report",
@@ -917,12 +875,6 @@
 		"app": {
 			"versions": "Known versions of __app__"
 		},
-		"bound_to_ds": {
-			"bound": "Bound",
-			"notbound": "Not Bound",
-			"info": "Totals since this data is being collected",
-			"title": "Bound to a Directory Service"
-		},
 		"duplicate_computernames": {
 			"notfound": "No duplicates found",
 			"title": "Duplicate Computer Names"
@@ -932,10 +884,6 @@
 		},
 		"memory": {
 			"title": "Memory Breakdown"
-		},
-		"modified_computernames": {
-			"title": "Not Matching AD Names",
-			"tooltip": "Computers where the computer name doesn't match the AD name"
 		},
 		"munki": {
 			"no_updates_pending": "No Updates Pending",
