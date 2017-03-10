@@ -98,7 +98,6 @@
     "tab": {
       "apple_software": "Logiciels Apple",
       "ard": "ARD",
-      "certificates": "Certificats",
 "deploystudio": "DeployStudio",
       "displays": "Moniteurs",
       "ds": "Services d'annuaires",
@@ -361,11 +360,6 @@
       "text": "Texte __number__",
       "title": "Rapport Apple Remote Desktop"
     },
-    "certificate": {
-      "commonname": "Nom commun",
-      "expires": "Expire",
-      "title": "Rapport Certificats"
-    },
     "checkin": "Enregistrement",
 "computername": "Name",
 	"directoryservice": {
@@ -527,7 +521,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "certificate": "Certificats",
       "deploystudio": "DeployStudio",
       "directoryservice": "Service d'annuaire",
       "disk": "Disque",
@@ -852,12 +845,6 @@
       "info": "Cumuls depuis que ces données sont collectées",
       "title": "Lié à un service d'annuaire"
 },
-    "certificate": {
-      "expired": "Expiré",
-      "ok": "Valable pour plus de trois mois",
-      "soon": "Expire dans les trois mois",
-      "title": "Certificats"
-    },
     "duplicate_computernames": {
       "notfound": "Pas de doublons trouvés",
 	"title": "Nom des ordinateurs dupliqués"

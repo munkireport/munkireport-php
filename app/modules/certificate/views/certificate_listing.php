@@ -12,8 +12,8 @@ new Certificate_model;
   <div class="row">
 
   	<div class="col-lg-12">
-	
-		  <h3><span data-i18n="listing.certificate.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+
+		  <h3><span data-i18n="certificate.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -21,8 +21,8 @@ new Certificate_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="listing.certificate.commonname" data-colname='certificate.cert_cn'></th>
-		        <th data-i18n="listing.certificate.expires" data-colname='certificate.cert_exp_time'></th>
+		        <th data-i18n="certificate.commonname" data-colname='certificate.cert_cn'></th>
+		        <th data-i18n="certificate.expires" data-colname='certificate.cert_exp_time'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
@@ -69,7 +69,7 @@ new Certificate_model;
 
             col++
         });
-        
+
 	    oTable = $('.table').dataTable( {
             ajax: {
                 url: appUrl + '/datatables/data',
@@ -96,7 +96,7 @@ new Certificate_model;
 	        	var diff = moment().diff(date, 'days');
 	        	var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
 	        	$('td:eq(4)', nRow).html('<span class="label label-'+cls+'"><span title="'+date+'">'+moment(date).fromNow()+'</span>');
-	        	
+
 	        	// Format Check-In timestamp
 	        	var checkin = parseInt($('td:eq(5)', nRow).html());
 	        	var date = new Date(checkin * 1000);
@@ -108,7 +108,7 @@ new Certificate_model;
 	    {
 			oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
 	    }
-	    
+
 	} );
 </script>
 

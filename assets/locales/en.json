@@ -97,7 +97,6 @@
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",
-			"certificates": "Certificates",
 			"deploystudio": "DeployStudio",
 			"displays": "Displays",
 			"ds": "Directory Services",
@@ -377,11 +376,6 @@
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
-		"certificate": {
-			"commonname": "Common Name",
-			"expires": "Expires",
-			"title": "Certificate Report"
-		},
 		"checkin": "Check-in",
 		"computername": "Name",
 		"directoryservice": {
@@ -545,7 +539,6 @@
 			"ard": "Apple Remote Desktop",
 			"batteries": "Batteries",
 			"clients": "Clients",
-			"certificate": "Certificates",
 			"crashplan": "CrashPlan",
 			"deploystudio": "DeployStudio",
 			"directoryservice": "Directory Service",
@@ -973,12 +966,6 @@
 			"notbound": "Not Bound",
 			"info": "Totals since this data is being collected",
 			"title": "Bound to a Directory Service"
-		},
-		"certificate": {
-			"expired": "Expired",
-			"ok": "Valid for more than three months",
-			"soon": "Expires within three months",
-			"title": "Certificates"
 		},
 		"duplicate_computernames": {
 			"notfound": "No duplicates found",

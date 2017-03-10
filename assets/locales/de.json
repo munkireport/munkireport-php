@@ -97,7 +97,6 @@
     "tab": {
       "apple_software": "Apple Software",
       "ard": "ARD",
-      "certificates": "Zertifikate",
       "deploystudio": "DeployStudio",
       "displays": "Displays",
       "ds": "Verzeichnisdienste",
@@ -333,11 +332,6 @@
       "text": "Text __number__",
       "title": "Apple Remote Desktop-Report"
     },
-    "certificate": {
-      "commonname": "Common Name",
-      "expires": "Ablaufdatum",
-      "title": "Zertifikats-Report"
-    },
     "checkin": "Check-in",
     "computername": "Name",
     "directoryservice": {
@@ -500,7 +494,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "certificate": "Zertifikate",
       "deploystudio": "DeployStudio",
       "directoryservice": "Verzeichnisdienste",
       "disk": "Festplatten",
@@ -822,12 +815,6 @@
       "notbound": "Nicht angebunden",
       "info": "Gesamt seit diese Daten gesammelt werden",
       "title": "An Verzeichnisdienst angebunden"
-    },
-    "certificate": {
-      "expired": "Abgelaufen",
-      "ok": "Gültig für mehr als drei Monate",
-      "soon": "Läuft innerhalb der nächsten drei Monate ab",
-      "title": "Zertifikate"
     },
     "duplicate_computernames": {
       "notfound": "Keine Duplikate gefunden",
