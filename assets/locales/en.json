@@ -139,17 +139,6 @@
 		"type": "CPU Type",
 		"usage": "Processor Usage"
 	},
-	"crashplan": {
-		"listing": {
-			"title": "CrashPlan Report"
-		},
-		"widget": {
-			"title": "CrashPlan Status"
-		},
-		"client": {
-			"title": "CrashPlan"
-		}
-	},
 	"danger": "Error",
 	"database": "Database",
 	"date": {
@@ -539,7 +528,6 @@
 			"ard": "Apple Remote Desktop",
 			"batteries": "Batteries",
 			"clients": "Clients",
-			"crashplan": "CrashPlan",
 			"deploystudio": "DeployStudio",
 			"directoryservice": "Directory Service",
 			"disk": "Disk",

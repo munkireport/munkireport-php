@@ -139,17 +139,6 @@
     "type": "CPU Typ",
     "usage": "Prozessorauslastung"
   },
-  "crashplan": {
-    "listing": {
-      "title": "CrashPlan-Report"
-    },
-    "widget": {
-      "title": "CrashPlan-Status"
-    },
-    "client": {
-      "title": "CrashPlan"
-    }
-  },
   "danger": "Fehler",
   "database": "Datenbank",
   "date": {

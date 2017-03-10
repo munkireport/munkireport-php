@@ -140,17 +140,6 @@
     "type": "Modèle processeur",
     "usage": "Utilisation processeur"
   },
-  "crashplan": {
-    "listing": {
-      "title": "Rapport CrashPlan"
-    },
-    "widget": {
-      "title": "Etat CrashPlan"
-    },
-    "client": {
-      "title": "CrashPlan"
-    }
-  },
   "danger": "Erreur",
 	"database": "Base de données",
   "date": {
