@@ -2,6 +2,8 @@
 class Locale extends Controller
 {
     private $modules;
+    private $fallBackLang = 'en';
+    private $langFilter = '/^[a-z]+$/';
 
     public function __construct()
     {
@@ -11,14 +13,44 @@ class Locale extends Controller
             exit;
         }
 
-        $this->modules = $modules = getMrModuleObj()->loadInfo();
+        $this->modules = getMrModuleObj()->loadInfo();
     }
 
 
     public function get($lang = 'en')
     {
-        header('Content-Type: application/json;charset=utf-8');
-        echo $this->modules->getModuleLocales($lang);
-    }
+        $locales = array(
+            'messages' => '{}',
+            'fallback_main' => '{}',
+            'fallback_module' => '{}',
+            'lang_main' => '{}',
+            'lang_module' => '{}',
+        );
 
+        // Load fallback language files
+        $locales['fallback_main'] = file_get_contents(APP_ROOT.'assets/locales/'.$this->fallBackLang.'.json');
+        $locales['fallback_module'] = $this->modules->getModuleLocales($this->fallBackLang);
+
+        if ($lang == $this->fallBackLang) {
+            $locales['messages'] = '{"info": "requested language is fallback language"}';
+        } elseif ( ! preg_match($this->langFilter, $lang)) {
+            $locales['messages'] = sprintf('{"error": "requested language is not valid: %s"}', $lang);
+        } else {
+            if (is_file(APP_ROOT.'assets/locales/'.$lang.'.json')) {
+                $locales['lang_main'] = file_get_contents(APP_ROOT.'assets/locales/'.$lang.'.json');
+            } else {
+                $locales['messages'] = sprintf('{"error": "Could not load main locale for: %s"}', $lang);
+            }
+            $locales['lang_module'] = $this->modules->getModuleLocales($lang);
+        }
+
+        // TODO: add ETAG support and caching.
+
+        header('Content-Type: application/json;charset=utf-8');
+        echo "{\n";
+        foreach($locales as $key => $content){
+            printf('"%s": %s%s', $key, $content, $key != 'lang_module' ? ",\n": '');
+        }
+        echo "}\n";
+    }
 }

@@ -45,19 +45,17 @@ $( document ).ready(function() {
 
    // Load locales
    $.when(
-       $.getJSON( baseUrl + "assets/locales/en.json" ),
-       $.getJSON( baseUrl + "assets/locales/"+lang+".json" ),
-       $.getJSON( appUrl + '/locale/get/en' ),
-       $.getJSON( appUrl + '/locale/get/'+lang ))
+       $.getJSON( appUrl + '/locale/get/'+lang )
+   )
     .fail(function(){
         alert('failed to load locales, please check for syntax errors');
     })
-   .done(function( a1, a2, a3, a4 ){
+   .done(function( data ){
 
-        i18n.addResourceBundle('en', 'translation', a1[0]);
-        i18n.addResourceBundle(lang, 'translation', a2[0]);
-        i18n.addResourceBundle('en', 'translation', a3[0]);
-        i18n.addResourceBundle(lang, 'translation', a4[0]);
+        i18n.addResourceBundle('en', 'translation', data.fallback_main);
+        i18n.addResourceBundle('en', 'translation', data.fallback_module);
+        i18n.addResourceBundle(lang, 'translation', data.lang_main);
+        i18n.addResourceBundle(lang, 'translation', data.lang_module);
 
         $('body').i18n();
 
