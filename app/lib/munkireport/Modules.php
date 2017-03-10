@@ -259,6 +259,10 @@ class Modules
     {
         foreach ($modulePaths as $basePath)
         {
+            if( ! is_dir($basePath)){
+                // Emit warning?
+                continue;
+            }
             foreach (scandir($basePath) as $module) {
 
                 // Skip inactive modules
