@@ -12,18 +12,18 @@ new Ard_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="listing.ard.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
-		  
+		  <h3><span data-i18n="ard.listing.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":1}' data-colname='ard.Text1'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":2}' data-colname='ard.Text2'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":3}' data-colname='ard.Text3'></th>
-		        <th data-i18n="listing.ard.text" data-i18n-options='{"number":4}' data-colname='ard.Text4'></th>
+		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":1}' data-colname='ard.Text1'></th>
+		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":2}' data-colname='ard.Text2'></th>
+		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":3}' data-colname='ard.Text3'></th>
+		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":4}' data-colname='ard.Text4'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
