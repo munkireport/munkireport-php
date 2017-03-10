@@ -320,6 +320,18 @@
 	*/
 	$conf['usb_internal'] = TRUE;
 
+	
+	/*
+	|===============================================
+	| Fonts
+	|===============================================
+	|
+	| By default the fonts module will collect information on all fonts.  
+	| Setting fonts_system to FALSE will skip all system fonts in /System/Library/Fonts.
+	|
+	*/
+	$conf['fonts_system'] = TRUE;
+
 	/*
 	|===============================================
 	| Google Maps API Key
