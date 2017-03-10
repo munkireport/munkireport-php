@@ -97,7 +97,6 @@
     "tab": {
       "apple_software": "Apple Software",
       "ard": "ARD",
-      "deploystudio": "DeployStudio",
       "displays": "Displays",
       "ds": "Verzeichnisdienste",
       "gsx": "GSX",
@@ -208,12 +207,6 @@
     "passwordchangeinterval": "Passwortwechselintervall",
     "restrictdynamicdnsupdates": "Dynamische DNS-Updates beschränken",
     "namespacemode": "Namespace Mode"
-  },
-  "ds": {
-    "computername": "Computername",
-    "architecture": "Architektur",
-    "recheck": "DeployStudio-Daten holen",
-    "report": "DeployStudio-Report"
   },
   "displayname": "Anzeigename",
   "edit": "Editieren",
@@ -483,7 +476,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "deploystudio": "DeployStudio",
       "directoryservice": "Verzeichnisdienste",
       "disk": "Festplatten",
       "displays": "Displays",

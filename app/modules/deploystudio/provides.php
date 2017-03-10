@@ -2,9 +2,9 @@
 
 return array(
     'client_tabs' => array(
-        'deploystudio-tab' => array('view' => 'deploystudio_tab', 'i18n' => 'client.tab.deploystudio'),
+        'deploystudio-tab' => array('view' => 'deploystudio_tab', 'i18n' => 'deploystudio.title'),
     ),
     'listings' => array(
-        'deploystudio' => array('view' => 'deploystudio_listing'),
+        'deploystudio' => array('view' => 'deploystudio_listing', 'i18n' => 'deploystudio.title'),
     ),
 );
