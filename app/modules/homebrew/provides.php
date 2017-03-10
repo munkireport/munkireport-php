@@ -5,6 +5,6 @@ return array(
         'homebrew-tab' => array('view' => 'homebrew_tab', 'i18n' => 'homebrew.clienttitle', 'badge' => 'homebrew-cnt'),
     ),
     'listings' => array(
-        'homebrew' => array('view' => 'hb_listing'),
+        'homebrew' => array('view' => 'hb_listing', 'i18n' => 'homebrew.clienttitle'),
     ),
 );
