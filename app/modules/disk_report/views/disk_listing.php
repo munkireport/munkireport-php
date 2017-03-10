@@ -12,7 +12,7 @@ new Reportdata_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.disk"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="disk_report.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -20,13 +20,13 @@ new Reportdata_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="storage.mountpoint" data-colname='diskreport.MountPoint'></th>
-		        <th data-i18n="storage.volume_type" data-colname='diskreport.VolumeType'></th>
-		        <th data-i18n="storage.percentage" data-sort='desc' data-colname='diskreport.Percentage'></th>
-		        <th data-i18n="storage.free" data-colname='diskreport.FreeSpace'></th>
-		        <th data-i18n="storage.total_size" data-colname='diskreport.TotalSize'></th>
-		    	<th data-i18n="storage.smartstatus" data-colname='diskreport.SMARTStatus'></th>
-		    	<th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+		        <th data-i18n="disk_report.mountpoint" data-colname='diskreport.MountPoint'></th>
+		        <th data-i18n="disk_report.volume_type" data-colname='diskreport.VolumeType'></th>
+		        <th data-i18n="disk_report.percentage" data-sort='desc' data-colname='diskreport.Percentage'></th>
+		        <th data-i18n="disk_report.free" data-colname='diskreport.FreeSpace'></th>
+		        <th data-i18n="disk_report.total_size" data-colname='diskreport.TotalSize'></th>
+		    	<th data-i18n="disk_report.smartstatus" data-colname='diskreport.SMARTStatus'></th>
+		    	<th data-i18n="disk_report.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -152,8 +152,8 @@ new Reportdata_model;
 
 	        	// Encryption Station
 	        	var encryptionstatus=$('td:eq(9)', nRow).html();
-	        	encryptionstatus = encryptionstatus == '1' ? i18n.t('storage.encrypted') :
-	        	(encryptionstatus === '0' ? i18n.t('storage.not_encrypted') : '')
+	        	encryptionstatus = encryptionstatus == '1' ? i18n.t('disk_report.encrypted') :
+	        	(encryptionstatus === '0' ? i18n.t('disk_report.not_encrypted') : '')
 	        	$('td:eq(9)', nRow).html(encryptionstatus)
 		    }
 

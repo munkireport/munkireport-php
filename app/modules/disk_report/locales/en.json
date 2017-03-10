@@ -1,0 +1,20 @@
+{
+    "bus_protocol": "BUS Protocol",
+    "encrypted": "Encrypted",
+    "encryption_status": "Encryption Status",
+    "external": "External",
+    "free": "Free",
+    "internal": "Internal",
+    "mountpoint": "Mount Point",
+    "not_encrypted": "Not Encrypted",
+    "percentage": "Percentage",
+    "size": "Disk Size",
+    "smartstatus": "SMART Status",
+    "smartstatus_failing": "SMART Status failing",
+    "storage": "Storage",
+    "total_size": "Size",
+    "type": "Storage Type",
+    "used": "Used",
+    "volume_type": "Volume Type",
+    "report": "Storage Report"
+}

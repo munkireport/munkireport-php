@@ -440,7 +440,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "disk": "Disque",
       "displays": "Moniteurs",
       "findmymac": "Find My Mac",
       "gsx": "GSX",
@@ -472,7 +471,6 @@
       "backup": "Sauvegarde",
       "clients": "Client",
       "configuration": "Configuration",
-      "disk": "Disque",
       "findmymac": "FindMyMac",
       "gsx": "GSX",
       "hardware": "Matériel",
@@ -657,25 +655,6 @@
 		"recommendedupdates": "Mises à jour recommandées"
 	},
   "status": "État",
-  "storage": {
-    "bus_protocol": "Protocole BUS",
-    "encrypted": "Chiffré",
-    "encryption_status": "État du chiffrement",
-    "external": "Externe",
-    "free": "Libre",
-    "internal": "Interne",
-    "mountpoint": "Point de montage",
-    "not_encrypted": "Non chiffré",
-    "percentage": "Pourcentage",
-    "size": "Taille du disque",
-    "smartstatus": "État SMART",
-    "smartstatus_failing": "Échec de l'état SMART",
-    "storage": "Stockage",
-    "total_size": "Taille",
-    "type": "Type de stockage",
-    "used": "Utilisé",
-    "volume_type": "Type de Volume"
-  },
   "success": "Succès",
   "system": {
 		"status": "Etat système Munkireport",

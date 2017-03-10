@@ -437,7 +437,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "disk": "Festplatten",
       "displays": "Displays",
       "findmymac": "Meinen Mac suchen",
       "gsx": "GSX",
@@ -469,7 +468,6 @@
       "backup": "Backup-Report",
       "clients": "Client-Report",
       "configuration": "Konfigurations-Report",
-      "disk": "Disk-Report",
       "findmymac": "Meinen Mac suchen-Report",
       "gsx": "GSX-Report",
       "hardware": "Hardware-Report",
@@ -652,25 +650,6 @@
     "recommendedupdates": "Empfohlene Updates"
   },
   "status": "Status",
-  "storage": {
-    "bus_protocol": "BUS Protokoll",
-    "encrypted": "Verschlüsselt",
-    "encryption_status": "Verschlüsselungsstatus",
-    "external": "Extern",
-    "free": "Frei",
-    "internal": "Intern",
-    "mountpoint": "Mount Point",
-    "not_encrypted": "Nicht verschlüsselt",
-    "percentage": "Prozent",
-    "size": "Festplattengöße",
-    "smartstatus": "SMART status",
-    "smartstatus_failing": "SMART Status Fehler",
-    "storage": "Massenspeicher",
-    "total_size": "Größe",
-    "type": "Massenspeichertyp",
-    "used": "Benutzt",
-    "volume_type": "Volumetyp"
-  },
   "success": "Erfolg",
   "system": {
     "status": "Munkireport Systemstatus",
