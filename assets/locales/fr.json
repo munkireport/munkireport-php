@@ -398,16 +398,6 @@
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
   "listing": {
-"appusage": {
-			"appname": "Nom Applications",
-			"appusage": "Usage Applications",
-			"appusagereport": "Rapport Usage Applications",
-			"count": "Compteur",
-			"event": "Evènement",
-			"lastevent": "Dernier évènement",
-			"launch": "Lancer",
-			"quit": "Quitter"
-		},
     "ard": {
       "text": "Texte __number__",
       "title": "Rapport Apple Remote Desktop"
@@ -583,7 +573,6 @@
         "ru": "Русский"
     },
     "listings": {
-	"appusage": "Usage Applications",
       "ard": "Apple Remote Desktop",
       "backup2go": "Archiware Backup2Go",
       "caching": "Mise en cache",
@@ -909,10 +898,6 @@
     "app": {
       "versions": "Versions connues du __app__"
 },
-        "appusage": {
-            "title": "Usages Applications",
-            "tooltip": "Applications les plus utilisées"
-    },
     "bound_to_ds": {
       "bound": "Lié",
       "notbound": "Non lié",

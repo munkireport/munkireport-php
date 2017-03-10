@@ -418,17 +418,6 @@
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
-		"appusage": {
-			"activation": "Activation",
-			"appname": "App Name",
-			"appusage": "App Usage",
-			"appusagereport": "App Usage Report",
-			"count": "Count",
-			"event": "Event",
-			"lastevent": "Last Event",
-			"launch": "Launch",
-			"quit": "Quit"
-		},
 		"backup2go": {
 			"title": "Backup2Go Report",
 			"date": "Last Successful Backup",
@@ -601,7 +590,6 @@
 	        "ru": "Русский"
 		},
 		"listings": {
-			"appusage": "App Usage",
 			"ard": "Apple Remote Desktop",
 			"backup2go": "Archiware Backup2Go",
 			"batteries": "Batteries",
@@ -1031,10 +1019,6 @@
 		},
 		"app": {
 			"versions": "Known versions of __app__"
-		},
-		"appusage": {
-			"title": "Application Usage",
-			"tooltip": "Most frequently used apps"
 		},
 		"bound_to_ds": {
 			"bound": "Bound",
