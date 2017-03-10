@@ -5,7 +5,7 @@ return array(
         'caching-tab' => array('view' => 'caching_tab', 'i18n' => 'caching.client_tab_title'),
     ),
     'listings' => array(
-        'caching' => array('view' => 'caching_listing'),
+        'caching' => array('view' => 'caching_listing', 'i18n' => 'caching.listing_title'),
     ),
     'widgets' => array(
         array('view' => 'caching_widget'),

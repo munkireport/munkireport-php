@@ -86,42 +86,6 @@
     "users": "Benutzer"
   },
   "buildversion": "Build Version",
-  "caching": {
-    "bytesdropped": "Verlorene Bytes",
-    "bytesfromcachetoclients": "Bytes vom Cache zu Clients",
-    "bytesfromcachetopeers": "Bytes vom Cache zu Peers",
-    "bytesfromorigintoclients": "Bytes von der Quelle zu Clients",
-    "bytesfromorigintopeers": "Bytes von er Quelle zu Peers",
-    "bytesfrompeerstoclients": "Bytes von Peers zu Clients",
-    "bytesimportedbyxpc": "Von XPC importierte Bytes",
-    "bytesimportedbyhttp": "Von HTTP importierte Byte",
-    "bytespurgedtotal": "Insgesamt gelöschte Bytes",
-    "bytespurgedyoungerthan1day": "Vor weniger als 1 Tag gelöschte Bytes",
-    "bytespurgedyoungerthan7days": "Vor weniger als 7 Tagen gelöschte Bytes",
-    "bytespurgedyoungerthan30days": "Vor weniger als 30 Tagen gelöschte Bytes",
-    "bytes_served": "CachingServer – Übertragene Bytes",
-    "client_requests": "Anfragen von Clients",
-    "client_tab_title": "Caching Server",
-    "date": "Datum",
-    "from_origin": "Herkunft",
-    "from_peers": "Von Peers",
-    "from_cache": "Aus dem Cache",
-    "importsbyhttp": "Importe durch HTT",
-    "importsbyxpc": "Importe duech XPC",
-    "peer_requests": "Anfragen von Peers",
-    "purged_1": "Gesäubert vor weniger als 1 Tag",
-    "purged_7": "Gesäubert vor weniger als 7 Tagen",
-    "purged_30": "Gesäubert vor weniger als 30 Tagen",
-    "repliesfromcachetoclients": "Antworten vom Cache zu Clients",
-    "repliesfromcachetopeers": "Antworten vom Cache zu Peers",
-    "repliesfrompeerstoclients": "Antworten von Peers zu Clients",
-    "repliesfromorigintoclients": "Antworten der Quelle zu Clients",
-    "repliesfromorigintopeers": "Antworten der Quelle zu Peers",
-    "reporttitle": "Caching Server-Report",
-    "requestsfromclients": "Anfragen von Clients",
-    "requestsfrompeers": "Anfragen von Peers",
-    "total_purged": "Gesamt gesäubert"
-  },
   "cert": {
     "expired": "__name__ expired __moment__"
   },
@@ -535,7 +499,6 @@
     },
     "listings": {
       "ard": "Apple Remote Desktop",
-      "caching": "Caching",
       "clients": "Clients",
       "certificate": "Zertifikate",
       "deploystudio": "DeployStudio",
@@ -570,7 +533,6 @@
     "reports": {
       "appVersions": "App Versions Report",
       "backup": "Backup-Report",
-      "caching": "Caching",
       "clients": "Client-Report",
       "configuration": "Konfigurations-Report",
       "directoryservice": "Directory Services-Report",
@@ -860,11 +822,6 @@
       "notbound": "Nicht angebunden",
       "info": "Gesamt seit diese Daten gesammelt werden",
       "title": "An Verzeichnisdienst angebunden"
-    },
-    "caching": {
-      "graph_title": "Aus dem Cache genutzte Bytes",
-      "title": "Cachenutzung in Bytes",
-      "tooltip": "Daten, die aus dem Caching-Server von OSX-Server genutzt wurden"
     },
     "certificate": {
       "expired": "Abgelaufen",
