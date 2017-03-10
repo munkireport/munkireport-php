@@ -16,6 +16,8 @@ Database:
 * bus_power - int - avaliable bus power
 * bus_power_used - int - bus power in use
 * extra_current_used - int - extra current being provided
+* usb_serial_number - varchar(255) - the serial number of the USB device
+* printer_id - TEXT - information about the connected USB printer
 
 Thanks to MiqViq for starting work on this module and bochoven for rewritting the USB script in Python
 

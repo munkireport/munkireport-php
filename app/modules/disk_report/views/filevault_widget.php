@@ -38,7 +38,7 @@ $(document).on('appUpdate', function(e, lang) {
 			return;
 		}
 		
-		var url = appUrl + '/show/listing/security#'
+		var url = appUrl + '/show/listing/security/security#'
 
 		// Set urls
 		$('#fv-unencrypted').attr('href', url + encodeURIComponent('encrypted = 0'))

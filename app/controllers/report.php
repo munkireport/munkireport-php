@@ -1,7 +1,7 @@
 <?php
 class report extends Controller
 {
-    
+
     public $group = 0;
 
     /**
@@ -67,7 +67,7 @@ class report extends Controller
             $report = new Reportdata_model($_POST['serial']);
             $report->machine_group = $this->group;
             $report->register()->save();
-            
+
             //$req_items = unserialize($_POST['items']); //Todo: check if array
             include_once(APP_PATH . '/lib/munkireport/Unserializer.php');
             $unserializer = new munkireport\Unserializer($_POST['items']);
@@ -112,11 +112,11 @@ class report extends Controller
                 $itemarr[$type] .= "$type: $msg\n";
             }
         }
-        
+
         // Return list of changed hashes
         echo serialize($itemarr);
     }
-    
+
     /**
      * Check in script for clients
      *
@@ -138,7 +138,10 @@ class report extends Controller
         if (! is_array($arr)) {
             $this->error("Could not parse items, not a proper serialized file");
         }
-        
+
+        include_once(APP_PATH . '/lib/munkireport/Modules.php');
+        $moduleMgr = new munkireport\Modules;
+
         foreach ($arr as $name => $val) {
         // Skip items without data
             if (! isset($val['data'])) {
@@ -157,7 +160,7 @@ class report extends Controller
                 $this->msg("Model has an illegal name: $name");
                 continue;
             }
-            
+
             // All models should be part of a module
             if (substr($name, -6) == '_model') {
                 $module = substr($name, 0, -6);
@@ -167,17 +170,16 @@ class report extends Controller
                 $name = $module . '_model';
             }
 
-            $model_path = APP_PATH."modules/${module}/";
-
-            // Capitalize classname
-               $classname = ucfirst($name);
-            
-            // Todo: prevent admin and user models, sanitize $name
-            if (! file_exists($model_path . $name . '.php')) {
+            if (! $moduleMgr->getModuleModelPath($module, $model_path))
+            {
                 $this->msg("Model not found: $name");
                 continue;
             }
-            require_once($model_path . $name . '.php');
+
+            require_once($model_path);
+
+            // Capitalize classname
+            $classname = ucfirst($name);
 
             if (! class_exists($classname, false)) {
                 $this->msg("Class not found: $classname");
@@ -187,7 +189,6 @@ class report extends Controller
                // Load model
             $class = new $classname($_POST['serial']);
 
-            
             if (! method_exists($class, 'process')) {
                 $this->msg("No process method in: $classname");
                 continue;
@@ -195,7 +196,7 @@ class report extends Controller
 
             try {
                 $class->process($val['data']);
-        
+
                 // Store hash
                 $hash = new Hash($_POST['serial'], $module);
                 $hash->hash = $val['hash'];
@@ -249,7 +250,7 @@ class report extends Controller
 
         echo "Recorded this message: ".$data['msg']."\n";
     }
-    
+
     /**
      *
      * @param string message

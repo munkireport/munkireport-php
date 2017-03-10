@@ -11,18 +11,20 @@ class Appusage_model extends Model
         $this->rs['app_version'] = "";
         $this->rs['app_name'] = "";
         $this->rs['app_path'] = "";
+        $this->rs['last_time_epoch'] = 0;
         $this->rs['last_time'] = "";
         $this->rs['number_times'] = 0;
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
-        
+
         //indexes to optimize queries
         $this->idx[] = array('event');
         $this->idx[] = array('bundle_id');
         $this->idx[] = array('app_version');
         $this->idx[] = array('app_path');
         $this->idx[] = array('app_name');
+        $this->idx[] = array('last_time_epoch');
         $this->idx[] = array('last_time');
         $this->idx[] = array('number_times');
 
@@ -31,11 +33,11 @@ class Appusage_model extends Model
     }
 
     // ------------------------------------------------------------------------
-    
+
     /**
-     * Get printer names for widget
+     * Get applications names for widget
      *
-     **/    
+     **/
     public function get_applaunch()
     {
         $out = array();
@@ -52,46 +54,51 @@ class Appusage_model extends Model
                 $out[] = $obj;
             }
         }
-        
+
         return $out;
     }
-    
+
     /**
      * Process data sent by postflight
      *
      * @param string data
      *
      **/
-    
+
     public function process($data)
     {
         // Delete previous entries
         $this->deleteWhere('serial_number=?', $this->serial_number);
-        
+
         // Split into lines
         foreach(str_getcsv($data, "\n") as $line)
         {
+            if(empty(trim($line))){
+                continue;
+            }
+
             // Split line
             $appusage_line = str_getcsv($line);
-            
-            if (! empty($appusage_line))
+
+            if ( count($appusage_line) > 1)
             {
                 $this->event = $appusage_line[0];
                 $this->bundle_id = $appusage_line[1];
                 $this->app_version = $appusage_line[2];
                 $this->app_path = $appusage_line[3];
-                
+
                 $app_array_explode = explode('/',$appusage_line[3]);
                 $app_array = array_pop($app_array_explode);
                 $app_name_full = substr($app_array, 0, -4);
                 $this->app_name = $app_name_full;
-                
+
                 $this->number_times = $appusage_line[4];
                 $dt = new DateTime('@'.$appusage_line[5]);
                 $this->last_time = ($dt->format('Y-m-d H:i:s'));
-                
+                $this->last_time_epoch = $appusage_line[5];
+
                 $this->id = '';
-                $this->create(); 
+                $this->create();
             }
         }
     } // end process()

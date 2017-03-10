@@ -4,7 +4,7 @@
 mr.loadTheme();
 
 $(document).on('appReady', function(e, lang) {
-    
+
     $('html.no-js').removeClass('no-js');
 
     // addMenuItem({
@@ -12,39 +12,59 @@ $(document).on('appReady', function(e, lang) {
     //     i18n: 'notification.menu_link',
     //     url: appUrl + '/module/notification/manage'
     // });
-    
+
     addMenuItem({
         menu: 'admin',
         i18n: 'systemstatus.menu_link',
         url: appUrl + '/system/show/status'
     });
-    addMenuItem({
-        menu: 'report',
-        i18n: 'managedinstalls.installratio_report',
-        url: appUrl + '/module/managedinstalls/view/pkg_stats'
-    }); 
-
 
 });
 
 
 $( document ).ready(function() {
-    
-    
+
+
     // Theme switcher
     $('a[data-switch]').on('click', function(){
         mr.setPref('theme', $(this).data('switch'));
         mr.loadTheme();
    });
-    
-    $.i18n.init({
-        debug: mr.debug,
-        useLocalStorage: false,
-        resGetPath: baseUrl + "assets/locales/__lng__.json",
-        fallbackLng: 'en',
-        useDataAttrOptions: true
-    }, function() {
+
+   // Initialize i18n
+   $.i18n.init({
+       debug: mr.debug,
+       useLocalStorage: false,
+       fallbackLng: 'en',
+       useDataAttrOptions: true,
+       getAsync: false,
+       resStore: {}
+   });
+
+   var lang = $.i18n.lng();
+
+   // Load locales
+   $.when(
+       $.getJSON( baseUrl + "assets/locales/en.json" ),
+       $.getJSON( baseUrl + "assets/locales/"+lang+".json" ),
+       $.getJSON( appUrl + '/locale/get/en' ),
+       $.getJSON( appUrl + '/locale/get/'+lang ))
+    .fail(function(){
+        alert('failed to load locales, please check for syntax errors');
+    })
+   .done(function( a1, a2, a3, a4 ){
+
+        i18n.addResourceBundle('en', 'translation', a1[0]);
+        i18n.addResourceBundle(lang, 'translation', a2[0]);
+        i18n.addResourceBundle('en', 'translation', a3[0]);
+        i18n.addResourceBundle(lang, 'translation', a4[0]);
+
         $('body').i18n();
+
+        // Sort menus
+        mr.sortMenu('ul.report');
+        mr.sortMenu('ul.listing');
+        mr.sortMenu('ul.client-tabs');
 
         // Check if current locale is available (FIXME: check loaded locale)
         if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
@@ -63,20 +83,20 @@ $( document ).ready(function() {
 
         // Activate filter
         $('a.filter-popup').click(showFilterModal);
-        
+
         // *******   Define hotkeys  *******
         // Dashboard
         $(document).bind('keydown', 'd', function(){
             window.location = appUrl + '/show/dashboard';
             return true;
         });
-        
+
         // Client listing
         $(document).bind('keydown', 'c', function(){
-            window.location = appUrl + '/show/listing/clients';
+            window.location = appUrl + '/show/listing/reportdata/clients';
             return true;
         });
-        
+
         // search
         $(document).bind('keydown', '/', function(){
             $('input[type="search"]').focus();
@@ -165,7 +185,7 @@ var updateHash = function(e){
 var showFilterModal = function(e){
 
 	e.preventDefault();
-    
+
     var mgList = [];
 
 	var updateGroup = function(){
@@ -182,16 +202,16 @@ var showFilterModal = function(e){
 			$(document).trigger('appUpdate');
 		})
 	};
-    
+
     var updateAll = function() {
-        
+
         var checked = this.checked,
             settings = {
                 filter: 'machine_group',
                 value: mgList,
                 action: checked ? 'clear' : 'add_all'
             }
-            
+
         $.post(appUrl + '/unit/set_filter', settings, function(){
 			// Update all
             $('#myModal .modal-body input[type=checkbox]').prop('checked', checked);
@@ -224,7 +244,7 @@ var showFilterModal = function(e){
 		$('#myModal button.ok')
 			.off()
 			.click(function(){$('#myModal').modal('hide')});
-        
+
         // Add check/uncheck all
         $('#myModal .modal-body')
             .append($('<div>')
@@ -234,7 +254,7 @@ var showFilterModal = function(e){
                         .change(updateAll)
                         .attr('type', 'checkbox'))
                     .append('Check/uncheck all')))
-                    
+
 		// Add machine groups
 		$.each(mg_data, function(index, obj){
 			if(obj.groupid !== undefined){
@@ -384,4 +404,3 @@ String.prototype.pluralize = function(count, plural)
 
   return (count == 1 ? this : plural)
 }
-

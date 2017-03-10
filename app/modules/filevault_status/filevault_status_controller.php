@@ -8,7 +8,7 @@
  **/
 class Filevault_status_controller extends Module_controller
 {
-    
+
     /*** Protect methods with auth! ****/
     public function __construct()
     {
@@ -25,7 +25,7 @@ class Filevault_status_controller extends Module_controller
     {
         echo "You've loaded the filevault_status module!";
     }
-    
+
      /**
      * Retrieve data in json format
      *
@@ -43,11 +43,11 @@ class Filevault_status_controller extends Module_controller
         $filevault_status = new Filevault_status_model($serial_number);
         $disk_report = new Disk_report_model($serial_number);
 
-        // Add relevant keys to escrow object 
-        $filevault_escrow->rs[filevault_status] = $filevault_status->rs[filevault_status];
-        $filevault_escrow->rs[filevault_users] = $filevault_status->rs[filevault_users];
+        // Add relevant keys to escrow object
+        $filevault_escrow->rs['filevault_status'] = $filevault_status->rs['filevault_status'];
+        $filevault_escrow->rs['filevault_users'] = $filevault_status->rs['filevault_users'];
         
         $obj->view('json', array('msg' => $filevault_escrow->rs));
     }
-    
+
 } // END class default_module

@@ -17,26 +17,26 @@
 <script>
 
 $(document).on('appReady', function(){
-	
+
 	// Add tooltip
 	$('#munki-widget>div.panel-heading')
 		.attr('title', i18n.t('munki.panel_title'))
 		.tooltip();
-	
+
 	// Entries
 	var entries = [
 		{
 			class: 'btn-danger',
-			url: appUrl + '/show/listing/munki#errors',
+			url: appUrl + '/show/listing/munkireport/munki#errors',
 			name: 'error'
 		},
 		{
 			class: 'btn-warning',
-			url: appUrl + '/show/listing/munki#warnings',
+			url: appUrl + '/show/listing/munkireport/munki#warnings',
 			name: 'warning'
 		}
 	]
-	
+
 	$.each(entries, function(i, obj){
 		$('#munki-widget div.panel-body')
 			.append($('<a>')
@@ -51,13 +51,13 @@ $(document).on('appReady', function(){
 					.text(i18n.t(obj.name, { count: 0 }))))
 			.append(' ');
 	})
-	
-	
+
+
 	$(document).on('appUpdate', function(){
-		
+
 		var hours = 24 * 7;
 		$.getJSON( appUrl + '/module/munkireport/get_stats/'+hours, function( data ) {
-			
+
 			$.each(entries, function(i, obj){
 				// Set count
 				$('#munki-widget a.'+obj.class+' span.bigger-150')
@@ -68,11 +68,11 @@ $(document).on('appReady', function(){
 			});
 
 		});
-				
+
 	});
-	
+
 });
 
 
-	
+
 </script>

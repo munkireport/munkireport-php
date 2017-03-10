@@ -7,9 +7,23 @@ to only the parts that represent the installed items
 import plistlib
 import sys
 import os
+import CoreFoundation
 
 DEBUG = False
-MANAGED_INSTALL_REPORT = '/Library/Managed Installs/ManagedInstallReport.plist'
+# Path to the default munki install dir
+default_install_dir = '/Library/Managed Installs'
+
+# Checks munki preferences to see where the install directory is set to.
+managed_install_dir = CoreFoundation.CFPreferencesCopyAppValue(
+    "ManagedInstallDir", "ManagedInstalls")
+
+# set the paths based on munki's configuration.
+if managed_install_dir:
+    MANAGED_INSTALL_REPORT = os.path.join(
+        managed_install_dir, 'ManagedInstallReport.plist')
+else:
+    MANAGED_INSTALL_REPORT = os.path.join(
+        default_install_dir, 'ManagedInstallReport.plist')
 
 # Don't skip manual check
 if len(sys.argv) > 1:
@@ -27,6 +41,7 @@ def dict_from_plist(path):
     except Exception, message:
         raise Exception("Error creating plist from output: %s" % message)
 
+
 def add_items(item_list, install_list, status, item_type):
     """Add item to list and set status"""
     for item in item_list:
@@ -39,44 +54,48 @@ def add_items(item_list, install_list, status, item_type):
         install_list[name] = filter_item(item)
         install_list[name]['status'] = status
         install_list[name]['type'] = item_type
-        
+
+
 def add_removeditems(item_list, install_list):
     """Add removed item to list and set status"""
     for item in item_list:
         install_list[item] = {'name': item, 'status': 'removed',
-            'installed': False, 'display_name': item, 'type': 'munki'}
+                              'installed': False, 'display_name': item,
+                              'type': 'munki'}
+
 
 def remove_result(item_list, install_list):
     """Update list according to result"""
     for item in item_list:
-        #install_list[item['name']]['time'] = item.time
+        # install_list[item['name']]['time'] = item.time
         if item.status == 0:
             install_list[item['name']]['installed'] = False
             install_list[item['name']]['status'] = 'uninstalled'
         else:
             install_list[item['name']]['status'] = 'uninstall_failed'
-            
+
         # Sometimes an item is only in RemovalResults, so we have to add
         # extra info:
-                        
+
         # Add munki
-        install_list[item['name']]['type'] = 'munki';
-        
+        install_list[item['name']]['type'] = 'munki'
+
         # Fix display name
         if not install_list[item['name']].get('display_name'):
-            install_list[item['name']]['display_name'] = item.display_name;
+            install_list[item['name']]['display_name'] = item.display_name
+
 
 def install_result(item_list, install_list):
     """Update list according to result"""
     for item in item_list:
-        #install_list[item['name']]['time'] = item.time
-        
+        # install_list[item['name']]['time'] = item.time
+
         # Check if applesus item
         if item.get('productKey'):
             name = item['productKey']
         else:
             name = item['name']
-            
+
         if item.status == 0:
             install_list[name]['installed'] = True
             install_list[name]['status'] = 'install_succeeded'
@@ -99,6 +118,7 @@ def filter_item(item):
 
     return out
 
+
 def main():
     """Main"""
     # Create cache dir if it does not exist
@@ -116,21 +136,22 @@ def main():
     # pylint: disable=E1103
     install_list = {}
     if install_report.get('ManagedInstalls'):
-        add_items(install_report.ManagedInstalls, install_list, 'installed', 'munki')
+        add_items(install_report.ManagedInstalls, install_list,
+                  'installed', 'munki')
     if install_report.get('AppleUpdates'):
-        add_items(install_report.AppleUpdates, install_list, \
-            'pending_install', 'applesus')
+        add_items(install_report.AppleUpdates, install_list,
+                  'pending_install', 'applesus')
     if install_report.get('ProblemInstalls'):
-        add_items(install_report.ProblemInstalls, install_list, \
-            'install_failed', 'munki')
+        add_items(install_report.ProblemInstalls, install_list,
+                  'install_failed', 'munki')
     if install_report.get('ItemsToRemove'):
-        add_items(install_report.ItemsToRemove, install_list, \
-            'pending_removal', 'munki')
+        add_items(install_report.ItemsToRemove, install_list,
+                  'pending_removal', 'munki')
     if install_report.get('RemovedItems'):
         add_removeditems(install_report.RemovedItems, install_list)
     if install_report.get('ItemsToInstall'):
-        add_items(install_report.ItemsToInstall, install_list, \
-            'pending_install', 'munki')
+        add_items(install_report.ItemsToInstall, install_list,
+                  'pending_install', 'munki')
 
     # Update install_list with results
     if install_report.get('RemovalResults'):
@@ -147,5 +168,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

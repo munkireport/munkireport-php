@@ -26,7 +26,7 @@ $(document).on('appReady', function(e, lang) {
 		widget: 'os-widget', // Widget id
 		elementClickCallback: function(e){
 			var label = mr.integerToVersion(e.data.label);
-			window.location.href = appUrl + '/show/listing/clients#' + label;
+			window.location.href = appUrl + '/show/listing/reportdata/clients#' + label;
 		},
 		labelModifier: function(label){
 			return mr.integerToVersion(label)

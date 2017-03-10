@@ -9,23 +9,23 @@
 				</div>
 
 				<div class="list-group scroll-box">
-					<a id="power-now" href="<?=url('show/listing/power#Replace%20Now')?>" class="list-group-item list-group-item-danger hide">
+					<a id="power-now" href="<?=url('show/listing/power/power#Replace%20Now')?>" class="list-group-item list-group-item-danger hide">
 						<span class="badge">0</span>
 						<span data-i18n="widget.power.now"></span>
 					</a>
-					<a id="power-service" href="<?=url('show/listing/power#Service%20Battery')?>" class="list-group-item list-group-item-warning hide">
+					<a id="power-service" href="<?=url('show/listing/power/power#Service%20Battery')?>" class="list-group-item list-group-item-warning hide">
 						<span class="badge">0</span>
 						<span data-i18n="widget.power.service"></span>
 					</a>
-					<a id="power-soon" href="<?=url('show/listing/power#Replace%20Soon')?>" class="list-group-item list-group-item-warning hide">
+					<a id="power-soon" href="<?=url('show/listing/power/power#Replace%20Soon')?>" class="list-group-item list-group-item-warning hide">
 						<span class="badge">0</span>
 						<span data-i18n="widget.power.soon"></span>
 					</a>
-					<a id="power-normal" href="<?=url('show/listing/power#Normal')?>" class="list-group-item list-group-item-success hide">
+					<a id="power-normal" href="<?=url('show/listing/power/power#Normal')?>" class="list-group-item list-group-item-success hide">
 						<span class="badge">0</span>
 						<span data-i18n="widget.power.normal"></span>
 					</a>
-					<a id="power-missing" href="<?=url('show/listing/power#No%20Battery')?>" class="list-group-item list-group-item-danger hide">
+					<a id="power-missing" href="<?=url('show/listing/power/power#No%20Battery')?>" class="list-group-item list-group-item-danger hide">
 						<span class="badge">0</span>
 						<span data-i18n="widget.power.nobattery"></span>
 					</a>
