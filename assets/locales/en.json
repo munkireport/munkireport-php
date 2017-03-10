@@ -187,11 +187,6 @@
 			"title": "CrashPlan"
 		}
 	},
-	"backup2go": {
-		"widget": {
-			"title": "Backup2Go Status"
-		}
-	},
 	"danger": "Error",
 	"database": "Database",
 	"date": {
@@ -418,13 +413,6 @@
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
 	"listing": {
-		"backup2go": {
-			"title": "Backup2Go Report",
-			"date": "Last Successful Backup",
-			"widget": {
-				"title": "Notification Rules"
-			}
-		},
 		"certificate": {
 			"commonname": "Common Name",
 			"expires": "Expires",
@@ -591,7 +579,6 @@
 		},
 		"listings": {
 			"ard": "Apple Remote Desktop",
-			"backup2go": "Archiware Backup2Go",
 			"batteries": "Batteries",
 			"caching": "Caching",
 			"clients": "Clients",
@@ -634,7 +621,6 @@
 		"reports": {
 			"appVersions": "App Versions Report",
 			"backup": "Backup Report",
-			"backup2go" : "Backup2Go Report",
 			"caching": "Caching",
 			"clients": "Client Report",
 			"configuration": "Configuration Report",

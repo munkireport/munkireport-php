@@ -9,16 +9,16 @@ new Backup2go_Model;
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            
-            <h3><span data-i18n="listing.backup2go.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
-		  
+
+            <h3><span data-i18n="backup2go.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="listing.backup2go.date" data-colname='backup2go.backupdate'></th>
+		        <th data-i18n="backup2go.date" data-colname='backup2go.backupdate'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -38,7 +38,7 @@ new Backup2go_Model;
 		var oTable = $('.table').DataTable();
 		oTable.ajax.reload();
 		return;
-	});		
+	});
 
 	$(document).on('appReady', function(e, lang) {
         // Get modifiers from data attribute
@@ -91,14 +91,14 @@ new Backup2go_Model;
 
 				//-- set col 4: last backup date
 				var backupdate=$('td:eq(3)', nRow).html(); //date of backup
-				
+
 				if(backupdate !== "" && !isNaN(backupdate)){
-                    
+
 					var date = new Date(backupdate * 1000);
 					var bdate = moment(date);
 					var now = moment();
 					var days = now.diff(bdate, "days")
-                    
+
 					if(days < 14){
 					   cls = 'success ';
 					} else if (days >= 14 && days < 28){

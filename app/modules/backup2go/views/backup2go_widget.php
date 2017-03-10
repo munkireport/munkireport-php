@@ -1,7 +1,7 @@
 <div class="col-lg-4 col-md-6">
     <div class="panel panel-default">
         <div class="panel-heading" data-container="body">
-            <h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="backup2go.widget.title"></span></h3>
+            <h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="backup2go.widget_title"></span></h3>
         </div>
 
         <div class="list-group scroll-box">

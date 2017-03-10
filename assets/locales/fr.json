@@ -188,11 +188,6 @@
       "title": "CrashPlan"
     }
   },
-	"backup2go": {
-		"widget": {
-			"title": "Etat Backup2go"
-		}
-	},
   "danger": "Erreur",
 	"database": "Base de données",
   "date": {
@@ -402,13 +397,6 @@
       "text": "Texte __number__",
       "title": "Rapport Apple Remote Desktop"
     },
-		"backup2go": {
-			"title": "Backup2go",
-			"date": "Dernière sauvegarde réussie",
-			"widget": {
-				"title": "Règles de notifications"
-			}
-		},
     "certificate": {
       "commonname": "Nom commun",
       "expires": "Expire",
@@ -574,7 +562,6 @@
     },
     "listings": {
       "ard": "Apple Remote Desktop",
-      "backup2go": "Archiware Backup2Go",
       "caching": "Mise en cache",
       "clients": "Clients",
       "certificate": "Certificats",
@@ -610,7 +597,6 @@
     "reports": {
 "appVersions": "Versions des Apps",
       "backup": "Sauvegarde",
-      "backup2go" : "Backup2Go",
       "caching": "Mise en cache",
       "clients": "Client",
       "configuration": "Configuration",
