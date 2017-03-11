@@ -89,7 +89,7 @@ new Timemachine_model;
 	        	var name=$('td:eq(0)', nRow).html();
 	        	if(name == ''){name = "No Name"};
 	        	var sn=$('td:eq(1)', nRow).html();
-	        	var link = mr.getClientDetailLink(name, sn, '#tab_summary');
+	        	var link = mr.getClientDetailLink(name, sn, '#tab_timemachine-tab');
 	        	$('td:eq(0)', nRow).html(link);
 
 	        	// Format start date
@@ -113,7 +113,7 @@ new Timemachine_model;
 	        	// Format Check-In timestamp
 	        	var checkin = parseInt($('td:eq(7)', nRow).html());
 	        	var date = new Date(checkin * 1000);
-	        	$('td:eq(7)', nRow).html('<span title="'+i18n.t('checkin')+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
+	        	$('td:eq(7)', nRow).html('<span title="'+i18n.t('listing.checkin')+" "+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery
