@@ -1,0 +1,25 @@
+{
+    "coverage": "Couverture de la garantie",
+    "est_manufacture_date": "Date de fabrication estimée",
+    "est_purchase_date": "Date d'achat estimée",
+    "expired": "Expirée le __date__",
+    "expires_in": "Expire le __date__",
+    "installed_memory_title": "Mémoire installée",
+    "no_alerts": "Aucune alerte de garantie",
+    "recheck": "Retest de l'état de la garantie",
+    "supported_no_applecare": "Pris en charge jusqu'à __date__. Pas d'Applecare",
+    "supported_until": "Pris en charge jusqu'à __date__",
+    "unregistered": "Non enregistré",
+    "warranty": "Garantie",
+    "widget_title": "Garantie Matériel",
+    "report": "Warranty Report",
+    "purchased": "Acheté",
+    "expires": "Expiration de la garantie",
+    "warrantysupport": {
+        "title": "Comptes pris en charge, Vintage, Obsolètes, et état du support inconnu",
+        "warrantyinfo": "Comptes pris en charge, Vintage, Obsolètes et état du support inconnu",
+        "warrentysupportstatus": "Etat de la garantie du support"
+    },
+    "status": "Etat de la garantie",
+    "age": "Age Matériel"
+}

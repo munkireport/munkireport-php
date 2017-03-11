@@ -12,8 +12,8 @@ new Reportdata_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.warranty"></span> <span id="total-count" class='label label-primary'>…</span></span></h3>
-		  
+		  <h3><span data-i18n="warranty.report"></span> <span id="total-count" class='label label-primary'>…</span></span></h3>
+
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
@@ -51,7 +51,7 @@ $(document).on('appReady', function(e, lang) {
     var mySort = [], // Initial sort
         hideThese = [], // Hidden columns
         col = 0, // Column counter
-        runtypes = [], // Array for runtype column 
+        runtypes = [], // Array for runtype column
         columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
     $('.table th').map(function(){
@@ -90,7 +90,7 @@ $(document).on('appReady', function(e, lang) {
 	        	var status=$('td:eq(3)', nRow).html();
 	        	var cls = status == 'Expired' ? 'danger' : (status == 'Supported' ? 'success' : 'warning');
 	        	$('td:eq(3)', nRow).html('<span class="label label-'+cls+'">'+status+'</span>');
-	        	
+
 	        	// Format purchase date
 	        	var date=$('td:eq(4)', nRow).html();
 	        	if(date){
@@ -102,7 +102,7 @@ $(document).on('appReady', function(e, lang) {
 	        		}
 	        		if(Math.round(b) == 4)
 	        		{
-	        			
+
 	        		}
 	        		$('td:eq(4)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow() + '</span>');
 	        	}

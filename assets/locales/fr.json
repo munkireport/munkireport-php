@@ -99,7 +99,6 @@
       "apple_software": "Logiciels Apple",
       "ard": "ARD",
       "ds": "Services d'annuaires",
-      "gsx": "GSX",
       "inventory_items": "Objets dans l'inventaire",
       "location": "Localisation",
       "munki": "Logiciels gérés",
@@ -196,30 +195,6 @@
   },
   "free_disk_space": "Espace disque disponible",
   "free_disk_space_less_than": "Espace disque disponible < __gb__Go",
-  "gsx": {
-    "configuration": "Configuration livrée",
-    "contracttype": "Type de contrat",
-    "country": "Pays d'achat",
-    "coverage": {
-      "conend": "Date de fin de contrat",
-      "constart": "Date de début de contrat",
-      "start": "Date de démarrage de couverture",
-      "end": "Date de fin de couverture"
-    },
-    "estpurchasedate": "Date d'achat estimée",
-    "laborcovered": "Main d'oeuvre prise en charge",
-    "loaner": "Prêt",
-    "modeldescription": "Description du modèle",
-    "obsolete": "Obsolète",
-    "partscovered": "Pièces prises en charge",
-    "recheck": "Retest de l'état de la garantie",
-    "sla": "SLA Garantie",
-    "supported": "Supporté",
-    "vintage": "Vintage",
-    "warrantystatus": "Etat de la garantie",
-    "warrantydays": "Jours restants de garantie",
-    "warrentyend": "Date de fin de garantie"
-  },
   "hardware": {
     "hardware": "Matériel",
     "uuid": "UUID Matériel"
@@ -278,10 +253,6 @@
       "title": "Rapport Time Machine"
     },
     "username": "Nom utilisateur",
- "warranty": {
- 	"purchased": "Acheté",
-	"expires": "Expiration de la garantie"
-        },
     "wifi": {
       "apmode": "Mode AP",
       "authtype": "Type Auth 802.11X",
@@ -384,7 +355,6 @@
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
       "findmymac": "Find My Mac",
-      "gsx": "GSX",
       "hardware": "Matériel",
       "inventory": "Inventaire",
       "location": "Localisation",
@@ -414,7 +384,6 @@
       "clients": "Client",
       "configuration": "Configuration",
       "findmymac": "FindMyMac",
-      "gsx": "GSX",
       "hardware": "Matériel",
       "location": "Localisation",
       "munki": "Munki",
@@ -654,25 +623,7 @@
   "version": "Version",
   "warning": "Alerte",
   "warning_plural": "Alertes",
-  "warranty": {
-    "coverage": "Couverture de la garantie",
-    "est_manufacture_date": "Date de fabrication estimée",
-    "est_purchase_date": "Date d'achat estimée",
-    "expired": "Expirée le __date__",
-    "expires_in": "Expire le __date__",
-"installed_memory_title": "Mémoire installée",
-    "no_alerts": "Aucune alerte de garantie",
-    "recheck": "Retest de l'état de la garantie",
-    "supported_no_applecare": "Pris en charge jusqu'à __date__. Pas d'Applecare",
-    "supported_until": "Pris en charge jusqu'à __date__",
-    "unregistered": "Non enregistré",
-    "warranty": "Garantie",
-    "widget_title": "Garantie Matériel"
-  },
   "widget": {
-    "age": {
-      "title": "Age Matériel"
-    },
     "app": {
       "versions": "Versions connues du __app__"
 },
@@ -761,15 +712,7 @@
 		},
 		"uptime": {
 			"title": "Temps de fonctionnement"
-		},
-		"warranty": {
-			"title": "Etat de la garantie"
-    },
-    "warrantysupport": {
-	"title": "Comptes pris en charge, Vintage, Obsolètes, et état du support inconnu",
-      "warrantyinfo": "Comptes pris en charge, Vintage, Obsolètes et état du support inconnu",
-      "warrentysupportstatus": "Etat de la garantie du support"
-    }
+		}
   },
   "wifi": {
     "apmode": "Mode du point d'accès",

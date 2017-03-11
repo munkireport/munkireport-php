@@ -98,7 +98,6 @@
       "apple_software": "Apple Software",
       "ard": "ARD",
       "ds": "Verzeichnisdienste",
-      "gsx": "GSX",
       "inventory_items": "Inventar",
       "location": "Standort",
       "munki": "Verwaltete Software",
@@ -192,30 +191,6 @@
   },
   "free_disk_space": "Verfügbarer Speicherplatz",
   "free_disk_space_less_than": "Verfügbarer Speicherplatz < __gb__GB",
-  "gsx": {
-    "configuration": "Bestellte Konfiguration",
-    "contracttype": "Vertragstyp",
-    "country": "In welchem Land verkauft?",
-    "coverage": {
-      "conend": "Vertragsende",
-      "constart": "Vertragsbeginn",
-      "start": "Abgedeckt ab",
-      "end": "Abdeckung endet"
-    },
-    "estpurchasedate": "Geschätztes Kaufdatum",
-    "laborcovered": "Arbeitsleistung abgedeckt?",
-    "loaner": "Leihgerät",
-    "modeldescription": "Modellbeschreibung",
-    "obsolete": "Obsolet",
-    "partscovered": "Ersatzteile abgedeckt?",
-    "recheck": "Garantiestatus überprüfen",
-    "sla": "Garantie SLA",
-    "supported": "Unterstützt",
-    "vintage": "Vintage",
-    "warrantystatus": "Garantiestatus",
-    "warrantydays": "Verbleibende Tage Garantie",
-    "warrentyend": "Garantieende"
-  },
   "hardware": {
     "hardware": "Hardware",
     "uuid": "Hardware UUID"
@@ -274,10 +249,6 @@
       "title": "Timemachine-Report"
     },
     "username": "Benutzername",
-    "warranty": {
-      "purchased": "Gekauft",
-      "expires": "Garantie läuft ab"
-    },
     "wifi": {
       "apmode": "AP Modus",
       "authtype": "802.11X Authentifizierungstyp",
@@ -381,7 +352,6 @@
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
       "findmymac": "Meinen Mac suchen",
-      "gsx": "GSX",
       "hardware": "Hardware",
       "inventory": "Inventar",
       "location": "Location",
@@ -396,7 +366,6 @@
       "softwareupdate": "Software Update",
       "timemachine": "Time Machine",
       "usb": "USB Devices",
-      "warranty": "Garantie",
       "wifi": "WiFi"
     },
     "main": {
@@ -411,7 +380,6 @@
       "clients": "Client-Report",
       "configuration": "Konfigurations-Report",
       "findmymac": "Meinen Mac suchen-Report",
-      "gsx": "GSX-Report",
       "hardware": "Hardware-Report",
       "location": "Standort-Report",
       "munki": "Munki-Report",
@@ -423,7 +391,6 @@
       "sccm": "SCCM-Agent-Status-Report",
       "security": "Sicherheits-Report",
       "server": "Server-Report",
-      "warranty": "Garantie-Report",
       "wifi": "Wifi-Report"
     },
     "user": {
@@ -649,25 +616,7 @@
   "version": "Version",
   "warning": "Warnung",
   "warning_plural": "Warnungen",
-  "warranty": {
-    "coverage": "Garantieabdeckung",
-    "est_manufacture_date": "ungef. Produktionsdatum",
-    "est_purchase_date": "ungef. Kaufdatum",
-    "expired": "Abgelaufen am __date__",
-    "expires_in": "Läuft ab __date__",
-    "installed_memory_title": "Installierter Speicher",
-    "no_alerts": "Keine Garantiewarnung",
-    "recheck": "Garantieabdeckung erneut prüfen",
-    "supported_no_applecare": "Unterstützt bis __date__. Kein Applecare",
-    "supported_until": "Unterstützt bis __date__",
-    "unregistered": "Nicht registriert",
-    "warranty": "Garantie",
-    "widget_title": "Hardwaregarantie"
-  },
   "widget": {
-    "age": {
-      "title": "Hardware-Alter"
-    },
     "app": {
       "versions": "Bekannte Versionen von __app__"
     },
@@ -756,14 +705,6 @@
     },
     "uptime": {
       "title": "Uptime"
-    },
-    "warranty": {
-      "title": "Garantie-Status"
-    },
-    "warrantysupport": {
-      "title": "Anzahl Unterstützt, Vintage, Obsolet und Unbekannter Support-Status",
-      "warrantyinfo": "Anzahl Unterstützt, Vintage, Obsolet und Unbekannter Support-Status",
-      "warrentysupportstatus": "Garantieabdeckungsstatus"
     }
   },
   "wifi": {

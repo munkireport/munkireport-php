@@ -97,7 +97,6 @@
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",
-			"gsx": "GSX",
 			"inventory_items": "Inventory Items",
 			"location": "Location",
 			"munki": "Managed Software",
@@ -194,30 +193,6 @@
 	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
-	"gsx": {
-		"configuration": "Shipping Configuration",
-		"contracttype": "Contract Type",
-		"country": "Country of Purchase",
-		"coverage": {
-			"conend": "Contract Coverage End Date",
-			"constart": "Contract Coverage Start Date",
-			"start": "Coverage Start Date",
-			"end": "Coverage End Date"
-		},
-		"estpurchasedate": "Estimated Purchase Date",
-		"laborcovered": "Labor Covered",
-		"loaner": "Loaner",
-		"modeldescription": "Model Description",
-		"obsolete": "Obsolete",
-		"partscovered": "Parts Covered",
-		"recheck": "Recheck Warranty Status",
-		"sla": "Warranty SLA",
-		"supported": "Supported",
-		"vintage": "Vintage",
-		"warrantystatus": "Warranty Status",
-		"warrantydays": "Warranty Days Remaining",
-		"warrentyend": "Warranty End Date"
-	},
 	"hardware": {
 		"hardware": "Hardware",
 		"uuid": "Hardware UUID"
@@ -272,10 +247,6 @@
 			"title": "Time Machine Report"
 		},
 		"username": "Username",
-        "warranty": {
-            "purchased": "Purchased",
-            "expires": "Warranty Expires"
-        },
         "wifi": {
             "apmode": "AP Mode",
             "authtype": "802.11X Auth Type",
@@ -381,7 +352,6 @@
 			"clients": "Clients",
 			"findmymac": "Find My Mac",
 			"fonts": "Fonts",
-			"gsx": "GSX",
 			"hardware": "Hardware",
 			"inventory": "Inventory",
 			"location": "Location",
@@ -399,7 +369,6 @@
 			"tag": "Tag",
 			"timemachine": "Time Machine",
 			"usb": "USB Devices",
-			"warranty": "Warranty",
 			"wifi": "WiFi"
 		},
 		"main": {
@@ -414,7 +383,6 @@
 			"clients": "Client Report",
 			"configuration": "Configuration Report",
 			"findmymac": "Find My Mac Report",
-			"gsx": "GSX Report",
 			"hardware": "Hardware Report",
 			"location": "Location Report",
 			"munki": "Munki Report",
@@ -426,7 +394,6 @@
 			"sccm": "SCCM Agent Status Report",
 			"security": "Security Report",
 			"server": "Server Report",
-			"warranty": "Warranty Report",
 			"wifi": "WiFi Report"
 		},
 		"user": {
@@ -752,25 +719,7 @@
 	"version": "Version",
 	"warning": "Warning",
 	"warning_plural": "Warnings",
-	"warranty": {
-		"coverage": "Warranty Coverage",
-		"est_manufacture_date": "Est. Manufacture Date",
-		"est_purchase_date": "Est. Purchase Date",
-		"expired": "Expired on __date__",
-		"expires_in": "Expires in __date__",
-		"installed_memory_title": "Installed Memory",
-		"no_alerts": "No Warranty Alerts",
-		"recheck": "Recheck Warranty Status",
-		"supported_no_applecare": "Supported until __date__. No Applecare",
-		"supported_until": "Supported until __date__",
-		"unregistered": "Unregistered",
-		"warranty": "Warranty",
-		"widget_title": "Hardware Warranty"
-	},
 	"widget": {
-		"age": {
-			"title": "Hardware Age"
-		},
 		"app": {
 			"versions": "Known versions of __app__"
 		},
@@ -860,33 +809,25 @@
 		},
 		"uptime": {
 			"title": "Uptime"
-		},
-		"warranty": {
-			"title": "Warranty Status"
-		},
-		"warrantysupport":{
-			"title": "Counts Supported, Vintage, Obsolete, and Unknown support status",
-			"warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
-			"warrentysupportstatus": "Warranty Support Status"
-			}
-		},
-		"wifi": {
-			"apmode": "Access Point Mode",
-			"bssid": "BSSID",
-			"channel": "Channel",
-			"extrssi": "External RSSI",
-			"lasttrx": "Last Transmit Rate (Mbps)",
-			"maxtrx": "Maximum Transmit Rate (Mbps)",
-			"networks": "WiFi Networks",
-			"noise": "Noise Level",
-			"nonetworks": "No Networks",
-			"rssilevel": "RSSI Level",
-			"sharing": "Sharing",
-			"state": "WiFi State",
-			"ssid": "SSID",
-			"xauthtype": "802.11X Authentication Type",
-			"wifiauthtype": "WiFi Authentication Type",
-			"wifiinfo": "WiFi Information"
-		},
+		}
+	},
+	"wifi": {
+		"apmode": "Access Point Mode",
+		"bssid": "BSSID",
+		"channel": "Channel",
+		"extrssi": "External RSSI",
+		"lasttrx": "Last Transmit Rate (Mbps)",
+		"maxtrx": "Maximum Transmit Rate (Mbps)",
+		"networks": "WiFi Networks",
+		"noise": "Noise Level",
+		"nonetworks": "No Networks",
+		"rssilevel": "RSSI Level",
+		"sharing": "Sharing",
+		"state": "WiFi State",
+		"ssid": "SSID",
+		"xauthtype": "802.11X Authentication Type",
+		"wifiauthtype": "WiFi Authentication Type",
+		"wifiinfo": "WiFi Information"
+	},
 	"yes": "Yes"
 }
