@@ -4,7 +4,7 @@
 
 		<div class="panel-heading" data-container="body">
 
-			<h3 class="panel-title"><i class="fa fa-expand"></i> <span data-i18n="displays.widget_title"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-expand"></i> <span data-i18n="displays_info.widget_title"></span></h3>
 
 		</div>
 
@@ -17,7 +17,7 @@
 <script>
 $(document).on('appReady', function(e, lang) {
 	$('#external-displays-count-widget div.panel-heading')
-		.attr('title', i18n.t('displays.widget_info'))
+		.attr('title', i18n.t('displays_info.widget_info'))
 		.tooltip();
 });
 $(document).on('appUpdate', function(e, lang) {
@@ -28,7 +28,7 @@ $(document).on('appUpdate', function(e, lang) {
 		body.empty();
 
 		data.total = data.total || 0;
-		body.append('<a href="'+appUrl+'/show/listing/displays_info/displays#external" class="btn btn-success"><span class="bigger-150">'+data.total+'</span><br>'+i18n.t('displays.displays')+'</a>');
+		body.append('<a href="'+appUrl+'/show/listing/displays_info/displays#external" class="btn btn-success"><span class="bigger-150">'+data.total+'</span><br>'+i18n.t('displays_info.displays')+'</a>');
 	});
 
 });

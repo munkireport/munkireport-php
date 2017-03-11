@@ -97,7 +97,6 @@
     "tab": {
       "apple_software": "Apple Software",
       "ard": "ARD",
-      "displays": "Displays",
       "ds": "Verzeichnisdienste",
       "gsx": "GSX",
       "fv_escrow": "Filevault Escrow",
@@ -164,20 +163,6 @@
   },
   "disabled": "Deaktiviert",
   "disconnected": "Getrennt",
-  "displays": {
-    "internal": "Eingebaut",
-    "displays": "Bildschirme",
-    "display_serial": "Seriennummer",
-    "external": "Extern",
-    "vendor": "Hersteller",
-    "model": "Modell",
-    "manufactured": "Herstellungsdatum",
-    "native": "Native Auflösung",
-    "timestamp": "Zuletzt verbunden",
-    "type": "Typ",
-    "widget_info": "Gesamtanzahl bekannter externer Bildschirme",
-    "widget_title": "Anzahl externer Bildschirme"
-  },
   "displayname": "Anzeigename",
   "edit": "Editieren",
   "email": {
@@ -286,13 +271,6 @@
     },
     "checkin": "Check-in",
     "computername": "Name",
-    "displays": {
-      "detected": "Erkannt",
-      "machineserial": "Maschinen-Seriennummer",
-      "model": "Modell",
-      "nativeresolution": "Native Auflösung",
-      "vendor": "Hersteller"
-    },
     "hardware": {
       "description": "Beschreibung"
     },
@@ -437,7 +415,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "displays": "Displays",
       "findmymac": "Meinen Mac suchen",
       "gsx": "GSX",
       "hardware": "Hardware",

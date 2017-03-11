@@ -98,7 +98,6 @@
     "tab": {
       "apple_software": "Logiciels Apple",
       "ard": "ARD",
-      "displays": "Moniteurs",
       "ds": "Services d'annuaires",
       "gsx": "GSX",
       "fv_escrow": "Filevault",
@@ -165,20 +164,6 @@
   },
   "disabled": "Désactivé",
   "disconnected": "Déconnecté",
-  "displays": {
-	"internal": "Built-In",
-    	"displays": "Moniteurs",
-	"display_serial": "Numéro de série",
-	"external": "Externe",
-	"vendor": "Vendeur",
-	"model": "Modèle",
-	"manufactured": "Date de fabrication",
-	"native": "NRésolution native",
-	"timestamp": "Dernière connexion",
-	"type": "Type",
-    "widget_info": "Nombre total d'écrans externes connus",
-"widget_title": "Nombre d'écrans"
-},
   "displayname": "Nom d'affichage",
    "edit": "Modifier",
   	"email": {
@@ -290,13 +275,6 @@
     },
     "checkin": "Enregistrement",
 "computername": "Name",
-"displays": {
-	"detected": "Détecté",
-	"machineserial": "N° de série",
-        "model": "Modèle",
-        "nativeresolution": "Résolution native",
-	"vendor": "Vendeur"
-    },
     "hardware": {
       "description": "Description"
     },
@@ -440,7 +418,6 @@
     "listings": {
       "ard": "Apple Remote Desktop",
       "clients": "Clients",
-      "displays": "Moniteurs",
       "findmymac": "Find My Mac",
       "gsx": "GSX",
       "hardware": "Matériel",

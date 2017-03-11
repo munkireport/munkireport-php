@@ -18,14 +18,14 @@
 		<thead>
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
-			<th data-i18n="listing.displays.machineserial" data-colname='reportdata.serial_number'></th>
+			<th data-i18n="displays_info.machineserial" data-colname='reportdata.serial_number'></th>
 			<th data-i18n="type" data-colname='displays.type'></th>
-			<th data-i18n="listing.displays.vendor" data-colname='displays.vendor'></th>
-			<th data-i18n="listing.displays.model" data-colname='displays.model'></th>
+			<th data-i18n="displays_info.vendor" data-colname='displays.vendor'></th>
+			<th data-i18n="displays_info.model" data-colname='displays.model'></th>
 			<th data-i18n="serial" data-colname='displays.display_serial'></th>
 			<th data-i18n="listing.power.manufactured" data-colname='displays.manufactured'></th>
-			<th data-i18n="listing.displays.nativeresolution" data-colname='displays.native'></th>
-			<th data-i18n="listing.displays.detected" data-sort="desc" data-colname='displays.timestamp'></th>
+			<th data-i18n="displays_info.nativeresolution" data-colname='displays.native'></th>
+			<th data-i18n="displays_info.detected" data-sort="desc" data-colname='displays.timestamp'></th>
 		  </tr>
 		</thead>
 
@@ -51,7 +51,7 @@
 		oTable.ajax.reload();
 		return;
 
-	});		
+	});
 
 	$(document).on('appReady', function(e, lang) {
 
@@ -82,7 +82,7 @@
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmpty = "displays.vendor"
-                    
+
                     // Look for 'external' keyword
                     if(d.search.value.match(/^external$/))
                     {
@@ -91,7 +91,7 @@
                         // Clear global search
                         d.search.value = '';
                     }
-                    
+
                     // Look for 'external' keyword
                     if(d.search.value.match(/^internal/))
                     {
@@ -122,8 +122,8 @@
 
                 // Internal vs External
                 var status=$('td:eq(2)', nRow).html();
-                status = status == 1 ? i18n.t('displays.external') : //ex
-                (status == '0' ? i18n.t('displays.internal') : '')
+                status = status == 1 ? i18n.t('displays_info.external') : //ex
+                (status == '0' ? i18n.t('displays_info.internal') : '')
                 $('td:eq(2)', nRow).html(status)
 
                 // Translating vendors column

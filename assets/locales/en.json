@@ -97,7 +97,6 @@
 		"tab": {
 			"apple_software": "Apple Software",
 			"ard": "ARD",
-			"displays": "Displays",
 			"gsx": "GSX",
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
@@ -163,20 +162,6 @@
 	},
 	"disabled": "Disabled",
 	"disconnected": "Disconnected",
-	"displays": {
-		"internal": "Built-In",
-		"displays": "Displays",
-		"display_serial": "Serial",
-		"external": "External",
-		"vendor": "Vendor",
-		"model": "Model",
-		"manufactured": "Manufacture Date",
-		"native": "Native Resolution",
-		"timestamp": "Was Last Connected",
-		"type": "Type",
-		"widget_info": "Total number of known external displays",
-		"widget_title": "External Displays Count"
-	},
 	"displayname": "Display Name",
 	"edit": "Edit",
 	"email": {
@@ -305,13 +290,6 @@
 	"listing": {
 		"checkin": "Check-in",
 		"computername": "Name",
-		"displays": {
-            "detected": "Detected",
-            "machineserial": "Machine Serial",
-            "model": "Model",
-            "nativeresolution": "Native Resolution",
-			"vendor": "Vendor"
-		},
 		"hardware": {
 			"description": "Description"
 		},
@@ -457,7 +435,6 @@
 			"ard": "Apple Remote Desktop",
 			"batteries": "Batteries",
 			"clients": "Clients",
-			"displays": "Displays",
 			"findmymac": "Find My Mac",
 			"fonts": "Fonts",
 			"gpu": "GPUs",
