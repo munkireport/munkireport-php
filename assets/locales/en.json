@@ -192,24 +192,6 @@
 	"filter": {
 		"title": "Set filters"
 	},
-	"findmymac": {
-		"listing": {
-			"email": "Email",
-			"status": "Status",
-			"title": "Find My Mac Report",
-			"ownerdisplayname": "Owner Display Name",
-			"personid": "iCloud PersonID",
-			"hostname": "iCloud Hostname"
-		},
-		"widget": {
-			"title": "Find My Mac Status",
-			"enabled": "Enabled",
-			"disabled": "Disabled"
-		},
-		"client": {
-			"title": "Find My Mac"
-		}
-	},
 	"free_disk_space": "Free Disk Space",
 	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
 	"gpu": {

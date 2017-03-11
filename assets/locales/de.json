@@ -190,24 +190,6 @@
   "filter": {
     "title": "Filter setzen"
   },
-  "findmymac": {
-    "listing": {
-      "email": "Email",
-      "status": "Status",
-      "title": "Meinen Mac suchen report",
-      "ownerdisplayname": "Anzeigename des Eigentümers",
-      "personid": "iCloud ID",
-      "hostname": "iCloud Hostname"
-    },
-    "widget": {
-      "title": "Meinen Mac suchen Status",
-      "enabled": "Aktiviert",
-      "disabled": "Deaktiviert"
-    },
-    "client": {
-      "title": "Meinen Mac suchen"
-    }
-  },
   "free_disk_space": "Verfügbarer Speicherplatz",
   "free_disk_space_less_than": "Verfügbarer Speicherplatz < __gb__GB",
   "gsx": {
