@@ -73,6 +73,27 @@ class Modules
         }
         return False;
     }
+
+    /**
+     * Retrieve moduleMigrationPath
+     *
+     *
+     * @param type var Description
+     * @return boolean
+     */
+    public function getModuleMigrationPath($moduleName, &$migrationPath)
+    {
+        foreach ($this->moduleSearchPaths as $type => $path) {
+            echo $path . $moduleName . '/migrations';
+            if (is_dir($path . $moduleName . '/migrations')) {
+                echo $path . $moduleName . '/migrations';
+                $migrationPath = $path . $moduleName . '/migrations';
+                return True;
+            }
+        }
+        return False;
+    }
+
     /**
      * Retrieve list of all available modules
      *
