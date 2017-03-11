@@ -16,7 +16,15 @@ class Locale extends Controller
         $this->modules = getMrModuleObj()->loadInfo();
     }
 
-
+    /**
+     * Get locale strings
+     *
+     * This function returns a JSON object containing 4 language objects and a messages object
+     * The function just concatenates the various JSON files together instead of parsing
+     * This is done for performance reasons.
+     *
+     * @param string $lang Locale definition, defaults to 'en'
+     */
     public function get($lang = 'en')
     {
         $locales = array(
