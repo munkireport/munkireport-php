@@ -99,7 +99,6 @@
       "ard": "ARD",
       "ds": "Verzeichnisdienste",
       "gsx": "GSX",
-      "fv_escrow": "Filevault Escrow",
       "inventory_items": "Inventar",
       "location": "Standort",
       "munki": "Verwaltete Software",
@@ -188,22 +187,6 @@
   },
   "failed": "Fehlgeschlagen",
   "failing": "Schlägt fehl!",
-  "filevault": {
-    "status_last_checkin": "Status am ",
-    "enableddate": "Verschlüsselt seit",
-    "encrypted": "Verschlüsselt",
-    "filevault_users": "Aktiviert für User",
-    "recoverykey": "Persönlicher Wiederherstellungsschlüssel",
-    "lvguuid": "Logical Volume Group UUID",
-    "lvuuid": "Logical Volume UUID",
-    "pvuuid": "Physical Volume UUID",
-    "hddserial": "Hard Drive Seriennummer",
-    "unencrypted": "Unverschlüsselt",
-    "users": "User bei denen FileVault aktiv ist",
-    "widget": {
-      "title": "Filevault 2 status"
-    }
-  },
   "filter": {
     "title": "Filter setzen"
   },

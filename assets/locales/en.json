@@ -98,7 +98,6 @@
 			"apple_software": "Apple Software",
 			"ard": "ARD",
 			"gsx": "GSX",
-			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
 			"location": "Location",
 			"munki": "Managed Software",
@@ -190,23 +189,6 @@
 	},
 	"failed": "Failed",
 	"failing": "Failing!",
-	"filevault": {
-		"status_last_checkin": "Status as of ",
-		"enableddate": "Enable Date",
-		"encrypted": "Encrypted",
-		"filevault_users": "Enabled User(s)",
-		"recoverykey": "Personal Recovery Key",
-		"lvguuid": "Logical Volume Group UUID",
-		"lvuuid": "Logical Volume UUID",
-		"pvuuid": "Physical Volume UUID",
-		"hddserial": "Hard Drive Serial Number",
-		"unencrypted": "Unencrypted",
-		"users": "FileVault Enabled users",
-		"users": "FileVault Enabled Users",
-		"widget": {
-			"title": "FileVault 2 Status"
-		}
-	},
 	"filter": {
 		"title": "Set filters"
 	},

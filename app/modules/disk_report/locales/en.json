@@ -16,5 +16,6 @@
     "type": "Storage Type",
     "used": "Used",
     "volume_type": "Volume Type",
-    "report": "Storage Report"
+    "report": "Storage Report",
+    "filevault_widget_title": "FileVault 2 Status"
 }

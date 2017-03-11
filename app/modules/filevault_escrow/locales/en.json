@@ -1,0 +1,14 @@
+{
+    "status_last_checkin": "Status as of ",
+    "enableddate": "Enable Date",
+    "encrypted": "Encrypted",
+    "filevault_users": "Enabled User(s)",
+    "recoverykey": "Personal Recovery Key",
+    "lvguuid": "Logical Volume Group UUID",
+    "lvuuid": "Logical Volume UUID",
+    "pvuuid": "Physical Volume UUID",
+    "hddserial": "Hard Drive Serial Number",
+    "unencrypted": "Unencrypted",
+    "users": "FileVault Enabled users",
+    "fv_escrow": "Filevault Escrow"
+}

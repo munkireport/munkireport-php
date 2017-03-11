@@ -100,7 +100,6 @@
       "ard": "ARD",
       "ds": "Services d'annuaires",
       "gsx": "GSX",
-      "fv_escrow": "Filevault",
       "inventory_items": "Objets dans l'inventaire",
       "location": "Localisation",
       "munki": "Logiciels gérés",
@@ -192,22 +191,6 @@
 	},
   "failed": "Echoué",
   "failing": "Défaillant !",
-  "filevault": {
-"status_last_checkin": "Statut à partir de ",
-		"enableddate": "Activer la date",
-		"encrypted": "Crypté",
-		"filevault_users": "Utilisateur(s) activé(s)",
-		"recoverykey": "Clé de récupération personnelle",
-		"lvguuid": "Groupe de volumes logiques UUID",
-		"lvuuid": "Volume logique UUID",
-		"pvuuid": "Volume physique UUID",
-		"hddserial": "N° série du disque dur",
-		"unencrypted": "Décrypté",
-"users": "Utilisateurs avec FileVault actif",
-    "widget": {
-      "title": "État Filevault 2"
-    }
-  },
   "filter": {
     "title": "Appliquer filtres"
   },
