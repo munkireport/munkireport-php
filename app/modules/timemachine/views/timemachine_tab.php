@@ -12,7 +12,7 @@ $(document).on('appReady', function(){
 			for (var prop in d){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
-                    if (d[prop] == ''){
+                    if (d[prop] == '' || d[prop] == '-9876540'){
 					   // Do nothing for empty values to blank them
                     } else if(prop.indexOf('bytes') > -1){
 					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+fileSize(d[prop], 2)+'</td></tr>';

@@ -207,12 +207,15 @@ class Timemachine_model extends Model
                 } else if (in_array($field, $nested) && isset($plist["Destinations"][0][$search])){
                     // If a nested element, extract from nested array
                     $this->$field = $plist["Destinations"][0][$search];
-                } else if (in_array($field, $bools) && $plist[$search] == true && isset($plist[$search])){
+                } else if (array_key_exists($search, $plist) && in_array($field, $bools) && $plist[$search] == true){
                     // If true boolean, set accordingly
                     $this->$field = '1';
-                } else if (in_array($field, $bools) && $plist[$search] == false && isset($plist[$search])){
+                } else if (array_key_exists($search, $plist) && in_array($field, $bools) && $plist[$search] == false){
                     // If false boolean, set accordingly
                     $this->$field = '0';
+                } else if ( ! array_key_exists($search, $plist) && in_array($field, $bools)){
+                    // If boolean and does not exist in plist, set to fake null
+                    $this->$field = '-9876540';
                 } else if (in_array($field, $ints) && $plist[$search] == "0"){
                     // Set the int to 0 if it's 0
                     $this->$field = $plist[$search];

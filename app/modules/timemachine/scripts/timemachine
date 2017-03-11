@@ -5,7 +5,11 @@ import subprocess
 import plistlib
 import os
 import sys
-import re
+
+def getOsVersion():
+"""Returns the minor OS version."""
+os_version_tuple = platform.mac_ver()[0].split('.')
+return int(os_version_tuple[1])
 
 def get_time_machine():
 
@@ -22,11 +26,15 @@ def get_time_machine():
     except Exception:
         return {}
     
-    # Get legacy informtion, only supported on 10.6-10.11
-    from subprocess import Popen, PIPE
-    stdout = Popen("/usr/bin/syslog -F '$((Time)(utc)) $Message' -k Sender com.apple.backupd -k Time ge -7d -k Message R '^(Backup|Starting).*'", shell=True, stdout=PIPE).stdout
-    output = stdout.read()
-    out['legacy_output'] = output
+    # If less than 10.12, run legacy log collector
+    if getOsVersion() < 12:
+        # Get legacy informtion, only supported on 10.6-10.11
+        from subprocess import Popen, PIPE
+        stdout = Popen("/usr/bin/syslog -F '$((Time)(utc)) $Message' -k Sender com.apple.backupd -k Time ge -7d -k Message R '^(Backup|Starting).*'", shell=True, stdout=PIPE).stdout
+        output = stdout.read()
+        out['legacy_output'] = output
+    else
+        out['legacy_output'] = "Mac OS X 10.12+ not supported with legacy Time Machine log output"
 
     # Get extra data from menu item. Thanks frogor!
     from Foundation import NSBundle
