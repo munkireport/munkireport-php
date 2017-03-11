@@ -95,7 +95,6 @@
     "comment": "Kommentar",
     "hour": "Clients pro Stunde",
     "tab": {
-      "apple_software": "Apple Software",
       "ard": "ARD",
       "ds": "Verzeichnisdienste",
       "inventory_items": "Inventar",
@@ -107,16 +106,10 @@
       "profiles": "Profile",
       "serverstats": "Server Statistik",
       "summary": "Zusammenfassung",
-      "third_party_software": "Drittanbieter-Software",
       "timemachine": "Time Machine",
       "wifi": "WiFi"
     },
-    "installed_apple_software": "Installierte Apple Software",
-    "installed_third_party_software": "Installierte Drittanbieter-Software",
-    "install_date": "Installationsdatum",
-    "no_install_history": "Keine Installationshistorie",
     "panel_title": "Clientaktivität im letzten Monat",
-    "process_name": "Prozessname",
     "total": "Gesamtanzahl Clients"
   },
   "chart": {
