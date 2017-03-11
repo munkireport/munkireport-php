@@ -9,6 +9,5 @@
     "pvuuid": "Volume physique UUID",
     "hddserial": "N° série du disque dur",
     "unencrypted": "Décrypté",
-    "users": "Utilisateurs avec FileVault actif",
     "fv_escrow": "Filevault Escrow"
 }

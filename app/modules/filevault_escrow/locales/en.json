@@ -9,6 +9,5 @@
     "pvuuid": "Physical Volume UUID",
     "hddserial": "Hard Drive Serial Number",
     "unencrypted": "Unencrypted",
-    "users": "FileVault Enabled users",
     "fv_escrow": "Filevault Escrow"
 }
