@@ -116,8 +116,7 @@
             "printers": "Printers",
             "profiles": "Profiles",
             "serverstats": "Server Statistics",
-            "summary": "Summary",
-            "wifi": "WiFi"
+            "summary": "Summary"
         },
         "total": "Total Clients"
     },
@@ -325,8 +324,7 @@
             "printers": "Printers",
             "profile": "Profiles",
             "sccm_status": "SCCM Status",
-            "security": "Security",
-            "wifi": "WiFi"
+            "security": "Security"
         },
         "main": {
             "admin": "Admin",
@@ -348,8 +346,7 @@
             "profile": "Profile Report",
             "sccm": "SCCM Agent Status Report",
             "security": "Security Report",
-            "server": "Server Report",
-            "wifi": "WiFi Report"
+            "server": "Server Report"
         },
         "user": {
             "logout": "Sign Off"
