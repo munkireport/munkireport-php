@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.13.0.2474';
+$GLOBALS['version'] = '2.13.0.2567';
 
 // Return version without commit count
 function get_version()
@@ -105,7 +105,10 @@ function __autoload($classname)
         require_once(APP_PATH.'modules/'.substr($classname, 0, -4).'/api'.EXT);
     } elseif (substr($classname, -6) == '_model') {
         $module = substr($classname, 0, -6);
-        require_once(APP_PATH."modules/${module}/${module}_model".EXT);
+        if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
+            throw new Exception("Cannot load model: ".$classname, 1);
+        }
+        require_once($model);
     } else {
         require_once(APP_PATH.'models/'.$classname.EXT);
     }
@@ -130,7 +133,7 @@ function getRemoteAddress()
     if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
         return $_SERVER["HTTP_X_FORWARDED_FOR"];
     }
-    
+
     return $_SERVER['REMOTE_ADDR'];
 }
 /**
@@ -372,4 +375,17 @@ function truncate_string($string, $limit = 100, $break = ".", $pad = "...")
     }
 
     return $string;
+}
+
+// Create a singleton moduleObj
+function getMrModuleObj()
+{
+    static $moduleObj;
+
+    if( ! $moduleObj){
+      include_once(APP_PATH . '/lib/munkireport/Modules.php');
+      $moduleObj = new munkireport\Modules;
+    }
+
+    return $moduleObj;
 }

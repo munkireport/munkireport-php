@@ -19,7 +19,8 @@ class datatables extends Controller
             'draw' => 0, // Identifier, just return
             'search' => '', // Search query
             'where' => '', // Optional where clause
-            'mrColNotEmpty' => '' // Munkireport non empty column name
+            'mrColNotEmpty' => '', // Munkireport non empty column name
+            'mrColNotEmptyBlank' => '' // Munkireport non empty column name
         );
         //echo '<pre>';print_r($_GET);return;
 

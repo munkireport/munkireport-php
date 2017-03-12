@@ -1,0 +1,21 @@
+{
+    "bus_protocol": "Protocole BUS",
+    "encrypted": "Chiffré",
+    "encryption_status": "État du chiffrement",
+    "external": "Externe",
+    "free": "Libre",
+    "internal": "Interne",
+    "mountpoint": "Point de montage",
+    "not_encrypted": "Non chiffré",
+    "percentage": "Pourcentage",
+    "size": "Taille du disque",
+    "smartstatus": "État SMART",
+    "smartstatus_failing": "Échec de l'état SMART",
+    "storage": "Stockage",
+    "total_size": "Taille",
+    "type": "Type de stockage",
+    "used": "Utilisé",
+    "volume_type": "Type de Volume",
+    "report": "Rapport Stockage",
+    "filevault_widget_title": "État Filevault 2"
+}

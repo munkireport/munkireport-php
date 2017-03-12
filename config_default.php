@@ -82,6 +82,16 @@
 
 	/*
 	|===============================================
+	| Hide Non-active Modules
+	|===============================================
+	|
+	| When true, modules that are not in conf['modules'] will not be shown
+	|	in the 'Listings' menu.
+	*/
+	$conf['hide_inactive_modules'] = FALSE;
+
+	/*
+	|===============================================
 	| Authentication
 	|===============================================
 	|
@@ -262,9 +272,9 @@
 	| time it is recommended that only one be enabled at a time to prevent
 	| the warranty module from overwriting the data provided by the GSX module.
 	|
-	| Use GSX article OP1474 and 
+	| Use GSX article OP1474 and
 	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
-	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the 
+	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the
 	| Readme.md located in the GSX module.
 	|
 	| To use the GSX module, set enable to TRUE and uncomment and
@@ -284,7 +294,7 @@
 	| DeployStudio
 	|===============================================
 	|
-	| A working DeployStudio server is required for use of this module. 
+	| A working DeployStudio server is required for use of this module.
 	|
 	| To use the DeployStudio module, set 'deploystudio_enable' to TRUE and
 	| enter the server, username, and password for accessing your primary
@@ -298,17 +308,29 @@
 	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443'; // no trailing slash
 	$conf['deploystudio_username'] = 'deploystudio_user';
 	$conf['deploystudio_password'] = 'deploystudio_password';
-	
+
 	/*
 	|===============================================
 	| USB Devices
 	|===============================================
 	|
-	| By default the USB module will list all USB devices. Setting usb_internal 
-	| to FALSE will skip all interal devices.
+	| By default the USB module will collect information on all USB devices.
+	| Setting usb_internal to FALSE will skip all internal devices.
 	|
 	*/
 	$conf['usb_internal'] = TRUE;
+
+	
+	/*
+	|===============================================
+	| Fonts
+	|===============================================
+	|
+	| By default the fonts module will collect information on all fonts.  
+	| Setting fonts_system to FALSE will skip all system fonts in /System/Library/Fonts.
+	|
+	*/
+	$conf['fonts_system'] = TRUE;
 
 	/*
 	|===============================================
@@ -327,7 +349,7 @@
 	|
 	*/
 	$conf['google_maps_api_key'] = '';
-	
+
 	/*
 	|===============================================
 	| Curl
@@ -336,7 +358,7 @@
 	| Define path to the curl binary and add options
 	| this is used by the installer script.
 	| Override to use custom path and add or remove options, some environments
-	| may need to add "--insecure" if the servercertificate is not to be 
+	| may need to add "--insecure" if the servercertificate is not to be
 	| checked.
 	|
 	*/
@@ -346,10 +368,10 @@
 		"--silent",
 		"--show-error");
 
-	
+
 	/*
 	|===============================================
-	| MunkiWebAdmin2 
+	| MunkiWebAdmin2
 	|===============================================
 	|
 	| MunkiWebAdmin2 (MWA2) is a web-based administration tool for Munki
@@ -460,7 +482,7 @@
 	|
 	*/
 	//$conf['proxy']['server'] = 'proxy.yoursite.org';
-	
+
 	/*
 	|===============================================
 	| SSL settings
@@ -489,8 +511,8 @@
 	|
 	*/
 	$conf['request_timeout'] = 5;
-	
-	
+
+
 	/*
 	|===============================================
 	| Email Settings
@@ -751,4 +773,3 @@
 	| FALSE in a production environment
 	*/
 	$conf['debug'] = FALSE;
-	
