@@ -126,8 +126,7 @@
         "arch": "CPU Architecture",
         "core": "core",
         "cpu": "CPU",
-        "type": "CPU Type",
-        "usage": "Processor Usage"
+        "type": "CPU Type"
     },
     "danger": "Error",
     "database": "Database",
@@ -254,11 +253,7 @@
         "manifest": "Manifest",
         "name": "Manifest Name"
     },
-    "memory": {
-        "memory": "Memory",
-        "pressure": "Memory Pressure",
-        "usage": "Memory Usage"
-    },
+    "memory": "Memory",
     "model": "Model",
     "mouse": "Mouse",
     "munki": {
@@ -355,16 +350,13 @@
     "network": {
         "ethernet": "Ethernet",
         "hostname": "Hostname",
-        "inbound_traffic": "Inbound Traffic",
         "ip_address": "IP Address",
         "mask": "Mask",
         "network": "Network",
-        "outbound_traffic": "Outbound Traffic",
         "prefix_length": "Prefix Length",
         "remote_ip": "Remote IP Address",
         "router": "Router",
-        "service": "Service",
-        "traffic": "Network Traffic"
+        "service": "Service"
     },
     "new_client": "New Client",
     "new_client_plural": "New Clients",
@@ -566,11 +558,6 @@
     "serial": "Serial Number",
     "servermetrics": {
         "tab": "Server Metrics"
-    },
-    "sharing": {
-        "afp_users": "AFP Users",
-        "connected_users": "Sharing – Connected Users",
-        "smb_users": "SMB Users"
     },
     "show": "Show",
     "size": "Size",

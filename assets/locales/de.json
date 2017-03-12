@@ -255,11 +255,7 @@
         "manifest": "Manifest",
         "name": "Manifest Name"
     },
-    "memory": {
-        "memory": "Speicher",
-        "pressure": "Speicherdruck",
-        "usage": "Speichernutzung"
-    },
+    "memory": "Speicher",
     "model": "Modell",
     "mouse": "Maus",
     "munki": {

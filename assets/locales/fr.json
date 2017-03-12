@@ -258,11 +258,7 @@
         "manifest": "Manifest",
         "name": "Nom du manifest"
     },
-    "memory": {
-        "memory": "Mémoire",
-        "pressure": "Pression sur la mémoire",
-        "usage": "Utilisation de la mémoire"
-    },
+    "memory": "Mémoire",
     "model": "Modèle",
     "mouse": " Souris",
     "munki": {
@@ -356,16 +352,13 @@
     "network": {
         "ethernet": "Ethernet",
         "hostname": "Nom d'hôte",
-        "inbound_traffic": "Trafic entrant",
         "ip_address": "Adresse IP",
         "mask": "Sous-Réseau",
         "network": "Réseau",
-        "outbound_traffic": "Trafic sortant",
         "prefix_length": "Longueur préfixe",
         "remote_ip": "Adresse IP distante",
         "router": "Routeur",
-        "service": "Service",
-        "traffic": "Trafic réseau"
+        "service": "Service"
     },
     "new_client": "Nouveau client",
     "new_client_plural": "Nouveaux clients",
@@ -469,11 +462,6 @@
     "serial": "Numéro de série",
     "servermetrics": {
         "tab": "Server Metrics"
-    },
-    "sharing": {
-        "afp_users": "Utilisateurs AFP",
-        "connected_users": "Partage - Utilisateurs connectés",
-        "smb_users": "Utilisateurs SMB"
     },
     "show": "Afficher",
     "size": "Taille",

@@ -12,7 +12,7 @@ new Reportdata_model;
   	<div class="col-lg-12">
 
 		  <h3><span data-i18n="nav.reports.hardware"></span> <span id="total-count" class='label label-primary'>…</span></h3>
-		  
+
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
@@ -21,7 +21,7 @@ new Reportdata_model;
 		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="machine.model" data-colname='machine.machine_model'></th>
 		        <th data-i18n="listing.hardware.description" data-colname='machine.machine_desc'></th>
-		        <th data-i18n="memory.memory" data-colname='machine.physical_memory'></th>
+		        <th data-i18n="memory" data-colname='machine.physical_memory'></th>
 		        <th data-i18n="machine.cores" data-colname='machine.number_processors'></th>
 		        <th data-i18n="machine.arch" data-colname='machine.cpu_arch'></th>
 		        <th data-i18n="machine.cpu_speed" data-colname='machine.current_processor_speed'></th>
@@ -46,10 +46,10 @@ new Reportdata_model;
 		oTable.ajax.reload();
 		return;
 
-	});	
+	});
 
 	$(document).on('appReady', function(e, lang) {
-        
+
         // Get column names from data attribute
 		var columnDefs = [],
             col = 0; // Column counter
@@ -63,7 +63,7 @@ new Reportdata_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    
+
                     // Look for 'between' statement todo: make generic
                     if(d.search.value.match(/^\d+GB memory \d+GB$/))
                     {
