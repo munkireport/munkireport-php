@@ -567,16 +567,6 @@
     "servermetrics": {
         "tab": "Server Metrics"
     },
-    "service": {
-        "listing": {
-            "title": "Services Report"
-        },
-        "name": "Service Name",
-        "status": "Service Status",
-        "tab": {
-            "title": "Services"
-        }
-    },
     "sharing": {
         "afp_users": "AFP Users",
         "connected_users": "Sharing – Connected Users",

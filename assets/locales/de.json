@@ -465,16 +465,6 @@
     "servermetrics": {
         "tab": "Server Statistik"
     },
-    "service": {
-        "listing": {
-            "title": "Dienste-Report"
-        },
-        "name": "Dienstname",
-        "status": "Dienststatus",
-        "tab": {
-            "title": "Dienste"
-        }
-    },
     "sharing": {
         "afp_users": "AFP Benutzer",
         "connected_users": "Filesharing – Verbundene Benutzer",

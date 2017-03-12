@@ -470,16 +470,6 @@
     "servermetrics": {
         "tab": "Server Metrics"
     },
-    "service": {
-        "listing": {
-            "title": "Rapport des services"
-        },
-        "name": "Nom du service",
-        "status": "État du service",
-        "tab": {
-            "title": "Services"
-        }
-    },
     "sharing": {
         "afp_users": "Utilisateurs AFP",
         "connected_users": "Partage - Utilisateurs connectés",
