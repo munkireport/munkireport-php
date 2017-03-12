@@ -318,7 +318,6 @@
             "power": "Alimentation",
             "printers": "Imprimantes",
             "profile": "Profils",
-            "sccm_status": "Etat SCCM",
             "warranty": "Garantie"
         },
         "main": {
@@ -339,7 +338,6 @@
             "power": "Alimentation",
             "printer": "Imprimantes",
             "profile": "Profils",
-            "sccm": "Etat agent SCCM",
             "server": "Serveur",
             "warranty": "Garantie"
         },
@@ -431,17 +429,6 @@
     "remote_control": "Contrôle à distance",
     "report": {
         "generate": "Générer un rapport"
-    },
-    "sccm_status": {
-        "agent_status": "Etat agent SCCM",
-        "cert_exp": "Expiration du certificat client SCCM",
-        "enrollment_name": "Nom d'inscription de l'utilisateur",
-        "enrollment_server": "Inscription serveur",
-        "enrollment_status": "Etat de l'inscription",
-        "last_checkin": "Dernier test SCCM",
-        "mgmt_point": "Point de gestion",
-        "title": "Etat agent SCCM",
-        "titleheader": "Information agent SCCM"
     },
     "serial": "Numéro de série",
     "servermetrics": {
