@@ -98,7 +98,6 @@
     "tab": {
       "ard": "ARD",
       "ds": "Services d'annuaires",
-      "location": "Localisation",
       "munki": "Logiciels gérés",
       "network": "Interfaces réseau",
       "power": "Alimentation",
@@ -253,22 +252,6 @@
       "state": "Etat WiFi"
     }
   },
-  "location": {
-    "address": "Adresse",
-    "altitude": "Altitude",
-    "coordinates": "Coordonnées",
-    "currentstatus": "Etat actuel",
-    "ls_enabled": "Services de localisation activés",
-    "lastrun": "Dernière mise à jour",
-    "lastlocationrun": "Dernière mise à jour de la localisation",
-    "latitude": "Latitude",
-    "latitudeaccuracy": "Précision Latitude",
-    "longitude": "Longitude",
-    "longitudeaccuracy": "Précision Longitude",
-	"never": "Jamais",
-    "report": "Rapport Localisation",
-    "stalelocation": "Localisation obsolète"
-  },
   "loading": "Chargement des données depuis le serveur",
   "machine": {
 		"arch": "Arch",
@@ -345,7 +328,6 @@
       "clients": "Clients",
       "findmymac": "Find My Mac",
       "hardware": "Matériel",
-      "location": "Localisation",
       "munki": "Munki",
       "mrinfo": "MunkiReport",
       "network": "Réseau",
@@ -372,7 +354,6 @@
       "configuration": "Configuration",
       "findmymac": "FindMyMac",
       "hardware": "Matériel",
-      "location": "Localisation",
       "munki": "Munki",
       "network": "Réseau",
       "peripheral": "Périphériques",
