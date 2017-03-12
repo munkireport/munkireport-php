@@ -329,7 +329,6 @@
 			"sccm_status": "SCCM Status",
 			"security": "Security",
 			"softwareupdate": "Software Update",
-			"tag": "Tag",
 			"timemachine": "Time Machine",
 			"wifi": "WiFi"
 		},
@@ -628,16 +627,6 @@
 	},
 	"systemstatus": {
 		"menu_link": "Show System Status"
-	},
-	"tag": {
-		"listing": {
-			"title": "Tag Report"
-		},
-		"name": "Tag Name",
-		"widget_title": "Tags"
-	},
-	"tags": {
-		"add_tag": "Add Tag"
 	},
 	"timemachine": {
 		"timemachine": "Time Machine"

@@ -523,16 +523,6 @@
   "systemstatus": {
     "menu_link": "Systemstatus zeigen"
   },
-  "tag": {
-    "listing": {
-      "title": "Tag report"
-    },
-    "name": "Tag Name",
-    "widget_title": "Tags"
-  },
-  "tags": {
-    "add_tag": "Tag hinzufügen"
-  },
   "timemachine": {
     "timemachine": "Time Machine"
   },
