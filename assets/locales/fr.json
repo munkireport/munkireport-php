@@ -228,13 +228,6 @@
         "model": "Modéle",
         "rom_version": "Version ROM"
     },
-    "managedinstalls": {
-        "failing_clients": "Clients avec erreurs d'installation",
-        "installratio_report": "Rapport du ratio d'installation",
-        "no_managedinstalls": "Pas d'installation managée",
-        "report": "Rapport installations managées",
-        "title": "Installation managées"
-    },
     "manifest": {
         "manifest": "Manifest",
         "name": "Nom du manifest"
@@ -409,7 +402,6 @@
             "title": "Répartition par mémoire"
         },
         "munki": {
-            "no_updates_pending": "Pas de mise à jour en attente",
             "title": "Munki"
         },
         "munki_versions": {
@@ -432,17 +424,6 @@
         },
         "os": {
             "title": "Répartition par OS"
-        },
-        "pending": {
-            "title": "Clients avec installation en attente"
-        },
-        "pending_apple": {
-            "title": "Mises à jour Apple en attente",
-            "tooltip": "Mises à jour Apple en attente pour cette semaine"
-        },
-        "pending_munki": {
-            "title": "Installations en attente",
-            "tooltip": "Installation en attente pour cette semaine"
         },
         "registered": {
             "title": "Enregistrement du client au fil du temps"
