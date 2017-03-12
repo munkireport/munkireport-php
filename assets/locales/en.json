@@ -246,14 +246,6 @@
         "warning": "Munki warning: __warning__",
         "warning_plural": "__count__ Munki warnings"
     },
-    "munkiinfo": {
-        "applecatalog": "Apple Catalog URL",
-        "duration": "Duration",
-        "localonlymanifest": "Local Only Manifest",
-        "manifest": "Manifest",
-        "softwarerepourl": "Software Repo URL",
-        "start": "Start"
-    },
     "mwa": {
         "mwa_link": "Open in Munki Web Admin"
     },
@@ -407,15 +399,6 @@
         "munki_versions": {
             "title": "Munki Versions",
             "tooltip": "Munki versions among all clients"
-        },
-        "munkiinfo": {
-            "munkiprotocol": {
-                "http": "http",
-                "https": "https",
-                "localrepo": "Local Repo",
-                "title": "Munki Protocol",
-                "tooltip": "Munki protocol among all clients"
-            }
         },
         "new_clients": {
             "no_new_clients": "No new clients",

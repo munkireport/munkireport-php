@@ -249,14 +249,6 @@
         "warning": "Alerte de Munki : __warning__",
         "warning_plural": "__count__ Alertes de Munki"
     },
-    "munkiinfo": {
-        "applecatalog": "URL catalogue Apple",
-        "duration": "Durée",
-        "localonlymanifest": "Manifest uniquement local",
-        "manifest": "Manifest",
-        "softwarerepourl": "URL répertoire logiciels",
-        "start": "Démarrage"
-    },
     "mwa": {
         "mwa_link": "Ouvrir dans Munki Web Admin"
     },
@@ -407,15 +399,6 @@
         "munki_versions": {
             "title": "Versions Munki",
             "tooltip": "Versions Munki entre tous les clients"
-        },
-        "munkiinfo": {
-            "munkiprotocol": {
-                "http": "http",
-                "https": "https",
-                "localrepo": "repo local",
-                "title": "Protocole Munki",
-                "tooltip": "Protocole Munki entre tous les clients"
-            }
         },
         "new_clients": {
             "no_new_clients": "Pas de nouveau client",

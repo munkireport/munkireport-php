@@ -246,14 +246,6 @@
         "warning": "Munki-Warnung: __warning__",
         "warning_plural": "__count__ Munki-Warnungen"
     },
-    "munkiinfo": {
-        "applecatalog": "Apple Catalog URL",
-        "duration": "Dauer",
-        "localonlymanifest": "Local Only Manifest",
-        "manifest": "Manifest",
-        "softwarerepourl": "Software Repo URL",
-        "start": "Start"
-    },
     "mwa": {
         "mwa_link": "In Munki Web Admin öffnen"
     },
