@@ -331,7 +331,6 @@
 			"softwareupdate": "Software Update",
 			"tag": "Tag",
 			"timemachine": "Time Machine",
-			"usb": "USB Devices",
 			"wifi": "WiFi"
 		},
 		"main": {
@@ -349,7 +348,6 @@
 			"location": "Location Report",
 			"munki": "Munki Report",
 			"network": "Network Report",
-			"peripheral": "Peripheral Report",
 			"power": "Power Report",
 			"printer": "Printer Report",
 			"profile": "Profile Report",
@@ -652,25 +650,6 @@
 	"unencrypted": "Unencrypted",
 	"unknown": "Unknown",
 	"unsupported": "Not Supported",
-	"usb": {
-		"bus_power": "Available mAh",
-		"bus_power_used": "Used mAh",
-		"camera": "Camera",
-		"clienttab": "USB Devices",
-		"device_speed": "USB Protocol",
-		"extra_current_used": "Extra mAh",
-		"internal": "Internal",
-		"manufacturer": "Manufacturer",
-		"media": "Removable Media",
-		"name": "Device Name",
-		"nousb": "No USB Devices Detected",
-		"reporttitle": "USB Devices Report",
-		"usb_serial_number": "Device Serial Number",
-		"title": "Keyboard and Mouse",
-		"type": "Device Type",
-		"usbtype": "USB Device Types",
-		"vendor_id": "Vendor ID"
-	},
 	"uptime": "Uptime",
 	"user": {
 		"user": "User",

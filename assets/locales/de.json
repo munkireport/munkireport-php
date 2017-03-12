@@ -325,8 +325,7 @@
       "sccm_status": "SCCM Status",
       "security": "Sicherheit",
       "softwareupdate": "Software Update",
-      "timemachine": "Time Machine",
-      "usb": "USB Devices"
+      "timemachine": "Time Machine"
     },
     "main": {
       "dashboard": "Dashboard",
@@ -545,24 +544,6 @@
   "unencrypted": "Unverschlüsselt",
   "unknown": "Unbekannt",
   "unsupported": "Nicht unterstützt",
-  "usb": {
-    "bus_power": "mAh verfügbar",
-    "bus_power_used": "mAh benutzt",
-    "camera": "Kamera",
-    "clienttab": "USB Devices",
-    "device_speed": "USB Protokoll",
-    "extra_current_used": "Extra mAh",
-    "internal": "Intern",
-    "manufacturer": "Hersteller",
-    "media": "Removable Media",
-    "name": "Device-Name",
-    "nousb": "Keine USB-Devices erkannt",
-    "reporttitle": "USB Devices-Report",
-    "title": "Tastatur und Maus",
-    "type": "Device-Typ",
-    "usbtype": "USB-Device-Typen",
-    "vendor_id": "Vendor ID"
-  },
   "uptime": "Uptime",
   "user": {
     "user": "Benutzer",
