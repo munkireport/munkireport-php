@@ -113,7 +113,6 @@
             "munki": "Verwaltete Software",
             "network": "Netzwerk Schnittstellen",
             "power": "Strom",
-            "printers": "Drucker",
             "serverstats": "Server Statistik",
             "summary": "Zusammenfassung"
         },
@@ -307,8 +306,7 @@
             "mrinfo": "MunkiReport",
             "munki": "Munki",
             "network": "Netzwerk",
-            "power": "Strom",
-            "printers": "Printers"
+            "power": "Strom"
         },
         "main": {
             "admin": "Admin",
@@ -326,7 +324,6 @@
             "network": "Netzwerk-Report",
             "peripheral": "Peripheriegeräte-Report",
             "power": "Stromversorgungs-Report",
-            "printer": "Drucker-Report",
             "server": "Server-Report"
         },
         "user": {
@@ -400,20 +397,6 @@
         "max_capacity": "Volle Ladung (mAh)",
         "max_percent": "Gesundheit %",
         "temperature": "Termperatur"
-    },
-    "printer": {
-        "default_set": "Standarddrucker",
-        "driver_version": "Treiberversion",
-        "error": "Fehler",
-        "idle": "Idle",
-        "in_use": "in Benutzung",
-        "name": "Druckername",
-        "offline": "Offline",
-        "ppd": "PPD",
-        "printer_sharing": "Printer Sharing",
-        "printer_status": "Druckerstatus",
-        "tab_title": "Installierte Drucker",
-        "url": "URL"
     },
     "ratio": "Verhältnis",
     "reg_date": "Registrierungsdatum",
