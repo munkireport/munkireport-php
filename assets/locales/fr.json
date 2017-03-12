@@ -319,7 +319,6 @@
             "printers": "Imprimantes",
             "profile": "Profils",
             "sccm_status": "Etat SCCM",
-            "security": "Sécurité",
             "warranty": "Garantie"
         },
         "main": {
@@ -341,7 +340,6 @@
             "printer": "Imprimantes",
             "profile": "Profils",
             "sccm": "Etat agent SCCM",
-            "security": "Securité",
             "server": "Serveur",
             "warranty": "Garantie"
         },
@@ -444,20 +442,6 @@
         "mgmt_point": "Point de gestion",
         "title": "Etat agent SCCM",
         "titleheader": "Information agent SCCM"
-    },
-    "security": {
-        "ard_users": "Utilisateurs ARD",
-        "firmwarepw": "Mot de passe firmware",
-        "gatekeeper": "Etat Gatekeeper",
-        "gatekeeper_active": "Gatekeeper sctif",
-        "gatekeeper_disabled": "Gatekeeper désactivé",
-        "report": "Rapport Sécurité",
-        "security": "Sécurité",
-        "sip": "Etat SIP",
-        "sip_active": "SIP actif",
-        "sip_disabled": "SIP désactivé",
-        "sip_status": "Etat SIP",
-        "ssh_users": "Utilisateurs SSH"
     },
     "serial": "Numéro de série",
     "servermetrics": {

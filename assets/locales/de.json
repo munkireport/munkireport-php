@@ -315,8 +315,7 @@
             "power": "Strom",
             "printers": "Printers",
             "profile": "Profile",
-            "sccm_status": "SCCM Status",
-            "security": "Sicherheit"
+            "sccm_status": "SCCM Status"
         },
         "main": {
             "admin": "Admin",
@@ -337,7 +336,6 @@
             "printer": "Drucker-Report",
             "profile": "Profile-Report",
             "sccm": "SCCM-Agent-Status-Report",
-            "security": "Sicherheits-Report",
             "server": "Server-Report"
         },
         "user": {
@@ -442,20 +440,6 @@
         "mgmt_point": "Management Point",
         "title": "SCCM Agent Status",
         "titleheader": "SCCM Agent Information"
-    },
-    "security": {
-        "ard_users": "ARD-Benutzer",
-        "firmwarepw": "Firmware-Passwort",
-        "gatekeeper": "Gatekeeper-Status",
-        "gatekeeper_active": "Gatekeeper aktiv",
-        "gatekeeper_disabled": "Gatekeeper deaktiviert",
-        "report": "Sicherheits-Report",
-        "security": "Security",
-        "sip": "SIP-Status",
-        "sip_active": "SIP aktiv",
-        "sip_disabled": "SIP deaktiviert",
-        "sip_status": "SIP-Status",
-        "ssh_users": "SSH-Benutzer"
     },
     "serial": "Seriennummer",
     "servermetrics": {

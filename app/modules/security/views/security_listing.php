@@ -14,7 +14,7 @@ new Security_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.security"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="security.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -25,7 +25,7 @@ new Security_model;
 		        <th data-i18n="user.local_admins" data-colname='localadmin.users'></th>
 		        <th data-i18n="filevault_status.users" data-colname='filevault_status.filevault_users'></th>
 		        <th data-i18n="type"data-colname='machine.machine_name'></th>
-		        <th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+		        <th data-i18n="disk_report.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
 		        <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
