@@ -13,7 +13,7 @@ new Timemachine_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="listing.timemachine.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="timemachine.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -54,7 +54,7 @@ new Timemachine_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -109,7 +109,7 @@ new Timemachine_model;
 	        	if(date){
 		        	$('td:eq(5)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date + 'Z').fromNow()+'</span>');
 	        	}
-	        	
+
 	        	// Format Check-In timestamp
 	        	var checkin = parseInt($('td:eq(7)', nRow).html());
 	        	var date = new Date(checkin * 1000);
@@ -121,9 +121,8 @@ new Timemachine_model;
 	    {
 			oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
 	    }
-	    
+
 	} );
 </script>
 
 <?php $this->view('partials/foot')?>
-

@@ -67,11 +67,16 @@
         "destination": "Backupziel",
         "destinations": "Backupziele",
         "duration": "Dauer des Backups",
+        "four_weeks_less": "Letztes Backup vor 4 Wochen",
+        "four_weeks_plus": "Letztes Backup vor mehr als 4 Wochen",
         "kind": "Backup-Art",
         "last_failure": "Letztes Fehlgeschlagenes Backup",
         "last_failure_msg": "Fehlermeldung",
         "last_success": "Letztes Erfolgreiches Backup",
-        "location_name": "Name des Backup-Orts"
+        "location_name": "Name des Backup-Orts",
+        "ok": "Letztes Backup vor 2 Wochen",
+        "today": "Backup heute",
+        "week_plus": "Letztes Backup vor mehr als einer Woche"
     },
     "battery": {
         "life_remaining": "__percent__% verbleibende Batterielaufzeit"
@@ -111,8 +116,7 @@
             "printers": "Drucker",
             "profiles": "Profile",
             "serverstats": "Server Statistik",
-            "summary": "Zusammenfassung",
-            "timemachine": "Time Machine"
+            "summary": "Zusammenfassung"
         },
         "total": "Gesamtanzahl Clients"
     },
@@ -227,13 +231,6 @@
             "payload": "Payloads",
             "profilename": "Profilename"
         },
-        "timemachine": {
-            "duration": "Backupdauer",
-            "last_failure": "Letztes fehlgeschlagenes Backup",
-            "last_failure_msg": "Fehlermeldung",
-            "last_success": "Letztes erfolgreiches Backup",
-            "title": "Timemachine-Report"
-        },
         "username": "Benutzername"
     },
     "loading": "Lade Daten vom Server",
@@ -324,8 +321,7 @@
             "profile": "Profile",
             "sccm_status": "SCCM Status",
             "security": "Sicherheit",
-            "softwareupdate": "Software Update",
-            "timemachine": "Time Machine"
+            "softwareupdate": "Software Update"
         },
         "main": {
             "admin": "Admin",
@@ -523,9 +519,6 @@
     "systemstatus": {
         "menu_link": "Systemstatus zeigen"
     },
-    "timemachine": {
-        "timemachine": "Time Machine"
-    },
     "total_clients": "Gesamte Anzahl Clients",
     "trackpad": "Trackpad",
     "type": "Typ",
@@ -614,15 +607,6 @@
         },
         "registered": {
             "title": "Zeitachse der Clientregistrierung"
-        },
-        "timemachine": {
-            "b2g_danger": "Letztes Backup vor mehr als 4 Wochen",
-            "b2g_ok": "Letztes Backup vor 2 Wochen",
-            "b2g_warning": "Letztes Backup vor 4 Wochen",
-            "lastweek": "Letztes Backup vor mehr als einem Tag",
-            "title": "Time Machine Status",
-            "today": "Backup heute",
-            "week_plus": "Letztes Backup vor mehr als einer Woche"
         },
         "unknown": {
             "alert": "Dieses Widget konnte nicht gefunden werden",

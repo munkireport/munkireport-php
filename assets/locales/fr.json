@@ -67,11 +67,17 @@
         "destination": "Destination de sauvegarde",
         "destinations": "Destinations des sauvegardes",
         "duration": "Durée de sauvegarde",
+        "four_weeks_less": "Dernière sauvegarde de 4 semaines",
+        "four_weeks_plus": "Dernière sauvegarde de plus de 4 semaines",
         "kind": "Type de sauvegarde",
         "last_failure": "Dernière sauvegarde échouée",
         "last_failure_msg": "Message",
         "last_success": "Dernière sauvegarde réussie",
-        "location_name": "Nom de l'emplacement"
+        "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
+        "location_name": "Nom de l'emplacement",
+        "ok": "Dernière sauvegarde de 2 semaines",
+        "today": "Sauvegardé aujourd'hui",
+        "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
     },
     "battery": {
         "life_remaining": "Durée restante de la batterie __percent__%"
@@ -111,8 +117,7 @@
             "printers": "Imprimantes",
             "profiles": "Profils",
             "serverstats": "Statistiques du serveur",
-            "summary": "Résumé",
-            "timemachine": "Time Machine"
+            "summary": "Résumé"
         },
         "total": "Nombre de clients"
     },
@@ -230,13 +235,6 @@
             "payload": "Payloads",
             "profilename": "Nom du profil"
         },
-        "timemachine": {
-            "duration": "Durée de sauvegarde",
-            "last_failure": "Dernière sauvegarde échouée",
-            "last_failure_msg": "Message",
-            "last_success": "Dernière sauvegarde réussie",
-            "title": "Rapport Time Machine"
-        },
         "username": "Nom utilisateur"
     },
     "loading": "Chargement des données depuis le serveur",
@@ -327,7 +325,6 @@
             "sccm_status": "Etat SCCM",
             "security": "Sécurité",
             "softwareupdate": "Mise à jour logiciels",
-            "timemachine": "Time Machine",
             "warranty": "Garantie"
         },
         "main": {
@@ -527,9 +524,6 @@
     "systemstatus": {
         "menu_link": "Voir l'état du système"
     },
-    "timemachine": {
-        "timemachine": "Time Machine"
-    },
     "total_clients": "Nombre Clients",
     "trackpad": "Trackpad",
     "type": "Type",
@@ -618,15 +612,6 @@
         },
         "registered": {
             "title": "Enregistrement du client au fil du temps"
-        },
-        "timemachine": {
-            "b2g_danger": "Dernière sauvegarde de plus de 4 semaines",
-            "b2g_ok": "Dernière sauvegarde de 2 semaines",
-            "b2g_warning": "Dernière sauvegarde de 4 semaines",
-            "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
-            "title": "État Time Machine",
-            "today": "Sauvegardé aujourd'hui",
-            "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
         },
         "unknown": {
             "alert": "Ce widget ne peut être trouvé",

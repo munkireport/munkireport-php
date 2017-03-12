@@ -7,15 +7,15 @@
         <div class="list-group scroll-box">
             <a id="b2g-b2g_ok" href="<?=url('/show/listing/backup2go/backup2go')?>" class="list-group-item list-group-item-success hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.b2g_ok"></span>
+                <span data-i18n="backup.ok"></span>
             </a>
             <a id="b2g-b2g_warning" href="<?=url('/show/listing/backup2go/backup2go')?>" class="list-group-item list-group-item-warning hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.b2g_warning"></span>
+                <span data-i18n="backup.four_weeks_less"></span>
             </a>
             <a id="b2g-b2g_danger" href="<?=url('/show/listing/backup2go/backup2go')?>" class="list-group-item list-group-item-danger hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.b2g_danger"></span>
+                <span data-i18n="backup.four_weeks_plus"></span>
             </a>
             <span id="b2g-nodata" data-i18n="no_clients" class="list-group-item"></span>
         </div>

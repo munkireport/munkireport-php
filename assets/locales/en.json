@@ -67,11 +67,17 @@
         "destination": "Backup Destination",
         "destinations": "Backup Destinations",
         "duration": "Backup Duration",
+        "four_weeks_less": "Latest backup within 4 weeks",
+        "four_weeks_plus": "Latest backup older then 4 weeks",
         "kind": "Backup Kind",
         "last_failure": "Last Failed Backup",
         "last_failure_msg": "Message",
         "last_success": "Last Successful Backup",
-        "location_name": "Location Name"
+        "lastweek": "Latest backup more than a day ago",
+        "location_name": "Location Name",
+        "ok": "Latest backup within 2 weeks",
+        "today": "Backed up today",
+        "week_plus": "Latest backup more than a week ago"
     },
     "battery": {
         "life_remaining": "__percent__% battery life remaining"
@@ -111,7 +117,6 @@
             "profiles": "Profiles",
             "serverstats": "Server Statistics",
             "summary": "Summary",
-            "timemachine": "Time Machine",
             "wifi": "WiFi"
         },
         "total": "Total Clients"
@@ -226,13 +231,6 @@
             "payload": "Payloads",
             "profilename": "Profile Name"
         },
-        "timemachine": {
-            "duration": "Backup Duration",
-            "last_failure": "Last Failed Backup",
-            "last_failure_msg": "Message",
-            "last_success": "Last Successful Backup",
-            "title": "Time Machine Report"
-        },
         "username": "Username"
     },
     "loading": "Loading data from server",
@@ -329,7 +327,6 @@
             "sccm_status": "SCCM Status",
             "security": "Security",
             "softwareupdate": "Software Update",
-            "timemachine": "Time Machine",
             "wifi": "WiFi"
         },
         "main": {
@@ -627,9 +624,6 @@
     "systemstatus": {
         "menu_link": "Show System Status"
     },
-    "timemachine": {
-        "timemachine": "Time Machine"
-    },
     "total_clients": "Total Clients",
     "trackpad": "Trackpad",
     "type": "Type",
@@ -719,15 +713,6 @@
         },
         "registered": {
             "title": "Client Registration Over Time"
-        },
-        "timemachine": {
-            "b2g_danger": "Latest backup older then 4 weeks",
-            "b2g_ok": "Latest backup within 2 weeks",
-            "b2g_warning": "Latest backup within 4 weeks",
-            "lastweek": "Latest backup more than a day ago",
-            "title": "Timemachine Status",
-            "today": "Backed up today",
-            "week_plus": "Latest backup more than a week ago"
         },
         "unknown": {
             "alert": "This widget cannot be found",
