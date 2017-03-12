@@ -3,14 +3,13 @@
     "hostname": "Hostname",
     "ip_address": "IP Adresse",
     "mask": "Netzmaske",
-    "network": "Netzwerk",
+    "network": "Network",
     "prefix_length": "Präfix Länge",
     "remote_ip": "Remote IP Adresse",
+    "report": "Netzwerk-Report",
     "router": "Router",
     "service": "Service",
     "tab": "Netzwerk Schnittstellen",
-    "network": "Network",
-    "report": "Netzwerk-Report",
     "widget": {
         "network_location": "Netzwerkumgebungen",
         "network_vlan": "Netzwerk-VLANs"

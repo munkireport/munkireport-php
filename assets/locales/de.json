@@ -261,14 +261,6 @@
         "softwarerepourl": "Software Repo URL",
         "start": "Start"
     },
-    "munkireportinfo": {
-        "baseurl": "MunkiReport URL",
-        "clienttabtitle": "MunkiReport",
-        "passphrase": "Passphrase",
-        "reportitems": "Installierte Module",
-        "reporttitle": "MunkiReport-Report",
-        "version": "Version"
-    },
     "mwa": {
         "mwa_link": "In Munki Web Admin öffnen"
     },

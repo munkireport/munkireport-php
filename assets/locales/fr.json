@@ -264,14 +264,6 @@
         "softwarerepourl": "URL répertoire logiciels",
         "start": "Démarrage"
     },
-    "munkireportinfo": {
-        "baseurl": "URL MunkiReport",
-        "clienttabtitle": "MunkiReport",
-        "passphrase": "Passphrase",
-        "reportitems": "Modules installés",
-        "reporttitle": "Rapport MunkiReport",
-        "version": "Version"
-    },
     "mwa": {
         "mwa_link": "Ouvrir dans Munki Web Admin"
     },
