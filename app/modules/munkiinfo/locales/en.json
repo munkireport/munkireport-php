@@ -1,0 +1,15 @@
+{
+    "applecatalog": "Apple Catalog URL",
+    "duration": "Duration",
+    "localonlymanifest": "Local Only Manifest",
+    "manifest": "Manifest",
+    "munkiprotocol": {
+        "http": "http",
+        "https": "https",
+        "localrepo": "Local Repo",
+        "title": "Munki Protocol",
+        "tooltip": "Munki protocol among all clients"
+    },
+    "softwarerepourl": "Software Repo URL",
+    "start": "Start"
+}
