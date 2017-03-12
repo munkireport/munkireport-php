@@ -114,7 +114,6 @@
             "network": "Netzwerk Schnittstellen",
             "power": "Strom",
             "printers": "Drucker",
-            "profiles": "Profile",
             "serverstats": "Server Statistik",
             "summary": "Zusammenfassung"
         },
@@ -227,10 +226,6 @@
             "health": "Gesundheit %",
             "manufactured": "Hergestellt"
         },
-        "profile": {
-            "payload": "Payloads",
-            "profilename": "Profilename"
-        },
         "username": "Benutzername"
     },
     "loading": "Lade Daten vom Server",
@@ -313,8 +308,7 @@
             "munki": "Munki",
             "network": "Netzwerk",
             "power": "Strom",
-            "printers": "Printers",
-            "profile": "Profile"
+            "printers": "Printers"
         },
         "main": {
             "admin": "Admin",
@@ -333,7 +327,6 @@
             "peripheral": "Peripheriegeräte-Report",
             "power": "Stromversorgungs-Report",
             "printer": "Drucker-Report",
-            "profile": "Profile-Report",
             "server": "Server-Report"
         },
         "user": {

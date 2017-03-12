@@ -115,7 +115,6 @@
             "network": "Interfaces réseau",
             "power": "Alimentation",
             "printers": "Imprimantes",
-            "profiles": "Profils",
             "serverstats": "Statistiques du serveur",
             "summary": "Résumé"
         },
@@ -231,10 +230,6 @@
             "health": "Santé %",
             "manufactured": "Fabriquée"
         },
-        "profile": {
-            "payload": "Payloads",
-            "profilename": "Nom du profil"
-        },
         "username": "Nom utilisateur"
     },
     "loading": "Chargement des données depuis le serveur",
@@ -317,7 +312,6 @@
             "network": "Réseau",
             "power": "Alimentation",
             "printers": "Imprimantes",
-            "profile": "Profils",
             "warranty": "Garantie"
         },
         "main": {
@@ -337,7 +331,6 @@
             "peripheral": "Périphériques",
             "power": "Alimentation",
             "printer": "Imprimantes",
-            "profile": "Profils",
             "server": "Serveur",
             "warranty": "Garantie"
         },

@@ -11,14 +11,14 @@
 
 	<div class="col-lg-12">
 
-	<h3><span data-i18n="nav.reports.profile"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+	<h3><span data-i18n="profile.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 
 		<thead>
 		  <tr>
-			<th data-i18n="listing.profile.profilename" data-colname='machine#computer_name' class="col-md-4"></th>
-			<th data-i18n="listing.profile.payload" data-colname='profile#payload_name' class="col-md-8"></th>
+			<th data-i18n="profile.profilename" data-colname='machine#computer_name' class="col-md-4"></th>
+			<th data-i18n="profile.payload" data-colname='profile#payload_name' class="col-md-8"></th>
 			<!--<th data-colname='profile#profile_UUID'>UUID</th>
 			<th data-colname='profile#profile_name'>Profile Name</th>
 			<th data-colname='profile#payload_name'>Payload Name</th>
@@ -47,10 +47,10 @@
 		$profilecount[$name] = $profiles;
 	}
 	?>
-	
+
 	<?php foreach($profile as $name => $value): ?>
 	<?php $name_url=url('module/profile/items/'. rawurlencode($name)); ?>
-	
+
 	<tr>
 	  <td>
 		<a href='<?php echo $name_url; ?>'><?php echo $name; ?></a>
@@ -104,7 +104,7 @@
 			 }, 300);
 		});
 	});
-	
+
 </script>
 
 <?php $this->view('partials/foot'); ?>

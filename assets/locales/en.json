@@ -225,10 +225,6 @@
             "health": "Health %",
             "manufactured": "Manufactured"
         },
-        "profile": {
-            "payload": "Payloads",
-            "profilename": "Profile Name"
-        },
         "username": "Username"
     },
     "loading": "Loading data from server",
@@ -316,8 +312,7 @@
             "munkiprotocol": "Munki info",
             "network": "Network",
             "power": "Power",
-            "printers": "Printers",
-            "profile": "Profiles"
+            "printers": "Printers"
         },
         "main": {
             "admin": "Admin",
@@ -336,7 +331,6 @@
             "network": "Network Report",
             "power": "Power Report",
             "printer": "Printer Report",
-            "profile": "Profile Report",
             "server": "Server Report"
         },
         "user": {
