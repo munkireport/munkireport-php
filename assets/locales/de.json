@@ -171,7 +171,8 @@
   "events": {
     "widget_title": "Ereignisse der letzten Stunde"
   },
-  "external": {
+  "external": "Extern",
+  "mwa": {
     "mwa_link": "In Munki Web Admin öffnen"
   },
   "failed": "Fehlgeschlagen",
@@ -188,6 +189,7 @@
   "inactive": "Inaktiv",
   "info": "Information",
   "installed": "Installiert",
+  "internal": "Intern",
   "keyboard": "Tastatur",
   "last_seen": "Zuletzt gesehen",
   "last_user": "Letzter User",

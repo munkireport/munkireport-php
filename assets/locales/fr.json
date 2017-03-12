@@ -175,9 +175,10 @@
   "events": {
     "widget_title": "Événements dans la dernière heure"
   },
-"external": {
-		"mwa_link": "Ouvrir dans Munki Web Admin"
-	},
+  "external": "External",
+    "mwa": {
+        "mwa_link": "Ouvrir dans Munki Web Admin"
+    },
   "failed": "Echoué",
   "failing": "Défaillant !",
   "filter": {
@@ -192,6 +193,7 @@
   "inactive": "Inactif",
   "info": "Information",
   "installed": "Installé",
+  "internal": "Interne",
 "keyboard": "Clavier",
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
