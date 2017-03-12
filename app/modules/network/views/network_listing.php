@@ -1,6 +1,6 @@
 <?php $this->view('partials/head'); ?>
 
-<?php 
+<?php
 //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
@@ -13,7 +13,7 @@ new Network_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.network"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="network.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -48,14 +48,14 @@ new Network_model;
 		return;
 
 	});
-	
+
 	$(document).on('appReady', function(e, lang) {
 
         // Get modifiers from data attribute
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -92,7 +92,7 @@ new Network_model;
 
 	        	// Status
 	        	var status=$('td:eq(4)', nRow).html();
-	        	status = status == 1 ? '<span class="label label-success">'+i18n.t('enabled')+'</span>' : 
+	        	status = status == 1 ? '<span class="label label-success">'+i18n.t('enabled')+'</span>' :
 	        	(status === '0' ? '<span class="label label-danger">'+i18n.t('disabled')+'</span>' : '')
 	        	$('td:eq(4)', nRow).html(status)
 		    }

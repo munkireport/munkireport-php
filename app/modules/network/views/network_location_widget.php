@@ -4,12 +4,12 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-globe"></i> <span data-i18n="widget.network_location.title"></span></h3>
-				
+					<h3 class="panel-title"><i class="fa fa-globe"></i> <span data-i18n="network.widget.network_location"></span></h3>
+
 				</div>
 
 				<div id="ip-panel" class="panel-body text-center">
-					
+
 					<svg id="network-plot" style="width:100%; height: 300px"></svg>
 
 				</div>
@@ -56,7 +56,7 @@
 					    .transition().duration(1200)
 					    .style('height', height)
 					    .call(chart);
-					
+
 					// Adjust title (count) depending on active slices
 					chart.dispatch.on('stateChange.legend', function (newState) {
 						var disabled = newState.disabled;
@@ -64,7 +64,7 @@
 							return d.cnt * !disabled[i];
 						}));
 			        });
-											
+
 					return chart;
 
 			    });

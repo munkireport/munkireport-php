@@ -111,7 +111,6 @@
             "ard": "ARD",
             "ds": "Verzeichnisdienste",
             "munki": "Verwaltete Software",
-            "network": "Netzwerk Schnittstellen",
             "serverstats": "Server Statistik",
             "summary": "Zusammenfassung"
         },
@@ -292,8 +291,7 @@
             "findmymac": "Meinen Mac suchen",
             "hardware": "Hardware",
             "mrinfo": "MunkiReport",
-            "munki": "Munki",
-            "network": "Netzwerk"
+            "munki": "Munki"
         },
         "main": {
             "admin": "Admin",
@@ -308,27 +306,12 @@
             "findmymac": "Meinen Mac suchen-Report",
             "hardware": "Hardware-Report",
             "munki": "Munki-Report",
-            "network": "Netzwerk-Report",
             "peripheral": "Peripheriegeräte-Report",
             "server": "Server-Report"
         },
         "user": {
             "logout": "Abmelden"
         }
-    },
-    "network": {
-        "ethernet": "Ethernet",
-        "hostname": "Hostname",
-        "inbound_traffic": "Ankommender Verkehr",
-        "ip_address": "IP Adresse",
-        "mask": "Netzmaske",
-        "network": "Netzwerk",
-        "outbound_traffic": "Ausgehender Verkehr",
-        "prefix_length": "Präfix Länge",
-        "remote_ip": "Remote IP Adresse",
-        "router": "Router",
-        "service": "Service",
-        "traffic": "Netzwerkverkehr"
     },
     "new_client": "Neuer Client",
     "new_client_plural": "Neue Clients",
@@ -449,12 +432,6 @@
                 "title": "Munki Protokoll",
                 "tooltip": "Munki Protokoll aller Clients"
             }
-        },
-        "network_location": {
-            "title": "Netzwerkumgebungen"
-        },
-        "network_vlan": {
-            "title": "Netzwerk-VLANs"
         },
         "new_clients": {
             "no_new_clients": "keine neuen Clients",

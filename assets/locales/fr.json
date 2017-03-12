@@ -112,7 +112,6 @@
             "ard": "ARD",
             "ds": "Services d'annuaires",
             "munki": "Logiciels gérés",
-            "network": "Interfaces réseau",
             "serverstats": "Statistiques du serveur",
             "summary": "Résumé"
         },
@@ -296,7 +295,6 @@
             "hardware": "Matériel",
             "mrinfo": "MunkiReport",
             "munki": "Munki",
-            "network": "Réseau",
             "warranty": "Garantie"
         },
         "main": {
@@ -312,7 +310,6 @@
             "findmymac": "FindMyMac",
             "hardware": "Matériel",
             "munki": "Munki",
-            "network": "Réseau",
             "peripheral": "Périphériques",
             "server": "Serveur",
             "warranty": "Garantie"
@@ -320,17 +317,6 @@
         "user": {
             "logout": "Se déconnecter"
         }
-    },
-    "network": {
-        "ethernet": "Ethernet",
-        "hostname": "Nom d'hôte",
-        "ip_address": "Adresse IP",
-        "mask": "Sous-Réseau",
-        "network": "Réseau",
-        "prefix_length": "Longueur préfixe",
-        "remote_ip": "Adresse IP distante",
-        "router": "Routeur",
-        "service": "Service"
     },
     "new_client": "Nouveau client",
     "new_client_plural": "Nouveaux clients",
@@ -446,12 +432,6 @@
                 "title": "Protocole Munki",
                 "tooltip": "Protocole Munki entre tous les clients"
             }
-        },
-        "network_location": {
-            "title": "Emplacements réseau"
-        },
-        "network_vlan": {
-            "title": "Vlans réseau"
         },
         "new_clients": {
             "no_new_clients": "Pas de nouveau client",

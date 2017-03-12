@@ -111,7 +111,6 @@
         "tab": {
             "ard": "ARD",
             "munki": "Managed Software",
-            "network": "Network Interfaces",
             "printers": "Printers",
             "profiles": "Profiles",
             "serverstats": "Server Statistics",
@@ -297,9 +296,7 @@
             "managed_installs": "Managed Installs",
             "mrinfo": "MunkiReport",
             "munki": "Munki",
-            "munkiprotocol": "Munki info",
-            "network": "Network",
-            "printers": "Printers"
+            "munkiprotocol": "Munki info"
         },
         "main": {
             "admin": "Admin",
@@ -315,23 +312,11 @@
             "hardware": "Hardware Report",
             "location": "Location Report",
             "munki": "Munki Report",
-            "network": "Network Report",
             "server": "Server Report"
         },
         "user": {
             "logout": "Sign Off"
         }
-    },
-    "network": {
-        "ethernet": "Ethernet",
-        "hostname": "Hostname",
-        "ip_address": "IP Address",
-        "mask": "Mask",
-        "network": "Network",
-        "prefix_length": "Prefix Length",
-        "remote_ip": "Remote IP Address",
-        "router": "Router",
-        "service": "Service"
     },
     "new_client": "New Client",
     "new_client_plural": "New Clients",
@@ -447,12 +432,6 @@
                 "title": "Munki Protocol",
                 "tooltip": "Munki protocol among all clients"
             }
-        },
-        "network_location": {
-            "title": "Network Locations"
-        },
-        "network_vlan": {
-            "title": "Network VLANs"
         },
         "new_clients": {
             "no_new_clients": "No new clients",
