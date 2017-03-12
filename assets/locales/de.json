@@ -112,7 +112,6 @@
             "ds": "Verzeichnisdienste",
             "munki": "Verwaltete Software",
             "network": "Netzwerk Schnittstellen",
-            "power": "Strom",
             "serverstats": "Server Statistik",
             "summary": "Zusammenfassung"
         },
@@ -214,17 +213,6 @@
             "pending_removal": "Ausstehende Deinstallation",
             "pending_removal_plural": "Ausstehende Deinstallationen"
         },
-        "power": {
-            "capacity": "Kapazität (mAh)",
-            "charged": "Geladen %",
-            "condition": "Zustand",
-            "current": "Stromstärke (mAh)",
-            "cycles": "Zyklen",
-            "designed": "Ursprünglich (mAh)",
-            "failedbattery": "Defekte Batterie",
-            "health": "Gesundheit %",
-            "manufactured": "Hergestellt"
-        },
         "username": "Benutzername"
     },
     "loading": "Lade Daten vom Server",
@@ -305,8 +293,7 @@
             "hardware": "Hardware",
             "mrinfo": "MunkiReport",
             "munki": "Munki",
-            "network": "Netzwerk",
-            "power": "Strom"
+            "network": "Netzwerk"
         },
         "main": {
             "admin": "Admin",
@@ -323,7 +310,6 @@
             "munki": "Munki-Report",
             "network": "Netzwerk-Report",
             "peripheral": "Peripheriegeräte-Report",
-            "power": "Stromversorgungs-Report",
             "server": "Server-Report"
         },
         "user": {
@@ -387,17 +373,6 @@
     },
     "pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
     "pkg_failed_to_install_plural": "__count__ Pakete wurden nicht installiert",
-    "power": {
-        "condition": "Zustand",
-        "current_capacity": "Verbleibende Ladung (mAh)",
-        "current_percent": "Geladen %",
-        "cycle_count": "Anzahl der Ladezyklen",
-        "design_capacity": "Ursprüngliche Kapazität (mAh)",
-        "manufacture_date": "Hergestellt ",
-        "max_capacity": "Volle Ladung (mAh)",
-        "max_percent": "Gesundheit %",
-        "temperature": "Termperatur"
-    },
     "ratio": "Verhältnis",
     "reg_date": "Registrierungsdatum",
     "remote_control": "Fernsteuerung",
@@ -499,21 +474,6 @@
         "pending_munki": {
             "title": "Anstehende Installationen",
             "tooltip": "Anstehende Installationen diese Woche"
-        },
-        "power": {
-            "check": "Batterie prüfen",
-            "health": {
-                "title": "Batterie-Gesundheit",
-                "tooltip": "Liste des Batteriegesundheits-Status"
-            },
-            "missing": "Fehlt",
-            "nobattery": "Keine Batterie",
-            "normal": "Normal",
-            "now": "Jetzt austauschen",
-            "service": "Jetzt zur Wartung",
-            "soon": "Wartung steht an",
-            "title": "Batterie-Zustand",
-            "tooltip": "Liste des Batteriezustands"
         },
         "registered": {
             "title": "Zeitachse der Clientregistrierung"

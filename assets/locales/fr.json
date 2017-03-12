@@ -113,7 +113,6 @@
             "ds": "Services d'annuaires",
             "munki": "Logiciels gérés",
             "network": "Interfaces réseau",
-            "power": "Alimentation",
             "serverstats": "Statistiques du serveur",
             "summary": "Résumé"
         },
@@ -218,17 +217,6 @@
             "pending_removal": "Suppression en attente",
             "pending_removal_plural": "Suppressions en attente"
         },
-        "power": {
-            "capacity": "Capacité (mAh)",
-            "charged": "Chargée %",
-            "condition": "Condition",
-            "current": "Actuel (mAh)",
-            "cycles": "Cycles",
-            "designed": "Conçu pour (mAh)",
-            "failedbattery": "Batterie endommagée",
-            "health": "Santé %",
-            "manufactured": "Fabriquée"
-        },
         "username": "Nom utilisateur"
     },
     "loading": "Chargement des données depuis le serveur",
@@ -309,7 +297,6 @@
             "mrinfo": "MunkiReport",
             "munki": "Munki",
             "network": "Réseau",
-            "power": "Alimentation",
             "warranty": "Garantie"
         },
         "main": {
@@ -327,7 +314,6 @@
             "munki": "Munki",
             "network": "Réseau",
             "peripheral": "Périphériques",
-            "power": "Alimentation",
             "server": "Serveur",
             "warranty": "Garantie"
         },
@@ -389,17 +375,6 @@
     },
     "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
     "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
-    "power": {
-        "condition": "Condition",
-        "current_capacity": "Charge restante (mAh)",
-        "current_percent": "Chargée %",
-        "cycle_count": "Nombre de cycles",
-        "design_capacity": "Capacité prévue (mAh)",
-        "manufacture_date": "Fabriquée",
-        "max_capacity": "Capacité pleine charge (mAh)",
-        "max_percent": "Santé %",
-        "temperature": "Température"
-    },
     "ratio": "Ratio",
     "reg_date": "Date d'enregistrement",
     "remote_control": "Contrôle à distance",
@@ -496,21 +471,6 @@
         "pending_munki": {
             "title": "Installations en attente",
             "tooltip": "Installation en attente pour cette semaine"
-        },
-        "power": {
-            "check": "Test de la batterie",
-            "health": {
-                "title": "Etat de santé de la batterie",
-                "tooltip": "Etat de santé de la batterie"
-            },
-            "missing": "Manquant",
-            "nobattery": "Pas de batterie",
-            "normal": "Normal",
-            "now": "A remplacer maintenant",
-            "service": "A entretenir maintenant",
-            "soon": "A entretenir bientôt",
-            "title": "Etat de la batterie",
-            "tooltip": "Etat de la batterie"
         },
         "registered": {
             "title": "Enregistrement du client au fil du temps"
