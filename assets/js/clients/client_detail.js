@@ -237,7 +237,7 @@ $(document).on('appReady', function(e, lang) {
 		var tmData = tmResp[0],
 			cpData = cpResp[0];
 
-		// Draw timemachine unit
+		// Draw Time Machine unit
 		if(tmData.id !== '')
 		{
 			$('table.mr-timemachine-table')
@@ -267,19 +267,9 @@ $(document).on('appReady', function(e, lang) {
 						})))
 				.append($('<tr>')
 					.append($('<th>')
-						.text(i18n.t('backup.kind')))
-					.append($('<td>')
-						.text(tmData.kind)))
-				.append($('<tr>')
-					.append($('<th>')
 						.text(i18n.t('backup.location_name')))
 					.append($('<td>')
-						.text(tmData.location_name)))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.backup_location')))
-					.append($('<td>')
-						.text(tmData.backup_location)))
+						.text(tmData.alias_volume_name)))
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.destinations')))
@@ -287,9 +277,9 @@ $(document).on('appReady', function(e, lang) {
 						.text(tmData.destinations)))
 				.append($('<tr>')
 					.append($('<th>')
-						.text(i18n.t('backup.last_failure_msg')))
+						.text(i18n.t('timemachine.result')))
 					.append($('<td>')
-						.text(tmData.last_failure_msg)));
+						.text(i18n.t('timemachine.'+tmData.result))));
 		}
 		else{
 			$('table.mr-timemachine-table')
