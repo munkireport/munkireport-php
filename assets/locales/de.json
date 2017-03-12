@@ -97,7 +97,6 @@
     "tab": {
       "ard": "ARD",
       "ds": "Verzeichnisdienste",
-      "inventory_items": "Inventar",
       "location": "Standort",
       "munki": "Verwaltete Software",
       "network": "Netzwerk Schnittstellen",
@@ -191,9 +190,6 @@
   "inactive": "Inaktiv",
   "info": "Information",
   "installed": "Installiert",
-  "inventory": {
-    "report": "Inventar Report"
-  },
   "keyboard": "Tastatur",
   "last_seen": "Zuletzt gesehen",
   "last_user": "Letzter User",
@@ -346,7 +342,6 @@
       "clients": "Clients",
       "findmymac": "Meinen Mac suchen",
       "hardware": "Hardware",
-      "inventory": "Inventar",
       "location": "Location",
       "munki": "Munki",
       "mrinfo": "MunkiReport",
@@ -368,7 +363,6 @@
       "admin": "Admin"
     },
     "reports": {
-      "appVersions": "App Versions Report",
       "backup": "Backup-Report",
       "clients": "Client-Report",
       "configuration": "Konfigurations-Report",
@@ -610,9 +604,6 @@
   "warning": "Warnung",
   "warning_plural": "Warnungen",
   "widget": {
-    "app": {
-      "versions": "Bekannte Versionen von __app__"
-    },
     "duplicate_computernames": {
       "notfound": "Keine Duplikate gefunden",
       "title": "Doppelte Computernamen"

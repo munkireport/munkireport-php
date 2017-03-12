@@ -98,7 +98,6 @@
     "tab": {
       "ard": "ARD",
       "ds": "Services d'annuaires",
-      "inventory_items": "Objets dans l'inventaire",
       "location": "Localisation",
       "munki": "Logiciels gérés",
       "network": "Interfaces réseau",
@@ -195,9 +194,6 @@
   "inactive": "Inactif",
   "info": "Information",
   "installed": "Installé",
-"inventory": {
-		"report": "Inventaire"
-	},
 "keyboard": "Clavier",
   "last_seen": "Vu la dernière fois",
   "last_user": "Dernier utilisateur",
@@ -349,7 +345,6 @@
       "clients": "Clients",
       "findmymac": "Find My Mac",
       "hardware": "Matériel",
-      "inventory": "Inventaire",
       "location": "Localisation",
       "munki": "Munki",
       "mrinfo": "MunkiReport",
@@ -372,7 +367,6 @@
       "admin": "Admin"
     },
     "reports": {
-"appVersions": "Versions des Apps",
       "backup": "Sauvegarde",
       "clients": "Client",
       "configuration": "Configuration",
@@ -617,9 +611,6 @@
   "warning": "Alerte",
   "warning_plural": "Alertes",
   "widget": {
-    "app": {
-      "versions": "Versions connues du __app__"
-},
     "duplicate_computernames": {
       "notfound": "Pas de doublons trouvés",
 	"title": "Nom des ordinateurs dupliqués"

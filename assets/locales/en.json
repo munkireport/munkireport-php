@@ -96,7 +96,6 @@
 		"hour": "Clients per hour",
 		"tab": {
 			"ard": "ARD",
-			"inventory_items": "Inventory Items",
 			"location": "Location",
 			"munki": "Managed Software",
 			"network": "Network Interfaces",
@@ -193,9 +192,6 @@
 	"inactive": "Inactive",
 	"info": "Information",
 	"installed": "Installed",
-	"inventory": {
-		"report": "Inventory Report"
-	},
 	"keyboard": "Keyboard",
 	"last_seen": "Last Seen",
 	"last_user": "Last User",
@@ -346,7 +342,6 @@
 			"findmymac": "Find My Mac",
 			"fonts": "Fonts",
 			"hardware": "Hardware",
-			"inventory": "Inventory",
 			"location": "Location",
 			"managed_installs": "Managed Installs",
 			"munki": "Munki",
@@ -371,7 +366,6 @@
 		  "admin": "Admin"
 		},
 		"reports": {
-			"appVersions": "App Versions Report",
 			"backup": "Backup Report",
 			"clients": "Client Report",
 			"configuration": "Configuration Report",
@@ -713,9 +707,6 @@
 	"warning": "Warning",
 	"warning_plural": "Warnings",
 	"widget": {
-		"app": {
-			"versions": "Known versions of __app__"
-		},
 		"duplicate_computernames": {
 			"notfound": "No duplicates found",
 			"title": "Duplicate Computer Names"
