@@ -105,8 +105,7 @@
       "profiles": "Profils",
       "serverstats": "Statistiques du serveur",
       "summary": "Résumé",
-      "timemachine": "Time Machine",
-      "wifi": "WiFi"
+      "timemachine": "Time Machine"
     },
     "panel_title": "Activité du client dans le dernier mois",
     "total": "Nombre de clients"
@@ -240,17 +239,7 @@
       "last_success": "Dernière sauvegarde réussie",
       "title": "Rapport Time Machine"
     },
-    "username": "Nom utilisateur",
-    "wifi": {
-      "apmode": "Mode AP",
-      "authtype": "Type Auth 802.11X",
-      "channel": "Canal",
-      "lasttx": "Dernière taux Tx (Mbps)",
-      "linkauthtype": "Lien type Auth",
-      "maxtx": "Taux Max Tx(Mbps)",
-      "noise": "Bruit",
-      "state": "Etat WiFi"
-    }
+    "username": "Nom utilisateur"
   },
   "loading": "Chargement des données depuis le serveur",
   "machine": {
@@ -339,8 +328,7 @@
       "softwareupdate": "Mise à jour logiciels",
       "timemachine": "Time Machine",
       "usb": "Périphériques USB",
-      "warranty": "Garantie",
-      "wifi": "WiFi"
+      "warranty": "Garantie"
     },
     "main": {
       "dashboard": "Tableau de bord",
@@ -363,9 +351,7 @@
       "sccm": "Etat agent SCCM",
       "security": "Securité",
       "server": "Serveur",
-      "warranty": "Garantie",
-      "wifi": "WiFi"
-
+      "warranty": "Garantie"
     },
     "user": {
       "logout": "Se déconnecter"
@@ -679,23 +665,5 @@
 			"title": "Temps de fonctionnement"
 		}
   },
-  "wifi": {
-    "apmode": "Mode du point d'accès",
-    "bssid": "BSSID",
-    "channel": "Canal",
-    "extrssi": "RSSI externe",
-    "lasttrx": "Dernier taux de transmission (Mbps)",
-    "maxtrx": "Taux maximal de transmission (Mbps)",
-    "networks": "Réseaux WiFi",
-    "noise": "Niveau de bruit",
-    "nonetworks": "Pas de réseaux",
-    "rssilevel": "Niveau RSSI",
-    "sharing": "Partagé",
-    "state": "Etat WiFi",
-    "ssid": "SSID",
-    "xauthtype": "Type Authentification 802.11X",
-    "wifiauthtype": "Type Authentication WiFi",
-    "wifiinfo": "Information WiFi"
- },
 	"yes": "Oui"
 }

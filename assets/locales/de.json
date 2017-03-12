@@ -104,8 +104,7 @@
       "profiles": "Profile",
       "serverstats": "Server Statistik",
       "summary": "Zusammenfassung",
-      "timemachine": "Time Machine",
-      "wifi": "WiFi"
+      "timemachine": "Time Machine"
     },
     "panel_title": "Clientaktivität im letzten Monat",
     "total": "Gesamtanzahl Clients"
@@ -236,17 +235,7 @@
       "last_success": "Letztes erfolgreiches Backup",
       "title": "Timemachine-Report"
     },
-    "username": "Benutzername",
-    "wifi": {
-      "apmode": "AP Modus",
-      "authtype": "802.11X Authentifizierungstyp",
-      "channel": "Kanal",
-      "lasttx": "Letzte Empfangsrate (Mbps)",
-      "linkauthtype": "Link Auth Typ",
-      "maxtx": "Max Senderate (Mbps)",
-      "noise": "Störsignal",
-      "state": "WiFi Status"
-    }
+    "username": "Benutzername"
   },
   "loading": "Lade Daten vom Server",
   "machine": {
@@ -335,8 +324,7 @@
       "security": "Sicherheit",
       "softwareupdate": "Software Update",
       "timemachine": "Time Machine",
-      "usb": "USB Devices",
-      "wifi": "WiFi"
+      "usb": "USB Devices"
     },
     "main": {
       "dashboard": "Dashboard",
@@ -358,8 +346,7 @@
       "profile": "Profile-Report",
       "sccm": "SCCM-Agent-Status-Report",
       "security": "Sicherheits-Report",
-      "server": "Server-Report",
-      "wifi": "Wifi-Report"
+      "server": "Server-Report"
     },
     "user": {
       "logout": "Abmelden"
@@ -671,24 +658,6 @@
     "uptime": {
       "title": "Uptime"
     }
-  },
-  "wifi": {
-    "apmode": "Access Point Modus",
-    "bssid": "BSSID",
-    "channel": "Kanal",
-    "extrssi": "Externes RSSI",
-    "lasttrx": "Letzte Übertragungsrate (Mbps)",
-    "maxtrx": "Maximale Übertragungsrate (Mbps)",
-    "networks": "WiFi Netzwerke",
-    "noise": "Störsignalstärke",
-    "nonetworks": "Keine Netzwerke",
-    "rssilevel": "RSSI Stärke",
-    "sharing": "Sharing",
-    "state": "WiFi Status",
-    "ssid": "SSID",
-    "xauthtype": "802.11X Authentifizierungstyp",
-    "wifiauthtype": "WiFi Authentifizierungstyp",
-    "wifiinfo": "WiFi Information"
   },
   "yes": "Ja"
 }
