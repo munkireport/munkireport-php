@@ -215,17 +215,25 @@
         "hardware_report": "Hardware-Report",
         "hardware_type_title": "Aufstellung der Hardware-Typen",
         "hardware_widget_title": "Aufstellung der Hardware-Modelle",
+        "memory": {
+            "title": "Aufstellung der Speicherausstattung"
+        },
         "model": "Modell",
         "new_clients": {
             "no_new_clients": "keine neuen Clients",
             "title": "Neue Clients",
             "tooltip": "Neue Clients diese Woche"
         },
-        "memory": {
-            "title": "Aufstellung der Speicherausstattung"
+        "os": {
+            "title": "Aufstellung der OS Versionen"
         },
-
-        "rom_version": "ROM Version"
+        "registered": {
+            "title": "Zeitachse der Clientregistrierung"
+        },
+        "rom_version": "ROM Version",
+        "uptime": {
+            "title": "Uptime"
+        }
     },
     "manifest": {
         "manifest": "Manifest",
@@ -321,11 +329,6 @@
     "servermetrics": {
         "tab": "Server Statistik"
     },
-    "sharing": {
-        "afp_users": "AFP Benutzer",
-        "connected_users": "Filesharing – Verbundene Benutzer",
-        "smb_users": "SMB Benutzer"
-    },
     "show": "Anzeigen",
     "size": "Größe",
     "software": {
@@ -364,18 +367,9 @@
         "munki": {
             "title": "Munki"
         },
-        "os": {
-            "title": "Aufstellung der OS Versionen"
-        },
-        "registered": {
-            "title": "Zeitachse der Clientregistrierung"
-        },
         "unknown": {
             "alert": "Dieses Widget konnte nicht gefunden werden",
             "title": "Unbekanntes Widget"
-        },
-        "uptime": {
-            "title": "Uptime"
         }
     },
     "yes": "Ja"

@@ -219,7 +219,21 @@
             "title": "Memory Breakdown"
         },
         "model": "Model",
-        "rom_version": "ROM Version"
+        "new_clients": {
+            "no_new_clients": "No new clients",
+            "title": "New Clients",
+            "tooltip": "Clients registered this week"
+        },
+        "os": {
+            "title": "OS Breakdown"
+        },
+        "registered": {
+            "title": "Client Registration Over Time"
+        },
+        "rom_version": "ROM Version",
+        "uptime": {
+            "title": "Uptime"
+        }
     },
     "memory": "Memory",
     "model": "Model",
@@ -349,23 +363,9 @@
         "munki": {
             "title": "Munki"
         },
-        "new_clients": {
-            "no_new_clients": "No new clients",
-            "title": "New Clients",
-            "tooltip": "Clients registered this week"
-        },
-        "os": {
-            "title": "OS Breakdown"
-        },
-        "registered": {
-            "title": "Client Registration Over Time"
-        },
         "unknown": {
             "alert": "This widget cannot be found",
             "title": "Unknown widget"
-        },
-        "uptime": {
-            "title": "Uptime"
         }
     },
     "yes": "Yes"

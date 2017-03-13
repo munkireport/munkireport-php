@@ -227,7 +227,16 @@
             "title": "Nouveaux clients",
             "tooltip": "Clients enregistrés cette semaine"
         },
-        "rom_version": "Version ROM"
+        "os": {
+            "title": "Répartition par OS"
+        },
+        "registered": {
+            "title": "Enregistrement du client au fil du temps"
+        },
+        "rom_version": "Version ROM",
+        "uptime": {
+            "title": "Temps de fonctionnement"
+        }
     },
     "manifest": {
         "manifest": "Manifest",
@@ -361,18 +370,9 @@
         "munki": {
             "title": "Munki"
         },
-        "os": {
-            "title": "Répartition par OS"
-        },
-        "registered": {
-            "title": "Enregistrement du client au fil du temps"
-        },
         "unknown": {
             "alert": "Ce widget ne peut être trouvé",
             "title": "Widget inconnu"
-        },
-        "uptime": {
-            "title": "Temps de fonctionnement"
         }
     },
     "yes": "Oui"

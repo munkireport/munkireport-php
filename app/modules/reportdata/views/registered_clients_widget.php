@@ -4,7 +4,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="widget.registered.title"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="machine.registered.title"></span></h3>
 
 		</div>
 
@@ -43,7 +43,7 @@ $(document).on('appReady', function() {
             }
             graphData.push(temp);
         }
-		
+
         nv.addGraph(function() {
             chart = nv.models.stackedAreaChart()
                 .useInteractiveGuideline(true)
@@ -57,19 +57,19 @@ $(document).on('appReady', function() {
 				if(moment(d).month()){
 					return moment(d).format("MMM YYYY");
 				}
-				return moment(d).format("YYYY") 
-			});			
-			
+				return moment(d).format("YYYY")
+			});
+
             chart.xAxis.showMaxMin(false);
 
             chart.yAxis.showMaxMin(false);
-			
+
             var tooltip = chart.interactiveLayer.tooltip;
-			tooltip.headerFormatter(function (d) { 
-				return moment(d).format('MMMM YYYY'); 
+			tooltip.headerFormatter(function (d) {
+				return moment(d).format('MMMM YYYY');
 			});
-			
-			
+
+
             d3.select('#chart1')
                 .datum(graphData)
                 .transition().duration(1000)

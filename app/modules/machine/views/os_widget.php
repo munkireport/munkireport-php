@@ -4,14 +4,14 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-apple"></i> <span data-i18n="widget.os.title"></span></h3>
-		
+			<h3 class="panel-title"><i class="fa fa-apple"></i> <span data-i18n="machine.os.title"></span></h3>
+
 		</div>
 
 		<div class="panel-body">
-			
+
 			<svg style="width:100%"></svg>
-			
+
 		</div>
 
 	</div><!-- /panel -->
@@ -20,7 +20,7 @@
 
 <script>
 $(document).on('appReady', function(e, lang) {
-	
+
 	var conf = {
 		url: appUrl + '/module/machine/os', // Url for json
 		widget: 'os-widget', // Widget id
