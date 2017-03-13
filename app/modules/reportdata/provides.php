@@ -2,7 +2,7 @@
 
 return array(
     'listings' => array(
-        'clients' => array('view' => 'clients_listing'),
+        'clients' => array('view' => 'clients_listing', 'i18n' => 'client.clients'),
     ),
     'widgets' => array(
         array('view' => 'client_widget'),
@@ -10,6 +10,6 @@ return array(
         array('view' => 'uptime_widget'),
     ),
     'reports' => array(
-        'clients' => array('view' => 'clients'),
+        'clients' => array('view' => 'clients', 'i18n' => 'client.report'),
     ),
 );

@@ -16,6 +16,6 @@ return array(
     ),
     'reports' => array(
         'hardware' => array('view' => 'hardware', 'i18n' => 'machine.hardware_report'),
-        'backup' => array('view' => 'backup_report')
+        'backup' => array('view' => 'backup_report', 'i18n' => 'backup.report')
     )
 );

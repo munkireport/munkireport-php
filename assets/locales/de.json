@@ -111,7 +111,9 @@
             "serverstats": "Server Statistik",
             "summary": "Zusammenfassung"
         },
-        "total": "Gesamtanzahl Clients"
+        "total": "Gesamtanzahl Clients",
+        "report": "Client Report",
+        "clients": "Clients"
     },
     "configuration": "Konfiguration",
     "connected": "Verbunden",

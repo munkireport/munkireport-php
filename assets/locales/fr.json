@@ -112,7 +112,9 @@
             "serverstats": "Statistiques du serveur",
             "summary": "Résumé"
         },
-        "total": "Nombre de clients"
+        "total": "Nombre de clients",
+        "report": "Client Report",
+        "clients": "Clients"
     },
     "configuration": "Configuration",
     "connected": "Connecté",

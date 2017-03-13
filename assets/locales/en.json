@@ -77,7 +77,8 @@
         "location_name": "Location Name",
         "ok": "Latest backup within 2 weeks",
         "today": "Backed up today",
-        "week_plus": "Latest backup more than a week ago"
+        "week_plus": "Latest backup more than a week ago",
+        "report": "Backup Report"
     },
     "boot_time": "Booted",
     "buildversion": "Build Version",
@@ -112,7 +113,9 @@
             "serverstats": "Server Statistics",
             "summary": "Summary"
         },
-        "total": "Total Clients"
+        "total": "Total Clients",
+        "report": "Client Report",
+        "clients": "Clients"
     },
     "configuration": "Configuration",
     "connected": "Connected",
