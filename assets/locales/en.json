@@ -75,9 +75,9 @@
         "lastweek": "Latest backup more than a day ago",
         "location_name": "Location Name",
         "ok": "Latest backup within 2 weeks",
+        "report": "Backup Report",
         "today": "Backed up today",
-        "week_plus": "Latest backup more than a week ago",
-        "report": "Backup Report"
+        "week_plus": "Latest backup more than a week ago"
     },
     "boot_time": "Booted",
     "buildversion": "Build Version",
@@ -102,9 +102,11 @@
     },
     "client": {
         "activity": "Client Activity",
+        "clients": "Clients",
         "comment": "Comments",
         "hour": "Clients per hour",
         "panel_title": "Client activity in the last month",
+        "report": "Client Report",
         "tab": {
             "ard": "ARD",
             "printers": "Printers",
@@ -112,9 +114,7 @@
             "serverstats": "Server Statistics",
             "summary": "Summary"
         },
-        "total": "Total Clients",
-        "report": "Client Report",
-        "clients": "Clients"
+        "total": "Total Clients"
     },
     "configuration": "Configuration",
     "connected": "Connected",
@@ -207,12 +207,16 @@
         "base_model_widget_title": "Base Model Breakdown",
         "cores": "Cores",
         "cpu_speed": "CPU Speed",
+        "duplicate_computernames": {
+            "notfound": "No duplicates found",
+            "title": "Duplicate Computer Names"
+        },
+        "hardware": "Hardware",
+        "hardware_report": "Hardware Report",
         "hardware_type_title": "Hardware Type breakdown",
         "hardware_widget_title": "Hardware Model Breakdown",
         "model": "Model",
-        "rom_version": "ROM Version",
-        "hardware": "Hardware",
-        "hardware_report": "Hardware Report"
+        "rom_version": "ROM Version"
     },
     "memory": "Memory",
     "model": "Model",
@@ -339,10 +343,6 @@
     "warning": "Warning",
     "warning_plural": "Warnings",
     "widget": {
-        "duplicate_computernames": {
-            "notfound": "No duplicates found",
-            "title": "Duplicate Computer Names"
-        },
         "memory": {
             "title": "Memory Breakdown"
         },

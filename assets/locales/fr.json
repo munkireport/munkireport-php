@@ -101,9 +101,11 @@
     },
     "client": {
         "activity": "Activité Client",
+        "clients": "Clients",
         "comment": "Commentaires",
         "hour": "Clients par heure",
         "panel_title": "Activité du client dans le dernier mois",
+        "report": "Client Report",
         "tab": {
             "ard": "ARD",
             "ds": "Services d'annuaires",
@@ -111,9 +113,7 @@
             "serverstats": "Statistiques du serveur",
             "summary": "Résumé"
         },
-        "total": "Nombre de clients",
-        "report": "Client Report",
-        "clients": "Clients"
+        "total": "Nombre de clients"
     },
     "configuration": "Configuration",
     "connected": "Connecté",
@@ -210,12 +210,16 @@
         "arch": "Arch",
         "cores": "Cores",
         "cpu_speed": "Fréquence CPU",
+        "duplicate_computernames": {
+            "notfound": "Pas de doublons trouvés",
+            "title": "Nom des ordinateurs dupliqués"
+        },
+        "hardware": "Matériel",
+        "hardware_report": "Rapport Matériel",
         "hardware_type_title": "Répartition par matériel",
         "hardware_widget_title": "Détails de l'appareil",
         "model": "Modéle",
-        "rom_version": "Version ROM",
-        "hardware": "Matériel",
-        "hardware_report": "Rapport Matériel"
+        "rom_version": "Version ROM"
     },
     "manifest": {
         "manifest": "Manifest",
@@ -352,10 +356,6 @@
     "warning": "Alerte",
     "warning_plural": "Alertes",
     "widget": {
-        "duplicate_computernames": {
-            "notfound": "Pas de doublons trouvés",
-            "title": "Nom des ordinateurs dupliqués"
-        },
         "manifest": {
             "title": "Manifests"
         },

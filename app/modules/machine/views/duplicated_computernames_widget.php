@@ -4,7 +4,7 @@
 
 		<div class="panel-heading" data-container="body">
 
-			<h3 class="panel-title"><i class="fa fa-bug"></i> <span data-i18n="widget.duplicate_computernames.title"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-bug"></i> <span data-i18n="machine.duplicate_computernames.title"></span></h3>
 
 		</div>
 
@@ -35,7 +35,7 @@ $(document).on('appUpdate', function(e, lang) {
 			})
 		}
 		else{
-			box.append('<span class="list-group-item">'+i18n.t('widget.duplicate_computernames.notfound')+'</span>');
+			box.append('<span class="list-group-item">'+i18n.t('machine.duplicate_computernames.notfound')+'</span>');
 		}
 	});
 });

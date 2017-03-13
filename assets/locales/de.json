@@ -100,9 +100,11 @@
     },
     "client": {
         "activity": "Clientaktivität",
+        "clients": "Clients",
         "comment": "Kommentar",
         "hour": "Clients pro Stunde",
         "panel_title": "Clientaktivität im letzten Monat",
+        "report": "Client Report",
         "tab": {
             "ard": "ARD",
             "ds": "Verzeichnisdienste",
@@ -110,9 +112,7 @@
             "serverstats": "Server Statistik",
             "summary": "Zusammenfassung"
         },
-        "total": "Gesamtanzahl Clients",
-        "report": "Client Report",
-        "clients": "Clients"
+        "total": "Gesamtanzahl Clients"
     },
     "configuration": "Konfiguration",
     "connected": "Verbunden",
@@ -207,12 +207,16 @@
         "base_model_widget_title": "Aufstellung der Basis-Modelle",
         "cores": "Kerne",
         "cpu_speed": "CPU Geschwindigkeit",
+        "duplicate_computernames": {
+            "notfound": "Keine Duplikate gefunden",
+            "title": "Doppelte Computernamen"
+        },
+        "hardware": "Hardware",
+        "hardware_report": "Hardware-Report",
         "hardware_type_title": "Aufstellung der Hardware-Typen",
         "hardware_widget_title": "Aufstellung der Hardware-Modelle",
         "model": "Modell",
-        "rom_version": "ROM Version",
-        "hardware": "Hardware",
-        "hardware_report": "Hardware-Report"
+        "rom_version": "ROM Version"
     },
     "manifest": {
         "manifest": "Manifest",
@@ -354,13 +358,6 @@
     "warning": "Warnung",
     "warning_plural": "Warnungen",
     "widget": {
-        "duplicate_computernames": {
-            "notfound": "Keine Duplikate gefunden",
-            "title": "Doppelte Computernamen"
-        },
-        "manifest": {
-            "title": "Manifests"
-        },
         "memory": {
             "title": "Aufstellung der Speicherausstattung"
         },
