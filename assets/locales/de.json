@@ -58,7 +58,6 @@
         "password": "Passwort",
         "secure": "Sie nutzen eine verschlüsselte Verbindung",
         "signin": "Anmelden",
-        "username": "Benutzername",
         "wrong_user_or_pass": "Falscher Benutzername oder falches Kennwort"
     },
     "backup": {
@@ -72,8 +71,10 @@
         "last_failure": "Letztes Fehlgeschlagenes Backup",
         "last_failure_msg": "Fehlermeldung",
         "last_success": "Letztes Erfolgreiches Backup",
+        "lastweek": "Letztes Backup vor mehr als einen Tag",
         "location_name": "Name des Backup-Orts",
         "ok": "Letztes Backup vor 2 Wochen",
+        "report": "Backup Report",
         "today": "Backup heute",
         "week_plus": "Letztes Backup vor mehr als einer Woche"
     },
@@ -106,10 +107,6 @@
         "panel_title": "Clientaktivität im letzten Monat",
         "report": "Client Report",
         "tab": {
-            "ard": "ARD",
-            "ds": "Verzeichnisdienste",
-            "munki": "Verwaltete Software",
-            "serverstats": "Server Statistik",
             "summary": "Zusammenfassung"
         },
         "total": "Gesamtanzahl Clients"
@@ -120,8 +117,7 @@
         "arch": "CPU Architektur",
         "core": "Kerne",
         "cpu": "CPU",
-        "type": "CPU Typ",
-        "usage": "Prozessorauslastung"
+        "type": "CPU Typ"
     },
     "danger": "Fehler",
     "database": "Datenbank",
@@ -190,10 +186,6 @@
     "last_seen": "Zuletzt gesehen",
     "last_user": "Letzter User",
     "listing": {
-        "ard": {
-            "text": "Text __number__",
-            "title": "Apple Remote Desktop-Report"
-        },
         "checkin": "Check-in",
         "computername": "Name",
         "loading": "Lade Daten vom Server"
@@ -231,10 +223,6 @@
         "uptime": {
             "title": "Uptime"
         }
-    },
-    "manifest": {
-        "manifest": "Manifest",
-        "name": "Manifest Name"
     },
     "memory": "Speicher",
     "model": "Modell",
@@ -362,9 +350,6 @@
     "warning": "Warnung",
     "warning_plural": "Warnungen",
     "widget": {
-        "munki": {
-            "title": "Munki"
-        },
         "unknown": {
             "alert": "Dieses Widget konnte nicht gefunden werden",
             "title": "Unbekanntes Widget"

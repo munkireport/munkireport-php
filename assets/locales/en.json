@@ -58,7 +58,6 @@
         "password": "Password",
         "secure": "You're using a secure connection",
         "signin": "Sign in",
-        "username": "Username",
         "wrong_user_or_pass": "Wrong username or password"
     },
     "backup": {
@@ -108,10 +107,6 @@
         "panel_title": "Client activity in the last month",
         "report": "Client Report",
         "tab": {
-            "ard": "ARD",
-            "printers": "Printers",
-            "profiles": "Profiles",
-            "serverstats": "Server Statistics",
             "summary": "Summary"
         },
         "total": "Total Clients"
@@ -358,9 +353,6 @@
     "warning": "Warning",
     "warning_plural": "Warnings",
     "widget": {
-        "munki": {
-            "title": "Munki"
-        },
         "unknown": {
             "alert": "This widget cannot be found",
             "title": "Unknown widget"

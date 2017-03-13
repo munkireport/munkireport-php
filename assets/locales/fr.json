@@ -58,7 +58,6 @@
         "password": "Mot de passe",
         "secure": "Vous utilisez une connexion sécurisée",
         "signin": "Connectez-vous",
-        "username": "Nom Utilisateur",
         "wrong_user_or_pass": "Nom d'utilisateur ou mot de passe incorrect"
     },
     "backup": {
@@ -75,6 +74,7 @@
         "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
         "location_name": "Nom de l'emplacement",
         "ok": "Dernière sauvegarde de 2 semaines",
+        "report": "Backup Report",
         "today": "Sauvegardé aujourd'hui",
         "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
     },
@@ -89,7 +89,7 @@
         "users": "Utilisateurs"
     },
     "cert": {
-        "expiré": "__name__ expired __moment__"
+        "expired": "__name__ expired __moment__"
     },
     "cfbundlename": "Nom CFBundle",
     "chart": {
@@ -107,10 +107,6 @@
         "panel_title": "Activité du client dans le dernier mois",
         "report": "Client Report",
         "tab": {
-            "ard": "ARD",
-            "ds": "Services d'annuaires",
-            "munki": "Logiciels gérés",
-            "serverstats": "Statistiques du serveur",
             "summary": "Résumé"
         },
         "total": "Nombre de clients"
@@ -121,8 +117,7 @@
         "arch": "Architecture processeur",
         "core": "core",
         "cpu": "CPU",
-        "type": "Modèle processeur",
-        "usage": "Utilisation processeur"
+        "type": "Modèle processeur"
     },
     "danger": "Erreur",
     "database": "Base de données",
@@ -162,9 +157,6 @@
     "error": "Erreur",
     "error_plural": "Erreurs",
     "errors": {
-        "403": "Vous n'êtes pas autorisé à voir cette page",
-        "404": "Page non trouvée",
-        "426": "Vous devez visiter ce site à l'aide d'une connexion sécurisée.",
         "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas",
         "loading": "Il y avait un problème avec la récupération de ces données: __error__",
         "title": "Erreurs"
@@ -194,10 +186,6 @@
     "last_seen": "Vu la dernière fois",
     "last_user": "Dernier utilisateur",
     "listing": {
-        "ard": {
-            "text": "Texte __number__",
-            "title": "Rapport Apple Remote Desktop"
-        },
         "checkin": "Enregistrement",
         "computername": "Name",
         "loading": "Chargement des données depuis le serveur"
@@ -205,6 +193,7 @@
     "loading": "Chargement des données depuis le serveur",
     "machine": {
         "arch": "Arch",
+        "base_model_widget_title": "Base Model Breakdown",
         "cores": "Cores",
         "cpu_speed": "Fréquence CPU",
         "duplicate_computernames": {
@@ -234,10 +223,6 @@
         "uptime": {
             "title": "Temps de fonctionnement"
         }
-    },
-    "manifest": {
-        "manifest": "Manifest",
-        "name": "Nom du manifest"
     },
     "memory": "Mémoire",
     "model": "Modèle",
@@ -365,9 +350,6 @@
     "warning": "Alerte",
     "warning_plural": "Alertes",
     "widget": {
-        "munki": {
-            "title": "Munki"
-        },
         "unknown": {
             "alert": "Ce widget ne peut être trouvé",
             "title": "Widget inconnu"

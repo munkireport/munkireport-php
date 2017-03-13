@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'power-tab' => array('view' => 'power_tab', 'i18n' => 'client.tab.power'),
+        'power-tab' => array('view' => 'power_tab', 'i18n' => 'power.power'),
         'battery-tab' => array('view' => 'battery_tab', 'i18n' => 'power.battery'),
     ),
     'listings' => array(
