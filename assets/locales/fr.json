@@ -137,6 +137,7 @@
         "writable": "Inscriptible"
     },
     "delete": "Supprimer",
+    "description": "Description",
     "dialog": {
         "cancel": "Annuler",
         "close": "Fermer",
@@ -199,9 +200,6 @@
         },
         "checkin": "Enregistrement",
         "computername": "Name",
-        "hardware": {
-            "description": "Description"
-        },
         "loading": "Chargement des données depuis le serveur",
         "username": "Nom utilisateur"
     },

@@ -137,6 +137,7 @@
         "writable": "Writable"
     },
     "delete": "Delete",
+    "description": "Description",
     "dialog": {
         "cancel": "Cancel",
         "close": "Close",
@@ -195,9 +196,6 @@
     "listing": {
         "checkin": "Check-in",
         "computername": "Name",
-        "hardware": {
-            "description": "Description"
-        },
         "loading": "Loading data from server",
         "username": "Username"
     },

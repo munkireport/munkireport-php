@@ -136,6 +136,7 @@
         "writable": "Beschreibbar"
     },
     "delete": "Löschen",
+    "description": "Beschreibung",
     "dialog": {
         "cancel": "Abbrechen",
         "close": "Schließen",
@@ -195,9 +196,6 @@
         },
         "checkin": "Check-in",
         "computername": "Name",
-        "hardware": {
-            "description": "Beschreibung"
-        },
         "loading": "Lade Daten vom Server",
         "username": "Benutzername"
     },
