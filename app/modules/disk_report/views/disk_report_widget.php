@@ -45,7 +45,7 @@ $(document).on('appUpdate', function(e, lang) {
 			// Get limits
 			var dangerThreshold = data.thresholds.danger+'GB',
 					warningThreshhold = data.thresholds.warning+'GB',
-					url = appUrl + '/show/listing/disk#'
+					url = appUrl + '/show/listing/disk_report/disk#'
 
 			// Set urls
 			$('#disk-danger').attr('href', url + encodeURIComponent('freespace < '+dangerThreshold))

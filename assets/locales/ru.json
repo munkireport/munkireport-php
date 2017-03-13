@@ -35,7 +35,6 @@
 			"network": "Сетевые интерфейсы",
 			"ds": "Службы Каталогов",
 			"fv_escrow": "Filevault Escrow",
-			"bluetooth": "Bluetooth",
 			"ard": "ARD"
 		},
 		"installed_apple_software": "Установленное ПО Apple",
@@ -73,9 +72,6 @@
 		"ard": {
 			"text": "Текст __number__"
 		},
-		"bluetooth": {
-			"title": "Отчет по Bluetooth"
-		},
 		"computername": "Имя",
 		"hardware": {
 			"description": "Описание"
@@ -100,7 +96,6 @@
 	"nav": {
 		"listings": {
 			"ard": "Apple Remote Desktop",
-			"bluetooth": "Bluetooth",
 			"clients": "Клиенты",
 			"directoryservice": "Служба Каталогов",
 			"disk": "Диск",
@@ -162,6 +157,6 @@
 			"now": "Сейчас",
 			"service": "Служба",
 			"soon": "Скоро"
-		}	
+		}
 	}
 }

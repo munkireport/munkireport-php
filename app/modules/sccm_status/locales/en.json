@@ -1,0 +1,13 @@
+{
+    "agent_status": "SCCM Agent Status",
+    "cert_exp": "SCCM Client Certificate Expiration",
+    "enrollment_name": "Enrollment User Name",
+    "enrollment_server": "Enrollment Server",
+    "enrollment_status": "Enrollment Status",
+    "last_checkin": "Last SCCM Check In",
+    "mgmt_point": "Management Point",
+    "report": "SCCM Agent Status Report",
+    "sccm_status": "SCCM Status",
+    "title": "SCCM Agent Status",
+    "titleheader": "SCCM Agent Information"
+}

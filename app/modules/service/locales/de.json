@@ -1,0 +1,10 @@
+{
+    "listing": {
+        "title": "Dienste-Report"
+    },
+    "name": "Dienstname",
+    "status": "Dienststatus",
+    "tab": {
+        "title": "Dienste"
+    }
+}

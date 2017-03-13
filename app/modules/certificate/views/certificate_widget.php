@@ -4,26 +4,26 @@
 
                 <div class="panel-heading" data-container="body" title="">
 
-                    <h3 class="panel-title"><i class="fa fa-certificate"></i> <span data-i18n="widget.certificate.title"></span></h3>
+                    <h3 class="panel-title"><i class="fa fa-certificate"></i> <span data-i18n="certificate.title"></span></h3>
 
                 </div>
 
                 <div class="list-group scroll-box">
-                    <a id="cert-ok" href="<?=url('show/listing/certificate')?>" class="list-group-item list-group-item-success hide">
+                    <a id="cert-ok" href="<?=url('show/listing/certificate/certificate')?>" class="list-group-item list-group-item-success hide">
                         <span class="badge">0</span>
-                        <span data-i18n="widget.certificate.ok"></span>
+                        <span data-i18n="certificate.ok"></span>
                     </a>
-                    <a id="cert-soon" href="<?=url('show/listing/certificate')?>" class="list-group-item list-group-item-warning hide">
+                    <a id="cert-soon" href="<?=url('show/listing/certificate/certificate')?>" class="list-group-item list-group-item-warning hide">
                         <span class="badge">0</span>
-                        <span data-i18n="widget.certificate.soon"></span>
+                        <span data-i18n="certificate.soon"></span>
                     </a>
-                    <a id="cert-expired" href="<?=url('show/listing/certificate')?>" class="list-group-item list-group-item-danger hide">
+                    <a id="cert-expired" href="<?=url('show/listing/certificate/certificate')?>" class="list-group-item list-group-item-danger hide">
                         <span class="badge">0</span>
-                        <span data-i18n="widget.certificate.expired"></span>
+                        <span data-i18n="certificate.expired"></span>
                     </a>
                     <span id="cert-nodata" data-i18n="no_clients" class="list-group-item"></span>
                 </div>
-        
+
             </div><!-- /panel -->
 
         </div><!-- /col -->
@@ -55,4 +55,3 @@ $(document).on('appUpdate', function(e, lang) {
 
 
 </script>
-

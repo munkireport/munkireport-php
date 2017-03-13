@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-Filter the result of /Library/Managed Installs/MANAGED_INSTALL_REPORT.plist
+Filter the results of munki's MANAGED_INSTALL_REPORT.plist
 to these items: 'EndTime', 'StartTime', 'ManifestName', 'ManagedInstallVersion'
 'Errors', 'Warnings', 'RunType'
 """
@@ -8,9 +8,24 @@ to these items: 'EndTime', 'StartTime', 'ManifestName', 'ManagedInstallVersion'
 import plistlib
 import sys
 import os
+import CoreFoundation
 
 DEBUG = False
-MANAGED_INSTALL_REPORT = '/Library/Managed Installs/ManagedInstallReport.plist'
+
+# Path to the default munki install dir
+default_install_dir = '/Library/Managed Installs'
+
+# Checks munki preferences to see where the install directory is set to.
+managed_install_dir = CoreFoundation.CFPreferencesCopyAppValue(
+    "ManagedInstallDir", "ManagedInstalls")
+
+# set the paths based on munki's configuration.
+if managed_install_dir:
+    MANAGED_INSTALL_REPORT = os.path.join(
+        managed_install_dir, 'ManagedInstallReport.plist')
+else:
+    MANAGED_INSTALL_REPORT = os.path.join(
+        default_install_dir, 'ManagedInstallReport.plist')
 
 # Don't skip manual check
 if len(sys.argv) > 1:
@@ -28,6 +43,7 @@ def dict_from_plist(path):
     except Exception, message:
         raise Exception("Error creating plist from output: %s" % message)
 
+
 def main():
     """Main"""
     # Create cache dir if it does not exist
@@ -41,7 +57,7 @@ def main():
         install_report = {}
     else:
         install_report = dict_from_plist(MANAGED_INSTALL_REPORT)
-        
+
     # Collect Errors, Warnings (as JSON?)
     # EndTime, StartTime, ManifestName, (Conditions->catalogs?)
     # ManagedInstallVersion
@@ -49,11 +65,12 @@ def main():
 
     # pylint: disable=E1103
     report_list = {}
-    items = ['EndTime', 'StartTime', 'ManifestName', 'ManagedInstallVersion', \
-        'Errors', 'Warnings', 'RunType']
+    items = ['EndTime', 'StartTime', 'ManifestName', 'ManagedInstallVersion',
+             'Errors', 'Warnings', 'RunType']
+
     for item in items:
         if install_report.get(item):
-            report_list[item] = install_report[item];
+            report_list[item] = install_report[item]
     # pylint: enable=E1103
 
     if DEBUG:
@@ -64,5 +81,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

@@ -2,7 +2,7 @@
 var mr = {
         debug: false,
         dt:{},
-        
+
         statusFormat: {
             install_failed: {type: 'danger'},
             install_succeeded: {type: 'success'},
@@ -13,15 +13,15 @@ var mr = {
             uninstall_failed: {type: 'danger'},
             uninstalled: {type: 'success'}
         },
-        
+
         // Graphing defaults
         graph: {
             barColor: ['steelBlue']
         },
-        
+
         // Localstorage handler
         state: function(id, data){
-            
+
             if( data == undefined)
             {
               // Get data
@@ -34,20 +34,20 @@ var mr = {
               localStorage.setItem( id, JSON.stringify(data) );
             }
         },
-        
+
         // Set Preference handler (uses localstorage)
         setPref: function(key, val){
             var globalPrefs = mr.state('global') || {};
             globalPrefs[key] = val;
             mr.state('global', globalPrefs);
         },
-        
+
         // Get Preference handler (uses localstorage)
         getPref: function(key){
             var globalPrefs = mr.state('global') || {};
             return globalPrefs[key];
         },
-        
+
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)
         {
@@ -64,7 +64,7 @@ var mr = {
             }
             return osvers
         },
-        
+
         // Get client detail link
         getClientDetailLink: function(name, sn, hash)
         {
@@ -74,7 +74,7 @@ var mr = {
             		<a href="'+appUrl+'/manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
             		<i class="fa fa-times"></i></a></div>';
         },
-        
+
         /*
          * Natural Sort algorithm for Javascript - Version 0.8.1 - Released under MIT license
          * Author: Jim Palmer (based on chunking idea from Dave Koelle)
@@ -126,7 +126,7 @@ var mr = {
                 else if (oFxNcL > oFyNcL) { return 1; }
             }
         }, // End naturalSort
-        
+
         // Draw graph for nvd3 and update graph
         drawGraph: function(conf){
             var graphData = [{"key": " ", "values": []}];
@@ -134,27 +134,27 @@ var mr = {
                 graphData[0].values = data;
                 height = data.length * 26 + 40;
                 conf.chart.height(height);
-                
+
                 d3.select(conf.svg)
                     .attr('height', height)
                     .datum(graphData)
                     .transition()
                     .duration(500)
                     .call(conf.chart);
-                    
+
                 conf.chart.update();
-                
+
             });
-            
+
         },
-        
+
         // Get preference for graph in this order: conf, default for graph, default
         getGraphPref: function(setting, graphName, conf){
             if(conf[setting]) return conf[setting];
             if(mr.graph[graphName] && mr.graph[graphName][setting]) return mr.graph[graphName][setting];
             return mr.graph[setting];
         },
-        
+
         // Add nvd3 graph
         addGraph: function(conf){
             // Sanity check
@@ -162,7 +162,7 @@ var mr = {
                 alert('no widget provided for addGraph');
                 return;
             };
-            
+
             // Assemble svg identifier
             conf.svg = '#' + conf.widget + ' svg';
 
@@ -180,38 +180,38 @@ var mr = {
 
               // Hide tooltips
               conf.chart.tooltip.enabled(false);
-              
+
               conf.chart.yAxis
                   .tickFormat(d3.format(''));
-                  
+
               d3.select(conf.svg)
                   .attr('height', 0)
                   .datum([{"key": " ","values": []}])
                   .call(conf.chart);
-            
+
             // Callback for click events
               if(conf.elementClickCallback){
                   // visit page on click
                   conf.chart.multibar.dispatch.on("elementClick", function(e) {
                       conf.elementClickCallback(e)
                   });
-                  
+
                   d3.select(conf.svg).attr("class", "clickLabels");
               }
-                
+
                 // Call the munkireport drawGraph routine
                 mr.drawGraph(conf);
-                
+
                 // update chart data on appUpdate
                 $(document).on('appUpdate', function(){mr.drawGraph(conf)});
-                
+
                 // update chart data on Resize
                 nv.utils.windowResize(conf.chart.update);
 
             });
 
         },
-                
+
         loadTheme: function() {
             // Get global state
             var theme = mr.getPref('theme') || 'Default';
@@ -219,15 +219,35 @@ var mr = {
             var theme_file = theme_dir + 'bootstrap.min.css';
             $('#bootstrap-stylesheet').attr('href', theme_dir + 'bootstrap.min.css');
             $('#nvd3-override-stylesheet').attr('href', theme_dir + 'nvd3.override.css');
-            
+
             // Add active to menu item
             $('[data-switch]').parent().removeClass('active');
             $('[data-switch="'+theme+'"]').parent().addClass('active');
-            
+
             // Store theme in session
             $.post( appUrl + "/settings/theme", { set: theme });
         },
-        
+
+        sortMenu: function(menuIdentifier) {
+            var $menu = $(menuIdentifier),
+            	$itemsli = $menu.children('li');
+
+            $itemsli.sort(function(a,b){
+            	var an = $(a).find('a').text(),
+            		bn = $(b).find('a').text();
+
+            	if(an > bn) {
+            		return 1;
+            	}
+            	if(an < bn) {
+            		return -1;
+            	}
+            	return 0;
+            });
+
+            $itemsli.detach().appendTo($menu);
+        },
+
         // Lookup table for display vendors
         display_vendors : {
             "610": "Apple",
