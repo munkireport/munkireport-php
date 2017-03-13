@@ -78,9 +78,6 @@
         "today": "Backup heute",
         "week_plus": "Letztes Backup vor mehr als einer Woche"
     },
-    "battery": {
-        "life_remaining": "__percent__% verbleibende Batterielaufzeit"
-    },
     "boot_time": "Startzeit",
     "buildversion": "Build Version",
     "bundle_id": "BundleID",
@@ -223,7 +220,9 @@
         "hardware_type_title": "Aufstellung der Hardware-Typen",
         "hardware_widget_title": "Aufstellung der Hardware-Modelle",
         "model": "Modell",
-        "rom_version": "ROM Version"
+        "rom_version": "ROM Version",
+        "hardware": "Hardware",
+        "hardware_report": "Hardware-Report"
     },
     "manifest": {
         "manifest": "Manifest",
@@ -262,29 +261,11 @@
             "nl": "Nederlands",
             "ru": "Русский"
         },
-        "listings": {
-            "ard": "Apple Remote Desktop",
-            "clients": "Clients",
-            "findmymac": "Meinen Mac suchen",
-            "hardware": "Hardware",
-            "mrinfo": "MunkiReport",
-            "munki": "Munki"
-        },
         "main": {
             "admin": "Admin",
             "dashboard": "Dashboard",
             "listings": "Listen",
             "reports": "Reports"
-        },
-        "reports": {
-            "backup": "Backup-Report",
-            "clients": "Client-Report",
-            "configuration": "Konfigurations-Report",
-            "findmymac": "Meinen Mac suchen-Report",
-            "hardware": "Hardware-Report",
-            "munki": "Munki-Report",
-            "peripheral": "Peripheriegeräte-Report",
-            "server": "Server-Report"
         },
         "user": {
             "logout": "Abmelden"
@@ -399,15 +380,6 @@
         "munki_versions": {
             "title": "Munki-Versionen",
             "tooltip": "Munki-Versionen aller Clients"
-        },
-        "munkiinfo": {
-            "munkiprotocol": {
-                "http": "http",
-                "https": "https",
-                "localrepo": "Lokales repo",
-                "title": "Munki Protokoll",
-                "tooltip": "Munki Protokoll aller Clients"
-            }
         },
         "new_clients": {
             "no_new_clients": "keine neuen Clients",

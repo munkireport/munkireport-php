@@ -79,9 +79,6 @@
         "today": "Backed up today",
         "week_plus": "Latest backup more than a week ago"
     },
-    "battery": {
-        "life_remaining": "__percent__% battery life remaining"
-    },
     "boot_time": "Booted",
     "buildversion": "Build Version",
     "bundle_id": "Bundle ID",
@@ -110,7 +107,6 @@
         "panel_title": "Client activity in the last month",
         "tab": {
             "ard": "ARD",
-            "munki": "Managed Software",
             "printers": "Printers",
             "profiles": "Profiles",
             "serverstats": "Server Statistics",
@@ -223,7 +219,9 @@
         "hardware_type_title": "Hardware Type breakdown",
         "hardware_widget_title": "Hardware Model Breakdown",
         "model": "Model",
-        "rom_version": "ROM Version"
+        "rom_version": "ROM Version",
+        "hardware": "Hardware",
+        "hardware_report": "Hardware Report"
     },
     "manifest": {
         "manifest": "Manifest",
@@ -232,20 +230,6 @@
     "memory": "Memory",
     "model": "Model",
     "mouse": "Mouse",
-    "munki": {
-        "additional_info": "Additional Munki Info",
-        "error": "Munki error: __error__",
-        "error_plural": "__count__ Munki errors",
-        "errors_and_warnings": "Errors and Warnings",
-        "munkiprotocol": "Munki Protocol",
-        "package_installed": "__pkg__ installed",
-        "package_installed_plural": "__count__ packages installed",
-        "panel_title": "Munki statistics this week",
-        "run_type": "Run Type",
-        "version": "Munki Version",
-        "warning": "Munki warning: __warning__",
-        "warning_plural": "__count__ Munki warnings"
-    },
     "mwa": {
         "mwa_link": "Open in Munki Web Admin"
     },
@@ -262,34 +246,11 @@
             "nl": "Nederlands",
             "ru": "Русский"
         },
-        "listings": {
-            "ard": "Apple Remote Desktop",
-            "batteries": "Batteries",
-            "clients": "Clients",
-            "findmymac": "Find My Mac",
-            "fonts": "Fonts",
-            "hardware": "Hardware",
-            "location": "Location",
-            "managed_installs": "Managed Installs",
-            "mrinfo": "MunkiReport",
-            "munki": "Munki",
-            "munkiprotocol": "Munki info"
-        },
         "main": {
             "admin": "Admin",
             "dashboard": "Dashboard",
             "listings": "Listings",
             "reports": "Reports"
-        },
-        "reports": {
-            "backup": "Backup Report",
-            "clients": "Client Report",
-            "configuration": "Configuration Report",
-            "findmymac": "Find My Mac Report",
-            "hardware": "Hardware Report",
-            "location": "Location Report",
-            "munki": "Munki Report",
-            "server": "Server Report"
         },
         "user": {
             "logout": "Sign Off"

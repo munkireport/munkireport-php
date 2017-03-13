@@ -79,9 +79,6 @@
         "today": "Sauvegardé aujourd'hui",
         "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
     },
-    "battery": {
-        "life_remaining": "Durée restante de la batterie __percent__%"
-    },
     "boot_time": "Démarré",
     "buildversion": "N° de version",
     "bundle_id": "BundleID",
@@ -226,7 +223,9 @@
         "hardware_type_title": "Répartition par matériel",
         "hardware_widget_title": "Détails de l'appareil",
         "model": "Modéle",
-        "rom_version": "Version ROM"
+        "rom_version": "Version ROM",
+        "hardware": "Matériel",
+        "hardware_report": "Rapport Matériel"
     },
     "manifest": {
         "manifest": "Manifest",
@@ -265,31 +264,11 @@
             "nl": "Nederlands",
             "ru": "Русский"
         },
-        "listings": {
-            "ard": "Apple Remote Desktop",
-            "clients": "Clients",
-            "findmymac": "Find My Mac",
-            "hardware": "Matériel",
-            "mrinfo": "MunkiReport",
-            "munki": "Munki",
-            "warranty": "Garantie"
-        },
         "main": {
             "admin": "Admin",
             "dashboard": "Tableau de bord",
             "listings": "Listings",
             "reports": "Rapports"
-        },
-        "reports": {
-            "backup": "Sauvegarde",
-            "clients": "Client",
-            "configuration": "Configuration",
-            "findmymac": "FindMyMac",
-            "hardware": "Matériel",
-            "munki": "Munki",
-            "peripheral": "Périphériques",
-            "server": "Serveur",
-            "warranty": "Garantie"
         },
         "user": {
             "logout": "Se déconnecter"
