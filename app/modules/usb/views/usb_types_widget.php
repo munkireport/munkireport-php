@@ -18,7 +18,7 @@ $(document).on('appUpdate', function(e, lang) {
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>';
-                box.append('<a href="'+appUrl+'/show/listing/usb/#'+d.type+'" class="list-group-item">'+d.type+badge+'</a>')
+                box.append('<a href="'+appUrl+'/show/listing/usb/usb/#'+d.type+'" class="list-group-item">'+d.type+badge+'</a>')
 			});
 		}
 		else{

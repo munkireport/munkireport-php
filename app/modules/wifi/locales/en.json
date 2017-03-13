@@ -1,0 +1,30 @@
+{
+    "apmode": "Access Point Mode",
+    "bssid": "BSSID",
+    "channel": "Channel",
+    "extrssi": "External RSSI",
+    "lasttrx": "Last Transmit Rate (Mbps)",
+    "maxtrx": "Maximum Transmit Rate (Mbps)",
+    "networks": "WiFi Networks",
+    "noise": "Noise Level",
+    "nonetworks": "No Networks",
+    "rssilevel": "RSSI Level",
+    "sharing": "Sharing",
+    "state": "WiFi State",
+    "ssid": "SSID",
+    "xauthtype": "802.11X Authentication Type",
+    "wifiauthtype": "WiFi Authentication Type",
+    "wifiinfo": "WiFi Information",
+    "listing": {
+        "apmode": "AP Mode",
+        "authtype": "802.11X Auth Type",
+        "channel": "Channel",
+        "lasttx": "Last Tx Rate (Mbps)",
+        "linkauthtype": "Link Auth Type",
+        "maxtx": "Max Tx Rate (Mbps)",
+        "noise": "Noise",
+        "state": "WiFi State"
+    },
+    "wifi": "WiFi",
+    "report": "Wifi Report"
+}

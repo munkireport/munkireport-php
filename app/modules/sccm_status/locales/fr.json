@@ -1,0 +1,13 @@
+{
+    "agent_status": "Etat agent SCCM",
+    "cert_exp": "Expiration du certificat client SCCM",
+    "enrollment_name": "Nom d'inscription de l'utilisateur",
+    "enrollment_server": "Inscription serveur",
+    "enrollment_status": "Etat de l'inscription",
+    "last_checkin": "Dernier test SCCM",
+    "mgmt_point": "Point de gestion",
+    "report": "Rapport Etat agent SCCM",
+    "sccm_status": "Etat agent SCCM",
+    "title": "Etat agent SCCM",
+    "titleheader": "Information agent SCCM"
+}

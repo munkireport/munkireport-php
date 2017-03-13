@@ -26,7 +26,7 @@ $(document).on('appUpdate', function(e, lang) {
 	}
 
 		var panel = $('#findmymac-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/findmymac/#';
+			baseUrl = appUrl + '/show/listing/findmymac/findmymac/#';
 		panel.empty();
 
 		// Set statuses

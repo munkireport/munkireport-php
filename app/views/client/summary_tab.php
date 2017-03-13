@@ -66,7 +66,7 @@
 					<th data-i18n="cpu.type"></th><td><span class="mr-number_processors"></span> <span data-i18n="cpu.core"></span></td>
 				</tr>
 				<tr>
-					<th data-i18n="memory.memory"></th><td><span class="mr-physical_memory"></span> GB</td>
+					<th data-i18n="memory"></th><td><span class="mr-physical_memory"></span> GB</td>
 				</tr>
 				<tr>
 					<th data-i18n="hardware.uuid"></th><td class="mr-platform_UUID"></td>
@@ -99,7 +99,7 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4><i class="fa fa-apple"></i> <span data-i18n="ard"></span></h4>
+			<h4><i class="fa fa-apple"></i> <span data-i18n="ard.ard"></span></h4>
 			<table id="ard-data" class="table"></table>
 		</div>
 
@@ -158,9 +158,9 @@
 			<table class="mr-timemachine-table">
 			</table>
 		</div>
-		
+
 		<div class="col-lg-4">
-			<h4><i class="fa fa-home"></i> <span data-i18n="crashplan.client.title"></span></h4>
+			<h4><i class="fa fa-home"></i> <span data-i18n="crashplan.title"></span></h4>
 			<table class="mr-crashplan-table">
 			</table>
 		</div>
@@ -176,7 +176,7 @@
 			<div class="comment" data-section="client"></div>
 			</table>
 		</div>
-		
+
 		<div class="col-lg-4">
 			<h4><i class="fa fa-key fa-fixed"></i> <span data-i18n="security.security"></span></h4>
 			<table>
@@ -197,5 +197,5 @@
 				</tr>
 			</table>
 		</div>
-		
+
 	</div><!-- /row -->

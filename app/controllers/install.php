@@ -1,10 +1,13 @@
 <?php
 class install extends Controller
 {
+    private $moduleManager;
+
     public function __construct()
     {
+        $this->moduleManager = getMrModuleObj();
     }
-    
+
     /**
      * Install all modules
      *
@@ -23,7 +26,7 @@ class install extends Controller
      **/
     public function dump_modules($format = '')
     {
-        $modules = $this->get_modules();
+        $modules = array_keys($this->moduleManager->getModuleList());
 
         switch ($format) {
             case 'config':
@@ -42,38 +45,13 @@ class install extends Controller
     }
 
     /**
-     * Get installed modules
-     *
-     * @author AvB
-     **/
-    private function get_modules()
-    {
-        $modules = array();
-
-        // Collect install scripts from modules
-        foreach (scandir(conf('module_path')) as $module) {
-        // Skip everything that starts with a dot
-            if (strpos($module, '.') === 0) {
-                continue;
-            }
-            
-            // Only include modules with an install script
-            if (is_file(conf('module_path').$module.'/scripts/install.sh')) {
-                $modules[] = $module;
-            }
-        }
-
-        return $modules;
-    }
-
-    /**
      * Install only selected modules
      *
      * @author Bochoven, A.E. van
      **/
     public function modules()
     {
-        
+
         $data['install_scripts'] = array();
         $data['uninstall_scripts'] = array();
 
@@ -84,36 +62,32 @@ class install extends Controller
         if (func_get_args()) {
             $use_modules = func_get_args();
         }
-        
+
         // Collect install scripts from modules
-        foreach (scandir(conf('module_path')) as $module) {
-        // Skip everything that starts with a dot
-            if (strpos($module, '.') === 0) {
-                continue;
-            }
+        foreach ($this->moduleManager->getModuleList() as $module => $modulePath) {
 
             // Check if we need to uninstall this module
             if (! in_array($module, $use_modules)) {
             // Check if there is an uninstall script
-                if (is_file(conf('module_path').$module.'/scripts/uninstall.sh')) {
-                    $data['uninstall_scripts'][$module] = conf('module_path').$module.'/scripts/uninstall.sh';
+                if (is_file($modulePath.'/scripts/uninstall.sh')) {
+                    $data['uninstall_scripts'][$module] = $modulePath.'/scripts/uninstall.sh';
                 }
 
                 continue;
             }
 
             // Check if there is a install script
-            if (is_file(conf('module_path').$module.'/scripts/install.sh')) {
-                $data['install_scripts'][$module] = conf('module_path').$module.'/scripts/install.sh';
+            if (is_file($modulePath.'/scripts/install.sh')) {
+                $data['install_scripts'][$module] = $modulePath.'/scripts/install.sh';
             }
         }
-        
+
         // Buffer script
         ob_start();
         $obj = new View();
         $obj->view('install/install_script', $data);
         $content = ob_get_clean();
-        
+
         // Get etag header
         $etagHeader = ( isset($_SERVER["HTTP_IF_NONE_MATCH"]) ? trim($_SERVER["HTTP_IF_NONE_MATCH"]) : false );
 
