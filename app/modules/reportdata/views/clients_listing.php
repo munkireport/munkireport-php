@@ -14,7 +14,7 @@ new Munkireport_model;
 
 	<div class="col-lg-12">
 
-	  <h3><span data-i18n="nav.reports.clients"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+	  <h3><span data-i18n="client.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 
@@ -26,10 +26,10 @@ new Munkireport_model;
 			<th data-i18n="os.version" data-colname='machine.os_version'></th>
 			<th data-i18n="buildversion" data-colname='machine.buildversion'></th>
 			<th data-i18n="type" data-colname='machine.machine_name'></th>
-			<th data-i18n="gsx.warrantystatus" data-colname='warranty.status'></th>
+			<th data-i18n="warranty.status" data-colname='warranty.status'></th>
 			<th data-i18n="uptime" data-i18n="uptime" data-colname='reportdata.uptime'></th>
 			<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
-			<th data-i18n="manifest.manifest" data-colname='munkireport.manifestname'></th>
+			<th data-i18n="munkireport.manifest.manifest" data-colname='munkireport.manifestname'></th>
 		  </tr>
 		</thead>
 
