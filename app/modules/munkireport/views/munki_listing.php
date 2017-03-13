@@ -23,8 +23,8 @@ new munkiinfo_model;
 		      	<th data-i18n="username" data-colname='reportdata.long_username'></th>
 		      	<th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
 		      	<th data-i18n="os.version" data-colname='machine.os_version'></th>
-		      	<th data-i18n="munki.version" data-colname='munkireport.version'></th>
-		      	<th data-i18n="munki.munkiprotocol" data-colname='munkiinfo.munkiinfo_value'></th>
+		      	<th data-i18n="munkireport.version" data-colname='munkireport.version'></th>
+		      	<th data-i18n="munkireport.munkiprotocol" data-colname='munkiinfo.munkiinfo_value'></th>
 		      	<th data-i18n="last_seen" data-sort="desc" data-colname='reportdata.timestamp'></th>
 		      	<th data-i18n="munkireport.run_type" data-colname='munkireport.runtype'></th>
 		      	<th data-i18n="error_plural" data-colname='munkireport.errors'></th>
