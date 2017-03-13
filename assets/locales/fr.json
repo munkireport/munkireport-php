@@ -219,6 +219,11 @@
         "hardware_type_title": "Répartition par matériel",
         "hardware_widget_title": "Détails de l'appareil",
         "model": "Modéle",
+        "new_clients": {
+            "no_new_clients": "Pas de nouveau client",
+            "title": "Nouveaux clients",
+            "tooltip": "Clients enregistrés cette semaine"
+        },
         "rom_version": "Version ROM"
     },
     "manifest": {
@@ -229,16 +234,10 @@
     "model": "Modèle",
     "mouse": " Souris",
     "munki": {
-        "additional_info": "Informations additionnelles Munki",
         "error": "Erreur de Munki : __error__",
         "error_plural": "__count__ Erreurs de Munki",
-        "errors_and_warnings": "Erreurs et Alertes",
-        "munkiprotocol": "Protocole Munki",
         "package_installed": "__pkg__ installé",
         "package_installed_plural": "__count__ paquets installés",
-        "panel_title": "Statistique de Munki cette semaine",
-        "run_type": "Type d'évènement",
-        "version": "Version de Munki",
         "warning": "Alerte de Munki : __warning__",
         "warning_plural": "__count__ Alertes de Munki"
     },
@@ -364,15 +363,6 @@
         },
         "munki": {
             "title": "Munki"
-        },
-        "munki_versions": {
-            "title": "Versions Munki",
-            "tooltip": "Versions Munki entre tous les clients"
-        },
-        "new_clients": {
-            "no_new_clients": "Pas de nouveau client",
-            "title": "Nouveaux clients",
-            "tooltip": "Clients enregistrés cette semaine"
         },
         "os": {
             "title": "Répartition par OS"
