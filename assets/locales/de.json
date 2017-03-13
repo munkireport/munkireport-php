@@ -196,8 +196,7 @@
         },
         "checkin": "Check-in",
         "computername": "Name",
-        "loading": "Lade Daten vom Server",
-        "username": "Benutzername"
+        "loading": "Lade Daten vom Server"
     },
     "loading": "Lade Daten vom Server",
     "machine": {
@@ -357,6 +356,7 @@
         "user": "Benutzer",
         "users": "Benutzer"
     },
+    "username": "Benutzername",
     "verified": "Verifiziert",
     "version": "Version",
     "warning": "Warnung",

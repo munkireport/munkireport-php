@@ -20,7 +20,7 @@ new Certificate_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="certificate.commonname" data-colname='certificate.cert_cn'></th>
 		        <th data-i18n="certificate.expires" data-colname='certificate.cert_exp_time'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>

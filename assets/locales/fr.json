@@ -200,8 +200,7 @@
         },
         "checkin": "Enregistrement",
         "computername": "Name",
-        "loading": "Chargement des données depuis le serveur",
-        "username": "Nom utilisateur"
+        "loading": "Chargement des données depuis le serveur"
     },
     "loading": "Chargement des données depuis le serveur",
     "machine": {
@@ -360,6 +359,7 @@
         "user": "Utilisateur",
         "users": "Utilisateurs"
     },
+    "username": "Nom utilisateur",
     "verified": "Verifié",
     "version": "Version",
     "warning": "Alerte",

@@ -22,7 +22,7 @@ new Munkireport_model;
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-			<th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+			<th data-i18n="username" data-colname='reportdata.long_username'></th>
 			<th data-i18n="os.version" data-colname='machine.os_version'></th>
 			<th data-i18n="buildversion" data-colname='machine.buildversion'></th>
 			<th data-i18n="type" data-colname='machine.machine_name'></th>

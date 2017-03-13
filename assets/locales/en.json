@@ -196,8 +196,7 @@
     "listing": {
         "checkin": "Check-in",
         "computername": "Name",
-        "loading": "Loading data from server",
-        "username": "Username"
+        "loading": "Loading data from server"
     },
     "loading": "Loading data from server",
     "machine": {
@@ -353,6 +352,7 @@
         "user": "User",
         "users": "Users"
     },
+    "username": "Username",
     "verified": "Verified",
     "version": "Version",
     "warning": "Warning",
