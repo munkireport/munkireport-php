@@ -1,0 +1,23 @@
+{
+    "caching": {
+        "bytes_served": "Caching Bytes Served",
+        "from_cache": "From Cache",
+        "from_origin": "From Origin",
+        "from_peers": "From Peers"
+    },
+    "cpu_usage": "Processor Usage",
+    "memory": {
+        "pressure": "Memory Pressure",
+        "usage": "Memory Usage"
+    },
+    "network": {
+        "inbound_traffic": "Inbound Traffic",
+        "outbound_traffic": "Outbound Traffic",
+        "traffic": "Network Traffic"
+    },
+    "sharing": {
+        "afp_users": "AFP Users",
+        "connected_users": "Sharing – Connected Users",
+        "smb_users": "SMB Users"
+    }
+}

@@ -41,7 +41,7 @@ $(document).on('appUpdate', function(e, lang) {
     	}
 
 	// Set URLs. TODO - once filtered update this to deep link
-	var url = appUrl + '/show/listing/security'
+	var url = appUrl + '/show/listing/security/security'
 	$('#gatekeeper-Disabled').attr('href', url)
 	$('#gatekeeper-Active').attr('href', url)
 

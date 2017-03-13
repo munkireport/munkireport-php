@@ -40,7 +40,7 @@
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
 	</script>
 
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>	
+	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
 
 <?php
 	if (isset($scripts))
@@ -53,6 +53,8 @@
 <body>
 
 	<?php if( isset($_SESSION['user'])):?>
+	<?php $modules = getMrModuleObj()->loadInfo(); ?>
+
 
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
 	<div class="container">
@@ -85,16 +87,11 @@
 					</a>
 					<ul class="report dropdown-menu">
 
-						<?php foreach(scandir(conf('view_path').'report') AS $list_url): ?>
+						<?php foreach($modules->getDropdownData('reports', 'show/report', $page) as $item): ?>
 
-							<?php if( strpos($list_url, 'php')): ?>
-							<?php $page_url = $url.strtok($list_url, '.'); ?>
-
-							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-								<a href="<?php echo url($page_url); ?>" data-i18n="nav.reports.<?php echo $name = strtok($list_url, '.'); ?>"><?php echo ucfirst($name); ?></a>
+							<li class="<?=$item->class?>">
+							<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
 							</li>
-
-							<?php endif; ?>
 
 						<?php endforeach; ?>
 
@@ -111,16 +108,11 @@
 					</a>
 					<ul class="listing dropdown-menu">
 
-						<?php foreach(scandir(conf('view_path').'listing') AS $list_url): ?>
+						<?php foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item): ?>
 
-							<?php if( strpos($list_url, 'php')): ?>
-							<?php $page_url = $url.strtok($list_url, '.'); ?>
-
-							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-								<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.listings.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+							<li class="<?=$item->class?>">
+							<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
 							</li>
-
-							<?php endif; ?>
 
 						<?php endforeach; ?>
 
@@ -165,7 +157,7 @@
 			</ul><!-- nav navbar-nav -->
 
 			<ul class="nav navbar-nav navbar-right">
-			
+
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-wrench"></i>

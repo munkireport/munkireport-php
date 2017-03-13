@@ -1,0 +1,8 @@
+{
+    "baseurl": "URL MunkiReport",
+    "clienttabtitle": "MunkiReport",
+    "passphrase": "Passphrase",
+    "reportitems": "Modules installés",
+    "reporttitle": "Rapport MunkiReport",
+    "version": "Version"
+}

@@ -1,0 +1,9 @@
+{
+    "installed_apple_software": "Logiciels Apple installés",
+    "installed_third_party_software": "Logiciels tiers installés",
+    "install_date": "Date de l'installation du client",
+    "no_install_history": "Pas d'historique de l'installation",
+    "process_name": "Nom du processus",
+    "apple_software": "Logiciels Apple",
+    "third_party_software": "Logiciels tiers"
+}
