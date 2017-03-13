@@ -38,7 +38,6 @@
         "unassigned_groups": "Groupes non assignés"
     },
     "all": "Tous",
-    "ard": "Apple Remote Desktop",
     "auth": {
         "addtoconfig": "Ajoutez cette ligne dans config.php:",
         "back_to_site": "Retour au site",
@@ -204,17 +203,6 @@
             "description": "Description"
         },
         "loading": "Chargement des données depuis le serveur",
-        "munki": {
-            "latest_run": "Dernière activité",
-            "package_installed": "Paquet installé",
-            "package_installed_plural": "Paquets installés",
-            "package_removed": "Paquet supprimé",
-            "package_removed_plural": "Paquets supprimés",
-            "pending_install": "Installation en attente",
-            "pending_install_plural": "Installations en attente",
-            "pending_removal": "Suppression en attente",
-            "pending_removal_plural": "Suppressions en attente"
-        },
         "username": "Nom utilisateur"
     },
     "loading": "Chargement des données depuis le serveur",
