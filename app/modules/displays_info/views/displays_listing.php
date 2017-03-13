@@ -23,7 +23,7 @@
 			<th data-i18n="displays_info.vendor" data-colname='displays.vendor'></th>
 			<th data-i18n="displays_info.model" data-colname='displays.model'></th>
 			<th data-i18n="serial" data-colname='displays.display_serial'></th>
-			<th data-i18n="listing.power.manufactured" data-colname='displays.manufactured'></th>
+			<th data-i18n="displays_info.manufactured" data-colname='displays.manufactured'></th>
 			<th data-i18n="displays_info.nativeresolution" data-colname='displays.native'></th>
 			<th data-i18n="displays_info.detected" data-sort="desc" data-colname='displays.timestamp'></th>
 		  </tr>
