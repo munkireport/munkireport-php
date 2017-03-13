@@ -218,6 +218,9 @@
         "hardware_report": "Rapport Matériel",
         "hardware_type_title": "Répartition par matériel",
         "hardware_widget_title": "Détails de l'appareil",
+        "memory": {
+            "title": "Répartition par mémoire"
+        },
         "model": "Modéle",
         "new_clients": {
             "no_new_clients": "Pas de nouveau client",
@@ -355,12 +358,6 @@
     "warning": "Alerte",
     "warning_plural": "Alertes",
     "widget": {
-        "manifest": {
-            "title": "Manifests"
-        },
-        "memory": {
-            "title": "Répartition par mémoire"
-        },
         "munki": {
             "title": "Munki"
         },

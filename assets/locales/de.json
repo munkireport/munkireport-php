@@ -216,6 +216,15 @@
         "hardware_type_title": "Aufstellung der Hardware-Typen",
         "hardware_widget_title": "Aufstellung der Hardware-Modelle",
         "model": "Modell",
+        "new_clients": {
+            "no_new_clients": "keine neuen Clients",
+            "title": "Neue Clients",
+            "tooltip": "Neue Clients diese Woche"
+        },
+        "memory": {
+            "title": "Aufstellung der Speicherausstattung"
+        },
+
         "rom_version": "ROM Version"
     },
     "manifest": {
@@ -226,16 +235,10 @@
     "model": "Modell",
     "mouse": "Maus",
     "munki": {
-        "additional_info": "Weitere Munki Infos",
         "error": "Munki-Fehler: __error__",
         "error_plural": "__count__ Munki-Fehler",
-        "errors_and_warnings": "Fehler und Warnungen",
-        "munkiprotocol": "Munki Protokoll",
         "package_installed": "__pkg__ installiert",
         "package_installed_plural": "__count__ Pakete installiert",
-        "panel_title": "Munki Statistik diese Woche",
-        "run_type": "Run Type",
-        "version": "Munki Version",
         "warning": "Munki-Warnung: __warning__",
         "warning_plural": "__count__ Munki-Warnungen"
     },
@@ -358,20 +361,8 @@
     "warning": "Warnung",
     "warning_plural": "Warnungen",
     "widget": {
-        "memory": {
-            "title": "Aufstellung der Speicherausstattung"
-        },
         "munki": {
             "title": "Munki"
-        },
-        "munki_versions": {
-            "title": "Munki-Versionen",
-            "tooltip": "Munki-Versionen aller Clients"
-        },
-        "new_clients": {
-            "no_new_clients": "keine neuen Clients",
-            "title": "Neue Clients",
-            "tooltip": "Neue Clients diese Woche"
         },
         "os": {
             "title": "Aufstellung der OS Versionen"

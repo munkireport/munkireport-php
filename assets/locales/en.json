@@ -215,6 +215,9 @@
         "hardware_report": "Hardware Report",
         "hardware_type_title": "Hardware Type breakdown",
         "hardware_widget_title": "Hardware Model Breakdown",
+        "memory": {
+            "title": "Memory Breakdown"
+        },
         "model": "Model",
         "rom_version": "ROM Version"
     },
@@ -343,9 +346,6 @@
     "warning": "Warning",
     "warning_plural": "Warnings",
     "widget": {
-        "memory": {
-            "title": "Memory Breakdown"
-        },
         "munki": {
             "title": "Munki"
         },
