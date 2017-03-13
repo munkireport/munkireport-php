@@ -1,4 +1,4 @@
-	<h2 data-i18n="directoryservice.clienttabtitle"></h2>
+	<h2 data-i18n="directory_service.clienttabtitle"></h2>
 
 	<div id="directoryservice-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
 
@@ -6,99 +6,99 @@
 		<div class="col-md-6">
 			<table class="table table-striped">
 				<tr>
-					<th data-i18n="directoryservice.which_directory_service"></th>
+					<th data-i18n="directory_service.which_directory_service"></th>
 					<td id="directoryservice-which_directory_service"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.directory_service_comments"></th>
+					<th data-i18n="directory_service.directory_service_comments"></th>
 					<td id="directoryservice-directory_service_comments"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.adforest"></th>
+					<th data-i18n="directory_service.adforest"></th>
 					<td id="directoryservice-adforest"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.addomain"></th>
+					<th data-i18n="directory_service.addomain"></th>
 					<td id="directoryservice-addomain"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.computeraccount"></th>
+					<th data-i18n="directory_service.computeraccount"></th>
 					<td id="directoryservice-computeraccount"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.createmobileaccount"></th>
+					<th data-i18n="directory_service.createmobileaccount"></th>
 					<td id="directoryservice-createmobileaccount"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.requireconfirmation"></th>
+					<th data-i18n="directory_service.requireconfirmation"></th>
 					<td id="directoryservice-requireconfirmation"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.forcehomeinstartup"></th>
+					<th data-i18n="directory_service.forcehomeinstartup"></th>
 					<td id="directoryservice-forcehomeinstartup"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.mounthomeassharepoint"></th>
+					<th data-i18n="directory_service.mounthomeassharepoint"></th>
 					<td id="directoryservice-mounthomeassharepoint"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.usewindowsuncpathforhome"></th>
+					<th data-i18n="directory_service.usewindowsuncpathforhome"></th>
 					<td id="directoryservice-usewindowsuncpathforhome"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.networkprotocoltobeused"></th>
+					<th data-i18n="directory_service.networkprotocoltobeused"></th>
 					<td id="directoryservice-networkprotocoltobeused"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.defaultusershell"></th>
+					<th data-i18n="directory_service.defaultusershell"></th>
 					<td id="directoryservice-defaultusershell"></td>
 				</tr>
                 <tr>
-					<th data-i18n="directoryservice.mappinguidtoattribute"></th>
+					<th data-i18n="directory_service.mappinguidtoattribute"></th>
 					<td id="directoryservice-mappinguidtoattribute"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.mappingusergidtoattribute"></th>
+					<th data-i18n="directory_service.mappingusergidtoattribute"></th>
 					<td id="directoryservice-mappingusergidtoattribute"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.mappinggroupgidtoattr"></th>
+					<th data-i18n="directory_service.mappinggroupgidtoattr"></th>
 					<td id="directoryservice-mappinggroupgidtoattr"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.generatekerberosauth"></th>
+					<th data-i18n="directory_service.generatekerberosauth"></th>
 					<td id="directoryservice-generatekerberosauth"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.preferreddomaincontroller"></th>
+					<th data-i18n="directory_service.preferreddomaincontroller"></th>
 					<td id="directoryservice-preferreddomaincontroller"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.allowedadmingroups"></th>
+					<th data-i18n="directory_service.allowedadmingroups"></th>
 					<td id="directoryservice-allowedadmingroups"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.authenticationfromanydomain"></th>
+					<th data-i18n="directory_service.authenticationfromanydomain"></th>
 					<td id="directoryservice-authenticationfromanydomain"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.packetsigning"></th>
+					<th data-i18n="directory_service.packetsigning"></th>
 					<td id="directoryservice-packetsigning"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.packetencryption"></th>
+					<th data-i18n="directory_service.packetencryption"></th>
 					<td id="directoryservice-packetencryption"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.passwordchangeinterval"></th>
+					<th data-i18n="directory_service.passwordchangeinterval"></th>
 					<td id="directoryservice-passwordchangeinterval"></td>
 				</tr>
                 <tr>
-					<th data-i18n="directoryservice.restrictdynamicdnsupdates"></th>
+					<th data-i18n="directory_service.restrictdynamicdnsupdates"></th>
 					<td id="directoryservice-restrictdynamicdnsupdates"></td>
 				</tr>
 				<tr>
-					<th data-i18n="directoryservice.namespacemode"></th>
+					<th data-i18n="directory_service.namespacemode"></th>
 					<td id="directoryservice-namespacemode"></td>
 				</tr>
 			</table>

@@ -12,30 +12,137 @@ class Modules
 {
 
     private $moduleList = array();
+    private $moduleSearchPaths = array();
     private $allowedModules = array(
       'machine',
       'reportdata',
       'tag'
     );
+    private $skipInactiveModules = False;
 
     public function __construct()
     {
         // Populate allowedModules if hide_inactive_modules is true
         if(conf('hide_inactive_modules')){
-            $skipInactiveModules = True;
-            $this->allowedModules = array_merge($this->allowedModules, conf('modules', array()));
-        }
-        else{
-            $skipInactiveModules = False;
+            $this->skipInactiveModules = True;
         }
 
-        // Get Modules in app/modules
-        $this->collectModuleInfo(conf('module_path'), $skipInactiveModules);
-
-        // Get Module info in custom folder
+        // Custom modules go first
         if(conf('custom_folder')){
-            $this->collectModuleInfo(conf('custom_folder').'modules/', $skipInactiveModules);
+            $this->moduleSearchPaths['custom'] = conf('custom_folder').'modules/';
         }
+
+        // And then built-in modules
+        $this->moduleSearchPaths['builtin'] = conf('module_path');
+
+
+    }
+
+    /**
+     * Retrieve moduleModelPath
+     *
+     *
+     * @param type var Description
+     * @return return type
+     */
+    public function getModuleModelPath($moduleName, &$modelPath)
+    {
+        foreach ($this->moduleSearchPaths as $type => $path) {
+            if ( file_exists($path . $moduleName . '/' . $moduleName . '_model.php')) {
+                $modelPath = $path . $moduleName . '/' . $moduleName . '_model.php';
+                return True;
+            }
+        }
+        return False;
+    }
+
+    /**
+     * Retrieve moduleControllerPath
+     *
+     *
+     * @param type var Description
+     * @return return type
+     */
+    public function getmoduleControllerPath($moduleName, &$controllerPath)
+    {
+        foreach ($this->moduleSearchPaths as $type => $path) {
+            if ( file_exists($path . $moduleName . '/' . $moduleName . '_controller.php')) {
+                $controllerPath = $path . $moduleName . '/' . $moduleName . '_controller.php';
+                return True;
+            }
+        }
+        return False;
+    }
+
+    /**
+     * Retrieve moduleMigrationPath
+     *
+     *
+     * @param type var Description
+     * @return boolean
+     */
+    public function getModuleMigrationPath($moduleName, &$migrationPath)
+    {
+        foreach ($this->moduleSearchPaths as $type => $path) {
+            echo $path . $moduleName . '/migrations';
+            if (is_dir($path . $moduleName . '/migrations')) {
+                echo $path . $moduleName . '/migrations';
+                $migrationPath = $path . $moduleName . '/migrations';
+                return True;
+            }
+        }
+        return False;
+    }
+
+    /**
+     * Retrieve list of all available modules
+     *
+     */
+    public function getModuleList()
+    {
+        $modules = array();
+        foreach ($this->moduleSearchPaths as $path)
+        {
+            foreach (scandir($path) as $module)
+            {
+                if (is_file($path.$module.'/scripts/install.sh')) {
+                    // Don't overwrite custom modules
+                    if( ! isset($modules[$module]))
+                    {
+                        $modules[$module] = $path.$module;
+                    }
+                }
+            }
+        }
+        return $modules;
+    }
+
+    /**
+     * Load Module info
+     *
+     * Load info from provides.php
+     *
+     * @param boolean $allModules If true, don't mind $skipInactiveModules
+     * @return none
+     */
+    public function loadInfo($allModules = False)
+    {
+        if($allModules){
+            $skipInactiveModules = False;
+        }else{
+            $skipInactiveModules = $this->skipInactiveModules;
+        }
+
+        if($skipInactiveModules){
+            $allowedModules = array_merge($this->allowedModules, conf('modules', array()));
+        }else{
+            $allowedModules = array(); // No need to set this.
+        }
+
+        $this->collectModuleInfo($this->moduleSearchPaths, $skipInactiveModules, $allowedModules);
+
+        return $this;
+
     }
 
     // Return info about $about
@@ -68,10 +175,10 @@ class Modules
     {
         if(isset($this->moduleList[$module]['listings'])){
             foreach ($this->moduleList[$module]['listings'] as $listing) {
-                if($listing['view'] = $name . '_listing'){
+                if($listing['view'] == $name . '_listing'){
                     return (object) array(
                         'view_path' => $this->getPath($module, '/views/'),
-                        'view' => $name . '_listing',
+                        'view' => $listing['view'],
                     );
                 }
             }
@@ -156,20 +263,40 @@ class Modules
         return $out;
     }
 
-    private function collectModuleInfo($basePath, $skipInactiveModules = False)
+    public function getModuleLocales($lang='en')
     {
-        foreach (scandir($basePath) as $module) {
+        $localeList = array();
+        foreach( $this->moduleList as $module => $info){
+            $localePath = sprintf('%s/locales/%s.json', $info['path'], $lang);
+            if(is_file($localePath)){
+                $localeList[] = sprintf('"%s": %s', $module, file_get_contents($localePath));
+            }
+        }
+        return '{'.implode(",\n", $localeList).'}';
+    }
 
-            // Skip inactive modules
-            if( $skipInactiveModules && ! in_array($module, $this->allowedModules)){
+
+    private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
+    {
+        foreach ($modulePaths as $basePath)
+        {
+            if( ! is_dir($basePath)){
+                // Emit warning?
                 continue;
             }
+            foreach (scandir($basePath) as $module) {
 
-            // Find provides.php
-            if (is_file($basePath.$module.'/provides.php'))
-            {
-                $this->moduleList[$module] = require $basePath.$module.'/provides.php';
-                $this->moduleList[$module]['path'] = $basePath.$module.'/';
+                // Skip inactive modules
+                if( $skipInactiveModules && ! in_array($module, $allowedModules)){
+                    continue;
+                }
+
+                // Find provides.php
+                if (is_file($basePath.$module.'/provides.php') && ! isset($this->moduleList[$module]))
+                {
+                    $this->moduleList[$module] = require $basePath.$module.'/provides.php';
+                    $this->moduleList[$module]['path'] = $basePath.$module.'/';
+                }
             }
         }
     }

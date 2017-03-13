@@ -2,9 +2,9 @@
 
 	<div class="panel panel-default" id="munkiinfo-munkiprotocol-widget">
 
-	  <div class="panel-heading" data-container="body" data-i18n="[title]widget.munkiinfo.munkiprotocol.tooltip">
+	  <div class="panel-heading" data-container="body" data-i18n="[title]munkiinfo.munkiprotocol.tooltip">
 
-	    <h3 class="panel-title"><i class="fa fa-magic"></i> <span data-i18n="widget.munkiinfo.munkiprotocol.title"></span></h3>
+	    <h3 class="panel-title"><i class="fa fa-magic"></i> <span data-i18n="munkiinfo.munkiprotocol.title"></span></h3>
 
 	  </div>
 
@@ -28,9 +28,9 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 
 		// Set statuses
-		panel.append(' <a href="'+baseUrl+'#protocol = http" class="btn btn-danger"><span class="bigger-150">'+data.http+'</span><br>'+i18n.t('widget.munkiinfo.munkiprotocol.http')+'</a>');
-		panel.append(' <a href="'+baseUrl+'#protocol = https" class="btn btn-success"><span class="bigger-150">'+data.https+'</span><br>'+i18n.t('widget.munkiinfo.munkiprotocol.https')+'</a>');
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-info"><span class="bigger-150">'+data.localrepo+'</span><br>'+i18n.t('widget.munkiinfo.munkiprotocol.localrepo')+'</a>');
+		panel.append(' <a href="'+baseUrl+'#protocol = http" class="btn btn-danger"><span class="bigger-150">'+data.http+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.http')+'</a>');
+		panel.append(' <a href="'+baseUrl+'#protocol = https" class="btn btn-success"><span class="bigger-150">'+data.https+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.https')+'</a>');
+		panel.append(' <a href="'+baseUrl+'" class="btn btn-info"><span class="bigger-150">'+data.localrepo+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.localrepo')+'</a>');
 
     });
 });

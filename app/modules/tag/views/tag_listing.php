@@ -24,7 +24,7 @@ new Tag_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
-				<th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+				<th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="tag.name" data-colname='tag.tag'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
@@ -78,7 +78,7 @@ $(document).on('appReady', function(e, lang) {
             type: "POST",
             data: function(d){
                 d.mrColNotEmpty = "tag.id";
-				
+
 				// Look for a bigger/smaller/equal statement
 				if(d.search.value.match(/^tag = .+$/))
 				{
@@ -101,7 +101,7 @@ $(document).on('appReady', function(e, lang) {
         	var sn=$('td:eq(1)', nRow).html();
         	var link = mr.getClientDetailLink(name, sn, '#tab_summary');
         	$('td:eq(0)', nRow).html(link);
-			
+
 			// Format Check-In timestamp
 			var checkin = parseInt($('td:last', nRow).html());
 			var date = new Date(checkin * 1000);
@@ -113,7 +113,7 @@ $(document).on('appReady', function(e, lang) {
     {
 		oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
     }
-    
+
 } );
 </script>
 

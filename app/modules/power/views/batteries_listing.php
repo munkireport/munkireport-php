@@ -20,14 +20,14 @@ new Power_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="listing.power.designed" data-colname='power.design_capacity'></th>
-		        <th data-i18n="listing.power.capacity" data-colname='power.max_capacity'></th>
-		        <th data-i18n="listing.power.cycles" data-colname='power.cycle_count'></th>
-		        <th data-i18n="listing.power.health" data-colname='power.max_percent'></th>
-		        <th data-i18n="listing.power.condition" data-colname='power.condition'></th>
-		        <th data-i18n="listing.power.current" data-colname='power.current_capacity'></th>
-		        <th data-i18n="listing.power.charged" data-colname='power.current_percent'></th>
+		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="power.listing.designed" data-colname='power.design_capacity'></th>
+		        <th data-i18n="power.listing.capacity" data-colname='power.max_capacity'></th>
+		        <th data-i18n="power.listing.cycles" data-colname='power.cycle_count'></th>
+		        <th data-i18n="power.listing.health" data-colname='power.max_percent'></th>
+		        <th data-i18n="power.listing.condition" data-colname='power.condition'></th>
+		        <th data-i18n="power.listing.current" data-colname='power.current_capacity'></th>
+		        <th data-i18n="power.listing.charged" data-colname='power.current_percent'></th>
 				<?php
 					$temperature_unit=conf('temperature_unit');
 					if ( $temperature_unit == "F" ) {
@@ -36,9 +36,9 @@ new Power_model;
 						echo "<th data-colname='power.temperature'>Temp°C</th>";
 					}
 				?>
-		        <th data-i18n="listing.power.manufactured" data-colname='power.manufacture_date'></th> 
-		        <th data-i18n="power.wattage" data-colname='power.wattage'></th> 
-		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th> 
+		        <th data-i18n="power.listing.manufactured" data-colname='power.manufacture_date'></th>
+		        <th data-i18n="power.wattage" data-colname='power.wattage'></th>
+		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -60,14 +60,14 @@ new Power_model;
 		return;
 
 	});
-	
+
 	$(document).on('appReady', function(e, lang) {
 
         // Get modifiers from data attribute
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -84,14 +84,14 @@ new Power_model;
 
             col++
         });
-        
+
 	    oTable = $('.table').dataTable( {
             ajax: {
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
                     d.mrColNotEmptyBlank = "power.condition";
-                    
+
                     // Look for 'between' statement todo: make generic
                     if(d.search.value.match(/^\d+% max_percent \d+%$/))
                     {
@@ -123,71 +123,71 @@ new Power_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_battery-tab');
 	        	$('td:eq(0)', nRow).html(link);
-			
+
 	        	// Format designed capacity
 	        	var capacity=$('td:eq(3)', nRow).html();
                 if (capacity != "-9876543" && (capacity)) {
 	        	$('td:eq(3)', nRow).html(capacity+' mAh').addClass('text-right');
                 } else {
-                  $('td:eq(3)', nRow).html('');  
+                  $('td:eq(3)', nRow).html('');
                 }
-                
+
 	        	// Format maximum capacity
 	        	var capacity=$('td:eq(4)', nRow).html();
                 if (capacity != "-9876543" && (capacity)) {
 	        	$('td:eq(4)', nRow).html(capacity+' mAh').addClass('text-right');
                 } else {
-                  $('td:eq(4)', nRow).html('');  
+                  $('td:eq(4)', nRow).html('');
                 }
-                
+
 	        	// Format cycles
 	        	var cycles=$('td:eq(5)', nRow).html();
                 if (cycles != "-9876543" && (cycles)) {
 	        	$('td:eq(5)', nRow).html(cycles+'').addClass('text-right');
                 } else {
-                  $('td:eq(5)', nRow).html('');  
+                  $('td:eq(5)', nRow).html('');
                 }
-                
+
 	        	// Format battery health
 	        	var max_percent=$('td:eq(6)', nRow).html();
                 if (max_percent != "-9876543" && (max_percent)) {
                   var cls = max_percent > 89 ? 'success' : (max_percent > 79 ? 'warning' : 'danger');
                   $('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+max_percent+'%;">'+max_percent+'%</div></div>');
                 } else {
-                  $('td:eq(6)', nRow).html('');  
+                  $('td:eq(6)', nRow).html('');
                 }
-                
+
 				// Format battery condition
 	        	var status=$('td:eq(7)', nRow).html();
-	        	status = status == 'Normal' ? '<span class="label label-success">'+i18n.t('widget.power.normal')+'</span>' : 
-	        	status = status == 'Replace Soon' ? '<span class="label label-warning">'+i18n.t('widget.power.soon')+'</span>' : 
-	        	status = status == 'ReplaceSoon' ? '<span class="label label-warning">'+i18n.t('widget.power.soon')+'</span>' : 
-	        	status = status == 'Service Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.service')+'</span>' : 
-	        	status = status == 'ServiceBattery' ? '<span class="label label-warning">'+i18n.t('widget.power.service')+'</span>' : 
-	        	status = status == 'Check Battery' ? '<span class="label label-warning">'+i18n.t('widget.power.check')+'</span>' : 
-	        	status = status == 'CheckBattery' ? '<span class="label label-warning">'+i18n.t('widget.power.check')+'</span>' : 
-	        	status = status == 'Replace Now' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
-	        	status = status == 'ReplaceNow' ? '<span class="label label-danger">'+i18n.t('widget.power.now')+'</span>' : 
-	        	status = status == '' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : 
-	        	(status === 'No Battery' ? '<span class="label label-danger">'+i18n.t('widget.power.nobattery')+'</span>' : '')
+	        	status = status == 'Normal' ? '<span class="label label-success">'+i18n.t('power.widget.normal')+'</span>' : 
+	        	status = status == 'Replace Soon' ? '<span class="label label-warning">'+i18n.t('power.widget.soon')+'</span>' :
+	        	status = status == 'ReplaceSoon' ? '<span class="label label-warning">'+i18n.t('power.widget.soon')+'</span>' :
+	        	status = status == 'Service Battery' ? '<span class="label label-warning">'+i18n.t('power.widget.service')+'</span>' :
+	        	status = status == 'ServiceBattery' ? '<span class="label label-warning">'+i18n.t('power.widget.service')+'</span>' :
+	        	status = status == 'Check Battery' ? '<span class="label label-warning">'+i18n.t('power.widget.check')+'</span>' :
+	        	status = status == 'CheckBattery' ? '<span class="label label-warning">'+i18n.t('power.widget.check')+'</span>' :
+	        	status = status == 'Replace Now' ? '<span class="label label-danger">'+i18n.t('power.widget.now')+'</span>' :
+	        	status = status == 'ReplaceNow' ? '<span class="label label-danger">'+i18n.t('power.widget.now')+'</span>' :
+	        	status = status == '' ? '<span class="label label-danger">'+i18n.t('power.widget.nobattery')+'</span>' :
+	        	(status === 'No Battery' ? '<span class="label label-danger">'+i18n.t('power.widget.nobattery')+'</span>' : '')
 	        	$('td:eq(7)', nRow).html(status)
-                
+
 	        	// Format current charge
 	        	var charge=$('td:eq(8)', nRow).html();
                 if (charge != "-9876543" && (charge)) {
 	        	$('td:eq(8)', nRow).html(charge+' mAh').addClass('text-right');
                 } else {
-                  $('td:eq(8)', nRow).html('');  
+                  $('td:eq(8)', nRow).html('');
                 }
-                
+
 	        	// Format percentage
 	        	var charge=$('td:eq(9)', nRow).html();
                 if (charge != "-9876543" && (charge)) {
 	        	$('td:eq(9)', nRow).html(charge+'%').addClass('text-right');
                 } else {
-                  $('td:eq(9)', nRow).html('');  
+                  $('td:eq(9)', nRow).html('');
                 }
-                
+
 	        	// Format temperature
 	        	// Check config for temperature_unit °C or °F
 	        	// °C * 9/5 + 32 = °F
@@ -202,7 +202,7 @@ new Power_model;
 					} else {
 						temperature_c = (temperature / 100).toFixed(1)+"°C";
 						temperature_f = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1)+"°F";
-					} 
+					}
 	        	$('td:eq(10)', nRow).html('<span title="'+temperature_c+'">'+temperature_f+'</span>').addClass('text-right');
 	        	} else {
 					// Celsius
@@ -214,15 +214,15 @@ new Power_model;
 				       	temperature_f = (((temperature * 9/5 ) + 3200 ) / 100).toFixed(1)+"°F";
 				       	}
 	        	$('td:eq(10)', nRow).html('<span title="'+temperature_f+'">'+temperature_c+'</span>').addClass('text-right');
-				} 
+				}
                 } else {
 		        	$('td:eq(10)', nRow).html("");
                 }
-                
+
 	        	// Format Manufacture date
 	        	var date=$('td:eq(11)', nRow).html();
                 if(date === '1980-00-00'){
-	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('widget.power.now'));
+	        		$('td:eq(11)', nRow).addClass('text-right danger').html(i18n.t('power.widget.now'));
                 } else {
 	        	if(date){
 	        		a = moment(date)
@@ -233,24 +233,24 @@ new Power_model;
 	        		}
 	        		if(Math.round(b) == 4)
 	        		{
-	        			
+
 	        		}
 	        		$('td:eq(11)', nRow).addClass('text-right').html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
 	        	}
                 }
-                
+
 				// Format wattage
 	        	var wattage=$('td:eq(12)', nRow).html();
                 if (wattage != "-9876543" && (wattage)) {
 	        	$('td:eq(12)', nRow).html(wattage+" "+i18n.t('power.watts'));
                 } else {
-                  $('td:eq(12)', nRow).html('');  
+                  $('td:eq(12)', nRow).html('');
                 }
-                
+
 				// Format Check-In timestamp
 				var checkin = parseInt($('td:eq(13)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(13)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');    
+				$('td:eq(13)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery
@@ -258,7 +258,7 @@ new Power_model;
 	    {
 			oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
 	    }
-	    
+
 	} );
 </script>
 

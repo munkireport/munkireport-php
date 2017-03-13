@@ -2,10 +2,10 @@
 
 return array(
     'client_tabs' => array(
-        'munki' => array('view' => 'client_munki_tab', 'i18n' => 'client.tab.munki'),
+        'munki' => array('view' => 'client_munki_tab', 'i18n' => 'munkireport.munki'),
     ),
     'listings' => array(
-        'munki' => array('view' => 'munki_listing'),
+        'munki' => array('view' => 'munki_listing', 'i18n' => 'munkireport.munki'),
     ),
     'widgets' => array(
         array('view' => 'manifests_widget'),
@@ -13,6 +13,6 @@ return array(
         array('view' => 'munki_widget'),
     ),
     'reports' => array(
-        'munki' => array('view' => 'munki'),
+        'munki' => array('view' => 'munki', 'i18n' => 'munkireport.managedsoftware'),
     ),
 );

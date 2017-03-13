@@ -31,14 +31,38 @@ $( document ).ready(function() {
         mr.loadTheme();
    });
 
-    $.i18n.init({
-        debug: mr.debug,
-        useLocalStorage: false,
-        resGetPath: baseUrl + "assets/locales/__lng__.json",
-        fallbackLng: 'en',
-        useDataAttrOptions: true
-    }, function() {
+   // Initialize i18n
+   $.i18n.init({
+       debug: mr.debug,
+       useLocalStorage: false,
+       fallbackLng: 'en',
+       useDataAttrOptions: true,
+       getAsync: false,
+       resStore: {}
+   });
+
+   var lang = $.i18n.lng();
+
+   // Load locales
+   $.when(
+       $.getJSON( appUrl + '/locale/get/'+lang )
+   )
+    .fail(function(){
+        alert('failed to load locales, please check for syntax errors');
+    })
+   .done(function( data ){
+
+        i18n.addResourceBundle('en', 'translation', data.fallback_main);
+        i18n.addResourceBundle('en', 'translation', data.fallback_module);
+        i18n.addResourceBundle(lang, 'translation', data.lang_main);
+        i18n.addResourceBundle(lang, 'translation', data.lang_module);
+
         $('body').i18n();
+
+        // Sort menus
+        mr.sortMenu('ul.report');
+        mr.sortMenu('ul.listing');
+        mr.sortMenu('ul.client-tabs');
 
         // Check if current locale is available (FIXME: check loaded locale)
         if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)

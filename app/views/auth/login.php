@@ -33,9 +33,9 @@
 							<?php endforeach; ?>
 
 							<div class="form-group">
-								<label for="loginusername" class="col-md-5 control-label"><span data-i18n="auth.username">Username</span></label>
+								<label for="loginusername" class="col-md-5 control-label"><span data-i18n="username">Username</span></label>
 								<div class="col-md-7">
-									<input type="text" id="loginusername" name="login" class="form-control" value="<?php echo $login; ?>" data-i18n="[placeholder]auth.username">
+									<input type="text" id="loginusername" name="login" class="form-control" value="<?php echo $login; ?>" data-i18n="[placeholder]username">
 								</div>
 							</div>
 							<div class="form-group">

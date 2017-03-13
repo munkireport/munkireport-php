@@ -13,7 +13,7 @@ $tab_list = array(
 );
 
 // Include module tabs
-$modules = getMrModuleObj();
+$modules = getMrModuleObj()->loadInfo();
 $modules->addTabs($tab_list);
 
 // Add custom tabs
@@ -50,7 +50,6 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 							<?php endforeach?>
 
-							<li class="divider"></li>
 						</ul>
 				</div><!-- /btn-group -->
 

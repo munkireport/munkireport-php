@@ -114,7 +114,7 @@ class Power_model extends Model
     {
         $sql = "SELECT COUNT(CASE WHEN max_percent>89 THEN 1 END) AS success,
                         COUNT(CASE WHEN max_percent BETWEEN 80 AND 89 THEN 1 END) AS warning,
-                        COUNT(CASE WHEN max_percent<80 THEN 1 END) AS danger
+                        COUNT(CASE WHEN max_percent BETWEEN 0 AND 79 THEN 1 END) AS danger
                         FROM power
                         LEFT JOIN reportdata USING(serial_number)
                         ".get_machine_group_filter();
@@ -282,7 +282,7 @@ class Power_model extends Model
         }
           
         // Check if no battery is inserted and adjust values
-        if ( $this->condition == "No Battery") {
+        if ( $this->condition == "No Battery" || $this->condition == "") {
             $this->manufacture_date = '1980-00-00';
             $this->design_capacity = -9876543;
             $this->max_capacity = -9876543;

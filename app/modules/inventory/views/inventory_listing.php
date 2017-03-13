@@ -1,6 +1,6 @@
 <?php $this->view('partials/head'); ?>
 
-<?php 
+<?php
 //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
@@ -20,7 +20,7 @@ new Inventory_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		    	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		    	<th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		    	<th data-i18n="username" data-colname='reportdata.long_username'></th>
 		    	<th data-i18n="name" data-colname='inventoryitem.name'></th>
 		    	<th data-i18n="version" data-colname='inventoryitem.version'></th>
 		      </tr>
@@ -44,14 +44,14 @@ new Inventory_model;
 		return;
 
 	});
-	
+
 	$(document).on('appReady', function(e, lang) {
 
         // Get modifiers from data attribute
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -85,7 +85,7 @@ new Inventory_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_inventory-items');
 	        	$('td:eq(0)', nRow).html(link);
-                
+
                 // Get name link
                 var appname=$('td:eq(3)', nRow).html();
                 $('td:eq(3)', nRow).html(
@@ -93,7 +93,7 @@ new Inventory_model;
                         .attr('href', appUrl+'/module/inventory/items/'+appname)
                         .text(appname)
                 )
-                
+
                 // Get name/version link
                 var version=$('td:eq(4)', nRow).html();
                 $('td:eq(4)', nRow).html(

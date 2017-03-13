@@ -2,7 +2,7 @@
 
 return array(
     'listings' => array(
-        'tag' => array('view' => 'tag_listing'),
+        'tag' => array('view' => 'tag_listing', 'i18n' => 'tag.tag'),
     ),
     'widgets' => array(
         array('view' => 'tag_widget'),

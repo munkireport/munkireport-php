@@ -8,7 +8,7 @@ class show extends Controller
             redirect('auth/login');
         }
 
-        $this->modules = $modules = getMrModuleObj();
+        $this->modules = $modules = getMrModuleObj()->loadInfo();
     }
 
     public function index()

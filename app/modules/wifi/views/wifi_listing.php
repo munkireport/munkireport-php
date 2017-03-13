@@ -12,8 +12,8 @@ new wifi_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.wifi"></span> <span id="total-count" class='label label-primary'>…</span></h3>
-		  
+		  <h3><span data-i18n="wifi.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
@@ -21,15 +21,15 @@ new wifi_model;
 		      	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		      	<th data-colname='wifi.ssid'>SSID</th>
 		      	<th data-colname='wifi.bssid'>BSSID</th>
-		      	<th data-i18n="listing.wifi.state" data-colname='wifi.state'></th>
-		      	<th data-i18n="listing.wifi.lasttx" data-colname='wifi.lasttxrate'></th>
-		      	<th data-i18n="listing.wifi.maxtx" data-colname='wifi.maxrate'></th>
-		      	<th data-i18n="listing.wifi.channel" data-colname='wifi.channel'></th>
+		      	<th data-i18n="wifi.listing.state" data-colname='wifi.state'></th>
+		      	<th data-i18n="wifi.listing.lasttx" data-colname='wifi.lasttxrate'></th>
+		      	<th data-i18n="wifi.listing.maxtx" data-colname='wifi.maxrate'></th>
+		      	<th data-i18n="wifi.listing.channel" data-colname='wifi.channel'></th>
 		      	<th data-colname='wifi.agrctlrssi'>RSSI</th>
-		      	<th data-i18n="listing.wifi.noise" data-colname='wifi.agrctlnoise'></th>
-		      	<th data-i18n="listing.wifi.authtype" data-colname='wifi.x802_11_auth'></th>
-		      	<th data-i18n="listing.wifi.linkauthtype" data-colname='wifi.link_auth'></th>
-		      	<th data-i18n="listing.wifi.apmode" data-colname='wifi.op_mode'></th>
+		      	<th data-i18n="wifi.listing.noise" data-colname='wifi.agrctlnoise'></th>
+		      	<th data-i18n="wifi.listing.authtype" data-colname='wifi.x802_11_auth'></th>
+		      	<th data-i18n="wifi.listing.linkauthtype" data-colname='wifi.link_auth'></th>
+		      	<th data-i18n="wifi.listing.apmode" data-colname='wifi.op_mode'></th>
 		      	<th data-colname='wifi.mcs'>MCS</th>
 		      </tr>
 		    </thead>

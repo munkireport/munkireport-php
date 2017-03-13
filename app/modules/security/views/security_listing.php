@@ -14,18 +14,18 @@ new Security_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.security"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="security.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="user.local_admins" data-colname='localadmin.users'></th>
-		        <th data-i18n="filevault.users" data-colname='filevault_status.filevault_users'></th>
+		        <th data-i18n="filevault_status.users" data-colname='filevault_status.filevault_users'></th>
 		        <th data-i18n="type"data-colname='machine.machine_name'></th>
-		        <th data-i18n="storage.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+		        <th data-i18n="disk_report.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
 		        <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
@@ -59,7 +59,7 @@ new Security_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -94,7 +94,7 @@ new Security_model;
                         console.log(d.columns[6].search.value)
                         //dumpj(d.columns[6].search.value)
                     }
-                    
+
                     // Only search on bootvolume
                     d.where = [
                         {
@@ -117,7 +117,7 @@ new Security_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn);
 	        	$('td:eq(0)', nRow).html(link);
-                
+
                 var enc = $('td:eq(6)', nRow).html();
                 $('td:eq(6)', nRow).html(function(){
                     if( enc == 1){
@@ -125,7 +125,7 @@ new Security_model;
                     }
                     return '<span class="label label-danger">'+i18n.t('unencrypted')+'</span>';
                 });
-                
+
                 var gk = $('td:eq(7)', nRow).html();
                 $('td:eq(7)', nRow).html(function(){
                   if( gk == 'Active'){
@@ -136,7 +136,7 @@ new Security_model;
                         return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
                     }
                 });
-                
+
                 var sip = $('td:eq(8)', nRow).html();
                 $('td:eq(8)', nRow).html(function(){
                     if( sip == 'Active'){
@@ -147,7 +147,7 @@ new Security_model;
                         return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
                     }
                 });
-                
+
                  var firmwarepw = $('td:eq(11)', nRow).html();
                  $('td:eq(11)', nRow).html(function(){
                      if( firmwarepw == 'Yes'){
@@ -155,11 +155,10 @@ new Security_model;
                      }
                      return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
                  });
-                
+
 		    }
 	    } );
 	} );
 </script>
 
 <?php $this->view('partials/foot'); ?>
-

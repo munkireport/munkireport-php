@@ -11,16 +11,16 @@ new Bluetooth_model;
 	<div class="row">
 		<div class="col-lg-12">
 
-			<h3><span data-i18n="listing.bluetooth.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+			<h3><span data-i18n="bluetooth.listing_title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 			<table class="table table-striped table-condensed table-bordered">
 			<thead>
 				<tr>
 					<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 					<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-					<th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-					<th data-i18n="listing.bluetooth.device_type" data-colname='bluetooth.device_type'></th> 
-					<th data-i18n="listing.bluetooth.battery_percent" data-colname='bluetooth.battery_percent'></th> 
+					<th data-i18n="username" data-colname='reportdata.long_username'></th>
+					<th data-i18n="bluetooth.device_type" data-colname='bluetooth.device_type'></th>
+					<th data-i18n="bluetooth.battery_percent" data-colname='bluetooth.battery_percent'></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -75,7 +75,7 @@ $(document).on('appReady', function(e, lang) {
 		  url: appUrl + '/datatables/data',
 		  type: "POST",
 		  data: function(d){
-	  
+
 			  d.where = [
 				  {
 					  table: 'bluetooth',
@@ -88,7 +88,7 @@ $(document).on('appReady', function(e, lang) {
 		}
 
 	  },
-	  
+
 	  dom: mr.dt.buttonDom,
 	  buttons: mr.dt.buttons,
 	  order: mySort,
@@ -107,7 +107,7 @@ $(document).on('appReady', function(e, lang) {
 		var device_type=$('td:eq(3)', nRow).html();
 		var battery_percent=$('td:eq(4)', nRow).html();
 		if (device_type == 'bluetooth_power'){
-			device_type = i18n.t('listing.bluetooth.bluetooth_power')
+			device_type = i18n.t('bluetooth.bluetooth_power')
 			battery_percent = battery_percent == 1 ? '<span class="label label-success">'+i18n.t('on')+'</span>' :
 			(battery_percent === '0' ? '<span class="label label-danger">'+i18n.t('off')+'</span>' : '')
 			$('td:eq(4)', nRow).html(battery_percent)

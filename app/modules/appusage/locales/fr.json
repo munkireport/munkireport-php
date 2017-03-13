@@ -1,0 +1,15 @@
+{
+    "activation": "Activation",
+    "appname": "Nom Applications",
+    "appusage": "Usage Applications",
+    "appusagereport": "Rapport Usage Applications",
+    "count": "Compteur",
+    "event": "Evènement",
+    "lastevent": "Dernier évènement",
+    "launch": "Lancer",
+    "quit": "Quitter",
+    "title": "Application Usage",
+    "tooltip": "Most frequently used apps",
+    "title": "Usages Applications",
+    "tooltip": "Applications les plus utilisées"
+}

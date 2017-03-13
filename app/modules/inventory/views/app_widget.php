@@ -1,4 +1,4 @@
-<?php foreach(conf('apps_to_track', array()) as $string):?> 
+<?php foreach(conf('apps_to_track', array()) as $string):?>
 <div class="col-lg-4 col-md-6">
     <div class="panel panel-default app-widget" data-ident="<?php echo $string;?>">
         <div class="panel-heading" data-container="body">
@@ -11,7 +11,7 @@
 
 <script>
 $(document).on('appReady', function(){
-    
+
     var baseUrl = appUrl + '/module/inventory/appVersions/',
         apps = [];
     // Compile list of apps
@@ -19,7 +19,7 @@ $(document).on('appReady', function(){
         var appName = $(this).data('ident');
         // Set tooltip
         $(this).find('div.panel-heading')
-            .attr('title', i18n.t('widget.app.versions', {app: appName}))
+            .attr('title', i18n.t('inventory.app.versions', {app: appName}))
             .tooltip();
         // Set title
         $(this).find('.panel-title span').text(appName);
@@ -29,9 +29,9 @@ $(document).on('appReady', function(){
             list: $(this).find('div.list-group')
         });
     });
-    
+
     $(document).on('appUpdate', function(){
-        
+
         // Get data for apps
         $.each(apps, function(i, app){
             $.getJSON(baseUrl + app.name, function(data){
@@ -58,4 +58,3 @@ $(document).on('appReady', function(){
 });
 
 </script>
-

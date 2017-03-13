@@ -46,11 +46,11 @@ drawServerPlots = function(hours) {
 
 		var networkTraffic = [
 			  {
-				key: i18n.t('network.inbound_traffic'),
+				key: i18n.t('servermetrics.network.inbound_traffic'),
 				values:[]
 			  },
 			  {
-				key: i18n.t('network.outbound_traffic'),
+				key: i18n.t('servermetrics.network.outbound_traffic'),
 				color: "#ff7f0e",
 				values:[]
 			  }
@@ -68,37 +68,37 @@ drawServerPlots = function(hours) {
 			],
 			memoryUsage = [
 			  {
-				key: i18n.t('memory.usage'),
+				key: i18n.t('servermetrics.memory.usage'),
 				values:[]
 			  }
 			],
 			memoryPressure = [
 			  {
-				key: i18n.t('memory.pressure'),
+				key: i18n.t('servermetrics.memory.pressure'),
 				values: []
 			  }
 			],
 			cachingServer = [
 			  {
-				key: i18n.t('caching.from_origin'),
+				key: i18n.t('servermetrics.caching.from_origin'),
 				values:[]
 			  },
 			  {
-				key: i18n.t('caching.from_peers'),
+				key: i18n.t('servermetrics.caching.from_peers'),
 				values:[]
 			  },
 			  {
-				key: i18n.t('caching.from_cache'),
+				key: i18n.t('servermetrics.caching.from_cache'),
 				values:[]
 			  }
 			],
 			connectedUsers = [
 			  {
-				key: i18n.t('sharing.afp_users'),
+				key: i18n.t('servermetrics.sharing.afp_users'),
 				values:[]
 			  },
 			  {
-				key: i18n.t('sharing.smb_users'),
+				key: i18n.t('servermetrics.sharing.smb_users'),
 				values:[]
 			  }
 			]

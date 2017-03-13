@@ -4,7 +4,7 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-lock"></i> <span data-i18n="filevault.widget.title"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-lock"></i> <span data-i18n="disk_report.filevault_widget_title"></span></h3>
 
 		</div>
 
@@ -37,7 +37,7 @@ $(document).on('appUpdate', function(e, lang) {
 			//alert(data.error);
 			return;
 		}
-		
+
 		var url = appUrl + '/show/listing/security/security#'
 
 		// Set urls

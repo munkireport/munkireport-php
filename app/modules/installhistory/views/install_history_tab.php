@@ -4,9 +4,9 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
 <?php if(isset($installHistory) && count($installHistory) > 1): ?>
 
 <?php if($apple):?>
-<h2 data-i18n="client.installed_apple_software"></h2>
+<h2 data-i18n="installhistory.installed_apple_software"></h2>
 <?php else:?>
-<h2 data-i18n="client.installed_third_party_software"></h2>
+<h2 data-i18n="installhistory.installed_third_party_software"></h2>
 <?php endif?>
 
 <table class="install-history-<?php echo $apple; ?> table table-striped">
@@ -14,8 +14,8 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
 		<tr>
 			<th data-i18n="name"></th>
 			<th data-i18n="version"></th>
-			<th data-i18n="client.install_date"></th>
-			<th data-i18n="client.process_name"></th>
+			<th data-i18n="installhistory.install_date"></th>
+			<th data-i18n="installhistory.process_name"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -32,7 +32,7 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
 	</tbody>
 </table>
 <?php else: ?>
-<p><i data-i18n="client.no_install_history"></i></p>
+<p><i data-i18n="installhistory.no_install_history"></i></p>
 <?php endif ?>
 
 <script>

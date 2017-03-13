@@ -1,8 +1,8 @@
 
-	<h2 data-i18n="client.tab.location"></h2>
-	
+	<h2 data-i18n="location.location"></h2>
+
 	<div id="location-msg" data-i18n="listing.loading" class="col-lg-12 text-center"></div>
-	
+
 	<div id="location-view" class="row hide">
 		<div class="col-md-6">
 			<table class="table table-striped">
@@ -56,20 +56,20 @@
 <?php endif?>
 
 <script>
-	
+
 $(document).on('appReady', function(e, lang) {
-	
+
 	// Get location data
 	$.getJSON( appUrl + '/module/location/get_data/' + serialNumber, function( data ) {
 		if( ! data.lastrun){
 			$('#location-msg').text(i18n.t('no_data'));
 		}
 		else{
-			
+
 			// Hide
 			$('#location-msg').text('');
 			$('#location-view').removeClass('hide');
-			
+
 			// Add strings
 			$('#location-currentstatus').text(data.currentstatus);
 			$('#location-stalelocation').text(data.stalelocation);
@@ -78,7 +78,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#location-altitude').text(data.altitude + 'm');
 			$('#location-latitudeaccuracy').text(data.latitudeaccuracy + 'm');
 			$('#location-longitudeaccuracy').text(data.longitudeaccuracy + 'm');
-			
+
 			// Format LastRun date
 			if(data.lastrun !== "" ){
 				var mydate = moment(data.lastrun, "YYYY-MM-DD HH:mm:ss Z");
@@ -88,7 +88,7 @@ $(document).on('appReady', function(e, lang) {
 				$('#location-lastrun').html(i18n.t('location.never'));
 				$('#location-lastrun time').tooltip().css('cursor', 'pointer');
 			}
-            
+
 			// Format LastLocationRun date
 			if(data.lastlocationrun !== "" ){
 				var mydate = moment(data.lastlocationrun, "YYYY-MM-DD HH:mm:ss Z");
@@ -98,7 +98,7 @@ $(document).on('appReady', function(e, lang) {
 				$('#location-lastlocationrun').html(i18n.t('location.never'));
 				$('#location-lastlocationrun time').tooltip().css('cursor', 'pointer');
 			}
-            
+
 			// Create google maps instance
 			var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
 			var mapOptions = {
@@ -112,7 +112,7 @@ $(document).on('appReady', function(e, lang) {
 				map: map,
 				title: ''
 			});
-			
+
 			var myLocation = new google.maps.Circle({
 				center:myLatlng,
 				radius:150,
@@ -128,7 +128,7 @@ $(document).on('appReady', function(e, lang) {
 		}
 
 	});
-	
+
 });
 
 </script>

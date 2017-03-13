@@ -13,23 +13,23 @@ new munkiinfo_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="nav.reports.munki"></span> <span id="total-count" class='label label-primary'>…</span></h3>
-		  
+		  <h3><span data-i18n="munkireport.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		      	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		      	<th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		      	<th data-i18n="username" data-colname='reportdata.long_username'></th>
 		      	<th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
 		      	<th data-i18n="os.version" data-colname='machine.os_version'></th>
-		      	<th data-i18n="munki.version" data-colname='munkireport.version'></th>
-		      	<th data-i18n="munki.munkiprotocol" data-colname='munkiinfo.munkiinfo_value'></th>
+		      	<th data-i18n="munkireport.version" data-colname='munkireport.version'></th>
+		      	<th data-i18n="munkireport.munkiprotocol" data-colname='munkiinfo.munkiinfo_value'></th>
 		      	<th data-i18n="last_seen" data-sort="desc" data-colname='reportdata.timestamp'></th>
-		      	<th data-i18n="munki.run_type" data-colname='munkireport.runtype'></th>
+		      	<th data-i18n="munkireport.run_type" data-colname='munkireport.runtype'></th>
 		      	<th data-i18n="error_plural" data-colname='munkireport.errors'></th>
 		      	<th data-i18n="warning_plural" data-colname='munkireport.warnings'></th>
-		      	<th data-i18n="manifest.name" data-colname='munkireport.manifestname'></th>
+		      	<th data-i18n="munkireport.manifest.name" data-colname='munkireport.manifestname'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -50,7 +50,7 @@ new munkiinfo_model;
 		oTable.ajax.reload();
 		return;
 
-	});	
+	});
 
 	$(document).on('appReady', function(e, lang) {
 
@@ -58,7 +58,7 @@ new munkiinfo_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -90,7 +90,7 @@ new munkiinfo_model;
                         });
 
                     }
-                    
+
                     // Look for the protocol
                     if(d.search.value.match(/^protocol = .+$/))
                     {
@@ -102,13 +102,13 @@ new munkiinfo_model;
                         d.search.value = '';
                         //console.log(d.columns[6].search.value)
                     }
-                    
+
         		    // OS version
                     if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
                     }
-                    
+
                     // Only search this key
                     d.where = [
                         {
@@ -117,7 +117,7 @@ new munkiinfo_model;
                             value: 'munkiprotocol'
                         }
                     ];
-                    
+
                 }
             },
             dom: mr.dt.buttonDom,

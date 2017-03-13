@@ -2,7 +2,7 @@
 
 return array(
     'listings' => array(
-        'hardware' => array('view' => 'hardware_listing'),
+        'hardware' => array('view' => 'hardware_listing', 'i18n' => 'machine.hardware'),
     ),
     'widgets' => array(
       array('view' => 'duplicated_computernames_widget'),
@@ -15,7 +15,7 @@ return array(
       array('view' => 'os_widget'),
     ),
     'reports' => array(
-        'hardware' => array('view' => 'hardware'),
-        'backup' => array('view' => 'backup_report')
+        'hardware' => array('view' => 'hardware', 'i18n' => 'machine.hardware_report'),
+        'backup' => array('view' => 'backup_report', 'i18n' => 'backup.report')
     )
 );

@@ -1,7 +1,7 @@
 /*!
  * Storageplot for MunkiReport
  * requires nv.d3.js (https://github.com/novus/nvd3)
- */	
+ */
 var drawStoragePlots = function(serialNumber, divid) {
 
 	// Get storage data
@@ -34,7 +34,7 @@ var drawStoragePlots = function(serialNumber, divid) {
 	    					.append('tbody')
 
 	    	// get encryption string
-	    	var encrypted = obj.CoreStorageEncrypted == 1 ? i18n.t('storage.encrypted') : i18n.t('storage.not_encrypted');
+	    	var encrypted = obj.CoreStorageEncrypted == 1 ? i18n.t('disk_report.encrypted') : i18n.t('disk_report.not_encrypted');
 	    	if(obj.CoreStorageEncrypted == -1)
 	    	{
 	    		encrypted = i18n.t('unknown')
@@ -42,25 +42,25 @@ var drawStoragePlots = function(serialNumber, divid) {
 
 	    	var props = [
 	    		{
-	    			key: i18n.t('storage.mountpoint'),
+	    			key: i18n.t('disk_report.mountpoint'),
 	    			val: obj.MountPoint
 	    		},
 	    		{
-	    			key: i18n.t('storage.volume_type'),
+	    			key: i18n.t('disk_report.volume_type'),
 	    			val: obj.VolumeType.toUpperCase()
 	    		},
 	    		{
-	    			key: i18n.t('storage.smartstatus'),
+	    			key: i18n.t('disk_report.smartstatus'),
 	    			val: obj.SMARTStatus
 	    		},{
-	    			key: i18n.t('storage.bus_protocol'),
+	    			key: i18n.t('disk_report.bus_protocol'),
 	    			val: obj.BusProtocol
 	    		},{
-	    			key: i18n.t('storage.type'),
-	    			val: obj.Internal == 1 ? i18n.t('storage.internal') : i18n.t('storage.external')
+	    			key: i18n.t('disk_report.type'),
+	    			val: obj.Internal == 1 ? i18n.t('disk_report.internal') : i18n.t('disk_report.external')
 	    		},
 	    		{
-	    			key: i18n.t('storage.encryption_status'),
+	    			key: i18n.t('disk_report.encryption_status'),
 	    			val: encrypted
 	    		}];
 
@@ -80,11 +80,11 @@ var drawStoragePlots = function(serialNumber, divid) {
 		   	// Filter data
 		   	var fill = [
 		   		{
-		   			key: i18n.t('storage.used'), 
+		   			key: i18n.t('disk_report.used'),
 		   			cnt: obj.TotalSize - obj.FreeSpace
 		   		},
 			    {
-			    	key: i18n.t('storage.free'),
+			    	key: i18n.t('disk_report.free'),
 			    	cnt:obj.FreeSpace
 			    }];
 
@@ -108,7 +108,7 @@ var drawStoragePlots = function(serialNumber, divid) {
 				    .datum(fill)
 				    .transition().duration(1200)
 				    .call(chart);
-                
+
                 // Remove fill from labels
                 d3.selectAll('#'+id+' .nv-pieLabels text').style('fill', null);
 

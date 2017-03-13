@@ -2,9 +2,9 @@
 
 	<div class="panel panel-default" id="bound-to-ds-widget">
 
-	  <div class="panel-heading" data-container="body" data-i18n="[title]widget.bound_to_ds.info">
+	  <div class="panel-heading" data-container="body" data-i18n="[title]directory_service.info">
 
-	    <h3 class="panel-title"><i class="fa fa-bullseye"></i> <span data-i18n="widget.bound_to_ds.title"></span></h3>
+	    <h3 class="panel-title"><i class="fa fa-bullseye"></i> <span data-i18n="directory_service.bound_title"></span></h3>
 
 	  </div>
 
@@ -23,16 +23,16 @@ $(document).on('appUpdate', function(e, lang) {
     		//alert(data.error);
     		return;
     	}
-		
+
 		var notbound = data.total - data.arebound;
-		
+
 		var panel = $('#bound-to-ds-widget div.panel-body'),
 			baseUrl = appUrl + '/show/listing/directory_service/directoryservice';
 		panel.empty();
-		
+
 		// Set statuses
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-danger"><span class="bigger-150">'+notbound+'</span><br>'+i18n.t('widget.bound_to_ds.notbound')+'</a>');
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-success"><span class="bigger-150">'+data.arebound+'</span><br>'+i18n.t('widget.bound_to_ds.bound')+'</a>');
+		panel.append(' <a href="'+baseUrl+'" class="btn btn-danger"><span class="bigger-150">'+notbound+'</span><br>'+i18n.t('directory_service.notbound')+'</a>');
+		panel.append(' <a href="'+baseUrl+'" class="btn btn-success"><span class="bigger-150">'+data.arebound+'</span><br>'+i18n.t('directory_service.bound')+'</a>');
 
 
     });

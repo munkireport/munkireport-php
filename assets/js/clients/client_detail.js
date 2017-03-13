@@ -179,52 +179,6 @@ $(document).on('appReady', function(e, lang) {
 		$('.mr-manufacture_date').html(data.date)
 	});
 
-	// Get certificate data
-	$.getJSON( appUrl + '/module/certificate/get_data/' + serialNumber, function( data ) {
-		if(data.length)
-		{
-			var certs = $('<table>').addClass('table table-condensed table-striped');
-
-			// Set headers
-			certs.append($('<thead>')
-					.append($('<tr>')
-						.append($('<th>')
-							.text(i18n.t('listing.certificate.commonname')))
-						.append($('<th>')
-							.text(i18n.t('listing.certificate.expires')))));
-
-			// Load data
-			$.each(data, function(index, cert){
-				certs.append($('<tr>')
-					.attr('title', cert.rs.cert_path)
-					.append($('<td>')
-						.text(cert.rs.cert_cn))
-					.append($('<td>')
-						.html(function(){
-							var date = new Date(cert.rs.cert_exp_time * 1000);
-							var diff = moment().diff(date, 'days');
-							var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
-							return('<span class="label label-'+cls+'">'+moment(date).fromNow()+'</span>');
-						})));
-			});
-
-			// Add tab
-			var conf = {
-				id: 'certificate-tab',
-				linkTitle: i18n.t('client.tab.certificates'),
-				tabTitle: i18n.t('client.tab.certificates'),
-				tabContent: certs
-			}
-			addTab(conf);
-
-			// Add tooltips
-			$('tr[title]').tooltip();
-
-			// Set correct tab on location hash
-			loadHash();
-
-		}
-	});
 
 	// Get services data
 	$.getJSON( appUrl + '/module/service/get_data/' + serialNumber, function( data ) {
@@ -283,7 +237,7 @@ $(document).on('appReady', function(e, lang) {
 		var tmData = tmResp[0],
 			cpData = cpResp[0];
 
-		// Draw timemachine unit
+		// Draw Time Machine unit
 		if(tmData.id !== '')
 		{
 			$('table.mr-timemachine-table')
@@ -313,19 +267,9 @@ $(document).on('appReady', function(e, lang) {
 						})))
 				.append($('<tr>')
 					.append($('<th>')
-						.text(i18n.t('backup.kind')))
-					.append($('<td>')
-						.text(tmData.kind)))
-				.append($('<tr>')
-					.append($('<th>')
 						.text(i18n.t('backup.location_name')))
 					.append($('<td>')
-						.text(tmData.location_name)))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.backup_location')))
-					.append($('<td>')
-						.text(tmData.backup_location)))
+						.text(tmData.alias_volume_name)))
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.destinations')))
@@ -333,9 +277,9 @@ $(document).on('appReady', function(e, lang) {
 						.text(tmData.destinations)))
 				.append($('<tr>')
 					.append($('<th>')
-						.text(i18n.t('backup.last_failure_msg')))
+						.text(i18n.t('timemachine.result')))
 					.append($('<td>')
-						.text(tmData.last_failure_msg)));
+						.text(i18n.t('timemachine.'+tmData.result))));
 		}
 		else{
 			$('table.mr-timemachine-table')
