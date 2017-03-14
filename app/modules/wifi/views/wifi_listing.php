@@ -78,11 +78,11 @@ new wifi_model;
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_wifi-tab');
 	        	$('td:eq(0)', nRow).html(link);
                 
-                // Format Last Tx
+	        	// Format Last Tx
 	        	var lastTx=$('td:eq(5)', nRow).html();
 	        	$('td:eq(5)', nRow).html('<span title="'+(lastTx*0.125)+' MB/sec">'+lastTx+" Mbps</span>");
                 
-                // Format Max Tx
+	        	// Format Max Tx
 	        	var maxTx=$('td:eq(6)', nRow).html();
 	        	$('td:eq(6)', nRow).html('<span title="'+(maxTx*0.125)+' MB/sec">'+maxTx+" Mbps</span>");
                 
@@ -91,11 +91,11 @@ new wifi_model;
 	        	var noise=$('td:eq(10)', nRow).html();
 	        	$('td:eq(8)', nRow).html('<span title="'+i18n.t('wifi.snr_detail')+'">'+(rssi-noise)+' db</span>');
                                 
-                // Format RSSI
+	        	// Format RSSI
 	        	var rssi=$('td:eq(9)', nRow).html();
 	        	$('td:eq(9)', nRow).html('<span title="'+i18n.t('wifi.rssi_detail')+'">'+rssi+' db</span>');
                                 
-                // Format Noise
+	        	// Format Noise
 	        	var noise=$('td:eq(10)', nRow).html();
 	        	$('td:eq(10)', nRow).html('<span title="'+i18n.t('wifi.noise_detail')+'">'+noise+' db</span>');
                 
@@ -126,18 +126,18 @@ new wifi_model;
                                 
 	        	// Blank row if no wifi
 	        	var wifistate=$('td:eq(4)', nRow).html();
-                if ( wifistate == 'no wifi' || wifistate == 'off') {
-                    $('td:eq(5)', nRow).html("")
-                    $('td:eq(6)', nRow).html("")
-                    $('td:eq(7)', nRow).html("")
-                    $('td:eq(8)', nRow).html("")
-                    $('td:eq(9)', nRow).html("")
-                    $('td:eq(10)', nRow).html("")
-                    $('td:eq(11)', nRow).html("")
-                    $('td:eq(12)', nRow).html("")
-                    $('td:eq(13)', nRow).html("")
-                    $('td:eq(14)', nRow).html("")
-                }
+	        	if ( wifistate == 'no wifi' || wifistate == 'off') {
+	        	    $('td:eq(5)', nRow).html("")
+	        	    $('td:eq(6)', nRow).html("")
+	        	    $('td:eq(7)', nRow).html("")
+	        	    $('td:eq(8)', nRow).html("")
+	        	    $('td:eq(9)', nRow).html("")
+	        	    $('td:eq(10)', nRow).html("")
+	        	    $('td:eq(11)', nRow).html("")
+	        	    $('td:eq(12)', nRow).html("")
+	        	    $('td:eq(13)', nRow).html("")
+	        	    $('td:eq(14)', nRow).html("")
+	        	}
                 
 	        	// Format wifi state
 	        	var wifistate=$('td:eq(4)', nRow).html();
@@ -148,7 +148,6 @@ new wifi_model;
 	        	wifistate = wifistate == 'sharing' ? i18n.t('wifi.sharing') :
 	        	(wifistate === 'unknown' ? i18n.t('wifi.unknown') : wifistate)
 	        	$('td:eq(4)', nRow).html(wifistate)
-
 	        }
 	    });
 	});
