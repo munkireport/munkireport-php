@@ -85,7 +85,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#wifi-rssilevel').html('<span title="'+i18n.t('wifi.rssi_detail')+'">'+data.agrctlrssi+" db</span>");
 			$('#wifi-noise').html('<span title="'+i18n.t('wifi.noise_detail')+'">'+data.agrctlnoise+" db</span>");
             
-            if(data.state == "running") {
+			if(data.state == "running") {
 				 $('#wifi-state').text(i18n.t('wifi.running'));
 			} else if(data.state == "off") {
 				 $('#wifi-state').text(i18n.t('wifi.off'));
@@ -101,7 +101,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#wifi-state').text(data.state);
 			}            
             
-            if(data.link_auth == "none") {
+			if(data.link_auth == "none") {
 				 $('#wifi-wifiauthtype').text(i18n.t('wifi.none'));
 			} else if(data.link_auth == "802.1x") {
 				 $('#wifi-wifiauthtype').text(i18n.t('wifi.802.1x'));
@@ -129,13 +129,13 @@ $(document).on('appReady', function(e, lang) {
 				 $('#wifi-xauthtype').text(data.x802_11_auth);
 			}
             
-            if(data.op_mode == "station ") {
+			if(data.op_mode == "station ") {
 				 $('#wifi-apmode').text(i18n.t('wifi.station'));
 			} else{
 				 $('#wifi-apmode').text(data.op_mode);
 			}
             
-            $('#wifi-snr').html('<span title="'+i18n.t('wifi.snr_detail')+'">'+(data.agrctlrssi - data.agrctlnoise)+' db</span>');
+			$('#wifi-snr').html('<span title="'+i18n.t('wifi.snr_detail')+'">'+(data.agrctlrssi - data.agrctlnoise)+' db</span>');
 
 		}
 
