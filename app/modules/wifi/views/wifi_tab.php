@@ -38,16 +38,20 @@
 					<td id="wifi-maxtrx"></td>
 				</tr>
 				<tr>
-					<th data-i18n="wifi.rssilevel"></th>
-					<td id="wifi-rssilevel"></td>
-				</tr>
-				<tr>
 					<th data-i18n="wifi.channel"></th>
 					<td id="wifi-channel"></td>
 				</tr>
 				<tr>
+					<th data-i18n="wifi.rssilevel"></th>
+					<td id="wifi-rssilevel"></td>
+				</tr>
+				<tr>
 					<th data-i18n="wifi.noise"></th>
 					<td id="wifi-noise"></td>
+				</tr>
+				<tr>
+					<th data-i18n="wifi.snr"></th>
+					<td id="wifi-snr"></td>
 				</tr>
 			</table>
 		</div>
@@ -62,8 +66,11 @@ $(document).on('appReady', function(e, lang) {
 	$.getJSON( appUrl + '/module/wifi/get_data/' + serialNumber, function( data ) {
 		if( ! data.state){
 			$('#wifi-msg').text(i18n.t('no_data'));
-		}
-		else{
+		} else if (data.state == 'no wifi') {
+			$('#wifi-msg').text(i18n.t('wifi.no_wifi_client_tab'));
+		} else if (data.state == 'off') {
+			$('#wifi-msg').text(i18n.t('wifi.off_client_tab'));
+        } else{
 
 			// Hide
 			$('#wifi-msg').text('');
@@ -72,15 +79,63 @@ $(document).on('appReady', function(e, lang) {
 			// Add strings
 			$('#wifi-ssid').text(data.ssid);
 			$('#wifi-bssid').text(data.bssid);
-			$('#wifi-state').text(data.state);
-			$('#wifi-apmode').text(data.op_mode);
-			$('#wifi-xauthtype').text(data.x802_11_auth);
-			$('#wifi-wifiauthtype').text(data.link_auth);
-			$('#wifi-lasttrx').text(data.lasttxrate);
-			$('#wifi-maxtrx').text(data.maxrate);
-			$('#wifi-rssilevel').text(data.agrctlrssi);
+			$('#wifi-lasttrx').html('<span title="'+(data.lasttxrate*0.125)+' MB/sec">'+data.lasttxrate+" Mbps</span>");
+			$('#wifi-maxtrx').html('<span title="'+(data.maxrate*0.125)+' MB/sec">'+data.maxrate+" Mbps</span>");
 			$('#wifi-channel').text(data.channel);
-			$('#wifi-noise').text(data.agrctlnoise);
+			$('#wifi-rssilevel').html('<span title="'+i18n.t('wifi.rssi_detail')+'">'+data.agrctlrssi+" db</span>");
+			$('#wifi-noise').html('<span title="'+i18n.t('wifi.noise_detail')+'">'+data.agrctlnoise+" db</span>");
+            
+			if(data.state == "running") {
+				 $('#wifi-state').text(i18n.t('wifi.running'));
+			} else if(data.state == "off") {
+				 $('#wifi-state').text(i18n.t('wifi.off'));
+			} else if(data.state == "no wifi") {
+				 $('#wifi-state').text(i18n.t('wifi.no_wifi'));
+			} else if(data.state == "init") {
+				 $('#wifi-state').text(i18n.t('wifi.init'));
+			} else if(data.state == "sharing") {
+				 $('#wifi-state').text(i18n.t('wifi.sharing'));
+			} else if(data.state == "unknown") {
+				 $('#wifi-state').text(i18n.t('wifi.unknown'));
+			} else{
+				 $('#wifi-state').text(data.state);
+			}            
+            
+			if(data.link_auth == "none") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.none'));
+			} else if(data.link_auth == "802.1x") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.802.1x'));
+			} else if(data.link_auth == "leap") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.leap'));
+			} else if(data.link_auth == "wps") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.wps'));
+			} else if(data.link_auth == "wep") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.wep'));
+			} else if(data.link_auth == "wpa") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.wpa'));
+			} else if(data.link_auth == "wpa-psk") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.wpa_psk'));
+			} else if(data.link_auth == "wpa2-psk") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.wpa2_psk'));
+			} else if(data.link_auth == "wpa2") {
+				 $('#wifi-wifiauthtype').text(i18n.t('wifi.wpa2'));
+			} else{
+				 $('#wifi-wifiauthtype').text(data.link_auth);
+			}
+            
+			if(data.x802_11_auth == "open") {
+				 $('#wifi-xauthtype').text(i18n.t('wifi.open'));
+			} else{
+				 $('#wifi-xauthtype').text(data.x802_11_auth);
+			}
+            
+			if(data.op_mode == "station ") {
+				 $('#wifi-apmode').text(i18n.t('wifi.station'));
+			} else{
+				 $('#wifi-apmode').text(data.op_mode);
+			}
+            
+			$('#wifi-snr').html('<span title="'+i18n.t('wifi.snr_detail')+'">'+(data.agrctlrssi - data.agrctlnoise)+' db</span>');
 
 		}
 
