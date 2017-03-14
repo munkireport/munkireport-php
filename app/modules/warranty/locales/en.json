@@ -1,0 +1,25 @@
+{
+    "coverage": "Warranty Coverage",
+    "est_manufacture_date": "Est. Manufacture Date",
+    "est_purchase_date": "Est. Purchase Date",
+    "expired": "Expired on __date__",
+    "expires_in": "Expires in __date__",
+    "installed_memory_title": "Installed Memory",
+    "no_alerts": "No Warranty Alerts",
+    "recheck": "Recheck Warranty Status",
+    "supported_no_applecare": "Supported until __date__. No Applecare",
+    "supported_until": "Supported until __date__",
+    "unregistered": "Unregistered",
+    "warranty": "Warranty",
+    "widget_title": "Hardware Warranty",
+    "report": "Warranty Report",
+    "purchased": "Purchased",
+    "expires": "Warranty Expires",
+    "warrantysupport":{
+        "title": "Counts Supported, Vintage, Obsolete, and Unknown support status",
+        "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
+        "warrentysupportstatus": "Warranty Support Status"
+    },
+    "status": "Warranty Status",
+    "age": "Hardware Age"
+}

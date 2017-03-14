@@ -50,7 +50,7 @@ $(document).on('appReady', function(e, lang) {
 		},
 		language: {
 		 processing: ' <i class="fa fa-refresh fa fa-spin"></i>'
-		} 
+		}
 	});
 
 	// Modify lengthmenu
@@ -84,7 +84,7 @@ $(document).on('appReady', function(e, lang) {
 		$.each(machineData, function(prop, val){
 			$('.mr-'+prop).html(val);
 		});
-		
+
 		// Convert computer_model to link to everymac.com TODO: make this optional/configurable
 		var mmodel = $('.mr-machine_model').html();
 		$('.mr-machine_model').html('<a target="_blank" href="https://www.everymac.com/ultimate-mac-lookup/?search_keywords='+mmodel+'">'+mmodel+'</a>');
@@ -95,7 +95,7 @@ $(document).on('appReady', function(e, lang) {
 			.attr('title', machineData.computer_name)
 			.data('placement', 'bottom')
 			.tooltip();
-		
+
 		// Add computername to pagetitle
 		var title = $('title').text();
 		$('title').text(machineData.computer_name + ' | ' + title)
@@ -179,64 +179,6 @@ $(document).on('appReady', function(e, lang) {
 		$('.mr-manufacture_date').html(data.date)
 	});
 
-	// Add storage plot(s)
-	var plotId = 'storage-plot';
-	var conf = {
-		id: 'storage-tab',
-		linkTitle: i18n.t('storage.storage'),
-		tabTitle: i18n.t('storage.storage'),
-		tabContent: $('<div>').attr('id', plotId)
-	};
-	addTab(conf);
-	//Initialize storage plots
-	drawStoragePlots(serialNumber, plotId)
-
-	// Get certificate data
-	$.getJSON( appUrl + '/module/certificate/get_data/' + serialNumber, function( data ) {
-		if(data.length)
-		{
-			var certs = $('<table>').addClass('table table-condensed table-striped');
-
-			// Set headers
-			certs.append($('<thead>')
-					.append($('<tr>')
-						.append($('<th>')
-							.text(i18n.t('listing.certificate.commonname')))
-						.append($('<th>')
-							.text(i18n.t('listing.certificate.expires')))));
-
-			// Load data
-			$.each(data, function(index, cert){
-				certs.append($('<tr>')
-					.attr('title', cert.rs.cert_path)
-					.append($('<td>')
-						.text(cert.rs.cert_cn))
-					.append($('<td>')
-						.html(function(){
-							var date = new Date(cert.rs.cert_exp_time * 1000);
-							var diff = moment().diff(date, 'days');
-							var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
-							return('<span class="label label-'+cls+'">'+moment(date).fromNow()+'</span>');
-						})));
-			});
-
-			// Add tab
-			var conf = {
-				id: 'certificate-tab',
-				linkTitle: i18n.t('client.tab.certificates'),
-				tabTitle: i18n.t('client.tab.certificates'),
-				tabContent: certs
-			}
-			addTab(conf);
-
-			// Add tooltips
-			$('tr[title]').tooltip();
-
-			// Set correct tab on location hash
-			loadHash();
-
-		}
-	});
 
 	// Get services data
 	$.getJSON( appUrl + '/module/service/get_data/' + serialNumber, function( data ) {
@@ -281,21 +223,21 @@ $(document).on('appReady', function(e, lang) {
 
 		}
 	});
-	
+
 	// -------------------------- BACKUP
 
 	// Get backup data
 	var timeMachineReq = $.getJSON( appUrl + '/module/timemachine/get_data/' + serialNumber),
 		crashPlanReq = $.getJSON( appUrl + '/module/crashplan/get_data/' + serialNumber);
-		
+
 	// When data is loaded, create tab
 	$.when( timeMachineReq, crashPlanReq ).done(function ( tmResp, cpResp ) {
-	    
+
 		// Get the data out of the response array
 		var tmData = tmResp[0],
 			cpData = cpResp[0];
 
-		// Draw timemachine unit
+		// Draw Time Machine unit
 		if(tmData.id !== '')
 		{
 			$('table.mr-timemachine-table')
@@ -322,22 +264,12 @@ $(document).on('appReady', function(e, lang) {
 							if(tmData.last_failure){
 								return moment(tmData.last_failure + 'Z').fromNow();
 							}
-						})))						
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.kind')))
-					.append($('<td>')
-						.text(tmData.kind)))
+						})))
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.location_name')))
 					.append($('<td>')
-						.text(tmData.location_name)))
-				.append($('<tr>')
-					.append($('<th>')
-						.text(i18n.t('backup.backup_location')))
-					.append($('<td>')
-						.text(tmData.backup_location)))
+						.text(tmData.alias_volume_name)))
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.destinations')))
@@ -345,16 +277,16 @@ $(document).on('appReady', function(e, lang) {
 						.text(tmData.destinations)))
 				.append($('<tr>')
 					.append($('<th>')
-						.text(i18n.t('backup.last_failure_msg')))
+						.text(i18n.t('timemachine.result')))
 					.append($('<td>')
-						.text(tmData.last_failure_msg)));
+						.text(i18n.t('timemachine.'+tmData.result))));
 		}
 		else{
 			$('table.mr-timemachine-table')
 				.empty()
 				.append('<tr><td>'+i18n.t('no_data')+'</td></tr>');
 		};
-		
+
 		// Draw Crashplan Unit
 		var mr_table_data = '<tr><td>'+i18n.t('no_data')+'</td></tr>';
 		if(cpData){
@@ -370,10 +302,10 @@ $(document).on('appReady', function(e, lang) {
 		$('table.mr-crashplan-table')
 			.empty()
 			.append(mr_table_data)
-		
+
 	});
 
-	
+
 	// -------------------------- END BACKUP
 
 	// Get ARD data
@@ -394,7 +326,7 @@ $(document).on('appReady', function(e, lang) {
 	// Get Bluetooth data
 	$.getJSON( appUrl + '/module/bluetooth/get_data/' + serialNumber, function( data ) {
 		if(data.id !== '')
-		{	
+		{
 			$('table.mr-bluetooth-table')
 				.empty()
 				.append($('<tr>')
@@ -429,10 +361,10 @@ $(document).on('appReady', function(e, lang) {
 		}
 
 	});
-	
+
 	// ------------------------------------ Hotkeys
 	// Use arrows to switch between tabs in client view
-	
+
 	$(document).bind('keydown', 'right', function(){
 
 		var activeTab = $('.client-tabs').find('li.active')
@@ -447,7 +379,7 @@ $(document).on('appReady', function(e, lang) {
 		$(nextTab).find('a').click();
 		return true;
 	});
-	
+
 	$(document).bind('keydown', 'left', function(){
 
 		var activeTab = $('.client-tabs').find('li.active')
@@ -463,19 +395,24 @@ $(document).on('appReady', function(e, lang) {
 		return true;
 	});
 
-	
+
 	// ------------------------------------ End Hotkeys
-	
+
+
+	// ------------------------------------ Refresh machine description
+
+	$('.mr-refresh-desc').attr('href', appUrl + '/module/warranty/recheck_warranty/' + serialNumber);
+
 	// ------------------------------------ Tags
 	var currentTags = {}
 		tagsRetrieved = false;
-	$('.mr-machine_desc')
+	$('.mr-refresh-desc')
 		.after($('<div>').append($('<select>')
 			.addClass('tags')
 			.attr("data-role", "tagsinput")
 			.attr("multiple", "multiple"))
 			);
-	
+
 	// instantiate the bloodhound suggestion engine
 	var hotDog = new Bloodhound({
 		datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -491,14 +428,14 @@ $(document).on('appReady', function(e, lang) {
 
 	// Activate tags input
 	$('select.tags').tagsinput({
-		typeaheadjs: {                  
+		typeaheadjs: {
 		  source: hotDog.ttAdapter()
 		}
 	});
-	
+
 	// Fix bug in tagsinput/typeahead that shows the last tag on blur
 	$('input.tt-input').on('blur', function(){$(this).val('')})
-	
+
 	// Get current tags
 	$.getJSON( appUrl + '/module/tag/retrieve/' + serialNumber, function( data ) {
 		// Set item value
@@ -516,7 +453,7 @@ $(document).on('appReady', function(e, lang) {
 		// Signal tags retrieved
 		tagsRetrieved = true;
 	});
-	
+
 	// Now add event handlers
 	$('select.tags')
 		.on('itemAdded', function(event) {
@@ -537,7 +474,7 @@ $(document).on('appReady', function(e, lang) {
 					// Store id in currentTags
 					currentTags[data.tag] = data.id;
 				}
-				
+
 			})
 		}).on('itemRemoved', function(event) {
 			var id = currentTags[event.item]
@@ -553,7 +490,7 @@ $(document).on('appReady', function(e, lang) {
 				}
 			})
 		});
-		
+
 		// ------------------------------------ End Tags
 
 	loadHash();

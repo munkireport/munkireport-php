@@ -13,17 +13,17 @@ function create_table($model)
     foreach ($model->rs as $name => $val) {
     // Determine type automagically
         $type = $model->get_type($val);
-        
+
         // Or set type from type array
         $columns[$name] = isset($model->rt[$name]) ? $model->rt[$name] : $type;
     }
-    
+
     // Set primary key
     $columns[$model->pkname] = 'INTEGER PRIMARY KEY';
 
     // Table options, override per driver
     $tbl_options = '';
-    
+
     // Driver specific options
     switch ($model->get_driver()) {
         case 'sqlite':
@@ -34,7 +34,7 @@ function create_table($model)
             $tbl_options = conf('mysql_create_tbl_opts');
             break;
     }
-    
+
     // Compile columns sql
     $sql = '';
     foreach ($columns as $name => $type) {
@@ -59,9 +59,15 @@ function create_table($model)
 function migrate($model_obj)
 {
     $model_name = get_class($model_obj);
-    $migration_dir = conf('application_path').'migrations/'.strtolower($model_name);
+    $module_name = str_replace('_model', '', strtolower($model_name));
     $target_version = $model_obj->get_version();
     $current_version = $model_obj->get_schema_version();
+
+    // Try to get migration path from moduleManager
+    if( ! getMrModuleObj()->getModuleMigrationPath($module_name, $migration_dir))
+    {
+        $migration_dir = conf('application_path').'migrations/'.strtolower($model_name);
+    }
 
     // Check if directory exists
     if (! is_dir($migration_dir)) {
@@ -74,7 +80,7 @@ function migrate($model_obj)
     foreach (glob($migration_dir.'/*_*.php') as $file) {
         $name = basename($file, '.php');
         $number = intval(strtok($name, '_'));
-        
+
         $migration_list[$number] = $file;
     }
 
@@ -90,7 +96,7 @@ function migrate($model_obj)
         $method = 'down';
     }
     $migration_obj = new Migration($model_obj->get_table_name());
-            
+
     foreach ($migration_list as $number => $file) {
         include_once $file;
 

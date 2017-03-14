@@ -8,10 +8,10 @@
  **/
 class managedinstalls_controller extends Module_controller
 {
-    
+
     protected $module_path;
     protected $view_path;
-    
+
     /*** Protect methods with auth! ****/
     public function __construct()
     {
@@ -19,7 +19,7 @@ class managedinstalls_controller extends Module_controller
         $this->module_path = dirname(__FILE__);
         $this->view_path = dirname(__FILE__) . '/views/';
     }
-    
+
       /**
      * Get managedinstalls information for serial_number
      *
@@ -40,9 +40,9 @@ class managedinstalls_controller extends Module_controller
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
-    
+
     // ------------------------------------------------------------------------
-    
+
     /**
      * Get pending installs
      *
@@ -58,18 +58,18 @@ class managedinstalls_controller extends Module_controller
             $model = new Managedinstalls_model;
             $hoursBack = 24 * 7; // Hours back
             $out = array();
-            
+
             foreach ($model->get_pending_installs($type, $hoursBack) as $obj) {
                 $out[] = $obj;
             }
         }
-        
+
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
-    
+
     // ------------------------------------------------------------------------
-    
+
     /**
      * Get package statistics
      *
@@ -85,7 +85,7 @@ class managedinstalls_controller extends Module_controller
             $out['error'] = 'Not authorized';
         } else {
             $model = new Managedinstalls_model;
-            
+
             // Convert to list
             foreach ($model->get_pkg_stats($pkg) as $rs) {
                 $status = $rs->status == 'install_succeeded' ? 'installed' : $rs->status;
@@ -112,7 +112,7 @@ class managedinstalls_controller extends Module_controller
         $obj->view('json', array('msg' => array_values($out)));
     }
 
-    
+
     /**
      * Get installs statistics
      *
@@ -136,7 +136,7 @@ class managedinstalls_controller extends Module_controller
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
-    
+
     /**
      * undocumented function summary
      *
@@ -155,9 +155,9 @@ class managedinstalls_controller extends Module_controller
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
         $obj = new View();
-        $obj->view('managed_installs_list', $data, $this->view_path);
+        $obj->view('managed_installs_listing', $data, $this->view_path);
     }
-    
+
     /**
      * View a file
      * TODO: move to parent?
@@ -168,11 +168,11 @@ class managedinstalls_controller extends Module_controller
         if (! $this->authorized()) {
             redirect('auth/login');
         }
-        
+
         $obj = new View();
         $obj->view($page, '', $this->view_path);
     }
-    
+
     /**
      * Get machines with $status installs
      *   *
@@ -189,7 +189,7 @@ class managedinstalls_controller extends Module_controller
                 $out[] = $rs;
             }
         }
-        
+
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }

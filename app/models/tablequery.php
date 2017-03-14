@@ -90,6 +90,11 @@ class Tablequery
             $where = sprintf('WHERE %s IS NOT NULL', $cfg['mrColNotEmpty']);
         }
         
+        // Where not empty or blank
+        if ($cfg['mrColNotEmptyBlank']) {
+            $where = sprintf("WHERE %s != ''", $cfg['mrColNotEmptyBlank']);
+        }
+        
         $bindings = array();
         
         // Extra where clause (can only do is equal)

@@ -1,7 +1,7 @@
 <div class="col-lg-4 col-md-6">
 	<div class="panel panel-default" id="warranty-support-gsx-widget">
-		<div class="panel-heading" data-container="body" data-i18n="[title]widget.warrantysupport.tooltip">
-			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="widget.warrantysupport.warrentysupportstatus"></span></h3>
+		<div class="panel-heading" data-container="body" data-i18n="[title]warranty.warrantysupport.tooltip">
+			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="warranty.warrantysupport.warrentysupportstatus"></span></h3>
 		</div>
 
 		<div class="panel-body text-center"></div>
@@ -18,11 +18,11 @@ $(document).on('appUpdate', function(e, lang) {
     		//alert(data.error);
     		return;
     	}
-		
+
 		var panel = $('#warranty-support-gsx-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/gsx';
+			baseUrl = appUrl + '/show/listing/gsx/gsx';
 		panel.empty();
-		
+
 		// Set statuses
 		if(data.obsolete){
 			panel.append(' <a href="'+baseUrl+'#Obsolete" class="btn btn-danger"><span class="bigger-150">'+data.obsolete+'</span><br>'+i18n.t('gsx.obsolete')+'</a>');

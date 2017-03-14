@@ -20,6 +20,7 @@ IDENTIFIER="com.github.munkireport"
 RESULT=""
 
 VERSION="<?php echo get_version(); ?>"
+VERSIONLONG="<?php echo $GLOBALS['version']; ?>"
 
 function usage {
 	PROG=$(basename $0)
@@ -248,6 +249,7 @@ if [ $ERR = 0 ]; then
 		for i in "${PREF_CMDS[@]}";
 			do echo $i >> $SCRIPTDIR/postinstall
 		done
+        echo "defaults write ${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
 		chmod +x $SCRIPTDIR/postinstall
 
 
@@ -273,6 +275,7 @@ if [ $ERR = 0 ]; then
 
 		# Set munkireport version file
 		touch "${MUNKIPATH}munkireport-${VERSION}"
+        defaults write ${PREFPATH} Version ${VERSIONLONG} 
 
 		echo "Installation of MunkiReport v${VERSION} complete."
 		echo 'Running the preflight script for initialization'

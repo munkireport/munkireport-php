@@ -10,23 +10,11 @@
 // 'badge' => id of a badge for this tab
 $tab_list = array(
 	'summary' => array('view' => 'client/summary_tab', 'i18n' => 'client.tab.summary'),
-	'munki' => array('view_path' => MODULE_PATH . 'munkireport/views/', 'view' => 'client_munki_tab', 'i18n' => 'client.tab.munki'),
-	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
-	'third-party-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 0), 'i18n' => 'client.tab.third_party_software', 'badge' => 'history-cnt-0'),
-	'inventory-items' => array('view' => 'client/inventory_items_tab', 'i18n' => 'client.tab.inventory_items', 'badge' => 'inventory-cnt'),
-	'location-tab' => array('view' => 'client/location_tab', 'i18n' => 'client.tab.location'),
-	'network-tab' => array('view' => 'client/network_tab', 'i18n' => 'client.tab.network', 'badge' => 'network-cnt'),
-	'wifi-tab' => array('view' => 'client/wifi_tab', 'i18n' => 'client.tab.wifi'),
-	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds', 'badge' => 'directory-cnt'),
-	'displays-tab' => array('view' => 'client/displays_tab', 'i18n' => 'client.tab.displays', 'badge' => 'displays-cnt'),
-	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
-	'gsx-tab' => array('view' => 'client/gsx_tab', 'i18n' => 'client.tab.gsx'),
-	'deploystudio-tab' => array('view' => 'client/deploystudio_tab', 'i18n' => 'client.tab.deploystudio'),
-	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
-	'printer-tab' => array('view' => 'client/printer_tab', 'i18n' => 'client.tab.printers', 'badge' => 'printer-cnt'),
-	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles'),
-	'sccm_status-tab' => array('view' => 'client/sccm_status_tab', 'i18n' => 'sccm_status.title'),
-		);
+);
+
+// Include module tabs
+$modules = getMrModuleObj()->loadInfo();
+$modules->addTabs($tab_list);
 
 // Add custom tabs
 $tab_list = array_merge($tab_list, conf('client_tabs', array()));
@@ -62,7 +50,6 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 							<?php endforeach?>
 
-							<li class="divider"></li>
 						</ul>
 				</div><!-- /btn-group -->
 
