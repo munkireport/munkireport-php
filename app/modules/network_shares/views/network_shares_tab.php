@@ -20,6 +20,15 @@ $(document).on('appReady', function(){
 					else if(prop == 'automounted' && d[prop] == 0){
 					   rows = rows + '<tr><th>'+i18n.t('network_shares.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
                     } 
+					else if(prop == 'name'){
+					   rows = rows + '<tr><th>'+i18n.t('name')+'</th><td>'+d[prop]+'</td></tr>';
+                    } 
+					else if(prop == 'mntfromname'){
+					   rows = rows + '<tr><th>'+i18n.t('path')+'</th><td>'+id[prop]+'</td></tr>';
+                    } 
+					else if(prop == 'fstypename'){
+					   rows = rows + '<tr><th>'+i18n.t('type')+'</th><td>'+d[prop]+'</td></tr>';
+                    } 
                     else {
                         rows = rows + '<tr><th>'+i18n.t('network_shares.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
 					}

@@ -18,10 +18,10 @@ new Network_shares_model;
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-			<th data-i18n="network_shares.name" data-colname='network_shares.name'></th>
-			<th data-i18n="network_shares.mntfromname" data-colname='network_shares.mntfromname'></th>
+			<th data-i18n="name" data-colname='network_shares.name'></th>
+			<th data-i18n="path" data-colname='network_shares.mntfromname'></th>
 			<th data-i18n="network_shares.fsmtnonname" data-colname='network_shares.fsmtnonname'></th>
-			<th data-i18n="network_shares.fstypename" data-colname='network_shares.fstypename'></th>
+			<th data-i18n="type" data-colname='network_shares.fstypename'></th>
 			<th data-i18n="network_shares.automounted" data-colname='network_shares.automounted'></th>
 		  </tr>
 		</thead>
