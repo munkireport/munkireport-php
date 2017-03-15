@@ -2,14 +2,14 @@
 
 	<div class="panel panel-default" id="new-clients-widget">
 
-		<div class="panel-heading" data-container="body" data-i18n="[title]widget.new_clients.tooltip">
+		<div class="panel-heading" data-container="body" data-i18n="[title]machine.new_clients.tooltip">
 
-			<div class="panel-title"><i class="fa fa-star-o"></i> <span data-i18n="widget.new_clients.title"></span> <span class="counter badge pull-right"></span></div>
+			<div class="panel-title"><i class="fa fa-star-o"></i> <span data-i18n="machine.new_clients.title"></span> <span class="counter badge pull-right"></span></div>
 
 		</div>
 
 		<div class="list-group scroll-box">
-			<span class="list-group-item"><span data-i18n="widget.new_clients.no_new_clients"></span></span>
+			<span class="list-group-item"><span data-i18n="machine.new_clients.no_new_clients"></span></span>
 		</div>
 
 	</div><!-- /panel -->
@@ -18,7 +18,7 @@
 
 <script>
 $(document).on('appUpdate', function(){
-	
+
 	$.getJSON( appUrl + '/module/machine/new_clients', function( data ) {
 
 		var scrollBox = $('#new-clients-widget .scroll-box').empty();
@@ -48,6 +48,6 @@ $(document).on('appUpdate', function(){
 					.text(i18n.t('no_clients')))
 		}
 
-	});				
+	});
 });
 </script>

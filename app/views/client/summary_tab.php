@@ -99,7 +99,7 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4><i class="fa fa-apple"></i> <span data-i18n="ard"></span></h4>
+			<h4><i class="fa fa-apple"></i> <span data-i18n="ard.ard"></span></h4>
 			<table id="ard-data" class="table"></table>
 		</div>
 

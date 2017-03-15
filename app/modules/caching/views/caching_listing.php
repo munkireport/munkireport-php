@@ -19,11 +19,11 @@ new Caching_model;
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 			<th data-i18n="caching.date" data-colname='caching.collectiondateepoch'></th>
-			<th data-i18n="caching.from_cache" data-colname='caching.bytesfromcachetoclients'></th>
-			<th data-i18n="caching.from_peers" data-colname='caching.bytesfrompeerstoclients'></th>
-			<th data-i18n="caching.from_origin" data-colname='caching.bytesfromorigintoclients'></th>
-			<th data-i18n="caching.peer_requests" data-colname='caching.requestsfrompeers'></th>
-			<th data-i18n="caching.client_requests" data-colname='caching.requestsfromclients'></th>
+			<th data-i18n="caching.bytesfromcachetoclients" data-colname='caching.bytesfromcachetoclients'></th>
+			<th data-i18n="caching.bytesfrompeerstoclients" data-colname='caching.bytesfrompeerstoclients'></th>
+			<th data-i18n="caching.bytesfromorigintoclients" data-colname='caching.bytesfromorigintoclients'></th>
+			<th data-i18n="caching.requestsfrompeers" data-colname='caching.requestsfrompeers'></th>
+			<th data-i18n="caching.requestsfromclients" data-colname='caching.requestsfromclients'></th>
 			<th data-i18n="caching.purged_1" data-colname='caching.bytespurgedyoungerthan1day'></th>
 			<th data-i18n="caching.purged_7" data-colname='caching.bytespurgedyoungerthan7days'></th>
 			<th data-i18n="caching.purged_30" data-colname='caching.bytespurgedyoungerthan30days'></th>
@@ -58,7 +58,7 @@ new Caching_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -82,7 +82,7 @@ new Caching_model;
                 type: "POST",
                 data: function(d){
                      d.mrColNotEmpty = "bytesfromcachetoclients";
-                    
+
                     // Check for column in search
                     if(d.search.value){
                         $.each(d.columns, function(index, item){
@@ -110,11 +110,11 @@ new Caching_model;
 	        	var event = parseInt($('td:eq(2)', nRow).html());
 	        	var date = new Date(event * 1000);
 	        	$('td:eq(2)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
-                
+
 	        	// Format byte size
 	        	var checkin = parseInt($('td:eq(3)', nRow).html());
 	        	$('td:eq(3)', nRow).html(fileSize(checkin, 2));
-                
+
 	        	// Format byte size
 	        	var checkin = parseInt($('td:eq(4)', nRow).html());
 	        	$('td:eq(4)', nRow).html(fileSize(checkin, 2));
@@ -126,15 +126,15 @@ new Caching_model;
 	        	// Format byte size
 	        	var checkin = parseInt($('td:eq(8)', nRow).html());
 	        	$('td:eq(8)', nRow).html(fileSize(checkin, 2));
-                
+
 	        	// Format byte size
 	        	var checkin = parseInt($('td:eq(9)', nRow).html());
 	        	$('td:eq(9)', nRow).html(fileSize(checkin, 2));
-                
+
 	        	// Format byte size
 	        	var checkin = parseInt($('td:eq(10)', nRow).html());
 	        	$('td:eq(10)', nRow).html(fileSize(checkin, 2));
-                
+
 	        	// Format byte size
 	        	var checkin = parseInt($('td:eq(11)', nRow).html());
 	        	$('td:eq(11)', nRow).html(fileSize(checkin, 2));

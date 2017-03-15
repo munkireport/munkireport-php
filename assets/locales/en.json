@@ -38,7 +38,6 @@
         "unassigned_groups": "Unassigned Groups"
     },
     "all": "All",
-    "ard": "Apple Remote Desktop",
     "auth": {
         "addtoconfig": "Add this line to config.php:",
         "back_to_site": "Back to site",
@@ -59,7 +58,6 @@
         "password": "Password",
         "secure": "You're using a secure connection",
         "signin": "Sign in",
-        "username": "Username",
         "wrong_user_or_pass": "Wrong username or password"
     },
     "backup": {
@@ -76,6 +74,7 @@
         "lastweek": "Latest backup more than a day ago",
         "location_name": "Location Name",
         "ok": "Latest backup within 2 weeks",
+        "report": "Backup Report",
         "today": "Backed up today",
         "week_plus": "Latest backup more than a week ago"
     },
@@ -102,14 +101,12 @@
     },
     "client": {
         "activity": "Client Activity",
+        "clients": "Clients",
         "comment": "Comments",
         "hour": "Clients per hour",
         "panel_title": "Client activity in the last month",
+        "report": "Client Report",
         "tab": {
-            "ard": "ARD",
-            "printers": "Printers",
-            "profiles": "Profiles",
-            "serverstats": "Server Statistics",
             "summary": "Summary"
         },
         "total": "Total Clients"
@@ -135,6 +132,7 @@
         "writable": "Writable"
     },
     "delete": "Delete",
+    "description": "Description",
     "dialog": {
         "cancel": "Cancel",
         "close": "Close",
@@ -193,22 +191,7 @@
     "listing": {
         "checkin": "Check-in",
         "computername": "Name",
-        "hardware": {
-            "description": "Description"
-        },
-        "loading": "Loading data from server",
-        "munki": {
-            "latest_run": "Latest Run",
-            "package_installed": "Package installed",
-            "package_installed_plural": "Packages installed",
-            "package_removed": "Package removed",
-            "package_removed_plural": "Packages removed",
-            "pending_install": "Pending install",
-            "pending_install_plural": "Pending installs",
-            "pending_removal": "Pending removal",
-            "pending_removal_plural": "Pending removals"
-        },
-        "username": "Username"
+        "loading": "Loading data from server"
     },
     "loading": "Loading data from server",
     "machine": {
@@ -216,20 +199,45 @@
         "base_model_widget_title": "Base Model Breakdown",
         "cores": "Cores",
         "cpu_speed": "CPU Speed",
+        "duplicate_computernames": {
+            "notfound": "No duplicates found",
+            "title": "Duplicate Computer Names"
+        },
+        "hardware": "Hardware",
+        "hardware_report": "Hardware Report",
         "hardware_type_title": "Hardware Type breakdown",
         "hardware_widget_title": "Hardware Model Breakdown",
+        "memory": {
+            "title": "Memory Breakdown"
+        },
         "model": "Model",
+        "new_clients": {
+            "no_new_clients": "No new clients",
+            "title": "New Clients",
+            "tooltip": "Clients registered this week"
+        },
+        "os": {
+            "title": "OS Breakdown"
+        },
+        "registered": {
+            "title": "Client Registration Over Time"
+        },
         "rom_version": "ROM Version",
-        "hardware": "Hardware",
-        "hardware_report": "Hardware Report"
-    },
-    "manifest": {
-        "manifest": "Manifest",
-        "name": "Manifest Name"
+        "uptime": {
+            "title": "Uptime"
+        }
     },
     "memory": "Memory",
     "model": "Model",
     "mouse": "Mouse",
+    "munki": {
+        "error": "Munki error: __error__",
+        "error_plural": "__count__ Munki errors",
+        "package_installed": "__pkg__ installed",
+        "package_installed_plural": "__count__ packages installed",
+        "warning": "Munki warning: __warning__",
+        "warning_plural": "__count__ Munki warnings"
+    },
     "mwa": {
         "mwa_link": "Open in Munki Web Admin"
     },
@@ -339,45 +347,15 @@
         "user": "User",
         "users": "Users"
     },
+    "username": "Username",
     "verified": "Verified",
     "version": "Version",
     "warning": "Warning",
     "warning_plural": "Warnings",
     "widget": {
-        "duplicate_computernames": {
-            "notfound": "No duplicates found",
-            "title": "Duplicate Computer Names"
-        },
-        "manifest": {
-            "title": "Manifests"
-        },
-        "memory": {
-            "title": "Memory Breakdown"
-        },
-        "munki": {
-            "title": "Munki"
-        },
-        "munki_versions": {
-            "title": "Munki Versions",
-            "tooltip": "Munki versions among all clients"
-        },
-        "new_clients": {
-            "no_new_clients": "No new clients",
-            "title": "New Clients",
-            "tooltip": "Clients registered this week"
-        },
-        "os": {
-            "title": "OS Breakdown"
-        },
-        "registered": {
-            "title": "Client Registration Over Time"
-        },
         "unknown": {
             "alert": "This widget cannot be found",
             "title": "Unknown widget"
-        },
-        "uptime": {
-            "title": "Uptime"
         }
     },
     "yes": "Yes"

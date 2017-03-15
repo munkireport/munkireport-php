@@ -4,7 +4,7 @@
 
 	  <div class="panel-heading">
 
-	    <h3 class="panel-title"><i class="fa fa-smile-o"></i> <span data-i18n="widget.munki.title"></span></h3>
+	    <h3 class="panel-title"><i class="fa fa-smile-o"></i> <span data-i18n="munkireport.munki"></span></h3>
 
 	  </div>
 
@@ -20,7 +20,7 @@ $(document).on('appReady', function(){
 
 	// Add tooltip
 	$('#munki-widget>div.panel-heading')
-		.attr('title', i18n.t('munki.panel_title'))
+		.attr('title', i18n.t('munkireport.panel_title'))
 		.tooltip();
 
 	// Entries

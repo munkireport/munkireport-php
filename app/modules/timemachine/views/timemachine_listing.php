@@ -20,7 +20,7 @@ new Timemachine_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="backup.last_success" data-colname='timemachine.last_success'></th>
 		        <th data-i18n="backup.duration" data-colname='timemachine.duration'></th>
 		        <th data-i18n="backup.last_failure" data-colname='timemachine.last_failure'></th>

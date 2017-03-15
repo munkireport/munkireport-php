@@ -38,7 +38,6 @@
         "unassigned_groups": "Groupes non assignés"
     },
     "all": "Tous",
-    "ard": "Apple Remote Desktop",
     "auth": {
         "addtoconfig": "Ajoutez cette ligne dans config.php:",
         "back_to_site": "Retour au site",
@@ -59,7 +58,6 @@
         "password": "Mot de passe",
         "secure": "Vous utilisez une connexion sécurisée",
         "signin": "Connectez-vous",
-        "username": "Nom Utilisateur",
         "wrong_user_or_pass": "Nom d'utilisateur ou mot de passe incorrect"
     },
     "backup": {
@@ -76,6 +74,7 @@
         "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
         "location_name": "Nom de l'emplacement",
         "ok": "Dernière sauvegarde de 2 semaines",
+        "report": "Backup Report",
         "today": "Sauvegardé aujourd'hui",
         "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
     },
@@ -90,7 +89,7 @@
         "users": "Utilisateurs"
     },
     "cert": {
-        "expiré": "__name__ expired __moment__"
+        "expired": "__name__ expired __moment__"
     },
     "cfbundlename": "Nom CFBundle",
     "chart": {
@@ -102,14 +101,12 @@
     },
     "client": {
         "activity": "Activité Client",
+        "clients": "Clients",
         "comment": "Commentaires",
         "hour": "Clients par heure",
         "panel_title": "Activité du client dans le dernier mois",
+        "report": "Client Report",
         "tab": {
-            "ard": "ARD",
-            "ds": "Services d'annuaires",
-            "munki": "Logiciels gérés",
-            "serverstats": "Statistiques du serveur",
             "summary": "Résumé"
         },
         "total": "Nombre de clients"
@@ -120,8 +117,7 @@
         "arch": "Architecture processeur",
         "core": "core",
         "cpu": "CPU",
-        "type": "Modèle processeur",
-        "usage": "Utilisation processeur"
+        "type": "Modèle processeur"
     },
     "danger": "Erreur",
     "database": "Base de données",
@@ -136,6 +132,7 @@
         "writable": "Inscriptible"
     },
     "delete": "Supprimer",
+    "description": "Description",
     "dialog": {
         "cancel": "Annuler",
         "close": "Fermer",
@@ -160,9 +157,6 @@
     "error": "Erreur",
     "error_plural": "Erreurs",
     "errors": {
-        "403": "Vous n'êtes pas autorisé à voir cette page",
-        "404": "Page non trouvée",
-        "426": "Vous devez visiter ce site à l'aide d'une connexion sécurisée.",
         "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas",
         "loading": "Il y avait un problème avec la récupération de ces données: __error__",
         "title": "Erreurs"
@@ -192,59 +186,52 @@
     "last_seen": "Vu la dernière fois",
     "last_user": "Dernier utilisateur",
     "listing": {
-        "ard": {
-            "text": "Texte __number__",
-            "title": "Rapport Apple Remote Desktop"
-        },
         "checkin": "Enregistrement",
         "computername": "Name",
-        "hardware": {
-            "description": "Description"
-        },
-        "loading": "Chargement des données depuis le serveur",
-        "munki": {
-            "latest_run": "Dernière activité",
-            "package_installed": "Paquet installé",
-            "package_installed_plural": "Paquets installés",
-            "package_removed": "Paquet supprimé",
-            "package_removed_plural": "Paquets supprimés",
-            "pending_install": "Installation en attente",
-            "pending_install_plural": "Installations en attente",
-            "pending_removal": "Suppression en attente",
-            "pending_removal_plural": "Suppressions en attente"
-        },
-        "username": "Nom utilisateur"
+        "loading": "Chargement des données depuis le serveur"
     },
     "loading": "Chargement des données depuis le serveur",
     "machine": {
         "arch": "Arch",
+        "base_model_widget_title": "Base Model Breakdown",
         "cores": "Cores",
         "cpu_speed": "Fréquence CPU",
+        "duplicate_computernames": {
+            "notfound": "Pas de doublons trouvés",
+            "title": "Nom des ordinateurs dupliqués"
+        },
+        "hardware": "Matériel",
+        "hardware_report": "Rapport Matériel",
         "hardware_type_title": "Répartition par matériel",
         "hardware_widget_title": "Détails de l'appareil",
+        "memory": {
+            "title": "Répartition par mémoire"
+        },
         "model": "Modéle",
+        "new_clients": {
+            "no_new_clients": "Pas de nouveau client",
+            "title": "Nouveaux clients",
+            "tooltip": "Clients enregistrés cette semaine"
+        },
+        "os": {
+            "title": "Répartition par OS"
+        },
+        "registered": {
+            "title": "Enregistrement du client au fil du temps"
+        },
         "rom_version": "Version ROM",
-        "hardware": "Matériel",
-        "hardware_report": "Rapport Matériel"
-    },
-    "manifest": {
-        "manifest": "Manifest",
-        "name": "Nom du manifest"
+        "uptime": {
+            "title": "Temps de fonctionnement"
+        }
     },
     "memory": "Mémoire",
     "model": "Modèle",
     "mouse": " Souris",
     "munki": {
-        "additional_info": "Informations additionnelles Munki",
         "error": "Erreur de Munki : __error__",
         "error_plural": "__count__ Erreurs de Munki",
-        "errors_and_warnings": "Erreurs et Alertes",
-        "munkiprotocol": "Protocole Munki",
         "package_installed": "__pkg__ installé",
         "package_installed_plural": "__count__ paquets installés",
-        "panel_title": "Statistique de Munki cette semaine",
-        "run_type": "Type d'évènement",
-        "version": "Version de Munki",
         "warning": "Alerte de Munki : __warning__",
         "warning_plural": "__count__ Alertes de Munki"
     },
@@ -357,45 +344,15 @@
         "user": "Utilisateur",
         "users": "Utilisateurs"
     },
+    "username": "Nom utilisateur",
     "verified": "Verifié",
     "version": "Version",
     "warning": "Alerte",
     "warning_plural": "Alertes",
     "widget": {
-        "duplicate_computernames": {
-            "notfound": "Pas de doublons trouvés",
-            "title": "Nom des ordinateurs dupliqués"
-        },
-        "manifest": {
-            "title": "Manifests"
-        },
-        "memory": {
-            "title": "Répartition par mémoire"
-        },
-        "munki": {
-            "title": "Munki"
-        },
-        "munki_versions": {
-            "title": "Versions Munki",
-            "tooltip": "Versions Munki entre tous les clients"
-        },
-        "new_clients": {
-            "no_new_clients": "Pas de nouveau client",
-            "title": "Nouveaux clients",
-            "tooltip": "Clients enregistrés cette semaine"
-        },
-        "os": {
-            "title": "Répartition par OS"
-        },
-        "registered": {
-            "title": "Enregistrement du client au fil du temps"
-        },
         "unknown": {
             "alert": "Ce widget ne peut être trouvé",
             "title": "Widget inconnu"
-        },
-        "uptime": {
-            "title": "Temps de fonctionnement"
         }
     },
     "yes": "Oui"

@@ -20,7 +20,7 @@ new Power_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="power.listing.designed" data-colname='power.design_capacity'></th>
 		        <th data-i18n="power.listing.capacity" data-colname='power.max_capacity'></th>
 		        <th data-i18n="power.listing.cycles" data-colname='power.cycle_count'></th>
