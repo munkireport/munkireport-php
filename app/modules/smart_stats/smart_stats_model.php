@@ -323,10 +323,14 @@ class Smart_stats_model extends Model {
                     
                     $headhours = explode("h+",$plist[$disk_id][$search]);
                     $this->$field = $headhours[0];
-                    
-                // If key is not empty save it to the object
-                } else if (! empty($plist[$disk_id][$search])) {  
+                                        
+                // If key is not empty and is a string save it to the object
+                } else if (! empty($plist[$disk_id][$search]) && in_array($field, $strings)) {  
                     $this->$field = $plist[$disk_id][$search];
+                    
+                // If key is not empty and not a string save it to the object
+                } else if (! empty($plist[$disk_id][$search]) && ! in_array($field, $strings)) {  
+                    $this->$field = preg_replace("/[^0-9]/", "", $plist[$disk_id][$search]);
                     
                 // Else, check if key is an int  
                 } else if ( ! in_array($field, $strings) && $plist[$disk_id][$search] != "0"){
