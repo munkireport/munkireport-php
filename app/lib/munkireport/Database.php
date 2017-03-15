@@ -1,17 +1,17 @@
 <?php
 
-namespace munkireport;
+namespace munkireport\lib;
 
 class Database
 {
-    
+
     private $config, $dbh, $error;
 
     public function __construct($config)
     {
         $this->config = $config;
     }
-    
+
     /**
      * connect
      *
@@ -34,7 +34,7 @@ class Database
         }
         return $this;
     }
-    
+
     /**
      * Get Database handle
      *
@@ -52,7 +52,7 @@ class Database
         $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         return $this->dbh;
     }
-    
+
     /**
      * is Writable
      *
@@ -66,7 +66,7 @@ class Database
         if (! $dbh) {
             return false;
         }
-        
+
         try {
             $dbh->exec("CREATE TABLE mr_temp (id TEXT)");
             $dbh->exec("DROP TABLE mr_temp");
@@ -76,7 +76,7 @@ class Database
             return false;
         }
     }
-    
+
     /**
      * Get error
      *
@@ -88,7 +88,7 @@ class Database
     {
         return $this->error;
     }
-    
+
     /**
      * Get PDO driver name
      *

@@ -1,5 +1,9 @@
 <?php
 
+namespace munkireport\controller;
+
+use \Controller, \View;
+
 /**
  * Module controller
  *
@@ -52,7 +56,7 @@ class Module extends Controller
 
         //Create module obj
         require($module_file);
-        $this->module_classname = $this->module.'_controller';
+        $this->module_classname = '\\' . $this->module.'_controller';
         if (! class_exists($this->module_classname, false)) {
             $this->requestNotFound('Module class not found: '.$this->module_classname);
         }
