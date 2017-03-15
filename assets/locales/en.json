@@ -1,835 +1,362 @@
 {
-	"about": {
-		"author": "Arjen van Bochoven"
-	},
-	"active": "Active",
-	"admin": {
-		"bu": {
-			"more_info": "More Information"
-		},
-		"bu_overview": "Business Units",
-		"delete_failed": "Remove failed: ",
-		"edit_bu": {
-			"address": "Address",
-			"link": "Link (to external site)",
-			"name": "Business Unit Name",
-			"title": "Edit Business Unit"
-		},
-		"edit_mg": {
-			"title": "Edit Machine Groups"
-		},
-		"edit_user": {
-			"title": "Edit Users",
-			"add_user": "Add user"
-		},
-		"mg": {
-			"title": "Machine Groups",
-			"add_group": "New Group",
-			"edit_group": "Edit Machine Group",
-			"new_group": "New Machine Group"
-		},
-		"new_bu": {
-			"title": "New Business Unit"
-		},
-		"remove_bu": {
-			"title": "Remove Business Unit",
-			"content": "When you remove this business unit, all related data will be removed. You cannot undo this."
-		},
-		"unassigned_groups": "Unassigned Groups"
-	},
-	"all": "All",
-	"ard": "Apple Remote Desktop",
-	"auth": {
-		"addtoconfig": "Add this line to config.php:",
-		"back_to_site": "Back to site",
-		"captcha": {
-			"empty": "Please fill out captcha",
-			"invalid": "Invalid captcha response"
-		},
-		"empty_not_allowed": "Empty values are not allowed",
-		"error_contacting_AD": "An error ocurred while contacting AD",
-		"gen_other": "Generate another",
-		"generate": "Generate",
-		"generate_hash": "Generate password hash",
-		"generated_hash": "Generated hash",
-		"go_secure": "Go to secure site",
-		"insecure": "Insecure connection, switch to secure",
-		"noauth_found": "No authentication information found, please add an account to the config file.",
-		"not_authorized": "Not authorized",
-		"password": "Password",
-		"secure": "You're using a secure connection",
-		"signin": "Sign in",
-		"username": "Username",
-		"wrong_user_or_pass": "Wrong username or password"
-	},
-	"backup":{
-		"destination": "Backup Destination",
-		"duration": "Backup duration",
-		"last_failure": "Last failed backup",
-		"last_failure_msg": "Message",
-		"last_success": "Last successful backup"
-	},
-	"battery": {
-		"life_remaining": "__percent__% battery life remaining"
-	},
-	"bluetooth": {
-		"all_ok": "No bluetooth devices with low battery",
-		"apple wireless keyboard": "Apple Wireless Keyboard",
-		"apple wireless trackpad": "Apple Wireless Trackpad",
-		"apple magic mouse": "Apple Magic Mouse",
-		"bluetooth": "Bluetooth",
-		"bluetooth_battery_widget": "Bluetooth battery status",
-		"keyboard": "Keyboard Status",
-		"magic keyboard": "Magic Keyboard",
-		"magic trackpad 2": "Magic Trackpad 2",
-		"magic mouse 2": "Magic Mouse 2",
-		"mouse": "Mouse Status",
-		"panel_title": "Bluetooth devices with less than 15% battery life",
-		"status": "Bluetooth Status",
-		"trackpad": "Trackpad Status"
-	},
-	"boot_time": "Booted",
-	"bundle_id": "BundleID",
-	"business_unit": {
-		"disabled": "Business Units Disabled",
-		"machine_group": "Machine Group",
-		"machine_groups": "Machine Groups",
-		"managers": "Managers",
-		"users": "Users"
-	},
-	"buildversion": "Build Version",
-	"caching": {
-		"bytes_served": "Caching – Bytes Served",
-		"from_origin": "From Origin",
-		"from_peers": "From Peers",
-		"from_cache": "From Cache"
-	},
-	"cert": {
-		"expired": "__name__ expired __moment__"
-	},
-	"cfbundlename": "CFBundleName",
-	"client": {
-		"activity": "Client Activity",
-		"comment": "Comments",
-		"hour": "Clients per hour",
-		"tab": {
-			"apple_software": "Apple Software",
-			"ard": "ARD",
-			"bluetooth": "Bluetooth",
-			"certificates": "Certificates",
-			"deploystudio": "DeployStudio",
-			"displays": "Displays",
-			"ds": "Directory Services",
-			"gsx": "GSX",
-			"firmware_escrow": "Firmware Escrow",
-			"fv_escrow": "Filevault Escrow",
-			"inventory_items": "Inventory Items",
-			"location": "Location",
-			"munki": "Managed Software",
-			"network": "Network Interfaces",
-			"power": "Power",
-			"printers": "Printers",
-			"profiles": "Profiles",
-			"serverstats": "Server Statistics",
-			"summary": "Summary",
-			"third_party_software": "Third Party Software",
-			"timemachine": "Time Machine",
-			"wifi": "WiFi"
-		},
-		"installed_apple_software": "Installed Apple Software",
-		"installed_third_party_software": "Installed Third Party Software",
-		"install_date": "Install Date",
-		"no_install_history": "No install history",
-		"panel_title": "Client activity in the last month",
-		"process_name": "Process Name",
-		"total": "Total Clients"
-	},
-	"chart": {
-		"stackedarea": {
-			"stacked": "Stacked",
-			"stream": "Stream",
-			"expanded": "Expanded"
-		}
-	},
-	"configuration": "Configuration",
+    "about": {
+        "author": "Arjen van Bochoven"
+    },
+    "active": "Active",
+    "admin": {
+        "bu": {
+            "more_info": "More Information"
+        },
+        "bu_overview": "Business Units",
+        "delete_failed": "Remove failed: ",
+        "edit_bu": {
+            "address": "Address",
+            "link": "Link (to external site)",
+            "name": "Business Unit Name",
+            "title": "Edit Business Unit"
+        },
+        "edit_mg": {
+            "title": "Edit Machine Groups"
+        },
+        "edit_user": {
+            "add_user": "Add user",
+            "title": "Edit Users"
+        },
+        "mg": {
+            "add_group": "New Group",
+            "edit_group": "Edit Machine Group",
+            "new_group": "New Machine Group",
+            "title": "Machine Groups"
+        },
+        "new_bu": {
+            "title": "New Business Unit"
+        },
+        "remove_bu": {
+            "content": "When you remove this business unit, all related data will be removed. You cannot undo this.",
+            "title": "Remove Business Unit"
+        },
+        "unassigned_groups": "Unassigned Groups"
+    },
+    "all": "All",
+    "auth": {
+        "addtoconfig": "Add this line to config.php:",
+        "back_to_site": "Back to site",
+        "captcha": {
+            "empty": "Please fill out captcha",
+            "invalid": "Invalid captcha response"
+        },
+        "empty_not_allowed": "Empty values are not allowed",
+        "error_contacting_AD": "An error ocurred while contacting AD",
+        "gen_other": "Generate another",
+        "generate": "Generate",
+        "generate_hash": "Generate password hash",
+        "generated_hash": "Generated hash",
+        "go_secure": "Go to secure site",
+        "insecure": "Insecure connection, switch to secure",
+        "noauth_found": "No authentication information found, please add an account to the config file.",
+        "not_authorized": "Not authorized",
+        "password": "Password",
+        "secure": "You're using a secure connection",
+        "signin": "Sign in",
+        "wrong_user_or_pass": "Wrong username or password"
+    },
+    "backup": {
+        "backup_location": "Backup Location",
+        "destination": "Backup Destination",
+        "destinations": "Backup Destinations",
+        "duration": "Backup Duration",
+        "four_weeks_less": "Latest backup within 4 weeks",
+        "four_weeks_plus": "Latest backup older then 4 weeks",
+        "kind": "Backup Kind",
+        "last_failure": "Last Failed Backup",
+        "last_failure_msg": "Message",
+        "last_success": "Last Successful Backup",
+        "lastweek": "Latest backup more than a day ago",
+        "location_name": "Location Name",
+        "ok": "Latest backup within 2 weeks",
+        "report": "Backup Report",
+        "today": "Backed up today",
+        "week_plus": "Latest backup more than a week ago"
+    },
+    "boot_time": "Booted",
+    "buildversion": "Build Version",
+    "bundle_id": "Bundle ID",
+    "business_unit": {
+        "disabled": "Business Units Disabled",
+        "machine_group": "Machine Group",
+        "machine_groups": "Machine Groups",
+        "managers": "Managers",
+        "users": "Users"
+    },
+    "cert": {
+        "expired": "__name__ expired __moment__"
+    },
+    "cfbundlename": "CFBundleName",
+    "chart": {
+        "stackedarea": {
+            "expanded": "Expanded",
+            "stacked": "Stacked",
+            "stream": "Stream"
+        }
+    },
+    "client": {
+        "activity": "Client Activity",
+        "clients": "Clients",
+        "comment": "Comments",
+        "hour": "Clients per hour",
+        "panel_title": "Client activity in the last month",
+        "report": "Client Report",
+        "tab": {
+            "summary": "Summary"
+        },
+        "total": "Total Clients"
+    },
+    "configuration": "Configuration",
     "connected": "Connected",
-	"cpu": {
-		"arch": "CPU Architecture",
-		"core": "core",
-		"cpu": "CPU",
-		"type": "CPU Type",
-		"usage": "Processor Usage"
-	},
-	"crashplan": {
-		"listing": {
-			"title": "CrashPlan Report"
-		},
-		"widget": {
-			"title": "CrashPlan Status"
-		},
-		"client": {
-			"title": "CrashPlan"
-		}
-	},
-	"backup2go": {
-		"widget": {
-			"title": "Backup2go Status"
-		}
-	},
-	"danger": "Error",
-	"database": "Database",
-	"date": {
-		"day": "Day",
-		"day_plural": "Days",
-		"year": "year"
-	},
-	"db": {
-		"connectable": "Connectable",
-		"driver": "Driver",
-		"writable": "Writable"
-	},
-	"delete": "Delete",
-	"dialog": {
-		"cancel": "Cancel",
-		"close": "Close",
-		"comment": {
-			"add": "Add Comment",
-			"label": "Comment"
-		},
-		"ok": "Ok",
-		"ok_remove": "Ok, Remove",
-		"save": "Save"
-	},
-	"disabled": "Disabled",
-	"disconnected": "Disconnected",
-	"displays": {
-		"displays": "Displays",
-		"widget_info": "Total number of known external displays",
-		"widget_title": "External Displays Count"
-	},
-    "ds": {
-		"computername": "Computer Name",
-        "architecture": "Architecture",
-        "dstudio-auto-disable": "Auto Disable",
-        "dstudio-auto-reset-workflow": "Auto Reset Workflow",
-        "dstudio-auto-started-workflow": "Auto Started Workflow",
-        "dstudio-bootcamp-windows-computer-name": "Boot Camp Windows Name",
-        "dstudio-completed": "Completed",
-        "dstudio-disabled": "Disabled",
-        "dstudio-failed": "Failed",
-        "dstudio-group": "Group",
-        "dstudio-host-ard-field-1": "ARD Field 1",
-        "dstudio-host-ard-field-2": "ARD Field 2",
-        "dstudio-host-ard-field-3": "ARD Field 3",
-        "dstudio-host-ard-field-4": "ARD Field 4",
-        "dstudio-host-ard-ignore-empty-fields": "Ignore Empty ARD Fields",
-        "dstudio-host-delete-other-locations": "Delete Other Locations",
-        "dstudio-host-model-identifier": "Model Identifier",
-        "dstudio-hostname": "Hostname",
-        "dstudio-host-new-network-location": "New Network Location",
-        "dstudio-host-serial-number": "Serial Number",
-        "dstudio-host-type": "Host Type",
-        "dstudio-last-workflow": "Last Workflow Run",
-        "dstudio-last-workflow-duration": "Last Workflow Duration",
-        "dstudio-last-workflow-execution-date": "Last Workflow Execution Date",
-        "dstudio-last-workflow-status": "Workflow Status",
-        "dstudio-mac-addr": "MAC Address",
-        "recheck": "Pull DeployStudio Data"
+    "cpu": {
+        "arch": "CPU Architecture",
+        "core": "core",
+        "cpu": "CPU",
+        "type": "CPU Type"
     },
-	"displayname": "Display Name",
-	"edit": "Edit",
-	"email": {
-		"email": "Email",
-		"show_machine_in_browser": "Show machine in browser"
-	},
-	"enabled": "Enabled",
-	"encrypted": "Encrypted",
-	"error": "Error",
-	"error_plural": "Errors",
-	"errors": {
-		"title": "Error",
-		"client_nonexistent": "Client with serial number \"__serial__\" does not exist",
-		"403": "You are not allowed to view this page",
-		"404": "Page not found",
-		"426": "You are required to visit this site using a secure connection.",
-		"loading": "There was problem with retrieving this data: __error__"
-	},
-	"event": "Event",
-	"event_plural": "Events",
-	"events": {
-		"widget_title": "Recently generated events"
-	},
-	"external": {
-		"mwa_link": "Open in Munki Web Admin"
-	},
-	"failed": "Failed",
-	"failing": "Failing!",
-	"filevault": {
-		"users": "FileVault Enabled users",
-		"widget": {
-			"title": "Filevault 2 status"
-		}
-	},
-	"filter": {
-		"title": "Set filters"
-	},
-	"findmymac": {
-		"listing": {
-			"email": "Email",
-			"status": "Status",
-			"title": "Find My Mac report",
-			"ownerdisplayname": "Owner Display Name",
-			"personid": "iCloud PersonID",
-			"hostname": "iCloud Hostname"
-		},
-		"widget": {
-			"title": "Find My Mac Status",
-			"enabled": "Enabled",
-			"disabled": "Disabled"
-		},
-		"client": {
-			"title": "Find My Mac"
-		}
-	},
-	"filter": {
-		"title": "Set filters"
-	},
-	"firmware": {
-		"enabled_date": "Enable Date",
-		"firmware_password": "Firmware Password",
-		"firmware_mode": "Firmware Mode"
-	},
-	"free_disk_space": "Free Disk Space",
-	"free_disk_space_less_than": "Free Disk Space < __gb__GB",
-	"gsx": {
-		"configuration": "Shipping Configuration",
-		"contracttype": "Contract Type",
-		"country": "Country of Purchase",
-		"coverage": {
-			"conend": "Contract Coverage End Date",
-			"constart": "Contract Coverage Start Date",
-			"start": "Coverage Start Date",
-			"end": "Coverage End Date"
-		},
-		"estpurchasedate": "Estimated Purchase Date",
-		"laborcovered": "Labor Covered",
-		"loaner": "Loaner",
-		"modeldescription": "Model Description",
-		"obsolete": "Obsolete",
-		"partscovered": "Parts Covered",
-		"recheck": "Recheck Warranty Status",
-		"sla": "Warranty SLA",
-		"supported": "Supported",
-		"vintage": "Vintage",
-		"warrantystatus": "Warranty Status",
-		"warrantydays": "Warranty Days Remaining",
-		"warrentyend": "Warranty End Date"
-	},
-	"hardware": {
-		"hardware": "Hardware",
-		"uuid": "Hardware UUID"
-	},
-	"inactive": "Inactive",
-	"info": "Information",
-	"installed": "Installed",
-	"inventory": {
-		"report": "Inventory Report"
-	},
-	"keyboard": "Keyboard",
-	"last_seen": "Last Seen",
-	"last_user": "Last User",
-	"listing": {
-		"ard": {
-			"text": "Text __number__",
-			"title": "Apple Remote Desktop Report"
-		},
-		"backup2go": {
-			"title": "Backup2go",
-			"date": "Last successful backup",
-			"widget": {
-				"title": "Notification rules"
-			}
-		},
-		"bluetooth": {
-			"battery_percent": "Battery Percent",
-			"bluetooth_power": "Bluetooth Power",
-			"device_type": "Device Type",
-			"title": "Bluetooth report"
-		},
-		"certificate": {
-			"commonname": "Common Name",
-			"expires": "Expires",
-			"title": "Certificate Report"
-		},
-		"checkin": "Check-in",
-		"computername": "Name",
-		"hardware": {
-			"description": "Description"
-		},
-		"loading": "Loading data from server",
-		"munki": {
-			"latest_run": "Latest Run",
-			"package_installed": "Package installed",
-			"package_installed_plural": "Packages installed",
-			"package_removed": "Package removed",
-			"package_removed_plural": "Packages removed",
-			"pending_install": "Pending install",
-			"pending_install_plural": "Pending installs",
-			"pending_removal": "Pending removal",
-			"pending_removal_plural": "Pending removals"
-		},
-		"timemachine": {
-			"duration": "Backup duration",
-			"last_failure": "Last failed backup",
-			"last_failure_msg": "Message",
-			"last_success": "Last successful backup",
-			"title": "Time Machine Report"
-		},
-		"username": "Username",
-        "wifi": {
-            "apmode": "AP Mode",
-            "authtype": "802.11X Auth Type",
-            "channel": "Channel",
-            "lasttx": "Last Tx Rate (Mbps)",
-            "linkauthtype": "Link Auth Type",
-            "maxtx": "Max Tx Rate (Mbps)",
-            "noise": "Noise",
-            "state": "WiFi State"
-        }
-	},
-	"location": {
-		"address": "Address",
-		"altitude": "Altitude",
-		"coordinates": "Coordinates",
-		"currentstatus": "Current Status",
-		"ls_enabled": "Location Services Enabled",
-		"lastrun": "Last Run",
-		"lastlocationrun": "Last Location Run",
-		"latitude": "Latitude",
-		"latitudeaccuracy": "Latitude Accuracy",
-		"longitude": "Longitude",
-		"longitudeaccuracy": "Longitude Accuracy",
-		"report": "Location Report",
-		"stalelocation": "Stale Location"
-	},
-	"loading": "Loading data from server",
-	"machine": {
-		"hardware_type_title": "Hardware type breakdown",
-		"hardware_widget_title": "Hardware model breakdown"
-	},
-	"managedinstalls": {
-		"failing_clients": "Clients with failing installs",
-		"installratio_report": "Installation Ratio Report",
-		"no_managedinstalls": "No Managed Installs",
-		"report": "Managedinstalls Report",
-		"title": "Managed Installs"
-	},
-	"manifest": {
-		"name": "Manifest Name"
-	},
-	"memory": {
-		"memory": "Memory",
-		"usage": "Memory Usage",
-		"pressure": "Memory Pressure"
-	},
-	"model": "Model",
-	"mouse": "Mouse",
-	"munki": {
-		"error": "Munki error: __error__",
-		"error_plural": "__count__ Munki errors",
-		"errors_and_warnings": "Errors and Warnings",
-		"package_installed": "__pkg__ installed",
-		"package_installed_plural": "__count__ packages installed",
-		"panel_title": "Munki statistics this week",
-		"munkiprotocol": "Munki Protocol",
-		"run_type": "Run Type",
-		"version": "Munki Version",
-		"warning": "Munki warning: __warning__",
-		"warning_plural": "__count__ Munki warnings",
-		"additional_info": "Additional Munki Info"
-	},
-	"name": "Name",
-	"nav": {
-		"admin": {
-			"business_units": "Manage Business Units"
-		},
-		"lang": {
-			"de": "Deutsch",
-	        "en": "English",
-	        "es": "Español",
-	        "fr": "Francais",
-	        "nl": "Nederlands",
-	        "ru": "Русский"
-		},
-		"listings": {
-			"ard": "Apple Remote Desktop",
-			"bluetooth": "Bluetooth",
-			"backup2go": "Archiware Backup2Go",
-			"clients": "Clients",
-			"certificate": "Certificates",
-			"deploystudio": "DeployStudio",
-			"directoryservice": "Directory Service",
-			"disk": "Disk",
-			"displays": "Displays",
-			"findmymac": "Find My Mac",
-			"firmware": "Firmware Escrow",
-			"gsx": "GSX",
-			"hardware": "Hardware",
-			"inventory": "Inventory",
-			"location": "Location",
-			"munki": "Munki",
-			"network": "Network",
-			"power": "Power",
-			"printers": "Printers",
-			"profile": "Profiles",
-			"sccm_status": "SCCM Status",
-			"security": "Security",
-			"timemachine": "Time Machine",
-			"warranty": "Warranty",
-			"wifi": "WiFi"
-		},
-		"main": {
-		  "dashboard": "Dashboard",
-		  "reports": "Reports",
-		  "listings": "Listings",
-		  "admin": "Admin"
-		},
-		"reports": {
-			"appVersions": "App Versions Report",
-			"backup": "Backup Report",
-			"clients": "Client Report",
-			"configuration": "Configuration Report",
-			"findmymac": "Find My Mac Report",
-			"hardware": "Hardware Report",
-			"location": "Location Report",
-			"munki": "Munki Report",
-			"network": "Network Report",
-			"power": "Power Report",
-			"backup2go" : "Backup2go"
-		},
-		"user": {
-			"logout": "Sign Off"
-		}
-	},
-	"network": {
-		"ethernet": "Ethernet",
-		"hostname": "Hostname",
-		"ip_address": "IP Address",
-		"network": "Network",
-		"mask": "Mask",
-		"prefix_length": "Prefix length",
-		"router": "Router",
-		"traffic": "Network Traffic",
-		"inbound_traffic": "Inbound Traffic",
-		"outbound_traffic": "Outbound Traffic",
-		"remote_ip": "Remote IP Address"
-	},
-	"new_client": "New Client",
-	"new_client_plural": "New Clients",
-	"no": "No",
-	"no_clients": "No Clients",
-	"no_data": "No Data",
-	"no_errors_or_warnings": "No Errors or Warnings",
-	"notification": {
-		"all_levels": "All levels",
-		"business_unit": "Business Unit",
-		"business_units_all": "All Business Units",
-		"confirm_delete": "Confirm delete notification",
-		"edit": "Edit notification",
-		"menu_link": "Manage Notifications",
-		"new": "New notification",
-		"notification_enabled": "Enabled",
-		"notification_how": "Method",
-		"notification_module": "Module",
-		"notification_severity": "Level",
-		"notification_title": "Description",
-		"notification_who": "Email address",
-		"title": "Notifications",
-		"widget": {
-			"title": "Notification rules"
-		}
-	},
-	"on": "On",
-	"off": "Off",
-	"os": {
-		"version": "OS Version"
-	},
-	"path": "Path",
-	"pending": "Pending",
-	"php": {
-		"dom": "DOM Extension",
-		"moreinfo": "Extended PHP info",
-		"pdo": "PDO Extension",
-		"pdodrivers": "PDO Database drivers",
-		"php": "PHP",
-		"soap": "SOAP Extension",
-		"version": "Version"
-	},
-	"pkg_failed_to_install": "__pkg__ failed to install: __reason__",
-	"pkg_failed_to_install_plural": "__count__ packages failed to install",
-	"ratio": "Ratio",
-	"reg_date": "Registration Date",
-	"remote_control": "Remote Control",
-	"report": {
-		"generate": "Generate Report"
-	},
-	"printer": {
-		"default_set": "Default Set",
-		"driver_version": "Driver Version",
-		"name": "Printer Name",
-		"ppd": "PPD",
-		"printer_sharing": "Printer Sharing",
-		"printer_status": "Printer Status",
-		"tab_title": "Installed Printers",
-		"url": "URL"
-	},
-	"sccm_status": {
-	  "title": "SCCM Agent Status",
-	  "titleheader": "SCCM Agent Information",
-	  "agent_status": "SCCM Agent Status",
-	  "mgmt_point": "Management Point",
-	  "enrollment_name": "Enrollment User Name",
-	  "enrollment_server": "Enrollment Server",
-	  "last_checkin": "Last SCCM Check In",
-	  "cert_exp": "SCCM Client Certificate Expiration",
-	  "enrollment_status": "Enrollment Status"
-	},
-	"security": {
-		"security": "Security",
-		"gatekeeper": "Gatekeeper Status",
-		"sip": "SIP Status"
-	},
-	"serial": "Serial Number",
-	"servermetrics": {
-		"tab": "Server Metrics"
-	},
-	"service": {
-		"listing":{
-			"title": "Services Report"
-		},
-		"name": "Service Name",
-		"status": "Service Status",
-		"tab": {
-			"title": "Services"
-		}
-	},
-	"sharing": {
-		"connected_users": "Sharing – Connected Users",
-		"afp_users": "AFP Users",
-		"smb_users": "SMB Users"
-	},
-	"show": "Show",
-	"size": "Size",
-	"software": {
-		"software": "Software",
-		"smc_version": "SMC Version",
-		"boot_rom_version": "Boot ROM Version"
-	},
-	"status": "Status",
-	"storage": {
-		"bus_protocol": "BUS Protocol",
-		"encrypted": "Encrypted",
-		"encryption_status": "Encryption Status",
-		"external": "External",
-		"free": "Free",
-		"internal": "Internal",
-		"mountpoint": "Mount Point",
-		"not_encrypted": "Not Encrypted",
-		"percentage": "Percentage",
-		"size": "Disk Size",
-		"smartstatus": "SMART Status",
-		"smartstatus_failing": "SMART Status failing",
-		"storage": "Storage",
-		"total_size": "Size",
-		"type": "Storage Type",
-		"used": "Used",
-		"volume_type": "Volume Type"
-	},
-	"success": "Success",
-	"system": {
-		"status": "Munkireport System Status",
-		"system": "System"
-	},
-	"systemstatus": {
-		"menu_link": "Show System Status"
-	},
-	"tag": {
-		"listing": {
-			"title": "Tag report"
-		},
-		"name": "Tag Name",
-		"widget_title": "Tags"
-	},
-	"tags": {
-		"add_tag": "Add Tag"
-	},
-	"timemachine": {
-		"timemachine": "Timemachine"
-	},
-	"total_clients": "Total Clients",
-	"trackpad": "Trackpad",
-	"type": "Type",
-	"unavailable": "Unavailable",
-	"unauthorized": "You are not authorized",
-	"unencrypted": "Unencrypted",
-	"unknown": "Unknown",
-	"unsupported": "Not Supported",
-	"uptime": "Uptime",
-	"user": {
-		"user": "User",
-		"users": "Users",
-		"local_admins": "Local Administrators"
-	},
-	"verified": "Verified",
-	"version": "Version",
-	"warning": "Warning",
-	"warning_plural": "Warnings",
-	"warranty": {
-		"coverage": "Warranty Coverage",
-		"est_manufacture_date": "Est. Manufacture Date",
-		"est_purchase_date": "Est. Purchase Date",
-		"expired": "Expired on __date__",
-		"expires_in": "Expires in __date__",
-		"installed_memory_title": "Installed Memory",
-		"no_alerts": "No Warranty Alerts",
-		"recheck": "Recheck Warranty Status",
-		"supported_no_applecare": "Supported until __date__. No Applecare",
-		"supported_until": "Supported until __date__",
-		"unregistered": "Unregistered",
-		"warranty": "Warranty",
-		"widget_title": "Hardware Warranty"
-	},
-	"widget": {
-		"age": {
-			"title": "Hardware Age"
-		},
-		"app": {
-			"versions": "Known versions of __app__"
-		},
-		"bound_to_ds": {
-			"bound": "Bound",
-			"notbound": "Not Bound",
-			"info": "Totals since this data is being collected",
-			"title": "Bound to a Directory Service"
-		},
-		"certificate": {
-			"expired": "Expired",
-			"ok": "Valid for more than three months",
-			"soon": "Expires within three months",
-			"title": "Certificates"
-		},
-		"duplicate_computernames": {
-			"notfound": "No duplicates found",
-			"title": "Duplicate Computer Names"
-		},
-		"manifest": {
-			"title": "Manifests"
-		},
-		"memory": {
-			"title": "Memory breakdown"
-		},
-		"modified_computernames": {
-			"title": "Not matching AD Names",
-			"tooltip": "Computers where the computer name doesn't match the AD name"
-		},
-		"munki": {
-			"no_updates_pending": "No Updates Pending",
-			"title": "Munki"
-		},
-		"munkiinfo": {
-			"munkiprotocol": {
-				"localrepo": "local repo",
-				"http": "http",
-				"https": "https",
-				"title": "Munki Protocol",
-				"tooltip": "Munki Protocol among all clients"
-			}
-		},
-		"munki_versions": {
-			"title": "Munki versions",
-			"tooltip": "Munki versions among all clients"
-		},
-		"network_location": {
-			"title": "Network locations"
-		},
-		"network_vlan": {
-			"title": "Network vlans"
-		},
-		"new_clients": {
-			"no_new_clients": "No new clients",
-			"title": "New clients",
-			"tooltip": "Clients registered this week"
-		},
-		"os": {
-			"title": "OS breakdown"
-		},
-		"pending": {
-			"title": "Clients with pending installs"
-		},
-		"pending_apple": {
-			"title": "Pending Apple Updates",
-			"tooltip": "Pending Apple Updates for this week"
-		},
-		"pending_munki": {
-			"title": "Pending Installs",
-			"tooltip": "Pending installs for this week"
-		},
-		"power": {
-			"health": {
-				"title": "Battery Health",
-				"tooltip": "Battery health status listing"
-			},
-			"missing": "Missing",
-			"normal": "Normal",
-			"now": "Replace Now",
-			"service": "Service Now",
-			"soon": "Service Soon",
-			"nobattery": "No Battery",
-			"title": "Battery Condition",
-			"tooltip": "Battery condition listing"
-		},
-		"timemachine": {
-			"lastweek": "Latest backup more than a day ago",
-			"title": "Timemachine Status",
-			"today": "Backed up today",
-			"week_plus": "Latest backup more than a week ago",
-			"b2g_ok": "Latest backup within 2 weeks",
-			"b2g_warning": "Latest backup within 4 weeks",
-			"b2g_danger": "Latest backup older then 4 weeks"
-		},
-		"unknown": {
-			"alert": "This widget cannot be found",
-			"title": "Unknown widget"
-		},
-		"uptime": {
-			"title": "Uptime"
-		},
-		"warranty": {
-			"title": "Warranty status"
-		},
-        "warrantysupport":{
-			"title": "Counts Supported, Vintage, Obsolete, and Unknown support status",
-            "warrantyinfo": "Counts Supported, Vintage, Obsolete, and Unknown support status",
-            "warrentysupportstatus": "Warranty Support Status"
-        }
-	},
-    "wifi": {
-        "apmode": "Access Point Mode",
-        "bssid": "BSSID",
-        "channel": "Channel",
-        "extrssi": "External RSSI",
-        "lasttrx": "Last Transmit Rate (Mbps)",
-        "maxtrx": "Maximum Transmit Rate (Mbps)",
-        "networks": "WiFi Networks",
-        "noise": "Noise Level",
-        "nonetworks": "No Networks",
-        "rssilevel": "RSSI Level",
-        "sharing": "Sharing",
-        "state": "WiFi State",
-        "ssid": "SSID",
-        "xauthtype": "802.11X Authentication Type",
-        "wifiauthtype": "WiFi Authentication Type",
-        "wifiinfo": "WiFi Information"
+    "danger": "Error",
+    "database": "Database",
+    "date": {
+        "day": "Day",
+        "day_plural": "Days",
+        "year": "year"
     },
-	"yes": "Yes"
+    "db": {
+        "connectable": "Connectable",
+        "driver": "Driver",
+        "writable": "Writable"
+    },
+    "delete": "Delete",
+    "description": "Description",
+    "dialog": {
+        "cancel": "Cancel",
+        "close": "Close",
+        "comment": {
+            "add": "Add Comment",
+            "label": "Comment"
+        },
+        "ok": "Ok",
+        "ok_remove": "Ok, Remove",
+        "save": "Save"
+    },
+    "disabled": "Disabled",
+    "disconnected": "Disconnected",
+    "displayname": "Display Name",
+    "edit": "Edit",
+    "email": {
+        "email": "Email",
+        "show_machine_in_browser": "Show machine in browser"
+    },
+    "enabled": "Enabled",
+    "encrypted": "Encrypted",
+    "error": "Error",
+    "error_plural": "Errors",
+    "errors": {
+        "403": "You are not allowed to view this page",
+        "404": "Page not found",
+        "426": "You are required to visit this site using a secure connection.",
+        "client_nonexistent": "Client with serial number \"__serial__\" does not exist",
+        "loading": "There was problem with retrieving this data: __error__",
+        "title": "Error"
+    },
+    "event": "Event",
+    "event_plural": "Events",
+    "events": {
+        "widget_title": "Recently generated events"
+    },
+    "external": "External",
+    "failed": "Failed",
+    "failing": "Failing!",
+    "filter": {
+        "title": "Set filters"
+    },
+    "free_disk_space": "Free Disk Space",
+    "free_disk_space_less_than": "Free Disk Space < __gb__GB",
+    "hardware": {
+        "hardware": "Hardware",
+        "uuid": "Hardware UUID"
+    },
+    "inactive": "Inactive",
+    "info": "Information",
+    "installed": "Installed",
+    "internal": "Internal",
+    "keyboard": "Keyboard",
+    "last_seen": "Last Seen",
+    "last_user": "Last User",
+    "listing": {
+        "checkin": "Check-in",
+        "computername": "Name",
+        "loading": "Loading data from server"
+    },
+    "loading": "Loading data from server",
+    "machine": {
+        "arch": "Arch",
+        "base_model_widget_title": "Base Model Breakdown",
+        "cores": "Cores",
+        "cpu_speed": "CPU Speed",
+        "duplicate_computernames": {
+            "notfound": "No duplicates found",
+            "title": "Duplicate Computer Names"
+        },
+        "hardware": "Hardware",
+        "hardware_report": "Hardware Report",
+        "hardware_type_title": "Hardware Type breakdown",
+        "hardware_widget_title": "Hardware Model Breakdown",
+        "memory": {
+            "title": "Memory Breakdown"
+        },
+        "model": "Model",
+        "new_clients": {
+            "no_new_clients": "No new clients",
+            "title": "New Clients",
+            "tooltip": "Clients registered this week"
+        },
+        "os": {
+            "title": "OS Breakdown"
+        },
+        "registered": {
+            "title": "Client Registration Over Time"
+        },
+        "rom_version": "ROM Version",
+        "uptime": {
+            "title": "Uptime"
+        }
+    },
+    "memory": "Memory",
+    "model": "Model",
+    "mouse": "Mouse",
+    "munki": {
+        "error": "Munki error: __error__",
+        "error_plural": "__count__ Munki errors",
+        "package_installed": "__pkg__ installed",
+        "package_installed_plural": "__count__ packages installed",
+        "warning": "Munki warning: __warning__",
+        "warning_plural": "__count__ Munki warnings"
+    },
+    "mwa": {
+        "mwa_link": "Open in Munki Web Admin"
+    },
+    "name": "Name",
+    "nav": {
+        "admin": {
+            "business_units": "Manage Business Units"
+        },
+        "lang": {
+            "de": "Deutsch",
+            "en": "English",
+            "es": "Español",
+            "fr": "Francais",
+            "nl": "Nederlands",
+            "ru": "Русский"
+        },
+        "main": {
+            "admin": "Admin",
+            "dashboard": "Dashboard",
+            "listings": "Listings",
+            "reports": "Reports"
+        },
+        "user": {
+            "logout": "Sign Off"
+        }
+    },
+    "new_client": "New Client",
+    "new_client_plural": "New Clients",
+    "no": "No",
+    "no_clients": "No Clients",
+    "no_data": "No Data",
+    "no_errors_or_warnings": "No Errors or Warnings",
+    "notification": {
+        "all_levels": "All levels",
+        "business_unit": "Business Unit",
+        "business_units_all": "All Business Units",
+        "confirm_delete": "Confirm delete notification",
+        "edit": "Edit notification",
+        "menu_link": "Manage Notifications",
+        "new": "New notification",
+        "notification_enabled": "Enabled",
+        "notification_how": "Method",
+        "notification_module": "Module",
+        "notification_severity": "Level",
+        "notification_title": "Description",
+        "notification_who": "Email address",
+        "title": "Notifications",
+        "widget": {
+            "title": "Notification Rules"
+        }
+    },
+    "off": "Off",
+    "on": "On",
+    "os": {
+        "version": "OS Version"
+    },
+    "path": "Path",
+    "pending": "Pending",
+    "php": {
+        "dom": "DOM Extension",
+        "moreinfo": "Extended PHP info",
+        "pdo": "PDO Extension",
+        "pdodrivers": "PDO Database drivers",
+        "php": "PHP",
+        "soap": "SOAP Extension",
+        "version": "Version"
+    },
+    "pkg_failed_to_install": "__pkg__ failed to install: __reason__",
+    "pkg_failed_to_install_plural": "__count__ packages failed to install",
+    "ratio": "Ratio",
+    "reg_date": "Registration Date",
+    "remote_control": "Remote Control",
+    "report": {
+        "generate": "Generate Report"
+    },
+    "serial": "Serial Number",
+    "servermetrics": {
+        "tab": "Server Metrics"
+    },
+    "show": "Show",
+    "size": "Size",
+    "software": {
+        "boot_rom_version": "Boot ROM Version",
+        "smc_version": "SMC Version",
+        "software": "Software"
+    },
+    "status": "Status",
+    "success": "Success",
+    "system": {
+        "status": "Munkireport System Status",
+        "system": "System"
+    },
+    "systemstatus": {
+        "menu_link": "Show System Status"
+    },
+    "total_clients": "Total Clients",
+    "trackpad": "Trackpad",
+    "type": "Type",
+    "unauthorized": "You are not authorized",
+    "unavailable": "Unavailable",
+    "unencrypted": "Unencrypted",
+    "unknown": "Unknown",
+    "unsupported": "Not Supported",
+    "uptime": "Uptime",
+    "user": {
+        "local_admins": "Local Administrators",
+        "user": "User",
+        "users": "Users"
+    },
+    "username": "Username",
+    "verified": "Verified",
+    "version": "Version",
+    "warning": "Warning",
+    "warning_plural": "Warnings",
+    "widget": {
+        "unknown": {
+            "alert": "This widget cannot be found",
+            "title": "Unknown widget"
+        }
+    },
+    "yes": "Yes"
 }
