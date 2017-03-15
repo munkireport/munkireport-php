@@ -175,12 +175,10 @@ class Modules
     {
         if(isset($this->moduleList[$module]['listings'])){
             foreach ($this->moduleList[$module]['listings'] as $listing) {
-                if($listing['view'] == $name . '_listing'){
-                    return (object) array(
-                        'view_path' => $this->getPath($module, '/views/'),
-                        'view' => $listing['view'],
-                    );
-                }
+                return (object) array(
+                    'view_path' => $this->getPath($module, '/views/'),
+                    'view' => $listing['view'],
+                );
             }
         }
         return False;
