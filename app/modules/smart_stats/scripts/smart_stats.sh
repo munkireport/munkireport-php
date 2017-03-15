@@ -54,7 +54,7 @@ for TRANSLATE in 'Model Family:     ' 'Device Model:     ' 'Serial Number:    ' 
 do 
 
     OUTKEY=$(awk -F' ' '{printf "%s%s\n", $1, $2}' <<< "${TRANSLATE}" | tr -cd '[[:alnum:]]._' )
-    OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${SMARTSTATS}" | sed -e "s/${TRANSLATE}//g" )
+    OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${SMARTSTATS}" | sed -e "s/${TRANSLATE}//g" | tr -d '\r' | tr -d '\n' )
     /usr/libexec/plistbuddy -c "add ${DISKARRAY}:${OUTKEY} string ${OUTVALUE}" "${smart_stats_file}" 1>/dev/null
 
 # Close TRANSLATE for
