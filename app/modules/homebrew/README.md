@@ -1,7 +1,7 @@
 Homebrew module
 ==============
 
-Module provides a breakdown on everything currently installed by Homebrew 
+Module provides a breakdown on everything currently installed by Homebrew. It can be installed separately from the homebrew_info module.
 
 Database:
 * name - varchar(255) - name of item installed by brew
