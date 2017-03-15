@@ -1,7 +1,7 @@
 Homebrew Info module
 ==============
 
-Gathers and returns information on the client's Homebrew installation
+Gathers and returns information on the client's Homebrew installation. It does not collect information on installed bottles/packages. It can be installed separately from the homebrew module.
 
 Database:
 * core_tap_head - varchar(255) - hash of the core tap head
