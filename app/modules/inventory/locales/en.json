@@ -2,7 +2,8 @@
     "app": {
         "versions": "Known versions of __app__"
     },
-    "report": "Inventory Report",
+    "appversions_report": "App Versions Report",
+    "inventory_items": "Inventory Items",
     "listing": "Inventory",
-    "appversions_report": "App Versions Report"
+    "report": "Inventory Report"
 }
