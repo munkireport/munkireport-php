@@ -80,10 +80,8 @@ class Disk_report_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-                $disk_report = new Disk_report_model;
-                $out = array();
-                $out['stats'] = $disk_report->get_disk_type();
-
+        
+        $disk_report = new Disk_report_model;
         $obj->view('json', array('msg' => $disk_report->get_disk_type()));
     }
 
