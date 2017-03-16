@@ -117,6 +117,12 @@ class Gpu_model extends Model {
 				$this->rs['vram'] = ($device['vram_shared']." (Shared)");
 			}
             
+            // Fix GMA950 memory
+            $this->rs['vram'] = str_replace("spdisplays_integrated_vram","1536 MB (Shared)",$this->rs['vram']);
+            
+            // Fix GMA model name
+            $this->rs['model'] = str_replace("GMA","Intel GMA",$this->rs['model']);
+            
 			// Save the GPU
 			$this->id = '';
 			$this->save();
