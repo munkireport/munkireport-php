@@ -1,4 +1,10 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View;
+use munkireport\lib\Widgets;
+
 class show extends Controller
 {
     private $modules;
@@ -18,9 +24,7 @@ class show extends Controller
 
     public function dashboard($which = '')
     {
-        include_once(APP_PATH . '/lib/munkireport/Widgets.php');
-
-        $data['widget'] = new munkireport\Widgets();
+        $data['widget'] = new Widgets();
 
         if ($which) {
             $view = 'dashboard/'.$which;
@@ -60,10 +64,9 @@ class show extends Controller
 
     public function report($module = '', $name = '')
     {
-        include_once(APP_PATH . '/lib/munkireport/Widgets.php');
 
         $data = array(
-            'widget' => new munkireport\Widgets(),
+            'widget' => new Widgets(),
         );
 
         if ($report = $this->modules->getReport($module, $name)) {

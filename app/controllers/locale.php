@@ -1,4 +1,9 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View;
+
 class Locale extends Controller
 {
     private $modules;

@@ -4,14 +4,14 @@ namespace munkireport\email;
 
 class Email
 {
-    
+
     private $config;
 
     public function __construct($config)
     {
         $this->config = $config;
     }
-    
+
     /**
      * Send email
      *
@@ -22,14 +22,14 @@ class Email
     public function send($email)
     {
         $out = array('error' => 0, 'error_msg' => '');
-        
+
         include_once(APP_PATH . '/lib/phpmailer/class.phpmailer.php');
         include_once(APP_PATH . '/lib/phpmailer/class.smtp.php');
         $mail = new \PHPMailer;
-        
+
         // Get from
         list($from_addr, $from_name) = each($this->config['from']);
-        
+
         $mail->isSMTP(); // Set mailer to use SMTP
         $mail->Host = $this->config['smtp_host'];  // Specify main and backup SMTP servers
         $mail->SMTPAuth = $this->config['smtp_auth']; // Enable SMTP authentication
@@ -39,7 +39,7 @@ class Email
         $mail->Port = $this->config['smtp_port']; // TCP port to connect to
         $mail->CharSet = "UTF-8";
         $mail->setFrom($from_addr, $from_name);
-        
+
         // Add recipient(s)
         foreach ($email['to'] as $to_addr => $to_name) {
             $mail->addAddress($to_addr, $to_name);
@@ -53,7 +53,7 @@ class Email
             $out['error'] = 1;
             $out['error_msg'] = $mail->ErrorInfo;
         }
-        
+
         return $out;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace munkireport;
+namespace munkireport\lib;
 
 /**
 * Themes class

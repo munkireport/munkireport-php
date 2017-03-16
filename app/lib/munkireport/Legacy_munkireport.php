@@ -1,6 +1,6 @@
 <?php
 
-namespace munkireport;
+namespace munkireport\lib;
 
 /**
  * Utility for legacy munkireport
