@@ -231,7 +231,7 @@ class Modules
                 $out[] = (object) array(
                   'url' => url($baseUrl.'/'.$module.'/'.$itemName),
                   'name' => $itemName,
-                  'class' => substr_compare( $page, $itemName, -strlen( $itemName ) ) === 0 ? 'active' : '',
+                  'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
                   'i18n' => $i18n,
                 );
             }
