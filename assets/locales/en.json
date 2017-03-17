@@ -260,6 +260,9 @@
             "listings": "Listings",
             "reports": "Reports"
         },
+        "reports": {
+            "hardware": "Hardware"
+        },
         "user": {
             "logout": "Sign Off"
         }
