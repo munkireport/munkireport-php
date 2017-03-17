@@ -7,9 +7,9 @@
 <div class="container">
 
   <div class="row">
-    
+
     <div class="col-lg-12">
-    
+
       <script type="text/javascript" charset="utf-8">
           $(document).on('appReady', function(e, lang) {
               $('.table').dataTable({
@@ -17,18 +17,18 @@
               });
           } );
       </script>
-      
+
       <h3><?php echo $name; ?> <span id="inv-count" class='label label-primary'><?php echo count($inventory_items); ?></span></h3>
-      
+
       <?php if (count($inventory_items)): ?>
           <!--
-          <h2>Machines (<?php echo count($inventory_items); ?>)</h2> 
+          <h2>Machines (<?php echo count($inventory_items); ?>)</h2>
           -->
           <table class='table table-striped table-condensed table-bordered'>
               <thead>
                   <tr>
                     <th data-i18n="listing.computername"></th>
-                    <th data-i18n="listing.username"></th>
+                    <th data-i18n="username"></th>
                     <th data-i18n="version"></th>
                     <th data-i18n="bundle_id"></th>
                     <th data-i18n="cfbundlename"></th>
@@ -58,9 +58,9 @@
           <p><i>No machines.</i></p>
       <?php endif ?>
     </div> <!-- /span 12 -->
-    
+
   </div> <!-- /row -->
-  
+
 </div>  <!-- /container -->
 
 <?php $this->view('partials/foot'); ?>

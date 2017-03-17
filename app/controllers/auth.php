@@ -1,5 +1,11 @@
 <?php
-class auth extends Controller
+
+namespace munkireport\controller;
+
+use \Controller, \View, \Machine_group, \Business_unit, \Reportdata_model;
+use munkireport\lib\Recaptcha, Hautelook\Phpass\PasswordHash;
+
+class Auth extends Controller
 {
     // Authentication mechanisms we handle
     public $mechanisms = array('noauth', 'config', 'ldap', 'AD');
@@ -35,7 +41,7 @@ class auth extends Controller
             $return_parts = func_get_args();
             $return = implode('/', $return_parts);
         }
-        
+
         if ($this->authorized()) {
             redirect($return);
         }
@@ -50,15 +56,14 @@ class auth extends Controller
 
         $login = post('login');
         $password = post('password');
-    
+
         //check for recaptcha
         if (conf('recaptchaloginpublickey')) {
         //recaptcha enabled by admin; checking it
             if ($response = post('g-recaptcha-response')) {
-                include_once(APP_PATH . '/lib/munkireport/Recaptcha.php');
-                $recaptchaObj = new munkireport\Recaptcha(conf('recaptchaloginprivatekey'));
+                $recaptchaObj = new Recaptcha(conf('recaptchaloginprivatekey'));
                 $remote_ip = getRemoteAddress();
-                
+
                 if (! $recaptchaObj->verify($response, $remote_ip)) {
                     error('', 'auth.capthca.invalid');
                     $pre_auth_failed = true;
@@ -70,7 +75,7 @@ class auth extends Controller
                 }
             }
         }
-        
+
         // User is a member of these groups
         $groups = array();
 
@@ -81,7 +86,7 @@ class auth extends Controller
             if ($pre_auth_failed) {
                 break;
             }
-            
+
             // Local is just a username => hash array
             switch ($mechanism) {
                 case 'noauth': // No authentication
@@ -94,7 +99,7 @@ class auth extends Controller
                         if (isset($auth_data[$login])) {
                             $t_hasher = $this->load_phpass();
                             $auth_verified = $t_hasher->CheckPassword($password, $auth_data[$login]);
-                            
+
                             if ($auth_verified) {
                             // Get group memberships
                                 foreach (conf('groups', array()) as $groupname => $members) {
@@ -111,7 +116,7 @@ class auth extends Controller
                 case 'ldap': // LDAP authentication
                     if ($login && $password) {
                         include_once(APP_PATH . '/lib/authLDAP/authLDAP.php');
-                        $ldap_auth_obj = new Auth_ldap($auth_data);
+                        $ldap_auth_obj = new \Auth_ldap($auth_data);
                         if ($ldap_auth_obj->authenticate($login, $password)) {
                         //alert('Authenticated');
                             // Check user against users list
@@ -144,7 +149,7 @@ class auth extends Controller
                                             if (conf('enable_business_units')) {
                                                 $groups = $user_data['grps'];
                                             }
-                                            
+
                                             break 3;
                                         }
                                     }
@@ -163,7 +168,7 @@ class auth extends Controller
                         //TODO: wrap this include somewhere else?
                         include_once(APP_PATH . '/lib/adLDAP/adLDAP.php');
                         try {
-                            $adldap = new adLDAP($auth_data);
+                            $adldap = new \adLDAP($auth_data);
                         } catch (adLDAPException $e) {
                             error('An error ocurred while contacting AD', 'error_contacting_AD');
                             // When in debug mode, show additional info
@@ -221,7 +226,7 @@ class auth extends Controller
             $_SESSION['user'] = $login;
             $_SESSION['groups'] = $groups;
             $_SESSION['auth'] = $mechanism;
-            
+
             $this->set_session_props();
 
             session_regenerate_id();
@@ -364,7 +369,7 @@ class auth extends Controller
 
         $password = isset($_POST['password']) ? $_POST['password'] : '';
         $data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
-        
+
         if ($_POST && (! $data['login'] or ! $password)) {
             error('Empty values are not allowed', 'auth.empty_not_allowed');
         }
@@ -380,7 +385,6 @@ class auth extends Controller
 
     public function load_phpass()
     {
-        require(APP_PATH . '/lib/phpass-0.3/PasswordHash.php');
         return new PasswordHash(8, true);
     }
 }

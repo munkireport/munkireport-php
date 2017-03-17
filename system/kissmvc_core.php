@@ -6,7 +6,7 @@ Eric Koh <erickoh75@gmail.com> http://kissmvc.com
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
 files ( the "Software" ), to deal in the Software without
-restriction, including without limitation the rights to use, 
+restriction, including without limitation the rights to use,
 copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the
 Software is furnished to do so, subject to the following
@@ -15,11 +15,11 @@ conditions:
 The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
@@ -36,19 +36,19 @@ abstract class KISS_Engine
     protected $action;
     protected $params=array();
     protected $uri_string='';
-    
+
     public function __construct($routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
     {
         if ($_POST and get_magic_quotes_gpc()) {
             $this->stripslashesDeep($_POST);
         }
-        
+
         $this->controller = $default_controller;
         $this->controller=$default_controller;
         $this->action=$default_action;
-        
+
         $this->fetchUriString($uri_protocol);
-                        
+
         //Process routes
         $req_uri = ltrim($this->uri_string, '/');
         foreach ($routes as $pat => $route) {
@@ -57,10 +57,10 @@ abstract class KISS_Engine
                 break;
             }
         }
-        
+
         //Explode URI parts
         $this->request_uri_parts = $req_uri ? explode('/', $req_uri) : array();
-        
+
         //Parse request (determine controller/action/params)
         $this->params = array();
         $p = $this->request_uri_parts;
@@ -73,36 +73,32 @@ abstract class KISS_Engine
         if (isset($p[2])) {
             $this->params=array_slice($p, 2);
         }
-        
-        //Route request to correct controller/action
-        $controller_file = CONTROLLER_PATH.$this->controller.'.php'; //CONTROLLER CLASS FILE
-        if (! preg_match('#^[A-Za-z0-9_-]+$#', $this->controller) or ! file_exists($controller_file)) {
-            $this->requestNotFound('Controller file not found: '.$controller_file);
+
+        try {
+            //Route request to correct controller/action
+            $controllerClass = 'munkireport\\controller\\' . $this->controller;
+            $this->controller_obj = new $controllerClass;
+        } catch (Exception $e) {
+            $this->requestNotFound('Controller class not found: '.$controllerClass);
         }
-        
-        //Create controller obj
-        require($controller_file);
-        if (! class_exists($this->controller, false)) {
-            $this->requestNotFound('Controller class not found: '.$this->controller);
-        }
-        $this->controller_obj = new $this->controller;
-        
+
+
         //call controller function
         if (! $this->validateAction() or ! method_exists($this->controller_obj, $this->action)) {
             $this->requestNotFound('Invalid function name: '.$this->action);
         }
         call_user_func_array(array( $this->controller_obj, $this->action ), $this->params);
-        
+
         return $this;
-        
+
     }
-    
+
     // Check if action contains valid chars
     protected function validateAction()
     {
         return preg_match('#^[A-Za-z_][A-Za-z0-9_-]*$#', $this->action);
     }
-    
+
     // The following three functions are blatantly copied from CodeIgniter (http://codeigniter.com)
     protected function fetchUriString($uri_protocol)
     {
@@ -209,7 +205,7 @@ abstract class KISS_Engine
             $parts = preg_split('#&#i', $uri, 2);
             $uri = $parts[0];
         }
-        
+
         if (isset($parts[1])) {
             $_SERVER['QUERY_STRING'] = $parts[1];
             parse_str($_SERVER['QUERY_STRING'], $_GET);
@@ -227,7 +223,7 @@ abstract class KISS_Engine
         // Do some final cleaning of the URI and return it
         return str_replace(array('//', '../'), '/', trim($uri, '/'));
     }
-    
+
 
     //Override this function for your own custom 404 page
     public function requestNotFound($msg = '')
@@ -235,7 +231,7 @@ abstract class KISS_Engine
         header("HTTP/1.0 404 Not Found");
         die('<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>'.$msg.'<p>The requested URL was not found on this server.</p><p>Please go <a href="javascript: history.back( 1 )">back</a> and try again.</p><hr /><p>Powered By: <a href="http://kissmvc.com">KISSMVC</a></p></body></html>');
     }
-        
+
     // Recursively strip slashes
     public function stripslashesDeep($value)
     {
@@ -303,13 +299,13 @@ abstract class KISS_View
             $this->vars=array_merge($this->vars, $vars);
         }
         extract($this->vars);
-        
+
         if (! @include($view_path.$file.EXT)) {
             echo '<!-- Could not open '.$view_path.$file.EXT.'-->';
         }
-        
+
     }
-    
+
     public function fetch($vars = '')
     {
         if (is_array($vars)) {
@@ -371,14 +367,14 @@ abstract class KISS_View
 // Model/ORM
 // Requires a function getdbh() which will return a PDO handler
 /*
-function getdbh() 
+function getdbh()
 	{
 	if ( !isset( $GLOBALS['dbh'] ) )
-		try 
+		try
 	{
 			//$GLOBALS['dbh'] = new PDO( 'sqlite:'.APP_PATH.'db/dbname.sqlite' );
 			$GLOBALS['dbh'] = new PDO( 'mysql:host=localhost;dbname=dbname', 'username', 'password' );
-		} catch ( PDOException $e ) 
+		} catch ( PDOException $e )
 	{
 			die( 'Connection failed: '.$e->getMessage() );
 		}
@@ -509,13 +505,13 @@ abstract class KISS_Model
                 $stmt->bindValue(++$i, is_scalar($v) ? $v : ( $this->COMPRESS_ARRAY ? gzdeflate(serialize($v)) : serialize($v) ));
             }
         }
-        
+
         $this->execute($stmt);
 
         if (! $stmt->rowCount()) {
             return false;
         }
-            
+
         $this->set($pkname, $dbh->lastInsertId());
         return $this;
     }

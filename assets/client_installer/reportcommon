@@ -1,7 +1,18 @@
 #!/usr/bin/python
 # encoding: utf-8
 
-from munkilib import munkicommon
+try:
+    from munkilib import display
+    from munkilib import prefs
+    from munkilib import constants
+    from munkilib import munkihash
+except ImportError:
+    # Legacy support
+    from munkilib import munkicommon as display
+    from munkilib import munkicommon as prefs
+    from munkilib import munkicommon as constants
+    from munkilib import munkicommon as munkihash
+
 from munkilib.purl import Purl
 from munkilib.phpserialize import *
 import subprocess
@@ -33,25 +44,25 @@ def set_verbosity(level):
     """
     Set verbosity level
     """
-    munkicommon.verbose = int(level)
+    display.verbose = int(level)
 
 def display_error(msg, *args):
     """
-    Call munkicommon error msg handler
+    Call display error msg handler
     """
-    munkicommon.display_error('Munkireport: %s' % msg, *args)
+    display.display_error('Munkireport: %s' % msg, *args)
 
 def display_warning(msg, *args):
     """
-    Call munkicommon warning msg handler
+    Call display warning msg handler
     """
-    munkicommon.display_warning('Munkireport: %s' % msg, *args)
+    display.display_warning('Munkireport: %s' % msg, *args)
 
 def display_detail(msg, *args):
     """
-    Call munkicommon detail msg handler
+    Call display detail msg handler
     """
-    munkicommon.display_detail('Munkireport: %s' % msg, *args)
+    display.display_detail('Munkireport: %s' % msg, *args)
 
 def curl(url, values):
     
@@ -62,8 +73,8 @@ def curl(url, values):
     options["body"] = urlencode(values)
     options["logging_function"] = display_detail
     if pref('UseMunkiAdditionalHttpHeaders'):
-        custom_headers = munkicommon.pref(
-                            munkicommon.ADDITIONAL_HTTP_HEADERS_KEY)
+        custom_headers = prefs.pref(
+                            constants.ADDITIONAL_HTTP_HEADERS_KEY)
         if custom_headers:
             options["additional_headers"] = dict()
             for header in custom_headers:
@@ -98,7 +109,7 @@ def curl(url, values):
 
     if connection.error != None:
         # Gurl returned an error
-        munkicommon.display_detail(
+        display.display_detail(
             'Download error %s: %s', connection.error.code(), 
             connection.error.localizedDescription())
         if connection.SSLerror:
@@ -109,10 +120,10 @@ def curl(url, values):
                         connection.error.localizedDescription())
 
     if connection.response != None and connection.status != 200:
-        munkicommon.display_detail('Status: %s', connection.status)
-        munkicommon.display_detail('Headers: %s', connection.headers)
+        display.display_detail('Status: %s', connection.status)
+        display.display_detail('Headers: %s', connection.headers)
     if connection.redirection != []:
-        munkicommon.display_detail('Redirection: %s', connection.redirection)
+        display.display_detail('Redirection: %s', connection.redirection)
 
     connection.headers['http_result_code'] = str(connection.status)
     description = NSHTTPURLResponse.localizedStringForStatusCode_(
@@ -176,7 +187,7 @@ def get_uptime():
 
 
 def set_pref(pref_name, pref_value):
-    """Sets a preference, See munkicommon.py for details"""
+    """Sets a preference, See prefs.py for details"""
     CFPreferencesSetValue(
         pref_name, pref_value, BUNDLE_ID,
         kCFPreferencesAnyUser, kCFPreferencesCurrentHost)
@@ -192,7 +203,7 @@ def set_pref(pref_name, pref_value):
 
 
 def pref(pref_name):
-    """Return a preference. See munkicommon.py for details
+    """Return a preference. See prefs.py for details
     """
     pref_value = CFPreferencesCopyAppValue(pref_name, BUNDLE_ID)
     return pref_value
@@ -206,7 +217,7 @@ def process(serial, items):
 
     # Get prefs
     baseurl = pref('BaseUrl') or \
-              munkicommon.pref('SoftwareRepoURL') + '/report/'
+              prefs.pref('SoftwareRepoURL') + '/report/'
 
     hashurl = baseurl + "index.php?/report/hash_check"
     checkurl = baseurl + "index.php?/report/check_in"
@@ -217,7 +228,7 @@ def process(serial, items):
     # Get hashes for all scripts
     for key, i in items.items():
         if i.get('path'):
-            i['hash'] = munkicommon.getmd5hash(i.get('path'))
+            i['hash'] = munkihash.getmd5hash(i.get('path'))
 
     # Check dict
     check = {}

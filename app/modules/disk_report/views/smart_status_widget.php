@@ -4,7 +4,7 @@
 
 		<div class="panel-heading" data-container="body">
 
-			<h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> <span data-i18n="storage.smartstatus"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> <span data-i18n="disk_report.smartstatus"></span></h3>
 
 		</div>
 
@@ -25,11 +25,11 @@ $(document).on('appUpdate', function(e, lang) {
     		//alert(data.error);
     		return;
     	}
-		
+
 		var panel = $('#smart-status-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/disk';
+			baseUrl = appUrl + '/show/listing/disk_report/disk';
 		panel.empty();
-		
+
 		// Set statuses
 		if(data.failing){
 			panel.append('<a href="'+baseUrl+'#failing" class="btn btn-danger"><span class="bigger-150">'+data.failing+'</span><br>'+i18n.t('failing')+'</a>');

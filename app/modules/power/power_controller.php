@@ -25,6 +25,23 @@ class Power_controller extends Module_controller
     }
     
     /**
+     * Retrieve data in json format
+     *
+     **/
+    public function get_data($serial_number = '')
+    {
+        $obj = new View();
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+        $power = new Power_model($serial_number);
+        $temp_format = conf('temperature_unit');
+        $power->rs['temp_format'] = $temp_format; // Add the temp format for use in the client tab's JavaScript    
+        $obj->view('json', array('msg' => $power->rs));
+    }
+    
+    /**
      * Get Power Statistics
      *
      *

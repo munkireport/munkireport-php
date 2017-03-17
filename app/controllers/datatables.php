@@ -1,4 +1,9 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View, \Tablequery, \Exception;
+
 class datatables extends Controller
 {
     public function __construct()
@@ -19,7 +24,8 @@ class datatables extends Controller
             'draw' => 0, // Identifier, just return
             'search' => '', // Search query
             'where' => '', // Optional where clause
-            'mrColNotEmpty' => '' // Munkireport non empty column name
+            'mrColNotEmpty' => '', // Munkireport non empty column name
+            'mrColNotEmptyBlank' => '' // Munkireport non empty column name
         );
         //echo '<pre>';print_r($_GET);return;
 
@@ -44,7 +50,7 @@ class datatables extends Controller
             $obj = new Tablequery($cfg);
             //echo '<pre>';print_r($obj->fetch($cfg));
             echo json_encode($obj->fetch($cfg));
-            
+
             // Check for older php versions
             if (function_exists('json_last_error')) {
             // If there is an encoding error, show it

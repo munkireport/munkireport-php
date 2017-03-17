@@ -4,22 +4,22 @@
 
         <div class="panel-heading" data-container="body" title="">
 
-            <h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="crashplan.widget.title"></span></h3>
+            <h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="crashplan.widget_title"></span></h3>
 
         </div>
 
         <div class="list-group scroll-box">
             <a id="cpp-today" href="<?=url('module/crashplan/listing')?>" class="list-group-item list-group-item-success hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.today"></span>
+                <span data-i18n="backup.today"></span>
             </a>
             <a id="cpp-lastweek" href="<?=url('module/crashplan/listing')?>" class="list-group-item list-group-item-warning hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.lastweek"></span>
+                <span data-i18n="backup.lastweek"></span>
             </a>
             <a id="cpp-week_plus" href="<?=url('module/crashplan/listing')?>" class="list-group-item list-group-item-danger hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.week_plus"></span>
+                <span data-i18n="backup.week_plus"></span>
             </a>
             <span id="cpp-nodata" data-i18n="no_clients" class="list-group-item"></span>
         </div>
@@ -55,4 +55,3 @@ $.each(data, function(prop, val){
 
 
 </script>
-

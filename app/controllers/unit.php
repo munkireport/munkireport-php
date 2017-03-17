@@ -1,4 +1,9 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View, \Business_unit, \Machine_group;
+
 class unit extends Controller
 {
     public function __construct()
@@ -110,7 +115,7 @@ class unit extends Controller
                     $value = intval($_POST['value']);
                 }
                 break;
-            
+
             default:
                 $out['error'] = 'Unknown filter: '.$_POST['filter'];
                 break;
@@ -146,7 +151,7 @@ class unit extends Controller
             // Return current filter array
             $out[$filter] = $_SESSION['filter'][$filter];
         }
-        
+
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }

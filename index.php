@@ -36,7 +36,7 @@ function load_conf()
 	{
 		$conf['auth']['auth_config'] = $auth_config;
 	}
-	
+
 }
 
 
@@ -49,6 +49,40 @@ function load_conf()
 function conf($cf_item, $default = '')
 {
 	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
+}
+
+/**
+ * Get session item
+ * @param string session item
+ * @param string default value (optional)
+ * @author AvB
+ **/
+function sess_get($sess_item, $default = '')
+{
+	if (! isset($_SESSION))
+	{
+		return $default;
+	}
+
+	return array_key_exists($sess_item, $_SESSION) ? $_SESSION[$sess_item] : $default;
+}
+
+/**
+ * Set session item
+ * @param string session item
+ * @param string value
+ * @author AvB
+ **/
+function sess_set($sess_item, $value)
+{
+	if (! isset($_SESSION))
+	{
+		return false;
+	}
+
+	$_SESSION[$sess_item] = $value;
+
+	return true;
 }
 
 /**
@@ -69,9 +103,9 @@ function fatal($msg)
 define('INDEX_PAGE', conf('index_page'));
 define('SYS_PATH', conf('system_path') );
 define('APP_PATH', conf('application_path') );
-define('VIEW_PATH', conf('view_path')); 
-define('MODULE_PATH', conf('module_path')); 
-define('CONTROLLER_PATH', conf('controller_path')); 
+define('VIEW_PATH', conf('view_path'));
+define('MODULE_PATH', conf('module_path'));
+define('CONTROLLER_PATH', conf('controller_path'));
 define('EXT', '.php'); // Default extension
 
 //===============================================
@@ -91,7 +125,7 @@ require( APP_PATH.'helpers/site_helper'.EXT );
 //===============================================
 date_default_timezone_set( conf('timezone') );
 
-set_exception_handler('uncaught_exception_handler');
+//set_exception_handler('uncaught_exception_handler');
 
 
 //===============================================

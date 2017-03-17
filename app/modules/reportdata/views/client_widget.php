@@ -12,7 +12,7 @@
 
 		<div class="panel-body">
 			
-			<svg id="test1" class="center-block"></svg>
+			<svg id="test1" class="center-block" style="width:258px; height: 258px"></svg>
 			<div class="text-muted text-center">
 				<span data-i18n="client.total"></span>: <span class="total-clients"></span> <span class="total-change"></span>
 				|
@@ -42,31 +42,25 @@ $(document).on('appReady', function() {
 		{ key: inactive, y: 100 }
 	];
 	var arcRadius1 = [
-		{ inner: .75, outer: 1.25 },
-		{ inner: 0.85, outer: 1.15 }
+		{ inner: .75, outer: 0.9 },
+		{ inner: .78, outer: 0.87 }
 	];
 	var colors = ["green", "gray"];
 	var chart;
-	var height = 258;
+	var height = 300;
 	var width = 258;
 	nv.addGraph(function () {
 		chart = nv.models.pieChart()
 			.x(function (d) { return d.key })
 			.y(function (d) { return d.y })
 			.donut(true)
-			.showLabels(false)
-			.width(width)
-			.height(height)
-			.growOnHover(false)
-			.arcsRadius(arcRadius1);
+			.showLabels(false);
 		
 		chart.title(" ");
 		chart.legend.updateState(false);
 		
 		d3.select("#client-widget svg")
 			.datum(testdata1)
-			.attr('width', width)
-			.attr('height', height)
 			.call(chart);
 		
 		drawGraph();

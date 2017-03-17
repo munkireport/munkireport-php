@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Remove timemachine script
-rm -f "${MUNKIPATH}preflight.d/timemachine.sh"
+rm -f "${MUNKIPATH}preflight.d/timemachine"
 
-# Remove timemachine.txt file
-rm -f "${CACHEPATH}timemachine.txt"
+# Remove timemachine.plist file
+rm -f "${CACHEPATH}timemachine.plist"

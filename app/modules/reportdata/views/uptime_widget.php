@@ -4,7 +4,7 @@
 
 		<div class="panel-heading" data-container="body">
 
-			<h3 class="panel-title"><i class="fa fa-power-off"></i> <span data-i18n="widget.uptime.title"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-power-off"></i> <span data-i18n="machine.uptime.title"></span></h3>
 
 		</div>
 
@@ -31,10 +31,10 @@
 
 <script>
 $(document).on('appReady', function(e, lang) {
-	
+
 	var panelBody = $('#uptime-widget div.panel-body');
-	panelBody.find('a.btn').attr('href', appUrl + '/show/listing/clients');
-	
+	panelBody.find('a.btn').attr('href', appUrl + '/show/listing/reportdata/clients');
+
 	$(document).on('appUpdate', function(e, lang) {
 
 	    $.getJSON( appUrl + '/module/reportdata/getUptimeStats', function( data ) {
@@ -47,7 +47,7 @@ $(document).on('appReady', function(e, lang) {
 			panelBody.find('a.btn-success span.bigger-150').text(data.oneday);
 			panelBody.find('a.btn-warning span.bigger-150').text(data.oneweek);
 			panelBody.find('a.btn-danger span.bigger-150').text(data.oneweekplus);
-			
+
 	    });
 	});
 });

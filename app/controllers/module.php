@@ -1,5 +1,9 @@
 <?php
 
+namespace munkireport\controller;
+
+use \Controller, \View;
+
 /**
  * Module controller
  *
@@ -13,16 +17,18 @@ class Module extends Controller
 {
     public $module = 'default';
     public $action = 'index';
+    private $moduleManager;
 
     public function __construct()
     {
+        $this->moduleManager = getMrModuleObj();
     }
 
     public function index()
     {
     }
-    
-    
+
+
     public function load()
     {
         //Parse request (determine controller/action/params)
@@ -37,16 +43,20 @@ class Module extends Controller
         if (isset($p[2])) {
             $this->params=array_slice($p, 2);
         }
-        
-        //Route request to correct controller/action
-        $module_file = MODULE_PATH.$this->module.'/'.$this->module.'_controller.php'; //CONTROLLER CLASS FILE
-        if (! preg_match('#^[A-Za-z0-9_-]+$#', $this->module) or ! file_exists($module_file)) {
-            $this->requestNotFound('Module file not found: '.$module_file);
+
+        if (! preg_match('#^[A-Za-z0-9_-]+$#', $this->module)){
+            $this->requestNotFound('illegal module name: '.$this->module);
         }
-        
+
+        //Route request to correct controller/action
+
+        if (! $this->moduleManager->getmoduleControllerPath($this->module, $module_file)) {
+            $this->requestNotFound('Module controller not found: '.$this->module);
+        }
+
         //Create module obj
         require($module_file);
-        $this->module_classname = $this->module.'_controller';
+        $this->module_classname = '\\' . $this->module.'_controller';
         if (! class_exists($this->module_classname, false)) {
             $this->requestNotFound('Module class not found: '.$this->module_classname);
         }
@@ -54,7 +64,7 @@ class Module extends Controller
 
         //call controller function
         if (! preg_match('#^[A-Za-z_][A-Za-z0-9_-]*$#', $this->action) or ! method_exists($this->module_obj, $this->action)) {
-            $this->requestNotFound('Invalid function name: '.$this->action);
+            $this->requestNotFound('Invalid method name: '.$this->action);
         }
         call_user_func_array(array( $this->module_obj, $this->action ), $this->params);
     }

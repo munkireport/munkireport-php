@@ -17,24 +17,24 @@ new Crashplan_model;
 
   	<div class="col-lg-12">
 
-		  <h3><span data-i18n="crashplan.listing.title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3><span data-i18n="crashplan.listing_title"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
 		        <th data-i18n="backup.destination" data-colname='crashplan.destination'></th>
-                <th data-i18n="backup.last_success" data-colname='crashplan.last_success'></th>
-                <th data-i18n="backup.duration" data-colname='crashplan.duration'></th>
-                <th data-i18n="backup.last_failure" data-colname='crashplan.last_failure'></th>
-                <th data-i18n="backup.last_failure_msg" data-colname='crashplan.reason'></th>
-				<th data-i18n="listing.checkin" data-colname='crashplan.timestamp'></th>
+		        <th data-i18n="backup.last_success" data-colname='crashplan.last_success'></th>
+		        <th data-i18n="backup.duration" data-colname='crashplan.duration'></th>
+		        <th data-i18n="backup.last_failure" data-colname='crashplan.last_failure'></th>
+		        <th data-i18n="backup.last_failure_msg" data-colname='crashplan.reason'></th>
+		        <th data-i18n="listing.checkin" data-colname='crashplan.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="6" class="dataTables_empty">Loading data from server</td>
+					<td colspan="8" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -94,7 +94,7 @@ $(document).on('appReady', function(e, lang) {
         	var sn=$('td:eq(1)', nRow).html();
         	var link = mr.getClientDetailLink(name, sn, '#tab_summary');
         	$('td:eq(0)', nRow).html(link);
-            
+
             // Format Last success timestamp
             var checkin = parseInt($('td:eq(3)', nRow).html()),
 				date = '';
@@ -103,7 +103,7 @@ $(document).on('appReady', function(e, lang) {
 				date = new Date(checkin * 1000);
 				$('td:eq(3)', nRow).html(moment(date).fromNow());
 			}
-			
+
 			// Format Last failure timestamp
 			checkin = parseInt($('td:eq(5)', nRow).html());
 			$('td:eq(5)', nRow).html('-');
@@ -111,14 +111,14 @@ $(document).on('appReady', function(e, lang) {
 				date = new Date(checkin * 1000);
 				$('td:eq(5)', nRow).html(moment(date).fromNow());
 			}
-			
+
 			// Format duration
 			var val = parseInt($('td:eq(4)', nRow).html());
 			$('td:eq(4)', nRow).html('-');
 			if(date){
 				$('td:eq(4)', nRow).html(moment.duration(val, "seconds").humanize());
 			}
-			
+
 			// Format Check-In timestamp
 			var checkin = parseInt($('td:last', nRow).html());
 			var date = new Date(checkin * 1000);
@@ -130,7 +130,7 @@ $(document).on('appReady', function(e, lang) {
     {
 		oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
     }
-    
+
 } );
 </script>
 

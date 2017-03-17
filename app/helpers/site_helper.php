@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.12.0.2346';
+$GLOBALS['version'] = '2.13.0.2656';
 
 // Return version without commit count
 function get_version()
@@ -99,15 +99,32 @@ function getdbh()
 function __autoload($classname)
 {
     // Switch to lowercase filename for models
-    $classname = strtolower($classname);
+    $lowercaseClassname = strtolower($classname);
 
-    if (substr($classname, -4) == '_api') {
-        require_once(APP_PATH.'modules/'.substr($classname, 0, -4).'/api'.EXT);
-    } elseif (substr($classname, -6) == '_model') {
-        $module = substr($classname, 0, -6);
-        require_once(APP_PATH."modules/${module}/${module}_model".EXT);
-    } else {
-        require_once(APP_PATH.'models/'.$classname.EXT);
+    if (substr($lowercaseClassname, -4) == '_api') {
+        require_once(APP_PATH.'modules/'.substr($lowercaseClassname, 0, -4).'/api'.EXT);
+    } elseif (substr($lowercaseClassname, -6) == '_model') {
+        $module = substr($lowercaseClassname, 0, -6);
+        if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
+            throw new Exception("Cannot load model: ".$classname, 1);
+        }
+        require_once($model);
+    }  elseif (strpos($classname, 'munkireport\\lib') === 0){
+        require_once(APP_PATH.'lib/munkireport/'.str_replace('munkireport\\lib\\', '', $classname).EXT);
+    } elseif (strpos($classname, 'munkireport\\controller\\') === 0){
+        $controller = str_replace('munkireport\\controller\\', '', $classname);
+        if ( ! preg_match('#^[A-Za-z0-9_-]+$#', $controller)){
+            throw new Exception("Illegal controller name: ".$controller, 1);
+        }
+        if( ! file_exists(CONTROLLER_PATH.$controller.EXT)){
+            throw new Exception("Controller does not exist: $controller", 1);
+        }
+        require_once CONTROLLER_PATH.$controller.EXT;
+    } elseif ($classname == 'Hautelook\\Phpass\\PasswordHash'){
+        require(APP_PATH . '/lib/phpass-0.3.5/src/Hautelook/Phpass/PasswordHash.php');
+    }
+    else {
+        require_once(APP_PATH.'models/'.$lowercaseClassname.EXT);
     }
 }
 
@@ -130,7 +147,7 @@ function getRemoteAddress()
     if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
         return $_SERVER["HTTP_X_FORWARDED_FOR"];
     }
-    
+
     return $_SERVER['REMOTE_ADDR'];
 }
 /**
@@ -372,4 +389,16 @@ function truncate_string($string, $limit = 100, $break = ".", $pad = "...")
     }
 
     return $string;
+}
+
+// Create a singleton moduleObj
+function getMrModuleObj()
+{
+    static $moduleObj;
+
+    if( ! $moduleObj){
+      $moduleObj = new munkireport\lib\Modules;
+    }
+
+    return $moduleObj;
 }

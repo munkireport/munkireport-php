@@ -26,7 +26,7 @@ $(document).on('appUpdate', function(e, lang) {
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>';
-                box.append('<a href="'+appUrl+'/show/listing/hardware/#'+d.machine_desc+'" class="list-group-item">'+d.machine_desc+badge+'</a>')
+                box.append('<a href="'+appUrl+'/show/listing/machine/hardware/#'+d.label+'" class="list-group-item">'+d.label+badge+'</a>')
 			});
 		}
 		else{
