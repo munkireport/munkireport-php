@@ -37,9 +37,8 @@ new Firmware_escrow_model;
 
 <script type="text/javascript">
 
-		$(document).on('appUpdate', function(e){
 
-            $(document).on('appUpdate', function(e){
+    $(document).on('appUpdate', function(e){
 
 		var oTable = $('.table').DataTable();
 		oTable.ajax.reload();
