@@ -261,7 +261,7 @@
             "reports": "Reports"
         },
         "reports": {
-            "hardware": "Hardware"
+            "hardware": "Hardware Report"
         },
         "user": {
             "logout": "Sign Off"
