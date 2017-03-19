@@ -1,7 +1,7 @@
 	<div class="col-lg-4 col-md-6">
 	<div class="panel panel-default">
 		<div class="panel-heading" data-container="body" data-i18n="[title]localadmin.widget.tooltip">
-			<h3 class="panel-title"><i class="fa fa-user-secret"></i> <span data-i18n="localadmin.widget.tooltip"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-user-secret"></i> <span data-i18n="localadmin.widget.title"></span></h3>
 		</div>
 		<div class="list-group scroll-box"></div>
 	</div><!-- /panel -->
