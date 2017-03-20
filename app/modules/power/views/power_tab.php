@@ -301,7 +301,7 @@ $(document).on('appReady', function(e, lang) {
 			} else if(data.standbydelay == "0") {
 				 $('#power-standbydelay').text(i18n.t('power.never'));
 			} else {
-				 $('#power-standbydelay').html('<span title="'+data.standbydelay+' '+i18n.t('power.seconds')+'">'+moment.duration(+data.standbydelay, "seconds").humanize());
+				 $('#power-standbydelay').html('<span title="'+data.standbydelay+' '+i18n.t('power.seconds')+'">'+moment.duration(+data.standbydelay, "seconds").humanize()+'</span>');
 			}  
                                       
 			if(data.displaysleep == "-9876543") {
@@ -309,7 +309,7 @@ $(document).on('appReady', function(e, lang) {
 			} else if(data.displaysleep == "0") {
 				 $('#power-displaysleep').text(i18n.t('power.never'));
 			} else {
-				 $('#power-displaysleep').html('<span title="'+data.displaysleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.displaysleep, "minutes").humanize());
+				 $('#power-displaysleep').html('<span title="'+data.displaysleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.displaysleep, "minutes").humanize()+'</span>');
 			}  
                                                   
 			if(data.disksleep == "-9876543") {
@@ -317,7 +317,7 @@ $(document).on('appReady', function(e, lang) {
 			} else if(data.disksleep == "0") {
 				 $('#power-disksleep').text(i18n.t('power.never'));
 			} else {
-				 $('#power-disksleep').html('<span title="'+data.disksleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.disksleep, "minutes").humanize());
+				 $('#power-disksleep').html('<span title="'+data.disksleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.disksleep, "minutes").humanize()+'</span>');
 			}  
                        
 			if(data.autopoweroffdelay == "-9876543") {
@@ -325,7 +325,7 @@ $(document).on('appReady', function(e, lang) {
 			} else if(data.autopoweroffdelay == "0") {
 				 $('#power-autopoweroffdelay').text(i18n.t('power.never'));
 			} else {
-				 $('#power-autopoweroffdelay').html('<span title="'+data.autopoweroffdelay+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.autopoweroffdelay, "minutes").humanize());
+				 $('#power-autopoweroffdelay').html('<span title="'+data.autopoweroffdelay+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.autopoweroffdelay, "minutes").humanize()+'</span>');
 			}  
                
 			if(data.sleep == "-9876543") {
@@ -333,7 +333,7 @@ $(document).on('appReady', function(e, lang) {
 			} else if(data.sleep == "0") {
 				 $('#power-sleep').text(i18n.t('power.never'));
 			} else {
-				 $('#power-sleep').html('<span title="'+data.sleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.sleep, "minutes").humanize());
+				 $('#power-sleep').html('<span title="'+data.sleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.sleep, "minutes").humanize()+'</span>');
 			} 
               
 			if(data.gpuswitch == "2") {
