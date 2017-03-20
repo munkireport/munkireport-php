@@ -17,10 +17,10 @@
     "smartstatus_failing": "SMART Status failing",
     "ssd": "SSD",
     "storage": "Storage",
+    "storage_type": "Storage Type",
     "total_size": "Size",
     "type": "Storage Type",
     "used": "Used",
-    "volume_type": "Volume Type",
     "report": "Storage Report",
     "filevault_widget_title": "FileVault 2 Status"
 }
