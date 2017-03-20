@@ -15,7 +15,6 @@
     "total_size": "Größe",
     "type": "Massenspeichertyp",
     "used": "Benutzt",
-    "volume_type": "Volumetyp",
     "report": "Disk-Report",
     "filevault_widget_title": "FileVault 2 Status"
 }
