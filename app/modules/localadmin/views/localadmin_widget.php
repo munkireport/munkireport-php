@@ -14,16 +14,16 @@ var box = $('#localadmin-widget div.scroll-box');
 	
   $.getJSON( appUrl + '/module/localadmin/get_localadmin', function( data ) {
 	
-		box.empty();	
-		if(data.length){
-		  $.each(data, function(i,d){
-		    var badge = '<span class="badge pull-right">'+d.count+'</span>';
-		    box.append('<a href="'+appUrl+'/show/listing/localadmin/localadmin/#'+d.serial_number+'" class="list-group-item">'+d.computer_name+badge+'</a>')
-		});
-		}
-		else{
-			box.append('<span class="list-group-item">'+i18n.t('localadmin.nolocaladmin')+'</span>');
-		}
+	box.empty();	
+	if(data.length){
+	  $.each(data, function(i,d){
+	    var badge = '<span class="badge pull-right">'+d.count+'</span>';
+	    box.append('<a href="'+appUrl+'/show/listing/localadmin/localadmin/#'+d.serial_number+'" class="list-group-item">'+d.computer_name+badge+'</a>')
+	});
+	}
+	else{
+		box.append('<span class="list-group-item">'+i18n.t('localadmin.nolocaladmin')+'</span>');
+	}
    });
 });	
 </script>
