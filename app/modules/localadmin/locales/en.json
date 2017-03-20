@@ -6,7 +6,7 @@
 	"users": "Local Admins",
 	"widget": {
 		"title": "Local Admins",
-		"tooltip": "Local administrators on the computer."
+		"tooltip": "# of local admins on the computer."
 	}
 }
 
