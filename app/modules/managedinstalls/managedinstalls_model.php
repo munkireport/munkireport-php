@@ -174,12 +174,10 @@ class managedinstalls_model extends Model
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();
-        if (! $mylist) {
-            throw new Exception("No Data in report", 1);
+        if ($mylist) {
+            // Run processData
+            $this->processData($mylist);
         }
-                
-        // Run processData
-        $this->processData($mylist);
     }
     
     /**
