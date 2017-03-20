@@ -1,6 +1,7 @@
 {
     "reporttitle": "Homebrew Report",
     "clienttitle": "Homebrew",
+    "clienttab": "Homebrew",
     "aliases": "Aliases",
     "build_dependencies": "Build Dependancies",
     "caveats": "Caveats",
