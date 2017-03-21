@@ -2,7 +2,7 @@
 
 namespace munkireport\controller;
 
-use \Controller, \Reportdata_model, \Messages_model, \Hash;
+use \Controller, \Reportdata_model, \Messages_model, \Hash, \Exception;
 use munkireport\lib\Unserializer, munkireport\lib\Modules;
 
 class report extends Controller
