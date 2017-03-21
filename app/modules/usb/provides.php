@@ -12,6 +12,6 @@ return array(
         array('view' => 'usb_types_widget'),
     ),
     'reports' => array(
-        'peripheral' => array('view' => 'usb_report', 'i18n' => 'usb_report'),
+        'peripheral' => array('view' => 'usb_report', 'i18n' => 'usb.report'),
     ),
 );

@@ -32,6 +32,7 @@
     "exclude_by_path": "Excluded by Path",
     "skip_paths": "Excluded by User",
     "timemachine": "Time Machine",
+    "report": "Time Machine Report",
     "null": "",
     "0": "Backup completed successfully",
     "1": "Error 1: Unable to launch Time Machine.",

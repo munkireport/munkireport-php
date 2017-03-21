@@ -2,14 +2,14 @@
 <table class="profile table table-striped table-bordered">
 	<thead>
 		<tr>
-      <th data-i18n="name"></th>
-      <th data-i18n="payload"></th>
+      <th data-i18n="profile.profilename"></th>
+      <th data-i18n="profile.payload"></th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php $profile_item_obj = new Profile_model();
 	$items = $profile_item_obj->select('profile_name, payload_name, serial_number, GROUP_CONCAT(payload_data) as payload_data', 'serial_number=? GROUP BY profile_name, payload_name, serial_number',array($serial_number));
-	
+
 	$payloaddata = array();
 	$profile = array();
 	foreach($items as $item)
@@ -21,10 +21,10 @@
 		$payloaddata[$name][$version] = $profile_item_obj->json_to_html($item['payload_data']);
 	}
 	?>
-    
+
     <?php foreach($profile as $name => $value): ?>
     <?php $name_url=url('module/profile/items/'. rawurlencode($name)); ?>
-    
+
     <tr>
       <td>
         <a href='<?php echo $name_url; ?>'><?php echo $name; ?></a>

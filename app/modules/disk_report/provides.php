@@ -11,5 +11,9 @@ return array(
         array('view' => 'disk_report_widget'),
         array('view' => 'filevault_widget'),
         array('view' => 'smart_status_widget'),
+        array('view' => 'disk_type_widget'),
+    ),
+    'reports' => array(
+        'storage' => array('view' => 'storage_report', 'i18n' => 'disk_report.report'),
     ),
 );

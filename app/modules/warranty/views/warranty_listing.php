@@ -19,10 +19,10 @@ new Reportdata_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="gsx.warrantystatus" data-colname='warranty.status'></th>
-		        <th data-i18n="listing.warranty.purchased" data-colname='warranty.purchase_date'></th>
-		        <th data-i18n="listing.warranty.expires" data-colname='warranty.end_date'></th>
+		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="warranty.status" data-colname='warranty.status'></th>
+		        <th data-i18n="warranty.purchased" data-colname='warranty.purchase_date'></th>
+		        <th data-i18n="warranty.expires" data-colname='warranty.end_date'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

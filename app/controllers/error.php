@@ -1,5 +1,10 @@
 <?php
-class error extends Controller
+
+namespace munkireport\controller;
+
+use \Controller, \View;
+
+class Error extends Controller
 {
     public function __construct()
     {

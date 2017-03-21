@@ -19,7 +19,7 @@ new Reportdata_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="disk_report.mountpoint" data-colname='diskreport.MountPoint'></th>
 		        <th data-i18n="disk_report.volume_type" data-colname='diskreport.VolumeType'></th>
 		        <th data-i18n="disk_report.percentage" data-sort='desc' data-colname='diskreport.Percentage'></th>

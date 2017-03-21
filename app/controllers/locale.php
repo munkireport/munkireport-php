@@ -1,4 +1,9 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View;
+
 class Locale extends Controller
 {
     private $modules;
@@ -7,11 +12,11 @@ class Locale extends Controller
 
     public function __construct()
     {
-        if (! $this->authorized()) {
-            header('Content-Type: application/json;charset=utf-8');
-            echo '{"error": "Not Authorized"}';
-            exit;
-        }
+        // if (! $this->authorized()) {
+        //     header('Content-Type: application/json;charset=utf-8');
+        //     echo '{"error": "Not Authorized"}';
+        //     exit;
+        // }
 
         $this->modules = getMrModuleObj()->loadInfo();
     }

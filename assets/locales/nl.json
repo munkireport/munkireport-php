@@ -65,9 +65,6 @@
     "last_failure_msg": "Boodschap",
     "last_success": "Last successful backup"
   },
-  "battery": {
-    "life_remaining": "__percent__% battery life remaining"
-  },
   "boot_time": "Opgestart",
   "bundle_id": "BundleID",
   "business_unit": {

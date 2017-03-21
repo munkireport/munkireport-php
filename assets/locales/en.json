@@ -38,7 +38,6 @@
         "unassigned_groups": "Unassigned Groups"
     },
     "all": "All",
-    "ard": "Apple Remote Desktop",
     "auth": {
         "addtoconfig": "Add this line to config.php:",
         "back_to_site": "Back to site",
@@ -59,7 +58,6 @@
         "password": "Password",
         "secure": "You're using a secure connection",
         "signin": "Sign in",
-        "username": "Username",
         "wrong_user_or_pass": "Wrong username or password"
     },
     "backup": {
@@ -67,14 +65,18 @@
         "destination": "Backup Destination",
         "destinations": "Backup Destinations",
         "duration": "Backup Duration",
+        "four_weeks_less": "Latest backup within 4 weeks",
+        "four_weeks_plus": "Latest backup older then 4 weeks",
         "kind": "Backup Kind",
         "last_failure": "Last Failed Backup",
         "last_failure_msg": "Message",
         "last_success": "Last Successful Backup",
-        "location_name": "Location Name"
-    },
-    "battery": {
-        "life_remaining": "__percent__% battery life remaining"
+        "lastweek": "Latest backup more than a day ago",
+        "location_name": "Location Name",
+        "ok": "Latest backup within 2 weeks",
+        "report": "Backup Report",
+        "today": "Backed up today",
+        "week_plus": "Latest backup more than a week ago"
     },
     "boot_time": "Booted",
     "buildversion": "Build Version",
@@ -99,20 +101,13 @@
     },
     "client": {
         "activity": "Client Activity",
+        "clients": "Clients",
         "comment": "Comments",
         "hour": "Clients per hour",
         "panel_title": "Client activity in the last month",
+        "report": "Client Report",
         "tab": {
-            "ard": "ARD",
-            "munki": "Managed Software",
-            "network": "Network Interfaces",
-            "power": "Power",
-            "printers": "Printers",
-            "profiles": "Profiles",
-            "serverstats": "Server Statistics",
-            "summary": "Summary",
-            "timemachine": "Time Machine",
-            "wifi": "WiFi"
+            "summary": "Summary"
         },
         "total": "Total Clients"
     },
@@ -122,8 +117,7 @@
         "arch": "CPU Architecture",
         "core": "core",
         "cpu": "CPU",
-        "type": "CPU Type",
-        "usage": "Processor Usage"
+        "type": "CPU Type"
     },
     "danger": "Error",
     "database": "Database",
@@ -138,6 +132,7 @@
         "writable": "Writable"
     },
     "delete": "Delete",
+    "description": "Description",
     "dialog": {
         "cancel": "Cancel",
         "close": "Close",
@@ -196,44 +191,7 @@
     "listing": {
         "checkin": "Check-in",
         "computername": "Name",
-        "hardware": {
-            "description": "Description"
-        },
-        "loading": "Loading data from server",
-        "munki": {
-            "latest_run": "Latest Run",
-            "package_installed": "Package installed",
-            "package_installed_plural": "Packages installed",
-            "package_removed": "Package removed",
-            "package_removed_plural": "Packages removed",
-            "pending_install": "Pending install",
-            "pending_install_plural": "Pending installs",
-            "pending_removal": "Pending removal",
-            "pending_removal_plural": "Pending removals"
-        },
-        "power": {
-            "capacity": "Capacity",
-            "charged": "Charged %",
-            "condition": "Condition",
-            "current": "Current",
-            "cycles": "Cycles",
-            "designed": "Designed",
-            "failedbattery": "Failed Battery",
-            "health": "Health %",
-            "manufactured": "Manufactured"
-        },
-        "profile": {
-            "payload": "Payloads",
-            "profilename": "Profile Name"
-        },
-        "timemachine": {
-            "duration": "Backup Duration",
-            "last_failure": "Last Failed Backup",
-            "last_failure_msg": "Message",
-            "last_success": "Last Successful Backup",
-            "title": "Time Machine Report"
-        },
-        "username": "Username"
+        "loading": "Loading data from server"
     },
     "loading": "Loading data from server",
     "machine": {
@@ -241,58 +199,44 @@
         "base_model_widget_title": "Base Model Breakdown",
         "cores": "Cores",
         "cpu_speed": "CPU Speed",
+        "duplicate_computernames": {
+            "notfound": "No duplicates found",
+            "title": "Duplicate Computer Names"
+        },
+        "hardware": "Hardware",
+        "hardware_report": "Hardware Report",
         "hardware_type_title": "Hardware Type breakdown",
         "hardware_widget_title": "Hardware Model Breakdown",
+        "memory": {
+            "title": "Memory Breakdown"
+        },
         "model": "Model",
-        "rom_version": "ROM Version"
+        "new_clients": {
+            "no_new_clients": "No new clients",
+            "title": "New Clients",
+            "tooltip": "Clients registered this week"
+        },
+        "os": {
+            "title": "OS Breakdown"
+        },
+        "registered": {
+            "title": "Client Registration Over Time"
+        },
+        "rom_version": "ROM Version",
+        "uptime": {
+            "title": "Uptime"
+        }
     },
-    "managedinstalls": {
-        "failing_clients": "Clients with failing installs",
-        "installratio_report": "Installation Ratio Report",
-        "no_managedinstalls": "No Managed Installs",
-        "report": "Managed Installs Report",
-        "title": "Managed Installs"
-    },
-    "manifest": {
-        "manifest": "Manifest",
-        "name": "Manifest Name"
-    },
-    "memory": {
-        "memory": "Memory",
-        "pressure": "Memory Pressure",
-        "usage": "Memory Usage"
-    },
+    "memory": "Memory",
     "model": "Model",
     "mouse": "Mouse",
     "munki": {
-        "additional_info": "Additional Munki Info",
         "error": "Munki error: __error__",
         "error_plural": "__count__ Munki errors",
-        "errors_and_warnings": "Errors and Warnings",
-        "munkiprotocol": "Munki Protocol",
         "package_installed": "__pkg__ installed",
         "package_installed_plural": "__count__ packages installed",
-        "panel_title": "Munki statistics this week",
-        "run_type": "Run Type",
-        "version": "Munki Version",
         "warning": "Munki warning: __warning__",
         "warning_plural": "__count__ Munki warnings"
-    },
-    "munkiinfo": {
-        "applecatalog": "Apple Catalog URL",
-        "duration": "Duration",
-        "localonlymanifest": "Local Only Manifest",
-        "manifest": "Manifest",
-        "softwarerepourl": "Software Repo URL",
-        "start": "Start"
-    },
-    "munkireportinfo": {
-        "baseurl": "MunkiReport URL",
-        "clienttabtitle": "MunkiReport",
-        "passphrase": "Passphrase",
-        "reportitems": "Installed Modules",
-        "reporttitle": "MunkiReport Report",
-        "version": "Version"
     },
     "mwa": {
         "mwa_link": "Open in Munki Web Admin"
@@ -310,68 +254,15 @@
             "nl": "Nederlands",
             "ru": "Русский"
         },
-        "listings": {
-            "ard": "Apple Remote Desktop",
-            "batteries": "Batteries",
-            "clients": "Clients",
-            "findmymac": "Find My Mac",
-            "fonts": "Fonts",
-            "hardware": "Hardware",
-            "location": "Location",
-            "managed_installs": "Managed Installs",
-            "mrinfo": "MunkiReport",
-            "munki": "Munki",
-            "munkiprotocol": "Munki info",
-            "network": "Network",
-            "power": "Power",
-            "printers": "Printers",
-            "profile": "Profiles",
-            "sccm_status": "SCCM Status",
-            "security": "Security",
-            "softwareupdate": "Software Update",
-            "timemachine": "Time Machine",
-            "wifi": "WiFi"
-        },
         "main": {
             "admin": "Admin",
             "dashboard": "Dashboard",
             "listings": "Listings",
             "reports": "Reports"
         },
-        "reports": {
-            "backup": "Backup Report",
-            "clients": "Client Report",
-            "configuration": "Configuration Report",
-            "findmymac": "Find My Mac Report",
-            "hardware": "Hardware Report",
-            "location": "Location Report",
-            "munki": "Munki Report",
-            "network": "Network Report",
-            "power": "Power Report",
-            "printer": "Printer Report",
-            "profile": "Profile Report",
-            "sccm": "SCCM Agent Status Report",
-            "security": "Security Report",
-            "server": "Server Report",
-            "wifi": "WiFi Report"
-        },
         "user": {
             "logout": "Sign Off"
         }
-    },
-    "network": {
-        "ethernet": "Ethernet",
-        "hostname": "Hostname",
-        "inbound_traffic": "Inbound Traffic",
-        "ip_address": "IP Address",
-        "mask": "Mask",
-        "network": "Network",
-        "outbound_traffic": "Outbound Traffic",
-        "prefix_length": "Prefix Length",
-        "remote_ip": "Remote IP Address",
-        "router": "Router",
-        "service": "Service",
-        "traffic": "Network Traffic"
     },
     "new_client": "New Client",
     "new_client_plural": "New Clients",
@@ -416,178 +307,15 @@
     },
     "pkg_failed_to_install": "__pkg__ failed to install: __reason__",
     "pkg_failed_to_install_plural": "__count__ packages failed to install",
-    "power": {
-        "ac_power": "AC Power",
-        "active_profile": "Active Power Profile",
-        "acwake": "AC Wake",
-        "adapter": "Power Adapter",
-        "adapter_id": "Adapter ID",
-        "adapter_serial_number": "Adapter Serial Number",
-        "adapter_wattage": "Adapter Wattage",
-        "amperage": "Amperage",
-        "amps": "Amps",
-        "applepushservicetask": "Apple Push Service Task",
-        "assertions": "Power Assertions",
-        "auto_gpu": "Automatic",
-        "autopoweroff": "Auto Power Off",
-        "autopoweroffdelay": "Auto Power Off Delay",
-        "autorestart": "Auto Restart",
-        "avgtimetoempty": "Estimated Average Time To Empty",
-        "avgtimetofull": "Average Time to Full",
-        "backgroundtask": "Background Task",
-        "battery": "Battery",
-        "battery_level": "Battery Level",
-        "battery_power": "Battery Power",
-        "battery_report": "Batteries Report",
-        "batteryserialnumber": "Battery Serial Number",
-        "cellvoltage": "Cell Voltage Levels",
-        "charging": "Charging",
-        "charging_watt": "Charging at ",
-        "combined_sys_load": "Combined System Load",
-        "condition": "Condition",
-        "cpu_available_cpus": "Available CPUs",
-        "cpu_scheduler_limit": "CPU Scheduler Limit",
-        "cpu_speed_limit": "CPU Speed Limit",
-        "current_capacity": "Charge Remaining",
-        "current_percent": "Charged %",
-        "cycle_count": "Cycle Count",
-        "dark_wake_count": "Dark Wake Count",
-        "design_capacity": "Design Capacity",
-        "designcyclecount": "Design Cycle Count",
-        "destroyfvkeyonstandby": "Destroy FileVault Keys on Standby",
-        "destroyfvkeyonstandby_short": "Destroy FV Keys on Standby",
-        "discharging": "Discharging",
-        "discharging_watt": "Discharging at",
-        "discreet": "Discreet GPU",
-        "disksleep": "Disk Sleep",
-        "displaysleep": "Display Sleep",
-        "externalconnected": "Power Adapter Connected",
-        "externalmedia": "External Media",
-        "family_code": "Adaptr Family Code",
-        "fullycharged": "Fully Charged",
-        "general_info": "General Information",
-        "gpuswitch": "GPU",
-        "halfdim": "Reduce Brigtness on Battery",
-        "haltafter": "UPS Shut Down/Sleep After",
-        "haltlevel": "UPS Shut Down/Sleep Level",
-        "haltremain": "UPS Shut Down/Sleep with % Remaining",
-        "hibernate": "Hibernate",
-        "hibernatefile": "Hibernate File Path",
-        "hibernatemode": "Hibernate Mode",
-        "instanttimetoempty": "Estimated Instant Time To Empty",
-        "integrated": "Integrated GPU",
-        "ischarging": "Is Charging",
-        "lidwake": "Lid Wake",
-        "manufacture_date": "Manufactured",
-        "manufacturer": "Battery Manufacturer",
-        "max_capacity": "Full Charge Capacity",
-        "max_percent": "Health %",
-        "minute": "minute",
-        "minutes": "minutes",
-        "networkclientactive": "Network Client Active",
-        "networkoversleep": "Network Over Sleep",
-        "never": "Never",
-        "packreserve": "Battery Reserve Power",
-        "permanentfailurestatus": "Battery Has Permanently Failed",
-        "power_settings": "Power Settings",
-        "powernap": "Power Nap",
-        "preventsystemsleep": "Prevent System Sleep",
-        "preventuseridledisplaysleep": "Prevent User Idle Display Sleep",
-        "preventuseridlesystemsleep": "Prevent User Idle System Sleep",
-        "safe_sleep": "Safe Sleep",
-        "schedule": "Repeating Scheduled Events",
-        "second": "second",
-        "seconds": "seconds",
-        "sleep": "Sleep",
-        "sleep_count": "Sleep Counts Since Boot",
-        "sleep_on_power_button": "Sleep on Power Button",
-        "sleep_prevented_by": "Sleep Prevented By",
-        "sms": "Sudden Motion Sensor",
-        "sms_short": "SMS",
-        "standby": "Standby",
-        "standbydelay": "Standby Delay",
-        "temperature": "Temperature",
-        "thermal_level": "Thermal Level",
-        "thermal_load": "Thermal Load",
-        "timeremaining": "Estimated Time Remaining",
-        "ttyskeepawake": "TTY Keep Awake",
-        "ups_charging_status": "UPS Charging Status",
-        "ups_name": "UPS Name",
-        "ups_percent": "UPS Charge Level",
-        "ups_status": "UPS Status",
-        "user_sys_load": "User System Load",
-        "user_wake_count": "User Wake Count",
-        "userisactive": "User is Active",
-        "voltage": "Battery Voltage Level",
-        "volts": "Volts",
-        "wattage": "Wattage",
-        "watts": "Watts",
-        "womp": "Wake-on-Magic-Packet",
-        "womp_short": "WoMP"
-    },
-    "printer": {
-        "default_set": "Default Set",
-        "driver_version": "Driver Version",
-        "error": "Error",
-        "idle": "Idle",
-        "in_use": "In Use",
-        "name": "Printer Name",
-        "offline": "Offline",
-        "ppd": "PPD",
-        "printer_sharing": "Printer Sharing",
-        "printer_status": "Printer Status",
-        "tab_title": "Installed Printers",
-        "url": "URL"
-    },
     "ratio": "Ratio",
     "reg_date": "Registration Date",
     "remote_control": "Remote Control",
     "report": {
         "generate": "Generate Report"
     },
-    "sccm_status": {
-        "agent_status": "SCCM Agent Status",
-        "cert_exp": "SCCM Client Certificate Expiration",
-        "enrollment_name": "Enrollment User Name",
-        "enrollment_server": "Enrollment Server",
-        "enrollment_status": "Enrollment Status",
-        "last_checkin": "Last SCCM Check In",
-        "mgmt_point": "Management Point",
-        "title": "SCCM Agent Status",
-        "titleheader": "SCCM Agent Information"
-    },
-    "security": {
-        "ard_users": "ARD Users",
-        "firmwarepw": "Firmware Password",
-        "gatekeeper": "Gatekeeper Status",
-        "gatekeeper_active": "Gatekeeper Active",
-        "gatekeeper_disabled": "Gatekeeper Disabled",
-        "report": "Security Report",
-        "security": "Security",
-        "sip": "SIP Status",
-        "sip_active": "SIP Active",
-        "sip_disabled": "SIP Disabled",
-        "sip_status": "SIP Status",
-        "ssh_users": "SSH Users"
-    },
     "serial": "Serial Number",
     "servermetrics": {
         "tab": "Server Metrics"
-    },
-    "service": {
-        "listing": {
-            "title": "Services Report"
-        },
-        "name": "Service Name",
-        "status": "Service Status",
-        "tab": {
-            "title": "Services"
-        }
-    },
-    "sharing": {
-        "afp_users": "AFP Users",
-        "connected_users": "Sharing – Connected Users",
-        "smb_users": "SMB Users"
     },
     "show": "Show",
     "size": "Size",
@@ -595,28 +323,6 @@
         "boot_rom_version": "Boot ROM Version",
         "smc_version": "SMC Version",
         "software": "Software"
-    },
-    "softwareupdate": {
-        "automaticcheckenabled": "Auto Check Enabled",
-        "automaticdownload": "Auto Download",
-        "catalogurl": "Catalog URL",
-        "clienttabtitle": "Software Updates",
-        "configdatainstall": "Auto Install XProtect",
-        "criticalupdateinstall": "Install Critical",
-        "inactiveupdates": "Ignored Updates",
-        "lastattemptsystemversion": "Version Attempted",
-        "lastbackgroundccdsuccessfuldate": "Background CCD Success Date",
-        "lastbackgroundsuccessfuldate": "Background Success Date",
-        "lastfullsuccessfuldate": "Full Success Date",
-        "lastrecommendedupdatesavailable": "Recommended Available Updates",
-        "lastresultcode": "Result Code",
-        "lastsessionsuccessful": "Session Successful",
-        "lastsuccessfuldate": "Successful Date",
-        "lastupdatesavailable": "Updates Available",
-        "mrxprotect": "XProtect Install",
-        "recommendedupdates": "Recommended Updates",
-        "reporttitle": "Software Update Report",
-        "skiplocalcdn": "Skip Local CDN"
     },
     "status": "Status",
     "success": "Success",
@@ -626,9 +332,6 @@
     },
     "systemstatus": {
         "menu_link": "Show System Status"
-    },
-    "timemachine": {
-        "timemachine": "Time Machine"
     },
     "total_clients": "Total Clients",
     "trackpad": "Trackpad",
@@ -644,97 +347,15 @@
         "user": "User",
         "users": "Users"
     },
+    "username": "Username",
     "verified": "Verified",
     "version": "Version",
     "warning": "Warning",
     "warning_plural": "Warnings",
     "widget": {
-        "duplicate_computernames": {
-            "notfound": "No duplicates found",
-            "title": "Duplicate Computer Names"
-        },
-        "manifest": {
-            "title": "Manifests"
-        },
-        "memory": {
-            "title": "Memory Breakdown"
-        },
-        "munki": {
-            "no_updates_pending": "No Updates Pending",
-            "title": "Munki"
-        },
-        "munki_versions": {
-            "title": "Munki Versions",
-            "tooltip": "Munki versions among all clients"
-        },
-        "munkiinfo": {
-            "munkiprotocol": {
-                "http": "http",
-                "https": "https",
-                "localrepo": "Local Repo",
-                "title": "Munki Protocol",
-                "tooltip": "Munki protocol among all clients"
-            }
-        },
-        "network_location": {
-            "title": "Network Locations"
-        },
-        "network_vlan": {
-            "title": "Network VLANs"
-        },
-        "new_clients": {
-            "no_new_clients": "No new clients",
-            "title": "New Clients",
-            "tooltip": "Clients registered this week"
-        },
-        "os": {
-            "title": "OS Breakdown"
-        },
-        "pending": {
-            "title": "Clients With Pending Installs"
-        },
-        "pending_apple": {
-            "title": "Pending Apple Updates",
-            "tooltip": "Pending Apple updates for this week"
-        },
-        "pending_munki": {
-            "title": "Pending Installs",
-            "tooltip": "Pending installs for this week"
-        },
-        "power": {
-            "battery": "Battery",
-            "check": "Check Battery",
-            "health": {
-                "title": "Battery Health",
-                "tooltip": "Battery health status listing"
-            },
-            "missing": "Missing",
-            "nobattery": "No Battery",
-            "normal": "Normal",
-            "now": "Replace Now",
-            "service": "Service Now",
-            "soon": "Replace Soon",
-            "title": "Battery Condition",
-            "tooltip": "Battery condition listing"
-        },
-        "registered": {
-            "title": "Client Registration Over Time"
-        },
-        "timemachine": {
-            "b2g_danger": "Latest backup older then 4 weeks",
-            "b2g_ok": "Latest backup within 2 weeks",
-            "b2g_warning": "Latest backup within 4 weeks",
-            "lastweek": "Latest backup more than a day ago",
-            "title": "Timemachine Status",
-            "today": "Backed up today",
-            "week_plus": "Latest backup more than a week ago"
-        },
         "unknown": {
             "alert": "This widget cannot be found",
             "title": "Unknown widget"
-        },
-        "uptime": {
-            "title": "Uptime"
         }
     },
     "yes": "Yes"

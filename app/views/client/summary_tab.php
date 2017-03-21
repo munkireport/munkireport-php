@@ -32,19 +32,19 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4><i class="fa fa-hdd-o"></i> <span data-i18n="storage.storage"></span></h4>
+			<h4><i class="fa fa-hdd-o"></i> <span data-i18n="disk_report.storage"></span></h4>
 			<table>
 				<tr>
-					<th data-i18n="storage.size"></th><td class="mr-TotalSize"></td>
+					<th data-i18n="disk_report.size"></th><td class="mr-TotalSize"></td>
 				</tr>
 				<tr>
-					<th data-i18n="storage.used"></th><td class="mr-UsedSize"></td>
+					<th data-i18n="disk_report.used"></th><td class="mr-UsedSize"></td>
 				</tr>
 				<tr>
-					<th data-i18n="storage.free"></th><td class="mr-FreeSpace"></td>
+					<th data-i18n="disk_report.free"></th><td class="mr-FreeSpace"></td>
 				</tr>
 				<tr>
-					<th data-i18n="storage.smartstatus"></th><td class="mr-SMARTStatus"></td>
+					<th data-i18n="disk_report.smartstatus"></th><td class="mr-SMARTStatus"></td>
 				</tr>
 			</table>
 		</div>
@@ -66,7 +66,7 @@
 					<th data-i18n="cpu.type"></th><td><span class="mr-number_processors"></span> <span data-i18n="cpu.core"></span></td>
 				</tr>
 				<tr>
-					<th data-i18n="memory.memory"></th><td><span class="mr-physical_memory"></span> GB</td>
+					<th data-i18n="memory"></th><td><span class="mr-physical_memory"></span> GB</td>
 				</tr>
 				<tr>
 					<th data-i18n="hardware.uuid"></th><td class="mr-platform_UUID"></td>
@@ -99,7 +99,7 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4><i class="fa fa-apple"></i> <span data-i18n="ard"></span></h4>
+			<h4><i class="fa fa-apple"></i> <span data-i18n="ard.ard"></span></h4>
 			<table id="ard-data" class="table"></table>
 		</div>
 

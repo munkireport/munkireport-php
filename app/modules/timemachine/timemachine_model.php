@@ -216,9 +216,12 @@ class Timemachine_model extends Model
                 } else if ( ! array_key_exists($search, $plist) && in_array($field, $bools)){
                     // If boolean and does not exist in plist, set to fake null
                     $this->$field = '-9876540';
-                } else if (in_array($field, $ints) && $plist[$search] == "0"){
+                } else if (array_key_exists($search, $plist) && in_array($field, $ints) && $plist[$search] == "0"){
                     // Set the int to 0 if it's 0
                     $this->$field = $plist[$search];
+                } else if ( ! array_key_exists($search, $plist) && in_array($field, $ints)){
+                    // If int and does not exist in plist, set to fake null
+                    $this->$field = '-9876540';
                 } else if (in_array($field, $ints)){
                     // Set the int to 0 if it's 0
                     $this->$field = 0;
@@ -250,22 +253,26 @@ class Timemachine_model extends Model
             }
             
             // Verify last_success is not blank
-            if (empty($last_success)) {
+            if (array_key_exists("latestSnapshotDate", $plist) && empty($last_success)) {
                 $this->last_success = str_replace(" +0000","",$plist["latestSnapshotDate"]);
             }
             
-            // Format dates
-            $this->earliest_snapshot_date = str_replace(" +0000","",$plist["earliest_snapshot_date"]);
-            $this->latest_snapshot_date = str_replace(" +0000","",$plist["latestSnapshotDate"]);
+            // Format dates, if they exist
+            if (array_key_exists("earliest_snapshot_date", $plist) && empty($last_success)) {
+                $this->earliest_snapshot_date = str_replace(" +0000","",$plist["earliest_snapshot_date"]);
+            }
+            if (array_key_exists("latestSnapshotDate", $plist) && empty($last_success)) {
+                $this->latest_snapshot_date = str_replace(" +0000","",$plist["latestSnapshotDate"]);
+            }
             
             // Condense arrays into strings after checking if they exist
-            if (array_key_exists("DestinationUUIDs",$plist["Destinations"][0])){
+            if (array_key_exists("Destinations",$plist) && array_key_exists("DestinationUUIDs",$plist["Destinations"][0])){
                 $this->destination_uuids = implode(", ", $plist["Destinations"][0]["DestinationUUIDs"]);
             } else {
                 $this->destination_uuids = "";
             }
             
-            if (array_key_exists("SnapshotDates",$plist["Destinations"][0])){
+            if (array_key_exists("Destinations",$plist) && array_key_exists("SnapshotDates",$plist["Destinations"][0])){
                 $this->snapshot_dates = implode(", ", $plist["Destinations"][0]["SnapshotDates"]);
             } else {
                 $this->snapshot_dates = "";
@@ -289,8 +296,12 @@ class Timemachine_model extends Model
                 $this->skip_paths = "";
             }
             
-            // Set destinations amount
-            $this->destinations = count($plist["Destinations"]);
+            // Set destinations count
+            if (array_key_exists("Destinations",$plist)){
+                $this->destinations = count($plist["Destinations"]);
+            } else {
+                $this->destinations = "0";
+            }
         }
         
         // Only store if there is data

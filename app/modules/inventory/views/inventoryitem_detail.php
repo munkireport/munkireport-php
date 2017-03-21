@@ -28,7 +28,7 @@
               <thead>
                   <tr>
                     <th data-i18n="listing.computername"></th>
-                    <th data-i18n="listing.username"></th>
+                    <th data-i18n="username"></th>
                     <th data-i18n="version"></th>
                     <th data-i18n="bundle_id"></th>
                     <th data-i18n="cfbundlename"></th>

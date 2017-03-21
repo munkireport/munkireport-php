@@ -1,4 +1,10 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \Reportdata_model, \Messages_model, \Hash;
+use munkireport\lib\Unserializer, munkireport\lib\Modules;
+
 class report extends Controller
 {
 
@@ -70,7 +76,7 @@ class report extends Controller
 
             //$req_items = unserialize($_POST['items']); //Todo: check if array
             include_once(APP_PATH . '/lib/munkireport/Unserializer.php');
-            $unserializer = new munkireport\Unserializer($_POST['items']);
+            $unserializer = new Unserializer($_POST['items']);
             $req_items = $unserializer->unserialize();
 
             // Reset messages for this client
@@ -131,7 +137,7 @@ class report extends Controller
         }
 
         include_once(APP_PATH . '/lib/munkireport/Unserializer.php');
-        $unserializer = new munkireport\Unserializer($_POST['items']);
+        $unserializer = new Unserializer($_POST['items']);
         $arr = $unserializer->unserialize();
 
 
@@ -140,7 +146,7 @@ class report extends Controller
         }
 
         include_once(APP_PATH . '/lib/munkireport/Modules.php');
-        $moduleMgr = new munkireport\Modules;
+        $moduleMgr = new Modules;
 
         foreach ($arr as $name => $val) {
         // Skip items without data
@@ -179,7 +185,7 @@ class report extends Controller
             require_once($model_path);
 
             // Capitalize classname
-            $classname = ucfirst($name);
+            $classname = '\\'.ucfirst($name);
 
             if (! class_exists($classname, false)) {
                 $this->msg("Class not found: $classname");

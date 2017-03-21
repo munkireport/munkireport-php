@@ -1,4 +1,9 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View, \Machine_group, \Business_unit, \Reportdata_model;
+
 class admin extends Controller
 {
     public function __construct()

@@ -11,15 +11,15 @@
         <div class="list-group scroll-box">
             <a id="cpp-today" href="<?=url('module/crashplan/listing')?>" class="list-group-item list-group-item-success hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.today"></span>
+                <span data-i18n="backup.today"></span>
             </a>
             <a id="cpp-lastweek" href="<?=url('module/crashplan/listing')?>" class="list-group-item list-group-item-warning hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.lastweek"></span>
+                <span data-i18n="backup.lastweek"></span>
             </a>
             <a id="cpp-week_plus" href="<?=url('module/crashplan/listing')?>" class="list-group-item list-group-item-danger hide">
                 <span class="badge">0</span>
-                <span data-i18n="widget.timemachine.week_plus"></span>
+                <span data-i18n="backup.week_plus"></span>
             </a>
             <span id="cpp-nodata" data-i18n="no_clients" class="list-group-item"></span>
         </div>

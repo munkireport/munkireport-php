@@ -2,7 +2,7 @@
 
 		<div class="col-lg-6">
 
-		<h2 data-i18n="munki.errors_and_warnings"></h2>
+		<h2 data-i18n="munkireport.errors_and_warnings"></h2>
 
 				<pre id="munkireport-errors" class="hide alert alert-danger"></pre>
 				<pre id="munkireport-warnings" class="hide alert alert-warning"></pre>
@@ -36,7 +36,7 @@
 				<td><div id="munkiinfo-LocalOnlyManifest"></div></td>
 			</tr>
 			<tr>
-				<th data-i18n="munki.run_type"></th>
+				<th data-i18n="munkireport.run_type"></th>
 				<td id="munki-runtype"></td>
 			</tr>
 			<tr>
@@ -48,7 +48,7 @@
 				<td id="munki-duration"></td>
 			</tr>
 		</table>
-		<button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munki.additional_info"></span></button>
+		<button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munkireport.additional_info"></span></button>
 
 	</div><!-- </div class="col-lg-6"> -->
 
@@ -61,7 +61,7 @@ $(document).on('appReady', function(){
 
 		$('#myModal .modal-title')
 			.empty()
-			.append(i18n.t("munki.additional_info"))
+			.append(i18n.t("munkireport.additional_info"))
 		$('#myModal .modal-body')
 			.empty()
 			.append(table);

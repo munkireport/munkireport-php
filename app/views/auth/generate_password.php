@@ -43,9 +43,9 @@
 							</div><!-- /.modal -->
 						<?php endif; ?>
 				    		<div class="form-group">
-								<label for="loginusername" class="col-lg-5 control-label"><span data-i18n="auth.username">Username</span></label>
+								<label for="loginusername" class="col-lg-5 control-label"><span data-i18n="username">Username</span></label>
 								<div class="col-lg-7">
-									<input type="text" id="loginusername" name="login" class="form-control" value="" data-i18n="[placeholder]auth.username" placeholder="Username">
+									<input type="text" id="loginusername" name="login" class="form-control" value="" data-i18n="[placeholder]username" placeholder="Username">
 								</div>
 							</div>
 							<div class="form-group">

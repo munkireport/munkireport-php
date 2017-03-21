@@ -1,5 +1,10 @@
 <?php
 
+namespace munkireport\controller;
+
+use \Controller, \View;
+use munkireport\lib\Themes;
+
 class Settings extends Controller
 {
     public function __construct()
@@ -8,12 +13,12 @@ class Settings extends Controller
             $obj = new View();
             $obj->view('json', array('msg' => 'Not authorized'));
 
-            die(); 
+            die();
         }
     }
-    
+
     //===============================================================
-    
+
     /**
      * Set
      *
@@ -24,10 +29,8 @@ class Settings extends Controller
     {
         if(isset($_POST['set']))
         {
-            include_once(APP_PATH . '/lib/munkireport/Themes.php');
-            
             // Check if valid theme
-            $themeObj = new munkireport\Themes();
+            $themeObj = new Themes();
             if(in_array($_POST['set'], $themeObj->get_list()))
             {
                 sess_set('theme', $_POST['set']);
@@ -38,9 +41,9 @@ class Settings extends Controller
                 $obj->view('json', array('msg' => sprintf('Error: theme %s unknown', $_POST['set'])));
             }
         }
-        
+
         $obj = new View();
         $obj->view('json', array('msg' => sess_get('theme', 'Default')));
     }
-    
+
 }

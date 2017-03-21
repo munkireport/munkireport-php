@@ -33,10 +33,10 @@
     </div>
 <script>
 $(document).on('appReady', function(e, lang) {
-	
+
 	// Get SCCM data
 	$.getJSON( appUrl + '/module/sccm_status/get_data/' + serialNumber, function( data ) {
-        
+
 		if( ! data.agent_status){
 			$('#sccm_status-msg').text(i18n.t('no_data'));
         }else{

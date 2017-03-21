@@ -18,7 +18,7 @@ new Bluetooth_model;
 				<tr>
 					<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 					<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-					<th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+					<th data-i18n="username" data-colname='reportdata.long_username'></th>
 					<th data-i18n="bluetooth.device_type" data-colname='bluetooth.device_type'></th>
 					<th data-i18n="bluetooth.battery_percent" data-colname='bluetooth.battery_percent'></th>
 				</tr>

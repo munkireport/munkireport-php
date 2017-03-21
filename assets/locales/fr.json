@@ -38,7 +38,6 @@
         "unassigned_groups": "Groupes non assignés"
     },
     "all": "Tous",
-    "ard": "Apple Remote Desktop",
     "auth": {
         "addtoconfig": "Ajoutez cette ligne dans config.php:",
         "back_to_site": "Retour au site",
@@ -59,7 +58,6 @@
         "password": "Mot de passe",
         "secure": "Vous utilisez une connexion sécurisée",
         "signin": "Connectez-vous",
-        "username": "Nom Utilisateur",
         "wrong_user_or_pass": "Nom d'utilisateur ou mot de passe incorrect"
     },
     "backup": {
@@ -67,14 +65,18 @@
         "destination": "Destination de sauvegarde",
         "destinations": "Destinations des sauvegardes",
         "duration": "Durée de sauvegarde",
+        "four_weeks_less": "Dernière sauvegarde de 4 semaines",
+        "four_weeks_plus": "Dernière sauvegarde de plus de 4 semaines",
         "kind": "Type de sauvegarde",
         "last_failure": "Dernière sauvegarde échouée",
         "last_failure_msg": "Message",
         "last_success": "Dernière sauvegarde réussie",
-        "location_name": "Nom de l'emplacement"
-    },
-    "battery": {
-        "life_remaining": "Durée restante de la batterie __percent__%"
+        "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
+        "location_name": "Nom de l'emplacement",
+        "ok": "Dernière sauvegarde de 2 semaines",
+        "report": "Backup Report",
+        "today": "Sauvegardé aujourd'hui",
+        "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
     },
     "boot_time": "Démarré",
     "buildversion": "N° de version",
@@ -87,7 +89,7 @@
         "users": "Utilisateurs"
     },
     "cert": {
-        "expiré": "__name__ expired __moment__"
+        "expired": "__name__ expired __moment__"
     },
     "cfbundlename": "Nom CFBundle",
     "chart": {
@@ -99,20 +101,13 @@
     },
     "client": {
         "activity": "Activité Client",
+        "clients": "Clients",
         "comment": "Commentaires",
         "hour": "Clients par heure",
         "panel_title": "Activité du client dans le dernier mois",
+        "report": "Client Report",
         "tab": {
-            "ard": "ARD",
-            "ds": "Services d'annuaires",
-            "munki": "Logiciels gérés",
-            "network": "Interfaces réseau",
-            "power": "Alimentation",
-            "printers": "Imprimantes",
-            "profiles": "Profils",
-            "serverstats": "Statistiques du serveur",
-            "summary": "Résumé",
-            "timemachine": "Time Machine"
+            "summary": "Résumé"
         },
         "total": "Nombre de clients"
     },
@@ -122,8 +117,7 @@
         "arch": "Architecture processeur",
         "core": "core",
         "cpu": "CPU",
-        "type": "Modèle processeur",
-        "usage": "Utilisation processeur"
+        "type": "Modèle processeur"
     },
     "danger": "Erreur",
     "database": "Base de données",
@@ -138,6 +132,7 @@
         "writable": "Inscriptible"
     },
     "delete": "Supprimer",
+    "description": "Description",
     "dialog": {
         "cancel": "Annuler",
         "close": "Fermer",
@@ -162,9 +157,6 @@
     "error": "Erreur",
     "error_plural": "Erreurs",
     "errors": {
-        "403": "Vous n'êtes pas autorisé à voir cette page",
-        "404": "Page non trouvée",
-        "426": "Vous devez visiter ce site à l'aide d'une connexion sécurisée.",
         "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas",
         "loading": "Il y avait un problème avec la récupération de ces données: __error__",
         "title": "Erreurs"
@@ -194,108 +186,54 @@
     "last_seen": "Vu la dernière fois",
     "last_user": "Dernier utilisateur",
     "listing": {
-        "ard": {
-            "text": "Texte __number__",
-            "title": "Rapport Apple Remote Desktop"
-        },
         "checkin": "Enregistrement",
         "computername": "Name",
-        "hardware": {
-            "description": "Description"
-        },
-        "loading": "Chargement des données depuis le serveur",
-        "munki": {
-            "latest_run": "Dernière activité",
-            "package_installed": "Paquet installé",
-            "package_installed_plural": "Paquets installés",
-            "package_removed": "Paquet supprimé",
-            "package_removed_plural": "Paquets supprimés",
-            "pending_install": "Installation en attente",
-            "pending_install_plural": "Installations en attente",
-            "pending_removal": "Suppression en attente",
-            "pending_removal_plural": "Suppressions en attente"
-        },
-        "power": {
-            "capacity": "Capacité (mAh)",
-            "charged": "Chargée %",
-            "condition": "Condition",
-            "current": "Actuel (mAh)",
-            "cycles": "Cycles",
-            "designed": "Conçu pour (mAh)",
-            "failedbattery": "Batterie endommagée",
-            "health": "Santé %",
-            "manufactured": "Fabriquée"
-        },
-        "profile": {
-            "payload": "Payloads",
-            "profilename": "Nom du profil"
-        },
-        "timemachine": {
-            "duration": "Durée de sauvegarde",
-            "last_failure": "Dernière sauvegarde échouée",
-            "last_failure_msg": "Message",
-            "last_success": "Dernière sauvegarde réussie",
-            "title": "Rapport Time Machine"
-        },
-        "username": "Nom utilisateur"
+        "loading": "Chargement des données depuis le serveur"
     },
     "loading": "Chargement des données depuis le serveur",
     "machine": {
         "arch": "Arch",
+        "base_model_widget_title": "Base Model Breakdown",
         "cores": "Cores",
         "cpu_speed": "Fréquence CPU",
+        "duplicate_computernames": {
+            "notfound": "Pas de doublons trouvés",
+            "title": "Nom des ordinateurs dupliqués"
+        },
+        "hardware": "Matériel",
+        "hardware_report": "Rapport Matériel",
         "hardware_type_title": "Répartition par matériel",
         "hardware_widget_title": "Détails de l'appareil",
+        "memory": {
+            "title": "Répartition par mémoire"
+        },
         "model": "Modéle",
-        "rom_version": "Version ROM"
+        "new_clients": {
+            "no_new_clients": "Pas de nouveau client",
+            "title": "Nouveaux clients",
+            "tooltip": "Clients enregistrés cette semaine"
+        },
+        "os": {
+            "title": "Répartition par OS"
+        },
+        "registered": {
+            "title": "Enregistrement du client au fil du temps"
+        },
+        "rom_version": "Version ROM",
+        "uptime": {
+            "title": "Temps de fonctionnement"
+        }
     },
-    "managedinstalls": {
-        "failing_clients": "Clients avec erreurs d'installation",
-        "installratio_report": "Rapport du ratio d'installation",
-        "no_managedinstalls": "Pas d'installation managée",
-        "report": "Rapport installations managées",
-        "title": "Installation managées"
-    },
-    "manifest": {
-        "manifest": "Manifest",
-        "name": "Nom du manifest"
-    },
-    "memory": {
-        "memory": "Mémoire",
-        "pressure": "Pression sur la mémoire",
-        "usage": "Utilisation de la mémoire"
-    },
+    "memory": "Mémoire",
     "model": "Modèle",
     "mouse": " Souris",
     "munki": {
-        "additional_info": "Informations additionnelles Munki",
         "error": "Erreur de Munki : __error__",
         "error_plural": "__count__ Erreurs de Munki",
-        "errors_and_warnings": "Erreurs et Alertes",
-        "munkiprotocol": "Protocole Munki",
         "package_installed": "__pkg__ installé",
         "package_installed_plural": "__count__ paquets installés",
-        "panel_title": "Statistique de Munki cette semaine",
-        "run_type": "Type d'évènement",
-        "version": "Version de Munki",
         "warning": "Alerte de Munki : __warning__",
         "warning_plural": "__count__ Alertes de Munki"
-    },
-    "munkiinfo": {
-        "applecatalog": "URL catalogue Apple",
-        "duration": "Durée",
-        "localonlymanifest": "Manifest uniquement local",
-        "manifest": "Manifest",
-        "softwarerepourl": "URL répertoire logiciels",
-        "start": "Démarrage"
-    },
-    "munkireportinfo": {
-        "baseurl": "URL MunkiReport",
-        "clienttabtitle": "MunkiReport",
-        "passphrase": "Passphrase",
-        "reportitems": "Modules installés",
-        "reporttitle": "Rapport MunkiReport",
-        "version": "Version"
     },
     "mwa": {
         "mwa_link": "Ouvrir dans Munki Web Admin"
@@ -313,63 +251,15 @@
             "nl": "Nederlands",
             "ru": "Русский"
         },
-        "listings": {
-            "ard": "Apple Remote Desktop",
-            "clients": "Clients",
-            "findmymac": "Find My Mac",
-            "hardware": "Matériel",
-            "mrinfo": "MunkiReport",
-            "munki": "Munki",
-            "network": "Réseau",
-            "power": "Alimentation",
-            "printers": "Imprimantes",
-            "profile": "Profils",
-            "sccm_status": "Etat SCCM",
-            "security": "Sécurité",
-            "softwareupdate": "Mise à jour logiciels",
-            "timemachine": "Time Machine",
-            "warranty": "Garantie"
-        },
         "main": {
             "admin": "Admin",
             "dashboard": "Tableau de bord",
             "listings": "Listings",
             "reports": "Rapports"
         },
-        "reports": {
-            "backup": "Sauvegarde",
-            "clients": "Client",
-            "configuration": "Configuration",
-            "findmymac": "FindMyMac",
-            "hardware": "Matériel",
-            "munki": "Munki",
-            "network": "Réseau",
-            "peripheral": "Périphériques",
-            "power": "Alimentation",
-            "printer": "Imprimantes",
-            "profile": "Profils",
-            "sccm": "Etat agent SCCM",
-            "security": "Securité",
-            "server": "Serveur",
-            "warranty": "Garantie"
-        },
         "user": {
             "logout": "Se déconnecter"
         }
-    },
-    "network": {
-        "ethernet": "Ethernet",
-        "hostname": "Nom d'hôte",
-        "inbound_traffic": "Trafic entrant",
-        "ip_address": "Adresse IP",
-        "mask": "Sous-Réseau",
-        "network": "Réseau",
-        "outbound_traffic": "Trafic sortant",
-        "prefix_length": "Longueur préfixe",
-        "remote_ip": "Adresse IP distante",
-        "router": "Routeur",
-        "service": "Service",
-        "traffic": "Trafic réseau"
     },
     "new_client": "Nouveau client",
     "new_client_plural": "Nouveaux clients",
@@ -414,80 +304,15 @@
     },
     "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
     "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
-    "power": {
-        "condition": "Condition",
-        "current_capacity": "Charge restante (mAh)",
-        "current_percent": "Chargée %",
-        "cycle_count": "Nombre de cycles",
-        "design_capacity": "Capacité prévue (mAh)",
-        "manufacture_date": "Fabriquée",
-        "max_capacity": "Capacité pleine charge (mAh)",
-        "max_percent": "Santé %",
-        "temperature": "Température"
-    },
-    "printer": {
-        "default_set": "Ensemble par défaut",
-        "driver_version": "Version du pilote",
-        "error": "Erreur",
-        "idle": "Inactive",
-        "in_use": "Utilisé",
-        "name": "Nom de l'imprimante",
-        "offline": "Hors ligne",
-        "ppd": "PPD",
-        "printer_sharing": "Partage d'imprimantes",
-        "printer_status": "État de l'imprimante",
-        "tab_title": "Imprimantes installées",
-        "url": "URL"
-    },
     "ratio": "Ratio",
     "reg_date": "Date d'enregistrement",
     "remote_control": "Contrôle à distance",
     "report": {
         "generate": "Générer un rapport"
     },
-    "sccm_status": {
-        "agent_status": "Etat agent SCCM",
-        "cert_exp": "Expiration du certificat client SCCM",
-        "enrollment_name": "Nom d'inscription de l'utilisateur",
-        "enrollment_server": "Inscription serveur",
-        "enrollment_status": "Etat de l'inscription",
-        "last_checkin": "Dernier test SCCM",
-        "mgmt_point": "Point de gestion",
-        "title": "Etat agent SCCM",
-        "titleheader": "Information agent SCCM"
-    },
-    "security": {
-        "ard_users": "Utilisateurs ARD",
-        "firmwarepw": "Mot de passe firmware",
-        "gatekeeper": "Etat Gatekeeper",
-        "gatekeeper_active": "Gatekeeper sctif",
-        "gatekeeper_disabled": "Gatekeeper désactivé",
-        "report": "Rapport Sécurité",
-        "security": "Sécurité",
-        "sip": "Etat SIP",
-        "sip_active": "SIP actif",
-        "sip_disabled": "SIP désactivé",
-        "sip_status": "Etat SIP",
-        "ssh_users": "Utilisateurs SSH"
-    },
     "serial": "Numéro de série",
     "servermetrics": {
         "tab": "Server Metrics"
-    },
-    "service": {
-        "listing": {
-            "title": "Rapport des services"
-        },
-        "name": "Nom du service",
-        "status": "État du service",
-        "tab": {
-            "title": "Services"
-        }
-    },
-    "sharing": {
-        "afp_users": "Utilisateurs AFP",
-        "connected_users": "Partage - Utilisateurs connectés",
-        "smb_users": "Utilisateurs SMB"
     },
     "show": "Afficher",
     "size": "Taille",
@@ -495,28 +320,6 @@
         "boot_rom_version": "Version du Boot ROM",
         "smc_version": "Version de la SMC",
         "software": "Logiciel"
-    },
-    "softwareupdate": {
-        "automaticcheckenabled": "Vérification auto activée",
-        "automaticdownload": "Téléchargement automatique",
-        "catalogurl": "URL Catalogue",
-        "clienttabtitle": "Mise à jour logiciels",
-        "configdatainstall": "Installation XProtect automatique",
-        "criticalupdateinstall": "Installations critiques",
-        "inactiveupdates": "Mise à jour ignorées",
-        "lastattemptsystemversion": "Version soumise",
-        "lastbackgroundccdsuccessfuldate": "Date de réussite CCD",
-        "lastbackgroundsuccessfuldate": "Date de réussite",
-        "lastfullsuccessfuldate": "Date de réussite complète",
-        "lastrecommendedupdatesavailable": "Mises à jour disponibles recommandées",
-        "lastresultcode": "Code résultat",
-        "lastsessionsuccessful": "Session réussie",
-        "lastsuccessfuldate": "Date de réussite",
-        "lastupdatesavailable": "Mises à jour disponibles",
-        "mrxprotect": "Installation XProtect",
-        "recommendedupdates": "Mises à jour recommandées",
-        "reporttitle": "Rapport mises à jour logiciels",
-        "skiplocalcdn": "Ignorer le CDN local"
     },
     "status": "État",
     "success": "Succès",
@@ -526,9 +329,6 @@
     },
     "systemstatus": {
         "menu_link": "Voir l'état du système"
-    },
-    "timemachine": {
-        "timemachine": "Time Machine"
     },
     "total_clients": "Nombre Clients",
     "trackpad": "Trackpad",
@@ -544,96 +344,15 @@
         "user": "Utilisateur",
         "users": "Utilisateurs"
     },
+    "username": "Nom utilisateur",
     "verified": "Verifié",
     "version": "Version",
     "warning": "Alerte",
     "warning_plural": "Alertes",
     "widget": {
-        "duplicate_computernames": {
-            "notfound": "Pas de doublons trouvés",
-            "title": "Nom des ordinateurs dupliqués"
-        },
-        "manifest": {
-            "title": "Manifests"
-        },
-        "memory": {
-            "title": "Répartition par mémoire"
-        },
-        "munki": {
-            "no_updates_pending": "Pas de mise à jour en attente",
-            "title": "Munki"
-        },
-        "munki_versions": {
-            "title": "Versions Munki",
-            "tooltip": "Versions Munki entre tous les clients"
-        },
-        "munkiinfo": {
-            "munkiprotocol": {
-                "http": "http",
-                "https": "https",
-                "localrepo": "repo local",
-                "title": "Protocole Munki",
-                "tooltip": "Protocole Munki entre tous les clients"
-            }
-        },
-        "network_location": {
-            "title": "Emplacements réseau"
-        },
-        "network_vlan": {
-            "title": "Vlans réseau"
-        },
-        "new_clients": {
-            "no_new_clients": "Pas de nouveau client",
-            "title": "Nouveaux clients",
-            "tooltip": "Clients enregistrés cette semaine"
-        },
-        "os": {
-            "title": "Répartition par OS"
-        },
-        "pending": {
-            "title": "Clients avec installation en attente"
-        },
-        "pending_apple": {
-            "title": "Mises à jour Apple en attente",
-            "tooltip": "Mises à jour Apple en attente pour cette semaine"
-        },
-        "pending_munki": {
-            "title": "Installations en attente",
-            "tooltip": "Installation en attente pour cette semaine"
-        },
-        "power": {
-            "check": "Test de la batterie",
-            "health": {
-                "title": "Etat de santé de la batterie",
-                "tooltip": "Etat de santé de la batterie"
-            },
-            "missing": "Manquant",
-            "nobattery": "Pas de batterie",
-            "normal": "Normal",
-            "now": "A remplacer maintenant",
-            "service": "A entretenir maintenant",
-            "soon": "A entretenir bientôt",
-            "title": "Etat de la batterie",
-            "tooltip": "Etat de la batterie"
-        },
-        "registered": {
-            "title": "Enregistrement du client au fil du temps"
-        },
-        "timemachine": {
-            "b2g_danger": "Dernière sauvegarde de plus de 4 semaines",
-            "b2g_ok": "Dernière sauvegarde de 2 semaines",
-            "b2g_warning": "Dernière sauvegarde de 4 semaines",
-            "lastweek": "Dernière sauvegarde effectuée il y a plus d'une journée",
-            "title": "État Time Machine",
-            "today": "Sauvegardé aujourd'hui",
-            "week_plus": "Dernière sauvegarde effectuée il y a plus d'une semaine"
-        },
         "unknown": {
             "alert": "Ce widget ne peut être trouvé",
             "title": "Widget inconnu"
-        },
-        "uptime": {
-            "title": "Temps de fonctionnement"
         }
     },
     "yes": "Oui"

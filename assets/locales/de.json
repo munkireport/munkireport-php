@@ -38,7 +38,6 @@
         "unassigned_groups": "Nicht zugeordnete Gruppen"
     },
     "all": "Alle",
-    "ard": "Apple Remote Desktop",
     "auth": {
         "addtoconfig": "Fügen Sie diese Zeile zur config.php hinzu:",
         "back_to_site": "Zurück zur Seite",
@@ -59,7 +58,6 @@
         "password": "Passwort",
         "secure": "Sie nutzen eine verschlüsselte Verbindung",
         "signin": "Anmelden",
-        "username": "Benutzername",
         "wrong_user_or_pass": "Falscher Benutzername oder falches Kennwort"
     },
     "backup": {
@@ -67,14 +65,18 @@
         "destination": "Backupziel",
         "destinations": "Backupziele",
         "duration": "Dauer des Backups",
+        "four_weeks_less": "Letztes Backup vor 4 Wochen",
+        "four_weeks_plus": "Letztes Backup vor mehr als 4 Wochen",
         "kind": "Backup-Art",
         "last_failure": "Letztes Fehlgeschlagenes Backup",
         "last_failure_msg": "Fehlermeldung",
         "last_success": "Letztes Erfolgreiches Backup",
-        "location_name": "Name des Backup-Orts"
-    },
-    "battery": {
-        "life_remaining": "__percent__% verbleibende Batterielaufzeit"
+        "lastweek": "Letztes Backup vor mehr als einen Tag",
+        "location_name": "Name des Backup-Orts",
+        "ok": "Letztes Backup vor 2 Wochen",
+        "report": "Backup Report",
+        "today": "Backup heute",
+        "week_plus": "Letztes Backup vor mehr als einer Woche"
     },
     "boot_time": "Startzeit",
     "buildversion": "Build Version",
@@ -99,20 +101,13 @@
     },
     "client": {
         "activity": "Clientaktivität",
+        "clients": "Clients",
         "comment": "Kommentar",
         "hour": "Clients pro Stunde",
         "panel_title": "Clientaktivität im letzten Monat",
+        "report": "Client Report",
         "tab": {
-            "ard": "ARD",
-            "ds": "Verzeichnisdienste",
-            "munki": "Verwaltete Software",
-            "network": "Netzwerk Schnittstellen",
-            "power": "Strom",
-            "printers": "Drucker",
-            "profiles": "Profile",
-            "serverstats": "Server Statistik",
-            "summary": "Zusammenfassung",
-            "timemachine": "Time Machine"
+            "summary": "Zusammenfassung"
         },
         "total": "Gesamtanzahl Clients"
     },
@@ -122,8 +117,7 @@
         "arch": "CPU Architektur",
         "core": "Kerne",
         "cpu": "CPU",
-        "type": "CPU Typ",
-        "usage": "Prozessorauslastung"
+        "type": "CPU Typ"
     },
     "danger": "Fehler",
     "database": "Datenbank",
@@ -138,6 +132,7 @@
         "writable": "Beschreibbar"
     },
     "delete": "Löschen",
+    "description": "Beschreibung",
     "dialog": {
         "cancel": "Abbrechen",
         "close": "Schließen",
@@ -191,50 +186,9 @@
     "last_seen": "Zuletzt gesehen",
     "last_user": "Letzter User",
     "listing": {
-        "ard": {
-            "text": "Text __number__",
-            "title": "Apple Remote Desktop-Report"
-        },
         "checkin": "Check-in",
         "computername": "Name",
-        "hardware": {
-            "description": "Beschreibung"
-        },
-        "loading": "Lade Daten vom Server",
-        "munki": {
-            "latest_run": "Letzter Durchlauf",
-            "package_installed": "Paket installiert",
-            "package_installed_plural": "Pakete installiert",
-            "package_removed": "Paket gelöscht",
-            "package_removed_plural": "Pakete gelöscht",
-            "pending_install": "Ausstehende Installation",
-            "pending_install_plural": "Ausstehende Installationen",
-            "pending_removal": "Ausstehende Deinstallation",
-            "pending_removal_plural": "Ausstehende Deinstallationen"
-        },
-        "power": {
-            "capacity": "Kapazität (mAh)",
-            "charged": "Geladen %",
-            "condition": "Zustand",
-            "current": "Stromstärke (mAh)",
-            "cycles": "Zyklen",
-            "designed": "Ursprünglich (mAh)",
-            "failedbattery": "Defekte Batterie",
-            "health": "Gesundheit %",
-            "manufactured": "Hergestellt"
-        },
-        "profile": {
-            "payload": "Payloads",
-            "profilename": "Profilename"
-        },
-        "timemachine": {
-            "duration": "Backupdauer",
-            "last_failure": "Letztes fehlgeschlagenes Backup",
-            "last_failure_msg": "Fehlermeldung",
-            "last_success": "Letztes erfolgreiches Backup",
-            "title": "Timemachine-Report"
-        },
-        "username": "Benutzername"
+        "loading": "Lade Daten vom Server"
     },
     "loading": "Lade Daten vom Server",
     "machine": {
@@ -242,58 +196,44 @@
         "base_model_widget_title": "Aufstellung der Basis-Modelle",
         "cores": "Kerne",
         "cpu_speed": "CPU Geschwindigkeit",
+        "duplicate_computernames": {
+            "notfound": "Keine Duplikate gefunden",
+            "title": "Doppelte Computernamen"
+        },
+        "hardware": "Hardware",
+        "hardware_report": "Hardware-Report",
         "hardware_type_title": "Aufstellung der Hardware-Typen",
         "hardware_widget_title": "Aufstellung der Hardware-Modelle",
+        "memory": {
+            "title": "Aufstellung der Speicherausstattung"
+        },
         "model": "Modell",
-        "rom_version": "ROM Version"
+        "new_clients": {
+            "no_new_clients": "keine neuen Clients",
+            "title": "Neue Clients",
+            "tooltip": "Neue Clients diese Woche"
+        },
+        "os": {
+            "title": "Aufstellung der OS Versionen"
+        },
+        "registered": {
+            "title": "Zeitachse der Clientregistrierung"
+        },
+        "rom_version": "ROM Version",
+        "uptime": {
+            "title": "Uptime"
+        }
     },
-    "managedinstalls": {
-        "failing_clients": "Clients mit fehlgeschlagenen Installationen",
-        "installratio_report": "Installationsquoten-Report",
-        "no_managedinstalls": "Keine verwalteten Installationen",
-        "report": "Verwaltete Installationen-Report",
-        "title": "Verwaltete Installs"
-    },
-    "manifest": {
-        "manifest": "Manifest",
-        "name": "Manifest Name"
-    },
-    "memory": {
-        "memory": "Speicher",
-        "pressure": "Speicherdruck",
-        "usage": "Speichernutzung"
-    },
+    "memory": "Speicher",
     "model": "Modell",
     "mouse": "Maus",
     "munki": {
-        "additional_info": "Weitere Munki Infos",
         "error": "Munki-Fehler: __error__",
         "error_plural": "__count__ Munki-Fehler",
-        "errors_and_warnings": "Fehler und Warnungen",
-        "munkiprotocol": "Munki Protokoll",
         "package_installed": "__pkg__ installiert",
         "package_installed_plural": "__count__ Pakete installiert",
-        "panel_title": "Munki Statistik diese Woche",
-        "run_type": "Run Type",
-        "version": "Munki Version",
         "warning": "Munki-Warnung: __warning__",
         "warning_plural": "__count__ Munki-Warnungen"
-    },
-    "munkiinfo": {
-        "applecatalog": "Apple Catalog URL",
-        "duration": "Dauer",
-        "localonlymanifest": "Local Only Manifest",
-        "manifest": "Manifest",
-        "softwarerepourl": "Software Repo URL",
-        "start": "Start"
-    },
-    "munkireportinfo": {
-        "baseurl": "MunkiReport URL",
-        "clienttabtitle": "MunkiReport",
-        "passphrase": "Passphrase",
-        "reportitems": "Installierte Module",
-        "reporttitle": "MunkiReport-Report",
-        "version": "Version"
     },
     "mwa": {
         "mwa_link": "In Munki Web Admin öffnen"
@@ -311,61 +251,15 @@
             "nl": "Nederlands",
             "ru": "Русский"
         },
-        "listings": {
-            "ard": "Apple Remote Desktop",
-            "clients": "Clients",
-            "findmymac": "Meinen Mac suchen",
-            "hardware": "Hardware",
-            "mrinfo": "MunkiReport",
-            "munki": "Munki",
-            "network": "Netzwerk",
-            "power": "Strom",
-            "printers": "Printers",
-            "profile": "Profile",
-            "sccm_status": "SCCM Status",
-            "security": "Sicherheit",
-            "softwareupdate": "Software Update",
-            "timemachine": "Time Machine"
-        },
         "main": {
             "admin": "Admin",
             "dashboard": "Dashboard",
             "listings": "Listen",
             "reports": "Reports"
         },
-        "reports": {
-            "backup": "Backup-Report",
-            "clients": "Client-Report",
-            "configuration": "Konfigurations-Report",
-            "findmymac": "Meinen Mac suchen-Report",
-            "hardware": "Hardware-Report",
-            "munki": "Munki-Report",
-            "network": "Netzwerk-Report",
-            "peripheral": "Peripheriegeräte-Report",
-            "power": "Stromversorgungs-Report",
-            "printer": "Drucker-Report",
-            "profile": "Profile-Report",
-            "sccm": "SCCM-Agent-Status-Report",
-            "security": "Sicherheits-Report",
-            "server": "Server-Report"
-        },
         "user": {
             "logout": "Abmelden"
         }
-    },
-    "network": {
-        "ethernet": "Ethernet",
-        "hostname": "Hostname",
-        "inbound_traffic": "Ankommender Verkehr",
-        "ip_address": "IP Adresse",
-        "mask": "Netzmaske",
-        "network": "Netzwerk",
-        "outbound_traffic": "Ausgehender Verkehr",
-        "prefix_length": "Präfix Länge",
-        "remote_ip": "Remote IP Adresse",
-        "router": "Router",
-        "service": "Service",
-        "traffic": "Netzwerkverkehr"
     },
     "new_client": "Neuer Client",
     "new_client_plural": "Neue Clients",
@@ -410,80 +304,15 @@
     },
     "pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
     "pkg_failed_to_install_plural": "__count__ Pakete wurden nicht installiert",
-    "power": {
-        "condition": "Zustand",
-        "current_capacity": "Verbleibende Ladung (mAh)",
-        "current_percent": "Geladen %",
-        "cycle_count": "Anzahl der Ladezyklen",
-        "design_capacity": "Ursprüngliche Kapazität (mAh)",
-        "manufacture_date": "Hergestellt ",
-        "max_capacity": "Volle Ladung (mAh)",
-        "max_percent": "Gesundheit %",
-        "temperature": "Termperatur"
-    },
-    "printer": {
-        "default_set": "Standarddrucker",
-        "driver_version": "Treiberversion",
-        "error": "Fehler",
-        "idle": "Idle",
-        "in_use": "in Benutzung",
-        "name": "Druckername",
-        "offline": "Offline",
-        "ppd": "PPD",
-        "printer_sharing": "Printer Sharing",
-        "printer_status": "Druckerstatus",
-        "tab_title": "Installierte Drucker",
-        "url": "URL"
-    },
     "ratio": "Verhältnis",
     "reg_date": "Registrierungsdatum",
     "remote_control": "Fernsteuerung",
     "report": {
         "generate": "Report erzeugen"
     },
-    "sccm_status": {
-        "agent_status": "SCCM Agent Status",
-        "cert_exp": "SCCM Client Cert Ablauf",
-        "enrollment_name": "Enrollment User Name",
-        "enrollment_server": "Enrollment Server",
-        "enrollment_status": "Enrollment Status",
-        "last_checkin": "Letzter SCCM Check In",
-        "mgmt_point": "Management Point",
-        "title": "SCCM Agent Status",
-        "titleheader": "SCCM Agent Information"
-    },
-    "security": {
-        "ard_users": "ARD-Benutzer",
-        "firmwarepw": "Firmware-Passwort",
-        "gatekeeper": "Gatekeeper-Status",
-        "gatekeeper_active": "Gatekeeper aktiv",
-        "gatekeeper_disabled": "Gatekeeper deaktiviert",
-        "report": "Sicherheits-Report",
-        "security": "Security",
-        "sip": "SIP-Status",
-        "sip_active": "SIP aktiv",
-        "sip_disabled": "SIP deaktiviert",
-        "sip_status": "SIP-Status",
-        "ssh_users": "SSH-Benutzer"
-    },
     "serial": "Seriennummer",
     "servermetrics": {
         "tab": "Server Statistik"
-    },
-    "service": {
-        "listing": {
-            "title": "Dienste-Report"
-        },
-        "name": "Dienstname",
-        "status": "Dienststatus",
-        "tab": {
-            "title": "Dienste"
-        }
-    },
-    "sharing": {
-        "afp_users": "AFP Benutzer",
-        "connected_users": "Filesharing – Verbundene Benutzer",
-        "smb_users": "SMB Benutzer"
     },
     "show": "Anzeigen",
     "size": "Größe",
@@ -491,28 +320,6 @@
         "boot_rom_version": "Boot ROM Version",
         "smc_version": "SMC Version",
         "software": "Software"
-    },
-    "softwareupdate": {
-        "automaticcheckenabled": "Auto Check aktivier",
-        "automaticdownload": "Auto Download",
-        "catalogurl": "Catalog URL",
-        "clienttabtitle": "Software Updates",
-        "configdatainstall": "XProtect automatisch installieren",
-        "criticalupdateinstall": "Kritische Updates installieren",
-        "inactiveupdates": "Ignorierte Updates",
-        "lastattemptsystemversion": "Versuchte Version",
-        "lastbackgroundccdsuccessfuldate": "Datum des letzten Erfolgreichen Hintergrund-CCD",
-        "lastbackgroundsuccessfuldate": "Erfolgreicher Hintergrund-Check",
-        "lastfullsuccessfuldate": "Vollständig erfolgreich",
-        "lastrecommendedupdatesavailable": "Empfohlene Updates",
-        "lastresultcode": "Result Code",
-        "lastsessionsuccessful": "Session erfolgreich",
-        "lastsuccessfuldate": "Erfolgreich am",
-        "lastupdatesavailable": "Updates verfügbar",
-        "mrxprotect": "XProtect Install",
-        "recommendedupdates": "Empfohlene Updates",
-        "reporttitle": "Software Update-Report",
-        "skiplocalcdn": "Skip Local CDN"
     },
     "status": "Status",
     "success": "Erfolg",
@@ -522,9 +329,6 @@
     },
     "systemstatus": {
         "menu_link": "Systemstatus zeigen"
-    },
-    "timemachine": {
-        "timemachine": "Time Machine"
     },
     "total_clients": "Gesamte Anzahl Clients",
     "trackpad": "Trackpad",
@@ -540,96 +344,15 @@
         "user": "Benutzer",
         "users": "Benutzer"
     },
+    "username": "Benutzername",
     "verified": "Verifiziert",
     "version": "Version",
     "warning": "Warnung",
     "warning_plural": "Warnungen",
     "widget": {
-        "duplicate_computernames": {
-            "notfound": "Keine Duplikate gefunden",
-            "title": "Doppelte Computernamen"
-        },
-        "manifest": {
-            "title": "Manifests"
-        },
-        "memory": {
-            "title": "Aufstellung der Speicherausstattung"
-        },
-        "munki": {
-            "no_updates_pending": "Keine anstehenden Updates",
-            "title": "Munki"
-        },
-        "munki_versions": {
-            "title": "Munki-Versionen",
-            "tooltip": "Munki-Versionen aller Clients"
-        },
-        "munkiinfo": {
-            "munkiprotocol": {
-                "http": "http",
-                "https": "https",
-                "localrepo": "Lokales repo",
-                "title": "Munki Protokoll",
-                "tooltip": "Munki Protokoll aller Clients"
-            }
-        },
-        "network_location": {
-            "title": "Netzwerkumgebungen"
-        },
-        "network_vlan": {
-            "title": "Netzwerk-VLANs"
-        },
-        "new_clients": {
-            "no_new_clients": "keine neuen Clients",
-            "title": "Neue Clients",
-            "tooltip": "Neue Clients diese Woche"
-        },
-        "os": {
-            "title": "Aufstellung der OS Versionen"
-        },
-        "pending": {
-            "title": "Clients mit anstehenden Installationen"
-        },
-        "pending_apple": {
-            "title": "Anstehende Apple Updates",
-            "tooltip": "Diese Woche anstehende Apple Updates"
-        },
-        "pending_munki": {
-            "title": "Anstehende Installationen",
-            "tooltip": "Anstehende Installationen diese Woche"
-        },
-        "power": {
-            "check": "Batterie prüfen",
-            "health": {
-                "title": "Batterie-Gesundheit",
-                "tooltip": "Liste des Batteriegesundheits-Status"
-            },
-            "missing": "Fehlt",
-            "nobattery": "Keine Batterie",
-            "normal": "Normal",
-            "now": "Jetzt austauschen",
-            "service": "Jetzt zur Wartung",
-            "soon": "Wartung steht an",
-            "title": "Batterie-Zustand",
-            "tooltip": "Liste des Batteriezustands"
-        },
-        "registered": {
-            "title": "Zeitachse der Clientregistrierung"
-        },
-        "timemachine": {
-            "b2g_danger": "Letztes Backup vor mehr als 4 Wochen",
-            "b2g_ok": "Letztes Backup vor 2 Wochen",
-            "b2g_warning": "Letztes Backup vor 4 Wochen",
-            "lastweek": "Letztes Backup vor mehr als einem Tag",
-            "title": "Time Machine Status",
-            "today": "Backup heute",
-            "week_plus": "Letztes Backup vor mehr als einer Woche"
-        },
         "unknown": {
             "alert": "Dieses Widget konnte nicht gefunden werden",
             "title": "Unbekanntes Widget"
-        },
-        "uptime": {
-            "title": "Uptime"
         }
     },
     "yes": "Ja"

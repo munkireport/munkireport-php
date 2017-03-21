@@ -13,7 +13,7 @@ new Printer_model;
 
   	<div class="col-lg-12">
 
-	<h3><span data-i18n="nav.reports.printer"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+	<h3><span data-i18n="printer.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 
@@ -53,7 +53,7 @@ new Printer_model;
 		oTable.ajax.reload();
 		return;
 
-	});		
+	});
 
 	$(document).on('appReady', function(e, lang) {
 
@@ -108,21 +108,21 @@ new Printer_model;
                 defaultset = defaultset == 'yes' ? i18n.t('yes') :
                 (defaultset === 'no' ? i18n.t('no') : '')
                 $('td:eq(6)', nRow).html(defaultset)
-                
+
                 // Printer Status
                 var printerstatus=$('td:eq(7)', nRow).html();
                 printerstatus = printerstatus == 'idle' ? i18n.t('printer.idle') :
-                printerstatus = printerstatus == 'error' ? i18n.t('printer.error') : 
-                printerstatus = printerstatus == 'in use' ? i18n.t('printer.in_use') : 
+                printerstatus = printerstatus == 'error' ? i18n.t('printer.error') :
+                printerstatus = printerstatus == 'in use' ? i18n.t('printer.in_use') :
                 (printerstatus === 'offline' ? i18n.t('printer.offline') : '')
                 $('td:eq(7)', nRow).html(printerstatus)
-                
+
                 // Sharing
                 var printersharing=$('td:eq(8)', nRow).html();
                 printersharing = printersharing == 'yes' ? i18n.t('yes') :
                 (printersharing === 'no' ? i18n.t('no') : '')
                 $('td:eq(8)', nRow).html(printersharing)
-                
+
             } //end fnCreatedRow
 
         }); //end oTable

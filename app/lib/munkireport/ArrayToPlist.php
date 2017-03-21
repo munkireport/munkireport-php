@@ -2,13 +2,13 @@
 
 // Utility class to render plist files
 
-namespace munkireport;
+namespace munkireport\lib;
 
 class ArrayToPlist
 {
-    
+
     private $parser;
-    
+
     public function __construct()
     {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
@@ -19,11 +19,11 @@ class ArrayToPlist
     {
         $this->parser->add($dict = new \CFDictionary());
         $this->addItem($dict, $array);
-        
+
         return $this->parser->toXML();
     }
 
-    
+
 
     // Detect if this is an associative array
     public function has_string_keys(array $array)
@@ -44,7 +44,7 @@ class ArrayToPlist
     public function addItem(&$dict, $item)
     {
         $parent = get_class($dict);
-        
+
         //echo "$parent\n";
         foreach ($item as $key => $value) {
             if (is_scalar($value)) {
@@ -63,7 +63,7 @@ class ArrayToPlist
                 } else {
                     $dict->add($key, $newdict = new \CFArray());
                 }
-                
+
                 $this->addItem($newdict, $value);
             }
         }

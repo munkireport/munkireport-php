@@ -1,5 +1,10 @@
 <?php
-class install extends Controller
+
+namespace munkireport\controller;
+
+use \Controller, \View;
+
+class Install extends Controller
 {
     private $moduleManager;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace munkireport;
+namespace munkireport\lib;
 
 /**
 * Modules class
@@ -175,12 +175,10 @@ class Modules
     {
         if(isset($this->moduleList[$module]['listings'])){
             foreach ($this->moduleList[$module]['listings'] as $listing) {
-                if($listing['view'] == $name . '_listing'){
-                    return (object) array(
-                        'view_path' => $this->getPath($module, '/views/'),
-                        'view' => $listing['view'],
-                    );
-                }
+                return (object) array(
+                    'view_path' => $this->getPath($module, '/views/'),
+                    'view' => $listing['view'],
+                );
             }
         }
         return False;
@@ -233,7 +231,7 @@ class Modules
                 $out[] = (object) array(
                   'url' => url($baseUrl.'/'.$module.'/'.$itemName),
                   'name' => $itemName,
-                  'class' => substr_compare( $page, $itemName, -strlen( $itemName ) ) === 0 ? 'active' : '',
+                  'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
                   'i18n' => $i18n,
                 );
             }

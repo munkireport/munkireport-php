@@ -3,8 +3,8 @@
 # Script to create a new module structure
 
 DIR=$(dirname $0)
-MODULE="${1}"
-MODULE_PATH=$(pwd)"/modules/${MODULE}/"
+MODULE_PATH="${1}"
+MODULE=$(basename $1)
 SCRIPT_DIR="${MODULE_PATH}/scripts/"
 VIEW_DIR="${MODULE_PATH}/views/"
 LOCALE_DIR="${MODULE_PATH}/locales/"
@@ -16,7 +16,7 @@ mkdir "${VIEW_DIR}" || exit 1
 mkdir "${LOCALE_DIR}" || exit 1
 
 # Copy provides.php
-cat "${DIR}/templates/provides.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}provides.php"
+cat "${DIR}/templates/provides.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/provides.php"
 
 # Copy install scripts from template
 cat "${DIR}/templates/install.sh" | sed "s/MODULE/${MODULE}/g" > "${SCRIPT_DIR}install.sh"
@@ -24,8 +24,8 @@ cat "${DIR}/templates/uninstall.sh" | sed "s/MODULE/${MODULE}/g" > "${SCRIPT_DIR
 cat "${DIR}/templates/module_script.sh" | sed "s/MODULE/${MODULE}/g" > "${SCRIPT_DIR}${MODULE}.sh"
 
 # Copy php templates
-cat "${DIR}/templates/controller.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}${MODULE}_controller.php"
-cat "${DIR}/templates/model.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}${MODULE}_model.php"
+cat "${DIR}/templates/controller.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/${MODULE}_controller.php"
+cat "${DIR}/templates/model.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/${MODULE}_model.php"
 
 # Copy views
 cat "${DIR}/templates/listing.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_listing.php"
