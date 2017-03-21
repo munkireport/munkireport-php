@@ -20,13 +20,13 @@ new Directory_service_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="directoryservice.boundstatus" data-colname='directoryservice.which_directory_service'></th>
-		        <th data-i18n="directoryservice.ad_domain" data-colname='directoryservice.addomain'></th>
-		        <th data-i18n="directoryservice.computeraccount" data-colname='directoryservice.computeraccount'></th>
-		        <th data-i18n="directoryservice.ad_comments" data-colname='directoryservice.directory_service_comments'></th>
-		        <th data-i18n="directoryservice.mobileaccount" data-colname='directoryservice.createmobileaccount'></th>
-		        <th data-i18n="directoryservice.networkprotocol" data-colname='directoryservice.networkprotocoltobeused'></th>
-		        <th data-i18n="directoryservice.admin_groups" data-colname='directoryservice.allowedadmingroups'></th>
+		        <th data-i18n="directory_service.which_directory_service" data-colname='directoryservice.which_directory_service'></th>
+		        <th data-i18n="directory_service.addomain" data-colname='directoryservice.addomain'></th>
+		        <th data-i18n="directory_service.computeraccount" data-colname='directoryservice.computeraccount'></th>
+		        <th data-i18n="directory_service.directory_service_comments" data-colname='directoryservice.directory_service_comments'></th>
+		        <th data-i18n="directory_service.createmobileaccount" data-colname='directoryservice.createmobileaccount'></th>
+		        <th data-i18n="directory_service.networkprotocoltobeused" data-colname='directoryservice.networkprotocoltobeused'></th>
+		        <th data-i18n="directory_service.allowedadmingroups" data-colname='directoryservice.allowedadmingroups'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
