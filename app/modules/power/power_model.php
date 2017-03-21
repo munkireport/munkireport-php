@@ -330,8 +330,11 @@ class Power_model extends Model
                
         if (strpos($sleep_long, '(') !== false) {
             preg_match('/\((.*?)\)/s', $sleep_long, $sleep_array);
-            $this->sleep = explode(" (", $sleep_long)[0];                
+            $this->sleep = explode(" (", $sleep_long)[0];
             $this->sleep_prevented_by = preg_replace("/[^A-Za-z0-9 ]/", '',(implode(", ", array_unique(explode(", ", str_replace("sleep prevented by ", "", $sleep_array[1]))))));
+        } else {
+            $this->sleep = preg_replace("/[^0-9 ]/", '', $sleep_long);
+            $this->sleep_prevented_by = "";
         }
         
         // Correct empty UPS percentage
