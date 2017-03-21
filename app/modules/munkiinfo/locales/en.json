@@ -4,8 +4,8 @@
     "localonlymanifest": "Local Only Manifest",
     "manifest": "Manifest",
     "munkiprotocol": {
-        "http": "http",
-        "https": "https",
+        "http": "HTTP",
+        "https": "HTTPS",
         "localrepo": "Local Repo",
         "title": "Munki Protocol",
         "tooltip": "Munki protocol among all clients"
