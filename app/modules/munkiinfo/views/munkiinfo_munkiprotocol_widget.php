@@ -24,12 +24,12 @@ $(document).on('appUpdate', function(e, lang) {
 	}
 
 		var panel = $('#munkiinfo-munkiprotocol-widget div.panel-body'),
-			baseUrl = appUrl + '/module/munkiinfo/listing';
+			baseUrl = appUrl + '/show/listing/munkireport/munki';
 		panel.empty();
 
 		// Set statuses
-		panel.append(' <a href="'+baseUrl+'#protocol = http" class="btn btn-danger"><span class="bigger-150">'+data.http+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.http')+'</a>');
-		panel.append(' <a href="'+baseUrl+'#protocol = https" class="btn btn-success"><span class="bigger-150">'+data.https+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.https')+'</a>');
+		panel.append(' <a href="'+baseUrl+'#protocol = http" class="btn btn-danger"><span class="bigger-150">'+data.http+'</span><br>&nbsp;'+i18n.t('munkiinfo.munkiprotocol.http')+'&nbsp;</a>');
+		panel.append(' <a href="'+baseUrl+'#protocol = https" class="btn btn-success"><span class="bigger-150">'+data.https+'</span><br>&nbsp;'+i18n.t('munkiinfo.munkiprotocol.https')+'&nbsp;</a>');
 		panel.append(' <a href="'+baseUrl+'" class="btn btn-info"><span class="bigger-150">'+data.localrepo+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.localrepo')+'</a>');
 
     });

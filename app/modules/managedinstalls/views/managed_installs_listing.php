@@ -146,7 +146,7 @@ new Managedinstalls_model;
                 // Format Check-In timestamp
                 var checkin = parseInt($('td:eq(6)', nRow).html());
                 var date = new Date(checkin * 1000);
-                $('td:eq(6)', nRow).html(moment(date).fromNow());
+                $('td:eq(6)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date).fromNow()+'</span>');
 
                 // Format filesize
                 $('td:last', nRow).html(fileSize($('td:last', nRow).html() * 1024));

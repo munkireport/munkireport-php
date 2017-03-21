@@ -63,10 +63,10 @@ $(document).on('appReady', function(e, lang) {
 			$('#filevault-HddSerial').text(data.HddSerial);
 
 			// Set FileVault status
-			if(data.filevault_status === "" && data.filevault_users !== "") {
-				 $('#filevault-filevault_status').text(i18n.t('filevault.encrypted'));
-			} else if(data.filevault_status === "" || data.filevault_users === "") {
-				 $('#filevault-filevault_status').text(i18n.t('filevault.unencrypted'));
+			if(data.filevault_status == "" && data.filevault_users !== "") {
+				 $('#filevault-filevault_status').text(i18n.t('encrypted'));
+			} else if(data.filevault_status == "" || data.filevault_users === "") {
+				 $('#filevault-filevault_status').text(i18n.t('unencrypted'));
 			} else{
 				 $('filevault-filevault_status').text("");
 			}
