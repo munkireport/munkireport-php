@@ -43,7 +43,7 @@ class Localadmin_model extends Model
                     ORDER BY count DESC";
         
         foreach ($this->query($sql) as $obj) {
-            if ("$obj->count" >= "$this->threshold") {
+            if ("$obj->count" >= "$threshold") {
                 $obj->users = $obj->users ? $obj->users : 'Unknown';
                 $out[] = $obj;
             }
