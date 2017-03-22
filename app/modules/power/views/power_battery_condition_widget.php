@@ -1,37 +1,11 @@
-		<div class="col-lg-4 col-md-6">
-
-			<div class="panel panel-default">
-
-				<div class="panel-heading" data-container="body" data-i18n="[title]power.widget.tooltip">
-
-					<h3 class="panel-title"><i class="fa fa-flash"></i> <span data-i18n="power.widget.title"></span></h3>
-
-				</div>
-
-				<div class="list-group scroll-box">
-					<a id="power-now" href="<?=url('show/listing/power/batteries#Replace%20Now')?>" class="list-group-item list-group-item-danger hide">
-						<span class="badge">0</span>
-						<span data-i18n="power.widget.now"></span>
-					</a>
-					<a id="power-service" href="<?=url('show/listing/power/batteries#Service%20Battery')?>" class="list-group-item list-group-item-warning hide">
-						<span class="badge">0</span>
-						<span data-i18n="power.widget.service"></span>
-					</a>
-					<a id="power-soon" href="<?=url('show/listing/power/batteries#Replace%20Soon')?>" class="list-group-item list-group-item-warning hide">
-						<span class="badge">0</span>
-						<span data-i18n="power.widget.soon"></span>
-					</a>
-					<a id="power-normal" href="<?=url('show/listing/power/batteries#Normal')?>" class="list-group-item list-group-item-success hide">
-						<span class="badge">0</span>
-						<span data-i18n="power.widget.normal"></span>
-					</a>
-					<a id="power-missing" href="<?=url('show/listing/power/batteries#No%20Battery')?>" class="list-group-item list-group-item-danger hide">
-						<span class="badge">0</span>
-						<span data-i18n="power.widget.nobattery"></span>
-					</a>
-					<span id="power-nodata" data-i18n="no_clients" class="list-group-item"></span>
-				</div>
-
+<div class="col-lg-4 col-md-6">
+    <div class="panel panel-default" id="battery-condition-widget">
+        <div class="panel-heading" data-container="body" data-i18n="[title]power.widget.tooltip">
+            <h3 class="panel-title"><i class="fa fa-flash"></i> <span data-i18n="power.widget.title"></span></h3>
+        </div>
+		<div class="panel-body text-center"></div>
+    </div><!-- /panel -->
+</div><!-- /col -->
 <script>
 $(document).on('appReady appUpdate', function(e, lang) {
 
@@ -40,29 +14,31 @@ $(document).on('appReady appUpdate', function(e, lang) {
 		// Show no clients span
 		$('#power-nodata').removeClass('hide');
 
-		$.each(data, function(prop, val){
-			if(val > 0)
-			{
-				$('#power-' + prop).removeClass('hide');
-				$('#power-' + prop + '>.badge').html(val);
-
-				// Hide no clients span
-				$('#power-nodata').addClass('hide');
-			}
-			else
-			{
-				$('#power-' + prop).addClass('hide');
-			}
-		});
-	});
+		if(data.error){
+    		//alert(data.error);
+    		return;
+    	}
+		
+		var panel = $('#battery-condition-widget div.panel-body'),
+			baseUrl = appUrl + '/show/listing/power/batteries';
+		panel.empty();
+		
+		// Set statuses
+		if(data.now){
+			panel.append(' <a href="'+baseUrl+'#Replace%20Now" class="btn btn-danger"><span class="bigger-150">'+data.now+'</span><br>'+i18n.t('power.widget.now')+'</a>');
+		}
+		if(data.service){
+			panel.append(' <a href="'+baseUrl+'#Service%20Battery" class="btn btn-danger"><span class="bigger-150">'+data.service+'</span><br>'+i18n.t('power.widget.service')+'</a>');
+		}
+		if(data.soon){
+			panel.append(' <a href="'+baseUrl+'#Replace%20Soon" class="btn btn-warning"><span class="bigger-150">'+data.soon+'</span><br>'+i18n.t('power.widget.soon')+'</a>');
+		}
+		if(data.normal){
+			panel.append(' <a href="'+baseUrl+'#Normal" class="btn btn-success"><span class="bigger-150">'+data.normal+'</span><br>'+i18n.t('power.widget.normal')+'</a>');
+		}
+		if(data.missing){
+			panel.append(' <a href="'+baseUrl+'#No%20Battery" class="btn btn-info"><span class="bigger-150">'+data.missing+'</span><br>'+i18n.t('power.widget.nobattery')+'</a>');
+		}
+    });
 });
-
-
 </script>
-
-
-
-
-			</div><!-- /panel -->
-
-		</div><!-- /col -->

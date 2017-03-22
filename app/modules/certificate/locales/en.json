@@ -2,8 +2,8 @@
     "commonname": "Common Name",
     "expired": "Expired",
     "expires": "Expires",
-    "ok": "Valid for more than three months",
+    "ok": "3 Months +",
     "report_title": "Certificate Report",
-    "soon": "Expires within three months",
+    "soon": "< 3 Months",
     "title": "Certificates"
 }
