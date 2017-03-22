@@ -33,7 +33,7 @@ class Localadmin_model extends Model
         if(!empty(conf('local_admin_threshold'))) {
             $threshold=conf('local_admin_threshold');
             }
-        console.log(threshold);
+        echo '<script>console.log(threshold)</script>';
         $sql = "SELECT machine.serial_number, computer_name,
                     LENGTH(users) - LENGTH(REPLACE(users, ' ', '')) + 1 AS count,
                     users
