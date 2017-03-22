@@ -33,6 +33,7 @@ class Localadmin_model extends Model
         if(!empty(conf('local_admin_threshold'))) {
             $threshold=conf('local_admin_threshold');
             }
+        console.log(threshold);
         $sql = "SELECT machine.serial_number, computer_name,
                     LENGTH(users) - LENGTH(REPLACE(users, ' ', '')) + 1 AS count,
                     users
@@ -42,7 +43,7 @@ class Localadmin_model extends Model
                     ORDER BY count DESC";
         
         foreach ($this->query($sql) as $obj) {
-            if ("$obj->count" >= $obj->threshold) {
+            if ("$obj->count" >= "$obj->threshold") {
                 $obj->users = $obj->users ? $obj->users : 'Unknown';
                 $out[] = $obj;
             }
