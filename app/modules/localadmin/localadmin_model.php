@@ -30,7 +30,7 @@ class Localadmin_model extends Model
         $out = array();
         //Check if config threshold is set for number of admins to show
         $threshold='2';
-        if(!empty(conf('local_admin_threshold')) {
+        if(!empty(conf('local_admin_threshold'))) {
             $threshold=conf('local_admin_threshold');
             }
         $sql = "SELECT machine.serial_number, computer_name,
