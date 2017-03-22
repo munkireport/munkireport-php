@@ -174,10 +174,10 @@ class Modules
     public function getListing($module, $name)
     {
         if(isset($this->moduleList[$module]['listings'])){
-            foreach ($this->moduleList[$module]['listings'] as $listing) {
+            if( isset($this->moduleList[$module]['listings'][$name]['view'])) {
                 return (object) array(
                     'view_path' => $this->getPath($module, '/views/'),
-                    'view' => $listing['view'],
+                    'view' => $this->moduleList[$module]['listings'][$name]['view'],
                 );
             }
         }
