@@ -91,6 +91,16 @@
 	$conf['hide_inactive_modules'] = FALSE;
 
 	/*
+        |===============================================
+        | Local Admin Threshold Value
+        |===============================================
+        |
+	| This value specifies the minimum number of local admin accounts needed to 
+	|	list the computer in the Local Admin Report.  Default is 2.
+	*/
+	$conf['local_admin_threshold'] = 2;
+
+	/*
 	|===============================================
 	| Authentication
 	|===============================================

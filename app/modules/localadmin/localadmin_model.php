@@ -29,21 +29,20 @@ class Localadmin_model extends Model
      {
         $out = array();
         //Check if config threshold is set for number of admins to show
-        $threshold='2';
+        $threshold=2;
         if(!empty(conf('local_admin_threshold'))) {
             $threshold=conf('local_admin_threshold');
             }
-        echo '<script>console.log(threshold)</script>';
         $sql = "SELECT machine.serial_number, computer_name,
                     LENGTH(users) - LENGTH(REPLACE(users, ' ', '')) + 1 AS count,
                     users
                     FROM localadmin
                     LEFT JOIN machine USING (serial_number)
-                    WHERE localadmin.users LIKE '% %'  
+                    WHERE localadmin.users LIKE '%'  
                     ORDER BY count DESC";
         
         foreach ($this->query($sql) as $obj) {
-            if ("$obj->count" >= "$threshold") {
+            if ($obj->count >= $threshold) {
                 $obj->users = $obj->users ? $obj->users : 'Unknown';
                 $out[] = $obj;
             }
