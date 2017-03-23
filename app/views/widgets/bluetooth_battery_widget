@@ -1,0 +1,95 @@
+		<div class="col-lg-4 col-md-6">
+			
+			<div class="panel panel-default">
+				
+				<div class="panel-heading">
+					
+					<h3 class="panel-title"><i class="fa fa-tachometer"></i>Bluetooth Battery Levels</h3>
+					
+				</div>
+				
+				<div class="panel-body text-center">
+					
+					<?php
+						$machine = new Machine_model();
+						$in_green = 0;
+						$in_yellow = 0;
+						$in_red = 0;
+						$sql = "SELECT bluetooth_status,keyboard_battery,mouse_battery,trackpad_battery count(1) as count
+							FROM machine 
+							GROUP BY bluetooth_status
+							ORDER BY bluetooth_status DESC";
+							
+						foreach ($machine->query($sql) as $obj) {
+							
+							// with intval for the battery column should be robust enough for rows not converted yet to int
+							
+                            if ($obj->bluetooth_status == 'Bluetooth is on'){
+                                
+                                if !($obj->keyboard_battery == 'Disconnected'){
+                                    
+                                    if (intval(rtrim($obj->keyboard_battery),  "acbdefghijklmnopqrstuvwxyz% ")  >= 15 ){
+								
+                                        $in_green += $obj->count ;
+								
+                                    } elseif (intval(rtrim($obj->keyboard_battery),  "acbdefghijklmnopqrstuvwxyz% ") < 5 ) {
+								
+                                        $in_red += $obj->count ;
+								
+                                    } else {
+								
+                                        $in_yellow += $obj->count ;
+                                    }
+                                }
+                                if !($obj->mouse_battery == 'Disconnected'){
+                                    
+                                    if (intval(rtrim($obj->mouse_battery),  "acbdefghijklmnopqrstuvwxyz% ")  >= 15 ){
+                                        
+                                        $in_green += $obj->count ;
+                                        
+                                    } elseif (intval(rtrim($obj->mouse_battery),  "acbdefghijklmnopqrstuvwxyz% ") < 5 ) {
+                                        
+                                        $in_red += $obj->count ;
+                                        
+                                    } else {
+                                        
+                                        $in_yellow += $obj->count ;
+                                    }
+                                }
+                                if !($obj->trackpad_battery == 'Disconnected'){
+                                    
+                                    if (intval(rtrim($obj->trackpad_battery),  "acbdefghijklmnopqrstuvwxyz% ")  >= 15 ){
+                                        
+                                        $in_green += $obj->count ;
+                                        
+                                    } elseif (intval(rtrim($obj->trackpad_battery),  "acbdefghijklmnopqrstuvwxyz% ") < 5 ) {
+                                        
+                                        $in_red += $obj->count ;
+                                        
+                                    } else {
+                                        
+                                        $in_yellow += $obj->count ;
+                                    }
+                                }
+                            }
+						} // end foreach
+					?>
+					
+					<a href="<?=url('show/listing/bluetooth')?>" class="btn btn-success">
+						<span class="bigger-150"> <?=$in_green?> </span><br>
+             					15% +
+           				</a>
+           				<a href="<?=url('show/listing/bluetooth')?>" class="btn btn-warning">
+             					<span class="bigger-150"> <?=$in_yellow?> </span><br>
+             					5-14%
+           				</a>
+           				<a href="<?=url('show/listing/bluetooth')?>" class="btn btn-danger">
+             					<span class="bigger-150"> <?=$in_red?> </span><br>
+             					< 5%
+          				</a>
+					
+				</div>
+				
+			</div><!-- /panel -->
+			
+		</div><!-- /col -->
