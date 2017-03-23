@@ -16,10 +16,10 @@ $(document).on('appReady', function(){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
                     if(prop == 'type' && d[prop] == 1){
-					   rows = rows + '<tr><th>'+i18n.t('displays_info.'+prop)+'</th><td>'+i18n.t('displays_info.internal')+'</td></tr>';
+					   rows = rows + '<tr><th>'+i18n.t('displays_info.'+prop)+'</th><td>'+i18n.t('displays_info.external')+'</td></tr>';
                     }
 					else if(prop == 'type' && d[prop] == 0){
-					   rows = rows + '<tr><th>'+i18n.t('displays_info.'+prop)+'</th><td>'+i18n.t('displays_info.external')+'</td></tr>';
+					   rows = rows + '<tr><th>'+i18n.t('displays_info.'+prop)+'</th><td>'+i18n.t('displays_info.internal')+'</td></tr>';
                     }
                     else if(prop == 'vendor'){
 					   rows = rows + '<tr><th>'+i18n.t('displays_info.vendor')+'</th><td>'+(mr.display_vendors[d[prop]] || d[prop])+'</td></tr>';
