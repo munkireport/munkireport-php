@@ -185,7 +185,7 @@ new Power_model;
                      $('td:eq(10)', nRow).html('');
                 } else if(columnvar == "1") {
                      $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.second'));
-                } else if(columnvar == "0"0) {
+                } else if(columnvar == "0") {
                      $('td:eq(10)', nRow).html(i18n.t('power.never'));
                 } else{
                      $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.seconds'));
