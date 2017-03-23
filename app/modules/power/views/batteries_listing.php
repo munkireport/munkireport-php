@@ -38,12 +38,13 @@ new Power_model;
 				?>
 		        <th data-i18n="power.listing.manufactured" data-colname='power.manufacture_date'></th>
 		        <th data-i18n="power.wattage" data-colname='power.wattage'></th>
+		        <th data-i18n="model" data-colname='machine.machine_model'></th>
 		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="14" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="15" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -248,9 +249,9 @@ new Power_model;
                 }
 
 				// Format Check-In timestamp
-				var checkin = parseInt($('td:eq(13)', nRow).html());
+				var checkin = parseInt($('td:eq(14)', nRow).html());
 				var date = new Date(checkin * 1000);
-				$('td:eq(13)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
+				$('td:eq(14)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery
