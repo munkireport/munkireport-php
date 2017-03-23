@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="munki-widget">
+	<div class="panel panel-default" id="munki-widget" onclick="location.href=appUrl+'/show/listing/munkireport/munki/'">
 
 	  <div class="panel-heading">
 

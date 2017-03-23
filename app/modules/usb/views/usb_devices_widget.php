@@ -1,5 +1,5 @@
 	<div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="usb-devices-widget">
+	<div class="panel panel-default" id="usb-devices-widget" onclick="location.href=appUrl+'/show/listing/usb/usb/'">
 		<div class="panel-heading" data-container="body" >
 			<h3 class="panel-title"><i class="fa fa-usb"></i> <span data-i18n="usb.clienttab"></span></h3>
 		</div>

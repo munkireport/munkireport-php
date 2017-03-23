@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="bluetooth-battery-widget">
+	<div class="panel panel-default" id="bluetooth-battery-widget" onclick="location.href=appUrl+'/show/listing/bluetooth/bluetooth/'">
 		
 		<div class="panel-heading">
 

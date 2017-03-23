@@ -1,6 +1,6 @@
 		<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+			<div class="panel panel-default" onclick="location.href=appUrl+'/show/listing/security/security/'">
 
 				<div class="panel-heading">
 

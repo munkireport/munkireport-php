@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="smart-status-widget">
+	<div class="panel panel-default" id="smart-status-widget" onclick="location.href=appUrl+'/show/listing/smart_stats/smart_stats/'">
 
 		<div class="panel-heading" data-container="body">
 

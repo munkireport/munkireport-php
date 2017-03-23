@@ -1,5 +1,5 @@
 <div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="disk-type-widget">
+	<div class="panel panel-default" id="disk-type-widget" onclick="location.href=appUrl+'/show/listing/disk_report/disk/'">
 		<div class="panel-heading" data-container="body">
 			<h3 class="panel-title"><i class="fa fa-hdd-o"></i>  <span data-i18n="disk_report.type"></span></h3>
 		</div>

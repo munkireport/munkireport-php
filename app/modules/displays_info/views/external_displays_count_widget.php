@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="external-displays-count-widget">
+	<div class="panel panel-default" id="external-displays-count-widget" onclick="location.href=appUrl+'/show/listing/displays_info/displays/'">
 
 		<div class="panel-heading" data-container="body">
 

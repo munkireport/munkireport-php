@@ -1,6 +1,6 @@
 <div class="col-sm-6">
 
-	<div class="panel panel-default" id='hardware-age-widget'>
+	<div class="panel panel-default" id='hardware-age-widget' onclick="location.href=appUrl+'/show/listing/warranty/warranty/'">
 
 		<div class="panel-heading">
 

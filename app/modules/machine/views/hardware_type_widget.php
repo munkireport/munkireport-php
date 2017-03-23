@@ -1,6 +1,6 @@
 <div class="col-lg-6 col-md-6">
 
-	<div class="panel panel-default" id="hardware-type-widget">
+	<div class="panel panel-default" id="hardware-type-widget" onclick="location.href=appUrl+'/show/listing/machine/hardware/'">
 
 		<div class="panel-heading">
 

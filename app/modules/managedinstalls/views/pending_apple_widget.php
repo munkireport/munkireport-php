@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-    <div class="panel panel-default" id="pending-apple-widget">
+    <div class="panel panel-default" id="pending-apple-widget" onclick="location.href=appUrl+'/show/listing/munkireport/munki/'">
 
 		<div class="panel-heading" data-container="body" data-i18n="[title]managedinstalls.widget.pending_apple.tooltip">
 

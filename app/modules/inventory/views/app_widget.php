@@ -1,6 +1,6 @@
 <?php foreach(conf('apps_to_track', array()) as $string):?>
 <div class="col-lg-4 col-md-6">
-    <div class="panel panel-default app-widget" data-ident="<?php echo $string;?>">
+    <div class="panel panel-default app-widget" data-ident="<?php echo $string;?>" onclick="location.href=appUrl+'/show/listing/inventory/inventory/'">
         <div class="panel-heading" data-container="body">
             <h3 class="panel-title"><i class="fa fa-tachometer"></i> <span></span></h3>
         </div>

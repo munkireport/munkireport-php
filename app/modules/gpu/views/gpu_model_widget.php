@@ -1,5 +1,5 @@
 	<div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="gpu-models-widget">
+	<div class="panel panel-default" id="gpu-models-widget" onclick="location.href=appUrl+'/show/listing/gpu/gpu/'">
 		<div class="panel-heading" data-container="body" >
 			<h3 class="panel-title"><i class="fa fa-desktop"></i> <span data-i18n="gpu.widgettitle"></span></h3>
 		</div>

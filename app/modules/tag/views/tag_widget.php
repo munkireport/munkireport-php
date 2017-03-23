@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-<div class="panel panel-default" id="tag-widget">
+<div class="panel panel-default" id="tag-widget" onclick="location.href=appUrl+'/show/listing/tag/tag/'">
 
     <div class="panel-heading">
 

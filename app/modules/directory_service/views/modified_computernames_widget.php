@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="modified-computernames-widget">
+	<div class="panel panel-default" id="modified-computernames-widget" onclick="location.href=appUrl+'/show/listing/directory_service/directoryservice/'">
 
 		<div id="modified-computer-names" class="panel-heading" data-container="body" data-i18n="[title]directory_service.modified_computernames_tooltip">
 

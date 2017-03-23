@@ -1,5 +1,5 @@
 <div class="col-md-4">
-		<div class="panel panel-default"  id="appusage-widget">
+		<div class="panel panel-default"  id="appusage-widget" onclick="location.href=appUrl+'/show/listing/appusage/appusage/'">
             <div class="panel-heading" data-container="body" data-i18n="[title]appusage.tooltip">
                 <h3 class="panel-title"><i class="fa fa-rocket"></i> <span data-i18n="appusage.title"></span></h3>
             </div>

@@ -1,6 +1,6 @@
 		<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default">
+			<div class="panel panel-default" onclick="location.href=appUrl+'/show/listing/power/batteries/'">
 
 				<div class="panel-heading" data-container="body" data-i18n="[title]power.widget.tooltip">
 

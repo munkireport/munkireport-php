@@ -1,6 +1,6 @@
 		<div class="col-lg-12">
 
-			<div class="panel panel-default" id="network-vlan-widget">
+			<div class="panel panel-default" id="network-vlan-widget" onclick="location.href=appUrl+'/show/listing/network/network/'">
 
 				<div class="panel-heading">
 

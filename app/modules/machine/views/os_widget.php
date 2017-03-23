@@ -1,6 +1,6 @@
 <div class="col-md-6">
 
-	<div class="panel panel-default" id="os-widget">
+	<div class="panel panel-default" id="os-widget" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
 
 		<div class="panel-heading">
 

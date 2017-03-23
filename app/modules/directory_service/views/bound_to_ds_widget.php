@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="bound-to-ds-widget">
+	<div class="panel panel-default" id="bound-to-ds-widget" onclick="location.href=appUrl+'/show/listing/directory_service/directoryservice/'">
 
 	  <div class="panel-heading" data-container="body" data-i18n="[title]directory_service.info">
 

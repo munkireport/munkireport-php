@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="new-clients-widget">
+	<div class="panel panel-default" id="new-clients-widget" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
 
 		<div class="panel-heading" data-container="body" data-i18n="[title]machine.new_clients.tooltip">
 

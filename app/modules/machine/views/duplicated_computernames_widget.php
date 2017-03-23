@@ -1,6 +1,6 @@
 <div class="col-lg-4">
 
-	<div class="panel panel-default" id="duplicated-computernames-widget">
+	<div class="panel panel-default" id="duplicated-computernames-widget" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
 
 		<div class="panel-heading" data-container="body">
 
