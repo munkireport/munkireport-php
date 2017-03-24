@@ -371,6 +371,9 @@ class Power_model extends Model
         // Format manufacturer
         $this->manufacturer = str_replace('"', '', $this->manufacturer);
         
+        // Fix condition
+        $this->condition = str_replace((array('ServiceBattery','ReplaceSoon','ReplaceNow'),(array('Service Battery','Replace Soon','Replace Now'), $this->condition);
+        
         // Format batteryserialnumber
         $this->batteryserialnumber = str_replace('"', '', $this->batteryserialnumber);
         
