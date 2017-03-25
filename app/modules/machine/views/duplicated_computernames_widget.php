@@ -1,8 +1,8 @@
 <div class="col-lg-4">
 
-	<div class="panel panel-default" id="duplicated-computernames-widget" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
+	<div class="panel panel-default" id="duplicated-computernames-widget">
 
-		<div class="panel-heading" data-container="body">
+		<div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
 
 			<h3 class="panel-title"><i class="fa fa-bug"></i> <span data-i18n="machine.duplicate_computernames.title"></span></h3>
 

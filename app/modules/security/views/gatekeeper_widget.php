@@ -1,8 +1,8 @@
 		<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default" onclick="location.href=appUrl+'/show/listing/security/security/'">
+			<div class="panel panel-default">
 
-				<div class="panel-heading">
+				<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/security/security/'">
 
 					<h3 class="panel-title"><i class="fa fa-lock"></i> <span data-i18n="security.gatekeeper"></span></h3>
 

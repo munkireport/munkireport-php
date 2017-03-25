@@ -1,6 +1,6 @@
 	<div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="usb-types-widget" onclick="location.href=appUrl+'/show/listing/usb/usb/'">
-		<div class="panel-heading" data-container="body" >
+	<div class="panel panel-default" id="usb-types-widget">
+		<div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/usb/usb/'">
 			<h3 class="panel-title"><i class="fa fa-usb"></i> <span data-i18n="usb.usbtype"></span></h3>
 		</div>
 		<div class="list-group scroll-box"></div>

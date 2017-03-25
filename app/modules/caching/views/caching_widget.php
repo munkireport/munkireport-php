@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="caching-widget" onclick="location.href=appUrl+'/show/listing/caching/caching/'">
-		<div class="panel-heading" data-container="body" data-i18n="[title]caching.widget_tooltip">
+	<div class="panel panel-default" id="caching-widget">
+		<div class="panel-heading" data-container="body" data-i18n="[title]caching.widget_tooltip" onclick="location.href=appUrl+'/show/listing/caching/caching/'">
 			<h3 class="panel-title"><i class="fa fa-database"></i> <span data-i18n="caching.widget_title"></h3>
 		</div>
 		<div class="panel-body text-center"></div>

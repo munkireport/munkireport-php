@@ -1,6 +1,6 @@
 	<div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="network-shares-widget" onclick="location.href=appUrl+'/show/listing/network_shares/network_shares/'">
-		<div class="panel-heading" data-container="body" >
+	<div class="panel panel-default" id="network-shares-widget">
+		<div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/network_shares/network_shares/'">
 			<h3 class="panel-title"><i class="fa fa-folder-open"></i> <span data-i18n="network_shares.clienttab"></span></h3>
 		</div>
 		<div class="list-group scroll-box"></div>

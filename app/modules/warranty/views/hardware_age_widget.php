@@ -1,8 +1,8 @@
 <div class="col-sm-6">
 
-	<div class="panel panel-default" id='hardware-age-widget' onclick="location.href=appUrl+'/show/listing/warranty/warranty/'">
+	<div class="panel panel-default" id='hardware-age-widget'>
 
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/warranty/warranty/'">
 
 			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="warranty.age"></span></h3>
 

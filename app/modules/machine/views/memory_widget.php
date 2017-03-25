@@ -1,8 +1,8 @@
 <div class="col-md-6">
 
-	<div class="panel panel-default" id="memory-widget" onclick="location.href=appUrl+'/show/listing/machine/hardware/'">
+	<div class="panel panel-default" id="memory-widget">
 
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/machine/hardware/'">
 
 			<h3 class="panel-title"><i class="fa fa-lightbulb-o"></i> <span data-i18n="machine.memory.title"></span></h3>
 		

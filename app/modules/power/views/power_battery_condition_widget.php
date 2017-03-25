@@ -1,8 +1,8 @@
 		<div class="col-lg-4 col-md-6">
 
-			<div class="panel panel-default" onclick="location.href=appUrl+'/show/listing/power/batteries/'">
+			<div class="panel panel-default">
 
-				<div class="panel-heading" data-container="body" data-i18n="[title]power.widget.tooltip">
+				<div class="panel-heading" data-container="body" data-i18n="[title]power.widget.tooltip" onclick="location.href=appUrl+'/show/listing/power/batteries/'">
 
 					<h3 class="panel-title"><i class="fa fa-flash"></i> <span data-i18n="power.widget.title"></span></h3>
 

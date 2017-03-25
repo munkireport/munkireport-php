@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="findmymac-widget">
 
-		<div class="panel-heading" data-container="body" title="FindMyMac status">
+		<div class="panel-heading" data-container="body" title="FindMyMac status" onclick="location.href=appUrl+'/show/listing/findmymac/findmymac/'">
 
 	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> 
 					<span data-i18n="findmymac.widget.title"></span>

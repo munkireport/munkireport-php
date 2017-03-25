@@ -1,8 +1,8 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="munki-versions-widget" onclick="location.href=appUrl+'/show/listing/munkireport/munki/'">
+	<div class="panel panel-default" id="munki-versions-widget">
 
-		<div class="panel-heading" data-container="body" data-i18n="[title]munkireport.munki_versions.tooltip">
+		<div class="panel-heading" data-container="body" data-i18n="[title]munkireport.munki_versions.tooltip" onclick="location.href=appUrl+'/show/listing/munkireport/munki/'">
 
 	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> <span data-i18n="munkireport.munki_versions.title"></span></h3>
 

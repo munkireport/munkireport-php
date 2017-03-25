@@ -1,8 +1,8 @@
         <div class="col-lg-4 col-md-6">
 
-            <div class="panel panel-default" onclick="location.href=appUrl+'/show/listing/timemachine/timemachine/'">
+            <div class="panel panel-default">
 
-                <div class="panel-heading" data-container="body" title="">
+                <div class="panel-heading" data-container="body" title="" onclick="location.href=appUrl+'/show/listing/timemachine/timemachine/'">
 
                     <h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="timemachine.timemachine"></span></h3>
 

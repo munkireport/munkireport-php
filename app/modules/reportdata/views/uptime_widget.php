@@ -1,8 +1,8 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="uptime-widget" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
+	<div class="panel panel-default" id="uptime-widget">
 
-		<div class="panel-heading" data-container="body">
+		<div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
 
 			<h3 class="panel-title"><i class="fa fa-power-off"></i> <span data-i18n="machine.uptime.title"></span></h3>
 

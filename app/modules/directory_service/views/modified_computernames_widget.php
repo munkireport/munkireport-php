@@ -1,8 +1,8 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="modified-computernames-widget" onclick="location.href=appUrl+'/show/listing/directory_service/directoryservice/'">
+	<div class="panel panel-default" id="modified-computernames-widget">
 
-		<div id="modified-computer-names" class="panel-heading" data-container="body" data-i18n="[title]directory_service.modified_computernames_tooltip">
+		<div id="modified-computer-names" class="panel-heading" data-container="body" data-i18n="[title]directory_service.modified_computernames_tooltip" onclick="location.href=appUrl+'/show/listing/directory_service/directoryservice/'">
 
 			<div class="panel-title"><i class="fa fa-code-fork"></i> <span data-i18n="directory_service.modified_computernames_title"></span> <span class="counter badge pull-right"></span></div>
 

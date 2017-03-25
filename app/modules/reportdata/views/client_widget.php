@@ -1,8 +1,8 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="client-widget" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
+	<div class="panel panel-default" id="client-widget">
 
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
 
 			<h3 class="panel-title"><i class="fa fa-group"></i>
 				<span data-i18n="client.activity"></span>

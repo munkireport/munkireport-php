@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="warranty-support-gsx-widget" onclick="location.href=appUrl+'/show/listing/gsx/gsx/'">
-		<div class="panel-heading" data-container="body" data-i18n="[title]warranty.warrantysupport.tooltip">
+	<div class="panel panel-default" id="warranty-support-gsx-widget">
+		<div class="panel-heading" data-container="body" data-i18n="[title]warranty.warrantysupport.tooltip" onclick="location.href=appUrl+'/show/listing/gsx/gsx/'">
 			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="warranty.warrantysupport.warrentysupportstatus"></span></h3>
 		</div>
 

@@ -1,8 +1,8 @@
 <div class="col-lg-4 col-md-6">
 
-	<div class="panel panel-default" id="bound-to-ds-widget" onclick="location.href=appUrl+'/show/listing/directory_service/directoryservice/'">
+	<div class="panel panel-default" id="bound-to-ds-widget">
 
-	  <div class="panel-heading" data-container="body" data-i18n="[title]directory_service.info">
+	  <div class="panel-heading" data-container="body" data-i18n="[title]directory_service.info" onclick="location.href=appUrl+'/show/listing/directory_service/directoryservice/'">
 
 	    <h3 class="panel-title"><i class="fa fa-bullseye"></i> <span data-i18n="directory_service.bound_title"></span></h3>
 
