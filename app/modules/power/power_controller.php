@@ -76,10 +76,10 @@ class Power_controller extends Module_controller
 
         $queryobj = new Power_model();
         $sql = "SELECT COUNT(CASE WHEN `condition` = 'Normal' THEN 1 END) AS normal,
-						COUNT(CASE WHEN `condition` = 'Replace Soon' THEN 1 END) AS soon,
-						COUNT(CASE WHEN `condition` = 'Service Battery' THEN 1 END) AS service,
-						COUNT(CASE WHEN `condition` = 'Replace Now' THEN 1 END) AS now,
-						COUNT(CASE WHEN `condition` = 'No Battery' THEN 1 END) AS missing
+						COUNT(CASE WHEN `condition` = 'Replace Soon' OR `condition` = 'ReplaceSoon'  THEN 1 END) AS soon,
+						COUNT(CASE WHEN `condition` = 'Service Battery' OR `condition` = 'ServiceBattery'  THEN 1 END) AS service,
+						COUNT(CASE WHEN `condition` = 'Replace Now' OR `condition` = 'ReplaceNow' THEN 1 END) AS now,
+						COUNT(CASE WHEN `condition` = 'No Battery' OR `condition` = 'NoBattery' THEN 1 END) AS missing
 			 			FROM power
 			 			LEFT JOIN reportdata USING (serial_number)
 			 			".get_machine_group_filter();
