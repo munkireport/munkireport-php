@@ -84,9 +84,7 @@ class Modules
     public function getModuleMigrationPath($moduleName, &$migrationPath)
     {
         foreach ($this->moduleSearchPaths as $type => $path) {
-            echo $path . $moduleName . '/migrations';
             if (is_dir($path . $moduleName . '/migrations')) {
-                echo $path . $moduleName . '/migrations';
                 $migrationPath = $path . $moduleName . '/migrations';
                 return True;
             }
