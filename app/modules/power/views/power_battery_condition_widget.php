@@ -4,7 +4,10 @@
 
 				<div class="panel-heading" data-container="body" data-i18n="[title]power.widget.tooltip">
 
-					<h3 class="panel-title"><i class="fa fa-flash"></i> <span data-i18n="power.widget.title"></span></h3>
+					<h3 class="panel-title"><i class="fa fa-flash"></i>
+					    <span data-i18n="power.widget.title"></span>
+                        <list-link data-url="/show/listing/power/batteries"></list-link>
+					</h3>
 
 				</div>
 

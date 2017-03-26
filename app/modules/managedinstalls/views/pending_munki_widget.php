@@ -4,7 +4,10 @@
 
 		<div class="panel-heading" data-container="body" data-i18n="[title]managedinstalls.widget.pending_munki.tooltip">
 
-			<h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <span data-i18n="managedinstalls.widget.pending_munki.title"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-shopping-cart"></i>
+			    <span data-i18n="managedinstalls.widget.pending_munki.title"></span>
+                <list-link data-url="/module/managedinstalls/listing/#pending_install"></list-link>
+			</h3>
 
 		</div>
 

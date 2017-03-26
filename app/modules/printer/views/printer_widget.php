@@ -1,7 +1,10 @@
 <div class="col-md-6">
 		<div class="panel panel-default"  id="printers-widget">
             <div class="panel-heading" data-container="body">
-                <h3 class="panel-title"><i class="fa fa-print"></i> <span data-i18n="printer.printers"></span></h3>
+                <h3 class="panel-title"><i class="fa fa-print"></i>
+                    <span data-i18n="printer.printers"></span>
+                    <list-link data-url="/show/listing/printer/printers"></list-link>
+                </h3>
             </div>
     <div class="list-group scroll-box"></div>
 	</div><!-- /panel -->

@@ -1,7 +1,10 @@
 	<div class="col-lg-4 col-md-6">
 	<div class="panel panel-default" id="gpu-models-widget">
 		<div class="panel-heading" data-container="body" >
-			<h3 class="panel-title"><i class="fa fa-desktop"></i> <span data-i18n="gpu.widgettitle"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-desktop"></i>
+			    <span data-i18n="gpu.widgettitle"></span>
+				<list-link data-url="/show/listing/gpu/gpu"></list-link>
+			</h3>
 		</div>
 		<div class="list-group scroll-box"></div>
 	</div><!-- /panel -->

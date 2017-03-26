@@ -4,7 +4,10 @@
 
     <div class="panel-heading">
 
-        <h3 class="panel-title"><i class="fa fa-laptop"></i> <span data-i18n="machine.base_model_widget_title"></span></h3>
+        <h3 class="panel-title"><i class="fa fa-laptop"></i>
+            <span data-i18n="machine.base_model_widget_title"></span>
+			<list-link data-url="/show/listing/machine/hardware"></list-link>
+        </h3>
 
     </div>
 
