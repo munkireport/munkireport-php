@@ -4,7 +4,10 @@
 
     <div class="panel-heading">
 
-        <h3 class="panel-title"><i class="fa fa-tags"></i> <span data-i18n="tag.widget_title"></span></h3>
+        <h3 class="panel-title"><i class="fa fa-tags"></i>
+            <span data-i18n="tag.widget_title"></span>
+            <list-link data-url="/module/tag/listing"></list-link>
+        </h3>
     
     </div>
 

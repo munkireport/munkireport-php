@@ -21,7 +21,7 @@ $(document).on('appReady', function(e, lang) {
 
     // Add list link
     $('list-link').each(function( index ){
-        var url = appUrl + '/show/listing/' + $(this).data('url');
+        var url = appUrl + $(this).data('url');
         $(this).after('<a href="'+url+'" class="btn btn-xs pull-right"><i class="fa fa-list"></i></a>');
         $(this).remove();
     });

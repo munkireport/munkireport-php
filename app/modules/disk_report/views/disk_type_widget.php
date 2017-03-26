@@ -1,7 +1,10 @@
 <div class="col-lg-4 col-md-6">
 	<div class="panel panel-default" id="disk-type-widget">
 		<div class="panel-heading" data-container="body">
-			<h3 class="panel-title"><i class="fa fa-hdd-o"></i>  <span data-i18n="disk_report.type"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-hdd-o"></i>
+			    <span data-i18n="disk_report.type"></span>
+			    <list-link data-url="/show/listing/disk_report/disk_report"></list-link>
+			</h3>
 		</div>
 		<div class="panel-body text-center"></div>
 	</div><!-- /panel -->

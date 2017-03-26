@@ -4,7 +4,10 @@
 
 		<div class="panel-heading" data-container="body">
 
-			<h3 class="panel-title"><i class="fa fa-power-off"></i> <span data-i18n="machine.uptime.title"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-power-off"></i>
+			    <span data-i18n="machine.uptime.title"></span>
+			    <list-link data-url="/show/listing/reportdata/clients"></list-link>
+			</h3>
 
 		</div>
 
