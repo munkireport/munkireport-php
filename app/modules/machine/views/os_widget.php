@@ -6,7 +6,7 @@
 
 			<h3 class="panel-title"><i class="fa fa-apple"></i>
 			    <span data-i18n="machine.os.title"></span>
-                <list-link data-url="/show/listing/reportdata/clients"></list-link>
+			    <list-link data-url="/show/listing/reportdata/clients"></list-link>
 			</h3>
 
 		</div>

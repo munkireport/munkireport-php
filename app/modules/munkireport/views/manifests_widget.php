@@ -6,7 +6,7 @@
 
 			<h3 class="panel-title"><i class="fa fa-book"></i>
 			    <span data-i18n="munkireport.manifest.title"></span>
-    			<list-link data-url="/show/listing/munkireport/munki"></list-link>
+			    <list-link data-url="/show/listing/munkireport/munki"></list-link>
 			</h3>
 
 		</div>

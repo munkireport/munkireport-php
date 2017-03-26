@@ -6,7 +6,7 @@
 
 	    <h3 class="panel-title"><i class="fa fa-bullseye"></i>
 	        <span data-i18n="directory_service.bound_title"></span>
-			<list-link data-url="/show/listing/directory_service/directoryservice"></list-link>
+	        <list-link data-url="/show/listing/directory_service/directoryservice"></list-link>
 	    </h3>
 
 	  </div>

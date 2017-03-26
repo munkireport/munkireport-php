@@ -3,7 +3,7 @@
 		<div class="panel-heading" data-container="body" >
 			<h3 class="panel-title"><i class="fa fa-folder-open"></i>
 			    <span data-i18n="network_shares.clienttab"></span>
-                <list-link data-url="/show/listing/network_shares/network_shares"></list-link>
+			    <list-link data-url="/show/listing/network_shares/network_shares"></list-link>
 			</h3>
 		</div>
 		<div class="list-group scroll-box"></div>

@@ -6,7 +6,7 @@
 
 					<h3 class="panel-title"><i class="fa fa-hdd-o"></i>
 					    <span data-i18n="free_disk_space"></span>
-	        			<list-link data-url="/show/listing/disk_report/disk"></list-link>
+					    <list-link data-url="/show/listing/disk_report/disk"></list-link>
 					</h3>
 
 				</div>

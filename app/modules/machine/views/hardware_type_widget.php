@@ -6,7 +6,7 @@
 
 			<h3 class="panel-title"><i class="fa fa-desktop"></i>
 			    <span data-i18n="machine.hardware_type_title"></span>
-    			<list-link data-url="/show/listing/machine/hardware"></list-link>
+			    <list-link data-url="/show/listing/machine/hardware"></list-link>
 			</h3>
 
 		</div>

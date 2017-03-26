@@ -3,7 +3,7 @@
 		<div class="panel-heading" data-container="body" >
 			<h3 class="panel-title"><i class="fa fa-wifi"></i>
 			    <span data-i18n="wifi.networks"></span>
-                <list-link data-url="/show/listing/wifi/wifi"></list-link>
+			    <list-link data-url="/show/listing/wifi/wifi"></list-link>
 			</h3>
 		</div>
 		<div class="list-group scroll-box"></div>

@@ -6,7 +6,7 @@
 
 					<h3 class="panel-title"><i class="fa fa-flash"></i>
 					    <span data-i18n="power.widget.title"></span>
-                        <list-link data-url="/show/listing/power/batteries"></list-link>
+					    <list-link data-url="/show/listing/power/batteries"></list-link>
 					</h3>
 
 				</div>

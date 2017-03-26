@@ -3,7 +3,7 @@
 		<div class="panel-heading" data-container="body" data-i18n="[title]warranty.warrantysupport.tooltip">
 			<h3 class="panel-title"><i class="fa fa-umbrella"></i>
 			    <span data-i18n="warranty.warrantysupport.warrentysupportstatus"></span>
-                <list-link data-url="/show/listing/gsx/gsx"></list-link>
+			    <list-link data-url="/show/listing/gsx/gsx"></list-link>
 			</h3>
 		</div>
 

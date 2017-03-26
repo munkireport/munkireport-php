@@ -6,7 +6,7 @@
 
 	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i>
 	    	    <span data-i18n="munkireport.munki_versions.title"></span>
-    			<list-link data-url="/show/listing/munkireport/munki"></list-link>
+	    	    <list-link data-url="/show/listing/munkireport/munki"></list-link>
 	    	</h3>
 
 		</div>

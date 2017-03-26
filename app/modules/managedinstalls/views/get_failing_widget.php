@@ -3,7 +3,7 @@
         <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-moon"></i>
                 <span data-i18n="managedinstalls.failing_clients"></span>
-				<list-link data-url="/show/listing/reportdata/clients"></list-link>
+                <list-link data-url="/show/listing/reportdata/clients"></list-link>
             </h3>
         </div>
         <div class="list-group scroll-box"></div>

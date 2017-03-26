@@ -3,7 +3,7 @@
 		<div class="panel-heading" data-container="body" >
 			<h3 class="panel-title"><i class="fa fa-desktop"></i>
 			    <span data-i18n="gpu.widgettitle"></span>
-				<list-link data-url="/show/listing/gpu/gpu"></list-link>
+			    <list-link data-url="/show/listing/gpu/gpu"></list-link>
 			</h3>
 		</div>
 		<div class="list-group scroll-box"></div>

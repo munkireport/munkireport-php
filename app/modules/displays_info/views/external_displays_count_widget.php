@@ -6,7 +6,7 @@
 
 			<h3 class="panel-title"><i class="fa fa-expand"></i>
 			    <span data-i18n="displays_info.widget_title"></span>
-				<list-link data-url="/show/listing/displays_info/displays"></list-link>
+			    <list-link data-url="/show/listing/displays_info/displays"></list-link>
 			</h3>
 
 		</div>

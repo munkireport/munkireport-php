@@ -6,7 +6,7 @@
 
 			<h3 class="panel-title"><i class="fa fa-umbrella"></i>
 			    <span data-i18n="warranty.widget_title"></span>
-			<list-link data-url="/show/listing/warranty/warranty"></list-link>
+			    <list-link data-url="/show/listing/warranty/warranty"></list-link>
 			</h3>
 
 		</div>

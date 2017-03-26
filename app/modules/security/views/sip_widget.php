@@ -6,7 +6,7 @@
 
 					<h3 class="panel-title"><i class="fa fa-lock"></i>
 					    <span data-i18n="security.sip_status"></span>
-        			    <list-link data-url="/show/listing/security/security"></list-link>
+					    <list-link data-url="/show/listing/security/security"></list-link>
 					</h3>
 
 				</div>
