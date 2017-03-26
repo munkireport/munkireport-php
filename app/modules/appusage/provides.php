@@ -8,6 +8,6 @@ return array(
         'appusage' => array('view' => 'appusage_listing', 'i18n' => 'appusage.title'),
     ),
     'widgets' => array(
-        array('view' => 'appusage_widget'),
+        'appusage' => array('view' => 'appusage_widget'),
     ),
 );
