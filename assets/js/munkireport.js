@@ -19,6 +19,13 @@ $(document).on('appReady', function(e, lang) {
         url: appUrl + '/system/show/status'
     });
 
+    // Add list link
+    $('list-link').each(function( index ){
+        var url = appUrl + '/show/listing/' + $(this).data('url');
+        $('list-link').after('<a href="'+url+'" class="btn btn-xs pull-right"><i class="fa fa-list"></i></a>');
+        $('list-link').remove();
+    });
+
 });
 
 
