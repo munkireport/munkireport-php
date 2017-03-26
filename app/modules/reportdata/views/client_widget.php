@@ -6,12 +6,13 @@
 
 			<h3 class="panel-title"><i class="fa fa-group"></i>
 				<span data-i18n="client.activity"></span>
+				<list-link data-url="reportdata/clients"></list-link>
 			</h3>
-		
+
 		</div>
 
 		<div class="panel-body">
-			
+
 			<svg id="test1" class="center-block" style="width:258px; height: 258px"></svg>
 			<div class="text-muted text-center">
 				<span data-i18n="client.total"></span>: <span class="total-clients"></span> <span class="total-change"></span>
@@ -20,9 +21,9 @@
 			</div>
 
 		</div>
-	
+
 	</div>
-	
+
 </div>
 
 <script>
@@ -33,10 +34,10 @@ $(document).on('appReady', function() {
 	$('#client-widget>div.panel-heading')
 		.attr('title', i18n.t('client.panel_title'))
 		.tooltip();
-	
+
 	var active = i18n.t('active'),
 		inactive = i18n.t('inactive');
-	
+
 	var testdata1 = [
 		{ key: active, y: 0 },
 		{ key: inactive, y: 100 }
@@ -55,18 +56,18 @@ $(document).on('appReady', function() {
 			.y(function (d) { return d.y })
 			.donut(true)
 			.showLabels(false);
-		
+
 		chart.title(" ");
 		chart.legend.updateState(false);
-		
+
 		d3.select("#client-widget svg")
 			.datum(testdata1)
 			.call(chart);
-		
+
 		drawGraph();
 
 	});
-	
+
 	// Get data and update graph
 	var drawGraph = function(){
 		var url = appUrl + '/module/reportdata/get_lastseen_stats';
@@ -77,10 +78,10 @@ $(document).on('appReady', function() {
 
 			d3.select('#test1').datum(testdata1).transition().duration(500).call(chart);
 			chart.update();
-			
+
 			var total = +$('#client-widget span.total-clients').text(),
 				lasthour = +$('#client-widget span.hour-clients').text();
-			
+
 			// Set count for total and hour
 			$('#client-widget span.total-clients').text(data.total);
 			$('#client-widget span.hour-clients').text(data.lasthour);
@@ -103,17 +104,14 @@ $(document).on('appReady', function() {
 				$('#client-widget span.lasthour-change').addClass('fa fa-caret-down text-danger');
 			}
 
-			
+
 		});
 
 	};
-	
-	
+
+
 	// update chart data
 	$(document).on('appUpdate', function(){drawGraph()});
-		
+
 });
 </script>
-
-
-
