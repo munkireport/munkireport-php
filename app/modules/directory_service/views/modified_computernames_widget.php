@@ -6,7 +6,7 @@
 
 			<div class="panel-title"><i class="fa fa-code-fork"></i>
 			    <span data-i18n="directory_service.modified_computernames_title"></span> 
-			    <span class="counter badge pull-right"></span>
+			    <span class="counter badge"></span>
 			    <list-link data-url="/show/listing/reportdata/clients"></list-link>
 			</div>
 

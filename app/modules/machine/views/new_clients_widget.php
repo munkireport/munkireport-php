@@ -6,8 +6,8 @@
 
 			<div class="panel-title"><i class="fa fa-star-o"></i>
 			    <span data-i18n="machine.new_clients.title"></span>
-			    <span class="counter badge pull-right"></span>
-			    <list-link data-url="/show/listing/reportdata/clients"></list-link>
+			    <span class="counter badge"></span>
+                            <list-link data-url="/show/listing/reportdata/clients"></list-link>
 			</div>
 
 		</div>
