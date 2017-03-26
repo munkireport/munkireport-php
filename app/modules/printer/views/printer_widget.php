@@ -1,6 +1,6 @@
 <div class="col-md-6">
 		<div class="panel panel-default"  id="printers-widget">
-            <div class="panel-heading" data-container="body">
+            <div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/printer/printers/'">
                 <h3 class="panel-title"><i class="fa fa-print"></i> <span data-i18n="printer.printers"></span></h3>
             </div>
     <div class="list-group scroll-box"></div>

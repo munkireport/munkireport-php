@@ -2,7 +2,7 @@
 
 <div class="panel panel-default" id="tag-widget">
 
-    <div class="panel-heading">
+    <div class="panel-heading" onclick="location.href=appUrl+'/show/listing/tag/tag/'">
 
         <h3 class="panel-title"><i class="fa fa-tags"></i> <span data-i18n="tag.widget_title"></span></h3>
     

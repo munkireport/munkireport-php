@@ -2,7 +2,7 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading">
+				<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/network/network/'">
 
 					<h3 class="panel-title"><i class="fa fa-globe"></i> <span data-i18n="network.widget.network_location"></span></h3>
 

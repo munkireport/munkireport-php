@@ -1,6 +1,6 @@
 	<div class="col-lg-4 col-md-6">
 	<div class="panel panel-default" id="gpu-models-widget">
-		<div class="panel-heading" data-container="body" >
+		<div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/gpu/gpu/'">
 			<h3 class="panel-title"><i class="fa fa-desktop"></i> <span data-i18n="gpu.widgettitle"></span></h3>
 		</div>
 		<div class="list-group scroll-box"></div>

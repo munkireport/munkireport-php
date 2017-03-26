@@ -2,7 +2,7 @@
 	
 	<div class="panel panel-default" id="installed-memory-widget">
 		
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/machine/hardware/'">
 			
 			<h3 class="panel-title"><i class="fa fa-tasks"></i> <span data-i18n="warranty.installed_memory_title"></span></h3>
 			

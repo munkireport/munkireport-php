@@ -1,6 +1,6 @@
 	<div class="col-lg-4 col-md-6">
 	<div class="panel panel-default" id="wifi-networks-widget">
-		<div class="panel-heading" data-container="body" >
+		<div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/wifi/wifi/'">
 			<h3 class="panel-title"><i class="fa fa-wifi"></i> <span data-i18n="wifi.networks"></span></h3>
 		</div>
 		<div class="list-group scroll-box"></div>

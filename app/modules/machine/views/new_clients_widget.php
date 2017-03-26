@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="new-clients-widget">
 
-		<div class="panel-heading" data-container="body" data-i18n="[title]machine.new_clients.tooltip">
+		<div class="panel-heading" data-container="body" data-i18n="[title]machine.new_clients.tooltip" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
 
 			<div class="panel-title"><i class="fa fa-star-o"></i> <span data-i18n="machine.new_clients.title"></span> <span class="counter badge pull-right"></span></div>
 

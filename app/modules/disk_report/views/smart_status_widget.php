@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="smart-status-widget">
 
-		<div class="panel-heading" data-container="body">
+		<div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/smart_stats/smart_stats/'">
 
 			<h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> <span data-i18n="disk_report.smartstatus"></span></h3>
 

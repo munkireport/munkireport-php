@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="power-battery-health-widget">
 
-		<div class="panel-heading" data-container="body" data-i18n="[title]power.widget.health.tooltip">
+		<div class="panel-heading" data-container="body" data-i18n="[title]power.widget.health.tooltip" onclick="location.href=appUrl+'/show/listing/power/batteries/'">
 
 			<h3 class="panel-title"><i class="fa fa-medkit"></i> <span data-i18n="power.widget.health.title"></span> %</h3>
 

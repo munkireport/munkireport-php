@@ -1,4 +1,5 @@
 /* Remove tick lines in multiBarHorizontalChart */
+
 g.nv-multiBarHorizontalChart .nv-x.nv-axis line {
     stroke: none;
     fill: none;
@@ -11,6 +12,10 @@ svg.clickLabels .nv-bar{
 /* Panel title */
 .panel-title{
     line-height: 1.1;
+}
+
+.panel-heading:hover{
+    filter: invert(15%)
 }
 
 body {

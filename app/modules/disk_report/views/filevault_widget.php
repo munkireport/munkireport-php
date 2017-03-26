@@ -2,7 +2,7 @@
 
 	<div id="filevault-status-widget" class="panel panel-default">
 
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/security/security/'">
 
 			<h3 class="panel-title"><i class="fa fa-lock"></i> <span data-i18n="disk_report.filevault_widget_title"></span></h3>
 

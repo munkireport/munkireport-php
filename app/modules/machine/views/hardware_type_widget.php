@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="hardware-type-widget">
 
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/machine/hardware/'">
 
 			<h3 class="panel-title"><i class="fa fa-desktop"></i> <span data-i18n="machine.hardware_type_title"></span></h3>
 

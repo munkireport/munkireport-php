@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="manifests-widget">
 
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/munkireport/munki/'">
 
 			<h3 class="panel-title"><i class="fa fa-book"></i> <span data-i18n="munkireport.manifest.title"></span></h3>
 

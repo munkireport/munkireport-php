@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="external-displays-count-widget">
 
-		<div class="panel-heading" data-container="body">
+		<div class="panel-heading" data-container="body" onclick="location.href=appUrl+'/show/listing/displays_info/displays/'">
 
 			<h3 class="panel-title"><i class="fa fa-expand"></i> <span data-i18n="displays_info.widget_title"></span></h3>
 

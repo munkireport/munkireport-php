@@ -1,6 +1,6 @@
 <div class="col-md-4">
 		<div class="panel panel-default"  id="appusage-widget">
-            <div class="panel-heading" data-container="body" data-i18n="[title]appusage.tooltip">
+            <div class="panel-heading" data-container="body" data-i18n="[title]appusage.tooltip" onclick="location.href=appUrl+'/show/listing/appusage/appusage/'">
                 <h3 class="panel-title"><i class="fa fa-rocket"></i> <span data-i18n="appusage.title"></span></h3>
             </div>
     <div class="list-group scroll-box"></div>

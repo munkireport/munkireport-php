@@ -2,9 +2,9 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading">
+				<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/disk_report/disk/'">
 
-					<h3 class="panel-title"><i class="fa fa-hdd-o"></i> <span data-i18n="free_disk_space"></span></h3>
+                    <h3 class="panel-title"><i class="fa fa-hdd-o" onmouseover=<i class="fa fa-hotel fa-inverse"></i></i> <span data-i18n="free_disk_space"></span></h3>
 
 				</div>
 

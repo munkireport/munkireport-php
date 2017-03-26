@@ -2,7 +2,7 @@
 
             <div class="panel panel-default">
 
-                <div class="panel-heading" data-container="body" title="">
+                <div class="panel-heading" data-container="body" title="" onclick="location.href=appUrl+'/show/listing/certificate/certificate/'">
 
                     <h3 class="panel-title"><i class="fa fa-certificate"></i> <span data-i18n="certificate.title"></span></h3>
 

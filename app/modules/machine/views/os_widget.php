@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="os-widget">
 
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/reportdata/clients/'">
 
 			<h3 class="panel-title"><i class="fa fa-apple"></i> <span data-i18n="machine.os.title"></span></h3>
 

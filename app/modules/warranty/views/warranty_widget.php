@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="warranty-widget">
 
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/warranty/warranty/'">
 
 			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="warranty.status"></span></h3>
 

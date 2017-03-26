@@ -2,7 +2,7 @@
 
 	<div class="panel panel-default" id="pending-munki-widget">
 
-		<div class="panel-heading" data-container="body" data-i18n="[title]managedinstalls.widget.pending_munki.tooltip">
+		<div class="panel-heading" data-container="body" data-i18n="[title]managedinstalls.widget.pending_munki.tooltip" onclick="location.href=appUrl+'/show/listing/munkireport/munki/'">
 
 			<h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <span data-i18n="managedinstalls.widget.pending_munki.title"></span></h3>
 

@@ -2,7 +2,7 @@
 
 			<div class="panel panel-default">
 
-				<div class="panel-heading">
+				<div class="panel-heading" onclick="location.href=appUrl+'/show/listing/firmware_escrow/firmware/'">
 
 					<h3 class="panel-title"><i class="fa fa-lock"></i> <span data-i18n="security.firmwarepw"></span></h3>
 
