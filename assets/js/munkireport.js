@@ -22,8 +22,8 @@ $(document).on('appReady', function(e, lang) {
     // Add list link
     $('list-link').each(function( index ){
         var url = appUrl + '/show/listing/' + $(this).data('url');
-        $('list-link').after('<a href="'+url+'" class="btn btn-xs pull-right"><i class="fa fa-list"></i></a>');
-        $('list-link').remove();
+        $(this).after('<a href="'+url+'" class="btn btn-xs pull-right"><i class="fa fa-list"></i></a>');
+        $(this).remove();
     });
 
 });
