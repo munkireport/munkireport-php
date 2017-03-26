@@ -5,11 +5,11 @@ return array(
         'managed_installs' => array('view' => 'managed_installs_listing', 'i18n' => 'managedinstalls.title'),
     ),
     'widgets' => array(
-        array('view' => 'get_failing_widget'),
-        array('view' => 'pending_apple_widget'),
-        array('view' => 'pending_munki_widget'),
-        array('view' => 'pending_widget'),
-        array('view' => 'appusage_widget'),
+        'get_failing' => array('view' => 'get_failing_widget'),
+        'pending_apple' => array('view' => 'pending_apple_widget'),
+        'pending_munki' => array('view' => 'pending_munki_widget'),
+        'pending' => array('view' => 'pending_widget'),
+        'appusage' => array('view' => 'appusage_widget'),
 
     ),
     'reports' => array(

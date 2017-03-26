@@ -2,6 +2,6 @@
 
 return array(
     'widgets' => array(
-        array('view' => 'messages_widget'),
+        'messages' => array('view' => 'messages_widget'),
     ),
 );
