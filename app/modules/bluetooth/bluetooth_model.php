@@ -79,11 +79,25 @@ class Bluetooth_model extends Model
         }
         
         foreach ($mylist as $key => $value) {
-            $this->device_type = str_replace(' ', '_', strtolower($key));
-            $this->battery_percent = $value;
+            if ( $key != "bluetooth_power" ) {
+                $this->device_type = str_replace(' ', '_', strtolower($key));
+                $this->battery_percent = $value;
 
-            $this->id = '';
-            $this->save();
+                $this->id = '';
+                $this->save();
+            } else if ( $key == "bluetooth_power" && $value == true ) {
+                $this->device_type = "bluetooth_power";
+                $this->battery_percent = 1;
+
+                $this->id = '';
+                $this->save();
+            } else {
+                $this->device_type = "bluetooth_power";
+                $this->battery_percent = 0;
+
+                $this->id = '';
+                $this->save();
+            }
         }
     }
 }
