@@ -59,7 +59,6 @@ class Timemachine_model extends Model
         $this->idx[] = array('consistency_scan_date');
         $this->idx[] = array('date_of_latest_warning');
         $this->idx[] = array('destination_id');
-        $this->idx[] = array('destination_uuids');
         $this->idx[] = array('last_known_encryption_state');
         $this->idx[] = array('result');
         $this->idx[] = array('root_volume_uuid');
