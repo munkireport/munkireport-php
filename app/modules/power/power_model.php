@@ -346,7 +346,7 @@ class Power_model extends Model
         $this->active_profile = str_replace("'", "", $this->active_profile);
         
         // Format cell voltages
-        if ($this->cellvoltage != '-9876543') {
+        if ($this->cellvoltage != '-9876543' && ! empty($this->cellvoltage)) {
             $this->cellvoltage = str_replace(array('(',')'), array('',''), $this->cellvoltage);
             $cellvoltagearray = explode(',', $this->cellvoltage);
             $cellvoltageout = array();
