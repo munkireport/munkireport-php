@@ -359,12 +359,12 @@ class Power_model extends Model
         }
         
         // Format voltage
-        if ($this->voltage !== '-9876543') {
+        if ($this->voltage !== '-9876543' && ! empty($this->cellvoltage)) {
              $this->voltage = ($this->voltage / 1000);
         }
         
         // Format amperage 
-        if ($this->amperage !== '-9876543') {
+        if ($this->amperage !== '-9876543' && ! empty($this->cellvoltage)) {
              $this->amperage = ($this->amperage / 1000);
         }
         
