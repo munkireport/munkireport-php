@@ -20,10 +20,10 @@ class Bluetooth_model extends Model
 
         // Create table if it does not exist
         $this->create_table();
-        
+
         $this->$serial = $serial;
     }
-    
+
     /**
      * Get devices with low battery
      *
@@ -40,14 +40,14 @@ class Bluetooth_model extends Model
 						LEFT JOIN machine USING (serial_number)
 						WHERE (`battery_percent` <= '15') AND  (`device_type` != 'bluetooth_power')
 						".get_machine_group_filter('AND');
-                        
+
         foreach ($this->query($sql) as $obj) {
             $out[] = $obj;
         }
-        
+
         return $out;
     }
-    
+
     // ------------------------------------------------------------------------
 
     /**
@@ -64,7 +64,7 @@ class Bluetooth_model extends Model
 
         // Delete previous set
         $this->deleteWhere('serial_number=?', $this->serial_number);
-        
+
         // Check for old-style reports
         if (strpos($plist, '<?xml') === false) {
         // Load legacy support
@@ -77,27 +77,19 @@ class Bluetooth_model extends Model
             $parser->parse($plist, CFPropertyList::FORMAT_XML);
             $mylist = $parser->toArray();
         }
-        
+
         foreach ($mylist as $key => $value) {
-            if ( $key != "bluetooth_power" ) {
-                $this->device_type = str_replace(' ', '_', strtolower($key));
-                $this->battery_percent = $value;
 
-                $this->id = '';
-                $this->save();
-            } else if ( $key == "bluetooth_power" && $value == true ) {
-                $this->device_type = "bluetooth_power";
-                $this->battery_percent = 1;
+            $this->device_type = str_replace(' ', '_', strtolower($key));
 
-                $this->id = '';
-                $this->save();
+            if($this->device_type == "bluetooth_power"){
+                $this->battery_percent = $value == true ? 1 : 0;
             } else {
-                $this->device_type = "bluetooth_power";
-                $this->battery_percent = 0;
-
-                $this->id = '';
-                $this->save();
+                $this->battery_percent = $value;
             }
+
+            $this->id = '';
+            $this->save();
         }
     }
 }
