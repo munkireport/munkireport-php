@@ -21,7 +21,7 @@ $(document).on('appUpdate', function(e, lang) {
     	}
 		
 		var panel = $('#disk-type-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/disk_report/disk_report';
+			baseUrl = appUrl + '/show/listing/disk_report/disk';
 		panel.empty();
 		
 		// Set types

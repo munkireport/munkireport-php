@@ -1,7 +1,7 @@
 <div class="col-lg-4 col-md-6">
     <div class="panel panel-default" id="pending-widget">
         <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-moon"></i>
+            <h3 class="panel-title"><i class="fa fa-moon-o"></i>
                 <span data-i18n="managedinstalls.widget.pending.title"></span>
                 <list-link data-url="/module/managedinstalls/listing/#pending_install"></list-link>
             </h3>
