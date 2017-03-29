@@ -247,268 +247,268 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-active_profile').text(data.active_profile);
 			} 
             
-			if(data.user_wake_count === "-9876543" || data.user_wake_count === -9876543) {
+			if(data.user_wake_count == "-9876543") {
 				 $('#power-user_wake_count').text('');
 			} else{
 				 $('#power-user_wake_count').text(data.user_wake_count);
 			}
                        
-			if(data.dark_wake_count === "-9876543" || data.dark_wake_count === -9876543) {
+			if(data.dark_wake_count == "-9876543") {
 				 $('#power-dark_wake_count').text('');
 			} else{
 				 $('#power-dark_wake_count').text(data.dark_wake_count);
 			}
                           
-			if(data.sleep_count === "-9876543" || data.sleep_count === -9876543) {
+			if(data.sleep_count == "-9876543") {
 				 $('#power-sleep_count').text('');
 			} else{
 				 $('#power-sleep_count').text(data.sleep_count);
 			}
                         
-			if(data.cpu_available_cpus === "-9876543" || data.cpu_available_cpus === -9876543) {
+			if(data.cpu_available_cpus == "-9876543") {
 				 $('#power-cpu_available_cpus').text('');
 			} else{
 				 $('#power-cpu_available_cpus').text(data.cpu_available_cpus);
 			}
                         
-			if(data.cpu_scheduler_limit === "-9876543" || data.cpu_scheduler_limit === -9876543) {
+			if(data.cpu_scheduler_limit == "-9876543") {
 				 $('#power-cpu_scheduler_limit').text('');
 			} else{
 				 $('#power-cpu_scheduler_limit').text(data.cpu_scheduler_limit+'%');
 			}
 
             
-			if(data.cpu_speed_limit === "-9876543" || data.cpu_speed_limit === -9876543) {
+			if(data.cpu_speed_limit == "-9876543") {
 				 $('#power-cpu_speed_limit').text('');
 			} else{
 				 $('#power-cpu_speed_limit').text(data.cpu_speed_limit+'%');
 			}  
 
-			if(data.hibernatemode === "25" || data.hibernatemode === 25 || data.hibernatemode === "1" || data.hibernatemode === 1) {
+			if(data.hibernatemode == "25" || data.hibernatemode == "1") {
 				 $('#power-hibernatemode').text(i18n.t('power.hibernate')+' ('+data.hibernatemode+')');
-			} else if(data.hibernatemode === "3" || data.hibernatemode === 3) {
+			} else if(data.hibernatemode == "3") {
 				 $('#power-hibernatemode').text(i18n.t('power.safe_sleep')+' ('+data.hibernatemode+')');
-			} else if(data.hibernatemode === "0" || data.hibernatemode === 0) {
+			} else if(data.hibernatemode == "0") {
 				 $('#power-hibernatemode').text(i18n.t('power.sleep')+' ('+data.hibernatemode+')');
-			} else if(data.hibernatemode === "-9876543" || data.hibernatemode === -9876543) {
+			} else if(data.hibernatemode == "-9876543") {
 				 $('#power-hibernatemode').text('');
 			} else{
 				 $('#power-hibernatemode').data.hibernatemode;
 			}  
                           
-			if(data.standbydelay === "-9876543" || data.standbydelay === -9876543) {
+			if(data.standbydelay == "-9876543") {
 				 $('#power-standbydelay').text('');
-			} else if(data.standbydelay === "0" || data.standbydelay === 0) {
+			} else if(data.standbydelay == "0") {
 				 $('#power-standbydelay').text(i18n.t('power.never'));
 			} else {
-				 $('#power-standbydelay').html('<span title="'+data.standbydelay+' '+i18n.t('power.seconds')+'">'+moment.duration(+data.standbydelay, "seconds").humanize());
+				 $('#power-standbydelay').html('<span title="'+data.standbydelay+' '+i18n.t('power.seconds')+'">'+moment.duration(+data.standbydelay, "seconds").humanize()+'</span>');
 			}  
                                       
-			if(data.displaysleep === "-9876543" || data.displaysleep === -9876543) {
+			if(data.displaysleep == "-9876543") {
 				 $('#power-displaysleep').text('');
-			} else if(data.displaysleep === "0" || data.displaysleep === 0) {
+			} else if(data.displaysleep == "0") {
 				 $('#power-displaysleep').text(i18n.t('power.never'));
 			} else {
-				 $('#power-displaysleep').html('<span title="'+data.displaysleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.displaysleep, "minutes").humanize());
+				 $('#power-displaysleep').html('<span title="'+data.displaysleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.displaysleep, "minutes").humanize()+'</span>');
 			}  
                                                   
-			if(data.disksleep === "-9876543" || data.disksleep === -9876543) {
+			if(data.disksleep == "-9876543") {
 				 $('#power-disksleep').text('');
-			} else if(data.disksleep === "0" || data.disksleep === 0) {
+			} else if(data.disksleep == "0") {
 				 $('#power-disksleep').text(i18n.t('power.never'));
 			} else {
-				 $('#power-disksleep').html('<span title="'+data.disksleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.disksleep, "minutes").humanize());
+				 $('#power-disksleep').html('<span title="'+data.disksleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.disksleep, "minutes").humanize()+'</span>');
 			}  
                        
-			if(data.autopoweroffdelay === "-9876543" || data.autopoweroffdelay === -9876543) {
+			if(data.autopoweroffdelay == "-9876543") {
 				 $('#power-autopoweroffdelay').text('');
-			} else if(data.autopoweroffdelay === "0" || data.autopoweroffdelay === 0) {
+			} else if(data.autopoweroffdelay == "0") {
 				 $('#power-autopoweroffdelay').text(i18n.t('power.never'));
 			} else {
-				 $('#power-autopoweroffdelay').html('<span title="'+data.autopoweroffdelay+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.autopoweroffdelay, "minutes").humanize());
+				 $('#power-autopoweroffdelay').html('<span title="'+data.autopoweroffdelay+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.autopoweroffdelay, "minutes").humanize()+'</span>');
 			}  
                
-			if(data.sleep === "-9876543" || data.sleep === -9876543) {
+			if(data.sleep == "-9876543") {
 				 $('#power-sleep').text('');
-			} else if(data.sleep === "0" || data.sleep === 0) {
+			} else if(data.sleep == "0") {
 				 $('#power-sleep').text(i18n.t('power.never'));
 			} else {
-				 $('#power-sleep').html('<span title="'+data.sleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.sleep, "minutes").humanize());
+				 $('#power-sleep').html('<span title="'+data.sleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.sleep, "minutes").humanize()+'</span>');
 			} 
               
-			if(data.gpuswitch === "2" || data.gpuswitch === 2) {
+			if(data.gpuswitch == "2") {
 				 $('#power-gpuswitch').text(i18n.t('power.auto_gpu'));
-			} else if(data.gpuswitch === "1" || data.gpuswitch === 1) {
+			} else if(data.gpuswitch == "1") {
 				 $('#power-gpuswitch').text(i18n.t('power.discreet'));
-			} else if(data.gpuswitch === "0" || data.gpuswitch === 0) {
+			} else if(data.gpuswitch == "0") {
 				 $('#power-gpuswitch').text(i18n.t('power.integrated'));
 			} else{
 				 $('#power-gpuswitch').text("");
 			}  
                            
-			if(data.standby === "1" || data.standby === 1) {
+			if(data.standby == "1") {
 				 $('#power-standby').text(i18n.t('yes'));
-			} else if(data.standby === "0" || data.standby === 0) {
+			} else if(data.standby == "0") {
 				 $('#power-standby').text(i18n.t('no'));
 			} else{
 				 $('#power-standby').text("");
 			}  
                
-			if(data.halfdim === "1" || data.halfdim === 1) {
+			if(data.halfdim == "1") {
 				 $('#power-halfdim').text(i18n.t('yes'));
-			} else if(data.halfdim === "0" || data.halfdim === 0) {
+			} else if(data.halfdim == "0") {
 				 $('#power-halfdim').text(i18n.t('no'));
 			} else{
 				 $('#power-halfdim').text("");
 			}  
                          
-			if(data.sms === "1" || data.sms === 1) {
+			if(data.sms == "1") {
 				 $('#power-sms').text(i18n.t('yes'));
-			} else if(data.sms === "0" || data.sms === 0) {
+			} else if(data.sms == "0") {
 				 $('#power-sms').text(i18n.t('no'));
 			} else{
 				 $('#power-sms').text("");
 			}  
                           
-			if(data.networkoversleep === "1" || data.networkoversleep === 1) {
+			if(data.networkoversleep == "1") {
 				 $('#power-networkoversleep').text(i18n.t('yes'));
-			} else if(data.networkoversleep === "0" || data.networkoversleep === 0) {
+			} else if(data.networkoversleep == "0") {
 				 $('#power-networkoversleep').text(i18n.t('no'));
 			} else{
 				 $('#power-networkoversleep').text("");
 			}  
                         
-			if(data.autopoweroff === "1" || data.autopoweroff === 1) {
+			if(data.autopoweroff == "1") {
 				 $('#power-autopoweroff').text(i18n.t('yes'));
-			} else if(data.autopoweroff === "0" || data.autopoweroff === 0) {
+			} else if(data.autopoweroff == "0") {
 				 $('#power-autopoweroff').text(i18n.t('no'));
 			} else{
 				 $('#power-autopoweroff').text("");
 			}  
                       
-			if(data.ttyskeepawake === "1" || data.ttyskeepawake === 1) {
+			if(data.ttyskeepawake == "1") {
 				 $('#power-ttyskeepawake').text(i18n.t('yes'));
-			} else if(data.ttyskeepawake === "0" || data.ttyskeepawake === 0) {
+			} else if(data.ttyskeepawake == "0") {
 				 $('#power-ttyskeepawake').text(i18n.t('no'));
 			} else{
 				 $('#power-ttyskeepawake').text("");
 			}   
                        
-			if(data.acwake === "1" || data.acwake === 1) {
+			if(data.acwake == "1") {
 				 $('#power-acwake').text(i18n.t('yes'));
-			} else if(data.acwake === "0" || data.acwake === 0) {
+			} else if(data.acwake == "0") {
 				 $('#power-acwake').text(i18n.t('no'));
 			} else{
 				 $('#power-acwake').text("");
 			}  
                         
-			if(data.lidwake === "1" || data.lidwake === 1) {
+			if(data.lidwake == "1") {
 				 $('#power-lidwake').text(i18n.t('yes'));
-			} else if(data.lidwake === "0" || data.lidwake === 0) {
+			} else if(data.lidwake == "0") {
 				 $('#power-lidwake').text(i18n.t('no'));
 			} else{
 				 $('#power-lidwake').text("");
 			}  
                         
-			if(data.sleep_on_power_button === "1" || data.sleep_on_power_button === 1) {
+			if(data.sleep_on_power_button == "1") {
 				 $('#power-sleep_on_power_button').text(i18n.t('yes'));
-			} else if(data.sleep_on_power_button === "0" || data.sleep_on_power_button === 0) {
+			} else if(data.sleep_on_power_button == "0") {
 				 $('#power-sleep_on_power_button').text(i18n.t('no'));
 			} else{
 				 $('#power-sleep_on_power_button').text("");
 			}  
                         
-			if(data.autorestart === "1" || data.autorestart === 1) {
+			if(data.autorestart == "1") {
 				 $('#power-autorestart').text(i18n.t('yes'));
-			} else if(data.autorestart === "0" || data.autorestart === 0) {
+			} else if(data.autorestart == "0") {
 				 $('#power-autorestart').text(i18n.t('no'));
 			} else{
 				 $('#power-autorestart').text("");
 			}  
                        
-			if(data.destroyfvkeyonstandby === "1" || data.destroyfvkeyonstandby === 1) {
+			if(data.destroyfvkeyonstandby == "1") {
 				 $('#power-destroyfvkeyonstandby').text(i18n.t('yes'));
-			} else if(data.destroyfvkeyonstandby === "0" || data.destroyfvkeyonstandby === 0) {
+			} else if(data.destroyfvkeyonstandby == "0") {
 				 $('#power-destroyfvkeyonstandby').text(i18n.t('no'));
 			} else{
 				 $('#power-destroyfvkeyonstandby').text("");
 			}  
                        
-			if(data.powernap === "1" || data.powernap === 1) {
+			if(data.powernap == "1") {
 				 $('#power-powernap').text(i18n.t('yes'));
-			} else if(data.powernap === "0" || data.powernap === 0) {
+			} else if(data.powernap == "0") {
 				 $('#power-powernap').text(i18n.t('no'));
 			} else{
 				 $('#power-powernap').text("");
 			}  
                         
-			if(data.backgroundtask === "1" || data.backgroundtask === 1) {
+			if(data.backgroundtask == "1") {
 				 $('#power-backgroundtask').text(i18n.t('yes'));
-			} else if(data.backgroundtask === "0" || data.backgroundtask === 0) {
+			} else if(data.backgroundtask == "0") {
 				 $('#power-backgroundtask').text(i18n.t('no'));
 			} else{
 				 $('#power-backgroundtask').text("");
 			}  
                      
-			if(data.applepushservicetask === "1" || data.applepushservicetask === 1) {
+			if(data.applepushservicetask == "1") {
 				 $('#power-applepushservicetask').text(i18n.t('yes'));
-			} else if(data.applepushservicetask === "0" || data.applepushservicetask === 0) {
+			} else if(data.applepushservicetask == "0") {
 				 $('#power-applepushservicetask').text(i18n.t('no'));
 			} else{
 				 $('#power-applepushservicetask').text("");
 			}    
                        
-			if(data.userisactive === "1" || data.userisactive === 1) {
+			if(data.userisactive == "1") {
 				 $('#power-userisactive').text(i18n.t('yes'));
-			} else if(data.userisactive === "0" || data.userisactive === 0) {
+			} else if(data.userisactive == "0") {
 				 $('#power-userisactive').text(i18n.t('no'));
 			} else{
 				 $('#power-userisactive').text("");
 			}    
                          
-			if(data.preventuseridledisplaysleep === "1" || data.preventuseridledisplaysleep === 1) {
+			if(data.preventuseridledisplaysleep == "1") {
 				 $('#power-preventuseridledisplaysleep').text(i18n.t('yes'));
-			} else if(data.preventuseridledisplaysleep === "0" || data.preventuseridledisplaysleep === 0) {
+			} else if(data.preventuseridledisplaysleep == "0") {
 				 $('#power-preventuseridledisplaysleep').text(i18n.t('no'));
 			} else{
 				 $('#power-preventuseridledisplaysleep').text("");
 			}    
                          
-			if(data.preventsystemsleep === "1" || data.preventsystemsleep === 1) {
+			if(data.preventsystemsleep == "1") {
 				 $('#power-preventsystemsleep').text(i18n.t('yes'));
-			} else if(data.preventsystemsleep === "0" || data.preventsystemsleep === 0) {
+			} else if(data.preventsystemsleep == "0") {
 				 $('#power-preventsystemsleep').text(i18n.t('no'));
 			} else{
 				 $('#power-preventsystemsleep').text("");
 			}    
                         
-			if(data.externalmedia === "1" || data.externalmedia === 1) {
+			if(data.externalmedia == "1") {
 				 $('#power-externalmedia').text(i18n.t('yes'));
-			} else if(data.externalmedia === "0" || data.externalmedia === 0) {
+			} else if(data.externalmedia == "0") {
 				 $('#power-externalmedia').text(i18n.t('no'));
 			} else{
 				 $('#power-externalmedia').text("");
 			}    
                         
-			if(data.preventuseridlesystemsleep === "1" || data.preventuseridlesystemsleep === 1) {
+			if(data.preventuseridlesystemsleep == "1") {
 				 $('#power-preventuseridlesystemsleep').text(i18n.t('yes'));
-			} else if(data.preventuseridlesystemsleep === "0" || data.preventuseridlesystemsleep === 0) {
+			} else if(data.preventuseridlesystemsleep == "0") {
 				 $('#power-preventuseridlesystemsleep').text(i18n.t('no'));
 			} else{
 				 $('#power-preventuseridlesystemsleep').text("");
 			}    
             
-			if(data.networkclientactive === "1" || data.networkclientactive === 1) {
+			if(data.networkclientactive == "1") {
 				 $('#power-networkclientactive').text(i18n.t('yes'));
-			} else if(data.networkclientactive === "0" || data.networkclientactive === 0) {
+			} else if(data.networkclientactive == "0") {
 				 $('#power-networkclientactive').text(i18n.t('no'));
 			} else{
 				 $('#power-networkclientactive').text("");
 			}  
             
-			if(data.womp === "1" || data.womp === 1) {
+			if(data.womp == "1") {
 				 $('#power-womp').text(i18n.t('yes'));
-			} else if(data.womp === "0" || data.womp === 0) {
+			} else if(data.womp == "0") {
 				 $('#power-womp').text(i18n.t('no'));
 			} else{
 				 $('#power-womp').text("");
@@ -532,17 +532,17 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-ups_charging_status').text(data.ups_charging_status);
 			} 
                 
-			if(data.haltafter === "-9876543" || data.haltafter === -9876543) {
+			if(data.haltafter == "-9876543") {
 				 $('#power-haltafter').text('');
-			} else if(data.haltafter === "1" || data.haltafter === 1) {
+			} else if(data.haltafter == "1") {
 				 $('#power-haltafter').text(data.haltafter+' '+i18n.t('power.minute'));
 			} else{
 				 $('#power-haltafter').text(data.haltafter+' '+i18n.t('power.minutes'));
 			}
                 
-			if(data.haltremain === "-9876543" || data.haltremain === -9876543) {
+			if(data.haltremain == "-9876543") {
 				 $('#power-haltremain').text('');
-			} else if(data.haltremain === "1" || data.haltremain === 1) {
+			} else if(data.haltremain == "1") {
 				 $('#power-haltremain').text(data.haltremain+' '+i18n.t('power.minute'));
 			} else{
 				 $('#power-haltremain').text(data.haltremain+' '+i18n.t('power.minutes'));

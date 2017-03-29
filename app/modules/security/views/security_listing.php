@@ -28,9 +28,9 @@ new Security_model;
 		        <th data-i18n="disk_report.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
 		        <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
+		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
 		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
-		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -148,8 +148,8 @@ new Security_model;
                     }
                 });
 
-                 var firmwarepw = $('td:eq(11)', nRow).html();
-                 $('td:eq(11)', nRow).html(function(){
+                 var firmwarepw = $('td:eq(9)', nRow).html();
+                 $('td:eq(9)', nRow).html(function(){
                      if( firmwarepw == 'Yes'){
                          return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
                      }

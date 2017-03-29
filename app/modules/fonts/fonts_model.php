@@ -64,7 +64,7 @@ class Fonts_model extends Model {
      public function get_fonts()
      {
         $out = array();
-        $sql = "SELECT COUNT(CASE WHEN type_name <> '' AND name IS NOT NULL THEN 1 END) AS count, type_name 
+        $sql = "SELECT COUNT(CASE WHEN type_name <> '' AND type_name IS NOT NULL THEN 1 END) AS count, type_name 
                 FROM fonts
                 LEFT JOIN reportdata USING (serial_number)
                 ".get_machine_group_filter()."

@@ -23,8 +23,19 @@ class Widgets
             'path' => conf('view_path') . 'widgets/',
         );
 
-        // Get widgets in modules
-        $this->searchWidgetsInModules(conf('module_path'));
+        $moduleManager = getMrModuleObj();
+
+        foreach( $moduleManager->getInfo('widgets') as $module => $widgets){
+            foreach($widgets as $id => $info){
+
+                    // Found a widget, add it to widgetList
+                    $this->widgetList[$id] = (object) array(
+                        'file' => $info['view'],
+                        'vars' => '',
+                        'path' => $moduleManager->getPath($module, '/views/'),
+                    );
+            }
+        }
 
         // Get widgets in widget directory
         $this->searchWidgetsInFolder(conf('view_path') . 'widgets/');
@@ -33,8 +44,6 @@ class Widgets
         if(conf('custom_folder')){
 
             $customPath = conf('custom_folder');
-
-            $this->searchWidgetsInModules($customPath.'modules/');
 
             if (is_dir($customPath.'views/widgets/'))
             {
@@ -61,21 +70,6 @@ class Widgets
         $viewObj->view($widget->file, $widget->vars, $widget->path);
     }
 
-    private function searchWidgetsInModules($basePath)
-    {
-        foreach (scandir($basePath) as $module) {
-        // Skip everything that starts with a dot
-            if (strpos($module, '.') === 0) {
-                continue;
-            }
-
-            // Find a views folder
-            if (is_dir($basePath.$module.'/views/'))
-            {
-                $this->searchWidgetsInFolder($basePath.$module.'/views/');
-            }
-        }
-    }
 
     private function searchWidgetsInFolder($viewpath)
     {

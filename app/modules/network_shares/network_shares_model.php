@@ -92,7 +92,7 @@ class Network_shares_model extends Model {
 			}
 			
 			// Network shares to exclude
-            $excludeshares = array("/net","/home","/Volumes/MobileBackups","/Network/Servers");
+            $excludeshares = array("/net","/home","/Volumes/MobileBackups","/Volumes/MobileBackups 1","/Volumes/MobileBackups 2","/Network/Servers");
             if (in_array($device['fsmtnonname'], $excludeshares)) {
 				continue;
 			}

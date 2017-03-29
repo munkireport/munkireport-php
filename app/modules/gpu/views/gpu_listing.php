@@ -24,7 +24,6 @@ new Gpu_model;
 			<th data-i18n="gpu.pcie_width" data-colname='gpu.pcie_width'></th>
 			<th data-i18n="gpu.slot_name" data-colname='gpu.slot_name'></th>
 			<th data-i18n="gpu.device_id" data-colname='gpu.device_id'></th>
-			<th data-i18n="gpu.gmux_version" data-colname='gpu.gmux_version'></th>
 			<th data-i18n="gpu.efi_version" data-colname='gpu.efi_version'></th>
 			<th data-i18n="gpu.revision_id" data-colname='gpu.revision_id'></th>
 			<th data-i18n="gpu.rom_revision" data-colname='gpu.rom_revision'></th>
@@ -33,7 +32,7 @@ new Gpu_model;
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 

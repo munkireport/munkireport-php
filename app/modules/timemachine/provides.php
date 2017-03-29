@@ -8,6 +8,6 @@ return array(
         'timemachine' => array('view' => 'timemachine_listing', 'i18n' => 'timemachine.timemachine'),
     ),
     'widgets' => array(
-        array('view' => 'timemachine_widget'),
+        'timemachine' => array('view' => 'timemachine_widget'),
     ),
 );
