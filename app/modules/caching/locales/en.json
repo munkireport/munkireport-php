@@ -14,7 +14,11 @@
     "bytes_served": "Caching – Bytes Served",
     "client_requests": "Requests From Clients",
     "client_tab_title": "Caching Server",
+    "purgedbytes": "Purged Bytes",
     "date": "Date",
+    "from_cache": "From Cache",
+    "from_origin": "From Origin",
+    "from_peers": "From Peers",
     "importsbyhttp": "Imports by HTTP",
     "importsbyxpc": "Imports by XPC",
     "listing_title": "Caching",
@@ -33,5 +37,5 @@
     "total_purged": "Total Purged",
     "widget_graph_title": "Historical Caching Bytes Served",
     "widget_title": "Caching Bytes Served",
-    "widget_tooltip": "Data that has been served from OS X Server's Caching Server"
+    "widget_tooltip": "Data that has been served from OS X Server's Caching Server and bytes purged within the last 7 days"
 }
