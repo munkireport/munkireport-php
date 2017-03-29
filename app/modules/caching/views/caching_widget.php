@@ -1,5 +1,5 @@
 <div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="caching-widget">            
+	<div class="panel panel-default" id="caching-widget">
 		<div class="panel-heading" data-container="body" data-i18n="[title]caching.widget_tooltip">
 			<h3 class="panel-title"><i class="fa fa-database"></i>
 			    <span data-i18n="caching.widget_title"></span>
