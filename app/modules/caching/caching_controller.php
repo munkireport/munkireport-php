@@ -169,8 +169,8 @@ class Caching_controller extends Module_controller
         $queryobj = new Caching_model();
         
         $sql = "SELECT sum(bytesfromcachetoclients) AS fromcache,
-                        sum(bytesfrompeerstoclients) AS frompeers,
-                        sum(bytesfromorigintoclients) AS fromorigin
+                        sum(bytesfromorigintoclients) AS fromorigin,
+                        sum(bytespurgedyoungerthan7days) AS purgedbytes
                         FROM caching
                         LEFT JOIN reportdata USING (serial_number)
                         ".get_machine_group_filter();
