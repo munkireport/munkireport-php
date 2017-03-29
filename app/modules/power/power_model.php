@@ -346,7 +346,7 @@ class Power_model extends Model
         $this->active_profile = str_replace("'", "", $this->active_profile);
         
         // Format cell voltages
-        if ($this->cellvoltage != '-9876543') {
+        if ($this->cellvoltage != '-9876543' && ! empty($this->cellvoltage)) {
             $this->cellvoltage = str_replace(array('(',')'), array('',''), $this->cellvoltage);
             $cellvoltagearray = explode(',', $this->cellvoltage);
             $cellvoltageout = array();
@@ -359,12 +359,12 @@ class Power_model extends Model
         }
         
         // Format voltage
-        if ($this->voltage !== '-9876543') {
+        if ($this->voltage !== '-9876543' && ! empty($this->cellvoltage)) {
              $this->voltage = ($this->voltage / 1000);
         }
         
         // Format amperage 
-        if ($this->amperage !== '-9876543') {
+        if ($this->amperage !== '-9876543' && ! empty($this->cellvoltage)) {
              $this->amperage = ($this->amperage / 1000);
         }
         
@@ -372,7 +372,7 @@ class Power_model extends Model
         $this->manufacturer = str_replace('"', '', $this->manufacturer);
         
         // Fix condition
-        $this->condition = str_replace((array('ServiceBattery','ReplaceSoon','ReplaceNow'),(array('Service Battery','Replace Soon','Replace Now'), $this->condition);
+        $this->condition = str_replace(array('ServiceBattery','ReplaceSoon','ReplaceNow'),array('Service Battery','Replace Soon','Replace Now'), $this->condition);
         
         // Format batteryserialnumber
         $this->batteryserialnumber = str_replace('"', '', $this->batteryserialnumber);
