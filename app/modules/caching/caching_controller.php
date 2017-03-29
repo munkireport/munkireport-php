@@ -110,7 +110,8 @@ class Caching_controller extends Module_controller
             case 'sqlite':
                 $sql = "SELECT DATE(collectiondateepoch, 'unixepoch') AS date,
                         sum(bytesfromcachetoclients) AS fromcache,
-                        sum(bytesfromorigintoclients) AS fromorigin
+                        sum(bytesfromorigintoclients) AS fromorigin,
+                        sum(bytespurgedyoungerthan7days) AS purgedbytes
                         FROM caching
                         GROUP BY date
                         ORDER BY date";
@@ -118,7 +119,8 @@ class Caching_controller extends Module_controller
             case 'mysql':
                 $sql = "SELECT DATE(FROM_UNIXTIME(collectiondateepoch)) AS date, 
                         sum(bytesfromcachetoclients) AS fromcache,
-                        sum(bytesfromorigintoclients) AS fromorigin
+                        sum(bytesfromorigintoclients) AS fromorigin,
+                        sum(bytespurgedyoungerthan7days) AS purgedbytes
                         FROM caching
                         GROUP BY date
                         ORDER BY date";
@@ -129,11 +131,13 @@ class Caching_controller extends Module_controller
         $dates = array();
         $cache = array();
         $origin = array();
+        $purged = array();
                 
         foreach ($cachingdata->query($sql) as $event) {
             $dates[] = $event->date;
             $cache[] = $event->fromcache;
             $origin[] = $event->fromorigin;
+            $purged[] = $event->purgedbytes;
         }
         
         $numbervar = range(1,count($dates));
@@ -148,8 +152,13 @@ class Caching_controller extends Module_controller
             $originassoc[$value] = intval($origin[$i]);
         }
         
-        $out = array('cache' => $cacheassoc, 'origin' => $originassoc);
+        $purgedassoc = array();
+        foreach ($numbervar as $i => $value) {
+            $purgedassoc[$value] = intval($purged[$i]);
+        }
         
+        $out = array('Cache' => $cacheassoc, 'Origin' => $originassoc, 'Purged' => $purgedassoc);
+
         $obj = new View();
         $obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
     }
@@ -160,8 +169,8 @@ class Caching_controller extends Module_controller
      * @tuxudo
      *
      **/
-    public function caching_widget()
-    {        
+     public function caching_widget()
+     {        
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json
         }
@@ -169,7 +178,7 @@ class Caching_controller extends Module_controller
         $queryobj = new Caching_model();
         
         $sql = "SELECT sum(bytesfromcachetoclients) AS fromcache,
-                        sum(bytesfrompeerstoclients) AS frompeers,
+                        sum(bytespurgedyoungerthan7days) AS purgedbytes,
                         sum(bytesfromorigintoclients) AS fromorigin
                         FROM caching
                         LEFT JOIN reportdata USING (serial_number)
@@ -179,6 +188,6 @@ class Caching_controller extends Module_controller
                 
         $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
-    }
+     }
 
 } // END class Caching_controller

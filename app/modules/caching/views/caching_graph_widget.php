@@ -1,0 +1,94 @@
+<div class="col-sm-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-clock-o"></i>
+			    <span data-i18n="caching.widget_title"></span>
+			    <list-link data-url="/show/listing/caching/caching"></list-link>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<svg id="cachingchart" style="width: 100%; height: 400px"></svg>
+		</div>
+	</div><!-- /panel -->
+
+</div><!-- /col-lg-4 -->
+
+<script>
+$(document).on('appReady', function() {
+	var colors = d3.scale.category20();
+    var keyColor = function(d, i) {return colors(d.key)};
+
+    var url = appUrl + '/module/caching/caching_graph'
+    var chart;
+
+    d3.json(url, function(err, data){
+
+        var graphData = [],
+            datelength = data.dates.length;
+
+        for (var type in data.types)
+        {
+            var total = 0
+                temp = {key: type, values: []};
+            for (var i = 1; i < datelength; i++) {
+                if (i.toString() in data.types[type]){
+//                    total = total + data.types[type][i];
+                    total = data.types[type][i];
+                }
+                temp.values.push([(new Date(data.dates[i])), total])
+            }
+            graphData.push(temp);
+        }
+
+        nv.addGraph(function() {
+                
+            chart = nv.models.lineChart()
+                .useInteractiveGuideline(true)
+                .x(function(d) { return d[0] })
+                .y(function(d) { return d[1] })
+                .color(keyColor)
+                .duration(300);
+            
+			chart.xAxis.tickFormat(function(d, e) {
+				if(e == undefined){ return d }
+				return moment(d).format("MMMM DD");
+			});
+            
+            //chart.xAxis.ticks(8);
+            
+            chart.yAxis.tickFormat(function(d, e) {
+				if(e == undefined){ return d }
+				return fileSize(d, 2);
+			});
+
+            chart.xAxis.showMaxMin(false);
+
+            chart.yAxis.showMaxMin(false);
+
+            var tooltip = chart.interactiveLayer.tooltip;
+			tooltip.headerFormatter(function (d) {
+				return moment(d).format("MMMM DD");
+			});
+
+
+            d3.select('#cachingchart')
+                .datum(graphData)
+                .call(chart)
+                .transition().duration(1000)
+                .each('start', function() {
+                    setTimeout(function() {
+                        d3.selectAll('#cachingchart *').each(function() {
+                            if(this.__transition__)
+                                this.__transition__.duration = 1;
+                        })
+                    }, 0)
+                })
+            ;
+            
+            nv.utils.windowResize(chart.update);
+            return chart;
+        });
+    });
+
+});
+</script>
