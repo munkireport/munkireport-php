@@ -157,31 +157,31 @@ $(document).on('appReady', function(e, lang) {
             }
 
 			// Format timeremaining
-			if(data.timeremaining == "-9876543" || data.timeremaining == -9876543 || data.manufacture_date == '1980-00-00' || data.fullycharged == 'Yes') {
+			if(data.timeremaining == "-9876543" || data.manufacture_date == '1980-00-00' || data.fullycharged == 'Yes') {
 				 $('#battery-timeremaining').text('');
             } else {
-				 $('#battery-timeremaining').html('<span title="'+data.timeremaining+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.timeremaining, "minutes").humanize());
+				 $('#battery-timeremaining').html('<span title="'+data.timeremaining+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.timeremaining, "minutes").humanize()+'</span>');
 			}
 
 			// Format instanttimetoempty
-			if(data.instanttimetoempty == "-9876543" || data.instanttimetoempty == -9876543) {
+			if(data.instanttimetoempty == "-9876543") {
 				 $('#battery-instanttimetoempty').text('');
             } else {
-				 $('#battery-instanttimetoempty').html('<span title="'+data.instanttimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.instanttimetoempty, "minutes").humanize());
+				 $('#battery-instanttimetoempty').html('<span title="'+data.instanttimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.instanttimetoempty, "minutes").humanize()+'</span>');
 			}
 
 			// Format avgtimetofull
-			if(data.avgtimetofull == "-9876543" || data.avgtimetofull == -9876543) {
+			if(data.avgtimetofull == "-9876543") {
 				 $('#battery-avgtimetofull').text('');
             } else {
-				 $('#battery-avgtimetofull').html('<span title="'+data.avgtimetofull+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetofull, "minutes").humanize());
+				 $('#battery-avgtimetofull').html('<span title="'+data.avgtimetofull+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetofull, "minutes").humanize()+'</span>');
 			}
 
 			// Format avgtimetoempty
-			if(data.avgtimetoempty == "-9876543" || data.avgtimetoempty == -9876543) {
+			if(data.avgtimetoempty == "-9876543") {
 				 $('#battery-avgtimetoempty').text('');
             } else {
-				 $('#battery-avgtimetoempty').html('<span title="'+data.avgtimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetoempty, "minutes").humanize());
+				 $('#battery-avgtimetoempty').html('<span title="'+data.avgtimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetoempty, "minutes").humanize()+'</span>');
 			}
 
 			// Format ischarging
@@ -205,9 +205,9 @@ $(document).on('appReady', function(e, lang) {
 			// Format permanentfailurestatus
             if (data.permanentfailurestatus != "-9876543" && (data.permanentfailurestatus)) {
 				 $('#battery-permanentfailurestatus').text("");
-            } else if(data.permanentfailurestatus === "1" || data.permanentfailurestatus === 1) {
+            } else if(data.permanentfailurestatus == "1") {
 				 $('#battery-permanentfailurestatus').addClass('danger').html(i18n.t('yes'));
-			} else if(data.permanentfailurestatus === "0" || data.permanentfailurestatus === 0) {
+			} else if(data.permanentfailurestatus == "0") {
 				 $('#battery-permanentfailurestatus').html(i18n.t('no'));
 			} else{
 				 $('#battery-permanentfailurestatus').text('');
@@ -331,7 +331,7 @@ $(document).on('appReady', function(e, lang) {
 	        		{
 
 	        		}
-	        		$('#battery-manufacture_date').html('<span title="'+data.manufacture_date+'">'+moment(data.manufacture_date).fromNow());
+	        		$('#battery-manufacture_date').html('<span title="'+data.manufacture_date+'">'+moment(data.manufacture_date).fromNow()+'</span>');
 	        	}
             }
 

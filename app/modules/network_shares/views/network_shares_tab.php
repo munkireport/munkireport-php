@@ -24,7 +24,7 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('name')+'</th><td>'+d[prop]+'</td></tr>';
                     } 
 					else if(prop == 'mntfromname'){
-					   rows = rows + '<tr><th>'+i18n.t('path')+'</th><td>'+id[prop]+'</td></tr>';
+					   rows = rows + '<tr><th>'+i18n.t('path')+'</th><td>'+d[prop]+'</td></tr>';
                     } 
 					else if(prop == 'fstypename'){
 					   rows = rows + '<tr><th>'+i18n.t('type')+'</th><td>'+d[prop]+'</td></tr>';

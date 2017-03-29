@@ -2,6 +2,6 @@
 
 return array(
     'widgets' => array(
-        array('view' => 'munkiinfo_munkiprotocol_widget'),
+        'munkiinfo_munkiprotocol' => array('view' => 'munkiinfo_munkiprotocol_widget'),
     ),
 );

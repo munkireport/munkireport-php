@@ -1,9 +1,9 @@
 {
-  "app": {
-    "versions": "Bekannte Versionen von __app__"
-  },
-  "appversions_report": "App Versions Report",
-  "inventory_items": "Inventar",
-  "listing": "Inventar",
-  "report": "Inventar Report"
+    "app": {
+        "versions": "Bekannte Versionen von __app__"
+    },
+    "appversions_report": "App Versions Report",
+    "inventory_items": "Inventar",
+    "listing": "Inventar",
+    "report": "Inventar Report"
 }

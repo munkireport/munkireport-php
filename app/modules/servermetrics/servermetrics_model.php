@@ -96,7 +96,11 @@ class Servermetrics_model extends Model
      **/
     public function process($data)
     {
-
+        // If data is empty, throw error
+        if (! $data) {
+            throw new Exception("Error Processing Server Metrics Module Request: No data found", 1);
+        }
+        
         // Delete previous set (this is expensive)
         $this->deleteWhere('serial_number=?', $this->serial_number);
 

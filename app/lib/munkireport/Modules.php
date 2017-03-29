@@ -84,9 +84,7 @@ class Modules
     public function getModuleMigrationPath($moduleName, &$migrationPath)
     {
         foreach ($this->moduleSearchPaths as $type => $path) {
-            echo $path . $moduleName . '/migrations';
             if (is_dir($path . $moduleName . '/migrations')) {
-                echo $path . $moduleName . '/migrations';
                 $migrationPath = $path . $moduleName . '/migrations';
                 return True;
             }
@@ -174,10 +172,10 @@ class Modules
     public function getListing($module, $name)
     {
         if(isset($this->moduleList[$module]['listings'])){
-            foreach ($this->moduleList[$module]['listings'] as $listing) {
+            if( isset($this->moduleList[$module]['listings'][$name]['view'])) {
                 return (object) array(
                     'view_path' => $this->getPath($module, '/views/'),
-                    'view' => $listing['view'],
+                    'view' => $this->moduleList[$module]['listings'][$name]['view'],
                 );
             }
         }
@@ -231,7 +229,7 @@ class Modules
                 $out[] = (object) array(
                   'url' => url($baseUrl.'/'.$module.'/'.$itemName),
                   'name' => $itemName,
-                  'class' => substr_compare( $page, $itemName, -strlen( $itemName ) ) === 0 ? 'active' : '',
+                  'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
                   'i18n' => $i18n,
                 );
             }
