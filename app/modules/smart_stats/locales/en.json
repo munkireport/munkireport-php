@@ -1,6 +1,7 @@
 {
     "clienttabtitle": "SMART Stats",
     "reporttitle": "SMART Stats Report",
+    "disk_number": "Drive Number",
     "timestamp": "SMART Data Last Pulled",
     "raw_read_error_rate": "Raw Read Error Rate",
     "throughput_performance": "Throughput Performance",
