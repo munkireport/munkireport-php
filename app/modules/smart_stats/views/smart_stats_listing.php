@@ -19,6 +19,7 @@ new Smart_stats_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="smart_stats.disk_number" data-colname='smart_stats.disk_number'></th>
 		        <th data-i18n="smart_stats.model_family" data-colname='smart_stats.model_family'></th>
 		        <th data-i18n="smart_stats.device_model" data-colname='smart_stats.device_model'></th>
 		        <th data-i18n="smart_stats.serial_number_hdd" data-colname='smart_stats.serial_number_hdd'></th>
@@ -111,34 +112,31 @@ new Smart_stats_model;
 	        	var sn=$('td:eq(1)', nRow).html();
                 var link = mr.getClientDetailLink(name, sn, '#tab_smart_stats-tab');
 	        	$('td:eq(0)', nRow).html(link);
+                
+	        	// Format disk number
+	        	var disknum=$('td:eq(2)', nRow).html();
+	        	$('td:eq(2)', nRow).html("/dev/disk"+disknum)
 
                 // Format timestamp
-                var timestamp = (($('td:eq(11)', nRow).html()) * 1000);
-                $('td:eq(11)', nRow).html(moment(timestamp).format("YYYY-MM-DD H:mm:ss"))
+                var timestamp = (($('td:eq(12)', nRow).html()) * 1000);
+                $('td:eq(12)', nRow).html(moment(timestamp).format("YYYY-MM-DD H:mm:ss"))
                 
                 // Format SMART Error Count
-	        	var status=$('td:eq(12)', nRow).html();
-                if (status != "" && status != "-9876540"){
-                    $('td:eq(12)', nRow).addClass('danger').html(status)
-                } else {
-                    $('td:eq(12)', nRow).html("")
-                }
-                
-                // Format SMART Power On Hours Error Count
 	        	var status=$('td:eq(13)', nRow).html();
-                if (status != "" && status != "-9876540" ){
+                if (status != "" && status != "-9876540"){
                     $('td:eq(13)', nRow).addClass('danger').html(status)
                 } else {
                     $('td:eq(13)', nRow).html("")
                 }
                 
+                // Format SMART Power On Hours Error Count
 	        	var status=$('td:eq(14)', nRow).html();
-                if (status != "-9876540" ){
-                    $('td:eq(14)', nRow).html(status)
+                if (status != "" && status != "-9876540" ){
+                    $('td:eq(14)', nRow).addClass('danger').html(status)
                 } else {
                     $('td:eq(14)', nRow).html("")
                 }
-                                
+                
 	        	var status=$('td:eq(15)', nRow).html();
                 if (status != "-9876540" ){
                     $('td:eq(15)', nRow).html(status)
@@ -179,6 +177,13 @@ new Smart_stats_model;
                     $('td:eq(20)', nRow).html(status)
                 } else {
                     $('td:eq(20)', nRow).html("")
+                }
+                                
+	        	var status=$('td:eq(21)', nRow).html();
+                if (status != "-9876540" ){
+                    $('td:eq(21)', nRow).html(status)
+                } else {
+                    $('td:eq(21)', nRow).html("")
                 }
                 
 		    }
