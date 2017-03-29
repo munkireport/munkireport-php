@@ -140,6 +140,13 @@ class Caching_controller extends Module_controller
             $purged[] = $event->purgedbytes;
         }
         
+        // Add in padded date to fix graph chop off
+        $datetime = new DateTime('tomorrow');
+        $dates[] =  $datetime->format('Y-m-d');
+        $cache[] = 0;
+        $origin[] = 0;
+        $purged[] = 0;
+        
         $numbervar = range(1,count($dates));
         
         $cacheassoc = array();
@@ -157,10 +164,8 @@ class Caching_controller extends Module_controller
             $purgedassoc[$value] = intval($purged[$i]);
         }
         
-        $out = array('Cache' => $cacheassoc, 'Origin' => $originassoc, 'Purged' => $purgedassoc);
-
         $obj = new View();
-        $obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
+        $obj->view('json', array('msg' => array('dates' => $dates, 'cache' => $cacheassoc, 'origin' => $originassoc, 'purged' => $purgedassoc)));
     }
     
     
