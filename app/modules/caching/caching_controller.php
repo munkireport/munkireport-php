@@ -111,7 +111,7 @@ class Caching_controller extends Module_controller
                 $sql = "SELECT DATE(collectiondateepoch, 'unixepoch') AS date,
                         sum(bytesfromcachetoclients) AS fromcache,
                         sum(bytesfromorigintoclients) AS fromorigin,
-                        sum(bytespurgedyoungerthan7days) AS purgedbytes
+                        sum(bytespurgedtotal) AS purgedbytes
                         FROM caching
                         GROUP BY date
                         ORDER BY date";
@@ -120,7 +120,7 @@ class Caching_controller extends Module_controller
                 $sql = "SELECT DATE(FROM_UNIXTIME(collectiondateepoch)) AS date, 
                         sum(bytesfromcachetoclients) AS fromcache,
                         sum(bytesfromorigintoclients) AS fromorigin,
-                        sum(bytespurgedyoungerthan7days) AS purgedbytes
+                        sum(bytespurgedtotal) AS purgedbytes
                         FROM caching
                         GROUP BY date
                         ORDER BY date";
@@ -183,7 +183,7 @@ class Caching_controller extends Module_controller
         $queryobj = new Caching_model();
         
         $sql = "SELECT sum(bytesfromcachetoclients) AS fromcache,
-                        sum(bytespurgedyoungerthan7days) AS purgedbytes,
+                        sum(bytespurgedtotal) AS purgedbytes,
                         sum(bytesfromorigintoclients) AS fromorigin
                         FROM caching
                         LEFT JOIN reportdata USING (serial_number)

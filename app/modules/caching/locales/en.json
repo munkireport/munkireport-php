@@ -37,5 +37,5 @@
     "total_purged": "Total Purged",
     "widget_graph_title": "Historical Caching Bytes Served",
     "widget_title": "Caching Bytes Served",
-    "widget_tooltip": "Data that has been served from OS X Server's Caching Server and bytes purged within the last 7 days"
+    "widget_tooltip": "Data that has been served from OS X Server's Caching Server"
 }
