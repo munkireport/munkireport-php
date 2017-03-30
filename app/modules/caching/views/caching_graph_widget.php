@@ -1,7 +1,7 @@
 <div class="col-sm-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><i class="fa fa-clock-o"></i>
+			<h3 class="panel-title"><i class="fa fa-database"></i>
 			    <span data-i18n="caching.widget_title"></span>
 			    <list-link data-url="/show/listing/caching/caching"></list-link>
 			</h3>
