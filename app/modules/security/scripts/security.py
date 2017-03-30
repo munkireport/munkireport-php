@@ -102,7 +102,7 @@ def ard_access_check():
         out, err = sp.communicate()
         plist = plistlib.readPlist(plist_path)
 
-        if plist['ARD_AllLocalUsers']:
+        if plist.get('ARD_AllLocalUsers', None):
             return "All users permitted"
         else:
             # Second method - check local directory for naprivs
