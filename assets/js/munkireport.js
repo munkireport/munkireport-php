@@ -71,6 +71,9 @@ $( document ).ready(function() {
         mr.sortMenu('ul.listing');
         mr.sortMenu('ul.client-tabs');
 
+        // Put summary on top
+        $('ul.client-tabs').prepend($('ul.client-tabs a[href="#summary"]').closest('li'));
+
         // Check if current locale is available (FIXME: check loaded locale)
         if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)
         {
