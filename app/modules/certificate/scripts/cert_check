@@ -36,7 +36,7 @@ then
         else
             NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
             EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
-            echo "${EXPIRYDATE}${SEP}${CERTSPATH}${CERT}${SEP}${SUBJECT}" >> "${OUT}"
+            echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}" >> "${OUT}"
         fi
     done
 fi
