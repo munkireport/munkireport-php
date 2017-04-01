@@ -5,6 +5,7 @@
     <thead>
         <tr>
             <th data-i18n="certificate.commonname"></th>
+            <th data-i18n="certificate.issuer"></th>
             <th data-i18n="certificate.expires"></th>
         </tr>
     </thead>
@@ -34,6 +35,8 @@ $(document).on('appReady', function(e, lang) {
                     .attr('title', cert.rs.cert_path)
                     .append($('<td>')
                         .text(cert.rs.cert_cn))
+                    .append($('<td>')
+                        .text(cert.rs.issuer))                        
                     .append($('<td>')
                         .html(function(){
                             var date = new Date(cert.rs.cert_exp_time * 1000);
