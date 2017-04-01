@@ -170,7 +170,7 @@ class Auth extends Controller
                         try {
                             $adldap = new \adLDAP($auth_data);
                         } catch (adLDAPException $e) {
-                            error('An error ocurred while contacting AD', 'error_contacting_AD');
+                            error('An error occurred while contacting AD', 'error_contacting_AD');
                             // When in debug mode, show additional info
                             if (conf('debug')) {
                                 error($e->getMessage());

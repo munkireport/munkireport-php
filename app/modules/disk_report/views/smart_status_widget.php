@@ -4,7 +4,10 @@
 
 		<div class="panel-heading" data-container="body">
 
-			<h3 class="panel-title"><i class="fa fa-exclamation-circle"></i> <span data-i18n="disk_report.smartstatus"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-exclamation-circle"></i>
+			    <span data-i18n="disk_report.smartstatus"></span>
+			    <list-link data-url="/show/listing/disk_report/disk"></list-link>
+			</h3>
 
 		</div>
 

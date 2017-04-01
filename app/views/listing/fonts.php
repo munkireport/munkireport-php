@@ -58,7 +58,7 @@ new Fonts_model;
         var mySort = [], // Initial sort
             hideThese = [], // Hidden columns
             col = 0, // Column counter
-            runtypes = [], // Array for runtype column 
+            runtypes = [], // Array for runtype column
             columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
         $('.table th').map(function(){
@@ -82,7 +82,7 @@ new Fonts_model;
                 type: "POST",
                 data: function(d){
                      d.mrColNotEmpty = "name";
-                    
+
                     // Check for column in search
                     if(d.search.value){
                         $.each(d.columns, function(index, item){
@@ -96,7 +96,7 @@ new Fonts_model;
                     if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
-                    }                    
+                    }
                 }
             },
             dom: mr.dt.buttonDom,
@@ -110,22 +110,22 @@ new Fonts_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_fonts-tab');
 	        	$('td:eq(0)', nRow).html(link);
-                
+
 	        	var internal=$('td:eq(3)', nRow).html();
 	        	internal = internal == '1' ? i18n.t('yes') :
 	        	(internal === '0' ? i18n.t('no') : '')
 	        	$('td:eq(3)', nRow).html(internal)
-                
+
 	        	var media=$('td:eq(4)', nRow).html();
 	        	media = media == '1' ? i18n.t('yes') :
 	        	(media === '0' ? i18n.t('no') : '')
 	        	$('td:eq(4)', nRow).html(media)
-                
+
 	        	var media=$('td:eq(5)', nRow).html();
 	        	media = media == '1' ? i18n.t('yes') :
 	        	(media === '0' ? i18n.t('no') : '')
 	        	$('td:eq(5)', nRow).html(media)
-                
+
 	        	var media=$('td:eq(9)', nRow).html();
 	        	media = media == '1' ? i18n.t('yes') :
 	        	(media === '0' ? i18n.t('no') : '')

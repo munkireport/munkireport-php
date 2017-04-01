@@ -61,7 +61,7 @@ class Gpu_controller extends Module_controller
         $queryobj = new Gpu_model;
         $gpu_tab = array();
         foreach($queryobj->retrieve_records($serial_number) as $gpuEntry){
-            gpu_tab[] = $gpuEntry->rs;
+            $gpu_tab[] = $gpuEntry->rs;
         }
 
         $obj->view('json', array('msg' => $gpu_tab));

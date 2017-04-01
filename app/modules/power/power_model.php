@@ -91,8 +91,8 @@ class Power_model extends Model
         // Indexes to optimize queries
         // MySQL allows for a maximum of 64 indexes per table, not all columns are indexed.
         // Some lesser used, more static columns have been omitted
-        foreach (array('manufacture_date','design_capacity','max_capacity','max_percent','current_capacity','current_percent','cycle_count','temperature','condition','timestamp','hibernatefile','active_profile','standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','externalconnected','timeremaining','instanttimetoempty','cellvoltage','voltage','permanentfailurestatus','manufacturer','packreserve','avgtimetofull','batteryserialnumber','amperage','fullycharged','ischarging','designcyclecount','avgtimetoempty') as $item) {
-        $this->idx[] = array($item);
+        foreach (array('manufacture_date','design_capacity','max_capacity','max_percent','current_capacity','current_percent','cycle_count','temperature','timestamp','hibernatefile','active_profile','standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','externalconnected','timeremaining','instanttimetoempty','cellvoltage','voltage','permanentfailurestatus','manufacturer','packreserve','avgtimetofull','batteryserialnumber','amperage','fullycharged','ischarging','designcyclecount','avgtimetoempty') as $item) {
+            $this->idx[] = array($item);
         }
         
         // Create table if it does not exist
@@ -330,8 +330,11 @@ class Power_model extends Model
                
         if (strpos($sleep_long, '(') !== false) {
             preg_match('/\((.*?)\)/s', $sleep_long, $sleep_array);
-            $this->sleep = explode(" (", $sleep_long)[0];                
+            $this->sleep = explode(" (", $sleep_long)[0];
             $this->sleep_prevented_by = preg_replace("/[^A-Za-z0-9 ]/", '',(implode(", ", array_unique(explode(", ", str_replace("sleep prevented by ", "", $sleep_array[1]))))));
+        } else {
+            $this->sleep = preg_replace("/[^0-9 ]/", '', $sleep_long);
+            $this->sleep_prevented_by = "";
         }
         
         // Correct empty UPS percentage
@@ -343,7 +346,7 @@ class Power_model extends Model
         $this->active_profile = str_replace("'", "", $this->active_profile);
         
         // Format cell voltages
-        if ($this->cellvoltage != '-9876543') {
+        if ($this->cellvoltage != '-9876543' && ! empty($this->cellvoltage)) {
             $this->cellvoltage = str_replace(array('(',')'), array('',''), $this->cellvoltage);
             $cellvoltagearray = explode(',', $this->cellvoltage);
             $cellvoltageout = array();
@@ -356,17 +359,20 @@ class Power_model extends Model
         }
         
         // Format voltage
-        if ($this->voltage !== '-9876543') {
+        if ($this->voltage !== '-9876543' && ! empty($this->cellvoltage)) {
              $this->voltage = ($this->voltage / 1000);
         }
         
         // Format amperage 
-        if ($this->amperage !== '-9876543') {
+        if ($this->amperage !== '-9876543' && ! empty($this->cellvoltage)) {
              $this->amperage = ($this->amperage / 1000);
         }
         
         // Format manufacturer
         $this->manufacturer = str_replace('"', '', $this->manufacturer);
+        
+        // Fix condition
+        $this->condition = str_replace(array('ServiceBattery','ReplaceSoon','ReplaceNow'),array('Service Battery','Replace Soon','Replace Now'), $this->condition);
         
         // Format batteryserialnumber
         $this->batteryserialnumber = str_replace('"', '', $this->batteryserialnumber);

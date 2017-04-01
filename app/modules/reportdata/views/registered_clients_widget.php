@@ -4,7 +4,10 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="machine.registered.title"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-clock-o"></i>
+			    <span data-i18n="machine.registered.title"></span>
+			    <list-link data-url="/show/listing/munkireport/munki"></list-link>
+			</h3>
 
 		</div>
 

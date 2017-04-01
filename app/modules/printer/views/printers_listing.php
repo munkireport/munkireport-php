@@ -114,7 +114,7 @@ new Printer_model;
                 printerstatus = printerstatus == 'idle' ? i18n.t('printer.idle') :
                 printerstatus = printerstatus == 'error' ? i18n.t('printer.error') :
                 printerstatus = printerstatus == 'in use' ? i18n.t('printer.in_use') :
-                (printerstatus === 'offline' ? i18n.t('printer.offline') : '')
+                (printerstatus === 'offline' ? i18n.t('printer.offline') : printerstatus)
                 $('td:eq(7)', nRow).html(printerstatus)
 
                 // Sharing
