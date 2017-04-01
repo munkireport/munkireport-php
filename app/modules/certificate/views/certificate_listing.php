@@ -23,6 +23,7 @@ new Certificate_model;
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="certificate.commonname" data-colname='certificate.cert_cn'></th>
 		        <th data-i18n="certificate.expires" data-colname='certificate.cert_exp_time'></th>
+		        <th data-i18n="certificate.issuer" data-colname='certificate.issuer'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
@@ -98,9 +99,9 @@ new Certificate_model;
 	        	$('td:eq(4)', nRow).html('<span class="label label-'+cls+'"><span title="'+date+'">'+moment(date).fromNow()+'</span>');
 
 	        	// Format Check-In timestamp
-	        	var checkin = parseInt($('td:eq(5)', nRow).html());
+	        	var checkin = parseInt($('td:eq(6)', nRow).html());
 	        	var date = new Date(checkin * 1000);
-	        	$('td:eq(5)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+	        	$('td:eq(6)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery

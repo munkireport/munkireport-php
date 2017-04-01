@@ -16,9 +16,14 @@ SEP="	" # Seperator
 # Set LANG to english for the date command to work correctly
 export LANG=en_EN.UTF-8
 
+# Create certificate out file directory and file if it doesn't exist
+if [[ ! -f "${OUT}" ]]
+then
+	mkdir -p $(basename "${OUT}") && touch "${OUT}"
+fi
+
 # Truncate out file
 > "${OUT}"
-
 IFS=$'\n'
 
 # Check if /etc/certificates path exists. Typically not on non-server macOS/OS X
@@ -29,6 +34,7 @@ then
         # read the dates on each certificate
         ENDDATE=$(openssl x509 -noout -in "${CERT}" -enddate 2>/dev/null)
         SUBJECT=$(openssl x509 -noout -in "${CERT}" -subject -nameopt oneline 2>/dev/null)
+        ISSUER=$(openssl x509 -noout -in "${CERT}" -issuer -noout 2>/dev/null)
         if [[ -z "$ENDDATE" ]]
         then
             # this cert could not be read.
@@ -36,7 +42,7 @@ then
         else
             NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
             EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
-            echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}" >> "${OUT}"
+            echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}" #>> "${OUT}"
         fi
     done
 fi
@@ -44,18 +50,19 @@ fi
 # Parse non-Apple certificates in Keychain
 for CERT in $(security find-certificate -a /Library/Keychains/System.keychain | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
 do
-    if [[ "$CERT" != "com.apple"* ]]
+    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]
     then     
         # read the subject on each certificate
-        SUBJECT=$(security find-certificate -a -c "$CERT" -p | openssl x509 -subject -nameopt oneline -noout)
+        SUBJECT=$(security find-certificate -a -c "$CERT" -p | openssl x509 -subject -nameopt oneline -noout 2>/dev/null)
+        ISSUER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -issuer -noout 2>/dev/null)
         if [[ -z "$SUBJECT" ]]
         then
             # this cert could not be read.
             printf "INFO - $CERT could not be loaded by openssl\n"
         else
-            NOTAFTER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -enddate -noout | cut -d= -f2)
+            NOTAFTER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -enddate -noout | cut -d= -f2 2>/dev/null)
             EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
-            echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}" >> "${OUT}"
+            echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}" #>> "${OUT}"
         fi
     fi
 done
