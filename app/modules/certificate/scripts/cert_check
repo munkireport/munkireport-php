@@ -31,18 +31,22 @@ if [[ -d "${CERTSPATH}" ]]
 then
     for CERT in $(ls "${CERTSPATH}"*.cert.pem)
     do
-        # read the dates on each certificate
-        ENDDATE=$(openssl x509 -noout -in "${CERT}" -enddate 2>/dev/null)
-        SUBJECT=$(openssl x509 -noout -in "${CERT}" -subject -nameopt oneline 2>/dev/null)
-        ISSUER=$(openssl x509 -noout -in "${CERT}" -issuer -nameopt oneline -noout 2>/dev/null)
-        if [[ -z "$ENDDATE" ]]
-        then
-            # this cert could not be read.
-            printf "INFO - $CERT could not be loaded by openssl\n"
-        else
-            NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
-            EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
-            echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}" >> "${OUT}"
+        if [[ "$CERT" != *"com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]
+        then     
+
+            # read the dates on each certificate
+            ENDDATE=$(openssl x509 -noout -in "${CERT}" -enddate 2>/dev/null)
+            SUBJECT=$(openssl x509 -noout -in "${CERT}" -subject -nameopt oneline 2>/dev/null)
+            ISSUER=$(openssl x509 -noout -in "${CERT}" -issuer -nameopt oneline -noout 2>/dev/null)
+            if [[ -z "$ENDDATE" ]]
+            then
+                # this cert could not be read.
+                printf "INFO - $CERT could not be loaded by openssl\n"
+            else
+                NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
+                EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
+                echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}" >> "${OUT}"
+            fi
         fi
     done
 fi
