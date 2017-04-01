@@ -20,11 +20,9 @@ new Certificate_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="certificate.commonname" data-colname='certificate.cert_cn'></th>
 		        <th data-i18n="certificate.expires" data-colname='certificate.cert_exp_time'></th>
 		        <th data-i18n="certificate.issuer" data-colname='certificate.issuer'></th>
-				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -92,16 +90,12 @@ new Certificate_model;
 	        	$('td:eq(0)', nRow).html(link);
 
 	        	// Format expiration date
-	        	var checkin = parseInt($('td:eq(4)', nRow).html());
+	        	var checkin = parseInt($('td:eq(3)', nRow).html());
 	        	var date = new Date(checkin * 1000);
 	        	var diff = moment().diff(date, 'days');
 	        	var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
-	        	$('td:eq(4)', nRow).html('<span class="label label-'+cls+'"><span title="'+date+'">'+moment(date).fromNow()+'</span>');
+	        	$('td:eq(3)', nRow).html('<span class="label label-'+cls+'"><span title="'+date+'">'+moment(date).fromNow()+'</span>');
 
-	        	// Format Check-In timestamp
-	        	var checkin = parseInt($('td:eq(6)', nRow).html());
-	        	var date = new Date(checkin * 1000);
-	        	$('td:eq(6)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery
