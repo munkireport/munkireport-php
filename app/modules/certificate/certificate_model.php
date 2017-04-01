@@ -14,7 +14,7 @@ class Certificate_model extends Model
         $this->rs['timestamp'] = 0; // Timestamp of last update
         
         // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
+        $this->schema_version = 1;
         
         //indexes to optimize queries
         $this->idx[] = array('serial_number');
@@ -60,7 +60,12 @@ class Certificate_model extends Model
                     } else {
                         $this->cert_cn = 'Unknown';
                     }
-                    $this->issuer = substr($parts[3], 0, 254);
+                    if (preg_match('/issuer= \/CN=([^$]+)/', $parts[3], $matches)) {
+                        $this->issuer = $matches[1];
+                    } else {
+                        $this->issuer = 'Unknown';
+                    }
+
 
                     $this->id = '';
                     $this->timestamp = time();
