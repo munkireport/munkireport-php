@@ -10,6 +10,7 @@ class Certificate_model extends Model
         $this->rs['cert_exp_time'] = 0; // Unix timestamp of expiration time
         $this->rs['cert_path'] = ''; // Path to certificate
         $this->rs['cert_cn'] = ''; // Common name
+        $this->rs['issuer'] = ''; //Cerfitificate issuer
         $this->rs['timestamp'] = 0; // Timestamp of last update
         
         // Schema version, increment when creating a db migration
@@ -46,7 +47,7 @@ class Certificate_model extends Model
             if ($line) {
                 $parts = explode("\t", $line);
 
-                if (count($parts) !== 3) {
+                if (count($parts) !== 4) {
                     echo 'Invalid log entry: '.$line;
                 } else {
                     // Convert unix timestamp string to int
@@ -59,6 +60,7 @@ class Certificate_model extends Model
                     } else {
                         $this->cert_cn = 'Unknown';
                     }
+                    $this->issuer = substr($parts[3], 0, 254);
 
                     $this->id = '';
                     $this->timestamp = time();
