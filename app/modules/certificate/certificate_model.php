@@ -60,7 +60,7 @@ class Certificate_model extends Model
                     } else {
                         $this->cert_cn = 'Unknown';
                     }
-                    if (preg_match('/issuer= \/CN=([^$]+)/', $parts[3], $matches)) {
+                    if (preg_match('/CN = ([^,|\n]+)/', $parts[3], $matches)) {
                         $this->issuer = $matches[1];
                     } else {
                         $this->issuer = 'Unknown';

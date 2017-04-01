@@ -34,7 +34,7 @@ then
         # read the dates on each certificate
         ENDDATE=$(openssl x509 -noout -in "${CERT}" -enddate 2>/dev/null)
         SUBJECT=$(openssl x509 -noout -in "${CERT}" -subject -nameopt oneline 2>/dev/null)
-        ISSUER=$(openssl x509 -noout -in "${CERT}" -issuer -noout 2>/dev/null)
+        ISSUER=$(openssl x509 -noout -in "${CERT}" -issuer -nameopt oneline -noout 2>/dev/null)
         if [[ -z "$ENDDATE" ]]
         then
             # this cert could not be read.
@@ -54,7 +54,7 @@ do
     then     
         # read the subject on each certificate
         SUBJECT=$(security find-certificate -a -c "$CERT" -p | openssl x509 -subject -nameopt oneline -noout 2>/dev/null)
-        ISSUER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -issuer -noout 2>/dev/null)
+        ISSUER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -issuer -nameopt oneline -noout 2>/dev/null)
         if [[ -z "$SUBJECT" ]]
         then
             # this cert could not be read.
