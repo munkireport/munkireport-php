@@ -9,7 +9,7 @@ set -e
 # Adapted for munkireport by Arjen van Bochoven (april 2015)
 # Added Keychain certs by Eric Holtam (April 2017)
 
-CERTSPATH=/etc/certificates/*.cert.pem
+CERTSPATH=/etc/certificates/
 OUT="/usr/local/munki/preflight.d/cache/certificate.txt"
 SEP="	" # Seperator
 
@@ -24,7 +24,7 @@ IFS=$'\n'
 # Check if /etc/certificates path exists. Typically not on non-server macOS/OS X
 if [[ -d "${CERTSPATH}" ]]
 then
-    for CERT in "${CERTSPATH}"
+    for CERT in $(ls "${CERTSPATH}"*.cert.pem)
     do
         # read the dates on each certificate
         ENDDATE=$(openssl x509 -noout -in "${CERT}" -enddate 2>/dev/null)
@@ -42,7 +42,7 @@ then
 fi
 
 # Parse non-Apple certificates in Keychain
-for CERT in $(security find-certificate -a  | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
+for CERT in $(security find-certificate -a /Library/Keychains/System.keychain | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
 do
     if [[ "$CERT" != "com.apple"* ]]
     then     
@@ -61,3 +61,4 @@ do
 done
 
 unset IFS
+
