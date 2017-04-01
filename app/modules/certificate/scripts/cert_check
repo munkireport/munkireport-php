@@ -34,7 +34,7 @@ then
             # this cert could not be read.
             printf "INFO - $CERT could not be loaded by openssl\n"
         else
-            NOTAFTER=`echo $ENDDATE | awk -F NOTAFTER= '{print $NF}'`
+            NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
             EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
             echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}" >> "${OUT}"
         fi
