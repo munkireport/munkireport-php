@@ -2,6 +2,7 @@
     "commonname": "Common Name",
     "expired": "Abgelaufen",
     "expires": "Ablaufdatum",
+    "issuer": "Issuer",
     "ok": "Gültig für mehr als drei Monate",
     "report_title": "Zertifikats-Report",
     "soon": "Läuft innerhalb der nächsten drei Monate ab",
