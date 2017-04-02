@@ -43,15 +43,17 @@ $(document).on('appReady', function(e, lang) {
                             var diff = moment().diff(date, 'days');
                             var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
                             return('<span class="label label-'+cls+'">'+moment(date).fromNow()+'</span>')
+                            }))
                     .append($('<td>')
                         .html(function(){
                             var date = new Date(cert.rs.cert_exp_time * 1000);
                             return(date)
+                            }))
                     .append($('<td>')
                         .text(cert.rs.issuer))                        
                     .append($('<td>')
                         .text(cert.rs.cert_location));                    
-                        })));
+                     );   
             });
 
             // Add tooltips
