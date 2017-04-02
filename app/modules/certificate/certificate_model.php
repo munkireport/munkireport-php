@@ -25,6 +25,23 @@ class Certificate_model extends Model
         $this->create_table();
     }
 
+     public function get_certificates()
+     {
+        $out = array();
+        $sql = "SELECT cert_cn, COUNT(1) AS count
+                FROM certificate
+                GROUP BY cert_cn
+                ORDER BY COUNT DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->cert_cn = $obj->cert_cn ? $obj->cert_cn : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+
     // ------------------------------------------------------------------------
     /**
      * Process data sent by postflight

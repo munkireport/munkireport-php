@@ -1,9 +1,11 @@
 {
+    "cert_groups": "Certificates by Name"
     "commonname": "Nom commun",
     "expired": "Expiré",
     "expiration_date": "Expiration Date",
     "expires": "Expire",
     "issuer": "Issuer",
+    "nocertificate": "No Certificate",
     "ok": "Valable pour plus de trois mois",
     "report_title": "Rapport Certificats",
     "soon": "Expire dans les trois mois",
