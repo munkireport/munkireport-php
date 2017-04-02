@@ -53,7 +53,7 @@ $(document).on('appReady', function(e, lang) {
                         .text(cert.rs.issuer))                        
                     .append($('<td>')
                         .text(cert.rs.cert_location))   
-            });
+            );
 
             // Add tooltips
             $('tr[title]').tooltip();
