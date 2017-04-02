@@ -29,12 +29,12 @@ class Migration_certificate_add_columns extends Model
         $this->exec($sql);
 
         // so is adding an index...
-        $idx_name = $this->tablename . '_' . $this->columname;
+        $idx_name = $this->tablename . '_' . $this->columname1;
         $sql = sprintf(
             "CREATE INDEX %s ON %s (%s)",
             $idx_name,
             $this->enquote($this->tablename),
-            $this->columname
+            $this->columname1
         );
 
         $this->exec($sql);
