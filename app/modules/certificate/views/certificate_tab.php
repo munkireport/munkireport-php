@@ -61,8 +61,9 @@ $(document).on('appReady', function(e, lang) {
             // Set correct tab on location hash
             loadHash();
 
-        })
-    }
-});
+            })
+        }
+    })
+};
 
 </script>
