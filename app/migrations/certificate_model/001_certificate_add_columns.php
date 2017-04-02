@@ -35,15 +35,6 @@ class Migration_certificate_add_columns extends Model
             // We do nothing here
         }
 
-        // so is adding an index...
-        $idx_name = $this->tablename . '_' . $this->columname;
-        $sql = sprintf(
-            "CREATE INDEX %s ON %s (%s)",
-            $idx_name,
-            $this->enquote($this->tablename),
-            $this->columname
-        );
-
         $this->exec($sql);
 
         $dbh->commit();
