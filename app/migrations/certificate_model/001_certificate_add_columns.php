@@ -2,10 +2,8 @@
 
 class Migration_certificate_add_columns extends Model
 {
-    protected $addcols = array(
-                'issuer' => VARCHAR(255),
-                'cert_location'=> VARCHAR(255),
-                );
+    protected $columname1 = 'issuer';
+    protected $columname2 = 'cert_location';
 
     public function __construct()
     {
@@ -21,19 +19,43 @@ class Migration_certificate_add_columns extends Model
         // Wrap in transaction
         $dbh->beginTransaction();
 
-        try {
-            foreach ($this->addcols as $colname => $type) {
-                $sql = sprintf(
-                    'ALTER TABLE %s ADD COLUMN %s %s',
-                    $this->tablename,
-                    $colname,
-                    $type
-                );
-                $this->exec($sql);
-            }
-        } catch (Exception $e) {
-            // We do nothing here
-        }
+        // Adding a column is simple...
+        $sql = sprintf(
+            'ALTER TABLE %s ADD COLUMN %s VARCHAR(255)',
+            $this->enquote($this->tablename),
+            $this->enquote($this->columname1)
+        );
+
+        $this->exec($sql);
+
+        // so is adding an index...
+        $idx_name = $this->tablename . '_' . $this->columname;
+        $sql = sprintf(
+            "CREATE INDEX %s ON %s (%s)",
+            $idx_name,
+            $this->enquote($this->tablename),
+            $this->columname
+        );
+
+        $this->exec($sql);
+
+        // Adding a column is simple...
+        $sql = sprintf(
+            'ALTER TABLE %s ADD COLUMN %s VARCHAR(255)',
+            $this->enquote($this->tablename),
+            $this->enquote($this->columname2)
+        );
+
+        $this->exec($sql);
+
+        // so is adding an index...
+        $idx_name = $this->tablename . '_' . $this->columname2;
+        $sql = sprintf(
+            "CREATE INDEX %s ON %s (%s)",
+            $idx_name,
+            $this->enquote($this->tablename),
+            $this->columname2
+        );
 
         $this->exec($sql);
 
@@ -78,7 +100,14 @@ class Migration_certificate_add_columns extends Model
                 $sql = sprintf(
                     'ALTER TABLE %s DROP COLUMN %s',
                     $this->enquote($this->tablename),
-                    $this->enquote($this->columname)
+                    $this->enquote($this->columname1)
+                );
+                $this->exec($sql);
+                
+                $sql = sprintf(
+                    'ALTER TABLE %s DROP COLUMN %s',
+                    $this->enquote($this->tablename),
+                    $this->enquote($this->columname2)
                 );
                 $this->exec($sql);
         }
