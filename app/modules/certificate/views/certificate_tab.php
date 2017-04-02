@@ -42,13 +42,13 @@ $(document).on('appReady', function(e, lang) {
                             var date = new Date(cert.rs.cert_exp_time * 1000);
                             var diff = moment().diff(date, 'days');
                             var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
-                            return('<span class="label label-'+cls+'">'+moment(date).fromNow()+'</span>');
+                            return('<span class="label label-'+cls+'">'+moment(date).fromNow()+'</span>')
                     .append($('<td>')
                         .text(cert.rs.expiration_date))                        
                     .append($('<td>')
                         .text(cert.rs.issuer))                        
                     .append($('<td>')
-                        .text(cert.rs.cert_location))                        
+                        .text(cert.rs.cert_location));                    
                         })));
             });
 
