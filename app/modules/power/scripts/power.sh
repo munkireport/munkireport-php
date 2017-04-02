@@ -18,7 +18,7 @@ powerfile="$DIR/cache/powerinfo.plist"
 nl='
 '
 # ^^^ New line variable ^^^ # no touchy
- 
+
 # Gather standard powerer information and settings
 pmset_general=$(pmset -g 2>/dev/null | sed -e 's/"//g' -e s'/powerbutton/ Sleep On Power Button /g')
 pmset_schedule=$(pmset -g sched 2>/dev/null | sed -e 's/  /schedule: /g' -e 's/"//g')
@@ -46,7 +46,7 @@ if [ -z "$AppleSmartBattery" ]; then
 
 else
 
-battery_text1=$(ioreg -n AppleSmartBattery -r | sed -e 's/" = 65535/" = -9876543/g' -e 's/"//g')
+battery_text1=$(ioreg -n AppleSmartBattery -r | sed -e 's/" = 65535/" = -1/g' -e 's/"//g')
 battery_text2=$(system_profiler SPPowerDataType | grep 'Amperage')
 
 ## Battery Condition
@@ -54,19 +54,19 @@ BatteryInstalled=$(echo "$AppleSmartBattery" | grep "BatteryInstalled" | awk '{ 
 if [ "$BatteryInstalled" == Yes ]; then
 	Condition=`system_profiler SPPowerDataType | grep 'Condition' | awk '{$1=""; print}' | awk -F' ' '{printf "%s%s\n", $1, $2}'`  ## print all except first column
 	condition="condition = ${Condition}"
-    
+
     ## Sometimes an inserted battery will show up as blank
     if [[ -z "${Condition}" ]]; then
 	   condition="condition = No Battery"
     fi
-    
+
 else
 	condition="condition = No Battery"
 fi
 
 battery_info="${condition}${nl}${battery_text1}${nl}${battery_text2}"
 
-fi 
+fi
 
 final_stats="${nl}${battery_info}${nl}${pmset_general}${nl}${pmset_schedule}${nl}${pmset_ups}${nl}${pmset_stats}${nl}${pmset_adapter}${nl}${pmset_therm}${nl}${pmset_sysload}${nl}${pmset_assertions}${nl}${pmset_accps}${nl}${pmset_ups_name}${nl}${pmset_ups_percent_out}${nl}${pmset_ups_charging_status_out}"
 
@@ -77,7 +77,7 @@ rm "$powerfile" 2>/dev/null
 if [[ $(/usr/bin/sw_vers -productVersion | /usr/bin/cut -d . -f 2) -lt 8 ]]; then
 # Turn the final_stats text mess into a pretty PLIST file for uploading
 for TRANSLATE in '      ManufactureDate = ' '      DesignCapacity = ' '      MaxCapacity = ' '      CurrentCapacity = ' '      CycleCount = ' '      Temperature = ' 'condition = ' ' standbydelay         ' ' standby              ' ' womp		' ' halfdim	' ' hibernatefile	' ' gpuswitch            ' ' sms		' ' networkoversleep	' ' disksleep	' ' sleep		' ' autopoweroffdelay    ' ' hibernatemode	' ' autopoweroff         ' ' ttyskeepawake	' ' displaysleep	' ' acwake		' ' lidwake	' ' Sleep On Power Button ' ' powernap             ' ' autorestart	' ' DestroyFVKeyOnStandby		' 'schedule: ' '  haltlevel		' '  haltafter		' '  haltremain		' ' lessbright           ' 'Sleep Count:' 'Dark Wake Count:' 'User Wake Count:' ' attage = ' ' AdapterID = ' ' Family Code = ' ' Serial Number = ' 'CPU_Scheduler_Limit 	= ' '	CPU_Available_CPUs 	= ' '	CPU_Speed_Limit 	= ' '   BackgroundTask                 ' '   ApplePushServiceTask                    ' '   UserIsActive                            ' '   PreventUserIdleDisplaySleep             ' '   PreventSystemSleep                      ' '   ExternalMedia                           ' '   PreventUserIdleSystemSleep              ' '   NetworkClientActive            ' '  combined level = ' '  - user level = ' '  - battery level = ' '  - thermal level = ' ' UPS Name:' 'Now drawing from ' 'UPS Percent: ' 'UPS Status: ' '      ExternalConnected = ' '      TimeRemaining = ' '      InstantTimeToEmpty = ' '      CellVoltage = ' '      Voltage = ' '      PermanentFailureStatus = ' '      Manufacturer = ' '      PackReserve = ' '      AvgTimeToFull = ' '      BatterySerialNumber = ' '      Amperage (mA): ' '      FullyCharged = ' '      IsCharging = ' '      DesignCycleCount9C = ' '      AvgTimeToEmpty = '
-do 
+do
     OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${final_stats}" | sed -e "s/${TRANSLATE}//g" )
     OUTKEY=$(awk -F' ' '{printf "%s%s\n", $1, $2}' <<< "${TRANSLATE}" | tr -cd '[[:alnum:]]' )
     /usr/libexec/plistbuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$powerfile" 1>/dev/null
@@ -87,7 +87,7 @@ done
 else
 # Turn the final_stats text mess into a pretty PLIST file for uploading
 for TRANSLATE in '      ManufactureDate = ' '      DesignCapacity = ' '      MaxCapacity = ' '      CurrentCapacity = ' '      CycleCount = ' '      Temperature = ' 'condition = ' ' standbydelay         ' ' standby              ' ' womp                 ' ' halfdim              ' ' hibernatefile        ' ' gpuswitch            ' ' sms                  ' ' networkoversleep     ' ' disksleep            ' ' sleep                ' ' autopoweroffdelay    ' ' hibernatemode        ' ' autopoweroff         ' ' ttyskeepawake        ' ' displaysleep         ' ' acwake               ' ' lidwake              ' ' Sleep On Power Button ' ' powernap             ' ' autorestart          ' ' DestroyFVKeyOnStandby		' 'schedule: ' '  haltlevel		' '  haltafter		' '  haltremain		' ' lessbright           ' 'Sleep Count:' 'Dark Wake Count:' 'User Wake Count:' ' attage = ' ' AdapterID = ' ' Family Code = ' ' Serial Number = ' 'CPU_Scheduler_Limit 	= ' '	CPU_Available_CPUs 	= ' '	CPU_Speed_Limit 	= ' '   BackgroundTask                 ' '   ApplePushServiceTask           ' '   UserIsActive                   ' '   PreventUserIdleDisplaySleep    ' '   PreventSystemSleep             ' '   ExternalMedia                  ' '   PreventUserIdleSystemSleep     ' '   NetworkClientActive            ' '  combined level = ' '  - user level = ' '  - battery level = ' '  - thermal level = ' ' UPS Name:' 'Now drawing from ' 'UPS Percent: ' 'UPS Status: ' '      ExternalConnected = ' '      TimeRemaining = ' '      InstantTimeToEmpty = ' '      CellVoltage = ' '      Voltage = ' '      PermanentFailureStatus = ' '      Manufacturer = ' '      PackReserve = ' '      AvgTimeToFull = ' '      BatterySerialNumber = ' '      Amperage (mA): ' '      FullyCharged = ' '      IsCharging = ' '      DesignCycleCount9C = ' '      AvgTimeToEmpty = '
-do 
+do
     OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${final_stats}" | sed -e "s/${TRANSLATE}//g" )
     OUTKEY=$(awk -F' ' '{printf "%s%s\n", $1, $2}' <<< "${TRANSLATE}" | tr -cd '[[:alnum:]]' )
     /usr/libexec/plistbuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$powerfile" 1>/dev/null
