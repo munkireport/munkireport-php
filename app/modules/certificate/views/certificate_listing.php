@@ -24,6 +24,7 @@ new Certificate_model;
 		        <th data-i18n="certificate.expires" data-colname='certificate.cert_exp_time'></th>
 		        <th data-i18n="certificate.expiration_date" data-colname='certificate.cert_exp_time'></th>
 		        <th data-i18n="certificate.issuer" data-colname='certificate.issuer'></th>
+                <th data-i18n="certificate.location" data-colname='certificate.cert_location'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
@@ -104,9 +105,9 @@ new Certificate_model;
 	        	$('td:eq(4)', nRow).html('<span title="'+date+'">'+date+'</span>');
 
 	        	// Format Check-In timestamp
-	        	var checkin = parseInt($('td:eq(6)', nRow).html());
+	        	var checkin = parseInt($('td:eq(7)', nRow).html());
 	        	var date = new Date(checkin * 1000);
-	        	$('td:eq(6)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+	        	$('td:eq(7)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
 
 		    }
 	    } );

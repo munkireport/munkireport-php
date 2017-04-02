@@ -1,8 +1,8 @@
 <?php
 
-class Migration_certificate_add_issuer extends Model
+class Migration_certificate_add_columns extends Model
 {
-    protected $columname = 'issuer';
+    protected $addcols = array('issuer','cert_location');
 
     public function __construct()
     {
@@ -18,14 +18,19 @@ class Migration_certificate_add_issuer extends Model
         // Wrap in transaction
         $dbh->beginTransaction();
 
-        // Adding a column is simple...
-        $sql = sprintf(
-            'ALTER TABLE %s ADD COLUMN %s VARCHAR(255)',
-            $this->enquote($this->tablename),
-            $this->enquote($this->columname)
-        );
-
-        $this->exec($sql);
+        try {
+            foreach ($this->addcols as $colname => $type) {
+                $sql = sprintf(
+                    'ALTER TABLE %s ADD COLUMN %s %s',
+                    $this->tablename,
+                    $colname,
+                    $type
+                );
+                $this->exec($sql);
+            }
+        } catch (Exception $e) {
+            // We do nothing here
+        }
 
         // so is adding an index...
         $idx_name = $this->tablename . '_' . $this->columname;
@@ -57,18 +62,17 @@ class Migration_certificate_add_issuer extends Model
 								cert_exp_time INTEGER,
 								cert_path VARCHAR(255),
 								cert_cn VARCHAR(255),
-								timestamp INTEGER,
-								issuer VARCHAR(255))";
+								timestamp INTEGER)";
                 $this->exec($sql);
 
-                $sql = "INSERT INTO machine_temp 
-							SELECT id, serial_number, cert_exp_time, cert_path, cert_cn, timestamp, issuer FROM certificate";
+                $sql = "INSERT INTO certificate_temp 
+							SELECT id, serial_number, cert_exp_time, cert_path, cert_cn, timestamp FROM certificate";
                 $this->exec($sql);
 
                 $sql = "DROP table certificate";
                 $this->exec($sql);
 
-                $sql = "ALTER TABLE machine_temp RENAME TO certificate";
+                $sql = "ALTER TABLE certificate_temp RENAME TO certificate";
                 $this->exec($sql);
 
                 $dbh->commit();

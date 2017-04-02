@@ -5,6 +5,7 @@
     "expired": "Abgelaufen",
     "expires": "Ablaufdatum",
     "issuer": "Issuer",
+    "location": "Location",
     "nocertificate": "No Certificate",
     "ok": "Gültig für mehr als drei Monate",
     "report_title": "Zertifikats-Report",

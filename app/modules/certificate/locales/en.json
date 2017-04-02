@@ -5,6 +5,7 @@
     "expiration_date": "Expiration Date",
     "expires": "Expires",
     "issuer": "Issuer",
+    "location": "Location",
     "nocertificate": "No Certificate",
     "ok": "Valid for more than three months",
     "report_title": "Certificate Report",

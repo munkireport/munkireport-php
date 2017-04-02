@@ -10,6 +10,7 @@ set -e
 # Added Keychain certs by Eric Holtam (April 2017)
 
 CERTSPATH=/etc/certificates/
+SYSTEM_KEYCHAIN="/Library/Keychains/System.keychain"
 OUT="/usr/local/munki/preflight.d/cache/certificate.txt"
 SEP="	" # Seperator
 
@@ -45,14 +46,14 @@ then
             else
                 NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
                 EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
-                echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}" >> "${OUT}"
+                echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}${SEP}${CERTSPATH}" >> "${OUT}"
             fi
         fi
     done
 fi
 
 # Parse non-Apple certificates in Keychain
-for CERT in $(security find-certificate -a /Library/Keychains/System.keychain | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
+for CERT in $(security find-certificate -a "${SYSTEM_KEYCHAIN}" | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
 do
     if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]
     then     
@@ -66,7 +67,7 @@ do
         else
             NOTAFTER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -enddate -noout | cut -d= -f2 2>/dev/null)
             EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
-            echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}" >> "${OUT}"
+                echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}${SEP}${SYSTEM_KEYCHAIN}" >> "${OUT}"
         fi
     fi
 done
