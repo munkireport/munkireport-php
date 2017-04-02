@@ -1,5 +1,6 @@
 {
     "commonname": "Common Name",
+    "expiration_date": "Expiration Date",
     "expired": "Abgelaufen",
     "expires": "Ablaufdatum",
     "issuer": "Issuer",

@@ -1,6 +1,7 @@
 {
     "commonname": "Nom commun",
     "expired": "Expiré",
+    "expiration_date": "Expiration Date",
     "expires": "Expire",
     "issuer": "Issuer",
     "ok": "Valable pour plus de trois mois",
