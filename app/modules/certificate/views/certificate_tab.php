@@ -64,6 +64,6 @@ $(document).on('appReady', function(e, lang) {
             })
         }
     })
-};
+}
 
 </script>
