@@ -52,8 +52,8 @@ $(document).on('appReady', function(e, lang) {
                     .append($('<td>')
                         .text(cert.rs.issuer))                        
                     .append($('<td>')
-                        .text(cert.rs.cert_location))   
-            );
+                        .text(cert.rs.cert_location)));   
+            });
 
             // Add tooltips
             $('tr[title]').tooltip();
@@ -61,9 +61,8 @@ $(document).on('appReady', function(e, lang) {
             // Set correct tab on location hash
             loadHash();
 
-            })
         }
-    })
-}
+    });
+});
 
 </script>
