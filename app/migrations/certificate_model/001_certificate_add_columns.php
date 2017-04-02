@@ -2,7 +2,10 @@
 
 class Migration_certificate_add_columns extends Model
 {
-    protected $addcols = array('issuer','cert_location');
+    protected $addcols = array(
+                'issuer' => VARCHAR(255),
+                'cert_location'=> VARCHAR(255),
+                );
 
     public function __construct()
     {
