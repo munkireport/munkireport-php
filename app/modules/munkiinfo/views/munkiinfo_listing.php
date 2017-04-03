@@ -17,13 +17,14 @@ new Munkiinfo_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="munkiinfo.protocol" data-colname='munkiinfo.munkiinfo_value'></th>
+		        <th data-i18n="munkiinfo.key" data-colname='munkiinfo.munkiinfo_key'></th>
+		        <th data-i18n="munkiinfo.value" data-colname='munkiinfo.munkiinfo_value'></th>
                 <th data-i18n="last_seen" data-sort="desc" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="5" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="6" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -80,15 +81,6 @@ new Munkiinfo_model;
                         d.search.value = '';
                         console.log(d.columns[3].search.value)
                     }
-                    
-                    // Only return the matchin protocol key
-                    d.where = [
-                        {
-                            table: 'munkiinfo',
-                            column: 'munkiinfo_key',
-                            value: 'munkiprotocol'
-                        }
-                    ];
                 }
             },
             dom: mr.dt.buttonDom,
@@ -104,9 +96,9 @@ new Munkiinfo_model;
                 $('td:eq(0)', nRow).html(link);
 
                 // Format date
-                var checkin = parseInt($('td:eq(4)', nRow).html());
+                var checkin = parseInt($('td:eq(5)', nRow).html());
                 var date = new Date(checkin * 1000);
-                $('td:eq(4)', nRow).html(moment(date).fromNow());
+                $('td:eq(5)', nRow).html(moment(date).fromNow());
             }
 	    });
 

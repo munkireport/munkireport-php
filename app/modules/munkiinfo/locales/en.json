@@ -1,6 +1,7 @@
 {
     "applecatalog": "Apple Catalog URL",
     "duration": "Duration",
+    "key": "Key",
     "listing": "Munki Info",
     "localonlymanifest": "Local Only Manifest",
     "manifest": "Manifest",
@@ -14,5 +15,6 @@
     "protocol": "Protocol",
     "reporttitle": "Munki Info",
     "softwarerepourl": "Software Repo URL",
-    "start": "Start"
+    "start": "Start",
+    "value": "Value"
 }
