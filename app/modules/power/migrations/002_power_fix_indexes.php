@@ -86,7 +86,7 @@ class Migration_power_fix_indexes extends Model
             case 'mysql':
                 foreach($this->idx as $indexArray)
                 {
-                    $sql = 'DROP INDEX ' . $indexArray[0] . 'ON power';
+                    $sql = 'DROP INDEX ' . $indexArray[0] . ' ON power';
                     $this->exec($sql);
                 }
                 break;
