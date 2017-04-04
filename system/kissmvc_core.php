@@ -502,7 +502,7 @@ abstract class KISS_Model
         $i=0;
         foreach ($this->rs as $k => $v) {
             if ($k!=$pkname or $v) {
-                $stmt->bindValue(++$i, is_scalar($v) ? $v : ( $this->COMPRESS_ARRAY ? gzdeflate(serialize($v)) : serialize($v) ));
+                $stmt->bindValue(++$i, $this->is_scalar_or_null($v) ? $v : ( $this->COMPRESS_ARRAY ? gzdeflate(serialize($v)) : serialize($v) ));
             }
         }
 
@@ -527,7 +527,7 @@ abstract class KISS_Model
         if ($rs) {
             foreach ($rs as $key => $val) {
                 if (array_key_exists($key, $this->rs)) {
-                    $this->rs[$key] = is_scalar($this->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val);
+                    $this->rs[$key] = $this->is_scalar_or_null($this->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val);
                 }
             }
         }
@@ -546,7 +546,7 @@ abstract class KISS_Model
         $stmt = $this->prepare($sql);
         $i=0;
         foreach ($this->rs as $k => $v) {
-            $stmt->bindValue(++$i, is_scalar($v) ? $v : ( $this->COMPRESS_ARRAY ? gzdeflate(serialize($v)) : serialize($v) ));
+            $stmt->bindValue(++$i, $this->is_scalar_or_null($v) ? $v : ( $this->COMPRESS_ARRAY ? gzdeflate(serialize($v)) : serialize($v) ));
         }
         $stmt->bindValue(++$i, $this->rs[$this->pkname]);
         return $this->execute($stmt);
@@ -609,7 +609,7 @@ abstract class KISS_Model
         }
         foreach ($rs as $key => $val) {
             if (array_key_exists($key, $this->rs)) {
-                $this->rs[$key] = is_scalar($this->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val);
+                $this->rs[$key] = $this->is_scalar_or_null($this->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val);
             }
         }
         return $this;
@@ -633,7 +633,7 @@ abstract class KISS_Model
             $myclass = new $class();
             foreach ($rs as $key => $val) {
                 if (array_key_exists($key, $myclass->rs)) {
-                    $myclass->rs[$key] = is_scalar($myclass->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val);
+                    $myclass->rs[$key] = $this->is_scalar_or_null($myclass->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val);
                 }
             }
             $arr[]=$myclass;
@@ -669,5 +669,10 @@ abstract class KISS_Model
         }
         $stmt = $this->prepare($sql);
         return $this->execute($stmt, $bindings);
+    }
+
+    private function is_scalar_or_null($value)
+    {
+        return is_scalar($value) || is_null($value);
     }
 }
