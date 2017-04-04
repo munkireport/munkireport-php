@@ -150,35 +150,35 @@ $(document).on('appReady', function(e, lang) {
 			$('#battery-adapter_serial_number').text(data.adapter_serial_number);
 
 			// Format wattage
-            if (data.wattage != "-9876543" && (data.wattage)) {
+            if (data.wattage != "-9876543" && data.wattage != null && (data.wattage)) {
             $('#battery-wattage').html(data.wattage+" "+i18n.t('power.watts'));
             } else {
 	        	$('#battery-wattage').html('');
             }
 
 			// Format timeremaining
-			if(data.timeremaining == "-9876543" || data.manufacture_date == '1980-00-00' || data.fullycharged == 'Yes') {
+			if(data.timeremaining == "-9876543" || data.timeremaining == null || data.manufacture_date == '1980-00-00' || data.fullycharged == 'Yes') {
 				 $('#battery-timeremaining').text('');
             } else {
 				 $('#battery-timeremaining').html('<span title="'+data.timeremaining+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.timeremaining, "minutes").humanize()+'</span>');
 			}
 
 			// Format instanttimetoempty
-			if(data.instanttimetoempty == "-9876543") {
+			if(data.instanttimetoempty == "-9876543" || data.instanttimetoempty == null) {
 				 $('#battery-instanttimetoempty').text('');
             } else {
 				 $('#battery-instanttimetoempty').html('<span title="'+data.instanttimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.instanttimetoempty, "minutes").humanize()+'</span>');
 			}
 
 			// Format avgtimetofull
-			if(data.avgtimetofull == "-9876543") {
+			if(data.avgtimetofull == "-9876543" || data.avgtimetofull == null) {
 				 $('#battery-avgtimetofull').text('');
             } else {
 				 $('#battery-avgtimetofull').html('<span title="'+data.avgtimetofull+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetofull, "minutes").humanize()+'</span>');
 			}
 
 			// Format avgtimetoempty
-			if(data.avgtimetoempty == "-9876543") {
+			if(data.avgtimetoempty == "-9876543" || data.avgtimetoempty == null) {
 				 $('#battery-avgtimetoempty').text('');
             } else {
 				 $('#battery-avgtimetoempty').html('<span title="'+data.avgtimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetoempty, "minutes").humanize()+'</span>');
@@ -203,7 +203,7 @@ $(document).on('appReady', function(e, lang) {
 			}
 
 			// Format permanentfailurestatus
-            if (data.permanentfailurestatus != "-9876543" && (data.permanentfailurestatus)) {
+            if (data.permanentfailurestatus != "-9876543" && data.permanentfailurestatus != null && (data.permanentfailurestatus)) {
 				 $('#battery-permanentfailurestatus').text("");
             } else if(data.permanentfailurestatus == "1") {
 				 $('#battery-permanentfailurestatus').addClass('danger').html(i18n.t('yes'));
@@ -223,21 +223,21 @@ $(document).on('appReady', function(e, lang) {
 			}
 
             // Format batteryserialnumber
-            if (data.batteryserialnumber != "-9876543" && (data.batteryserialnumber)) {
+            if (data.batteryserialnumber != "-9876543" && data.batteryserialnumber != null && (data.batteryserialnumber)) {
             $('#battery-batteryserialnumber').html(data.batteryserialnumber);
             } else {
 	        	$('#battery-batteryserialnumber').html('');
             }
 
             // Format packreserve
-            if (data.packreserve != "-9876543" && (data.packreserve)) {
+            if (data.packreserve != "-9876543" && data.packreserve != null && (data.packreserve)) {
             $('#battery-packreserve').html(data.packreserve+" mAh");
             } else {
 	        	$('#battery-packreserve').html('');
             }
 
             // Format manufacturer
-            if (data.manufacturer != "-9876543" && (data.manufacturer)) {
+            if (data.manufacturer != "-9876543" && data.manufacturer != null && (data.manufacturer)) {
             $('#battery-manufacturer').html(data.manufacturer);
             } else {
 	        	$('#battery-manufacturer').html('');
@@ -251,14 +251,14 @@ $(document).on('appReady', function(e, lang) {
             }
 
             // Format voltage
-            if (data.voltage != "-9876540" && (data.voltage)) {
+            if (data.voltage != "-9876540" && data.voltage != null && (data.voltage)) {
             $('#battery-voltage').html(data.voltage+" "+i18n.t('power.volts'));
             } else {
 	        	$('#battery-voltage').html('');
             }
 
             // Format amperage
-            if (data.amperage != "-9876540" && (data.amperage)) {
+            if (data.amperage != "-9876540" && data.amperage != null && (data.amperage)) {
             $('#battery-amperage').html(data.amperage+" "+i18n.t('power.amps'));
             } else {
 	        	$('#battery-amperage').html('');
@@ -266,7 +266,7 @@ $(document).on('appReady', function(e, lang) {
 
             // Calculate charge/discharge watts
             // null amperage and voltage is -9876540
-            if (data.amperage != "-9876540" && (data.amperage) && data.voltage != "-9876540" && (data.voltage)) {
+            if (data.amperage != "-9876540" && data.amperage != null && (data.amperage) && data.voltage != "-9876540" && data.voltage != null && (data.voltage)) {
             $('#battery-watts').html((data.amperage*data.voltage).toFixed(2)+" "+i18n.t('power.watts'));
                 if (data.amperage >= 0) {
                   $('#battery-watt-label').html(i18n.t('power.charging_watt'));
@@ -296,21 +296,21 @@ $(document).on('appReady', function(e, lang) {
             }
 
             // Format designed capacity
-            if (data.design_capacity != "-9876543" && (data.design_capacity)) {
+            if (data.design_capacity != "-9876543" && data.design_capacity != null && (data.design_capacity)) {
             $('#battery-design_capacity').html(data.design_capacity+' mAh');
             } else {
 	        	$('#battery-design_capacity').html('');
             }
 
             // Format current capacity
-            if (data.current_capacity != "-9876543" && (data.current_capacity)) {
+            if (data.current_capacity != "-9876543" && data.current_capacity != null && (data.current_capacity)) {
             $('#battery-current_capacity').html(data.current_capacity+' mAh');
             } else {
 	        	$('#battery-current_capacity').html('');
             }
 
             // Format max capacity
-            if (data.max_capacity != "-9876543" && (data.max_capacity)) {
+            if (data.max_capacity != "-9876543" && data.max_capacity != null && (data.max_capacity)) {
             $('#battery-max_capacity').html(data.max_capacity+' mAh');
             } else {
 	        	$('#battery-max_capacity').html('');
@@ -350,7 +350,7 @@ $(document).on('appReady', function(e, lang) {
             $('#battery-condition').html(data.condition)
 
             // Format battery health
-            if (data.max_percent != "-9876543" && (data.max_percent)) {
+            if (data.max_percent != "-9876543" && data.max_percent != null && (data.max_percent)) {
             var cls = data.max_percent > 89 ? 'success' : (data.max_percent > 79 ? 'warning' : 'danger');
             $('#battery-max_percent').html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+data.max_percent+'%;">'+data.max_percent+'%</div></div>');
             } else {
@@ -358,7 +358,7 @@ $(document).on('appReady', function(e, lang) {
             }
 
             // Format battery charge
-            if (data.current_percent != "-9876543" && (data.current_percent)) {
+            if (data.current_percent != "-9876543" && data.current_percent != null && (data.current_percent)) {
             var cls = data.current_percent > 89 ? 'success' : (data.current_percent > 79 ? 'warning' : 'danger');
             $('#battery-current_percent').html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+data.current_percent+'%;">'+data.current_percent+'%</div></div>');
             } else {
@@ -366,7 +366,7 @@ $(document).on('appReady', function(e, lang) {
             }
 
             // Format temperature
-            if (data.temperature != "-9876543" && (data.temperature) && data.temperature !== 0) {
+            if (data.temperature != "-9876543" && data.temperature != null && (data.temperature) && data.temperature !== 0) {
             if (data.temp_format === "F"){
 				var outtemp_c = (data.temperature / 100)+"°C";
 				var outtemp_f = (((data.temperature * 9/5) + 3200) / 100).toFixed(2)+"°F";

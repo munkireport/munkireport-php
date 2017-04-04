@@ -271,14 +271,14 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-cpu_available_cpus').text(data.cpu_available_cpus);
 			}
                         
-			if(data.cpu_scheduler_limit == "-9876543") {
+			if(data.cpu_scheduler_limit == "-9876543" || data.cpu_scheduler_limit == null) {
 				 $('#power-cpu_scheduler_limit').text('');
 			} else{
 				 $('#power-cpu_scheduler_limit').text(data.cpu_scheduler_limit+'%');
 			}
 
             
-			if(data.cpu_speed_limit == "-9876543") {
+			if(data.cpu_speed_limit == "-9876543" || data.cpu_speed_limit == null) {
 				 $('#power-cpu_speed_limit').text('');
 			} else{
 				 $('#power-cpu_speed_limit').text(data.cpu_speed_limit+'%');
@@ -296,7 +296,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-hibernatemode').data.hibernatemode;
 			}  
                           
-			if(data.standbydelay == "-9876543") {
+			if(data.standbydelay == "-9876543" || data.standbydelay == null) {
 				 $('#power-standbydelay').text('');
 			} else if(data.standbydelay == "0") {
 				 $('#power-standbydelay').text(i18n.t('power.never'));
@@ -304,7 +304,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-standbydelay').html('<span title="'+data.standbydelay+' '+i18n.t('power.seconds')+'">'+moment.duration(+data.standbydelay, "seconds").humanize()+'</span>');
 			}  
                                       
-			if(data.displaysleep == "-9876543") {
+			if(data.displaysleep == "-9876543" || data.displaysleep == null) {
 				 $('#power-displaysleep').text('');
 			} else if(data.displaysleep == "0") {
 				 $('#power-displaysleep').text(i18n.t('power.never'));
@@ -312,7 +312,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-displaysleep').html('<span title="'+data.displaysleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.displaysleep, "minutes").humanize()+'</span>');
 			}  
                                                   
-			if(data.disksleep == "-9876543") {
+			if(data.disksleep == "-9876543" || data.disksleep == null) {
 				 $('#power-disksleep').text('');
 			} else if(data.disksleep == "0") {
 				 $('#power-disksleep').text(i18n.t('power.never'));
@@ -320,7 +320,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-disksleep').html('<span title="'+data.disksleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.disksleep, "minutes").humanize()+'</span>');
 			}  
                        
-			if(data.autopoweroffdelay == "-9876543") {
+			if(data.autopoweroffdelay == "-9876543" || data.autopoweroffdelay == null) {
 				 $('#power-autopoweroffdelay').text('');
 			} else if(data.autopoweroffdelay == "0") {
 				 $('#power-autopoweroffdelay').text(i18n.t('power.never'));
@@ -328,7 +328,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-autopoweroffdelay').html('<span title="'+data.autopoweroffdelay+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.autopoweroffdelay, "minutes").humanize()+'</span>');
 			}  
                
-			if(data.sleep == "-9876543") {
+			if(data.sleep == "-9876543" || data.sleep == null) {
 				 $('#power-sleep').text('');
 			} else if(data.sleep == "0") {
 				 $('#power-sleep').text(i18n.t('power.never'));
@@ -515,7 +515,7 @@ $(document).on('appReady', function(e, lang) {
 			}
             
             // Unhide and fill out UPS if UPS is present
-            if (data.ups_percent != "-9876543" && (data.ups_percent)) {
+            if (data.ups_percent != "-9876543" && data.ups_percent != "" && (data.ups_percent)) {
 	        	$('#power-ups').removeClass('hide'); // unhide UPS table
 	        	$('#power-ups_percent').text(data.ups_percent+'%');
 	        	$('#power-haltlevel').text(data.haltlevel+'%');
@@ -532,7 +532,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-ups_charging_status').text(data.ups_charging_status);
 			} 
                 
-			if(data.haltafter == "-9876543") {
+			if(data.haltafter == "-9876543" || data.haltafter == null) {
 				 $('#power-haltafter').text('');
 			} else if(data.haltafter == "1") {
 				 $('#power-haltafter').text(data.haltafter+' '+i18n.t('power.minute'));
@@ -540,7 +540,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-haltafter').text(data.haltafter+' '+i18n.t('power.minutes'));
 			}
                 
-			if(data.haltremain == "-9876543") {
+			if(data.haltremain == "-9876543" || data.haltremain == null) {
 				 $('#power-haltremain').text('');
 			} else if(data.haltremain == "1") {
 				 $('#power-haltremain').text(data.haltremain+' '+i18n.t('power.minute'));
