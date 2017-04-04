@@ -101,7 +101,7 @@ while getopts b:m:p:r:c:v:i:nh flag; do
 			INSTALLTEMP=$(mktemp -d -t mrpkg)
 			INSTALLROOT="$INSTALLTEMP"/install_root
 			MUNKIPATH="$INSTALLROOT"/usr/local/munki/
-			TARGET_VOLUME="\$3"
+			TARGET_VOLUME='$3'
 			PREFPATH="${TARGET_VOLUME}/Library/Preferences/MunkiReport"
 			PREFLIGHT=0
 			BUILDPKG=1
