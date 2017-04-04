@@ -346,7 +346,7 @@ class Power_model extends Model
         $this->active_profile = str_replace("'", "", $this->active_profile);
 
         // Format cell voltages
-        if ( ! empty($this->cellvoltage)) {
+        if ( $this->cellvoltage != "") {
             $this->cellvoltage = str_replace(array('(',')'), array('',''), $this->cellvoltage);
             $cellvoltagearray = explode(',', $this->cellvoltage);
             $cellvoltageout = array();
@@ -359,12 +359,12 @@ class Power_model extends Model
         }
 
         // Format voltage
-        if ( ! empty($this->cellvoltage)) {
+        if ( $this->voltage != "") {
              $this->voltage = ($this->voltage / 1000);
         }
 
         // Format amperage
-        if ( ! empty($this->cellvoltage)) {
+        if ( $this->amperage != "") {
              $this->amperage = ($this->amperage / 1000);
         }
 
