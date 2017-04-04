@@ -14,7 +14,7 @@ $(document).on('appReady', function(){
 			for (var prop in d){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
-                    if (d[prop] == -9876540){
+                    if (d[prop] == -9876540 || d[prop] == null){
 					   // Do nothing for the fake nulls to blank them
                     } else if (d[prop] == "" && d[prop] != "0"){
 					   // Do nothing for the nulls to blank them

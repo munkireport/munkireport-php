@@ -45,7 +45,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#munkireportinfo-reportitems').text(data.reportitems); 
             
             // Format version
-            if (data.version != "-9876543" && (data.version)) {
+            if (data.version != "-9876543" && data.version != null && (data.version)) {
 			$('#munkireportinfo-version').text(mr.integerToVersion(data.version));
             } else {
 	        	$('#munkireportinfo-version').html('');  
