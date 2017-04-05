@@ -352,7 +352,7 @@ class Power_model extends Model
             $cellvoltageout = array();
             foreach ($cellvoltagearray as $cell) {
                 if ($cell !== "0") {
-                       array_push($cellvoltageout, ($cell / 1000));
+                       array_push($cellvoltageout, (intval($cell) / 1000));
                 }
             }
             $this->cellvoltage = implode($cellvoltageout,'v, ');
@@ -360,12 +360,12 @@ class Power_model extends Model
 
         // Format voltage
         if ( $this->voltage != "") {
-             $this->voltage = ($this->voltage / 1000);
+             $this->voltage = (intval($this->voltage) / 1000);
         }
 
         // Format amperage
         if ( $this->amperage != "") {
-             $this->amperage = ($this->amperage / 1000);
+             $this->amperage = (intval($this->amperage) / 1000);
         }
 
         // Format manufacturer
