@@ -127,7 +127,7 @@ new Power_model;
 
 	        	// Format designed capacity
 	        	var capacity=$('td:eq(3)', nRow).html();
-                if (capacity != "-9876543" && capacity != "" && (capacity)) {
+                if (capacity != "" && (capacity)) {
 	        	$('td:eq(3)', nRow).html(capacity+' mAh').addClass('text-right');
                 } else {
                   $('td:eq(3)', nRow).html('');
@@ -135,7 +135,7 @@ new Power_model;
 
 	        	// Format maximum capacity
 	        	var capacity=$('td:eq(4)', nRow).html();
-                if (capacity != "-9876543" && capacity != "" && (capacity)) {
+                if (capacity != "" && (capacity)) {
 	        	$('td:eq(4)', nRow).html(capacity+' mAh').addClass('text-right');
                 } else {
                   $('td:eq(4)', nRow).html('');
@@ -143,7 +143,7 @@ new Power_model;
 
 	        	// Format cycles
 	        	var cycles=$('td:eq(5)', nRow).html();
-                if (cycles != "-9876543" && cycles != "" && (cycles)) {
+                if (cycles != "" && (cycles)) {
 	        	$('td:eq(5)', nRow).html(cycles+'').addClass('text-right');
                 } else {
                   $('td:eq(5)', nRow).html('');
@@ -151,7 +151,7 @@ new Power_model;
 
 	        	// Format battery health
 	        	var max_percent=$('td:eq(6)', nRow).html();
-                if (max_percent != "-9876543" && max_percent != "" && (max_percent)) {
+                if (max_percent != "" && (max_percent)) {
                   var cls = max_percent > 89 ? 'success' : (max_percent > 79 ? 'warning' : 'danger');
                   $('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+max_percent+'%;">'+max_percent+'%</div></div>');
                 } else {
@@ -175,7 +175,7 @@ new Power_model;
 
 	        	// Format current charge
 	        	var charge=$('td:eq(8)', nRow).html();
-                if (charge != "-9876543" && charge != "" && (charge)) {
+                if (charge != "" && (charge)) {
 	        	$('td:eq(8)', nRow).html(charge+' mAh').addClass('text-right');
                 } else {
                   $('td:eq(8)', nRow).html('');
@@ -183,7 +183,7 @@ new Power_model;
 
 	        	// Format percentage
 	        	var charge=$('td:eq(9)', nRow).html();
-                if (charge != "-9876543" && charge != "" && (charge)) {
+                if (charge != "" && (charge)) {
 	        	$('td:eq(9)', nRow).html(charge+'%').addClass('text-right');
                 } else {
                   $('td:eq(9)', nRow).html('');
@@ -193,7 +193,7 @@ new Power_model;
 	        	// Check config for temperature_unit °C or °F
 	        	// °C * 9/5 + 32 = °F
                 var temperature=$('td:eq(10)', nRow).html();
-                if ( temperature != "-9876543" && temperature != "" ){
+                if (temperature != "" ){
 	        	var temperature_unit = "<?=conf('temperature_unit')?>";
 	        	if ( temperature_unit == "F" ){
 					// Fahrenheit
@@ -242,7 +242,7 @@ new Power_model;
 
 				// Format wattage
 	        	var wattage=$('td:eq(12)', nRow).html();
-                if (wattage != "-9876543" && wattage != "" && (wattage)) {
+                if (wattage != "" && (wattage)) {
 	        	$('td:eq(12)', nRow).html(wattage+" "+i18n.t('power.watts'));
                 } else {
                   $('td:eq(12)', nRow).html('');

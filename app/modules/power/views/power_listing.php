@@ -119,7 +119,7 @@ new Power_model;
 
 	        	// sleep
 	        	var columnvar=$('td:eq(4)', nRow).html();
-                if(columnvar == "-9876543" || columnvar == "") {
+                if(columnvar == "") {
                      $('td:eq(4)', nRow).html('');
                 } else if(columnvar == "1") {
                      $('td:eq(4)', nRow).html(columnvar+' '+i18n.t('power.minute'));
@@ -131,7 +131,7 @@ new Power_model;
 
 	        	// disk sleep
 	        	var columnvar=$('td:eq(5)', nRow).html();
-                if(columnvar == "-9876543" || columnvar == "") {
+                if(columnvar == "") {
                      $('td:eq(5)', nRow).html('');
                 } else if(columnvar == "1") {
                      $('td:eq(5)', nRow).html(columnvar+' '+i18n.t('power.minute'));
@@ -143,7 +143,7 @@ new Power_model;
 
 	        	// display sleep
 	        	var columnvar=$('td:eq(6)', nRow).html();
-                if(columnvar == "-9876543" || columnvar == "") {
+                if(columnvar == "") {
                      $('td:eq(6)', nRow).html('');
                 } else if(columnvar == "1") {
                      $('td:eq(6)', nRow).html(columnvar+' '+i18n.t('power.minute'));
@@ -167,7 +167,7 @@ new Power_model;
                      $('td:eq(8)', nRow).html(i18n.t('power.safe_sleep')+' ('+columnvar+')');
                 } else if(columnvar == "0") {
                      $('td:eq(8)', nRow).html(i18n.t('power.sleep')+' ('+columnvar+')');
-                } else if(columnvar == "-9876543" || columnvar == "") {
+                } else if(columnvar == "") {
                      $('td:eq(8)', nRow).html('');
                 } else{
                      $('td:eq(8)', nRow).columnvar;
@@ -181,7 +181,7 @@ new Power_model;
 
 	        	// standby delay
 	        	var columnvar=$('td:eq(10)', nRow).html();
-                if(columnvar == "-9876543" || columnvar == "") {
+                if(columnvar == "") {
                      $('td:eq(10)', nRow).html('');
                 } else if(columnvar == "1") {
                      $('td:eq(10)', nRow).html(columnvar+' '+i18n.t('power.second'));
