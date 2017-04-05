@@ -133,8 +133,13 @@ if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders 2>/dev/null)" 
 	for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do CURL+=("-H" "$header"); done
 fi
 
-echo "Preparing ${MUNKIPATH} and ${PREFPATH}"
-mkdir -p "$(dirname ${PREFPATH})"
+if [[ ${BUILDPKG} != 1 ]]
+then
+        echo "Preparing ${PREFPATH}"
+        mkdir -p "$(dirname ${PREFPATH})"
+fi
+
+echo "Preparing ${MUNKIPATH}"
 mkdir -p "${MUNKIPATH}munkilib"
 
 echo "BaseURL is ${BASEURL}"
