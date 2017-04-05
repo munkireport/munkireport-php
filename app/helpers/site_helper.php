@@ -10,6 +10,14 @@ function get_version()
 }
 
 //===============================================
+// Legacy support
+//===============================================s
+if (version_compare(phpversion(), '5.5.0', '<')) {
+    include 'php_legacy_helper.php';
+}
+
+
+//===============================================
 // Uncaught Exception Handling
 //===============================================s
 function uncaught_exception_handler($e)
