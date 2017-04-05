@@ -14,7 +14,7 @@ class Munkireportinfo_model extends Model
                 $this->rs['reportitems'] = ''; $this->rt['reportitems'] = 'TEXT';
 
                 // Schema version, increment when creating a db migration
-                $this->schema_version = 0;
+                $this->schema_version = 1;
                 
                 //indexes to optimize queries
                 $this->idx[] = array('version');

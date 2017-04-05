@@ -102,7 +102,7 @@ class Smart_stats_model extends Model {
         $this->rs['perc_rated_life_used'] = 0; $this->rt['perc_rated_life_used'] = 'BIGINT';
 		$this->rs['reallocate_nand_blk_cnt'] = 0; $this->rt['reallocate_nand_blk_cnt'] = 'BIGINT';
 		$this->rs['ave_blockerase_count'] = 0; $this->rt['ave_blockerase_count'] = 'BIGINT';
-		$this->rs['Unused_Reserve_NAND_Blk'] = 0; $this->rt['THINGTHING'] = 'BIGINT';
+		$this->rs['Unused_Reserve_NAND_Blk'] = 0; $this->rt['Unused_Reserve_NAND_Blk'] = 'BIGINT';
 		$this->rs['sata_interfac_downshift'] = 0; $this->rt['sata_interfac_downshift'] = 'BIGINT';
         $this->rs['ssd_life_left'] = 0; $this->rt['ssd_life_left'] = 'BIGINT';
 		$this->rs['life_curve_status'] = 0; $this->rt['life_curve_status'] = 'BIGINT';
@@ -126,7 +126,7 @@ class Smart_stats_model extends Model {
 
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
+        $this->schema_version = 1;
 
         // Indexes to optimize queries
         $this->idx[] = array('serial_number');

@@ -295,7 +295,7 @@ class Fan_temps_model extends Model {
 		$this->rs['tw0p2'] = 0; $this->rt['tw0p2'] = 'FLOAT';
         		
         // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
+        $this->schema_version = 1;
 
         // Indexes to optimize queries
         $this->idx[] = array('serial_number');
