@@ -133,8 +133,7 @@ if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders 2>/dev/null)" 
 	for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do CURL+=("-H" "$header"); done
 fi
 
-echo "Preparing ${MUNKIPATH} and ${PREFPATH}"
-mkdir -p "$(dirname ${PREFPATH})"
+echo "Preparing ${MUNKIPATH}"
 mkdir -p "${MUNKIPATH}munkilib"
 
 echo "BaseURL is ${BASEURL}"
@@ -246,6 +245,11 @@ if [ $ERR = 0 ]; then
 
 		# Add Preference setting commands to postinstall
 		echo  "#!/bin/bash" > $SCRIPTDIR/postinstall
+
+		# Create prefpath
+		PREFDIR=$(dirname ${PREFPATH})
+		echo "mkdir -p '${PREFDIR}'" >> $SCRIPTDIR/postinstall
+
 		for i in "${PREF_CMDS[@]}";
 			do echo $i >> $SCRIPTDIR/postinstall
 		done
@@ -267,6 +271,9 @@ if [ $ERR = 0 ]; then
 
 	else
 
+		echo "Preparing ${PREFPATH}"
+		mkdir -p "$(dirname ${PREFPATH})"
+
 		# Set preferences
 		echo "Setting preferences"
 		for i in "${PREF_CMDS[@]}"; do
@@ -275,7 +282,7 @@ if [ $ERR = 0 ]; then
 
 		# Set munkireport version file
 		touch "${MUNKIPATH}munkireport-${VERSION}"
-        defaults write ${PREFPATH} Version ${VERSIONLONG} 
+        defaults write ${PREFPATH} Version ${VERSIONLONG}
 
 		echo "Installation of MunkiReport v${VERSION} complete."
 		echo 'Running the preflight script for initialization'
