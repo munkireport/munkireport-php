@@ -69,7 +69,7 @@ Munkireport-php makes use of these fine software packages:
 
 * [php](http://php.net) serverside scripting
 * [CFPropertyList](https://github.com/rodneyrehm/CFPropertyList) serverside plist parsing
-* [phpass 0.3](http://www.openwall.com/phpass/) for encrypting passwords
+* [phpass 0.3.5](https://github.com/hautelook/phpass) for encrypting passwords
 * [phpserialize](https://github.com/sdfsdhgjkbmnmxc/phpserialize) for serializing client data
 * [jQuery](http://jquery.com) for easy javascript
 * [Datatables](http://datatables.net) table display

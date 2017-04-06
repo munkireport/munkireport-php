@@ -49,6 +49,25 @@ class Disk_report_model extends Model
 						".get_machine_group_filter('AND');
         return current($this->query($sql, $mountpoint));
     }
+    
+     /**
+     * Get disk type statistics
+     * autor tuxudo
+     *
+     **/
+    public function get_disk_type()
+    {
+        $sql = 'SELECT COUNT(CASE WHEN VolumeType = "hdd" THEN 1 END) AS hdd,
+						COUNT(CASE WHEN VolumeType = "ssd" THEN 1 END) AS ssd,
+						COUNT(CASE WHEN VolumeType = "fusion" THEN 1 END) AS fusion,
+						COUNT(CASE WHEN VolumeType = "raid" THEN 1 END) AS raid,
+						COUNT(CASE WHEN VolumeType = "bootcamp" THEN 1 END) AS bootcamp
+						FROM diskreport
+						LEFT JOIN reportdata USING (serial_number)
+						WHERE Internal = 1
+						'.get_machine_group_filter('AND');
+        return current($this->query($sql));
+    }
 
     /**
      * Get statistics

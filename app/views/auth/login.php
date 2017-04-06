@@ -33,9 +33,9 @@
 							<?php endforeach; ?>
 
 							<div class="form-group">
-								<label for="loginusername" class="col-md-5 control-label"><span data-i18n="auth.username">Username</span></label>
+								<label for="loginusername" class="col-md-5 control-label"><span data-i18n="username">Username</span></label>
 								<div class="col-md-7">
-									<input type="text" id="loginusername" name="login" class="form-control" value="<?php echo $login; ?>" data-i18n="[placeholder]auth.username">
+									<input type="text" id="loginusername" name="login" class="form-control" value="<?php echo $login; ?>" data-i18n="[placeholder]username">
 								</div>
 							</div>
 							<div class="form-group">
@@ -63,26 +63,5 @@
 			</div>
 		</div>
 	</div><!-- /container -->
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.js"></script>
-
-	<?php if (conf('recaptchaloginpublickey')):?>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
-	<?php endif?>
-
-  <script>
-    $.i18n.init({
-        useLocalStorage: false,
-        debug: true,
-        resGetPath: "<?php echo conf('subdirectory'); ?>assets/locales/__lng__.json",
-        fallbackLng: 'en'
-    }, function() {
-        $('form').i18n();
-        $('[title]').tooltip();
-    });
-
-</script>
-
-</body>
-</html>
+	
+	<?php $this->view('partials/foot', array('recaptcha' => true)); ?>

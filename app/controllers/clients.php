@@ -1,4 +1,12 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View;
+use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model;
+
+
+
 class clients extends Controller
 {
     public function __construct()
@@ -10,7 +18,7 @@ class clients extends Controller
 
     public function index()
     {
-        
+
         $data['page'] = 'clients';
 
         $obj = new View();
@@ -25,7 +33,7 @@ class clients extends Controller
     public function get_data($serial_number = '')
     {
         $obj = new View();
-        
+
         if (authorized_for_serial($serial_number)) {
             $machine = new Machine_model;
             new Reportdata_model;
@@ -36,10 +44,10 @@ class clients extends Controller
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
-                        s.gatekeeper, s.sip, w.purchase_date, w.end_date,
+                        s.gatekeeper, s.sip, s.ssh_users, s.ard_users, s.firmwarepw, w.purchase_date, w.end_date,
                         w.status, l.users, d.TotalSize, d.FreeSpace,
                         d.SMARTStatus, d.CoreStorageEncrypted
-                FROM machine m 
+                FROM machine m
                 LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
                 LEFT JOIN security s ON (m.serial_number = s.serial_number)
                 LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
@@ -72,7 +80,7 @@ class clients extends Controller
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
-    
+
     // ------------------------------------------------------------------------
 
     /**

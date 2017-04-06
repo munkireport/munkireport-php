@@ -18,7 +18,7 @@ $(document).on('appUpdate', function(e, lang) {
     	}
 		
 		var panel = $('#wifi-state-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/wifi';
+			baseUrl = appUrl + '/show/listing/wifi/wifi';
 		panel.empty();
 		
 		// Set statuses

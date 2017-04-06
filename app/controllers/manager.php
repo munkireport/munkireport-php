@@ -1,4 +1,9 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View, \Machine_model;
+
 class manager extends Controller
 {
     public function __construct()
@@ -11,20 +16,20 @@ class manager extends Controller
             die('You need to be manager or admin');
         }
     }
-    
-    
+
+
     //===============================================================
-    
+
     public function index()
     {
         echo 'Manager';
     }
 
     //===============================================================
-    
+
     public function delete_machine($serial_number = '')
     {
-        
+
         $status = array('status' => 'undefined', 'rowcount' => 0);
 
         // Don't process these tables
@@ -39,19 +44,19 @@ class manager extends Controller
             // List tables (unfortunately this is not db-agnostic)
             switch ($machine->get_driver()) {
                 case 'sqlite':
-                    $tbl_query = "SELECT name FROM sqlite_master 
+                    $tbl_query = "SELECT name FROM sqlite_master
                         WHERE type = 'table' AND name NOT LIKE 'sqlite_%'";
                     break;
                 default:
                     // Get database name from dsn string
                     if (conf('dbname')) {
-                        $tbl_query = "SELECT TABLE_NAME AS name FROM information_schema.TABLES 
+                        $tbl_query = "SELECT TABLE_NAME AS name FROM information_schema.TABLES
                         WHERE TABLE_TYPE='BASE TABLE' AND TABLE_SCHEMA='".conf('dbname')."'";
                     } else {
                         die('Admin:delete_machine: Cannot find database name.');
                     }
             }
-            
+
             // Get tables
             $tables = array();
             foreach ($machine->query($tbl_query) as $obj) {
@@ -79,7 +84,7 @@ class manager extends Controller
                     } else {
                         $serial = 'serial_number';
                     }
-                    
+
                     $sql = "DELETE FROM $table WHERE `$serial`=?";
                     if (! $stmt = $dbh->prepare($sql)) {
                         die('Prepare '.$sql.' failed');

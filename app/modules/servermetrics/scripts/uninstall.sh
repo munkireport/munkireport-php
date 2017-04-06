@@ -2,6 +2,7 @@
 
 # Remove servermetrics script
 rm -f "${MUNKIPATH}preflight.d/servermetrics.py"
+rm -f "${MUNKIPATH}preflight.d/servermetrics.sh"
 
 # Remove servermetrics.json file
 rm -f "${MUNKIPATH}preflight.d/cache/servermetrics.json"

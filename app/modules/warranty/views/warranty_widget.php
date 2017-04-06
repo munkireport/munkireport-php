@@ -4,8 +4,8 @@
 
 		<div class="panel-heading">
 
-			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="widget.warranty.title"></span></h3>
-		
+			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="warranty.status"></span></h3>
+
 		</div>
 
 		<div class="list-group scroll-box"></div>
@@ -16,28 +16,28 @@
 
 <script>
 $(document).on('appUpdate', function(e, lang) {
-	
+
 	var box = $('#warranty-widget div.scroll-box'),
 		days = 30,
 		expires = i18n.t('warranty.expires_in', {date: moment.duration(days, "days").humanize()});
 
     $.getJSON( appUrl + '/module/warranty/get_stats/1', function( data ) {
-		
+
 		// Clear box
 		box.empty();
-		
+
 		if(data.length){
 			$.each(data, function(i,d){
 				var badge = '<span class="badge pull-right">'+d.count+'</span>',
-					url = appUrl+'/show/listing/warranty#'+d.status;
-				
+					url = appUrl+'/show/listing/warranty/warranty#'+d.status;
+
 				box.append('<a href="'+url+'" class="list-group-item">'+expires+' ('+d.status+')'+badge+'</a>')
 			});
 		}
 		else{
 			box.append('<span class="list-group-item">'+i18n.t('warranty.no_alerts')+'</span>');
 		}
-        
+
     });
 });
 

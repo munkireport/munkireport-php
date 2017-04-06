@@ -6,9 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title><?php echo conf('sitename'); ?></title>
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/Default/bootstrap.min.css" id="bootstrap-stylesheet" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/<?php echo sess_get('theme', 'Default')?>/bootstrap.min.css" id="bootstrap-stylesheet" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/Default/nvd3.override.css" id="nvd3-override-stylesheet" />
+	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/<?php echo sess_get('theme', 'Default')?>/nvd3.override.css" id="nvd3-override-stylesheet" />
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
 	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/datatables.min.css" />
 	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
@@ -47,11 +47,14 @@
 		foreach($scripts as $script): ?>
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/<?php echo $script; ?>" type="text/javascript"></script>
 <?php endforeach; ?>
+
 </head>
 
 <body>
 
 	<?php if( isset($_SESSION['user'])):?>
+	<?php $modules = getMrModuleObj()->loadInfo(); ?>
+
 
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
 	<div class="container">
@@ -84,16 +87,11 @@
 					</a>
 					<ul class="report dropdown-menu">
 
-						<?php foreach(scandir(conf('view_path').'report') AS $list_url): ?>
+						<?php foreach($modules->getDropdownData('reports', 'show/report', $page) as $item): ?>
 
-							<?php if( strpos($list_url, 'php')): ?>
-							<?php $page_url = $url.strtok($list_url, '.'); ?>
-
-							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-								<a href="<?php echo url($page_url); ?>" data-i18n="nav.reports.<?php echo $name = strtok($list_url, '.'); ?>"><?php echo ucfirst($name); ?></a>
+							<li class="<?=$item->class?>">
+							<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
 							</li>
-
-							<?php endif; ?>
 
 						<?php endforeach; ?>
 
@@ -110,16 +108,11 @@
 					</a>
 					<ul class="listing dropdown-menu">
 
-						<?php foreach(scandir(conf('view_path').'listing') AS $list_url): ?>
+						<?php foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item): ?>
 
-							<?php if( strpos($list_url, 'php')): ?>
-							<?php $page_url = $url.strtok($list_url, '.'); ?>
-
-							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-								<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.listings.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+							<li class="<?=$item->class?>">
+							<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
 							</li>
-
-							<?php endif; ?>
 
 						<?php endforeach; ?>
 
@@ -164,7 +157,7 @@
 			</ul><!-- nav navbar-nav -->
 
 			<ul class="nav navbar-nav navbar-right">
-			
+
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-wrench"></i>

@@ -26,6 +26,23 @@ class Directory_service_controller extends Module_controller
         echo "You've loaded the directoryservice module!";
     }
     
+     /**
+     * Retrieve data in json format
+     *
+     **/
+    public function get_data($serial_number = '')
+    {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+
+        $dm = new Directory_service_model($serial_number);
+        $obj->view('json', array('msg' => $dm->rs));
+    }
+    
     /**
      * Get bound Statistics
      *

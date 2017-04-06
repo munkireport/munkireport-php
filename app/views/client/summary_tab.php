@@ -11,7 +11,7 @@
 					<span class="label label-info"><span class="mr-remote_ip"></span></span><br>
 				</div>
 			</div>
-			<span class="mr-machine_desc"></span>
+			<span class="mr-machine_desc"></span> <a class="mr-refresh-desc" href=""><i class="fa fa-refresh"></i></a>
 		</div>
 		<div class="col-lg-4">
 			<h4 class="mr-computer_name"></h4>
@@ -32,19 +32,19 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4><i class="fa fa-hdd-o"></i> <span data-i18n="storage.storage"></span></h4>
+			<h4><i class="fa fa-hdd-o"></i> <span data-i18n="disk_report.storage"></span></h4>
 			<table>
 				<tr>
-					<th data-i18n="storage.size"></th><td class="mr-TotalSize"></td>
+					<th data-i18n="disk_report.size"></th><td class="mr-TotalSize"></td>
 				</tr>
 				<tr>
-					<th data-i18n="storage.used"></th><td class="mr-UsedSize"></td>
+					<th data-i18n="disk_report.used"></th><td class="mr-UsedSize"></td>
 				</tr>
 				<tr>
-					<th data-i18n="storage.free"></th><td class="mr-FreeSpace"></td>
+					<th data-i18n="disk_report.free"></th><td class="mr-FreeSpace"></td>
 				</tr>
 				<tr>
-					<th data-i18n="storage.smartstatus"></th><td class="mr-SMARTStatus"></td>
+					<th data-i18n="disk_report.smartstatus"></th><td class="mr-SMARTStatus"></td>
 				</tr>
 			</table>
 		</div>
@@ -66,7 +66,7 @@
 					<th data-i18n="cpu.type"></th><td><span class="mr-number_processors"></span> <span data-i18n="cpu.core"></span></td>
 				</tr>
 				<tr>
-					<th data-i18n="memory.memory"></th><td><span class="mr-physical_memory"></span> GB</td>
+					<th data-i18n="memory"></th><td><span class="mr-physical_memory"></span> GB</td>
 				</tr>
 				<tr>
 					<th data-i18n="hardware.uuid"></th><td class="mr-platform_UUID"></td>
@@ -99,7 +99,7 @@
 		</div>
 
 		<div class="col-lg-4">
-			<h4><i class="fa fa-apple"></i> <span data-i18n="ard"></span></h4>
+			<h4><i class="fa fa-apple"></i> <span data-i18n="ard.ard"></span></h4>
 			<table id="ard-data" class="table"></table>
 		</div>
 
@@ -158,9 +158,9 @@
 			<table class="mr-timemachine-table">
 			</table>
 		</div>
-		
+
 		<div class="col-lg-4">
-			<h4><i class="fa fa-home"></i> <span data-i18n="crashplan.client.title"></span></h4>
+			<h4><i class="fa fa-home"></i> <span data-i18n="crashplan.title"></span></h4>
 			<table class="mr-crashplan-table">
 			</table>
 		</div>
@@ -176,7 +176,7 @@
 			<div class="comment" data-section="client"></div>
 			</table>
 		</div>
-		
+
 		<div class="col-lg-4">
 			<h4><i class="fa fa-key fa-fixed"></i> <span data-i18n="security.security"></span></h4>
 			<table>
@@ -186,7 +186,16 @@
 				<tr>
 					<th data-i18n="security.sip"></th><td class="mr-sip"></td>
 				</tr>
+				<tr>
+					<th data-i18n="security.ssh_users"></th><td class="mr-ssh_users"></td>
+				</tr>
+				<tr>
+					<th data-i18n="security.ard_users"></th><td class="mr-ard_users"></td>
+				</tr>
+				<tr>
+					<th data-i18n="security.firmwarepw"></th><td class="mr-firmwarepw"></td>
+				</tr>
 			</table>
 		</div>
-		
+
 	</div><!-- /row -->

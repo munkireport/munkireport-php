@@ -25,6 +25,23 @@ class Power_controller extends Module_controller
     }
     
     /**
+     * Retrieve data in json format
+     *
+     **/
+    public function get_data($serial_number = '')
+    {
+        $obj = new View();
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+        $power = new Power_model($serial_number);
+        $temp_format = conf('temperature_unit');
+        $power->rs['temp_format'] = $temp_format; // Add the temp format for use in the client tab's JavaScript    
+        $obj->view('json', array('msg' => $power->rs));
+    }
+    
+    /**
      * Get Power Statistics
      *
      *
@@ -59,10 +76,10 @@ class Power_controller extends Module_controller
 
         $queryobj = new Power_model();
         $sql = "SELECT COUNT(CASE WHEN `condition` = 'Normal' THEN 1 END) AS normal,
-						COUNT(CASE WHEN `condition` = 'Replace Soon' THEN 1 END) AS soon,
-						COUNT(CASE WHEN `condition` = 'Service Battery' THEN 1 END) AS service,
-						COUNT(CASE WHEN `condition` = 'Replace Now' THEN 1 END) AS now,
-						COUNT(CASE WHEN `condition` = 'No Battery' THEN 1 END) AS missing
+						COUNT(CASE WHEN `condition` = 'Replace Soon' OR `condition` = 'ReplaceSoon'  THEN 1 END) AS soon,
+						COUNT(CASE WHEN `condition` = 'Service Battery' OR `condition` = 'ServiceBattery'  THEN 1 END) AS service,
+						COUNT(CASE WHEN `condition` = 'Replace Now' OR `condition` = 'ReplaceNow' THEN 1 END) AS now,
+						COUNT(CASE WHEN `condition` = 'No Battery' OR `condition` = 'NoBattery' THEN 1 END) AS missing
 			 			FROM power
 			 			LEFT JOIN reportdata USING (serial_number)
 			 			".get_machine_group_filter();

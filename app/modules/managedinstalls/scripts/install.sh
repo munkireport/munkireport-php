@@ -8,7 +8,7 @@ rm -f "${MUNKIPATH}preflight.d/cache/managedinstalls.plist"
 CTL="${BASEURL}index.php?/module/managedinstalls/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/managedinstalls.py" -o "${MUNKIPATH}postflight.d/managedinstalls.py"
+"${CURL[@]}" "${CTL}get_script/managedinstalls.py" -o "${MUNKIPATH}postflight.d/managedinstalls.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

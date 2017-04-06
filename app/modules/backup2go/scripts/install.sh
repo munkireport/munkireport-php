@@ -5,7 +5,7 @@ MODULE_NAME="backup2go"
 CTL="${BASEURL}index.php?/module/backup2go/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/backup2go.sh" -o "${MUNKIPATH}preflight.d/backup2go.sh"
+"${CURL[@]}" "${CTL}get_script/backup2go.sh" -o "${MUNKIPATH}preflight.d/backup2go.sh"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

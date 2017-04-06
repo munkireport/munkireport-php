@@ -1,4 +1,10 @@
 <?php
+
+namespace munkireport\controller;
+
+use \Controller, \View;
+use munkireport\lib\Database;
+
 class system extends Controller
 {
     public function __construct()
@@ -11,9 +17,9 @@ class system extends Controller
             die('You need to be admin');
         }
     }
-    
+
     //===============================================================
-    
+
     /**
      * DataBase
      *
@@ -34,9 +40,8 @@ class system extends Controller
             'pdo_pass' => conf('pdo_pass'),
             'pdo_opts' => conf('pdo_opts'),
         );
-        
-        include_once(APP_PATH . '/lib/munkireport/Database.php');
-        $db = new munkireport\Database($config);
+
+        $db = new Database($config);
         //echo '<pre>'; var_dump($db);
         if ($db->connect()) {
             $out['db.connectable'] = true;
@@ -60,9 +65,9 @@ class system extends Controller
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
-    
+
     //===============================================================
-    
+
     /**
      * Authentication and Authorization
      *
@@ -74,7 +79,7 @@ class system extends Controller
         # code...
     }
     //===============================================================
-    
+
     /**
      * php information
      *
@@ -87,7 +92,7 @@ class system extends Controller
         phpinfo(11);
         $raw = ob_get_clean();
         $phpinfo = array('phpinfo' => array());
-        
+
         // Remove credits
         $nocreds = preg_replace('#<h1>PHP Credits.*#s', '', $raw);
         if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', $nocreds, $matches, PREG_SET_ORDER)) {
@@ -110,7 +115,7 @@ class system extends Controller
     //===============================================================
     //===============================================================
     //===============================================================
-    
+
     //===============================================================
 
     /**

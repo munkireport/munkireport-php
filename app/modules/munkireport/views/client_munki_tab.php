@@ -2,12 +2,12 @@
 
 		<div class="col-lg-6">
 
-		<h2 data-i18n="munki.errors_and_warnings"></h2>
+		<h2 data-i18n="munkireport.errors_and_warnings"></h2>
 
 				<pre id="munkireport-errors" class="hide alert alert-danger"></pre>
 				<pre id="munkireport-warnings" class="hide alert alert-warning"></pre>
 
-			<p><i data-i18n="no_errors_or_warnings" id="munkireport-no-errors">Loading</i></p>
+			<p><i data-i18n="no_errors_or_warnings" data-i18n="listing.loading" id="munkireport-no-errors"></i></p>
 
 	</div><!-- </div class="col-lg-6"> -->
 
@@ -16,45 +16,41 @@
 		<h2>Munki</h2>
 		<table class="table table-striped">
 			<tr>
-				<th>Version</th>
+				<th data-i18n="version"></th>
 				<td id="munki-version"></td>
 			</tr>
 			<tr>
-				<th>SoftwareRepoURL</th>
+				<th data-i18n="munkiinfo.softwarerepourl"></th>
 				<td><div id="munkiinfo-SoftwareRepoURL"></div></td>
 			</tr>
 			<tr>
-				<th>AppleCatalogURL</th>
+				<th data-i18n="munkiinfo.applecatalog"></th>
 				<td><div id="munkiinfo-AppleCatalogURL"></div></td>
 			</tr>
 			<tr>
-				<th>Manifest</th>
+				<th data-i18n="munkiinfo.manifest"></th>
 				<td id="munki-manifestname"></td>
 			</tr>
 			<tr>
-				<th>LocalOnlyManifest</th>
+				<th data-i18n="munkiinfo.localonlymanifest"></th>
 				<td><div id="munkiinfo-LocalOnlyManifest"></div></td>
 			</tr>
 			<tr>
-				<th>Run Type</th>
+				<th data-i18n="munkireport.run_type"></th>
 				<td id="munki-runtype"></td>
 			</tr>
 			<tr>
-				<th>Start</th>
+				<th data-i18n="munkiinfo.start"></th>
 				<td id="munki-starttime"></td>
 			</tr>
 			<tr>
-				<th>Duration</th>
+				<th data-i18n="munkiinfo.duration"></th>
 				<td id="munki-duration"></td>
 			</tr>
 		</table>
-		<button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munki.additional_info"></span></button>
+		<button id="popoverId" class="btn btn-info btn-sm"><span data-i18n="munkireport.additional_info"></span></button>
 
 	</div><!-- </div class="col-lg-6"> -->
-
-
-
-
 
 <script>
 $(document).on('appReady', function(){
@@ -65,7 +61,7 @@ $(document).on('appReady', function(){
 
 		$('#myModal .modal-title')
 			.empty()
-			.append(i18n.t("munki.additional_info"))
+			.append(i18n.t("munkireport.additional_info"))
 		$('#myModal .modal-body')
 			.empty()
 			.append(table);
@@ -117,11 +113,11 @@ $(document).on('appReady', function(){
 			<table id="managedinstalls-table" class="table table-striped">
 		      <thead>
 		        <tr>
-		          <th>Name</th>
-				  <th>Version</th>
-				  <th>Size</th>
-				  <th>Status</th>
-				  <th>Type</th>
+		          <th data-i18n="name"></th>
+				  <th data-i18n="version"></th>
+				  <th data-i18n="size"></th>
+				  <th data-i18n="status"></th>
+				  <th data-i18n="type"></th>
 		        </tr>
 		      </thead>
 		      <tbody>
@@ -206,22 +202,22 @@ $(document).on('appReady', function(e, lang) {
 			}
 		});
 	});
-	
+
 	// Get mwa2Link
 	mr.mwa2Link = "<?=conf('mwa2_link')?>";
-	
+
 	// Get munkireport data TODO: move to client_detail.js
     $.getJSON(appUrl + '/module/munkireport/get_data/' + serialNumber, function(data){
 		// TODO: check for errors
 		$.each(data, function(prop, val){
 			$('#munki-'+prop).html(val);
 		});
-		
+
 		// Get mwa2 link
 		if(mr.mwa2Link){
 			$('#munki-manifestname').append(' <a class="btn btn-xs btn-info" target="_blank" href="'+mr.mwa2Link+'/manifests/#'+$('#munki-manifestname').text()+'"><i class="fa fa-arrow-circle-right"></span></a>');
 			$('#munki-manifestname a').tooltip(
-				{title: i18n.t('external.mwa_link')}
+				{title: i18n.t('mwa.mwa_link')}
 			);
 		}
 
@@ -230,7 +226,7 @@ $(document).on('appReady', function(e, lang) {
 			endtime = moment(data.endtime, "YYYY-MM-DD HH:mm:ss Z"),
 			duration = endtime.diff(starttime, 'seconds');
 
-		$('#munki-starttime').html(starttime.fromNow());
+		$('#munki-starttime').html('<span title="'+data.starttime+'"></span>'+starttime.fromNow());
 		$('#munki-duration').html(moment.duration(duration, "seconds").humanize());
 
 		// Handle Errors and Warnings
