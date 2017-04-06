@@ -86,7 +86,7 @@ class Power_model extends Model
         $this->rs['avgtimetoempty'] = 0;
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
+        $this->schema_version = 3;
 
         // Indexes to optimize queries
         // MySQL allows for a maximum of 64 indexes per table, not all columns are indexed.

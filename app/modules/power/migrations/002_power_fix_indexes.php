@@ -95,7 +95,6 @@ class Migration_power_fix_indexes extends Model
                 throw new Exception("Unknown Datbase driver", 1);
         }
 
-
         // Add all indexes
         $this->set_indexes();
 
