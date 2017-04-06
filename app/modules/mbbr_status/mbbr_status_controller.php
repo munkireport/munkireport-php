@@ -9,8 +9,9 @@ class mbbr_status_controller extends Module_controller
 {
     public function __construct()
     {
-        $this->module_path = dirname(__FILE__);
-    }
+      // Store module path
+      $this->module_path = dirname(__FILE__) .'/';
+      $this->view_path = $this->module_path . 'views/';    }
     /**
      * Default method
      *
