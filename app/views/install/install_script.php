@@ -253,9 +253,10 @@ if [ $ERR = 0 ]; then
 		for i in "${PREF_CMDS[@]}";
 			do echo $i >> $SCRIPTDIR/postinstall
 		done
-        echo "defaults write ${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
-		chmod +x $SCRIPTDIR/postinstall
 
+		echo "defaults write ${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
+		echo "touch "${MUNKIPATH}munkireport-${VERSION}" >> $SCRIPTDIR/postinstall
+		chmod +x $SCRIPTDIR/postinstall
 
 		echo "Building MunkiReport v${VERSION} package."
 		pkgbuild --identifier "$IDENTIFIER" \

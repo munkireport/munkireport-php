@@ -8,7 +8,7 @@ return array(
         'caching' => array('view' => 'caching_listing', 'i18n' => 'caching.listing_title'),
     ),
     'widgets' => array(
-        array('view' => 'caching_widget'),
+        'caching' => array('view' => 'caching_widget'),
     ),
     'reports' => array(
         'caching' => array('view' => 'server', 'i18n' => 'caching.reporttitle'),
