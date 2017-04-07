@@ -86,7 +86,7 @@ class Power_model extends Model
         $this->rs['avgtimetoempty'] = 0;
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
+        $this->schema_version = 3;
 
         // Indexes to optimize queries
         // MySQL allows for a maximum of 64 indexes per table, not all columns are indexed.
@@ -346,26 +346,26 @@ class Power_model extends Model
         $this->active_profile = str_replace("'", "", $this->active_profile);
 
         // Format cell voltages
-        if ( ! empty($this->cellvoltage)) {
+        if ( $this->cellvoltage != "") {
             $this->cellvoltage = str_replace(array('(',')'), array('',''), $this->cellvoltage);
             $cellvoltagearray = explode(',', $this->cellvoltage);
             $cellvoltageout = array();
             foreach ($cellvoltagearray as $cell) {
                 if ($cell !== "0") {
-                       array_push($cellvoltageout, ($cell / 1000));
+                       array_push($cellvoltageout, (intval($cell) / 1000));
                 }
             }
             $this->cellvoltage = implode($cellvoltageout,'v, ');
         }
 
         // Format voltage
-        if ( ! empty($this->cellvoltage)) {
-             $this->voltage = ($this->voltage / 1000);
+        if ( $this->voltage != "") {
+             $this->voltage = (intval($this->voltage) / 1000);
         }
 
         // Format amperage
-        if ( ! empty($this->cellvoltage)) {
-             $this->amperage = ($this->amperage / 1000);
+        if ( $this->amperage != "") {
+             $this->amperage = (intval($this->amperage) / 1000);
         }
 
         // Format manufacturer

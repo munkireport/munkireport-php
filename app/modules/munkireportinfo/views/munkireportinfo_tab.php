@@ -30,7 +30,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	// Get munkireportinfo data
 	$.getJSON( appUrl + '/module/munkireportinfo/get_data/' + serialNumber, function( data ) {
-		if( ! data.version){
+		if( ! data.baseurl){
 			$('#munkireportinfo-msg').text(i18n.t('no_data'));
 		}
 		else{
@@ -45,10 +45,10 @@ $(document).on('appReady', function(e, lang) {
 			$('#munkireportinfo-reportitems').text(data.reportitems); 
             
             // Format version
-            if (data.version != "-9876543" && (data.version)) {
-			$('#munkireportinfo-version').text(mr.integerToVersion(data.version));
+            if (data.version) {
+                $('#munkireportinfo-version').text(mr.integerToVersion(data.version));
             } else {
-	        	$('#munkireportinfo-version').html('');  
+                $('#munkireportinfo-version').html('');  
             }
 		}
 

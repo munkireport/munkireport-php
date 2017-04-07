@@ -14,10 +14,10 @@ $(document).on('appReady', function(){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
 					if(prop.indexOf('fan_') > -1){
-					   if (d[prop] != -9876540){
+					   if (d[prop] != null){
 					        rows = rows + '<tr><th>'+d[(prop.replace('fan_', 'fanlabel'))]+' '+i18n.t('fan_temps.fan')+'</th><td><span title="'+i18n.t('fan_temps.minfan')+': '+d[(prop.replace('fan_', 'fanmin'))]+' '+i18n.t('fan_temps.rpm')+'\x0A'+i18n.t('fan_temps.maxfan')+': '+d[(prop.replace('fan_', 'fanmax'))]+' '+i18n.t('fan_temps.rpm')+'">'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</span></td></tr>';
 					   }
-                    } else if (d[prop] == -9876540){
+                    } else if (d[prop] == null){
 					   // Do nothing for the fake nulls to blank them
                     } else if (d[prop] == "true"){
 					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
