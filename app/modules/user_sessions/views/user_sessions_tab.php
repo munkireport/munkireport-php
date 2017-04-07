@@ -26,7 +26,7 @@
         // Initialize datatables
             $('.user_sessions').dataTable({
                 "bServerSide": false,
-                "aaSorting": [[0,'asc']]
+                "aaSorting": [[3,'asc']]
             });
   });
 </script>
