@@ -1,17 +1,10 @@
 <div class="col-lg-4 col-md-6">
-
 	<div class="panel panel-default" id="munkiinfo-munkiprotocol-widget">
-
 	  <div class="panel-heading" data-container="body" data-i18n="[title]munkiinfo.munkiprotocol.tooltip">
-
 	    <h3 class="panel-title"><i class="fa fa-magic"></i> <span data-i18n="munkiinfo.munkiprotocol.title"></span></h3>
-
 	  </div>
-
 	  <div class="panel-body text-center"></div>
-
 	</div><!-- /panel -->
-
 </div><!-- /col -->
 
 <script>
@@ -24,7 +17,7 @@ $(document).on('appUpdate', function(e, lang) {
 	}
 
 		var panel = $('#munkiinfo-munkiprotocol-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/munkireport/munki';
+			baseUrl = appUrl + '/show/listing/munkiinfo/munkiinfo#munkiprotocol';
 		panel.empty();
 
 		// Set statuses
