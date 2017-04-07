@@ -1,8 +1,8 @@
 #!/usr/bin/python
 """
 Parse user sessions on macOS so we can determine what users logged in and
-when the event took place. We only obtain 'console' sessions as 'ttys'
-sessions are less useful as a whole.
+when the event took place. We only obtain 'console' and 'ssh' sessions as
+regular 'ttys' sessions are less useful as a whole.
 
 Author: Clayton Burlison - https://clburlison.com
 
@@ -54,7 +54,16 @@ class utmpx(Structure):
                ]
 
 
-def fast_last(gui_only=True):
+def fast_last(session='gui_ssh'):
+    """This method will replicate the functionallity of the /usr/bin/last
+    command to output all logins, reboots, and shutdowns. We then calculate
+    the logout.
+
+    session takes on of the following strings:
+        * gui
+        * gui_ssh
+        * all
+    """
     # local constants
     setutxent_wtmp = c.setutxent_wtmp
     setutxent_wtmp.restype = None
@@ -70,28 +79,31 @@ def fast_last(gui_only=True):
     while entry:
         e = entry.contents
         entry = getutxent_wtmp()
+        event = {}
         if e.ut_type == BOOT_TIME:
             # reboot/startup
-            events.append({'event': 'reboot',
-                           'time': e.ut_tv.tv_sec})
+            event = {'event': 'reboot',
+                     'time': e.ut_tv.tv_sec}
         elif e.ut_type == SHUTDOWN_TIME:
             # shutdown
-            events.append({'event': 'shutdown',
-                           'time': e.ut_tv.tv_sec})
-        elif e.ut_type == USER_PROCESS:
-            # login
-            if gui_only and e.ut_line != "console":
+            event = {'event': 'shutdown',
+                     'time': e.ut_tv.tv_sec}
+        elif (e.ut_type == USER_PROCESS) or (e.ut_type == DEAD_PROCESS):
+            if e.ut_type == USER_PROCESS: event_label = 'login'
+            if e.ut_type == DEAD_PROCESS: event_label = 'logout'
+            if session is 'gui' and e.ut_line != "console":
                 continue
-            events.append({'event': 'login',
-                           'user': e.ut_user,
-                           'time': e.ut_tv.tv_sec})
-        elif e.ut_type == DEAD_PROCESS:
-            # logout
-            if gui_only and e.ut_line != "console":
+            if (session is 'gui_ssh' and e.ut_host == "") and (
+                    session is 'gui_ssh' and e.ut_line != "console"):
                 continue
-            events.append({'event': 'logout',
-                           'user': e.ut_user,
-                           'time': e.ut_tv.tv_sec})
+            event = {'event': event_label,
+                     'user': e.ut_user,
+                     'time': e.ut_tv.tv_sec}
+            if e.ut_host != "":
+                event['remote_ssh'] = e.ut_host
+
+        if event != {}:
+            events.append(event)
     # finish
     endutxent_wtmp()
     return events

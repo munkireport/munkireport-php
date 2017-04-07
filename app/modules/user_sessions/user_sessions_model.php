@@ -9,6 +9,7 @@ class User_sessions_model extends Model {
 		$this->rs['event'] = '';
 		$this->rs['time'] = 0;
 		$this->rs['user'] = '';
+		$this->rs['remote_ssh'] = '';
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -17,6 +18,7 @@ class User_sessions_model extends Model {
 		$this->idx[] = array('event');
 		$this->idx[] = array('time');
 		$this->idx[] = array('user');
+		$this->idx[] = array('remote_ssh');
         
 		// Create table if it does not exist
 		$this->create_table();
@@ -50,6 +52,7 @@ class User_sessions_model extends Model {
 			'event' => '',
 			'time' => 0,
 			'user' => '',
+			'remote_ssh' => ''
 		);
 		
 		foreach ($myList as $event) {
@@ -60,9 +63,14 @@ class User_sessions_model extends Model {
 				if(array_key_exists($key, $event))
 				{
 					$this->rs[$key] = $event[$key];
-				}
+				}                
 			}
-			
+                            
+            if (array_key_exists("remote_ssh", $event)){
+                print_r("SSHSSHSSH");
+                $this->rs["event"] = "sshlogin";  
+            }
+            
 			// Save user session event
 			$this->id = '';
 			$this->save();

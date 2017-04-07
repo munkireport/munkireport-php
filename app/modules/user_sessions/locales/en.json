@@ -4,6 +4,8 @@
     "reporttitle": "User Sessions Report",
     "reboot": "Reboot",
     "shutdown": "Shut Down",
+    "sshlogin": "SSH Login",
+    "ipaddress": "Remote SSH IP Address",
     "login": "Login",
     "logout": "Logout"
 }

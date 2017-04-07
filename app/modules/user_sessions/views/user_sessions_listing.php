@@ -19,12 +19,13 @@ new User_sessions_model;
 		      	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		      	<th data-i18n="event" data-colname='user_sessions.event'></th>
 		      	<th data-i18n="username" data-colname='user_sessions.user'></th>
+		      	<th data-i18n="user_sessions.ipaddress" data-colname='user_sessions.remote_ssh'></th>
 		      	<th data-i18n="user_sessions.time" data-colname='user_sessions.time'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="5" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="6" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -89,15 +90,16 @@ new User_sessions_model;
              	// Event type
 	        	var eventlocal=$('td:eq(2)', nRow).html();
 	        	eventlocal = eventlocal == 'login' ? i18n.t('user_sessions.login') :
+	        	eventlocal = eventlocal == 'sshlogin' ? i18n.t('user_sessions.sshlogin') :
 	        	eventlocal = eventlocal == 'reboot' ? i18n.t('user_sessions.reboot') :
 	        	eventlocal = eventlocal == 'shutdown' ? i18n.t('user_sessions.shutdown') :
 	        	(eventlocal === 'logout' ? i18n.t('user_sessions.logout') : eventlocal)
 	        	$('td:eq(2)', nRow).html(eventlocal)
 
 	        	// Format date
-	        	var event = parseInt($('td:eq(4)', nRow).html());
+	        	var event = parseInt($('td:eq(5)', nRow).html());
 	        	var date = new Date(event * 1000);
-	        	$('td:eq(4)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date).fromNow()+'</span>');
+	        	$('td:eq(5)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date).fromNow()+'</span>');
 
 		    }
 	    } );
