@@ -176,14 +176,16 @@ class Usb_model extends Model {
 				'iPhone' => 'iphone',
 				'iPad' => 'ipad',
 				'iPod' => 'ipod',
-				'Mouse' => 'mouse',
-				'Mass Storage' => 'card reader|os x install disk|apple usb superdrive',
+				'Mouse' => 'mouse|ps2 orbit',
+				'Mass Storage' => 'card reader|os x install disk|apple usb superdrive|ultra fast media reader|usb to serial-ata bridge',
 				'Display' => 'displaylink|display|monitor',
 				'Composite Device' => 'composite device',
 				'Network' => 'network|ethernet|modem',
 				'UPS' => 'ups',
 				'Audio Device' => 'audio',
-				'TouchBar' => 'ibridge'
+				'TouchBar' => 'ibridge',
+				'Scanner' => 'scanner',
+				'Wacom Tablet' => 'wacom|ptz-|intuos|ctl-'
 			);
 			$device_name = strtolower($device['name']);
 			foreach($device_types as $type => $pattern){
