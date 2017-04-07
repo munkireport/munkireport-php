@@ -123,7 +123,7 @@ new Smart_stats_model;
                 
                 // Format SMART Error Count
 	        	var status=$('td:eq(13)', nRow).html();
-                if (status != "" && status != "-9876540"){
+                if (status != ""){
                     $('td:eq(13)', nRow).addClass('danger').html(status)
                 } else {
                     $('td:eq(13)', nRow).html("")
@@ -131,56 +131,56 @@ new Smart_stats_model;
                 
                 // Format SMART Power On Hours Error Count
 	        	var status=$('td:eq(14)', nRow).html();
-                if (status != "" && status != "-9876540" ){
+                if (status != ""){
                     $('td:eq(14)', nRow).addClass('danger').html(status)
                 } else {
                     $('td:eq(14)', nRow).html("")
                 }
                 
 	        	var status=$('td:eq(15)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(15)', nRow).html(status)
                 } else {
                     $('td:eq(15)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(16)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(16)', nRow).html(status)
                 } else {
                     $('td:eq(16)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(17)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(17)', nRow).html(status)
                 } else {
                     $('td:eq(17)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(18)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(18)', nRow).html(status)
                 } else {
                     $('td:eq(18)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(19)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(19)', nRow).html(status)
                 } else {
                     $('td:eq(19)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(20)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(20)', nRow).html(status)
                 } else {
                     $('td:eq(20)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(21)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(21)', nRow).html(status)
                 } else {
                     $('td:eq(21)', nRow).html("")

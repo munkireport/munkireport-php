@@ -8,11 +8,8 @@ new munkiinfo_model;
 ?>
 
 <div class="container">
-
   <div class="row">
-
   	<div class="col-lg-12">
-
 		  <h3><span data-i18n="munkireport.report"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
@@ -24,7 +21,6 @@ new munkiinfo_model;
 		      	<th data-i18n="network.ip_address" data-colname='reportdata.remote_ip'></th>
 		      	<th data-i18n="os.version" data-colname='machine.os_version'></th>
 		      	<th data-i18n="munkireport.version" data-colname='munkireport.version'></th>
-		      	<th data-i18n="munkireport.munkiprotocol" data-colname='munkiinfo.munkiinfo_value'></th>
 		      	<th data-i18n="last_seen" data-sort="desc" data-colname='reportdata.timestamp'></th>
 		      	<th data-i18n="munkireport.run_type" data-colname='munkireport.runtype'></th>
 		      	<th data-i18n="error_plural" data-colname='munkireport.errors'></th>
@@ -34,7 +30,7 @@ new munkiinfo_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
 		    	</tr>
 		    </tbody>
 		  </table>
@@ -88,19 +84,6 @@ new munkiinfo_model;
                                 d.columns[index].search.value = '> 0';
                             }
                         });
-
-                    }
-
-                    // Look for the protocol
-                    if(d.search.value.match(/^protocol = .+$/))
-                    {
-                        //console.log(d.search.value)
-
-                        // Add column specific search
-                        d.columns[6].search.value = d.search.value.replace(/.*= (.+)$/, '$1');
-                        // Clear global search
-                        d.search.value = '';
-                        //console.log(d.columns[6].search.value)
                     }
 
         		    // OS version
@@ -108,16 +91,6 @@ new munkiinfo_model;
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
                     }
-
-                    // Only search this key
-                    d.where = [
-                        {
-                            table: 'munkiinfo',
-                            column: 'munkiinfo_key',
-                            value: 'munkiprotocol'
-                        }
-                    ];
-
                 }
             },
             dom: mr.dt.buttonDom,
@@ -131,19 +104,20 @@ new munkiinfo_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_munki');
 	        	$('td:eq(0)', nRow).html(link);
-
-	        	// Format date
-	        	var checkin = parseInt($('td:eq(7)', nRow).html());
-	        	var date = new Date(checkin * 1000);
-	        	$('td:eq(7)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
-
-	        	// Format OS Version
+                
+                // Format OS Version
 	        	var osvers = $('td:eq(4)', nRow).html();
 	        	if( osvers > 0 && osvers.indexOf(".") == -1)
 	        	{
 	        	     osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
 	        	}
 	        	$('td:eq(4)', nRow).html(osvers);
+                
+	        	// Format date
+	        	var checkin = parseInt($('td:eq(6)', nRow).html());
+	        	var date = new Date(checkin * 1000);
+	        	$('td:eq(6)', nRow).html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+
 		    }
 	    });
 

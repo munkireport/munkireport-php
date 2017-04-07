@@ -11,8 +11,8 @@ if [ -f "${MUNKIPATH}preflight.d/security.sh" ]; then
 	rm "${MUNKIPATH}preflight.d/security.sh"
 fi
 
-if [ -f "${CACHEPATH}security.txt" ]; then
-	rm "${CACHEPATH}security.txt"
+if [ -f "${MUNKIPATH}preflight.d/cache/security.txt" ]; then
+	rm "${MUNKIPATH}preflight.d/cache/security.txt"
 fi
 
 
