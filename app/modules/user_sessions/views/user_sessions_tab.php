@@ -1,0 +1,30 @@
+<p>
+<table class="user_sessions table table-striped table-bordered">
+	<thead>
+		<tr>
+            <th data-i18n="event"></th>
+            <th data-i18n="username"></th>
+            <th data-i18n="user_sessions.time"></th>
+		</tr>
+	</thead>
+	<tbody>
+<?php $user_sessionsitemobj = new user_sessions_model(); ?>
+      <?php foreach($user_sessionsitemobj->retrieveMany('serial_number=?', array($serial_number)) as $item): ?>
+        <tr>
+          <td><?php echo str_replace(array('login','logout','shutdown','reboot'), array('Login','Logout','Shutdown','Reboot'), $item->event); ?></td>
+          <td><?php echo $item->user; ?></td>
+          <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
+        </tr>
+  <?php endforeach; ?>	</tbody>
+</table>
+
+<script>
+  $(document).on('appReady', function(e, lang) {
+
+        // Initialize datatables
+            $('.user_sessions').dataTable({
+                "bServerSide": false,
+                "aaSorting": [[0,'asc']]
+            });
+  });
+</script>

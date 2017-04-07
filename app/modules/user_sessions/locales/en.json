@@ -1,0 +1,9 @@
+{
+    "clienttab": "User Sessions",
+    "time": "Time",
+    "reporttitle": "User Sessions Report",
+    "reboot": "Reboot",
+    "shutdown": "Shut Down",
+    "login": "Login",
+    "logout": "Logout"
+}
