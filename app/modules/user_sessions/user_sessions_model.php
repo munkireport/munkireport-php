@@ -67,7 +67,6 @@ class User_sessions_model extends Model {
 			}
                             
             if (array_key_exists("remote_ssh", $event)){
-                print_r("SSHSSHSSH");
                 $this->rs["event"] = "sshlogin";  
             }
             
