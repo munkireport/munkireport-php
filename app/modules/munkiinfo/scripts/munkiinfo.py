@@ -7,6 +7,8 @@ import os
 import plistlib
 import sys
 import urlparse
+import importlib
+
 from Foundation import CFPreferencesCopyAppValue
 
 sys.path.append('/usr/local/munki')
@@ -96,6 +98,26 @@ def get_munkiprotocol():
     except AttributeError:
         return 'Could not obtain protocol'
 
+def middleware_checks():
+    """Check for middleware, get version if supported"""
+
+    middleware_version = []
+    name = []
+    for filename in os.listdir('/usr/local/munki'):
+            print "checking %s" % filename
+            if (filename.startswith('middleware') 
+                and os.path.splitext(filename)[1] == '.py'):
+                
+                name = os.path.splitext(filename)[0]
+                print 'middleware name %s' % name
+                try:
+                    middleware = importlib.import_module(name)
+                    middleware_version = middleware.get_version()
+                except:
+                    print "Error importing middleware for version checks, or version function does not exist."
+
+    return name, middleware_version
+
 def munkiinfo_report():
     """Build our report data for our munkiinfo plist"""
     munkiprotocol = get_munkiprotocol()
@@ -106,9 +128,13 @@ def munkiinfo_report():
     if AppleCatalogURL == 'None':
         AppleCatalogURL = ''
 
+    middleware_name, middleware_version = middleware_checks()
+
     report = {
         'AppleCatalogURL': AppleCatalogURL,
         'munkiprotocol': munkiprotocol,
+        'MiddlewareName': middleware_name,
+        'MiddlewareVersion': middleware_version,
     }
     report.update(formated_prefs())
     return ([report])
