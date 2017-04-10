@@ -8,6 +8,6 @@ return array(
         'gsx' => array('view' => 'gsx_listing', 'i18n' => 'gsx.title'),
     ),
     'widgets' => array(
-        array('view' => 'support_status_gsx_widget'),
+        'support_status_gsx' => array('view' => 'support_status_gsx_widget'),
     ),
 );

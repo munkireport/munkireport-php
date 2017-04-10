@@ -8,9 +8,9 @@ return array(
         'munki' => array('view' => 'munki_listing', 'i18n' => 'munkireport.munki'),
     ),
     'widgets' => array(
-        array('view' => 'manifests_widget'),
-        array('view' => 'munki_versions_widget'),
-        array('view' => 'munki_widget'),
+        'manifests' => array('view' => 'manifests_widget'),
+        'munki_versions' => array('view' => 'munki_versions_widget'),
+        'munki' => array('view' => 'munki_widget'),
     ),
     'reports' => array(
         'munki' => array('view' => 'munki', 'i18n' => 'munkireport.managedsoftware'),

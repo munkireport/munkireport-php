@@ -21,8 +21,12 @@ $(document).on('appReady', function(){
         $(this).find('div.panel-heading')
             .attr('title', i18n.t('inventory.app.versions', {app: appName}))
             .tooltip();
+        // Create url
+        var url = appUrl + '/module/inventory/items/' + appName;
         // Set title
-        $(this).find('.panel-title span').text(appName);
+        $(this).find('.panel-title span')
+            .text(appName)
+            .after('<a href="'+url+'" class="btn btn-xs pull-right"><i class="fa fa-list"></i></a>');
         // Add to app list
         apps.push({
             name: appName,

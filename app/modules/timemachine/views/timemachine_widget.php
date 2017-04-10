@@ -4,7 +4,10 @@
 
                 <div class="panel-heading" data-container="body" title="">
 
-                    <h3 class="panel-title"><i class="fa fa-clock-o"></i> <span data-i18n="timemachine.timemachine"></span></h3>
+                    <h3 class="panel-title"><i class="fa fa-clock-o"></i>
+                        <span data-i18n="timemachine.timemachine"></span>
+                        <list-link data-url="/show/listing/timemachine/timemachine"></list-link>
+                    </h3>
 
                 </div>
 

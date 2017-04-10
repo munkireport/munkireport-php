@@ -5,8 +5,9 @@
 		<div class="panel-heading" data-container="body" title="FindMyMac status">
 
 	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> 
-					<span data-i18n="findmymac.widget.title"></span>
-				</h3>
+				<span data-i18n="findmymac.widget.title"></span>
+				<list-link data-url="/show/listing/findmymac/findmymac"></list-link>
+			</h3>
 
 
 		</div>

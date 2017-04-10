@@ -4,7 +4,10 @@
 
 		<div class="panel-heading" data-container="body" data-i18n="[title]munkireport.munki_versions.tooltip">
 
-	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i> <span data-i18n="munkireport.munki_versions.title"></span></h3>
+	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i>
+	    	    <span data-i18n="munkireport.munki_versions.title"></span>
+	    	    <list-link data-url="/show/listing/munkireport/munki"></list-link>
+	    	</h3>
 
 		</div>
 

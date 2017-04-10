@@ -1,7 +1,10 @@
 <div class="col-lg-4 col-md-6">
 	<div class="panel panel-default" id="warranty-support-gsx-widget">
 		<div class="panel-heading" data-container="body" data-i18n="[title]warranty.warrantysupport.tooltip">
-			<h3 class="panel-title"><i class="fa fa-umbrella"></i> <span data-i18n="warranty.warrantysupport.warrentysupportstatus"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-umbrella"></i>
+			    <span data-i18n="warranty.warrantysupport.warrentysupportstatus"></span>
+			    <list-link data-url="/show/listing/gsx/gsx"></list-link>
+			</h3>
 		</div>
 
 		<div class="panel-body text-center"></div>
