@@ -2,7 +2,7 @@
 
 MODULE_NAME="certificate"
 MODULESCRIPT="cert_check"
-PREF_FILE="${CACHEPATH}certificate.txt"
+PREF_FILE="certificate.txt"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 
@@ -15,7 +15,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/${MODULESCRIPT}"
 
 	# Set preference to include this file in the preflight check
-	setreportpref $MODULE_NAME "${PREF_FILE}"
+	setreportpref $MODULE_NAME "${CACHEPATH}${PREF_FILE}"
 
 else
 	echo "Failed to download all required components!"

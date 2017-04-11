@@ -8,8 +8,8 @@ return array(
         'usb' => array('view' => 'usb_listing', 'i18n' => 'usb.devices'),
     ),
     'widgets' => array(
-        array('view' => 'usb_devices_widget'),
-        array('view' => 'usb_types_widget'),
+        'usb_devices' => array('view' => 'usb_devices_widget'),
+        'usb_types' => array('view' => 'usb_types_widget'),
     ),
     'reports' => array(
         'peripheral' => array('view' => 'usb_report', 'i18n' => 'usb.report'),

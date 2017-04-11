@@ -8,6 +8,6 @@ return array(
         'displays' => array('view' => 'displays_listing', 'i18n' => 'displays_info.displays'),
     ),
     'widgets' => array(
-        array('view' => 'external_displays_count_widget'),
+        'external_displays_count' => array('view' => 'external_displays_count_widget'),
     ),
 );

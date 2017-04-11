@@ -19,6 +19,13 @@ $(document).on('appReady', function(e, lang) {
         url: appUrl + '/system/show/status'
     });
 
+    // Add list link
+    $('list-link').each(function( index ){
+        var url = appUrl + $(this).data('url');
+        $(this).after('<a href="'+url+'" class="btn btn-xs pull-right"><i class="fa fa-list"></i></a>');
+        $(this).remove();
+    });
+
 });
 
 
@@ -63,6 +70,9 @@ $( document ).ready(function() {
         mr.sortMenu('ul.report');
         mr.sortMenu('ul.listing');
         mr.sortMenu('ul.client-tabs');
+
+        // Put summary on top
+        $('ul.client-tabs').prepend($('ul.client-tabs a[href="#summary"]').closest('li'));
 
         // Check if current locale is available (FIXME: check loaded locale)
         if( ! $('.locale a[data-i18n=\'nav.lang.' + i18n.lng() + '\']').length)

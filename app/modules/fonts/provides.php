@@ -8,6 +8,6 @@ return array(
         'fonts' => array('view' => 'fonts_listing', 'i18n' => 'fonts.clienttab'),
     ),
     'widgets' => array(
-       array('view' => 'fonts_widget'),
+       'fonts' => array('view' => 'fonts_widget'),
     ),
 );

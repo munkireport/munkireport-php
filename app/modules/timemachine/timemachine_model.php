@@ -44,7 +44,7 @@ class Timemachine_model extends Model
         $this->rs['destinations'] = 0;
         
         // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
+        $this->schema_version = 2;
         
         // Indexes to optimize queries
         $this->idx[] = array('last_success');
@@ -59,7 +59,6 @@ class Timemachine_model extends Model
         $this->idx[] = array('consistency_scan_date');
         $this->idx[] = array('date_of_latest_warning');
         $this->idx[] = array('destination_id');
-        $this->idx[] = array('destination_uuids');
         $this->idx[] = array('last_known_encryption_state');
         $this->idx[] = array('result');
         $this->idx[] = array('root_volume_uuid');
@@ -214,14 +213,14 @@ class Timemachine_model extends Model
                     // If false boolean, set accordingly
                     $this->$field = '0';
                 } else if ( ! array_key_exists($search, $plist) && in_array($field, $bools)){
-                    // If boolean and does not exist in plist, set to fake null
-                    $this->$field = '-9876540';
+                    // If boolean and does not exist in plist, set to null
+                    $this->$field = null;
                 } else if (array_key_exists($search, $plist) && in_array($field, $ints) && $plist[$search] == "0"){
                     // Set the int to 0 if it's 0
                     $this->$field = $plist[$search];
                 } else if ( ! array_key_exists($search, $plist) && in_array($field, $ints)){
-                    // If int and does not exist in plist, set to fake null
-                    $this->$field = '-9876540';
+                    // If int and does not exist in plist, set to null
+                    $this->$field = null;
                 } else if (in_array($field, $ints)){
                     // Set the int to 0 if it's 0
                     $this->$field = 0;

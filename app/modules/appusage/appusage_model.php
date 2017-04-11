@@ -73,7 +73,7 @@ class Appusage_model extends Model
         // Split into lines
         foreach(str_getcsv($data, "\n") as $line)
         {
-            if(empty(trim($line))){
+            if(trim($line) === ''){
                 continue;
             }
 

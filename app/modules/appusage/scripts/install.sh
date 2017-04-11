@@ -12,8 +12,8 @@ CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 if [ $? = 0 ]; then
 	# Make executable
 	chmod a+x "${MUNKIPATH}preflight.d/appusage"
-	mkdir -p "${CACHEPATH}"
-	touch "${CACHEPATH}${MODULE_CACHE_FILE}"
+	mkdir -p "${MUNKIPATH}preflight.d/cache"
+	touch "${MUNKIPATH}preflight.d/cache/${MODULE_CACHE_FILE}"
 
 	# Set preference to include this file in the preflight check
 	setreportpref $MODULE_NAME "${CACHEPATH}${MODULE_CACHE_FILE}"
