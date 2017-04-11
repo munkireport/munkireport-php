@@ -8,13 +8,13 @@ class Munkireportinfo_model extends Model
                 $this->rs['id'] = 0;
                 $this->rs['serial_number'] = $serial;
                 $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-                $this->rs['version'] = -9876543;
+                $this->rs['version'] = 0;
                 $this->rs['baseurl'] = '';
                 $this->rs['passphrase'] = '';
                 $this->rs['reportitems'] = ''; $this->rt['reportitems'] = 'TEXT';
 
                 // Schema version, increment when creating a db migration
-                $this->schema_version = 0;
+                $this->schema_version = 1;
                 
                 //indexes to optimize queries
                 $this->idx[] = array('version');
@@ -67,7 +67,7 @@ class Munkireportinfo_model extends Model
             
             // Set default version value
             if(empty($plist['version'])){
-                $plist['version'] = -9876543;
+                $plist['version'] = null;
             }
                 
             foreach (array('baseurl', 'passphrase', 'version', 'reportitems') as $item) {
