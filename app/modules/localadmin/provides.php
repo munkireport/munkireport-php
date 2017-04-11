@@ -5,7 +5,7 @@ return array(
         'localadmin' => array('view' => 'localadmin', 'i18n' => 'localadmin.localadmin',),
     ),
     'widgets' => array(
-        array('view' => 'localadmin_widget'),
+        'localadmin' => array('view' => 'localadmin_widget'),
     ),
     'reports' => array(
         'localadmin' => array('view' => 'localadmin_report', 'i18n' => 'localadmin.localadmin',),
