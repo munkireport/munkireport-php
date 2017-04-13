@@ -126,7 +126,7 @@ class Smart_stats_model extends Model {
 
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
+        $this->schema_version = 2;
 
         // Indexes to optimize queries
         $this->idx[] = array('serial_number');
