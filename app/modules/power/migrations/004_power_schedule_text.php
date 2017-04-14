@@ -41,9 +41,6 @@ class Migration_power_schedule_text extends Model
 
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                // Wrap in transaction
-                $dbh->beginTransaction();
-
                 foreach ($this->fields as $field) {
                     $sql = "CREATE INDEX power_$field ON power ($field)";
                     $this->exec($sql);
