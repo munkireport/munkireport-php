@@ -5,6 +5,8 @@
 class Migration_power_schedule_text extends Model
 {
 
+    private $fields = array('manufacture_date','design_capacity','max_capacity','max_percent','current_capacity','current_percent','cycle_count','temperature','timestamp','hibernatefile','active_profile','standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','externalconnected','timeremaining','instanttimetoempty','cellvoltage','voltage','permanentfailurestatus','manufacturer','packreserve','avgtimetofull','batteryserialnumber','amperage','fullycharged','ischarging','designcyclecount','avgtimetoempty');
+    
     public function __construct()
     {
         parent::__construct();
@@ -33,6 +35,22 @@ class Migration_power_schedule_text extends Model
                     // Delete old table
                     $sql = 'DROP TABLE power_tmp';
                     $this->exec($sql);
+                
+                // Get database handle
+                $dbh = $this->getdbh();
+
+                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                // Wrap in transaction
+                $dbh->beginTransaction();
+
+                foreach ($this->fields as $field) {
+                    $sql = "CREATE INDEX power_$field ON power ($field)";
+                    $this->exec($sql);
+                }
+
+                // Commit changes
+                $dbh->commit();
                 
                 break;
 
