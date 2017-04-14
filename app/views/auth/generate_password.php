@@ -56,13 +56,13 @@
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary" data-i18n="auth.generate">Generate</button> 
-								<a href="<?php echo url(); ?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>	
+								<button type="submit" class="btn btn-primary" data-i18n="auth.generate">Generate</button>
+								<a href="<?php echo url(); ?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>
 								</div>
 							</div>
-						<?php //endif; ?>				
+						<?php //endif; ?>
 			            </fieldset>
-			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
+			            <p class="text-right"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
 					</form>
 				</div>
 			</div>
