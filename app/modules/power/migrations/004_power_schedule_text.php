@@ -19,6 +19,12 @@ class Migration_power_schedule_text extends Model
         {
             // Set column type
             case 'sqlite':
+                     
+                    // Get database handle
+                    $dbh = $this->getdbh();
+                
+                    // Wrap in transaction
+                    $dbh->beginTransaction();
 
                     // Rename table
                     $sql = 'ALTER TABLE power RENAME TO power_tmp';
@@ -35,19 +41,14 @@ class Migration_power_schedule_text extends Model
                     // Delete old table
                     $sql = 'DROP TABLE power_tmp';
                     $this->exec($sql);
-                
-                // Get database handle
-                $dbh = $this->getdbh();
 
-                $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    foreach ($this->fields as $field) {
+                        $sql = "CREATE INDEX power_$field ON power ($field)";
+                        $this->exec($sql);
+                    }
 
-                foreach ($this->fields as $field) {
-                    $sql = "CREATE INDEX power_$field ON power ($field)";
-                    $this->exec($sql);
-                }
-
-                // Commit changes
-                $dbh->commit();
+                    // Commit changes
+                    $dbh->commit();
                 
                 break;
 
