@@ -255,7 +255,7 @@
 	| $conf['bundlepath_ignorelist'][] = '/System/Library/.*';
 	|
 	| Skip all apps that are contained in an app bundle
-	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
+	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app';
 	|
 	*/
 	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
