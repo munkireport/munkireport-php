@@ -47,7 +47,7 @@ $(document).on('appReady', function(e, lang) {
                     .append($('<td>')
                         .html(function(){
                             var date = new Date(cert.rs.cert_exp_time * 1000);
-                            return moment(date).format('LLL');
+                            return moment(date).format('LLLL');
                             }))
                     .append($('<td>')
                         .text(cert.rs.issuer))                        
