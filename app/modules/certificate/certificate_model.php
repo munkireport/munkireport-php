@@ -20,6 +20,10 @@ class Certificate_model extends Model
         //indexes to optimize queries
         $this->idx[] = array('serial_number');
         $this->idx[] = array('cert_exp_time');
+        $this->idx[] = array('cert_path');
+        $this->idx[] = array('cert_cn');
+        $this->idx[] = array('issuer');
+        $this->idx[] = array('cert_location');
         $this->idx[] = array('timestamp');
         
         // Create table if it does not exist
