@@ -74,7 +74,7 @@ class Migration_certificate_add_columns extends Model
                 // Create temporary table
                 $sql = "CREATE TABLE certificate (
 								id INTEGER PRIMARY KEY, 
-								serial_number VARCHAR(255) UNIQUE, 
+								serial_number VARCHAR(255), 
 								cert_exp_time INTEGER,
 								cert_path VARCHAR(255),
 								cert_cn VARCHAR(255),

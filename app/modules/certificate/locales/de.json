@@ -1,5 +1,5 @@
 {
-    "cert_groups": "Certificates by Name"
+    "cert_groups": "Certificates by Name",
     "commonname": "Common Name",
     "expiration_date": "Expiration Date",
     "expired": "Abgelaufen",
