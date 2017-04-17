@@ -107,7 +107,7 @@ new Munkireportinfo_model;
                 
                 // Format Version
                 var version = $('td:eq(2)', nRow).html();
-                if (version != "-9876543" && (version)) {
+                if (version != "" && (version)) {
                   $('td:eq(2)', nRow).html(mr.integerToVersion(version));
                 } else {
                   $('td:eq(2)', nRow).html('');  
