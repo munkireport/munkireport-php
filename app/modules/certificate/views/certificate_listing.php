@@ -102,7 +102,7 @@ new Certificate_model;
 	        	// Format expiration date
 	        	var checkin = parseInt($('td:eq(4)', nRow).html());
 	        	var date = new Date(checkin * 1000);
-	        	$('td:eq(4)', nRow).html('<span title="'+date+'">'+date+'</span>');
+	        	$('td:eq(4)', nRow).html('<span title="'+moment(date).format('LLLL')+'">'+date+'</span>');
 
 	        	// Format Check-In timestamp
 	        	var checkin = parseInt($('td:eq(7)', nRow).html());
