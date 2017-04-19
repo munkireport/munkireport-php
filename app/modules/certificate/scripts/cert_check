@@ -32,7 +32,7 @@ if [[ -d "${CERTSPATH}" ]]
 then
     for CERT in $(ls "${CERTSPATH}"*.cert.pem)
     do
-        if [[ "$CERT" != *"com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]
+        if [[ "$CERT" != *"com.apple"* ]] && [[ "$CERT" != *"Apple"* ]] && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]]
         then     
 
             # read the dates on each certificate
@@ -55,7 +55,7 @@ fi
 # Parse non-Apple certificates in Keychain
 for CERT in $(security find-certificate -a "${SYSTEM_KEYCHAIN}" | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
 do
-    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]
+    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]  && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]]
     then     
         # read the subject on each certificate
         SUBJECT=$(security find-certificate -a -c "$CERT" -p | openssl x509 -subject -nameopt oneline -noout 2>/dev/null)
