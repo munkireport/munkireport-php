@@ -9,7 +9,9 @@ import sys
 import urlparse
 import importlib
 
+# pylint: disable=E0611
 from Foundation import CFPreferencesCopyAppValue
+# pylint: enable=E0611
 
 sys.path.append('/usr/local/munki')
 try:
@@ -101,22 +103,25 @@ def get_munkiprotocol():
 def middleware_checks():
     """Check for middleware, get version if supported"""
 
-    middleware_version = []
-    name = []
+    middleware_version = None
+    middleware_name = None
     for filename in os.listdir('/usr/local/munki'):
-            print "checking %s" % filename
-            if (filename.startswith('middleware') 
-                and os.path.splitext(filename)[1] == '.py'):
-                
-                name = os.path.splitext(filename)[0]
-                print 'middleware name %s' % name
-                try:
-                    middleware = importlib.import_module(name)
-                    middleware_version = middleware.get_version()
-                except:
-                    print "Error importing middleware for version checks, or version function does not exist."
+        if filename.startswith('middleware') and os.path.splitext(filename)[1] == '.py':
+            middleware_name = os.path.splitext(filename)[0]
+            try:
+                middleware = importlib.import_module(middleware_name)
+                middleware_version = middleware.__version__
+            except ImportError:
+                print "Error: munkiinfo.py - Error importing middleware for version checks."
+            except AttributeError:
+                print "Error: munkiinfo.py - Error getting version attribute from middleware."
 
-    return name, middleware_version
+    if middleware_name and middleware_version:
+        return middleware_name + '-' + middleware_version
+    elif middleware_name:
+        return middleware_name
+    else:
+        return ""
 
 def munkiinfo_report():
     """Build our report data for our munkiinfo plist"""
@@ -128,16 +133,16 @@ def munkiinfo_report():
     if AppleCatalogURL == 'None':
         AppleCatalogURL = ''
 
-    middleware_name, middleware_version = middleware_checks()
+    middleware_info = middleware_checks()
 
     report = {
         'AppleCatalogURL': AppleCatalogURL,
         'munkiprotocol': munkiprotocol,
-        'MiddlewareName': middleware_name,
-        'MiddlewareVersion': middleware_version,
+        'Middleware': middleware_info
     }
+
     report.update(formated_prefs())
-    return ([report])
+    return [report]
 
 def main():
     """Main"""
