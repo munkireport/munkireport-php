@@ -40,6 +40,14 @@ $(document).on('appReady', function(){
 					   } else {
 					        rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+temperature_f+'°F">'+d[prop]+'°C</span></td></tr>';
 					   }
+                    } else if (prop == "overall_health"){
+                        if (d['overall_health'] == "PASSED"){
+                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-success">'+d['overall_health']+'</span></td></tr>';
+                        } else if (d['overall_health'] == "UNKNOWN!"){
+                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-success">'+d['overall_health']+'</span></td></tr>';
+                        } else if (d['overall_health'] == "FAILED!"){
+                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-success">'+d['overall_health']+'</span></td></tr>';
+                        } else { ; }
                     } else {
                         rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
                     }
@@ -61,3 +69,4 @@ $(document).on('appReady', function(){
 	});
 });
 </script>
+
