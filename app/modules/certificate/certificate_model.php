@@ -54,7 +54,7 @@ class Certificate_model extends Model
                     // Trim path to 255 chars
                     $this->cert_path = substr($parts[1], 0, 254);
                     // Get common name out of subject
-                    if (preg_match('/subject= CN = ([^,]+)/', $parts[2], $matches)) {
+                    if (preg_match('/CN = ([^,|\n]+)/', $parts[2], $matches)) {
                         $this->cert_cn = $matches[1];
                     } else {
                         $this->cert_cn = 'Unknown';
