@@ -159,7 +159,7 @@ $(document).on('appReady', function(e, lang) {
 			} else if(data.requireconfirmation === "0" || data.requireconfirmation === 0) {
 				 $('#directoryservice-requireconfirmation').text(i18n.t('no'));
 			} else{
-				 $('#directoryservice-createmobileaccount').text("");
+				 $('#directoryservice-requireconfirmation').text("");
 			}
 
 			if(data.forcehomeinstartup === "1" || data.forcehomeinstartup === 1) {
@@ -167,7 +167,7 @@ $(document).on('appReady', function(e, lang) {
 			} else if(data.forcehomeinstartup === "0" || data.forcehomeinstartup === 0) {
 				 $('#directoryservice-forcehomeinstartup').text(i18n.t('no'));
 			} else{
-				 $('#directoryservice-createmobileaccount').text("");
+				 $('#directoryservice-forcehomeinstartup').text("");
 			}
 
 			if(data.mounthomeassharepoint === "1" || data.mounthomeassharepoint === 1) {
@@ -191,7 +191,7 @@ $(document).on('appReady', function(e, lang) {
 			} else if(data.generatekerberosauth === "0" || data.generatekerberosauth === 0) {
 				 $('#directoryservice-generatekerberosauth').text(i18n.t('no'));
 			} else{
-				 $('#directoryservice-createmobileaccount').text("");
+				 $('#directoryservice-generatekerberosauth').text("");
 			}
 
 			if(data.authenticationfromanydomain === "1" || data.authenticationfromanydomain === 1) {
