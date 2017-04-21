@@ -119,11 +119,15 @@ new Smart_stats_model;
 	        	$('td:eq(2)', nRow).html("/dev/disk"+disknum)
 
 	        	var status=$('td:eq(3)', nRow).html();
-                if (status != "PASSED" && status != ""){
-                    $('td:eq(3)', nRow).addClass('danger').html(status)
-                } else {
-                    $('td:eq(3)', nRow).html("")
-                }
+                $('td:eq(3)', nRow).html(function(){
+                    if( status == 'PASSED'){
+                        return '<span class="label label-success">'+i18n.t(status)+'</span>';
+                    } else if( status == 'UNKNOWN!'){
+                        return '<span class="label label-warning">'+i18n.t(status)+'</span>';
+                    } else {
+                        return '<span class="label label-danger">'+i18n.t(status)+'</span>';
+                    }
+                });
 
                 // Format timestamp
                 var timestamp = (($('td:eq(13)', nRow).html()) * 1000);
