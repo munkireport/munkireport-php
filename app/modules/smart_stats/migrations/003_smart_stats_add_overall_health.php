@@ -26,7 +26,7 @@ class Migration_smart_stats_add_overall_health extends Model
 		$this->exec($sql);
 
 		// Adding an index
-		$idx_name = $this->tablename . '_' . $this->columname;
+		$idx_name = $this->tablename . '_' . $this->columnname;
 		$sql = sprintf(
 		    "CREATE INDEX %s ON %s (%s)",
 		    $idx_name,
