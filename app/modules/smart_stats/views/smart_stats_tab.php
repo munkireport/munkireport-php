@@ -44,9 +44,9 @@ $(document).on('appReady', function(){
                         if (d['overall_health'] == "PASSED"){
                             rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-success">'+d['overall_health']+'</span></td></tr>';
                         } else if (d['overall_health'] == "UNKNOWN!"){
-                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-success">'+d['overall_health']+'</span></td></tr>';
+                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-warning">'+d['overall_health']+'</span></td></tr>';
                         } else if (d['overall_health'] == "FAILED!"){
-                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-success">'+d['overall_health']+'</span></td></tr>';
+                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-danger">'+d['overall_health']+'</span></td></tr>';
                         } else { ; }
                     } else {
                         rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
