@@ -25,6 +25,26 @@ class Localadmin_model extends Model
     
     // ------------------------------------------------------------------------
 
+     public function get_localadmin()
+     {
+        $out = array();
+        $sql = "SELECT machine.serial_number, computer_name,
+                    LENGTH(users) - LENGTH(REPLACE(users, ' ', '')) + 1 AS count,
+                    users
+                    FROM localadmin
+                    LEFT JOIN machine USING (serial_number)
+                    WHERE localadmin.users LIKE '% %'  
+                    ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->users = $obj->users ? $obj->users : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+
     /**
      * Process data sent by postflight
      *

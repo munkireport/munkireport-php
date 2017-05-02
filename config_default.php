@@ -591,22 +591,23 @@
 	| This is a list of the current dashboard widgets
 	|
 	| Small horizontal widgets:
-	|	bound_to_ds
-	|	client (two items)
-	|	external_displays_count
-	|	firmwarepw
-	|	gatekeeper
-	|	hardware_model
-	|	smart_status
-	|	disk_report
-	|	uptime
-	|	installed memory
-	|	munki
-	|	power_battery_condition
-	|	power_battery_health
-	|	sip
-	|	wifi_state
-	|
+        |       bound_to_ds
+        |       client (two items)
+        |       disk_report
+        |       external_displays_count
+        |       firmwarepw
+        |       gatekeeper
+        |       hardware_model
+        |       installed memory
+        |       localadmin
+        |       munki
+        |       power_battery_condition
+        |       power_battery_health
+        |       sip
+        |       smart_status
+        |       uptime
+        |       wifi_state
+        |       	|
 	| Small horizontal / medium vertical widgets:
 	|	network_location
 	|
