@@ -89,7 +89,7 @@
         "users": "Utilisateurs"
     },
     "cert": {
-        "expired": "__name__ expired __moment__"
+        "expired": "__name__ expiré __moment__"
     },
     "cfbundlename": "Nom CFBundle",
     "chart": {
@@ -157,6 +157,9 @@
     "error": "Erreur",
     "error_plural": "Erreurs",
     "errors": {
+	"403": "Vous n'êtes pas autorisé à voir cette page",
+        "404": "Page non trouvée",
+        "426": "Vous devez visiter ce site en utilisant une connexion sécurisée.",
         "client_nonexistent": "Client avec le numéro de série \\\"__serial__\\\" n'existe pas",
         "loading": "Il y avait un problème avec la récupération de ces données: __error__",
         "title": "Erreurs"
@@ -166,7 +169,7 @@
     "events": {
         "widget_title": "Événements dans la dernière heure"
     },
-    "external": "External",
+    "external": "Externe",
     "failed": "Echoué",
     "failing": "Défaillant !",
     "filter": {
@@ -187,7 +190,7 @@
     "last_user": "Dernier utilisateur",
     "listing": {
         "checkin": "Enregistrement",
-        "computername": "Name",
+        "computername": "Nom",
         "loading": "Chargement des données depuis le serveur"
     },
     "loading": "Chargement des données depuis le serveur",

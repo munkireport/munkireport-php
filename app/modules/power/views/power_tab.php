@@ -247,41 +247,41 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-active_profile').text(data.active_profile);
 			} 
             
-			if(data.user_wake_count == "-9876543") {
-				 $('#power-user_wake_count').text('');
-			} else{
+			if(data.user_wake_count) {
 				 $('#power-user_wake_count').text(data.user_wake_count);
+			} else{
+				 $('#power-user_wake_count').text('');
 			}
                        
-			if(data.dark_wake_count == "-9876543") {
-				 $('#power-dark_wake_count').text('');
-			} else{
+			if(data.dark_wake_count) {
 				 $('#power-dark_wake_count').text(data.dark_wake_count);
+			} else{
+				 $('#power-dark_wake_count').text('');
 			}
                           
-			if(data.sleep_count == "-9876543") {
-				 $('#power-sleep_count').text('');
-			} else{
+			if(data.sleep_count) {
 				 $('#power-sleep_count').text(data.sleep_count);
+			} else{
+				 $('#power-sleep_count').text('');
 			}
                         
-			if(data.cpu_available_cpus == "-9876543") {
-				 $('#power-cpu_available_cpus').text('');
-			} else{
+			if(data.cpu_available_cpus) {
 				 $('#power-cpu_available_cpus').text(data.cpu_available_cpus);
+			} else{
+				 $('#power-cpu_available_cpus').text('');
 			}
                         
-			if(data.cpu_scheduler_limit == "-9876543") {
-				 $('#power-cpu_scheduler_limit').text('');
+			if(data.cpu_scheduler_limit) {
+				 $('#power-cpu_scheduler_limit').text('data.cpu_scheduler_limit+'%');
 			} else{
-				 $('#power-cpu_scheduler_limit').text(data.cpu_scheduler_limit+'%');
+				 $('#power-cpu_scheduler_limit').text('');
 			}
 
             
-			if(data.cpu_speed_limit == "-9876543") {
-				 $('#power-cpu_speed_limit').text('');
-			} else{
+			if(data.cpu_speed_limit) {
 				 $('#power-cpu_speed_limit').text(data.cpu_speed_limit+'%');
+			} else{
+				 $('#power-cpu_speed_limit').text('');
 			}  
 
 			if(data.hibernatemode == "25" || data.hibernatemode == "1") {
@@ -290,13 +290,13 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-hibernatemode').text(i18n.t('power.safe_sleep')+' ('+data.hibernatemode+')');
 			} else if(data.hibernatemode == "0") {
 				 $('#power-hibernatemode').text(i18n.t('power.sleep')+' ('+data.hibernatemode+')');
-			} else if(data.hibernatemode == "-9876543") {
+			} else if(data.hibernatemode == null) {
 				 $('#power-hibernatemode').text('');
 			} else{
 				 $('#power-hibernatemode').data.hibernatemode;
 			}  
                           
-			if(data.standbydelay == "-9876543") {
+			if(data.standbydelay == null) {
 				 $('#power-standbydelay').text('');
 			} else if(data.standbydelay == "0") {
 				 $('#power-standbydelay').text(i18n.t('power.never'));
@@ -304,7 +304,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-standbydelay').html('<span title="'+data.standbydelay+' '+i18n.t('power.seconds')+'">'+moment.duration(+data.standbydelay, "seconds").humanize()+'</span>');
 			}  
                                       
-			if(data.displaysleep == "-9876543") {
+			if(data.displaysleep == null) {
 				 $('#power-displaysleep').text('');
 			} else if(data.displaysleep == "0") {
 				 $('#power-displaysleep').text(i18n.t('power.never'));
@@ -312,7 +312,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-displaysleep').html('<span title="'+data.displaysleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.displaysleep, "minutes").humanize()+'</span>');
 			}  
                                                   
-			if(data.disksleep == "-9876543") {
+			if(data.disksleep == null) {
 				 $('#power-disksleep').text('');
 			} else if(data.disksleep == "0") {
 				 $('#power-disksleep').text(i18n.t('power.never'));
@@ -320,7 +320,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-disksleep').html('<span title="'+data.disksleep+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.disksleep, "minutes").humanize()+'</span>');
 			}  
                        
-			if(data.autopoweroffdelay == "-9876543") {
+			if(data.autopoweroffdelay == null) {
 				 $('#power-autopoweroffdelay').text('');
 			} else if(data.autopoweroffdelay == "0") {
 				 $('#power-autopoweroffdelay').text(i18n.t('power.never'));
@@ -328,7 +328,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-autopoweroffdelay').html('<span title="'+data.autopoweroffdelay+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.autopoweroffdelay, "minutes").humanize()+'</span>');
 			}  
                
-			if(data.sleep == "-9876543") {
+			if(data.sleep == null) {
 				 $('#power-sleep').text('');
 			} else if(data.sleep == "0") {
 				 $('#power-sleep').text(i18n.t('power.never'));
@@ -515,7 +515,7 @@ $(document).on('appReady', function(e, lang) {
 			}
             
             // Unhide and fill out UPS if UPS is present
-            if (data.ups_percent != "-9876543" && (data.ups_percent)) {
+            if (data.ups_percent != "" && (data.ups_percent)) {
 	        	$('#power-ups').removeClass('hide'); // unhide UPS table
 	        	$('#power-ups_percent').text(data.ups_percent+'%');
 	        	$('#power-haltlevel').text(data.haltlevel+'%');
@@ -532,7 +532,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-ups_charging_status').text(data.ups_charging_status);
 			} 
                 
-			if(data.haltafter == "-9876543") {
+			if(data.haltafter == null) {
 				 $('#power-haltafter').text('');
 			} else if(data.haltafter == "1") {
 				 $('#power-haltafter').text(data.haltafter+' '+i18n.t('power.minute'));
@@ -540,7 +540,7 @@ $(document).on('appReady', function(e, lang) {
 				 $('#power-haltafter').text(data.haltafter+' '+i18n.t('power.minutes'));
 			}
                 
-			if(data.haltremain == "-9876543") {
+			if(data.haltremain == null) {
 				 $('#power-haltremain').text('');
 			} else if(data.haltremain == "1") {
 				 $('#power-haltremain').text(data.haltremain+' '+i18n.t('power.minute'));
