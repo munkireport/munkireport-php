@@ -69,8 +69,15 @@ def main():
              'Errors', 'Warnings', 'RunType']
 
     for item in items:
-        if install_report.get(item):
-            report_list[item] = install_report[item]
+        # Only list unique errors. Munki lists missing catalogs for each section: Check for installs, Check for removals, Check for managed updates
+        #  causing duplicate entries for the same catalog.
+        if item == 'Errors' or item == 'Warnings':
+            if install_report.get(item):
+                report_list[item] = list(set(install_report[item]))
+        else:
+            if install_report.get(item):
+                report_list[item] = install_report[item]
+    
     # pylint: enable=E1103
 
     if DEBUG:
