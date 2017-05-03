@@ -19,7 +19,7 @@ new mbbr_status_model;
               <tr>
                 <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
                 <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-                <th data-i18n="listing.username" data-colname='reportdata.long_username'></th>
+                <th data-i18n="username.username" data-colname='reportdata.long_username'></th>
                 <th data-i18n="mbbr_status.entitlement_status" data-colname='mbbr_status.entitlement_status'></th>
                 <th data-i18n="mbbr_status.machine_id" data-colname='mbbr_status.machine_id'></th>
                 <th data-i18n="mbbr_status.install_token" data-colname='mbbr_status.install_token'></th>
