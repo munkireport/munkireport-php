@@ -30,7 +30,7 @@ class mbbr_status_model extends Model
     {
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
-        $parser->parse($data, CFPropertyList);
+        $parser->parse($data, CFPropertyList::FORMAT_XML);
 
         $translate = array(
           'Entitlement status' => 'entitlement_status',

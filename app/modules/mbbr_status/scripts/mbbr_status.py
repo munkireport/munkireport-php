@@ -38,6 +38,12 @@ def main():
     if not os.path.exists(cachedir):
         os.makedirs(cachedir)
 
+    # Check for existance of /usr/local/bin/mbbr before going further
+    mbbr_dir = '/usr/local/bin/mbbr'
+    if not os.path.exists(mbbr_dir):
+        print 'Client is missing the mbbr tool at /usr/local/bin/mbbr. Exiting'
+        exit(0)
+
     # Skip manual check
     if len(sys.argv) > 1:
         if sys.argv[1] == 'manualcheck':

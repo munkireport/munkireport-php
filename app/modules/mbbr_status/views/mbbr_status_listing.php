@@ -66,7 +66,7 @@ new mbbr_status_model;
                 var name=$('td:eq(0)', nRow).html();
                 if(name == ''){name = "No Name"};
                 var sn=$('td:eq(1)', nRow).html();
-                var link = mr.getClientDetailLink(name, sn, '<?php echo url(); ?>/');
+                var link = mr.getClientDetailLink(name, sn, '#tab_mbbr_status-tab');
                 $('td:eq(0)', nRow).html(link);
 
             }
