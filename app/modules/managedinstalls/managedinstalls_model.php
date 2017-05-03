@@ -1,7 +1,7 @@
 <?php
 class managedinstalls_model extends Model
 {
-        
+
     public function __construct($serial_number = '')
     {
         parent::__construct('id', 'managedinstalls'); //primary key, tablename
@@ -14,7 +14,7 @@ class managedinstalls_model extends Model
         $this->rs['installed'] = 0; // 1 = installed, 0 = not installed
         $this->rs['status'] = ''; // installed, pending, failed
         $this->rs['type'] = ''; // munki, applesus
-        
+
         // Add indexes
         $this->idx[] = array('serial_number');
         $this->idx[] = array('name');
@@ -26,10 +26,10 @@ class managedinstalls_model extends Model
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
-        
+
         // Create table if it does not exist
         $this->create_table();
-        
+
         if ($serial_number) {
             $this->retrieve_record($serial_number);
             if (! $this->rs['serial_number']) {
@@ -37,7 +37,7 @@ class managedinstalls_model extends Model
             }
         }
     }
-    
+
     /**
      * Get statistics
      *
@@ -53,7 +53,7 @@ class managedinstalls_model extends Model
         } else {
             $timestamp = 0;
         }
-        
+
         $filter = get_machine_group_filter('AND');
         $sql = "SELECT managedinstalls.status, type, count(distinct reportdata.serial_number) as clients, count(managedinstalls.status) as total_items
             FROM reportdata
@@ -65,9 +65,9 @@ class managedinstalls_model extends Model
 
         return $this->query($sql);
     }
-    
+
     // ------------------------------------------------------------------------
-    
+
     /**
      * Get pending installs
      *
@@ -79,7 +79,7 @@ class managedinstalls_model extends Model
         $fromdate = time() - 3600 * $hoursBack;
         $updates_array = array();
         $filter = get_machine_group_filter('AND');
-        $sql = "SELECT m.name, m.display_name, m.version, count(*) as count 
+        $sql = "SELECT m.name, m.display_name, m.version, count(*) as count
                 FROM managedinstalls m
                 LEFT JOIN reportdata USING (serial_number)
                 WHERE status = 'pending_install'
@@ -91,9 +91,9 @@ class managedinstalls_model extends Model
         return $this->query($sql, array($type));
     }
 
-    
+
     // ------------------------------------------------------------------------
-    
+
     /**
      * Get package statistics
      *
@@ -106,12 +106,12 @@ class managedinstalls_model extends Model
     {
         $where = '';
         $bindings = array();
-        
+
         if ($pkg) {
             $where = 'AND m.name = ?';
             $bindings[] = $pkg;
         }
-        
+
         $filter = get_machine_group_filter();
         $sql = "SELECT m.name, m.version, m.display_name, m.status, count(*) as count
             FROM reportdata
@@ -123,7 +123,7 @@ class managedinstalls_model extends Model
         return $this->query($sql, $bindings);
     }
     // ------------------------------------------------------------------------
-    
+
     /**
      * Setter for serial_number
      */
@@ -131,9 +131,9 @@ class managedinstalls_model extends Model
     {
         $this->serial_number = $serial_number;
     }
-    
+
     // ------------------------------------------------------------------------
-    
+
     /**
      * Get machines with pending installs
      *
@@ -154,14 +154,14 @@ class managedinstalls_model extends Model
             AND reportdata.timestamp > $timestamp
             GROUP BY reportdata.serial_number, computer_name
             ORDER BY count DESC";
-        
+
         return $this->query($sql, array($status));
     }
-    
 
-    
+
+
     // ------------------------------------------------------------------------
-    
+
     /**
      * Process data sent by postflight
      *
@@ -179,7 +179,7 @@ class managedinstalls_model extends Model
             $this->processData($mylist);
         }
     }
-    
+
     /**
      * Process Data
      *
@@ -189,7 +189,7 @@ class managedinstalls_model extends Model
      */
     public function processData($mylist)
     {
-            
+
         // Remove previous data
         $this->deleteWhere('serial_number=?', $this->serial_number);
 
@@ -203,17 +203,18 @@ class managedinstalls_model extends Model
             'status' => '',
             'type' => '',
         );
-        
+
         $new_installs = array();
-        
+        $uninstalls = array();
+
         # Loop through list
         foreach ($mylist as $name => $props) {
             // Get an instance of the fillable array
             $temp = $fillable;
-            
+
             // Add name to temp
             $temp['name'] = $name;
-            
+
             // Copy values and correct type
             foreach ($temp as $key => $value) {
                 if (array_key_exists($key, $props)) {
@@ -221,28 +222,34 @@ class managedinstalls_model extends Model
                     settype($temp[$key], gettype($value));
                 }
             }
-            
+
             // Set version
             if (isset($props['installed_version'])) {
                 $temp['version'] = $props['installed_version'];
             } elseif (isset($props['version_to_install'])) {
                 $temp['version'] = $props['version_to_install'];
             }
-            
+
             // Set installed size
             if (isset($props['installed_size'])) {
                 $temp['size'] = $props['installed_size'];
             }
-                        
+
             $this->id = 0;
             $this->merge($temp)->save();
-            
+
             // Store new installs
             if ($this->status == 'install_succeeded') {
                 $new_installs[] = $temp;
             }
+
+            // Store uninstalls
+            if ($this->status == 'uninstalled') {
+                $uninstalls[] = $temp;
+            }
+
         }
-        
+
         // Store apropriate event:
         if ($new_installs) {
             $count = count($new_installs);
@@ -254,6 +261,19 @@ class managedinstalls_model extends Model
             $this->store_event(
                 'success',
                 'munki.package_installed',
+                json_encode($msg)
+            );
+        }
+        elseif ($uninstalls) {
+            $count = count($uninstalls);
+            $msg = array('count' => $count);
+            if ($count == 1) {
+                $pkg = array_pop($uninstalls);
+                $msg['pkg'] = $pkg['display_name'] . ' ' . $pkg['version'];
+            }
+            $this->store_event(
+                'success',
+                'munki.package_uninstalled',
                 json_encode($msg)
             );
         }
