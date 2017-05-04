@@ -159,6 +159,11 @@ $(document).on('appReady', function(e, lang) {
 		var msecs = moment(machineData.timestamp * 1000);
 		$('.mr-check-in_date').append('<time title="'+msecs.format('LLLL')+'" >'+msecs.fromNow()+'</time>');
 
+		// Firewall
+		var fw_states = [i18n.t('disabled'), i18n.t('enabled'), i18n.t('security.block_all')]
+		var firewall_state = parseInt(machineData.firewall_state);
+		$('.mr-firewall_state').text(fw_states[firewall_state] || i18n.t('unknown'));
+
 		// Set tooltips
 		$( "time" ).each(function( index ) {
 				$(this).tooltip().css('cursor', 'pointer');
