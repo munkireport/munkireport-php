@@ -18,7 +18,7 @@ class Power_model extends Model
         $this->rs['timestamp'] = 0; // Unix time when the report was uploaded
         $this->rs['sleep_prevented_by'] = ''; $this->rt['sleep_prevented_by'] = 'TEXT';
         $this->rs['hibernatefile'] = '';
-        $this->rs['schedule'] = '';
+        $this->rs['schedule'] = ''; $this->rt['schedule'] = 'TEXT';
         $this->rs['adapter_id'] = '';
         $this->rs['family_code'] = '';
         $this->rs['adapter_serial_number'] = '';
@@ -86,7 +86,7 @@ class Power_model extends Model
         $this->rs['avgtimetoempty'] = 0;
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 3;
+        $this->schema_version = 4;
 
         // Indexes to optimize queries
         // MySQL allows for a maximum of 64 indexes per table, not all columns are indexed.
