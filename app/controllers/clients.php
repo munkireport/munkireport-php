@@ -44,8 +44,8 @@ class clients extends Controller
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
-                        s.gatekeeper, s.sip, s.ssh_users, s.ard_users, s.firmwarepw, w.purchase_date, w.end_date,
-                        w.status, l.users, d.TotalSize, d.FreeSpace,
+			s.gatekeeper, s.sip, s.ssh_users, s.ard_users, s.firmwarepw, s.firewall_state, 
+			w.purchase_date, w.end_date, w.status, l.users, d.TotalSize, d.FreeSpace,
                         d.SMARTStatus, d.CoreStorageEncrypted
                 FROM machine m
                 LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
