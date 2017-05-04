@@ -159,9 +159,9 @@ new Security_model;
 
 		 var firewall_state = $('td:eq(12)', nRow).html();
 		 $('td:eq(12)', nRow).html(function(){
-		     if(firewall_state == 'Enabled'){
+		     if(firewall_state == '1'){
 			 return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-		     } else if (firewall_state == 'Block All'){
+		     } else if (firewall_state == '2'){
 			     return '<span class="label label-success">'+i18n.t('security.block_all')+'</span>';
 		     }
 		     return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
