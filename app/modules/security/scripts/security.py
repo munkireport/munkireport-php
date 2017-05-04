@@ -155,17 +155,8 @@ def firewall_enable_check():
     
     sp = subprocess.Popen(['defaults', 'read', '/Library/Preferences/com.apple.alf.plist', 'globalstate'], stdout=subprocess.PIPE)
     out, err = sp.communicate()
-
-    if "2" in out:
-        firewall_enabled = "Block All"
-    elif "1" in out:
-        firewall_enabled = "Enabled"
-    elif "0" in out:
-        firewall_enabled = "Disabled"
-    else:
-        firewall_enabled = "Error"
-
-    return firewall_enabled
+    
+    return out[0]
 
 
 def main():
