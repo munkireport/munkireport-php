@@ -20,7 +20,7 @@ class Migration_security_add_firewall_state extends Model
 		// First add the table
 		$dbh->beginTransaction();
 		$sql = sprintf(
-			'ALTER TABLE %s ADD COLUMN %s VARCHAR(255) DEFAULT NULL',
+			'ALTER TABLE %s ADD COLUMN %s INTEGER DEFAULT NULL',
 			$this->enquote($this->tablename),
 			$this->enquote($this->columnname)
 		);
