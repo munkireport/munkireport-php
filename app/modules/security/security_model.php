@@ -10,7 +10,8 @@ class Security_model extends Model
     	$this->rs['sip'] = '';
     	$this->rs['ssh_users'] = '';
     	$this->rs['ard_users'] = '';
-    	$this->rs['firmwarepw'] = '';
+	$this->rs['firmwarepw'] = '';
+	$this->rs['firewall_state'] = '';
         
         // Add indexes
         $this->idx[] = array('serial_number');
@@ -18,10 +19,11 @@ class Security_model extends Model
         $this->idx[] = array('sip');
         $this->idx[] = array('ssh_users');
         $this->idx[] = array('ard_users');
-        $this->idx[] = array('firmwarepw');
+	$this->idx[] = array('firmwarepw');
+	$this->idx[] = array('firewall_state');
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 4;
+        $this->schema_version = 5;
         
         // Create table if it does not exist
         $this->create_table();
@@ -55,7 +57,7 @@ class Security_model extends Model
 
 		$plist = $parser->toArray();
 
-		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw') as $item) {
+		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state') as $item) {
 			if (isset($plist[$item])) {
 				$this->$item = $plist[$item];
 			} else {
