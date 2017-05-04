@@ -1,5 +1,6 @@
 {
     "ard_users": "ARD Users",
+    "firewall_state": "Firewall State",
     "firmwarepw": "Firmware Password",
     "gatekeeper": "Gatekeeper Status",
     "gatekeeper_active": "Gatekeeper Active",
