@@ -299,6 +299,7 @@
     "path": "Path",
     "pending": "Pending",
     "php": {
+        "allow_url_fopen": "Remote URL access",
         "dom": "DOM Extension",
         "moreinfo": "Extended PHP info",
         "pdo": "PDO Extension",
