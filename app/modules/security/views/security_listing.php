@@ -83,17 +83,22 @@ new Security_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    // Look for a bigger/smaller/equal statement
+                   
+		    // Look for a encrypted statement
                     if(d.search.value.match(/^encrypted = \d$/))
                     {
-                        console.log(d.search.value)
-
                         // Add column specific search
                         d.columns[6].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
                         // Clear global search
                         d.search.value = '';
-                        console.log(d.columns[6].search.value)
-                        //dumpj(d.columns[6].search.value)
+                    }
+
+                    if(d.search.value.match(/^firewall = \d$/))
+                    {
+                        // Add column specific search
+                        d.columns[12].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
+                        // Clear global search
+                        d.search.value = '';
                     }
 
                     // Only search on bootvolume
