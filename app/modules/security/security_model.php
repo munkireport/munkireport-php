@@ -97,4 +97,14 @@ class Security_model extends Model
 		".get_machine_group_filter();
 	return current($this->query($sql));
     }
+
+    public function get_firewall_state_stats()
+    {
+	$sql = "SELECT COUNT(CASE WHEN firewall_state = 'Enabled' THEN 1 END) as enabled,
+		COUNT(CASE WHEN firewall_state = 'Disabled' THEN 1 END) as disabled
+		FROM security
+		LEFT JOIN reportdata USING(serial_number)
+		".get_machine_group_filter();
+	return current($this->query($sql));
+    }
 }
