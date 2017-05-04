@@ -8,6 +8,7 @@ class Migration_security_add_firewall_state extends Model
 	{
 		parent::__construct();
 		$this->tablename = 'security';
+		$this->idx[] = array('firewall_state');
 	}
 
 
@@ -16,6 +17,7 @@ class Migration_security_add_firewall_state extends Model
 		// Get database handle
 		$dbh = $this->getdbh();
 
+		// First add the table
 		$dbh->beginTransaction();
 		$sql = sprintf(
 			'ALTER TABLE %s ADD COLUMN %s VARCHAR(255) DEFAULT NULL',
@@ -26,6 +28,37 @@ class Migration_security_add_firewall_state extends Model
 		$this->exec($sql);
 		$dbh->commit();
 
+		// Add index too
+        	switch ($this->get_driver()) {
+            		case 'sqlite':
+                		// In SQLite we just use 'IF NOT EXISTS'
+                		$sql = 'CREATE INDEX IF NOT EXISTS %s ON %s (%s)';
+                		break;
+
+            		case 'mysql':
+                		$sql = 'CREATE INDEX %s ON %s (%s)';
+
+                		// Look up existing indexes
+                		$indexes = $this->query("SELECT index_name
+                                                FROM INFORMATION_SCHEMA.STATISTICS
+                                                WHERE table_schema = DATABASE()
+                                                AND table_name = '".$this->get_table_name()."'");
+
+                		foreach ($indexes as $obj) {
+                    			foreach ($this->idx as $k => $idx_data) {
+                        			if ($obj->index_name == $this->get_index_name($idx_data)) {
+                        	    			// If index exists, unset from index
+                            				unset($this->idx[$k]);
+                        			}
+                    			}
+                		}
+                	break;
+            	default:
+                	throw new Exception("UNKNOWN DRIVER", 1);
+        	}
+
+        	// Call set indexes()
+        	$this->set_indexes($sql);
 	}
 
 
