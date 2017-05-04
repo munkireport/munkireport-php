@@ -187,7 +187,7 @@ def main():
     result.update({'ssh_users': ssh_access_check()})
     result.update({'ard_users': ard_access_check()})
     result.update({'firmwarepw': firmware_pw_check()})
-    result.update({'firewall':firewall_enable_check()})
+    result.update({'firewall_state':firewall_enable_check()})
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')
