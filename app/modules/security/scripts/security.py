@@ -149,6 +149,16 @@ def firmware_pw_check():
     return firmwarepw
 
 
+def firewall_enable_check():
+    """Checks to see if firewall is enabled using a one-shot defaults read command.
+    Doing it this way because shelling out is easier than having to convert..."""
+    
+    sp = subprocess.Popen(['defaults', 'read', '/Library/Preferences/com.apple.alf.plist', 'globalstate'], stdout=subprocess.PIPE)
+    out, err = sp.communicate()
+    
+    return out[0]
+
+
 def main():
     """main"""
 
@@ -170,6 +180,7 @@ def main():
     result.update({'ssh_users': ssh_access_check()})
     result.update({'ard_users': ard_access_check()})
     result.update({'firmwarepw': firmware_pw_check()})
+    result.update({'firewall_state':firewall_enable_check()})
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')

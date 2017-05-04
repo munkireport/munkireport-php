@@ -10,7 +10,8 @@ class Security_model extends Model
     	$this->rs['sip'] = '';
     	$this->rs['ssh_users'] = '';
     	$this->rs['ard_users'] = '';
-    	$this->rs['firmwarepw'] = '';
+	$this->rs['firmwarepw'] = '';
+	$this->rs['firewall_state'] = '';
         
         // Add indexes
         $this->idx[] = array('serial_number');
@@ -18,10 +19,11 @@ class Security_model extends Model
         $this->idx[] = array('sip');
         $this->idx[] = array('ssh_users');
         $this->idx[] = array('ard_users');
-        $this->idx[] = array('firmwarepw');
+	$this->idx[] = array('firmwarepw');
+	$this->idx[] = array('firewall_state');
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 4;
+        $this->schema_version = 5;
         
         // Create table if it does not exist
         $this->create_table();
@@ -55,7 +57,7 @@ class Security_model extends Model
 
 		$plist = $parser->toArray();
 
-		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw') as $item) {
+		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state') as $item) {
 			if (isset($plist[$item])) {
 				$this->$item = $plist[$item];
 			} else {
@@ -90,6 +92,16 @@ class Security_model extends Model
     {
 	$sql = "SELECT COUNT(CASE WHEN firmwarepw = 'Yes' THEN 1 END) AS enabled,
 		COUNT(CASE WHEN firmwarepw = 'No' THEN 1 END) AS disabled
+		FROM security
+		LEFT JOIN reportdata USING(serial_number)
+		".get_machine_group_filter();
+	return current($this->query($sql));
+    }
+
+    public function get_firewall_state_stats()
+    {
+	$sql = "SELECT COUNT(CASE WHEN firewall_state = 'Enabled' THEN 1 END) as enabled,
+		COUNT(CASE WHEN firewall_state = 'Disabled' THEN 1 END) as disabled
 		FROM security
 		LEFT JOIN reportdata USING(serial_number)
 		".get_machine_group_filter();
