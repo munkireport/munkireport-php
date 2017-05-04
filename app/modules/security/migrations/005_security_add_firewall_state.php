@@ -1,6 +1,6 @@
 <?php
 
-class Migration_security_add_ssh extends Model
+class Migration_security_add_firewall_state extends Model
 {
 	protected $columnname = 'firewall_state';
 
