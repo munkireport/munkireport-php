@@ -257,6 +257,9 @@
             "listings": "Listings",
             "reports": "Rapports"
         },
+        "reports": {
+            "hardware": "Matériel Rapport",
+        },
         "user": {
             "logout": "Se déconnecter"
         }

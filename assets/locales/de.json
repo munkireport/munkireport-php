@@ -257,6 +257,9 @@
             "listings": "Listen",
             "reports": "Reports"
         },
+        "reports": {
+            "hardware": "Hardware Report"
+        },
         "user": {
             "logout": "Abmelden"
         }
