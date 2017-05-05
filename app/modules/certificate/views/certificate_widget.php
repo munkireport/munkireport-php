@@ -6,7 +6,7 @@
 
                     <h3 class="panel-title"><i class="fa fa-certificate"></i>
                         <span data-i18n="certificate.title"></span>
-                        <list-link data-url="show/listing/certificate/certificate"></list-link>
+                        <list-link data-url="/show/listing/certificate/certificate"></list-link>
                     </h3>
 
                 </div>

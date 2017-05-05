@@ -10,19 +10,42 @@ class Certificate_model extends Model
         $this->rs['cert_exp_time'] = 0; // Unix timestamp of expiration time
         $this->rs['cert_path'] = ''; // Path to certificate
         $this->rs['cert_cn'] = ''; // Common name
+        $this->rs['issuer'] = ''; //Certificate issuer
+        $this->rs['cert_location'] = ''; //Certificate location
         $this->rs['timestamp'] = 0; // Timestamp of last update
         
         // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
+        $this->schema_version = 1;
         
         //indexes to optimize queries
         $this->idx[] = array('serial_number');
         $this->idx[] = array('cert_exp_time');
+        $this->idx[] = array('cert_path');
+        $this->idx[] = array('cert_cn');
+        $this->idx[] = array('issuer');
+        $this->idx[] = array('cert_location');
         $this->idx[] = array('timestamp');
         
         // Create table if it does not exist
         $this->create_table();
     }
+
+     public function get_certificates()
+     {
+        $out = array();
+        $sql = "SELECT cert_cn, COUNT(1) AS count
+                FROM certificate
+                GROUP BY cert_cn
+                ORDER BY COUNT DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->cert_cn = $obj->cert_cn ? $obj->cert_cn : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
 
     // ------------------------------------------------------------------------
     /**
@@ -46,7 +69,7 @@ class Certificate_model extends Model
             if ($line) {
                 $parts = explode("\t", $line);
 
-                if (count($parts) !== 3) {
+                if (count($parts) !== 5) {
                     echo 'Invalid log entry: '.$line;
                 } else {
                     // Convert unix timestamp string to int
@@ -54,11 +77,18 @@ class Certificate_model extends Model
                     // Trim path to 255 chars
                     $this->cert_path = substr($parts[1], 0, 254);
                     // Get common name out of subject
-                    if (preg_match('/subject= CN = ([^,]+)/', $parts[2], $matches)) {
+                    if (preg_match('/CN = ([^,|\n]+)/', $parts[2], $matches)) {
                         $this->cert_cn = $matches[1];
                     } else {
                         $this->cert_cn = 'Unknown';
                     }
+                    if (preg_match('/CN = ([^,|\n]+)/', $parts[3], $matches)) {
+                        $this->issuer = $matches[1];
+                    } else {
+                        $this->issuer = 'Unknown';
+                    }
+                    
+                    $this->cert_location = $parts[4];
 
                     $this->id = '';
                     $this->timestamp = time();

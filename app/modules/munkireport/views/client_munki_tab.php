@@ -145,6 +145,7 @@ $(document).on('appReady', function(e, lang) {
 				pending_install: 0,
 				removed: 0,
 				pending_removal: 0,
+				uninstalled: 0,
 				uninstall_failed: 0
 			};
 

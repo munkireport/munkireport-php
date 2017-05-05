@@ -30,7 +30,8 @@ new Security_model;
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
-		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
+			<th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
+			<th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -82,17 +83,22 @@ new Security_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    // Look for a bigger/smaller/equal statement
+                   
+		    // Look for a encrypted statement
                     if(d.search.value.match(/^encrypted = \d$/))
                     {
-                        console.log(d.search.value)
-
                         // Add column specific search
                         d.columns[6].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
                         // Clear global search
                         d.search.value = '';
-                        console.log(d.columns[6].search.value)
-                        //dumpj(d.columns[6].search.value)
+                    }
+
+                    if(d.search.value.match(/^firewall = \d$/))
+                    {
+                        // Add column specific search
+                        d.columns[12].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
+                        // Clear global search
+                        d.search.value = '';
                     }
 
                     // Only search on bootvolume
@@ -154,7 +160,17 @@ new Security_model;
                          return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
                      }
                      return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-                 });
+		 });
+
+		 var firewall_state = $('td:eq(12)', nRow).html();
+		 $('td:eq(12)', nRow).html(function(){
+		     if(firewall_state == '1'){
+			 return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+		     } else if (firewall_state == '2'){
+			     return '<span class="label label-success">'+i18n.t('security.block_all')+'</span>';
+		     }
+		     return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+		 });
 
 		    }
 	    } );

@@ -195,6 +195,9 @@
 				<tr>
 					<th data-i18n="security.firmwarepw"></th><td class="mr-firmwarepw"></td>
 				</tr>
+				<tr>
+					<th data-i18n="security.firewall_state"></th><td class="mr-firewall_state"></td>
+				</tr>
 			</table>
 		</div>
 

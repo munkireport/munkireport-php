@@ -113,4 +113,27 @@ class Security_controller extends Module_controller
 
         $obj->view('json', array('msg' => $out));
     }
+
+    /**
+     * Get firewall state statistics
+     *
+     * @return void
+     * @author rickheil
+     **/
+    public function get_firewall_state_stats()
+    {
+	$obj = new View();
+
+	if (! $this->authorized()) {
+		$obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+		return;
+	}
+
+	$firewall_state_report = new Security_model;
+	$out = array();
+	$out['stats'] = $firewall_state_report->get_firewall_state_stats();
+
+	$obj->view('json', array('msg' => $out));
+
+    }
 } // END class default_module

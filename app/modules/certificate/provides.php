@@ -9,6 +9,7 @@ return array(
     ),
     'widgets' => array(
         'certificate' => array('view' => 'certificate_widget'),
+        'certificate_group' => array('view' => 'certificate_group_widget'),
     ),
     'reports' => array(
         'certificate' => array('view' => 'certificate_report', 'i18n' => 'certificate.report_title'),

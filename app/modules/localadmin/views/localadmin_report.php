@@ -8,8 +8,7 @@
 
   <div class="row">
 
-	  <?php $widget->view($this, 'certificate'); ?>
-	  <?php $widget->view($this, 'certificate_group'); ?>
+    <?php $widget->view($this, 'localadmin'); ?>
 
   </div> <!-- /row -->
 
@@ -18,3 +17,4 @@
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.autoupdate.js"></script>
 
 <?php $this->view('partials/foot'); ?>
+
