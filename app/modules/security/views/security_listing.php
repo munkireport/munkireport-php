@@ -167,9 +167,12 @@ new Security_model;
 		     if(firewall_state == '1'){
 			 return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
 		     } else if (firewall_state == '2'){
-			     return '<span class="label label-success">'+i18n.t('security.block_all')+'</span>';
+			  return '<span class="label label-success">'+i18n.t('security.block_all')+'</span>';
+		     } else if (firewall_state == '0'){
+		          return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
 		     }
-		     return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+		     // default case - return blank if client has not checked in with this info
+			   return "";
 		 });
 
 		    }
