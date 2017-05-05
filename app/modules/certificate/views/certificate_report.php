@@ -9,6 +9,7 @@
   <div class="row">
 
 	  <?php $widget->view($this, 'certificate'); ?>
+	  <?php $widget->view($this, 'certificate_group'); ?>
 
   </div> <!-- /row -->
 

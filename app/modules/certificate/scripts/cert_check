@@ -1,32 +1,76 @@
 #!/bin/bash
+set -u
+set -e
 
-#	Check Mac OS X Server Certificate Expiry
+#	Check Mac OS X Certificate Expiry
 #	by Jedda Wignall
 #	http://jedda.me
 
 # Adapted for munkireport by Arjen van Bochoven (april 2015)
+# Added Keychain certs by Eric Holtam (April 2017)
 
-CERTS=/etc/certificates/*.cert.pem
+CERTSPATH=/etc/certificates/
+SYSTEM_KEYCHAIN="/Library/Keychains/System.keychain"
 OUT="/usr/local/munki/preflight.d/cache/certificate.txt"
 SEP="	" # Seperator
 
 # Set LANG to english for the date command to work correctly
 export LANG=en_EN.UTF-8
 
+# Create certificate out file directory and file if it doesn't exist
+if [[ ! -f "${OUT}" ]]
+then
+	mkdir -p $(basename "${OUT}") && touch "${OUT}"
+fi
+
 # Truncate out file
 > "${OUT}"
+IFS=$'\n'
 
-for c in $CERTS
+# Check if /etc/certificates path exists. Typically not on non-server macOS/OS X
+if [[ -d "${CERTSPATH}" ]]
+then
+    for CERT in $(ls "${CERTSPATH}"*.cert.pem)
+    do
+        if [[ "$CERT" != *"com.apple"* ]] && [[ "$CERT" != *"Apple"* ]] && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]]
+        then     
+
+            # read the dates on each certificate
+            ENDDATE=$(openssl x509 -noout -in "${CERT}" -enddate 2>/dev/null)
+            SUBJECT=$(openssl x509 -noout -in "${CERT}" -subject -nameopt oneline 2>/dev/null)
+            ISSUER=$(openssl x509 -noout -in "${CERT}" -issuer -nameopt oneline -noout 2>/dev/null)
+            if [[ -z "$ENDDATE" ]]
+            then
+                # this cert could not be read.
+                printf "INFO - $CERT could not be loaded by openssl\n"
+            else
+                NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
+                EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
+                echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}${SEP}${CERTSPATH}" >> "${OUT}"
+            fi
+        fi
+    done
+fi
+
+# Parse non-Apple certificates in Keychain
+for CERT in $(security find-certificate -a "${SYSTEM_KEYCHAIN}" | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
 do
-	# read the dates on each certificate
-	ENDDATE=`openssl x509 -noout -in "$c" -enddate 2>/dev/null`
-	SUBJECT=$(openssl x509 -noout -in "$c" -subject -nameopt oneline 2>/dev/null)
-	if [ -z "$ENDDATE" ]; then
-		# this cert could not be read.
-  		printf "INFO - $c could not be loaded by openssl\n"
-  	else
-		notAfter=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
-		expiryDate=$(date -j -f "%b %e %T %Y %Z" "$notAfter" "+%s")
-		echo "${expiryDate}${SEP}${c}${SEP}${SUBJECT}" >> "${OUT}"
-	fi
+    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]  && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]]
+    then     
+        # read the subject on each certificate
+        SUBJECT=$(security find-certificate -a -c "$CERT" -p | openssl x509 -subject -nameopt oneline -noout 2>/dev/null)
+        ISSUER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -issuer -nameopt oneline -noout 2>/dev/null)
+        if [[ -z "$SUBJECT" ]]
+        then
+            # this cert could not be read.
+            printf "INFO - $CERT could not be loaded by openssl\n"
+        else
+            NOTAFTER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -enddate -noout | cut -d= -f2 2>/dev/null)
+            EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
+                echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}${SEP}${SYSTEM_KEYCHAIN}" >> "${OUT}"
+        fi
+    fi
 done
+
+unset IFS
+
