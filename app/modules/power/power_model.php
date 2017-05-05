@@ -378,9 +378,9 @@ class Power_model extends Model
         $this->batteryserialnumber = str_replace('"', '', $this->batteryserialnumber);
 
         // Clean pmset -g values
-        $this->displaysleep = strtok($this->displaysleep, ' ');
-        $this->disksleep = strtok($this->disksleep, ' ');
-        $this->standby = strtok($this->standby, ' ');
+        $this->displaysleep = intval(strtok($this->displaysleep, ' '));
+        $this->disksleep = intval(strtok($this->disksleep, ' '));
+        $this->standby = intval(strtok($this->standby, ' '));
 
         $this->save();
     }
