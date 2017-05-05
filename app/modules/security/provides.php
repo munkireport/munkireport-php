@@ -7,7 +7,8 @@ return array(
     'widgets' => array(
         'firmwarepw' => array('view' => 'firmwarepw_widget'),
         'gatekeeper' => array('view' => 'gatekeeper_widget'),
-        'sip' => array('view' => 'sip_widget'),
+	'sip' => array('view' => 'sip_widget'),
+	'firewall_state' =>('view' => 'firewall_state_widget'),
     ),
     'reports' => array(
         'security' => array('view' => 'security', 'i18n' => 'security.report'),
