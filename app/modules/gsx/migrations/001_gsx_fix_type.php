@@ -37,23 +37,10 @@ class Migration_gsx_fix_type extends Model
             // Add indexes
             $this->idx[] = array('warrantystatus');
             $this->idx[] = array('coverageenddate');
-            $this->idx[] = array('coveragestartdate');
-            $this->idx[] = array('daysremaining');
             $this->idx[] = array('estimatedpurchasedate');
-            $this->idx[] = array('purchasecountry');
-            $this->idx[] = array('registrationdate');
-            $this->idx[] = array('productdescription');
-            $this->idx[] = array('configdescription');
-            $this->idx[] = array('contractcoverageenddate');
-            $this->idx[] = array('contractcoveragestartdate');
-            $this->idx[] = array('contracttype');
-            $this->idx[] = array('laborcovered');
-            $this->idx[] = array('partcovered');
-            $this->idx[] = array('warrantyreferenceno');
-            $this->idx[] = array('isloaner');
-            $this->idx[] = array('warrantymod');
+            $this->idx[] = array('daysremaining');
             $this->idx[] = array('isvintage');
-            $this->idx[] = array('isobsolete');
+            $this->idx[] = array('configdescription');
             $sql = 'CREATE INDEX IF NOT EXISTS %s ON %s (%s)';
             $this->set_indexes($sql);
             
@@ -104,27 +91,13 @@ class Migration_gsx_fix_type extends Model
             $sql = "ALTER TABLE gsx_temp RENAME TO gsx";
             $this->exec($sql);
             
-            // Add indexes
-            $this->idx[] = array('serial_number');
+            // Add indexes            
             $this->idx[] = array('warrantystatus');
             $this->idx[] = array('coverageenddate');
-            $this->idx[] = array('coveragestartdate');
-            $this->idx[] = array('daysremaining');
             $this->idx[] = array('estimatedpurchasedate');
-            $this->idx[] = array('purchasecountry');
-            $this->idx[] = array('registrationdate');
-            $this->idx[] = array('productdescription');
-            $this->idx[] = array('configdescription');
-            $this->idx[] = array('contractcoverageenddate');
-            $this->idx[] = array('contractcoveragestartdate');
-            $this->idx[] = array('contracttype');
-            $this->idx[] = array('laborcovered');
-            $this->idx[] = array('partcovered');
-            $this->idx[] = array('warrantyreferenceno');
-            $this->idx[] = array('isloaner');
-            $this->idx[] = array('warrantymod');
+            $this->idx[] = array('daysremaining');
             $this->idx[] = array('isvintage');
-            $this->idx[] = array('isobsolete');
+            $this->idx[] = array('configdescription');
             $sql = 'CREATE INDEX IF NOT EXISTS %s ON %s (%s)';
             $this->set_indexes($sql);
             
