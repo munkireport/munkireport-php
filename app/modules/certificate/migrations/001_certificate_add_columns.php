@@ -2,8 +2,17 @@
 
 class Migration_certificate_add_columns extends Model
 {
-    protected $columname1 = 'issuer';
-    protected $columname2 = 'cert_location';
+    protected $new_columns = array(
+        'issuer' => 'VARCHAR(255)',
+        'cert_location' => 'VARCHAR(255)',
+    );
+
+    private $new_indexes = array(
+        'cert_path',
+        'cert_cn',
+        'issuer',
+        'cert_location',
+    );
 
     public function __construct()
     {
@@ -20,96 +29,22 @@ class Migration_certificate_add_columns extends Model
         $dbh->beginTransaction();
 
         // Adding a column is simple...
-        $sql = sprintf(
-            'ALTER TABLE %s ADD COLUMN %s VARCHAR(255)',
-            $this->enquote($this->tablename),
-            $this->enquote($this->columname1)
-        );
+        foreach ($this->new_columns as $column => $type) {
+            $sql = "ALTER TABLE certificate ADD COLUMN $column $type";
+            $this->exec($sql);
+        }
 
-        $this->exec($sql);
-
-        // so is adding an index...
-        $idx_name = $this->tablename . '_' . $this->columname1;
-        $sql = sprintf(
-            "CREATE INDEX %s ON %s (%s)",
-            $idx_name,
-            $this->enquote($this->tablename),
-            $this->columname1
-        );
-
-        $this->exec($sql);
-
-        // Adding a column is simple...
-        $sql = sprintf(
-            'ALTER TABLE %s ADD COLUMN %s VARCHAR(255)',
-            $this->enquote($this->tablename),
-            $this->enquote($this->columname2)
-        );
-
-        $this->exec($sql);
-
-        // so is adding an index...
-        $idx_name = $this->tablename . '_' . $this->columname2;
-        $sql = sprintf(
-            "CREATE INDEX %s ON %s (%s)",
-            $idx_name,
-            $this->enquote($this->tablename),
-            $this->columname2
-        );
-
-        $this->exec($sql);
+        // Add new indexes
+        foreach ($this->new_indexes as $index) {
+            $sql = "CREATE INDEX certificate_$index ON `certificate` ($index)";
+            $this->exec($sql);
+        }
 
         $dbh->commit();
     }
 
     public function down()
     {
-        // Get database handle
-        $dbh = $this->getdbh();
-
-        switch ($this->get_driver()) {
-            case 'sqlite':
-                $dbh->beginTransaction();
-
-                // Create temporary table
-                $sql = "CREATE TABLE certificate (
-								id INTEGER PRIMARY KEY, 
-								serial_number VARCHAR(255), 
-								cert_exp_time INTEGER,
-								cert_path VARCHAR(255),
-								cert_cn VARCHAR(255),
-								timestamp INTEGER)";
-                $this->exec($sql);
-
-                $sql = "INSERT INTO certificate_temp 
-							SELECT id, serial_number, cert_exp_time, cert_path, cert_cn, timestamp FROM certificate";
-                $this->exec($sql);
-
-                $sql = "DROP table certificate";
-                $this->exec($sql);
-
-                $sql = "ALTER TABLE certificate_temp RENAME TO certificate";
-                $this->exec($sql);
-
-                $dbh->commit();
-
-                break;
-
-            default:
-                // MySQL drops the index as well -> check for other engines
-                $sql = sprintf(
-                    'ALTER TABLE %s DROP COLUMN %s',
-                    $this->enquote($this->tablename),
-                    $this->enquote($this->columname1)
-                );
-                $this->exec($sql);
-                
-                $sql = sprintf(
-                    'ALTER TABLE %s DROP COLUMN %s',
-                    $this->enquote($this->tablename),
-                    $this->enquote($this->columname2)
-                );
-                $this->exec($sql);
-        }
+        // Don't bother about down as migrations are tied to git releases
     }
 }
