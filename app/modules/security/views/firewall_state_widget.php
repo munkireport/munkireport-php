@@ -47,9 +47,9 @@ $(document).on('appUpdate', function(e, lang) {
         var url = appUrl + '/show/listing/security/security#'
 
         // Set urls
-        //$('#fw-disabled').attr('href', url + encodeURIComponent('encrypted = 0'))
-        //$('#fw-enabled').attr('href', url + encodeURIComponent('encrypted = 1'))
-        //$('#fw-blockall').attr('href', url + encodeURIComponent('
+        $('#fw-disabled').attr('href', url + encodeURIComponent('firewall = 0'));
+        $('#fw-enabled').attr('href', url + encodeURIComponent('firewall = 1'));
+        $('#fw-blockall').attr('href', url + encodeURIComponent('firewall = 2'));
 
         // Show no clients span
         $('#fw-nodata').removeClass('hide');
