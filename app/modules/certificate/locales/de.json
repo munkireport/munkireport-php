@@ -1,7 +1,12 @@
 {
+    "cert_groups": "Certificates by Name",
     "commonname": "Common Name",
+    "expiration_date": "Expiration Date",
     "expired": "Abgelaufen",
     "expires": "Ablaufdatum",
+    "issuer": "Issuer",
+    "location": "Location",
+    "nocertificate": "No Certificate",
     "ok": "Gültig für mehr als drei Monate",
     "report_title": "Zertifikats-Report",
     "soon": "Läuft innerhalb der nächsten drei Monate ab",

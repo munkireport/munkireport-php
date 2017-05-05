@@ -1,9 +1,14 @@
 {
+    "cert_groups": "Certificates by Name",
     "commonname": "Common Name",
     "expired": "Expired",
+    "expiration_date": "Expiration Date",
     "expires": "Expires",
-    "ok": "Valid for more than three months",
+    "ok": "3 Months +",
+    "issuer": "Issuer",
+    "location": "Location",
+    "nocertificate": "No Certificate",
     "report_title": "Certificate Report",
-    "soon": "Expires within three months",
+    "soon": "< 3 Months",
     "title": "Certificates"
 }
