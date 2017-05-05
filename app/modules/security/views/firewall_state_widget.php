@@ -25,6 +25,7 @@
             <a id="fw-blockall" class="btn btn-success hide">
                 <span class="fw-count bigger-150"></span><br>
                 <span data-i18n="security.block_all"></span>
+            </a>
 
             <span id="fw-nodata" data-i18n="no_clients"></span>
 
