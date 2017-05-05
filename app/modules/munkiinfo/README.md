@@ -49,3 +49,4 @@ These are the only non-ManagedInstall preference values stored in this module
 
 * AppleCatalogURL - This is the catalog that `/usr/sbin/softwareupdate` will use to find updates
 * munkiprotocol - This is the url scheme for the `SoftwareRepoURL` key. This is used for widgets. 
+* middlewarename and middlewareversion - These are displayed only if middleware is installed. Version relies on a get_version() function in your middleware script.

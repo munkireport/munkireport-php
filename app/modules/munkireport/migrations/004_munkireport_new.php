@@ -83,7 +83,7 @@ class Migration_munkireport_new extends Model
             // Wrap in transaction
             $dbh->beginTransaction();
         }
-        
+
         try {
             // Get number of records to convert
             $sql = "SELECT count(*) as count
@@ -96,7 +96,7 @@ class Migration_munkireport_new extends Model
             // we're done..
             return;
         }
-        
+
 
         // Get limited
         $sql = "SELECT serial_number, report_plist
@@ -107,9 +107,7 @@ class Migration_munkireport_new extends Model
             foreach ($resultset as $arr) {
                 $report = unserialize($this->COMPRESS_ARRAY ? gzinflate($arr->report_plist) : $arr->report_plist);
 
-                // Load legacy support TODO: use autoloader
-                include_once(APP_PATH . '/lib/munkireport/Legacy_munkireport.php');
-                $legacyObj = new munkireport\Legacy_munkireport;
+                $legacyObj = new munkireport\lib\Legacy_munkireport;
                 $install_list = $legacyObj->parse($report)->getList();
 
                 // Store data in managedinstalls

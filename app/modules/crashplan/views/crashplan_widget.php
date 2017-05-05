@@ -6,7 +6,7 @@
 
             <h3 class="panel-title"><i class="fa fa-clock-o"></i>
                 <span data-i18n="crashplan.widget_title"></span>
-                <list-link data-url="show/listing/crashplan/crashplan"></list-link>
+                <list-link data-url="/show/listing/crashplan/crashplan"></list-link>
             </h3>
 
         </div>

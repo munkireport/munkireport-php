@@ -19,6 +19,9 @@ new Smart_stats_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
+		        <th data-i18n="smart_stats.disk_number" data-colname='smart_stats.disk_number'></th>
+		        <th data-i18n="smart_stats.error_count" data-colname='smart_stats.error_count'></th>
+		        <th data-i18n="smart_stats.error_poh" data-colname='smart_stats.error_poh'></th>
 		        <th data-i18n="smart_stats.model_family" data-colname='smart_stats.model_family'></th>
 		        <th data-i18n="smart_stats.device_model" data-colname='smart_stats.device_model'></th>
 		        <th data-i18n="smart_stats.serial_number_hdd" data-colname='smart_stats.serial_number_hdd'></th>
@@ -29,8 +32,6 @@ new Smart_stats_model;
 		        <th data-i18n="smart_stats.sata_version_is" data-colname='smart_stats.sata_version_is'></th>
 		        <th data-i18n="smart_stats.user_capacity" data-colname='smart_stats.user_capacity'></th>
 		        <th data-i18n="smart_stats.timestamp" data-colname='smart_stats.timestamp'></th>
-		        <th data-i18n="smart_stats.error_count" data-colname='smart_stats.error_count'></th>
-		        <th data-i18n="smart_stats.error_poh" data-colname='smart_stats.error_poh'></th>
 		        <th data-i18n="smart_stats.power_on_hours" data-colname='smart_stats.power_on_hours'></th>
 		        <th data-i18n="smart_stats.power_cycle_count" data-colname='smart_stats.power_cycle_count'></th>
 		        <th data-i18n="smart_stats.reallocated_sector_ct" data-colname='smart_stats.reallocated_sector_ct'></th>
@@ -111,74 +112,78 @@ new Smart_stats_model;
 	        	var sn=$('td:eq(1)', nRow).html();
                 var link = mr.getClientDetailLink(name, sn, '#tab_smart_stats-tab');
 	        	$('td:eq(0)', nRow).html(link);
-
-                // Format timestamp
-                var timestamp = (($('td:eq(11)', nRow).html()) * 1000);
-                $('td:eq(11)', nRow).html(moment(timestamp).format("YYYY-MM-DD H:mm:ss"))
                 
+	        	// Format disk number
+	        	var disknum=$('td:eq(2)', nRow).html();
+	        	$('td:eq(2)', nRow).html("/dev/disk"+disknum)
+
                 // Format SMART Error Count
-	        	var status=$('td:eq(12)', nRow).html();
-                if (status != "" && status != "-9876540"){
-                    $('td:eq(12)', nRow).addClass('danger').html(status)
+	        	var status=$('td:eq(3)', nRow).html();
+                if (status != ""){
+                    $('td:eq(3)', nRow).addClass('danger').html(status)
                 } else {
-                    $('td:eq(12)', nRow).html("")
+                    $('td:eq(3)', nRow).html("")
                 }
                 
                 // Format SMART Power On Hours Error Count
-	        	var status=$('td:eq(13)', nRow).html();
-                if (status != "" && status != "-9876540" ){
-                    $('td:eq(13)', nRow).addClass('danger').html(status)
+	        	var status=$('td:eq(4)', nRow).html();
+                if (status != ""){
+                    $('td:eq(4)', nRow).addClass('danger').html(status)
                 } else {
-                    $('td:eq(13)', nRow).html("")
+                    $('td:eq(4)', nRow).html("")
                 }
                 
-	        	var status=$('td:eq(14)', nRow).html();
-                if (status != "-9876540" ){
-                    $('td:eq(14)', nRow).html(status)
-                } else {
-                    $('td:eq(14)', nRow).html("")
-                }
-                                
+                // Format timestamp
+                var timestamp = (($('td:eq(14)', nRow).html()) * 1000);
+                $('td:eq(14)', nRow).html(moment(timestamp).format("YYYY-MM-DD H:mm:ss"))
+                
 	        	var status=$('td:eq(15)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(15)', nRow).html(status)
                 } else {
                     $('td:eq(15)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(16)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(16)', nRow).html(status)
                 } else {
                     $('td:eq(16)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(17)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(17)', nRow).html(status)
                 } else {
                     $('td:eq(17)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(18)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(18)', nRow).html(status)
                 } else {
                     $('td:eq(18)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(19)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(19)', nRow).html(status)
                 } else {
                     $('td:eq(19)', nRow).html("")
                 }
                                 
 	        	var status=$('td:eq(20)', nRow).html();
-                if (status != "-9876540" ){
+                if (status != null){
                     $('td:eq(20)', nRow).html(status)
                 } else {
                     $('td:eq(20)', nRow).html("")
+                }
+                                
+	        	var status=$('td:eq(21)', nRow).html();
+                if (status != null){
+                    $('td:eq(21)', nRow).html(status)
+                } else {
+                    $('td:eq(21)', nRow).html("")
                 }
                 
 		    }

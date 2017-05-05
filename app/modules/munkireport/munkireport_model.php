@@ -34,7 +34,7 @@ class Munkireport_model extends Model
 
         // Create table if it does not exist
         $this->create_table();
-        
+
         if ($serial_number) {
             $this->retrieve_record($serial_number);
             if (! $this->rs['serial_number']) {
@@ -42,7 +42,7 @@ class Munkireport_model extends Model
             }
         }
     }
-    
+
     /**
      * Get manifests statistics
      *
@@ -52,21 +52,21 @@ class Munkireport_model extends Model
     {
         $out = array();
         $filter = get_machine_group_filter();
-        $sql = "SELECT COUNT(1) AS count, manifestname 
+        $sql = "SELECT COUNT(1) AS count, manifestname
             FROM munkireport
             LEFT JOIN reportdata USING (serial_number)
             $filter
             GROUP BY manifestname
             ORDER BY count DESC";
-            
+
         foreach ($this->query($sql) as $obj) {
             $obj->manifestname = $obj->manifestname ? $obj->manifestname : 'Unknown';
             $out[] = $obj;
         }
-        
+
         return $out;
     }
-    
+
     /**
      * Get munki versions
      *
@@ -83,7 +83,7 @@ class Munkireport_model extends Model
                 ORDER BY COUNT DESC";
         return $this->query($sql);
     }
-        
+
     /**
      * Get statistics
      *
@@ -94,8 +94,8 @@ class Munkireport_model extends Model
     public function get_stats($hours = 24)
     {
         $timestamp = date('Y-m-d H:i:s', time() - 60 * 60 * $hours);
-        $sql = "SELECT 
-            SUM(errors > 0) as error, 
+        $sql = "SELECT
+            SUM(errors > 0) as error,
             SUM(warnings > 0) as warning
             FROM munkireport
             LEFT JOIN reportdata USING (serial_number)
@@ -105,20 +105,20 @@ class Munkireport_model extends Model
         return current($this->query($sql));
     }
 
-    
+
     public function process($plist)
     {
         $this->timestamp = date('Y-m-d H:i:s');
-        
+
         if (! $plist) {
             throw new Exception("Error Processing Request: No property list found", 1);
         }
-                
+
         require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();
-        
+
         // Translate plist keys to db keys
         $translate = array(
             'ManagedInstallVersion' => 'version',
@@ -127,13 +127,13 @@ class Munkireport_model extends Model
             'StartTime' => 'starttime',
             'EndTime' => 'endtime',
         );
-        
+
         foreach ($translate as $key => $dbkey) {
             if (array_key_exists($key, $mylist)) {
                 $this->$dbkey = $mylist[$key];
             }
         }
-        
+
         // Parse errors and warnings
         $errorsWarnings = array('Errors' => 'error_json', 'Warnings' => 'warning_json');
         foreach ($errorsWarnings as $key => $json) {
@@ -141,7 +141,7 @@ class Munkireport_model extends Model
             if (isset($mylist[$key]) && is_array($mylist[$key])) {
                 // Store count
                 $this->rs[$dbkey] = count($mylist[$key]);
-                
+
                 // Store json
                 $this->rs[$json] = json_encode($mylist[$key]);
             } else {
@@ -150,10 +150,10 @@ class Munkireport_model extends Model
                 $this->rs[$json] = json_encode(array());
             }
         }
-        
+
         // Store record
         $this->save();
-        
+
         // Store apropriate event:
         if ($this->rs['errors'] == 1) { // Errors is a protected name
             $this->store_event(
@@ -183,20 +183,18 @@ class Munkireport_model extends Model
             // Delete event
             $this->delete_event();
         }
-        
+
         // Legacy support: check if we got an old style report
         if (array_key_exists('ManagedInstalls', $mylist)) {
-            // Load legacy support TODO: use autoloader
-            include_once(APP_PATH . '/lib/munkireport/Legacy_munkireport.php');
-            $legacyObj = new munkireport\Legacy_munkireport;
+            $legacyObj = new munkireport\lib\Legacy_munkireport;
             $install_list = $legacyObj->parse($mylist)->getList();
-            
+
             // Calculate hash and check with hash
             $myHash = md5(serialize($install_list));
             $hashObj = new Hash();
             $bindings = array($this->serial_number, 'managedinstalls');
             $hashObj->retrieveOne('serial=? AND name=?', $bindings);
-            
+
             // Compare hash with stored hash
             if ($hashObj->hash != $myHash) {
                 // Instantiate managedinstalls model
@@ -212,7 +210,7 @@ class Munkireport_model extends Model
             }
         }
 
-        
+
         return $this;
     }
 }

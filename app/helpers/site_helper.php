@@ -1,13 +1,21 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.13.0.2684';
+$GLOBALS['version'] = '2.14.0.2749';
 
 // Return version without commit count
 function get_version()
 {
     return preg_replace('/(.*)\.\d+$/', '$1', $GLOBALS['version']);
 }
+
+//===============================================
+// Legacy support
+//===============================================s
+if (version_compare(phpversion(), '5.5.0', '<')) {
+    include 'php_legacy_helper.php';
+}
+
 
 //===============================================
 // Uncaught Exception Handling

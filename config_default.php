@@ -91,6 +91,16 @@
 	$conf['hide_inactive_modules'] = FALSE;
 
 	/*
+        |===============================================
+        | Local Admin Threshold Value
+        |===============================================
+        |
+	| This value specifies the minimum number of local admin accounts needed to 
+	|	list the computer in the Local Admin Report.  Default is 2.
+	*/
+	$conf['local_admin_threshold'] = 2;
+
+	/*
 	|===============================================
 	| Authentication
 	|===============================================
@@ -255,7 +265,7 @@
 	| $conf['bundlepath_ignorelist'][] = '/System/Library/.*';
 	|
 	| Skip all apps that are contained in an app bundle
-	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
+	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app';
 	|
 	*/
 	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
@@ -591,22 +601,23 @@
 	| This is a list of the current dashboard widgets
 	|
 	| Small horizontal widgets:
-	|	bound_to_ds
-	|	client (two items)
-	|	external_displays_count
-	|	firmwarepw
-	|	gatekeeper
-	|	hardware_model
-	|	smart_status
-	|	disk_report
-	|	uptime
-	|	installed memory
-	|	munki
-	|	power_battery_condition
-	|	power_battery_health
-	|	sip
-	|	wifi_state
-	|
+        |       bound_to_ds
+        |       client (two items)
+        |       disk_report
+        |       external_displays_count
+        |       firmwarepw
+        |       gatekeeper
+        |       hardware_model
+        |       installed memory
+        |       localadmin
+        |       munki
+        |       power_battery_condition
+        |       power_battery_health
+        |       sip
+        |       smart_status
+        |       uptime
+        |       wifi_state
+        |       	|
 	| Small horizontal / medium vertical widgets:
 	|	network_location
 	|
