@@ -277,14 +277,14 @@
 	|
 	| Access to GSX and certificates are required for use of this module
 	|
-	| The GSX module is designed to be used in place of the warranty module.
-	| While both the warranty and GSX modules can be enabled at the same
-	| time it is recommended that only one be enabled at a time to prevent
-	| the warranty module from overwriting the data provided by the GSX module.
+	| The GSX module is designed to be used as a supplement to the warranty module.
+	| It is now required for both the warranty and GSX modules to be enabled at
+	| the same time. This is different from before when it was recommended that only
+	| one of the modules be enabled at a time.
 	|
 	| Use GSX article OP1474 and
 	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
-	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the
+	| to assist with creating certificates and whitelisting your IPs. Additional documentation can be found in the
 	| Readme.md located in the GSX module.
 	|
 	| To use the GSX module, set enable to TRUE and uncomment and
