@@ -100,10 +100,11 @@ class Security_model extends Model
 
     public function get_firewall_state_stats()
     {
-	$sql = "SELECT COUNT(CASE WHEN firewall_state = 'Enabled' THEN 1 END) as enabled,
-		COUNT(CASE WHEN firewall_state = 'Disabled' THEN 1 END) as disabled
-		FROM security
-		LEFT JOIN reportdata USING(serial_number)
+	$sql = "SELECT COUNT(CASE WHEN firewall_state = '2' THEN 1 END) as blockall,
+                COUNT(CASE WHEN firewall_state = '1' THEN 1 END) as enabled,
+                COUNT(CASE WHEN firewall_state = '0' THEN 1 END) as disabled
+                FROM security
+                LEFT JOIN reportdata USING(serial_number)
 		".get_machine_group_filter();
 	return current($this->query($sql));
     }
