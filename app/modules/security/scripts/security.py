@@ -152,10 +152,10 @@ def firmware_pw_check():
 def firewall_enable_check():
     """Checks to see if firewall is enabled using a one-shot defaults read command.
     Doing it this way because shelling out is easier than having to convert..."""
-    
-    sp = subprocess.Popen(['defaults', 'read', '/Library/Preferences/com.apple.alf.plist', 'globalstate'], stdout=subprocess.PIPE)
+
+    sp = subprocess.Popen(['defaults', 'read', '/Library/Preferences/com.apple.alf', 'globalstate'], stdout=subprocess.PIPE)
     out, err = sp.communicate()
-    
+
     return out[0]
 
 
