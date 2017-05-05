@@ -38,7 +38,7 @@ $(document).on('appReady', function() {
         {
             var total = 0
                 temp = {key: type, values: []};
-            for (var i = 0; i < datelength; i++) {
+            for (var i = 1; i < datelength; i++) {
                 if (i.toString() in data.types[type]){
                     total = total + data.types[type][i];
                 }
