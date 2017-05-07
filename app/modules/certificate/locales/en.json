@@ -4,11 +4,11 @@
     "expired": "Expired",
     "expiration_date": "Expiration Date",
     "expires": "Expires",
-    "ok": "3 Months +",
+    "ok": "1 Month +",
     "issuer": "Issuer",
     "location": "Location",
     "nocertificate": "No Certificate",
     "report_title": "Certificate Report",
-    "soon": "< 3 Months",
+    "soon": "< 1 Month",
     "title": "Certificates"
 }
