@@ -7,8 +7,8 @@
     "issuer": "Issuer",
     "location": "Location",
     "nocertificate": "No Certificate",
-    "ok": "Gültig für mehr als drei Monate",
+    "ok": "Gültig für mehr als ein Monat",
     "report_title": "Zertifikats-Report",
-    "soon": "Läuft innerhalb der nächsten drei Monate ab",
+    "soon": "Läuft innerhalb der nächsten ein Monat ab",
     "title": "Zertifikate"
 }
