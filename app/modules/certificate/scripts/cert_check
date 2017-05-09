@@ -9,7 +9,7 @@ set -e
 # Adapted for munkireport by Arjen van Bochoven (april 2015)
 # Added Keychain certs by Eric Holtam (April 2017)
 
-CERTSPATH=/etc/certificates/
+CERTSPATHS=("/etc/certificates/" "/etc/letsencrypt/live/*/")
 SYSTEM_KEYCHAIN="/Library/Keychains/System.keychain"
 OUT="/usr/local/munki/preflight.d/cache/certificate.txt"
 SEP="	" # Seperator
@@ -20,42 +20,52 @@ export LANG=en_EN.UTF-8
 # Create certificate out file directory and file if it doesn't exist
 if [[ ! -f "${OUT}" ]]
 then
-	mkdir -p $(basename "${OUT}") && touch "${OUT}"
+	mkdir -p $(dirname "${OUT}") && touch "${OUT}"
 fi
 
 # Truncate out file
 > "${OUT}"
 IFS=$'\n'
 
-# Check if /etc/certificates path exists. Typically not on non-server macOS/OS X
-if [[ -d "${CERTSPATH}" ]]
-then
-    for CERT in $(ls "${CERTSPATH}"*.cert.pem)
-    do
-        if [[ "$CERT" != *"com.apple"* ]] && [[ "$CERT" != *"Apple"* ]] && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]]
-        then     
-
-            # read the dates on each certificate
-            ENDDATE=$(openssl x509 -noout -in "${CERT}" -enddate 2>/dev/null)
-            SUBJECT=$(openssl x509 -noout -in "${CERT}" -subject -nameopt oneline 2>/dev/null)
-            ISSUER=$(openssl x509 -noout -in "${CERT}" -issuer -nameopt oneline -noout 2>/dev/null)
-            if [[ -z "$ENDDATE" ]]
-            then
-                # this cert could not be read.
-                printf "INFO - $CERT could not be loaded by openssl\n"
-            else
-                NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
-                EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
-                echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}${SEP}${CERTSPATH}" >> "${OUT}"
+# Iterate thru CERTSPATHS array 
+for CERTSPATH in ${CERTSPATHS[@]}
+do
+    # Check if the directory exists, need to use ls since paths may contain wildcards that -d doesn't expand 
+    if [[ $(ls "${CERTSPATH}") ]]
+    then
+        for CERT in $(ls "${CERTSPATH}"*cert.pem)
+        do
+            # Don't report on standard Apple certs that are not admin controlled
+            if [[ "$CERT" != *"com.apple"* ]] && [[ "$CERT" != *"Apple"* ]] && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]]
+            then     
+                # get pathname to specific cert file for reporting
+                CERTFILEPATH=$(dirname "$CERT")
+                # read the dates on each certificate
+                ENDDATE=$(openssl x509 -noout -in "${CERT}" -enddate 2>/dev/null)
+                # read subject on each certificate 
+                SUBJECT=$(openssl x509 -noout -in "${CERT}" -subject -nameopt oneline 2>/dev/null)
+                # read issuer info on each certificate
+                ISSUER=$(openssl x509 -noout -in "${CERT}" -issuer -nameopt oneline -noout 2>/dev/null)
+                if [[ -z "$ENDDATE" ]]
+                then
+                    # this cert could not be read.
+                    printf "INFO - $CERT could not be loaded by openssl\n"
+                else
+                    # Remove "notAfter=" from ENDDATE variable for reporting
+                    NOTAFTER=`echo $ENDDATE | awk -F notAfter= '{print $NF}'`
+                    EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
+                    echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}${SEP}${CERTFILEPATH}" >> "${OUT}"
+                fi
             fi
-        fi
-    done
-fi
+        done
+    fi
+done
+
 
 # Parse non-Apple certificates in Keychain
 for CERT in $(security find-certificate -a "${SYSTEM_KEYCHAIN}" | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
 do
-    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]  && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]]
+    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]  && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]] && [[ "$CERT" != "Software Signing" ]] && [[ "$CERT" != "Dashboard Advisory" ]]
     then     
         # read the subject on each certificate
         SUBJECT=$(security find-certificate -a -c "$CERT" -p | openssl x509 -subject -nameopt oneline -noout 2>/dev/null)
@@ -73,4 +83,5 @@ do
 done
 
 unset IFS
+
 
