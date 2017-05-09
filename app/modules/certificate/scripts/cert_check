@@ -9,7 +9,7 @@ set -e
 # Adapted for munkireport by Arjen van Bochoven (april 2015)
 # Added Keychain certs by Eric Holtam (April 2017)
 
-CERTSPATHS=("/etc/certificates/" "/etc/letsencrypt/live/*/")
+CERTSPATHS=(/etc/certificates/ /etc/letsencrypt/live/*/)
 SYSTEM_KEYCHAIN="/Library/Keychains/System.keychain"
 OUT="/usr/local/munki/preflight.d/cache/certificate.txt"
 SEP="	" # Seperator
@@ -31,7 +31,7 @@ IFS=$'\n'
 for CERTSPATH in ${CERTSPATHS[@]}
 do
     # Check if the directory exists, need to use ls since paths may contain wildcards that -d doesn't expand 
-    if [[ $(ls "${CERTSPATH}") ]]
+    if [[ -d "${CERTSPATH}" ]]
     then
         for CERT in $(ls "${CERTSPATH}"*cert.pem)
         do
@@ -83,5 +83,3 @@ do
 done
 
 unset IFS
-
-
