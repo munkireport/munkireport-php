@@ -20,6 +20,7 @@ new Smart_stats_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="smart_stats.disk_number" data-colname='smart_stats.disk_number'></th>
+		        <th data-i18n="smart_stats.overall_health" data-colname='smart_stats.overall_health'></th>
 		        <th data-i18n="smart_stats.error_count" data-colname='smart_stats.error_count'></th>
 		        <th data-i18n="smart_stats.error_poh" data-colname='smart_stats.error_poh'></th>
 		        <th data-i18n="smart_stats.model_family" data-colname='smart_stats.model_family'></th>
@@ -117,15 +118,19 @@ new Smart_stats_model;
 	        	var disknum=$('td:eq(2)', nRow).html();
 	        	$('td:eq(2)', nRow).html("/dev/disk"+disknum)
 
-                // Format SMART Error Count
+                // Format Overall health colors
 	        	var status=$('td:eq(3)', nRow).html();
-                if (status != ""){
-                    $('td:eq(3)', nRow).addClass('danger').html(status)
-                } else {
-                    $('td:eq(3)', nRow).html("")
-                }
-                
-                // Format SMART Power On Hours Error Count
+                $('td:eq(3)', nRow).html(function(){
+                    if( status == 'PASSED'){
+                        return '<span class="label label-success">'+i18n.t(status)+'</span>';
+                    } else if( status == 'UNKNOWN!'){
+                        return '<span class="label label-warning">'+i18n.t(status)+'</span>';
+                    } else {
+                        return '<span class="label label-danger">'+i18n.t(status)+'</span>';
+                    }
+                });
+
+                // Format SMART Error Count
 	        	var status=$('td:eq(4)', nRow).html();
                 if (status != ""){
                     $('td:eq(4)', nRow).addClass('danger').html(status)
@@ -133,24 +138,25 @@ new Smart_stats_model;
                     $('td:eq(4)', nRow).html("")
                 }
                 
-                // Format timestamp
-                var timestamp = (($('td:eq(14)', nRow).html()) * 1000);
-                $('td:eq(14)', nRow).html(moment(timestamp).format("YYYY-MM-DD H:mm:ss"))
-                
-	        	var status=$('td:eq(15)', nRow).html();
-                if (status != null){
-                    $('td:eq(15)', nRow).html(status)
+                // Format SMART Power On Hours Error Count
+	        	var status=$('td:eq(5)', nRow).html();
+                if (status != ""){
+                    $('td:eq(5)', nRow).addClass('danger').html(status)
                 } else {
-                    $('td:eq(15)', nRow).html("")
+                    $('td:eq(5)', nRow).html("")
                 }
-                                
+                
+                // Format timestamp
+            var timestamp = (($('td:eq(15)', nRow).html()) * 1000);
+            $('td:eq(15)', nRow).html(moment(timestamp).format("YYYY-MM-DD H:mm:ss"))
+
 	        	var status=$('td:eq(16)', nRow).html();
-                if (status != null){
+                if (status != ""){
                     $('td:eq(16)', nRow).html(status)
                 } else {
                     $('td:eq(16)', nRow).html("")
                 }
-                                
+                                                
 	        	var status=$('td:eq(17)', nRow).html();
                 if (status != null){
                     $('td:eq(17)', nRow).html(status)
@@ -184,6 +190,13 @@ new Smart_stats_model;
                     $('td:eq(21)', nRow).html(status)
                 } else {
                     $('td:eq(21)', nRow).html("")
+                }
+                                
+	        	var status=$('td:eq(22)', nRow).html();
+                if (status != null){
+                    $('td:eq(22)', nRow).html(status)
+                } else {
+                    $('td:eq(22)', nRow).html("")
                 }
                 
 		    }

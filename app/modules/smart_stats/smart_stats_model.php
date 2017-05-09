@@ -123,10 +123,10 @@ class Smart_stats_model extends Model {
         $this->rs['perc_writeerase_ct_bc'] = 0; $this->rt['perc_writeerase_ct_bc'] = 'BIGINT';
         $this->rs['avg_writeerase_count'] = 0; $this->rt['avg_writeerase_count'] = 'BIGINT';
         $this->rs['sata_phy_error'] = 0; $this->rt['sata_phy_error'] = 'BIGINT';
-
+        $this->rs['overall_health'] = '';
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
+        $this->schema_version = 3;
 
         // Indexes to optimize queries
         $this->idx[] = array('serial_number');
@@ -150,6 +150,7 @@ class Smart_stats_model extends Model {
         $this->idx[] = array('error_count');
         $this->idx[] = array('error_poh');
         $this->idx[] = array('timestamp');
+        $this->idx[] = array('overall_health');
 				        
 		// Create table if it does not exist
 		$this->create_table();
@@ -292,7 +293,8 @@ class Smart_stats_model extends Model {
         	'error_count' => 'error_count',
         	'SMARTsupport' => 'smart_support_is',
         	'DiskNumber' => 'disk_number',
-        	'SMARTis' => 'smart_is');
+        	'SMARTis' => 'smart_is',
+        	'Overall_Health' => 'overall_health');
 
         // Delete previous entries
         $this->deleteWhere('serial_number=?', $this->serial_number);
@@ -304,7 +306,7 @@ class Smart_stats_model extends Model {
         $plist = $parser->toArray();
         
         // Array of string for nulling with ""
-        $strings =  array('model_family','device_model','serial_number_hdd','lu_wwn_device_id','firmware_version','user_capacity','sector_size','rotation_rate','device_is','ata_version_is','sata_version_is','form_factor','smart_support_is','smart_is','serial_number','power_on_hours_and_msec','airflow_temperature_cel','temperature_celsius');
+        $strings =  array('model_family','device_model','serial_number_hdd','lu_wwn_device_id','firmware_version','user_capacity','sector_size','rotation_rate','device_is','ata_version_is','sata_version_is','form_factor','smart_support_is','smart_is','serial_number','power_on_hours_and_msec','airflow_temperature_cel','temperature_celsius','overall_health');
 
         // Get index ID
         $disk_id = (count($plist) -1 );
