@@ -65,7 +65,7 @@ done
 # Parse non-Apple certificates in Keychain
 for CERT in $(security find-certificate -a "${SYSTEM_KEYCHAIN}" | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
 do
-    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]  && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]] && [[ "$CERT" != "Software Signing" ]]
+    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]  && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]] && [[ "$CERT" != "Software Signing" ]] && [[ "$CERT" != "Dashboard Advisory" ]]
     then     
         # read the subject on each certificate
         SUBJECT=$(security find-certificate -a -c "$CERT" -p | openssl x509 -subject -nameopt oneline -noout 2>/dev/null)
