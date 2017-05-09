@@ -47,9 +47,21 @@ $(document).on('appReady', function(e, lang) {
 	    		return;
 	    	}
 
-			panelBody.find('a.btn-success span.bigger-150').text(data.oneday);
-			panelBody.find('a.btn-warning span.bigger-150').text(data.oneweek);
-			panelBody.find('a.btn-danger span.bigger-150').text(data.oneweekplus);
+		if(data.oneday == null){
+			data.oneday = 0;
+		}
+
+                if(data.oneweek == null){
+                        data.oneweek = 0;
+                }
+
+                if(data.oneweekplus == null){
+                        data.oneweekplus = 0;
+                }
+	
+		panelBody.find('a.btn-success span.bigger-150').text(data.oneday);
+		panelBody.find('a.btn-warning span.bigger-150').text(data.oneweek);
+		panelBody.find('a.btn-danger span.bigger-150').text(data.oneweekplus);
 
 	    });
 	});
