@@ -13,15 +13,15 @@
 
 		<div class="panel-body text-center">
 
-			<a href="" class="btn btn-danger">
+			<a tag="oneweekplus" class="btn btn-danger disabled">
 				<span class="bigger-150"> 0 </span><br>
 				7 <span data-i18n="date.day_plural"></span> +
 			</a>
-			<a href="" class="btn btn-warning">
+			<a tag="oneweek" class="btn btn-warning disabled">
 				<span class="bigger-150"> 0 </span><br>
 				< 7 <span data-i18n="date.day_plural"></span>
 			</a>
-			<a href="" class="btn btn-success">
+			<a tag="oneday" class="btn btn-success disabled">
 				<span class="bigger-150"> 0 </span><br>
 				< 1 <span data-i18n="date.day"></span>
 			</a>
@@ -46,10 +46,11 @@ $(document).on('appReady', function(e, lang) {
 	    		//alert(data.error);
 	    		return;
 	    	}
-
-			panelBody.find('a.btn-success span.bigger-150').text(data.oneday);
-			panelBody.find('a.btn-warning span.bigger-150').text(data.oneweek);
-			panelBody.find('a.btn-danger span.bigger-150').text(data.oneweekplus);
+			$.each(['oneday', 'oneweek', 'oneweekplus'], function(i, tag){
+				panelBody.find('a[tag="'+tag+'"]')
+					.toggleClass('disabled', !data[tag])
+					.find('span.bigger-150').text(data[tag] || 0)
+			})
 
 	    });
 	});
