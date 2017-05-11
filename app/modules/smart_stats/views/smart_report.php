@@ -8,7 +8,7 @@
 
   <div class="row">
 
-  <?php $widget->view($this, 'smart_stats_status'); ?>
+  <?php $widget->view($this, 'smart_overall_health_test'); ?>
 
   </div> <!-- /row -->
 
