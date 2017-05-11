@@ -163,6 +163,17 @@ class Smart_stats_model extends Model {
 		$this->serial = $serial;
     }
 
+    public function getSmartStats()
+    {
+        $sql = "SELECT COUNT(CASE WHEN overall_health='PASSED' THEN 1 END) AS passed,
+						COUNT(CASE WHEN overall_health='UNKNOWN!' THEN 1 END) AS unknown,
+						COUNT(CASE WHEN overall_health='FAILING!' THEN 1 END) AS failing
+						FROM smart_stats
+						LEFT JOIN reportdata USING(serial_number)
+						".get_machine_group_filter();
+        return current($this->query($sql));
+    }
+
     /**
      * Process data sent by postflight
      *
