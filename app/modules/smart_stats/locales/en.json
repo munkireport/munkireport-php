@@ -23,7 +23,7 @@
     "error_poh": "Last SMART Error at Power On Hours",
     "exception_mode_status": "Exception Mode Status",
     "factory_bad_block_ct": "Factory Bad Block Count",
-    "failing": "Failing",
+    "failed": "Failed",
     "firmware_version": "Firmware Version",
     "flying_height": "Flying Height",
     "form_factor": "Form Factor",
@@ -52,7 +52,7 @@
     "non4k_aligned_access": "Non-4K Aligned Access",
     "offline_seek_performnce": "Offline Seek Performance",
     "offline_uncorrectable": "Offline Uncorrectable",
-    "overall_health": "Overall Health",
+    "overall_health": "Overall Health Test",
     "passed": "Passed",
     "perc_avail_resrvd_space": "Percent Available Reserved Space",
     "perc_rated_life_used": "Percent Rated Life Used",
@@ -89,6 +89,7 @@
     "seek_time_performance": "Seek Time Performance",
     "serial_number_hdd": "Serial Number",
     "smart_is": "SMART Status",
+    "smart_overall_health_test": "SMART Overall Health Test",
     "smart_support_is": "SMART Enabled",
     "soft_ecc_correction": "Soft ECC Correction",
     "soft_read_error_rate": "Soft Read Error Rate",
@@ -122,5 +123,5 @@
     "used_rsvd_blk_cnt_tot": "Used Reserved Block Count Total",
     "user_capacity": "Raw Capactiy",
     "wear_leveling_count": "Wear Leveling Count",
-    "write_error_rate": "Write Error Rate",
+    "write_error_rate": "Write Error Rate"
 }
