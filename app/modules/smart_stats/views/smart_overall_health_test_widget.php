@@ -11,42 +11,61 @@
 
 		</div>
 
-		<div class="panel-body text-center"></div>
+		<div class="panel-body text-center">
 
+			<a tag="failed" class="btn btn-danger disabled">
+				<span class="bigger-150"> 0 </span><br>
+				<span data-i18n="smart_stats.failed"></span>
+			</a>
+			<a tag="unknown" class="btn btn-warning disabled">
+				<span class="bigger-150"> 0 </span><br>
+				<span data-i18n="smart_stats.unknown"></span>
+			</a>
+			<a tag="passed" class="btn btn-success disabled">
+				<span class="bigger-150"> 0 </span><br>
+				<span data-i18n="smart_stats.passed"></span>
+			</a>
+
+		</div>
 	</div><!-- /panel -->
 
 </div><!-- /col -->
 
 
-
 <script>
-$(document).on('appUpdate', function(e, lang) {
+$(document).on('appReady', function(){
 
-    $.getJSON( appUrl + '/module/smart_stats/get_smart_stats', function( data ) {
+	var panelBody = $('#smart-overall-health-test div.panel-body');
 
-    	if(data.error){
-    		//alert(data.error);
-    		return;
-    	}
+	// Tags
+	var tags = ['failed', 'unknown', 'passed'];
 
-		var panel = $('#smart-overall-health-test div.panel-body'),
-			baseUrl = appUrl + '/show/listing/smart_stats/smart_stats';
-		panel.empty();
+	// Set url
+	$.each(tags, function(i, tag){
+		$('#smart-overall-health-test a[tag="'+tag+'"]')
+			.attr('href', appUrl + '/show/listing/smart_stats/smart_stats/#'+tag);
+	});
 
-		// Set statuses
-		if(data.failed){
-			panel.append('<a href="'+baseUrl+'#failed" class="btn btn-danger"><span class="bigger-150">'+data.failed+'</span><br>'+i18n.t("smart_stats.failed")+'</a>');
-		}
-		if(data.unknown){
-			panel.append(' <a href="'+baseUrl+'#unknown" class="btn btn-warning"><span class="bigger-150">'+data.unknown+'</span><br>'+i18n.t("smart_stats.unknown")+'</a>');
-		}
-		if(data.passed){
-			panel.append(' <a href="'+baseUrl+'#passed" class="btn btn-success"><span class="bigger-150">'+data.passed+'</span><br>'+i18n.t("smart_stats.passed")+'</a>');
-		}
+	$(document).on('appUpdate', function(){
 
+		$.getJSON( appUrl + '/module/smart_stats/get_smart_stats', function( data ) {
 
-    });
+			$.each(tags, function(i, tag){
+				// Set count
+				$('#smart-overall-health-test a[tag="'+tag+'"]')
+					.toggleClass('disabled', ! data[tag])
+					.find('span.bigger-150')
+						.text(+data[tag]);
+				// Set localized label
+				$('#smart-overall-health-test a[tag="'+tag+'"] span.count')
+					.text(i18n.t(tag, { count: +data[tag] }));
+			});
+
+		});
+
+	});
+
 });
 
-
 </script>
+
