@@ -2,20 +2,20 @@
 
 class Tablequery
 {
-    
+
     private $cfg = array();
 
     public function __construct($cfg = '')
     {
         $this->cfg = $cfg;
     }
-    
+
     // Clean unsafe strings
     public function dirify($string, $chars = '\w')
     {
         return preg_replace("/[^$chars]/", '', $string);
     }
-    
+
     // ------------------------------------------------------------------------
 
     /**
@@ -27,15 +27,15 @@ class Tablequery
      **/
     public function fetch($cfg)
     {
-        
+
         // Quick debug
         $debug = false;
-        
+
         $dbh = getdbh();
 
         // Initial value
         $recordsTotal = 0;
-        
+
         // Output array
         $output = array(
             "draw" => intval($cfg['draw']),
@@ -64,7 +64,7 @@ class Tablequery
                 $formatted_columns[$pos] = sprintf('`%s`', $column['name']);
             }
             $columns[$pos] = $column['name'];
-            
+
             // Check if search in column
             if (isset($column['search']['value']) && $column['search']['value']) {
                 $search_cols[$pos] = $column['search']['value'];
@@ -89,14 +89,14 @@ class Tablequery
         if ($cfg['mrColNotEmpty']) {
             $where = sprintf('WHERE %s IS NOT NULL', $cfg['mrColNotEmpty']);
         }
-        
+
         // Where not empty or blank
         if ($cfg['mrColNotEmptyBlank']) {
             $where = sprintf("WHERE %s != ''", $cfg['mrColNotEmptyBlank']);
         }
-        
+
         $bindings = array();
-        
+
         // Extra where clause (can only do is equal)
         if (is_array($cfg['where'])) {
             foreach ($cfg['where'] as $entry) {
@@ -134,11 +134,11 @@ class Tablequery
             SELECT COUNT(1) as count
             $from
             $where";
-            
+
         if ($debug) {
             print $sql;
         }
-        
+
         if (! $stmt = $dbh->prepare($sql)) {
             $err = $dbh->errorInfo();
             die($err[2]);
@@ -180,11 +180,14 @@ class Tablequery
                 if (preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val)) {
                     // Special case, use unquoted
                     $compstr = $val;
+                } elseif(preg_match('/[%_]+/', $val)) {
+                    $bindings[] = $val;
+                    $compstr = " LIKE ?";
                 } else {
                     $bindings[] = $val;
                     $compstr = " = ?";
                 }
-                
+
                 $sWhere .= $formatted_columns[$pos].$compstr." OR ";
             }
             $sWhere = substr_replace($sWhere, "", -3);
@@ -222,7 +225,7 @@ class Tablequery
                 $recordsFiltered = $rs->count;
             }
         }
-        
+
         $output["recordsTotal"] = $recordsTotal;
         $output["recordsFiltered"] = $recordsFiltered;
 
@@ -243,7 +246,7 @@ class Tablequery
         if (conf('debug')) {
             $output['sql'] = str_replace("\n", '', $sql);
         }
-        
+
         if (! $stmt = $dbh->prepare($sql)) {
             $err = $dbh->errorInfo();
             die($err[2]);
