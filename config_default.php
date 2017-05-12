@@ -91,6 +91,16 @@
 	$conf['hide_inactive_modules'] = FALSE;
 
 	/*
+        |===============================================
+        | Local Admin Threshold Value
+        |===============================================
+        |
+	| This value specifies the minimum number of local admin accounts needed to 
+	|	list the computer in the Local Admin Report.  Default is 2.
+	*/
+	$conf['local_admin_threshold'] = 2;
+
+	/*
 	|===============================================
 	| Authentication
 	|===============================================
@@ -255,7 +265,7 @@
 	| $conf['bundlepath_ignorelist'][] = '/System/Library/.*';
 	|
 	| Skip all apps that are contained in an app bundle
-	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app'
+	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app';
 	|
 	*/
 	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
@@ -267,14 +277,14 @@
 	|
 	| Access to GSX and certificates are required for use of this module
 	|
-	| The GSX module is designed to be used in place of the warranty module.
-	| While both the warranty and GSX modules can be enabled at the same
-	| time it is recommended that only one be enabled at a time to prevent
-	| the warranty module from overwriting the data provided by the GSX module.
+	| The GSX module is designed to be used as a supplement to the warranty module.
+	| It is now required for both the warranty and GSX modules to be enabled at
+	| the same time. This is different from before when it was recommended that only
+	| one of the modules be enabled at a time.
 	|
 	| Use GSX article OP1474 and
 	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
-	| to assist with creating certificates and whitelisting your IPs. Addtional documentation can be found in the
+	| to assist with creating certificates and whitelisting your IPs. Additional documentation can be found in the
 	| Readme.md located in the GSX module.
 	|
 	| To use the GSX module, set enable to TRUE and uncomment and
@@ -591,22 +601,23 @@
 	| This is a list of the current dashboard widgets
 	|
 	| Small horizontal widgets:
-	|	bound_to_ds
-	|	client (two items)
-	|	external_displays_count
-	|	firmwarepw
-	|	gatekeeper
-	|	hardware_model
-	|	smart_status
-	|	disk_report
-	|	uptime
-	|	installed memory
-	|	munki
-	|	power_battery_condition
-	|	power_battery_health
-	|	sip
-	|	wifi_state
-	|
+        |       bound_to_ds
+        |       client (two items)
+        |       disk_report
+        |       external_displays_count
+        |       firmwarepw
+        |       gatekeeper
+        |       hardware_model
+        |       installed memory
+        |       localadmin
+        |       munki
+        |       power_battery_condition
+        |       power_battery_health
+        |       sip
+        |       smart_status
+        |       uptime
+        |       wifi_state
+        |       	|
 	| Small horizontal / medium vertical widgets:
 	|	network_location
 	|

@@ -235,6 +235,8 @@
         "error_plural": "__count__ Munki errors",
         "package_installed": "__pkg__ installed",
         "package_installed_plural": "__count__ packages installed",
+        "package_uninstalled": "__pkg__ uninstalled",
+        "package_uninstalled_plural": "__count__ packages uninstalled",
         "warning": "Munki warning: __warning__",
         "warning_plural": "__count__ Munki warnings"
     },
@@ -297,6 +299,7 @@
     "path": "Path",
     "pending": "Pending",
     "php": {
+        "allow_url_fopen": "Remote URL access",
         "dom": "DOM Extension",
         "moreinfo": "Extended PHP info",
         "pdo": "PDO Extension",

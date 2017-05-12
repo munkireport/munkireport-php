@@ -1,7 +1,7 @@
 <?php
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.13.2.2714';
+$GLOBALS['version'] = '2.14.0.2785';
 
 // Return version without commit count
 function get_version()

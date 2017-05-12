@@ -26,12 +26,15 @@ The following information is stored in the smart_stats table:
 
 All other table columns correspond with SMART attributes.  
 
-##Dependency
+## Dependency
 
 smart_stats module required smartctl, a part of smartmontools: [https://www.smartmontools.org/](https://www.smartmontools.org/)
 
 Download the latest version of smartmontools for macOS from the official repository here: [https://sourceforge.net/projects/smartmontools/files/latest/download?source=files](https://sourceforge.net/projects/smartmontools/files/latest/download?source=files)
- 
-##Notes
+
+**Munki:**
+The downloaded smartmontools package has a name that conflicts with Munki's versioning. To avoid an error, import the downloaded DMG file directly instead of the PKG it contains.
+
+## Notes
 
 Because smartmontools does not yet fully support NVMe drives on macOS, this module does not support NVMe drives.

@@ -4,7 +4,9 @@
 
 		<div class="panel-heading" data-container="body" data-i18n="[title]events.widget_title">
 
-			<h3 class="panel-title"><i class="fa fa-bullhorn"></i> <span data-i18n="event_plural"></span></h3>
+			<h3 class="panel-title"><i class="fa fa-bullhorn"></i>
+			    <span data-i18n="event_plural"></span>
+			</h3>
 
 		</div>
 

@@ -4,7 +4,10 @@
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-globe"></i> <span data-i18n="network.widget.network_vlan"></span></h3>
+					<h3 class="panel-title"><i class="fa fa-globe"></i>
+					    <span data-i18n="network.widget.network_vlan"></span>
+					    <list-link data-url="/show/listing/network/network"></list-link>
+					</h3>
 
 				</div>
 

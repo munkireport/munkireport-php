@@ -1,7 +1,7 @@
 Certificate module
 ==================
 
-Provides certificate information on certs found in `/etc/certificates/`
+Provides certificate information on certs found in `/etc/certificates/` and the System Keychain.
 
 The table provides the following information per 'certificate':
 
@@ -11,4 +11,6 @@ The table provides the following information per 'certificate':
 * cert_path (string) Path to certificate
 * cert_cn (string) Common name
 * timestamp (int) Timestamp of last update
+* issuer (string) Who issued the certificate
+* cert_location (string) Where the certificate is stored
 

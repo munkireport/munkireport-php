@@ -77,13 +77,7 @@ class Munkireportinfo_model extends Model
                         $modulelist = array_keys($plist["reportitems"]);
                         sort($modulelist);
                         $modulelistproper = implode(", ",$modulelist);
-                        $this->$item = $modulelistproper;
-                        // Check if both GSX and warranty modules are enabled. They should not be
-                        // the warranty module runs after then GSX module and can overwrite actual
-                        // data with estimated data, such as warranty expiration dates.
-                        if (strpos($modulelistproper, "gsx") !== false && strpos($modulelistproper , "warranty") !== false ){
-                            print_r("***** You should not have both the GSX and Warranty modules enabled at the same time. Please disable the Warranty module *****\r\n");  
-                        }                        
+                        $this->$item = $modulelistproper;                  
                     } else {    
                         $this->$item = $plist[$item];
                     }

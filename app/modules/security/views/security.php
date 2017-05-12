@@ -22,6 +22,8 @@
 
 		<?php $widget->view($this, 'findmymac'); ?>
 
+		<?php $widget->view($this, 'firewall_state'); ?>
+
 	</div> <!-- /row -->
 
 
