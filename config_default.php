@@ -403,10 +403,10 @@
 	| e.g. $conf['modules'] = array('disk_report', 'inventory');
 	|
 	| An empty list installs only the basic reporting modules:
-	| Machine and Reportdata
+	| Events, Machine and Reportdata
 	|
 	*/
-	$conf['modules'] = array('munkireport', 'managedinstalls');
+	$conf['modules'] = array('event', 'munkireport', 'managedinstalls');
 
 	/*
 	|===============================================
