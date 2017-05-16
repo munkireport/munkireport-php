@@ -9,6 +9,7 @@ return array(
     ),
     'widgets' => array(
         'caching' => array('view' => 'caching_widget'),
+        'caching_graph' => array('view' => 'caching_graph_widget'),
     ),
     'reports' => array(
         'caching' => array('view' => 'server', 'i18n' => 'caching.reporttitle'),
