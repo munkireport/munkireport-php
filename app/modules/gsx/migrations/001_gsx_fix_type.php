@@ -22,7 +22,7 @@ class Migration_gsx_fix_type extends Model
     {
         // Get database handle
         $dbh = $this->getdbh();
-        
+
         // ***** Modify columns
 
         if ($this->get_driver() == 'mysql')
@@ -30,10 +30,10 @@ class Migration_gsx_fix_type extends Model
             // Get columns and data types
             $sql = "ALTER TABLE gsx MODIFY daysremaining INT(11)";
             $this->exec($sql);
-            
+
             // Wrap in transaction
             $dbh->beginTransaction();
-            
+
             // Add indexes
             $this->idx[] = array('warrantystatus');
             $this->idx[] = array('coverageenddate');
@@ -41,18 +41,18 @@ class Migration_gsx_fix_type extends Model
             $this->idx[] = array('daysremaining');
             $this->idx[] = array('isvintage');
             $this->idx[] = array('configdescription');
-            $sql = 'CREATE INDEX IF NOT EXISTS %s ON %s (%s)';
+            $sql = 'CREATE INDEX %s ON %s (%s)';
             $this->set_indexes($sql);
-            
+
             // Commit transaction
             $dbh->commit();
 
         }
         else{
-            
+
             // Wrap in transaction
             $dbh->beginTransaction();
-                        
+
             // Create a temporary table
             $sql = "CREATE TABLE gsx_temp (
                         id INTEGER PRIMARY KEY,
@@ -90,8 +90,8 @@ class Migration_gsx_fix_type extends Model
             // Rename temp table
             $sql = "ALTER TABLE gsx_temp RENAME TO gsx";
             $this->exec($sql);
-            
-            // Add indexes            
+
+            // Add indexes
             $this->idx[] = array('warrantystatus');
             $this->idx[] = array('coverageenddate');
             $this->idx[] = array('estimatedpurchasedate');
@@ -100,7 +100,7 @@ class Migration_gsx_fix_type extends Model
             $this->idx[] = array('configdescription');
             $sql = 'CREATE INDEX IF NOT EXISTS %s ON %s (%s)';
             $this->set_indexes($sql);
-            
+
             // Commit transaction
             $dbh->commit();
         }
