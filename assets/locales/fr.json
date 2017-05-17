@@ -297,6 +297,7 @@
     "path": "Chemin",
     "pending": "En attente",
     "php": {
+		"allow_url_fopen": "Accès distant à l'URL",
         "dom": "Extension DOM",
         "moreinfo": "Infos PHP avancées",
         "pdo": "Extension PDO",
