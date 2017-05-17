@@ -15,7 +15,6 @@
     "directory_service_comments": "Active Directory Comments",
     "adforest": "Active Directory Forest",
     "addomain": "Active Directory Domain",
-    "computeraccount": "Computer Account",
     "user_experience": "Advanced Options - User Experience",
     "createmobileaccount": "Create Mobile Account at Login",
     "requireconfirmation": "Require Confirmation",
