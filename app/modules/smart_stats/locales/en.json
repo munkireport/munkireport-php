@@ -121,7 +121,7 @@
     "unused_rsvd_blk_cnt_tot": "Unused Reserved Block Count Cotal",
     "used_rsvd_blk_cnt_chip": "Used Reserved Block Count Chip",
     "used_rsvd_blk_cnt_tot": "Used Reserved Block Count Total",
-    "user_capacity": "Raw Capactiy",
+    "user_capacity": "Raw Capacity",
     "wear_leveling_count": "Wear Leveling Count",
     "write_error_rate": "Write Error Rate"
 }
