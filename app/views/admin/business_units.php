@@ -771,7 +771,12 @@
 		// Render when all requests are successful
 		defer.done(function(bu_data, mg_data, gr_data){
 
-			machineGroups = mg_data[0];
+			machineGroups = mg_data[0].sort( function( a, b ) {
+				a = a.name.toLowerCase();
+				b = b.name.toLowerCase();
+
+				return a < b ? -1 : a > b ? 1 : 0;
+			});
 
 			// Remove Loading row
 			$('#loading').hide();
