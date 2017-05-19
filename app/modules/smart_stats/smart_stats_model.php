@@ -315,39 +315,28 @@ class Smart_stats_model extends Model {
      while ($disk_id > -1) {
 
         // Traverse the xml with translations
-        foreach ($translate as $search => $field) {  
-                // If key is empty, is not a string, and is not zero
-                if (empty($plist[$disk_id][$search]) && ! in_array($field, $strings) && $plist[$disk_id][$search] != "0") {  
+        foreach ($translate as $search => $field) {
+            // If key is empty
+            if ( ! isset($plist[$disk_id][$search])) {
+                if ( ! in_array($field, $strings)) {
                     $this->$field = null;
-                   
-                // Head_Flying_Hours can sometimes a string    
-                } else if ($search == "Head_Flying_Hours" && stripos($plist[$disk_id][$search], 'h') !== false) {
-                    
+                }
+            } else { // Key is set
+                if ($search == "Head_Flying_Hours" && stripos($plist[$disk_id][$search], 'h') !== false) {
+
                     $headhours = explode("h+",$plist[$disk_id][$search]);
                     $this->$field = $headhours[0];
-                                        
-                // If key is not empty and is a string save it to the object
-                } else if (! empty($plist[$disk_id][$search]) && in_array($field, $strings)) {  
+
+                    // If key is a string save it to the object
+                } else if ( in_array($field, $strings)) {  
                     $this->$field = $plist[$disk_id][$search];
-                    
-                // If key is not empty and not a string save it to the object
-                } else if (! empty($plist[$disk_id][$search]) && ! in_array($field, $strings)) {  
-                    $this->$field = preg_replace("/[^0-9]/", "", $plist[$disk_id][$search]);
-                    
-                // Else, check if key is an int  
-                } else if ( ! in_array($field, $strings) && $plist[$disk_id][$search] != "0"){
-                    // Set the int to null
-                    $this->$field = null;
-                    
-                } else if ( ! in_array($field, $strings) && $plist[$disk_id][$search] == "0"){
-                    // Set the int to 0
-                    $this->$field = $plist[$disk_id][$search];
-                    
-                } else {  
-                    // Else, null the value
-                    $this->$field = '';
+
+                    // If key is not a string save it to the object
+                } else  {  
+                    $this->$field = intval(preg_replace("/[^0-9]/", "", $plist[$disk_id][$search]));
                 }
             }
+        }
          
          //timestamp added by the server
          $this->timestamp = time();
