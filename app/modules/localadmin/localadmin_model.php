@@ -12,17 +12,17 @@ class Localadmin_model extends Model
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
-        
+
         // Create table if it does not exist
         $this->create_table();
-        
+
         if ($serial) {
             $this->retrieve_record($serial);
         }
-        
+
         $this->serial = $serial;
     }
-    
+
     // ------------------------------------------------------------------------
 
      public function get_localadmin()
@@ -30,7 +30,7 @@ class Localadmin_model extends Model
         $out = array();
         //Check if config threshold is set for number of admins to show
         $threshold=2;
-        if(!empty(conf('local_admin_threshold'))) {
+        if(conf('local_admin_threshold') != '') {
             $threshold=conf('local_admin_threshold');
             }
         $sql = "SELECT machine.serial_number, computer_name,
@@ -38,9 +38,9 @@ class Localadmin_model extends Model
                     users
                     FROM localadmin
                     LEFT JOIN machine USING (serial_number)
-                    WHERE localadmin.users LIKE '%'  
+                    WHERE localadmin.users LIKE '%'
                     ORDER BY count DESC";
-        
+
         foreach ($this->query($sql) as $obj) {
             if ($obj->count >= $threshold) {
                 $obj->users = $obj->users ? $obj->users : 'Unknown';
