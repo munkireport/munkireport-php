@@ -83,7 +83,7 @@ new Security_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                   
+
 		    // Look for a encrypted statement
                     if(d.search.value.match(/^encrypted = \d$/))
                     {
@@ -124,60 +124,62 @@ new Security_model;
 	        	var link = mr.getClientDetailLink(name, sn);
 	        	$('td:eq(0)', nRow).html(link);
 
-                var enc = $('td:eq(6)', nRow).html();
-                $('td:eq(6)', nRow).html(function(){
-                    if( enc == 1){
-                        return '<span class="label label-success">'+i18n.t('encrypted')+'</span>';
-                    }
-                    return '<span class="label label-danger">'+i18n.t('unencrypted')+'</span>';
-                });
+            var enc = $('td:eq(6)', nRow).html();
+            $('td:eq(6)', nRow).html(function(){
+                if( enc == 1){
+                    return '<span class="label label-success">'+i18n.t('encrypted')+'</span>';
+                }
+                return '<span class="label label-danger">'+i18n.t('unencrypted')+'</span>';
+            });
 
-                var gk = $('td:eq(7)', nRow).html();
-                $('td:eq(7)', nRow).html(function(){
-                  if( gk == 'Active'){
-                        return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-                    } else if( gk == 'Not Supported'){
-                        return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
-                    } else {
-                        return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-                    }
-                });
+            var gk = $('td:eq(7)', nRow).html();
+            $('td:eq(7)', nRow).html(function(){
+              if( gk == 'Active'){
+                    return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                } else if( gk == 'Not Supported'){
+                    return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
+                } else {
+                    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+                }
+            });
 
-                var sip = $('td:eq(8)', nRow).html();
-                $('td:eq(8)', nRow).html(function(){
-                    if( sip == 'Active'){
-                        return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-                    } else if( sip == 'Not Supported'){
-                        return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
-                    } else {
-                        return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-                    }
-                });
+            var sip = $('td:eq(8)', nRow).html();
+            $('td:eq(8)', nRow).html(function(){
+                if( sip == 'Active'){
+                    return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                } else if( sip == 'Not Supported'){
+                    return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
+                } else {
+                    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+                }
+            });
 
-                 var firmwarepw = $('td:eq(9)', nRow).html();
-                 $('td:eq(9)', nRow).html(function(){
-                     if( firmwarepw == 'Yes'){
-                         return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-                     }
+             var firmwarepw = $('td:eq(9)', nRow).html();
+             $('td:eq(9)', nRow).html(function(){
+                 if( firmwarepw == 'Yes' || firmwarepw == 'command'){
+                     return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                 } else if ( firmwarepw == 'No'){
                      return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-		 });
+                 }
+                 return '<span class="label label-default">'+i18n.t('unknown')+'</span>';
+             });
 
-		 var firewall_state = $('td:eq(12)', nRow).html();
-		 $('td:eq(12)', nRow).html(function(){
-		     if(firewall_state == '1'){
-			 return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-		     } else if (firewall_state == '2'){
-			  return '<span class="label label-success">'+i18n.t('security.block_all')+'</span>';
-		     } else if (firewall_state == '0'){
-		          return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-		     }
-		     // default case - return blank if client has not checked in with this info
-			   return "";
-		 });
+            var firewall_state = $('td:eq(12)', nRow).html();
+            $('td:eq(12)', nRow).html(function(){
+               if(firewall_state == '1'){
+                   return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+               } else if (firewall_state == '2'){
+                    return '<span class="label label-success">'+i18n.t('security.block_all')+'</span>';
+               } else if (firewall_state == '0'){
+                    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+               }
+               // default case - return blank if client has not checked in with this info
+               return "";
+            });
 
-		    }
-	    } );
-	} );
+        }
+    });
+  });
 </script>
 
 <?php $this->view('partials/foot'); ?>
