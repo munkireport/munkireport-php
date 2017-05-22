@@ -158,8 +158,11 @@ new Security_model;
                  $('td:eq(9)', nRow).html(function(){
                      if( firmwarepw == 'Yes'){
                          return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-                     }
-                     return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+		     } else if (firmwarepw == 'No'){
+			 return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+		     }
+		     // default case - return blank if client has not checked in with this info
+                     return "";
 		 });
 
 		 var firewall_state = $('td:eq(12)', nRow).html();
