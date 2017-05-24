@@ -26,7 +26,7 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (d[prop] == "Not in smartctl database [for details use: -P showall]"){ // Localize if drive is not in database
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
-                    } else if (prop == "error_poh" || prop == "error_count"){ // Formate SMART Errors
+                    } else if ((prop == "error_poh" || prop == "error_count") && d[prop] != "0"){ // Formate SMART Errors
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td class="danger">'+d[prop]+'</td></tr>';
                     } else if (prop == "total_lbas_written" || prop == "total_lbas_read"){ // Formate LBAs Read/Written
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+fileSize(d[prop] * 512)+'">'+d[prop]+'</span></td></tr>';
