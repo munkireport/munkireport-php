@@ -124,7 +124,7 @@ new Fan_temps_model;
                 var temperature_unit = "<?=conf('temperature_unit')?>";
 
 			var columnvar=$('td:eq(2)', nRow).html();
-			if(columnvar == null) {
+			if(columnvar == "") {
 				 $('td:eq(2)', nRow).html('');
 			} else{				 
 				 $('td:eq(2)', nRow).html(columnvar+" "+i18n.t('fan_temps.rpm'));
