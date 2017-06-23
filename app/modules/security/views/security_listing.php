@@ -29,14 +29,14 @@ new Security_model;
 		        <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
+		        <th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
-			<th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
-			<th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
+		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="14" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -96,7 +96,7 @@ new Security_model;
                     if(d.search.value.match(/^firewall = \d$/))
                     {
                         // Add column specific search
-                        d.columns[12].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
+                        d.columns[10].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
                         // Clear global search
                         d.search.value = '';
                     }
@@ -164,8 +164,8 @@ new Security_model;
                  return '<span class="label label-default">'+i18n.t('unknown')+'</span>';
              });
 
-            var firewall_state = $('td:eq(12)', nRow).html();
-            $('td:eq(12)', nRow).html(function(){
+            var firewall_state = $('td:eq(10)', nRow).html();
+            $('td:eq(10)', nRow).html(function(){
                if(firewall_state == '1'){
                    return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
                } else if (firewall_state == '2'){
