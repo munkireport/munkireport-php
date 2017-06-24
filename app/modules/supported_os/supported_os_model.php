@@ -60,7 +60,7 @@ class Supported_os_model extends Model
             } else {
                 $plist['highest_supported'] = "10.6.8";
             }
-        } else if (strpos($plist['machine_id'], 'MacMini') !== false) {
+        } else if (strpos($plist['machine_id'], 'Macmini') !== false) {
             $model_num = preg_replace("/[^0-9]/", "", $plist['machine_id']);
             if ($model_num >= 41) {
                 $plist['highest_supported'] = $most_current_os;
