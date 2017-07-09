@@ -164,21 +164,21 @@ $(document).on('appReady', function(e, lang) {
 			}
 
 			// Format instanttimetoempty
-			if(data.instanttimetoempty) {
+			if(data.instanttimetoempty && data.instanttimetoempty != -1) {
                 $('#battery-instanttimetoempty').html('<span title="'+data.instanttimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.instanttimetoempty, "minutes").humanize()+'</span>');
             } else {
                 $('#battery-instanttimetoempty').text('');
 			}
 
 			// Format avgtimetofull
-			if(data.avgtimetofull) {
+			if(data.avgtimetofull && data.avgtimetofull != -1) {
                 $('#battery-avgtimetofull').html('<span title="'+data.avgtimetofull+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetofull, "minutes").humanize()+'</span>');
             } else {
                 $('#battery-avgtimetofull').text('');
             }
 
 			// Format avgtimetoempty
-			if(data.avgtimetoempty) {
+			if(data.avgtimetoempty && data.avgtimetoempty != -1) {
                 $('#battery-avgtimetoempty').html('<span title="'+data.avgtimetoempty+' '+i18n.t('power.minutes')+'">'+moment.duration(+data.avgtimetoempty, "minutes").humanize()+'</span>');
             } else {
                 $('#battery-avgtimetoempty').text('');
