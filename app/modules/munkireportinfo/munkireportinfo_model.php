@@ -56,6 +56,7 @@ class Munkireportinfo_model extends Model
             // Convert version to int
             if (isset($plist['version'])) {
                 $digits = explode('.', $plist['version']);
+                array_pop($digits);
                 $mult = 10000;
                 $plist['version'] = 0;
                 foreach ($digits as $digit) {
