@@ -8,10 +8,10 @@ class Extensions_model extends Model {
 		$this->rs['serial_number'] = $serial;
 		$this->rs['name'] = '';
 		$this->rs['bundle_id'] = '';
-        $this->rs['version'] = '';
-		$this->rs['path'] = ''; $this->rt['path'] = 'TEXT';
+		$this->rs['version'] = '';
+		$this->rs['path'] = ''; $this->rt['path'] = 'VARCHAR(1024)';
 		$this->rs['codesign'] = '';
-		$this->rs['executable'] = ''; $this->rt['executable'] = 'TEXT';
+		$this->rs['executable'] = ''; $this->rt['executable'] = 'VARCHAR(1024)';
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -91,9 +91,9 @@ class Extensions_model extends Model {
 				continue;
 			}
             
-            // Get exetension name
-            $path_array = explode("/", $kext['path']);
-            $kext['name'] = str_replace(".kext","",array_pop($path_array));
+			// Get extension name
+			$path_array = explode("/", $kext['path']);
+			$kext['name'] = str_replace(".kext","",array_pop($path_array));
             
 			foreach ($typeList as $key => $value) {
 				$this->rs[$key] = $value;

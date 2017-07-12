@@ -55,6 +55,7 @@ class Extensions_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
         $queryobj = new Extensions_model();
@@ -64,8 +65,6 @@ class Extensions_controller extends Module_controller
                         WHERE serial_number = '$serial_number'";
         
         $extensions_tab = $queryobj->query($sql);
-
-//        $extensions = new Extensions_model;
         $obj->view('json', array('msg' => current(array('msg' => $extensions_tab)))); 
     }
 		
