@@ -30,25 +30,27 @@
 				</tr>
 			</table>
 		</div>
-
-		<div class="col-lg-4">
-			<h4><i class="fa fa-hdd-o"></i> <span data-i18n="disk_report.storage"></span></h4>
-			<table>
-				<tr>
-					<th data-i18n="disk_report.size"></th><td class="mr-TotalSize"></td>
-				</tr>
-				<tr>
-					<th data-i18n="disk_report.used"></th><td class="mr-UsedSize"></td>
-				</tr>
-				<tr>
-					<th data-i18n="disk_report.free"></th><td class="mr-FreeSpace"></td>
-				</tr>
-				<tr>
-					<th data-i18n="disk_report.smartstatus"></th><td class="mr-SMARTStatus"></td>
-				</tr>
-			</table>
-		</div>
-
+		
+        <?php if (conf('hide_inactive_modules') && in_array("disk_report", conf('modules')) || ! conf('hide_inactive_modules')) : ?>
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-hdd-o"></i> <span data-i18n="disk_report.storage"></span></h4>
+    			<table>
+    				<tr>
+    					<th data-i18n="disk_report.size"></th><td class="mr-TotalSize"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="disk_report.used"></th><td class="mr-UsedSize"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="disk_report.free"></th><td class="mr-FreeSpace"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="disk_report.smartstatus"></th><td class="mr-SMARTStatus"></td>
+    				</tr>
+    			</table>
+    		</div>
+        <?php endif; ?>
+        
 	</div><!-- /row -->
 
 	<div class="row">
@@ -97,44 +99,50 @@
 				</tr>
 			</table>
 		</div>
-
-		<div class="col-lg-4">
-			<h4><i class="fa fa-apple"></i> <span data-i18n="ard.ard"></span></h4>
-			<table id="ard-data" class="table"></table>
-		</div>
+        
+        <?php if (conf('hide_inactive_modules') && in_array("ard", conf('modules')) || ! conf('hide_inactive_modules')) : ?>        
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-apple"></i> <span data-i18n="ard.ard"></span></h4>
+    			<table id="ard-data" class="table"></table>
+    		</div>
+        <?php endif; ?>
 
 	</div><!-- /row -->
 
 	<div class="row">
 
-		<div class="col-lg-4">
-			<h4><i class="fa fa-umbrella"></i> <span data-i18n="warranty.warranty"></span></h4>
-			<table>
-				<tr>
-					<th data-i18n="warranty.coverage"></th><td class="mr-warranty_status"></td>
-				</tr>
-				<tr>
-					<th data-i18n="warranty.est_manufacture_date"></th><td class="mr-manufacture_date"></td>
-				</tr>
-				<tr>
-					<th data-i18n="warranty.est_purchase_date"></th><td class="mr-purchase_date"></td>
-				</tr>
-			</table>
-		</div>
-
-		<div class="col-lg-4">
-			<h4><i class="fa fa-sitemap"></i> <span data-i18n="network.network"></span></h4>
-			<table>
-				<tr>
-					<th data-i18n="network.remote_ip"></th><td class="mr-remote_ip"></td>
-				</tr>
-				<tr>
-					<th data-i18n="network.hostname"></th><td class="mr-hostname"></td>
-				</tr>
-				</tr>
-			</table>
-		</div>
-
+        <?php if (conf('hide_inactive_modules') && in_array("warranty", conf('modules')) || ! conf('hide_inactive_modules')) : ?>
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-umbrella"></i> <span data-i18n="warranty.warranty"></span></h4>
+    			<table>
+    				<tr>
+    					<th data-i18n="warranty.coverage"></th><td class="mr-warranty_status"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="warranty.est_manufacture_date"></th><td class="mr-manufacture_date"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="warranty.est_purchase_date"></th><td class="mr-purchase_date"></td>
+    				</tr>
+    			</table>
+    		</div>
+        <?php endif; ?>
+        
+        <?php if (conf('hide_inactive_modules') && in_array("network", conf('modules')) || ! conf('hide_inactive_modules')) : ?>
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-sitemap"></i> <span data-i18n="network.network"></span></h4>
+    			<table>
+    				<tr>
+    					<th data-i18n="network.remote_ip"></th><td class="mr-remote_ip"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="network.hostname"></th><td class="mr-hostname"></td>
+    				</tr>
+    				</tr>
+    			</table>
+    		</div>
+        <?php endif; ?>
+        
 		<div class="col-lg-4">
 			<h4><i class="fa fa-users"></i> <span data-i18n="user.users"></span></h4>
 			<table>
@@ -152,53 +160,62 @@
 	</div><!-- /row -->
 
 	<div class="row">
+    	
+    	
+        <?php if (conf('hide_inactive_modules') && in_array("timemachine", conf('modules')) || ! conf('hide_inactive_modules')) : ?>
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-clock-o"></i> <span data-i18n="timemachine.timemachine"></span></h4>
+    			<table class="mr-timemachine-table">
+    			</table>
+    		</div>
+		<?php endif; ?>
 
-		<div class="col-lg-4">
-			<h4><i class="fa fa-clock-o"></i> <span data-i18n="timemachine.timemachine"></span></h4>
-			<table class="mr-timemachine-table">
-			</table>
-		</div>
+        <?php if (conf('hide_inactive_modules') && in_array("crashplan", conf('modules')) || ! conf('hide_inactive_modules')) : ?>
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-home"></i> <span data-i18n="crashplan.title"></span></h4>
+    			<table class="mr-crashplan-table">
+    			</table>
+    		</div>
+		<?php endif; ?>
 
-		<div class="col-lg-4">
-			<h4><i class="fa fa-home"></i> <span data-i18n="crashplan.title"></span></h4>
-			<table class="mr-crashplan-table">
-			</table>
-		</div>
+        <?php if (conf('hide_inactive_modules') && in_array("bluetooth", conf('modules')) || ! conf('hide_inactive_modules')) : ?>
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-keyboard-o fa-fixed"></i> <span data-i18n="bluetooth.bluetooth"></span></h4>
+    			<table class="mr-bluetooth-table">
+    			</table>
+    		</div>
+        <?php endif; ?>
 
-		<div class="col-lg-4">
-			<h4><i class="fa fa-keyboard-o fa-fixed"></i> <span data-i18n="bluetooth.bluetooth"></span></h4>
-			<table class="mr-bluetooth-table">
-			</table>
-		</div>
-
-		<div class="col-lg-4">
-			<h4><i class="fa fa-comment-o fa-fixed"></i> <span data-i18n="client.comment"></span></h4>
-			<div class="comment" data-section="client"></div>
-			</table>
-		</div>
-
-		<div class="col-lg-4">
-			<h4><i class="fa fa-key fa-fixed"></i> <span data-i18n="security.security"></span></h4>
-			<table>
-				<tr>
-					<th data-i18n="security.gatekeeper"></th><td class="mr-gatekeeper"></td>
-				</tr>
-				<tr>
-					<th data-i18n="security.sip"></th><td class="mr-sip"></td>
-				</tr>
-				<tr>
-					<th data-i18n="security.ssh_users"></th><td class="mr-ssh_users"></td>
-				</tr>
-				<tr>
-					<th data-i18n="security.ard_users"></th><td class="mr-ard_users"></td>
-				</tr>
-				<tr>
-					<th data-i18n="security.firmwarepw"></th><td class="mr-firmwarepw"></td>
-				</tr>
-				<tr>
-					<th data-i18n="security.firewall_state"></th><td class="mr-firewall_state"></td>
-				</tr>
-			</table>
-		</div>
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-comment-o fa-fixed"></i> <span data-i18n="client.comment"></span></h4>
+    			<div class="comment" data-section="client"></div>
+    			</table>
+    		</div>
+        
+        <?php if (conf('hide_inactive_modules') && in_array("security", conf('modules')) || ! conf('hide_inactive_modules')) : ?>
+    		<div class="col-lg-4">
+    			<h4><i class="fa fa-key fa-fixed"></i> <span data-i18n="security.security"></span></h4>
+    			<table>
+    				<tr>
+    					<th data-i18n="security.gatekeeper"></th><td class="mr-gatekeeper"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="security.sip"></th><td class="mr-sip"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="security.ssh_users"></th><td class="mr-ssh_users"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="security.ard_users"></th><td class="mr-ard_users"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="security.firmwarepw"></th><td class="mr-firmwarepw"></td>
+    				</tr>
+    				<tr>
+    					<th data-i18n="security.firewall_state"></th><td class="mr-firewall_state"></td>
+    				</tr>
+    			</table>
+    		</div>
+		<?php endif; ?>
 
 	</div><!-- /row -->
