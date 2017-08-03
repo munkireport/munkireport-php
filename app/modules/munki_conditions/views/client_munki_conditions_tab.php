@@ -29,7 +29,7 @@ $(document).on('appReady', function(e, lang) {
       // Add data
       for (var key in data) {
         var element = '<tr><th>' + key + '</th><td>' + data[key] + '</td></tr>'
-        $('tbody').append(element)
+        $('#munki_conditions-table tbody').append(element)
       }
     }
 
