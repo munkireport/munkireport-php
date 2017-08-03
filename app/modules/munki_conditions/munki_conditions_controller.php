@@ -45,7 +45,7 @@ class munki_conditions_controller extends Module_controller
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
         $obj = new View();
-        $obj->view('munkiprotocol_listing', $data, $this->view_path);
+        $obj->view('munki_conditions_listing', $data, $this->view_path);
     }
 
     /**
@@ -67,7 +67,7 @@ class munki_conditions_controller extends Module_controller
                 $temp[] = $conditions->rs;
             }
             foreach ($temp as $value) {
-                $out[$value['munkiinfo_key']] = $value['munkiinfo_value'];
+                $out[$value['condition_key']] = $value['condition_value'];
             }
         }
 
