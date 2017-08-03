@@ -4,6 +4,7 @@
  *
  * @package munkireport
  * @author nperkins487
+ *
  **/
 class munki_conditions_controller extends Module_controller
 {
@@ -49,7 +50,7 @@ class munki_conditions_controller extends Module_controller
     }
 
     /**
-     * Get munki preferences for serial_number
+     * Get munki conditions for serial_number
      *
      * @param string $serial serial number
      * @author clburlison
