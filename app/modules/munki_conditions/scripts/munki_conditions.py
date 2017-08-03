@@ -4,9 +4,17 @@ munki_conditions for munkireport
 """
 
 import os
+import json
 import plistlib
 import CoreFoundation
+from datetime import datetime
 
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.isoformat()
+
+        return json.JSONEncoder.default(self, o)
 
 def gather_conditions(path):
   """
@@ -23,15 +31,16 @@ def gather_conditions(path):
 
   if plist.get('Conditions'):
     for key, value in plist['Conditions'].iteritems():
-      key = key[:255]
+      key = key[:65535]
       if isinstance(value, list) and len(value) > 0:
-        conditions[key] = ', '.join([str(x) for x in value])[:255]
+        conditions[key] = json.dumps(value)[:65535]
       else:
-        conditions[key] = str(value)[:255]
+        conditions[key] = str(value)[:65535]
   else:
     print 'No conditions found.'
 
   return conditions
+
 
 def main():
   """Main"""

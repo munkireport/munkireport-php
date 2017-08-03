@@ -8,7 +8,9 @@ class munki_conditions_model extends Model
           $this->rs['id'] = 0;
           $this->rs['serial_number'] = $serial;
           $this->rs['condition_key'] = '';
+          $this->rt['condition_key'] = 'TEXT';
           $this->rs['condition_value'] = '';
+          $this->rt['condition_value'] = 'TEXT';
         
           // Schema version, increment when creating a db migration
           $this->schema_version = 0;

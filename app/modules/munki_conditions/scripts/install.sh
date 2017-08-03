@@ -15,7 +15,7 @@ if [ $? = 0 ]; then
   chmod a+x "${MUNKIPATH}postflight.d/${MODULESCRIPT}"
 
   # Set preference to include this file in the postflight check
-  setreportpref $MODULE_NAME "${CACHEPATH}${MODULE_CACHE_FILE}"
+  setreportpref $MODULE_NAME "${POSTFLIGHT_CACHEPATH}${MODULE_CACHE_FILE}"
 
 else
   echo "Failed to download all required components!"
