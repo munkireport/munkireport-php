@@ -30,7 +30,7 @@ class munki_conditions_model extends Model
    * Process data sent by postflight
    *
    * @param string data
-   * @author nperkins487
+   * @author erikng
    **/
     public function process($plist)
     {
