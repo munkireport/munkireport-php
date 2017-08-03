@@ -41,9 +41,8 @@ def munki_conditions_report():
 def main():
   """Main"""
   # Create cache dir if it does not exist
-  cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
-  if not os.path.exists(cachedir):
-      os.makedirs(cachedir)
+  if not os.path.exists(CACHEPATH):
+      os.makedirs(CACHEPATH)
 
   # Write munkiinfo report to cache
   output_plist = os.path.join(CACHEPATH, 'munki_conditions.plist')
