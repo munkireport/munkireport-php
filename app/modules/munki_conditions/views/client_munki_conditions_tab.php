@@ -4,7 +4,7 @@
   
   <div id="munki_conditions-view" class="row hide">
     <div class="col-md-7">
-      <table id="#munki_conditions-table" class="table table-striped">
+      <table id="munki_conditions-table" class="table table-striped">
         <tr>
           <th data-i18n="munki_conditions.key"></th>
           <th data-i18n="munki_conditions.value"></th>
