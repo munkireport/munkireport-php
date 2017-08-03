@@ -6,8 +6,8 @@
     <div class="col-md-7">
       <table id="#munki_conditions-table" class="table table-striped">
         <tr>
-          <th data-i18n="munki_conditions-condition_key"></th>
-          <td id="munki_conditions-condition_value"></td>
+          <th data-i18n="munki_conditions.key"></th>
+          <th data-i18n="munki_conditions.value"></th>
         </tr>
       </table>
     </div>
@@ -15,28 +15,25 @@
 
 <script>
 $(document).on('appReady', function(e, lang) {
-  
+
   // Get munki_conditions data
   $.getJSON( appUrl + '/module/munki_conditions/get_data/' + serialNumber, function( data ) {
     if( Object.keys(data).length === 0 ){
       $('#munki_conditions-msg').text(i18n.t('No Munki Condition Data Found!'));
     }
     else{
-      
       // Hide
       $('#munki_conditions-msg').text('');
       $('#munki_conditions-view').removeClass('hide');
                   
       // Add data
       for (var key in data) {
-        $('#munki_conditions-table').append('<tr><th>' + key + '</th><td>' + data[key] + '</td></tr>')
+        var element = '<tr><th>' + key + '</th><td>' + data[key] + '</td></tr>'
+        $('tbody').append(element)
       }
     }
 
-  // });
-
-  document.write(data);
-     
+  });
 });
-    
+  
 </script>
