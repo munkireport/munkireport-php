@@ -250,12 +250,12 @@
 	| '^$'
 	|
 	*/
-    $conf['bundleid_ignorelist'] = array(
-        'com.parallels.winapp.*',
-        'com.vmware.proxyApp.*',
-        'com.apple.print.PrinterProxy',
-        'com.google.Chrome.app.*'
-    );
+	$conf['bundleid_ignorelist'] = array(
+	    'com.parallels.winapp.*',
+	    'com.vmware.proxyApp.*',
+	    'com.apple.print.PrinterProxy',
+	    'com.google.Chrome.app.*',
+	);
 
 	/*
 	|===============================================
