@@ -277,7 +277,7 @@
 	    '.*/Library/AutoPkg.*',
 	    '/.DocumentRevisions-V100/.*',
 	    '/Library/Application Support/Adobe/Uninstall/.*',
-	    '.*/Library/Application Support/Google/Chrome/Default/Web Applications/*',
+	    '.*/Library/Application Support/Google/Chrome/Default/Web Applications/.*',
 	);
 
 	/*
