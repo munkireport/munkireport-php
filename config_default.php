@@ -275,9 +275,9 @@
 	$conf['bundlepath_ignorelist'] = array(
 	    '/System/Library/.*',
 	    '.*/Library/AutoPkg.*',
-        '/.DocumentRevisions-V100/.*',
-        '/Library/Application Support/Adobe/Uninstall/.*',
-        '.*/Library/Application Support/Google/Chrome/Default/Web Applications/*',
+	    '/.DocumentRevisions-V100/.*',
+	    '/Library/Application Support/Adobe/Uninstall/.*',
+	    '.*/Library/Application Support/Google/Chrome/Default/Web Applications/*',
 	);
 
 	/*
