@@ -37,15 +37,18 @@ def _OSVersion():
 
     return output.split('.')[1]
 
-def _GetFusionVolumes():
-    """get list of deviceIDs that are in an APFS Fusion container"""
-    fusion_volumes = []
+def _GetAPFSDeviceInfoDict():
+    """get list of deviceIDs with extra info"""
+    deviceIdDict = {}
     apfslist = _DictFromDiskutilAPFSList()
     for container in apfslist['Containers']:
-        if container.get('Fusion'):
-            for volume in container['Volumes']:
-                fusion_volumes.append(volume['DeviceIdentifier'])
-    return fusion_volumes
+        fusion = container.get('Fusion')
+        for volume in container['Volumes']:
+            deviceID = volume['DeviceIdentifier']
+            encrypted = volume.get('Encryption')
+            deviceIdDict[deviceID] = {'fusion': fusion,
+                'encrypted': encrypted}
+    return deviceIdDict
 
 def _DictFromDiskutilAPFSList():
     """calls diskutil apfs list.
@@ -174,10 +177,12 @@ def DiskReport():
 
     for disk in AllDisksAndPartitions():
         if getattr(disk, 'APFSVolumes', None):
-            fusion_volumes = _GetFusionVolumes()
+            apfsInfoList = _GetAPFSDeviceInfoDict()
             for apfsvolume in disk.APFSVolumes:
-                diskInfo = filteredDiskInfo(apfsvolume.DeviceIdentifier)
-                diskInfo['Fusion'] = apfsvolume['DeviceIdentifier'] in fusion_volumes
+                deviceId = apfsvolume['DeviceIdentifier']
+                diskInfo = filteredDiskInfo(deviceId)
+                if apfsInfoList.get(deviceId):
+                    diskInfo.update(apfsInfoList[deviceId])
                 volumeList.append(diskInfo)
         if getattr(disk, 'Partitions', None):
             for partition in disk.Partitions:
