@@ -179,11 +179,13 @@ def DiskReport():
         if getattr(disk, 'APFSVolumes', None):
             apfsInfoList = _GetAPFSDeviceInfoDict()
             for apfsvolume in disk.APFSVolumes:
-                deviceId = apfsvolume['DeviceIdentifier']
-                diskInfo = filteredDiskInfo(deviceId)
-                if apfsInfoList.get(deviceId):
-                    diskInfo.update(apfsInfoList[deviceId])
-                volumeList.append(diskInfo)
+                mountpoint = apfsvolume.get('MountPoint')
+                if mountpoint and mountpoint != '/private/var/vm':
+                    deviceId = apfsvolume['DeviceIdentifier']
+                    diskInfo = filteredDiskInfo(deviceId)
+                    if apfsInfoList.get(deviceId):
+                        diskInfo.update(apfsInfoList[deviceId])
+                    volumeList.append(diskInfo)
         if getattr(disk, 'Partitions', None):
             for partition in disk.Partitions:
 
