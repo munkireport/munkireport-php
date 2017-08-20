@@ -147,7 +147,7 @@ class Disk_report_model extends Model
                     max($disk['TotalSize'], 1) * 100);
             }
 
-            // Determine VolumeType
+            // Determine VolumeType FIXME: split into storage_type (SSD, HDD) and volume_type
             $disk['VolumeType'] = "hdd";
             if (isset($disk['SolidState']) && $disk['SolidState'] == true) {
                 $disk['VolumeType'] = "ssd";
@@ -163,6 +163,13 @@ class Disk_report_model extends Model
             }
             if (isset($disk['FilesystemName']) && $disk['FilesystemName'] == 'APFS') {
                 $disk['VolumeType'] = "apfs";
+            }
+            # New APFS info fields
+            if(isset($disk['encrypted'])) {
+                $this->CoreStorageEncrypted = $disk['encrypted'];
+            }
+            if(isset($disk['fusion']) && $disk['fusion'] == true) {
+                $disk['VolumeType'] = "apfs_fusion";
             }
 
             $this->merge($disk);
