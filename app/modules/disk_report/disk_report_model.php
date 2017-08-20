@@ -161,6 +161,9 @@ class Disk_report_model extends Model
             if (isset($disk['Content']) && $disk['Content'] == 'Microsoft Basic Data') {
                 $disk['VolumeType'] = "bootcamp";
             }
+            if (isset($disk['FilesystemName']) && $disk['FilesystemName'] == 'APFS') {
+                $disk['VolumeType'] = "apfs";
+            }
 
             $this->merge($disk);
 

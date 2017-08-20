@@ -37,6 +37,23 @@ def _OSVersion():
 
     return output.split('.')[1]
 
+def _GetFusionVolumes():
+    """get list of deviceIDs that are in an APFS Fusion container"""
+    fusion_volumes = []
+    apfslist = _DictFromDiskutilAPFSList()
+    for container in apfslist['Containers']:
+        if container.get('Fusion'):
+            for volume in container['Volumes']:
+                fusion_volumes.append(volume['DeviceIdentifier'])
+    return fusion_volumes
+
+def _DictFromDiskutilAPFSList():
+    """calls diskutil apfs list.
+        info: dictionary from resulting plist output
+    """
+    command = ["/usr/sbin/diskutil", "apfs", "list", "-plist"]
+    return _DictFromSubprocess(command)
+
 def _DictFromDiskutilList():
     """calls diskutil list -plist and returns as dict."""
 
@@ -88,8 +105,8 @@ def filteredDiskInfo(deviceid):
 
     keys = ["BusProtocol", "Content", "CoreStorageCompositeDisk",
             "CoreStorageEncrypted", "CoreStorageLVGUUID", "Ejectable",
-            "FreeSpace", "Internal",  "MountPoint", "RAIDMaster",
-            "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus",
+            "FilesystemName", "FreeSpace", "Internal",  "MountPoint",
+            "RAIDMaster", "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus",
             "SolidState", "TotalSize", "VolumeName"]
 
     out = {}
@@ -156,7 +173,12 @@ def DiskReport():
     searchCS = False
 
     for disk in AllDisksAndPartitions():
-
+        if getattr(disk, 'APFSVolumes', None):
+            fusion_volumes = _GetFusionVolumes()
+            for apfsvolume in disk.APFSVolumes:
+                diskInfo = filteredDiskInfo(apfsvolume.DeviceIdentifier)
+                diskInfo['Fusion'] = apfsvolume['DeviceIdentifier'] in fusion_volumes
+                volumeList.append(diskInfo)
         if getattr(disk, 'Partitions', None):
             for partition in disk.Partitions:
 
