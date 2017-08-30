@@ -62,7 +62,7 @@ class Disk_report_model extends Model
         $sql = 'SELECT COUNT(CASE WHEN media_type = "hdd" THEN 1 END) AS hdd,
 						COUNT(CASE WHEN media_type = "ssd" THEN 1 END) AS ssd,
 						COUNT(CASE WHEN media_type = "fusion" THEN 1 END) AS fusion,
-						COUNT(CASE WHEN media_type = "raid" THEN 1 END) AS raid,
+						COUNT(CASE WHEN media_type = "raid" THEN 1 END) AS raid
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
 						WHERE Internal = 1
