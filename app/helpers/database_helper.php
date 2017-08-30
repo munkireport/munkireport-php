@@ -58,6 +58,11 @@ function create_table($model)
  **/
 function migrate($model_obj)
 {
+    $ctl = new Controller;
+    if (! $ctl->authorized('global')) {
+        throw new Exception("Only migrate in admin session", 1);
+    }
+    
     $model_name = get_class($model_obj);
     $module_name = str_replace('_model', '', strtolower($model_name));
     $target_version = $model_obj->get_version();

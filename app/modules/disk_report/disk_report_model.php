@@ -14,6 +14,7 @@ class Disk_report_model extends Model
         $this->rs['Percentage'] = 0;
         $this->rs['SMARTStatus'] = '';
         $this->rs['VolumeType'] = '';
+        $this->rs['media_type'] = '';
         $this->rs['BusProtocol'] = '';
         $this->rs['Internal'] = 0; // Boolean
         $this->rs['MountPoint'] = '';
@@ -23,11 +24,12 @@ class Disk_report_model extends Model
 
         $this->idx[] = array('serial_number');
         $this->idx[] = array('VolumeType');
+        $this->idx[] = array('media_type');
         $this->idx[] = array('MountPoint');
         $this->idx[] = array('VolumeName');
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
+        $this->schema_version = 3;
 
         // Create table if it does not exist
         $this->create_table();
@@ -57,11 +59,10 @@ class Disk_report_model extends Model
      **/
     public function get_disk_type()
     {
-        $sql = 'SELECT COUNT(CASE WHEN VolumeType = "hdd" THEN 1 END) AS hdd,
-						COUNT(CASE WHEN VolumeType = "ssd" THEN 1 END) AS ssd,
-						COUNT(CASE WHEN VolumeType = "fusion" THEN 1 END) AS fusion,
-						COUNT(CASE WHEN VolumeType = "raid" THEN 1 END) AS raid,
-						COUNT(CASE WHEN VolumeType = "bootcamp" THEN 1 END) AS bootcamp
+        $sql = 'SELECT COUNT(CASE WHEN media_type = "hdd" THEN 1 END) AS hdd,
+						COUNT(CASE WHEN media_type = "ssd" THEN 1 END) AS ssd,
+						COUNT(CASE WHEN media_type = "fusion" THEN 1 END) AS fusion,
+						COUNT(CASE WHEN media_type = "raid" THEN 1 END) AS raid
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
 						WHERE Internal = 1
@@ -147,19 +148,29 @@ class Disk_report_model extends Model
                     max($disk['TotalSize'], 1) * 100);
             }
 
-            // Determine VolumeType
-            $disk['VolumeType'] = "hdd";
+            $disk['VolumeType'] = "hfs+";
+            $disk['media_type'] = "hdd";
             if (isset($disk['SolidState']) && $disk['SolidState'] == true) {
-                $disk['VolumeType'] = "ssd";
+                $disk['media_type'] = "ssd";
             }
             if (isset($disk['CoreStorageCompositeDisk']) && $disk['CoreStorageCompositeDisk'] == true) {
-                $disk['VolumeType'] = "fusion";
+                $disk['media_type'] = "fusion";
             }
             if (isset($disk['RAIDMaster']) && $disk['RAIDMaster'] == true) {
-                $disk['VolumeType'] = "raid";
+                $disk['media_type'] = "raid";
             }
             if (isset($disk['Content']) && $disk['Content'] == 'Microsoft Basic Data') {
                 $disk['VolumeType'] = "bootcamp";
+            }
+            if (isset($disk['FilesystemName']) && $disk['FilesystemName'] == 'APFS') {
+                $disk['VolumeType'] = "apfs";
+            }
+            # New APFS info fields
+            if(isset($disk['encrypted'])) {
+                $this->CoreStorageEncrypted = $disk['encrypted'];
+            }
+            if(isset($disk['fusion']) && $disk['fusion'] == true) {
+                $disk['VolumeType'] = "apfs_fusion";
             }
 
             $this->merge($disk);
