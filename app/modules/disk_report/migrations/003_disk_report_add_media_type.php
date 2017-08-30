@@ -21,7 +21,7 @@ class Migration_disk_report_add_media_type extends Model
         
         // Populate new column
         $sql = "UPDATE diskreport 
-                SET media_type = volumeType, volumeType = 'hfs+' 
+                SET media_type = volumeType, volumeType = 'hfs' 
                 WHERE volumeType IN ('hdd', 'ssd', 'fusion', 'raid')";
         $this->exec($sql);
 
@@ -35,6 +35,5 @@ class Migration_disk_report_add_media_type extends Model
      **/
     public function down()
     {
-        // There is no down() as this is a bugfix and up() is idempotent
     }
 }
