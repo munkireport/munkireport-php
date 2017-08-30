@@ -14,6 +14,7 @@ class Disk_report_model extends Model
         $this->rs['Percentage'] = 0;
         $this->rs['SMARTStatus'] = '';
         $this->rs['VolumeType'] = '';
+        $this->rs['media_type'] = '';
         $this->rs['BusProtocol'] = '';
         $this->rs['Internal'] = 0; // Boolean
         $this->rs['MountPoint'] = '';
@@ -23,11 +24,12 @@ class Disk_report_model extends Model
 
         $this->idx[] = array('serial_number');
         $this->idx[] = array('VolumeType');
+        $this->idx[] = array('media_type');
         $this->idx[] = array('MountPoint');
         $this->idx[] = array('VolumeName');
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
+        $this->schema_version = 3;
 
         // Create table if it does not exist
         $this->create_table();
