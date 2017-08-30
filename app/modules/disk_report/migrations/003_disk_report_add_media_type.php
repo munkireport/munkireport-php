@@ -1,13 +1,10 @@
 <?php
+// Adds media_type column and moves volumetype data to new column
 
 use munkireport\lib\Schema;
 
-
-// Fix indexes for MySQL that were not created when migrating
-
 class Migration_disk_report_add_media_type extends Model
 {
-
     /**
      * Migrate up
      *
@@ -21,6 +18,12 @@ class Migration_disk_report_add_media_type extends Model
             $table->string('media_type');
             $table->index('media_type');
         });
+        
+        // Populate new column
+        $sql = "UPDATE diskreport 
+                SET media_type = volumeType, volumeType = 'hfs+' 
+                WHERE volumeType IN ('hdd', 'ssd', 'fusion', 'raid')";
+        $this->exec($sql);
 
     }// End function up()
 
