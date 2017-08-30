@@ -21,7 +21,8 @@ new Reportdata_model;
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="disk_report.mountpoint" data-colname='diskreport.MountPoint'></th>
-		        <th data-i18n="disk_report.media_type" data-colname='diskreport.VolumeType'></th>
+                <th data-i18n="disk_report.media_type" data-colname='diskreport.media_type'></th>
+                <th data-i18n="disk_report.volume_type" data-colname='diskreport.VolumeType'></th>
 		        <th data-i18n="disk_report.percentage" data-sort='desc' data-colname='diskreport.Percentage'></th>
 		        <th data-i18n="disk_report.free" data-colname='diskreport.FreeSpace'></th>
 		        <th data-i18n="disk_report.total_size" data-colname='diskreport.TotalSize'></th>
@@ -95,7 +96,7 @@ new Reportdata_model;
                     if(d.search.value.match(/^\d+GB freespace \d+GB$/))
                     {
                         // Add column specific search
-                        d.columns[6].search.value = d.search.value.replace(/(\d+GB) freespace (\d+GB)/, function(m, from, to){return ' BETWEEN ' + humansizeToBytes(from) + ' AND ' + humansizeToBytes(to)});
+                        d.columns[7].search.value = d.search.value.replace(/(\d+GB) freespace (\d+GB)/, function(m, from, to){return ' BETWEEN ' + humansizeToBytes(from) + ' AND ' + humansizeToBytes(to)});
                         // Clear global search
                         d.search.value = '';
 
@@ -106,7 +107,7 @@ new Reportdata_model;
                     if(d.search.value.match(/^freespace [<>=] \d+GB$/))
                     {
                         // Add column specific search
-                        d.columns[6].search.value = d.search.value.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + humansizeToBytes(content)});
+                        d.columns[7].search.value = d.search.value.replace(/.*([<>=] )(\d+GB)$/, function(m, o, content){return o + humansizeToBytes(content)});
                         // Clear global search
                         d.search.value = '';
 
@@ -128,33 +129,36 @@ new Reportdata_model;
 	        	$('td:eq(0)', nRow).html(link);
 
 	        	// is SSD ?
-	        	var volumeType=$('td:eq(4)', nRow).html();
-	        	$('td:eq(4)', nRow).html(volumeType.toUpperCase())
+	        	var mediaType=$('td:eq(4)', nRow).html();
+	        	$('td:eq(4)', nRow).html(mediaType.toUpperCase())
+                
+                var volumeType=$('td:eq(5)', nRow).html();
+	        	$('td:eq(5)', nRow).html(volumeType.toUpperCase())
 
 	        	// Format disk usage
-	        	var disk=$('td:eq(5)', nRow).html();
+	        	var disk=$('td:eq(6)', nRow).html();
 	        	var cls = disk > 90 ? 'danger' : (disk > 80 ? 'warning' : 'success');
-	        	$('td:eq(5)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
-
-	        	// Format filesize
-	        	var fs=$('td:eq(6)', nRow).html();
-	        	$('td:eq(6)', nRow).addClass('text-right').html(fileSize(fs, 0));
+	        	$('td:eq(6)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
 
 	        	// Format filesize
 	        	var fs=$('td:eq(7)', nRow).html();
 	        	$('td:eq(7)', nRow).addClass('text-right').html(fileSize(fs, 0));
 
+	        	// Format filesize
+	        	var fs=$('td:eq(8)', nRow).html();
+	        	$('td:eq(8)', nRow).addClass('text-right').html(fileSize(fs, 0));
+
 	        	// Alert on SMART failures
-	        	var smartstatus=$('td:eq(8)', nRow).html();
+	        	var smartstatus=$('td:eq(9)', nRow).html();
 	        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">'+i18n.t('failing')+'</span>' :
 	        		(smartstatus)
-	        	$('td:eq(8)', nRow).html(smartstatus)
+	        	$('td:eq(9)', nRow).html(smartstatus)
 
 	        	// Encryption Station
-	        	var encryptionstatus=$('td:eq(9)', nRow).html();
+	        	var encryptionstatus=$('td:eq(10)', nRow).html();
 	        	encryptionstatus = encryptionstatus == '1' ? i18n.t('disk_report.encrypted') :
 	        	(encryptionstatus === '0' ? i18n.t('disk_report.not_encrypted') : '')
-	        	$('td:eq(9)', nRow).html(encryptionstatus)
+	        	$('td:eq(10)', nRow).html(encryptionstatus)
 		    }
 
 	    });

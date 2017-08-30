@@ -150,15 +150,16 @@ class Disk_report_model extends Model
             }
 
             // Determine VolumeType FIXME: split into storage_type (SSD, HDD) and volume_type
-            $disk['VolumeType'] = "hdd";
+            $disk['VolumeType'] = "hfs+";
+            $disk['media_type'] = "hdd";
             if (isset($disk['SolidState']) && $disk['SolidState'] == true) {
-                $disk['VolumeType'] = "ssd";
+                $disk['media_type'] = "ssd";
             }
             if (isset($disk['CoreStorageCompositeDisk']) && $disk['CoreStorageCompositeDisk'] == true) {
-                $disk['VolumeType'] = "fusion";
+                $disk['media_type'] = "fusion";
             }
             if (isset($disk['RAIDMaster']) && $disk['RAIDMaster'] == true) {
-                $disk['VolumeType'] = "raid";
+                $disk['media_type'] = "raid";
             }
             if (isset($disk['Content']) && $disk['Content'] == 'Microsoft Basic Data') {
                 $disk['VolumeType'] = "bootcamp";
