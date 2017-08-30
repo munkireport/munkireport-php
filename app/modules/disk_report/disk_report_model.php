@@ -148,7 +148,7 @@ class Disk_report_model extends Model
                     max($disk['TotalSize'], 1) * 100);
             }
 
-            $disk['VolumeType'] = "hfs+";
+            $disk['VolumeType'] = "hfs";
             $disk['media_type'] = "hdd";
             if (isset($disk['SolidState']) && $disk['SolidState'] == true) {
                 $disk['media_type'] = "ssd";
@@ -159,11 +159,11 @@ class Disk_report_model extends Model
             if (isset($disk['RAIDMaster']) && $disk['RAIDMaster'] == true) {
                 $disk['media_type'] = "raid";
             }
+            if (isset($disk['FilesystemName']) {
+                $disk['VolumeType'] = strtolower($disk['FilesystemName']);
+            }
             if (isset($disk['Content']) && $disk['Content'] == 'Microsoft Basic Data') {
                 $disk['VolumeType'] = "bootcamp";
-            }
-            if (isset($disk['FilesystemName']) && $disk['FilesystemName'] == 'APFS') {
-                $disk['VolumeType'] = "apfs";
             }
             # New APFS info fields
             if(isset($disk['encrypted'])) {
