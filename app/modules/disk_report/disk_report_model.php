@@ -148,7 +148,6 @@ class Disk_report_model extends Model
                     max($disk['TotalSize'], 1) * 100);
             }
 
-            // Determine VolumeType FIXME: split into storage_type (SSD, HDD) and volume_type
             $disk['VolumeType'] = "hfs+";
             $disk['media_type'] = "hdd";
             if (isset($disk['SolidState']) && $disk['SolidState'] == true) {
