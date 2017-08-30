@@ -159,8 +159,8 @@ class Disk_report_model extends Model
             if (isset($disk['RAIDMaster']) && $disk['RAIDMaster'] == true) {
                 $disk['media_type'] = "raid";
             }
-            if (isset($disk['FilesystemName']) {
-                $disk['VolumeType'] = strtolower($disk['FilesystemName']);
+            if (isset($disk['FilesystemName'])) {
+                $disk['VolumeType'] = $disk['FilesystemName'];
             }
             if (isset($disk['Content']) && $disk['Content'] == 'Microsoft Basic Data') {
                 $disk['VolumeType'] = "bootcamp";
