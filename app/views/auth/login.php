@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4">
 		        <div class="well">
-		        	<form action="<?php echo $url?>" method="post" accept-charset="UTF-8" class="form-horizontal">
+		        	<form id="login-form" action="<?php echo $url?>" method="post" accept-charset="UTF-8" class="form-horizontal">
 						<fieldset>
 							<legend>
 
@@ -45,17 +45,23 @@
 								</div>
 							</div>
 					<?php if (conf('recaptchaloginpublickey')):?>
-							<div class="form-group">
-								<div class="col-lg-offset-2 col-lg-10">
-									<div class="g-recaptcha" data-size="normal" data-sitekey="<?=conf('recaptchaloginpublickey')?>"></div>
-								</div>
-							</div>
-					<?php endif?>
+						
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button>
+									<button class="btn btn-primary g-recaptcha" data-sitekey="<?=conf('recaptchaloginpublickey')?>" data-callback="onSubmit" data-i18n="auth.signin"></button>
 								</div>
 							</div>
+							
+					<?php else:?>
+						
+							<div class="form-group">
+								<div class="col-lg-10 col-lg-offset-3">
+									<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button>
+								</div>
+							</div>
+							
+					<?php endif?>
+
 			            </fieldset>
 			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
 					</form>
