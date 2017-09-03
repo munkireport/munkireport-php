@@ -47,7 +47,7 @@ var drawStoragePlots = function(serialNumber, divid) {
 	    		},
                 {
 	    			key: i18n.t('disk_report.media_type'),
-	    			val: obj.media_type.toUpperCase()
+	    			val: obj.media_type && obj.media_type.toUpperCase()
 	    		},
                 {
 	    			key: i18n.t('disk_report.volume_type'),
