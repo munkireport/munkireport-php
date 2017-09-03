@@ -74,11 +74,17 @@ class Schema
     
     public function default($value='')
     {
-        $sql = array_pop($this->cmd_queue);
-        if( ! $this->isNumeric($sql)){
+        $queue_item = array_pop($this->cmd_queue);
+        if ($queue_item['query_type'] != 'add_column') {
+            throw new \Exception("Can't set default value on index", 1);
+        }
+        if( ! $queue_item['is_numeric']){
             $value = $this->enquote($value);
         }
-        $this->cmd_queue[] = $sql.' DEFAULT '.$value;
+        $queue_item['sql'] .= ' DEFAULT '.$value;
+        $this->cmd_queue[] = $queue_item;
+        
+        return $this;
     }
     
     /**
@@ -97,27 +103,29 @@ class Schema
     /**
      * Check if sql is processing a numeric column
      *
-     * Clunky way of doing this, better store the type in an object
-     *
-     * @param string sql sql string
+     * @param string type
      * @return return boolean
      */
-    private function isNumeric($sql)
+    private function isNumeric($type)
     {
-        foreach($this->numericColumns as $type)
-        {
-            if(strpos($sql, 'COLUMN '.$type))
-            {
-                return true;
-            }
-        }
-        return false;
+        return in_array($type, $this->numericColumns);
     }
 
+    /**
+     * Add a column to the query list
+     *
+     * @param string type type of the column
+     * @param string column_name name of the column
+     * @return return this
+     */
     private function addColumn($type, $column_name)
     {
         $sql = 'ALTER TABLE %s ADD COLUMN %s %s';
-        $this->addToCmdQueue(sprintf($sql, $this->tablename, $column_name, $type));
+        $this->addToCmdQueue([
+            'query_type' => 'add_column',
+            'is_numeric' => $this->isNumeric($type),
+            'sql' => sprintf($sql, $this->tablename, $column_name, $type),
+        ]);
         return $this;
     }
 
@@ -131,8 +139,7 @@ class Schema
                     $this->createIndexName($idx_data),
                     $this->tablename,
                     join(',', $idx_data));
-                    
-        $this->addToCmdQueue($sql);
+        $this->addToCmdQueue(['query_type' => 'add_index', 'sql' => $sql]);
         
         return $this;
     }
@@ -142,9 +149,9 @@ class Schema
         return $this->tablename . '_' . join('_', $idx_data);
     }
     
-    private function addToCmdQueue($sql)
+    private function addToCmdQueue($queue_item)
     {
-        $this->cmd_queue[] = $sql;
+        $this->cmd_queue[] = $queue_item;
         return $this;
     }
     
@@ -159,11 +166,11 @@ class Schema
         // get global dbh
         $dbh = getdbh();
         
-        foreach($this->cmd_queue as $cmd)
+        foreach($this->cmd_queue as $queue_item)
         {
-            if ($dbh->exec($cmd) === false) {
+            if ($dbh->exec($queue_item['sql']) === false) {
                 $err = $dbh->errorInfo();
-                throw new Exception('database error: '.$err[2]);
+                throw new \Exception('database error: '.$err[2]);
             }
         }
     }

@@ -8,7 +8,7 @@ class Migration_disk_report_add_media_type extends Model
     /**
      * Migrate up
      *
-     * Migrates this table to the current version
+     * Migrates this table to version 3
      *
      **/
     public function up()
