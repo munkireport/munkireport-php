@@ -19,7 +19,7 @@ class Schema
         $table = new Schema($tablename);
         $func($table);
         $dbh->beginTransaction();
-        $this->runCmdQueue();
+        $table->runCmdQueue();
         $dbh->commit();
     }
         
@@ -154,14 +154,14 @@ class Schema
      *
      * @author AvB
      **/
-    private function runCmdQueue($sql)
+    private function runCmdQueue()
     {
         // get global dbh
         $dbh = getdbh();
         
         foreach($this->cmd_queue as $cmd)
         {
-            if ($dbh->exec($sql) === false) {
+            if ($dbh->exec($cmd) === false) {
                 $err = $dbh->errorInfo();
                 throw new Exception('database error: '.$err[2]);
             }
