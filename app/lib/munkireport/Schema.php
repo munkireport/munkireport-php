@@ -4,7 +4,8 @@ namespace munkireport\lib;
 
 class Schema
 {
-    private $tablename;
+    private $tablename, $cmd_queue = [];
+    private $numericColumns = ['INTEGER', 'BIGINT', 'REAL'];
 
     public function __construct($tablename)
     {
@@ -16,8 +17,9 @@ class Schema
     {
         $dbh = getdbh();
         $table = new Schema($tablename);
-        $dbh->beginTransaction();
         $func($table);
+        $dbh->beginTransaction();
+        $table->runCmdQueue();
         $dbh->commit();
     }
         
@@ -69,11 +71,61 @@ class Schema
         $type = 'REAL';
         return $this->addColumn($type, $column_name);
     }
+    
+    public function default($value='')
+    {
+        $queue_item = array_pop($this->cmd_queue);
+        if ($queue_item['query_type'] != 'add_column') {
+            throw new \Exception("Can't set default value on index", 1);
+        }
+        if( ! $queue_item['is_numeric']){
+            $value = $this->enquote($value);
+        }
+        $queue_item['sql'] .= ' DEFAULT '.$value;
+        $this->cmd_queue[] = $queue_item;
+        
+        return $this;
+    }
+    
+    /**
+     * Enquote value
+     *
+     * Undocumented function long description
+     *
+     * @param type var Description
+     * @return return type
+     */
+    public function enquote($value='')
+    {
+        return "'".$value."'";
+    }
+    
+    /**
+     * Check if sql is processing a numeric column
+     *
+     * @param string type
+     * @return return boolean
+     */
+    private function isNumeric($type)
+    {
+        return in_array($type, $this->numericColumns);
+    }
 
+    /**
+     * Add a column to the query list
+     *
+     * @param string type type of the column
+     * @param string column_name name of the column
+     * @return return this
+     */
     private function addColumn($type, $column_name)
     {
         $sql = 'ALTER TABLE %s ADD COLUMN %s %s';
-        $this->exec(sprintf($sql, $this->tablename, $column_name, $type));
+        $this->addToCmdQueue([
+            'query_type' => 'add_column',
+            'is_numeric' => $this->isNumeric($type),
+            'sql' => sprintf($sql, $this->tablename, $column_name, $type),
+        ]);
         return $this;
     }
 
@@ -87,8 +139,7 @@ class Schema
                     $this->createIndexName($idx_data),
                     $this->tablename,
                     join(',', $idx_data));
-                    
-        $this->exec($sql);
+        $this->addToCmdQueue(['query_type' => 'add_index', 'sql' => $sql]);
         
         return $this;
     }
@@ -98,19 +149,29 @@ class Schema
         return $this->tablename . '_' . join('_', $idx_data);
     }
     
+    private function addToCmdQueue($queue_item)
+    {
+        $this->cmd_queue[] = $queue_item;
+        return $this;
+    }
+    
+    
     /**
      * Exec statement with error handling
      *
      * @author AvB
      **/
-    private function exec($sql)
+    private function runCmdQueue()
     {
         // get global dbh
         $dbh = getdbh();
         
-        if ($dbh->exec($sql) === false) {
-            $err = $dbh->errorInfo();
-            throw new Exception('database error: '.$err[2]);
+        foreach($this->cmd_queue as $queue_item)
+        {
+            if ($dbh->exec($queue_item['sql']) === false) {
+                $err = $dbh->errorInfo();
+                throw new \Exception('database error: '.$err[2]);
+            }
         }
     }
 }
