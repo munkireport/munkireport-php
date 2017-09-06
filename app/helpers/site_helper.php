@@ -104,7 +104,7 @@ function getdbh()
 // Autoloading for Business Classes
 //===============================================
 // module classes end with _model
-function __autoload($classname)
+function munkireport_autoload($classname)
 {
     // Switch to lowercase filename for models
     $lowercaseClassname = strtolower($classname);

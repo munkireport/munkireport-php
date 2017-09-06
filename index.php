@@ -121,6 +121,12 @@ require( SYS_PATH.'kissmvc.php' );
 require( APP_PATH.'helpers/site_helper'.EXT );
 
 //===============================================
+// Autoloading
+//===============================================
+spl_autoload_register('munkireport_autoload');
+require 'vendor/autoload.php';
+
+//===============================================
 // Timezone
 //===============================================
 date_default_timezone_set( conf('timezone') );

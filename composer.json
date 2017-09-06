@@ -1,5 +1,8 @@
 {
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.5"
+    },
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use munkireport\lib\Request;
+
 /**
  * Unfortunately we have to scrape the page as Apple discontinued the json api
  *
@@ -51,6 +53,7 @@ function check_warranty_status(&$warranty_model)
     
     // Get machine model from apple (only when not set or failed)
     $machine = new Machine_model($warranty_model->serial_number);
+    model_description_lookup($warranty_model->serial_number);
     $lookup_failed = array('model_lookup_failed', 'unknown_model');
     if (! $machine->machine_desc or in_array($machine->machine_desc, $lookup_failed)) {
         $machine->machine_desc = model_description_lookup($warranty_model->serial_number);
@@ -104,10 +107,17 @@ function model_description_lookup($serial)
         return 'VMware virtual machine';
     }
     
-    $url = sprintf('https://km.support.apple.com/kb/index?page=categorydata&serialnumber=%s', $serial);
-    $result = get_url($url);
+    $options = [
+        'query' => [
+            'page' => 'categorydata',
+            'serialnumber' => $serial
+        ]
+    ];
+    
+    $client = new Request();
+    $result = $client->get('https://km.support.apple.com/kb/index', $options);
 
-    if ($result === false) {
+    if ( ! $result) {
         return 'model_lookup_failed';
     }
     
@@ -123,88 +133,4 @@ function model_description_lookup($serial)
         return 'model_lookup_failed';
     }
     
-}
-
-/**
- * Retrieve url
- *
- * @return mixed string if successfull, FALSE if failed
- * @author AvB
- **/
-function get_url($url, $options = array())
-{
-    $http = array('header' => '');
-
-    $http['user_agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A';
-
-    if (isset($options['method'])) {
-        $http['method'] = $options['method'];
-        if ($options['method'] = 'POST') {
-            $http['header'] .= "Content-type: application/x-www-form-urlencoded\r\n";
-        }
-    }
-
-    if (isset($options['data'])) {
-        $http['content'] = http_build_query($options['data']);
-        $http['header'] .= "Content-Length: " . strlen($http['content']) . "\r\n";
-    }
-    
-
-    // Add optional timeout
-    if (conf('request_timeout')) {
-        $http['timeout'] = conf('request_timeout');
-    }
-
-    $context_options = array('http' => $http);
-
-    // Add optional proxy settings
-    if (conf('proxy')) {
-        add_proxy_server($context_options);
-    }
-    
-    // Add optional ssl settings
-    if (conf('ssl_options')) {
-        $context_options['ssl'] = conf('ssl_options');
-    }
-
-    $context = stream_context_create($context_options);
-    return @file_get_contents($url, false, $context);
-}
-
-/**
- * Add proxy server variables to context_options
- *
- * @return boolean TRUE if succeeded, FALSE if config error
- * @author AvB
- **/
-function add_proxy_server(&$context_options)
-{
-    $proxy = conf('proxy');
-
-    if (! isset($proxy['server'])) {
-        return false;
-    }
-
-    $proxy['server'] = str_replace('tcp://', '', $proxy['server']);
-
-    // If port is not set, default to 8080
-    $proxy['port'] = isset($proxy['port']) ? $proxy['port'] : 8080;
-
-    $context_options['http']['proxy'] = 'tcp://' . $proxy['server'].':'.$proxy['port'];
-    $context_options['http']['request_fulluri'] = true;
-
-    // Authenticated proxy
-    if (isset($proxy['username']) && isset($proxy['password'])) {
-    // Encode username and password
-        $auth = base64_encode($proxy['username'].':'.$proxy['password']);
-
-        if (! isset($context_options['http']['header'])) {
-            $context_options['http']['header'] = "";
-        }
-
-        // Add authentication header
-        $context_options['http']['header'] .= "Proxy-Authorization: Basic $auth\r\n";
-    }
-
-    return true;
 }
