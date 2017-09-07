@@ -11,11 +11,11 @@
             <span class="bigger-150"> 0 </span><br>
             <span data-i18n="munkiinfo.munkiprotocol.http"></span>
         </a>
-        <a tag="https" class="btn btn-warning disabled">
+        <a tag="https" class="btn btn-success disabled">
             <span class="bigger-150"> 0 </span><br>
             <span data-i18n="munkiinfo.munkiprotocol.https"></span>
         </a>
-        <a tag="localrepo" class="btn btn-success disabled">
+        <a tag="localrepo" class="btn btn-info disabled">
             <span class="bigger-150"> 0 </span><br>
             <span data-i18n="munkiinfo.munkiprotocol.localrepo"></span>
         </a>
