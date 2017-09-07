@@ -34,7 +34,7 @@ $(document).on('appReady', function(){
 	// Set url
 	$.each(tags, function(i, tag){
 		$('#munkiinfo-munkiprotocol-widget a[tag="'+tag+'"]')
-			.attr('href', appUrl + '/show/listing/munkiinfo/munkiinfo/#'+tag);
+			.attr('href', appUrl + '/show/listing/munkiinfo/munkiinfo/#munkiprotocol');
 	});
 
 	$(document).on('appUpdate', function(){
