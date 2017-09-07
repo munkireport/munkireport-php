@@ -20,13 +20,19 @@ $(document).on('appUpdate', function(e, lang) {
 	}
 
 		var panel = $('#munkiinfo-munkiprotocol-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/munkiinfo/munkiinfo#munkiprotocol';
+			baseUrl = appUrl + '/show/listing/munkiinfo/munkiinfo';
 		panel.empty();
 
 		// Set statuses
-		panel.append(' <a href="'+baseUrl+'#protocol = http" class="btn btn-danger"><span class="bigger-150">'+data.http+'</span><br>&nbsp;'+i18n.t('munkiinfo.munkiprotocol.http')+'&nbsp;</a>');
-		panel.append(' <a href="'+baseUrl+'#protocol = https" class="btn btn-success"><span class="bigger-150">'+data.https+'</span><br>&nbsp;'+i18n.t('munkiinfo.munkiprotocol.https')+'&nbsp;</a>');
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-info"><span class="bigger-150">'+data.localrepo+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.localrepo')+'</a>');
+		if(data.http){
+		panel.append(' <a href="'+baseUrl+'#munkiprotocol" class="btn btn-danger"><span class="bigger-150">'+data.http+'</span><br>&nbsp;'+i18n.t('munkiinfo.munkiprotocol.http')+'&nbsp;</a>');
+		}
+		if(data.https){
+		panel.append(' <a href="'+baseUrl+'#munkiprotocol" class="btn btn-success"><span class="bigger-150">'+data.https+'</span><br>&nbsp;'+i18n.t('munkiinfo.munkiprotocol.https')+'&nbsp;</a>');
+		}
+		if(data.localrepo){
+		panel.append(' <a href="'+baseUrl+'#munkiprotocol" class="btn btn-info"><span class="bigger-150">'+data.localrepo+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.localrepo')+'</a>');
+		}
 
     });
 });
