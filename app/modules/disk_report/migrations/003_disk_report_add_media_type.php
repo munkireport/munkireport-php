@@ -35,5 +35,7 @@ class Migration_disk_report_add_media_type extends Model
      **/
     public function down()
     {
+        throw new Exception("Can't migrate back to version 2", 1);
+        
     }
 }

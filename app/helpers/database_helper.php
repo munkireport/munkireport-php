@@ -88,6 +88,10 @@ function migrate($model_obj)
 
         $migration_list[$number] = $file;
     }
+    
+    if ($current_version > 0 && ! isset($migration_list[$current_version])) {
+        throw new Exception($model_name.' migration '.$current_version.' not found');
+    }
 
     if ($target_version > 0 && ! isset($migration_list[$target_version])) {
         throw new Exception($model_name.' migration '.$target_version.' not found');
