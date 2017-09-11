@@ -784,3 +784,13 @@
 	| FALSE in a production environment
 	*/
 	$conf['debug'] = FALSE;
+
+        /*
+        |===============================================
+        | Custom suffix for pre-/postflight
+        |===============================================
+        |
+        | Optional suffix for pre- and postflight scripts
+        */
+        $conf['preflight_suffix'] = '-munkireport';
+        $conf['postflight_suffix'] = '-munkireport';

@@ -11,6 +11,8 @@ PREFLIGHT=1
 PREF_CMDS=( ) # Pref commands array
 TARGET_VOLUME=''
 CURL=("<?php echo implode('" "', conf('curl_cmd'))?>")
+PREFLIGHT_SUFFIX="<?php echo conf('preflight_suffix'); ?>"
+POSTFLIGHT_SUFFIX="<?php echo conf('postflight_suffix'); ?>"
 # Exit status
 ERR=0
 
@@ -141,7 +143,9 @@ echo "BaseURL is ${BASEURL}"
 echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
-"${CURL[@]}" "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
+"${CURL[@]}" "${TPL_BASE}{preflight}" --output "#1${PREFLIGHT_SUFFIX}" \
+  "${TPL_BASE}{postflight}" --output "#1${POSTFLIGHT_SUFFIX}" \
+  "${TPL_BASE}report_broken_client" --remote-name \
     && "${CURL[@]}" "${TPL_BASE}purl" -o "${MUNKIPATH}munkilib/purl.py" \
     && "${CURL[@]}" "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
 	&& "${CURL[@]}" "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
@@ -149,12 +153,12 @@ cd ${MUNKIPATH}
 if [ "${?}" != 0 ]
 then
 	echo "Failed to download all required components!"
-	rm -f "${MUNKIPATH}"{preflight,postflight,report_broken_client} \
+	rm -f "${MUNKIPATH}"{preflight${PREFLIGHT_SUFFIX},postflight${POSTFLIGHT_SUFFIX},report_broken_client} \
 		"${MUNKIPATH}"munkilib/reportcommon.py
 	exit 1
 fi
 
-chmod a+x "${MUNKIPATH}"{preflight,postflight,report_broken_client}
+chmod a+x "${MUNKIPATH}"{preflight${PREFLIGHT_SUFFIX},postflight${POSTFLIGHT_SUFFIX},report_broken_client}
 
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"
