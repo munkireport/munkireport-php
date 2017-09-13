@@ -148,7 +148,7 @@ class Disk_report_model extends Model
                     max($disk['TotalSize'], 1) * 100);
             }
 
-            $disk['VolumeType'] = "hfs";
+            $disk['VolumeType'] = "-";
             $disk['media_type'] = "hdd";
             if (isset($disk['SolidState']) && $disk['SolidState'] == true) {
                 $disk['media_type'] = "ssd";
