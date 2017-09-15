@@ -74,7 +74,12 @@
   <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.js"></script>
   
   <?php if(isset($recaptcha) && conf('recaptchaloginpublickey')):?>
-      <script src='https://www.google.com/recaptcha/api.js'></script>
+      <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+      <script>
+          function onSubmit(token) {
+            document.getElementById("login-form").submit();
+          }
+      </script>
   <?php endif?>
   
   <script>

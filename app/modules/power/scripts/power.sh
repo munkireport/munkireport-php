@@ -80,7 +80,7 @@ for TRANSLATE in '      ManufactureDate = ' '      DesignCapacity = ' '      Max
 do
     OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${final_stats}" | sed -e "s/${TRANSLATE}//g" )
     OUTKEY=$(awk -F' ' '{printf "%s%s\n", $1, $2}' <<< "${TRANSLATE}" | tr -cd '[[:alnum:]]' )
-    /usr/libexec/plistbuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$powerfile" 1>/dev/null
+    /usr/libexec/PlistBuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$powerfile" 1>/dev/null
 done
 
 # Else on 10.8+
@@ -90,7 +90,7 @@ for TRANSLATE in '      ManufactureDate = ' '      DesignCapacity = ' '      Max
 do
     OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${final_stats}" | sed -e "s/${TRANSLATE}//g" )
     OUTKEY=$(awk -F' ' '{printf "%s%s\n", $1, $2}' <<< "${TRANSLATE}" | tr -cd '[[:alnum:]]' )
-    /usr/libexec/plistbuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$powerfile" 1>/dev/null
+    /usr/libexec/PlistBuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$powerfile" 1>/dev/null
 done
 fi
 

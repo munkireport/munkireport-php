@@ -64,7 +64,6 @@ $(document).on('appReady', function(e, lang) {
 
         //console.log(data);
 
-
         // Create php info dom structure
         var phpinfo = $('<table>').addClass('table table-striped');
         for(var section in data) {
@@ -88,13 +87,16 @@ $(document).on('appReady', function(e, lang) {
 
         // There is a difference between servers on how to find PHP version
         var phpVersion = data.Core ? data.Core['PHP Version'] : (data.phpinfo ? data.phpinfo[0] : 'Could not find version');
+        
+        // Get Core variables
+        var coreVars = data.Core ? data.Core : (data['HTTP Headers Information'] ? data['HTTP Headers Information'] : {});
 
         // Create table with required php items
         var list = {
             'php.version': phpVersion,
-            'php.dom': data.dom['DOM/XML'] || false,
+            'php.dom': data.dom ? data.dom['DOM/XML'] : false || false,
             'php.soap': data.soap ? data.soap['Soap Client'] : false || false,
-            'php.allow_url_fopen': data.Core ? data.Core['allow_url_fopen'] : false || false,
+            'php.allow_url_fopen': coreVars['allow_url_fopen'] || false,
             'php.pdo': data.PDO ? data.PDO['PDO support'] : false || false,
             'php.pdodrivers': data.PDO ? data.PDO['PDO drivers'] : false || false
         };
