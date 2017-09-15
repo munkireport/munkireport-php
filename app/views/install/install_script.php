@@ -2,7 +2,6 @@
 ?>#!/bin/bash
 
 BASEURL="<?php echo conf('webhost') . conf('subdirectory'); ?>"
-TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 POSTFLIGHT_CACHEPATH="${MUNKIPATH}postflight.d/cache/"
@@ -137,6 +136,7 @@ echo "Preparing ${MUNKIPATH}"
 mkdir -p "${MUNKIPATH}munkilib"
 
 echo "BaseURL is ${BASEURL}"
+TPL_BASE="${BASEURL}/assets/client_installer/"
 
 echo "Retrieving munkireport scripts"
 
