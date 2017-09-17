@@ -39,7 +39,7 @@ class Request
     {
         $client = new Client();
         try {
-            $response = $client->request('GET', $url.'x', array_merge($this->options, $options));
+            $response = $client->request('GET', $url, array_merge($this->options, $options));
             return $response->getBody();
         } catch (TransferException $e) {
             if(conf('debug')){
