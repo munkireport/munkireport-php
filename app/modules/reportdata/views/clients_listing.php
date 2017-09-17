@@ -76,7 +76,27 @@ new Munkireport_model;
                         var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                         d.search.value = search;
                     }
+                    
+                    // Look for 'between' statement todo: make generic
+                    uptimeFieldNumber = 7
+                    if(d.search.value.match(/^\d+d uptime \d+d$/)){
+                        // Add column specific search
+                        d.columns[uptimeFieldNumber].search.value = d.search.value.replace(/(\d+)d uptime (\d+)d/, function(m, from, to){
+                            return ' BETWEEN ' + (parseInt(from)*86400) + ' AND ' + (parseInt(to)*86400)
+                        });
+                        // Clear global search
+                        d.search.value = '';
+                    }
 
+                    // Look for a bigger/smaller/equal statement
+                    if(d.search.value.match(/^uptime [<>=] \d+d$/)){
+                        // Add column specific search
+                        d.columns[uptimeFieldNumber].search.value = d.search.value.replace(/.*([<>=] )(\d+)d$/, function(m, o, content){
+                            return o + (parseInt(content)*86400)
+                        });
+                        // Clear global search
+                        d.search.value = '';
+                    }
                 }
             },
             dom: mr.dt.buttonDom,
