@@ -39,7 +39,7 @@ class Request
     {
         $client = new Client();
         try {
-            $response = $client->request('GET', $url, array_merge($this->options, $options));
+            $response = $client->request('GET', $url.'x', array_merge($this->options, $options));
             return $response->getBody();
         } catch (TransferException $e) {
             if(conf('debug')){
@@ -51,6 +51,7 @@ class Request
     
     private function dump_exception($e)
     {
+        printf("<pre>ERROR: %s</pre>", htmlentities($e->getMessage()));
         printf("<pre>REQUEST:\n%s</pre>", Psr7\str($e->getRequest()));
         if ($e->hasResponse()) {
             printf("<pre>RESPONSE:\n%s</pre>", htmlentities(Psr7\str($e->getResponse())));
