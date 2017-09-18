@@ -15,7 +15,7 @@ class Migration_disk_report_add_media_type extends Model
     {
         Schema::table('diskreport', function ($table)
         {
-            $table->string('media_type')->default('-');
+            $table->string('media_type');
             $table->index('media_type');
         });
         
