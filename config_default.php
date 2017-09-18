@@ -531,6 +531,7 @@
 	| You can override this behaviour by specifying the handler here.
 	|
 	| Valid options are 'curl', 'stream' or 'auto' (default)
+	| For CA Bundle options see http://docs.guzzlephp.org/en/stable/request-options.html#verify
 	*/
 	$conf['guzzle_handler'] = 'auto';
 
