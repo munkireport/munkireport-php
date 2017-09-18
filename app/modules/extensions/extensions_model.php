@@ -54,6 +54,25 @@ class Extensions_model extends Model {
         return $out;
      }
 
+     public function get_codesign()
+     {
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN NAME <> '' AND codesign IS NOT NULL THEN 1 END) AS count, codesign 
+                FROM extensions
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter()."
+                GROUP BY codesign
+                ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->codesign = $obj->codesign ? $obj->codesign : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+
     
 	/**
 	 * Process data sent by postflight
