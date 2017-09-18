@@ -787,10 +787,11 @@
 
         /*
         |===============================================
-        | Custom suffix for pre-/postflight
+        | Custom names of scripts
         |===============================================
         |
-        | Optional suffix for pre- and postflight scripts
+        | Custom name of pre-/postflight and report_broken_client scripts
         */
-        $conf['preflight_suffix'] = '-munkireport';
-        $conf['postflight_suffix'] = '-munkireport';
+        $conf['preflight_script'] = 'preflight';
+        $conf['postflight_script'] = 'postflight';
+        $conf['report_broken_client_script'] = 'report_broken_client';
