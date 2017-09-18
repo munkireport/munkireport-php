@@ -250,12 +250,6 @@
 	| '^$'
 	|
 	*/
-	$conf['bundleid_ignorelist'] = array(
-	    'com.parallels.winapp.*',
-	    'com.vmware.proxyApp.*',
-	    'com.apple.print.PrinterProxy',
-	    'com.google.Chrome.app.*',
-	);
 
 	/*
 	|===============================================
@@ -272,13 +266,6 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app';
 	|
 	*/
-	$conf['bundlepath_ignorelist'] = array(
-	    '/System/Library/.*',
-	    '.*/Library/AutoPkg.*',
-	    '/.DocumentRevisions-V100/.*',
-	    '/Library/Application Support/Adobe/Uninstall/.*',
-	    '.*/Library/Application Support/Google/Chrome/Default/Web Applications/.*',
-	);
 
 	/*
 	|===============================================
@@ -794,3 +781,14 @@
 	| FALSE in a production environment
 	*/
 	$conf['debug'] = FALSE;
+
+        /*
+        |===============================================
+        | Custom names of scripts
+        |===============================================
+        |
+        | Custom name of pre-/postflight and report_broken_client scripts
+        */
+        $conf['preflight_script'] = 'preflight';
+        $conf['postflight_script'] = 'postflight';
+        $conf['report_broken_client_script'] = 'report_broken_client';
