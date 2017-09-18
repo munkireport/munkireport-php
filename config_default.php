@@ -486,6 +486,18 @@
 
 	/*
 	|===============================================
+	| Client scriptnames
+	|===============================================
+	|
+	| Override these if you want to provide your own custom scripts that
+	| call the munkireport scripts
+	*/
+	$conf['preflight_script'] = 'preflight';
+	$conf['postflight_script'] = 'postflight';
+	$conf['report_broken_client_script'] = 'report_broken_client';
+
+	/*
+	|===============================================
 	| Proxy settings
 	|===============================================
 	|
@@ -809,14 +821,3 @@
 	| FALSE in a production environment
 	*/
 	$conf['debug'] = FALSE;
-
-        /*
-        |===============================================
-        | Custom names of scripts
-        |===============================================
-        |
-        | Custom name of pre-/postflight and report_broken_client scripts
-        */
-        $conf['preflight_script'] = 'preflight';
-        $conf['postflight_script'] = 'postflight';
-        $conf['report_broken_client_script'] = 'report_broken_client';
