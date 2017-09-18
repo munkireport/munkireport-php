@@ -95,7 +95,7 @@
         | Local Admin Threshold Value
         |===============================================
         |
-	| This value specifies the minimum number of local admin accounts needed to 
+	| This value specifies the minimum number of local admin accounts needed to
 	|	list the computer in the Local Admin Report.  Default is 2.
 	*/
 	$conf['local_admin_threshold'] = 2;
@@ -340,13 +340,13 @@
 	*/
 	$conf['usb_internal'] = TRUE;
 
-	
+
 	/*
 	|===============================================
 	| Fonts
 	|===============================================
 	|
-	| By default the fonts module will collect information on all fonts.  
+	| By default the fonts module will collect information on all fonts.
 	| Setting fonts_system to FALSE will skip all system fonts in /System/Library/Fonts.
 	|
 	*/
@@ -519,6 +519,20 @@
 	|    );
 	*/
 	$conf['ssl_options']  = array();
+
+	/*
+	|===============================================
+	| Guzzle settings
+	|===============================================
+	|
+	| Guzzle is used to make http connections to other servers (e.g. apple.com)
+	|
+	| Guzzle will choose the appropriate handler based on your php installation
+	| You can override this behaviour by specifying the handler here.
+	|
+	| Valid options are 'curl', 'stream' or 'auto' (default)
+	*/
+	$conf['guzzle_handler'] = 'auto';
 
 	/*
 	|===============================================

@@ -5,11 +5,14 @@ namespace munkireport\lib;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\StreamHandler;
+use GuzzleHttp\Handler\CurlHandler;
 
 class Request
 {
     private $options;
-    
+
     public function __construct()
     {
         $this->options = [
@@ -18,7 +21,26 @@ class Request
             ],
             'timeout'  => conf('request_timeout', 5)
         ];
-        
+
+        // Choose http handler
+        switch (conf('guzzle_handler')) {
+          case 'stream':
+            $handler = new StreamHandler();
+            $stack = HandlerStack::create($handler);
+            $this->options['handler'] = $stack;
+            break;
+
+            case 'curl':
+              $handler = new CurlHandler();
+              $stack = HandlerStack::create($handler);
+              $this->options['handler'] = $stack;
+              break;
+
+            default:
+              // Use automatic
+              break;
+        }
+
         // Add proxy
         $proxy = conf('proxy');
         if (isset($proxy['server'])) {
@@ -34,7 +56,7 @@ class Request
             }
         }
     }
-    
+
     public function get($url, $options = [])
     {
         $client = new Client();
@@ -48,7 +70,7 @@ class Request
             }
         }
     }
-    
+
     private function dump_exception($e)
     {
         printf("<pre>ERROR: %s</pre>", htmlentities($e->getMessage()));
