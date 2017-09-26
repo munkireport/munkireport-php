@@ -24,7 +24,13 @@
 
 		<?php $widget->view($this, 'firewall_state'); ?>
 
-	</div> <!-- /row -->
+    </div> <!-- /row -->
+
+    <div class="row">
+
+        <?php $widget->view($this, 'skel_state'); ?>
+
+    </div> <!-- /row -->
 
 
 </div>  <!-- /container -->
