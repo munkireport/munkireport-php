@@ -189,7 +189,7 @@ new Security_model;
                     return '<span class="label label-default">'+i18n.t('unsupported')+'</span>';
                 }
                 // if skel_state is null, we don't have data
-                return 'span class="label label-default">'+i18n.t('unknown')+'</span>';
+                return '<span class="label label-default">'+i18n.t('unknown')+'</span>';
             });
 
         }
