@@ -4,11 +4,12 @@ namespace munkireport\controller;
 
 use \Controller, \View, \Machine_group, \Business_unit, \Reportdata_model;
 use munkireport\lib\Recaptcha, Hautelook\Phpass\PasswordHash;
+use munkireport\lib\Auth_saml;
 
 class Auth extends Controller
 {
     // Authentication mechanisms we handle
-    public $mechanisms = array('noauth', 'config', 'ldap', 'AD');
+    public $mechanisms = array('noauth', 'config', 'ldap', 'AD', 'saml');
 
     // Authentication mechanisms available
     public $auth_mechanisms = array();
@@ -93,7 +94,9 @@ class Auth extends Controller
                     $auth_verified = true;
                     $login = 'admin';
                     break 2;
-
+                case 'saml':
+                    redirect('auth/saml/sso');
+                    break;
                 case 'config': // Config authentication
                     if ($login && $password) {
                         if (isset($auth_data[$login])) {
@@ -223,9 +226,12 @@ class Auth extends Controller
 
         // If authentication succeeded, create session
         if ($auth_verified) {
-            $_SESSION['user'] = $login;
-            $_SESSION['groups'] = $groups;
-            $_SESSION['auth'] = $mechanism;
+            
+            $this->storeAuthData([
+                'user' => $login,
+                'groups' => $groups,
+                'auth' => $mechanism,
+            ]);
 
             $this->set_session_props();
 
@@ -246,6 +252,13 @@ class Auth extends Controller
 
         $obj = new View();
         $obj->view('auth/login', $data);
+    }
+    
+    public function storeAuthData($authdata)
+    {
+        foreach($authdata as $key => $value){
+            $_SESSION[$key] = $value;
+        }
     }
 
     /**
@@ -356,10 +369,16 @@ class Auth extends Controller
     {
         // Initialize session
         $this->authorized();
-
-        // Destroy session;
-        session_destroy();
-        redirect('');
+        
+        // Check if saml
+        if($_SESSION['auth'] == 'saml'){
+            redirect('auth/saml/slo');
+        }
+        else{
+            // Destroy session;
+            session_destroy();
+            redirect('');
+        }
     }
 
     public function generate()
@@ -386,5 +405,17 @@ class Auth extends Controller
     public function load_phpass()
     {
         return new PasswordHash(8, true);
+    }
+    
+    public function getConfig($authmethod)
+    {
+        return $this->auth_mechanisms[$authmethod];
+    }
+    
+    public function saml($endpoint = 'sso')
+    {        
+        $this->authorized();
+        $saml_obj = new Auth_saml($this);
+        $saml_obj->handle($endpoint);
     }
 }
