@@ -181,9 +181,9 @@ new Security_model;
             var skel_state = $('td:eq(11)', nRow).html();
             $('td:eq(11)', nRow).html(function(){
                 if(skel_state == '1'){
-                    return '<span class="label label-default">'+i18n.t('security.skel.all-allowed')+'</span>';
+                    return '<span class="label label-info">'+i18n.t('security.skel.all-approved')+'</span>';
                 } else if (skel_state == '0'){
-                    return '<span class="label label-default">'+i18n.t('security.skel.user-approved')+'</span>';
+                    return '<span class="label label-info">'+i18n.t('security.skel.user-approved')+'</span>';
                 }
                 // if skel_state is null, we don't have data
                 return '<span class="label label-default">'+i18n.t('unknown')+'</span>';
