@@ -5,7 +5,7 @@
 				<div class="panel-heading">
 
 					<h3 class="panel-title"><i class="fa fa-lock"></i>
-    					<span data-i18n="security.skel"></span>
+    					<span data-i18n="security.skel.kext-loading"></span>
     					<list-link data-url="/show/listing/security/security"></list-link>
 					</h3>
 
@@ -14,15 +14,15 @@
 				<div class="panel-body text-center">
 
 
-					<a id="skel-disabled" class="btn btn-danger hide">
+					<a id="skel-disabled" class="btn btn-info hide">
 						<span class="skel-count bigger-150"></span><br>
 						<span class="skel-label"></span>
-						<span data-i18n="disabled"></span>
+						<span data-i18n="security.skel.all-approved"></span>
 					</a>
-					<a id="skel-enabled" class="btn btn-success hide">
+					<a id="skel-enabled" class="btn btn-info hide">
 						<span class="skel-count bigger-150"></span><br>
 						<span class="skel-label"></span>
-						<span data-i18n="enabled"></span>
+						<span data-i18n="security.skel.user-approved"></span>
 					</a>
 
           <span id="skel-nodata" data-i18n="no_clients"></span>

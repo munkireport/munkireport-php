@@ -178,7 +178,7 @@ def skel_state_check():
         else:
             return 0
     else:
-        return 2 # use value of 2 for not supported
+        return 1 # if the OS is < 10.13, KEXT loading is open by default.
 
 
 def main():

@@ -105,10 +105,10 @@ class Security_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-                $sip_report = new Security_model;
+                $firmwarepw_report = new Security_model;
 
                 $out = array();
-                $out['stats'] = $sip_report->get_firmwarepw_stats();
+                $out['stats'] = $firmwarepw_report->get_firmwarepw_stats();
 
 
         $obj->view('json', array('msg' => $out));
@@ -143,20 +143,21 @@ class Security_controller extends Module_controller
      * @return void
      * @author rickheil
      **/
-    public function get_skel_state_stats()
+    public function get_skel_stats()
     {
-        $job = new View();
+        $obj = new View();
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
+                $skel_report = new Security_model;
 
-        $skel_state_report = new Security_model;
-        $out = array();
-        $out['stats'] = $skel_state_report->get_skel_state_stats();
+                $out = array();
+                $out['stats'] = $skel_report->get_skel_stats();
+
 
         $obj->view('json', array('msg' => $out));
-
     }
+
 } // END class default_module

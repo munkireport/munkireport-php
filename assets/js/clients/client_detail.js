@@ -165,9 +165,9 @@ $(document).on('appReady', function(e, lang) {
 		$('.mr-firewall_state').text(fw_states[firewall_state] || i18n.t('unknown'));
 
         // SKEL status
-        var skel_states = [i18n.t('disabled'), i18n.t('enabled'), i18n.t('unsupported')]
+        var skel_states = [i18n.t('security.skel.all-allowed'), i18n.t('security.skel.user-approved')]
         var skel_state = parseInt(machineData.skel_state);
-        $('.mr-skel_state').text(fw_states[skel_state] || i18n.t('unknown'));
+        $('.mr-skel_state').text(skel_states[skel_state] || i18n.t('unknown'));
 
 		// Set tooltips
 		$( "time" ).each(function( index ) {

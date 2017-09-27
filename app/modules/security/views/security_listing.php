@@ -30,7 +30,7 @@ new Security_model;
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
                 <th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
-                <th data-i18n="security.skel" data-colname='security.skel_state'></th>
+                <th data-i18n="security.skel.kext-loading" data-colname='security.skel_state'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
 		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
 		      </tr>
@@ -181,12 +181,9 @@ new Security_model;
             var skel_state = $('td:eq(11)', nRow).html();
             $('td:eq(11)', nRow).html(function(){
                 if(skel_state == '1'){
-                    return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                    return '<span class="label label-default">'+i18n.t('security.skel.all-allowed')+'</span>';
                 } else if (skel_state == '0'){
-                    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-                } else if (skel_state == '2'){
-                    // 2 means the OS is older than 10.13.0
-                    return '<span class="label label-default">'+i18n.t('unsupported')+'</span>';
+                    return '<span class="label label-default">'+i18n.t('security.skel.user-approved')+'</span>';
                 }
                 // if skel_state is null, we don't have data
                 return '<span class="label label-default">'+i18n.t('unknown')+'</span>';

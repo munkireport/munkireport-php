@@ -111,7 +111,7 @@ class Security_model extends Model
 	return current($this->query($sql));
     }
 
-    public function get_skel_state_stats()
+    public function get_skel_stats()
     {
     $sql = "SELECT COUNT(CASE WHEN skel_state = '0' THEN 1 END) as disabled,
                 COUNT(CASE WHEN skel_state = '1' THEN 1 END) as enabled
