@@ -71,22 +71,7 @@ class Schema
         $type = 'REAL';
         return $this->addColumn($type, $column_name);
     }
-    
-    public function default($value='')
-    {
-        $queue_item = array_pop($this->cmd_queue);
-        if ($queue_item['query_type'] != 'add_column') {
-            throw new \Exception("Can't set default value on index", 1);
-        }
-        if( ! $queue_item['is_numeric']){
-            $value = $this->enquote($value);
-        }
-        $queue_item['sql'] .= ' DEFAULT '.$value;
-        $this->cmd_queue[] = $queue_item;
-        
-        return $this;
-    }
-    
+
     /**
      * Enquote value
      *

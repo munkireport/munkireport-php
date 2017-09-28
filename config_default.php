@@ -558,7 +558,16 @@
 	|
 	*/
 	$conf['request_timeout'] = 5;
-
+	
+	/*
+	|===============================================
+	| Apple Hardware Icon Url
+	|===============================================
+	|
+	| URL to retrieve icon from Apple
+	|
+	*/
+	$conf['apple_hardware_icon_url'] = 'https://km.support.apple.com/kb/securedImage.jsp?configcode=%s&amp;size=240x240';
 
 	/*
 	|===============================================
