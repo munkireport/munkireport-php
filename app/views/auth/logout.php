@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4">
 		        <div class="well">
-		        	<form id="login-form" action="<?php echo $url?>" method="post" accept-charset="UTF-8" class="form-horizontal">
+		        	<form id="login-form" action="<?php echo $loginurl?>" method="get" accept-charset="UTF-8" class="form-horizontal">
 						<fieldset>
 							<legend>
 
@@ -22,8 +22,8 @@
 
 							<?php endforeach; ?>
 
-							<p>You successfully logged out</p>
-							<p><a href="/" class="btn btn-primary" data-i18n="auth.signin"></a></p>
+							<p data-i18n="auth.logout_success"></p>
+							<p><button type="submit" class="btn btn-primary" data-i18n="auth.signin"></button></p>
 
 			            </fieldset>
 					</form>

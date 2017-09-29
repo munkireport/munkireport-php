@@ -154,7 +154,7 @@ class Auth_saml
             $errors = $auth->getErrors();
             if (empty($errors)) {
                 $obj = new View();
-                $obj->view('auth/logout');
+                $obj->view('auth/logout', ['loginurl' => url()]);
             } else {
                 echo '<p>' . implode(', ', $errors) . '</p>';
             }
