@@ -8,12 +8,12 @@ class Auth_saml
 {
     private $config, $error, $authController;
 
-    public function __construct($authController)
+    public function __construct($config, $authHandler)
     {
-        $this->authController = $authController;
+        $this->authController = $authHandler;
 
         // TODO Check config
-        $this->config = $authController->getConfig('saml');
+        $this->config = $config;
         $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
         $this->config['sp']['assertionConsumerService'] = [
             'url' => url('auth/saml/acs', true)
@@ -109,7 +109,7 @@ class Auth_saml
         $auth_data = $this->mapSamlAttrs($attrs);
         if ($this->authController->authorizeUserAndGroups($this->config, $auth_data)) {
             $this->authController->storeAuthData($auth_data);
-            $this->authController->set_session_props();
+            $this->authController->setSessionProps();
             
             //var_dump($_SESSION);
             // Go to dashboard
