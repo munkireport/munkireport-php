@@ -35,7 +35,19 @@ The Identity Provider needs some information from the MunkiReport SAML Service. 
 https://your-munkireport-server/index.php?/auth/saml/metadata
 ```
 
-## More information
+## Attribute Mapping
+
+MunkiReport needs to know which attributes to map to `user` and to `groups`.
+
+```php
+$conf['auth']['auth_saml']['attr_mapping'] = [
+    'memberOf' => 'groups',
+    'User.email' => 'user',
+];
+```
+
+## More information 
 
 See https://github.com/onelogin/php-saml#settings
+
 
