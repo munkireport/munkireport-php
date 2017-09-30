@@ -37,13 +37,22 @@ https://your-munkireport-server/index.php?/auth/saml/metadata
 
 ## Attribute Mapping
 
-MunkiReport needs to know which attributes to map to `user` and to `groups`.
+MunkiReport needs to know which attributes to map to `user` and to `groups`. You can add your own attribute mapping to `config.php`:
 
 ```php
 $conf['auth']['auth_saml']['attr_mapping'] = [
     'memberOf' => 'groups',
     'User.email' => 'user',
 ];
+```
+
+## Authorization
+
+You can handle authorization in the IDp by only allowing users and or groups to authenticate for MunkiReport. But you can also handle authorization in the SAML configuration:
+
+```php
+$conf['auth']['auth_saml']['mr_allowed_users'] = ['your_username', 'another_user'];
+$conf['auth']['auth_saml']['mr_allowed_groups'] = ['admingroup'];
 ```
 
 ## More information 
