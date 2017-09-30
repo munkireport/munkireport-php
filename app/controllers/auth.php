@@ -254,11 +254,58 @@ class Auth extends Controller
         $obj->view('auth/login', $data);
     }
     
+    public function unauthorized($value='')
+    {
+        $obj = new View();
+        $obj->view('auth/unauthorized', ['why' => $value]);
+    }
+    
     public function storeAuthData($authdata)
     {
         foreach($authdata as $key => $value){
             $_SESSION[$key] = $value;
         }
+    }
+    
+    public function authorizeUserAndGroups($auth_config, $auth_data)
+    {
+        $checkUser = isset($auth_config['mr_allowed_users']);
+        $checkGroups = isset($auth_config['mr_allowed_groups']);
+        
+        if( ! $checkUser && ! $checkGroups){
+            return true;
+        }
+        
+        if ($checkUser) {
+            $admin_users = $this->valueToArray($auth_config['mr_allowed_users']);
+            if (in_array(strtolower($auth_data['user']), array_map('strtolower', $admin_users))) {
+                return true;
+            }
+        }
+        // Check user against group list
+        if ($checkGroups) {
+        // Set mr_allowed_groups to array
+            $admin_groups = $this->valueToArray($auth_config['mr_allowed_groups']);
+            foreach ($auth_data['groups'] as $group) {
+                if (in_array($group, $admin_groups)) {
+                    return true;
+                }
+            }
+        }//end group list check
+        
+        return false;
+    }
+    
+    /**
+     * Convert value to array or keep Array
+     *
+     *
+     * @param mixed $value string or array
+     * @return return array
+     */
+    private function valueToArray($value='')
+    {
+        return is_array($value) ? $value : [$value];
     }
 
     /**

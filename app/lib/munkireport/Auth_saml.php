@@ -106,12 +106,18 @@ class Auth_saml
         unset($_SESSION['AuthNRequestID']);
         
         $attrs = $auth->getAttributes();
-        $this->authController->storeAuthData($this->mapSamlAttrs($attrs));
-        $this->authController->set_session_props();
-        
-        //var_dump($_SESSION);
-        // Go to dashboard
-        redirect('show/dashboard');
+        $auth_data = $this->mapSamlAttrs($attrs);
+        if ($this->authController->authorizeUserAndGroups($this->config, $auth_data)) {
+            $this->authController->storeAuthData($auth_data);
+            $this->authController->set_session_props();
+            
+            //var_dump($_SESSION);
+            // Go to dashboard
+            redirect('show/dashboard');
+        }
+        else{
+            redirect('auth/unauthorized');
+        }
 
     }
     
