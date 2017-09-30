@@ -21,7 +21,7 @@ $conf['auth']['auth_saml'] = [
 
 Replace the values with the correct values for your env.
 
-* sp - This is the Service Provider array. You should only add the `NameIDFormat` here. MunkiReport will automatically fill in the correct endpoints (metadata, acs and slo)
+* sp - This is the Service Provider array. You should only add the `NameIDFormat` here. MunkiReport will automatically fill in the correct endpoints (metadata, acs and sls)
 * idp - This is the Identity Provider array. You need to add the proper connection details for your IDp.
 * entityId - URI to the IDp metadata
 * singleSignOnService - Array containing one or more URIs to the Single Sign On endpoints of the IDp.
@@ -55,7 +55,7 @@ $conf['auth']['auth_saml']['mr_allowed_users'] = ['your_username', 'another_user
 $conf['auth']['auth_saml']['mr_allowed_groups'] = ['admingroup'];
 ```
 
-## More information 
+## More information/settings
 
 See https://github.com/onelogin/php-saml#settings
 
