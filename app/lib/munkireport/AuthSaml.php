@@ -4,7 +4,7 @@ namespace munkireport\lib;
 use \OneLogin_Saml2_Auth, \OneLogin_Saml2_Settings, \OneLogin_Saml2_Error;
 use \Exception, \View;
 
-class Auth_saml
+class AuthSaml
 {
     private $config, $error, $authController;
 
@@ -200,5 +200,29 @@ class Auth_saml
         
         return $out;
     }
+    
+    public function login($login, $password)
+    {
+        return true;
+    }
+    
+    public function getAuthMechanism()
+    {
+        return 'saml';
+    }
 
+    public function getAuthStatus()
+    {
+        return 'success';
+    }
+    
+    public function getUser()
+    {
+        return 'admin';
+    }
+
+    public function getGroups()
+    {
+        return [];
+    }
 }

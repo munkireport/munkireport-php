@@ -2,9 +2,8 @@
 
 namespace munkireport\lib;
 use \Exception, \View, \Machine_group, \Business_unit, \Reportdata_model;
-use munkireport\lib\Auth_config;
 
-class Auth_handler
+class AuthHandler
 {
     // Authentication mechanisms we handle
     private $mechanisms = ['noauth', 'config', 'ldap', 'AD', 'saml'];
@@ -23,82 +22,63 @@ class Auth_handler
         }
     }
     
-    public function login(&$login, $password, &$groups)
+    public function login($login, $password)
+    {
+        if($auth_obj = $this->validate($login, $password))
+        {
+            $this->storeAuthData($auth_obj);
+
+            $this->setSessionProps();
+
+            session_regenerate_id();
+
+            return true;
+        }
+        return false;
+    }
+    
+    private function validate($login, $password)
     {
 
         // Loop through authentication mechanisms
         // Break when we have a match
         foreach ($this->auth_mechanisms as $mechanism => $auth_data) {
 
-            // Local is just a username => hash array
             switch ($mechanism) {
                 case 'noauth': // No authentication
-                    $login = 'admin';
-                    return true;
+                    $authObj = new AuthNoauth($auth_data);
+                    if($authObj->login($login, $password)){
+                        return $authObj;
+                    }
+                    break;
+                    
                 case 'saml':
                     redirect('auth/saml/sso');
                     break;
+                    
                 case 'config': // Config authentication
-                
-                    // 3 responses: not_found, failed, successful
-                    $authObj = new Auth_config($auth_data);
-                    $result = $authObj->login($login, $password, $groups);
-                    if ($result == 'successful'){
-                        return 'config';
+                    $authObj = new AuthConfig($auth_data);
+                    if($authObj->login($login, $password)){
+                        return $authObj;
                     }
-                    if ($result == 'failed'){
+                    if ($authObj->getAuthStatus() == 'failed'){
                         return false;
                     }
                     break;
 
                 case 'ldap': // LDAP authentication
-                    if ($login && $password) {
-                        include_once(APP_PATH . '/lib/authLDAP/authLDAP.php');
-                        $ldap_auth_obj = new \Auth_ldap($auth_data);
-                        if ($ldap_auth_obj->authenticate($login, $password)) {
-                        //alert('Authenticated');
-                            // Check user against users list
-                            if (isset($auth_data['mr_allowed_users'])) {
-                                $admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
-                                if (in_array(strtolower($login), array_map('strtolower', $admin_users))) {
-
-                                    // If business units enabled, get group memberships
-                                    if (conf('enable_business_units')) {
-                                        if ($user_data = $ldap_auth_obj->getUserData($login)) {
-                                            foreach($user_data['grps'] as $group){
-                                                $groups[] = $group;
-                                            }
-                                        }
-                                    }
-
-                                    return true;
-                                }
-                            }
-                            // Check user against group list
-                            if (isset($auth_data['mr_allowed_groups'])) {
-                            // Set mr_allowed_groups to array
-                                $admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
-                                // Get groups from AD
-                                if ($user_data = $ldap_auth_obj->getUserData($login)) {
-                                    foreach ($user_data['grps'] as $group) {
-                                        if (in_array($group, $admin_groups)) {
-                                            // If business units enabled, store group memberships
-                                            if (conf('enable_business_units')) {
-                                                foreach($user_data['grps'] as $group){
-                                                    $groups[] = $group;
-                                                }
-                                            }
-
-                                            return true;
-                                        }
-                                    }
-                                }
-                            }//end group list check
-                            // Not in users list or group list
-                            error('Not authorized', 'auth.not_authorized');
-                            break;
-                        }
+                    $authObj = new AuthLDAP($auth_data);
+                    if($authObj->login($login, $password)){
+                        return $authObj;
                     }
+                    if ($authObj->getAuthStatus() == 'failed'){
+                        return false;
+                    }
+                    if ($authObj->getAuthStatus() == 'unauthorized'){
+                        error('Not authorized', 'auth.not_authorized');
+                        return false;
+                    }
+                    break;
 
                 case 'AD': // Active Directory authentication
                     // Prevent empty values
@@ -173,52 +153,20 @@ class Auth_handler
         return $this->auth_mechanisms;
     }
     
-    public function storeAuthData($authdata)
+    public function storeAuthData($authObj)
     {
-        foreach($authdata as $key => $value){
+        $this->storeSessionData([
+            'user' => $authObj->getUser(),
+            'groups' => $authObj->getGroups(),
+            'auth' => $authObj->getAuthMechanism(),
+        ]);
+    }
+    
+    private function storeSessionData($session_data)
+    {
+        foreach($session_data as $key => $value){
             $_SESSION[$key] = $value;
         }
-    }
-    
-    public function authorizeUserAndGroups($auth_config, $auth_data)
-    {
-        $checkUser = isset($auth_config['mr_allowed_users']);
-        $checkGroups = isset($auth_config['mr_allowed_groups']);
-        
-        if( ! $checkUser && ! $checkGroups){
-            return true;
-        }
-        
-        if ($checkUser) {
-            $admin_users = $this->valueToArray($auth_config['mr_allowed_users']);
-            if (in_array(strtolower($auth_data['user']), array_map('strtolower', $admin_users))) {
-                return true;
-            }
-        }
-        // Check user against group list
-        if ($checkGroups) {
-        // Set mr_allowed_groups to array
-            $admin_groups = $this->valueToArray($auth_config['mr_allowed_groups']);
-            foreach ($auth_data['groups'] as $group) {
-                if (in_array($group, $admin_groups)) {
-                    return true;
-                }
-            }
-        }//end group list check
-        
-        return false;
-    }
-    
-    /**
-     * Convert value to array or keep Array
-     *
-     *
-     * @param mixed $value string or array
-     * @return return array
-     */
-    private function valueToArray($value='')
-    {
-        return is_array($value) ? $value : [$value];
     }
 
     /**

@@ -4,8 +4,8 @@ namespace munkireport\controller;
 
 use \Controller, \View;
 use munkireport\lib\Recaptcha;
-use munkireport\lib\Auth_handler;
-use munkireport\lib\Auth_saml;
+use munkireport\lib\AuthHandler;
+use munkireport\lib\AuthSaml;
 
 class Auth extends Controller
 {
@@ -17,7 +17,7 @@ class Auth extends Controller
             redirect('error/client_error/426'); // Switch protocol
         }
         
-        $this->authHandler = new Auth_handler;
+        $this->authHandler = new AuthHandler;
     }
 
     //===============================================================
@@ -38,7 +38,7 @@ class Auth extends Controller
             redirect($return);
         }
 
-        // If no valid mechanisms found, bail
+        // If no valid mechanisms found, redirect to account generator
         if (! $this->authHandler->authConfigured()) {
             redirect('auth/generate');
         }
@@ -69,26 +69,8 @@ class Auth extends Controller
             }
         }
 
-        // Call login
-        // User is a member of these groups
-        $groups = [];
         // Check if pre-authentication is successful
-        if (! $pre_auth_failed) {
-            $mechanism = $this->authHandler->login($login, $password, $groups);
-        }
-
-        // If authentication succeeded, create session
-        if ($mechanism) {
-            
-            $this->authHandler->storeAuthData([
-                'user' => $login,
-                'groups' => $groups,
-                'auth' => $mechanism,
-            ]);
-
-            $this->authHandler->setSessionProps();
-
-            session_regenerate_id();
+        if (! $pre_auth_failed && $this->authHandler->login($login, $password)) {
             redirect($return);
         }
 
@@ -172,7 +154,7 @@ class Auth extends Controller
         $saml_config = $this->getConfig('saml');
         if($saml_config){
             $this->authorized();
-            $saml_obj = new Auth_saml($saml_config, $this->authHandler);
+            $saml_obj = new AuthSaml($saml_config, $this->authHandler);
             $saml_obj->handle($endpoint);
         }
         else{
