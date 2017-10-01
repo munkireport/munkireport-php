@@ -4,7 +4,8 @@ namespace munkireport\lib;
 use \OneLogin_Saml2_Auth, \OneLogin_Saml2_Settings, \OneLogin_Saml2_Error;
 use \Exception, \View;
 
-class AuthSaml
+class AuthSaml extends AbstractAuth
+
 {
     private $config, $error, $authController;
 
@@ -107,7 +108,7 @@ class AuthSaml
         
         $attrs = $auth->getAttributes();
         $auth_data = $this->mapSamlAttrs($attrs);
-        if ($this->authController->authorizeUserAndGroups($this->config, $auth_data)) {
+        if ($this->authorizeUserAndGroups($this->config, $auth_data)) {
             $this->authController->storeAuthData($auth_data);
             $this->authController->setSessionProps();
             
@@ -203,7 +204,7 @@ class AuthSaml
     
     public function login($login, $password)
     {
-        return true;
+        redirect('auth/saml/sso');
     }
     
     public function getAuthMechanism()

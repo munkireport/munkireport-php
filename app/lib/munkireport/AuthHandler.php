@@ -5,8 +5,13 @@ use \Exception, \View, \Machine_group, \Business_unit, \Reportdata_model;
 
 class AuthHandler
 {
-    // Authentication mechanisms we handle
-    private $mechanisms = ['noauth', 'config', 'ldap', 'AD', 'saml'];
+    // Authentication mechanisms we handle => classname
+    private $mechanisms = [
+        'noauth' => 'AuthNoauth',
+        'config' => 'AuthConfig',
+        'ldap' => 'AuthLDAP',
+        'AD' => 'AuthAD',
+        'saml' => 'AuthSaml'];
 
     // Authentication mechanisms available
     private $auth_mechanisms = [];
@@ -15,7 +20,7 @@ class AuthHandler
     {
         // Check if there's a valid auth mechanism in config
         $authSettings = conf('auth');
-        foreach ($this->mechanisms as $mech) {
+        foreach ($this->mechanisms as $mech => $class_name) {
             if (isset($authSettings["auth_$mech"]) && is_array($authSettings["auth_$mech"])) {
                 $this->auth_mechanisms[$mech] = $authSettings["auth_$mech"];
             }
@@ -43,65 +48,29 @@ class AuthHandler
         // Loop through authentication mechanisms
         // Break when we have a match
         foreach ($this->auth_mechanisms as $mechanism => $auth_data) {
-
-            switch ($mechanism) {
-                case 'noauth': // No authentication
-                    $authObj = new AuthNoauth($auth_data);
-                    if($authObj->login($login, $password)){
-                        return $authObj;
-                    }
-                    break;
-                    
-                case 'saml':
-                    redirect('auth/saml/sso');
-                    break;
-                    
-                case 'config': // Config authentication
-                    $authObj = new AuthConfig($auth_data);
-                    if($authObj->login($login, $password)){
-                        return $authObj;
-                    }
-                    if ($authObj->getAuthStatus() == 'failed'){
-                        return false;
-                    }
-                    break;
-
-                case 'ldap': // LDAP authentication
-                    $authObj = new AuthLDAP($auth_data);
-                    if($authObj->login($login, $password)){
-                        return $authObj;
-                    }
-                    if ($authObj->getAuthStatus() == 'failed'){
-                        return false;
-                    }
-                    if ($authObj->getAuthStatus() == 'unauthorized'){
-                        error('Not authorized', 'auth.not_authorized');
-                        return false;
-                    }
-                    break;
-
-                case 'AD': // Active Directory authentication
-                    $authObj = new AuthLDAP($auth_data);
-                    if($authObj->login($login, $password)){
-                        return $authObj;
-                    }
-                    if ($authObj->getAuthStatus() == 'failed'){
-                        return false;
-                    }
-                    if ($authObj->getAuthStatus() == 'unauthorized'){
-                        error('Not authorized', 'auth.not_authorized');
-                        return false;
-                    }
-                    break; //end of AD method
-
-                default:
-                    die('Unknown authentication mechanism: '.$mechanism);
-                    break;
-            } //end switch
+            
+            try {
+                $class_name = 'munkireport\\lib\\' . $this->mechanisms[$mechanism];
+                $authObj = new $class_name($auth_data);
+                if($authObj->login($login, $password)){
+                    return $authObj;
+                }
+                if ($authObj->getAuthStatus() == 'failed'){
+                    return false;
+                }
+                if ($authObj->getAuthStatus() == 'unauthorized'){
+                    error('Not authorized', 'auth.not_authorized');
+                    return false;
+                }
+            } catch (Exception $e) {
+                error('An error occurred', 'auth.not_authorized');
+                if (conf('debug')) {
+                    error($e->getMessage());
+                }
+            }
         } //end foreach loop
         
-        // Return state and groups.
-        return;
+        return false;
     }
     
     public function authConfigured()
