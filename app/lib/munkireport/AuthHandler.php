@@ -81,55 +81,16 @@ class AuthHandler
                     break;
 
                 case 'AD': // Active Directory authentication
-                    // Prevent empty values
-                    if ($_POST && $login && $password) {
-                    //include the class and create a connection
-                        //TODO: wrap this include somewhere else?
-                        include_once(APP_PATH . '/lib/adLDAP/adLDAP.php');
-                        try {
-                            $adldap = new \adLDAP($auth_data);
-                        } catch (adLDAPException $e) {
-                            error('An error occurred while contacting AD', 'error_contacting_AD');
-                            // When in debug mode, show additional info
-                            if (conf('debug')) {
-                                error($e->getMessage());
-                            }
-                            break 2;
-                        }
-                        // If nothing has failed to this point, authenticate user
-                        if ($adldap->authenticate($login, $password)) {
-                        // Check user against userlist
-                            if (isset($auth_data['mr_allowed_users'])) {
-                                $admin_users = is_array($auth_data['mr_allowed_users']) ? $auth_data['mr_allowed_users'] : array($auth_data['mr_allowed_users']);
-                                if (in_array(strtolower($login), array_map('strtolower', $admin_users))) {
-
-                                    // If business units enabled, get group memberships
-                                    if (conf('enable_business_units')) {
-                                        
-                                        $groups = $adldap->user()->groups($login);
-                                    }
-
-                                    return true;
-                                }
-                            }
-                            // Check user against group list
-                            if (isset($auth_data['mr_allowed_groups'])) {
-                            // Set mr_allowed_groups to array
-                                $admin_groups = is_array($auth_data['mr_allowed_groups']) ? $auth_data['mr_allowed_groups'] : array($auth_data['mr_allowed_groups']);
-                                // Get groups from AD
-                                $groups = $adldap->user()->groups($login);
-                                foreach ($groups as $group) {
-                                    if (in_array($group, $admin_groups)) {
-                                        return true;
-                                    }
-                                }
-                            }//end group list check
-
-                            // Not in users list or group list
-                            error('Not authorized', 'auth.not_authorized');
-                            break;
-                        }
-                        break;
+                    $authObj = new AuthLDAP($auth_data);
+                    if($authObj->login($login, $password)){
+                        return $authObj;
+                    }
+                    if ($authObj->getAuthStatus() == 'failed'){
+                        return false;
+                    }
+                    if ($authObj->getAuthStatus() == 'unauthorized'){
+                        error('Not authorized', 'auth.not_authorized');
+                        return false;
                     }
                     break; //end of AD method
 
