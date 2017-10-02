@@ -144,14 +144,10 @@ class Auth extends Controller
         $obj->view('auth/generate_password', $data);
     }
     
-    public function getConfig($authmethod)
-    {
-        return isset($this->auth_mechanisms[$authmethod]) ? $this->auth_mechanisms[$authmethod]: [];
-    }
     
     public function saml($endpoint = 'sso')
     {        
-        $saml_config = $this->getConfig('saml');
+        $saml_config = $this->authHandler->getConfig('saml');
         if($saml_config){
             $this->authorized();
             $saml_obj = new AuthSaml($saml_config, $this->authHandler);

@@ -11,7 +11,7 @@ abstract class AbstractAuth
     abstract public function getUser();
     abstract public function getGroups();
     
-    private function authorizeUserAndGroups($auth_config, $auth_data)
+    protected function authorizeUserAndGroups($auth_config, $auth_data)
     {
         $checkUser = isset($auth_config['mr_allowed_users']);
         $checkGroups = isset($auth_config['mr_allowed_groups']);

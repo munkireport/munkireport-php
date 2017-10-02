@@ -32,11 +32,8 @@ class AuthHandler
         if($auth_obj = $this->validate($login, $password))
         {
             $this->storeAuthData($auth_obj);
-
             $this->setSessionProps();
-
             session_regenerate_id();
-
             return true;
         }
         return false;
@@ -51,7 +48,7 @@ class AuthHandler
             
             try {
                 $class_name = 'munkireport\\lib\\' . $this->mechanisms[$mechanism];
-                $authObj = new $class_name($auth_data);
+                $authObj = new $class_name($auth_data, $this);
                 if($authObj->login($login, $password)){
                     return $authObj;
                 }
@@ -71,6 +68,11 @@ class AuthHandler
         } //end foreach loop
         
         return false;
+    }
+    
+    public function getConfig($authmethod)
+    {
+        return isset($this->auth_mechanisms[$authmethod]) ? $this->auth_mechanisms[$authmethod]: [];
     }
     
     public function authConfigured()

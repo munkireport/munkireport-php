@@ -109,7 +109,9 @@ class AuthSaml extends AbstractAuth
         $attrs = $auth->getAttributes();
         $auth_data = $this->mapSamlAttrs($attrs);
         if ($this->authorizeUserAndGroups($this->config, $auth_data)) {
-            $this->authController->storeAuthData($auth_data);
+            $this->login = $auth_data['login'];
+            $this->groups = $auth_data['groups'];
+            $this->authController->storeAuthData($this);
             $this->authController->setSessionProps();
             
             //var_dump($_SESSION);
@@ -214,16 +216,16 @@ class AuthSaml extends AbstractAuth
 
     public function getAuthStatus()
     {
-        return 'success';
+        return 'success'; //FIXME
     }
     
     public function getUser()
     {
-        return 'admin';
+        return $this->login;
     }
 
     public function getGroups()
     {
-        return [];
+        return $this->groups;
     }
 }
