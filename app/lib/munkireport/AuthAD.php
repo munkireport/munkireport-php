@@ -14,7 +14,7 @@ class AuthAD extends AbstractAuth
         $this->config = $config;
         $this->groups = [];
     }
-    
+
     public function login($login, $password)
     {
         $this->login = $login;
@@ -27,12 +27,12 @@ class AuthAD extends AbstractAuth
                 if($provider->auth()->attempt($login, $password)){
                     $user = $provider->search()->find($login);
                     $this->groups = $user->getGroupNames();
-                    
+
                     $auth_data = [
                         'user' => $login,
                         'groups' => $this->groups,
-                    ]
-                    
+                    ];
+
                     if ($this->authorizeUserAndGroups($this->config, $auth_data)){
                         $this->authStatus = 'success';
                         return true;
@@ -52,10 +52,10 @@ class AuthAD extends AbstractAuth
                 return false;
             }
         }
-        
+
         return false;
     }
-    
+
     public function getAuthMechanism()
     {
         return 'ldap';
@@ -65,7 +65,7 @@ class AuthAD extends AbstractAuth
     {
         return $this->authStatus;
     }
-    
+
     public function getUser()
     {
         return $this->login;
