@@ -10,16 +10,16 @@ abstract class AbstractAuth
     abstract public function getAuthStatus();
     abstract public function getUser();
     abstract public function getGroups();
-    
+
     protected function authorizeUserAndGroups($auth_config, $auth_data)
     {
         $checkUser = isset($auth_config['mr_allowed_users']);
         $checkGroups = isset($auth_config['mr_allowed_groups']);
-        
+
         if( ! $checkUser && ! $checkGroups){
             return true;
         }
-        
+
         if ($checkUser) {
             $admin_users = $this->valueToArray($auth_config['mr_allowed_users']);
             if (in_array(strtolower($auth_data['user']), array_map('strtolower', $admin_users))) {
@@ -36,10 +36,10 @@ abstract class AbstractAuth
                 }
             }
         }//end group list check
-        
+
         return false;
     }
-    
+
     /**
      * Convert value to array or keep Array
      *
@@ -51,4 +51,19 @@ abstract class AbstractAuth
         return is_array($value) ? $value : [$value];
     }
 
+    /**
+     * Remove MunkiReport specific items from config array
+     *
+     * adldap2 trips over extra items in config array
+     *
+     * @param type $config Config array
+     * @return return array
+     */
+    public function stripMunkireportItemsFromConfig($config)
+    {
+        foreach(['mr_allowed_users', 'mr_allowed_groups'] as $item){
+            unset($config[$item]);
+        }
+        return $config;
+    }
 }

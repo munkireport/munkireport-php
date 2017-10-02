@@ -20,12 +20,14 @@ class AuthAD extends AbstractAuth
         $this->login = $login;
         if ($login && $password) {
             $adldap = new adLDAP;
-            $adldap->addProvider($auth_data);
+            $adldap->addProvider($this->stripMunkireportItemsFromConfig($this->config));
 
             try {
                 $provider = $adldap->connect();
-                if($provider->auth()->attempt($login, $password)){
-                    $user = $provider->search()->find($login);
+                if($provider->auth()->attempt($login, $password, ! $this->bindAsAdmin())){
+                    $search = $provider->search();
+
+                    $user = $search->findOrFail($login);
                     $this->groups = $user->getGroupNames();
 
                     $auth_data = [
@@ -56,6 +58,11 @@ class AuthAD extends AbstractAuth
         return false;
     }
 
+    private function bindAsAdmin()
+    {
+         return isset($this->config['admin_username']) && isset($this->config['admin_password']);
+    }
+
     public function getAuthMechanism()
     {
         return 'ldap';
@@ -63,7 +70,7 @@ class AuthAD extends AbstractAuth
 
     public function getAuthStatus()
     {
-        return $this->authStatus;
+        return $this->auth_status;
     }
 
     public function getUser()
