@@ -7,7 +7,7 @@ use \Exception, \View;
 class AuthSaml extends AbstractAuth
 
 {
-    private $config, $error, $authController;
+    private $config, $error, $authController, $groups, $login;
 
     public function __construct($config, $authHandler)
     {
@@ -109,7 +109,7 @@ class AuthSaml extends AbstractAuth
         $attrs = $auth->getAttributes();
         $auth_data = $this->mapSamlAttrs($attrs);
         if ($this->authorizeUserAndGroups($this->config, $auth_data)) {
-            $this->login = $auth_data['login'];
+            $this->login = $auth_data['user'];
             $this->groups = $auth_data['groups'];
             $this->authController->storeAuthData($this);
             $this->authController->setSessionProps();
