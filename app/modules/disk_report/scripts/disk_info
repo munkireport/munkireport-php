@@ -64,7 +64,7 @@ def _DictFromDiskutilList():
     return _DictFromSubprocess(command)
 
 def _DictFromDiskutilList_SnowLeopard():
-    """as Snow Leopard delivers a different output from diskutil 
+    """as Snow Leopard delivers a different output from diskutil
     list we will mimic the output from newer versions of OS X
 
     """
@@ -168,6 +168,12 @@ def _DictFromSubprocess(command, stdin=None):
         except xml.parsers.expat.ExpatError:
             raise Exception("Error creating plist from output: %s" % stdout)
 
+def _isDiskImage(diskInfo):
+    diskimage = diskInfo.get('BusProtocol')
+    if diskimage == 'Disk Image':
+        return True
+    return False
+
 def DiskReport():
     """ Retrieve a list of dicts containing disk info """
     volumeList = []
@@ -183,6 +189,9 @@ def DiskReport():
                 if mountpoint and mountpoint != '/private/var/vm':
                     deviceId = apfsvolume['DeviceIdentifier']
                     diskInfo = filteredDiskInfo(deviceId)
+                    if _isDiskImage(diskInfo):
+                        # Skip Disk Images
+                        continue
                     if apfsInfoList.get(deviceId):
                         diskInfo.update(apfsInfoList[deviceId])
                     volumeList.append(diskInfo)
@@ -191,7 +200,7 @@ def DiskReport():
 
                 if partition.Content == 'Apple_HFS' and partition.get('MountPoint'):
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
-                    if diskInfo['BusProtocol'] == 'Disk Image':
+                    if _isDiskImage(diskInfo):
                         # Skip Disk Images
                         continue
                     volumeList.append(diskInfo)
@@ -213,7 +222,7 @@ def DiskReport():
                 elif partition.Content == 'Apple_RAID':
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
                     appleRaidDict[diskInfo['RAIDMemberUUID']] = diskInfo
-                
+
                 elif partition.Content == 'Microsoft Basic Data':
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
                     volumeList.append(diskInfo)
@@ -222,7 +231,7 @@ def DiskReport():
             if disk.Content == 'Apple_HFS' and disk.get('MountPoint'):
                 diskInfo = filteredDiskInfo(disk.DeviceIdentifier)
 
-                if diskInfo['BusProtocol'] == 'Disk Image':
+                if _isDiskImage(diskInfo):
                     # Skip Disk Images
                     continue
 
