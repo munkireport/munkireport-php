@@ -23,7 +23,7 @@ class AuthSaml extends AbstractAuth
             'url' => url('auth/saml/sls', true)
         ];
     }
-    
+
     public function handle($endpoint)
     {
         switch ($endpoint) {
@@ -33,7 +33,7 @@ class AuthSaml extends AbstractAuth
             case 'sso':
                 $this->sso();
                 break;
-            case 'slo':            
+            case 'slo':
                 $this->slo();
                 break;
             case 'acs':
@@ -44,11 +44,11 @@ class AuthSaml extends AbstractAuth
                 break;
             default:
                 throw new Exception("Unknown endpoint: $endpoint", 1);
-                
+
                 break;
         }
     }
-    
+
     private function metadata()
     {
         try {
@@ -68,14 +68,14 @@ class AuthSaml extends AbstractAuth
             echo $e->getMessage();
         }
     }
-    
+
     // Initiate Single Sign On
     private function sso()
     {
         $auth = new OneLogin_Saml2_Auth($this->config);
         $auth->login();
     }
-    
+
     // Retrieve Data from IDP
     private function acs()
     {
@@ -98,14 +98,14 @@ class AuthSaml extends AbstractAuth
             echo "<p>Not authenticated</p>";
             exit();
         }
-        
+
         // Not sure why we have to store these:
         $_SESSION['samlUserdata'] = $auth->getAttributes();
         $_SESSION['samlNameId'] = $auth->getNameId();
         $_SESSION['samlNameIdFormat'] = $auth->getNameIdFormat();
         $_SESSION['samlSessionIndex'] = $auth->getSessionIndex();
         unset($_SESSION['AuthNRequestID']);
-        
+
         $attrs = $auth->getAttributes();
         $auth_data = $this->mapSamlAttrs($attrs);
         if ($this->authorizeUserAndGroups($this->config, $auth_data)) {
@@ -113,7 +113,7 @@ class AuthSaml extends AbstractAuth
             $this->groups = $auth_data['groups'];
             $this->authController->storeAuthData($this);
             $this->authController->setSessionProps();
-            
+
             //var_dump($_SESSION);
             // Go to dashboard
             redirect('show/dashboard');
@@ -123,7 +123,7 @@ class AuthSaml extends AbstractAuth
         }
 
     }
-    
+
     // Single Logout
     private function slo()
     {
@@ -146,9 +146,9 @@ class AuthSaml extends AbstractAuth
         }
 
         $auth->logout($returnTo, $paramters, $nameId, $sessionIndex, false, $nameIdFormat);
-        
+
     }
-    
+
     private function sls()
     {
         $auth = new OneLogin_Saml2_Auth($this->config);
@@ -172,11 +172,12 @@ class AuthSaml extends AbstractAuth
             print_r($e->getMessage());
         }
     }
-    
+
     private function mapSamlAttrs($attrs)
     {
         $out = [
             'auth' => 'saml',
+            'groups' => [],
         ];
 
         if(isset($this->config['attr_mapping'])){
@@ -189,8 +190,9 @@ class AuthSaml extends AbstractAuth
             ];
         }
         foreach($attr_mapping as $key => $mappedKey){
-            if( ! isset($attrs[$key])){
-                throw new Exception("SAML Mapping error. $key not found in SAML attributes", 1);
+            if( ! isset($attrs[$key]) && conf('debug')){
+                $attr_list = implode(', ', array_keys($attrs));
+                throw new Exception("<pre>SAML Mapping error. $key not found in SAML attributes ($attr_list)", 1);
             }
             if($mappedKey == 'groups'){
                 $out[$mappedKey] = $attrs[$key];
@@ -198,17 +200,17 @@ class AuthSaml extends AbstractAuth
             else{
                 $out[$mappedKey] = $attrs[$key][0];
             }
-            
+
         }
-        
+
         return $out;
     }
-    
+
     public function login($login, $password)
     {
         redirect('auth/saml/sso');
     }
-    
+
     public function getAuthMechanism()
     {
         return 'saml';
@@ -218,7 +220,7 @@ class AuthSaml extends AbstractAuth
     {
         return 'success'; //FIXME
     }
-    
+
     public function getUser()
     {
         return $this->login;
