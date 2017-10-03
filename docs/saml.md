@@ -58,5 +58,3 @@ $conf['auth']['auth_saml']['mr_allowed_groups'] = ['admingroup'];
 ## More information/settings
 
 See https://github.com/onelogin/php-saml#settings
-
-
