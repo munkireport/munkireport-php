@@ -9,6 +9,7 @@
     "require": {
         "guzzlehttp/guzzle": "~6.0",
         "onelogin/php-saml": "^2.11",
-        "adldap2/adldap2": "^8.0"
+        "adldap2/adldap2": "^8.0",
+        "hautelook/phpass": "^1.1"
     }
 }
