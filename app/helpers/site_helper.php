@@ -128,8 +128,6 @@ function munkireport_autoload($classname)
             throw new Exception("Controller does not exist: $controller", 1);
         }
         require_once CONTROLLER_PATH.$controller.EXT;
-    } elseif ($classname == 'Hautelook\\Phpass\\PasswordHash'){
-        require(APP_PATH . '/lib/phpass-0.3.5/src/Hautelook/Phpass/PasswordHash.php');
     }
     else {
         require_once(APP_PATH.'models/'.$lowercaseClassname.EXT);

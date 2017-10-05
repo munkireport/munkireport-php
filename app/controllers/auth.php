@@ -6,6 +6,7 @@ use \Controller, \View;
 use munkireport\lib\Recaptcha;
 use munkireport\lib\AuthHandler;
 use munkireport\lib\AuthSaml;
+use munkireport\lib\AuthConfig;
 
 class Auth extends Controller
 {
@@ -136,7 +137,8 @@ class Auth extends Controller
         }
 
         if ($data['login'] && $password) {
-            $t_hasher = $this->authHandler->load_phpass();
+            $auth_config = new AuthConfig([]);
+            $t_hasher = $auth_config->load_phpass();
             $data['generated_pwd'] = $t_hasher->HashPassword($password);
         }
 

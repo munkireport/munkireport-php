@@ -66,7 +66,7 @@ class AuthConfig extends AbstractAuth
         return isset($this->config[$login]) ? $this->config[$login] : false;
     }
 
-    private function load_phpass()
+    public function load_phpass()
     {
         return new PasswordHash(8, true);
     }
