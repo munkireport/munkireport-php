@@ -1,5 +1,7 @@
 <?php
 
+use CFPropertyList\CFPropertyList;
+
 class Reportdata_model extends Model
 {
 
@@ -151,7 +153,6 @@ class Reportdata_model extends Model
         // Check if uptime is set to determine this is a new client
         $new_client = $this->uptime ? false : true;
         
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();

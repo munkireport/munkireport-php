@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class Security_model extends Model
 {
     public function __construct($serial = '')
@@ -51,7 +54,6 @@ class Security_model extends Model
 		throw new Exception("Error Processing Request: old format data found, please update the security module", 1);	
 	}
 	else {
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($data);
 

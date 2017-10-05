@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class Machine_model extends Model
 {
 
@@ -182,7 +185,6 @@ class Machine_model extends Model
      **/
     public function process($plist)
     {
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();

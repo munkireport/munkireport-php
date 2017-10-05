@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class Softwareupdate_model extends Model 
 {
         public function __construct($serial='')
@@ -73,7 +76,6 @@ class Softwareupdate_model extends Model
             }    
             
             // Process incoming com.apple.SoftwareUpdate.plist
-            require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
             $parser = new CFPropertyList();
             $parser->parse($data);
             

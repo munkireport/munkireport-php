@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class Timemachine_model extends Model
 {
     public function __construct($serial = '')
@@ -153,7 +156,6 @@ class Timemachine_model extends Model
         } else { // Else process with new XML handler    
             
             // Process incoming powerinfo.xml
-            require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
             $parser = new CFPropertyList();
             $parser->parse($data, CFPropertyList::FORMAT_XML);
             $plist = $parser->toArray();

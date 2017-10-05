@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class Munkireportinfo_model extends Model 
 {
 
@@ -47,7 +50,6 @@ class Munkireportinfo_model extends Model
             }    
             
             // Process incoming MunkiReport.plist
-            require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
             $parser = new CFPropertyList();
             $parser->parse($data);
             

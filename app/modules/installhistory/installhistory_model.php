@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class Installhistory_model extends Model
 {
 
@@ -40,7 +43,6 @@ class Installhistory_model extends Model
         // Strip invalid xml chars
             $plist = preg_replace('/[^\x{0009}\x{000A}\x{000D}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '�', $plist);
             
-            require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
             $parser = new CFPropertyList();
             $parser->parse($plist, CFPropertyList::FORMAT_XML);
             $mylist = $parser->toArray();

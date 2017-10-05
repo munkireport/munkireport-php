@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class Bluetooth_model extends Model
 {
 
@@ -72,7 +75,6 @@ class Bluetooth_model extends Model
             $bt = new munkireport\Bt_legacy_support($plist);
             $mylist = $bt->toArray();
         } else {
-            require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
             $parser = new CFPropertyList();
             $parser->parse($plist, CFPropertyList::FORMAT_XML);
             $mylist = $parser->toArray();

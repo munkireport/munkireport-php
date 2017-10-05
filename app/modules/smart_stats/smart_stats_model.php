@@ -1,5 +1,7 @@
 <?php
 
+use CFPropertyList\CFPropertyList;
+
 class Smart_stats_model extends Model {
     
 	function __construct($serial='')
@@ -311,7 +313,6 @@ class Smart_stats_model extends Model {
         $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // Process incoming smart_stats.xml
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $plist = $parser->toArray();

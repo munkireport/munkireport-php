@@ -1,4 +1,7 @@
 <?php
+
+use CFPropertyList\CFPropertyList;
+
 class managedinstalls_model extends Model
 {
 
@@ -170,7 +173,6 @@ class managedinstalls_model extends Model
      **/
     public function process($data)
     {
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();
