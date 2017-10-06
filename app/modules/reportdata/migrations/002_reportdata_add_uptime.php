@@ -2,7 +2,7 @@
 
 // Add uptime field
 
-class Migration_reportdata_add_uptime extends Model
+class Migration_reportdata_add_uptime extends \Model
 {
     protected $columname = 'uptime';
 

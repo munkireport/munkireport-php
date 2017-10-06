@@ -2,7 +2,7 @@
 
 // Fix the ipv4 router: was integer, should be varchar
 
-class Migration_network_model_fix_ipv4router extends Model
+class Migration_network_model_fix_ipv4router extends \Model
 {
     
     public function up()

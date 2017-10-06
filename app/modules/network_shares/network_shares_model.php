@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Network_shares_model extends Model {
+class Network_shares_model extends \Model {
 
 	function __construct($serial='')
 	{

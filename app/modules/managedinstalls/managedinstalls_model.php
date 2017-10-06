@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class managedinstalls_model extends Model
+class managedinstalls_model extends \Model
 {
 
     public function __construct($serial_number = '')

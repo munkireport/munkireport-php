@@ -1,5 +1,7 @@
 <?php
 
+use munkireport\models\Migration;
+
 /**
  * undocumented function
  *

@@ -1,5 +1,5 @@
 <?php
-class Printer_model extends Model
+class Printer_model extends \Model
 {
     public function __construct($serial = '')
     {

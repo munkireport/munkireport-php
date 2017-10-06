@@ -1,6 +1,6 @@
 <?php
 
-class Migration_smart_stats_add_overall_health extends Model
+class Migration_smart_stats_add_overall_health extends \Model
 {
 	protected $columnname = 'overall_health';
 

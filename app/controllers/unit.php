@@ -2,7 +2,9 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View, \Business_unit, \Machine_group;
+use \Controller, \View;
+use munkireport\models\Business_unit;
+use munkireport\models\Machine_group;
 
 class unit extends Controller
 {

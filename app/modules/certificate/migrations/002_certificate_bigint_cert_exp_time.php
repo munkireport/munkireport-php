@@ -2,7 +2,7 @@
 
 // Sets the cert_exp_time colum to be BIGINT
 
-class Migration_certificate_bigint_cert_exp_time extends Model
+class Migration_certificate_bigint_cert_exp_time extends \Model
 {
 
     

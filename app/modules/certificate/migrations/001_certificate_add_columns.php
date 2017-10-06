@@ -1,6 +1,6 @@
 <?php
 
-class Migration_certificate_add_columns extends Model
+class Migration_certificate_add_columns extends \Model
 {
     protected $new_columns = array(
         'issuer' => 'VARCHAR(255)',

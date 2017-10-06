@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class munkiinfo_model extends Model
+class munkiinfo_model extends \Model
 {
 
     public function __construct($serial = '')

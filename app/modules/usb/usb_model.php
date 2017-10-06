@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Usb_model extends Model {
+class Usb_model extends \Model {
 
 	function __construct($serial='')
 	{

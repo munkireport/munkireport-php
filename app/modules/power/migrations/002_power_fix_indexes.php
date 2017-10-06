@@ -2,7 +2,7 @@
 
 // Remove indexes with non-standard name and re-add them with the proper name
 
-class Migration_power_fix_indexes extends Model
+class Migration_power_fix_indexes extends \Model
 {
 
     public function __construct()

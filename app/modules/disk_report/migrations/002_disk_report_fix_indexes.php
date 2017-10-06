@@ -2,7 +2,7 @@
 
 // Fix indexes for MySQL that were not created when migrating
 
-class Migration_disk_report_fix_indexes extends Model
+class Migration_disk_report_fix_indexes extends \Model
 {
     /**
      * Constructor

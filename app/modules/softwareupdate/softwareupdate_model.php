@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Softwareupdate_model extends Model 
+class Softwareupdate_model extends \Model 
 {
         public function __construct($serial='')
         {

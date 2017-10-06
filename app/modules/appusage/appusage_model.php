@@ -1,5 +1,5 @@
 <?php
-class Appusage_model extends Model
+class Appusage_model extends \Model
 {
     public function __construct($serial = '')
     {

@@ -1,6 +1,6 @@
 <?php
 
-class Migration_security_add_ssh extends Model
+class Migration_security_add_ssh extends \Model
 {
 	protected $columnname = 'ssh_users';
 

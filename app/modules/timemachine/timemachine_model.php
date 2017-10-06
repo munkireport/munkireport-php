@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Timemachine_model extends Model
+class Timemachine_model extends \Model
 {
     public function __construct($serial = '')
     {

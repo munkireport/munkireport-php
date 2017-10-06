@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Inventory_model extends Model
+class Inventory_model extends \Model
 {
     
     public function __construct($serial = '')

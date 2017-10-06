@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Fonts_model extends Model {
+class Fonts_model extends \Model {
 
 	function __construct($serial='')
 	{

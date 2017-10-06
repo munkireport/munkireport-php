@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Bluetooth_model extends Model
+class Bluetooth_model extends \Model
 {
 
     public function __construct($serial = '')

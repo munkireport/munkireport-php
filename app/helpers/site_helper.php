@@ -1,5 +1,7 @@
 <?php
 
+use munkireport\models\Machine_group;
+
 // Munkireport version (last number is number of commits)
 $GLOBALS['version'] = '2.15.0.2795';
 
@@ -128,9 +130,6 @@ function munkireport_autoload($classname)
             throw new Exception("Controller does not exist: $controller", 1);
         }
         require_once CONTROLLER_PATH.$controller.EXT;
-    }
-    else {
-        require_once(APP_PATH.'models/'.$lowercaseClassname.EXT);
     }
 }
 

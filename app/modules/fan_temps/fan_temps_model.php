@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Fan_temps_model extends Model {
+class Fan_temps_model extends \Model {
     
 	function __construct($serial='')
 	{

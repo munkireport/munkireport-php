@@ -1,5 +1,5 @@
 <?php
-class MODULE_model extends Model {
+class MODULE_model extends \Model {
 
     protected $restricted;
 

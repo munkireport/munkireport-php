@@ -12,7 +12,7 @@
  * @package default
  * @author
  **/
-class Migration_cleanup_hash_table extends Model
+class Migration_cleanup_hash_table extends \Model
 {
     
     public function up()

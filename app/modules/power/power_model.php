@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Power_model extends Model
+class Power_model extends \Model
 {
     public function __construct($serial = '')
     {

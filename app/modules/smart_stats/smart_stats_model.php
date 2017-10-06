@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Smart_stats_model extends Model {
+class Smart_stats_model extends \Model {
     
 	function __construct($serial='')
 	{

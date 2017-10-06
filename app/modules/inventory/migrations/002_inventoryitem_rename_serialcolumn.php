@@ -2,7 +2,7 @@
 
 // Rename serial column to serial_number
 
-class Migration_inventoryitem_rename_serialcolumn extends Model
+class Migration_inventoryitem_rename_serialcolumn extends \Model
 {
     /**
      * Constructor

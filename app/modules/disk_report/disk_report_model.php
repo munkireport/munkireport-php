@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Disk_report_model extends Model
+class Disk_report_model extends \Model
 {
 
     public function __construct($serial = '')

@@ -1,8 +1,9 @@
 <?php
 
 use CFPropertyList\CFPropertyList;
+use munkireport\models\Hash;
 
-class Munkireport_model extends Model
+class Munkireport_model extends \Model
 {
 
     public function __construct($serial_number='')

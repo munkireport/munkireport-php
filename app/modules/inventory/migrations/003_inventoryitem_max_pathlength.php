@@ -2,7 +2,7 @@
 
 // Adjust the path column to allow for paths up to 1024 chars
 
-class Migration_inventoryitem_max_pathlength extends Model
+class Migration_inventoryitem_max_pathlength extends \Model
 {
     /**
      * Constructor

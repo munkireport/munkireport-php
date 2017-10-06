@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class mbbr_status_model extends Model
+class mbbr_status_model extends \Model
 {
     public function __construct($serial = '')
     {

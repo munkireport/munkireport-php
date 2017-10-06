@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Gpu_model extends Model {
+class Gpu_model extends \Model {
 
 	function __construct($serial='')
 	{

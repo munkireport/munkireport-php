@@ -1,6 +1,6 @@
 <?php
 
-class Migration_machine_add_cpu extends Model
+class Migration_machine_add_cpu extends \Model
 {
     protected $columname = 'cpu';
 

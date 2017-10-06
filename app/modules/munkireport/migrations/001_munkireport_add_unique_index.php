@@ -2,7 +2,7 @@
 
 // Add UNIQUE index to serial_number column
 
-class Migration_munkireport_add_unique_index extends Model
+class Migration_munkireport_add_unique_index extends \Model
 {
     
     public function up()

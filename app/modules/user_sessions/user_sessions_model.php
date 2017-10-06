@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class User_sessions_model extends Model {
+class User_sessions_model extends \Model {
 
 	function __construct($serial='')
 	{

@@ -1,7 +1,9 @@
 <?php
 
 namespace munkireport\lib;
-use \Exception, \View, \Machine_group, \Business_unit, \Reportdata_model;
+use \Exception, \View, \Reportdata_model;
+use munkireport\models\Business_unit;
+use munkireport\models\Machine_group;
 
 class AuthHandler
 {

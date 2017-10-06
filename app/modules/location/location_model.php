@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Location_model extends Model
+class Location_model extends \Model
 {
 
     // Defaults array

@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Security_model extends Model
+class Security_model extends \Model
 {
     public function __construct($serial = '')
     {

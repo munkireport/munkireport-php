@@ -2,7 +2,7 @@
 
 use CFPropertyList\CFPropertyList;
 
-class Ard_model extends Model
+class Ard_model extends \Model
 {
 
     public function __construct($serial = '')
