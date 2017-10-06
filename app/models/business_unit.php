@@ -2,6 +2,8 @@
 
 namespace munkireport\models;
 
+use \PDO;
+
 class Business_unit extends \Model
 {
     

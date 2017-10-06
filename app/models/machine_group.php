@@ -2,6 +2,8 @@
 
 namespace munkireport\models;
 
+use \PDO;
+
 class Machine_group extends \Model
 {
     
