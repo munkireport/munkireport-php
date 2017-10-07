@@ -111,9 +111,7 @@ function munkireport_autoload($classname)
     // Switch to lowercase filename for models
     $lowercaseClassname = strtolower($classname);
 
-    if (substr($lowercaseClassname, -4) == '_api') {
-        require_once(APP_PATH.'modules/'.substr($lowercaseClassname, 0, -4).'/api'.EXT);
-    } elseif (substr($lowercaseClassname, -6) == '_model') {
+    if (substr($lowercaseClassname, -6) == '_model') {
         $module = substr($lowercaseClassname, 0, -6);
         if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
             throw new Exception("Cannot load model: ".$classname, 1);
