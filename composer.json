@@ -18,7 +18,9 @@
     },
     "autoload": {
         "psr-4": {
-            "munkireport\\models\\": "app/models/"
+            "munkireport\\models\\": "app/models/",
+            "munkireport\\controller\\": "app/controllers",
+            "munkireport\\lib\\": "app/lib/munkireport"
         }
     }
 }

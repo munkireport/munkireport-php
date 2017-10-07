@@ -1,6 +1,6 @@
 <?php
 
-use munkireport\models\Machine_group;
+use munkireport\models\Machine_group, munkireport\lib\Modules;
 
 // Munkireport version (last number is number of commits)
 $GLOBALS['version'] = '2.15.0.2795';
@@ -119,17 +119,6 @@ function munkireport_autoload($classname)
             throw new Exception("Cannot load model: ".$classname, 1);
         }
         require_once($model);
-    }  elseif (strpos($classname, 'munkireport\\lib') === 0){
-        require_once(APP_PATH.'lib/munkireport/'.str_replace('munkireport\\lib\\', '', $classname).EXT);
-    } elseif (strpos($classname, 'munkireport\\controller\\') === 0){
-        $controller = str_replace('munkireport\\controller\\', '', $classname);
-        if ( ! preg_match('#^[A-Za-z0-9_-]+$#', $controller)){
-            throw new Exception("Illegal controller name: ".$controller, 1);
-        }
-        if( ! file_exists(CONTROLLER_PATH.$controller.EXT)){
-            throw new Exception("Controller does not exist: $controller", 1);
-        }
-        require_once CONTROLLER_PATH.$controller.EXT;
     }
 }
 
@@ -402,7 +391,7 @@ function getMrModuleObj()
     static $moduleObj;
 
     if( ! $moduleObj){
-      $moduleObj = new munkireport\lib\Modules;
+      $moduleObj = new Modules;
     }
 
     return $moduleObj;
