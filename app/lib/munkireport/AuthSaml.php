@@ -136,7 +136,7 @@ class AuthSaml extends AbstractAuth
         $auth = new OneLogin_Saml2_Auth($this->config);
 
         $returnTo = url('auth/saml/sls');
-        $paramters = array();
+        $parameters = array();
         $nameId = null;
         $sessionIndex = null;
         $nameIdFormat = null;
@@ -151,7 +151,7 @@ class AuthSaml extends AbstractAuth
             $nameIdFormat = $_SESSION['samlNameIdFormat'];
         }
 
-        $auth->logout($returnTo, $paramters, $nameId, $sessionIndex, false, $nameIdFormat);
+        $auth->logout($returnTo, $parameters, $nameId, $sessionIndex, false, $nameIdFormat);
 
     }
 
