@@ -22,6 +22,7 @@ class AuthSaml extends AbstractAuth
         $this->config['sp']['singleLogoutService'] = [
             'url' => url('auth/saml/sls', true)
         ];
+        $this->config['forceAuthn'] = isset($this->config['forceAuthn']) ? true : false;
     }
 
     public function handle($endpoint)
@@ -73,7 +74,12 @@ class AuthSaml extends AbstractAuth
     private function sso()
     {
         $auth = new OneLogin_Saml2_Auth($this->config);
-        $auth->login();
+        $auth->login(
+            $returnTo = null,
+            $parameters = array(),
+            $forceAuthn = $this->config['forceAuthn'],
+            $isPassive = false
+        );
     }
 
     // Retrieve Data from IDP
