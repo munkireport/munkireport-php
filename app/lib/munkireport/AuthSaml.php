@@ -22,7 +22,7 @@ class AuthSaml extends AbstractAuth
         $this->config['sp']['singleLogoutService'] = [
             'url' => url('auth/saml/sls', true)
         ];
-        $this->config['forceAuthn'] = isset($this->config['forceAuthn']) ? true : false;
+        $this->config['forceAuthn'] = isset($this->config['forceAuthn']) ? $this->config['forceAuthn'] : false;
     }
 
     public function handle($endpoint)
