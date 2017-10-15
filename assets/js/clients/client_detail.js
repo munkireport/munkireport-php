@@ -164,6 +164,11 @@ $(document).on('appReady', function(e, lang) {
 		var firewall_state = parseInt(machineData.firewall_state);
 		$('.mr-firewall_state').text(fw_states[firewall_state] || i18n.t('unknown'));
 
+        // SKEL status
+        var skel_states = [i18n.t('security.skel.all-allowed'), i18n.t('security.skel.user-approved')]
+        var skel_state = parseInt(machineData.skel_state);
+        $('.mr-skel_state').text(skel_states[skel_state] || i18n.t('unknown'));
+
 		// Set tooltips
 		$( "time" ).each(function( index ) {
 				$(this).tooltip().css('cursor', 'pointer');

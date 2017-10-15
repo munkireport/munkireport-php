@@ -105,10 +105,10 @@ class Security_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-                $sip_report = new Security_model;
+                $firmwarepw_report = new Security_model;
 
                 $out = array();
-                $out['stats'] = $sip_report->get_firmwarepw_stats();
+                $out['stats'] = $firmwarepw_report->get_firmwarepw_stats();
 
 
         $obj->view('json', array('msg' => $out));
@@ -136,4 +136,28 @@ class Security_controller extends Module_controller
 	$obj->view('json', array('msg' => $out));
 
     }
+
+    /**
+     * Get Secure Kernel Extension Loading ("SKEL") statistics
+     *
+     * @return void
+     * @author rickheil
+     **/
+    public function get_skel_stats()
+    {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+                $skel_report = new Security_model;
+
+                $out = array();
+                $out['stats'] = $skel_report->get_skel_stats();
+
+
+        $obj->view('json', array('msg' => $out));
+    }
+
 } // END class default_module
