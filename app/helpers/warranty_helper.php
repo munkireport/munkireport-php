@@ -79,7 +79,7 @@ function estimate_manufactured_date($serial)
     if (strlen($serial) == 11) {
         $year = $serial[2];
         $est_year = 2000 + strpos('   3456789012', $year);
-        $week = intval(substr($serial, 3, 2));
+        $week = max(1, intval(substr($serial, 3, 2)));
         return formatted_manufactured_date($est_year, $week);
     } elseif (strlen($serial) == 12) {
         $year_code = 'cdfghjklmnpqrstvwxyz';
