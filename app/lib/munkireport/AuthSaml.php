@@ -7,7 +7,7 @@ use \Exception, \View;
 class AuthSaml extends AbstractAuth
 
 {
-    private $config, $error, $authController, $groups, $login;
+    private $config, $error, $authController, $groups, $login, $forceAuthn;
 
     public function __construct($config, $authHandler)
     {
@@ -22,7 +22,7 @@ class AuthSaml extends AbstractAuth
         $this->config['sp']['singleLogoutService'] = [
             'url' => url('auth/saml/sls', true)
         ];
-        $this->config['forceAuthn'] = isset($this->config['forceAuthn']) ? $this->config['forceAuthn'] : false;
+        $this->forceAuthn = isset($this->config['disable_sso']) ? $this->config['disable_sso'] : false;
     }
 
     public function handle($endpoint)
@@ -77,7 +77,7 @@ class AuthSaml extends AbstractAuth
         $auth->login(
             $returnTo = null,
             $parameters = array(),
-            $forceAuthn = $this->config['forceAuthn'],
+            $forceAuthn = $this->forceAuthn,
             $isPassive = false
         );
     }

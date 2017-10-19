@@ -16,7 +16,7 @@ $conf['auth']['auth_saml'] = [
         'singleSignOnService' => ['url' => 'https://vrije-universiteit-amsterdam-dev.onelogin.com/trust/saml2/http-post/sso/707308'],
         'singleLogoutService' => ['url' => 'https://vrije-universiteit-amsterdam-dev.onelogin.com/trust/saml2/http-redirect/slo/707308'],
     ],
-    'forceAuthn' => false,
+    'disable_sso' => false,
 ];
 ```
 
@@ -27,7 +27,7 @@ Replace the values with the correct values for your env.
 * entityId - URI to the IDp metadata
 * singleSignOnService - Array containing one or more URIs to the Single Sign On endpoints of the IDp.
 * singleLogoutService - Array containing one or more URIs to the Single Sign Out endpoints of the IDp.
-* forceAuthn - boolean Force authentication allows you to force re-authentication of users even if the user has a SSO session at the IdP.
+* disable_sso - boolean Force authentication allows you to force re-authentication of users even if the user has a SSO session at the IdP.
 
 ## Metadata
 
