@@ -1,5 +1,5 @@
 <?php
-class backup2go_model extends Model {
+class backup2go_model extends \Model {
     
     protected $restricted;
     

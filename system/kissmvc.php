@@ -1,4 +1,7 @@
 <?php
+
+use munkireport\models\Migration;
+
 require('kissmvc_core.php');
 
 //===============================================================

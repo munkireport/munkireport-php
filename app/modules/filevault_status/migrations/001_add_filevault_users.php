@@ -1,6 +1,6 @@
 <?php
 
-class Migration_add_filevault_users extends Model
+class Migration_add_filevault_users extends \Model
 {
     protected $columname = 'filevault_users';
 

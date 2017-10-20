@@ -1,5 +1,5 @@
 <?php
-class Servermetrics_model extends Model
+class Servermetrics_model extends \Model
 {
 
     // Field order as sent by postflight and served by get_data().

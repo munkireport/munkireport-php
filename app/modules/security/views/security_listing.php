@@ -29,13 +29,15 @@ new Security_model;
 		        <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
+                <th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
+                <th data-i18n="security.skel.kext-loading" data-colname='security.skel_state'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
 		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="14" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -82,17 +84,22 @@ new Security_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    // Look for a bigger/smaller/equal statement
+
+		    // Look for a encrypted statement
                     if(d.search.value.match(/^encrypted = \d$/))
                     {
-                        console.log(d.search.value)
-
                         // Add column specific search
                         d.columns[6].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
                         // Clear global search
                         d.search.value = '';
-                        console.log(d.columns[6].search.value)
-                        //dumpj(d.columns[6].search.value)
+                    }
+
+                    if(d.search.value.match(/^firewall = \d$/))
+                    {
+                        // Add column specific search
+                        d.columns[10].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
+                        // Clear global search
+                        d.search.value = '';
                     }
 
                     // Only search on bootvolume
@@ -118,47 +125,73 @@ new Security_model;
 	        	var link = mr.getClientDetailLink(name, sn);
 	        	$('td:eq(0)', nRow).html(link);
 
-                var enc = $('td:eq(6)', nRow).html();
-                $('td:eq(6)', nRow).html(function(){
-                    if( enc == 1){
-                        return '<span class="label label-success">'+i18n.t('encrypted')+'</span>';
-                    }
-                    return '<span class="label label-danger">'+i18n.t('unencrypted')+'</span>';
-                });
+            var enc = $('td:eq(6)', nRow).html();
+            $('td:eq(6)', nRow).html(function(){
+                if( enc == 1){
+                    return '<span class="label label-success">'+i18n.t('encrypted')+'</span>';
+                }
+                return '<span class="label label-danger">'+i18n.t('unencrypted')+'</span>';
+            });
 
-                var gk = $('td:eq(7)', nRow).html();
-                $('td:eq(7)', nRow).html(function(){
-                  if( gk == 'Active'){
-                        return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-                    } else if( gk == 'Not Supported'){
-                        return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
-                    } else {
-                        return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-                    }
-                });
+            var gk = $('td:eq(7)', nRow).html();
+            $('td:eq(7)', nRow).html(function(){
+              if( gk == 'Active'){
+                    return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                } else if( gk == 'Not Supported'){
+                    return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
+                } else {
+                    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+                }
+            });
 
-                var sip = $('td:eq(8)', nRow).html();
-                $('td:eq(8)', nRow).html(function(){
-                    if( sip == 'Active'){
-                        return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-                    } else if( sip == 'Not Supported'){
-                        return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
-                    } else {
-                        return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-                    }
-                });
+            var sip = $('td:eq(8)', nRow).html();
+            $('td:eq(8)', nRow).html(function(){
+                if( sip == 'Active'){
+                    return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                } else if( sip == 'Not Supported'){
+                    return '<span class="label label-warning">'+i18n.t('unsupported')+'</span>';
+                } else {
+                    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+                }
+            });
 
-                 var firmwarepw = $('td:eq(9)', nRow).html();
-                 $('td:eq(9)', nRow).html(function(){
-                     if( firmwarepw == 'Yes'){
-                         return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
-                     }
+             var firmwarepw = $('td:eq(9)', nRow).html();
+             $('td:eq(9)', nRow).html(function(){
+                 if( firmwarepw == 'Yes' || firmwarepw == 'command'){
+                     return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+                 } else if ( firmwarepw == 'No'){
                      return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
-                 });
+                 }
+                 return '<span class="label label-default">'+i18n.t('unknown')+'</span>';
+             });
 
-		    }
-	    } );
-	} );
+            var firewall_state = $('td:eq(10)', nRow).html();
+            $('td:eq(10)', nRow).html(function(){
+               if(firewall_state == '1'){
+                   return '<span class="label label-success">'+i18n.t('enabled')+'</span>';
+               } else if (firewall_state == '2'){
+                    return '<span class="label label-success">'+i18n.t('security.block_all')+'</span>';
+               } else if (firewall_state == '0'){
+                    return '<span class="label label-danger">'+i18n.t('disabled')+'</span>';
+               }
+               // default case - return blank if client has not checked in with this info
+               return "";
+            });
+
+            var skel_state = $('td:eq(11)', nRow).html();
+            $('td:eq(11)', nRow).html(function(){
+                if(skel_state == '1'){
+                    return '<span class="label label-info">'+i18n.t('security.skel.all-approved')+'</span>';
+                } else if (skel_state == '0'){
+                    return '<span class="label label-info">'+i18n.t('security.skel.user-approved')+'</span>';
+                }
+                // if skel_state is null, we don't have data
+                return '<span class="label label-default">'+i18n.t('unknown')+'</span>';
+            });
+
+        }
+    });
+  });
 </script>
 
 <?php $this->view('partials/foot'); ?>

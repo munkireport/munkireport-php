@@ -1,5 +1,8 @@
 <?php
-class Ard_model extends Model
+
+use CFPropertyList\CFPropertyList;
+
+class Ard_model extends \Model
 {
 
     public function __construct($serial = '')
@@ -35,7 +38,6 @@ class Ard_model extends Model
 
     public function process($data)
     {
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data);
         

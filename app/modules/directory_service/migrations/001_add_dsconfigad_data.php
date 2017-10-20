@@ -1,6 +1,6 @@
 <?php
 
-class Migration_add_dsconfigad_data extends Model
+class Migration_add_dsconfigad_data extends \Model
 {
     
     public function up()

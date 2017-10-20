@@ -121,6 +121,17 @@ require( SYS_PATH.'kissmvc.php' );
 require( APP_PATH.'helpers/site_helper'.EXT );
 
 //===============================================
+// Autoloading
+//===============================================
+spl_autoload_register('munkireport_autoload');
+if ((include APP_ROOT . "vendor/autoload.php") === false)
+{
+	fatal("vendor/autoload.php is missing!<br>
+Please run `composer install` in the munkireport directory</p>");
+}
+
+
+//===============================================
 // Timezone
 //===============================================
 date_default_timezone_set( conf('timezone') );

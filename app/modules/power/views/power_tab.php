@@ -272,7 +272,7 @@ $(document).on('appReady', function(e, lang) {
 			}
                         
 			if(data.cpu_scheduler_limit) {
-				 $('#power-cpu_scheduler_limit').text('data.cpu_scheduler_limit+'%');
+				 $('#power-cpu_scheduler_limit').text(data.cpu_scheduler_limit+'%');
 			} else{
 				 $('#power-cpu_scheduler_limit').text('');
 			}

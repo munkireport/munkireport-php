@@ -1,6 +1,6 @@
 <?php
 
-class Migration_stale_location_columns extends Model
+class Migration_stale_location_columns extends \Model
 {
     protected $columname1 = 'stalelocation';
     protected $columname2 = 'lastlocationrun';

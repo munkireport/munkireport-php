@@ -1,5 +1,5 @@
 <?php
-class Deploystudio_model extends Model
+class Deploystudio_model extends \Model
 {
     
     protected $error = '';

@@ -1,7 +1,9 @@
 <?php
 
+use munkireport\models\Machine_group, munkireport\lib\Modules;
+
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.14.0.2743';
+$GLOBALS['version'] = '2.15.0.2795';
 
 // Return version without commit count
 function get_version()
@@ -104,35 +106,17 @@ function getdbh()
 // Autoloading for Business Classes
 //===============================================
 // module classes end with _model
-function __autoload($classname)
+function munkireport_autoload($classname)
 {
     // Switch to lowercase filename for models
     $lowercaseClassname = strtolower($classname);
 
-    if (substr($lowercaseClassname, -4) == '_api') {
-        require_once(APP_PATH.'modules/'.substr($lowercaseClassname, 0, -4).'/api'.EXT);
-    } elseif (substr($lowercaseClassname, -6) == '_model') {
+    if (substr($lowercaseClassname, -6) == '_model') {
         $module = substr($lowercaseClassname, 0, -6);
         if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
             throw new Exception("Cannot load model: ".$classname, 1);
         }
         require_once($model);
-    }  elseif (strpos($classname, 'munkireport\\lib') === 0){
-        require_once(APP_PATH.'lib/munkireport/'.str_replace('munkireport\\lib\\', '', $classname).EXT);
-    } elseif (strpos($classname, 'munkireport\\controller\\') === 0){
-        $controller = str_replace('munkireport\\controller\\', '', $classname);
-        if ( ! preg_match('#^[A-Za-z0-9_-]+$#', $controller)){
-            throw new Exception("Illegal controller name: ".$controller, 1);
-        }
-        if( ! file_exists(CONTROLLER_PATH.$controller.EXT)){
-            throw new Exception("Controller does not exist: $controller", 1);
-        }
-        require_once CONTROLLER_PATH.$controller.EXT;
-    } elseif ($classname == 'Hautelook\\Phpass\\PasswordHash'){
-        require(APP_PATH . '/lib/phpass-0.3.5/src/Hautelook/Phpass/PasswordHash.php');
-    }
-    else {
-        require_once(APP_PATH.'models/'.$lowercaseClassname.EXT);
     }
 }
 
@@ -405,7 +389,7 @@ function getMrModuleObj()
     static $moduleObj;
 
     if( ! $moduleObj){
-      $moduleObj = new munkireport\lib\Modules;
+      $moduleObj = new Modules;
     }
 
     return $moduleObj;

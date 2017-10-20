@@ -1,5 +1,5 @@
 <?php
-class Comment_model extends Model
+class Comment_model extends \Model
 {
     
     public function __construct($serial = '')

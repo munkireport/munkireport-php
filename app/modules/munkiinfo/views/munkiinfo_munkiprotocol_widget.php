@@ -6,30 +6,56 @@
 	        <list-link data-url="/show/listing/munkireport/munki"></list-link>
 	    </h3>
 	  </div>
-	  <div class="panel-body text-center"></div>
+	  <div class="panel-body text-center">
+        <a tag="http" class="btn btn-danger disabled">
+            <span class="bigger-150"> 0 </span><br>
+            <span data-i18n="munkiinfo.munkiprotocol.http"></span>
+        </a>
+        <a tag="https" class="btn btn-success disabled">
+            <span class="bigger-150"> 0 </span><br>
+            <span data-i18n="munkiinfo.munkiprotocol.https"></span>
+        </a>
+        <a tag="localrepo" class="btn btn-info disabled">
+            <span class="bigger-150"> 0 </span><br>
+            <span data-i18n="munkiinfo.munkiprotocol.localrepo"></span>
+        </a>
+	  </div>
 	</div><!-- /panel -->
 </div><!-- /col -->
 
 <script>
-$(document).on('appUpdate', function(e, lang) {
+$(document).on('appReady', function(){
 
-    $.getJSON( appUrl + '/module/munkiinfo/get_protocol_stats', function( data ) {
-	if(data.error){
-		//alert(data.error);
-		return;
-	}
+	var panelBody = $('#munkiinfo-munkiprotocol-widget div.panel-body');
 
-		var panel = $('#munkiinfo-munkiprotocol-widget div.panel-body'),
-			baseUrl = appUrl + '/show/listing/munkiinfo/munkiinfo#munkiprotocol';
-		panel.empty();
+	// Tags
+	var tags = ['http', 'https', 'localrepo'];
 
-		// Set statuses
-		panel.append(' <a href="'+baseUrl+'#protocol = http" class="btn btn-danger"><span class="bigger-150">'+data.http+'</span><br>&nbsp;'+i18n.t('munkiinfo.munkiprotocol.http')+'&nbsp;</a>');
-		panel.append(' <a href="'+baseUrl+'#protocol = https" class="btn btn-success"><span class="bigger-150">'+data.https+'</span><br>&nbsp;'+i18n.t('munkiinfo.munkiprotocol.https')+'&nbsp;</a>');
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-info"><span class="bigger-150">'+data.localrepo+'</span><br>'+i18n.t('munkiinfo.munkiprotocol.localrepo')+'</a>');
+	// Set url
+	$.each(tags, function(i, tag){
+		$('#munkiinfo-munkiprotocol-widget a[tag="'+tag+'"]')
+			.attr('href', appUrl + '/show/listing/munkiinfo/munkiinfo/#munkiprotocol');
+	});
 
-    });
+	$(document).on('appUpdate', function(){
+
+		$.getJSON( appUrl + '/module/munkiinfo/get_protocol_stats', function( data ) {
+
+			$.each(tags, function(i, tag){
+				// Set count
+				$('#munkiinfo-munkiprotocol-widget a[tag="'+tag+'"]')
+					.toggleClass('disabled', ! data[tag])
+					.find('span.bigger-150')
+						.text(+data[tag]);
+				// Set localized label
+				$('#munkiinfo-munkiprotocol-widget a[tag="'+tag+'"] span.count')
+					.text(i18n.t(tag, { count: +data[tag] }));
+			});
+
+		});
+
+	});
+
 });
-
 
 </script>

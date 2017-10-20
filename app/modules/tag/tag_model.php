@@ -1,5 +1,5 @@
 <?php
-class Tag_model extends Model
+class Tag_model extends \Model
 {
     
     public function __construct($serial = '')

@@ -2,7 +2,7 @@
 
 // Add indexes to printer table
 
-class Migration_printer_fix_indexes extends Model
+class Migration_printer_fix_indexes extends \Model
 {
     /**
      * Constructor

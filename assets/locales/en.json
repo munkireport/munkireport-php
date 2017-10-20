@@ -53,6 +53,7 @@
         "generated_hash": "Generated hash",
         "go_secure": "Go to secure site",
         "insecure": "Insecure connection, switch to secure",
+        "logout_success": "You successfully logged out",
         "noauth_found": "No authentication information found, please add an account to the config file.",
         "not_authorized": "Not authorized",
         "password": "Password",
@@ -299,6 +300,7 @@
     "path": "Path",
     "pending": "Pending",
     "php": {
+        "allow_url_fopen": "Remote URL access",
         "dom": "DOM Extension",
         "moreinfo": "Extended PHP info",
         "pdo": "PDO Extension",

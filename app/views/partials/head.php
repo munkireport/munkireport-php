@@ -34,7 +34,7 @@
 
 	<script>
 		var baseUrl = "<?php echo conf('subdirectory'); ?>",
-			appUrl = baseUrl + 'index.php?',
+			appUrl = "<?php echo rtrim(url(), '/'); ?>",
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;

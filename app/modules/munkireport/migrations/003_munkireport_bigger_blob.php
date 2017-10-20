@@ -1,6 +1,6 @@
 <?php
 
-class Migration_munkireport_bigger_blob extends Model
+class Migration_munkireport_bigger_blob extends \Model
 {
     public function up()
     {

@@ -1,6 +1,6 @@
 <?php
 
-class Migration_add_columns_for_rewrite extends Model
+class Migration_add_columns_for_rewrite extends \Model
 {
     public function __construct()
     {

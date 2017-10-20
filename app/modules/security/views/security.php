@@ -22,7 +22,15 @@
 
 		<?php $widget->view($this, 'findmymac'); ?>
 
-	</div> <!-- /row -->
+		<?php $widget->view($this, 'firewall_state'); ?>
+
+    </div> <!-- /row -->
+
+    <div class="row">
+
+        <?php $widget->view($this, 'skel_state'); ?>
+
+    </div> <!-- /row -->
 
 
 </div>  <!-- /container -->

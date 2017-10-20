@@ -1,6 +1,6 @@
 <?php
 
-class Migration_multiple_disks_addition extends Model
+class Migration_multiple_disks_addition extends \Model
 {
     public $rt = array();
 

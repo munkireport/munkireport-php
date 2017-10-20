@@ -1,6 +1,6 @@
 <?php
 
-class Migration_security_add_ard extends Model
+class Migration_security_add_ard extends \Model
 {
 	protected $columnname = 'ard_users';
 

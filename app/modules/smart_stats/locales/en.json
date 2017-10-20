@@ -117,5 +117,7 @@
     "error_poh": "Last SMART Error at Power On Hours",
     "error_count": "SMART Errors Count",
     "smart_support_is": "SMART Enabled",
-    "smart_is": "SMART Status"
+    "smart_is": "SMART Status",
+    "overall_health": "Overall Health",
+    "passed": "Passed"
 }

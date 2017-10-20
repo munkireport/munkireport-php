@@ -133,10 +133,16 @@ def firmware_pw_check():
     The command firmwarepassword appeared in 10.10, so we use nvram for older versions.
     Thank you @steffan for this check."""
     if float(os.uname()[2][0:2]) >= 14:
-        sp = subprocess.Popen(['firmwarepasswd', '-check'], stdout=subprocess.PIPE)
-        out, err = sp.communicate()
-        firmwarepw = out.split()[2]
-
+        try:
+            sp = subprocess.Popen(['/usr/sbin/firmwarepasswd', '-check'], stdout=subprocess.PIPE)
+            out, err = sp.communicate()
+            firmwarepw = out.split()[2]
+        except OSError as e:
+            # firmwarepasswd command not found at the path we specified
+            # so set the data to blank and print a warning.
+            print "Error: firmwarepasswd binary not found or accessible."
+            firmwarepw = ""
+        
     else:
         sp = subprocess.Popen(['nvram', 'security-mode'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         mode_out, mode_err = sp.communicate()
@@ -147,6 +153,32 @@ def firmware_pw_check():
             firmwarepw = "Yes"
 
     return firmwarepw
+
+
+def firewall_enable_check():
+    """Checks to see if firewall is enabled using a one-shot defaults read command.
+    Doing it this way because shelling out is easier than having to convert..."""
+
+    sp = subprocess.Popen(['defaults', 'read', '/Library/Preferences/com.apple.alf', 'globalstate'], stdout=subprocess.PIPE)
+    out, err = sp.communicate()
+
+    return out[0]
+
+
+def skel_state_check():
+    """Checks to see if Secure Kernel Extension Loading ("SKEL") is enabled or disabled.
+    Only supported with macOS High Sierra (10.13 / 17) and up."""
+
+    if float(os.uname()[2][0:2]) >= 17:
+        sp = subprocess.Popen(['spctl', 'kext-consent', 'status'], stdout=subprocess.PIPE)
+        out, err = sp.communicate()
+
+        if "ENABLED" in out:
+            return 1
+        else:
+            return 0
+    else:
+        return 1 # if the OS is < 10.13, KEXT loading is open by default.
 
 
 def main():
@@ -170,6 +202,8 @@ def main():
     result.update({'ssh_users': ssh_access_check()})
     result.update({'ard_users': ard_access_check()})
     result.update({'firmwarepw': firmware_pw_check()})
+    result.update({'firewall_state':firewall_enable_check()})
+    result.update({'skel_state':skel_state_check()})
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')

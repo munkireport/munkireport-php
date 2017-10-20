@@ -16,7 +16,8 @@ class Modules
     private $allowedModules = array(
       'machine',
       'reportdata',
-      'tag'
+      'tag',
+      'event',
     );
     private $skipInactiveModules = False;
 

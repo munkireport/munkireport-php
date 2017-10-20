@@ -1,6 +1,8 @@
 <?php
 
-class Smart_stats_model extends Model {
+use CFPropertyList\CFPropertyList;
+
+class Smart_stats_model extends \Model {
     
 	function __construct($serial='')
 	{
@@ -123,10 +125,10 @@ class Smart_stats_model extends Model {
         $this->rs['perc_writeerase_ct_bc'] = 0; $this->rt['perc_writeerase_ct_bc'] = 'BIGINT';
         $this->rs['avg_writeerase_count'] = 0; $this->rt['avg_writeerase_count'] = 'BIGINT';
         $this->rs['sata_phy_error'] = 0; $this->rt['sata_phy_error'] = 'BIGINT';
-
+        $this->rs['overall_health'] = '';
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
+        $this->schema_version = 3;
 
         // Indexes to optimize queries
         $this->idx[] = array('serial_number');
@@ -150,6 +152,7 @@ class Smart_stats_model extends Model {
         $this->idx[] = array('error_count');
         $this->idx[] = array('error_poh');
         $this->idx[] = array('timestamp');
+        $this->idx[] = array('overall_health');
 				        
 		// Create table if it does not exist
 		$this->create_table();
@@ -160,6 +163,17 @@ class Smart_stats_model extends Model {
 		}
 		
 		$this->serial = $serial;
+    }
+
+    public function getSmartStats()
+    {
+        $sql = "SELECT COUNT(CASE WHEN overall_health='PASSED' THEN 1 END) AS passed,
+						COUNT(CASE WHEN overall_health='UNKNOWN!' THEN 1 END) AS unknown,
+						COUNT(CASE WHEN overall_health='FAILED!' THEN 1 END) AS failed
+						FROM smart_stats
+						LEFT JOIN reportdata USING(serial_number)
+						".get_machine_group_filter();
+        return current($this->query($sql));
     }
 
     /**
@@ -292,19 +306,19 @@ class Smart_stats_model extends Model {
         	'error_count' => 'error_count',
         	'SMARTsupport' => 'smart_support_is',
         	'DiskNumber' => 'disk_number',
-        	'SMARTis' => 'smart_is');
+        	'SMARTis' => 'smart_is',
+        	'Overall_Health' => 'overall_health');
 
         // Delete previous entries
         $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // Process incoming smart_stats.xml
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $plist = $parser->toArray();
         
         // Array of string for nulling with ""
-        $strings =  array('model_family','device_model','serial_number_hdd','lu_wwn_device_id','firmware_version','user_capacity','sector_size','rotation_rate','device_is','ata_version_is','sata_version_is','form_factor','smart_support_is','smart_is','serial_number','power_on_hours_and_msec','airflow_temperature_cel','temperature_celsius');
+        $strings =  array('model_family','device_model','serial_number_hdd','lu_wwn_device_id','firmware_version','user_capacity','sector_size','rotation_rate','device_is','ata_version_is','sata_version_is','form_factor','smart_support_is','smart_is','serial_number','power_on_hours_and_msec','airflow_temperature_cel','temperature_celsius','overall_health');
 
         // Get index ID
         $disk_id = (count($plist) -1 );
@@ -313,39 +327,28 @@ class Smart_stats_model extends Model {
      while ($disk_id > -1) {
 
         // Traverse the xml with translations
-        foreach ($translate as $search => $field) {  
-                // If key is empty, is not a string, and is not zero
-                if (empty($plist[$disk_id][$search]) && ! in_array($field, $strings) && $plist[$disk_id][$search] != "0") {  
+        foreach ($translate as $search => $field) {
+            // If key is empty
+            if ( ! isset($plist[$disk_id][$search])) {
+                if ( ! in_array($field, $strings)) {
                     $this->$field = null;
-                   
-                // Head_Flying_Hours can sometimes a string    
-                } else if ($search == "Head_Flying_Hours" && stripos($plist[$disk_id][$search], 'h') !== false) {
-                    
+                }
+            } else { // Key is set
+                if ($search == "Head_Flying_Hours" && stripos($plist[$disk_id][$search], 'h') !== false) {
+
                     $headhours = explode("h+",$plist[$disk_id][$search]);
                     $this->$field = $headhours[0];
-                                        
-                // If key is not empty and is a string save it to the object
-                } else if (! empty($plist[$disk_id][$search]) && in_array($field, $strings)) {  
+
+                    // If key is a string save it to the object
+                } else if ( in_array($field, $strings)) {  
                     $this->$field = $plist[$disk_id][$search];
-                    
-                // If key is not empty and not a string save it to the object
-                } else if (! empty($plist[$disk_id][$search]) && ! in_array($field, $strings)) {  
-                    $this->$field = preg_replace("/[^0-9]/", "", $plist[$disk_id][$search]);
-                    
-                // Else, check if key is an int  
-                } else if ( ! in_array($field, $strings) && $plist[$disk_id][$search] != "0"){
-                    // Set the int to null
-                    $this->$field = null;
-                    
-                } else if ( ! in_array($field, $strings) && $plist[$disk_id][$search] == "0"){
-                    // Set the int to 0
-                    $this->$field = $plist[$disk_id][$search];
-                    
-                } else {  
-                    // Else, null the value
-                    $this->$field = '';
+
+                    // If key is not a string save it to the object
+                } else  {  
+                    $this->$field = intval(preg_replace("/[^0-9]/", "", $plist[$disk_id][$search]));
                 }
             }
+        }
          
          //timestamp added by the server
          $this->timestamp = time();

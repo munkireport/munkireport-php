@@ -3,7 +3,7 @@
 // Fix indexes for MySQL that were not created when migrating
 // from 2.0.7 and before
 
-class Migration_installhistory_fix_indexes extends Model
+class Migration_installhistory_fix_indexes extends \Model
 {
     /**
      * Constructor

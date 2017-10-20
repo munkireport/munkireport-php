@@ -1,4 +1,7 @@
 {
+    "today": "Today",
+    "lastweek": "Past Week",
+    "week_plus": "1 Week +",
     "last_success": "Last Successful Backup",
     "last_failure": "Last Failed Backup",
     "last_failure_msg": "Last Failed Message",
@@ -32,6 +35,7 @@
     "exclude_by_path": "Excluded by Path",
     "skip_paths": "Excluded by User",
     "timemachine": "Time Machine",
+    "timemachinewidget": "Time Machine Backups",
     "report": "Time Machine Report",
     "null": "",
     "0": "Backup completed successfully",

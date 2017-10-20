@@ -1,6 +1,6 @@
 <?php
 
-class Displays_info_model extends Model
+class Displays_info_model extends \Model
 {
 
     public function __construct($serial = '')

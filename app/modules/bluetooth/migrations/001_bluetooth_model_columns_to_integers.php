@@ -1,6 +1,6 @@
 <?php
 
-class Migration_bluetooth_model_columns_to_integers extends Model
+class Migration_bluetooth_model_columns_to_integers extends \Model
 {
 
     public function up()

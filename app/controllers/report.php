@@ -2,8 +2,9 @@
 
 namespace munkireport\controller;
 
-use \Controller, \Reportdata_model, \Messages_model, \Hash, \Exception;
+use \Controller, \Reportdata_model, \Messages_model, \Exception;
 use munkireport\lib\Unserializer, munkireport\lib\Modules;
+use munkireport\models\Hash;
 
 class report extends Controller
 {

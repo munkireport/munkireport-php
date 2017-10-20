@@ -1,5 +1,5 @@
 <?php
-class Caching_model extends Model
+class Caching_model extends \Model
 {
     public function __construct($serial = '')
     {

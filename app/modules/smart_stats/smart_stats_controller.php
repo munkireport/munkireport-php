@@ -53,6 +53,19 @@ class Smart_stats_controller extends Module_controller
         $obj->view('json', array('msg' => current(array('msg' => $smart_stats_tab)))); 
     }
 
+    public function get_smart_stats()
+    {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $smart_stats_report = new Smart_stats_model;
+        $obj->view('json', array('msg' =>$smart_stats_report->getSmartStats()));
+    }
+
 
 	/**
      * Retrieve data in json format

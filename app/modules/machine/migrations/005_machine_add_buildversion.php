@@ -1,6 +1,6 @@
 <?php
 
-class Migration_machine_add_buildversion extends Model
+class Migration_machine_add_buildversion extends \Model
 {
     protected $columname = 'buildversion';
 

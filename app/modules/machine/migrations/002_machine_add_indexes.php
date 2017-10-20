@@ -2,7 +2,7 @@
 
 // Add indexes to searchable fields in machine
 
-class Migration_machine_add_indexes extends Model
+class Migration_machine_add_indexes extends \Model
 {
     
     private $fields = array('hostname', 'machine_model', 'machine_desc',

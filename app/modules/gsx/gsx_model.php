@@ -1,5 +1,5 @@
 <?php
-class gsx_model extends Model
+class gsx_model extends \Model
 {
     
     protected $error = '';
@@ -13,7 +13,7 @@ class gsx_model extends Model
         $this->rs['warrantystatus'] = '';
         $this->rs['coverageenddate'] = '';
         $this->rs['coveragestartdate'] = '';
-        $this->rs['daysremaining'] = '';
+        $this->rs['daysremaining'] = 0;
         $this->rs['estimatedpurchasedate'] = '';
         $this->rs['purchasecountry'] = '';
         $this->rs['registrationdate'] = '';
@@ -32,7 +32,15 @@ class gsx_model extends Model
 
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
+        $this->schema_version = 1;
+        
+        // Indexes to optimize queries
+           $this->idx[] = array('warrantystatus');
+        $this->idx[] = array('coverageenddate');
+        $this->idx[] = array('estimatedpurchasedate');
+        $this->idx[] = array('daysremaining');
+        $this->idx[] = array('isvintage');
+        $this->idx[] = array('configdescription');
         
         // Create table if it does not exist
         $this->create_table();

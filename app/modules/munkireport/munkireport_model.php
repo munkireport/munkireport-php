@@ -1,5 +1,9 @@
 <?php
-class Munkireport_model extends Model
+
+use CFPropertyList\CFPropertyList;
+use munkireport\models\Hash;
+
+class Munkireport_model extends \Model
 {
 
     public function __construct($serial_number='')
@@ -114,7 +118,6 @@ class Munkireport_model extends Model
             throw new Exception("Error Processing Request: No property list found", 1);
         }
 
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();

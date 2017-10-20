@@ -1,6 +1,6 @@
 <?php
 
-class Migration_convert_physical_memory extends Model
+class Migration_convert_physical_memory extends \Model
 {
     
     public function up()
