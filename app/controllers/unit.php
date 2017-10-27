@@ -76,6 +76,8 @@ class unit extends Controller
                     'name' => 'Group '.$group,
                     'groupid' => $group);
                 }
+                //sort the machine groups
+                sort($out);
             }
         } else {
             $mg = new Machine_group;
