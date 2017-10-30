@@ -133,6 +133,14 @@ class AuthSaml extends AbstractAuth
     // Single Logout
     private function slo()
     {
+        // Check if SSO is disabled, if yes, destroy session and move on
+        if(isset($this->config['disable_sso']) && $this->config['disable_sso'] === true){
+            session_destroy();
+            $obj = new View();
+            $obj->view('auth/logout', ['loginurl' => url()]);
+            return;
+        }
+
         $auth = new OneLogin_Saml2_Auth($this->config);
 
         $returnTo = url('auth/saml/sls');
