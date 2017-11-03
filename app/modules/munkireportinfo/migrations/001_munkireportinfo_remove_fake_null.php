@@ -2,7 +2,7 @@
 
 // Remove fake nulls and set them to NULL
 
-class Migration_munkireportinfo_remove_fake_null extends Model
+class Migration_munkireportinfo_remove_fake_null extends \Model
 {
 
     public function __construct()

@@ -1,5 +1,8 @@
 <?php
-class Disk_report_model extends Model
+
+use CFPropertyList\CFPropertyList;
+
+class Disk_report_model extends \Model
 {
 
     public function __construct($serial = '')
@@ -119,7 +122,6 @@ class Disk_report_model extends Model
     public function process($plist)
     {
 
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();

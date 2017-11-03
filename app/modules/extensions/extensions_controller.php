@@ -44,6 +44,18 @@ class Extensions_controller extends Module_controller
         $obj->view('json', array('msg' => $extension->get_bundle_ids()));
      }
     
+     public function get_codesign()
+     {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $extension = new Extensions_model;
+        $obj->view('json', array('msg' => $extension->get_codesign()));
+     }
     
 	/**
      * Retrieve data in json format

@@ -1,6 +1,6 @@
 <?php
 
-class Migration_bluetooth_all_devices_in_seperate_db_row extends Model
+class Migration_bluetooth_all_devices_in_seperate_db_row extends \Model
 {
 
     public function up()

@@ -3,7 +3,7 @@
 // This migration converts fixes a type error introduced in 2.9.0
 // The migration will check the database and fix it when necessary
 
-class Migration_munkireport_fix_type extends Model
+class Migration_munkireport_fix_type extends \Model
 {
 
     /**

@@ -9,6 +9,7 @@ return array(
         'gatekeeper' => array('view' => 'gatekeeper_widget'),
         'sip' => array('view' => 'sip_widget'),
         'firewall_state' => array('view' => 'firewall_state_widget'),
+        'skel_state' => array('view' => 'skel_state_widget'),
     ),
     'reports' => array(
         'security' => array('view' => 'security', 'i18n' => 'security.report'),

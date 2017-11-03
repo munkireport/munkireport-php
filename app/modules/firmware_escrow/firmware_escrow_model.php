@@ -1,7 +1,7 @@
 <?php
 // @author gmarnin
 
-class Firmware_escrow_model extends Model
+class Firmware_escrow_model extends \Model
 {
 
     public function __construct($serial = '')

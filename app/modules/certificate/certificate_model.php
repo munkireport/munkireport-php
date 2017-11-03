@@ -1,5 +1,5 @@
 <?php
-class Certificate_model extends Model
+class Certificate_model extends \Model
 {
     
     public function __construct($serial = '')

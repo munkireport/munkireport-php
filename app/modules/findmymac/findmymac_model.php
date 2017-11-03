@@ -1,5 +1,5 @@
 <?php
-class findmymac_model extends Model
+class findmymac_model extends \Model
 {
     public function __construct($serial = '')
     {

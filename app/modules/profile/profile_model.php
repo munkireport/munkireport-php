@@ -1,5 +1,5 @@
 <?php
-class Profile_model extends Model
+class Profile_model extends \Model
 {
     public function __construct($serial = '')
     {

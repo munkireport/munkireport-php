@@ -1,5 +1,5 @@
 <?php
-class Homebrew_info_model extends Model {
+class Homebrew_info_model extends \Model {
 
 	function __construct($serial='')
 	{

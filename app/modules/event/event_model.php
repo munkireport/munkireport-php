@@ -9,7 +9,7 @@
  * @package munkireport
  * @author AvB
  **/
-class Event_model extends Model
+class Event_model extends \Model
 {
     public function __construct($serial_number = '', $module = '')
     {

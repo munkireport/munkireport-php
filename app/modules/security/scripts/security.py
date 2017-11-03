@@ -165,6 +165,22 @@ def firewall_enable_check():
     return out[0]
 
 
+def skel_state_check():
+    """Checks to see if Secure Kernel Extension Loading ("SKEL") is enabled or disabled.
+    Only supported with macOS High Sierra (10.13 / 17) and up."""
+
+    if float(os.uname()[2][0:2]) >= 17:
+        sp = subprocess.Popen(['spctl', 'kext-consent', 'status'], stdout=subprocess.PIPE)
+        out, err = sp.communicate()
+
+        if "ENABLED" in out:
+            return 1
+        else:
+            return 0
+    else:
+        return 1 # if the OS is < 10.13, KEXT loading is open by default.
+
+
 def main():
     """main"""
 
@@ -187,6 +203,7 @@ def main():
     result.update({'ard_users': ard_access_check()})
     result.update({'firmwarepw': firmware_pw_check()})
     result.update({'firewall_state':firewall_enable_check()})
+    result.update({'skel_state':skel_state_check()})
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')

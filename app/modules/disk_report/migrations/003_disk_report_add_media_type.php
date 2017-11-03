@@ -3,7 +3,7 @@
 
 use munkireport\lib\Schema;
 
-class Migration_disk_report_add_media_type extends Model
+class Migration_disk_report_add_media_type extends \Model
 {
     /**
      * Migrate up

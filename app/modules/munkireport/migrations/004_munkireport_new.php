@@ -3,7 +3,7 @@
 // This migration converts the old munkireport table to a new version
 // most of the data is migrated to managedinstalls
 
-class Migration_munkireport_new extends Model
+class Migration_munkireport_new extends \Model
 {
     // Drop these columns
     protected $dropCols = array(

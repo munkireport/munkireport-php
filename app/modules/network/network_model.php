@@ -1,6 +1,6 @@
 <?php
 
-class Network_model extends Model
+class Network_model extends \Model
 {
     
     public function __construct($serial_number = '')

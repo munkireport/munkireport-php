@@ -1,5 +1,8 @@
 <?php
-class Network_shares_model extends Model {
+
+use CFPropertyList\CFPropertyList;
+
+class Network_shares_model extends \Model {
 
 	function __construct($serial='')
 	{
@@ -72,7 +75,6 @@ class Network_shares_model extends Model {
 		// Delete previous set        
 		$this->deleteWhere('serial_number=?', $this->serial_number);
 
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();

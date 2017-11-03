@@ -3,6 +3,7 @@
 namespace munkireport\module\deploystudio;
 
 use Exception;
+use CFPropertyList\CFPropertyList;
 
 class Deploystudio_helper
 {
@@ -29,8 +30,7 @@ class Deploystudio_helper
             throw new Exception("No data received from deploystudio server", 1);
         }
 
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-        $plist = new \CFPropertyList();
+        $plist = new CFPropertyList();
         $plist->parse($deploystudio_computer_result);
 
         $plist = $plist->toArray();

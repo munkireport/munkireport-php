@@ -1,6 +1,8 @@
 <?php
 
-class Inventory_model extends Model
+use CFPropertyList\CFPropertyList;
+
+class Inventory_model extends \Model
 {
     
     public function __construct($serial = '')
@@ -109,7 +111,6 @@ class Inventory_model extends Model
         $bundlepath_ignorelist = is_array(conf('bundlepath_ignorelist')) ? conf('bundlepath_ignorelist') : array();
         $path_regex = ':^'.implode('|', $bundlepath_ignorelist).'$:';
                     
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse(
             $data,

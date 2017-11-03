@@ -1,5 +1,8 @@
 <?php
-class Power_model extends Model
+
+use CFPropertyList\CFPropertyList;
+
+class Power_model extends \Model
 {
     public function __construct($serial = '')
     {
@@ -177,7 +180,6 @@ class Power_model extends Model
         $ints =  array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','designcyclecount','avgtimetoempty','voltage','amperage','temperature','cycle_count','current_percent','current_capacity','max_percent','max_capacity','design_capacity');
 
         // Process incoming powerinfo.xml
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $plist = $parser->toArray();

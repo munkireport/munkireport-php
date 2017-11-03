@@ -2,7 +2,7 @@
 
 // Remove fake nulls and set them to NULL
 
-class Migration_fan_temps_remove_fake_null extends Model
+class Migration_fan_temps_remove_fake_null extends \Model
 {
 
     public function __construct()

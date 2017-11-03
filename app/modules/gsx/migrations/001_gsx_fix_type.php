@@ -1,6 +1,6 @@
 <?php
 
-class Migration_gsx_fix_type extends Model
+class Migration_gsx_fix_type extends \Model
 {
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-class Migration_reportdata_add_group extends Model
+class Migration_reportdata_add_group extends \Model
 {
     protected $columname = 'machine_group';
 

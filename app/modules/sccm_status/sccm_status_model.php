@@ -1,5 +1,5 @@
 <?php
-class sccm_status_model extends Model {
+class sccm_status_model extends \Model {
 
         public function __construct($serial='')
         {

@@ -2,7 +2,6 @@
 ?>#!/bin/bash
 
 BASEURL="<?php echo conf('webhost') . conf('subdirectory'); ?>"
-TPL_BASE="${BASEURL}/assets/client_installer/"
 MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
 CACHEPATH="${MUNKIPATH}preflight.d/cache/"
 POSTFLIGHT_CACHEPATH="${MUNKIPATH}postflight.d/cache/"
@@ -11,6 +10,9 @@ PREFLIGHT=1
 PREF_CMDS=( ) # Pref commands array
 TARGET_VOLUME=''
 CURL=("<?php echo implode('" "', conf('curl_cmd'))?>")
+PREFLIGHT_SCRIPT="<?php echo conf('preflight_script'); ?>"
+POSTFLIGHT_SCRIPT="<?php echo conf('postflight_script'); ?>"
+REPORT_BROKEN_CLIENT_SCRIPT="<?php echo conf('report_broken_client_script'); ?>"
 # Exit status
 ERR=0
 
@@ -137,11 +139,14 @@ echo "Preparing ${MUNKIPATH}"
 mkdir -p "${MUNKIPATH}munkilib"
 
 echo "BaseURL is ${BASEURL}"
+TPL_BASE="${BASEURL}/assets/client_installer/"
 
 echo "Retrieving munkireport scripts"
 
 cd ${MUNKIPATH}
-"${CURL[@]}" "${TPL_BASE}{preflight,postflight,report_broken_client}" --remote-name --remote-name --remote-name \
+"${CURL[@]}" "${TPL_BASE}preflight" --output "${PREFLIGHT_SCRIPT}" \
+  "${TPL_BASE}postflight" --output "${POSTFLIGHT_SCRIPT}" \
+  "${TPL_BASE}report_broken_client" --output "${REPORT_BROKEN_CLIENT_SCRIPT}" \
     && "${CURL[@]}" "${TPL_BASE}purl" -o "${MUNKIPATH}munkilib/purl.py" \
     && "${CURL[@]}" "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
 	&& "${CURL[@]}" "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
@@ -149,12 +154,12 @@ cd ${MUNKIPATH}
 if [ "${?}" != 0 ]
 then
 	echo "Failed to download all required components!"
-	rm -f "${MUNKIPATH}"{preflight,postflight,report_broken_client} \
+	rm -f "${MUNKIPATH}"{${PREFLIGHT_SCRIPT},${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}} \
 		"${MUNKIPATH}"munkilib/reportcommon.py
 	exit 1
 fi
 
-chmod a+x "${MUNKIPATH}"{preflight,postflight,report_broken_client}
+chmod a+x "${MUNKIPATH}"{${PREFLIGHT_SCRIPT},${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
 
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"

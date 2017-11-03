@@ -1,5 +1,5 @@
 <?php
-class Directory_service_model extends Model
+class Directory_service_model extends \Model
 {
 
     public function __construct($serial = '')

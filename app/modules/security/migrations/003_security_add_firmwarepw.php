@@ -1,6 +1,6 @@
 <?php
 
-class Migration_security_add_firmwarepw extends Model
+class Migration_security_add_firmwarepw extends \Model
 {
 	protected $columnname = 'firmwarepw';
 

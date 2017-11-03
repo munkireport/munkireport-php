@@ -12,5 +12,10 @@
     "sip_active": "SIP Active",
     "sip_disabled": "SIP Disabled",
     "sip_status": "SIP Status",
-    "ssh_users": "SSH Users"
+    "ssh_users": "SSH Users",
+    "skel": {
+        "kext-loading": "KEXT Loading",
+        "all-approved": "Open",
+        "user-approved": "User Approved"
+    }
 }

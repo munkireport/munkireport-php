@@ -36,7 +36,6 @@
 $(document).on('appReady', function(e, lang) {
 
 	var panelBody = $('#uptime-widget div.panel-body');
-	panelBody.find('a.btn').attr('href', appUrl + '/show/listing/reportdata/clients');
 
 	$(document).on('appUpdate', function(e, lang) {
 
@@ -46,10 +45,16 @@ $(document).on('appReady', function(e, lang) {
 	    		//alert(data.error);
 	    		return;
 	    	}
-			$.each(['oneday', 'oneweek', 'oneweekplus'], function(i, tag){
-				panelBody.find('a[tag="'+tag+'"]')
-					.toggleClass('disabled', !data[tag])
-					.find('span.bigger-150').text(data[tag] || 0)
+			var uptimeList = [
+				{tag: 'oneday', search: 'uptime < 1d'},
+				{tag: 'oneweek', search: '1d uptime 7d'},
+				{tag: 'oneweekplus', search: 'uptime > 7d'}
+			]
+			$.each(uptimeList, function(i, item){
+				panelBody.find('a[tag="'+item.tag+'"]')
+					.attr('href', appUrl + '/show/listing/reportdata/clients#' + item.search)
+					.toggleClass('disabled', !data[item.tag])
+					.find('span.bigger-150').text(data[item.tag] || 0)
 			})
 
 	    });
