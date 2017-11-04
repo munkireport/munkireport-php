@@ -211,7 +211,7 @@ https://github.com/settings/applications
     
     # install dependencies
     subprocess.check_call(['composer', 'install', '--no-dev',
-        '--optimize-autoloader'])
+        '--ignore-platform-reqs', '--optimize-autoloader'])
     
     # zip up
     subprocess.check_call([
