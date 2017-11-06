@@ -1,6 +1,12 @@
 #!/bin/sh
 # Check the supported_os once a week
 
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
 # Seconds between checks
 CHECK=604800
 
