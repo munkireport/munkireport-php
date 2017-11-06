@@ -1,37 +1,46 @@
-#!/bin/bash
+#!/usr/bin/python
+# Script by Bochoven
 
-if [ "$1" = 'manualcheck' ]; then
-	echo 'Manual check: skipping'
-	exit 0
-fi
+import os, sys, plistlib, subprocess
 
-# Create cache dir if it does not exist
-DIR=$(dirname $0)
-mkdir -p "$DIR/cache"
-usage_stats_file="$DIR/cache/usage_stats.plist"
-usage_stats_temp_file="$DIR/cache/usage_stats_temp.plist"
-usage_stats_temp2_file="$DIR/cache/usage_stats_temp2.plist"
+def get_power_metrics():
+    cmd = ['/usr/bin/powermetrics', '--show-initial-usage', ' -s',
+            'network,disk', '-f', 'plist', '-n', '0']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, err = proc.communicate()
+    plist = plistlib.readPlistFromString(output.rstrip(' \t\r\n\0'))
 
-# Gather historical information
-/usr/bin/powermetrics --show-initial-usage -s network,disk -u "${usage_stats_temp_file}" -f plist -n 0 2>/dev/null
+    cmd = ['/usr/bin/powermetrics', '-s', 
+            'cpu_power,gpu_power,thermal,battery', '-n', '1', '-f', 'plist']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, err = proc.communicate()
+    plist.update(plistlib.readPlistFromString(output.rstrip(' \t\r\n\0')))
 
-# Gather usage information
-/usr/bin/powermetrics -s cpu_power,gpu_power,thermal,battery -u "${usage_stats_temp2_file}" -f plist -n 1 2>/dev/null
+    return plist
 
-# Merge plist files
-cat "${usage_stats_temp2_file}" >> "${usage_stats_temp_file}"
+def main():
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
 
-# Flatten
-tr -d "\n" < "${usage_stats_temp_file}" > "${usage_stats_file}"
+    # Skip manual check
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'manualcheck':
+            print 'Manual check: skipping'
+            exit(0)
 
-# Remove non-ascii charactors
-sed -i '' 's/[^[:print:]]//g' "${usage_stats_file}"
+    # Get results
+    result = get_power_metrics()
 
-# Condense plist into one
-sed -i '' 's/<\/dict><\/plist><?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-\/\/Apple\/\/DTD PLIST 1.0\/\/EN" "http:\/\/www.apple.com\/DTDs\/PropertyList-1.0.dtd"><plist version="1.0"><dict>//g' "${usage_stats_file}"
+    # Write results to cache
+    output_plist = os.path.join(cachedir, 'usage_stats.plist')
+    plistlib.writePlist(result, output_plist)
 
-# Remove temp files
-rm "${usage_stats_temp_file}"
-rm "${usage_stats_temp2_file}"
-
-exit 0
+if __name__ == "__main__":
+    main()
