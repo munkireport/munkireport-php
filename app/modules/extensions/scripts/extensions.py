@@ -17,6 +17,12 @@ cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
 if not os.path.exists(cachedir):
     os.makedirs(cachedir)
     
+# Skip manual check
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'manualcheck':
+        print 'Manual check: skipping'
+        exit(0)
+    
 # Get kexts info
 IOKit = NSBundle.bundleWithIdentifier_('com.apple.framework.IOKit')
 functions = [('KextManagerCopyLoadedKextInfo', '@@@'),('KextManagerCreateURLForBundleIdentifier', '@@@'),]
