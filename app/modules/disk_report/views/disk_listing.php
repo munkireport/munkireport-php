@@ -132,8 +132,11 @@ new Reportdata_model;
 	        	var mediaType=$('td:eq(4)', nRow).html();
 	        	$('td:eq(4)', nRow).html(mediaType.toUpperCase())
                 
-                var volumeType=$('td:eq(5)', nRow).html();
-	        	$('td:eq(5)', nRow).html(volumeType.toUpperCase())
+                // Format Volume Type
+	        	var volumeType=$('td:eq(5)', nRow).html();
+	        	volumeType = volumeType == 'bootcamp' ? i18n.t('disk_report.bootcamp') :
+	        	(volumeType === 'fusion' ? i18n.t('disk_report.Fusion') : volumeType)
+	        	$('td:eq(5)', nRow).html(volumeType)
 
 	        	// Format disk usage
 	        	var disk=$('td:eq(6)', nRow).html();
@@ -154,7 +157,7 @@ new Reportdata_model;
 	        		(smartstatus)
 	        	$('td:eq(9)', nRow).html(smartstatus)
 
-	        	// Encryption Station
+	        	// Encryption Status
 	        	var encryptionstatus=$('td:eq(10)', nRow).html();
 	        	encryptionstatus = encryptionstatus == '1' ? i18n.t('disk_report.encrypted') :
 	        	(encryptionstatus === '0' ? i18n.t('disk_report.not_encrypted') : '')
