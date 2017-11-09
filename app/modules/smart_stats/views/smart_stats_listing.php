@@ -132,7 +132,7 @@ new Smart_stats_model;
 
                 // Format SMART Error Count
 	        	var status=$('td:eq(4)', nRow).html();
-                if (status != ""){
+                if (status != "" && status != 0){
                     $('td:eq(4)', nRow).addClass('danger').html(status)
                 } else {
                     $('td:eq(4)', nRow).html("")
@@ -140,7 +140,7 @@ new Smart_stats_model;
                 
                 // Format SMART Power On Hours Error Count
 	        	var status=$('td:eq(5)', nRow).html();
-                if (status != ""){
+                if (status != "" && status != 0){
                     $('td:eq(5)', nRow).addClass('danger').html('<span title="'+Math.round((status/24), 2)+" "+i18n.t('date.day_plural')+'">'+status+'</span>')
                 } else {
                     $('td:eq(5)', nRow).html("")
