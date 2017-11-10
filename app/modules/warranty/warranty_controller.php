@@ -111,7 +111,7 @@ class Warranty_controller extends Module_controller
                 $agesql as age FROM warranty 
                 LEFT JOIN reportdata USING (serial_number)
                 $where
-                AND $agesql <> 'NULL' 
+                AND $agesql IS NOT NULL 
                 GROUP by age 
                 ORDER BY age ASC;";
         $cnt = 0;
