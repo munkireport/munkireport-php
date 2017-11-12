@@ -1,0 +1,5 @@
+RewriteEngine on
+
+# Redirect all requests to public 
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ index.php
