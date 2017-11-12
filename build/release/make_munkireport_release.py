@@ -158,8 +158,10 @@ https://github.com/settings/applications
          'https://github.com/%s/%s' % (publish_user, publish_repo),
          munkireport_root])
     os.chdir(munkireport_root)
-
-    subprocess.check_call(['git', 'checkout', 'wip'])
+    
+    branch = 'wip'
+    
+    subprocess.check_call(['git', 'checkout', branch])
         
     # get the current munkireport-php version
     current_version = get_version()
@@ -199,8 +201,8 @@ https://github.com/settings/applications
         ['git', 'commit', '-m', 'Release version %s.' % current_version])
     subprocess.check_call(['git', 'tag', tag_name])
     if not opts.dry_run:
-        subprocess.check_call(['git', 'push', 'origin', 'master'])
-        subprocess.check_call(['git', 'push', '--tags', 'origin', 'master'])
+        subprocess.check_call(['git', 'push', 'origin', branch])
+        subprocess.check_call(['git', 'push', '--tags', 'origin', branch])
 
     # extract release notes for this new version
     notes_rex = r"(?P<current_ver_notes>\#\#\# \[%s\].+?)\#\#\#" % current_version
@@ -214,15 +216,16 @@ https://github.com/settings/applications
         '--ignore-platform-reqs', '--optimize-autoloader'])
     
     # zip up
-    subprocess.check_call([
-        'zip', '-r', 'munkireport-%s.zip' % current_version, '.',
-        '--exclude', '.git*'])
-
+    zip_file = 'munkireport-%s.zip' % current_version
+    subprocess.check_call(['zip', '-r', zip_file, '.', '--exclude', '.git*'])
+    with open(zip_file, 'rb') as fdesc:
+        zip_data = fdesc.read()
+        
     # prepare release metadata
     release_data = dict()
     release_data['tag_name'] = tag_name
-    release_data['target_commitish'] = 'master'
-    release_data['name'] = "munkireport-php " + current_version
+    release_data['target_commitish'] = branch
+    release_data['name'] = "Munkireport " + current_version
     release_data['body'] = release_notes
     release_data['draft'] = False
     if opts.prerelease:
@@ -245,16 +248,16 @@ https://github.com/settings/applications
                         % (publish_user,
                            publish_repo,
                            new_release_id,
-                           pkg_filename))
+                           zip_file))
             upload_asset = api_call(
                 endpoint,
                 token,
                 baseurl='https://uploads.github.com',
-                data=pkg_data,
+                data=zip_data,
                 json_data=False,
                 additional_headers={'Content-Type': 'application/octet-stream'})
             if upload_asset:
-                print ("Successfully attached .pkg release asset. Server "
+                print ("Successfully attached .zip release asset. Server "
                        "response:")
                 pprint(upload_asset)
                 print
@@ -278,7 +281,7 @@ https://github.com/settings/applications
         ['git', 'commit', '-m',
          'Bumping to v%s for development.' % next_version])
     if not opts.dry_run:
-        subprocess.check_call(['git', 'push', 'origin', 'master'])
+        subprocess.check_call(['git', 'push', 'origin', branch])
     else:
         print ("Ended dry-run mode. Final state of the munkireport-php repo can be "
                "found at: %s" % munkireport_root)
