@@ -120,10 +120,13 @@ function munkireport_autoload($classname)
     }
 }
 
-function url($url = '', $fullurl = false)
+function url($url = '', $fullurl = false, $queryArray = [])
 {
     $s = $fullurl ? conf('webhost') : '';
     $s .= conf('subdirectory').($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
+    if($queryArray){
+        $s .= (INDEX_PAGE ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
+    }
     return $s;
 }
 

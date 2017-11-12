@@ -190,7 +190,7 @@
 
 								<?php $lang = strtok($list_url, '.'); ?>
 
-								<li><a href="<?php echo url("$page&amp;setLng=$lang"); ?>" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
+								<li><a href="<?php echo url($page, false, ['setLng' => $lang]); ?>" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
 
 								<?php endif; ?>
 
