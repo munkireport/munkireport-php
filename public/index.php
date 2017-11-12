@@ -4,7 +4,8 @@ define( 'KISS', 1 );
 // Front controller
 define('FC', __FILE__ .'/' );
 
-define('APP_ROOT', dirname(__FILE__) .'/' );
+define('PUBLIC_ROOT', dirname(__FILE__) . '/' );
+define('APP_ROOT', dirname(PUBLIC_ROOT) . '/' );
 
 // Pass on https forward to $_SERVER['HTTPS']
 if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')

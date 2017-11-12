@@ -184,7 +184,6 @@
 					</a>
 					<ul class="dropdown-menu locale">
 
-							<?php foreach(scandir(APP_ROOT.'assets/locales') AS $list_url): ?>
 
 								<?php if( strpos($list_url, 'json')):?>
 
