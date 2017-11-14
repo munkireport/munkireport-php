@@ -164,7 +164,7 @@
 					</a>
 					<ul class="dropdown-menu theme">
 
-							<?php foreach(scandir(APP_ROOT.'assets/themes') AS $theme): ?>
+							<?php foreach(scandir(PUBLIC_ROOT.'assets/themes') AS $theme): ?>
 
 								<?php if( $theme != 'fonts' && strpos($theme, '.') === false):?>
 
