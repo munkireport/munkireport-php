@@ -164,7 +164,7 @@
 					</a>
 					<ul class="dropdown-menu theme">
 
-							<?php foreach(scandir(APP_ROOT.'assets/themes') AS $theme): ?>
+							<?php foreach(scandir(PUBLIC_ROOT.'assets/themes') AS $theme): ?>
 
 								<?php if( $theme != 'fonts' && strpos($theme, '.') === false):?>
 
@@ -184,7 +184,7 @@
 					</a>
 					<ul class="dropdown-menu locale">
 
-							<?php foreach(scandir(APP_ROOT.'assets/locales') AS $list_url): ?>
+							<?php foreach(scandir(PUBLIC_ROOT.'assets/locales') AS $list_url): ?>
 
 								<?php if( strpos($list_url, 'json')):?>
 

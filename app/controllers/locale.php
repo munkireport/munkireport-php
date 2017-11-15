@@ -41,7 +41,7 @@ class Locale extends Controller
         );
 
         // Load fallback language files
-        $locales['fallback_main'] = file_get_contents(APP_ROOT.'assets/locales/'.$this->fallBackLang.'.json');
+        $locales['fallback_main'] = file_get_contents(PUBLIC_ROOT.'assets/locales/'.$this->fallBackLang.'.json');
         $locales['fallback_module'] = $this->modules->getModuleLocales($this->fallBackLang);
 
         if ($lang == $this->fallBackLang) {
@@ -49,8 +49,8 @@ class Locale extends Controller
         } elseif ( ! preg_match($this->langFilter, $lang)) {
             $locales['messages'] = sprintf('{"error": "requested language is not valid: %s"}', $lang);
         } else {
-            if (is_file(APP_ROOT.'assets/locales/'.$lang.'.json')) {
-                $locales['lang_main'] = file_get_contents(APP_ROOT.'assets/locales/'.$lang.'.json');
+            if (is_file(PUBLIC_ROOT.'assets/locales/'.$lang.'.json')) {
+                $locales['lang_main'] = file_get_contents(PUBLIC_ROOT.'assets/locales/'.$lang.'.json');
             } else {
                 $locales['messages'] = sprintf('{"error": "Could not load main locale for: %s"}', $lang);
             }
