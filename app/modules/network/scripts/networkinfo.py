@@ -29,53 +29,59 @@ def get_tunnel_info():
     ## Things to do:
     ## 1: Make the parser smarter so in case things aren't where we expect, we don't ship bad info
     ## 2: Allow the function to loop over all 'utun' addresses if there are multiple
+    try:
+        tunnel_ip = bashCommand(['ifconfig', 'utun1'])
+        tunnel_ip = tunnel_ip.split()
+        # Helpful functions to convert ip and subnet mask to router address
+        # May not be fully useful and might give incorrect info if CIDR is greater than /24
+        # greater in this case means less, i.e. /22 = greater number of addresses
+        def netmask_to_cidr(netmask):
+            return sum([bin(int(x)).count('1') for x in netmask.split('.')])
+
+        def get_network_addr(ip, cidr):
+            ip = ip.split('.')
+            cidr = int(cidr)
+
+            mask = [0, 0, 0, 0]
+            for i in range(cidr):
+                mask[i/8] = mask[i/8] + (1 << (7 - i % 8))
+
+            net = []
+            for i in range(4):
+                net.append(int(ip[i]) & mask[i])
+
+            broad = list(net)
+            brange = 32 - cidr
+            for i in range(brange):
+                broad[3 - i/8] = broad[3 - i/8] + (1 << (i % 8))
+
+            return ".".join(map(str, net))
+
+        # Get address info from parsed output
+        ipv4_address = tunnel_ip[5]
+        subnet_mask = socket.inet_ntoa(struct.pack('!L', int(tunnel_ip[9], 16)))
+        cidr = netmask_to_cidr(subnet_mask)
+        router_address = get_network_addr(ipv4_address, cidr)
+
+        if not 'fe80' in tunnel_ip[11]:
+            ipv6_address = tunnel_ip[11]
+        else:
+            ipv6_address = "none"
+
+        network_service_list.append('Service: Tunnel Interface')
+        network_service_list.append('DHCP Configuration')
+        network_service_list.append('IP address: %s' % str(ipv4_address))
+        network_service_list.append('Subnet mask: %s' % str(subnet_mask))
+        network_service_list.append('Router: %s' % str(router_address))
+        network_service_list.append('Ethernet Address: 00:00:00:00:00:00')
+        network_service_list.append('Client ID:')
+        network_service_list.append('IPv6: Automatic')
+        network_service_list.append('IPv6 IP address: %s' % str(ipv6_address))
+        network_service_list.append('IPv6 Router: none')
+    except:
+        return
+
     
-    tunnel_ip = bashCommand(['ifconfig', 'utun1'])
-    tunnel_ip = tunnel_ip.split()
-
-    ## get address info from parsed output
-    def netmask_to_cidr(netmask):
-        return sum([bin(int(x)).count('1') for x in netmask.split('.')])
-
-    def get_network_addr(ip, cidr):
-        ip = ip.split('.')
-        cidr = int(cidr)
-
-        mask = [0, 0, 0, 0]
-        for i in range(cidr):
-            mask[i/8] = mask[i/8] + (1 << (7 - i % 8))
-
-        net = []
-        for i in range(4):
-            net.append(int(ip[i]) & mask[i])
-
-        broad = list(net)
-        brange = 32 - cidr
-        for i in range(brange):
-            broad[3 - i/8] = broad[3 - i/8] + (1 << (i % 8))
-
-        return ".".join(map(str, net))
-
-    ipv4_address = tunnel_ip[5]
-    subnet_mask = socket.inet_ntoa(struct.pack('!L', int(tunnel_ip[9], 16)))
-    cidr = netmask_to_cidr(subnet_mask)
-    router_address = get_network_addr(ipv4_address, cidr)
-
-    if not 'fe80' in tunnel_ip[11]:
-        ipv6_address = tunnel_ip[11]
-    else:
-        ipv6_address = "none"
-
-    network_service_list.append('Service: Tunnel Interface')
-    network_service_list.append('DHCP Configuration')
-    network_service_list.append('IP address: %s' % str(ipv4_address))
-    network_service_list.append('Subnet mask: %s' % str(subnet_mask))
-    network_service_list.append('Router: %s' % str(router_address))
-    network_service_list.append('Ethernet Address: 00:00:00:00:00:00')
-    network_service_list.append('Client ID:')
-    network_service_list.append('IPv6: Automatic')
-    network_service_list.append('IPv6 IP address: %s' % str(ipv6_address))
-    network_service_list.append('IPv6 Router: none')
 
 def main():
     '''Main'''
