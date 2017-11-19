@@ -13,8 +13,8 @@
         "rodneyrehm/plist": "^2.0"
     },
     "suggest": {
-        "onelogin/php-saml": "Required for SAML authentication",
-        "adldap2/adldap2": "Required for AD authentication"
+        "onelogin/php-saml": "^2.12 Required for SAML authentication",
+        "adldap2/adldap2": "^8.0 Required for AD authentication"
     },
     "autoload": {
         "psr-4": {
