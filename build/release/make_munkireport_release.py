@@ -100,6 +100,8 @@ def set_version(version):
         f.truncate()
         f.write(content)
 
+def get_version_from_string(str):
+    return str.split(" ", 1)[0]
 
 def main():
     """Builds and pushes a new munkireport-php release from an existing Git clone
@@ -214,7 +216,17 @@ https://github.com/settings/applications
     # install dependencies
     subprocess.check_call(['composer', 'install', '--no-dev',
         '--ignore-platform-reqs', '--optimize-autoloader'])
-    
+
+    # also install all suggested packages
+    data = json.load(open('composer.json'))
+    for key, value in  data['suggest'].iteritems():
+        version = get_version_from_string(value)
+        pkg = "%s:%s" % (key, version)
+        print ['composer', 'require', '--update-no-dev',
+                '--ignore-platform-reqs', '--optimize-autoloader', pkg]
+        subprocess.check_call(['composer', 'require', '--update-no-dev',
+                '--ignore-platform-reqs', '--optimize-autoloader', pkg])
+
     # zip up
     zip_file = 'munkireport-%s.zip' % current_version
     subprocess.check_call(['zip', '-r', zip_file, '.', '--exclude', '.git*'])
