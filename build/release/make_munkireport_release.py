@@ -103,6 +103,10 @@ def set_version(version):
 def get_version_from_string(str):
     return str.split(" ", 1)[0]
 
+def run_command(cmd):
+    print ' '.join(cmd)
+    subprocess.check_call(cmd)
+
 def main():
     """Builds and pushes a new munkireport-php release from an existing Git clone
 of munkireport-php.
@@ -155,7 +159,7 @@ https://github.com/settings/applications
     changelog_path = os.path.join(munkireport_root, 'CHANGELOG.md')
 
     # clone Git master
-    subprocess.check_call(
+    run_command(
         ['git', 'clone', #'--depth',  '1',
          'https://github.com/%s/%s' % (publish_user, publish_repo),
          munkireport_root])
@@ -163,7 +167,7 @@ https://github.com/settings/applications
     
     branch = 'wip'
     
-    subprocess.check_call(['git', 'checkout', branch])
+    run_command(['git', 'checkout', branch])
         
     # get the current munkireport-php version
     current_version = get_version()
@@ -198,13 +202,13 @@ https://github.com/settings/applications
         fdesc.write(new_changelog)
 
     # commit and push the new release
-    subprocess.check_call(['git', 'add', changelog_path])
-    subprocess.check_call(
+    run_command(['git', 'add', changelog_path])
+    run_command(
         ['git', 'commit', '-m', 'Release version %s.' % current_version])
-    subprocess.check_call(['git', 'tag', tag_name])
+    run_command(['git', 'tag', tag_name])
     if not opts.dry_run:
-        subprocess.check_call(['git', 'push', 'origin', branch])
-        subprocess.check_call(['git', 'push', '--tags', 'origin', branch])
+        run_command(['git', 'push', 'origin', branch])
+        run_command(['git', 'push', '--tags', 'origin', branch])
 
     # extract release notes for this new version
     notes_rex = r"(?P<current_ver_notes>\#\#\# \[%s\].+?)\#\#\#" % current_version
@@ -214,7 +218,7 @@ https://github.com/settings/applications
     release_notes = match.group('current_ver_notes')
     
     # install dependencies
-    subprocess.check_call(['composer', 'install', '--no-dev',
+    run_command(['composer', 'install', '--no-dev',
         '--ignore-platform-reqs', '--optimize-autoloader'])
 
     # also install all suggested packages
@@ -222,14 +226,12 @@ https://github.com/settings/applications
     for key, value in  data['suggest'].iteritems():
         version = get_version_from_string(value)
         pkg = "%s:%s" % (key, version)
-        print ['composer', 'require', '--update-no-dev',
-                '--ignore-platform-reqs', '--optimize-autoloader', pkg]
-        subprocess.check_call(['composer', 'require', '--update-no-dev',
+        run_command(['composer', 'require', '--update-no-dev',
                 '--ignore-platform-reqs', '--optimize-autoloader', pkg])
 
     # zip up
     zip_file = 'munkireport-%s.zip' % current_version
-    subprocess.check_call(['zip', '-r', zip_file, '.', '--exclude', '.git*'])
+    run_command(['zip', '-r', zip_file, '.', '--exclude', '.git*'])
     with open(zip_file, 'rb') as fdesc:
         zip_data = fdesc.read()
         
@@ -288,12 +290,12 @@ https://github.com/settings/applications
         fdesc.write(new_changelog)
 
     # commit and push increment
-    subprocess.check_call(['git', 'add', get_version_file_path(), changelog_path])
-    subprocess.check_call(
+    run_command(['git', 'add', get_version_file_path(), changelog_path])
+    run_command(
         ['git', 'commit', '-m',
          'Bumping to v%s for development.' % next_version])
     if not opts.dry_run:
-        subprocess.check_call(['git', 'push', 'origin', branch])
+        run_command(['git', 'push', 'origin', branch])
     else:
         print ("Ended dry-run mode. Final state of the munkireport-php repo can be "
                "found at: %s" % munkireport_root)
