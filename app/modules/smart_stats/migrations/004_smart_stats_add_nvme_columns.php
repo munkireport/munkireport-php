@@ -3,7 +3,11 @@
 class Migration_smart_stats_add_nvme_columns extends \Model
 {
     protected $new_columns = array(
+        'model_number' => 'VARCHAR(255)',
         'pci_vender_subsystem_id' => 'VARCHAR(255)',
+        'temperature_nvme' => 'BIGINT',
+        'power_on_hours_nvme' => 'BIGINT',
+        'power_cycle_count_nvme' => 'BIGINT',
         'critical_warning' => 'VARCHAR(255)',
         'available_spare' => 'BIGINT',
         'available_spare_threshold' => 'BIGINT',

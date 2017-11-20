@@ -27,14 +27,18 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (d[prop] == "Not in smartctl database [for details use: -P showall]"){ // Localize if drive is not in database
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
-                    } else if (prop == "error_poh" || prop == "error_count"){ // Formate SMART Errors
+                    } else if (prop == "error_poh" && d[prop] != 0){ // Format SMART Error Power on Hours
+					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td class="danger"><span title="'+Math.round((d[prop]/24), 2)+" "+i18n.t('date.day_plural')+'">'+d[prop]+'</span></td></tr>';
+                    } else if (prop == "power_on_hours" || prop == "power_on_hours_nvme"){ // Format Power on Hours
+					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+Math.round((d[prop]/24), 2)+" "+i18n.t('date.day_plural')+'">'+d[prop]+'</span></td></tr>';
+                    } else if (prop == "error_count" && d[prop] != 0){ // Format SMART Error count
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td class="danger">'+d[prop]+'</td></tr>';
                     } else if (prop == "total_lbas_written" || prop == "total_lbas_read"){ // Formate LBAs Read/Written
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+fileSize(d[prop] * 512)+'">'+d[prop]+'</span></td></tr>';
                     } else if (prop == "timestamp"){ // Format timestamp
 					   var timestamp = (d[prop] * 1000)
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+moment(+timestamp).format("YYYY-MM-DD H:mm:ss")+'</td></tr>';
-                    } else if (prop == "airflow_temperature_cel" || prop == "temperature_celsius"){ // Formate temperatures
+                    } else if (prop == "airflow_temperature_cel" || prop == "temperature_celsius" || prop == "temperature_nvme"){ // Format temperatures
 					   temperature_f = parseFloat(((d[prop] * 9/5 ) + 32 ).toFixed(2));
 					   if (d['temperature_unit'] == "F"){
 					        rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+d[prop]+'°C">'+temperature_f+'°F</span></td></tr>';

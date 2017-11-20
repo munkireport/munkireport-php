@@ -127,7 +127,11 @@ class Smart_stats_model extends \Model {
         $this->rs['sata_phy_error'] = 0; $this->rt['sata_phy_error'] = 'BIGINT';
         $this->rs['overall_health'] = '';
         $this->rs['pci_vender_subsystem_id'] = ''; // Start of NVMe columns
-        $this->rs['critical_warning'] = '';
+        $this->rs['model_number'] = '';
+        $this->rs['temperature_nvme'] = 0;
+        $this->rs['power_on_hours_nvme'] = 0;
+        $this->rs['power_cycle_count_nvme'] = 0;
+        $this->rs['critical_warning'] = '';  
         $this->rs['available_spare'] = 0; $this->rt['available_spare'] = 'BIGINT';
         $this->rs['available_spare_threshold'] = 0; $this->rt['available_spare_threshold'] = 'BIGINT';
         $this->rs['percentage_used'] = 0; $this->rt['percentage_used'] = 'BIGINT';
@@ -346,11 +350,10 @@ class Smart_stats_model extends \Model {
         	'FirmwareUpdates0x06' => 'firmware_updates',
         	'OptionalAdminCommands0x0006' => 'optional_admin_commands',
         	'OptionalNVMCommands0x001f' => 'optional_nvm_commands',
-        	'ModelNumber' => 'device_model', // Translated to existing column
-        	'Temperature' => 'temperature_celsius', // Translated to existing column
-        	'PowerCycles' => 'power_cycle_count',// Translated to existing column
-        	'PowerOnHours' => 'power_on_hours',// Translated to existing column
-        	'SerialNumber' => 'serial_number_hdd',// Translated to existing column
+        	'ModelNumber' => 'model_number',
+        	'Temperature' => 'temperature_nvme',
+        	'PowerCycles' => 'power_cycle_count_nvme',
+        	'PowerOnHours' => 'power_on_hours_nvme',
         	'MaximumDataTransferSize' => 'max_data_transfer_size', // End of NVMe translations  
         	'Overall_Health' => 'overall_health');
 
