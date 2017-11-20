@@ -43,13 +43,13 @@ mapObj.init = function() {
         };
 
     mapObj.map = new google.maps.Map($('#map')[0], options);
-    
+
     $.getJSON( appUrl + '/module/location/get_map_data', function( data ) {
         mapObj.machines = data;
         mapObj.infoWindow = new google.maps.InfoWindow();
         mapObj.showMarkers();
     });
-    
+
 };
 
 mapObj.showMarkers = function() {
@@ -60,7 +60,7 @@ mapObj.showMarkers = function() {
     }
 
     var numMarkers = mapObj.machines.length;
-	
+
 	var bounds = new google.maps.LatLngBounds();
 
     for (var i = 0; i < numMarkers; i++) {
@@ -87,10 +87,10 @@ mapObj.showMarkers = function() {
         var fn = mapObj.markerClickFunction(mapObj.machines[i], latLng);
         google.maps.event.addListener(marker, 'click', fn);
         mapObj.markers.push(marker);
-		
+
 		bounds.extend(latLng);
     }
-	
+
 	// Set center and zoom
 	var center = bounds.getCenter();
 	mapObj.map.fitBounds(bounds);
@@ -111,8 +111,8 @@ mapObj.markerClickFunction = function(machine, latlng) {
     var url = machine.photo_url;
     var fileurl = machine.photo_file_url;
 
-    var infoHtml = '<div class="info">' + 
-	'<img style="width:120px; height: auto" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode='+machine.serial_number.substr(8)+'&amp;size=240x240" />' +
+    var infoHtml = '<div class="info">' +
+	'<img style="width:120px; height: auto" src="https://km.support.apple.com/kb/securedImage.jsp?configcode='+machine.serial_number.substr(8)+'&amp;size=240x240" />' +
       '<div class="info-body">' +
       machine.long_username +
       '<br/>' +
