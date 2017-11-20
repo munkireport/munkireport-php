@@ -284,7 +284,7 @@ class Smart_stats_model extends \Model {
         	'Total_Reads_GiB' => 'total_reads_gib',
         	'Total_Writes_GiB' => 'total_writes_gib',
         	'Thermal_Throttle' => 'thermal_throttle',
-        	'Perc_WriteErase_Count' => 'perc_writeerase_count',
+        	'Perc_WriteErase_Count' => 'perc_writeerase_Count',
         	'Perc_Avail_Resrvd_Space' => 'perc_avail_resrvd_space',
         	'Perc_WriteErase_Ct_BC' => 'perc_writeerase_ct_bc',
         	'SATA_PHY_Error' => 'sata_phy_error',
