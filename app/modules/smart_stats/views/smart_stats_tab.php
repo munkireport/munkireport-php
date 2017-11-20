@@ -8,6 +8,9 @@ $(document).on('appReady', function(){
 	$.getJSON(appUrl + '/module/smart_stats/get_client_tab_data/' + serialNumber, function(data){
 		var skipThese = ['id','serial_number','disk_number','temperature_unit'];
 		$.each(data, function(i,d){
+            
+			// Set the tab badge to blank
+			$('#smart_stats-cnt').html("");
 			
 			// Generate rows from data
 			var rows = ''
@@ -52,6 +55,8 @@ $(document).on('appReady', function(){
                             var drive_health = " <span class='label label-warning'>"+i18n.t('unknown')+"</span>"
                         } else if (d['overall_health'] == "FAILED!"){
                            var drive_health = " <span class='label label-danger'>"+i18n.t('failing')+"</span>"
+                           // Update the tab badge
+                           $('#smart_stats-cnt').html(i18n.t('failing'));
                         } else { var drive_health = d['overall_health'] }
                     } else {
                         rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
