@@ -16,7 +16,7 @@ $(document).on('appReady', function(){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
                     if (d[prop] == null){
-					   // Do nothing for the fake nulls to blank them
+					   // Do nothing for the nulls to blank them
                     } else if (d[prop] == "" && d[prop] != "0"){
 					   // Do nothing for the nulls to blank them
                     } else if (d[prop] == "Enabled"){ // Localize enabled
@@ -33,7 +33,7 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+Math.round((d[prop]/24), 2)+" "+i18n.t('date.day_plural')+'">'+d[prop]+'</span></td></tr>';
                     } else if (prop == "error_count" && d[prop] != 0){ // Format SMART Error count
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td class="danger">'+d[prop]+'</td></tr>';
-                    } else if (prop == "total_lbas_written" || prop == "total_lbas_read"){ // Formate LBAs Read/Written
+                    } else if (prop == "total_lbas_written" || prop == "total_lbas_read"){ // Format LBAs Read/Written
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span title="'+fileSize(d[prop] * 512)+'">'+d[prop]+'</span></td></tr>';
                     } else if (prop == "timestamp"){ // Format timestamp
 					   var timestamp = (d[prop] * 1000)
