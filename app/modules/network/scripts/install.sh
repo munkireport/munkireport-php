@@ -3,6 +3,9 @@
 # filevault_status_controller
 NW_CTL="${BASEURL}index.php?/module/network/"
 
+# remove the previous networkinfo.sh if installed
+rm -f "${MUNKIPATH}preflight.d/networkinfo.sh"
+
 # Get the script in the proper directory
 "${CURL[@]}" "${NW_CTL}get_script/networkinfo.py" -o "${MUNKIPATH}preflight.d/networkinfo.py"
 
