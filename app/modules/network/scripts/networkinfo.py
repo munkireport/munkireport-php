@@ -28,7 +28,6 @@ def get_network_info():
 def get_tunnel_info():
     ## Things to do:
     ## 1: Make the parser smarter so in case things aren't where we expect, we don't ship bad info
-    ## 2: Allow the function to loop over all 'utun' addresses if there are multiple
     
     utun_adapter_count = os.popen('ifconfig | grep -c "utun[0-9]:"').read()[0]
     if int(utun_adapter_count) > 1:
