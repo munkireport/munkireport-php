@@ -1,16 +1,19 @@
 <?php
-class munki_conditions_model extends Model
+
+use CFPropertyList\CFPropertyList;
+
+class Munki_facts_model extends Model
 {
 
     public function __construct($serial = '')
     {
-          parent::__construct('id', 'munki_conditions'); //primary key, tablename
+          parent::__construct('id', 'munki_facts'); //primary key, tablename
           $this->rs['id'] = 0;
           $this->rs['serial_number'] = $serial;
-          $this->rs['condition_key'] = '';
-          $this->rt['condition_key'] = 'TEXT';
-          $this->rs['condition_value'] = '';
-          $this->rt['condition_value'] = 'TEXT';
+          $this->rs['fact_key'] = '';
+          $this->rt['fact_key'] = 'TEXT';
+          $this->rs['fact_value'] = '';
+          $this->rt['fact_value'] = 'TEXT';
         
           // Schema version, increment when creating a db migration
           $this->schema_version = 0;
@@ -36,19 +39,14 @@ class munki_conditions_model extends Model
    **/
     public function process($plist)
     {
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($plist);
 
         $plist = $parser->toArray();
-
         $this->deleteWhere('serial_number=?', $this->serial_number);
-            $item = array_pop($plist);
-
-            reset($item);
-        while (list($key, $val) = each($item)) {
-                $this->condition_key = $key;
-                $this->condition_value = $val;
+        while (list($key, $val) = each($plist)) {
+                $this->fact_key = $key;
+                $this->fact_value = $val;
 
                 $this->id = '';
                 $this->save();

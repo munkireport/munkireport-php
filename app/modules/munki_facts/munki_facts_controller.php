@@ -1,12 +1,12 @@
 <?php
 /**
- * munki_conditions status module class
+ * munki_facts status module class
  *
  * @package munkireport
  * @author nperkins487
  *
  **/
-class munki_conditions_controller extends Module_controller
+class Munki_facts_controller extends Module_controller
 {
     
     protected $module_path;
@@ -27,7 +27,7 @@ class munki_conditions_controller extends Module_controller
    **/
     public function index()
     {
-        echo "You've loaded the munki_conditions module!";
+        echo "You've loaded the munki_facts module!";
     }
   
     /**
@@ -46,11 +46,11 @@ class munki_conditions_controller extends Module_controller
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
         $obj = new View();
-        $obj->view('munki_conditions_listing', $data, $this->view_path);
+        $obj->view('munki_facts_listing', $data, $this->view_path);
     }
 
     /**
-     * Get munki conditions for serial_number
+     * Get munki facts for serial_number
      *
      * @param string $serial serial number
      * @author clburlison
@@ -63,12 +63,12 @@ class munki_conditions_controller extends Module_controller
         if (! $this->authorized()) {
             $out['error'] = 'Not authorized';
         } else {
-            $munki_conditions = new munki_conditions_model;
-            foreach ($munki_conditions->retrieve_records($serial) as $conditions) {
-                $temp[] = $conditions->rs;
+            $munki_facts = new munki_facts_model;
+            foreach ($munki_facts->retrieve_records($serial) as $facts) {
+                $temp[] = $facts->rs;
             }
             foreach ($temp as $value) {
-                $out[$value['condition_key']] = $value['condition_value'];
+                $out[$value['fact_key']] = $value['fact_value'];
             }
         }
 

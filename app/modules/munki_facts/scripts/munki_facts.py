@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-munki_conditions for munkireport
+munki_facts for munkireport
 """
 
 import os
@@ -16,9 +16,9 @@ class DateTimeEncoder(json.JSONEncoder):
 
         return json.JSONEncoder.default(self, o)
 
-def gather_conditions(path):
+def gather_facts(path):
   """
-  Read condition keys and values from the ManagedInstallReport and process them into a
+  Read fact keys and values from the ManagedInstallReport and process them into a
   dict of strings less than 256 characters.
   """
   try:
@@ -27,19 +27,21 @@ def gather_conditions(path):
     print 'Could not find ManagedInstallReport.plist'
     return {}
 
-  conditions = {}
+  facts = {}
 
   if plist.get('Conditions'):
     for key, value in plist['Conditions'].iteritems():
+      if key == 'date':
+          continue
       key = key[:65535]
       if isinstance(value, list) and len(value) > 0:
-        conditions[key] = json.dumps(value)[:65535]
+        facts[key] = json.dumps(value)[:65535]
       else:
-        conditions[key] = str(value)[:65535]
+        facts[key] = str(value)[:65535]
   else:
-    print 'No conditions found.'
+    print 'No facts found.'
 
-  return conditions
+  return facts
 
 
 def main():
@@ -56,13 +58,13 @@ def main():
 
   if not os.path.exists(managed_install_report):
     print "%s is missing." % managed_install_report
-    conditions_report = {}
+    facts_report = {}
   else:
-    conditions_report = gather_conditions(managed_install_report)
+    facts_report = gather_facts(managed_install_report)
 
   # Write munkiinfo report to cache
-  output_plist = os.path.join(cache_dir, 'munki_conditions.plist')
-  plistlib.writePlist(conditions_report, output_plist)
+  output_plist = os.path.join(cache_dir, 'munki_facts.plist')
+  plistlib.writePlist(facts_report, output_plist)
 
 if __name__ == '__main__':
   main()

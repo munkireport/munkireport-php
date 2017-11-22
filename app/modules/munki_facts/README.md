@@ -8,7 +8,7 @@ The results of these scripts are stored in the 'Conditions' dictionary in `/Libr
 
 Both keys and values are truncated to 65,535 characters.
 
-The following information is stored in the munki_conditions table:
+The following information is stored in the munki_facts table:
 
 * serial_number
 * condition_key

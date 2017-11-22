@@ -1,8 +1,8 @@
 #!/bin/bash
 
-MODULE_NAME="munki_conditions"
-MODULESCRIPT="munki_conditions.py"
-MODULE_CACHE_FILE="munki_conditions.plist"
+MODULE_NAME="munki_facts"
+MODULESCRIPT="munki_facts.py"
+MODULE_CACHE_FILE="munki_facts.plist"
 
 CTL="${BASEURL}index.php?/module/${MODULE_NAME}/"
 

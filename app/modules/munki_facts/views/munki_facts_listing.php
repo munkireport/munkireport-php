@@ -3,13 +3,13 @@
 <?php //Initialize models needed for the table
 new Machine_model;
 new Reportdata_model;
-new Munki_conditions_model;
+new Munki_facts_model;
 ?>
 
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h3><span data-i18n="munki_conditions.reporttitle"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+      <h3><span data-i18n="munki_facts.reporttitle"></span> <span id="total-count" class='label label-primary'>…</span></h3>
       
       <table class="table table-striped table-condensed table-bordered">
         <thead>
@@ -17,8 +17,8 @@ new Munki_conditions_model;
             <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
             <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
             <th data-i18n="username" data-colname='reportdata.long_username'></th>
-            <th data-i18n="munki_conditions.key" data-colname='munki_conditions.condition_key'></th>
-            <th data-i18n="munki_conditions.value" data-colname='munki_conditions.condition_value'></th>
+            <th data-i18n="munki_facts.key" data-colname='munki_facts.fact_key'></th>
+            <th data-i18n="munki_facts.value" data-colname='munki_facts.fact_value'></th>
                 <th data-i18n="last_seen" data-sort="desc" data-colname='reportdata.timestamp'></th>
           </tr>
         </thead>
@@ -92,7 +92,7 @@ new Munki_conditions_model;
             var name=$('td:eq(0)', nRow).html();
             if(name == ''){name = "No Name"};
             var sn=$('td:eq(1)', nRow).html();
-                var link = mr.getClientDetailLink(name, sn, '#tab_munki');
+                var link = mr.getClientDetailLink(name, sn, '#tab_munki_facts');
                 $('td:eq(0)', nRow).html(link);
 
                 // Format date
