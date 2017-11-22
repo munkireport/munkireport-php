@@ -32,7 +32,7 @@ class Appusage_model extends \Model
         $this->create_table();
     }
 
-    // Override create_table to use illuminate/databse capsule
+    // Override create_table to use illuminate/database capsule
     public function create_table() {
         // Check if we instantiated this table before
         if (isset($GLOBALS['tables'][$this->tablename])) {
@@ -65,6 +65,13 @@ class Appusage_model extends \Model
                 $table->index('last_time_epoch', 'appusage_last_time_epoch');
                 $table->index('number_times', 'appusage_number_times');
             });
+
+//            // Store schema version in migration table
+//            $migration = new Migration($this->tablename);
+//            $migration->version = $this->schema_version;
+//            $migration->save();
+//
+//            alert("Created table '$this->tablename' version $this->schema_version");
         }
 
         // Store this table in the instantiated tables array
