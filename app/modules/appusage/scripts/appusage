@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
 # Munki database check
 
 MANAGEDINSTALLDIR=$(/usr/bin/python -c "from Foundation import CFPreferencesCopyAppValue; print CFPreferencesCopyAppValue('ManagedInstallDir', 'ManagedInstalls')")

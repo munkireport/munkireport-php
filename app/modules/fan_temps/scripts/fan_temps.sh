@@ -1,6 +1,12 @@
 #!/bin/bash
 # Created by tuxudo for MunkiReport-PHP
 
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
 # Create cache dir if it does not exist
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
