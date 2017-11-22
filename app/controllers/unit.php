@@ -91,7 +91,7 @@ class unit extends Controller
         }
 
         usort($out, function($a, $b) {
-            return strcmp($a['name'], $b['name']);
+            return strcasecmp($a['name'], $b['name']);
         });
         
         $obj = new View();
