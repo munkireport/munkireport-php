@@ -60,7 +60,7 @@ class Business_unit extends \Model
 //            $migration->version = $this->schema_version;
 //            $migration->save();
 //
-//            alert("Created table '$this->tablename' version $this->schema_version");
+            alert("Created table '$this->tablename' version $this->schema_version");
         }
 
         // Store this table in the instantiated tables array
