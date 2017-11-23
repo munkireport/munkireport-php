@@ -55,6 +55,52 @@ class Directory_service_model extends \Model
             $this->serial = $serial;
         }
     }
+
+    // Override create_table to use illuminate/database capsule
+    public function create_table() {
+        // Check if we instantiated this table before
+        if (isset($GLOBALS['tables'][$this->tablename])) {
+            return true;
+        }
+
+        $capsule = $this->getCapsule();
+
+        try {
+            $exist = $capsule::table('directoryservice')->limit(1)->count();
+        } catch (PDOException $e) {
+            $capsule::schema()->create('directoryservice', function ($table) {
+                $table->increments('id');
+                $table->string('serial_number');
+                $table->string('which_directory_service');
+                $table->string('directory_service_comments');
+                $table->string('adforest');
+                $table->string('addomain');
+                $table->string('computeraccount');
+                $table->boolean('createmobileaccount');
+                $table->boolean('requireconfirmation');
+                $table->boolean('forcehomeinstartup');
+                $table->boolean('mounthomeassharepoint');
+                $table->boolean('usewindowsuncpathforhome');
+                $table->string('networkprotocoltobeused');
+                $table->string('defaultusershell');
+                $table->string('mappinguidtoattribute');
+
+            });
+
+            // Store schema version in migration table
+//            $migration = new Migration($this->tablename);
+//            $migration->version = $this->schema_version;
+//            $migration->save();
+
+            alert("Created table '$this->tablename' version $this->schema_version");
+        }
+
+        // Store this table in the instantiated tables array
+        $GLOBALS['tables'][$this->tablename] = $this->tablename;
+
+        // Create table succeeded
+        return true;
+    }
     
     /**
      * Get bound stats

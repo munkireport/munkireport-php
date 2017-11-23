@@ -102,10 +102,10 @@ class Deploystudio_model extends \Model
 
                 $table->index('cn', 'deploystudio_cn');
                 $table->index('dstudio_host_serial_number', 'deploystudio_dstudio_host_serial_number');
-                $table->index('dstudio_hostname', 'deploystudio_dstudio_');
-                $table->index('dstudio_last_workflow', 'deploystudio_dstudio_');
-                $table->index('dstudio_mac_addr', 'deploystudio_dstudio_');
-                $table->index('serial_number', 'deploystudio_dstudio_');
+                $table->index('dstudio_hostname', 'deploystudio_dstudio_hostname');
+                $table->index('dstudio_last_workflow', 'deploystudio_dstudio_last_workflow');
+                $table->index('dstudio_mac_addr', 'deploystudio_dstudio_mac_addr');
+                $table->index('dstudio_host_serial_number', 'deploystudio_dstudio_host_serial_number');
 
             });
 
