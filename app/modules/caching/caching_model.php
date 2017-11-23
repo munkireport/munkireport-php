@@ -94,12 +94,12 @@ class Caching_model extends \Model
                 $table->index('serial_number', 'caching_serial_number');
             });
 
-//            // Store schema version in migration table
+            // Store schema version in migration table
 //            $migration = new Migration($this->tablename);
 //            $migration->version = $this->schema_version;
 //            $migration->save();
-//
-//            alert("Created table '$this->tablename' version $this->schema_version");
+
+            alert("Created table '$this->tablename' version $this->schema_version");
         }
 
         // Store this table in the instantiated tables array
