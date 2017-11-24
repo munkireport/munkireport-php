@@ -70,7 +70,7 @@ class Directory_service_model extends \Model
         } catch (PDOException $e) {
             $capsule::schema()->create('directoryservice', function ($table) {
                 $table->increments('id');
-                $table->string('serial_number');
+                $table->string('serial_number')->unique();
                 $table->string('which_directory_service');
                 $table->string('directory_service_comments');
                 $table->string('adforest');
@@ -84,7 +84,21 @@ class Directory_service_model extends \Model
                 $table->string('networkprotocoltobeused');
                 $table->string('defaultusershell');
                 $table->string('mappinguidtoattribute');
+                $table->string('mappingusergidtoattribute');
+                $table->string('mappinggroupgidtoattr');
+                $table->boolean('generatekerberosauth');
+                $table->string('preferreddomaincontroller');
+                $table->string('allowedadmingroups');
+                $table->boolean('authenticationfromanydomain');
+                $table->string('packetsigning');
+                $table->string('packetencryption');
+                $table->string('passwordchangeinterval');
+                $table->string('restrictdynamicdnsupdates');
+                $table->string('namespacemode');
 
+                $table->index('allowedadmingroups', 'directoryservice_allowedadmingroups');
+                $table->index('directory_service_comments', 'directoryservice_directory_service_comments');
+                $table->index('which_directory_service', 'directoryservice_which_directory_service');
             });
 
             // Store schema version in migration table
