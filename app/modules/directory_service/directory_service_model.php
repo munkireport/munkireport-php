@@ -115,7 +115,7 @@ class Directory_service_model extends \Model
         // Create table succeeded
         return true;
     }
-    
+
     /**
      * Get bound stats
      *
