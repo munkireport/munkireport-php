@@ -1,17 +1,10 @@
 <?php
-
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Machine extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         $capsule = new Capsule();
@@ -28,7 +21,7 @@ class Machine extends Migration
             $table->string('cpu_arch')->nullable();
             $table->integer('os_version')->nullable();
             $table->integer('physical_memory')->nullable();
-            $table->uuid('platform_UUID')->nullable();
+            $table->string('platform_UUID')->nullable();
             $table->integer('number_processors')->nullable();
             $table->string('SMC_version_system')->nullable();
             $table->string('boot_rom_version')->nullable();
@@ -42,12 +35,7 @@ class Machine extends Migration
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    
     public function down()
     {
         $capsule = new Capsule();
