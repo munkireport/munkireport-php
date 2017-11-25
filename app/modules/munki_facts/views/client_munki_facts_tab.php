@@ -19,7 +19,7 @@ $(document).on('appReady', function(e, lang) {
   // Get munki_facts data
   $.getJSON( appUrl + '/module/munki_facts/get_data/' + serialNumber, function( data ) {
     if( Object.keys(data).length === 0 ){
-      $('#munki_facts-msg').text(i18n.t('No Munki Condition Data Found!'));
+      $('#munki_facts-msg').text(i18n.t('munki_facts.not_found'));
     }
     else{
       // Hide
