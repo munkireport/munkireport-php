@@ -102,6 +102,33 @@ class system extends Controller
         ));
     }
 
+    public function migrate()
+    {
+        $capsule = new Capsule();
+        $capsule->addConnection([
+            'username' => conf('pdo_user'),
+            'password' => conf('pdo_pass'),
+            'driver' => 'sqlite',
+            'database' => conf('application_path').'db/db.sqlite'
+        ]);
+        $capsule->setAsGlobal();
+        $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
+
+        if (!$repository->repositoryExists()) {
+            $repository->createRepository();
+        }
+
+        $files = new Filesystem();
+        $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
+        $migrationFiles = $migrator->run(APP_ROOT . 'database/migrations', Array('pretend' => true));
+
+        $obj = new View();
+        $obj->view('json', array('msg' => Array(
+            'files' => $migrationFiles,
+            'notes' => $migrator->getNotes())
+        ));
+    }
+
     //===============================================================
 
     /**
