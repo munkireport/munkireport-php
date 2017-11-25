@@ -87,7 +87,14 @@ class system extends Controller
 
         $files = new Filesystem();
         $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
-        $migrationFiles = $migrator->run(APP_ROOT . 'database/migrations', Array('pretend' => true));
+        $dirs = Array(APP_ROOT . 'database/migrations');
+        foreach (conf('modules') as $module) {
+            $migration_dir = APP_ROOT . 'app/modules/' . $module . '/migrations';
+            if (file_exists($migration_dir)) {
+                $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
+            }
+        }
+        $migrationFiles = $migrator->run($dirs, Array('pretend' => true));
         $migrationFilenames = Array();
 
         foreach ($migrationFiles as $mf) {
@@ -120,7 +127,14 @@ class system extends Controller
 
         $files = new Filesystem();
         $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
-        $migrationFiles = $migrator->run(APP_ROOT . 'database/migrations', Array('pretend' => true));
+        $dirs = Array(APP_ROOT . 'database/migrations');
+        foreach (conf('modules') as $module) {
+            $migration_dir = APP_ROOT . 'app/modules/' . $module . '/migrations';
+            if (file_exists($migration_dir)) {
+                $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
+            }
+        }
+        $migrationFiles = $migrator->run($dirs, Array('pretend' => true));
 
         $obj = new View();
         $obj->view('json', array('msg' => Array(

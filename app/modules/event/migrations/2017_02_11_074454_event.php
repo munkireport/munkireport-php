@@ -20,6 +20,11 @@ class Event extends Migration
             $table->integer('timestamp');
 
             //$table->timestamps();
+
+            $table->index('msg', 'event_');
+            $table->index('serial_number', 'event_');
+            $table->index(['serial_number', 'module'], 'event_serial_number_module');
+            $table->index('type', 'event_type');
         });
     }
     
