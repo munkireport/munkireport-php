@@ -28,8 +28,12 @@ $(document).on('appReady', function(e, lang) {
                   
       // Add data
       for (var key in data) {
-        var element = '<tr><th>' + key + '</th><td>' + data[key] + '</td></tr>'
-        $('#munki_facts-table tbody').append(element)
+        $('#munki_facts-table tbody').append(
+            $('<tr/>').append(
+                $('<th/>').text(key),
+                $('<td/>').text(data[key])
+            )
+        )
       }
     }
 
