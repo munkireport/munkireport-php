@@ -1,0 +1,17 @@
+.table-console {
+    background: black;
+    color: ghostwhite;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 1.4rem;
+
+    padding: 1rem;
+}
+
+.table-console > tbody {
+    overflow-y: scroll;
+}
+
+.table-console tbody tr td {
+    border: none;
+    padding: 2px 0;
+}

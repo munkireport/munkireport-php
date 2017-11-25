@@ -7,16 +7,23 @@
     <div class="row">
         <div id="mr-migrations" class="col-lg-6">
             <h4 data-i18n="database.migrations.pending">Upgrades Pending</h4>
-            <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
+            <table class="table table-striped">
+                <tr><td data-i18n="loading"></td></tr>
+            </table>
         </div>
         <div id="mr-sqllog" class="col-lg-6">
             <h4 data-i18n="database.log">Upgrade Log</h4>
-            <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
+            <table class="table table-console">
+                <tr><td data-i18n="database.loghelp">Perform an upgrade and the log results will be displayed here</td></tr>
+            </table>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <button id="db-upgrade" class="btn btn-default"><span id="db-upgrade-label" data-i18n="database.upgrade">Upgrade now</span> <span class="glyphicon glyphicon-export"></span></button>
+            <button id="db-upgrade" class="btn btn-default">
+                <span id="db-upgrade-label" data-i18n="database.upgrade">Upgrade now</span>
+                <span class="glyphicon glyphicon-export"></span>
+            </button>
         </div>
     </div>
 </div>  <!-- /container -->
@@ -35,10 +42,19 @@
 
             $.getJSON(appUrl + '/system/migrate', function(data) {
                 done();
+
+                if (data.notes) {
+                    var table = $('#mr-sqllog table').empty();
+
+                    for (var i = 0; i < data.notes.length; i++) {
+                        table.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
+                    }
+                }
             }).fail(function(jqXHR, textStatus, error) {
                 done();
             })
         });
+        
         $.getJSON(appUrl + '/system/migrationsPending', function( data ) {
             var table = $('#mr-migrations table').empty();
 
