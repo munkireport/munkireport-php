@@ -1,9 +1,12 @@
 <?php
-
 namespace munkireport\controller;
 
 use \Controller, \View;
+use Illuminate\Filesystem\Filesystem;
 use munkireport\lib\Database;
+use Illuminate\Database\Migrations\Migrator;
+use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class system extends Controller
 {
@@ -64,6 +67,39 @@ class system extends Controller
         // Get size
         $obj = new View();
         $obj->view('json', array('msg' => $out));
+    }
+
+    public function migrationsPending()
+    {
+        $capsule = new Capsule();
+        $capsule->addConnection([
+            'username' => conf('pdo_user'),
+            'password' => conf('pdo_pass'),
+            'driver' => 'sqlite',
+            'database' => conf('application_path').'db/db.sqlite'
+        ]);
+        $capsule->setAsGlobal();
+        $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
+
+        if (!$repository->repositoryExists()) {
+            $repository->createRepository();
+        }
+
+        $files = new Filesystem();
+        $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
+        $migrationFiles = $migrator->run(APP_ROOT . 'database/migrations', Array('pretend' => true));
+        $migrationFilenames = Array();
+
+        foreach ($migrationFiles as $mf) {
+            $migrationFilenames[] = basename($mf);
+        }
+
+
+        $obj = new View();
+        $obj->view('json', array('msg' => Array(
+            'files_pending' => $migrationFilenames,
+            'notes' => $migrator->getNotes())
+        ));
     }
 
     //===============================================================
