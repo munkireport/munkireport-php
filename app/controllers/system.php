@@ -134,13 +134,22 @@ class system extends Controller
                 $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
             }
         }
-        $migrationFiles = $migrator->run($dirs, Array('pretend' => true));
 
         $obj = new View();
-        $obj->view('json', array('msg' => Array(
-            'files' => $migrationFiles,
-            'notes' => $migrator->getNotes())
-        ));
+
+        try {
+            $migrationFiles = $migrator->run($dirs, Array('pretend' => false));
+
+            $obj->view('json', array('msg' => Array(
+                'files' => $migrationFiles,
+                'notes' => $migrator->getNotes())
+            ));
+        } catch (\PDOException $exception) {
+            $obj->view('json', array('msg' => Array(
+                'notes' => $migrator->getNotes(),
+                'error' => $exception->getMessage()
+            )));
+        }
     }
 
     //===============================================================
