@@ -80,16 +80,15 @@ class Disk_report_model extends \Model
      **/
     public function get_volume_type()
     {
-        $sql = "SELECT COUNT(CASE WHEN VolumeType = 'bootcamp' THEN 1 END) AS bootcamp,
-						COUNT(CASE WHEN VolumeType = 'Journaled HFS+' THEN 1 END) AS hfs,
-						COUNT(CASE WHEN VolumeType = 'APFS' THEN 1 END) AS apfs
+        $sql = "SELECT VolumeType as type, count(*) as count FROM diskreport
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
 						WHERE Internal = 1
+                        GROUP by VolumeType
 						".get_machine_group_filter('AND');
         return current($this->query($sql));
     }
-
+    
     /**
      * Get statistics
      *
