@@ -54,7 +54,7 @@ class Supported_os_model extends Model
             if ($model_num >= 11) {
                 $plist['highest_supported'] = $most_current_os;
             }
-        else if (strpos($plist['machine_id'], 'iMac') !== false) {
+        } else if (strpos($plist['machine_id'], 'iMac') !== false) {
             $model_num = preg_replace("/[^0-9]/", "", $plist['machine_id']);
             if ($model_num >= 101) {
                 $plist['highest_supported'] = $most_current_os;
