@@ -234,6 +234,11 @@ class AuthSaml extends AbstractAuth
         return $out;
     }
 
+    private function debug()
+    {
+        return isset($this->config['debug']) && $this->config['debug'] == true;
+    }
+
     public function login($login, $password)
     {
         redirect('auth/saml/sso');
