@@ -34,7 +34,7 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('timemachine.'+d[prop])+'</td></tr>';
 
                     } else if(d[prop] == 'NotEncrypted'){
-					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('unencrypted')+'</td></tr>';
+					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('storage.not_encrypted')+'</td></tr>';
                     } else if(d[prop] == 'Encrypted'){
 					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('encrypted')+'</td></tr>';
 
