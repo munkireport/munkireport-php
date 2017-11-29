@@ -11,7 +11,7 @@ class Findmymac extends Migration
         $capsule::schema()->create('findmymac', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number');
+            $table->string('serial_number')->unique();
             $table->string('status');
             $table->string('ownerdisplayname')->nullable();
             $table->string('email')->nullable();
