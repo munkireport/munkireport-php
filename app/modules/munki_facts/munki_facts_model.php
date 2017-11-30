@@ -31,6 +31,23 @@ class Munki_facts_model extends Model
         }
     }
 
+     public function get_facts_report()
+     {
+        $out = array();
+        $sql = "SELECT fact_key, COUNT(1) AS count
+                FROM munki_facts
+                GROUP BY fact_key
+                ORDER BY COUNT DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->fact_key = $obj->fact_key ? $obj->fact_key : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+
   /**
    * Process data sent by postflight
    *

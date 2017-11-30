@@ -75,5 +75,18 @@ class Munki_facts_controller extends Module_controller
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
+    
+    public function get_facts_report()
+     {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $munki_facts = new Munki_facts_model;
+        $obj->view('json', array('msg' => $munki_facts->get_facts_report()));
+     }
 
 } // END class default_module
