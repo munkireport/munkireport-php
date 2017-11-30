@@ -14,7 +14,6 @@
 
 	<div class="row">
 
-		<?php $widget->view($this, 'caching_graph'); ?>
 
 	</div> <!-- /row -->
 
