@@ -81,32 +81,41 @@ class system extends Controller
         $capsule->setAsGlobal();
         $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
 
-        if (!$repository->repositoryExists()) {
-            $repository->createRepository();
-        }
-
-        $files = new Filesystem();
-        $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
-        $dirs = Array(APP_ROOT . 'database/migrations');
-        foreach (conf('modules') as $module) {
-            $migration_dir = APP_ROOT . 'app/modules/' . $module . '/migrations';
-            if (file_exists($migration_dir)) {
-                $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
+        try {
+            if (!$repository->repositoryExists()) {
+                $repository->createRepository();
             }
+
+            $files = new Filesystem();
+            $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
+            $dirs = Array(APP_ROOT . 'database/migrations');
+            foreach (conf('modules') as $module) {
+                $migration_dir = APP_ROOT . 'app/modules/' . $module . '/migrations';
+                if (file_exists($migration_dir)) {
+                    $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
+                }
+            }
+            $migrationFiles = $migrator->run($dirs, Array('pretend' => true));
+            $migrationFilenames = Array();
+
+            foreach ($migrationFiles as $mf) {
+                $migrationFilenames[] = basename($mf);
+            }
+
+
+            $obj = new View();
+            $obj->view('json', array('msg' => Array(
+                'files_pending' => $migrationFilenames,
+                'notes' => $migrator->getNotes())
+            ));
+        } catch (\Exception $e) {
+            $obj = new View();
+            $obj->view('json', array('msg' => Array(
+                'error' => true,
+                'error_message' => $e->getMessage(),
+                'error_trace' => $e->getTrace()
+            )));
         }
-        $migrationFiles = $migrator->run($dirs, Array('pretend' => true));
-        $migrationFilenames = Array();
-
-        foreach ($migrationFiles as $mf) {
-            $migrationFilenames[] = basename($mf);
-        }
-
-
-        $obj = new View();
-        $obj->view('json', array('msg' => Array(
-            'files_pending' => $migrationFilenames,
-            'notes' => $migrator->getNotes())
-        ));
     }
 
     public function migrate()
@@ -121,33 +130,42 @@ class system extends Controller
         $capsule->setAsGlobal();
         $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
 
-        if (!$repository->repositoryExists()) {
-            $repository->createRepository();
-        }
-
-        $files = new Filesystem();
-        $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
-        $dirs = Array(APP_ROOT . 'database/migrations');
-        foreach (conf('modules') as $module) {
-            $migration_dir = APP_ROOT . 'app/modules/' . $module . '/migrations';
-            if (file_exists($migration_dir)) {
-                $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
-            }
-        }
-
-        $obj = new View();
-
         try {
-            $migrationFiles = $migrator->run($dirs, Array('pretend' => false));
+            if (!$repository->repositoryExists()) {
+                $repository->createRepository();
+            }
 
+            $files = new Filesystem();
+            $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
+            $dirs = Array(APP_ROOT . 'database/migrations');
+            foreach (conf('modules') as $module) {
+                $migration_dir = APP_ROOT . 'app/modules/' . $module . '/migrations';
+                if (file_exists($migration_dir)) {
+                    $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
+                }
+            }
+
+            $obj = new View();
+
+            try {
+                $migrationFiles = $migrator->run($dirs, Array('pretend' => false));
+
+                $obj->view('json', array('msg' => Array(
+                    'files' => $migrationFiles,
+                    'notes' => $migrator->getNotes())
+                ));
+            } catch (\PDOException $exception) {
+                $obj->view('json', array('msg' => Array(
+                    'notes' => $migrator->getNotes(),
+                    'error' => $exception->getMessage()
+                )));
+            }
+        } catch (\Exception $e) {
+            $obj = new View();
             $obj->view('json', array('msg' => Array(
-                'files' => $migrationFiles,
-                'notes' => $migrator->getNotes())
-            ));
-        } catch (\PDOException $exception) {
-            $obj->view('json', array('msg' => Array(
-                'notes' => $migrator->getNotes(),
-                'error' => $exception->getMessage()
+                'error' => true,
+                'error_message' => $e->getMessage(),
+                'error_trace' => $e->getTrace()
             )));
         }
     }
