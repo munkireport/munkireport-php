@@ -8,7 +8,7 @@
 
   <div class="row">
 
-	  <?php $widget->view($this, 'munki_facts_group'); ?>
+	  <?php $widget->view($this, 'munki_facts'); ?>
 
   </div> <!-- /row -->
 
