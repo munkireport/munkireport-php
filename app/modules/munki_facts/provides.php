@@ -10,5 +10,7 @@ return array(
     'reports' => array(
         'munki_facts' => array('view' => 'munki_facts_report', 'i18n' => 'munki_facts.reporttitle'),
     ),
-    'widgets' => array()
+    'widgets' => array(
+        'munki_facts_group' => array('view' => 'munki_facts_group_widget'),
+    )
 );

@@ -1,4 +1,4 @@
-	<div class="col-lg-4 col-md-6">
+<div class="col-lg-4 col-md-6">
 	<div class="panel panel-default" id="munki-facts-group-widget">
 		<div class="panel-heading" data-container="body" >
 			<h3 class="panel-title"><i class="fa fa-check-square"></i>
