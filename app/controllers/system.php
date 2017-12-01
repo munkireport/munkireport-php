@@ -32,6 +32,7 @@ class system extends Controller
             'db.driver' => '',
             'db.connectable' => false,
             'db.writable' => false,
+            'db.total_size' => '',
             'error' => '',
         );
         $config = array(
@@ -45,6 +46,7 @@ class system extends Controller
         //echo '<pre>'; var_dump($db);
         if ($db->connect()) {
             $out['db.connectable'] = true;
+        	$out['db.total_size'] = $db->get_totalsize();
             $out['db.driver'] = $db->get_driver();
 
             if ($db->isWritable()) {
@@ -55,13 +57,13 @@ class system extends Controller
         } else {
             $out['error'] = $db->getError();
         }
+        
         //echo '<pre>'; var_dump($db);
         // Get engine
         // Get permissions
         // Do a write
         // Do a read
         // Get tables
-        // Get size
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
