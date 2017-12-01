@@ -98,4 +98,27 @@ class Database
     {
         return $this->getDBH()->getAttribute(\PDO::ATTR_DRIVER_NAME);
     }
+    
+	/**
+     * Get database size
+     *
+     * @return number
+     **/
+    public function get_totalsize()
+    {
+    
+    	$sql = 'SELECT sum(round(((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024 ), 2)) from information_schema.TABLES';
+        $dbh = $this->getDBH();
+        if (! $dbh) {
+            return false;
+        }
+
+        try {
+        	$x = $dbh->query($sql);
+        	return $x->fetch()[0];
+        } catch (\PDOException $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
+    }
 }
