@@ -129,7 +129,8 @@
     "db": {
         "connectable": "Connectable",
         "driver": "Driver",
-        "writable": "Writable"
+        "writable": "Writable",
+        "total_size": "Total Size (MB)"
     },
     "delete": "Delete",
     "description": "Description",
