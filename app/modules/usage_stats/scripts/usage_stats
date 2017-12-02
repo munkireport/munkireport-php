@@ -1,0 +1,46 @@
+#!/usr/bin/python
+# Script by Bochoven
+
+import os, sys, plistlib, subprocess
+
+def get_power_metrics():
+    cmd = ['/usr/bin/powermetrics', '--show-initial-usage', ' -s',
+            'network,disk', '-f', 'plist', '-n', '0']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, err = proc.communicate()
+    plist = plistlib.readPlistFromString(output.rstrip(' \t\r\n\0'))
+
+    cmd = ['/usr/bin/powermetrics', '-s', 
+            'cpu_power,gpu_power,thermal,battery', '-n', '1', '-f', 'plist']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, err = proc.communicate()
+    plist.update(plistlib.readPlistFromString(output.rstrip(' \t\r\n\0')))
+
+    return plist
+
+def main():
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
+
+    # Skip manual check
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'manualcheck':
+            print 'Manual check: skipping'
+            exit(0)
+
+    # Get results
+    result = get_power_metrics()
+
+    # Write results to cache
+    output_plist = os.path.join(cachedir, 'usage_stats.plist')
+    plistlib.writePlist(result, output_plist)
+
+if __name__ == "__main__":
+    main()
