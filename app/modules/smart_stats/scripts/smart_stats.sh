@@ -30,6 +30,9 @@ rm "$smart_stats_file" 2>/dev/null
 
 DISKARRAY=0
 
+# Drive serial number variable initialization
+DRIVESERIALS=""
+
 # Get UNIX name of physical drives for processing with smartctl and process each drive
 for DISK in $(diskutil list | grep -e '/dev/disk' | grep -v -e 'virtual' | grep -v -e 'disk image' | awk {'print $1'} | tr '\n' ' ' | sed -e 's/\/dev\/disk//g')
 do
@@ -39,6 +42,15 @@ if [[ "$($SMARTCTL -i /dev/disk${DISK})" == *"Smartctl open device: /dev/disk"* 
      continue
 fi
 
+# Duplicate serial number check, skip if serial is already in $DRIVESERIAL string
+SERIAL=$($SMARTCTL -i /dev/disk${DISK} | grep 'Serial Number' | awk '{print $3}')
+if [[ $DRIVESERIALS == *$SERIAL* ]] ; then
+     continue
+else
+     DRIVESERIALS="${DRIVESERIALS}${SERIAL}"
+fi
+
+# Check if drive is NVMe drive
 if [[ "$($SMARTCTL -A /dev/disk${DISK})" == *"NVMe"* ]] ; then
      # Run special attributes for NVMe drives
      SMARTATTRIBUTES=$(${SMARTCTL} -A /dev/disk${DISK} | tail -n +6 | cut -d '/' -f-1 | sed -e 's/#//' -e 's/\\/-/g' -e 's/\///g' -e 's/UDMA_CRC_Error_Count/UDMA_Error_Count/g' -e s'/(//g' -e 's/)//g' -e 's/ Celsius//g')
@@ -49,7 +61,6 @@ else
      SMARTATTRIBUTES=$(${SMARTCTL} -s on -A /dev/disk${DISK} | tail -n +11 | awk '{print $2, $10}' | cut -d '/' -f-1 | sed -e 's/#//' -e 's/\\/-/g' -e 's/\///g' -e 's/UDMA_CRC_Error_Count/UDMA_Error_Count/g' -e s'/(//g' -e 's/)//g')
      SMARTERRORCOUNT=$($SMARTCTL -s on -l error /dev/disk${DISK} | grep -e 'ATA Error Count: ' | awk {'print "error_count "$4'})
      SMARTERRORS=$($SMARTCTL -s on -l error /dev/disk${DISK} | grep -e 'occurred at disk power-on lifetime' | awk {'print $1"PoH- "$8'} | head -n1)
-
 fi
 
 SMARTINFO=$($SMARTCTL -s on -i /dev/disk${DISK} | tail -n +5 | sed -e 's./.-.g' -e '1,/SMART support is: / s/SMART support is: /SMART is: /g')
