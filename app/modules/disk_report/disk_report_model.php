@@ -80,11 +80,11 @@ class Disk_report_model extends \Model
      **/
     public function get_volume_type()
     {
-        $sql = "SELECT VolumeType as type, count(*) as count FROM diskreport
+        $sql = "SELECT VolumeType as type, count(*) as count
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
 						WHERE Internal = 1
-                        GROUP by VolumeType
+						GROUP by VolumeType
 						".get_machine_group_filter('AND');
         return current($this->query($sql));
     }
