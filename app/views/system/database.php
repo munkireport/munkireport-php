@@ -58,6 +58,10 @@
         $.getJSON(appUrl + '/system/migrationsPending', function( data ) {
             var table = $('#mr-migrations table').empty();
 
+            if (data.error) {
+                  
+            }
+
             if (data.hasOwnProperty('files_pending')) {
                 for (var i = 0; i < data['files_pending'].length; i++) {
                     table.append($('<tr><td></td></tr>').text(data['files_pending'][i]));
