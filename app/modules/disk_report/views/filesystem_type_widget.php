@@ -26,7 +26,7 @@ $(document).on('appUpdate', function(e, lang) {
 		
 		// Set types
 		if(data.hfs){
-			panel.append(' <a href="'+baseUrl+'#hfs" class="btn btn-info"><span class="bigger-150">'+data.hfs+'</span><br>&nbsp;&nbsp;HFS+&nbsp;&nbsp;</a>');
+			panel.append(' <a href="'+baseUrl+'#hfs" class="btn btn-info"><span class="bigger-150">'+data.hfs+'</span><br>&nbsp;&nbsp;&nbsp;HFS+&nbsp;&nbsp;</a>');
 		}
 		if(data.apfs){
 			panel.append(' <a href="'+baseUrl+'#apfs" class="btn btn-info"><span class="bigger-150">'+data.apfs+'</span><br>&nbsp;&nbsp;APFS&nbsp;&nbsp;</a>');
