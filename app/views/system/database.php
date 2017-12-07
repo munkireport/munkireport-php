@@ -5,11 +5,9 @@
         <h3 class="col-lg-12" data-i18n="system.database.migrations">Database</h3>
     </div>
     <div class="row">
-        <div id="mr-migrations" class="col-lg-6">
-            <h4 data-i18n="database.migrations.pending">Upgrades Pending</h4>
-            <table class="table table-striped">
-                <tr><td data-i18n="loading"></td></tr>
-            </table>
+        <div id="mr-migrations" class="col-lg-12">
+            <span id="database-update-count"></span>
+            <h4 data-i18n="database.migrations.pending"> Database Update(s) Pending</h4>
         </div>
         <div id="mr-sqllog" class="col-lg-6">
             <h4 data-i18n="database.log">Upgrade Log</h4>
@@ -60,7 +58,11 @@
 
             if (data.error) {
                   
+            } else {
+
             }
+
+            $('#database-update-count').text(data['files_pending'].length);
 
             if (data.hasOwnProperty('files_pending')) {
                 for (var i = 0; i < data['files_pending'].length; i++) {
