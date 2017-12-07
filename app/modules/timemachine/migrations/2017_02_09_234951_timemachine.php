@@ -65,19 +65,23 @@ class Timemachine extends Migration
             $table->index('is_network_destination', 'timemachine_is_network_destination');
             $table->index('last_configuration_trace_date', 'timemachine_last_configuration_trace_date');
             $table->index('last_destination_id', 'timemachine_last_destination_id');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-//            $table->index('', 'timemachine_');
-            
+            $table->index('last_failure', 'timemachine_last_failure');
+            $table->index('last_failure_msg', 'timemachine_last_failure_msg');
+            $table->index('last_known_encryption_state', 'timemachine_last_known_encryption_state');
+            $table->index('last_success', 'timemachine_last_success');
+            $table->index('latest_snapshot_date', 'timemachine_latest_snapshot_date');
+            $table->index('localized_disk_image_volume_name', 'timemachine_localized_disk_image_volume_name');
+            $table->index('mobile_backups', 'timemachine_mobile_backups');
+            $table->index('mount_point', 'timemachine_mount_point');
+            $table->index('network_url', 'timemachine_network_url');
+            $table->index('result', 'timemachine_result');
+            $table->index('root_volume_uuid', 'timemachine_root_volume_uuid');
+            $table->index('server_display_name', 'timemachine_server_display_name');
+            $table->index('skip_system_files', 'timemachine_skip_system_files');
+            $table->index('snapshot_count', 'timemachine_snapshot_count');
+            $table->index('time_capsule_display_name', 'timemachine_time_capsule_display_name');
+            $table->index('timestamp', 'timemachine_timestamp');
+            $table->index('volume_display_name', 'timemachine_volume_display_name');
 //            $table->timestamps();
         });
     }
