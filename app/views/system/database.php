@@ -2,32 +2,41 @@
 
 <div class="container">
     <div class="row">
-        <h3 class="col-lg-12" data-i18n="system.database.migrations">Database</h3>
-    </div>
-    <div class="row">
         <div id="mr-migrations" class="col-lg-12">
-            <span id="database-update-count"></span>
-            <h4 data-i18n="database.migrations.pending"> Database Update(s) Pending</h4>
-        </div>
-        <div id="mr-sqllog" class="col-lg-6">
-            <h4 data-i18n="database.log">Upgrade Log</h4>
-            <table class="table table-console">
-                <tr><td data-i18n="database.loghelp">Perform an upgrade and the log results will be displayed here</td></tr>
-            </table>
+            <h1><span id="database-update-count">(n/a)</span> <span data-i18n="database.migrations.pending">Database Update(s) Pending</span></h1>
         </div>
     </div>
+
     <div class="row">
         <div class="col-lg-12">
-            <button id="db-upgrade" class="btn btn-default">
-                <span id="db-upgrade-label" data-i18n="database.upgrade">Upgrade now</span>
-                <span class="glyphicon glyphicon-export"></span>
+            <button id="db-upgrade" class="btn btn-primary">
+                <span id="db-upgrade-label" data-i18n="database.update">Update</span>
             </button>
         </div>
     </div>
+    <div class="row">
+        <div id="database-upgrade-log" class="col-lg-6">
+            <a class="disclosure" href="#">
+                <span class="glyphicon glyphicon-chevron-right"></span> <span data-i18n="database.log">Upgrade Log</span>
+            </a>
+
+            <table class="table table-console">
+                <tr><td data-i18n="database.loghelp">Nothing to show</td></tr>
+            </table>
+        </div>
+    </div>
+
 </div>  <!-- /container -->
 
 <script>
     $(document).on('appReady', function(e, lang) {
+
+        // Show/Hide the upgrade log
+        $('.disclosure').click(function() {
+            $(this).toggleClass('disclosure-active');
+            $(this.parentNode).toggleClass('disclosure-active');
+        });
+
         $('#db-upgrade').click(function(e) {
             $(this).attr('disabled', true);
             $(this).find('#db-upgrade-label').html('Upgrading&hellip;');
@@ -40,14 +49,23 @@
 
             $.getJSON(appUrl + '/system/migrate', function(data) {
                 done();
+                var table = $('.table-console').empty();
 
-                if (data.notes) {
-                    var table = $('#mr-sqllog table').empty();
+                if (data.error) {
 
-                    for (var i = 0; i < data.notes.length; i++) {
-                        table.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
+
+                    table.append($('<tr><td class="log-error">' + data.error + '</td></tr>'));
+                } else {
+                    if (data.notes) {
+                        var table = $('.table-console').empty();
+
+                        for (var i = 0; i < data.notes.length; i++) {
+                            table.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
+                        }
                     }
                 }
+
+
             }).fail(function(jqXHR, textStatus, error) {
                 done();
             })

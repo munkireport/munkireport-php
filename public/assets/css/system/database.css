@@ -5,6 +5,7 @@
     font-size: 1.4rem;
 
     padding: 1rem;
+    display: none;
 }
 
 .table-console > tbody {
@@ -14,4 +15,27 @@
 .table-console tbody tr td {
     border: none;
     padding: 2px 0;
+}
+
+.log-error {
+    color: red;
+}
+
+.disclosure {
+    cursor: pointer;
+}
+
+.disclosure > .glyphicon {
+    transition-property: transform;
+    transition-duration: 100ms;
+}
+
+.disclosure-active > .glyphicon {
+    transform: rotate(90deg);
+}
+
+
+
+.disclosure-active > .table-console {
+    display: block;
 }
