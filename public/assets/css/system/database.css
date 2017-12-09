@@ -5,11 +5,11 @@
     font-size: 1.4rem;
 
     padding: 1rem;
-    display: none;
 }
 
 .table-console > tbody {
     overflow-y: scroll;
+    display: none;
 }
 
 .table-console tbody tr td {

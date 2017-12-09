@@ -11,7 +11,7 @@ class Diskreport extends Migration
 
         $legacy_migration_version = $capsule::table('migration')
             ->where('table_name', '=', 'diskreport')
-            ->first();
+            ->first(['version']);
 
         if ($legacy_migration_version && $legacy_migration_version->version === 3) {
             // No need to run this migration

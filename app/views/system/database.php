@@ -16,12 +16,21 @@
     </div>
     <div class="row">
         <div id="database-upgrade-log" class="col-lg-6">
-            <a class="disclosure" href="#">
-                <span class="glyphicon glyphicon-chevron-right"></span> <span data-i18n="database.log">Upgrade Log</span>
-            </a>
-
             <table class="table table-console">
-                <tr><td data-i18n="database.loghelp">Nothing to show</td></tr>
+                <thead>
+                    <tr>
+                        <th colspan="1">
+                            <a class="disclosure" href="#">
+                                <span class="glyphicon glyphicon-chevron-right"></span> <span data-i18n="database.log">Upgrade Log</span>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-i18n="database.loghelp">Nothing to show</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
