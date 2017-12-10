@@ -126,7 +126,7 @@ class Caching_model extends \Model
     {
         // If data is empty, throw error
         if (! $data) {
-            throw new Exception("Error Processing Caching Module Request: No data found", 1);
+            //throw new Exception("Error Processing Caching Module Request: No data found", 1);
         } else if (substr( $data, 0, 26 ) != '[{"name":"status","result"' ) { // Else if old style text, process with old text based handler
             
             // Delete previous entries
