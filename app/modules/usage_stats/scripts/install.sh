@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/usage_stats/"
 
 # Get the scripts in the proper directories
-"${CURL[@]}" "${CTL}get_script/usage_stats.sh" -o "${MUNKIPATH}preflight.d/usage_stats"
+"${CURL[@]}" "${CTL}get_script/usage_stats" -o "${MUNKIPATH}preflight.d/usage_stats"
 
 # Check exit status of curl
 if [ $? = 0 ]; then
