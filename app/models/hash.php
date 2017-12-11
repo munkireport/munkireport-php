@@ -1,53 +1,29 @@
 <?php
 
 namespace munkireport\models;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Hash extends \Model
+class Hash extends Eloquent
 {
+    
+    protected $fillable = ['serial_number', 'name', 'hash'];
     
     public function __construct($serial = '', $name = '')
     {
-        parent::__construct('id', 'hash'); //primary key, tablename
-        $this->rs['id'] = '';
-        $this->rs['serial'] = '';
-        $this->rs['name'] = '';
-        $this->rs['hash'] = '';
-        $this->rs['timestamp'] = time();
-
-        $this->idx[] = array('serial');
-        $this->idx[] = array('serial', 'name');
-
-        // Table version. Increment when creating a db migration
-        $this->schema_version = 1;
-
-        // Create table if it does not exist
-        $this->create_table();
         
-        if ($serial and $name) {
-            $this->retrieveOne('serial=? AND name=?', array($serial, $name));
-            $this->serial = $serial;
-            $this->name = $name;
-        }
-        
+        $capsule = new Capsule;
+        $capsule->addConnection([
+            'driver' => 'sqlite',
+            'database' => conf('application_path').'db/db.sqlite',
+            'username' => conf('pdo_user'),
+            'password' => conf('pdo_pass'),
+        ]);
+
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+
+
         return $this;
-    }
-    
-    // ------------------------------------------------------------------------
-
-    /**
-     * Retrieve all entries for serial
-     *
-     * @param string serial
-     * @return array
-     * @author abn290
-     **/
-    public function all($serial)
-    {
-        $dbh=$this->getdbh();
-        $out = array();
-        foreach ($this->retrieveMany('serial=?', $serial) as $obj) {
-            $out[$obj->name] = $obj->hash;
-        }
-        return $out;
     }
 }

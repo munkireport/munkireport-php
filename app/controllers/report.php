@@ -88,8 +88,10 @@ class report extends Controller
             }
 
             // Get stored hashes from db
-            $hash = new Hash();
-            $hashes = $hash->all($_POST['serial']);
+            $hashes = [];
+            foreach(Hash::where('serial_number', $_POST['serial'])->get() as $item) {
+                $hashes[$item->name] = $item->hash;
+            }
 
             // Compare sent hashes with stored hashes
             foreach ($req_items as $name => $val) {
@@ -205,10 +207,10 @@ class report extends Controller
                 $class->process($val['data']);
 
                 // Store hash
-                $hash = new Hash($_POST['serial'], $module);
-                $hash->hash = $val['hash'];
-                $hash->timestamp = time();
-                $hash->save();
+                $hash = Hash::updateOrCreate(
+                    ['serial_number' => $_POST['serial'], 'name' => $module],
+                    ['serial_number' => $_POST['serial'], 'name' => $module, 'hash' => $val['hash']]
+                )->save();
             } catch (Exception $e) {
                 $this->msg("An error occurred while processing: $classname");
                 $this->msg("Error: " . $e->getMessage());
