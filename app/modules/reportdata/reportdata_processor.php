@@ -19,9 +19,6 @@ class Reportdata_processor
      **/
     public function process($plist)
     {
-        // Check if uptime is set to determine this is a new client
-        $new_client = $this->uptime ? false : true;
-        
         $parser = new CFPropertyList();
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();
@@ -42,9 +39,9 @@ class Reportdata_processor
         $model = Reportdata_model::updateOrCreate(
             ['serial_number' => $this->serial_number],
             $mylist
-        )->save();
+        );
         
-        if ($new_client) {
+        if ($model->wasRecentlyCreated) {
             store_event($this->serial_number, 'reportdata', 'info', 'new_client');
         }
 

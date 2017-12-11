@@ -5,6 +5,17 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Reportdata_model extends Eloquent
 {
 
+    protected $table = 'reportdata';
+    protected $fillable
+        = [
+            'serial_number',
+            'console_user',
+            'long_username',
+            'remote_ip',
+            'uptime',
+            'machine_group',
+        ];
+
   /**
    * Reset Machine Group attribute
    *

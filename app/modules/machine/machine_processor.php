@@ -55,7 +55,7 @@ class Machine_processor
         $model = Machine_model::updateOrCreate(
             ['serial_number' => $this->serial_number],
             $mylist
-        )->save();
+        );
     }
 
 }

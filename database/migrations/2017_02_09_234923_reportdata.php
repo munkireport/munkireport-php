@@ -16,7 +16,6 @@ class Reportdata extends Migration
             $table->string('long_username')->nullable();
             $table->string('remote_ip');
             $table->integer('uptime')->nullable()->default(0);
-            $table->integer('reg_timestamp')->nullable();
             $table->integer('machine_group')->nullable()->default(0);
             $table->timestamps();
 

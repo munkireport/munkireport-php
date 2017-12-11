@@ -69,18 +69,18 @@ class report extends Controller
         // Connect to database
         $this->connectDB();
 
-        $itemarr = array('error' => '', 'danger' => '', 'warning' => '', 'info' => '');
+        $itemarr = ['error' => '', 'danger' => '', 'warning' => '', 'info' => ''];
 
         // Try to register client and lookup hashes in db
         try {
             // Register check and group in reportdata
-            $model = Reportdata_model::updateOrCreate(
+            $model = \Reportdata_model::updateOrCreate(
                 ['serial_number' => $_POST['serial']],
                 [
                     'machine_group' => $this->group,
                     'remote_ip' => getRemoteAddress()
                 ]
-            )->save();
+            );
 
             //$req_items = unserialize($_POST['items']); //Todo: check if array
             include_once(APP_PATH . '/lib/munkireport/Unserializer.php');
@@ -221,7 +221,7 @@ class report extends Controller
                 $hash = Hash::updateOrCreate(
                     ['serial_number' => $_POST['serial'], 'name' => $module],
                     ['serial_number' => $_POST['serial'], 'name' => $module, 'hash' => $val['hash']]
-                )->save();
+                );
             } catch (Exception $e) {
                 $this->msg("An error occurred while processing: $classname");
                 $this->msg("Error: " . $e->getMessage());
