@@ -1,5 +1,8 @@
 <?php
-class Supported_os_model extends Model
+
+use CFPropertyList\CFPropertyList;
+
+class Supported_os_model extends \Model
 {    
     public function __construct($serial = '')
     {
@@ -37,14 +40,13 @@ class Supported_os_model extends Model
         
         if ( ! $data){
 			throw new Exception("Error Processing Request: No property list found", 1);
-		}
+        }
         
-		// Delete previous set        
-		$this->deleteWhere('serial_number=?', $this->serial_number);
+        // Delete previous set        
+        $this->deleteWhere('serial_number=?', $this->serial_number);
         
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-		$parser = new CFPropertyList();
-		$parser->parse($data);     
+        $parser = new CFPropertyList();
+        $parser->parse($data);     
         $plist = $parser->toArray();
         
         $most_current_os = "10.13.2"; //Update this as Apple releases new point updates
