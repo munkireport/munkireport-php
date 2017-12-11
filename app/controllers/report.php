@@ -69,14 +69,18 @@ class report extends Controller
         // Connect to database
         $this->connectDB();
 
-        $itemarr = array('error' => '', 'info' => '');
+        $itemarr = array('error' => '', 'danger' => '', 'warning' => '', 'info' => '');
 
         // Try to register client and lookup hashes in db
         try {
             // Register check and group in reportdata
-            $report = new Reportdata_model($_POST['serial']);
-            $report->machine_group = $this->group;
-            $report->register()->save();
+            $model = Reportdata_model::updateOrCreate(
+                ['serial_number' => $_POST['serial']],
+                [
+                    'machine_group' => $this->group,
+                    'remote_ip' => getRemoteAddress()
+                ]
+            )->save();
 
             //$req_items = unserialize($_POST['items']); //Todo: check if array
             include_once(APP_PATH . '/lib/munkireport/Unserializer.php');
@@ -178,17 +182,17 @@ class report extends Controller
             }
 
             // All models should be part of a module
-            if (substr($name, -6) == '_model') {
+            if (substr($name, -6) == '_processor') {
                 $module = substr($name, 0, -6);
             } else // Legacy clients
             {
                 $module = $name;
-                $name = $module . '_model';
+                $name = $module . '_processor';
             }
 
-            if (! $moduleMgr->getModuleModelPath($module, $model_path))
+            if (! $moduleMgr->getModuleProcessorPath($module, $model_path))
             {
-                $this->msg("Model not found: $name");
+                $this->msg("Processor not found: $name");
                 continue;
             }
 

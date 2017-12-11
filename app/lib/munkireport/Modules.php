@@ -58,6 +58,24 @@ class Modules
     }
 
     /**
+     * Retrieve moduleProcessorPath
+     *
+     *
+     * @param type var Description
+     * @return return type
+     */
+    public function getModuleProcessorPath($moduleName, &$modelPath)
+    {
+        foreach ($this->moduleSearchPaths as $type => $path) {
+            if ( file_exists($path . $moduleName . '/' . $moduleName . '_processor.php')) {
+                $modelPath = $path . $moduleName . '/' . $moduleName . '_processor.php';
+                return True;
+            }
+        }
+        return False;
+    }
+
+    /**
      * Retrieve moduleControllerPath
      *
      *
