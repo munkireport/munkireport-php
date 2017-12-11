@@ -65,6 +65,9 @@ class report extends Controller
         if (! isset($_POST['items'])) {
             $this->error("Items are missing");
         }
+        
+        // Connect to database
+        $this->connectDB();
 
         $itemarr = array('error' => '', 'info' => '');
 
@@ -147,6 +150,10 @@ class report extends Controller
         if (! is_array($arr)) {
             $this->error("Could not parse items, not a proper serialized file");
         }
+        
+        // Connect to database
+        $this->connectDB();
+
 
         include_once(APP_PATH . '/lib/munkireport/Modules.php');
         $moduleMgr = new Modules;

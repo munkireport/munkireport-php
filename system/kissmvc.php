@@ -1,6 +1,7 @@
 <?php
 
 use munkireport\models\Migration;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 require('kissmvc_core.php');
 
@@ -42,6 +43,20 @@ class Engine extends KISS_Engine
 //===============================================================
 class Controller extends KISS_Controller
 {
+    protected function connectDB()
+    {
+        $capsule = new Capsule;
+        $capsule->addConnection([
+            'driver' => 'sqlite',
+            'database' => conf('application_path').'db/db.sqlite',
+            'username' => conf('pdo_user'),
+            'password' => conf('pdo_pass'),
+        ]);
+
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+    }
+    
     /**
      * Check if there is a valid session
      * and if the person is authorized for $what
