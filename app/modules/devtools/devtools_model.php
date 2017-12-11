@@ -1,6 +1,6 @@
 <?php
 
-//////////////////////////////use CFPropertyList\CFPropertyList;
+use CFPropertyList\CFPropertyList;
 
 class Devtools_model extends \Model {
 
@@ -62,12 +62,6 @@ class Devtools_model extends \Model {
 		if ( ! $plist){
 			throw new Exception("Error Processing Request: No property list found", 1);
 		}
-		
-		// Delete previous set        
-//		$this->deleteWhere('serial_number=?', $this->serial_number);
-
-///////asdfasdfasdf///////////////////
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
@@ -110,28 +104,7 @@ class Devtools_model extends \Model {
 			$this->rs['watchos_sdks'] = substr_replace($this->rs['watchos_sdks'] ,"",-2);
 			$this->rs['watchos_simulator_sdks'] = substr_replace($this->rs['watchos_simulator_sdks'] ,"",-2);
 
-            
-//            // Set VRAM from shared VRAM
-//			if( array_key_exists("vram_shared", $device)){
-//				$this->rs['vram'] = ($device['vram_shared']." (Shared)");
-//			}
-//            
-//            // Fix GMA950 memory
-//            $this->rs['vram'] = str_replace("spdisplays_integrated_vram","64 MB",$this->rs['vram']);
-//            
-//            // Fix GMA shared memory
-//            if (stripos($this->rs['model'], 'GMA') !== false){
-//				$this->rs['vram'] = ($device['vram']." (Shared)");
-//            }
-//            
-//            //Fix model names
-//            $this->rs['model'] = str_replace(array("GMA","ATY,Radeon"),array("Intel GMA","ATI Radeon"),$this->rs['model']);
-//            
-//            //Fix vendors name
-//            $this->rs['vendor'] = str_replace(array("sppci_vendor_amd","sppci_vendor_Nvidia"),array("AMD","NVIDIA"),$this->rs['model']);
-//            
-//			//Save the data (also save the whales)
-//			$this->id = '';
+			//Save the data (also save the whales)
 			$this->save();
 		}
 	}
