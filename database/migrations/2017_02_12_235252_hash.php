@@ -8,13 +8,14 @@ class Hash extends Migration
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('hash', function (Blueprint $table) {
+        $capsule::schema()->create('hashes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial');
+            $table->string('serial_number');
             $table->string('name');
             $table->string('hash');
 
-            $table->index(['serial', 'name']);
+            $table->index(['serial_number']);
+            $table->index(['serial_number', 'name']);
 
             $table->timestamps();
         });
@@ -23,6 +24,6 @@ class Hash extends Migration
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('hash');
+        $capsule::schema()->dropIfExists('hashes');
     }
 }
