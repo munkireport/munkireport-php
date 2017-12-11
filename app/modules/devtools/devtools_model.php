@@ -41,7 +41,7 @@ class Devtools_model extends \Model {
 		$this->create_table();
 
 		if ($serial) {
-            $this->retrieve_record($serial);
+			$this->retrieve_record($serial);
 		}
         
 		$this->serial_number = $serial;
@@ -96,16 +96,16 @@ class Devtools_model extends \Model {
 			}
 			
             // Trim off the ending comma and space
-			$this->rs['ios_sdks'] = substr_replace($this->rs['ios_sdks'] ,"",-2);
-			$this->rs['ios_simulator_sdks'] = substr_replace($this->rs['ios_simulator_sdks'] ,"",-2);
-			$this->rs['macos_sdks'] = substr_replace($this->rs['macos_sdks'] ,"",-2);
-			$this->rs['tvos_sdks'] = substr_replace($this->rs['tvos_sdks'] ,"",-2);
-			$this->rs['tvos_simulator_sdks'] = substr_replace($this->rs['tvos_simulator_sdks'] ,"",-2);
-			$this->rs['watchos_sdks'] = substr_replace($this->rs['watchos_sdks'] ,"",-2);
-			$this->rs['watchos_simulator_sdks'] = substr_replace($this->rs['watchos_simulator_sdks'] ,"",-2);
+            $this->rs['ios_sdks'] = substr_replace($this->rs['ios_sdks'] ,"",-2);
+            $this->rs['ios_simulator_sdks'] = substr_replace($this->rs['ios_simulator_sdks'] ,"",-2);
+            $this->rs['macos_sdks'] = substr_replace($this->rs['macos_sdks'] ,"",-2);
+            $this->rs['tvos_sdks'] = substr_replace($this->rs['tvos_sdks'] ,"",-2);
+            $this->rs['tvos_simulator_sdks'] = substr_replace($this->rs['tvos_simulator_sdks'] ,"",-2);
+            $this->rs['watchos_sdks'] = substr_replace($this->rs['watchos_sdks'] ,"",-2);
+            $this->rs['watchos_simulator_sdks'] = substr_replace($this->rs['watchos_simulator_sdks'] ,"",-2);
 
-			//Save the data (also save the whales)
-			$this->save();
+            //Save the data (also save the whales)
+            $this->save();
 		}
 	}
 }
