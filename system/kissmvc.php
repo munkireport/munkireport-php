@@ -393,6 +393,8 @@ class Model extends KISS_Model
      **/
     public function create_table()
     {
+        throw new Exception("Create table is not available anymore", 1);
+        
         // Check if we instantiated this table before
         if (isset($GLOBALS['tables'][$this->tablename])) {
             return true;
