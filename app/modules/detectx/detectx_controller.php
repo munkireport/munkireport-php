@@ -25,6 +25,21 @@ class Detectx_controller extends Module_controller
 	{
 		echo "You've loaded the detectx module!";
 	}
+  public function get_stats()
+  {
+      $obj = new View();
+      if (! $this->authorized()) {
+          $obj->view('json', array('msg' => 'Not authorized'));
+          return;
+      }
+
+      $queryobj = new Detectx_model();
+      $sql = "SELECT  COUNT(1) as total,
+                    COUNT(CASE WHEN `status` = 'Clean' THEN 1 END) AS Clean,
+                    COUNT(CASE WHEN `status` = 'Infected' THEN 1 END) AS Infected
+                    FROM detectx";
+      $obj->view('json', array('msg' => current($queryobj->query($sql))));
+  }
 
 	/**
      * Retrieve data in json format

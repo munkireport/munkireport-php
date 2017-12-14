@@ -6,15 +6,18 @@ class Detectx_model extends \Model {
 		parent::__construct('id', 'detectx'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial;
-		$this->rs['searchdate'] = '';
+		$this->rs['searchdate'] = 0; $this->rt['searchdate'] = 'BIGINT';
     $this->rs['numberofissues'] = 0;
+    $this->rs['status'] = '';
 		$this->rs['issues'] = ''; $this->rt['issues'] = 'TEXT';
+
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
 
 		// Add indexes
     $this->idx[] = array('numberofissues');
+    $this->idx[] = array('status');
 
 		// Create table if it does not exist
 		$this->create_table();
@@ -44,18 +47,21 @@ class Detectx_model extends \Model {
 
 		// Process json into object thingy
     $data = json_decode($json, true);
-    $this->searchdate = stripslashes($data['searchdate']);
+    $this->searchdate = strtotime($data['searchdate']);
     $len = count($data['issues']);
     if ($len > 0)
      {
        foreach($data['issues'] as $issue){
-       $this->issues .= ($issue . ";");
-       $this->numberofissues += 1;
-      }
+         $this->status = "Infected";
+         $this->issues .= ($issue . ";");
+         $this->numberofissues += 1;
+       }
     }
     else {
+      $this->status = "Clean";
       $this->issues = 'No Issues Detected';
       $this->numberofissues = 0;
+
     }
     $this->save();
 }

@@ -12,11 +12,12 @@ $(document).on('appReady', function(){
 			// Generate rows from data
 			var rows = ''
 			for (var prop in d){
-        console.log(d[prop]);
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
-           if(prop == 'searchdate' && d[prop] == 1){
-					    rows = rows + '<tr><th>'+i18n.t('detectx.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
+           if(prop == 'searchdate'){
+             var reporteddate = d[prop];
+             var date = new Date(reporteddate * 1000)
+					   rows = rows + '<tr><th>'+i18n.t('detectx.'+prop)+'</th><td>'+moment(date).format('llll')+'</td></tr>';
              }
 					    else {
                 if(prop == 'issues'){
@@ -36,6 +37,7 @@ $(document).on('appReady', function(){
 						.append($('<tbody>')
 							.append(rows)))
 		})
+
 	});
 });
 </script>

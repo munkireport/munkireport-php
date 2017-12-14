@@ -7,5 +7,8 @@ return array(
     'listings' => array(
        'detectx' => array('view' => 'detectx_listing', 'i18n' => 'detectx.clienttitle'),
    ),
+   'widgets' => array(
+       'detectx' => array('view' => 'detectx_widget'),
+   ),
 
 );

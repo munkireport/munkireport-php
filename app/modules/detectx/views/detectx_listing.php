@@ -19,6 +19,7 @@ new Detectx_model;
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
       <th data-i18n="detectx.searchdate" data-colname='detectx.searchdate'></th>
+      <th data-i18n="detectx.status" data-colname='detectx.status'></th>
       <th data-i18n="detectx.numberofissues" data-colname='detectx.numberofissues'></th>
 		  </tr>
 		</thead>
@@ -102,23 +103,11 @@ new Detectx_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_detectx-tab');
 	        	$('td:eq(0)', nRow).html(link);
-
-	        	// outdated
-	        	/*var colvar=$('td:eq(4)', nRow).html();
-	        	colvar = colvar == '1' ? i18n.t('yes') :
-	        	(colvar === '0' ? i18n.t('no') : '')
-	        	$('td:eq(4)', nRow).html(colvar)
-
-	        	// built_as_bottle
-	        	var colvar=$('td:eq(6)', nRow).html();
-	        	colvar = colvar == '1' ? i18n.t('yes') :
-	        	(colvar === '0' ? i18n.t('no') : '')
-	        	$('td:eq(6)', nRow).html(colvar)
-            */
-
+            var checkin = parseInt($('td:eq(2)', nRow).html());
+            var date = new Date(checkin * 1000);
+            $('td:eq(2)', nRow).html('<span title="'+i18n.t('detectx.searchdate')+" "+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    });
-
 	});
 </script>
 

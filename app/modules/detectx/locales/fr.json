@@ -4,5 +4,6 @@
     "clienttab": "DetectX",
     "issues": "Issues",
     "numberofissues": "Number of Issues",
-    "searchdate": "Search Date"
+    "searchdate": "Search Date",
+    "status":"Status"
 }
