@@ -4,7 +4,7 @@
 
 		<div class="panel-heading" data-container="body" title="DetectX status">
 
-	    	<h3 class="panel-title"><i class="fa fa-sitemap"></i>
+	    	<h3 class="panel-title"><i class="fa fa-times-circle-o"></i>
 				<span data-i18n="detectx.widget.title"></span>
 				<list-link data-url="/show/listing/detectx/detectx"></list-link>
 			</h3>
@@ -31,8 +31,8 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 		// Set statuses
     console.log(data)
-		panel.append(' <a href="'+baseUrl+'clean" class="btn btn-success"><span class="bigger-150">'+data.Clean+'</span><br>'+'Machines Clean'+'</a>');
-		panel.append(' <a href="'+baseUrl+'infected" class="btn btn-danger"><span class="bigger-150">'+data.Infected+'</span><br>'+'Machines Infected'+'</a>');
+		panel.append(' <a href="'+baseUrl+'clean" class="btn btn-success"><span class="bigger-150">'+data.Clean+'</span><br>'+i18n.t('detectx.widget.clean')+'</a>');
+		panel.append(' <a href="'+baseUrl+'infected" class="btn btn-danger"><span class="bigger-150">'+data.Infected+'</span><br>'+i18n.t('detectx.widget.infected')+'</a>');
 
     });
 });

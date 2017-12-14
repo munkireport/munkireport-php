@@ -1,5 +1,5 @@
 <div id="detectx-tab"></div>
-<h2 data-i18n="detectx.clienttab"></h2>
+<h2 data-i18n="detectx.listing.clienttab"></h2>
 
 <script>
 $(document).on('appReady', function(){
@@ -17,16 +17,16 @@ $(document).on('appReady', function(){
            if(prop == 'searchdate'){
              var reporteddate = d[prop];
              var date = new Date(reporteddate * 1000)
-					   rows = rows + '<tr><th>'+i18n.t('detectx.'+prop)+'</th><td>'+moment(date).format('llll')+'</td></tr>';
+					   rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+moment(date).format('llll')+'</td></tr>';
              }
 					    else {
                 if(prop == 'issues'){
                   var issue = '';
                   issue = d[prop].split(';').join('<br />');
-                  rows = rows + '<tr><th>'+i18n.t('detectx.'+prop)+'</th><td>'+issue+'</td></tr>';
+                  rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+issue+'</td></tr>';
                   }
                 else{
-                rows = rows + '<tr><th>'+i18n.t('detectx.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
+                rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
               }
            }
 				}

@@ -1,4 +1,5 @@
 {
+  "listing":{
     "reporttitle": "DetectX Report",
     "clienttitle": "DetectX",
     "clienttab": "DetectX",
@@ -6,4 +7,11 @@
     "numberofissues": "Number of Issues",
     "searchdate": "Search Date",
     "status": "Status"
+},
+"widget": {
+    "title": "DetectX Status",
+    "clean": "Clean",
+    "infected": "Infected"
+},
+"title":"DetectX"
 }

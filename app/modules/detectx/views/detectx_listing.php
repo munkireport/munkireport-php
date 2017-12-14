@@ -10,7 +10,7 @@ new Detectx_model;
   <div class="row">
 	<div class="col-lg-12">
 
-	  <h3><span data-i18n="detectx.reporttitle"></span> <span id="total-count" class='label label-primary'>…</span></h3>
+	  <h3><span data-i18n="detectx.listing.reporttitle"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 
@@ -18,9 +18,9 @@ new Detectx_model;
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-      <th data-i18n="detectx.searchdate" data-colname='detectx.searchdate'></th>
-      <th data-i18n="detectx.status" data-colname='detectx.status'></th>
-      <th data-i18n="detectx.numberofissues" data-colname='detectx.numberofissues'></th>
+      <th data-i18n="detectx.listing.searchdate" data-colname='detectx.searchdate'></th>
+      <th data-i18n="detectx.listing.status" data-colname='detectx.status'></th>
+      <th data-i18n="detectx.listing.numberofissues" data-colname='detectx.numberofissues'></th>
 		  </tr>
 		</thead>
 
@@ -105,7 +105,7 @@ new Detectx_model;
 	        	$('td:eq(0)', nRow).html(link);
             var checkin = parseInt($('td:eq(2)', nRow).html());
             var date = new Date(checkin * 1000);
-            $('td:eq(2)', nRow).html('<span title="'+i18n.t('detectx.searchdate')+" "+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
+            $('td:eq(2)', nRow).html('<span title="'+i18n.t('detectx.listing.searchdate')+" "+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    });
 	});
