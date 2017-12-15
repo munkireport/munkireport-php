@@ -7,8 +7,8 @@ class Detectx_model extends \Model {
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial;
 		$this->rs['searchdate'] = 0; $this->rt['searchdate'] = 'BIGINT';
-    $this->rs['numberofissues'] = 0;
-    $this->rs['status'] = '';
+    		$this->rs['numberofissues'] = 0;
+    		$this->rs['status'] = '';
 		$this->rs['issues'] = ''; $this->rt['issues'] = 'TEXT';
 
 
@@ -16,8 +16,8 @@ class Detectx_model extends \Model {
 		$this->schema_version = 0;
 
 		// Add indexes
-    $this->idx[] = array('numberofissues');
-    $this->idx[] = array('status');
+    		$this->idx[] = array('numberofissues');
+    		$this->idx[] = array('status');
 
 		// Create table if it does not exist
 		$this->create_table();
@@ -33,7 +33,7 @@ class Detectx_model extends \Model {
 	 *
 	 * @param string data
 	 * @author wardsparadox
-   * based on homebrew by tuxudo
+   	 * based on homebrew by tuxudo
 	 **/
 	function process($json)
 	{
@@ -41,28 +41,27 @@ class Detectx_model extends \Model {
 		if ( ! $json ){
 			throw new Exception("Error Processing Request: No JSON file found", 1);
 		}
-
 		// Delete previous set
 		$this->deleteWhere('serial_number=?', $this->serial_number);
 
 		// Process json into object thingy
-    $data = json_decode($json, true);
-    $this->searchdate = strtotime($data['searchdate']);
-    $len = count($data['issues']);
-    if ($len > 0)
-     {
-       foreach($data['issues'] as $issue){
-         $this->status = "Infected";
-         $this->issues .= ($issue . ";");
-         $this->numberofissues += 1;
-       }
-    }
-    else {
-      $this->status = "Clean";
-      $this->issues = 'No Issues Detected';
-      $this->numberofissues = 0;
+   		$data = json_decode($json, true);
+    		$this->searchdate = strtotime($data['searchdate']);
+    		$len = count($data['issues']);
+    		if ($len > 0)
+     		{
+       		foreach($data['issues'] as $issue){
+         		$this->status = "Infected";
+         		$this->issues .= ($issue . ";");
+         		$this->numberofissues += 1;
+       		}
+    		}
+    		else {
+      		$this->status = "Clean";
+      		$this->issues = 'No Issues Detected';
+      		$this->numberofissues = 0;
 
-    }
-    $this->save();
-}
+    		}
+   		$this->save();
+	}
 }
