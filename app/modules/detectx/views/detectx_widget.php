@@ -30,7 +30,6 @@ $(document).on('appUpdate', function(e, lang) {
     baseUrl = appUrl + '/show/listing/detectx/detectx/#';
     panel.empty();
     // Set statuses
-    console.log(data)
     panel.append(' <a href="'+baseUrl+'clean" class="btn btn-success"><span class="bigger-150">'+data.Clean+'</span><br>'+i18n.t('detectx.widget.clean')+'</a>');
     panel.append(' <a href="'+baseUrl+'infected" class="btn btn-danger"><span class="bigger-150">'+data.Infected+'</span><br>'+i18n.t('detectx.widget.infected')+'</a>');
 
