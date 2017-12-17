@@ -57,6 +57,11 @@ class Controller extends KISS_Controller
         $capsule->bootEloquent();
     }
     
+    protected function addTimeZoneToTimestamp($timestamp)
+    {
+        return $timestamp . 'Z';
+    }
+    
     /**
      * Check if there is a valid session
      * and if the person is authorized for $what
