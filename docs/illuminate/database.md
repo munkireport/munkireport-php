@@ -133,3 +133,9 @@ If a column should relate to the primary key of another table, you will have to 
 
 The migration has to contain separate statements for creating any indexes you want.
 
+## Running migrations ##
+
+Because we don't have access to the `artisan` console command, the database upgrade page will run migrations.
+This page is available under the **System** menu.
+
+
