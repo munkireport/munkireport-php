@@ -31,7 +31,10 @@ else
     # Merge the two variables as an invalid JSON
     CACHINGOUTPUT="${MANAGER}${LOCATOR}]"
     
-    # Write the two JSON files to disk after merging them
-    echo "${CACHINGOUTPUT//\}\}]{\"results\":\{/,}" > /usr/local/munki/preflight.d/cache/caching.txt
+    # Get epoch date
+    DATE=$(date +%s)
+    
+    # Write the two JSON file to disk after merging them and include the datestamp
+    echo "${CACHINGOUTPUT//\}\}]{\"results\":\{/,\"rundate\":$DATE,}" > /usr/local/munki/preflight.d/cache/caching.txt
 
 fi

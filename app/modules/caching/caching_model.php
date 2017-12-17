@@ -5,10 +5,10 @@ class Caching_model extends \Model
     {
         parent::__construct('id', 'caching'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial;
         $this->rs['collectiondate'] = ""; // Date when data was written
         $this->rs['expirationdate'] = ""; // Date when data will expire
-        $this->rs['collectiondateepoch'] = 0; // Date when data will expire
+        $this->rs['collectiondateepoch'] = 0; // Date when data was written, in UNIX time
         $this->rs['requestsfrompeers'] = 0; $this->rt['requestsfrompeers'] = 'BIGINT';
         $this->rs['requestsfromclients'] = 0; $this->rt['requestsfromclients'] = 'BIGINT';
         $this->rs['bytespurgedyoungerthan1day'] = 0; $this->rt['bytespurgedyoungerthan1day'] = 'BIGINT';
@@ -191,6 +191,7 @@ class Caching_model extends \Model
                 'RegistrationError' => 'registrationerror',
                 'RegistrationResponseCode' => 'registrationresponsecode',
                 'RestrictedMedia' => 'restrictedmedia',
+                'rundate' => 'collectiondateepoch',
                 'ServerGUID' => 'serverguid',
                 'StartupStatus' => 'startupstatus',
                 'TotalBytesDropped' => 'totalbytesdropped',
@@ -230,11 +231,19 @@ class Caching_model extends \Model
                 } else if (in_array($field, $booleans) && ($cachingjson[0]["result"][$search] == "true" || $cachingjson[0]["result"][$search] == "1")) {
                     // Send a 1 to the db
                     $this->$field = '1';
+                    
                 } else if (in_array($field, $booleans) && ($cachingjson[0]["result"][$search] == "false" || $cachingjson[0]["result"][$search] == "0")) {
                     // Send a 0 to the db
                     $this->$field = '0';
                 
-                } else if (! empty($cachingjson[0]["result"][$search]) && ! is_array($cachingjson[0]["result"][$search])) { 
+                } else if (! empty($cachingjson[0]["result"][$search]) && ! is_array($cachingjson[0]["result"][$search]) && $search = "rundate") { 
+                    // If key is not empty, save it to the object, process timestamp
+                    $temptime = $cachingjson[0]['result'][$search];
+                    $dt = new DateTime("@$temptime");
+                    $this->collectiondate = ($dt->format('Y-m-d H:i:s'));
+                    $this->$field = $cachingjson[0]["result"][$search];
+                    
+                } else if (! empty($cachingjson[0]["result"][$search]) && ! is_array($cachingjson[0]["result"][$search]) && $search != "rundate") { 
                     // If key is not empty, save it to the object
                     $this->$field = $cachingjson[0]["result"][$search];
                     

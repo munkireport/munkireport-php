@@ -16,7 +16,6 @@ class Caching_controller extends Module_controller
         $this->module_path = dirname(__FILE__);
     }
 
-
     /**
      * Default method
      *
@@ -233,9 +232,9 @@ class Caching_controller extends Module_controller
 
         $queryobj = new Caching_model();
         
-        $sql = "SELECT sum(bytesfromcachetoclients + totalbytesreturnedtoclients) AS fromcache,
-                        sum(bytespurgedtotal + totalbytesdropped) AS purgedbytes,
-                        sum(bytesfromorigintoclients + totalbytesstoredfromorigin) AS fromorigin
+        $sql = "SELECT sum(bytesfromcachetoclients) AS fromcache,
+                        sum(bytespurgedtotal) AS purgedbytes,
+                        sum(bytesfromorigintoclients) AS fromorigin
                         FROM caching
                         LEFT JOIN reportdata USING (serial_number)
                         ".get_machine_group_filter();
@@ -299,7 +298,7 @@ class Caching_controller extends Module_controller
      }
     
      /**
-     * REST API for retrieving icloud caching data for icloud widget
+     * REST API for retrieving icloud caching data for iCloud widget
      * @tuxudo
      *
      **/
