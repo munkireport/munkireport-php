@@ -112,4 +112,24 @@ If you read Laravel's schema builder guide, you will notice that almost everythi
 - We need to instantiate the **Capsule** class.
 - We have to access the schema builder by calling `$capsule::schema()`.
 
+## Key Differences ##
+
+### 1. Column types are not automatic ###
+
+You need to specify the proper type of data you are storing, laravel doesn't detect this automatically.
+
+### 2. Default values are not automatic ###
+
+If you want a default value (managed by the database) when one isn't specified, you have to specify that. You also need
+to append `->nullable()` to make a column nullable, which is the default in KISS_Model.
+
+### 3. Foreign key constraints are explicit ###
+
+**KISS_Model** doesn't truly deal with database constraints (except for `UNIQUE` indexes).
+If a column should relate to the primary key of another table, you will have to specify that foreign key relationship.
+
+
+### 4. Index creation is explicit ###
+
+The migration has to contain separate statements for creating any indexes you want.
 
