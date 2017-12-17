@@ -191,7 +191,6 @@ class Caching_model extends \Model
                 'RegistrationError' => 'registrationerror',
                 'RegistrationResponseCode' => 'registrationresponsecode',
                 'RestrictedMedia' => 'restrictedmedia',
-                'rundate' => 'collectiondateepoch',
                 'ServerGUID' => 'serverguid',
                 'StartupStatus' => 'startupstatus',
                 'TotalBytesDropped' => 'totalbytesdropped',
@@ -235,15 +234,8 @@ class Caching_model extends \Model
                 } else if (in_array($field, $booleans) && ($cachingjson[0]["result"][$search] == "false" || $cachingjson[0]["result"][$search] == "0")) {
                     // Send a 0 to the db
                     $this->$field = '0';
-                
-                } else if (! empty($cachingjson[0]["result"][$search]) && ! is_array($cachingjson[0]["result"][$search]) && $search = "rundate") { 
-                    // If key is not empty, save it to the object, process timestamp
-                    $temptime = $cachingjson[0]['result'][$search];
-                    $dt = new DateTime("@$temptime");
-                    $this->collectiondate = ($dt->format('Y-m-d H:i:s'));
-                    $this->$field = $cachingjson[0]["result"][$search];
-                    
-                } else if (! empty($cachingjson[0]["result"][$search]) && ! is_array($cachingjson[0]["result"][$search]) && $search != "rundate") { 
+
+                } else if (! empty($cachingjson[0]["result"][$search]) && ! is_array($cachingjson[0]["result"][$search])) { 
                     // If key is not empty, save it to the object
                     $this->$field = $cachingjson[0]["result"][$search];
                     
