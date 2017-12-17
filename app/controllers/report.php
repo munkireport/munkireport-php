@@ -121,7 +121,11 @@ class report extends Controller
         // Handle errors
         foreach ($GLOBALS['alerts'] as $type => $list) {
             foreach ($list as $msg) {
-                $itemarr[$type] .= "$type: $msg\n";
+                if($type == 'info'){
+                    $itemarr[$type] .= "$type: $msg\n";
+                }else{
+                    $itemarr['error'] .= "$type: $msg\n";
+                }
             }
         }
 
