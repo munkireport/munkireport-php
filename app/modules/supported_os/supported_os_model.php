@@ -12,7 +12,7 @@ class Supported_os_model extends \Model
         $this->rs['current_os'] = 0;
         $this->rs['highest_supported'] = 0;
         $this->rs['machine_id'] = '';
-        $this->rs['last_touch'] = 0;
+        $this->rs['last_touch'] = 0; $this->rt['last_touch'] = 'BIGINT';
         
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
