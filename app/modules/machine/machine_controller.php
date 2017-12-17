@@ -83,14 +83,15 @@ class Machine_controller extends Module_controller
 
         $filter = get_machine_group_filter('AND');
 
-        $sql = "SELECT machine.serial_number, computer_name, reg_timestamp
+        $sql = "SELECT machine.serial_number, computer_name, reportdata.created_at as reg_timestamp
 			FROM machine
 			LEFT JOIN reportdata USING (serial_number)
-			WHERE reg_timestamp > $lastweek
+			WHERE reportdata.created_at > $lastweek
 			$filter
 			ORDER BY reg_timestamp DESC";
 
         foreach ($machine->query($sql) as $obj) {
+            $obj->reg_timestamp = $this->addTimeZoneToTimestamp($obj->reg_timestamp);
             $out[]  = $obj;
         }
 

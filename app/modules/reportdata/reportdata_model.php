@@ -16,10 +16,10 @@ class Reportdata_model extends \Model
         $this->rs['remote_ip'] = '';
         $this->rs['uptime'] = 0;
         $this->rt['uptime'] = 'INTEGER DEFAULT 0';// Uptime in seconds
-        $this->rs['reg_timestamp'] = time(); // Registration date
         $this->rs['machine_group'] = 0;
         $this->rt['machine_group'] = 'INT DEFAULT 0';
-        $this->rs['timestamp'] = time();
+        $this->rs['created_at'] = date('Y-m-d H:i:s'); // Registration date
+        $this->rs['updated_at'] = date('Y-m-d H:i:s');
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 3;
@@ -29,13 +29,13 @@ class Reportdata_model extends \Model
         $this->idx[] = array('console_user');
         $this->idx[] = array('long_username');
         $this->idx[] = array('remote_ip');
-        $this->idx[] = array('reg_timestamp');
+        $this->idx[] = array('created_at');
         $this->idx[] = array('timestamp');
         $this->idx[] = array('machine_group');
 
 
         // Create table if it does not exist
-        $this->create_table();
+        //$this->create_table();
 
         if ($serial) {
             $this->retrieve_record($serial);
@@ -54,7 +54,7 @@ class Reportdata_model extends \Model
     public function register()
     {
         $this->remote_ip = getRemoteAddress();
-        $this->timestamp = time();
+        $this->updated_at = date('Y-m-d H:i:s');
 
         return $this;
     }
