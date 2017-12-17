@@ -31,8 +31,27 @@ class Machine extends Migration
             $table->string('machine_name')->nullable();
             $table->string('packages')->nullable();
             $table->string('buildversion')->nullable();
+            
+            $table->index(['serial_number']);
+            $table->index(['hostname']);
+            $table->index(['machine_model']);
+            $table->index(['machine_desc']);
+            $table->index(['cpu']);
+            $table->index(['current_processor_speed']);
+            $table->index(['cpu_arch']);
+            $table->index(['os_version']);
+            $table->index(['physical_memory']);
+            $table->index(['platform_UUID']);
+            $table->index(['number_processors']);
+            $table->index(['SMC_version_system']);
+            $table->index(['boot_rom_version']);
+            $table->index(['bus_speed']);
+            $table->index(['computer_name']);
+            $table->index(['l2_cache']);
+            $table->index(['machine_name']);
+            $table->index(['packages']);
+            $table->index(['buildversion']);
 
-            $table->timestamps();
         });
     }
     

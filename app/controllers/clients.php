@@ -14,6 +14,10 @@ class clients extends Controller
         if (! $this->authorized()) {
             redirect('auth/login');
         }
+
+        // Connect to database
+        $this->connectDB();
+
     }
 
     public function index()
