@@ -397,6 +397,12 @@ class Model extends KISS_Model
         if (isset($GLOBALS['tables'][$this->tablename])) {
             return true;
         }
+        
+        throw new \Exception(
+            sprintf('Create table is deprecated, cannot create %s', $this->tablename), 
+            1
+        );
+        
 
         // Check if table exists and is up-to-date
         try {
