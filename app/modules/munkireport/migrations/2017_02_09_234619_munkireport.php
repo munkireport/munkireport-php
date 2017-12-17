@@ -18,8 +18,8 @@ class Munkireport extends Migration
             $table->integer('errors');
             $table->integer('warnings');
             $table->string('manifestname')->nullable();
-            $table->binary('error_json')->nullable();
-            $table->binary('warning_json')->nullable();
+            $table->longText('error_json')->nullable();
+            $table->longText('warning_json')->nullable();
             $table->string('starttime');
             $table->string('endtime');
             $table->string('timestamp');
