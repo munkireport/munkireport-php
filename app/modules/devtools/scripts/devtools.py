@@ -101,11 +101,11 @@ def flatten_dev_info(array):
             # Process each SDK
             elif item == 'spdevtools_sdks':
                 for sdk in obj['spdevtools_sdks']:
-                    if sdk == 'iOS':                        
+                    if sdk == 'iOS' or sdk == 'spios_sdks' or sdk == 'spiphoneos_sdks':                        
                         device['ios_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
-                    elif sdk == 'iOS Simulator':
+                    elif sdk == 'iOS Simulator' or sdk == 'spiossim_sdks' or sdk == 'spiphonesim_sdks':
                         device['ios_simulator_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
-                    elif sdk == 'macOS':
+                    elif sdk == 'macOS' or sdk == 'sposx_sdks' or sdk == 'spmacosx_sdks':
                         device['macos_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
                     elif sdk == 'tvOS':
                         device['tvos_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
@@ -115,21 +115,6 @@ def flatten_dev_info(array):
                         device['watchos_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
                     elif sdk == 'watchOS Simulator':
                         device['watchos_simulator_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
-                    # Older versions have a different output, thanks Apple 
-                    # 10.8
-                    elif sdk == 'spios_sdks':
-                        device['ios_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
-                    elif sdk == 'spiossim_sdks':
-                        device['ios_simulator_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
-                    elif sdk == 'sposx_sdks':
-                        device['macos_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
-                    # 10.7
-                    elif sdk == 'spiphoneos_sdks':
-                        device['ios_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
-                    elif sdk == 'spiphonesim_sdks':
-                        device['ios_simulator_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
-                    elif sdk == 'spmacosx_sdks':
-                        device['macos_sdks'] = ''.join('{} {}, '.format(key, val) for key, val in obj['spdevtools_sdks'][sdk].items())
            
         out.append(device)
     return out
