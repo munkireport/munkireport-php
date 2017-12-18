@@ -13,7 +13,8 @@ class Backup2go extends Migration
             $table->string('serial_number')->unique();
             $table->string('backupdate');
 
-            $table->index('serial_number', 'backup2go_serial_number');
+            $table->index('serial_number');
+            $table->index('backupdate');
             // $table->timestamps();
         });
     }
