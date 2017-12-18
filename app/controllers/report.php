@@ -65,22 +65,15 @@ class report extends Controller
         if (! isset($_POST['items'])) {
             $this->error("Items are missing");
         }
-        
-        // Connect to database
-        $this->connectDB();
 
         $itemarr = ['error' => '', 'danger' => '', 'warning' => '', 'info' => ''];
 
         // Try to register client and lookup hashes in db
         try {
             // Register check and group in reportdata
-            $model = \Reportdata_model::updateOrCreate(
-                ['serial_number' => $_POST['serial']],
-                [
-                    'machine_group' => $this->group,
-                    'remote_ip' => getRemoteAddress()
-                ]
-            );
+            $report = new Reportdata_model($_POST['serial']);
+            $report->machine_group = $this->group;
+            $report->register()->save();
 
             //$req_items = unserialize($_POST['items']); //Todo: check if array
             include_once(APP_PATH . '/lib/munkireport/Unserializer.php');
@@ -95,10 +88,8 @@ class report extends Controller
             }
 
             // Get stored hashes from db
-            $hashes = [];
-            foreach(Hash::where('serial_number', $_POST['serial'])->get() as $item) {
-                $hashes[$item->name] = $item->hash;
-            }
+            $hash = new Hash();
+            $hashes = $hash->all($_POST['serial']);
 
             // Compare sent hashes with stored hashes
             foreach ($req_items as $name => $val) {
@@ -125,11 +116,7 @@ class report extends Controller
         // Handle errors
         foreach ($GLOBALS['alerts'] as $type => $list) {
             foreach ($list as $msg) {
-                if($type == 'info'){
-                    $itemarr[$type] .= "$type: $msg\n";
-                }else{
-                    $itemarr['error'] .= "$type: $msg\n";
-                }
+                $itemarr[$type] .= "$type: $msg\n";
             }
         }
 
@@ -158,10 +145,6 @@ class report extends Controller
         if (! is_array($arr)) {
             $this->error("Could not parse items, not a proper serialized file");
         }
-        
-        // Connect to database
-        $this->connectDB();
-
 
         include_once(APP_PATH . '/lib/munkireport/Modules.php');
         $moduleMgr = new Modules;
@@ -186,17 +169,17 @@ class report extends Controller
             }
 
             // All models should be part of a module
-            if (substr($name, -6) == '_processor') {
+            if (substr($name, -6) == '_model') {
                 $module = substr($name, 0, -6);
             } else // Legacy clients
             {
                 $module = $name;
-                $name = $module . '_processor';
+                $name = $module . '_model';
             }
 
-            if (! $moduleMgr->getModuleProcessorPath($module, $model_path))
+            if (! $moduleMgr->getModuleModelPath($module, $model_path))
             {
-                $this->msg("Processor not found: $name");
+                $this->msg("Model not found: $name");
                 continue;
             }
 
@@ -222,10 +205,10 @@ class report extends Controller
                 $class->process($val['data']);
 
                 // Store hash
-                $hash = Hash::updateOrCreate(
-                    ['serial_number' => $_POST['serial'], 'name' => $module],
-                    ['serial_number' => $_POST['serial'], 'name' => $module, 'hash' => $val['hash']]
-                );
+                $hash = new Hash($_POST['serial'], $module);
+                $hash->hash = $val['hash'];
+                $hash->timestamp = time();
+                $hash->save();
             } catch (Exception $e) {
                 $this->msg("An error occurred while processing: $classname");
                 $this->msg("Error: " . $e->getMessage());
