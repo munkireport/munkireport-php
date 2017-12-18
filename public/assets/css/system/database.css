@@ -1,6 +1,6 @@
 .table-console {
-    background: black;
-    color: ghostwhite;
+    background: beige;
+    color: darkgrey;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     font-size: 1.4rem;
 
@@ -8,11 +8,11 @@
 }
 
 .table-console > tbody {
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     display: none;
 }
 
-.table-console tbody tr td {
+.table-console td {
     border: none;
     padding: 2px 0;
 }
@@ -34,8 +34,12 @@
     transform: rotate(90deg);
 }
 
-
-
-.disclosure-active > .table-console {
+.table-console.disclosure-active tbody {
     display: block;
+}
+
+.loading {
+    opacity: 0.5;
+    transition-property: opacity;
+    transition-duration: 100ms;
 }

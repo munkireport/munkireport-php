@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="row">
-        <div id="mr-migrations" class="col-lg-12">
+        <div id="mr-migrations" class="col-lg-12 loading">
             <h1><span id="database-update-count">(n/a)</span> <span data-i18n="database.migrations.pending">Database Update(s) Pending</span></h1>
         </div>
     </div>
@@ -43,7 +43,7 @@
         // Show/Hide the upgrade log
         $('.disclosure').click(function() {
             $(this).toggleClass('disclosure-active');
-            $(this.parentNode).toggleClass('disclosure-active');
+            $(this).closest('table').toggleClass('disclosure-active');
         });
 
         $('#db-upgrade').click(function(e) {
@@ -53,23 +53,23 @@
 
             function done() {
                 $btn.attr('disabled', false);
-                $btn.find('#db-upgrade-label').html('Upgrade now');
+                $btn.find('#db-upgrade-label').html('Update');
             }
+
+            var tbody = $('.table-console tbody');
 
             $.getJSON(appUrl + '/system/migrate', function(data) {
                 done();
-                var table = $('.table-console').empty();
+                tbody.empty();
 
                 if (data.error) {
-
-
-                    table.append($('<tr><td class="log-error">' + data.error + '</td></tr>'));
+                    tbody.append($('<tr><td class="log-error">' + data.error + '</td></tr>'));
                 } else {
                     if (data.notes) {
-                        var table = $('.table-console').empty();
+                        tbody.empty();
 
                         for (var i = 0; i < data.notes.length; i++) {
-                            table.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
+                            tbody.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
                         }
                     }
                 }
@@ -81,7 +81,8 @@
         });
         
         $.getJSON(appUrl + '/system/migrationsPending', function( data ) {
-            var table = $('#mr-migrations table').empty();
+            var tbody = $('#mr-migrations tbody').empty();
+            $('.loading').removeClass('loading');
 
             if (data.error) {
                   
@@ -91,9 +92,9 @@
 
             $('#database-update-count').text(data['files_pending'].length);
 
-            if (data.hasOwnProperty('files_pending')) {
+            if (data.files_pending) {
                 for (var i = 0; i < data['files_pending'].length; i++) {
-                    table.append($('<tr><td></td></tr>').text(data['files_pending'][i]));
+                  tbody.append($('<tr><td></td></tr>').text(data['files_pending'][i]));
                 }
             }
         })
