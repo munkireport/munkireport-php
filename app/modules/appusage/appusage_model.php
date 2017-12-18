@@ -32,55 +32,6 @@ class Appusage_model extends \Model
         $this->create_table();
     }
 
-    // Override create_table to use illuminate/database capsule
-    public function create_table() {
-        // Check if we instantiated this table before
-        if (isset($GLOBALS['tables'][$this->tablename])) {
-            return true;
-        }
-
-        $capsule = $this->getCapsule();
-
-        try {
-            $exist = $capsule::table('appusage')->limit(1)->count();
-        } catch (PDOException $e) {
-            $capsule::schema()->create('appusage', function ($table) {
-                $table->increments('id');
-                $table->string('serial_number');
-                $table->string('event');
-                $table->string('bundle_id');
-                $table->string('app_version');
-                $table->string('app_name');
-                $table->string('app_path');
-                $table->integer('last_time_epoch');
-                $table->string('last_time');
-                $table->integer('number_times');
-
-                $table->index('app_name', 'appusage_app_name');
-                $table->index('app_path', 'appusage_app_path');
-                $table->index('app_version', 'appusage_app_version');
-                $table->index('bundle_id', 'appusage_bundle_id');
-                $table->index('event', 'appusage_event');
-                $table->index('last_time', 'appusage_last_time');
-                $table->index('last_time_epoch', 'appusage_last_time_epoch');
-                $table->index('number_times', 'appusage_number_times');
-            });
-
-//            // Store schema version in migration table
-//            $migration = new Migration($this->tablename);
-//            $migration->version = $this->schema_version;
-//            $migration->save();
-//
-            alert("Created table '$this->tablename' version $this->schema_version");
-        }
-
-        // Store this table in the instantiated tables array
-        $GLOBALS['tables'][$this->tablename] = $this->tablename;
-
-        // Create table succeeded
-        return true;
-    }
-
     // ------------------------------------------------------------------------
 
     /**
