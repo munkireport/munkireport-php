@@ -14,14 +14,14 @@ class Bluetooth extends Migration
             $table->integer('battery_percent')->nullable();
             $table->string('device_type')->nullable();
 
-            $table->index('device_type', 'bluetooth_device_type');
-            $table->index('serial_number', 'bluetooth_serial_number')->nullable();
+            $table->index('serial_number');
+            $table->index('battery_percent');
+            $table->index('device_type');
 
-            $table->unique('serial_number', 'bluetooth_serial_number_unique');
 //            $table->timestamps();
         });
     }
-    
+
     public function down()
     {
         $capsule = new Capsule();
