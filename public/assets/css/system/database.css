@@ -43,3 +43,7 @@
     transition-property: opacity;
     transition-duration: 100ms;
 }
+
+.database-alert {
+    margin-top: 1rem;
+}
