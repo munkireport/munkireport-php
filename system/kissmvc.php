@@ -24,7 +24,7 @@ class Engine extends KISS_Engine
 
         // Don't show a detailed message when not in debug mode
         conf('debug') && $data['msg'] = $msg;
-            
+
         $obj = new View();
 
         $obj->view('error/client_error', $data);
@@ -56,12 +56,7 @@ class Controller extends KISS_Controller
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
     }
-    
-    protected function addTimeZoneToTimestamp($timestamp)
-    {
-        return $timestamp . 'Z';
-    }
-    
+
     /**
      * Check if there is a valid session
      * and if the person is authorized for $what
@@ -128,10 +123,10 @@ class Model extends KISS_Model
             //primary key exists, so update
             $this->update();
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Get SQL partial for trim
      *
@@ -279,12 +274,12 @@ class Model extends KISS_Model
 
         // Push serial number in front of the array
         array_unshift($bindings, $serial_number);
-        
+
         return $this->retrieveOne($where, $bindings);
     }
 
     // ------------------------------------------------------------------------
-    
+
     /**
      * Delete one considering machine_group membership
      * use this instead of deleteWhere
@@ -303,7 +298,7 @@ class Model extends KISS_Model
 
         // Push serial number in front of the array
         array_unshift($bindings, $serial_number);
-        
+
         return $this->deleteWhere($where, $bindings);
     }
 
@@ -399,22 +394,22 @@ class Model extends KISS_Model
     public function create_table()
     {
         throw new Exception("Create table is not available anymore", 1);
-        
+
         // Check if we instantiated this table before
         if (isset($GLOBALS['tables'][$this->tablename])) {
             return true;
         }
-        
+
         throw new \Exception(
-            sprintf('Create table is deprecated, cannot create %s', $this->tablename), 
+            sprintf('Create table is deprecated, cannot create %s', $this->tablename),
             1
         );
-        
+
 
         // Check if table exists and is up-to-date
         try {
             $dbh = $this->getdbh();
-        
+
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
             // Check if table exists
@@ -440,7 +435,7 @@ class Model extends KISS_Model
 
                         }
                     }
-                    
+
                 }
             }
         } catch (Exception $e) {
@@ -451,17 +446,17 @@ class Model extends KISS_Model
             foreach ($this->rs as $name => $val) {
             // Determine type automagically
                 $type = $this->get_type($val);
-                
+
                 // Or set type from type array
                 $columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
             }
-            
+
             // Set primary key
             $columns[$this->pkname] = 'INTEGER PRIMARY KEY';
 
             // Table options, override per driver
             $tbl_options = '';
-            
+
             // Driver specific options
             switch ($this->get_driver()) {
                 case 'sqlite':
@@ -472,7 +467,7 @@ class Model extends KISS_Model
                     $tbl_options = conf('mysql_create_tbl_opts');
                     break;
             }
-            
+
             // Compile columns sql
             $sql = '';
             foreach ($columns as $name => $type) {
@@ -499,7 +494,7 @@ class Model extends KISS_Model
                 error("Create table '$this->tablename' failed: " . $e->getMessage());
                 return false;
             }
-            
+
         }
 
         // Store this table in the instantiated tables array
@@ -508,7 +503,7 @@ class Model extends KISS_Model
         // Create table succeeded
         return true;
     }
-    
+
     // ------------------------------------------------------------------------
 
     /**
@@ -520,13 +515,13 @@ class Model extends KISS_Model
     public function set_indexes($sql = "CREATE INDEX %s ON %s (%s)")
     {
         $dbh = $this->getdbh();
-        
+
         foreach ($this->idx as $idx_data) {
         // Create name
             $idx_name = $this->get_index_name($idx_data);
             $this->exec(sprintf($sql, $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
         }
-        
+
     }
 
     /**
@@ -551,7 +546,7 @@ class Model extends KISS_Model
         return array_key_exists($this->tablename, $GLOBALS['schema_versions']) ?
             intval($GLOBALS['schema_versions'][$this->tablename]) : 0;
     }
-    
+
     /**
      * Store event
      *
@@ -564,7 +559,7 @@ class Model extends KISS_Model
     {
         store_event($this->serial_number, $this->tablename, $type, $msg, $data);
     }
-    
+
     /**
      * Delete event
      *
@@ -582,7 +577,7 @@ class Model extends KISS_Model
 //===============================================================
 class View extends KISS_View
 {
-    
+
 }
 
 /**
@@ -593,7 +588,7 @@ class View extends KISS_View
  **/
 class Module_controller extends Controller
 {
-    
+
     // Module, override in child object
     protected $module_path;
 
@@ -606,7 +601,7 @@ class Module_controller extends Controller
         } else {
             $scripts = array();
         }
-        
+
         $script_path = $this->module_path . '/scripts/' . basename($name);
 
         if (! in_array($name, $scripts) or ! is_readable($script_path)) {
