@@ -1,5 +1,4 @@
 <?php
-use Illuminate\Database\Capsule\Manager as Capsule;
 /*****************************************************************
 Copyright ( c ) 2008-2009 {kissmvc.php version 0.7}
 Eric Koh <erickoh75@gmail.com> http://kissmvc.com
@@ -434,26 +433,6 @@ abstract class KISS_Model
             $this->dbh = call_user_func($this->dbhfnname);
         }
         return $this->dbh;
-    }
-
-    /**
-     * Get Illuminate\Database Capsule.
-     *
-     * @return Illuminate\Database\Capsule\Manager
-     */
-    public function getCapsule()
-    {
-       $capsule = new Capsule;
-       $capsule->addConnection([
-           'driver' => 'sqlite',
-           'database' => __DIR__ . '/../app/db/db.sqlite',
-           'username' => conf('pdo_user'),
-           'password' => conf('pdo_pass'),
-       ]);
-
-       $capsule->setAsGlobal();
-
-       return $capsule;
     }
 
     public function enquote($name)

@@ -27,43 +27,6 @@ class Bluetooth_model extends \Model
         $this->$serial = $serial;
     }
 
-    // Override create_table to use illuminate/database capsule
-    public function create_table() {
-        // Check if we instantiated this table before
-        if (isset($GLOBALS['tables'][$this->tablename])) {
-            return true;
-        }
-
-        $capsule = $this->getCapsule();
-
-        try {
-            $exist = $capsule::table('bluetooth')->limit(1)->count();
-        } catch (PDOException $e) {
-            $capsule::schema()->create('bluetooth', function ($table) {
-                $table->increments('id');
-                $table->string('serial_number');
-                $table->integer('battery_percent');
-                $table->string('device_type');
-
-                $table->index('device_type', 'bluetooth_device_type');
-                $table->index('serial_number', 'bluetooth_serial_number');
-            });
-
-//            // Store schema version in migration table
-//            $migration = new Migration($this->tablename);
-//            $migration->version = $this->schema_version;
-//            $migration->save();
-//
-//            alert("Created table '$this->tablename' version $this->schema_version");
-        }
-
-        // Store this table in the instantiated tables array
-        $GLOBALS['tables'][$this->tablename] = $this->tablename;
-
-        // Create table succeeded
-        return true;
-    }
-
     /**
      * Get devices with low battery
      *

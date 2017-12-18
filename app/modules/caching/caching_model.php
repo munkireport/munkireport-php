@@ -46,69 +46,6 @@ class Caching_model extends \Model
        //$this->create_table();
     }
 
-    // Override create_table to use illuminate/database capsule
-    public function create_table() {
-        // Check if we instantiated this table before
-        if (isset($GLOBALS['tables'][$this->tablename])) {
-            return true;
-        }
-
-        $capsule = $this->getCapsule();
-
-        try {
-            $exist = $capsule::table('caching')->limit(1)->count();
-        } catch (PDOException $e) {
-            $capsule::schema()->create('caching', function ($table) {
-                $table->increments('id');
-                $table->string('serial_number');
-                $table->string('collectiondate');
-                $table->string('expirationdate');
-                $table->integer('collectiondateepoch');
-                $table->bigInteger('requestsfrompeers');
-                $table->bigInteger('requestsfromclients');
-                $table->bigInteger('bytespurgedyoungerthan1day');
-                $table->bigInteger('bytespurgedyoungerthan7days');
-                $table->bigInteger('bytespurgedyoungerthan30days');
-                $table->bigInteger('bytespurgedtotal');
-                $table->bigInteger('bytesfrompeerstoclients');
-                $table->bigInteger('bytesfromorigintopeers');
-                $table->bigInteger('bytesfromorigintoclients');
-                $table->bigInteger('bytesfromcachetopeers');
-                $table->bigInteger('bytesfromcachetoclients');
-                $table->bigInteger('bytesdropped');
-                $table->bigInteger('repliesfrompeerstoclients');
-                $table->bigInteger('repliesfromorigintopeers');
-                $table->bigInteger('repliesfromorigintoclients');
-                $table->bigInteger('repliesfromcachetopeers');
-                $table->bigInteger('repliesfromcachetoclients');
-                $table->bigInteger('bytesimportedbyxpc');
-                $table->bigInteger('bytesimportedbyhttp');
-                $table->bigInteger('importsbyxpc');
-                $table->bigInteger('importsbyhttp');
-
-                $table->index('bytesfromcachetoclients', 'caching_bytesfromcachetoclients');
-                $table->index('bytesfromorigintoclients', 'caching_bytesfromorigintoclients');
-                $table->index('bytesfrompeerstoclients', 'caching_bytesfrompeerstoclients');
-                $table->index('collectiondate', 'caching_collectiondate');
-                $table->index('collectiondateepoch', 'caching_collectiondateepoch');
-                $table->index('serial_number', 'caching_serial_number');
-            });
-
-            // Store schema version in migration table
-//            $migration = new Migration($this->tablename);
-//            $migration->version = $this->schema_version;
-//            $migration->save();
-
-            alert("Created table '$this->tablename' version $this->schema_version");
-        }
-
-        // Store this table in the instantiated tables array
-        $GLOBALS['tables'][$this->tablename] = $this->tablename;
-
-        // Create table succeeded
-        return true;
-    }
-
     // ------------------------------------------------------------------------
     /**
      * Process data sent by postflight
