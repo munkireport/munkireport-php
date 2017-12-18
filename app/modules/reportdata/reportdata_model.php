@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use CFPropertyList\CFPropertyList;
 
-class Reportdata_model extends Eloquent
+class Reportdata_model extends \Model
 {
 
     public function __construct($serial = '')
@@ -16,10 +16,10 @@ class Reportdata_model extends Eloquent
         $this->rs['remote_ip'] = '';
         $this->rs['uptime'] = 0;
         $this->rt['uptime'] = 'INTEGER DEFAULT 0';// Uptime in seconds
+        $this->rs['reg_timestamp'] = time(); // Registration date
         $this->rs['machine_group'] = 0;
         $this->rt['machine_group'] = 'INT DEFAULT 0';
-        $this->rs['created_at'] = date('Y-m-d H:i:s'); // Registration date
-        $this->rs['updated_at'] = date('Y-m-d H:i:s');
+        $this->rs['timestamp'] = time();
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 3;
@@ -29,7 +29,7 @@ class Reportdata_model extends Eloquent
         $this->idx[] = array('console_user');
         $this->idx[] = array('long_username');
         $this->idx[] = array('remote_ip');
-        $this->idx[] = array('created_at');
+        $this->idx[] = array('reg_timestamp');
         $this->idx[] = array('timestamp');
         $this->idx[] = array('machine_group');
 
@@ -54,7 +54,7 @@ class Reportdata_model extends Eloquent
     public function register()
     {
         $this->remote_ip = getRemoteAddress();
-        $this->updated_at = date('Y-m-d H:i:s');
+        $this->timestamp = time();
 
         return $this;
     }
@@ -100,7 +100,7 @@ class Reportdata_model extends Eloquent
 
         return $out;
     }
-    
+
     /**
      * Get uptime for Clients
      *
@@ -115,11 +115,11 @@ class Reportdata_model extends Eloquent
                     FROM reportdata
                     WHERE uptime > 0
                     ".get_machine_group_filter('AND');
-            
+
             return current($this->query($sql));
     }
-    
-    
+
+
     /**
      * Get check-in statistics
      *
@@ -133,9 +133,9 @@ class Reportdata_model extends Eloquent
         $week_ago = $now - 3600 * 24 * 7;
         $month_ago = $now - 3600 * 24 * 30;
         $three_month_ago = $now - 3600 * 24 * 90;
-        $sql = "SELECT COUNT(1) as total, 
-        	COUNT(CASE WHEN timestamp > $hour_ago THEN 1 END) AS lasthour, 
-        	COUNT(CASE WHEN timestamp > $today THEN 1 END) AS today, 
+        $sql = "SELECT COUNT(1) as total,
+        	COUNT(CASE WHEN timestamp > $hour_ago THEN 1 END) AS lasthour,
+        	COUNT(CASE WHEN timestamp > $today THEN 1 END) AS today,
         	COUNT(CASE WHEN timestamp > $week_ago THEN 1 END) AS lastweek,
         	COUNT(CASE WHEN timestamp > $month_ago THEN 1 END) AS lastmonth,
         	COUNT(CASE WHEN timestamp BETWEEN $month_ago AND $week_ago THEN 1 END) AS inactive_week,
@@ -145,5 +145,35 @@ class Reportdata_model extends Eloquent
         	".get_machine_group_filter();
 
         return(current($this->query($sql)));
+    }
+
+
+    public function process($plist)
+    {
+        // Check if uptime is set to determine this is a new client
+        $new_client = $this->uptime ? false : true;
+
+        $parser = new CFPropertyList();
+        $parser->parse($plist, CFPropertyList::FORMAT_XML);
+        $mylist = $parser->toArray();
+
+        // Remove serial_number from mylist, use the cleaned serial that was provided in the constructor.
+        unset($mylist['serial_number']);
+
+        // If console_user is empty, retain previous entry
+        if (! $mylist['console_user']) {
+            unset($mylist['console_user']);
+        }
+
+        // If long_username is empty, retain previous entry
+        if (array_key_exists('long_username', $mylist) && empty($mylist['long_username'])) {
+            unset($mylist['long_username']);
+        }
+
+        $this->merge($mylist)->register()->save();
+
+        if ($new_client) {
+            store_event($this->serial_number, 'reportdata', 'info', 'new_client');
+        }
     }
 }

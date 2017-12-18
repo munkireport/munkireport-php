@@ -17,16 +17,20 @@ class Reportdata extends Migration
             $table->string('remote_ip');
             $table->integer('uptime')->nullable()->default(0);
             $table->integer('machine_group')->nullable()->default(0);
-            $table->timestamps();
+            $table->bigInteger('reg_timestamp')->default(0);
+            $table->bigInteger('timestamp')->default(0);
+
 
             $table->index(['console_user']);
             $table->index(['long_username']);
             $table->index(['remote_ip']);
             $table->index(['machine_group']);
+            $table->index(['reg_timestamp']);
+            $table->index(['timestamp']);
 
         });
     }
-    
+
     public function down()
     {
         $capsule = new Capsule();
