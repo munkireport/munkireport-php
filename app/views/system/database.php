@@ -66,7 +66,7 @@
 
           var tbody = $('.table-console tbody');
 
-          $.getJSON(appUrl + '/system/migrate', function (data) {
+          $.getJSON(appUrl + '/database/migrate', function (data) {
             done();
 
             if (data.error) {
@@ -85,7 +85,7 @@
         })
       });
 
-      $.getJSON(appUrl + '/system/migrationsPending', function (data) {
+      $.getJSON(appUrl + '/database/migrationsPending', function (data) {
         var tbody = $('.table-console tbody').empty();
         $('.loading').removeClass('loading');
 
