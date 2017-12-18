@@ -10,12 +10,14 @@ class Bluetooth extends Migration
         $capsule = new Capsule();
         $capsule::schema()->create('bluetooth', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
-            $table->integer('battery_percent')->default(-1);
-            $table->string('device_type');
+            $table->string('serial_number');
+            $table->integer('battery_percent')->nullable();
+            $table->string('device_type')->nullable();
 
             $table->index('device_type', 'bluetooth_device_type');
-            $table->index('serial_number', 'bluetooth_serial_number');
+            $table->index('serial_number', 'bluetooth_serial_number')->nullable();
+
+            $table->unique('serial_number', 'bluetooth_serial_number_unique');
 //            $table->timestamps();
         });
     }

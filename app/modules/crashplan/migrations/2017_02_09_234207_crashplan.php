@@ -10,13 +10,13 @@ class Crashplan extends Migration
         $capsule = new Capsule();
         $capsule::schema()->create('crashplan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number');
-            $table->string('destination');
-            $table->integer('last_success');
-            $table->integer('duration');
-            $table->integer('last_failure');
-            $table->string('reason');
-            $table->integer('timestamp');
+            $table->string('serial_number')->nullable();
+            $table->string('destination')->nullable();
+            $table->integer('last_success')->nullable();
+            $table->integer('duration')->nullable();
+            $table->integer('last_failure')->nullable();
+            $table->string('reason')->nullable();
+            $table->integer('timestamp')->nullable();
 //            $table->timestamps();
 
             $table->index('reason', 'crashplan_reason');

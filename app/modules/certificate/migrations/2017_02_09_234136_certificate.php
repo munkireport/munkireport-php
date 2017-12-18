@@ -16,7 +16,7 @@ class Certificate extends Migration
             $table->string('cert_cn');
             $table->string('issuer');
             $table->string('cert_location');
-            $table->integer('timestamp');
+            $table->integer('timestamp')->nullable();
 //            $table->timestamps();
 
             $table->index('cert_cn', 'certificate_cert_cn');
