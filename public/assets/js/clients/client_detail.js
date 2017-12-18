@@ -152,7 +152,7 @@ $(document).on('appReady', function(e, lang) {
 		}
 
 		// Registration date
-		var msecs = moment(machineData.reg_timestamp);
+		var msecs = moment(machineData.reg_timestamp * 1000);
 		$('.mr-reg_date').append('<time title="'+msecs.format('LLLL')+'" >'+msecs.fromNow()+'</time>');
 
 		// Check-in date
