@@ -7,6 +7,7 @@ use munkireport\lib\Database;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use munkireport\lib\Modules as ModuleMgr;
 
 class system extends Controller
 {
@@ -88,13 +89,8 @@ class system extends Controller
 
             $files = new Filesystem();
             $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
-            $dirs = Array(APP_ROOT . 'database/migrations');
-            foreach (conf('modules') as $module) {
-                $migration_dir = APP_ROOT . 'app/modules/' . $module . '/migrations';
-                if (file_exists($migration_dir)) {
-                    $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
-                }
-            }
+            $dirs = [APP_ROOT . 'database/migrations'];
+            $this->appenModuleMigrations($dirs);
             $migrationFiles = $migrator->run($dirs, Array('pretend' => true));
             $migrationFilenames = Array();
 
@@ -137,13 +133,8 @@ class system extends Controller
 
             $files = new Filesystem();
             $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
-            $dirs = Array(APP_ROOT . 'database/migrations');
-            foreach (conf('modules') as $module) {
-                $migration_dir = APP_ROOT . 'app/modules/' . $module . '/migrations';
-                if (file_exists($migration_dir)) {
-                    $dirs[] = APP_ROOT . 'app/modules/' . $module . '/migrations';
-                }
-            }
+            $dirs = [APP_ROOT . 'database/migrations'];
+            $this->appenModuleMigrations($dirs);
 
             $obj = new View();
 
@@ -167,6 +158,17 @@ class system extends Controller
                 'error_message' => $e->getMessage(),
                 'error_trace' => $e->getTrace()
             )));
+        }
+    }
+    
+    public function appenModuleMigrations(&$migrationDirList)
+    {
+        $moduleMgr = new ModuleMgr;
+        $moduleMgr->loadinfo(true);
+        foreach($moduleMgr->getInfo() as $moduleName => $info){
+            if($moduleMgr->getModuleMigrationPath($moduleName, $migrationPath)){
+                $migrationDirList[] = $migrationPath;
+            }
         }
     }
 

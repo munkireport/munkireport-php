@@ -57,6 +57,11 @@ class Controller extends KISS_Controller
         $capsule->bootEloquent();
     }
     
+    protected function addTimeZoneToTimestamp($timestamp)
+    {
+        return $timestamp . 'Z';
+    }
+    
     /**
      * Check if there is a valid session
      * and if the person is authorized for $what
@@ -399,6 +404,12 @@ class Model extends KISS_Model
         if (isset($GLOBALS['tables'][$this->tablename])) {
             return true;
         }
+        
+        throw new \Exception(
+            sprintf('Create table is deprecated, cannot create %s', $this->tablename), 
+            1
+        );
+        
 
         // Check if table exists and is up-to-date
         try {

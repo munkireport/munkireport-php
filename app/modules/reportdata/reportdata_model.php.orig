@@ -5,6 +5,18 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Reportdata_model extends Eloquent
 {
 
+<<<<<<< HEAD
+    protected $table = 'reportdata';
+    protected $fillable
+        = [
+            'serial_number',
+            'console_user',
+            'long_username',
+            'remote_ip',
+            'uptime',
+            'machine_group',
+        ];
+=======
     public function __construct($serial = '')
     {
         parent::__construct('id', 'reportdata'); //primary key, tablename
@@ -58,6 +70,7 @@ class Reportdata_model extends Eloquent
 
         return $this;
     }
+>>>>>>> bochoven/mrmodel-to-eloquent
 
   /**
    * Reset Machine Group attribute
