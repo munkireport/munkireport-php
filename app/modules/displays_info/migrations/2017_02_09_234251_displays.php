@@ -11,14 +11,14 @@ class Displays extends Migration
         $capsule::schema()->create('displays', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('type');
-            $table->string('display_serial');
-            $table->string('serial_number');
-            $table->string('vendor');
-            $table->string('model');
-            $table->string('manufactured');
-            $table->string('native');
-            $table->integer('timestamp');
+            $table->integer('type')->nullable();
+            $table->string('display_serial')->nullable();
+            $table->string('serial_number')->nullable();
+            $table->string('vendor')->nullable();
+            $table->string('model')->nullable();
+            $table->string('manufactured')->nullable();
+            $table->string('native')->nullable();
+            $table->integer('timestamp')->nullable();
 
 //            $table->timestamps();
         });
