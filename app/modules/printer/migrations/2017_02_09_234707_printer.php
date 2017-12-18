@@ -11,14 +11,14 @@ class Printer extends Migration
         $capsule::schema()->create('printer', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number');
-            $table->string('name');
-            $table->string('ppd');
-            $table->string('driver_version');
-            $table->string('url');
-            $table->string('default_set');
-            $table->string('printer_status');
-            $table->string('printer_sharing');
+            $table->string('serial_number')->nullable();
+            $table->string('name')->nullable();
+            $table->string('ppd')->nullable();
+            $table->string('driver_version')->nullable();
+            $table->string('url')->nullable();
+            $table->string('default_set')->nullable();
+            $table->string('printer_status')->nullable();
+            $table->string('printer_sharing')->nullable();
 
             $table->index('default_set', 'printer_default_set');
             $table->index('name', 'printer_name');

@@ -11,26 +11,26 @@ class Gsx extends Migration
         $capsule::schema()->create('gsx', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number')->unique();
-            $table->string('warrantystatus');
-            $table->string('coverageenddate');
-            $table->string('coveragestartdate');
-            $table->integer('daysremaining');
-            $table->string('estimatedpurchasedate');
-            $table->string('purchasecountry');
-            $table->string('registrationdate');
-            $table->string('productdescription');
-            $table->string('configdescription');
-            $table->string('contractcoverageenddate');
-            $table->string('contractcoveragestartdate');
-            $table->string('contracttype');
-            $table->string('laborcovered');
-            $table->string('partcovered');
-            $table->string('warrantyreferenceno');
-            $table->string('isloaner');
-            $table->string('warrantymod');
-            $table->string('isvintage');
-            $table->string('isobsolete');
+            $table->string('serial_number')->unique()->nullable();
+            $table->string('warrantystatus')->nullable();
+            $table->string('coverageenddate')->nullable();
+            $table->string('coveragestartdate')->nullable();
+            $table->integer('daysremaining')->nullable();
+            $table->string('estimatedpurchasedate')->nullable();
+            $table->string('purchasecountry')->nullable();
+            $table->string('registrationdate')->nullable();
+            $table->string('productdescription')->nullable();
+            $table->string('configdescription')->nullable();
+            $table->string('contractcoverageenddate')->nullable();
+            $table->string('contractcoveragestartdate')->nullable();
+            $table->string('contracttype')->nullable();
+            $table->string('laborcovered')->nullable();
+            $table->string('partcovered')->nullable();
+            $table->string('warrantyreferenceno')->nullable();
+            $table->string('isloaner')->nullable();
+            $table->string('warrantymod')->nullable();
+            $table->string('isvintage')->nullable();
+            $table->string('isobsolete')->nullable();
 
             $table->index('configdescription', 'gsx_configdescription');
             $table->index('coverageenddate', 'gsx_coverageenddate');

@@ -20,8 +20,8 @@ class Timemachine extends Migration
 
             $table->integer('always_show_deleted_backups_warning')->nullable();
             $table->integer('auto_backup')->nullable();
-            $table->bigInteger('bytes_available')->nullable();
-            $table->bigInteger('bytes_used')->nullable();
+            $table->integer('bytes_available')->nullable();
+            $table->integer('bytes_used')->nullable();
             $table->string('consistency_scan_date')->nullable();
             $table->string('date_of_latest_warning')->nullable();
             $table->string('destination_id')->nullable();
