@@ -12,11 +12,11 @@ class Warranty extends Migration
             $table->increments('id');
 
             $table->string('serial_number')->unique();
-            $table->string('purchase_date');
-            $table->string('end_date');
-            $table->string('status');
+            $table->string('purchase_date')->nullable();
+            $table->string('end_date')->nullable();
+            $table->string('status')->nullable();
 
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
     

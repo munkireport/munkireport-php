@@ -12,12 +12,12 @@ class SccmStatus extends Migration
             $table->increments('id');
 
             $table->string('serial_number')->unique();
-            $table->string('agent_status');
-            $table->string('mgmt_point');
-            $table->string('enrollment_name');
-            $table->string('enrollment_server');
-            $table->string('last_checkin');
-            $table->string('cert_exp');
+            $table->string('agent_status')->nullable();
+            $table->string('mgmt_point')->nullable();
+            $table->string('enrollment_name')->nullable();
+            $table->string('enrollment_server')->nullable();
+            $table->string('last_checkin')->nullable();
+            $table->string('cert_exp')->nullable();
 
             $table->index('agent_status', 'sccm_status_agent_status');
             $table->index('cert_exp', 'sccm_status_cert_exp');

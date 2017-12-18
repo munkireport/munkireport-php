@@ -12,14 +12,14 @@ class Security extends Migration
         $capsule::schema()->create('security', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number');
-            $table->string('gatekeeper');
-            $table->string('sip');
-            $table->string('ssh_users');
-            $table->string('ard_users');
-            $table->string('firmwarepw');
-            $table->string('firewall_state');
-            $table->string('skel_state');
+            $table->string('serial_number')->nullable();
+            $table->string('gatekeeper')->nullable();
+            $table->string('sip')->nullable();
+            $table->string('ssh_users')->nullable();
+            $table->string('ard_users')->nullable();
+            $table->string('firmwarepw')->nullable();
+            $table->string('firewall_state')->nullable();
+            $table->string('skel_state')->nullable();
 
 //            $table->timestamps();
 
