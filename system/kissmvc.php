@@ -43,18 +43,24 @@ class Engine extends KISS_Engine
 //===============================================================
 class Controller extends KISS_Controller
 {
+    protected $capsule;
+    
     protected function connectDB()
     {
-        $capsule = new Capsule;
-        $capsule->addConnection([
-            'driver' => 'sqlite',
-            'database' => conf('application_path').'db/db.sqlite',
-            'username' => conf('pdo_user'),
-            'password' => conf('pdo_pass'),
-        ]);
+        if(! $this->capsule){
+            $this->capsule = new Capsule;
+            $this->capsule->addConnection([
+                'driver' => 'sqlite',
+                'database' => conf('application_path').'db/db.sqlite',
+                'username' => conf('pdo_user'),
+                'password' => conf('pdo_pass'),
+            ]);
 
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
+            $this->capsule->setAsGlobal();
+            $this->capsule->bootEloquent();
+        }
+        
+        return $this->capsule;
     }
 
     /**

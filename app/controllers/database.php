@@ -19,19 +19,13 @@ class Database extends Controller
         if (! $this->authorized('global')) {
             die('You need to be admin');
         }
+        
+        $this->connectDB();
     }
     
     public function migrationsPending()
     {
-        $capsule = new Capsule();
-        $capsule->addConnection([
-            'username' => conf('pdo_user'),
-            'password' => conf('pdo_pass'),
-            'driver' => 'sqlite',
-            'database' => conf('application_path').'db/db.sqlite'
-        ]);
-        $capsule->setAsGlobal();
-        $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
+        $repository = new DatabaseMigrationRepository($this->capsule->getDatabaseManager(), 'migrations');
 
         try {
             if (!$repository->repositoryExists()) {
@@ -39,7 +33,7 @@ class Database extends Controller
             }
 
             $files = new Filesystem();
-            $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
+            $migrator = new Migrator($repository, $this->capsule->getDatabaseManager(), $files);
             $dirs = [APP_ROOT . 'database/migrations'];
             $this->appendModuleMigrations($dirs);
             $migrationFiles = $migrator->run($dirs, Array('pretend' => true));
@@ -67,15 +61,7 @@ class Database extends Controller
 
     public function migrate()
     {
-        $capsule = new Capsule();
-        $capsule->addConnection([
-            'username' => conf('pdo_user'),
-            'password' => conf('pdo_pass'),
-            'driver' => 'sqlite',
-            'database' => conf('application_path').'db/db.sqlite'
-        ]);
-        $capsule->setAsGlobal();
-        $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
+        $repository = new DatabaseMigrationRepository($this->capsule->getDatabaseManager(), 'migrations');
 
         try {
             if (!$repository->repositoryExists()) {
@@ -83,7 +69,7 @@ class Database extends Controller
             }
 
             $files = new Filesystem();
-            $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);
+            $migrator = new Migrator($repository, $this->capsule->getDatabaseManager(), $files);
             $dirs = [APP_ROOT . 'database/migrations'];
             $this->appendModuleMigrations($dirs);
 
