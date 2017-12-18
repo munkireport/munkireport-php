@@ -26,7 +26,7 @@ new Detectx_model;
 
         <tbody>
           <tr>
-            <td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
+            <td data-i18n="listing.loading" colspan="2" class="dataTables_empty"></td>
           </tr>
         </tbody>
 

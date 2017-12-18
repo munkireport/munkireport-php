@@ -19,7 +19,7 @@ Example Launch Daemon
 		<string>/Applications/DetectX Swift.app/Contents/MacOS/DetectX Swift</string>
 		<string>search</string>
 		<string>-aj</string>
-		<string>/usr/loca/munki/preflight.d/cache/detectx.json</string>
+		<string>/usr/local/munki/preflight.d/cache/detectx.json</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
