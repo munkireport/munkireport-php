@@ -18,7 +18,7 @@ class Displays extends Migration
             $table->string('model')->nullable();
             $table->string('manufactured')->nullable();
             $table->string('native')->nullable();
-            $table->integer('timestamp')->nullable();
+            $table->bigInteger('timestamp')->nullable();
 
 //            $table->timestamps();
         });

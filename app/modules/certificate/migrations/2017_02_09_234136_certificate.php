@@ -16,16 +16,16 @@ class Certificate extends Migration
             $table->string('cert_cn');
             $table->string('issuer');
             $table->string('cert_location');
-            $table->integer('timestamp')->nullable();
+            $table->bigInteger('timestamp')->nullable();
 //            $table->timestamps();
 
-            $table->index('cert_cn', 'certificate_cert_cn');
-            $table->index('cert_exp_time', 'certificate_cert_exp_time');
-            $table->index('cert_location', 'certificate_cert_location');
-            $table->index('cert_path', 'certificate_cert_path');
-            $table->index('issuer', 'certificate_issuer');
-            $table->index('serial_number', 'certificate_serial_number');
-            $table->index('timestamp', 'certificate_timestamp');
+            $table->index('cert_cn');
+            $table->index('cert_exp_time');
+            $table->index('cert_location');
+            $table->index('cert_path');
+            $table->index('issuer');
+            $table->index('serial_number');
+            $table->index('timestamp');
         });
     }
     

@@ -24,13 +24,13 @@ class Diskreport extends Migration
             $table->string('MountPoint');
             $table->string('VolumeName');
             $table->integer('CoreStorageEncrypted');
-            $table->string('timestamp');
+            $table->bigInteger('timestamp');
 
-            $table->index('serial_number', 'diskreport_serial_number');
-            $table->index('MountPoint', 'diskreport_MountPoint');
-            $table->index('media_type', 'diskreport_media_type');
-            $table->index('VolumeName', 'diskreport_VolumeName');
-            $table->index('VolumeType', 'diskreport_VolumeType');
+            $table->index('serial_number');
+            $table->index('MountPoint');
+            $table->index('media_type');
+            $table->index('VolumeName');
+            $table->index('VolumeType');
 
 //            $table->timestamps();
         });

@@ -16,7 +16,7 @@ class Munkiinfo extends Migration
             $table->string('munkiinfo_key')->nullable();
             $table->string('munkiinfo_value')->nullable();
 
-            $table->index('serial_number', 'munkiinfo_serial_number');
+            $table->index('serial_number');
 
 //            $table->timestamps();
         });

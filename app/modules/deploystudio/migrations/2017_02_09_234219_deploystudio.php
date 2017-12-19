@@ -10,7 +10,7 @@ class Deploystudio extends Migration
         $capsule = new Capsule();
         $capsule::schema()->create('deploystudio', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number');
+            $table->string('serial_number')->unique();
             $table->string('architecture')->nullable();
             $table->string('cn')->nullable();
             $table->string('dstudio_host_new_network_location')->nullable();
@@ -37,13 +37,11 @@ class Deploystudio extends Migration
             $table->string('dstudio_host_delete_other_locations')->nullable();
             $table->string('dstudio_host_model_identifier')->nullable();
 
-            $table->index('cn', 'deploystudio_cn');
-            $table->index('dstudio_host_serial_number', 'deploystudio_dstudio_host_serial_number');
-            $table->index('dstudio_hostname', 'deploystudio_dstudio_hostname');
-            $table->index('dstudio_last_workflow', 'deploystudio_dstudio_last_workflow');
-            $table->index('dstudio_mac_addr', 'deploystudio_dstudio_mac_addr');
-
-            $table->unique('serial_number', 'deploystudio_serial_number_unique');
+            $table->index('cn');
+            $table->index('dstudio_host_serial_number');
+            $table->index('dstudio_hostname');
+            $table->index('dstudio_last_workflow');
+            $table->index('dstudio_mac_addr');
 
 //            $table->timestamps();
         });

@@ -24,12 +24,12 @@ class Munkireport extends Migration
             $table->string('endtime')->nullable();
             $table->string('timestamp')->nullable();
 
-            $table->index('errors','munkireport_errors');
-            $table->index('manifestname','munkireport_manifestname');
-            $table->index('runtype','munkireport_runtype');
-            $table->index('timestamp','munkireport_timestamp');
-            $table->index('version','munkireport_version');
-            $table->index('warnings','munkireport_warnings');
+            $table->index('errors');
+            $table->index('manifestname');
+            $table->index('runtype');
+            $table->index('timestamp');
+            $table->index('version');
+            $table->index('warnings');
 
 //            $table->timestamps();
         });

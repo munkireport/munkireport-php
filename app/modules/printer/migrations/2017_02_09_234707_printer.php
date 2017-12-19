@@ -20,13 +20,13 @@ class Printer extends Migration
             $table->string('printer_status')->nullable();
             $table->string('printer_sharing')->nullable();
 
-            $table->index('default_set', 'printer_default_set');
-            $table->index('name', 'printer_name');
-            $table->index('ppd', 'printer_ppd');
-            $table->index('printer_sharing', 'printer_printer_sharing');
-            $table->index('printer_status', 'printer_printer_status');
-            $table->index('serial_number', 'printer_serial_number');
-            $table->index('url', 'printer_url');
+            $table->index('default_set');
+            $table->index('name');
+            $table->index('ppd');
+            $table->index('printer_sharing');
+            $table->index('printer_status');
+            $table->index('serial_number');
+            $table->index('url');
 
 //            $table->timestamps();
         });

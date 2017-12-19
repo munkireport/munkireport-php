@@ -19,10 +19,10 @@ class Extensions extends Migration
             $table->string('codesign');
             $table->string('executable');
 
-            $table->index('bundle_id', 'extensions_bundle_id');
-            $table->index('codesign', 'extensions_codesign');
-            $table->index('name', 'extensions_name');
-            $table->index('version', 'extensions_version');
+            $table->index('bundle_id');
+            $table->index('codesign');
+            $table->index('name');
+            $table->index('version');
         });
     }
     

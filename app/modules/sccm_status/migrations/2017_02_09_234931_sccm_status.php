@@ -19,12 +19,12 @@ class SccmStatus extends Migration
             $table->string('last_checkin')->nullable();
             $table->string('cert_exp')->nullable();
 
-            $table->index('agent_status', 'sccm_status_agent_status');
-            $table->index('cert_exp', 'sccm_status_cert_exp');
-            $table->index('enrollment_name', 'sccm_status_enrollment_name');
-            $table->index('enrollment_server', 'sccm_status_enrollment_server');
-            $table->index('last_checkin', 'sccm_status_last_checkin');
-            $table->index('mgmt_point', 'sccm_status_mgmt_point');
+            $table->index('agent_status');
+            $table->index('cert_exp');
+            $table->index('enrollment_name');
+            $table->index('enrollment_server');
+            $table->index('last_checkin');
+            $table->index('mgmt_point');
 
 //            $table->timestamps();
         });

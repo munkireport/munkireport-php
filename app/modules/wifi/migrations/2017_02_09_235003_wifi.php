@@ -30,9 +30,9 @@ class Wifi extends Migration
 
 //            $table->timestamps();
 
-            $table->index('bssid', 'wifi_bssid');
-            $table->index('ssid', 'wifi_ssid');
-            $table->index('state', 'wifi_state');
+            $table->index('bssid');
+            $table->index('ssid');
+            $table->index('state');
         });
 
     }

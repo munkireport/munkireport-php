@@ -37,12 +37,12 @@ class Caching extends Migration
             $table->bigInteger('importsbyxpc')->nullable();
             $table->bigInteger('importsbyhttp')->nullable();
 
-            $table->index('serial_number', 'caching_serial_number');
-            $table->index('collectiondate', 'caching_collectiondate');
-            $table->index('collectiondateepoch', 'caching_collectiondateepoch');
-            $table->index('bytesfromcachetoclients', 'caching_bytesfromcachetoclients');
-            $table->index('bytesfrompeerstoclients', 'caching_bytesfrompeerstoclients');
-            $table->index('bytesfromorigintoclients', 'caching_bytesfromorigintoclients');
+            $table->index('serial_number');
+            $table->index('collectiondate');
+            $table->index('collectiondateepoch');
+            $table->index('bytesfromcachetoclients');
+            $table->index('bytesfrompeerstoclients');
+            $table->index('bytesfromorigintoclients');
             // $table->timestamps();
         });
     }

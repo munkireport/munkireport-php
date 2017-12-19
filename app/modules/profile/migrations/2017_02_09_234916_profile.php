@@ -20,8 +20,8 @@ class Profile extends Migration
             $table->binary('payload_data');
             $table->integer('timestamp');
 
-            $table->index('serial_number', 'profile_serial_number');
-            $table->index('profile_uuid', 'profile_uuid');
+            $table->index('serial_number');
+            $table->index('profile_uuid');
 //            $table->timestamps();
         });
     }

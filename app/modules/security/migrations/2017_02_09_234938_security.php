@@ -23,14 +23,14 @@ class Security extends Migration
 
 //            $table->timestamps();
 
-            $table->index('ard_users', 'security_ard_users');
-            $table->index('firewall_state', 'security_firewall_state');
-            $table->index('firmwarepw', 'security_firmwarepw');
-            $table->index('gatekeeper', 'security_gatekeeper');
-            $table->index('serial_number', 'security_serial_number');
-            $table->index('sip', 'security_sip');
-            $table->index('skel_state', 'security_skel_state');
-            $table->index('ssh_users', 'security_ssh_users');
+            $table->index('ard_users');
+            $table->index('firewall_state');
+            $table->index('firmwarepw');
+            $table->index('gatekeeper');
+            $table->index('serial_number');
+            $table->index('sip');
+            $table->index('skel_state');
+            $table->index('ssh_users');
         });
     }
     

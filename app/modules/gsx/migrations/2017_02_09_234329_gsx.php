@@ -32,12 +32,12 @@ class Gsx extends Migration
             $table->string('isvintage')->nullable();
             $table->string('isobsolete')->nullable();
 
-            $table->index('configdescription', 'gsx_configdescription');
-            $table->index('coverageenddate', 'gsx_coverageenddate');
-            $table->index('daysremaining', 'gsx_daysremaining');
-            $table->index('estimatedpurchasedate', 'gsx_estimatedpurchasedate');
-            $table->index('isvintage', 'gsx_isvintage');
-            $table->index('warrantystatus', 'gsx_warrantystatus');
+            $table->index('configdescription');
+            $table->index('coverageenddate');
+            $table->index('daysremaining');
+            $table->index('estimatedpurchasedate');
+            $table->index('isvintage');
+            $table->index('warrantystatus');
 //            $table->timestamps();
         });
     }

@@ -25,8 +25,8 @@ class Location extends Migration
             $table->integer('longitudeaccuracy')->default(0);
             $table->string('stalelocation')->nullable();
 
-            $table->index('address', 'location_address');
-            $table->index('currentstatus', 'location_currentstatus');
+            $table->index('address');
+            $table->index('currentstatus');
 
             $table->timestamps();
         });

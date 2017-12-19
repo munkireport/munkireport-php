@@ -13,7 +13,7 @@ class FilevaultStatus extends Migration
             $table->string('serial_number')->unique();
             $table->string('filevault_status');
             $table->string('filevault_users');
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
     

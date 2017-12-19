@@ -37,9 +37,9 @@ class Directoryservice extends Migration
             $table->string('restrictdynamicdnsupdates')->nullable();
             $table->string('namespacemode')->nullable();
 
-            $table->index('allowedadmingroups', 'directoryservice_allowedadmingroups');
-            $table->index('directory_service_comments', 'directoryservice_directory_service_comments');
-            $table->index('which_directory_service', 'directoryservice_which_directory_service');
+            $table->index('allowedadmingroups');
+            $table->index('directory_service_comments');
+            $table->index('which_directory_service');
 //            $table->timestamps();
         });
     }

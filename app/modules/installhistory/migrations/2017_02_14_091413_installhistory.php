@@ -18,7 +18,7 @@ class Installhistory extends Migration
             $table->string('packageIdentifiers');
             $table->string('processName');
 
-            $table->timestamps();
+//            $table->timestamps();
         });
     }
     

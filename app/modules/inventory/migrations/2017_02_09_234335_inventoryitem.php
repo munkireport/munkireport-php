@@ -18,8 +18,8 @@ class Inventoryitem extends Migration
             $table->string('bundlename');
             $table->text('path');
 
-            $table->index(['name', 'version'], 'inventoryitem_name_version');
-            $table->index('serial_number', 'inventoryitem_serial_number');
+            $table->index(['name', 'version']);
+            $table->index('serial_number');
 
 //            $table->timestamps();
         });

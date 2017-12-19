@@ -19,8 +19,8 @@ class Crashplan extends Migration
             $table->integer('timestamp')->nullable();
 //            $table->timestamps();
 
-            $table->index('reason', 'crashplan_reason');
-            $table->index('serial_number', 'crashplan_serial_number');
+            $table->index('reason');
+            $table->index('serial_number');
         });
     }
     

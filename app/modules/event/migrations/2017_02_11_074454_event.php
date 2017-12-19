@@ -17,14 +17,14 @@ class Event extends Migration
             $table->string('module');
             $table->string('msg');
             $table->string('data')->nullable();
-            $table->integer('timestamp');
+            $table->bigInteger('timestamp');
 
             //$table->timestamps();
 
-            $table->index('msg', 'event_msg');
-            $table->index('serial_number', 'event_serial_number');
-            $table->index(['serial_number', 'module'], 'event_serial_number_module');
-            $table->index('type', 'event_type');
+            $table->index('msg');
+            $table->index('serial_number');
+            $table->index(['serial_number', 'module']);
+            $table->index('type');
         });
     }
     
