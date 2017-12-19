@@ -10,14 +10,14 @@ class Appusage extends Migration
         $capsule = new Capsule();
         $capsule::schema()->create('appusage', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number', 255)->nullable();
-            $table->string('event', 255)->nullable();
-            $table->string('bundle_id', 255)->nullable();
-            $table->string('app_version', 255)->nullable();
-            $table->string('app_name', 255)->nullable();
-            $table->string('app_path', 255)->nullable();
+            $table->string('serial_number')->nullable();
+            $table->string('event')->nullable();
+            $table->string('bundle_id')->nullable();
+            $table->string('app_version')->nullable();
+            $table->string('app_name')->nullable();
+            $table->string('app_path')->nullable();
             $table->integer('last_time_epoch')->nullable();
-            $table->string('last_time', 255)->nullable();
+            $table->string('last_time')->nullable();
             $table->integer('number_times')->nullable();
 
             $table->index('app_name', 'appusage_app_name');

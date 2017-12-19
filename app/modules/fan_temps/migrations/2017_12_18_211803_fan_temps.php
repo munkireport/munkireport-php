@@ -10,7 +10,7 @@ class FanTemps extends Migration
         $capsule = new Capsule();
         $capsule::schema()->create('fan_temps', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number', 255)->nullable();
+            $table->string('serial_number')->nullable();
 
             $table->integer('fan_0')->nullable();
             $table->integer('fan_1')->nullable();

@@ -10,7 +10,7 @@ class Caching extends Migration
         $capsule = new Capsule();
         $capsule::schema()->create('caching', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number', 255)->nullable();
+            $table->string('serial_number')->nullable();
 
             $table->string('collectiondate')->nullable();
             $table->string('expirationdate')->nullable();
