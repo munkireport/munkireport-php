@@ -10,7 +10,7 @@ class Applications extends Migration
         $capsule = new Capsule();
         $capsule::schema()->create('applications', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('name');
             $table->text('path');
             $table->bigInteger('last_modified');
