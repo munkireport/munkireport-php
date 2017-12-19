@@ -10,7 +10,7 @@ class Homebrew extends Migration
         $capsule = new Capsule();
         $capsule::schema()->create('homebrew', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->text('name');
             $table->text('full_name');
             $table->text('oldname');
