@@ -15,7 +15,8 @@
         "illuminate/filesystem": "~5.4",
         "league/flysystem": "~1.0",
         "rodneyrehm/plist": "^2.0",
-        "doctrine/dbal": "~2.5"
+        "doctrine/dbal": "~2.5",
+        "defuse/php-encryption": "^2.1"
     },
     "suggest": {
         "onelogin/php-saml": "^2.12 Required for SAML authentication",
