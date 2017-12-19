@@ -12,7 +12,7 @@ class Softwareupdate extends Migration
             $table->increments('id');
             $table->string('serial_number')->unique();
 
-            $table->boolean('automaticcheckenabled')->nullable();
+            $table->integer('automaticcheckenabled')->nullable();
             $table->integer('automaticdownload')->nullable();
             $table->integer('configdatainstall')->nullable();
             $table->integer('criticalupdateinstall')->nullable();
