@@ -11,15 +11,15 @@ class Supported_os extends Migration
         $capsule::schema()->create('supported_os', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
-            $table->integer('current_os')->nullable();
-            $table->integer('highest_supported')->nullable();
-            $table->string('machine_id')->nullable();
-            $table->bigInteger('last_touch')->nullable();
+            $table->integer('current_os');
+            $table->integer('highest_supported');
+            $table->string('machine_id');
+            $table->bigInteger('last_touch');
 
-            $table->index('current_os', 'supported_current_os');
-            $table->index('highest_supported', 'supported_os_highest_supported');
-            $table->index('machine_id', 'supported_os_machine_id');
-            $table->index('last_touch', 'supported_os_last_touch');
+            $table->index('current_os');
+            $table->index('highest_supported');
+            $table->index('machine_id');
+            $table->index('last_touch');
         });
     }
     
