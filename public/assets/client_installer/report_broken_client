@@ -25,8 +25,8 @@ fi
 SERIAL=`ioreg -c IOPlatformExpertDevice | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
 NAME=`scutil --get ComputerName`
 
-BASEURL=$(defaults read /Library/Preferences/MunkiReport BaseUrl)
-PASSPHRASE=$(defaults read /Library/Preferences/MunkiReport Passphrase 2>/dev/null)
+BASEURL=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('BaseUrl', 'MunkiReport');")
+PASSPHRASE=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('Passphrase', 'MunkiReport');" 2>/dev/null)
 SUBMITURL="${BASEURL}/report/broken_client"
 
 # Application paths
