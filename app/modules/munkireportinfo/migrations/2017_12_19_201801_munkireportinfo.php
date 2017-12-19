@@ -15,6 +15,10 @@ class Munkireportinfo extends Migration
             $table->string('baseurl');
             $table->string('passphrase');
             $table->text('reportitems');
+
+            $table->index('version');
+            $table->index('baseurl');
+            $table->index('passphrase');
         });
 
     }

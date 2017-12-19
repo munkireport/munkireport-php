@@ -22,6 +22,19 @@ class Gpu extends Migration
             $table->string('efi_version')->nullable();
             $table->string('revision_id')->nullable();
             $table->string('rom_revision')->nullable();
+
+            $table->index('model');
+            $table->index('vendor');
+            $table->index('vram');
+            $table->index('pcie_width');
+            $table->index('slot_name');
+            $table->index('device_id');
+            $table->index('gmux_version');
+            $table->index('efi_version');
+            $table->index('revision_id');
+            $table->index('rom_revision');
+
+
         });
 
     }

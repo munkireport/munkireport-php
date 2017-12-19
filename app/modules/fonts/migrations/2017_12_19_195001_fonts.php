@@ -33,6 +33,22 @@ class Fonts extends Migration
             $table->text('vendor');
             $table->text('designer');
             $table->text('trademark');
+            
+            $table->index('name');
+            $table->index('type');
+            $table->index('type_name');
+            $table->index('family');
+            $table->index('fullname');
+            $table->index('style');
+            $table->index('unique_id');
+            $table->index('version');
+            $table->index('enabled');
+            $table->index('copy_protected');
+            $table->index('duplicate');
+            $table->index('embeddable');
+            $table->index('type_enabled');
+            $table->index('outline');
+            $table->index('valid');
         });
 
     }

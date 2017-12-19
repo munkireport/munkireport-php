@@ -18,6 +18,14 @@ class Findmymac extends Migration
             $table->string('personid')->nullable();
             $table->string('hostname')->nullable();
 
+            
+            $table->index('serial_number');
+            $table->index('status');
+            $table->index('ownerdisplayname');
+            $table->index('email');
+            $table->index('personid');
+            $table->index('hostname');
+            
 //            $table->timestamps();
         });
     }

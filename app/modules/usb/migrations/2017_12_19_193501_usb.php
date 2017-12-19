@@ -19,11 +19,25 @@ class Usb extends Migration
             $table->string('device_speed')->nullable();
             $table->boolean('internal')->nullable();
             $table->boolean('media')->nullable();
-            $table->boolean('bus_power')->nullable();
-            $table->boolean('bus_power_used')->nullable();
-            $table->boolean('extra_current_used')->nullable();
+            $table->integer('bus_power')->nullable();
+            $table->integer('bus_power_used')->nullable();
+            $table->integer('extra_current_used')->nullable();
             $table->string('usb_serial_number')->nullable();
             $table->text('printer_id')->nullable();
+            
+            
+            $table->index('name');
+            $table->index('type');
+            $table->index('manufacturer');
+            $table->index('vendor_id');
+            $table->index('device_speed');
+            $table->index('internal');
+            $table->index('bus_power');
+            $table->index('bus_power_used');
+            $table->index('extra_current_used');
+            $table->index('usb_serial_number');
+
+            
         });
 
     }

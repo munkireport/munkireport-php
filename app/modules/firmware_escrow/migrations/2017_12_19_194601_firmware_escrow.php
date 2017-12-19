@@ -14,6 +14,11 @@ class FirmwareEscrow extends Migration
             $table->dateTime('enabled_date')->nullable();
             $table->string('firmware_password')->nullable();
             $table->string('firmware_mode')->nullable();
+            
+            $table->index('enabled_date');
+            $table->index('firmware_password');
+            $table->index('firmware_mode');
+
 
         });
 

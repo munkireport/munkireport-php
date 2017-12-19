@@ -18,7 +18,7 @@ class Profile extends Migration
             $table->string('payload_name');
             $table->string('payload_display');
             $table->binary('payload_data');
-            $table->integer('timestamp');
+            $table->bigInteger('timestamp');
 
             $table->index('serial_number');
             $table->index('profile_uuid');

@@ -14,7 +14,8 @@ class Localadmin extends Migration
             $table->string('serial_number')->unique();
             $table->string('users');
 
-//            $table->timestamps();
+            $table->index('users');
+
         });
     }
     

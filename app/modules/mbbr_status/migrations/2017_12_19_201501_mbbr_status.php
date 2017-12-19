@@ -11,10 +11,14 @@ class MbbrStatus extends Migration
         $capsule::schema()->create('mbbr_status', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
+            $table->string('entitlement_status');
+            $table->string('machine_id');
+            $table->string('install_token');
 
-            $table->string('entitlement_status')->nullable();
-            $table->string('machine_id')->nullable();
-            $table->string('install_token')->nullable();
+
+            $table->index('entitlement_status');
+            $table->index('machine_id');
+            $table->index('install_token');
         });
 
     }
