@@ -46,12 +46,20 @@
 					<td id="homebrew_info-homebrew_repository"></td>
 				</tr>
 				<tr>
+					<th data-i18n="homebrew_info.homebrew_git_config_file"></th>
+					<td id="homebrew_info-homebrew_git_config_file"></td>
+				</tr>
+				<tr>
 					<th data-i18n="homebrew_info.homebrew_version"></th>
 					<td id="homebrew_info-homebrew_version"></td>
 				</tr>
 				<tr>
 					<th data-i18n="homebrew_info.homebrew_ruby"></th>
 					<td id="homebrew_info-homebrew_ruby"></td>
+				</tr>
+				<tr>
+					<th data-i18n="homebrew_info.homebrew_noanalytics_this_run"></th>
+					<td id="homebrew_info-homebrew_noanalytics_this_run"></td>
 				</tr>
 				<tr>
 					<th data-i18n="homebrew_info.command_line_tools"></th>
@@ -68,6 +76,10 @@
 				<tr>
 					<th data-i18n="homebrew_info.clang"></th>
 					<td id="homebrew_info-clang"></td>
+				</tr>
+                <tr>
+					<th data-i18n="homebrew_info.curl"></th>
+					<td id="homebrew_info-curl"></td>
 				</tr>
 				<tr>
 					<th data-i18n="homebrew_info.java"></th>
@@ -127,9 +139,11 @@ $(document).on('appReady', function(e, lang) {
 			$('#homebrew_info-homebrew_prefix').text(data.homebrew_prefix);  
 			$('#homebrew_info-homebrew_repository').text(data.homebrew_repository);  
 			$('#homebrew_info-homebrew_version').text(data.homebrew_version);  
+			$('#homebrew_info-homebrew_git_config_file').text(data.homebrew_git_config_file);  
 			$('#homebrew_info-homebrew_ruby').text(data.homebrew_ruby);  
 			$('#homebrew_info-command_line_tools').text(data.command_line_tools);  
 			$('#homebrew_info-cpu').text(data.cpu);  
+			$('#homebrew_info-curl').text(data.curl);  
 			$('#homebrew_info-git').text(data.git);  
 			$('#homebrew_info-clang').text(data.clang);  
 			$('#homebrew_info-java').text(data.java);  
@@ -139,6 +153,14 @@ $(document).on('appReady', function(e, lang) {
 			$('#homebrew_info-x11').text(data.x11);  
 			$('#homebrew_info-xcode').text(data.xcode);  
 			$('#homebrew_info-macos').text(data.macos);  
+            
+            if(data.homebrew_noanalytics_this_run === "1" || data.homebrew_noanalytics_this_run === 1) {
+				 $('#homebrew_info-homebrew_noanalytics_this_run').text(i18n.t('yes'));
+			} else if(data.homebrew_noanalytics_this_run === "0" || data.homebrew_noanalytics_this_run === 0) {
+				 $('#homebrew_info-homebrew_noanalytics_this_run').text(i18n.t('no'));
+			} else{
+				 $('#homebrew_info-homebrew_noanalytics_this_run').text("");
+			}
 		}
 
 	});
