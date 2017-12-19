@@ -40,6 +40,7 @@ class Homebrew extends Migration
             $table->boolean('versions_devel')->default(0);
             $table->boolean('versions_head')->default(0);
 
+            $table->index('serial_number');
             $table->index('built_as_bottle');
             $table->index('installed_as_dependency'):
             $table->index('installed_on_request'):
