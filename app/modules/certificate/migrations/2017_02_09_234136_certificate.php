@@ -11,7 +11,7 @@ class Certificate extends Migration
         $capsule::schema()->create('certificate', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number');
-            $table->integer('cert_exp_time');
+            $table->bigInteger('cert_exp_time');
             $table->string('cert_path');
             $table->string('cert_cn');
             $table->string('issuer');

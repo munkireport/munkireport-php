@@ -16,7 +16,7 @@ class Appusage extends Migration
             $table->string('app_version');
             $table->string('app_name');
             $table->string('app_path');
-            $table->integer('last_time_epoch');
+            $table->bigInteger('last_time_epoch');
             $table->string('last_time');
             $table->integer('number_times');
 

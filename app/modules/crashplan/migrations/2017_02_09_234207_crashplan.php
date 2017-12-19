@@ -12,11 +12,11 @@ class Crashplan extends Migration
             $table->increments('id');
             $table->string('serial_number')->nullable();
             $table->string('destination')->nullable();
-            $table->integer('last_success')->nullable();
+            $table->bigInteger('last_success')->nullable();
             $table->integer('duration')->nullable();
-            $table->integer('last_failure')->nullable();
+            $table->bigInteger('last_failure')->nullable();
             $table->string('reason')->nullable();
-            $table->integer('timestamp')->nullable();
+            $table->bigInteger('timestamp')->nullable();
 //            $table->timestamps();
 
             $table->index('reason');

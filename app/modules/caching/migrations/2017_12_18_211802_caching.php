@@ -14,7 +14,7 @@ class Caching extends Migration
 
             $table->string('collectiondate')->nullable();
             $table->string('expirationdate')->nullable();
-            $table->integer('collectiondateepoch')->nullable();
+            $table->bigInteger('collectiondateepoch')->nullable();
             $table->bigInteger('requestsfrompeers')->nullable();
             $table->bigInteger('requestsfromclients')->nullable();
             $table->bigInteger('bytespurgedyoungerthan1day')->nullable();
