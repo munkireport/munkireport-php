@@ -14,8 +14,11 @@ class Service extends Migration
             $table->string('service_name');
             $table->string('service_state');
             $table->bigInteger('timestamp');
+            
+            $table->index('serial_number');
+            $table->index('service_name');
+            $table->index('service_state');
         });
-
     }
 
     public function down()
