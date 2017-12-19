@@ -11,10 +11,10 @@ class Ard extends Migration
         $capsule::schema()->create('ard', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
-            $table->string('Text1')->nullable();
-            $table->string('Text2')->nullable();
-            $table->string('Text3')->nullable();
-            $table->string('Text4')->nullable();
+            $table->string('Text1');
+            $table->string('Text2');
+            $table->string('Text3');
+            $table->string('Text4');
 
             $table->index('Text1');
             $table->index('Text2');
