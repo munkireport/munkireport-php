@@ -29,7 +29,7 @@ class SmartStats extends Migration
             $table->string('smart_is')->nullable();
             $table->integer('error_count')->nullable();
             $table->integer('error_poh')->nullable();
-            $table->integer('timestamp')->nullable();
+            $table->bigInteger('timestamp')->nullable();
             $table->bigInteger('raw_read_error_rate')->nullable();
             $table->bigInteger('throughput_performance')->nullable();
             $table->bigInteger('spin_up_time')->nullable();

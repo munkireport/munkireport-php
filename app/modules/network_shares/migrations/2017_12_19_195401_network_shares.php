@@ -16,6 +16,13 @@ class NetworkShares extends Migration
             $table->string('fstypename')->nullable();
             $table->string('fsmtnonname')->nullable();
             $table->boolean('automounted')->nullable();
+
+            $table->index('name');
+            $table->index('mntfromname');
+            $table->index('fstypename');
+            $table->index('fsmtnonname');
+            $table->index('automounted');
+
         });
 
     }

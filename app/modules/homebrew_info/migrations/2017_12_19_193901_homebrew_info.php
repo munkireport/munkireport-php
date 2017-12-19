@@ -35,6 +35,30 @@ class HomebrewInfo extends Migration
             $table->string('x11')->nullable();
             $table->string('xcode')->nullable();
             $table->string('macos')->nullable();
+
+            $table->index('core_tap_head');
+            $table->index('core_tap_origin');
+            $table->index('core_tap_last_commit');
+            $table->index('head');
+            $table->index('last_commit');
+            $table->index('origin');
+            $table->index('homebrew_bottle_domain');
+            $table->index('homebrew_cellar');
+            $table->index('homebrew_prefix');
+            $table->index('homebrew_repository');
+            $table->index('homebrew_version');
+            $table->index('homebrew_ruby');
+            $table->index('command_line_tools');
+            $table->index('cpu');
+            $table->index('git');
+            $table->index('clang');
+            $table->index('java');
+            $table->index('perl');
+            $table->index('python');
+            $table->index('ruby');
+            $table->index('x11');
+            $table->index('xcode');
+            $table->index('macos');
         });
 
     }

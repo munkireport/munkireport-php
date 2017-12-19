@@ -1,5 +1,5 @@
 <?php
-class wifi_model extends \Model
+class Wifi_model extends \Model
 {
 
     public function __construct($serial = '')

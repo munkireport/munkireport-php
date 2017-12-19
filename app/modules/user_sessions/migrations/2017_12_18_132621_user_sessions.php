@@ -13,7 +13,7 @@ class UserSessions extends Migration
 
             $table->string('serial_number');
             $table->string('event')->nullable();
-            $table->integer('time')->nullable();
+            $table->bigInteger('time')->nullable();
             $table->string('user')->nullable();
             $table->string('remote_ssh')->nullable();
 

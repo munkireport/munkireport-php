@@ -30,6 +30,25 @@ class Softwareupdate extends Migration
             $table->string('mrxprotect')->nullable();
             $table->string('catalogurl')->nullable();
             $table->string('inactiveupdates')->nullable();
+            
+            $table->index('automaticcheckenabled');
+            $table->index('automaticdownload');
+            $table->index('configdatainstall');
+            $table->index('criticalupdateinstall');
+            $table->index('lastattemptsystemversion');
+            $table->index('lastbackgroundccdsuccessfuldate');
+            $table->index('lastbackgroundsuccessfuldate');
+            $table->index('lastfullsuccessfuldate');
+            $table->index('lastrecommendedupdatesavailable');
+            $table->index('lastresultcode');
+            $table->index('lastsessionsuccessful');
+            $table->index('lastsuccessfuldate');
+            $table->index('lastupdatesavailable');
+            $table->index('skiplocalcdn');
+            $table->index('recommendedupdates');
+            $table->index('mrxprotect');
+            $table->index('inactiveupdates');
+            
         });
 
     }

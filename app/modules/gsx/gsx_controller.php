@@ -6,7 +6,7 @@
  * @package munkireport
  * @author John Eberle
  **/
-class gsx_controller extends Module_controller
+class Gsx_controller extends Module_controller
 {
     public function __construct()
     {
@@ -78,4 +78,4 @@ class gsx_controller extends Module_controller
         $gsx = new gsx_model($serial_number);
         $obj->view('json', array('msg' => $gsx->rs));
     }
-} // END class gsx_module
+} // END class Gsx_module
