@@ -20,7 +20,7 @@ class Database extends Controller
             die('You need to be admin');
         }
         
-        $this->connectDB();
+        $this->db();
     }
     
     public function migrationsPending()

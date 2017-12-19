@@ -19,7 +19,7 @@ class admin extends Controller
         }
         
         // Connect to database
-        $this->connectDB();
+        $this->db();
 
     }
 
@@ -353,15 +353,22 @@ class admin extends Controller
     public function show($which = '')
     {
         if ($which) {
-            $data['page'] = 'clients';
-            $data['scripts'] = array("clients/client_list.js");
-            $view = 'admin/'.$which;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
+            $view = $this->blade()->view()->make('admin/' . $which);
+            echo $view->render();
         }
 
-        $obj = new View();
-        $obj->view($view, $data);
+
+
+//        if ($which) {
+//            $data['page'] = 'clients';
+//            $data['scripts'] = array("clients/client_list.js");
+//            $view = 'admin/'.$which;
+//        } else {
+//            $data = array('status_code' => 404);
+//            $view = 'error/client_error';
+//        }
+//
+//        $obj = new View();
+//        $obj->view($view, $data);
     }
 }

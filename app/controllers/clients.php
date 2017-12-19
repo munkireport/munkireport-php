@@ -16,7 +16,7 @@ class clients extends Controller
         }
 
         // Connect to database
-        $this->connectDB();
+        $this->db();
 
     }
 

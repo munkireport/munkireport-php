@@ -14,7 +14,7 @@ class datatables extends Controller
         }
 
         // Connect to database
-        $this->connectDB();
+        $this->db();
 
     }
 

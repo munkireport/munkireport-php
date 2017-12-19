@@ -2,6 +2,7 @@
 
 use munkireport\models\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Philo\Blade;
 
 require('kissmvc_core.php');
 
@@ -44,8 +45,13 @@ class Engine extends KISS_Engine
 class Controller extends KISS_Controller
 {
     protected $capsule;
-    
-    protected function connectDB()
+
+    /**
+     * Get a connection to the database.
+     *
+     * @return Capsule
+     */
+    protected function db()
     {
         if(! $this->capsule){
             $this->capsule = new Capsule;
@@ -73,6 +79,19 @@ class Controller extends KISS_Controller
         }
         
         return $this->capsule;
+    }
+
+    /**
+     * Create a laravel Blade template instance.
+     *
+     * @return Blade
+     */
+    protected function blade()
+    {
+        $views_path = APP_ROOT . '/resources/views';
+        $cache_path = APP_ROOT . '/storage/framework/views';
+
+        return new Blade($views_path, $cache_path);
     }
 
     /**

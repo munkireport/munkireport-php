@@ -24,6 +24,9 @@
         "adldap2/adldap2": "^8.0 Required for AD authentication"
     },
     "autoload": {
+        "psr-0": {
+            "Philo\\": "lib/"
+        },
         "psr-4": {
             "munkireport\\models\\": "app/models/",
             "munkireport\\controller\\": "app/controllers",

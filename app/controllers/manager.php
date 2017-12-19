@@ -17,7 +17,7 @@ class manager extends Controller
         }
 
         // Connect to database
-        $this->connectDB();
+        $this->db();
 
     }
 
