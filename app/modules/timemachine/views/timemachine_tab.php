@@ -76,6 +76,17 @@ $(document).on('appReady', function(){
 					   });
 					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+outsnaps+'</td></tr>';
 
+                     } else if(prop == "apfs_snapshots"){
+					   var apfsdates = d[prop].split(", ");
+					   var outsnaps = "";
+					   apfsdates.forEach(function(snapdate) {
+                           if (snapdate != "") {
+                               var date = new Date(snapdate * 1000);
+                               outsnaps = outsnaps + '<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span><br>'
+                           }
+					   });
+					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+outsnaps+'</td></tr>';
+                        
                     } else {
                         rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
 					}

@@ -45,9 +45,10 @@ class Timemachine_model extends \Model
         $this->rs['time_capsule_display_name'] = '';
         $this->rs['volume_display_name'] = '';
         $this->rs['destinations'] = 0;
+        $this->rs['apfs_snapshots'] = ''; $this->rt['apfs_snapshots'] = 'TEXT';
         
         // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
+        $this->schema_version = 3;
         
         // Indexes to optimize queries
         $this->idx[] = array('last_success');
@@ -155,7 +156,7 @@ class Timemachine_model extends \Model
             
         } else { // Else process with new XML handler    
             
-            // Process incoming powerinfo.xml
+            // Process incoming timemachine.plist
             $parser = new CFPropertyList();
             $parser->parse($data, CFPropertyList::FORMAT_XML);
             $plist = $parser->toArray();
@@ -197,7 +198,8 @@ class Timemachine_model extends \Model
                 'server_display_name' => 'server_display_name',
                 'snapshot_count' => 'snapshot_count',
                 'time_capsule_display_name' => 'time_capsule_display_name',
-                'volume_display_name' => 'volume_display_name'
+                'volume_display_name' => 'volume_display_name',
+                'apfs_snapshots' => 'apfs_snapshots'
             );
                         
             // Traverse the xml with translations
@@ -303,6 +305,24 @@ class Timemachine_model extends \Model
             } else {
                 $this->destinations = "0";
             }
+            
+            // Format apfs_snapshots data, if it exist
+            if (array_key_exists("apfs_snapshots", $plist)) {
+                
+                $apfs_array = explode("\n", $plist["apfs_snapshots"]);
+                array_shift($apfs_array);
+                $apfs_snapshots = "";
+                foreach ($apfs_array as $apfs_element) {
+                    // Check that element is not empty
+                    if ($apfs_element != ""){
+                        $date = DateTime::createFromFormat('Y-m-d-His', $apfs_element);
+                        $apfs_unix = $date->format('U');
+                        $apfs_snapshots = $apfs_unix.", ".$apfs_snapshots;
+                    }
+                }
+                $this->apfs_snapshots = $apfs_snapshots;
+            }
+            
         }
         
         // Only store if there is data

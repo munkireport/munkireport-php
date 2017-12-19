@@ -37,6 +37,7 @@
     "timemachine": "Time Machine",
     "timemachinewidget": "Time Machine Backups",
     "report": "Time Machine Report",
+    "apfs_snapshots": "Local APFS Snapshots",
     "null": "",
     "0": "Backup completed successfully",
     "1": "Error 1: Unable to launch Time Machine.",

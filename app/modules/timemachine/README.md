@@ -44,4 +44,4 @@ The following information is stored in the table:
 * time_capsule_display_name - name of Time Capsule
 * volume_display_name - name of local backup disk
 * destinations - int - number of destinations
-
+* apfs_snapshots - TEXT - dates of all local APFS snapshots
