@@ -20,7 +20,12 @@ class Displays extends Migration
             $table->string('native')->nullable();
             $table->bigInteger('timestamp')->nullable();
 
-//            $table->timestamps();
+            $table->index('serial_number');
+            $table->index('display_serial');
+            $table->index('vendor');
+            $table->index('model');
+            $table->index('native');
+            $table->index('timestamp');
         });
     }
 
