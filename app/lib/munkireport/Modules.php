@@ -18,6 +18,7 @@ class Modules
       'reportdata',
       'tag',
       'event',
+      'comment',
     );
     private $skipInactiveModules = False;
 

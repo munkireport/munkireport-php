@@ -17,7 +17,10 @@ class Comment extends Migration
             $table->text('text');
             $table->text('html');
             $table->bigInteger('timestamp');
-//            $table->timestamps();
+            
+            $table->index('serial_number');
+            $table->index('section');
+            $table->index('user');
         });
     }
 
