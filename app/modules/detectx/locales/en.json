@@ -1,0 +1,20 @@
+{
+  "listing": {
+    "numberofissues": "Number of Issues",
+    "searchdate": "Search Date",
+    "status": "Status",
+    "issues":"Issues",
+    "noissues": "No Issues Found!",
+    "clean":"Clean",
+    "true":"True",
+    "false":"False",
+    "scantime": "Scan Duration",
+    "spotlightindexing": "Spotlight Indexing"
+  },
+  "widget": {
+    "title": "DetectX Status",
+    "clean": "Clean",
+    "infected": "Infected"
+  },
+  "title": "DetectX"
+}

@@ -12,6 +12,10 @@ class datatables extends Controller
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
         }
+
+        // Connect to database
+        $this->connectDB();
+
     }
 
     public function data()

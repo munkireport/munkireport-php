@@ -1,5 +1,8 @@
 <?php
-class Usage_stats_model extends Model {
+
+use CFPropertyList\CFPropertyList;
+
+class Usage_stats_model extends \Model {
 
     function __construct($serial='')
 	{
@@ -7,7 +10,7 @@ class Usage_stats_model extends Model {
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['timestamp'] = 0; $this->rt['timestamp'] = 'BIGINT';
-        $this->rs['thermal_pressure'] = '';
+		$this->rs['thermal_pressure'] = '';
 		$this->rs['backlight_max'] = 0;
 		$this->rs['backlight_min'] = 0;
 		$this->rs['backlight'] = 0;
@@ -100,7 +103,6 @@ class Usage_stats_model extends Model {
 			throw new Exception("Error Processing Request: No property list found", 1);
 		}
 		
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();
@@ -119,7 +121,7 @@ class Usage_stats_model extends Model {
         if( array_key_exists("keyboard_backlight", $myList)){
             $this->rs['keyboard_backlight'] = ($myList['keyboard_backlight']['value']);
         } else {
-           $this->rs['keyboard_backlight'] = null; 
+            $this->rs['keyboard_backlight'] = null; 
         }
         
         // Check for backlight

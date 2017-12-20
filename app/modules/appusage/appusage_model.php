@@ -29,7 +29,7 @@ class Appusage_model extends \Model
         $this->idx[] = array('number_times');
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
 
     // ------------------------------------------------------------------------

@@ -19,6 +19,12 @@ $(document).on('appReady', function(e, lang) {
         url: appUrl + '/system/show/status'
     });
 
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'system.database.menu_link',
+        url: appUrl + '/system/show/database'
+    });
+
     // Add list link
     $('list-link').each(function( index ){
         var url = appUrl + $(this).data('url');

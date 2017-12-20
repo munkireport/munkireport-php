@@ -29,11 +29,14 @@ new Homebrew_info_model;
 			<th data-i18n="homebrew_info.homebrew_cellar" data-colname='homebrew_info.homebrew_cellar'></th>
 			<th data-i18n="homebrew_info.homebrew_prefix" data-colname='homebrew_info.homebrew_prefix'></th>
 			<th data-i18n="homebrew_info.homebrew_repository" data-colname='homebrew_info.homebrew_repository'></th>
+			<th data-i18n="homebrew_info.homebrew_git_config_file" data-colname='homebrew_info.homebrew_git_config_file'></th>
 			<th data-i18n="homebrew_info.homebrew_ruby" data-colname='homebrew_info.homebrew_ruby'></th>
+			<th data-i18n="homebrew_info.homebrew_noanalytics_this_run" data-colname='homebrew_info.homebrew_noanalytics_this_run'></th>
 			<th data-i18n="homebrew_info.command_line_tools" data-colname='homebrew_info.command_line_tools'></th>
 			<th data-i18n="homebrew_info.cpu" data-colname='homebrew_info.cpu'></th>
 			<th data-i18n="homebrew_info.git" data-colname='homebrew_info.git'></th>
 			<th data-i18n="homebrew_info.clang" data-colname='homebrew_info.clang'></th>
+			<th data-i18n="homebrew_info.curl" data-colname='homebrew_info.curl'></th>
 			<th data-i18n="homebrew_info.java" data-colname='homebrew_info.java'></th>
 			<th data-i18n="homebrew_info.perl" data-colname='homebrew_info.perl'></th>
 			<th data-i18n="homebrew_info.python" data-colname='homebrew_info.python'></th>
@@ -46,7 +49,7 @@ new Homebrew_info_model;
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="25" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="28" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 
@@ -118,6 +121,12 @@ new Homebrew_info_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_homebrew_info-tab');
 	        	$('td:eq(0)', nRow).html(link);
+                
+                // Analytics Enabled/Disabled
+	        	var homebrew_noanalytics_this_run=$('td:eq(15)', nRow).html();
+	        	homebrew_noanalytics_this_run = homebrew_noanalytics_this_run == '1' ? i18n.t('yes') :
+	        	(homebrew_noanalytics_this_run === '0' ? i18n.t('no') : '')
+	        	$('td:eq(15)', nRow).html(homebrew_noanalytics_this_run)
                 
 		    }
 	    });
