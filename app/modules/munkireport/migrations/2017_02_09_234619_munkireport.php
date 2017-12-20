@@ -30,8 +30,6 @@ class Munkireport extends Migration
             $table->index('timestamp');
             $table->index('version');
             $table->index('warnings');
-
-//            $table->timestamps();
         });
     }
 
