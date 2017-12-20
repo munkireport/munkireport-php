@@ -86,12 +86,28 @@ class Controller extends KISS_Controller
      *
      * @return Blade
      */
-    protected function blade()
+    protected function view($name)
     {
         $views_path = APP_ROOT . '/resources/views';
         $cache_path = APP_ROOT . '/storage/framework/views';
 
-        return new Blade($views_path, $cache_path);
+        $blade = new Blade($views_path, $cache_path);
+        $view = $blade->view()->make($name);
+
+        $view->role = $_SESSION['role'];
+        $view->theme = sess_get('theme', 'Default');
+        $view->subdirectory = conf('subdirectory');
+        $view->custom_css = conf('custom_css');
+        $view->enable_business_units = conf('enable_business_units');
+        $view->user = $_SESSION['user'];
+        $view->appUrl = rtrim(url(), '/');
+        $view->version = $GLOBALS['version'];
+        $view->alerts = $GLOBALS['alerts'];
+        $view->custom_js = conf('custom_js');
+        $view->recaptchaloginpublickey = conf('recaptchaloginpublickey');
+        $view->debug = conf('debug');
+
+        return $view;
     }
 
     /**

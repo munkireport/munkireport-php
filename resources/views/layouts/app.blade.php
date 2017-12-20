@@ -6,56 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{ $conf_subdirectory }}assets/themes/{{ $sess_get_theme }}/bootstrap.min.css" id="bootstrap-stylesheet" />
-    <link rel="stylesheet" href="{{ $conf_subdirectory }}assets/nvd3/nv.d3.min.css" />
-    <link rel="stylesheet" href="{{ $conf_subdirectory }}assets/themes/{{ $sess_get_theme }}/nvd3.override.css" id="nvd3-override-stylesheet" />
-    <link rel="stylesheet" href="{{ $conf_subdirectory }}assets/css/style.css" />
-    <link rel="stylesheet" media="screen" href="{{ $conf_subdirectory }}assets/css/datatables.min.css" />
-    <link href="{{ $conf_subdirectory }}assets/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ $subdirectory }}assets/themes/{{ $theme }}/bootstrap.min.css" id="bootstrap-stylesheet" />
+    <link rel="stylesheet" href="{{ $subdirectory }}assets/nvd3/nv.d3.min.css" />
+    <link rel="stylesheet" href="{{ $subdirectory }}assets/themes/{{ $theme }}/nvd3.override.css" id="nvd3-override-stylesheet" />
+    <link rel="stylesheet" href="{{ $subdirectory }}assets/css/style.css" />
+    <link rel="stylesheet" media="screen" href="{{ $subdirectory }}assets/css/datatables.min.css" />
+    <link href="{{ $subdirectory }}assets/css/font-awesome.min.css" rel="stylesheet">
     <!--favicons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ $conf_subdirectory }}assets/images/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="{{ $conf_subdirectory }}assets/images/favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="{{ $conf_subdirectory }}assets/images/favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="{{ $conf_subdirectory }}assets/images/favicons/manifest.json">
-    <link rel="mask-icon" href="{{ $conf_subdirectory }}assets/images/favicons/safari-pinned-tab.svg" color="#5d5858">
-    <link rel="shortcut icon" href="{{ $conf_subdirectory }}assets/images/favicons/favicon.ico">
-    <meta name="msapplication-config" content="{{ $conf_subdirectory }}assets/images/favicons/browserconfig.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ $subdirectory }}assets/images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="{{ $subdirectory }}assets/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ $subdirectory }}assets/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="{{ $subdirectory }}assets/images/favicons/manifest.json">
+    <link rel="mask-icon" href="{{ $subdirectory }}assets/images/favicons/safari-pinned-tab.svg" color="#5d5858">
+    <link rel="shortcut icon" href="{{ $subdirectory }}assets/images/favicons/favicon.ico">
+    <meta name="msapplication-config" content="{{ $subdirectory }}assets/images/favicons/browserconfig.xml">
     <meta name="theme-color" content="#5d5858">
     <!--end of favicons-->
-    <?php if(conf('custom_css')): ?>
-    <link rel="stylesheet" href="<?php echo conf('custom_css'); ?>" />
-    <?php endif; ?>
-
-        @stack('stylesheets')
-
-        @foreach($stylesheets as $stylesheet)
-            <link rel="stylesheet" href="{{ $conf_subdirectory }}assets/css/{{ $stylesheet }}" />
-        @endforeach
+    @isset($custom_css)
+        <link rel="stylesheet" href="{{ $custom_css }}" />
+    @endisset
+    @stack('stylesheets')
+    @foreach($stylesheets as $stylesheet)
+        <link rel="stylesheet" href="{{ $subdirectory }}assets/css/{{ $stylesheet }}" />
+    @endforeach
     <script>
-      var baseUrl = "{{ $conf_subdirectory }}",
-        appUrl = "<?php echo rtrim(url(), '/'); ?>",
-        businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
-      isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
-      isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
-    </script>
+      var baseUrl = "{{ $subdirectory }}";
+      var appUrl = "{{ $appUrl }}";
 
-    <script src="{{ $conf_subdirectory }}assets/js/jquery.js"></script>
+      @if ($enable_business_units)
+        var businessUnitsEnabled = true;
+      @else
+        var businessUnitsEnabled = false;
+      @endif
+
+      @if ($role == 'admin')
+        var isAdmin = true;
+      @else
+        var isAdmin = false;
+      @endif
+
+      @if ($role == 'manager')
+        var isManager = true;
+      @else
+        var isManager = false;
+      @endif
+    </script>
+    <script src="{{ $subdirectory }}assets/js/jquery.js"></script>
 
     @foreach($scripts as $script)
-        <script src="{{ $conf_subdirectory }}assets/js/{{ $script }}" type="text/javascript"></script>
+        <script src="{{ $subdirectory }}assets/js/{{ $script }}" type="text/javascript"></script>
     @endforeach
 
 </head>
 
 <body>
 
-<?php if( isset($_SESSION['user'])):?>
+@isset($user)
 <?php $modules = getMrModuleObj()->loadInfo(); ?>
 
 @include('shared.navbar')
 
 
-<?php endif; ?>
+@endisset
 
 <!-- end header -->
 
@@ -65,7 +77,7 @@
 
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
 
-        <i>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></i>
+        <i>MunkiReport <span data-i18n="version">Version</span> {{ $version }}</i>
 
     </div>
 
@@ -90,7 +102,7 @@
     </div>
 </div>
 
-<?php foreach($GLOBALS['alerts'] AS $type => $list): ?>
+<?php foreach($alerts AS $type => $list): ?>
 
 <div class="mr-alert alert alert-dismissable alert-<?php echo $type; ?>">
 
@@ -113,28 +125,31 @@
 </script>
 
 
-<script src="{{ $conf_subdirectory }}assets/js/bootstrap.min.js"></script>
-<script src="{{ $conf_subdirectory }}assets/js/datatables.min.js"></script>
-<script src="{{ $conf_subdirectory }}assets/js/moment.min.js"></script>
-<script src="{{ $conf_subdirectory }}assets/js/i18next.min.js"></script>
-<script src="{{ $conf_subdirectory }}assets/js/d3/d3.min.js"></script>
-<script src="{{ $conf_subdirectory }}assets/js/nv.d3.min.js"></script>
-<script src="{{ $conf_subdirectory }}assets/js/jquery.hotkeys/jquery.hotkeys.js"></script>
-<script src="{{ $conf_subdirectory }}assets/js/munkireport.settings.js"></script>
+<script src="{{ $subdirectory }}assets/js/bootstrap.min.js"></script>
+<script src="{{ $subdirectory }}assets/js/datatables.min.js"></script>
+<script src="{{ $subdirectory }}assets/js/moment.min.js"></script>
+<script src="{{ $subdirectory }}assets/js/i18next.min.js"></script>
+<script src="{{ $subdirectory }}assets/js/d3/d3.min.js"></script>
+<script src="{{ $subdirectory }}assets/js/nv.d3.min.js"></script>
+<script src="{{ $subdirectory }}assets/js/jquery.hotkeys/jquery.hotkeys.js"></script>
+<script src="{{ $subdirectory }}assets/js/munkireport.settings.js"></script>
 
 <script>
   // Inject debug value from php
-  mr.debug = <?php echo conf('debug') ? 'true' : 'false'; ?>;
+  @if ($debug)
+      mr.debug = true;
+  @else
+      mr.debug = false;
+  @endif
 </script>
 
+@if ($custom_js)
+    <script src="{{ $custom_js }}"></script>
+@endif
 
-<?php if(conf('custom_js')): ?>
-<script src="<?php echo conf('custom_js'); ?>"></script>
-<?php endif; ?>
+<script src="{{ $subdirectory }}assets/js/munkireport.js"></script>
 
-<script src="{{ $conf_subdirectory }}assets/js/munkireport.js"></script>
-
-<?php if(isset($recaptcha) && conf('recaptchaloginpublickey')):?>
+<?php if(isset($recaptcha) && $recaptchaloginpublickey):?>
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <script>
   function onSubmit(token) {

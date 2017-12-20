@@ -353,13 +353,7 @@ class admin extends Controller
     public function show($which = '')
     {
         if ($which) {
-            $view = $this->blade()->view()->make('admin/' . $which);
-            $view->conf_subdirectory = conf('subdirectory');
-            $view->conf_custom_css = conf('custom_css');
-            $view->stylesheets = [];
-            $view->scripts = [];
-            $view->sess_get_theme = sess_get('theme', 'Default');
-
+            $view = $this->view('admin/' . $which);
             echo $view->render();
         }
 
