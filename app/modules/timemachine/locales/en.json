@@ -79,9 +79,11 @@
     "42": "Error 42: Time Machine couldn’t verify your backups because verification was interrupted.",
     "44": "Error 44: Time Machine could not delete the backup disk image.",
     "45": "Error 45: The network backup disk does not support the required AFP features.",
+    "49": "Error 49: Time Machine could not create a local snapshot to back up from.",
     "100": "Error 100: Time Machine did not back up because the computer was running on battery power.",
     "101": "Error 101: Time Machine did not back up because the battery charge was low.",
     "102": "Error 102: Time Machine did not back up because the computer was in a poor thermal state.",
+    "103": "Error 103: Time Machine did not back up because FileVault was encrypting or decrypting a disk. Backups will resume once FileVault finishes.",
     "1000": "Error 1000: The backup disk is almost full.",
     "1001": "Error 1001: The backup disk is full.",
     "1002": "Error 1002: Check that the disk is available or select a new disk.",
@@ -89,5 +91,6 @@
     "1004": "Error 1004: Time Machine can’t back up to the Time Capsule because the firmware must be updated.",
     "1006": "Error 1006: Time Machine completed a verification of your backups. To improve reliability, Time Machine must create a new backup for you.",
     "1008": "Error 1008: The identity of the backup disk has changed since the previous backup.",
-    "1009": "Error 1009: The backup will continue when connected to a power source."
+    "1009": "Error 1009: The backup will continue when connected to a power source.",
+    "1011": "Error 1011: Time Machine is backing up an encrypted disk to an unencrypted disk."
 }

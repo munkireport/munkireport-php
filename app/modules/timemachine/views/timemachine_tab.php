@@ -32,6 +32,9 @@ $(document).on('appReady', function(){
 
                     } else if(prop == 'result'){
 					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('timemachine.'+d[prop])+'</td></tr>';
+                        
+                    } else if(prop == 'last_failure_msg' && ! d[prop].startsWith("Backup failed with error ", 0)){
+					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('timemachine.'+d[prop])+'</td></tr>';
 
                     } else if(d[prop] == 'NotEncrypted'){
 					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('unencrypted')+'</td></tr>';

@@ -123,6 +123,7 @@ class Timemachine_model extends \Model
      *
      * @param string data
      * Author tuxudo
+     * Time Machine errors can be found at /System/Library/CoreServices/backupd.bundle/Contents/Resources/English.lproj/Localizable.strings
      *
      **/
     public function process($data)
@@ -323,6 +324,17 @@ class Timemachine_model extends \Model
                 $this->apfs_snapshots = $apfs_snapshots;
             }
             
+            // Fill in older legacy values
+            if (array_key_exists("legacy_output", $plist) && $plist["legacy_output"] == "Mac OS X 10.12+ not supported with legacy Time Machine log output") {
+                // Null the duration because we can't get that on 10.12+ *sad panda*
+                $this->duration = null;
+                if ($plist["Destinations"][0]["RESULT"] != "0"){
+                    // Record failure time using same format as legacy
+                    $this->last_failure = gmdate("Y-m-d H:i:s");
+                    // Record the result for processing by the UI view
+                    $this->last_failure_msg = $plist["Destinations"][0]["RESULT"];
+                }
+            }
         }
         
         // Only store if there is data
