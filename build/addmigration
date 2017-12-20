@@ -28,6 +28,6 @@ if (!file_exists($migrations_dir)) {
     mkdir($migrations_dir, 0777, true);
 }
 
-file_put_contents("$migrations_dir/$filename", $template);
+file_put_contents("${migrations_dir}${filename}", $template);
 
-echo "Created template at $migrations_dir/$filename\n";
+echo "Created template at ${migrations_dir}${filename}\n";
