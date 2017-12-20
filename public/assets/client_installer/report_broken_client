@@ -24,9 +24,18 @@ fi
 
 SERIAL=`ioreg -c IOPlatformExpertDevice | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
 NAME=`scutil --get ComputerName`
+OSVERSIONLONG=$(uname -r)
+OSVERS=${osversionlong/.*/}
 
-BASEURL=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('BaseUrl', 'MunkiReport');")
-PASSPHRASE=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('Passphrase', 'MunkiReport');" 2>/dev/null)
+# Get pref from foundation if OS > 10.9
+if [[ "${OSVERS}" > "13" ]]
+then
+    BASEURL=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('BaseUrl', 'MunkiReport');")
+    PASSPHRASE=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('Passphrase', 'MunkiReport');" 2>/dev/null)
+else
+    BASEURL=$(defaults read /Library/Preferences/MunkiReport BaseUrl)
+    PASSPHRASE=$(defaults read /Library/Preferences/MunkiReport Passphrase 2>/dev/null)
+fi
 SUBMITURL="${BASEURL}/report/broken_client"
 
 # Application paths

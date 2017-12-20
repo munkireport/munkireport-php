@@ -19,7 +19,7 @@ class Migration extends \Model
         $this->rs['version'] = 0;
                 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
         
         if ($table_name) {
             $this->retrieveOne('table_name=?', array($table_name));

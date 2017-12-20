@@ -22,7 +22,7 @@ class Installhistory_model extends \Model
         $this->idx['serial_number'] = array('serial_number');
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
             
     // ------------------------------------------------------------------------

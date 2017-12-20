@@ -17,6 +17,10 @@ class admin extends Controller
         if (! $this->authorized('global')) {
             die('You need to be admin');
         }
+        
+        // Connect to database
+        $this->connectDB();
+
     }
 
 

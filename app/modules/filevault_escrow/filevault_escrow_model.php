@@ -1,10 +1,13 @@
 <?php
 // @author gmarnin
 use CFPropertyList\CFPropertyList;
+use Defuse\Crypto\Crypto;
+use Defuse\Crypto\Key;
 
 class Filevault_escrow_model extends \Model
 {
-
+    private $cryptokey;
+    
     public function __construct($serial = '')
     {
         parent::__construct('id', 'filevault_escrow'); //primary key, tablename
@@ -23,10 +26,22 @@ class Filevault_escrow_model extends \Model
         $this->schema_version = 0;
         
         // Create table if it does not exist
-        $this->create_table();
-        
+       //$this->create_table();
+       
+       if( ! conf('encryption_key')){
+           throw new \Exception("No encryption key found in config", 1);
+       }
+       $this->cryptokey = Key::loadFromAsciiSafeString(conf('encryption_key'));
+
         if ($serial) {
             $this->retrieve_record($serial);
+            if($this->RecoveryKey){
+                try {
+                    $this->RecoveryKey = Crypto::decrypt($this->RecoveryKey, $this->cryptokey);
+                }catch (\Exception $e) {
+                    $this->RecoveryKey = $e->getMessage();
+                }
+            }
         }
         
         $this->serial = $serial;
@@ -46,6 +61,13 @@ class Filevault_escrow_model extends \Model
                 $this->$item = '';
             }
         }
+        
+        if( ! $this->RecoveryKey){
+            throw new \Exception("No Recovery Key found!", 1);
+        }
+        
+        // Encrypt recoverykey
+        $this->RecoveryKey = Crypto::encrypt($this->RecoveryKey, $this->cryptokey);
 
         $this->save();
     }

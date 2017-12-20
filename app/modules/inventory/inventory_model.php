@@ -25,7 +25,7 @@ class Inventory_model extends \Model
         $this->idx['name_version'] = array('name', 'version');
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
 
     /**
