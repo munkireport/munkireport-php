@@ -6,25 +6,25 @@ class Homebrew_model extends \Model {
 		parent::__construct('id', 'homebrew'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial;
-		$this->rs['name'] = '';
-		$this->rs['full_name'] = '';
-		$this->rs['oldname'] = '';
-		$this->rs['aliases'] = '';
+		$this->rs['name'] = ''; $this->rt['name'] = 'TEXT';
+		$this->rs['full_name'] = ''; $this->rt['full_name'] = 'TEXT';
+		$this->rs['oldname'] = ''; $this->rt['oldname'] = 'TEXT';
+		$this->rs['aliases'] = ''; $this->rt['aliases'] = 'TEXT';
 		$this->rs['desc'] = ''; $this->rt['desc'] = 'TEXT';
-		$this->rs['homepage'] = '';
-		$this->rs['installed_versions'] = '';
-		$this->rs['versions_stable'] = '';
-		$this->rs['linked_keg'] = '';        
+		$this->rs['homepage'] = ''; $this->rt['homepage'] = 'TEXT';
+		$this->rs['installed_versions'] = ''; $this->rt['installed_versions'] = 'TEXT';
+		$this->rs['versions_stable'] = ''; $this->rt['versions_stable'] = 'TEXT';
+		$this->rs['linked_keg'] = ''; $this->rt['linked_keg'] = 'TEXT';    
 		$this->rs['dependencies'] = ''; $this->rt['dependencies'] = 'TEXT';
 		$this->rs['build_dependencies'] = ''; $this->rt['build_dependencies'] = 'TEXT';
 		$this->rs['recommended_dependencies'] = ''; $this->rt['recommended_dependencies'] = 'TEXT';
 		$this->rs['runtime_dependencies'] = ''; $this->rt['runtime_dependencies'] = 'TEXT';
 		$this->rs['optional_dependencies'] = ''; $this->rt['optional_dependencies'] = 'TEXT';
-		$this->rs['requirements'] = ''; 
+		$this->rs['requirements'] = ''; $this->rt['requirements'] = 'TEXT';
 		$this->rs['options'] = ''; $this->rt['options'] = 'TEXT';
 		$this->rs['used_options'] = ''; $this->rt['used_options'] = 'TEXT';
 		$this->rs['caveats'] = ''; $this->rt['caveats'] = 'TEXT';
-		$this->rs['conflicts_with'] = '';
+		$this->rs['conflicts_with'] = ''; $this->rt['conflicts_with'] = 'TEXT';
 		$this->rs['built_as_bottle'] = 0; //TF
 		$this->rs['installed_as_dependency'] = 0; //TF
 		$this->rs['installed_on_request'] = 0; //TF
@@ -37,27 +37,17 @@ class Homebrew_model extends \Model {
 		$this->rs['versions_head'] = 0; //TF
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
+		$this->schema_version = 1;
 
 		// Add indexes
-		$this->idx[] = array('aliases');
-		$this->idx[] = array('conflicts_with');
-		$this->idx[] = array('full_name');
-		$this->idx[] = array('homepage');
 		$this->idx[] = array('built_as_bottle');
 		$this->idx[] = array('installed_as_dependency');
 		$this->idx[] = array('installed_on_request');
 		$this->idx[] = array('poured_from_bottle');
-		$this->idx[] = array('installed_versions');
 		$this->idx[] = array('keg_only');
-		$this->idx[] = array('linked_keg');
-		$this->idx[] = array('name');
-		$this->idx[] = array('oldname');
 		$this->idx[] = array('outdated');
 		$this->idx[] = array('pinned');
-		$this->idx[] = array('requirements');
 		$this->idx[] = array('versions_devel');
-		$this->idx[] = array('versions_stable');
 		$this->idx[] = array('versions_bottle');
 		$this->idx[] = array('versions_head');
         
@@ -98,7 +88,7 @@ class Homebrew_model extends \Model {
             // Traverse the brew
             foreach ($singlebrew as $key => $field) {
                 
-                // Formate boolneans before processing
+                // Format booleans before processing
                 if (in_array($key, $booleans) && $field == "true") {
                     // Send a 1 to the db
                     $this->$key = '1';
