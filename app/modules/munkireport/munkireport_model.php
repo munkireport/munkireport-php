@@ -24,9 +24,7 @@ class Munkireport_model extends \Model
 
         if ($serial_number) {
             $this->retrieve_record($serial_number);
-            if (! $this->rs['serial_number']) {
-                $this->serial_number = $serial_number;
-            }
+            $this->serial_number = $serial_number;
         }
     }
 
