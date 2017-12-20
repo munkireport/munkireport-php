@@ -25,7 +25,7 @@ class Detectx_model extends \Model {
     $this->idx[] = array('spotlightindexing');
 
   // Create table if it does not exist
-    $this->create_table();
+    // $this->create_table();
     $this->serial_number = $serial;
   }
 
@@ -51,7 +51,7 @@ class Detectx_model extends \Model {
   // Process json into object thingy
         $data = json_decode($json, true);
         $this->searchdate = strtotime($data['searchdate']);
-        $this->scantime = $data['duration'];
+        $this->scantime = isset($data['duration']) ? $data['duration'] : 0;
         $this->spotlightindexing = $data['spotlightindexing'];
         $len = count($data['issues']);
         if ($len > 0)
