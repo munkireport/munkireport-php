@@ -49,6 +49,7 @@ class Timemachine extends Migration
             $table->string('time_capsule_display_name')->nullable();
             $table->string('volume_display_name')->nullable();
             $table->integer('destinations')->nullable();
+            $table->integer('apfs_snapshots')->nullable();
 
             $table->index('alias_volume_name');
             $table->index('always_show_deleted_backups_warning');
