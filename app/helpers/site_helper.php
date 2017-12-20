@@ -366,24 +366,14 @@ function delete_event($serial, $module = '')
     $evtobj->reset($serial, $module);
 }
 
-
-// Original PHP code by Chirp Internet: www.chirp.com.au
-// Please acknowledge use of this code by including this header.
-function truncate_string($string, $limit = 100, $break = ".", $pad = "...")
+// Truncate string
+function truncate_string($string, $limit = 100, $pad = "...")
 {
-  // return with no change if string is shorter than $limit
     if (strlen($string) <= $limit) {
         return $string;
     }
 
-  // is $break present between $limit and the end of the string?
-    if (false !== ($breakpoint = strpos($string, $break, $limit))) {
-        if ($breakpoint < strlen($string) - 1) {
-            $string = substr($string, 0, $breakpoint) . $pad;
-        }
-    }
-
-    return $string;
+    return substr($string, 0, $limit - strlen($pad)) . $pad;
 }
 
 // Create a singleton moduleObj

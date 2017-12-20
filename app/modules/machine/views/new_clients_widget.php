@@ -37,8 +37,7 @@ $(document).on('appUpdate', function(){
 					.append($('<span>')
 						.addClass('pull-right')
 						.text(function(){
-								var date = new Date(obj.reg_timestamp * 1000);
-								return moment(date).fromNow();
+								return moment(obj.reg_timestamp * 1000).fromNow();
 							})))
 
 		});

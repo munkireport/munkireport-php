@@ -48,14 +48,14 @@ class Directory_service_model extends \Model
         $this->schema_version = 2;
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);
             $this->serial = $serial;
         }
     }
-    
+
     /**
      * Get bound stats
      *
