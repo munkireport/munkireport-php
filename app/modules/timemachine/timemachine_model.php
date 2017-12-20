@@ -330,7 +330,7 @@ class Timemachine_model extends \Model
                 $this->duration = null;
                 if ($plist["Destinations"][0]["RESULT"] != "0"){
                     // Record failure time using same format as legacy
-                    $this->last_failure = gmdate("Y-m-d H:i:s");
+                    $this->last_failure = date("Y-m-d H:i:s");
                     // Record the result for processing by the UI view
                     $this->last_failure_msg = $plist["Destinations"][0]["RESULT"];
                 }
