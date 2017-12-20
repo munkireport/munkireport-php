@@ -35,7 +35,7 @@ class Disk_report_model extends \Model
         $this->schema_version = 3;
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
     
     /**

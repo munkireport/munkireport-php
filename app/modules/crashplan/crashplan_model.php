@@ -22,7 +22,7 @@ class Crashplan_model extends \Model
         $this->idx[] = array('reason');
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
 
     // ------------------------------------------------------------------------

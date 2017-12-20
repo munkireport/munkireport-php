@@ -363,7 +363,7 @@ class Fan_temps_model extends \Model {
         $this->idx[] = array('fanlabel8');
         
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 		
 		if ($serial)
 		{

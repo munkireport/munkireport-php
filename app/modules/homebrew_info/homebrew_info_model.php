@@ -65,7 +65,7 @@ class Homebrew_info_model extends \Model {
 		$this->idx[] = array('curl');
         
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);

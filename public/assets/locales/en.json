@@ -332,7 +332,10 @@
     "success": "Success",
     "system": {
         "status": "Munkireport System Status",
-        "system": "System"
+        "system": "System",
+        "database": {
+            "menu_link": "Database"
+        }
     },
     "systemstatus": {
         "menu_link": "Show System Status"

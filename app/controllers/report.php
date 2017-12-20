@@ -66,7 +66,7 @@ class report extends Controller
             $this->error("Items are missing");
         }
 
-        $itemarr = array('error' => '', 'info' => '');
+        $itemarr = ['error' => '', 'danger' => '', 'warning' => '', 'info' => ''];
 
         // Try to register client and lookup hashes in db
         try {
