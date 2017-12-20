@@ -14,7 +14,7 @@ class backup2go_model extends \Model {
 		//initialise tables
 		$this->rs['id'] = 0;
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-        $this->rs['backupdate'] = '';
+		$this->rs['backupdate'] = '';
         
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;

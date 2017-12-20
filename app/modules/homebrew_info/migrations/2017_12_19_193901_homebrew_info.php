@@ -35,6 +35,9 @@ class HomebrewInfo extends Migration
             $table->string('x11')->nullable();
             $table->string('xcode')->nullable();
             $table->string('macos')->nullable();
+            $table->string('homebrew_git_config_file')->nullable();
+            $table->string('homebrew_noanalytics_this_run')->nullable();
+            $table->string('curl')->nullable();
 
             $table->index('core_tap_head');
             $table->index('core_tap_origin');
@@ -59,6 +62,9 @@ class HomebrewInfo extends Migration
             $table->index('x11');
             $table->index('xcode');
             $table->index('macos');
+            $table->index('homebrew_git_config_file');
+            $table->index('homebrew_noanalytics_this_run');
+            $table->index('curl');
         });
 
     }
