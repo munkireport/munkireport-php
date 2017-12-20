@@ -12,13 +12,13 @@ class Munkiinfo extends Migration
         $capsule::schema()->create('munkiinfo', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number')->nullable();
-            $table->string('munkiinfo_key')->nullable();
-            $table->string('munkiinfo_value')->nullable();
+            $table->string('serial_number');
+            $table->string('munkiinfo_key');
+            $table->string('munkiinfo_value');
 
             $table->index('serial_number');
-
-//            $table->timestamps();
+            $table->index('munkiinfo_key');
+            $table->index('munkiinfo_value');
         });
     }
     
