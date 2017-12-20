@@ -41,15 +41,15 @@ class Homebrew extends Migration
             $table->boolean('versions_head')->default(0);
 
             $table->index('built_as_bottle');
-            $table->index('installed_as_dependency'):
-            $table->index('installed_on_request'):
-            $table->index('poured_from_bottle'):
-            $table->index('keg_only'):
-            $table->index('outdated'):
-            $table->index('pinned'):
-            $table->index('versions_devel'):
-            $table->index('versions_bottle'):
-            $table->index('versions_head'):
+            $table->index('installed_as_dependency');
+            $table->index('installed_on_request');
+            $table->index('poured_from_bottle');
+            $table->index('keg_only');
+            $table->index('outdated');
+            $table->index('pinned');
+            $table->index('versions_devel');
+            $table->index('versions_bottle');
+            $table->index('versions_head');
         });
     }
     
