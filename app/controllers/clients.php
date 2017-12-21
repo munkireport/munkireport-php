@@ -99,16 +99,37 @@ class clients extends Controller
         $data = array('serial_number' => $sn);
         $data['scripts'] = array("clients/client_detail.js");
 
-        $obj = new View();
-
         $machine = new Machine_model($sn);
 
         // Check if machine exists/is allowed for this user to view
         if (! $machine->id) {
-            $obj->view("client/client_dont_exist", $data);
+            $view = $this->view('client/client_dont_exist');
         } else {
-            $obj->view("client/client_detail", $data);
+            $view = $this->view('client/client_detail');
         }
+
+        $view->data = $data;
+
+        // Tab list, each item should contain:
+        //	'view' => path/to/tab
+        // 'i18n' => i18n identifier matching a localised name
+        // Optionally:
+        // 'view_vars' => array with variables to pass to the views
+        // 'badge' => id of a badge for this tab
+        $tab_list = array(
+            'summary' => array('view' => 'client/summary_tab', 'i18n' => 'client.tab.summary'),
+        );
+
+        // Include modules tabs
+        $modules = getMrModuleObj()->loadInfo();
+        $modules->addTabs($tab_list);
+
+        // Add custom tabs
+        $tab_list = array_merge($tab_list, conf('client_tabs', array()));
+
+        $view->tab_list = $tab_list;
+
+        echo $view->render();
     }
 
     // ------------------------------------------------------------------------
