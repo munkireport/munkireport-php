@@ -2,6 +2,14 @@
 
 MunkiReport uses OneLogin's SAML PHP Toolkit. This is a straightforward, modern library that is easy to integrate with MunkiReport.
 
+## Installation
+
+You need to add the toolkit using composer:
+
+```bash
+composer require onelogin/php-saml --update-no-dev --optimize-autoloader
+```
+
 ## Configuration
 
 To configure MunkiReport for SAML authentication, you need at least add the following to ``$config.php`:
