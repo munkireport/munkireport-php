@@ -26,9 +26,11 @@
         <link rel="stylesheet" href="{{ $custom_css }}" />
     @endisset
     @stack('stylesheets')
-    @foreach($stylesheets as $stylesheet)
-        <link rel="stylesheet" href="{{ $subdirectory }}assets/css/{{ $stylesheet }}" />
-    @endforeach
+    @isset($stylesheets)
+        @foreach($stylesheets as $stylesheet)
+            <link rel="stylesheet" href="{{ $subdirectory }}assets/css/{{ $stylesheet }}" />
+        @endforeach
+    @endisset
     <script>
       var baseUrl = "{{ $subdirectory }}";
       var appUrl = "{{ $appUrl }}";
@@ -53,9 +55,11 @@
     </script>
     <script src="{{ $subdirectory }}assets/js/jquery.js"></script>
 
-    @foreach($scripts as $script)
-        <script src="{{ $subdirectory }}assets/js/{{ $script }}" type="text/javascript"></script>
-    @endforeach
+    @isset($scripts)
+        @foreach($scripts as $script)
+            <script src="{{ $subdirectory }}assets/js/{{ $script }}" type="text/javascript"></script>
+        @endforeach
+    @endisset
 
 </head>
 
@@ -102,9 +106,9 @@
     </div>
 </div>
 
-<?php foreach($alerts AS $type => $list): ?>
+@foreach($alerts as $type => $list)
 
-<div class="mr-alert alert alert-dismissable alert-<?php echo $type; ?>">
+<div class="mr-alert alert alert-dismissable alert-{{ $type }}">
 
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 
@@ -117,8 +121,7 @@
     </ul>
 
 </div>
-
-<?php endforeach; ?>
+@endforeach
 
 <script>
   $('.mr-alert').prependTo('body>div.container:first');
@@ -149,14 +152,16 @@
 
 <script src="{{ $subdirectory }}assets/js/munkireport.js"></script>
 
-<?php if(isset($recaptcha) && $recaptchaloginpublickey):?>
-<script src='https://www.google.com/recaptcha/api.js' async defer></script>
-<script>
-  function onSubmit(token) {
-    document.getElementById("login-form").submit();
-  }
-</script>
-<?php endif?>
+@isset($recaptcha)
+    @if($recaptchaloginpublickey)
+        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+        <script>
+          function onSubmit(token) {
+            document.getElementById("login-form").submit();
+          }
+        </script>
+    @endif
+@endisset
 
 <script>
   $(document).on('appUpdate', function(){
