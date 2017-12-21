@@ -30,8 +30,11 @@ class Network extends Migration
 
             $table->index('serial_number');
             $table->index(['serial_number', 'service']);
-
-//            $table->timestamps();
+            $table->index('service');
+            $table->index('ethernet');
+            $table->index('ipv4ip');
+            $table->index('ipv4router');
+            $table->index('ipv4mask');
         });
     }
 
