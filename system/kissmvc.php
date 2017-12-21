@@ -62,8 +62,10 @@ class Controller extends KISS_Controller
                     break;
                 case "mysql":
                     $connection['driver'] = 'mysql';
-                    preg_match('/dbname=([^;]*)/', $pdo_dsn[2], $matches);
-                    $connection['database'] = $matches[1][0];
+                    if(preg_match('/dbname=([^;]*)/', $pdo_dsn[1], $matches))
+                    {
+                        $connection['database'] = $matches[1][0];
+                    }
                     break;
             }
 
