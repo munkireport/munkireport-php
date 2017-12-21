@@ -10,15 +10,11 @@
 							<legend data-i18n="auth.generate_hash">
 								Generate password hash
 							</legend>
-							<?php foreach($GLOBALS['alerts'] AS $type => $list):?>
-
-						    	<?php foreach ($list AS $msg):?>
-
-								<p class="text-<?php echo $type; ?>"><?php echo $msg; ?></p>
-
-								<?php endforeach; ?>
-
-							<?php endforeach; ?>
+							@foreach($alerts as $type => $list)
+								@foreach ($list AS $msg)
+									<p class="text-{{ $type }}">{{ $msg }}</p>
+								@endforeach
+							@endforeach
 
 						@if($reason == 'noauth')
 						    <div class="alert alert-danger" data-i18n="auth.noauth_found">No authentication information found, please add an account to the config file.</div>

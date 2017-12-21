@@ -106,6 +106,7 @@ class Controller extends KISS_Controller
         $view->custom_js = conf('custom_js');
         $view->recaptchaloginpublickey = conf('recaptchaloginpublickey');
         $view->debug = conf('debug');
+        $view->sitename = conf('sitename');
 
         return $view;
     }

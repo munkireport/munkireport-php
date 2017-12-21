@@ -84,10 +84,13 @@ class Auth extends Controller
             }
         }
 
-        $data = array('login' => $login, 'url' => url("auth/login/$return"));
+        $view = $this->view('auth/login');
+        $view->login = $login;
+        $view->url = url("auth/login/$return");
+        $view->https_disabled = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off";
+        $view->secure_url = secure_url();
 
-        $obj = new View();
-        $obj->view('auth/login', $data);
+        echo $view->render();
     }
     
     public function set_session_props($show = false)
