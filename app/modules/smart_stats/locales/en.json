@@ -81,6 +81,7 @@
     "reallocate_nand_blk_cnt": "Reallocated NAND Blocks",
     "ave_blockerase_count": "Average Block Erase Count",
     "unused_reserve_nand_blk": "Unused Reserve NAND Blocks",
+    "Unused_Reserve_NAND_Blk": "Unused Reserve NAND Blocks",
     "sata_interfac_downshift": "SATA Interface Downshift",
     "ssd_life_left": "SSD Life Left",
     "life_curve_status": "Life Curve Status",
