@@ -14,6 +14,9 @@ if [ $? = 0 ]; then
 	# Set preference to include this file in the preflight check
 	setreportpref "homebrew_info" "${CACHEPATH}homebrew_info.json"
 
+	# Touch the cache file to prevent errors
+	touch "${MUNKIPATH}preflight.d/cache/${MODULE_CACHE_FILE}"
+
 else
 	echo "Failed to download all required components!"
 	rm -f "${MUNKIPATH}preflight.d/homebrew_info.sh"

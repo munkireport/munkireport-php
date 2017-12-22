@@ -1,7 +1,5 @@
-RewriteEngine On
+RewriteEngine on
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php?/$1 [L]
-
-# Protect app files
-RewriteRule ^((app|system|scripts|config.php).*)$ index.php/$1 [L]
+# Redirect all requests to public 
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ index.php

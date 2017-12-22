@@ -2,6 +2,12 @@
 # Script by rtrouton, slightly edited by tuxudo
 # https://github.com/rtrouton/rtrouton_scripts/blob/master/rtrouton_scripts/Casper_Extension_Attributes/report_latest_xprotect_update/report%20latest_xprotect_update.sh
 
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
 XProtectCheck(){
 
 osvers_major=$(/usr/bin/sw_vers -productVersion | awk -F. '{print $1}')

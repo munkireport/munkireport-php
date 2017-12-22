@@ -52,7 +52,7 @@ class Fonts_model extends \Model {
 		$this->idx[] = array('valid');
         
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}

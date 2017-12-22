@@ -12,14 +12,14 @@ function check_warranty_status(&$warranty_model)
 {
     // Error message
     $error = '';
-    
+
     // Check if virtual machine
     // We assume vmware serials contain upper and lower chars
     // There are actual macs with a serial starting with VM
     // Todo: make this check more robust/support other VMs
     if (strtoupper($warranty_model->serial_number) != $warranty_model->serial_number) {
         $warranty_model->status = "Virtual Machine";
-        
+
         // Use reg_timestamp as purchase_date
         $report = new Reportdata_model($warranty_model->serial_number);
         $warranty_model->purchase_date = date('Y-m-d', $report->reg_timestamp);
@@ -31,7 +31,7 @@ function check_warranty_status(&$warranty_model)
         $machine->save();
         return;
     }
-    
+
     // Previous entry
     if ($warranty_model->end_date) {
         if ($warranty_model->end_date < date('Y-m-d')) {
@@ -43,14 +43,14 @@ function check_warranty_status(&$warranty_model)
         // so we can't do any automated lookup anymore
         $warranty_model->status = "Can't lookup warranty";
         $warranty_model->purchase_date = estimate_manufactured_date($warranty_model->serial_number);
-        
+
         // Calculate time to expire
         $max_applecare_years = sprintf('+%s year', conf('max_applecare', 3));
         $purchase_time = strtotime($warranty_model->purchase_date);
         $warranty_model->end_date = date('Y-m-d', strtotime($max_applecare_years, $purchase_time));
     }
-    
-    
+
+
     // Get machine model from apple (only when not set or failed)
     $machine = new Machine_model($warranty_model->serial_number);
     model_description_lookup($warranty_model->serial_number);
@@ -106,21 +106,21 @@ function model_description_lookup($serial)
     if (strpos($serial, 'VMWV') === 0) {
         return 'VMware virtual machine';
     }
-    
+
     $options = [
         'query' => [
             'page' => 'categorydata',
             'serialnumber' => $serial
         ]
     ];
-    
+
     $client = new Request();
     $result = $client->get('http://km.support.apple.com/kb/index', $options);
 
     if ( ! $result) {
         return 'model_lookup_failed';
     }
-    
+
     try {
         $categorydata = json_decode($result);
         if(isset($categorydata->name)){
@@ -132,5 +132,5 @@ function model_description_lookup($serial)
     } catch (Exception $e) {
         return 'model_lookup_failed';
     }
-    
+
 }

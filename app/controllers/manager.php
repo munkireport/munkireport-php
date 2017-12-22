@@ -15,6 +15,10 @@ class manager extends Controller
         if (! $this->authorized('delete_machine')) {
             die('You need to be manager or admin');
         }
+
+        // Connect to database
+        $this->connectDB();
+
     }
 
 

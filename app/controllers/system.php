@@ -1,5 +1,4 @@
 <?php
-
 namespace munkireport\controller;
 
 use \Controller, \View;
@@ -126,13 +125,21 @@ class system extends Controller
      **/
     public function show($which = '')
     {
-        if ($which) {
-            $data['page'] = 'clients';
-            $data['scripts'] = array("clients/client_list.js");
-            $view = 'system/'.$which;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
+        switch ($which) {
+            case 'status':
+                $data['page'] = 'clients';
+                $data['scripts'] = array("clients/client_list.js");
+                $view = 'system/status';
+                break;
+            case 'database':
+                $data['page'] = 'clients';
+                $data['scripts'] = array("clients/client_list.js");
+                $data['stylesheets'] = array('system/database.css');
+                $view = 'system/database';
+                break;
+            default:
+                $data = array('status_code' => 404);
+                $view = 'error/client_error';
         }
 
         $obj = new View();

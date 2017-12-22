@@ -15,7 +15,9 @@ class AuthSaml extends AbstractAuth
 
         // TODO Check config
         $this->config = $config;
-        $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
+        if( ! isset($this->config['sp']['entityId'])){
+            $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
+        }
         $this->config['sp']['assertionConsumerService'] = [
             'url' => url('auth/saml/acs', true)
         ];
@@ -133,6 +135,14 @@ class AuthSaml extends AbstractAuth
     // Single Logout
     private function slo()
     {
+        // Check if SSO is disabled, if yes, destroy session and move on
+        if(isset($this->config['disable_sso']) && $this->config['disable_sso'] === true){
+            session_destroy();
+            $obj = new View();
+            $obj->view('auth/logout', ['loginurl' => url()]);
+            return;
+        }
+
         $auth = new OneLogin_Saml2_Auth($this->config);
 
         $returnTo = url('auth/saml/sls');
@@ -195,21 +205,40 @@ class AuthSaml extends AbstractAuth
                 'User.email' => 'user',
             ];
         }
-        foreach($attr_mapping as $key => $mappedKey){
-            if( ! isset($attrs[$key]) && conf('debug')){
-                $attr_list = implode(', ', array_keys($attrs));
-                throw new Exception("<pre>SAML Mapping error. $key not found in SAML attributes ($attr_list)", 1);
+        foreach($attr_mapping as $key => $mappedKey)
+        {
+            if(isset($attrs[$key]))
+            {
+                if($mappedKey == 'groups')
+                {
+                    $out['groups'] = array_merge( $out['groups'], $attrs[$key]);
+                }
+                else{
+                    $out[$mappedKey] = $attrs[$key][0];
+                }
             }
-            if($mappedKey == 'groups'){
-                $out[$mappedKey] = $attrs[$key];
-            }
-            else{
-                $out[$mappedKey] = $attrs[$key][0];
-            }
+        }
 
+        // Check if we have a user
+        if( $this->debug() && ! $out['user'] )
+        {
+            $attr_list = implode(', ', array_keys($attrs));
+            die("<pre>SAML Mapping error: user not found in SAML attributes ($attr_list)");
+        }
+
+        // Check if we have a user
+        if( $this->debug() && ! $out['groups'] )
+        {
+            $attr_list = implode(', ', array_keys($attrs));
+            die("<pre>SAML Mapping error: no groups found in SAML attributes ($attr_list)");
         }
 
         return $out;
+    }
+
+    private function debug()
+    {
+        return isset($this->config['debug']) && $this->config['debug'] == true;
     }
 
     public function login($login, $password)

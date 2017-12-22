@@ -10,30 +10,16 @@ class Ard_model extends \Model
         parent::__construct('id', 'ard'); //primary key, tablename
         $this->rs['id'] = 0;
         $this->rs['serial_number'] = $serial;
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['Text1'] = '';
         $this->rs['Text2'] = '';
         $this->rs['Text3'] = '';
         $this->rs['Text4'] = '';
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-
-        // Add indexes
-        $this->idx[] = array('Text1');
-        $this->idx[] = array('Text2');
-        $this->idx[] = array('Text3');
-        $this->idx[] = array('Text4');
-
-        
-        // Create table if it does not exist
-        $this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);
         }
         
-        $this->serial = $serial;
+        $this->serial_number = $serial;
     }
 
     public function process($data)

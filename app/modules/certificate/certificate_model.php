@@ -27,7 +27,7 @@ class Certificate_model extends \Model
         $this->idx[] = array('timestamp');
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
 
      public function get_certificates()

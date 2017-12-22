@@ -90,6 +90,10 @@ class unit extends Controller
             $group['checked'] = in_array($group['groupid'], $groups);
         }
 
+        usort($out, function($a, $b) {
+            return strcasecmp($a['name'], $b['name']);
+        });
+        
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
