@@ -19,6 +19,8 @@ function colorize($string){
         '</comment>' => "\033[0m",
         '<info>' => "\033[32m",
         '</info>' => "\033[0m",
+        '<error>' => "\033[31m",
+        '</error>' => "\033[0m",
     ];
     return str_replace(array_keys($colorTable), array_values($colorTable), $string);
 }
@@ -67,10 +69,16 @@ foreach($moduleMgr->getInfo() as $moduleName => $info){
         $migrationDirList[] = $migrationPath;
     }
 }
-
-$migrationFiles = $migrator->run($migrationDirList, ['pretend' => false]);
+$error = '';
+try {
+    $migrationFiles = $migrator->run($migrationDirList, ['pretend' => false]);
+} catch (\Exception $exception) {
+    $error = sprintf(colorize("<error>ERROR: %s</error>\n"), $exception->getMessage());
+}
 
 foreach($migrator->getNotes() as $note){
     echo colorize($note)."\n";
 }
-
+if($error){
+    echo $error;
+}
