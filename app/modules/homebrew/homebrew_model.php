@@ -8,7 +8,7 @@ class Homebrew_model extends \Model {
 		$this->rs['serial_number'] = $serial;
 		$this->rs['name'] = '';
 		$this->rs['full_name'] = '';
-		$this->rs['oldname'] = ''
+		$this->rs['oldname'] = '';
 		$this->rs['aliases'] = '';
 		$this->rs['desc'] = ''; $this->rt['desc'] = 'TEXT';
 		$this->rs['homepage'] = '';
