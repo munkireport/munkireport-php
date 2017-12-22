@@ -11,24 +11,22 @@ class Wifi extends Migration
         $capsule::schema()->create('wifi', function (Blueprint $table) {
             $table->increments('id');
             
-            $table->string('serial_number')->unique()->nullable();
-            $table->integer('agrctlrssi')->nullable();
-            $table->integer('agrextrssi')->nullable();
-            $table->integer('agrctlnoise')->nullable();
-            $table->integer('agrextnoise')->nullable();
-            $table->string('state')->nullable();
-            $table->string('op_mode')->nullable();
-            $table->integer('lasttxrate')->nullable();
-            $table->string('lastassocstatus')->nullable();
-            $table->integer('maxrate')->nullable();
-            $table->string('x802_11_auth')->nullable();
-            $table->string('link_auth')->nullable();
-            $table->string('bssid')->nullable();
-            $table->string('ssid')->nullable();
-            $table->integer('mcs')->nullable();
-            $table->string('channel')->nullable();
-
-//            $table->timestamps();
+            $table->string('serial_number')->unique();
+            $table->integer('agrctlrssi');
+            $table->integer('agrextrssi');
+            $table->integer('agrctlnoise');
+            $table->integer('agrextnoise');
+            $table->string('state');
+            $table->string('op_mode');
+            $table->integer('lasttxrate');
+            $table->string('lastassocstatus');
+            $table->integer('maxrate');
+            $table->string('x802_11_auth');
+            $table->string('link_auth');
+            $table->string('bssid');
+            $table->string('ssid');
+            $table->integer('mcs');
+            $table->string('channel');
 
             $table->index('bssid');
             $table->index('ssid');

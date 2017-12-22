@@ -81,11 +81,24 @@ function getdbh()
 {
     if (! isset($GLOBALS['dbh'])) {
         try {
+            $conn = conf('connection');
+            switch ($conn['driver']) {
+                case 'sqlite':
+                    $dsn = "sqlite:{$conn['database']}";
+                    break;
+                
+                case 'mysql':
+                    $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
+                    break;
+
+                default:
+                    throw new \Exception("Unknown driver in config", 1);
+            }
             $GLOBALS['dbh'] = new PDO(
-                conf('pdo_dsn'),
-                conf('pdo_user'),
-                conf('pdo_pass'),
-                conf('pdo_opts')
+                $dsn,
+                isset($conn['username']) ? $conn['username'] : '',
+                isset($conn['password']) ? $conn['password'] : '',
+                isset($conn['options']) ? $conn['options'] : []
             );
         } catch (PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());
