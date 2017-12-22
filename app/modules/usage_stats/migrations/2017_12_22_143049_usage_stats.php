@@ -12,36 +12,36 @@ class UsageStats extends Migration
             $table->increments('id');
             $table->string('serial_number')->unique();
             $table->bigInteger('timestamp');
-            $table->string('thermal_pressure');
-            $table->integer('backlight_max');
-            $table->integer('backlight_min');
-            $table->integer('backlight');
-            $table->integer('keyboard_backlight');
-            $table->float('ibyte_rate');
-            $table->float('ibytes');
-            $table->float('ipacket_rate');
-            $table->float('ipackets');
-            $table->float('obyte_rate');
-            $table->float('obytes');
-            $table->float('opacket_rate');
-            $table->float('opackets');
-            $table->float('rbytes_per_s');
-            $table->float('rops_per_s');
-            $table->float('wbytes_per_s');
-            $table->float('wops_per_s');
-            $table->float('rbytes_diff');
-            $table->float('rops_diff');
-            $table->float('wbytes_diff');
-            $table->float('wops_diff');
-            $table->float('package_watts');
-            $table->float('package_joules');
-            $table->float('freq_hz'); // CPU
-            $table->float('freq_ratio'); // CPU
-            $table->string('gpu_name');
-            $table->float('gpu_freq_hz');
-            $table->float('gpu_freq_mhz');
-            $table->float('gpu_freq_ratio');
-            $table->float('gpu_busy');
+            $table->string('thermal_pressure')->nullable();
+            $table->integer('backlight_max')->nullable();
+            $table->integer('backlight_min')->nullable();
+            $table->integer('backlight')->nullable();
+            $table->integer('keyboard_backlight')->nullable();
+            $table->float('ibyte_rate')->nullable();
+            $table->float('ibytes')->nullable();
+            $table->float('ipacket_rate')->nullable();
+            $table->float('ipackets')->nullable();
+            $table->float('obyte_rate')->nullable();
+            $table->float('obytes')->nullable();
+            $table->float('opacket_rate')->nullable();
+            $table->float('opackets')->nullable();
+            $table->float('rbytes_per_s')->nullable();
+            $table->float('rops_per_s')->nullable();
+            $table->float('wbytes_per_s')->nullable();
+            $table->float('wops_per_s')->nullable();
+            $table->float('rbytes_diff')->nullable();
+            $table->float('rops_diff')->nullable();
+            $table->float('wbytes_diff')->nullable();
+            $table->float('wops_diff')->nullable();
+            $table->float('package_watts')->nullable();
+            $table->float('package_joules')->nullable();
+            $table->float('freq_hz')->nullable(); // CPU
+            $table->float('freq_ratio')->nullable(); // CPU
+            $table->string('gpu_name')->nullable();
+            $table->float('gpu_freq_hz')->nullable();
+            $table->float('gpu_freq_mhz')->nullable();
+            $table->float('gpu_freq_ratio')->nullable();
+            $table->float('gpu_busy')->nullable();
             
             $table->index('backlight_max');
             $table->index('backlight_min');
