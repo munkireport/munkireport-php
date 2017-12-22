@@ -18,6 +18,7 @@ class Homebrew extends Migration
             $table->text('desc');
             $table->text('homepage');
             $table->text('installed_versions');
+            $table->text('versions_stable');
             $table->text('linked_keg');
             $table->text('dependencies');
             $table->text('build_dependencies');
