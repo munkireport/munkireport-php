@@ -6,15 +6,15 @@ class Homebrew_model extends \Model {
 		parent::__construct('id', 'homebrew'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial;
-		$this->rs['name'] = ''; $this->rt['name'] = 'TEXT';
-		$this->rs['full_name'] = ''; $this->rt['full_name'] = 'TEXT';
-		$this->rs['oldname'] = ''; $this->rt['oldname'] = 'TEXT';
-		$this->rs['aliases'] = ''; $this->rt['aliases'] = 'TEXT';
+		$this->rs['name'] = '';
+		$this->rs['full_name'] = '';
+		$this->rs['oldname'] = ''
+		$this->rs['aliases'] = '';
 		$this->rs['desc'] = ''; $this->rt['desc'] = 'TEXT';
-		$this->rs['homepage'] = ''; $this->rt['homepage'] = 'TEXT';
-		$this->rs['installed_versions'] = ''; $this->rt['installed_versions'] = 'TEXT';
-		$this->rs['versions_stable'] = ''; $this->rt['versions_stable'] = 'TEXT';
-		$this->rs['linked_keg'] = ''; $this->rt['linked_keg'] = 'TEXT';    
+		$this->rs['homepage'] = '';
+		$this->rs['installed_versions'] = '';
+		$this->rs['versions_stable'] = '';
+		$this->rs['linked_keg'] = '';  
 		$this->rs['dependencies'] = ''; $this->rt['dependencies'] = 'TEXT';
 		$this->rs['build_dependencies'] = ''; $this->rt['build_dependencies'] = 'TEXT';
 		$this->rs['recommended_dependencies'] = ''; $this->rt['recommended_dependencies'] = 'TEXT';
@@ -24,7 +24,7 @@ class Homebrew_model extends \Model {
 		$this->rs['options'] = ''; $this->rt['options'] = 'TEXT';
 		$this->rs['used_options'] = ''; $this->rt['used_options'] = 'TEXT';
 		$this->rs['caveats'] = ''; $this->rt['caveats'] = 'TEXT';
-		$this->rs['conflicts_with'] = ''; $this->rt['conflicts_with'] = 'TEXT';
+		$this->rs['conflicts_with'] = '';
 		$this->rs['built_as_bottle'] = 0; //TF
 		$this->rs['installed_as_dependency'] = 0; //TF
 		$this->rs['installed_on_request'] = 0; //TF
@@ -37,7 +37,7 @@ class Homebrew_model extends \Model {
 		$this->rs['versions_head'] = 0; //TF
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 1;
+		$this->schema_version = 0;
 
 		// Add indexes
 		$this->idx[] = array('built_as_bottle');
