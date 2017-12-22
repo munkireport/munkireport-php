@@ -775,7 +775,7 @@
 	| ];
 	|
 	*/
-	$conf['database'] = [
+	$conf['connection'] = [
 	    'driver'    => 'sqlite',
 	    'database'  => $conf['application_path'].'db/db.sqlite',
 	];

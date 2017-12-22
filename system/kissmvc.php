@@ -50,8 +50,8 @@ class Controller extends KISS_Controller
         if(! $this->capsule){
             $this->capsule = new Capsule;
             
-            if( ! $connection = conf('database')){
-                die('Database not configured in config.php');
+            if( ! $connection = conf('connection')){
+                die('Connection not configured in config.php');
             }
 
             $this->capsule->addConnection($connection);
