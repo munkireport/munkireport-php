@@ -11,6 +11,7 @@ class Diskreport extends Migration
     public function up()
     {
         $capsule = new Capsule();
+        $migrateData = false;
 
         if ($capsule::schema()->hasTable($this->tableNameV2)) {
             // Migration already failed before, but didnt finish
