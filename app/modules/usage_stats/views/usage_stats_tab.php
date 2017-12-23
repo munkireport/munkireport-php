@@ -10,9 +10,13 @@
 					<th data-i18n="usage_stats.timestamp"></th>
 					<td id="usage_stats-timestamp"></td>
 				</tr>
-                <tr>
+				<tr>
 					<th data-i18n="usage_stats.thermal_pressure"></th>
 					<td id="usage_stats-thermal_pressure"></td>
+				</tr>
+                <tr>
+					<th data-i18n="usage_stats.kern_bootargs"></th>
+					<td id="usage_stats-kern_bootargs"></td>
 				</tr>
 			</table>
                 <h2 data-i18n="usage_stats.network_actvity"></h2>
@@ -152,6 +156,7 @@ $(document).on('appReady', function(e, lang) {
 
 			// Add strings
 			$('#usage_stats-thermal_pressure').text(data.thermal_pressure);
+			$('#usage_stats-kern_bootargs').text(data.kern_bootargs);
             
             // Format timestamp
             $('#usage_stats-timestamp').html('<span title=" '+moment((+data.timestamp)*1000).format('llll')+'">'+moment((+data.timestamp)*1000).fromNow()+'</span>');
