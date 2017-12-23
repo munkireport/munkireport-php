@@ -1,7 +1,7 @@
 Fans and Temperatures Module
 ==============
 
-Reports on fan speeds and temperatures from a client Mac.
+Reports on amps, fan speeds, temperatures, voltages, watts, and other SMC data from a client Mac.
 
 The table provides the following information 'fan_temps':
 
@@ -16,5 +16,4 @@ The table provides the following information 'fan_temps':
 Remarks
 ---
 
-* Uses smckit to get data from SMC - [https://github.com/beltex/SMCKit/](https://github.com/beltex/SMCKit/)
-* Because smckit is written in Swift, this modules required 10.9 or higher
+* Uses smc binary from smcFanControl to get data from SMC
