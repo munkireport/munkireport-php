@@ -23,7 +23,6 @@ class Ard extends Migration
             $migrateData = true;
         }
 
-
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
