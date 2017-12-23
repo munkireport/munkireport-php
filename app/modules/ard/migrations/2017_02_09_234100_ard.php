@@ -8,6 +8,14 @@ class Ard extends Migration
     public function up()
     {
         $capsule = new Capsule();
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable('ard')) {
+            $capsule::schema()->rename('ard', 'ard_v2');
+            $migrateData = true;
+        }
+
+
         $capsule::schema()->create('ard', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
@@ -20,13 +28,29 @@ class Ard extends Migration
             $table->index('Text2');
             $table->index('Text3');
             $table->index('Text4');
-            // $table->timestamps();
         });
+
+        if ($migrateData) {
+            $capsule::select('INSERT INTO 
+                ard 
+            SELECT 
+                serial_number,
+                Text1,
+                Text2,
+                Text3,
+                Text4
+            FROM
+                ard_v2');
+        }
     }
     
     public function down()
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('ard');
+        if ($capsule::schema()->hasTable('ard_v2')) {
+            $capsule::schema()->rename('ard_v2', 'ard');
+        }
+
     }
 }
