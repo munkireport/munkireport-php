@@ -8,18 +8,19 @@ class Diskreport extends Migration
     public function up()
     {
         $capsule = new Capsule();
+        $tableName = 'diskreport';
 
-        if ($capsule::schema()->hasTable('diskreport_v2')) {
+        if ($capsule::schema()->hasTable("${tableName}_v2")) {
             // Migration already failed before, but didnt finish
             throw new Exception("previous failed migration exists");
         }
 
-        if ($capsule::schema()->hasTable('diskreport')) {
-            $capsule::schema()->rename('diskreport', 'diskreport_v2');
+        if ($capsule::schema()->hasTable($tableName)) {
+            $capsule::schema()->rename($tableName, "${tableName}_v2");
             $migrateData = true;
         }
 
-        $capsule::schema()->create('diskreport', function (Blueprint $table) {
+        $capsule::schema()->create($tableName, function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('serial_number');
@@ -46,7 +47,8 @@ class Diskreport extends Migration
         if ($migrateData) {
             $capsule::select('INSERT INTO 
                 diskreport
-            SELECT 
+            SELECT
+                id,
                 serial_number,
                 TotalSize,
                 FreeSpace,
@@ -68,9 +70,9 @@ class Diskreport extends Migration
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('diskreport');
-        if ($capsule::schema()->hasTable('diskreport_v2')) {
-            $capsule::schema()->rename('diskreport_v2', 'diskreport');
+        $capsule::schema()->dropIfExists($tableName);
+        if ($capsule::schema()->hasTable("${tableName}_v2")) {
+            $capsule::schema()->rename("${tableName}_v2", $tableName);
         }
     }
 }
