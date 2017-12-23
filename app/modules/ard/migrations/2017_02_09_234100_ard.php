@@ -32,8 +32,9 @@ class Ard extends Migration
 
         if ($migrateData) {
             $capsule::select('INSERT INTO 
-                ard 
-            SELECT 
+                ard
+            SELECT
+                id,
                 serial_number,
                 Text1,
                 Text2,
