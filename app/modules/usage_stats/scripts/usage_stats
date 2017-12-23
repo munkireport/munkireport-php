@@ -138,7 +138,7 @@ def parse_usage_plist(plist):
                 usage_info['error'] = '' 
         elif item == 'GPU':
             try:
-                usage_info['gpu_name'] = plist[item][0]['name']
+                usage_info['gpu_name'] = plist[item][0]['name'].replace("IntelIG", "Intel iGPU")
             except:
                 usage_info['error'] = ''
             try:

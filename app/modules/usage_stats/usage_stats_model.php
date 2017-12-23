@@ -116,9 +116,6 @@ class Usage_stats_model extends \Model {
             // If key does not exist in $plist, null it
             if ( ! array_key_exists($field, $plist)) {
                 $this->$field = null;
-            } else if ($field = "gpu_name") {
-                // Fix Intel GPU name
-                $this->$field = str_replace("IntelIG","Intel iGPU",$plist[$field]);
             } else {
                 $this->$field = $plist[$field];
             }
