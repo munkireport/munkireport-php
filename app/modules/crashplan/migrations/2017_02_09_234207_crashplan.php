@@ -8,6 +8,19 @@ class Crashplan extends Migration
     public function up()
     {
         $capsule = new Capsule();
+
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable('crashplan_v2')) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable('crashplan')) {
+            $capsule::schema()->rename('crashplan', 'crashplan_v2');
+            $migrateData = true;
+        }
+
         $capsule::schema()->create('crashplan', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->nullable();
@@ -22,11 +35,30 @@ class Crashplan extends Migration
             $table->index('reason');
             $table->index('serial_number');
         });
+
+        if ($migrateData) {
+            $capsule::select('INSERT INTO 
+                crashplan (serial_number, destination, last_success, duration, last_failure, reason, "timestamp") 
+            SELECT 
+                serial_number,
+                destination,
+                last_success,
+                duration,
+                last_failure,
+                reason,
+                timestamp
+            FROM
+                crashplan_v2');
+        }
+
     }
     
     public function down()
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('crashplan');
+        if ($capsule::schema()->hasTable('crashplan_v2')) {
+            $capsule::schema()->rename('crashplan_v2', 'crashplan');
+        }
     }
 }

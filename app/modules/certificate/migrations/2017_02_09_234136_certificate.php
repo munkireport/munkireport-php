@@ -8,6 +8,18 @@ class Certificate extends Migration
     public function up()
     {
         $capsule = new Capsule();
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable('certificate_v2')) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable('certificate')) {
+            $capsule::schema()->rename('certificate', 'certificate_v2');
+            $migrateData = true;
+        }
+
         $capsule::schema()->create('certificate', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number');
@@ -17,7 +29,6 @@ class Certificate extends Migration
             $table->string('issuer');
             $table->string('cert_location');
             $table->bigInteger('timestamp')->nullable();
-//            $table->timestamps();
 
             $table->index('cert_cn');
             $table->index('cert_exp_time');
@@ -27,11 +38,29 @@ class Certificate extends Migration
             $table->index('serial_number');
             $table->index('timestamp');
         });
+
+        if ($migrateData) {
+            $capsule::select('INSERT INTO 
+                certificate (serial_number, cert_exp_time, cert_path, cert_cn, issuer, cert_location, "timestamp") 
+            SELECT 
+                serial_number,
+                cert_exp_time,
+                cert_path,
+                cert_cn,
+                issuer,
+                cert_location,
+                timestamp
+            FROM
+                certificate_v2');
+        }
     }
     
     public function down()
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('certificate');
+        if ($capsule::schema()->hasTable('certificate_v2')) {
+            $capsule::schema()->rename('certificate_v2', 'certificate');
+        }
     }
 }
