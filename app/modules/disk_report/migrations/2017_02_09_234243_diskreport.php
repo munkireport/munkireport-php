@@ -9,6 +9,16 @@ class Diskreport extends Migration
     {
         $capsule = new Capsule();
 
+        if ($capsule::schema()->hasTable('diskreport_v2')) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable('diskreport')) {
+            $capsule::schema()->rename('diskreport', 'diskreport_v2');
+            $migrateData = true;
+        }
+
         $capsule::schema()->create('diskreport', function (Blueprint $table) {
             $table->increments('id');
 
@@ -31,15 +41,36 @@ class Diskreport extends Migration
             $table->index('media_type');
             $table->index('VolumeName');
             $table->index('VolumeType');
-
-//            $table->timestamps();
         });
 
+        if ($migrateData) {
+            $capsule::select('INSERT INTO 
+                diskreport
+            SELECT 
+                serial_number,
+                TotalSize,
+                FreeSpace,
+                Percentage,
+                SMARTStatus,
+                VolumeType,
+                media_type,
+                BusProtocol,
+                Internal,
+                MountPoint,
+                VolumeName,
+                CoreStorageEncrypted,
+                timestamp
+            FROM
+                diskreport_v2');
+        }
     }
 
     public function down()
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('diskreport');
+        if ($capsule::schema()->hasTable('diskreport_v2')) {
+            $capsule::schema()->rename('diskreport_v2', 'diskreport');
+        }
     }
 }
