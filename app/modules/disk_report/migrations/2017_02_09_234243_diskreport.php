@@ -47,8 +47,8 @@ class Diskreport extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select('INSERT INTO 
-                diskreport
+            $capsule::select("INSERT INTO 
+                $this->tableName
             SELECT
                 id,
                 serial_number,
@@ -65,7 +65,7 @@ class Diskreport extends Migration
                 CoreStorageEncrypted,
                 timestamp
             FROM
-                diskreport_v2');
+                $this->tableNameV2");
         }
     }
 
