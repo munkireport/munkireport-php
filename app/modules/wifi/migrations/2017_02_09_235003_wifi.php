@@ -5,10 +5,25 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Wifi extends Migration
 {
+    private $tableName = 'wifi';
+    private $tableNameV2 = 'wifi_v2';
+
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('wifi', function (Blueprint $table) {
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+            $migrateData = true;
+        }
+
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             
             $table->string('serial_number')->unique();
@@ -31,13 +46,40 @@ class Wifi extends Migration
             $table->index('bssid');
             $table->index('ssid');
             $table->index('state');
+            
+            if ($migrateData) {
+                $capsule::select("INSERT INTO 
+                    $this->tableName
+                SELECT
+                    id,
+                    serial_number,
+                    agrctlrssi,
+                    agrextrssi,
+                    agrctlnoise,
+                    agrextnoise,
+                    state,
+                    op_mode,
+                    lasttxrate,
+                    lastassocstatus,
+                    maxrate,
+                    x802_11_auth,
+                    link_auth,
+                    bssid,
+                    ssid,
+                    mcs,
+                    channel
+                FROM
+                    $this->tableNameV2");
+            }
         });
-
     }
 
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('wifi');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        }
     }
 }
