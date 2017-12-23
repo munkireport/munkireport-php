@@ -5,12 +5,27 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class SmartStats extends Migration
 {
+    private $tableName = 'smart_stats';
+    private $tableNameV2 = 'smart_stats_v2';
+
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('smart_stats', function (Blueprint $table) {
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+            $migrateData = true;
+        }
+
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->nullable();
+            $table->string('serial_number');
 
             $table->integer('disk_number')->nullable();
             $table->string('model_family')->nullable();
@@ -153,13 +168,189 @@ class SmartStats extends Migration
             $table->text('optional_admin_commands')->nullable();
             $table->text('optional_nvm_commands')->nullable();
             $table->string('max_data_transfer_size')->nullable();
+            
+            $table->index('serial_number'),
+            $table->index('disk_number'),
+            $table->index('power_on_hours_and_msec'),
+            $table->index('power_on_hours'),
+            $table->index('model_family'),
+            $table->index('device_model'),
+            $table->index('serial_number_hdd'),
+            $table->index('lu_wwn_device_id'),
+            $table->index('firmware_version'),
+            $table->index('user_capacity'),
+            $table->index('sector_size'),
+            $table->index('rotation_rate'),
+            $table->index('device_is'),
+            $table->index('ata_version_is'),
+            $table->index('sata_version_is'),
+            $table->index('form_factor'),
+            $table->index('smart_support_is'),
+            $table->index('smart_is'),
+            $table->index('error_count'),
+            $table->index('error_poh'),
+            $table->index('timestamp'),
+            $table->index('overall_health')
         });
 
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                disk_number,
+                model_family,
+                device_model,
+                serial_number_hdd,
+                lu_wwn_device_id,
+                firmware_version,
+                user_capacity,
+                sector_size,
+                rotation_rate,
+                device_is,
+                ata_version_is,
+                sata_version_is,
+                form_factor,
+                smart_support_is,
+                smart_is,
+                error_count,
+                error_poh,
+                timestamp,
+                raw_read_error_rate,
+                throughput_performance,
+                spin_up_time,
+                start_stop_count,
+                reallocated_sector_ct,
+                read_channel_margin,
+                seek_error_rate,
+                seek_time_performance,
+                power_on_hours,
+                power_on_hours_and_msec,
+                spin_retry_count,
+                calibration_retry_count,
+                power_cycle_count,
+                read_soft_error_rate,
+                program_fail_count_chip,
+                erase_fail_count_chip,
+                wear_leveling_count,
+                used_rsvd_blk_cnt_chip,
+                used_rsvd_blk_cnt_tot,
+                unused_rsvd_blk_cnt_tot,
+                program_fail_cnt_total,
+                erase_fail_count_total,
+                runtime_bad_block,
+                endtoend_error,
+                reported_uncorrect,
+                command_timeout,
+                high_fly_writes,
+                airflow_temperature_cel,
+                gsense_error_rate,
+                poweroff_retract_count,
+                load_cycle_count,
+                temperature_celsius,
+                hardware_ecc_recovered,
+                reallocated_event_count,
+                current_pending_sector,
+                offline_uncorrectable,
+                udma_crc_error_count,
+                multi_zone_error_rate,
+                soft_read_error_rate,
+                data_address_mark_errs,
+                run_out_cancel,
+                soft_ecc_correction,
+                thermal_asperity_rate,
+                flying_height,
+                spin_high_current,
+                spin_buzz,
+                offline_seek_performnce,
+                disk_shift,
+                loaded_hours,
+                load_retry_count,
+                load_friction,
+                loadin_time,
+                torqamp_count,
+                head_amplitude,
+                available_reservd_space,
+                media_wearout_indicator,
+                head_flying_hours,
+                total_lbas_written,
+                total_lbas_read,
+                read_error_retry_rate,
+                free_fall_sensor,
+                host_reads_mib,
+                host_writes_mib,
+                grown_failing_block_ct,
+                unexpect_power_loss_ct,
+                non4k_aligned_access,
+                sata_iface_downshift,
+                factory_bad_block_ct,
+                percent_lifetime_used,
+                write_error_rate,
+                success_rain_recov_cnt,
+                total_host_sector_write,
+                host_program_page_count,
+                bckgnd_program_page_cnt,
+                perc_rated_life_used,
+                reallocate_nand_blk_cnt,
+                ave_blockerase_count,
+                Unused_Reserve_NAND_Blk,
+                sata_interfac_downshift,
+                ssd_life_left,
+                life_curve_status,
+                supercap_health,
+                lifetime_writes_gib,
+                lifetime_reads_gib,
+                uncorrectable_error_cnt,
+                ecc_error_eate,
+                crc_error_count,
+                supercap_status,
+                exception_mode_status,
+                por_recovery_count,
+                total_reads_gib,
+                total_writes_gib,
+                thermal_throttle,
+                perc_writeerase_count,
+                perc_avail_resrvd_space,
+                perc_writeerase_ct_bc,
+                avg_writeerase_count,
+                sata_phy_error,
+                overall_health,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            FROM
+                $this->tableNameV2");
+        }
     }
-
+    
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('smart_stats');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        }
     }
 }
