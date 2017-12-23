@@ -10,6 +10,11 @@ class Bluetooth extends Migration
         $capsule = new Capsule();
         $migrateData = false;
 
+        if ($capsule::schema()->hasTable('bluetooth_v2')) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
         if ($capsule::schema()->hasTable('bluetooth')) {
             $capsule::schema()->rename('bluetooth', 'bluetooth_v2');
             $migrateData = true;
@@ -28,7 +33,7 @@ class Bluetooth extends Migration
 
         if ($migrateData) {
             $capsule::select('INSERT INTO 
-                bluetooth 
+                bluetooth (serial_number, battery_percent, device_type) 
             SELECT 
                 serial_number,
                 battery_percent,

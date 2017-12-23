@@ -8,6 +8,17 @@ class Directoryservice extends Migration
     public function up()
     {
         $capsule = new Capsule();
+
+        if ($capsule::schema()->hasTable('directoryservice_v2')) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable('directoryservice')) {
+            $capsule::schema()->rename('directoryservice', 'directoryservice_v2');
+            $migrateData = true;
+        }
+
         $capsule::schema()->create('directoryservice', function (Blueprint $table) {
             $table->increments('id');
 
@@ -40,8 +51,40 @@ class Directoryservice extends Migration
             $table->index('allowedadmingroups');
             $table->index('directory_service_comments');
             $table->index('which_directory_service');
-//            $table->timestamps();
         });
+
+        if ($migrateData) {
+            $capsule::select('INSERT INTO 
+                directoryservice (serial_number, which_directory_service, directory_service_comments, adforest, addomain, computeraccount, createmobileaccount, requireconfirmation, forcehomeinstartup, mounthomeassharepoint, usewindowsuncpathforhome, networkprotocoltobeused, defaultusershell, mappinguidtoattribute, mappingusergidtoattribute, mappinggroupgidtoattr, generatekerberosauth, preferreddomaincontroller, allowedadmingroups, authenticationfromanydomain, packetsigning, packetencryption, passwordchangeinterval, restrictdynamicdnsupdates, namespacemode) 
+            SELECT 
+                serial_number,
+                which_directory_service,
+                directory_service_comments,
+                adforest,
+                addomain,
+                computeraccount,
+                createmobileaccount,
+                requireconfirmation,
+                forcehomeinstartup,
+                mounthomeassharepoint,
+                usewindowsuncpathforhome,
+                networkprotocoltobeused,
+                defaultusershell,
+                mappinguidtoattribute,
+                mappingusergidtoattribute,
+                mappinggroupgidtoattr,
+                generatekerberosauth,
+                preferreddomaincontroller,
+                allowedadmingroups,
+                authenticationfromanydomain,
+                packetsigning,
+                packetencryption,
+                passwordchangeinterval,
+                restrictdynamicdnsupdates,
+                namespacemode
+            FROM
+                directoryservice_v2');
+        }
     }
 
     /**
@@ -53,5 +96,8 @@ class Directoryservice extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('directoryservice');
+        if ($capsule::schema()->hasTable('directoryservice_v2')) {
+            $capsule::schema()->rename('directoryservice_v2', 'directoryservice');
+        }
     }
 }
