@@ -9,22 +9,56 @@ import string
 import re
 
 def get_battery_profiler():
-    cmd = ['/usr/sbin/system_profiler', 'SPPowerDataType']
+    '''Uses system profiler to get power info for this machine.'''
+    cmd = ['/usr/sbin/system_profiler', 'SPPowerDataType', '-xml']
     proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (output, unused_error) = proc.communicate()
-    output = output.replace('"', '')
+    plist = plistlib.readPlistFromString(output)
+    # system_profiler xml is an array
+    sp_dict = plist[0]
+    items = sp_dict['_items']
+    
+    batteryprofiler = {}
+    
+    for obj in items:
+        for item in obj:
+            if item == 'sppower_current_amperage':
+                batteryprofiler['AmperagemA'] = obj[item]
+            elif item == 'sppower_current_voltage':
+                batteryprofiler['Voltage'] = obj[item]
+            elif item == 'sppower_battery_charger_connected':
+                batteryprofiler['ExternalConnected'] = obj[item]
+            elif item == 'sppower_ac_charger_ID':
+                batteryprofiler['AdapterID'] = obj[item]
+            elif item == 'sppower_ac_charger_watts':
+                batteryprofiler['attage'] = obj[item] # This is not a typo
+            elif item == 'sppower_ac_charger_family':
+                batteryprofiler['FamilyCode'] = obj[item]
+            elif item == 'sppower_ac_charger_serial_number':
+                batteryprofiler['SerialNumber'] = obj[item]
+            elif item == 'sppower_ups_installed':
+                batteryprofiler['UPSInstalled'] = obj[item]
+            elif item == 'sppower_battery_installed' and obj['sppower_battery_installed'] == "TRUE":
+                batteryprofiler['condition'] = obj['sppower_battery_health_info']['sppower_battery_health']
+            elif item == 'sppower_battery_installed' and obj['sppower_battery_installed'] == "FALSE":
+                batteryprofiler['condition'] = "No Battery"
+            elif item == 'sppower_battery_charge_info':
+                batteryprofiler['MaxCapacity'] = obj[item]['sppower_battery_max_capacity']
+                batteryprofiler['CurrentCapacity'] = obj[item]['sppower_battery_current_capacity']
+                batteryprofiler['IsCharging'] = obj[item]['sppower_battery_is_charging']
+                batteryprofiler['FullyCharged'] = obj[item]['sppower_battery_fully_charged']
+            elif item == 'sppower_battery_health_info':
+                batteryprofiler['CycleCount'] = obj[item]['sppower_battery_cycle_count']
+            elif item == 'sppower_battery_model_info':
+                batteryprofiler['FirmwareVersion'] = obj[item]['sppower_battery_firmware_version']
+                batteryprofiler['BatteryName'] = obj[item]['sppower_battery_device_name']
+                batteryprofiler['Manufacturer'] = obj[item]['sppower_battery_manufacturer']
+                batteryprofiler['BatterySerialNumber'] = obj[item]['sppower_battery_serial_number']
+                batteryprofiler['BatteryRevision'] = obj[item]['sppower_battery_hardware_revision']
+                batteryprofiler['BatteryCellRevision'] = obj[item]['sppower_battery_cell_revision']
 
-    batteryprofiler = {'AdapterID': '','AmperagemA': '','ApplePushServiceTask': '','AvgTimeToEmpty': '','AvgTimeToFull': '','BackgroundTask': '','BatterySerialNumber': '','CPUAvailableCPUs': '','CPUSchedulerLimit': '','CPUSpeedLimit': '','CellVoltage': '','CurrentCapacity': '','CycleCount': '','DarkWake': '','DesignCapacity': '','DesignCycleCount9C': '','DestroyFVKeyOnStandby': '','ExternalConnected': '','ExternalMedia': '','FamilyCode': '','FullyCharged': '','InstantTimeToEmpty': '','IsCharging': '','ManufactureDate': '','Manufacturer': '','MaxCapacity': '','NetworkClientActive': '','Nowdrawing': '','PackReserve': '','PermanentFailureStatus': '','PreventSystemSleep': '','PreventUserIdleDisplaySleep': '','PreventUserIdleSystemSleep': '','SerialNumber': '','SleepCount': '','SleepOn': '','Temperature': '','TimeRemaining': '','UPSName': '','UPSPercent': '','UPSStatus': '','UserIsActive': '','UserWake': '','Voltage': '','acwake': '','attage': '','autopoweroff': '','autopoweroffdelay': '','autorestart': '','battery': '','combinedlevel': '','condition': '','disksleep': '','displaysleep': '','gpuswitch': '','halfdim': '','haltafter': '','haltlevel': '','haltremain': '','hibernatefile': '','hibernatemode': '','lessbright': '','lidwake': '','networkoversleep': '','powernap': '','schedule': '','sleep': '','sms': '','standby': '','standbydelay': '','thermal': '','ttyskeepawake': '','user': '','womp': ''}
-
-    for item in output.split("\n"):
-        if "      Amperage (mA): " in item and not "65535" in item:
-            batteryprofiler['AmperagemA'] = remove_all("      Amperage (mA): ", item).strip()
-        elif "          Condition: " in item:
-            batteryprofiler['condition'] = remove_all("          Condition: ", item).strip()
-        elif "Battery Installed: No" in item:
-            batteryprofiler['condition'] = "No Battery"
     return batteryprofiler
 
 def get_battery_stats():
@@ -41,20 +75,12 @@ def get_battery_stats():
     for item in output.split("\n"):
         if "      DesignCapacity = " in item and not "65535" in item:
             batteryinfo['DesignCapacity'] = re.sub('[^0-9]','', item.strip())
-        elif "      MaxCapacity = " in item and not "65535" in item:
-            batteryinfo['MaxCapacity'] = re.sub('[^0-9]','', item.strip())
-        elif "      CurrentCapacity = " in item and not "65535" in item:
-            batteryinfo['CurrentCapacity'] = re.sub('[^0-9]','', item.strip())
-        elif "      CycleCount = " in item and not "65535" in item:
-            batteryinfo['CycleCount'] = re.sub('[^0-9]','', item.strip())
         elif "      Temperature = " in item and not "65535" in item:
             batteryinfo['Temperature'] = re.sub('[^0-9]','', item.strip())
         elif "      TimeRemaining = " in item and not "65535" in item:
             batteryinfo['TimeRemaining'] = re.sub('[^0-9]','', item.strip())
         elif "      InstantTimeToEmpty = " in item and not "65535" in item:
             batteryinfo['InstantTimeToEmpty'] = re.sub('[^0-9]','', item.strip())
-        elif "      Voltage = " in item and not "65535" in item:
-            batteryinfo['Voltage'] = re.sub('[^0-9]','', item.strip())
         elif "      PackReserve = " in item and not "65535" in item:
             batteryinfo['PackReserve'] = re.sub('[^0-9]','', item.strip())
         elif "      AvgTimeToFull = " in item and not "65535" in item:
@@ -65,20 +91,10 @@ def get_battery_stats():
             batteryinfo['DesignCycleCount9C'] = re.sub('[^0-9]','', item.strip())
         elif "      PermanentFailureStatus = " in item and not "65535" in item:
             batteryinfo['PermanentFailureStatus'] = re.sub('[^0-9]','', item.strip())
-        elif "      IsCharging = " in item:
-            batteryinfo['IsCharging'] = remove_all("      IsCharging = ", item).strip()
         elif "      ManufactureDate = " in item:
             batteryinfo['ManufactureDate'] = remove_all("      ManufactureDate = ", item).strip()
         elif "      CellVoltage = " in item:
             batteryinfo['CellVoltage'] = remove_all("      CellVoltage = ", item).strip()
-        elif "      Manufacturer = " in item:
-            batteryinfo['Manufacturer'] = remove_all("      Manufacturer = ", item).strip()
-        elif "      BatterySerialNumber = " in item:
-            batteryinfo['BatterySerialNumber'] = remove_all("      BatterySerialNumber = ", item).strip()
-        elif "      FullyCharged = " in item:
-            batteryinfo['FullyCharged'] = remove_all("      FullyCharged = ", item).strip()
-        elif "      ExternalConnected = " in item:
-            batteryinfo['ExternalConnected'] = remove_all("      ExternalConnected = ", item).strip()
         elif "Now drawing from '" in item:
             batteryinfo['Nowdrawing'] = remove_all("'", remove_all("Now drawing from '", item)).strip()
     return batteryinfo
@@ -175,27 +191,6 @@ def get_pmset_therm():
             therminfo['CPUSpeedLimit'] = re.sub('[^0-9]','', item.strip())
     return therminfo
 
-def get_pmset_adapter():
-    cmd = ['/usr/bin/pmset', '-g', 'adapter']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-
-    adapterinfo = get_pmset_therm()
-
-    for item in output.split("\n"):
-        if " Wattage = " in item:
-            adapterinfo['attage'] = re.sub('[^0-9]','', item.strip())
-            # This is not a typo^^^^
-        elif " AdapterID = " in item:
-            adapterinfo['AdapterID'] = remove_all(" AdapterID = ", item).strip()
-        elif " Family Code = " in item:
-            adapterinfo['FamilyCode'] = remove_all(" Family Code = ", item).strip()
-        elif " Serial Number = " in item:
-            adapterinfo['SerialNumber'] = remove_all(" Serial Number = ", item).strip()
-    return adapterinfo
-
 def get_pmset_stats():
     cmd = ['/usr/bin/pmset', '-g', 'stats']
     proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
@@ -203,7 +198,7 @@ def get_pmset_stats():
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (output, unused_error) = proc.communicate()
 
-    statsinfo = get_pmset_adapter()
+    statsinfo = get_pmset_therm()
 
     for item in output.split("\n"):
         if "Sleep Count:" in item:
