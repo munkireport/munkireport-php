@@ -16,18 +16,19 @@ def get_battery_profiler():
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (output, unused_error) = proc.communicate()
     plist = plistlib.readPlistFromString(output)
+
     # system_profiler xml is an array
     sp_dict = plist[0]
     items = sp_dict['_items']
-    
+
     batteryprofiler = {}
-    
+
     for obj in items:
         for item in obj:
             if item == 'sppower_current_amperage':
-                batteryprofiler['AmperagemA'] = obj[item]
+                batteryprofiler['AmperagemA'] = format((float(obj[item])/1000),'.3f')
             elif item == 'sppower_current_voltage':
-                batteryprofiler['Voltage'] = obj[item]
+                batteryprofiler['Voltage'] = format((float(obj[item])/1000),'.3f')
             elif item == 'sppower_battery_charger_connected':
                 batteryprofiler['ExternalConnected'] = obj[item]
             elif item == 'sppower_ac_charger_ID':
@@ -67,45 +68,44 @@ def get_battery_stats():
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (output, unused_error) = proc.communicate()
-    plist = plistlib.readPlistFromString(output)
-    batteryxml = plist[0]
+    try:
+        plist = plistlib.readPlistFromString(output)
+        batteryxml = plist[0]
 
-    batteryinfo = get_battery_profiler()
+        batteryinfo = get_battery_profiler()
+
+        for item in batteryxml:
+                if item == 'DesignCapacity':
+                    batteryinfo['DesignCapacity'] = batteryxml[item]
+                elif item == 'Temperature':
+                    batteryinfo['Temperature'] = batteryxml[item]
+                elif item == 'TimeRemaining':
+                    batteryinfo['TimeRemaining'] = batteryxml[item]
+                elif item == 'InstantTimeToEmpty':
+                    batteryinfo['InstantTimeToEmpty'] = batteryxml[item]
+                elif item == 'PackReserve':
+                    batteryinfo['PackReserve'] = batteryxml[item]
+                elif item == 'AvgTimeToFull':
+                    batteryinfo['AvgTimeToFull'] = batteryxml[item]
+                elif item == 'AvgTimeToEmpty':
+                    batteryinfo['AvgTimeToEmpty'] = batteryxml[item]
+                elif item == 'AvgTimeToEmpty':
+                    batteryinfo['AvgTimeToEmpty'] = batteryxml[item]
+                elif item == 'DesignCycleCount9C':
+                    batteryinfo['DesignCycleCount9C'] = batteryxml[item]
+                elif item == 'PermanentFailureStatus':
+                    batteryinfo['PermanentFailureStatus'] = batteryxml[item]
+                elif item == 'ManufactureDate':
+                    batteryinfo['ManufactureDate'] = batteryxml[item]
+                elif item == 'CellVoltage':
+                    cells = []
+                    for cell in batteryxml[item]:
+                        cells.append(str(float(cell)/1000)+"v")
+                    batteryinfo['CellVoltage'] = (', '.join(map(str,(cells))))
+        return batteryinfo
+    except:
+        return get_battery_profiler()
     
-    for item in batteryxml:
-            if item == 'DesignCapacity':
-                batteryinfo['DesignCapacity'] = batteryxml[item]
-            elif item == 'Temperature':
-                batteryinfo['Temperature'] = batteryxml[item]
-            elif item == 'TimeRemaining':
-                batteryinfo['TimeRemaining'] = batteryxml[item]
-            elif item == 'InstantTimeToEmpty':
-                batteryinfo['InstantTimeToEmpty'] = batteryxml[item]
-            elif item == 'PackReserve':
-                batteryinfo['PackReserve'] = batteryxml[item]
-            elif item == 'AvgTimeToFull':
-                batteryinfo['AvgTimeToFull'] = batteryxml[item]
-            elif item == 'AvgTimeToEmpty':
-                batteryinfo['AvgTimeToEmpty'] = batteryxml[item]
-            elif item == 'AvgTimeToEmpty':
-                batteryinfo['AvgTimeToEmpty'] = batteryxml[item]
-            elif item == 'DesignCycleCount9C':
-                batteryinfo['DesignCycleCount9C'] = batteryxml[item]
-            elif item == 'PermanentFailureStatus':
-                batteryinfo['PermanentFailureStatus'] = batteryxml[item]
-            elif item == 'ManufactureDate':
-                batteryinfo['ManufactureDate'] = batteryxml[item]
-            elif item == 'CellVoltage':
-                cells = []
-                for cell in batteryxml[item]:
-                    cells.append(cell)
-                batteryinfo['CellVoltage'] = "("+(', '.join(map(str,(cells))))+")"
-            elif item == 'sppower_current_voltage':
-                batteryinfo['Voltage'] = batteryxml[item]
-            elif item == 'sppower_current_voltage':
-                batteryinfo['Voltage'] = batteryxml[item]
-    return batteryinfo
-
 def get_pmset_accps():
     cmd = ['/usr/bin/pmset', '-g', 'accps']
     proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
@@ -298,7 +298,12 @@ def get_pmset_general():
         elif " lessbright" in item:
             powerinfo['lessbright'] = re.sub('[^0-9]','', item.strip())
         elif " sleep" in item:
-            powerinfo['sleep'] = remove_all(" sleep", item).strip()
+            try:
+                powerinfo['sleep_prevented_by'] = re.search('\(.*\)', item).group(0).replace("(sleep prevented by ", "").replace(")", "").strip()
+            except:
+                powerinfo['sleep_prevented_by_error'] = ""
+            powerinfo['sleep'] = (re.sub('[^0-9]','', re.sub(r'\(.+?\)', '', item))).strip()
+
 #    print powerinfo
     return powerinfo
 

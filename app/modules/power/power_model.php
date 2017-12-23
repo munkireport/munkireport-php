@@ -256,11 +256,12 @@ class Power_model extends \Model
                 'FullyCharged' => 'fullycharged',
                 'IsCharging' => 'ischarging',
                 'DesignCycleCount9C' => 'designcyclecount',
-                'AvgTimeToEmpty' => 'avgtimetoempty'
+                'AvgTimeToEmpty' => 'avgtimetoempty',
+                'sleep_prevented_by' => 'sleep_prevented_by'
             );
             
             // Array of strings
-            $strings =  array('manufacture_date', 'condition', 'hibernatefile', 'adapter_id', 'family_code', 'adapter_serial_number', 'combined_sys_load', 'user_sys_load', 'thermal_level', 'battery_level', 'ups_name', 'active_profile', 'ups_charging_status', 'externalconnected', 'cellvoltage', 'manufacturer', 'batteryserialnumber', 'fullycharged', 'ischarging');
+            $strings =  array('manufacture_date', 'condition', 'hibernatefile', 'adapter_id', 'family_code', 'adapter_serial_number', 'combined_sys_load', 'user_sys_load', 'thermal_level', 'battery_level', 'ups_name', 'active_profile', 'ups_charging_status', 'externalconnected', 'cellvoltage', 'manufacturer', 'batteryserialnumber', 'fullycharged', 'ischarging','sleep_prevented_by');
 
             // Traverse the xml with translations
             foreach ($translate as $search => $field) {
@@ -328,62 +329,8 @@ class Power_model extends \Model
         //timestamp added by the server
         $this->timestamp = time();
 
-        // Fix sleep and make sleep_prevented_by
-        $sleep_long = $this->sleep;
-
-        if (strpos($sleep_long, '(') !== false) {
-            preg_match('/\((.*?)\)/s', $sleep_long, $sleep_array);
-            $this->sleep = explode(" (", $sleep_long)[0];
-            $this->sleep_prevented_by = preg_replace("/[^A-Za-z0-9 ]/", '',(implode(", ", array_unique(explode(", ", str_replace("sleep prevented by ", "", $sleep_array[1]))))));
-        } else {
-            $this->sleep = preg_replace("/[^0-9 ]/", '', $sleep_long);
-            $this->sleep_prevented_by = "";
-        }
-
-        // Correct empty UPS percentage
-        if (trim($this->ups_percent) === '') {
-            $this->ups_percent = null;
-        }
-
-        // Remove single quotes from active_profile
-        $this->active_profile = str_replace("'", "", $this->active_profile);
-
-        // Format cell voltages
-        if ( $this->cellvoltage != "") {
-            $this->cellvoltage = str_replace(array('(',')'), array('',''), $this->cellvoltage);
-            $cellvoltagearray = explode(',', $this->cellvoltage);
-            $cellvoltageout = array();
-            foreach ($cellvoltagearray as $cell) {
-                if ($cell !== "0") {
-                       array_push($cellvoltageout, (intval($cell) / 1000));
-                }
-            }
-            $this->cellvoltage = implode($cellvoltageout,'v, ');
-        }
-
-        // Format voltage
-        if ( $this->voltage != "") {
-             $this->voltage = (intval($this->voltage) / 1000);
-        }
-
-        // Format amperage
-        if ( $this->amperage != "") {
-             $this->amperage = (intval($this->amperage) / 1000);
-        }
-
-        // Format manufacturer
-        $this->manufacturer = str_replace('"', '', $this->manufacturer);
-
         // Fix condition
         $this->condition = str_replace(array('ServiceBattery','ReplaceSoon','ReplaceNow'),array('Service Battery','Replace Soon','Replace Now'), $this->condition);
-
-        // Format batteryserialnumber
-        $this->batteryserialnumber = str_replace('"', '', $this->batteryserialnumber);
-
-        // Clean pmset -g values
-        $this->displaysleep = intval(strtok($this->displaysleep, ' '));
-        $this->disksleep = intval(strtok($this->disksleep, ' '));
-        $this->standby = intval(strtok($this->standby, ' '));
 
         $this->save();
     }
