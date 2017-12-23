@@ -6,10 +6,26 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Power extends Migration
 {
+    private $tableName = 'power';
+    private $tableNameV2 = 'power_v2';
+
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('power', function (Blueprint $table) {
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+            $migrateData = true;
+        }
+
+
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('serial_number')->unique();
@@ -152,11 +168,102 @@ class Power extends Migration
             $table->index('designcyclecount');
             $table->index('avgtimetoempty');
         });
-    }
 
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                manufacture_date,
+                design_capacity,
+                max_capacity,
+                max_percent,
+                current_capacity,
+                current_percent,
+                cycle_count,
+                temperature,
+                condition,
+                timestamp,
+                sleep_prevented_by,
+                hibernatefile,
+                schedule,
+                adapter_id,
+                family_code,
+                adapter_serial_number,
+                combined_sys_load,
+                user_sys_load,
+                thermal_level,
+                battery_level,
+                ups_name,
+                active_profile,
+                ups_charging_status,
+                externalconnected,
+                cellvoltage,
+                manufacturer,
+                batteryserialnumber,
+                fullycharged,
+                ischarging,
+                standbydelay,
+                standby,
+                womp,
+                halfdim,
+                gpuswitch,
+                sms,
+                networkoversleep,
+                disksleep,
+                sleep,
+                autopoweroffdelay,
+                hibernatemode,
+                autopoweroff,
+                ttyskeepawake,
+                displaysleep,
+                acwake,
+                lidwake,
+                sleep_on_power_button,
+                autorestart,
+                destroyfvkeyonstandby,
+                powernap,
+                haltlevel,
+                haltafter,
+                haltremain,
+                lessbright,
+                sleep_count,
+                dark_wake_count,
+                user_wake_count,
+                wattage,
+                backgroundtask,
+                applepushservicetask,
+                userisactive,
+                preventuseridledisplaysleep,
+                preventsystemsleep,
+                externalmedia,
+                preventuseridlesystemsleep,
+                networkclientactive,
+                cpu_scheduler_limit,
+                cpu_available_cpus,
+                cpu_speed_limit,
+                ups_percent,
+                timeremaining,
+                instanttimetoempty,
+                voltage,
+                permanentfailurestatus,
+                packreserve,
+                avgtimetofull,
+                amperage,
+                designcyclecount,
+                avgtimetoempty
+            FROM
+                $this->tableNameV2");
+        }
+    }
+    
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('power');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        }
     }
 }
