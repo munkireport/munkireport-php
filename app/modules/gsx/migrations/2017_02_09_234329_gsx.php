@@ -63,7 +63,7 @@ class Gsx extends Migration
                     warrantystatus,
                     coverageenddate,
                     coveragestartdate,
-                    'daysremaining,
+                    daysremaining,
                     estimatedpurchasedate,
                     purchasecountry,
                     registrationdate,
