@@ -35,21 +35,21 @@ class Comment extends Migration
             $table->index('serial_number');
             $table->index('section');
             $table->index('user');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    section,
-                    user,
-                    text,
-                    timestamp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+        
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                section,
+                user,
+                text,
+                timestamp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

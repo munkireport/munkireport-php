@@ -44,25 +44,25 @@ class Appusage extends Migration
             $table->index('last_time_epoch');
             $table->index('last_time');
             $table->index('number_times');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    event,
-                    bundle_id,
-                    app_version,
-                    app_name,
-                    app_path,
-                    last_time_epoch,
-                    last_time,
-                    number_times
-                FROM
-                    $this->tableNameV2");
-            }
         });
+        
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                event,
+                bundle_id,
+                app_version,
+                app_name,
+                app_path,
+                last_time_epoch,
+                last_time,
+                number_times
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()
