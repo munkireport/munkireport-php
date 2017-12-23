@@ -46,19 +46,52 @@ def get_battery_profiler():
             elif item == 'sppower_battery_installed' and obj['sppower_battery_installed'] == "FALSE":
                 batteryprofiler['condition'] = "No Battery"
             elif item == 'sppower_battery_charge_info':
-                batteryprofiler['MaxCapacity'] = obj[item]['sppower_battery_max_capacity']
-                batteryprofiler['CurrentCapacity'] = obj[item]['sppower_battery_current_capacity']
-                batteryprofiler['IsCharging'] = obj[item]['sppower_battery_is_charging']
-                batteryprofiler['FullyCharged'] = obj[item]['sppower_battery_fully_charged']
+                try:
+                    batteryprofiler['MaxCapacity'] = obj[item]['sppower_battery_max_capacity']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['CurrentCapacity'] = obj[item]['sppower_battery_current_capacity']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['IsCharging'] = obj[item]['sppower_battery_is_charging']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['FullyCharged'] = obj[item]['sppower_battery_fully_charged']
+                except:
+                    batteryprofiler['error'] = ""
             elif item == 'sppower_battery_health_info':
-                batteryprofiler['CycleCount'] = obj[item]['sppower_battery_cycle_count']
+                try:
+                    batteryprofiler['CycleCount'] = obj[item]['sppower_battery_cycle_count']
+                except:
+                    batteryprofiler['error'] = ""
             elif item == 'sppower_battery_model_info':
-                batteryprofiler['FirmwareVersion'] = obj[item]['sppower_battery_firmware_version']
-                batteryprofiler['BatteryName'] = obj[item]['sppower_battery_device_name']
-                batteryprofiler['Manufacturer'] = obj[item]['sppower_battery_manufacturer']
-                batteryprofiler['BatterySerialNumber'] = obj[item]['sppower_battery_serial_number']
-                batteryprofiler['BatteryRevision'] = obj[item]['sppower_battery_hardware_revision']
-                batteryprofiler['BatteryCellRevision'] = obj[item]['sppower_battery_cell_revision']
+                try:
+                    batteryprofiler['FirmwareVersion'] = obj[item]['sppower_battery_firmware_version']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['BatteryName'] = obj[item]['sppower_battery_device_name']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['Manufacturer'] = obj[item]['sppower_battery_manufacturer']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['BatterySerialNumber'] = obj[item]['sppower_battery_serial_number']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['BatteryRevision'] = obj[item]['sppower_battery_hardware_revision']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['BatteryCellRevision'] = obj[item]['sppower_battery_cell_revision']
+                except:
+                    batteryprofiler['error'] = ""
 
     return batteryprofiler
 
