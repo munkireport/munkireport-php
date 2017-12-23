@@ -1172,7 +1172,7 @@ class Fan_temps_model extends \Model {
 		    'PD0R' => 'pd0r'
 		);
 		
-        // Process incoming fan_temps.xml
+        // Process incoming fan_temps.plist
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $plist = $parser->toArray();

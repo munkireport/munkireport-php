@@ -13,7 +13,7 @@ $(document).on('appReady', function(){
 			for (var prop in d){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
-                    if (d[prop] == null || d[prop] == "0"){
+                    if (d[prop] == null){
 					   // Do nothing for nulls to blank them
                         
                     } else if (prop.startsWith("i")){
