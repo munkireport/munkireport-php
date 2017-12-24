@@ -133,7 +133,8 @@ def get_battery_stats():
                 elif item == 'CellVoltage':
                     cells = []
                     for cell in batteryxml[item]:
-                        cells.append(str(float(cell)/1000)+"v")
+                        if cell > 0:
+                            cells.append(str(float(cell)/1000)+"v")
                     batteryinfo['CellVoltage'] = (', '.join(map(str,(cells))))
         return batteryinfo
     except:

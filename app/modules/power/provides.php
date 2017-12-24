@@ -6,7 +6,7 @@ return array(
         'battery-tab' => array('view' => 'battery_tab', 'i18n' => 'power.battery'),
     ),
     'listings' => array(
-        'batteries' => array('view' => 'batteries_listing', 'i18n' => 'power.batteries'),
+        'batteries' => array('view' => 'batteries_listing', 'i18n' => 'power.batteries', 'badge' => 'battery-cnt'),
         'power' => array('view' => 'power_listing', 'i18n' => 'power.power'),
     ),
     'widgets' => array(
