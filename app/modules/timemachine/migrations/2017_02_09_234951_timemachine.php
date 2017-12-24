@@ -31,7 +31,6 @@ class Timemachine extends Migration
             $table->string('last_failure')->nullable();
             $table->string('last_failure_msg')->nullable();
             $table->integer('duration')->nullable();
-            $table->string('timestamp')->nullable();
 
             $table->integer('always_show_deleted_backups_warning')->nullable();
             $table->integer('auto_backup')->nullable();
@@ -95,7 +94,6 @@ class Timemachine extends Migration
             $table->index('skip_system_files');
             $table->index('snapshot_count');
             $table->index('time_capsule_display_name');
-            $table->index('timestamp');
             $table->index('volume_display_name');
         });
 
@@ -109,7 +107,6 @@ class Timemachine extends Migration
                 last_failure,
                 last_failure_msg,
                 duration,
-                timestamp,
                 always_show_deleted_backups_warning,
                 auto_backup,
                 bytes_available,
