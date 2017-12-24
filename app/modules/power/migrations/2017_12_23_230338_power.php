@@ -38,7 +38,6 @@ class Power extends Migration
             $table->integer('cycle_count')->default(0);
             $table->integer('temperature')->default(0);
             $table->string('condition');
-            $table->bigInteger('timestamp')->default(0);
             
             $table->text('sleep_prevented_by');
             $table->string('hibernatefile');
@@ -117,7 +116,6 @@ class Power extends Migration
             $table->index('current_percent');
             $table->index('cycle_count');
             $table->index('temperature');
-            $table->index('timestamp');
             $table->index('hibernatefile');
             $table->index('active_profile');
             $table->index('standbydelay');
@@ -184,7 +182,6 @@ class Power extends Migration
                 cycle_count,
                 temperature,
                 `condition`,
-                timestamp,
                 sleep_prevented_by,
                 hibernatefile,
                 schedule,
