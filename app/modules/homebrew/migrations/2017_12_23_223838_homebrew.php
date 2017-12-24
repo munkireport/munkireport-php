@@ -102,7 +102,7 @@ class Homebrew extends Migration
                 outdated,
                 pinned,
                 versions_devel,
-                versions_head,
+                versions_head
             FROM
                 $this->tableNameV2");
         }
