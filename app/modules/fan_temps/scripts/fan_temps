@@ -617,7 +617,14 @@ def get_smc_results():
         
         
         elif "ALSL" in item:
-            smcinfo['ALSL'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('ALSL', ''))).strip()
+            model = subprocess.check_output(['/usr/sbin/sysctl', '-n','hw.model'], shell=False, bufsize=-1)
+            if 'iMac' in model:
+                if (int(re.sub('[^0-9]','', model)) > 120):
+                    smcinfo['ALSL'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('ALSL', ''))).strip()
+            elif "(bytes 01 2c)" in item:
+                smcinfo['ALSL'] = "0"
+            else: 
+                smcinfo['ALSL'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('ALSL', ''))).strip()
         elif "AUPO" in item:
             smcinfo['AUPO'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('AUPO', ''))).strip()
         elif "BNum" in item:
