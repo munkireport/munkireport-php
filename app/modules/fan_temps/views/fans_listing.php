@@ -179,7 +179,7 @@ new Fan_temps_model;
                 }
 
 	        	var columnvar=$('td:eq(14)', nRow).html();
-	        	columnvar = columnvar == '1' ? i18n.t('yes') :
+	        	columnvar = columnvar > '1' ? i18n.t('yes') :
 	        	(columnvar === '0' ? i18n.t('no') : '')
 	        	$('td:eq(14)', nRow).html(columnvar)
                 

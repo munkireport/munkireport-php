@@ -648,7 +648,7 @@ def get_smc_results():
             smcinfo['ID5R'] = item.split(' ')[6].strip() #Mainboard S5 Rail Amps
         elif "IG0R" in item:
             smcinfo['IG0R'] = item.split(' ')[6].strip() #GPU Amps
-        elif "LSOF" in item and "(bytes 00)" not in item:
+        elif "LSOF" in item and "(bytes 00)" in item:
             smcinfo['LSOF'] = "0" #Reads TRUE (1) if the SIL is Off
         elif "LSOF" in item and "(bytes 01)" in item:
             smcinfo['LSOF'] = "1" #Reads TRUE (1) if the SIL is Off
@@ -660,8 +660,8 @@ def get_smc_results():
             smcinfo['MSAg'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSAg', ''))).strip() #Returns the average GPU PLIMIT sent by the SMC
         elif "MSAm" in item:
             smcinfo['MSAm'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSAm', ''))).strip() #Returns the average MEM PLIMIT sent by the SMC
-        elif "MSLD" in item and "(bytes 01)" in item:
-            model = subprocess.check_output(['/usr/sbin/sysctl', '-n','hw.model'])
+        elif "MSLD" in item:
+            model = subprocess.check_output(['/usr/sbin/sysctl', '-n','hw.model'], shell=False, bufsize=-1)
             if 'Book' in model:
                 smcinfo['MSLD'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSLD', ''))).strip() #Returns the current Lid Switch state
         elif "MSHA" in item:

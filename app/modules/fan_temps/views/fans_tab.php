@@ -20,7 +20,7 @@ $(document).on('appReady', function(){
                     if (d[prop] == null){
 					   // Do nothing for nulls to blank them
                         
-                    } else if (prop == "fnfd" && d[prop] == "1"){
+                    } else if (prop == "fnfd" && d[prop] > "0"){
 					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (prop == "fnfd" && d[prop] == "0"){
 					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';

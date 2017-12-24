@@ -116,6 +116,43 @@ new Fan_temps_model;
 	        	(columnvar === '0' ? i18n.t('fan_temps.open') : '')
 	        	$('td:eq(3)', nRow).html(columnvar)
                 
+                var columnvar=$('td:eq(4)', nRow).html();
+	        	columnvar = columnvar == '5' ? i18n.t('fan_temps.shutdown5_short') :
+	        	columnvar = columnvar == '3' ? i18n.t('fan_temps.shutdown3_short') :
+	        	columnvar = columnvar == '2' ? i18n.t('fan_temps.shutdown2_short') :
+	        	columnvar = columnvar == '1' ? i18n.t('fan_temps.shutdown1_short') :
+	        	columnvar = columnvar == '0' ? i18n.t('fan_temps.shutdown0_short') :
+	        	columnvar = columnvar == '-1' ? i18n.t('fan_temps.shutdown_1_short') :
+	        	columnvar = columnvar == '-2' ? i18n.t('fan_temps.shutdown_2_short') :
+	        	columnvar = columnvar == '-3' ? i18n.t('fan_temps.shutdown_3_short') :
+	        	columnvar = columnvar == '-4' ? i18n.t('fan_temps.shutdown_4_short') :
+	        	columnvar = columnvar == '-30' ? i18n.t('fan_temps.shutdown_30_short') :
+	        	columnvar = columnvar == '-40' ? i18n.t('fan_temps.shutdown_40_short') :
+	        	columnvar = columnvar == '-50' ? i18n.t('fan_temps.shutdown_50_short') :
+	        	columnvar = columnvar == '-60' ? i18n.t('fan_temps.shutdown_60_short') :
+	        	columnvar = columnvar == '-61' ? i18n.t('fan_temps.shutdown_61_short') :
+	        	columnvar = columnvar == '-62' ? i18n.t('fan_temps.shutdown_62_short') :
+	        	columnvar = columnvar == '-70' ? i18n.t('fan_temps.shutdown_70_short') :
+	        	columnvar = columnvar == '-71' ? i18n.t('fan_temps.shutdown_71_short') :
+	        	columnvar = columnvar == '-72' ? i18n.t('fan_temps.shutdown_72_short') :
+	        	columnvar = columnvar == '-74' ? i18n.t('fan_temps.shutdown_74_short') :
+	        	columnvar = columnvar == '-75' ? i18n.t('fan_temps.shutdown_75_short') :
+	        	columnvar = columnvar == '-76' ? i18n.t('fan_temps.shutdown_76_short') :
+	        	columnvar = columnvar == '-78' ? i18n.t('fan_temps.shutdown_78_short') :
+	        	columnvar = columnvar == '-79' ? i18n.t('fan_temps.shutdown_79_short') :
+	        	columnvar = columnvar == '-82' ? i18n.t('fan_temps.shutdown_82_short') :
+	        	columnvar = columnvar == '-83' ? i18n.t('fan_temps.shutdown_83_short') :
+	        	columnvar = columnvar == '-84' ? i18n.t('fan_temps.shutdown_84_short') :
+	        	columnvar = columnvar == '-86' ? i18n.t('fan_temps.shutdown_86_short') :
+	        	columnvar = columnvar == '-95' ? i18n.t('fan_temps.shutdown_95_short') :
+	        	columnvar = columnvar == '-100' ? i18n.t('fan_temps.shutdown_100_short') :
+	        	columnvar = columnvar == '-101' ? i18n.t('fan_temps.shutdown_101_short') :
+	        	columnvar = columnvar == '-102' ? i18n.t('fan_temps.shutdown_102_short') :
+	        	columnvar = columnvar == '-103' ? i18n.t('fan_temps.shutdown_103_short') :
+	        	columnvar = columnvar == '-127' ? i18n.t('fan_temps.shutdown_127_short') :
+                (columnvar === '-128' ? i18n.t('fan_temps.shutdown_128_short') : columnvar)
+	        	$('td:eq(4)', nRow).html(columnvar)
+                
                 var columnvar=$('td:eq(5)', nRow).html();
 	        	columnvar = columnvar == 'true' ? i18n.t('yes') :
 	        	(columnvar === 'false' ? i18n.t('no') : '')
@@ -127,8 +164,8 @@ new Fan_temps_model;
 	        	$('td:eq(6)', nRow).html(columnvar)
                 
                 var columnvar=$('td:eq(7)', nRow).html();
-	        	columnvar = columnvar == '0' ? i18n.t('off') :
-	        	(columnvar === '1' ? i18n.t('on') : '')
+	        	columnvar = columnvar == '1' ? i18n.t('off') :
+	        	(columnvar === '0' ? i18n.t('on') : '')
 	        	$('td:eq(7)', nRow).html(columnvar)
                 
                 var columnvar=$('td:eq(8)', nRow).html();

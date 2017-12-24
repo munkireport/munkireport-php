@@ -26,9 +26,9 @@ $(document).on('appReady', function(){
                     } else if (prop == "discin" && d[prop] == "false"){
 					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
                         
-                    } else if (prop == "lsof" && d[prop] == "0"){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('off')+'</td></tr>';
                     } else if (prop == "lsof" && d[prop] == "1"){
+					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('off')+'</td></tr>';
+                    } else if (prop == "lsof" && d[prop] == "0"){
 					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('on')+'</td></tr>';
                         
                     } else if (prop == "msld" && d[prop] == "1"){
