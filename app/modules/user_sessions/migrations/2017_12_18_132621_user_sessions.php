@@ -45,13 +45,10 @@ class UserSessions extends Migration
             SELECT
                 id,
                 serial_number,
-                type,
-                display_serial,
-                vendor,
-                model,
-                manufactured,
-                native,
-                timestamp
+                event,
+                `time`,
+                user,
+                remote_ssh
             FROM
                 $this->tableNameV2");
         }

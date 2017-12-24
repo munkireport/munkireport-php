@@ -57,7 +57,7 @@ class Security extends Migration
                 ard_users,
                 firmwarepw,
                 firewall_state,
-                skel_state
+                ''
             FROM
                 $this->tableNameV2");
         }

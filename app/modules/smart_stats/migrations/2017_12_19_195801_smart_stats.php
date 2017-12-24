@@ -169,28 +169,28 @@ class SmartStats extends Migration
             $table->text('optional_nvm_commands')->nullable();
             $table->string('max_data_transfer_size')->nullable();
             
-            $table->index('serial_number'),
-            $table->index('disk_number'),
-            $table->index('power_on_hours_and_msec'),
-            $table->index('power_on_hours'),
-            $table->index('model_family'),
-            $table->index('device_model'),
-            $table->index('serial_number_hdd'),
-            $table->index('lu_wwn_device_id'),
-            $table->index('firmware_version'),
-            $table->index('user_capacity'),
-            $table->index('sector_size'),
-            $table->index('rotation_rate'),
-            $table->index('device_is'),
-            $table->index('ata_version_is'),
-            $table->index('sata_version_is'),
-            $table->index('form_factor'),
-            $table->index('smart_support_is'),
-            $table->index('smart_is'),
-            $table->index('error_count'),
-            $table->index('error_poh'),
-            $table->index('timestamp'),
-            $table->index('overall_health')
+            $table->index('serial_number');
+            $table->index('disk_number');
+            $table->index('power_on_hours_and_msec');
+            $table->index('power_on_hours');
+            $table->index('model_family');
+            $table->index('device_model');
+            $table->index('serial_number_hdd');
+            $table->index('lu_wwn_device_id');
+            $table->index('firmware_version');
+            $table->index('user_capacity');
+            $table->index('sector_size');
+            $table->index('rotation_rate');
+            $table->index('device_is');
+            $table->index('ata_version_is');
+            $table->index('sata_version_is');
+            $table->index('form_factor');
+            $table->index('smart_support_is');
+            $table->index('smart_is');
+            $table->index('error_count');
+            $table->index('error_poh');
+            $table->index('timestamp');
+            $table->index('overall_health');
         });
 
         if ($migrateData) {

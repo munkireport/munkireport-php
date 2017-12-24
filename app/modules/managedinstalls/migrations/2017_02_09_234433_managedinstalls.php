@@ -51,6 +51,7 @@ class Managedinstalls extends Migration
             SELECT
                 id,
                 serial_number,
+                name,
                 display_name,
                 version,
                 size,

@@ -39,7 +39,7 @@ class Hash extends Migration
                 $this->tableName
             SELECT
                 id,
-                serial_number,
+                serial,
                 name,
                 hash,
                 timestamp

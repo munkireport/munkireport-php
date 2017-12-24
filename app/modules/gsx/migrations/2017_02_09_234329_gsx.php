@@ -79,7 +79,7 @@ class Gsx extends Migration
                 isloaner,
                 warrantymod,
                 isvintage,
-                isobsolete'
+                isobsolete
             FROM
                 $this->tableNameV2");
         }

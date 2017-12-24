@@ -59,7 +59,7 @@ class Network extends Migration
                 id,
                 serial_number,
                 service,
-                order,
+                `order`,
                 status,
                 ethernet,
                 clientid,
