@@ -28,7 +28,6 @@ class Certificate extends Migration
             $table->string('cert_cn');
             $table->string('issuer');
             $table->string('cert_location');
-            $table->bigInteger('timestamp')->nullable();
 
             $table->index('cert_cn');
             $table->index('cert_exp_time');
@@ -36,7 +35,6 @@ class Certificate extends Migration
             $table->index('cert_path');
             $table->index('issuer');
             $table->index('serial_number');
-            $table->index('timestamp');
         });
 
         if ($migrateData) {
@@ -48,8 +46,7 @@ class Certificate extends Migration
                 cert_path,
                 cert_cn,
                 issuer,
-                cert_location,
-                timestamp
+                cert_location
             FROM
                 certificate_v2');
         }

@@ -12,7 +12,6 @@ class Certificate_model extends \Model
         $this->rs['cert_cn'] = ''; // Common name
         $this->rs['issuer'] = ''; //Certificate issuer
         $this->rs['cert_location'] = ''; //Certificate location
-        $this->rs['timestamp'] = 0; // Timestamp of last update
         
         // Schema version, increment when creating a db migration
         $this->schema_version = 2;
@@ -24,7 +23,6 @@ class Certificate_model extends \Model
         $this->idx[] = array('cert_cn');
         $this->idx[] = array('issuer');
         $this->idx[] = array('cert_location');
-        $this->idx[] = array('timestamp');
         
         // Create table if it does not exist
        //$this->create_table();
