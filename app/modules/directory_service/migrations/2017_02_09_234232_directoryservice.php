@@ -5,21 +5,25 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Directoryservice extends Migration
 {
+    private $tableName = 'directoryservice';
+    private $tableNameV2 = 'directoryservice_v2';
+
     public function up()
     {
         $capsule = new Capsule();
+        $migrateData = false;
 
-        if ($capsule::schema()->hasTable('directoryservice_v2')) {
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
             // Migration already failed before, but didnt finish
             throw new Exception("previous failed migration exists");
         }
 
-        if ($capsule::schema()->hasTable('directoryservice')) {
-            $capsule::schema()->rename('directoryservice', 'directoryservice_v2');
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
             $migrateData = true;
         }
 
-        $capsule::schema()->create('directoryservice', function (Blueprint $table) {
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('serial_number')->unique();
@@ -87,17 +91,12 @@ class Directoryservice extends Migration
         }
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('directoryservice');
-        if ($capsule::schema()->hasTable('directoryservice_v2')) {
-            $capsule::schema()->rename('directoryservice_v2', 'directoryservice');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
         }
     }
 }
