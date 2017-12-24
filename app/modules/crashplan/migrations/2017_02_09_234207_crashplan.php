@@ -29,8 +29,6 @@ class Crashplan extends Migration
             $table->integer('duration')->nullable();
             $table->bigInteger('last_failure')->nullable();
             $table->string('reason')->nullable();
-            $table->bigInteger('timestamp')->nullable();
-//            $table->timestamps();
 
             $table->index('reason');
             $table->index('serial_number');
@@ -46,8 +44,7 @@ class Crashplan extends Migration
                 last_success,
                 duration,
                 last_failure,
-                reason,
-                timestamp
+                reason
             FROM
                 crashplan_v2');
         }
