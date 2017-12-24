@@ -33,20 +33,20 @@ class Warranty extends Migration
             $table->index('purchase_date');
             $table->index('end_date');
             $table->index('status');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    purchase_date,
-                    end_date,
-                    status
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                purchase_date,
+                end_date,
+                status
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

@@ -53,36 +53,36 @@ class Gsx extends Migration
             $table->index('estimatedpurchasedate');
             $table->index('isvintage');
             $table->index('warrantystatus');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    warrantystatus,
-                    coverageenddate,
-                    coveragestartdate,
-                    daysremaining,
-                    estimatedpurchasedate,
-                    purchasecountry,
-                    registrationdate,
-                    productdescription,
-                    configdescription,
-                    contractcoverageenddate,
-                    contractcoveragestartdate,
-                    contracttype,
-                    laborcovered,
-                    partcovered,
-                    warrantyreferenceno,
-                    isloaner,
-                    warrantymod,
-                    isvintage,
-                    isobsolete'
-                FROM
-                    $this->tableNameV2");
-            }
         });
+        
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                warrantystatus,
+                coverageenddate,
+                coveragestartdate,
+                daysremaining,
+                estimatedpurchasedate,
+                purchasecountry,
+                registrationdate,
+                productdescription,
+                configdescription,
+                contractcoverageenddate,
+                contractcoveragestartdate,
+                contracttype,
+                laborcovered,
+                partcovered,
+                warrantyreferenceno,
+                isloaner,
+                warrantymod,
+                isvintage,
+                isobsolete'
+            FROM
+                $this->tableNameV2");
+        }
     }
     
     public function down()

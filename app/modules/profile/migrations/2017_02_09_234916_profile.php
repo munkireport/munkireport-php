@@ -40,24 +40,24 @@ class Profile extends Migration
             $table->index('profile_name');
             $table->index('payload_name');
             $table->index('payload_display');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    profile_uuid,
-                    profile_name,
-                    profile_removal_allowed,
-                    payload_name,
-                    payload_display,
-                    payload_data,
-                    timestamp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                profile_uuid,
+                profile_name,
+                profile_removal_allowed,
+                payload_name,
+                payload_display,
+                payload_data,
+                timestamp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

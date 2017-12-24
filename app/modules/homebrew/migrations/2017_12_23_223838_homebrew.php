@@ -66,46 +66,46 @@ class Homebrew extends Migration
             $table->index('versions_devel');
             $table->index('versions_bottle');
             $table->index('versions_head');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    name,
-                    full_name,
-                    oldname,
-                    aliases,
-                    desc,
-                    homepage,
-                    installed_versions,
-                    versions_stable,
-                    linked_keg,
-                    dependencies,
-                    build_dependencies,
-                    recommended_dependencies,
-                    runtime_dependencies,
-                    optional_dependencies,
-                    requirements,
-                    options,
-                    used_options,
-                    caveats,
-                    conflicts_with,
-                    built_as_bottle,
-                    installed_as_dependency,
-                    installed_on_request,
-                    poured_from_bottle,
-                    versions_bottle,
-                    keg_only,
-                    outdated,
-                    pinned,
-                    versions_devel,
-                    versions_head,
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                name,
+                full_name,
+                oldname,
+                aliases,
+                desc,
+                homepage,
+                installed_versions,
+                versions_stable,
+                linked_keg,
+                dependencies,
+                build_dependencies,
+                recommended_dependencies,
+                runtime_dependencies,
+                optional_dependencies,
+                requirements,
+                options,
+                used_options,
+                caveats,
+                conflicts_with,
+                built_as_bottle,
+                installed_as_dependency,
+                installed_on_request,
+                poured_from_bottle,
+                versions_bottle,
+                keg_only,
+                outdated,
+                pinned,
+                versions_devel,
+                versions_head,
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

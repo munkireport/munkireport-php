@@ -46,32 +46,32 @@ class Wifi extends Migration
             $table->index('bssid');
             $table->index('ssid');
             $table->index('state');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    agrctlrssi,
-                    agrextrssi,
-                    agrctlnoise,
-                    agrextnoise,
-                    state,
-                    op_mode,
-                    lasttxrate,
-                    lastassocstatus,
-                    maxrate,
-                    x802_11_auth,
-                    link_auth,
-                    bssid,
-                    ssid,
-                    mcs,
-                    channel
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                agrctlrssi,
+                agrextrssi,
+                agrctlnoise,
+                agrextnoise,
+                state,
+                op_mode,
+                lasttxrate,
+                lastassocstatus,
+                maxrate,
+                x802_11_auth,
+                link_auth,
+                bssid,
+                ssid,
+                mcs,
+                channel
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

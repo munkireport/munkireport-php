@@ -45,27 +45,27 @@ class Munkireport extends Migration
             $table->index('timestamp');
             $table->index('version');
             $table->index('warnings');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    runtype,
-                    version,
-                    errors,
-                    warnings,
-                    manifestname,
-                    error_json,
-                    warning_json,
-                    starttime,
-                    endtime,
-                    timestamp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                runtype,
+                version,
+                errors,
+                warnings,
+                manifestname,
+                error_json,
+                warning_json,
+                starttime,
+                endtime,
+                timestamp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

@@ -37,23 +37,22 @@ class Inventoryitem extends Migration
             $table->index('serial_number');
             $table->index('bundleid');
             $table->index('bundlename');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    name,
-                    version,
-                    bundleid,
-                    bundlename,
-                    path
-                FROM
-                    $this->tableNameV2");
-            }
-
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                name,
+                version,
+                bundleid,
+                bundlename,
+                path
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

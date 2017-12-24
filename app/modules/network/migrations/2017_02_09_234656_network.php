@@ -50,31 +50,31 @@ class Network extends Migration
             $table->index('ipv4ip');
             $table->index('ipv4router');
             $table->index('ipv4mask');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    service,
-                    order,
-                    status,
-                    ethernet,
-                    clientid,
-                    ipv4conf,
-                    ipv4ip,
-                    ipv4mask,
-                    ipv4router,
-                    ipv6conf,
-                    ipv6ip,
-                    ipv6prefixlen,
-                    ipv6router,
-                    timestamp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                service,
+                order,
+                status,
+                ethernet,
+                clientid,
+                ipv4conf,
+                ipv4ip,
+                ipv4mask,
+                ipv4router,
+                ipv6conf,
+                ipv6ip,
+                ipv6prefixlen,
+                ipv6router,
+                timestamp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

@@ -39,22 +39,22 @@ class Event extends Migration
             $table->index('serial_number');
             $table->index(['serial_number', 'module']);
             $table->index('type');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    type,
-                    module,
-                    msg,
-                    data,
-                    timestamp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+        
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                type,
+                module,
+                msg,
+                data,
+                timestamp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

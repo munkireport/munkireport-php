@@ -40,23 +40,23 @@ class Extensions extends Migration
             $table->index('version');
             $table->index('path');
             $table->index('codesign');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    name,
-                    bundle_id,
-                    version,
-                    path,
-                    codesign,
-                    executable
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                name,
+                bundle_id,
+                version,
+                path,
+                codesign,
+                executable
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

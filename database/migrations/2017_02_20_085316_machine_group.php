@@ -28,19 +28,19 @@ class MachineGroup extends Migration
             $table->integer('groupid')->nullable();
             $table->string('property');
             $table->string('value');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    groupid,
-                    property,
-                    value
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                groupid,
+                property,
+                value
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

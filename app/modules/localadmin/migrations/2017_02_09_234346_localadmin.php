@@ -30,18 +30,18 @@ class Localadmin extends Migration
             $table->string('users');
 
             $table->index('users');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    users
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                users
+            FROM
+                $this->tableNameV2");
+        }
     }
     
     public function down()

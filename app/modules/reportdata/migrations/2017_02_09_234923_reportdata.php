@@ -35,31 +35,30 @@ class Reportdata extends Migration
             $table->bigInteger('reg_timestamp')->default(0);
             $table->bigInteger('timestamp')->default(0);
 
-
             $table->index(['console_user']);
             $table->index(['long_username']);
             $table->index(['remote_ip']);
             $table->index(['machine_group']);
             $table->index(['reg_timestamp']);
             $table->index(['timestamp']);
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    console_user,
-                    long_username,
-                    remote_ip,
-                    uptime,
-                    machine_group,
-                    reg_timestamp,
-                    timestamp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                console_user,
+                long_username,
+                remote_ip,
+                uptime,
+                machine_group,
+                reg_timestamp,
+                timestamp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

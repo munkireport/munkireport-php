@@ -43,23 +43,23 @@ class Managedinstalls extends Migration
             $table->index('status');
             $table->index('type');
             $table->index('version');
-
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    display_name,
-                    version,
-                    size,
-                    installed,
-                    status,
-                    type
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                display_name,
+                version,
+                size,
+                installed,
+                status,
+                type
+            FROM
+                $this->tableNameV2");
+        }
     }
     
     public function down()

@@ -32,22 +32,22 @@ class Installhistory extends Migration
             $table->string('displayVersion');
             $table->string('packageIdentifiers');
             $table->string('processName');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    date,
-                    displayName,
-                    displayVersion,
-                    packageIdentifiers,
-                    processName
-                FROM
-                    $this->tableNameV2");
-            }
         });
+        
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                date,
+                displayName,
+                displayVersion,
+                packageIdentifiers,
+                processName
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

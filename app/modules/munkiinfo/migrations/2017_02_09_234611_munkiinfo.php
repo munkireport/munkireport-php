@@ -34,19 +34,19 @@ class Munkiinfo extends Migration
             $table->index('serial_number');
             $table->index('munkiinfo_key');
             $table->index('munkiinfo_value');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    munkiinfo_key,
-                    munkiinfo_value
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                munkiinfo_key,
+                munkiinfo_value
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

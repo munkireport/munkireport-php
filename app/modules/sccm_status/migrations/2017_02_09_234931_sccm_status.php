@@ -40,23 +40,23 @@ class SccmStatus extends Migration
             $table->index('enrollment_server');
             $table->index('last_checkin');
             $table->index('mgmt_point');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    agent_status,
-                    mgmt_point,
-                    enrollment_name,
-                    enrollment_server,
-                    last_checkin,
-                    cert_exp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                agent_status,
+                mgmt_point,
+                enrollment_name,
+                enrollment_server,
+                last_checkin,
+                cert_exp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

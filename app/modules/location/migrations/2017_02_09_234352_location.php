@@ -42,28 +42,28 @@ class Location extends Migration
 
             $table->index('address');
             $table->index('currentstatus');
-
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    address,
-                    altitude,
-                    currentstatus,
-                    ls_enabled,
-                    lastlocationrun,
-                    lastrun,
-                    latitude,
-                    latitudeaccuracy,
-                    longitude,
-                    longitudeaccuracy,
-                    stalelocation
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                address,
+                altitude,
+                currentstatus,
+                ls_enabled,
+                lastlocationrun,
+                lastrun,
+                latitude,
+                latitudeaccuracy,
+                longitude,
+                longitudeaccuracy,
+                stalelocation
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

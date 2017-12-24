@@ -31,19 +31,19 @@ class BusinessUnit extends Migration
 
             $table->index('property');
             $table->index('value');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    unitid,
-                    property,
-                    value
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                unitid,
+                property,
+                value
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

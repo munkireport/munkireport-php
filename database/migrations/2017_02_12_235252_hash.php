@@ -32,20 +32,20 @@ class Hash extends Migration
 
             $table->index(['serial_number']);
             $table->index(['serial_number', 'name']);
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    name,
-                    hash,
-                    timestamp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                name,
+                hash,
+                timestamp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

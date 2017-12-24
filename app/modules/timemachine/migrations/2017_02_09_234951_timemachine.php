@@ -97,53 +97,53 @@ class Timemachine extends Migration
             $table->index('time_capsule_display_name');
             $table->index('timestamp');
             $table->index('volume_display_name');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    last_success,
-                    last_failure,
-                    last_failure_msg,
-                    duration,
-                    timestamp,
-                    always_show_deleted_backups_warning,
-                    auto_backup,
-                    bytes_available,
-                    bytes_used,
-                    consistency_scan_date,
-                    date_of_latest_warning,
-                    destination_id,
-                    destination_uuids,
-                    last_known_encryption_state,
-                    result,
-                    root_volume_uuid,
-                    snapshot_dates,
-                    exclude_by_path,
-                    host_uuids,
-                    last_configuration_trace_date,
-                    last_destination_id,
-                    localized_disk_image_volume_name,
-                    mobile_backups,
-                    skip_paths,
-                    skip_system_files,
-                    alias_volume_name,
-                    earliest_snapshot_date,
-                    is_network_destination,
-                    latest_snapshot_date,
-                    mount_point,
-                    network_url,
-                    server_display_name,
-                    snapshot_count,
-                    time_capsule_display_name,
-                    volume_display_name,
-                    destinations
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                last_success,
+                last_failure,
+                last_failure_msg,
+                duration,
+                timestamp,
+                always_show_deleted_backups_warning,
+                auto_backup,
+                bytes_available,
+                bytes_used,
+                consistency_scan_date,
+                date_of_latest_warning,
+                destination_id,
+                destination_uuids,
+                last_known_encryption_state,
+                result,
+                root_volume_uuid,
+                snapshot_dates,
+                exclude_by_path,
+                host_uuids,
+                last_configuration_trace_date,
+                last_destination_id,
+                localized_disk_image_volume_name,
+                mobile_backups,
+                skip_paths,
+                skip_system_files,
+                alias_volume_name,
+                earliest_snapshot_date,
+                is_network_destination,
+                latest_snapshot_date,
+                mount_point,
+                network_url,
+                server_display_name,
+                snapshot_count,
+                time_capsule_display_name,
+                volume_display_name,
+                destinations
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

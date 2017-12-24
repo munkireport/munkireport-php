@@ -39,22 +39,22 @@ class Findmymac extends Migration
             $table->index('email');
             $table->index('personid');
             $table->index('hostname');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    status,
-                    ownerdisplayname,
-                    email,
-                    personid,
-                    hostname
-                FROM
-                    $this->tableNameV2");
-            }
         });
+        
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                status,
+                ownerdisplayname,
+                email,
+                personid,
+                hostname
+            FROM
+                $this->tableNameV2");
+        }
     }
     
     public function down()

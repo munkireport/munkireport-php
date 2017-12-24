@@ -37,24 +37,24 @@ class UserSessions extends Migration
             $table->index('time');
             $table->index('user');
             $table->index('remote_ssh');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    type,
-                    display_serial,
-                    vendor,
-                    model,
-                    manufactured,
-                    native,
-                    timestamp
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                type,
+                display_serial,
+                vendor,
+                model,
+                manufactured,
+                native,
+                timestamp
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()

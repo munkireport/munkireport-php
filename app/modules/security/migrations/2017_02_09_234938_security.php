@@ -43,24 +43,24 @@ class Security extends Migration
             $table->index('firmwarepw');
             $table->index('firewall_state');
             $table->index('skel_state');
-            
-            if ($migrateData) {
-                $capsule::select("INSERT INTO 
-                    $this->tableName
-                SELECT
-                    id,
-                    serial_number,
-                    gatekeeper,
-                    sip,
-                    ssh_users,
-                    ard_users,
-                    firmwarepw,
-                    firewall_state,
-                    skel_state
-                FROM
-                    $this->tableNameV2");
-            }
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                gatekeeper,
+                sip,
+                ssh_users,
+                ard_users,
+                firmwarepw,
+                firewall_state,
+                skel_state
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()
