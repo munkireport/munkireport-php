@@ -38,7 +38,6 @@ class Diskreport extends Migration
             $table->string('MountPoint');
             $table->string('VolumeName');
             $table->integer('CoreStorageEncrypted');
-            $table->bigInteger('timestamp');
 
             $table->index('serial_number');
             $table->index('MountPoint');
@@ -63,8 +62,7 @@ class Diskreport extends Migration
                 Internal,
                 MountPoint,
                 VolumeName,
-                CoreStorageEncrypted,
-                timestamp
+                CoreStorageEncrypted
             FROM
                 $this->tableNameV2");
         }

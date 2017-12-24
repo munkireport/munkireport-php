@@ -23,7 +23,6 @@ class Disk_report_model extends \Model
         $this->rs['MountPoint'] = '';
         $this->rs['VolumeName'] = '';
         $this->rs['CoreStorageEncrypted'] = 0; //Boolean
-        $this->rs['timestamp'] = 0;
 
         $this->idx[] = array('serial_number');
         $this->idx[] = array('VolumeType');
@@ -182,7 +181,6 @@ class Disk_report_model extends \Model
             $this->CoreStorageEncrypted = (int) $this->CoreStorageEncrypted;
 
             $this->id = '';
-            $this->timestamp = time();
             $this->create();
             
             // Fire event when systemdisk hits a threshold

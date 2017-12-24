@@ -54,8 +54,6 @@ class Deploystudio extends Migration
             $table->index('dstudio_hostname');
             $table->index('dstudio_last_workflow');
             $table->index('dstudio_mac_addr');
-
-//            $table->timestamps();
         });
 
         if ($migrateData) {
