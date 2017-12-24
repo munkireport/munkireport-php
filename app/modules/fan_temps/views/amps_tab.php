@@ -1,5 +1,5 @@
 
-<div id="fan_temps"></div>
+<div id="amps"></div>
 
 
 <script>

@@ -1,5 +1,5 @@
 
-<div id="fan_temps"></div>
+<div id="fans"></div>
 
 
 <script>
@@ -13,10 +13,6 @@ $(document).on('appReady', function(){
 			for (var prop in d){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
-//					if(prop.indexOf('fan_') > -1){
-//					   if (d[prop] != null){
-//					        rows = rows + '<tr><th>'+d[(prop.replace('fan_', 'fanlabel'))]+' '+i18n.t('fan_temps.fan')+'</th><td><span title="'+i18n.t('fan_temps.minfan')+': '+d[(prop.replace('fan_', 'fanmin'))]+' '+i18n.t('fan_temps.rpm')+'\x0A'+i18n.t('fan_temps.maxfan')+': '+d[(prop.replace('fan_', 'fanmax'))]+' '+i18n.t('fan_temps.rpm')+'">'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</span></td></tr>';
-//					   }
                     if (d[prop] == null){
 					   // Do nothing for nulls to blank them
                         

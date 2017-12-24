@@ -1,5 +1,5 @@
 
-<div id="fan_temps"></div>
+<div id="smc"></div>
 
 
 <script>
@@ -134,8 +134,8 @@ $(document).on('appReady', function(){
 					        rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</span></th><td><span title="'+temperature_f+'°F">'+d[prop]+'°C</span></td></tr>';
 					   }
                     
-                    } else ((i18n.t('fan_temps.'+prop).length) == 4);{
-					   // Hide rows that are only the sensor code
+                    } else {
+					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
                     }
 				}
 			}
