@@ -1,5 +1,6 @@
 {
     "usage_stats": "Usage Stats",
+    "kern_bootargs": "Kernel Boot Flags",
     "usage_stats_report": "Usage Stats Report",
     "timestamp": "Stats Pulled",
     "thermal_pressure": "Thermal Pressure",

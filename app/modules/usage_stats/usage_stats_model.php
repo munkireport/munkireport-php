@@ -40,6 +40,7 @@ class Usage_stats_model extends \Model {
 		$this->rs['gpu_freq_mhz'] = 0.0;
 		$this->rs['gpu_freq_ratio'] = 0.0;
 		$this->rs['gpu_busy'] = 0.0;
+		$this->rs['kern_bootargs'] = "";
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -76,6 +77,7 @@ class Usage_stats_model extends \Model {
 		$this->idx[] = array('gpu_freq_mhz');
 		$this->idx[] = array('gpu_freq_ratio');
 		$this->idx[] = array('gpu_busy');
+		$this->idx[] = array('kern_bootargs');
         
 		// Create table if it does not exist
 		//$this->create_table();
@@ -102,190 +104,23 @@ class Usage_stats_model extends \Model {
 		if ( ! $plist){
 			throw new Exception("Error Processing Request: No property list found", 1);
 		}
-		
+
+        // Process incoming usage_stats.plist
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
-		$myList = $parser->toArray();
-		
-        // Save the timestamp
-        $this->rs['timestamp'] = $myList['timestamp'];
+		$plist = $parser->toArray();
         
-        // Check for thermal pressure
-        if( array_key_exists("thermal_pressure", $myList)){
-            $this->rs['thermal_pressure'] = ($myList['thermal_pressure']);
-        } else {
-           $this->rs['thermal_pressure'] = null; 
-        }
+        $fields = array('timestamp','thermal_pressure','backlight_max','backlight_min','backlight','keyboard_backlight','ibyte_rate','ibytes','ipacket_rate','ipackets','obyte_rate','obytes','opacket_rate','opackets','rbytes_per_s','rops_per_s','wbytes_per_s','wops_per_s','rbytes_diff','rops_diff','wbytes_diff','wops_diff','package_watts','package_joules','freq_hz','freq_ratio','gpu_name','gpu_freq_hz','gpu_freq_mhz','gpu_freq_ratio','gpu_busy','kern_bootargs');
         
-        // Check for keyboard backlight
-        if( array_key_exists("keyboard_backlight", $myList)){
-            $this->rs['keyboard_backlight'] = ($myList['keyboard_backlight']['value']);
-        } else {
-            $this->rs['keyboard_backlight'] = null; 
-        }
-        
-        // Check for backlight
-        if( array_key_exists("backlight", $myList)){
-            
-            // Check for max
-            if( array_key_exists("max", $myList['backlight'])){
-                $this->rs['backlight_max'] = ($myList['backlight']['max']);
+        foreach ($fields as $field) {
+            // If key does not exist in $plist, null it
+            if ( ! array_key_exists($field, $plist)) {
+                $this->$field = null;
             } else {
-                $this->rs['backlight_max'] = null;
+                $this->$field = $plist[$field];
             }
-            
-            // Check for min
-            if( array_key_exists("max", $myList['backlight'])){
-                $this->rs['backlight_min'] = ($myList['backlight']['min']);
-            } else {
-                $this->rs['backlight_min'] = null;
-            }
-            
-            // Check for value
-            if( array_key_exists("value", $myList['backlight'])){
-                $this->rs['backlight'] = ($myList['backlight']['value']);
-            } else {
-                $this->rs['backlight'] = null;
-            }
-        } else {
-            $this->rs['backlight_max'] = null;
-            $this->rs['backlight_min'] = null;
-            $this->rs['backlight'] = null;
         }
-        
-        // Check for disk
-        if( array_key_exists("disk", $myList)){
-            $this->rs['rbytes_diff'] = ($myList['disk']['rbytes_diff']);
-            $this->rs['rbytes_per_s'] = ($myList['disk']['rbytes_per_s']);
-            $this->rs['rops_diff'] = ($myList['disk']['rops_diff']);
-            $this->rs['rops_per_s'] = ($myList['disk']['rops_per_s']);
-            $this->rs['wbytes_diff'] = ($myList['disk']['wbytes_diff']);
-            $this->rs['wbytes_per_s'] = ($myList['disk']['wbytes_per_s']);
-            $this->rs['wops_diff'] = ($myList['disk']['wops_diff']);
-            $this->rs['wops_per_s'] = ($myList['disk']['wops_per_s']);
-        } else {
-            $this->rs['rbytes_diff'] = null;
-            $this->rs['rbytes_per_s'] = null;
-            $this->rs['rops_diff'] = null;
-            $this->rs['rops_per_s'] = null;
-            $this->rs['wbytes_diff'] = null;
-            $this->rs['wbytes_per_s'] = null;
-            $this->rs['wops_diff'] = null;
-            $this->rs['wops_per_s'] = null;
-        }
-        
-        // Check for network
-        if( array_key_exists("network", $myList)){
-            $this->rs['ibyte_rate'] = ($myList['network']['ibyte_rate']);
-            $this->rs['ibytes'] = ($myList['network']['ibytes']);
-            $this->rs['ipacket_rate'] = ($myList['network']['ipacket_rate']);
-            $this->rs['ipackets'] = ($myList['network']['ipackets']);
-            $this->rs['obyte_rate'] = ($myList['network']['obyte_rate']);
-            $this->rs['obytes'] = ($myList['network']['obytes']);
-            $this->rs['opacket_rate'] = ($myList['network']['opacket_rate']);
-            $this->rs['opackets'] = ($myList['network']['opackets']);
-        } else {
-            $this->rs['ibyte_rate'] = null;
-            $this->rs['ibytes'] = null;
-            $this->rs['ipacket_rate'] = null;
-            $this->rs['ipackets'] = null;
-            $this->rs['obyte_rate'] = null;
-            $this->rs['obytes'] = null;
-            $this->rs['opacket_rate'] = null;
-            $this->rs['opackets'] = null;
-        }
-        
-        // Check for GPU
-        if( array_key_exists("GPU", $myList)){
-            
-            // Check for gpu_name
-            if( array_key_exists("name", $myList['GPU'][0])){
-                $this->rs['gpu_name'] = ($myList['GPU'][0]['name']);
-            } else {
-                $this->rs['gpu_name'] = null;
-            } 
-            
-            // Check for freq_hz
-            if( array_key_exists("freq_hz", $myList['GPU'][0])){
-                $this->rs['gpu_freq_hz'] = ($myList['GPU'][0]['freq_hz']);
-            } else {
-                $this->rs['gpu_freq_hz'] = null;
-            } 
-            
-            // Check for freq_mhz
-            if( array_key_exists("freq_mhz", $myList['GPU'][0])){
-                $this->rs['gpu_freq_mhz'] = ($myList['GPU'][0]['freq_mhz']);
-            } else {
-                $this->rs['gpu_freq_mhz'] = null;
-            } 
-            
-            // Check for freq_ratio
-            if( array_key_exists("freq_ratio", $myList['GPU'][0])){
-                $this->rs['gpu_freq_ratio'] = ($myList['GPU'][0]['freq_ratio']);
-            } else {
-                $this->rs['gpu_freq_ratio'] = null;
-            } 
-            
-            // Check for misc_counters
-            if( array_key_exists("misc_counters", $myList['GPU'][0])){
-                // Check for GPU Busy
-                if( array_key_exists("GPU Busy", $myList['GPU'][0]['misc_counters'])){
-                    $this->rs['gpu_busy'] = ($myList['GPU'][0]['misc_counters']['GPU Busy']);
-                } else {
-                    $this->rs['gpu_busy'] = null;
-                }
-            } else {
-                $this->rs['gpu_busy'] = null;
-            }
-        } else {
-            $this->rs['gpu_name'] = null;
-            $this->rs['gpu_freq_hz'] = null;
-            $this->rs['gpu_freq_mhz'] = null;
-            $this->rs['gpu_freq_ratio'] = null;
-            $this->rs['gpu_busy'] = null;
-
-        }
-        
-        // Check for processor
-        if( array_key_exists("processor", $myList)){
-            
-            // Check for freq_hz
-            if( array_key_exists("freq_hz", $myList['processor'])){
-                $this->rs['freq_hz'] = ($myList['processor']['freq_hz']);
-            } else {
-                $this->rs['freq_hz'] = null;
-            }   
-            
-            // Check for freq_ratio
-            if( array_key_exists("freq_ratio", $myList['processor'])){
-                $this->rs['freq_ratio'] = ($myList['processor']['freq_ratio']);
-            } else {
-                $this->rs['freq_ratio'] = null;
-            }
-            
-            // Check for package_joules
-            if( array_key_exists("package_joules", $myList['processor'])){
-                $this->rs['package_joules'] = ($myList['processor']['package_joules']);
-            } else {
-                $this->rs['package_joules'] = null;
-            }
-            
-            // Check for package_watts
-            if( array_key_exists("package_watts", $myList['processor'])){
-                $this->rs['package_watts'] = ($myList['processor']['package_watts']);
-            } else {
-                $this->rs['package_watts'] = null;
-            }
-        } else {
-            $this->rs['freq_hz'] = null;
-            $this->rs['freq_ratio'] = null;
-            $this->rs['package_joules'] = null;
-            $this->rs['package_watts'] = null;
-        }
-        
-        // Fix Intel GPU name
-        $this->rs['gpu_name'] = str_replace("IntelIG","Intel iGPU",$this->rs['gpu_name']);
-            
+                    
         // Save the data 
         $this->save();
 	}

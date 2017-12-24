@@ -42,6 +42,7 @@ class UsageStats extends Migration
             $table->float('gpu_freq_mhz')->nullable();
             $table->float('gpu_freq_ratio')->nullable();
             $table->float('gpu_busy')->nullable();
+            $table->string('kern_bootargs')->nullable();
             
             $table->index('backlight_max');
             $table->index('backlight_min');
@@ -73,6 +74,7 @@ class UsageStats extends Migration
             $table->index('gpu_freq_mhz');
             $table->index('gpu_freq_ratio');
             $table->index('gpu_busy');
+            $table->index('kern_bootargs');
         });
     }
     
