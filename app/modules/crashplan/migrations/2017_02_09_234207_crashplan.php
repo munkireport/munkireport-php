@@ -38,8 +38,9 @@ class Crashplan extends Migration
 
         if ($migrateData) {
             $capsule::select('INSERT INTO 
-                crashplan (serial_number, destination, last_success, duration, last_failure, reason, "timestamp") 
-            SELECT 
+                crashplan
+            SELECT
+                id,
                 serial_number,
                 destination,
                 last_success,

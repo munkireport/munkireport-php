@@ -183,7 +183,7 @@ class Power extends Migration
                 current_percent,
                 cycle_count,
                 temperature,
-                condition,
+                `condition`,
                 timestamp,
                 sleep_prevented_by,
                 hibernatefile,

@@ -78,7 +78,7 @@ class Homebrew extends Migration
                 full_name,
                 oldname,
                 aliases,
-                desc,
+                `desc`,
                 homepage,
                 installed_versions,
                 versions_stable,

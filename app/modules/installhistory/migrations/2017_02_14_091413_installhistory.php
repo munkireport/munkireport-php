@@ -27,7 +27,7 @@ class Installhistory extends Migration
             $table->increments('id');
 
             $table->string('serial_number')->index();
-            $table->dateTimeTz('date');
+            $table->bigInteger('date');
             $table->string('displayName');
             $table->string('displayVersion');
             $table->string('packageIdentifiers');
