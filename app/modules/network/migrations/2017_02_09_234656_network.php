@@ -41,7 +41,6 @@ class Network extends Migration
             $table->string('ipv6ip')->nullable();
             $table->integer('ipv6prefixlen')->nullable();
             $table->string('ipv6router')->nullable();
-            $table->bigInteger('timestamp')->nullable();
 
             $table->index('serial_number');
             $table->index(['serial_number', 'service']);
@@ -70,8 +69,7 @@ class Network extends Migration
                 ipv6conf,
                 ipv6ip,
                 ipv6prefixlen,
-                ipv6router,
-                timestamp
+                ipv6router
             FROM
                 $this->tableNameV2");
         }
