@@ -17,13 +17,13 @@ $(document).on('appReady', function(){
 					   // Do nothing for nulls to blank them
                         
                     } else if (prop.startsWith("i")){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+' Amps</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+' Amps</td></tr>';
                         
                     } else if (prop.startsWith("v")){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+' Volts</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+' Volts</td></tr>';
                         
                     } else if (prop.startsWith("p")){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+' Watts</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+' Watts</td></tr>';
                         
                     } else ((i18n.t('fan_temps.'+prop).length) == 4);{
 					   // Hide rows that are only the sensor code

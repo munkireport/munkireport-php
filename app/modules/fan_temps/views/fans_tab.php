@@ -17,17 +17,17 @@ $(document).on('appReady', function(){
 					   // Do nothing for nulls to blank them
                         
                     } else if (prop == "fnfd" && d[prop] > "0"){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (prop == "fnfd" && d[prop] == "0"){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
                         
                     } else if (prop == "mssf" && d[prop] == "1"){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (prop == "mssf" && d[prop] == "0"){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
               
                     } else if (prop == "fnum"){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
                         
                     } else if (prop.startsWith("fanmin")){
 					   rows = rows + '<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;'+i18n.t('fan_temps.fanmin')+'</th><td>'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</td></tr>';
@@ -37,12 +37,12 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+d[(prop.replace('fan_', 'fanlabel'))]+' '+i18n.t('fan_temps.current_speed')+'</th><td>'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</td></tr>';
                         
                     } else if (prop == "dbah" || prop == "dbat"){
-					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop+'_short')+'</th><td>'+d[prop]+' dBDA</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop+'_short')+'</th><td>'+d[prop]+' dBDA</td></tr>';
                         
                     } else if (prop.startsWith("dba")){
-					   rows = rows + '<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;'+i18n.t('fan_temps.noise')+'</th><td>'+d[prop]+' dBA</td></tr>';
+					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">&nbsp;&nbsp;&nbsp;&nbsp;'+i18n.t('fan_temps.noise')+'</th><td>'+d[prop]+' dBA</td></tr>';
                         
-                    } else ((i18n.t('fan_temps.'+prop).length) == 4);{
+                    } else {
 					   // Hide rows that are only the sensor code
                     }
 				}
