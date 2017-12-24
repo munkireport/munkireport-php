@@ -51,7 +51,7 @@ class Ard extends Migration
                 $this->tableNameV2");
         }
     }
-    
+
     public function down()
     {
         $capsule = new Capsule();
