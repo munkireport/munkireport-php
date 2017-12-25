@@ -11,7 +11,7 @@
     "sensorname": "Sensor Code",
     "fanid": "Fan ID",
     "fan": "Fan",
-    "current_speed": "Fan Current Speed",
+    "current_speed": "Current Speed",
     "rpm": "RPM",
     "speed": "Speed",
     "open": "Open",

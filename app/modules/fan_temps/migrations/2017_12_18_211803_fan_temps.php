@@ -11,7 +11,6 @@ class FanTemps extends Migration
         $capsule::schema()->create('fan_temps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->nullable();
-
             $table->integer('fan_0')->nullable();
             $table->integer('fan_1')->nullable();
             $table->integer('fan_2')->nullable();
@@ -538,6 +537,33 @@ class FanTemps extends Migration
             $table->float('vmas')->nullable();
             $table->float('vmbs')->nullable();
             $table->float('vn1r')->nullable();
+            $table->integer('fan_9')->nullable();
+            $table->integer('fanmin9')->nullable();
+            $table->integer('fanmax9')->nullable();
+            $table->integer('fan_10')->nullable();
+            $table->integer('fanmin10')->nullable();
+            $table->integer('fanmax10')->nullable();
+            $table->integer('fan_11')->nullable();
+            $table->integer('fanmin11')->nullable();
+            $table->integer('fanmax11')->nullable();
+            $table->integer('fan_12')->nullable();
+            $table->integer('fanmin12')->nullable();
+            $table->integer('fanmax12')->nullable();
+            $table->integer('fan_13')->nullable();
+            $table->integer('fanmin13')->nullable();
+            $table->integer('fanmax13')->nullable();
+            $table->integer('fan_14')->nullable();
+            $table->integer('fanmin14')->nullable();
+            $table->integer('fanmax14')->nullable();
+            $table->integer('fan_15')->nullable();
+            $table->integer('fanmin15')->nullable();
+            $table->integer('fanmax15')->nullable();
+            $table->integer('fan_16')->nullable();
+            $table->integer('fanmin16')->nullable();
+            $table->integer('fanmax16')->nullable();
+            $table->integer('fan_17')->nullable();
+            $table->integer('fanmin17')->nullable();
+            $table->integer('fanmax17')->nullable();
             
             $table->index('serial_number');
             $table->index('ta0p');

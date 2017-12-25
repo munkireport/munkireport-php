@@ -113,7 +113,7 @@ class Fan_temps_controller extends Module_controller
 
         $queryobj = new Fan_temps_model();
         
-        $sql = "SELECT fnum, fnfd, mssf, fanlabel0, fan_0, fanmin0, fanmax0, dba0, fanlabel1, fan_1, fanmin1, fanmax1, dba1, fanlabel2, fan_2, fanmin2, fanmax2, dba2, fanlabel3, fan_3, fanmin3, fanmax3, fanlabel4, fan_4, fanmin4, fanmax4, fanlabel5, fan_5, fanmin5, fanmax5, fanlabel6, fan_6, fanmin6, fanmax6, fanlabel7, fan_7, fanmax7, fanmin7, fanlabel8, fan_8, fanmin8, fanmax8, dbah, dbat FROM fan_temps WHERE serial_number = '$serial_number'";
+        $sql = "SELECT fnum, fnfd, mssf, fanlabel0, fan_0, fanmin0, fanmax0, dba0, fanlabel1, fan_1, fanmin1, fanmax1, dba1, fanlabel2, fan_2, fanmin2, fanmax2, dba2, fanlabel3, fan_3, fanmin3, fanmax3, fanlabel4, fan_4, fanmin4, fanmax4, fanlabel5, fan_5, fanmin5, fanmax5, fanlabel6, fan_6, fanmin6, fanmax6, fanlabel7, fan_7, fanmax7, fanmin7, fanlabel8, fan_8, fanmin8, fanmax8, fan_9, fanmin9, fanmax9, fan_10, fanmin10, fanmax10, fan_11, fanmin11, fanmax11, fan_12, fanmin12, fanmax12, fan_13, fanmin13, fanmax13, fan_14, fanmin14, fanmax14, fan_15, fanmin15, fanmax15, fan_16, fanmin16, fanmax16, fan_17, fanmin17, fanmax17, dbah, dbat FROM fan_temps WHERE serial_number = '$serial_number'";
         
         $fan_temps_tab = $queryobj->query($sql);
             

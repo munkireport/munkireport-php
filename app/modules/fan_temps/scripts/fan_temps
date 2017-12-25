@@ -48,8 +48,13 @@ def get_smc_results():
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (output, unused_error) = proc.communicate()
-
-    smcinfo = get_fan_labels()
+    
+    
+    model = subprocess.check_output(['/usr/sbin/sysctl', '-n','hw.model'], shell=False, bufsize=-1)
+    if 'Xserve' in model:
+        smcinfo = {}
+    else:
+        smcinfo = get_fan_labels()
 
     for item in output.split("\n"):
         if "TA0P" in item:
@@ -612,12 +617,62 @@ def get_smc_results():
             smcinfo['FAN_8_Min'] = item.split(' ')[6].strip()
         elif "F8Mx" in item:
             smcinfo['FAN_8_Max'] = item.split(' ')[6].strip()
-        # Start the new keys
-        
-        
-        
+        elif "F9Ac" in item:
+            smcinfo['FAN_9_Current'] = item.split(' ')[6].strip()
+        elif "F9Mn" in item:
+            smcinfo['FAN_9_Min'] = item.split(' ')[6].strip()
+        elif "F9Mx" in item:
+            smcinfo['FAN_9_Max'] = item.split(' ')[6].strip()
+        elif "FAAc" in item:
+            smcinfo['FAN_10_Current'] = item.split(' ')[6].strip()
+        elif "FAMn" in item:
+            smcinfo['FAN_10_Min'] = item.split(' ')[6].strip()
+        elif "FAMx" in item:
+            smcinfo['FAN_10_Max'] = item.split(' ')[6].strip()
+        elif "FBAc" in item:
+            smcinfo['FAN_11_Current'] = item.split(' ')[6].strip()
+        elif "FBMn" in item:
+            smcinfo['FAN_11_Min'] = item.split(' ')[6].strip()
+        elif "FBMx" in item:
+            smcinfo['FAN_11_Max'] = item.split(' ')[6].strip()
+        elif "FCAc" in item:
+            smcinfo['FAN_12_Current'] = item.split(' ')[6].strip()
+        elif "FCMn" in item:
+            smcinfo['FAN_12_Min'] = item.split(' ')[6].strip()
+        elif "FCMx" in item:
+            smcinfo['FAN_12_Max'] = item.split(' ')[6].strip()
+        elif "FDAc" in item:
+            smcinfo['FAN_13_Current'] = item.split(' ')[6].strip()
+        elif "FDMn" in item:
+            smcinfo['FAN_13_Min'] = item.split(' ')[6].strip()
+        elif "FDMx" in item:
+            smcinfo['FAN_13_Max'] = item.split(' ')[6].strip()
+        elif "FEAc" in item:
+            smcinfo['FAN_14_Current'] = item.split(' ')[6].strip()
+        elif "FEMn" in item:
+            smcinfo['FAN_14_Min'] = item.split(' ')[6].strip()
+        elif "FEMx" in item:
+            smcinfo['FAN_14_Max'] = item.split(' ')[6].strip()
+        elif "FFAc" in item:
+            smcinfo['FAN_15_Current'] = item.split(' ')[6].strip()
+        elif "FFMn" in item:
+            smcinfo['FAN_15_Min'] = item.split(' ')[6].strip()
+        elif "FFMx" in item:
+            smcinfo['FAN_15_Max'] = item.split(' ')[6].strip()
+        elif "FGAc" in item:
+            smcinfo['FAN_16_Current'] = item.split(' ')[6].strip()
+        elif "FGMn" in item:
+            smcinfo['FAN_16_Min'] = item.split(' ')[6].strip()
+        elif "FGMx" in item:
+            smcinfo['FAN_16_Max'] = item.split(' ')[6].strip()
+        elif "FHAc" in item:
+            smcinfo['FAN_17_Current'] = item.split(' ')[6].strip()
+        elif "FHMn" in item:
+            smcinfo['FAN_17_Min'] = item.split(' ')[6].strip()
+        elif "FHMx" in item:
+            smcinfo['FAN_17_Max'] = item.split(' ')[6].strip()
+        # Start the new keys    
         elif "ALSL" in item:
-            model = subprocess.check_output(['/usr/sbin/sysctl', '-n','hw.model'], shell=False, bufsize=-1)
             if 'iMac' in model:
                 if (int(re.sub('[^0-9]','', model)) > 120):
                     smcinfo['ALSL'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('ALSL', ''))).strip()
@@ -628,7 +683,8 @@ def get_smc_results():
         elif "AUPO" in item:
             smcinfo['AUPO'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('AUPO', ''))).strip()
         elif "BNum" in item:
-            smcinfo['BNum'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('BNum', ''))).strip()
+            if 'Book' in model:
+                smcinfo['BNum'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('BNum', ''))).strip()
         elif "FNum" in item:
             smcinfo['FNum'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('FNum', ''))).strip() #Number of supported fans.
         elif "FS!" in item:
@@ -668,7 +724,6 @@ def get_smc_results():
         elif "MSAm" in item:
             smcinfo['MSAm'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSAm', ''))).strip() #Returns the average MEM PLIMIT sent by the SMC
         elif "MSLD" in item:
-            model = subprocess.check_output(['/usr/sbin/sysctl', '-n','hw.model'], shell=False, bufsize=-1)
             if 'Book' in model:
                 smcinfo['MSLD'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSLD', ''))).strip() #Returns the current Lid Switch state
         elif "MSHA" in item:

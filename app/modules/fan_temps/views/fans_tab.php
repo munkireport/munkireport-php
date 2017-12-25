@@ -34,8 +34,11 @@ $(document).on('appReady', function(){
                     } else if (prop.startsWith("fanmax")){
 					   rows = rows + '<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;'+i18n.t('fan_temps.fanmax')+'</th><td>'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</td></tr>';
                     } else if (prop.startsWith("fan_")){
-					   rows = rows + '<tr><th>'+d[(prop.replace('fan_', 'fanlabel'))]+' '+i18n.t('fan_temps.current_speed')+'</th><td>'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</td></tr>';
-                        
+                        if (d[(prop.replace('fan_', 'fanlabel'))]) {
+                           rows = rows + '<tr><th>'+d[(prop.replace('fan_', 'fanlabel'))]+' '+i18n.t('fan_temps.fan')+' '+i18n.t('fan_temps.current_speed')+'</th><td>'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</td></tr>';
+                        } else {
+                           rows = rows + '<tr><th>'+i18n.t('fan_temps.fan')+' '+(prop.replace('fan_', ''))+' '+i18n.t('fan_temps.current_speed')+'</th><td>'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</td></tr>';
+                        }
                     } else if (prop == "dbah" || prop == "dbat"){
 					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop+'_short')+'</th><td>'+d[prop]+' dBDA</td></tr>';
                         
@@ -43,7 +46,7 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">&nbsp;&nbsp;&nbsp;&nbsp;'+i18n.t('fan_temps.noise')+'</th><td>'+d[prop]+' dBA</td></tr>';
                         
                     } else {
-					   // Hide rows that are only the sensor code
+                        rows = rows + '<tr><th><span title="'+i18n.t('fan_temps.sensorname')+": "+prop+'">'+i18n.t('fan_temps.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
                     }
 				}
 			}
