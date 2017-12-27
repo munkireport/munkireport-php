@@ -14,6 +14,7 @@
   "bytes_served": "Caching - zur Verfügung gestellte Bytes",
   "client_requests": "Anfragen von Clients",
   "client_tab_title": "Caching Server",
+  "purgedbytes": "Gepurgte Byte",
   "date": "Datum",
   "from_cache": "aus dem Cache",
   "from_origin": "von der Quelle",
