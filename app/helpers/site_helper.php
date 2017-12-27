@@ -81,14 +81,14 @@ function getdbh()
 {
     if (! isset($GLOBALS['dbh'])) {
         try {
-            $db = conf('database');
-            switch ($db['driver']) {
+            $conn = conf('connection');
+            switch ($conn['driver']) {
                 case 'sqlite':
-                    $dsn = "sqlite:{$db['database']}";
+                    $dsn = "sqlite:{$conn['database']}";
                     break;
                 
                 case 'mysql':
-                    $dsn = "mysql:host={$db['host']};dbname={$db['database']}";
+                    $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
                     break;
 
                 default:
@@ -96,9 +96,9 @@ function getdbh()
             }
             $GLOBALS['dbh'] = new PDO(
                 $dsn,
-                isset($db['username']) ? $db['username'] : '',
-                isset($db['password']) ? $db['password'] : '',
-                isset($db['options']) ? $db['options'] : []
+                isset($conn['username']) ? $conn['username'] : '',
+                isset($conn['password']) ? $conn['password'] : '',
+                isset($conn['options']) ? $conn['options'] : []
             );
         } catch (PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());

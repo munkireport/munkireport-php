@@ -45,8 +45,10 @@
 	| determined. no trailing slash
 	|
 	*/
-	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
-		. '://'.$_SERVER[ 'HTTP_HOST' ];
+	if(PHP_SAPI != 'cli'){
+		$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
+			. '://'.$_SERVER[ 'HTTP_HOST' ];
+	}
 
 	/*
 	|===============================================
@@ -775,7 +777,7 @@
 	| ];
 	|
 	*/
-	$conf['database'] = [
+	$conf['connection'] = [
 	    'driver'    => 'sqlite',
 	    'database'  => $conf['application_path'].'db/db.sqlite',
 	];

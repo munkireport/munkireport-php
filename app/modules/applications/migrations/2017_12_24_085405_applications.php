@@ -21,6 +21,7 @@ class Applications extends Migration
             $table->string('signed_by');
             $table->boolean('has64bit')->default(0);
 
+            $table->index('serial_number');
             $table->index('name');
             $table->index('last_modified');
             $table->index('obtained_from');

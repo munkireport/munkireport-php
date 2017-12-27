@@ -21,7 +21,6 @@ class Network_model extends \Model
         $this->rs['ipv6ip'] = ''; // IPv6 address as string
         $this->rs['ipv6prefixlen'] = 0; // IPv6 prefix length as int
         $this->rs['ipv6router'] = '';  // IPv6 router address as string
-        $this->rs['timestamp'] = time();
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 2;
