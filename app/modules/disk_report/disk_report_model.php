@@ -194,6 +194,9 @@ class Disk_report_model extends \Model
                 if ($this->SMARTStatus=='Failing') {
                     $type = 'danger';
                     $msg = 'smartstatus_failing';
+                    
+                    // Trigger an email to send
+                    $this->send_email($this->serial_number, "Drive Failing", "has a drive containing volume ".$this->VolumeName." that is failing SMART.", "storage-tab");
                 }
                 foreach (conf('disk_thresholds', array()) as $name => $value) {
                     if ($this->FreeSpace < $value * 1000000000) {
@@ -203,6 +206,9 @@ class Disk_report_model extends \Model
                             $data = json_encode(array('gb'=> $value));
                             // Store lowest value
                             $lowvalue = $value;
+                            
+                            // Trigger an email to send
+                            $this->send_email($this->serial_number, "Low Free Space", "has a volume that is running low on freespace with ".(100-intval($this->Percentage))."% free. <br /><br />Volume: ".$this->VolumeName." has ".(round(intval($this->FreeSpace)/1000000000,3))."GB free out of ".(round(intval($this->TotalSize)/1000000000,3))."GB.", "storage-tab");
                         }
                     }
                 }

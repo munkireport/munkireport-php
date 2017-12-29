@@ -96,21 +96,25 @@ class Certificate_model extends \Model
                     if ($this->cert_exp_time < $now) {
                         $errors[] = array(
                             'type' => 'danger',
-                            'msg' => 'cert.expired',
+                            'msg' => 'certificate.expired',
                             'data' => json_encode(array(
                                 'name' => $this->cert_cn,
                                 'timestamp' => $this->cert_exp_time
                             ))
                         );
+                        // Trigger an email to send
+                        $this->send_email($this->serial_number, "Certificate Expired", "has a certificate that is expired:<br /><br />".$this->cert_cn." from ".$this->issuer." has expired on ".date("l, F j, Y g:i A\Z", $this->cert_exp_time)."<br />It is located at ".$this->cert_location, "certificate-tab");
                     } elseif ($this->cert_exp_time < $four_weeks) {
                         $errors[] = array(
                             'type' => 'warning',
-                            'msg' => 'cert.expire_warning',
+                            'msg' => 'certificate.expire_warning',
                             'data' => json_encode(array(
                                 'name' => $this->cert_cn,
                                 'timestamp' => $this->cert_exp_time
                             ))
                         );
+                        // Trigger an email to send
+                        $this->send_email($this->serial_number, "Certificate Expiring", "has a certificate that is expiring soon:<br /><br />".$this->cert_cn." from ".$this->issuer." is expiring at ".date("l, F j, Y g:i A\Z", $this->cert_exp_time)."<br />It is located at ".$this->cert_location, "certificate-tab");
                     }
                 }
             }
@@ -144,12 +148,12 @@ class Certificate_model extends \Model
                         $msg = $last_error['msg'];
                         $data = $last_error['data'];
                     } else {
-                        $msg = 'cert.multiple_errors';
+                        $msg = 'certificate.multiple_errors';
                         $data = $error_count;
                     }
                 } else {
                     $type = 'warning';
-                    $msg = 'cert.multiple_warnings';
+                    $msg = 'certificate.multiple_warnings';
                     $data = $warning_count;
                 }
                 $this->store_event($type, $msg, $data);

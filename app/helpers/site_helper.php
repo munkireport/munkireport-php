@@ -379,6 +379,28 @@ function delete_event($serial, $module = '')
     $evtobj->reset($serial, $module);
 }
 
+/**
+ * Send email for client
+ *
+ * @param string $serial serial number
+ * @param string $module reporting module
+ **/
+function send_email($serial, $subject, $message, $linked)
+{
+    $mailerobj = new Mrmailer_model();
+    $computerobj = new Machine_model($serial);
+    
+    // Get tags for serial number
+    $Tag = new Tag_model();
+    $tagobj[] = "";
+    foreach ($Tag->retrieve_records($serial) as $obj) {
+        $tagobj[] = $obj->tag;
+    }
+    
+    // Call the sendmail function
+    $mailerobj->sendemail($serial, $subject, $message, $linked, $computerobj->computer_name, $tagobj);
+}
+
 // Truncate string
 function truncate_string($string, $limit = 100, $pad = "...")
 {

@@ -579,15 +579,24 @@
 	| These settings are used for email notifications
 	| Only smtp is supported at the moment.
 	|
-	| 	$conf['email']['use_smtp'] = true;
-	| 	$conf['email']['from'] = array('noreply@example.com' => 'Munkireport Mailer');
-	|	$conf['email']['smtp_host'] = 'smtp1.example.com;smtp2.example.com';
-	|	$conf['email']['smtp_auth'] = true;
-	|	$conf['email']['smtp_username'] = 'user@example.com';
-	|	$conf['email']['smtp_password'] = 'secret';
-	|	$conf['email']['smtp_secure'] = 'tls';
-	|	$conf['email']['smtp_port'] = 587;
-	|	$conf['email']['locale'] = 'en';
+	| 	$conf['email']['enabled'] = true; // Controls if emails are sent or not
+	| 	$conf['email']['use_smtp'] = true; // Should always be true
+	| 	$conf['email']['from'] = array('noreply@example.com' => 'MunkiReport Mailer'); // Required
+	| 	$conf['email']['to'] = array('user1@example.com' => 'MunkiReport Mailer','user2@example.com' => 'MunkiReport Mailer'); // Required, can have more than one
+	| 	$conf['email']['replyto'] = array('noreply@example.com' => 'MunkiReport Mailer'); // Can have more than one
+	| 	$conf['email']['cc'] = array('user1@example.com' => 'MunkiReport Mailer'); // Can have more than one
+	| 	$conf['email']['bcc'] = array('user1@example.com' => 'MunkiReport Mailer'); // Can have more than one
+	|	$conf['email']['smtp_host'] = 'smtp1.example.com'; // Required if using SMTP
+	|	$conf['email']['smtp_auth'] = true; // Required if using SMTP, can be true or false
+	|	$conf['email']['smtp_username'] = 'user@example.com'; // Required if smtp_auth is true
+	|	$conf['email']['smtp_password'] = 'secret'; // Required if smtp_auth is true
+	|	$conf['email']['smtp_secure'] = 'tls'; // Required if using SMTP, can be "tls", "ssl", or ""
+	|	$conf['email']['smtp_port'] = 587; // Required if using SMTP
+	|	$conf['email']['locale'] = 'en'; // Local used for error messages, defaults to English
+	|	$conf['email']['debug'] = 0; //Debug level, 0-5
+	|	$conf['email']['use_html'] = true; //Send HTML email
+	| 	$conf['email']['skip_serials'] = array('A00AB0A0AB00','A00AB0A0BC11'); // Serial number of Macs to never send an email for
+	| 	$conf['email']['skip_subjects'] = array('Checked In','Disk is full'); // Subjects to never send an email for
 	*/
 
 	/*

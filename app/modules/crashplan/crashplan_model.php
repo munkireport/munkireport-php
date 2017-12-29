@@ -78,6 +78,8 @@ class Crashplan_model extends \Model
             }
             $data = json_encode($out);
             $this->store_event($type, $msg, $data);
+            // Trigger an email to send
+            $this->send_email($this->serial_number, "CrashPlan Backup Failed", "has had its CrashPlan backup to ".$this->destination." fail on ".date("l, F j, Y g:i A\Z", $this->last_failure)." because of ".$this->reason, "");
         } else {
             $this->delete_event();
         }

@@ -22,7 +22,7 @@ Features
 Setup
 ---
 
-Setup is easy, you could be running your own reportingserver within minutes! 
+Setup is easy, you could be running your own reporting server within minutes! 
 
 Please read the [install manual](https://github.com/munkireport/munkireport-php/wiki/Quick-demo)
 
@@ -80,5 +80,5 @@ Munkireport-php makes use of these fine software packages:
 * [adLDAP](http://adldap.sourceforge.net) for authenticating against AD
 * [i18next](http://i18next.com) js library for localization
 * [libgsx](https://github.com/filipp/gsxlib) libgsx library used for GSX integration 
-
+* [PHPMailer](https://github.com/PHPMailer/PHPMailer) for sending emails
 
