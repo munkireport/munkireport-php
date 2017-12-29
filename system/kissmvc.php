@@ -575,6 +575,17 @@ class Model extends KISS_Model
     {
         delete_event($this->serial_number, $this->tablename);
     }
+    
+     /**
+     * Send email
+     *
+     * Sends an email with the included details
+     *
+     **/
+    public function send_email($serial, $subject, $message, $linked)
+    {
+        send_email($serial, $subject, $message, $linked);
+    }
 }
 
 //===============================================================

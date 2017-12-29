@@ -174,6 +174,8 @@ class Reportdata_model extends \Model
 
         if ($new_client) {
             store_event($this->serial_number, 'reportdata', 'info', 'new_client');
+            // Trigger an email to send
+            $this->send_email($this->serial_number, "New Client", "has just registered to MunkiReport as a new client on ".date("l, F j, Y g:i A\Z", $this->reg_timestamp), "");
         }
     }
 }

@@ -138,31 +138,43 @@ class Munkireport_model extends \Model
         // Store record
         $this->save();
 
-        // Store apropriate event:
+        // Store apropriate event and trigger emails:
         if ($this->rs['errors'] == 1) { // Errors is a protected name
             $this->store_event(
                 'danger',
                 'munki.error',
                 json_encode(array('error' => truncate_string($mylist['Errors'][0])))
             );
+            // Trigger an email to send
+            $this->send_email($this->serial_number, "Munki Error", "has had 1 error when running Munki:<br /><br />".implode("<br />",$mylist['Errors']), "munki");
+
         } elseif ($this->rs['errors'] > 1) { // Errors is a protected name
             $this->store_event(
                 'danger',
                 'munki.error',
                 json_encode(array('count' => $this->rs['errors']))
             );
+            // Trigger an email to send
+            $this->send_email($this->serial_number, "Munki Error", "has had ".$this->rs['errors']." errors when running Munki:<br /><br />".implode("<br />",$mylist['Errors']), "munki");
+
         } elseif ($this->warnings == 1) {
             $this->store_event(
                 'warning',
                 'munki.warning',
                 json_encode(array('warning' => truncate_string($mylist['Warnings'][0])))
             );
+            // Trigger an email to send
+            $this->send_email($this->serial_number, "Munki Warning", "has had 1 warning when running Munki:<br /><br />".implode("<br />",$mylist['Warnings']), "munki");
+            
         } elseif ($this->warnings > 1) {
             $this->store_event(
                 'warning',
                 'munki.warning',
                 json_encode(array('count' => $this->warnings))
             );
+            // Trigger an email to send
+            $this->send_email($this->serial_number, "Munki Warning", "has had ".$this->warnings." warnings when running Munki:<br /><br />".implode("<br />",$mylist['Warnings']), "munki");
+            
         } else {
             // Delete event
             $this->delete_event();
