@@ -7,6 +7,8 @@ This module does not have a table and does not have a client side element, it sh
 
 Before the module can be used, you must set the config options in config.php. Module currently supports sending emails via SMTP only at this time.
 
+If a client contains a tag of "noemail", it will not generate any emails until the tag was removed.
+
 Config Options
 ---
 * $conf['email']['enabled'] = true; // Controls if emails are sent or not
