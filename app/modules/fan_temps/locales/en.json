@@ -411,7 +411,7 @@
     "msld_short": "Clamshell",
     "hdbs": "Hang Detect Enabled",
     "mssd": "Last Known Shutdown Cause",
-    "mssd_short": "Shutdown Cause",
+    "mssd_short": "Last Shutdown Cause",
     "mssp": "Last Known Sleep Request Cause",
     "mstc": "Last CPU PLIMIT",
     "mstg": "Last GPU PLIMIT",
