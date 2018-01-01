@@ -26,9 +26,9 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (d[prop] == "Disabled"){ // Localize disabled
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
-                    } else if (d[prop] == "In smartctl database [for details use: -P show]"){ // Localize if drive is in database
+                    } else if (d[prop] == "In smartctl database [for details use: -P show]" || d[prop] == "In smartctl database"){ // Localize if drive is in database
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
-                    } else if (d[prop] == "Not in smartctl database [for details use: -P showall]"){ // Localize if drive is not in database
+                    } else if (d[prop] == "Not in smartctl database [for details use: -P showall]" || d[prop] == "Not smartctl database"){ // Localize if drive is not in database
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
                     } else if (prop == "error_poh" && d[prop] != 0){ // Format SMART Error Power on Hours
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td class="danger"><span title="'+Math.round((d[prop]/24), 2)+" "+i18n.t('date.day_plural')+'">'+d[prop]+'</span></td></tr>';

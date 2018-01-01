@@ -104,7 +104,7 @@ class Smart_stats_model extends \Model {
         $this->rs['perc_rated_life_used'] = 0; $this->rt['perc_rated_life_used'] = 'BIGINT';
         $this->rs['reallocate_nand_blk_cnt'] = 0; $this->rt['reallocate_nand_blk_cnt'] = 'BIGINT';
         $this->rs['ave_blockerase_count'] = 0; $this->rt['ave_blockerase_count'] = 'BIGINT';
-        $this->rs['Unused_Reserve_NAND_Blk'] = 0; $this->rt['Unused_Reserve_NAND_Blk'] = 'BIGINT';
+        $this->rs['unused_reserve_nand_blk'] = 0; $this->rt['unused_reserve_nand_blk'] = 'BIGINT';
         $this->rs['sata_interfac_downshift'] = 0; $this->rt['sata_interfac_downshift'] = 'BIGINT';
         $this->rs['ssd_life_left'] = 0; $this->rt['ssd_life_left'] = 'BIGINT';
         $this->rs['life_curve_status'] = 0; $this->rt['life_curve_status'] = 'BIGINT';
@@ -128,9 +128,6 @@ class Smart_stats_model extends \Model {
         $this->rs['overall_health'] = '';
         $this->rs['pci_vender_subsystem_id'] = ''; // Start of NVMe columns
         $this->rs['model_number'] = '';
-        $this->rs['temperature_nvme'] = 0;
-        $this->rs['power_on_hours_nvme'] = 0;
-        $this->rs['power_cycle_count_nvme'] = 0;
         $this->rs['critical_warning'] = '';  
         $this->rs['available_spare'] = 0; $this->rt['available_spare'] = 'BIGINT';
         $this->rs['available_spare_threshold'] = 0; $this->rt['available_spare_threshold'] = 'BIGINT';
@@ -351,64 +348,55 @@ class Smart_stats_model extends \Model {
         	'OptionalAdminCommands0x0006' => 'optional_admin_commands',
         	'OptionalNVMCommands0x001f' => 'optional_nvm_commands',
         	'ModelNumber' => 'model_number',
-        	'Temperature' => 'temperature_nvme',
-        	'PowerCycles' => 'power_cycle_count_nvme',
-        	'PowerOnHours' => 'power_on_hours_nvme',
         	'MaximumDataTransferSize' => 'max_data_transfer_size', // End of NVMe translations  
         	'Overall_Health' => 'overall_health');
 
         // Delete previous entries
         $this->deleteWhere('serial_number=?', $this->serial_number);
 
-        // Process incoming smart_stats.xml
+        // Process incoming smart_stats.plist
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $plist = $parser->toArray();
         
-        // Array of string for nulling with ""
+        // Array of strings
         $strings =  array('model_family','device_model','serial_number_hdd','lu_wwn_device_id','firmware_version','user_capacity','sector_size','rotation_rate','device_is','ata_version_is','sata_version_is','form_factor','smart_support_is','smart_is','serial_number','power_on_hours_and_msec','airflow_temperature_cel','temperature_celsius','overall_health','critical_warning', 'data_units_read', 'data_units_written', 'pci_vender_subsystem_id', 'ieee_oui_id', 'firmware_updates', 'optional_admin_commands', 'optional_nvm_commands', 'max_data_transfer_size');
 
         // Get index ID
         $disk_id = (count($plist) -1 );
         
-     // Parse data for each disk
-     while ($disk_id > -1) {
+        // Parse data for each disk
+        while ($disk_id > -1) {
 
-        // Traverse the xml with translations
-        foreach ($translate as $search => $field) {
-                // If key is empty
-            if ( ! isset($plist[$disk_id][$search])) {
+            // Traverse the xml with translations
+            foreach ($translate as $search => $field) {
+
+                // If key does not exist in $plist, null it
+                if ( ! array_key_exists($search, $plist[$disk_id])) {
                     $this->$field = null;
-                // If key has blank value, null it in the db
-            } else if ( $plist[$disk_id][$search] == "") {
-                $this->$field = null;
-                
-                // Key is set
-            } else {
-                if ($search == "Head_Flying_Hours" && stripos($plist[$disk_id][$search], 'h') !== false) {
 
-                    $headhours = explode("h+",$plist[$disk_id][$search]);
-                    $this->$field = $headhours[0];
-
-                    // If key is a string save it to the object
-                } else if ( in_array($field, $strings)) {  
+                // Else if not a string and is numeric, then save the field
+                } else if (! in_array($field, $strings) && is_numeric($plist[$disk_id][$search])) {  
                     $this->$field = $plist[$disk_id][$search];
 
-                    // If key is not a string save it to the object
-                } else  {  
-                    $this->$field = intval(preg_replace("/[^0-9]/", "", $plist[$disk_id][$search]));
-                }
+                // Else if a string, save the value
+                } else if (in_array($field, $strings)){
+                    $this->$field = $plist[$disk_id][$search];
+
+                 // Else null the field
+                } else {
+                    $this->$field = null;
+                }             
             }
+
+             //timestamp added by the server
+             $this->timestamp = time();
+
+             $this->id = '';
+             $this->create(); 
+             $disk_id--;
         }
-         
-         //timestamp added by the server
-         $this->timestamp = time();
-         
-         $this->id = '';
-         $this->create(); 
-         $disk_id--;
-     }
         
-		$this->save();
+        $this->save();
     }
 }

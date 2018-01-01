@@ -122,7 +122,7 @@ class SmartStats extends Migration
             $table->bigInteger('perc_rated_life_used')->nullable();
             $table->bigInteger('reallocate_nand_blk_cnt')->nullable();
             $table->bigInteger('ave_blockerase_count')->nullable();
-            $table->bigInteger('Unused_Reserve_NAND_Blk')->nullable();
+            $table->bigInteger('unused_reserve_nand_blk')->nullable();
             $table->bigInteger('sata_interfac_downshift')->nullable();
             $table->bigInteger('ssd_life_left')->nullable();
             $table->bigInteger('life_curve_status')->nullable();
@@ -146,9 +146,6 @@ class SmartStats extends Migration
             $table->string('overall_health')->nullable();
             $table->string('pci_vender_subsystem_id')->nullable();
             $table->string('model_number')->nullable();
-            $table->integer('temperature_nvme')->nullable();
-            $table->integer('power_on_hours_nvme')->nullable();
-            $table->integer('power_cycle_count_nvme')->nullable();
             $table->string('critical_warning')->nullable();
             $table->bigInteger('available_spare')->nullable();
             $table->bigInteger('available_spare_threshold')->nullable();
@@ -294,7 +291,7 @@ class SmartStats extends Migration
                 perc_rated_life_used,
                 reallocate_nand_blk_cnt,
                 ave_blockerase_count,
-                Unused_Reserve_NAND_Blk,
+                unused_reserve_nand_blk,
                 sata_interfac_downshift,
                 ssd_life_left,
                 life_curve_status,
