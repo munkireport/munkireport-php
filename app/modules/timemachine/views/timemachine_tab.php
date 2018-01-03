@@ -4,7 +4,7 @@
 <script>
 $(document).on('appReady', function(){
 	$.getJSON(appUrl + '/module/timemachine/get_tab_data/' + serialNumber, function(data){
-		var skipThese = ['id','serial_number','destinations','timestamp','localized_disk_image_volume_name','alias_volume_name'];
+		var skipThese = ['id','serial_number','destinations','localized_disk_image_volume_name','alias_volume_name'];
 		$.each(data, function(i,d){
 
 			// Generate rows from data

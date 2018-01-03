@@ -15,7 +15,9 @@ class AuthSaml extends AbstractAuth
 
         // TODO Check config
         $this->config = $config;
-        $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
+        if( ! isset($this->config['sp']['entityId'])){
+            $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
+        }
         $this->config['sp']['assertionConsumerService'] = [
             'url' => url('auth/saml/acs', true)
         ];

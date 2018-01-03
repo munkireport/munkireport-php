@@ -45,8 +45,10 @@
 	| determined. no trailing slash
 	|
 	*/
-	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
-		. '://'.$_SERVER[ 'HTTP_HOST' ];
+	if(PHP_SAPI != 'cli'){
+		$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
+			. '://'.$_SERVER[ 'HTTP_HOST' ];
+	}
 
 	/*
 	|===============================================
@@ -758,22 +760,27 @@
 
 	/*
 	|===============================================
-	| PDO Datasource
+	| Database configuration
 	|===============================================
 	|
-	| Specify dsn, username, password and options
+	| Specify driver, username, password and options
 	| Supported engines: sqlite and mysql
 	| Mysql example:
-	| 	$conf['pdo_dsn'] = 'mysql:host=localhost;dbname=munkireport';
-	| 	$conf['pdo_user'] = 'munki';
-	| 	$conf['pdo_pass'] = 'munki';
-	| 	$conf['pdo_opts'] = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
+	| $conf['database'] = [
+	|     'driver'    => 'mysql',
+	|     'host'      => '127.0.0.1',
+	|     'port'      => 3306,
+	|     'database'  => 'munkireport',
+	|     'username'  => 'munkireport',
+	|     'password'  => 'munkireport',
+	|     'options'   => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
+	| ];
 	|
 	*/
-	$conf['pdo_dsn'] = 'sqlite:'.$conf['application_path'].'db/db.sqlite';
-	$conf['pdo_user'] = '';
-	$conf['pdo_pass'] = '';
-	$conf['pdo_opts'] = array();
+	$conf['connection'] = [
+	    'driver'    => 'sqlite',
+	    'database'  => $conf['application_path'].'db/db.sqlite',
+	];
 
 	/*
 	|===============================================

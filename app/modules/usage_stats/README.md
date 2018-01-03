@@ -3,6 +3,8 @@ Usage Stats module
 
 Presents information about network, disk, CPU, and GPU activity
 
+This module is only supported on 10.10 and higher
+
 Database:
 * timestamp - BIGINT - timestamp of when stats were last pulled
 * thermal_pressure - varchar(255) - String detailing thermal pressure of the system
@@ -35,5 +37,5 @@ Database:
 * gpu_freq_mhz - FLOAT - GPU Speed in megahertz
 * gpu_freq_ratio - FLOAT - GPU Fraction of Nominal Speed
 * gpu_busy - FLOAT - GPU cycles used
-
+* kern_bootargs - VARCHAT(255) - boot flags used by the kernel on last boot
 
