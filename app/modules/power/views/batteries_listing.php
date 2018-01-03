@@ -39,8 +39,8 @@ new Power_model;
 		        <th data-i18n="power.listing.manufactured" data-colname='power.manufacture_date'></th>
 		        <th data-i18n="power.wattage" data-colname='power.wattage'></th>
 		        <th data-i18n="model" data-colname='machine.machine_model'></th>
-		        <th data-i18n="listing.checkin" data-sort="desc" data-colname='power.timestamp'></th>
-		      </tr>
+                <th data-i18n="listing.checkin" data-sort="desc" data-colname='reportdata.timestamp'></th>
+      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>

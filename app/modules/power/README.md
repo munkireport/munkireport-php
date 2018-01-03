@@ -28,7 +28,6 @@ Power module
 * cycle_count - INT(11) - Amount of battery cycles
 * temperature - INT(11) - Temperature of battery
 * condition - VARCHAR(255) - Current battery condition
-* timestamp - INT(11) - When data was las uploaded
 * sleep_prevented_by - TEXT - List of processes preventing sleep
 * hibernatefile - VARCHAR(255) - Path of hibernate file
 * schedule - VARCHAR(255) - Scheduled events

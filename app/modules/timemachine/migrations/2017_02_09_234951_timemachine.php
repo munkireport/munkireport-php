@@ -5,10 +5,25 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Timemachine extends Migration
 {
+    private $tableName = 'timemachine';
+    private $tableNameV2 = 'timemachine_v2';
+
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('timemachine', function (Blueprint $table) {
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+            $migrateData = true;
+        }
+
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('serial_number')->unique()->nullable();
@@ -16,12 +31,11 @@ class Timemachine extends Migration
             $table->string('last_failure')->nullable();
             $table->string('last_failure_msg')->nullable();
             $table->integer('duration')->nullable();
-            $table->string('timestamp')->nullable();
 
             $table->integer('always_show_deleted_backups_warning')->nullable();
             $table->integer('auto_backup')->nullable();
-            $table->integer('bytes_available')->nullable();
-            $table->integer('bytes_used')->nullable();
+            $table->bigInteger('bytes_available')->nullable();
+            $table->bigInteger('bytes_used')->nullable();
             $table->string('consistency_scan_date')->nullable();
             $table->string('date_of_latest_warning')->nullable();
             $table->string('destination_id')->nullable();
@@ -81,15 +95,61 @@ class Timemachine extends Migration
             $table->index('skip_system_files');
             $table->index('snapshot_count');
             $table->index('time_capsule_display_name');
-            $table->index('timestamp');
             $table->index('volume_display_name');
-//            $table->timestamps();
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                last_success,
+                last_failure,
+                last_failure_msg,
+                duration,
+                always_show_deleted_backups_warning,
+                auto_backup,
+                bytes_available,
+                bytes_used,
+                consistency_scan_date,
+                date_of_latest_warning,
+                destination_id,
+                destination_uuids,
+                last_known_encryption_state,
+                result,
+                root_volume_uuid,
+                snapshot_dates,
+                exclude_by_path,
+                host_uuids,
+                last_configuration_trace_date,
+                last_destination_id,
+                localized_disk_image_volume_name,
+                mobile_backups,
+                skip_paths,
+                skip_system_files,
+                alias_volume_name,
+                earliest_snapshot_date,
+                is_network_destination,
+                latest_snapshot_date,
+                mount_point,
+                network_url,
+                server_display_name,
+                snapshot_count,
+                time_capsule_display_name,
+                volume_display_name,
+                destinations
+            FROM
+                $this->tableNameV2");
+        }
     }
 
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('timemachine');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        }
     }
 }
