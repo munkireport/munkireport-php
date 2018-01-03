@@ -17,7 +17,6 @@ The table provides the following information per 'networkservice':
 * ipv6ip (string) IPv6 address
 * ipv6prefixlen (int) IPv6 prefix length
 * ipv6router (string) IPv6 router address
-* timestamp (int) UNIX timestamp
 
 Remarks
 ---

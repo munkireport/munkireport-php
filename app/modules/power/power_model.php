@@ -18,7 +18,6 @@ class Power_model extends \Model
         $this->rs['cycle_count'] = 0;
         $this->rs['temperature'] = 0;
         $this->rs['condition'] = '';
-        $this->rs['timestamp'] = 0; // Unix time when the report was uploaded
         $this->rs['sleep_prevented_by'] = ''; $this->rt['sleep_prevented_by'] = 'TEXT';
         $this->rs['hibernatefile'] = '';
         $this->rs['schedule'] = ''; $this->rt['schedule'] = 'TEXT';
@@ -94,7 +93,7 @@ class Power_model extends \Model
         // Indexes to optimize queries
         // MySQL allows for a maximum of 64 indexes per table, not all columns are indexed.
         // Some lesser used, more static columns have been omitted
-        foreach (array('manufacture_date','design_capacity','max_capacity','max_percent','current_capacity','current_percent','cycle_count','temperature','timestamp','hibernatefile','active_profile','standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','externalconnected','timeremaining','instanttimetoempty','cellvoltage','voltage','permanentfailurestatus','manufacturer','packreserve','avgtimetofull','batteryserialnumber','amperage','fullycharged','ischarging','designcyclecount','avgtimetoempty') as $item) {
+        foreach (array('manufacture_date','design_capacity','max_capacity','max_percent','current_capacity','current_percent','cycle_count','temperature','hibernatefile','active_profile','standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','externalconnected','timeremaining','instanttimetoempty','cellvoltage','voltage','permanentfailurestatus','manufacturer','packreserve','avgtimetofull','batteryserialnumber','amperage','fullycharged','ischarging','designcyclecount','avgtimetoempty') as $item) {
             $this->idx[] = array($item);
         }
 
@@ -158,7 +157,6 @@ class Power_model extends \Model
         $this->cycle_count = 0;
         $this->temperature = 0;
         $this->condition = '';
-        $this->timestamp = 0;
         // Parse data
         foreach(explode("\n", $data) as $line) {
             // Translate standard entries
@@ -323,9 +321,6 @@ class Power_model extends \Model
 
             $this->manufacture_date = sprintf("%d-%02d-%02d", $mfgyear, $mfgmonth, $mfgday);
         }
-
-        //timestamp added by the server
-        $this->timestamp = time();
 
         // Fix sleep and make sleep_prevented_by
         $sleep_long = $this->sleep;

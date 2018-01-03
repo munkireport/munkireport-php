@@ -12,7 +12,6 @@ The following information is stored in the table:
 * last_failure - Datetime of last failure
 * last_failure_msg - Message of the last failure
 * duration - int - Duration in seconds
-* timestamp - Unix timestamp when the report was uploaded
 * always_show_deleted_backups_warning - int/bool - Will Time Machine display warning if deleting older backups
 * auto_backup - int/bool - Are automatic backups enabled
 * bytes_available - int - Number of available bytes on backup destination

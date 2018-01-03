@@ -5,10 +5,25 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Machine extends Migration
 {
+    private $tableName = 'machine';
+    private $tableNameV2 = 'machine_v2';
+
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('machine', function (Blueprint $table) {
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+            $migrateData = true;
+        }
+
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('serial_number')->unique();
@@ -51,13 +66,44 @@ class Machine extends Migration
             $table->index(['machine_name']);
             $table->index(['packages']);
             $table->index(['buildversion']);
-
         });
+
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                hostname,
+                machine_model,
+                machine_desc,
+                img_url,
+                cpu,
+                current_processor_speed,
+                cpu_arch,
+                os_version,
+                physical_memory,
+                platform_UUID,
+                number_processors,
+                SMC_version_system,
+                boot_rom_version,
+                bus_speed,
+                computer_name,
+                l2_cache,
+                machine_name,
+                packages,
+                buildversion
+            FROM
+                $this->tableNameV2");
+        }
     }
     
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('machine');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        }
     }
 }

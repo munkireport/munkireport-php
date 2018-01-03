@@ -13,7 +13,6 @@ class Timemachine_model extends \Model
         $this->rs['last_failure'] = ''; // Datetime of last failure
         $this->rs['last_failure_msg'] = ''; // Message of the last failure
         $this->rs['duration'] = 0; // Duration in seconds
-        $this->rs['timestamp'] = ''; // Timestamp of last update
         $this->rs['always_show_deleted_backups_warning'] = 0; // bool
         $this->rs['auto_backup'] = 0; // bool
         $this->rs['bytes_available'] = 0; $this->rt['bytes_available'] = 'BIGINT';
@@ -54,7 +53,6 @@ class Timemachine_model extends \Model
         $this->idx[] = array('last_failure');
         $this->idx[] = array('last_failure_msg');
         $this->idx[] = array('duration');
-        $this->idx[] = array('timestamp');
         $this->idx[] = array('always_show_deleted_backups_warning');
         $this->idx[] = array('auto_backup');
         $this->idx[] = array('bytes_available');
@@ -307,7 +305,6 @@ class Timemachine_model extends \Model
         
         // Only store if there is data
         if ($this->last_success or $this->last_failure) {
-            $this->timestamp = time();
             $this->save();
         }
     }

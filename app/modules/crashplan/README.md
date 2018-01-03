@@ -13,5 +13,4 @@ The following information is stored in the table:
 * last_failure - Timestamp of last failure
 * reason - Reason of last failure
 * duration - Duration in seconds
-* timestamp - Unix timestamp when the report was uploaded
 

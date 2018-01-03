@@ -5,10 +5,25 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Softwareupdate extends Migration
 {
+    private $tableName = 'softwareupdate';
+    private $tableNameV2 = 'softwareupdate_v2';
+
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('softwareupdate', function (Blueprint $table) {
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+            $migrateData = true;
+        }
+
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
 
@@ -48,14 +63,43 @@ class Softwareupdate extends Migration
             $table->index('recommendedupdates');
             $table->index('mrxprotect');
             $table->index('inactiveupdates');
-            
         });
 
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                automaticcheckenabled,
+                automaticdownload,
+                configdatainstall,
+                criticalupdateinstall,
+                lastattemptsystemversion,
+                lastbackgroundccdsuccessfuldate,
+                lastbackgroundsuccessfuldate,
+                lastfullsuccessfuldate,
+                lastrecommendedupdatesavailable,
+                lastresultcode,
+                lastsessionsuccessful,
+                lastsuccessfuldate,
+                lastupdatesavailable,
+                skiplocalcdn,
+                recommendedupdates,
+                mrxprotect,
+                catalogurl,
+                inactiveupdates
+            FROM
+                $this->tableNameV2");
+        }
     }
-
+    
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('softwareupdate');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        }
     }
 }
