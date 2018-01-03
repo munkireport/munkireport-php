@@ -49,22 +49,9 @@ class Controller extends KISS_Controller
     {
         if(! $this->capsule){
             $this->capsule = new Capsule;
-            $connection = [
-                'username' => conf('pdo_user'),
-                'password' => conf('pdo_pass'),
-            ];
-
-            $pdo_dsn = explode(':',  conf('pdo_dsn'), 2);
-            switch (strtolower($pdo_dsn[0])) {
-                case "sqlite":
-                    $connection['driver'] = 'sqlite';
-                    $connection['database'] = $pdo_dsn[1];
-                    break;
-                case "mysql":
-                    $connection['driver'] = 'mysql';
-                    preg_match('/dbname=([^;]*)/', $pdo_dsn[2], $matches);
-                    $connection['database'] = $matches[1][0];
-                    break;
+            
+            if( ! $connection = conf('connection')){
+                die('Connection not configured in config.php');
             }
 
             $this->capsule->addConnection($connection);

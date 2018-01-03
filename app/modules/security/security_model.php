@@ -51,25 +51,25 @@ class Security_model extends \Model
      **/
     public function process($data)
     {
-	if (strpos($data, '<?xml') === false) {
-		// old style txt file data has been passed - throw an error.
-		throw new Exception("Error Processing Request: old format data found, please update the security module", 1);	
-	}
-	else {
-		$parser = new CFPropertyList();
-		$parser->parse($data);
+    	if (strpos($data, '<?xml') === false) {
+    		// old style txt file data has been passed - throw an error.
+    		throw new Exception("Error Processing Request: old format data found, please update the security module", 1);	
+    	}
+    	else {
+    		$parser = new CFPropertyList();
+    		$parser->parse($data);
 
-		$plist = $parser->toArray();
+    		$plist = $parser->toArray();
 
-		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state', 'skel_state') as $item) {
-			if (isset($plist[$item])) {
-				$this->$item = $plist[$item];
-			} else {
-				$this->$item = '';
-			}
-		}
-		$this->save();
-	}
+    		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state', 'skel_state') as $item) {
+    			if (isset($plist[$item])) {
+    				$this->$item = $plist[$item];
+    			} else {
+    				$this->$item = '';
+    			}
+    		}
+    		$this->save();
+    	}
     }
 
     public function get_sip_stats()
