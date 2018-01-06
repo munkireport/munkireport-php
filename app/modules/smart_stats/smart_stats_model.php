@@ -389,12 +389,13 @@ class Smart_stats_model extends \Model {
                 }             
             }
 
-             //timestamp added by the server
-             $this->timestamp = time();
+            //timestamp added by the server
+            $this->timestamp = time();
 
-             $this->id = '';
-             $this->create(); 
-             $disk_id--;
+            $this->id = '';
+            $this->create(); 
+            $disk_id--;
+            
         }
         
         $this->save();
