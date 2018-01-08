@@ -18,9 +18,9 @@ else
     
 	# Update smartctl database
 	if [[ -f /usr/local/sbin/update-smart-drivedb ]]; then
-	     /usr/local/sbin/update-smart-drivedb > /dev/null 2>&1
+	     /usr/bin/yes | /usr/local/sbin/update-smart-drivedb > /dev/null 2>&1
 	elif [[ -f /usr/local/bin/update-smart-drivedb ]]; then
-	     /usr/local/bin/update-smart-drivedb > /dev/null 2>&1
+	     /usr/bin/yes | /usr/local/bin/update-smart-drivedb > /dev/null 2>&1
 	fi
 
 	# Set preference to include this file in the preflight check
