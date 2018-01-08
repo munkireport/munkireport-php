@@ -84,6 +84,25 @@ class Disk_report_controller extends Module_controller
         $disk_report = new Disk_report_model;
         $obj->view('json', array('msg' => $disk_report->get_disk_type()));
     }
+    
+     /**
+     * Get filesystem type
+     *
+     * @return void
+     * @author tuxudo
+     **/
+    public function get_volume_type()
+    {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $disk_report = new Disk_report_model;
+        $obj->view('json', array('msg' => $disk_report->get_volume_type()));
+    }
 
     /**
      * Get statistics

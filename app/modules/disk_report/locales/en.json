@@ -20,6 +20,7 @@
     "storage": "Storage",
     "total_size": "Size",
     "type": "Storage Type",
+    "filesystem_type": "Filesystem Type",
     "used": "Used",
     "volume_type": "Volume Type",
     "report": "Storage Report",

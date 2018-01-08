@@ -11,6 +11,6 @@ return array(
         'smart_overall_health_test' => array('view' => 'smart_overall_health_test_widget'),
     ),
     'reports' => array(
-        'smart_report' => array('view' => 'smart_report', 'i18n' => 'smart_stats.report'),
+        'smart_report' => array('view' => 'smart_report', 'i18n' => 'smart_stats.reporttitle'),
     ),
 );
