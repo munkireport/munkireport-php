@@ -321,7 +321,7 @@ $(document).on('appReady', function(e, lang) {
 	// Get ARD data
 	$.getJSON( appUrl + '/module/ard/get_data/' + serialNumber, function( data ) {
 		$.each(data, function(index, item){
-			if(/^Text[\d]$/.test(index))
+			if(/^text[\d]$/.test(index))
 			{
 				$('#ard-data')
 					.append($('<tr>')
