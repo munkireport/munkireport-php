@@ -10,31 +10,17 @@ class Disk_report_model extends \Model
         parent::__construct('id', 'diskreport'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial;
-        $this->rs['TotalSize'] = 0;
-        $this->rt['TotalSize'] = 'BIGINT';
-        $this->rs['FreeSpace'] = 0;
-        $this->rt['FreeSpace'] = 'BIGINT';
-        $this->rs['Percentage'] = 0;
-        $this->rs['SMARTStatus'] = '';
-        $this->rs['VolumeType'] = '';
+        $this->rs['totalsize'] = 0;
+        $this->rs['freespace'] = 0;
+        $this->rs['percentage'] = 0;
+        $this->rs['smartstatus'] = '';
+        $this->rs['volumetype'] = '';
         $this->rs['media_type'] = '';
-        $this->rs['BusProtocol'] = '';
-        $this->rs['Internal'] = 0; // Boolean
-        $this->rs['MountPoint'] = '';
-        $this->rs['VolumeName'] = '';
-        $this->rs['CoreStorageEncrypted'] = 0; //Boolean
-
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('VolumeType');
-        $this->idx[] = array('media_type');
-        $this->idx[] = array('MountPoint');
-        $this->idx[] = array('VolumeName');
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 3;
-
-        // Create table if it does not exist
-       //$this->create_table();
+        $this->rs['busprotocol'] = '';
+        $this->rs['internal'] = 0;
+        $this->rs['mountpoint'] = '';
+        $this->rs['volumename'] = '';
+        $this->rs['encrypted'] = 0;
     }
     
     /**
@@ -45,11 +31,11 @@ class Disk_report_model extends \Model
      **/
     public function get_filevault_stats($mountpoint = '/')
     {
-        $sql = "SELECT COUNT(CASE WHEN CoreStorageEncrypted = 1 THEN 1 END) AS encrypted,
-						COUNT(CASE WHEN CoreStorageEncrypted = 0 THEN 1 END) AS unencrypted
+        $sql = "SELECT COUNT(CASE WHEN encrypted = 1 THEN 1 END) AS encrypted,
+						COUNT(CASE WHEN encrypted = 0 THEN 1 END) AS unencrypted
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
-						WHERE MountPoint = ?
+						WHERE mountpoint = ?
 						".get_machine_group_filter('AND');
         return current($this->query($sql, $mountpoint));
     }
@@ -67,7 +53,7 @@ class Disk_report_model extends \Model
 						COUNT(CASE WHEN media_type = 'raid' THEN 1 END) AS raid
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
-						WHERE Internal = 1
+						WHERE internal = 1
 						".get_machine_group_filter('AND');
         return current($this->query($sql));
     }
@@ -79,9 +65,9 @@ class Disk_report_model extends \Model
      **/
     public function get_volume_type()
     {
-        $sql = "SELECT COUNT(CASE WHEN VolumeType = 'APFS' THEN 1 END) AS apfs,
-						COUNT(CASE WHEN VolumeType = 'bootcamp' THEN 1 END) AS bootcamp,
-						COUNT(CASE WHEN VolumeType = 'Journaled HFS+' THEN 1 END) AS hfs
+        $sql = "SELECT COUNT(CASE WHEN volumetype = 'APFS' THEN 1 END) AS apfs,
+						COUNT(CASE WHEN volumetype = 'bootcamp' THEN 1 END) AS bootcamp,
+						COUNT(CASE WHEN volumetype = 'Journaled HFS+' THEN 1 END) AS hfs
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
 						WHERE Internal = 1
@@ -101,12 +87,12 @@ class Disk_report_model extends \Model
         $level1 = $level1 . '000000000';
         $level2 = $level2 . '000000000';
         $level2_minus_one = $level2 - 1;
-        $sql = "SELECT COUNT(CASE WHEN FreeSpace > $level2_minus_one THEN 1 END) AS success,
-						COUNT(CASE WHEN FreeSpace < $level2 THEN 1 END) AS warning,
-						COUNT(CASE WHEN FreeSpace < $level1 THEN 1 END) AS danger
+        $sql = "SELECT COUNT(CASE WHEN freespace > $level2_minus_one THEN 1 END) AS success,
+						COUNT(CASE WHEN freespace < $level2 THEN 1 END) AS warning,
+						COUNT(CASE WHEN freespace < $level1 THEN 1 END) AS danger
 						FROM diskreport
 						LEFT JOIN reportdata USING (serial_number)
-						WHERE MountPoint = '$mountpoint'
+						WHERE mountpoint = '$mountpoint'
 						".get_machine_group_filter('AND');
         return current($this->query($sql));
     }
@@ -118,9 +104,9 @@ class Disk_report_model extends \Model
      **/
     public function getSmartStats()
     {
-        $sql = "SELECT COUNT(CASE WHEN SMARTStatus='Failing' THEN 1 END) AS failing,
-						COUNT(CASE WHEN SMARTStatus='Verified' THEN 1 END) AS verified,
-						COUNT(CASE WHEN SMARTStatus='Not Supported' THEN 1 END) AS unsupported
+        $sql = "SELECT COUNT(CASE WHEN smartstatus='Failing' THEN 1 END) AS failing,
+						COUNT(CASE WHEN smartstatus='Verified' THEN 1 END) AS verified,
+						COUNT(CASE WHEN smartstatus='Not Supported' THEN 1 END) AS unsupported
 						FROM diskreport
 						LEFT JOIN reportdata USING(serial_number)
 						".get_machine_group_filter();
@@ -157,63 +143,65 @@ class Disk_report_model extends \Model
         $empty = $this->rs;
 
         foreach ($mylist as $disk) {
-        // Reset values
+            // Reset values
             $this->rs = $empty;
+            
+            $disk = array_change_key_case($disk, CASE_LOWER);
 
             // Calculate percentage
-            if (isset($disk['TotalSize']) && isset($disk['FreeSpace'])) {
-                $disk['Percentage'] = round(($disk['TotalSize'] - $disk['FreeSpace']) /
-                    max($disk['TotalSize'], 1) * 100);
+            if (isset($disk['totalsize']) && isset($disk['freespace'])) {
+                $disk['percentage'] = round(($disk['totalsize'] - $disk['freespace']) /
+                    max($disk['totalsize'], 1) * 100);
             }
 
-            $disk['VolumeType'] = "-";
+            $disk['volumetype'] = "-";
             $disk['media_type'] = "hdd";
-            if (isset($disk['SolidState']) && $disk['SolidState'] == true) {
+            if (isset($disk['solidstate']) && $disk['solidstate'] == true) {
                 $disk['media_type'] = "ssd";
             }
-            if (isset($disk['CoreStorageCompositeDisk']) && $disk['CoreStorageCompositeDisk'] == true) {
+            if (isset($disk['corestoragecompositedisk']) && $disk['corestoragecompositedisk'] == true) {
                 $disk['media_type'] = "fusion";
             }
-            if (isset($disk['RAIDMaster']) && $disk['RAIDMaster'] == true) {
+            if (isset($disk['raidmaster']) && $disk['raidmaster'] == true) {
                 $disk['media_type'] = "raid";
             }
-            if (isset($disk['FilesystemName'])) {
-                $disk['VolumeType'] = $disk['FilesystemName'];
+            if (isset($disk['filesystemname'])) {
+                $disk['volumetype'] = $disk['filesystemname'];
             }
-            if (isset($disk['Content']) && $disk['Content'] == 'Microsoft Basic Data') {
-                $disk['VolumeType'] = "bootcamp";
+            if (isset($disk['content']) && $disk['content'] == 'Microsoft Basic Data') {
+                $disk['volumetype'] = "bootcamp";
             }
-            # New APFS info fields
-            if(isset($disk['encrypted'])) {
-                $this->CoreStorageEncrypted = $disk['encrypted'];
+            # Legacy FV info field
+            if(isset($disk['corestorageencrypted'])) {
+                $this->encrypted = $disk['corestorageencrypted'];
             }
             if(isset($disk['fusion']) && $disk['fusion'] == true) {
-                $disk['VolumeType'] = "apfs_fusion";
+                $disk['volumetype'] = "apfs_fusion";
             }
 
             $this->merge($disk);
 
             // Typecast Boolean values
             $this->Internal = (int) $this->Internal;
-            $this->CoreStorageEncrypted = (int) $this->CoreStorageEncrypted;
+            $this->encrypted = (int) $this->encrypted;
 
             $this->id = '';
             $this->create();
             
             // Fire event when systemdisk hits a threshold
-            if ($this->MountPoint == '/') {
+            if ($this->mountpoint == '/') {
                 $type = 'success';
                 $msg = '';
                 $data = '';
                 $lowvalue = 1000; // Lowest value (GB)
                 
                 // Check SMART Status
-                if ($this->SMARTStatus=='Failing') {
+                if ($this->smartstatus=='Failing') {
                     $type = 'danger';
                     $msg = 'smartstatus_failing';
                 }
                 foreach (conf('disk_thresholds', array()) as $name => $value) {
-                    if ($this->FreeSpace < $value * 1000000000) {
+                    if ($this->freespace < $value * 1000000000) {
                         if ($value < $lowvalue) {
                             $type = $name;
                             $msg = 'free_disk_space_less_than';

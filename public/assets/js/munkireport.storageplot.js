@@ -27,15 +27,15 @@ var drawStoragePlots = function(serialNumber, divid) {
 	    					.attr('class', 'col-sm-6')
 
 	    	info.append('h4')
-	    		.text(obj.VolumeName)
+	    		.text(obj.volumename)
 
 	    	var table = info.append('table')
 	    					.attr('class', 'table table-striped')
 	    					.append('tbody')
 
 	    	// get encryption string
-	    	var encrypted = obj.CoreStorageEncrypted == 1 ? i18n.t('disk_report.encrypted') : i18n.t('disk_report.not_encrypted');
-	    	if(obj.CoreStorageEncrypted == -1)
+	    	var encrypted = obj.encrypted == 1 ? i18n.t('disk_report.encrypted') : i18n.t('disk_report.not_encrypted');
+	    	if(obj.encrypted == -1)
 	    	{
 	    		encrypted = i18n.t('unknown')
 	    	}
@@ -43,7 +43,7 @@ var drawStoragePlots = function(serialNumber, divid) {
 	    	var props = [
 	    		{
 	    			key: i18n.t('disk_report.mountpoint'),
-	    			val: obj.MountPoint
+	    			val: obj.mountpoint
 	    		},
                 {
 	    			key: i18n.t('disk_report.media_type'),
@@ -51,17 +51,17 @@ var drawStoragePlots = function(serialNumber, divid) {
 	    		},
                 {
 	    			key: i18n.t('disk_report.volume_type'),
-	    			val: obj.VolumeType.toUpperCase()
+	    			val: obj.volumetype.toUpperCase()
 	    		},
 	    		{
 	    			key: i18n.t('disk_report.smartstatus'),
-	    			val: obj.SMARTStatus
+	    			val: obj.smartstatus
 	    		},{
 	    			key: i18n.t('disk_report.bus_protocol'),
-	    			val: obj.BusProtocol
+	    			val: obj.busprotocol
 	    		},{
 	    			key: i18n.t('disk_report.type'),
-	    			val: obj.Internal == 1 ? i18n.t('disk_report.internal') : i18n.t('disk_report.external')
+	    			val: obj.internal == 1 ? i18n.t('disk_report.internal') : i18n.t('disk_report.external')
 	    		},
 	    		{
 	    			key: i18n.t('disk_report.encryption_status'),
@@ -85,11 +85,11 @@ var drawStoragePlots = function(serialNumber, divid) {
 		   	var fill = [
 		   		{
 		   			key: i18n.t('disk_report.used'),
-		   			cnt: obj.TotalSize - obj.FreeSpace
+		   			cnt: obj.totalsize - obj.freespace
 		   		},
 			    {
 			    	key: i18n.t('disk_report.free'),
-			    	cnt:obj.FreeSpace
+			    	cnt:obj.freespace
 			    }];
 
 			nv.addGraph(function() {
@@ -102,7 +102,7 @@ var drawStoragePlots = function(serialNumber, divid) {
 				    .labelsOutside(true)
 				    .labelType('value');
 
-				chart.title(format(obj.TotalSize));
+				chart.title(format(obj.totalsize));
 
 				//chart.pie.donut(true);
 

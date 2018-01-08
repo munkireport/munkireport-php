@@ -27,23 +27,23 @@ class Diskreport extends Migration
             $table->increments('id');
 
             $table->string('serial_number');
-            $table->bigInteger('TotalSize');
-            $table->bigInteger('FreeSpace');
-            $table->bigInteger('Percentage');
-            $table->string('SMARTStatus');
-            $table->string('VolumeType');
+            $table->bigInteger('totalsize');
+            $table->bigInteger('freespace');
+            $table->bigInteger('percentage');
+            $table->string('smartstatus');
+            $table->string('volumetype');
             $table->string('media_type');
-            $table->string('BusProtocol');
-            $table->integer('Internal');
-            $table->string('MountPoint');
-            $table->string('VolumeName');
-            $table->integer('CoreStorageEncrypted');
+            $table->string('busprotocol');
+            $table->integer('internal');
+            $table->string('mountpoint');
+            $table->string('volumename');
+            $table->integer('encrypted');
 
             $table->index('serial_number');
-            $table->index('MountPoint');
+            $table->index('mountpoint');
             $table->index('media_type');
-            $table->index('VolumeName');
-            $table->index('VolumeType');
+            $table->index('volumename');
+            $table->index('volumetype');
         });
 
         if ($migrateData) {
