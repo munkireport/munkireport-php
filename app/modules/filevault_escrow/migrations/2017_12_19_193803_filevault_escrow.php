@@ -27,20 +27,20 @@ class FilevaultEscrow extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
-            $table->string('EnabledDate');
-            $table->string('EnabledUser');
-            $table->string('LVGUUID');
-            $table->string('LVUUID');
-            $table->string('PVUUID');
-            $table->text('RecoveryKey');
-            $table->string('HddSerial');
+            $table->string('enableddate');
+            $table->string('enableduser');
+            $table->string('lvguuid');
+            $table->string('lvuuid');
+            $table->string('pvuuid');
+            $table->text('recoverykey');
+            $table->string('hddserial');
 
-            $table->index('EnabledDate');
-            $table->index('EnabledUser');
-            $table->index('LVGUUID');
-            $table->index('LVUUID');
-            $table->index('PVUUID');
-            $table->index('HddSerial');
+            $table->index('enableddate');
+            $table->index('enableduser');
+            $table->index('lvguuid');
+            $table->index('lvuuid');
+            $table->index('pvuuid');
+            $table->index('hddserial');
         });
 
         if ($migrateData) {
