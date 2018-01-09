@@ -22,7 +22,7 @@ The workflow:
    Note: This script isn't automatically downloaded by the client. Feel free to customize this script for your own needs.  
 
  The sample script does the following:  
- * Preforms some sanity checks such as making sure the OS is at least 10.8, Munkireport is installed,
+ * Performs some sanity checks such as making sure the OS is at least 10.8, Munkireport is installed,
 FileVault isn't already on and a recovery partition present.  
 
  * Saves the FileVault escrow data to /tmp/fvresults.plist  
