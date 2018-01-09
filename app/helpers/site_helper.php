@@ -81,11 +81,24 @@ function getdbh()
 {
     if (! isset($GLOBALS['dbh'])) {
         try {
+            $conn = conf('connection');
+            switch ($conn['driver']) {
+                case 'sqlite':
+                    $dsn = "sqlite:{$conn['database']}";
+                    break;
+                
+                case 'mysql':
+                    $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
+                    break;
+
+                default:
+                    throw new \Exception("Unknown driver in config", 1);
+            }
             $GLOBALS['dbh'] = new PDO(
-                conf('pdo_dsn'),
-                conf('pdo_user'),
-                conf('pdo_pass'),
-                conf('pdo_opts')
+                $dsn,
+                isset($conn['username']) ? $conn['username'] : '',
+                isset($conn['password']) ? $conn['password'] : '',
+                isset($conn['options']) ? $conn['options'] : []
             );
         } catch (PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());
@@ -366,24 +379,14 @@ function delete_event($serial, $module = '')
     $evtobj->reset($serial, $module);
 }
 
-
-// Original PHP code by Chirp Internet: www.chirp.com.au
-// Please acknowledge use of this code by including this header.
-function truncate_string($string, $limit = 100, $break = ".", $pad = "...")
+// Truncate string
+function truncate_string($string, $limit = 100, $pad = "...")
 {
-  // return with no change if string is shorter than $limit
     if (strlen($string) <= $limit) {
         return $string;
     }
 
-  // is $break present between $limit and the end of the string?
-    if (false !== ($breakpoint = strpos($string, $break, $limit))) {
-        if ($breakpoint < strlen($string) - 1) {
-            $string = substr($string, 0, $breakpoint) . $pad;
-        }
-    }
-
-    return $string;
+    return substr($string, 0, $limit - strlen($pad)) . $pad;
 }
 
 // Create a singleton moduleObj

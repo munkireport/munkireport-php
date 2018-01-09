@@ -7,6 +7,10 @@ return array(
     'listings' => array(
         'munki_facts' => array('view' => 'munki_facts_listing', 'i18n' => 'munki_facts.listing'),
     ),
-    'reports' => array(),
-    'widgets' => array()
+    'reports' => array(
+        'munki_facts' => array('view' => 'munki_facts_report', 'i18n' => 'munki_facts.reporttitle'),
+    ),
+    'widgets' => array(
+        'munki_facts' => array('view' => 'munki_facts_widget'),
+    )
 );

@@ -20,14 +20,14 @@ new Reportdata_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="disk_report.mountpoint" data-colname='diskreport.MountPoint'></th>
+		        <th data-i18n="disk_report.mountpoint" data-colname='diskreport.mountpoint'></th>
                 <th data-i18n="disk_report.media_type" data-colname='diskreport.media_type'></th>
-                <th data-i18n="disk_report.volume_type" data-colname='diskreport.VolumeType'></th>
-		        <th data-i18n="disk_report.percentage" data-sort='desc' data-colname='diskreport.Percentage'></th>
-		        <th data-i18n="disk_report.free" data-colname='diskreport.FreeSpace'></th>
-		        <th data-i18n="disk_report.total_size" data-colname='diskreport.TotalSize'></th>
-		    	<th data-i18n="disk_report.smartstatus" data-colname='diskreport.SMARTStatus'></th>
-		    	<th data-i18n="disk_report.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+                <th data-i18n="disk_report.volume_type" data-colname='diskreport.volumetype'></th>
+		        <th data-i18n="disk_report.percentage" data-sort='desc' data-colname='diskreport.percentage'></th>
+		        <th data-i18n="disk_report.free" data-colname='diskreport.freespace'></th>
+		        <th data-i18n="disk_report.total_size" data-colname='diskreport.totalsize'></th>
+		    	<th data-i18n="disk_report.smartstatus" data-colname='diskreport.smartstatus'></th>
+		    	<th data-i18n="disk_report.encryption_status" data-colname='diskreport.encrypted'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -80,7 +80,7 @@ new Reportdata_model;
                 type: "POST",
                 data: function(d){
 
-                    d.mrColNotEmpty = "FreeSpace";
+                    d.mrColNotEmpty = "freespace";
 
                     // Check for column in search
                     if(d.search.value){
@@ -132,8 +132,11 @@ new Reportdata_model;
 	        	var mediaType=$('td:eq(4)', nRow).html();
 	        	$('td:eq(4)', nRow).html(mediaType.toUpperCase())
                 
-                var volumeType=$('td:eq(5)', nRow).html();
-	        	$('td:eq(5)', nRow).html(volumeType.toUpperCase())
+                // Format Volume Type
+	        	var volumeType=$('td:eq(5)', nRow).html();
+	        	volumeType = volumeType == 'bootcamp' ? i18n.t('disk_report.bootcamp') :
+	        	(volumeType === 'fusion' ? i18n.t('disk_report.Fusion') : volumeType)
+	        	$('td:eq(5)', nRow).html(volumeType)
 
 	        	// Format disk usage
 	        	var disk=$('td:eq(6)', nRow).html();
@@ -154,7 +157,7 @@ new Reportdata_model;
 	        		(smartstatus)
 	        	$('td:eq(9)', nRow).html(smartstatus)
 
-	        	// Encryption Station
+	        	// Encryption Status
 	        	var encryptionstatus=$('td:eq(10)', nRow).html();
 	        	encryptionstatus = encryptionstatus == '1' ? i18n.t('disk_report.encrypted') :
 	        	(encryptionstatus === '0' ? i18n.t('disk_report.not_encrypted') : '')

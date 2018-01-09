@@ -17,7 +17,8 @@
         "rodneyrehm/plist": "^2.0",
         "doctrine/dbal": "~2.5",
         "symfony/debug": "~3.3",
-        "illuminate/view": "^5.5"
+        "illuminate/view": "^5.5",
+        "defuse/php-encryption": "^2.1"
     },
     "suggest": {
         "onelogin/php-saml": "^2.12 Required for SAML authentication",

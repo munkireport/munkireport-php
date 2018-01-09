@@ -13,12 +13,12 @@ class Usb_model extends \Model {
 		$this->rs['type'] = ''; // Mouse, Trackpad, Hub, etc.
 		$this->rs['manufacturer'] = '';
 		$this->rs['vendor_id'] = '';
-		$this->rs['device_speed'] = ''; // Speed
+		$this->rs['device_speed'] = ''; // USB Speed
 		$this->rs['internal'] = 0; // True or False
 		$this->rs['media'] = 0; // True or False
-		$this->rs['bus_power'] = 0; // True or False
-		$this->rs['bus_power_used'] = 0; // True or False
-		$this->rs['extra_current_used'] = 0; // True or False
+		$this->rs['bus_power'] = 0;
+		$this->rs['bus_power_used'] = 0;
+		$this->rs['extra_current_used'] = 0;
 		$this->rs['usb_serial_number'] = ''; // USB device serial number
 		$this->rs['printer_id'] = ''; $this->rt['printer_id'] = 'TEXT'; // 1284 Device ID information, only used by printers
 

@@ -5,16 +5,32 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Caching extends Migration
 {
+    private $tableName = 'caching';
+    private $tableNameV2 = 'caching_v2';
+
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('caching', function (Blueprint $table) {
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+            $migrateData = true;
+        }
+
+
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->nullable();
 
             $table->string('collectiondate')->nullable();
             $table->string('expirationdate')->nullable();
-            $table->integer('collectiondateepoch')->nullable();
+            $table->bigInteger('collectiondateepoch')->nullable();
             $table->bigInteger('requestsfrompeers')->nullable();
             $table->bigInteger('requestsfromclients')->nullable();
             $table->bigInteger('bytespurgedyoungerthan1day')->nullable();
@@ -43,13 +59,49 @@ class Caching extends Migration
             $table->index('bytesfromcachetoclients');
             $table->index('bytesfrompeerstoclients');
             $table->index('bytesfromorigintoclients');
-            // $table->timestamps();
         });
-    }
 
+        if ($migrateData) {
+            $capsule::select("INSERT INTO 
+                $this->tableName
+            SELECT
+                id,
+                serial_number,
+                collectiondate,
+                expirationdate,
+                collectiondateepoch,
+                requestsfrompeers,
+                requestsfromclients,
+                bytespurgedyoungerthan1day,
+                bytespurgedyoungerthan7days,
+                bytespurgedyoungerthan30days,
+                bytespurgedtotal,
+                bytesfrompeerstoclients,
+                bytesfromorigintopeers,
+                bytesfromorigintoclients,
+                bytesfromcachetopeers,
+                bytesfromcachetoclients,
+                bytesdropped,
+                repliesfrompeerstoclients,
+                repliesfromorigintopeers,
+                repliesfromorigintoclients,
+                repliesfromcachetopeers,
+                repliesfromcachetoclients,
+                bytesimportedbyxpc,
+                bytesimportedbyhttp,
+                importsbyxpc,
+                importsbyhttp
+            FROM
+                $this->tableNameV2");
+        }
+    }
+    
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('caching');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        }
     }
 }

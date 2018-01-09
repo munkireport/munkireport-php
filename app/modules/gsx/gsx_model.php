@@ -1,5 +1,5 @@
 <?php
-class gsx_model extends \Model
+class Gsx_model extends \Model
 {
     
     protected $error = '';

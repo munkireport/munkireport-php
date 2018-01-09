@@ -127,8 +127,11 @@ class Gpu_model extends \Model {
 				$this->rs['vram'] = ($device['vram']." (Shared)");
             }
             
-            // Fix GMA model name
-            $this->rs['model'] = str_replace("GMA","Intel GMA",$this->rs['model']);
+            // Fix model names
+            $this->rs['model'] = str_replace(array("GMA","ATY,Radeon"),array("Intel GMA","ATI Radeon"),$this->rs['model']);
+            
+            // Fix vendors name
+            $this->rs['vendor'] = str_replace(array("sppci_vendor_amd","sppci_vendor_Nvidia"),array("AMD","NVIDIA"),$this->rs['model']);
             
 			// Save the GPU
 			$this->id = '';

@@ -37,7 +37,7 @@ class manager extends Controller
         $status = array('status' => 'undefined', 'rowcount' => 0);
 
         // Don't process these tables
-        $skip_tables = array('migration', 'business_unit', 'machine_group');
+        $skip_tables = array('migration', 'migrations', 'business_unit', 'machine_group');
 
         if (! $this->authorized('delete_machine')) {
             $status['status'] = 'unauthorized';
@@ -66,6 +66,7 @@ class manager extends Controller
             foreach ($machine->query($tbl_query) as $obj) {
                 $tables[] = $obj->name;
             }
+            
 
             // Get database handle
             $dbh = getdbh();
@@ -82,14 +83,7 @@ class manager extends Controller
                         continue;
                     }
 
-                    // hash uses serial FIXME
-                    if ($table == 'hash') {
-                        $serial = 'serial';
-                    } else {
-                        $serial = 'serial_number';
-                    }
-
-                    $sql = "DELETE FROM $table WHERE `$serial`=?";
+                    $sql = "DELETE FROM $table WHERE `serial_number`=?";
                     if (! $stmt = $dbh->prepare($sql)) {
                         die('Prepare '.$sql.' failed');
                     }

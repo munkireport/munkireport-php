@@ -76,25 +76,31 @@ class Database extends Controller
             $obj = new View();
 
             try {
-                $migrationFiles = $migrator->run($dirs, Array('pretend' => false));
+                $migrationFiles = $migrator->run($dirs, ['pretend' => false]);
 
-                $obj->view('json', array('msg' => Array(
-                    'files' => $migrationFiles,
-                    'notes' => $migrator->getNotes())
-                ));
+                $obj->view('json', [
+                    'msg' => [
+                        'files' => $migrationFiles,
+                        'notes' => $migrator->getNotes()
+                    ]
+                ]);
             } catch (\PDOException $exception) {
-                $obj->view('json', array('msg' => Array(
-                    'notes' => $migrator->getNotes(),
-                    'error' => $exception->getMessage()
-                )));
+                $obj->view('json', [
+                    'msg' => [
+                        'notes' => $migrator->getNotes(),
+                        'error' => $exception->getMessage()
+                    ]
+                ]);
             }
         } catch (\Exception $e) {
             $obj = new View();
-            $obj->view('json', array('msg' => Array(
-                'error' => true,
-                'error_message' => $e->getMessage(),
-                'error_trace' => $e->getTrace()
-            )));
+            $obj->view('json', [
+                'msg' => [
+                    'error' => true,
+                    'error_message' => $e->getMessage(),
+                    'error_trace' => $e->getTrace()
+                ]
+            ]);
         }
     }
     

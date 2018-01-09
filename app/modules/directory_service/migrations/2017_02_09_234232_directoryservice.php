@@ -5,10 +5,25 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Directoryservice extends Migration
 {
+    private $tableName = 'directoryservice';
+    private $tableNameV2 = 'directoryservice_v2';
+
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('directoryservice', function (Blueprint $table) {
+        $migrateData = false;
+
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            // Migration already failed before, but didnt finish
+            throw new Exception("previous failed migration exists");
+        }
+
+        if ($capsule::schema()->hasTable($this->tableName)) {
+            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+            $migrateData = true;
+        }
+
+        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('serial_number')->unique();
@@ -40,18 +55,48 @@ class Directoryservice extends Migration
             $table->index('allowedadmingroups');
             $table->index('directory_service_comments');
             $table->index('which_directory_service');
-//            $table->timestamps();
         });
+
+        if ($migrateData) {
+            $capsule::select('INSERT INTO 
+                directoryservice (serial_number, which_directory_service, directory_service_comments, adforest, addomain, computeraccount, createmobileaccount, requireconfirmation, forcehomeinstartup, mounthomeassharepoint, usewindowsuncpathforhome, networkprotocoltobeused, defaultusershell, mappinguidtoattribute, mappingusergidtoattribute, mappinggroupgidtoattr, generatekerberosauth, preferreddomaincontroller, allowedadmingroups, authenticationfromanydomain, packetsigning, packetencryption, passwordchangeinterval, restrictdynamicdnsupdates, namespacemode) 
+            SELECT 
+                serial_number,
+                which_directory_service,
+                directory_service_comments,
+                adforest,
+                addomain,
+                computeraccount,
+                createmobileaccount,
+                requireconfirmation,
+                forcehomeinstartup,
+                mounthomeassharepoint,
+                usewindowsuncpathforhome,
+                networkprotocoltobeused,
+                defaultusershell,
+                mappinguidtoattribute,
+                mappingusergidtoattribute,
+                mappinggroupgidtoattr,
+                generatekerberosauth,
+                preferreddomaincontroller,
+                allowedadmingroups,
+                authenticationfromanydomain,
+                packetsigning,
+                packetencryption,
+                passwordchangeinterval,
+                restrictdynamicdnsupdates,
+                namespacemode
+            FROM
+                directoryservice_v2');
+        }
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('directoryservice');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        }
     }
 }

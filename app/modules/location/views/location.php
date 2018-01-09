@@ -108,11 +108,12 @@ mapObj.markerClickFunction = function(machine, latlng) {
       e.stopPropagation();
       e.preventDefault();
     }
-    var url = machine.photo_url;
-    var fileurl = machine.photo_file_url;
+	var configCode = machine.serial_number.substr(8);
+	var iconUrlTemplate = "<?php echo conf('apple_hardware_icon_url');?>";
+	var iconUrl = iconUrlTemplate.replace('%s', configCode);
 
     var infoHtml = '<div class="info">' +
-	'<img style="width:120px; height: auto" src="https://km.support.apple.com/kb/securedImage.jsp?configcode='+machine.serial_number.substr(8)+'&amp;size=240x240" />' +
+	'<img style="width:120px; height: auto" src="'+iconUrl+'" />' +
       '<div class="info-body">' +
       machine.long_username +
       '<br/>' +
