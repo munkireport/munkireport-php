@@ -65,7 +65,7 @@ class Auth extends Controller
                 $remote_ip = getRemoteAddress();
 
                 if (! $recaptchaObj->verify($response, $remote_ip)) {
-                    error('', 'auth.capthca.invalid');
+                    error('', 'auth.captcha.invalid');
                     $pre_auth_failed = true;
                 }
             } else {

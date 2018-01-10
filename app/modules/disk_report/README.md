@@ -10,7 +10,8 @@ The table provides the following information per client:
 * FreeSpace (int) Size in Bytes
 * Percentage (int) percentage 0-100
 * SMARTStatus (string) Verified, Unsupported or Failing
-* VolumeType (string) SSD, FUSION, RAID or HDD
+* VolumeType (string) HFS+, APFS, BOOTCAMP
+* media_type (string) SSD, FUSION, RAID or HDD
 * BusProtocol (string) PCI, SAS, SATA, USB
 * Internal (bool)
 * MountPoint (string)

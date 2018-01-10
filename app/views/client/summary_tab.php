@@ -2,7 +2,7 @@
 		<div class="col-lg-4">
 			<div class="row">
 				<div class="col-xs-6">
-					<img class="img-responsive" src="https://km.support.apple.com.edgekey.net/kb/securedImage.jsp?configcode=<?php echo substr($serial_number, 8); ?>&amp;size=240x240" />
+					<img class="img-responsive" src="<?php printf(conf('apple_hardware_icon_url'), substr($serial_number, 8)); ?>" />
 				</div>
 				<div class="col-xs-6" style="font-size: 1.4em; overflow: hidden">
 					<span class="label label-info">macOS <span class="mr-os_version"></span></span><br>

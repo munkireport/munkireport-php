@@ -11,6 +11,7 @@ $(document).on('appReady', function(){
 			
 			// Generate rows from data
 			var rows = ''
+            var drive_health = ""
 			for (var prop in d){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
@@ -42,23 +43,24 @@ $(document).on('appReady', function(){
 					   }
                     } else if (prop == "overall_health"){
                         if (d['overall_health'] == "PASSED"){
-                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-success">'+d['overall_health']+'</span></td></tr>';
+                           var drive_health = " <span class='label label-success'>"+i18n.t('smart_stats.passed')+"</span>"
                         } else if (d['overall_health'] == "UNKNOWN!"){
-                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-warning">'+d['overall_health']+'</span></td></tr>';
+                            var drive_health = " <span class='label label-warning'>"+i18n.t('unknown')+"</span>"
                         } else if (d['overall_health'] == "FAILED!"){
-                            rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td><span class="label label-danger">'+d['overall_health']+'</span></td></tr>';
-                        } else { ; }
+                           var drive_health = " <span class='label label-danger'>"+i18n.t('failing')+"</span>"
+                        } else { var drive_health = d['overall_health'] }
                     } else {
                         rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
                     }
 				}
 			}
             
+            
 			$('#smart_stats-tab')
 				.append($('<h4>')
 					.append($('<i>')
 						.addClass('fa fa-hdd-o '))
-					.append(' /dev/disk'+d.disk_number))
+					.append(" /dev/disk"+d.disk_number+drive_health))
 				.append($('<div style="max-width:650px;">')
 					.addClass('table-responsive')
 					.append($('<table>')

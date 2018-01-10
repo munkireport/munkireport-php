@@ -58,6 +58,11 @@ function create_table($model)
  **/
 function migrate($model_obj)
 {
+    $ctl = new Controller;
+    if (! $ctl->authorized('global')) {
+        throw new Exception("Only migrate in admin session", 1);
+    }
+    
     $model_name = get_class($model_obj);
     $module_name = str_replace('_model', '', strtolower($model_name));
     $target_version = $model_obj->get_version();
@@ -82,6 +87,10 @@ function migrate($model_obj)
         $number = intval(strtok($name, '_'));
 
         $migration_list[$number] = $file;
+    }
+    
+    if ($current_version > 0 && ! isset($migration_list[$current_version])) {
+        throw new Exception($model_name.' migration '.$current_version.' not found');
     }
 
     if ($target_version > 0 && ! isset($migration_list[$target_version])) {

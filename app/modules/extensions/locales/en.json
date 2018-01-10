@@ -1,0 +1,12 @@
+{
+    "clienttab": "Extensions",
+    "noextensions": "No Third Party Extensions",
+    "reporttitle": "Extensions Report",
+    "name": "Name",
+    "path": "Path",
+    "executable": "Executable",
+    "bundle_id": "Bundle ID",
+    "version": "Version",
+    "codesign": "Codesign Cert",
+    "report": "Extensions Report"
+}

@@ -37,6 +37,26 @@ def _OSVersion():
 
     return output.split('.')[1]
 
+def _GetAPFSDeviceInfoDict():
+    """get list of deviceIDs with extra info"""
+    deviceIdDict = {}
+    apfslist = _DictFromDiskutilAPFSList()
+    for container in apfslist['Containers']:
+        fusion = container.get('Fusion')
+        for volume in container['Volumes']:
+            deviceID = volume['DeviceIdentifier']
+            encrypted = volume.get('Encryption')
+            deviceIdDict[deviceID] = {'fusion': fusion,
+                'encrypted': encrypted}
+    return deviceIdDict
+
+def _DictFromDiskutilAPFSList():
+    """calls diskutil apfs list.
+        info: dictionary from resulting plist output
+    """
+    command = ["/usr/sbin/diskutil", "apfs", "list", "-plist"]
+    return _DictFromSubprocess(command)
+
 def _DictFromDiskutilList():
     """calls diskutil list -plist and returns as dict."""
 
@@ -44,7 +64,7 @@ def _DictFromDiskutilList():
     return _DictFromSubprocess(command)
 
 def _DictFromDiskutilList_SnowLeopard():
-    """as Snow Leopard delivers a different output from diskutil 
+    """as Snow Leopard delivers a different output from diskutil
     list we will mimic the output from newer versions of OS X
 
     """
@@ -88,8 +108,8 @@ def filteredDiskInfo(deviceid):
 
     keys = ["BusProtocol", "Content", "CoreStorageCompositeDisk",
             "CoreStorageEncrypted", "CoreStorageLVGUUID", "Ejectable",
-            "FreeSpace", "Internal",  "MountPoint", "RAIDMaster",
-            "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus",
+            "FilesystemName", "FreeSpace", "Internal",  "MountPoint",
+            "RAIDMaster", "RAIDMemberUUID", "RAIDSetMembers", "SMARTStatus",
             "SolidState", "TotalSize", "VolumeName"]
 
     out = {}
@@ -148,6 +168,12 @@ def _DictFromSubprocess(command, stdin=None):
         except xml.parsers.expat.ExpatError:
             raise Exception("Error creating plist from output: %s" % stdout)
 
+def _isDiskImage(diskInfo):
+    diskimage = diskInfo.get('BusProtocol')
+    if diskimage == 'Disk Image':
+        return True
+    return False
+
 def DiskReport():
     """ Retrieve a list of dicts containing disk info """
     volumeList = []
@@ -156,13 +182,25 @@ def DiskReport():
     searchCS = False
 
     for disk in AllDisksAndPartitions():
-
+        if getattr(disk, 'APFSVolumes', None):
+            apfsInfoList = _GetAPFSDeviceInfoDict()
+            for apfsvolume in disk.APFSVolumes:
+                mountpoint = apfsvolume.get('MountPoint')
+                if mountpoint and mountpoint != '/private/var/vm':
+                    deviceId = apfsvolume['DeviceIdentifier']
+                    diskInfo = filteredDiskInfo(deviceId)
+                    if _isDiskImage(diskInfo):
+                        # Skip Disk Images
+                        continue
+                    if apfsInfoList.get(deviceId):
+                        diskInfo.update(apfsInfoList[deviceId])
+                    volumeList.append(diskInfo)
         if getattr(disk, 'Partitions', None):
             for partition in disk.Partitions:
 
                 if partition.Content == 'Apple_HFS' and partition.get('MountPoint'):
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
-                    if diskInfo['BusProtocol'] == 'Disk Image':
+                    if _isDiskImage(diskInfo):
                         # Skip Disk Images
                         continue
                     volumeList.append(diskInfo)
@@ -184,7 +222,7 @@ def DiskReport():
                 elif partition.Content == 'Apple_RAID':
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
                     appleRaidDict[diskInfo['RAIDMemberUUID']] = diskInfo
-                
+
                 elif partition.Content == 'Microsoft Basic Data':
                     diskInfo = filteredDiskInfo(partition.DeviceIdentifier)
                     volumeList.append(diskInfo)
@@ -193,7 +231,7 @@ def DiskReport():
             if disk.Content == 'Apple_HFS' and disk.get('MountPoint'):
                 diskInfo = filteredDiskInfo(disk.DeviceIdentifier)
 
-                if diskInfo['BusProtocol'] == 'Disk Image':
+                if _isDiskImage(diskInfo):
                     # Skip Disk Images
                     continue
 

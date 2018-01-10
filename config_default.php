@@ -250,8 +250,12 @@
 	| '^$'
 	|
 	*/
-	$conf['bundleid_ignorelist'][] = 'com.parallels.winapp.*';
-	$conf['bundleid_ignorelist'][] = 'com.vmware.proxyApp.*';
+	$conf['bundleid_ignorelist'] = array(
+	    'com.parallels.winapp.*',
+	    'com.vmware.proxyApp.*',
+	    'com.apple.print.PrinterProxy',
+	    'com.google.Chrome.app.*',
+	);
 
 	/*
 	|===============================================
@@ -268,7 +272,13 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app';
 	|
 	*/
-	$conf['bundlepath_ignorelist'] = array('/System/Library/.*');
+	$conf['bundlepath_ignorelist'] = array(
+	    '/System/Library/.*',
+	    '.*/Library/AutoPkg.*',
+	    '/.DocumentRevisions-V100/.*',
+	    '/Library/Application Support/Adobe/Uninstall/.*',
+	    '.*/Library/Application Support/Google/Chrome/Default/Web Applications/.*',
+	);
 
 	/*
 	|===============================================
@@ -521,7 +531,16 @@
 	|
 	*/
 	$conf['request_timeout'] = 5;
-
+	
+	/*
+	|===============================================
+	| Apple Hardware Icon Url
+	|===============================================
+	|
+	| URL to retrieve icon from Apple
+	|
+	*/
+	$conf['apple_hardware_icon_url'] = 'https://km.support.apple.com/kb/securedImage.jsp?configcode=%s&amp;size=240x240';
 
 	/*
 	|===============================================
