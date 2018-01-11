@@ -24,7 +24,7 @@ class show extends Controller
 
     public function dashboard($which = '')
     {
-        $data['widget'] = new Widgets();
+        // $data['widget'] = new Widgets();
 
         if ($which) {
             $view = 'dashboard/'.$which;
@@ -41,8 +41,18 @@ class show extends Controller
             $view = 'error/client_error';
         }
 
-        $obj = new View();
-        $obj->view($view, $data);
+//        $obj = new View();
+//        $obj->view($view, $data);
+
+        $view = $this->view('show/dashboard');
+        $view->widget = new Widgets();
+        $view->conf_dashboard_layout = conf('dashboard_layout', Array());
+        //        $view->login = $login;
+//        $view->url = url("auth/login/$return");
+//        $view->https_disabled = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off";
+//        $view->secure_url = secure_url();
+
+        echo $view->render();
     }
 
     public function listing($module = '', $name = '')

@@ -2,6 +2,10 @@
 
 namespace munkireport\lib;
 
+use Philo\Blade;
+
+
+
 /**
 * Widgets class
 *
@@ -68,6 +72,18 @@ class Widgets
     {
         $widget = $this->get($widgetName);
         $viewObj->view($widget->file, $widget->vars, $widget->path);
+    }
+
+    public function render($widgetName)
+    {
+        $cache_path = APP_ROOT . '/storage/framework/views';
+
+        if (isset($this->widgetList[$widgetName])) {
+            $widget = $this->widgetList[$widgetName];
+            $blade = new Blade($widget->path, $cache_path);
+            $vo = $blade->view()->make($widget->file);
+            echo $vo->render();
+        }
     }
 
 
