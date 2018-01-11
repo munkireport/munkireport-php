@@ -1,8 +1,12 @@
-<?php $this->view('partials/head', array(
-	"scripts" => array(
-		"clients/client_list.js"
-	)
-)); ?>
+@extends('layouts.app')
+
+@push('scripts')
+    <script src="{{ $subdirectory }}assets/js/clients/client_list.js"></script>
+    <script src="{{ $subdirectory }}assets/js/munkireport.autoupdate.js"></script>
+    <script src="{{ $subdirectory }}assets/js/googlemaps/markerclusterer.js"></script>
+@endpush
+
+@section('content')
 
 <div class="container">
 
@@ -19,8 +23,6 @@
 <?php else:?>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <?php endif?>
-<script src="<?php echo conf('subdirectory'); ?>assets/js/googlemaps/markerclusterer.js"></script>
-<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.autoupdate.js"></script>
 
 <script>
 
@@ -130,4 +132,4 @@ google.maps.event.addDomListener(window, 'load', mapObj.init);
 
 </script>
 
-<?php $this->view('partials/foot'); ?>
+@endsection

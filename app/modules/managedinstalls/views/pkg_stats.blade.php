@@ -1,4 +1,10 @@
-<?php $this->view('partials/head', array('scripts' => array("clients/client_list.js"))); ?>
+@extends('layouts.app')
+
+@push('scripts')
+    <script src="{{ $subdirectory }}assets/js/clients/client_list.js"></script>
+@endpush
+
+@section('content')
 
 <div class="container">
 
@@ -79,5 +85,4 @@ $(document).on('appReady', function(e, lang) {
 });
 
 </script>
-
-<?php $this->view('partials/foot'); ?>
+@endsection

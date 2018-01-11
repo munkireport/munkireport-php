@@ -66,23 +66,20 @@ class show extends Controller
 
     public function report($module = '', $name = '')
     {
+        $report = $this->modules->getReport($module, $name);
 
-        $data = array(
-            'widget' => new Widgets(),
-        );
-
-        if ($report = $this->modules->getReport($module, $name)) {
-            $data['page'] = 'clients';
-            $viewpath = $report->view_path;
-            $view = $report->view;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-            $viewpath = conf('view_path');
+        if (!$report) {
+            $view = $this->view('error/client_error');
+            $view->status_code = 404;
+            echo $view->render();
+            return;
         }
 
-        $obj = new View();
-        $obj->view($view, $data, $viewpath);
+        $view = $this->view($report->view, Array($report->view_path));
+        $view->widget = new Widgets();
+        $view->page = 'clients';
+
+        echo $view->render();
     }
 
     public function custom($which = 'default')

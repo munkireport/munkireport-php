@@ -70,9 +70,15 @@
 
                 @foreach($tab_list as $name => $data)
 
-                <div class="tab-pane @isset($data['class'])active@endisset" id='{{ $name }}'>
-                    <?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:VIEW_PATH);?>
-                </div>
+                    @if (isset($data['class']))
+                        <div class="tab-pane active" id='{{ $name }}'>
+                    @else
+                        <div class="tab-pane" id='{{ $name }}'>
+                    @endif
+                            <?php $viewVars = isset($data['view_vars']) ? $data['view_vars'] : Array(); ?>
+                        @includeIf($data['view'], $viewVars)
+                        <?php //$this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:VIEW_PATH);?>
+                    </div>
 
                 @endforeach
 
