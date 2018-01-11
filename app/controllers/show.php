@@ -24,52 +24,44 @@ class show extends Controller
 
     public function dashboard($which = '')
     {
-        // $data['widget'] = new Widgets();
-
         if ($which) {
-            $view = 'dashboard/'.$which;
-        } else {
-            if (file_exists(VIEW_PATH.'dashboard/custom_dashboard'.EXT)) {
-                $view = 'dashboard/custom_dashboard';
-            } else {
-                $view = 'dashboard/dashboard';
+            if (! file_exists(VIEW_PATH.$view.EXT)) {
+                $view = $this->view('error/client_error');
+                $view->status_code = 404;
+                echo $view->render();
+                return;
             }
+
+            $view = $this->view('dashboard/'.$which);
+
+        } else if (file_exists(VIEW_PATH.'dashboard/custom_dashboard'.EXT)) {
+            $view = $this->view('show/custom_dashboard');
+        } else {
+            $view = $this->view('show/dashboard');
         }
 
-        if (! file_exists(VIEW_PATH.$view.EXT)) {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-        }
-
-//        $obj = new View();
-//        $obj->view($view, $data);
-
-        $view = $this->view('show/dashboard');
         $view->widget = new Widgets();
         $view->conf_dashboard_layout = conf('dashboard_layout', Array());
-        //        $view->login = $login;
-//        $view->url = url("auth/login/$return");
-//        $view->https_disabled = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off";
-//        $view->secure_url = secure_url();
 
         echo $view->render();
     }
 
     public function listing($module = '', $name = '')
     {
-        if ($listing = $this->modules->getListing($module, $name)) {
-            $data['page'] = 'clients';
-            $data['scripts'] = array("clients/client_list.js");
-            $viewpath = $listing->view_path;
-            $view = $listing->view;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-            $viewpath = conf('view_path');
+        $listing = $this->modules->getListing($module, $name);
+
+        if (!$listing) {
+            $view = $this->view('error/client_error');
+            $view->status_code = 404;
+            echo $view->render();
+            return;
         }
 
-        $obj = new View();
-        $obj->view($view, $data, $viewpath);
+        $view = $this->view($listing->view, Array($listing->view_path));
+        $view->page = 'clients';
+        $view->scripts = Array("clients/client_list.js");
+        
+        echo $view->render();
     }
 
     public function report($module = '', $name = '')

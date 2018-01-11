@@ -73,12 +73,12 @@ class Controller extends KISS_Controller
      *
      * @return Blade
      */
-    protected function view($name)
+    protected function view($name, $additionalViewPaths = Array())
     {
-        $views_path = APP_ROOT . '/resources/views';
-        $cache_path = APP_ROOT . '/storage/framework/views';
+        $viewPaths = Array(APP_ROOT . '/resources/views');
+        $cachePath = APP_ROOT . '/storage/framework/views';
 
-        $blade = new Blade($views_path, $cache_path);
+        $blade = new Blade(array_merge($viewPaths, $additionalViewPaths), $cachePath);
         $view = $blade->view()->make($name);
 
         $view->role = $_SESSION['role'];
