@@ -1,5 +1,6 @@
-<?php $this->view('partials/head'); ?>
+@extends('layouts.app')
 
+@section('content')
 <div class="container">
 
     <div class="row">
@@ -149,6 +150,4 @@ $(document).on('appReady', function(e, lang) {
     });
 });
 </script>
-
-
-<?php $this->view('partials/foot'); ?>
+@endsection

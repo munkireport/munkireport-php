@@ -1,5 +1,6 @@
-<?php $this->view('partials/head'); ?>
+@extends('layouts.app')
 
+@section('content')
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4">
@@ -7,22 +8,10 @@
 		        	<form id="login-form" action="<?php echo $loginurl?>" method="get" accept-charset="UTF-8" class="form-horizontal">
 						<fieldset>
 							<legend>
-
-								<?php echo conf('sitename'); ?>
-
+								{{ $sitename }}
 							</legend>
 
-					    	<?php foreach($GLOBALS['alerts'] AS $type => $list): ?>
-
-						    	<?php foreach ($list AS $msg): ?>
-
-								<p class="text-<?php echo $type; ?>"><?php echo $msg; ?></p>
-
-								<?php endforeach; ?>
-
-							<?php endforeach; ?>
-
-							<p data-i18n="auth.logout_success"></p>
+							<p data-i18n="auth.not_authorized"></p>
 							<p><button type="submit" class="btn btn-primary" data-i18n="auth.signin"></button></p>
 
 			            </fieldset>
@@ -31,5 +20,5 @@
 			</div>
 		</div>
 	</div><!-- /container -->
-	
-	<?php $this->view('partials/foot'); ?>
+@endsection
+

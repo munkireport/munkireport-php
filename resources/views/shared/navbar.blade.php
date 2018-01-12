@@ -128,7 +128,7 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user"></i> <?php echo $_SESSION['user']; ?>
+                        <i class="fa fa-user"></i> {{ $user }}
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
