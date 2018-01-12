@@ -95,6 +95,32 @@ class Controller extends KISS_Controller
         $view->debug = conf('debug');
         $view->sitename = conf('sitename');
 
+        function map_admin_views($file) {
+            return "admin/show/" . strtok($file, ".");
+        }
+
+        $themes = array_filter(scandir(PUBLIC_ROOT . 'assets/themes'), function($theme) {
+            return $theme != 'fonts' && strpos($theme, '.') === false;
+        });
+
+        $view->themes = $themes;
+
+        $locales = array_filter(scandir(PUBLIC_ROOT . 'assets/locales'), function($locale) {
+             return strpos($locale, 'json') !== false;
+        });
+
+        $view->locales = $locales;
+
+//        $admin_php_files = array_filter(scandir(conf('view_path') . 'admin'), function($file) {
+//            return strpos($file, 'php') !== false;
+//        });
+//
+//        $admin_views = array_map(function($php) {
+//            return "admin/show/" . strtok($php, ".");
+//        }, $admin_php_files);
+
+//        $view->admin_views = $admin_views;
+
         return $view;
     }
 

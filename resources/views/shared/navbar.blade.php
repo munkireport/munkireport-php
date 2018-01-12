@@ -1,4 +1,4 @@
-
+<?php $page = $GLOBALS[ 'engine' ]->get_uri_string(); ?>
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
     <div class="container">
         <div class="navbar-header">
@@ -8,11 +8,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?php echo url(''); ?>"><?php echo conf('sitename'); ?></a>
+            <a class="navbar-brand" href="<?php echo url(''); ?>">{{ $sitename }}</a>
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
-                <?php $page = $GLOBALS[ 'engine' ]->get_uri_string(); ?>
 
                 <li <?php echo $page==''?'class="active"':''; ?>>
                     <a href="<?php echo url(); ?>">
@@ -32,8 +31,8 @@
 
                         <?php foreach($modules->getDropdownData('reports', 'show/report', $page) as $item): ?>
 
-                        <li class="<?=$item->class?>">
-                            <a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
+                        <li class="{{ $item->class }}">
+                            <a href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
                         </li>
 
                         <?php endforeach; ?>
@@ -53,9 +52,9 @@
 
                         <?php foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item): ?>
 
-                        <li class="<?=$item->class?>">
-                            <a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
-                        </li>
+                            <li class="{{ $item->class }}">
+                                <a href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
+                            </li>
 
                         <?php endforeach; ?>
 
@@ -63,7 +62,7 @@
 
                 </li>
 
-                <?php if($_SESSION['role'] == 'admin'):?>
+                @if ($role == 'admin')
                 <?php $url = 'admin/show/'; ?>
                 <li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -89,7 +88,7 @@
                     </ul>
 
                 </li>
-                <?php endif?>
+                @endif
 
                 <li>
                     <a href="#" class="filter-popup">
@@ -106,17 +105,9 @@
                         <i class="fa fa-wrench"></i>
                     </a>
                     <ul class="dropdown-menu theme">
-
-                        <?php foreach(scandir(PUBLIC_ROOT.'assets/themes') AS $theme): ?>
-
-                        <?php if( $theme != 'fonts' && strpos($theme, '.') === false):?>
-
-                        <li><a data-switch="<?php echo $theme; ?>" href="#"><?php echo $theme; ?></a></li>
-
-                        <?php endif; ?>
-
-                        <?php endforeach; ?>
-
+                        @foreach ($themes as $theme)
+                            <li><a data-switch="{{ $theme }}" href="#">{{ $theme }}</a></li>
+                        @endforeach
                     </ul>
                 </li>
 
@@ -126,19 +117,10 @@
                         <i class="fa fa-globe"></i>
                     </a>
                     <ul class="dropdown-menu locale">
-
-                        <?php foreach(scandir(PUBLIC_ROOT.'assets/locales') AS $list_url): ?>
-
-                        <?php if( strpos($list_url, 'json')):?>
-
-                        <?php $lang = strtok($list_url, '.'); ?>
-
-                        <li><a href="<?php echo url($page, false, ['setLng' => $lang]); ?>" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
-
-                        <?php endif; ?>
-
-                        <?php endforeach; ?>
-
+                        @foreach ($locales as $locale)
+                            <?php $lang = strtok($locale, '.'); ?>
+                            <li><a href="<?php echo url($page, false, ['setLng' => $lang]); ?>" data-i18n="nav.lang.{{ $lang }}">{{ $lang }}</a></li>
+                        @endforeach
                     </ul>
                 </li>
 
