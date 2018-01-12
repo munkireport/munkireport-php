@@ -25,7 +25,7 @@ class Servermetrics extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->integer('afp_sessions'); // number of afp connections
             $table->integer('smb_sessions'); // number of smb connections
             $table->float('caching_cache_toclients'); //
