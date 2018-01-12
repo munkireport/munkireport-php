@@ -40,7 +40,8 @@ class Certificate extends Migration
         if ($migrateData) {
             $capsule::select('INSERT INTO 
                 certificate
-            SELECT 
+            SELECT
+                id,
                 serial_number,
                 cert_exp_time,
                 cert_path,
