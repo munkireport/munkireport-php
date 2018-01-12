@@ -46,6 +46,7 @@ class Comment extends Migration
                 section,
                 user,
                 text,
+                html,
                 timestamp
             FROM
                 $this->tableNameV2");
