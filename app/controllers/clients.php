@@ -3,6 +3,7 @@
 namespace munkireport\controller;
 
 use \Controller, \View;
+use Doctrine\DBAL\Driver\PDOException;
 use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model;
 
 
@@ -36,17 +37,19 @@ class clients extends Controller
      **/
     public function get_data($serial_number = '')
     {
-        $obj = new View();
+        try {
+            $obj = new View();
 
-        if (authorized_for_serial($serial_number)) {
-            $machine = new Machine_model;
-            new Reportdata_model;
-            new Disk_report_model;
-            new Warranty_model;
-            new Localadmin_model;
-            new Security_model;
+            if (authorized_for_serial($serial_number)) {
+                $machine = new Machine_model;
+                new Reportdata_model;
+                new Disk_report_model;
+                new Warranty_model;
+                new Localadmin_model;
+                new Security_model;
 
-            $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
+                $sql
+                    = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
 			s.gatekeeper, s.sip, s.ssh_users, s.ard_users, s.firmwarepw, s.firewall_state, s.skel_state,
 			w.purchase_date, w.end_date, w.status, l.users, d.totalsize, d.freespace,
@@ -60,9 +63,15 @@ class clients extends Controller
                 WHERE m.serial_number = ?
                 ";
 
-            $obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
-        } else {
-            $obj->view('json', array('msg' => array()));
+                $obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
+            } else {
+                $obj->view('json', array('msg' => array()));
+            }
+        } catch (\PDOException $exception) {
+            $obj->view('json', array('msg' => Array(
+                'error' => true,
+                'error_message' => 'Database Exception: ' . $exception->getMessage(),
+                'error_trace' => $exception->getTrace())));
         }
     }
 
