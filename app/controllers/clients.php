@@ -96,9 +96,6 @@ class clients extends Controller
      **/
     public function detail($sn = '')
     {
-        $data = array('serial_number' => $sn);
-        $data['scripts'] = array("clients/client_detail.js");
-
         $machine = new Machine_model($sn);
 
         // Check if machine exists/is allowed for this user to view
@@ -108,7 +105,7 @@ class clients extends Controller
             $view = $this->view('client/client_detail');
         }
 
-        $view->data = $data;
+        $view->serial_number = $sn;
 
         // Tab list, each item should contain:
         //	'view' => path/to/tab
@@ -117,7 +114,7 @@ class clients extends Controller
         // 'view_vars' => array with variables to pass to the views
         // 'badge' => id of a badge for this tab
         $tab_list = array(
-            'summary' => array('view' => 'client/summary_tab', 'i18n' => 'client.tab.summary'),
+            'summary' => array('view' => 'client.summary_tab', 'i18n' => 'client.tab.summary'),
         );
 
         // Include modules tabs

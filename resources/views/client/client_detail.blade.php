@@ -12,6 +12,7 @@
     <script src="{{ $subdirectory }}assets/js/marked.min.js"></script>
     <script src="{{ $subdirectory }}assets/js/munkireport.comment.js"></script>
     <script src="{{ $subdirectory }}assets/js/munkireport.storageplot.js"></script>
+    <script src="{{ $subdirectory }}assets/js/clients/client_detail.js"></script>
 @endpush
 
 @section('content')
@@ -69,15 +70,16 @@
             <div class="tab-content">
 
                 @foreach($tab_list as $name => $data)
-
                     @if (isset($data['class']))
                         <div class="tab-pane active" id='{{ $name }}'>
                     @else
                         <div class="tab-pane" id='{{ $name }}'>
                     @endif
-                            <?php $viewVars = isset($data['view_vars']) ? $data['view_vars'] : Array(); ?>
-                        @includeIf($data['view'], $viewVars)
-                        <?php //$this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:VIEW_PATH);?>
+                        {{-- instead of using the full path to the view we use a registered namespace
+                             if provides.php contains a module attribute --}}
+                        <?php $prefix = isset($data['module']) ? $data['module']."." : ""; ?>
+                        <?php $viewVars = isset($data['view_vars']) ? $data['view_vars'] : Array(); ?>
+                        @includeIf($prefix.$data['view'], $viewVars)
                     </div>
 
                 @endforeach
