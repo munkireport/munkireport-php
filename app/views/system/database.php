@@ -52,8 +52,16 @@
         
         function disclose () {
           var logDiv = $('#database-upgrade-log');
-          logDiv.find('.disclosure').toggleClass('disclosure-active');
-          logDiv.find('table').toggleClass('disclosure-active');
+          var disclosureEl = logDiv.find('.disclosure');
+          var logTbl = logDiv.find('table');
+
+          if (!disclosureEl.hasClass('disclosure-active')) {
+            disclosureEl.addClass('disclosure-active');
+          }
+
+          if (!logTbl.hasClass('disclosure-active')) {
+            logTbl.addClass('disclosure-active');
+          }
         }
 
         // Show/Hide the upgrade log
