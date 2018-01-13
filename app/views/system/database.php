@@ -72,7 +72,7 @@
             $btn.find('#db-upgrade-label').html('Update');
           }
 
-          var tbody = $('.table-console tbody');
+          log('started update: ' + new Date());
 
           $.getJSON(appUrl + '/database/migrate', function (data) {
             done();
