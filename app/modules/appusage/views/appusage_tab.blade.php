@@ -16,13 +16,13 @@
       <?php foreach($appusageitemobj->retrieveMany('serial_number=?', array($serial_number)) as $item): ?>
       <?php $name_url=url('module/inventory/items/'. rawurlencode($item->app_name)); ?>
         <tr>
-          <td><a href='<?php echo $name_url; ?>'><?php echo $item->app_name; ?></a></td>
-          <td><?php echo str_replace(array('quit','launch','activate'), array('Quit','Launch','Activation'), $item->event); ?></td>
-          <td><?php echo $item->last_time; ?></td>
-          <td><?php echo $item->number_times; ?></td>
-          <td><?php echo $item->app_version; ?></td>
-          <td><?php echo $item->app_path; ?></td>
-          <td><?php echo $item->bundle_id; ?></td>
+          <td><a href='<?php echo $name_url; ?>'>{{ $item->app_name }}</a></td>
+          <td>{{ str_replace(array('quit','launch','activate'), array('Quit','Launch','Activation'), $item->event) }}</td>
+          <td>{{ $item->last_time }}</td>
+          <td>{{ $item->number_times }}</td>
+          <td>{{ $item->app_version }}</td>
+          <td>{{ $item->app_path }}</td>
+          <td>{{ $item->bundle_id }}</td>
         </tr>
   <?php endforeach; ?>	</tbody>
 </table>

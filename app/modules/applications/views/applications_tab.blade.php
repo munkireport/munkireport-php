@@ -17,14 +17,14 @@
 	<?php foreach($applicationsitemobj->retrieveMany('serial_number=?', array($serial_number)) as $item): ?>
 	<?php $name_url=url('show/listing/applications/applications#'. rawurlencode($item->name)); ?>
         <tr>
-          <td><a href='<?php echo $name_url; ?>'><?php echo $item->name; ?></a></td>
-          <td><?php echo $item->version; ?></td>
-          <td><?php echo $item->signed_by; ?></td>
-          <td><?php echo str_replace(array('unknown','mac_app_store','apple','identified_developer'), array('Unknown','Mac App Store','Apple','Identified Developer'), $item->obtained_from); ?></td>
-          <td><?php echo date("Y-m-d H:i:s", $item->last_modified); ?></td>
-          <td><?php echo str_replace(array('1','0'), array('Yes','No'), $item->has64bit); ?></td>
-          <td><?php echo $item->path; ?></td>
-          <td><?php echo $item->info; ?></td>
+          <td><a href='<?php echo $name_url; ?>'>{{ $item->name }}</a></td>
+          <td>{{ $item->version }}</td>
+          <td>{{ $item->signed_by }}</td>
+          <td>{{ str_replace(array('unknown','mac_app_store','apple','identified_developer'), array('Unknown','Mac App Store','Apple','Identified Developer'), $item->obtained_from) }}</td>
+          <td>{{ date("Y-m-d H:i:s", $item->last_modified) }}</td>
+          <td>{{ str_replace(array('1','0'), array('Yes','No'), $item->has64bit) }}</td>
+          <td>{{ $item->path }}</td>
+          <td>{{ $item->info }}</td>
         </tr>
 	<?php endforeach; ?>
 

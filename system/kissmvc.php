@@ -44,7 +44,18 @@ class Engine extends KISS_Engine
 //===============================================================
 class Controller extends KISS_Controller
 {
+    /**
+     * @var Illuminate\Contracts\Container\Container
+     */
+    protected $app;
+
     protected $capsule;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->app = new Illuminate\Container\Container();
+    }
 
     /**
      * Get a connection to the database.
@@ -54,7 +65,7 @@ class Controller extends KISS_Controller
     protected function db()
     {
         if(! $this->capsule){
-            $this->capsule = new Capsule;
+            $this->capsule = new Capsule($this->app);
             
             if( ! $connection = conf('connection')){
                 die('Connection not configured in config.php');

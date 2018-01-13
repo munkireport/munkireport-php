@@ -3,7 +3,7 @@
 return array(
     'client_tabs' => array(
         'applications-tab' => array(
-            'view' => 'applications_tab',
+            'view' => 'applications::applications_tab',
             'i18n' => 'applications.applications',
             'badge' => 'applications-cnt',
             'module' => 'applications',
