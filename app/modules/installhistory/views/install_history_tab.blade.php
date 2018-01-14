@@ -9,7 +9,7 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
 <h2 data-i18n="installhistory.installed_third_party_software"></h2>
 <?php endif?>
 
-<table class="install-history-<?php echo $apple; ?> table table-striped">
+<table class="install-history-{{ $apple }} table table-striped">
 	<thead>
 		<tr>
 			<th data-i18n="name"></th>
@@ -22,10 +22,10 @@ $installHistory = $hist_obj->itemsBySerialNumber($serial_number); ?>
 	<?php foreach($installHistory as $item): ?>
 	<?php if($apple == (strpos($item->packageIdentifiers,'com.apple.') === 0)): ?>
 		<tr>
-			<td><?php echo $item->displayName; ?></td>
-			<td><?php echo $item->displayVersion; ?></td>
-			<td data-order="<?php echo $item->date; ?>"><time title="<?php echo strftime('%c',$item->date); ?>" datetime="<?php echo date('c',$item->date); ?>"></time></td>
-			<td><?php echo $item->processName; ?></td>
+			<td>{{ $item->displayName }}</td>
+			<td>{{ $item->displayVersion }}</td>
+			<td data-order="{{ $item->date }}"><time title="{{ strftime('%c',$item->date) }}" datetime="{{ date('c',$item->date) }}"></time></td>
+			<td>{{ $item->processName }}</td>
 		</tr>
 	<?php endif; ?>
 	<?php endforeach; ?>

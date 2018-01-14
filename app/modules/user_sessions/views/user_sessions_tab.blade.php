@@ -13,9 +13,9 @@
       <?php foreach($user_sessionsitemobj->retrieve_records($serial_number) as $item): ?>
         <tr>
           <td><?php echo str_replace(array('sshlogin','login','logout','shutdown','reboot'), array('SSH Login','Login','Logout','Shutdown','Reboot'), $item->event); ?></td>
-          <td><?php echo $item->user; ?></td>
-          <td><?php echo $item->remote_ssh; ?></td>
-          <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
+          <td>{{ $item->user }}</td>
+          <td>{{ $item->remote_ssh }}</td>
+          <td>{{ date("Y-m-d H:i:s", $item->time) }}</td>
         </tr>
   <?php endforeach; ?>	</tbody>
 </table>

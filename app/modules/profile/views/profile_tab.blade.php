@@ -27,12 +27,12 @@
 
     <tr>
       <td>
-        <a href='<?php echo $name_url; ?>'><?php echo $name; ?></a>
+        <a href='{{ $name_url }}'>{{ $name }}</a>
       </td>
       <td>
         <?php foreach($value as $version => $count): ?>
         <?php $vers_url=$name_url . '/' . rawurlencode($version); ?>
-        <a href='<?php echo $vers_url; ?>' data-html="true" data-content='<?php echo $payloaddata[$name][$version];?>' class='popovers' data-trigger='hover'><?php echo $version; ?>
+        <a href='{{ $vers_url }}' data-html="true" data-content='{{ $payloaddata[$name][$version] }}' class='popovers' data-trigger='hover'>{{ $version }}
         </a><br />
         <?php endforeach; ?>
       </td>

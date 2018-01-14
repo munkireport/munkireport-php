@@ -39,11 +39,12 @@ class Blade {
 
     /**
      * Initialize class
-     * @param array  $viewPaths
+     * @param array $viewPaths
      * @param string $cachePath
-     * @param Illuminate\Events\Dispatcher $events
+     * @param array $hints Array of namespace prefix => paths for the viewfinder class.
+     * @param Dispatcher|Illuminate\Events\Dispatcher $events
      */
-    function __construct($viewPaths = array(), $cachePath, Dispatcher $events = null) {
+    function __construct($viewPaths = array(), $cachePath, $hints = array(), Dispatcher $events = null) {
 
         $this->container = new Container;
 
@@ -57,7 +58,7 @@ class Blade {
 
         $this->registerEngineResolver();
 
-        $this->registerViewFinder();
+        $this->registerViewFinder($hints);
 
         $this->instance = $this->registerFactory();
     }
@@ -146,16 +147,22 @@ class Blade {
     /**
      * Register the view finder implementation.
      *
+     * @param array $namespaces associative array of module name => view path(s)
      * @return void
      */
-    public function registerViewFinder()
+    public function registerViewFinder($namespaces = Array())
     {
         $me = $this;
         $this->container->singleton('view.finder', function($app) use ($me)
         {
             $paths = $me->viewPaths;
 
-            return new FileViewFinder($app['files'], $paths);
+            $viewFinder = new FileViewFinder($app['files'], $paths);
+            foreach ($namespaces as $namespace => $hints) {
+                $viewFinder->addNamespace($namespace, $hints);
+            }
+
+            return $viewFinder;
         });
     }
 

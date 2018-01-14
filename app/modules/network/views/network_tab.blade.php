@@ -4,7 +4,7 @@ $nw = new Network_model();?>
 <?php foreach($nw->retrieveMany(
 		'serial_number=? ORDER BY `order`', array($serial_number)) as $item): ?>
 
-<h2><?php echo $item->service; ?> (<?php echo $item->order; ?>)
+<h2>{{ $item->service }} ({{ $item->order }})
 
 <?php if($item->status): ?>
 <span class="label label-success nw-enabled" data-i18n="enabled"></span>
@@ -28,11 +28,11 @@ $nw = new Network_model();?>
 				<th data-i18n="configuration"></th>
 			</tr>
 			<tr>
-				<td><?php echo $item->ethernet; ?></td>
-				<td><?php echo $item->ipv4ip; ?></td>
-				<td><?php echo $item->ipv4mask; ?></td>
-				<td><?php echo $item->ipv4router; ?></td>
-				<td><?php echo $item->ipv4conf; ?></td>
+				<td>{{ $item->ethernet }}</td>
+				<td>{{ $item->ipv4ip }}</td>
+				<td>{{ $item->ipv4mask }}</td>
+				<td>{{ $item->ipv4router }}</td>
+				<td>{{ $item->ipv4conf }}</td>
 			</tr>
 
 		</table>
@@ -56,11 +56,11 @@ $nw = new Network_model();?>
 				<th data-i18n="configuration"></th>
 			</tr>
 			<tr>
-				<td><?php echo $item->ethernet; ?></td>
-				<td><?php echo $item->ipv6ip; ?></td>
-				<td><?php echo $item->ipv6prefixlen; ?></td>
-				<td><?php echo $item->ipv6router; ?></td>
-				<td><?php echo $item->ipv6conf; ?></td>
+				<td>{{ $item->ethernet }}</td>
+				<td>{{ $item->ipv6ip }}</td>
+				<td>{{ $item->ipv6prefixlen }}</td>
+				<td>{{ $item->ipv6router }}</td>
+				<td>{{ $item->ipv6conf }}</td>
 			</tr>
 
 		</table>

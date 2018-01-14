@@ -89,6 +89,8 @@ class Controller extends KISS_Controller
         $viewPaths = Array(APP_ROOT . '/resources/views');
         $cachePath = APP_ROOT . '/storage/framework/views';
 
+
+
         $blade = new Blade(array_merge($viewPaths, $additionalViewPaths), $cachePath);
         $view = $blade->view()->make($name);
 

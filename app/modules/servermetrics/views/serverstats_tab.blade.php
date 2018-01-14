@@ -18,4 +18,4 @@
 <h2 data-i18n="servermetrics.sharing_connected_users"></h2>
 <svg id="sharing-connected-users"></svg>
 
-<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.serverstats.js"></script>
+<script src="{{ $subdirectory }}assets/js/munkireport.serverstats.js"></script>
