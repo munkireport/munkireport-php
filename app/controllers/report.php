@@ -22,6 +22,11 @@ class report extends Controller
         // Flag we're on report authorization
         $GLOBALS['auth'] = 'report';
 
+        // Check for maintenance mode
+        if(file_exists(APP_ROOT . 'storage/framework/down')) {
+            $this->error("MunkiReport is in maintenance mode, try again later.");
+        }
+
         if (isset($_POST['passphrase'])) {
             $this->group = passphrase_to_group($_POST['passphrase']);
         }
