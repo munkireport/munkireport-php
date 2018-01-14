@@ -89,9 +89,17 @@ class Controller extends KISS_Controller
         $viewPaths = Array(APP_ROOT . '/resources/views');
         $cachePath = APP_ROOT . '/storage/framework/views';
 
+        $modules = getMrModuleObj()->getModuleList();
+        $moduleObj = getMrModuleObj();
+        $moduleObj->loadInfo();
 
+        // These hints allow you to load views from modules using the module namespace prefix eg. 'module::view'
+        $hints = array_reduce(array_keys($modules), function($carry, $item) use ($moduleObj) {
+            $carry[$item] = $moduleObj->getPath($item, 'views');
+            return $carry;
+        }, Array());
 
-        $blade = new Blade(array_merge($viewPaths, $additionalViewPaths), $cachePath);
+        $blade = new Blade(array_merge($viewPaths, $additionalViewPaths), $cachePath, $hints);
         $view = $blade->view()->make($name);
 
         $view->role = $_SESSION['role'];

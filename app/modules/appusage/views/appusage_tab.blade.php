@@ -1,4 +1,3 @@
-<p>
 <table class="appusage table table-striped table-bordered">
 	<thead>
 		<tr>
@@ -12,11 +11,10 @@
 		</tr>
 	</thead>
 	<tbody>
-<?php $appusageitemobj = new Appusage_model(); ?>
-      <?php foreach($appusageitemobj->retrieveMany('serial_number=?', array($serial_number)) as $item): ?>
+    @foreach($appusage as $item)
       <?php $name_url=url('module/inventory/items/'. rawurlencode($item->app_name)); ?>
         <tr>
-          <td><a href='<?php echo $name_url; ?>'>{{ $item->app_name }}</a></td>
+          <td><a href='{{ $name_url }}'>{{ $item->app_name }}</a></td>
           <td>{{ str_replace(array('quit','launch','activate'), array('Quit','Launch','Activation'), $item->event) }}</td>
           <td>{{ $item->last_time }}</td>
           <td>{{ $item->number_times }}</td>
@@ -24,7 +22,8 @@
           <td>{{ $item->app_path }}</td>
           <td>{{ $item->bundle_id }}</td>
         </tr>
-  <?php endforeach; ?>	</tbody>
+    @endforeach
+    </tbody>
 </table>
 
 <script>

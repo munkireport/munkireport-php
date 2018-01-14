@@ -3,10 +3,10 @@
 return array(
     'client_tabs' => array(
         'applications-tab' => array(
-            'view' => 'applications::applications_tab',
+            'view' => 'applications_tab',
+            'view_controller' => 'ApplicationsTabController',
             'i18n' => 'applications.applications',
             'badge' => 'applications-cnt',
-            'module' => 'applications',
         ),
     ),
     'listings' => array(

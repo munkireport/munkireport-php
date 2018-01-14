@@ -2,7 +2,11 @@
 
 return array(
     'client_tabs' => array(
-        'caching-tab' => array('view' => 'caching_tab', 'i18n' => 'caching.client_tab_title'),
+        'caching-tab' => array(
+            'view' => 'caching_tab',
+            'i18n' => 'caching.client_tab_title',
+            'view_controller' => 'CachingTabController'
+        ),
     ),
     'listings' => array(
         'caching' => array('view' => 'caching_listing', 'i18n' => 'caching.listing_title'),

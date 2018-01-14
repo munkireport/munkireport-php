@@ -2,5 +2,6 @@
 
 - If you had a custom dashboard view called `custom_dashboard.php`, it should now be placed in `/resources/views/show/custom_dashboard.php`.
 
-- `provides.php` for each module should now include the module name. This will be part of registering
-  module namespaces so that views will be loaded out of the module if you use a prefix such as module::viewname
+- Each tab in the client detail view is now represented by a custom instance of a Tab View Controller.
+
+- Custom tabs via the `client_tabs` configuration option are not currently respected.

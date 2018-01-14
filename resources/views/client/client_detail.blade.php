@@ -33,18 +33,11 @@
                         <i class="fa fa-list fa-fw"></i>
                     </button>
                     <ul class="dropdown-menu client-tabs" role="tablist">
-                        @foreach($tab_list as $name => $data)
-
+                        @foreach($tabMenuItems as $name => $viewName)
                         <li>
-                            <a href="#{{ $name }}" data-toggle="tab"><span data-i18n="{{ $data['i18n'] }}"></span>
-                                @isset($data['badge'])
-                                    <span id="{{ $data['badge'] }}" class="badge">0</span>
-                                @endisset
-                            </a>
+                            @include($viewName)
                         </li>
-
                         @endforeach
-
                     </ul>
                 </div><!-- /btn-group -->
 
@@ -68,22 +61,16 @@
         <div class="col-lg-12">
 
             <div class="tab-content">
-
-                @foreach($tab_list as $name => $data)
+                @foreach($tabViews as $name => $viewName)
                     @if (isset($data['class']))
-                        <div class="tab-pane active" id='{{ $name }}'>
+                        <div class="tab-pane active" id="{{ $name }}">
                     @else
-                        <div class="tab-pane" id='{{ $name }}'>
+                        <div class="tab-pane" id="{{ $name }}">
                     @endif
-                        {{-- instead of using the full path to the view we use a registered namespace
-                             if provides.php contains a module attribute --}}
-                        <?php $prefix = isset($data['module']) ? $data['module']."." : ""; ?>
-                        <?php $viewVars = isset($data['view_vars']) ? $data['view_vars'] : Array(); ?>
-                        @includeIf($prefix.$data['view'], $viewVars)
+
+                    @include($viewName)
                     </div>
-
                 @endforeach
-
             </div>
         </div> <!-- /span 12 -->
     </div> <!-- /row -->

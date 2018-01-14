@@ -13,9 +13,8 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php $applicationsitemobj = new Applications_model(); ?>
-	<?php foreach($applicationsitemobj->retrieveMany('serial_number=?', array($serial_number)) as $item): ?>
-	<?php $name_url=url('show/listing/applications/applications#'. rawurlencode($item->name)); ?>
+        @foreach($applications as $item)
+	    <?php $name_url=url('show/listing/applications/applications#'. rawurlencode($item->name)); ?>
         <tr>
           <td><a href='<?php echo $name_url; ?>'>{{ $item->name }}</a></td>
           <td>{{ $item->version }}</td>
@@ -26,7 +25,7 @@
           <td>{{ $item->path }}</td>
           <td>{{ $item->info }}</td>
         </tr>
-	<?php endforeach; ?>
+        @endforeach
 
 	</tbody>
 </table>

@@ -5,7 +5,7 @@ namespace munkireport\controller;
 use \Controller, \View;
 use Doctrine\DBAL\Driver\PDOException;
 use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model;
-
+use Mr\Contracts\TabController;
 
 
 class clients extends Controller
@@ -114,6 +114,7 @@ class clients extends Controller
             $view = $this->view('client/client_detail');
         }
 
+        $view->tabViews = [];
         $view->serial_number = $sn;
 
         // Tab list, each item should contain:
@@ -123,17 +124,43 @@ class clients extends Controller
         // 'view_vars' => array with variables to pass to the views
         // 'badge' => id of a badge for this tab
         $tab_list = array(
-            'summary' => array('view' => 'client.summary_tab', 'i18n' => 'client.tab.summary'),
+            'summary' => array(
+                'view' => 'summary_tab',
+                'view_controller' => '\Mr\Core\Clients\SummaryTabController',
+                'i18n' => 'client.tab.summary',
+            ),
         );
+//        $tab_list = Array();
+        $menuItems = Array();
 
         // Include modules tabs
         $modules = getMrModuleObj()->loadInfo();
         $modules->addTabs($tab_list);
 
-        // Add custom tabs
-        $tab_list = array_merge($tab_list, conf('client_tabs', array()));
+        $tabViewParameters = Array('serial_number' => $sn);
 
-        $view->tab_list = $tab_list;
+        foreach ($tab_list as $id => $info) {
+            if (isset($info['view_controller'])) {
+                if (!isset($info['view_path'])) {  // Must be a core view
+
+                } else {
+                    require_once dirname($info['view_path']) . '/' . $info['view_controller'] . ".php";
+                }
+
+                $vc = new $info['view_controller'];
+                $vc->render($view, $tabViewParameters);
+                $view->tabViews[$info['view']] = $vc->viewName();
+                $view->tabMenuItems[$info['view']] = $vc->menuItemViewName();
+                $menuItems[$info['view']] = $info;
+            }
+        }
+
+        $view->menuItems = $menuItems;
+
+        // Add custom tabs
+//        $tab_list = array_merge($tab_list, conf('client_tabs', array()));
+//
+//        $view->tab_list = $tab_list;
 
         echo $view->render();
     }

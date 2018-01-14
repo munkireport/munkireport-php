@@ -2,7 +2,11 @@
 
 return array(
     'client_tabs' => array(
-        'certificate-tab' => array('view' => 'certificate_tab', 'i18n' => 'certificate.title'),
+        'certificate-tab' => array(
+            'view' => 'certificate_tab',
+            'i18n' => 'certificate.title',
+            'view_controller' => 'CertificateTabController'
+        ),
     ),
     'listings' => array(
         'certificate' => array('view' => 'certificate_listing', 'i18n' => 'certificate.title'),

@@ -153,7 +153,8 @@ class Blade {
     public function registerViewFinder($namespaces = Array())
     {
         $me = $this;
-        $this->container->singleton('view.finder', function($app) use ($me)
+
+        $this->container->singleton('view.finder', function($app) use ($me, $namespaces)
         {
             $paths = $me->viewPaths;
 
