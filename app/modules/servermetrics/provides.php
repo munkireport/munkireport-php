@@ -2,6 +2,6 @@
 
 return [
     'client_tabs' => [
-        'servermetrics-tab' => ['view' => 'serverstats_tab', 'i18n' => 'servermetrics.title'],
+        'servermetrics-tab' => ['view' => 'servermetrics::serverstats_tab', 'i18n' => 'servermetrics.title'],
     ],
 ];

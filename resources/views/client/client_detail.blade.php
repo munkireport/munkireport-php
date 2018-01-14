@@ -35,7 +35,7 @@
                     <ul class="dropdown-menu client-tabs" role="tablist">
                         @foreach($tabs as $name => $info)
                         <li>
-                            <a href="#{{ $info['view'] }}" data-toggle="tab">
+                            <a href="#{{ $name }}" data-toggle="tab">
                                 <span data-i18n="{{ $info['i18n'] }}"></span>
                                 @isset ($info['badge'])
                                     <span id="{{ $info['badge'] }}" class="badge">0</span>

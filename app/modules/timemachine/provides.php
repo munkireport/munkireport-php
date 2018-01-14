@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'timemachine-tab' => array('view' => 'timemachine_tab', 'i18n' => 'timemachine.timemachine'),
+        'timemachine-tab' => array('view' => 'timemachine::timemachine_tab', 'i18n' => 'timemachine.timemachine'),
     ),
     'listings' => array(
         'timemachine' => array('view' => 'timemachine_listing', 'i18n' => 'timemachine.timemachine'),

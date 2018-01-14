@@ -3,7 +3,7 @@
 return array(
     'client_tabs' => array(
         'inventory-items' => array(
-            'view' => 'inventory_items_tab',
+            'view' => 'inventory::inventory_items_tab',
             'i18n' => 'inventory.inventory_items',
             'badge' => 'inventory-cnt'
         ),

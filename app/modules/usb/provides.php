@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'usb-tab' => array('view' => 'usb_tab', 'i18n' => 'usb.devices', 'badge' => 'usb-cnt'),
+        'usb-tab' => array('view' => 'usb::usb_tab', 'i18n' => 'usb.devices', 'badge' => 'usb-cnt'),
     ),
     'listings' => array(
         'usb' => array('view' => 'usb_listing', 'i18n' => 'usb.devices'),

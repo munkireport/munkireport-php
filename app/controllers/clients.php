@@ -155,10 +155,10 @@ class clients extends Controller
 
                 $vc = new $info['view_controller'];
                 $vc->render($view, $tabViewParameters);
-                $view->tabViews[$info['view']] = $vc->viewName();
+                $view->tabViews[$id] = $vc->viewName();
                 $view->tabs[$id] = $info;
             } else { // View does not require a controller, so just add the blade template for inclusion.
-                $view->tabViews[$info['view']] = $info['view'];
+                $view->tabViews[$id] = $info['view'];
                 $view->tabs[$id] = $info;
             }
         }

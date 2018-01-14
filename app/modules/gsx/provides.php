@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'gsx-tab' => array('view' => 'gsx_tab', 'i18n' => 'gsx.title'),
+        'gsx-tab' => array('view' => 'gsx::gsx_tab', 'i18n' => 'gsx.title'),
     ),
     'listings' => array(
         'gsx' => array('view' => 'gsx_listing', 'i18n' => 'gsx.title'),

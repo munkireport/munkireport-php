@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'network-tab' => array('view' => 'network_tab', 'i18n' => 'network.network', 'badge' => 'network-cnt'),
+        'network-tab' => array('view' => 'network::network_tab', 'i18n' => 'network.network', 'badge' => 'network-cnt'),
     ),
     'listings' => array(
         'network' => array('view' => 'network_listing', 'i18n' => 'network.network'),

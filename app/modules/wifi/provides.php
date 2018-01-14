@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'wifi-tab' => array('view' => 'wifi_tab', 'i18n' => 'wifi.wifi'),
+        'wifi-tab' => array('view' => 'wifi::wifi_tab', 'i18n' => 'wifi.wifi'),
     ),
     'listings' => array(
         'wifi' => array('view' => 'wifi_listing', 'i18n' => 'wifi.wifi'),

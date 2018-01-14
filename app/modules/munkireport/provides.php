@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'munki' => array('view' => 'client_munki_tab', 'i18n' => 'munkireport.munki'),
+        'munki' => array('view' => 'munkireport::client_munki_tab', 'i18n' => 'munkireport.munki'),
     ),
     'listings' => array(
         'munki' => array('view' => 'munki_listing', 'i18n' => 'munkireport.munki'),
