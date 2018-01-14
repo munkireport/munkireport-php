@@ -3,10 +3,9 @@
 return array(
     'client_tabs' => array(
         'detectx-tab' => array(
-            'view' => 'detectx_tab',
+            'view' => 'detectx::detectx_tab',
             'i18n' => 'detectx.title',
-            'badge' => 'detectx-cnt',
-            'view_controller' => 'DetectxTabController'
+            'badge' => 'detectx-cnt'
         ),
     ),
     'listings' => array(

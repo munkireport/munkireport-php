@@ -3,7 +3,7 @@
 use Illuminate\Contracts\View\View;
 use Mr\Contracts\TabController;
 
-class CachingTabController implements TabController {
+class DiskReportTabController implements TabController {
 
     /**
      * Fetch and provide variable contents to the passed-in constructed view.
@@ -15,7 +15,6 @@ class CachingTabController implements TabController {
      * @return void
      */
     public function render(View &$view, array $params = Array()) {
-
     }
 
     /**
@@ -26,16 +25,6 @@ class CachingTabController implements TabController {
      */
     public function viewName()
     {
-        return 'caching::caching_tab';
-    }
-
-    /**
-     * Get the name of the view to include as the "tab" item.
-     *
-     * @return string
-     */
-    public function menuItemViewName()
-    {
-        return 'caching::caching_tab_menuitem';
+        return 'disk_report::storage_tab';
     }
 }

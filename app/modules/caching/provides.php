@@ -3,9 +3,8 @@
 return array(
     'client_tabs' => array(
         'caching-tab' => array(
-            'view' => 'caching_tab',
-            'i18n' => 'caching.client_tab_title',
-            'view_controller' => 'CachingTabController'
+            'view' => 'caching::caching_tab',
+            'i18n' => 'caching.client_tab_title'
         ),
     ),
     'listings' => array(

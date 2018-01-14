@@ -131,7 +131,13 @@ class clients extends Controller
             ),
         );
 //        $tab_list = Array();
-        $menuItems = Array();
+        $view->tabs = Array(
+            'summary' => array(
+                'view' => 'summary_tab',
+                'view_controller' => '\Mr\Core\Clients\SummaryTabController',
+                'i18n' => 'client.tab.summary',
+            ),
+        );
 
         // Include modules tabs
         $modules = getMrModuleObj()->loadInfo();
@@ -150,12 +156,12 @@ class clients extends Controller
                 $vc = new $info['view_controller'];
                 $vc->render($view, $tabViewParameters);
                 $view->tabViews[$info['view']] = $vc->viewName();
-                $view->tabMenuItems[$info['view']] = $vc->menuItemViewName();
-                $menuItems[$info['view']] = $info;
+                $view->tabs[$id] = $info;
+            } else { // View does not require a controller, so just add the blade template for inclusion.
+                $view->tabViews[$info['view']] = $info['view'];
+                $view->tabs[$id] = $info;
             }
         }
-
-        $view->menuItems = $menuItems;
 
         // Add custom tabs
 //        $tab_list = array_merge($tab_list, conf('client_tabs', array()));

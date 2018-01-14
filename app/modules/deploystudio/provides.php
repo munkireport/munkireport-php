@@ -3,9 +3,8 @@
 return array(
     'client_tabs' => array(
         'deploystudio-tab' => array(
-            'view' => 'deploystudio_tab',
-            'i18n' => 'deploystudio.title',
-            'view_controller' => 'DeploystudioTabController'
+            'view' => 'deploystudio::deploystudio_tab',
+            'i18n' => 'deploystudio.title'
         ),
     ),
     'listings' => array(

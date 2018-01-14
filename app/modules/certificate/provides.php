@@ -3,9 +3,8 @@
 return array(
     'client_tabs' => array(
         'certificate-tab' => array(
-            'view' => 'certificate_tab',
-            'i18n' => 'certificate.title',
-            'view_controller' => 'CertificateTabController'
+            'view' => 'certificate::certificate_tab',
+            'i18n' => 'certificate.title'
         ),
     ),
     'listings' => array(

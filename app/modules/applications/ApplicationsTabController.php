@@ -30,14 +30,4 @@ class ApplicationsTabController implements TabController {
     {
         return 'applications::applications_tab';
     }
-
-    /**
-     * Get the name of the view to include as the "tab" item.
-     *
-     * @return string
-     */
-    public function menuItemViewName()
-    {
-        return 'applications::applications_tab_menuitem';
-    }
 }

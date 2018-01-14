@@ -2,7 +2,11 @@
 
 return array(
     'client_tabs' => array(
-        'storage-tab' => array('view' => 'storage_tab', 'i18n' => 'disk_report.storage'),
+        'storage-tab' => array(
+            'view' => 'storage_tab',
+            'i18n' => 'disk_report.storage',
+            'view_controller' => 'DiskReportTabController'
+        ),
     ),
     'listings' => array(
         'disk' => array('view' => 'disk_listing', 'i18n' => 'disk_report.storage'),

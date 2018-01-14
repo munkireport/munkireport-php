@@ -31,14 +31,4 @@ class AppusageTabController implements TabController {
     {
         return 'appusage::appusage_tab';
     }
-
-    /**
-     * Get the name of the view to include as the "tab" item.
-     *
-     * @return string
-     */
-    public function menuItemViewName()
-    {
-        return 'appusage::appusage_tab_menuitem';
-    }
 }

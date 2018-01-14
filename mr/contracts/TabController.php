@@ -19,13 +19,6 @@ interface TabController
     public function viewName();
 
     /**
-     * Get the name of the view to include as the "tab" item.
-     *
-     * @return string
-     */
-    public function menuItemViewName();
-
-    /**
      * Fetch and provide variable contents to the passed-in constructed view.
      *
      * The params argument provides parameters that were supplied to the page controller.

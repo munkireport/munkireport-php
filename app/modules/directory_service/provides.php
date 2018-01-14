@@ -2,7 +2,10 @@
 
 return array(
     'client_tabs' => array(
-        'directory-tab' => array('view' => 'directory_tab', 'i18n' => 'directory_service.title'),
+        'directory-tab' => array(
+            'view' => 'directory_service::directory_tab',
+            'i18n' => 'directory_service.title'
+        ),
     ),
     'listings' => array(
         'directoryservice' => array('view' => 'directoryservice_listing', 'i18n' => 'directory_service.title'),

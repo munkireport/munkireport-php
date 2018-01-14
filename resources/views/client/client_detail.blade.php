@@ -33,9 +33,14 @@
                         <i class="fa fa-list fa-fw"></i>
                     </button>
                     <ul class="dropdown-menu client-tabs" role="tablist">
-                        @foreach($tabMenuItems as $name => $viewName)
+                        @foreach($tabs as $name => $info)
                         <li>
-                            @include($viewName)
+                            <a href="#{{ $info['view'] }}" data-toggle="tab">
+                                <span data-i18n="{{ $info['i18n'] }}"></span>
+                                @isset ($info['badge'])
+                                    <span id="{{ $info['badge'] }}" class="badge">0</span>
+                                @endisset
+                            </a>
                         </li>
                         @endforeach
                     </ul>

@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'extensions-tab' => array('view' => 'extensions_tab', 'i18n' => 'extensions.clienttab', 'badge' => 'extensions-cnt'),
+        'extensions-tab' => array('view' => 'extensions::extensions_tab', 'i18n' => 'extensions.clienttab', 'badge' => 'extensions-cnt'),
     ),
     'listings' => array(
         'extensions' => array('view' => 'extensions_listing', 'i18n' => 'extensions.clienttab'),
