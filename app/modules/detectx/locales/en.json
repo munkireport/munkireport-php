@@ -9,9 +9,13 @@
     "true":"True",
     "false":"False",
     "scantime": "Scan Duration",
+<<<<<<< HEAD
     "spotlightindexing": "Spotlight Indexing",
     "infections": "Infections",
     "registered": "Registered"
+=======
+    "spotlightindexing": "Spotlight Indexing"
+>>>>>>> 6db156460ae62390b216c5c567fd97337bc4bcf3
   },
   "widget": {
     "title": "DetectX Status",
