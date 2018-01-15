@@ -11,16 +11,10 @@ class Detectx_model extends \Model {
     $this->rs['status'] = '';
     $this->rs['scantime'] = 0;
     $this->rs['spotlightindexing'] = true; $this->rt['spotlightindexing'] = 'BOOLEAN';
-<<<<<<< HEAD
     $this->rs['registered'] = true; $this->rt['registered'] = 'BOOLEAN';
     $this->rs['infections'] = ''; $this->rt['infections'] = 'TEXT';
     $this->rs['issues'] = ''; $this->rt['issues'] = 'TEXT';
-
-=======
-    $this->rs['issues'] = ''; $this->rt['issues'] = 'TEXT';
-
-
->>>>>>> 6db156460ae62390b216c5c567fd97337bc4bcf3
+    
   // Schema version, increment when creating a db migration
     $this->schema_version = 0;
 
