@@ -1,6 +1,8 @@
 ### [3.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v2.16.0...HEAD) (Unreleased)
 
-The third major version of munkireport attempts to solve a couple of longstanding issues concerning security, dependency management and database management. Most notable changes are:
+The third major version of munkireport attempts to solve a couple of longstanding issues concerning security, dependency management and database management. We're moving slowly to using eloquent as replacement for the KISS database abstraction. A ton of work has been done by @mosen to make this all work.
+
+Most notable changes are:
 
 - Minimum PHP version is 7.0
 - Document root is now in a directory called `/public`. The best practice is to serve your munkireport instance from this directory or make a symlink to this directory.
@@ -11,8 +13,24 @@ The third major version of munkireport attempts to solve a couple of longstandin
 See also the [Upgrade v3 guide](https://github.com/munkireport/munkireport-php/wiki/How-to-Upgrade-to-v3) and [Quick demo v3](https://github.com/munkireport/munkireport-php/wiki/Quick-demo-V3)
 
 FIXES
+- Certificate Module fix for multiple certs with same name (#893) @sphen13
+- Misc UI fixes (#885) @tuxudo
+- Fix vendors for 10.13 (#902) @tuxudo
+- Fix localization in client tab (#903) @tuxudo
+- Use CFPreferences to read BaseUrl and Passphrase. (#919) @MagerValp
+
+NEW FEATURES
 - NVMe Support in SMART Stats module (#895) @tuxudo
-- 
+- Update Network Info script to now pull Tunnel adapter information (#897) @jbaker10
+- Sort machine groups by name (#898) @choules
+- New module: Munki-facts (#850) @nathanperkins and @poundbangbash
+- New module: Usage Stats module (#843) @tuxudo
+- New module: Applications Module (#917) @tuxudo
+- New module: DetectX Module (#916) @WardsParadox
+- SAML support, see also [SAML authentication](https://github.com/munkireport/munkireport-php/wiki/SAML-authentication)
+- Added filesystem widget (#886) @tuxudo
+- Maintenance Mode, see also [Maintenance Mode](https://github.com/munkireport/munkireport-php/wiki/Maintenance-Mode)
+
 
 ### [2.15.2](https://github.com/munkireport/munkireport-php/compare/v2.14.3...v2.15.2) (Sept 28, 2017)
 
