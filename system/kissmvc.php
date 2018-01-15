@@ -92,9 +92,10 @@ class Controller extends KISS_Controller
         $modules = getMrModuleObj()->getModuleList();
         $moduleObj = getMrModuleObj();
         $moduleObj->loadInfo();
+        $builtin = Array('reportdata', 'event', 'machine');
 
         // These hints allow you to load views from modules using the module namespace prefix eg. 'module::view'
-        $hints = array_reduce(array_keys($modules), function($carry, $item) use ($moduleObj) {
+        $hints = array_reduce(array_merge($builtin, array_keys($modules)), function($carry, $item) use ($moduleObj) {
             $carry[$item] = $moduleObj->getPath($item, 'views');
             return $carry;
         }, Array());

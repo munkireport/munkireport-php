@@ -8,8 +8,8 @@ return array(
         'extensions' => array('view' => 'extensions_listing', 'i18n' => 'extensions.clienttab'),
     ),
     'widgets' => array(
-        'extensions' => array('view' => 'extensions_widget'),
-        'extensions_codesign' => array('view' => 'extensions_codesign_widget'),
+        'extensions' => array('view' => 'extensions::extensions_widget'),
+        'extensions_codesign' => array('view' => 'extensions::extensions_codesign_widget'),
     ),
     'reports' => array(
         'extensions' => array('view' => 'extensions_report', 'i18n' => 'extensions.report'),

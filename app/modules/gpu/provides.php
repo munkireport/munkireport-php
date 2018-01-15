@@ -8,6 +8,6 @@ return array(
         'gpu' => array('view' => 'gpu_listing', 'i18n' => 'gpu.clienttab'),
     ),
     'widgets' => array(
-        'gpu_model' => array('view' => 'gpu_model_widget'),
+        'gpu_model' => array('view' => 'gpu::gpu_model_widget'),
     ),
 );

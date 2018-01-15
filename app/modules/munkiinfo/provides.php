@@ -5,6 +5,6 @@ return array(
         'munkiinfo' => array('view' => 'munkiinfo_listing', 'i18n' => 'munkiinfo.listing'),
     ),
     'widgets' => array(
-        'munkiinfo_munkiprotocol' => array('view' => 'munkiinfo_munkiprotocol_widget'),
+        'munkiinfo_munkiprotocol' => array('view' => 'munkiinfo::munkiinfo_munkiprotocol_widget'),
     ),
 );

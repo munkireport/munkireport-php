@@ -12,6 +12,6 @@ return array(
         'displays' => array('view' => 'displays_listing', 'i18n' => 'displays_info.displays'),
     ),
     'widgets' => array(
-        'external_displays_count' => array('view' => 'external_displays_count_widget'),
+        'external_displays_count' => array('view' => 'displays_info::external_displays_count_widget'),
     ),
 );

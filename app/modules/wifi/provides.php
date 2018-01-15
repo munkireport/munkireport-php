@@ -8,7 +8,7 @@ return array(
         'wifi' => array('view' => 'wifi_listing', 'i18n' => 'wifi.wifi'),
     ),
     'widgets' => array(
-        'wifi_networks' => array('view' => 'wifi_networks_widget'),
-        'wifi_state' => array('view' => 'wifi_state_widget'),
+        'wifi_networks' => array('view' => 'wifi::wifi_networks_widget'),
+        'wifi_state' => array('view' => 'wifi::wifi_state_widget'),
     ),
 );

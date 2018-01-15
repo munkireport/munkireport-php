@@ -12,7 +12,7 @@ return array(
         'detectx' => array('view' => 'detectx_listing', 'i18n' => 'detectx.title'),
     ),
     'widgets' => array(
-        'detectx' => array('view' => 'detectx_widget'),
+        'detectx' => array('view' => 'detectx::detectx_widget'),
     ),
 
 );

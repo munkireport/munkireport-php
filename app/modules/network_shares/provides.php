@@ -8,6 +8,6 @@ return array(
         'network_shares' => array('view' => 'network_shares_listing', 'i18n' => 'network_shares.clienttab'),
     ),
     'widgets' => array(
-       'network_shares' => array('view' => 'network_shares_widget'),
+       'network_shares' => array('view' => 'network_shares::network_shares_widget'),
     ),
 );

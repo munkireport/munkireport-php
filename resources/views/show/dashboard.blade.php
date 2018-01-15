@@ -11,7 +11,8 @@
     @foreach($conf_dashboard_layout as $row)
     <div class="row">
         @foreach($row as $item)
-		<?php $widget->render($item); ?>
+		    <?php $w = $widget->get($item); ?>
+            @include($w->file)
 		@endforeach
     </div> <!-- /row -->
     @endforeach
