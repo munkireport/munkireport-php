@@ -36,7 +36,7 @@ class Certificate_controller extends Module_controller
         $obj = new View();
         $db = $this->connectDB();
 
-        if (! $this->authorized()) {
+        if (!$this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
@@ -63,7 +63,7 @@ class Certificate_controller extends Module_controller
     {
         $obj = new View();
 
-        if (! $this->authorized()) {
+        if (!$this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
@@ -71,18 +71,18 @@ class Certificate_controller extends Module_controller
         $cert = new Certificate_model;
         $obj->view('json', array('msg' => $cert->get_stats()));
     }
-    
-         public function get_certificates()
-     {
+
+    public function get_certificates()
+    {
         $obj = new View();
 
-        if (! $this->authorized()) {
+        if (!$this->authorized()) {
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-        
+
         $certificate = new Certificate_model;
         $obj->view('json', array('msg' => $certificate->get_certificates()));
-     }
+    }
 
 } // END class Certificate_controller
