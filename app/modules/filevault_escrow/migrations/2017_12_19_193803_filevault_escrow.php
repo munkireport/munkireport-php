@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class FilevaultEscrow extends Migration
 {
     private $tableName = 'filevault_escrow';
-    private $tableNameV2 = 'filevault_escrow_v2';
+    private $tableNameV2 = 'filevault_escrow_orig';
 
     public function up()
     {

@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class BusinessUnit extends Migration
 {
     private $tableName = 'business_unit';
-    private $tableNameV2 = 'business_unit_v2';
+    private $tableNameV2 = 'business_unit_orig';
 
     public function up()
     {

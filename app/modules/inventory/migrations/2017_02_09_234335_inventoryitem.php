@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Inventoryitem extends Migration
 {
     private $tableName = 'inventoryitem';
-    private $tableNameV2 = 'inventoryitem_v2';
+    private $tableNameV2 = 'inventoryitem_orig';
 
     public function up()
     {

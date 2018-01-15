@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Directoryservice extends Migration
 {
     private $tableName = 'directoryservice';
-    private $tableNameV2 = 'directoryservice_v2';
+    private $tableNameV2 = 'directoryservice_orig';
 
     public function up()
     {
@@ -87,7 +87,7 @@ class Directoryservice extends Migration
                 restrictdynamicdnsupdates,
                 namespacemode
             FROM
-                directoryservice_v2');
+                directoryservice_orig');
         }
     }
 

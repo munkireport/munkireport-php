@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Ard extends Migration
 {
     private $tableName = 'ard';
-    private $tableNameV2 = 'ard_v2';
+    private $tableNameV2 = 'ard_orig';
 
     public function up()
     {

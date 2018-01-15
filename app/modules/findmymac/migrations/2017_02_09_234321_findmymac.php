@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Findmymac extends Migration
 {
     private $tableName = 'findmymac';
-    private $tableNameV2 = 'findmymac_v2';
+    private $tableNameV2 = 'findmymac_orig';
 
     public function up()
     {

@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Diskreport extends Migration
 {
     private $tableName = 'diskreport';
-    private $tableNameV2 = 'diskreport_v2';
+    private $tableNameV2 = 'diskreport_orig';
     
     public function up()
     {

@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class FanTemps extends Migration
 {
     private $tableName = 'fan_temps';
-    private $tableNameV2 = 'fan_temps_v2';
+    private $tableNameV2 = 'fan_temps_orig';
 
     public function up()
     {

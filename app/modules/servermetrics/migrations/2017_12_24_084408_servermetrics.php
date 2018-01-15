@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Servermetrics extends Migration
 {
     private $tableName = 'servermetrics';
-    private $tableNameV2 = 'servermetrics_v2';
+    private $tableNameV2 = 'servermetrics_orig';
 
     public function up()
     {

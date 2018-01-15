@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class FilevaultStatus extends Migration
 {
     private $tableName = 'filevault_status';
-    private $tableNameV2 = 'filevault_status_v2';
+    private $tableNameV2 = 'filevault_status_orig';
     
     public function up()
     {

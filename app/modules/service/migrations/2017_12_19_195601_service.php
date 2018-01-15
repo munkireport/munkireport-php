@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Service extends Migration
 {
     private $tableName = 'service';
-    private $tableNameV2 = 'service_v2';
+    private $tableNameV2 = 'service_orig';
 
     public function up()
     {

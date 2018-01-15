@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Tag extends Migration
 {
     private $tableName = 'tag';
-    private $tableNameV2 = 'tag_v2';
+    private $tableNameV2 = 'tag_orig';
 
     public function up()
     {

@@ -10,13 +10,13 @@ class Certificate extends Migration
         $capsule = new Capsule();
         $migrateData = false;
 
-        if ($capsule::schema()->hasTable('certificate_v2')) {
+        if ($capsule::schema()->hasTable('certificate_orig')) {
             // Migration already failed before, but didnt finish
             throw new Exception("previous failed migration exists");
         }
 
         if ($capsule::schema()->hasTable('certificate')) {
-            $capsule::schema()->rename('certificate', 'certificate_v2');
+            $capsule::schema()->rename('certificate', 'certificate_orig');
             $migrateData = true;
         }
 
@@ -49,7 +49,7 @@ class Certificate extends Migration
                 issuer,
                 cert_location
             FROM
-                certificate_v2');
+                certificate_orig');
         }
     }
     
@@ -57,8 +57,8 @@ class Certificate extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('certificate');
-        if ($capsule::schema()->hasTable('certificate_v2')) {
-            $capsule::schema()->rename('certificate_v2', 'certificate');
+        if ($capsule::schema()->hasTable('certificate_orig')) {
+            $capsule::schema()->rename('certificate_orig', 'certificate');
         }
     }
 }

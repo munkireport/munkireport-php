@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Security extends Migration
 {
     private $tableName = 'security';
-    private $tableNameV2 = 'security_v2';
+    private $tableNameV2 = 'security_orig';
 
     public function up()
     {

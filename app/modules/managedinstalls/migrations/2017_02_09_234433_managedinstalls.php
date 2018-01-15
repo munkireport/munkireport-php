@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Managedinstalls extends Migration
 {
     private $tableName = 'managedinstalls';
-    private $tableNameV2 = 'managedinstalls_v2';
+    private $tableNameV2 = 'managedinstalls_orig';
 
     public function up()
     {
