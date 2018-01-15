@@ -8,20 +8,12 @@
 
 @section('content')
 <div class="container">
-
     @foreach($conf_dashboard_layout as $row)
-
     <div class="row">
-
         @foreach($row as $item)
-
 		<?php $widget->render($item); ?>
-
 		@endforeach
-
     </div> <!-- /row -->
-
     @endforeach
-
 </div>	<!-- /container -->
 @endsection

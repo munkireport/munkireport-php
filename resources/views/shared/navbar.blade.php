@@ -72,7 +72,7 @@
                     </a>
                     <ul class="admin dropdown-menu">
 
-                        <?php foreach(scandir(conf('view_path').'admin') as $list_url): ?>
+                        <?php foreach(scandir(APP_ROOT . 'resources/views/admin') as $list_url): ?>
 
                         <?php if( strpos($list_url, 'php')): ?>
                         <?php $page_url = $url.strtok($list_url, '.'); ?>

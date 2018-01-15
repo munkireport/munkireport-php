@@ -356,19 +356,5 @@ class admin extends Controller
             $view = $this->view('admin/' . $which);
             echo $view->render();
         }
-
-
-
-//        if ($which) {
-//            $data['page'] = 'clients';
-//            $data['scripts'] = array("clients/client_list.js");
-//            $view = 'admin/'.$which;
-//        } else {
-//            $data = array('status_code' => 404);
-//            $view = 'error/client_error';
-//        }
-//
-//        $obj = new View();
-//        $obj->view($view, $data);
     }
 }
