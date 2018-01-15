@@ -35,6 +35,7 @@
             "munkireport\\models\\": "app/models/",
             "munkireport\\controller\\": "app/controllers",
             "munkireport\\lib\\": "app/lib/munkireport",
+            "Mr\\": "mr",
             "Tests\\": "tests/"
         }
     },

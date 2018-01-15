@@ -1,5 +1,7 @@
 <?php
 
+use Mr\Certificate\Certificate;
+
 /**
  * Certificate_controller class
  *
@@ -32,14 +34,25 @@ class Certificate_controller extends Module_controller
     public function get_data($serial_number = '')
     {
         $obj = new View();
+        $db = $this->connectDB();
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
 
-        $cert = new Certificate_model;
-        $obj->view('json', array('msg' => $cert->retrieve_records($serial_number)));
+        $certificates = Certificate::where('serial_number', '=', $serial_number)->get();
+        $results = [];
+
+        foreach ($certificates as $certificate) {
+            $results[] = Array(
+                'pkname' => 'id',
+                'tablename' => 'certificates',
+                'rs' => $certificate
+            );
+        }
+
+        $obj->view('json', array('msg' => $results));
     }
 
     /**
