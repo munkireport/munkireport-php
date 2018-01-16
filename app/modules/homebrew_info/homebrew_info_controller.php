@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use Mr\HomebrewInfo\HomebrewInfo;
 
 /**
  * homebrew_info module class
@@ -39,8 +41,9 @@ class Homebrew_info_controller extends Module_controller
             return;
         }
 
-        $homebrew_info = new Homebrew_info_model($serial_number);
-        $obj->view('json', array('msg' => $homebrew_info->rs));
+        $this->connectDB();
+        $homebrew_info = HomebrewInfo::where('serial_number', '=', $serial_number)->first();
+        $obj->view('json', array('msg' => $homebrew_info));
 
     }
 		

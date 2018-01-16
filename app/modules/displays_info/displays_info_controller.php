@@ -1,5 +1,7 @@
 <?php
 
+use Mr\Display\Display;
+
 /**
  * Displays module class
  *
@@ -37,16 +39,16 @@ class Displays_info_controller extends Module_controller
         if (! $this->authorized()) {
             $out['error'] = 'Not authorized';
         } else {
-            $prm = new Displays_info_model;
-            foreach ($prm->retrieve_records($serial) as $display) {
-                $out[] = $display->rs;
-            }
+            $db = $this->connectDB();
+            $out = Display::where('serial_number', '=', $serial)->get();
         }
-        
+
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
-    
+
+
+//[{"id":"1","type":"1","display_serial":"XGFMF5C2458L","serial_number":"C02LFIXME1234","vendor":"10ac","model":"DELL UP2716D","manufactured":"2015-01","native":"2560 x 1440","timestamp":"1503055808"}]
     /**
      * Get count of  displays
      *

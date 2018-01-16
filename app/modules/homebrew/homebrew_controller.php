@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use Mr\Homebrew\Homebrew;
 
 /**
  * homebrew module class
@@ -39,13 +41,10 @@ class Homebrew_controller extends Module_controller
             return;
         }
 
-        $queryobj = new Homebrew_model;
-        $homebrew_tab = array();
-        foreach($queryobj->retrieve_records($serial_number) as $brewEntry) {
-            $homebrew_tab[] = $brewEntry->rs;
-        }
+        $this->connectDB();
+        $homebrew_apps = Homebrew::where('serial_number', '=', $serial_number)->get();
 
-        $obj->view('json', array('msg' => $homebrew_tab));
+        $obj->view('json', array('msg' => $homebrew_apps));
 	}
 		
 } // END class Homebrew_controller

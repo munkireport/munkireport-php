@@ -1,5 +1,7 @@
 <?php
 
+use Mr\GPU\GPU;
+
 /**
  * GPU module class
  *
@@ -58,13 +60,9 @@ class Gpu_controller extends Module_controller
             return;
         }
 
-        $queryobj = new Gpu_model;
-        $gpu_tab = array();
-        foreach($queryobj->retrieve_records($serial_number) as $gpuEntry){
-            $gpu_tab[] = $gpuEntry->rs;
-        }
-
-        $obj->view('json', array('msg' => $gpu_tab));
+        $this->connectDB();
+        $gpus = GPU::where('serial_number', '=', $serial_number)->get();
+        $obj->view('json', array('msg' => $gpus));
     }
 
 } // END class Gpu_controller
