@@ -155,7 +155,7 @@ https://github.com/settings/applications
     api_call('/users/%s' % publish_user, token)
 
     # set up some paths and important variables
-    munkireport_root = tempfile.mkdtemp()
+    munkireport_root = tempfile.mkdtemp('', 'mr_release_')
     changelog_path = os.path.join(munkireport_root, 'CHANGELOG.md')
 
     # clone Git master
@@ -197,7 +197,6 @@ https://github.com/settings/applications
     release_date = strftime('(%B %d, %Y)')
     new_changelog = re.sub(r'\(Unreleased\)', release_date, changelog)
     new_changelog = re.sub('...HEAD', '...v%s' % current_version, new_changelog)
-    print new_changelog
     with open(changelog_path, 'w') as fdesc:
         fdesc.write(new_changelog)
 
