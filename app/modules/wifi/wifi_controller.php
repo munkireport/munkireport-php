@@ -1,5 +1,7 @@
 <?php
 
+use Mr\Wifi\Wifi;
+
 /**
  * Wifi_controller class
  *
@@ -36,8 +38,9 @@ class Wifi_controller extends Module_controller
             return;
         }
 
-        $wifi = new wifi_model($serial_number);
-        $obj->view('json', array('msg' => $wifi->rs));
+        $this->connectDB();
+        $wifi = Wifi::where('serial_number', '=', $serial_number)->first();
+        $obj->view('json', array('msg' => $wifi));
     }
     
     /**

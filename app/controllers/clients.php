@@ -3,6 +3,7 @@
 namespace munkireport\controller;
 
 use \Controller, \View;
+use Illuminate\Database\Query\JoinClause;
 use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model, \Network_model;
 
 
