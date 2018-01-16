@@ -180,6 +180,7 @@ https://github.com/settings/applications
     tag_name = 'v%s' % current_version
     if opts.prerelease:
         tag_name += opts.prerelease
+        current_version += opts.prerelease
     published_releases = api_call(
         '/repos/%s/%s/releases' % (publish_user, publish_repo), token)
     for rel in published_releases:
