@@ -174,16 +174,17 @@ https://github.com/settings/applications
         
     # get the current munkireport-php version
     current_version = get_version()
-    print "Current munkireport-php version: %s" % current_version
-    if LooseVersion(next_version) <= LooseVersion(current_version):
-        sys.exit(
-            "Next version (gave %s) must be greater than current version %s!"
-            % (next_version, current_version))
-
     tag_name = 'v%s' % current_version
     if opts.prerelease:
         tag_name += opts.prerelease
         current_version += opts.prerelease
+
+    # print "Current munkireport-php version: %s" % current_version
+    # if LooseVersion(next_version) < LooseVersion(current_version):
+    #     sys.exit(
+    #         "Next version (gave %s) must be greater than current version %s!"
+    #         % (next_version, current_version))
+
     published_releases = api_call(
         '/repos/%s/%s/releases' % (publish_user, publish_repo), token)
     for rel in published_releases:
@@ -199,7 +200,8 @@ https://github.com/settings/applications
     with open(changelog_path, 'r') as fdesc:
         changelog = fdesc.read()
     release_date = strftime('(%B %d, %Y)')
-    new_changelog = re.sub(r'\(Unreleased\)', release_date, changelog)
+    new_changelog = re.sub(r'### \[.+\]', '### [%s]' % current_version, changelog, 1)
+    new_changelog = re.sub(r'\(Unreleased\)', release_date, new_changelog)
     new_changelog = re.sub('...HEAD', '...v%s' % current_version, new_changelog)
     with open(changelog_path, 'w') as fdesc:
         fdesc.write(new_changelog)
