@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class MachineGroup extends Migration
 {
     private $tableName = 'machine_group';
-    private $tableNameV2 = 'machine_group_v2';
+    private $tableNameV2 = 'machine_group_orig';
 
     public function up()
     {

@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Localadmin extends Migration
 {
     private $tableName = 'localadmin';
-    private $tableNameV2 = 'localadmin_v2';
+    private $tableNameV2 = 'localadmin_orig';
 
     public function up()
     {

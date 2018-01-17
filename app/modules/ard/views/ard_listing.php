@@ -20,10 +20,10 @@ new Ard_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":1}' data-colname='ard.Text1'></th>
-		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":2}' data-colname='ard.Text2'></th>
-		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":3}' data-colname='ard.Text3'></th>
-		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":4}' data-colname='ard.Text4'></th>
+		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":1}' data-colname='ard.text1'></th>
+		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":2}' data-colname='ard.text2'></th>
+		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":3}' data-colname='ard.text3'></th>
+		        <th data-i18n="ard.listing.text" data-i18n-options='{"number":4}' data-colname='ard.text4'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Reportdata extends Migration
 {
     private $tableName = 'reportdata';
-    private $tableNameV2 = 'reportdata_v2';
+    private $tableNameV2 = 'reportdata_orig';
 
     public function up()
     {

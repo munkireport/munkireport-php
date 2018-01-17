@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Network extends Migration
 {
     private $tableName = 'network';
-    private $tableNameV2 = 'network_v2';
+    private $tableNameV2 = 'network_orig';
 
     public function up()
     {

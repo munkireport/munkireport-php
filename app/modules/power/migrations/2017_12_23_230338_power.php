@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Power extends Migration
 {
     private $tableName = 'power';
-    private $tableNameV2 = 'power_v2';
+    private $tableNameV2 = 'power_orig';
 
     public function up()
     {

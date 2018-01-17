@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Profile extends Migration
 {
     private $tableName = 'profile';
-    private $tableNameV2 = 'profile_v2';
+    private $tableNameV2 = 'profile_orig';
 
     public function up()
     {

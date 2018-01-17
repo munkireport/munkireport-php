@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Hash extends Migration
 {
     private $tableName = 'hash';
-    private $tableNameV2 = 'hash_v2';
+    private $tableNameV2 = 'hash_orig';
 
     public function up()
     {

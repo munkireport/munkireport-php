@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Servermetrics extends Migration
 {
     private $tableName = 'servermetrics';
-    private $tableNameV2 = 'servermetrics_v2';
+    private $tableNameV2 = 'servermetrics_orig';
 
     public function up()
     {
@@ -25,7 +25,7 @@ class Servermetrics extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->integer('afp_sessions'); // number of afp connections
             $table->integer('smb_sessions'); // number of smb connections
             $table->float('caching_cache_toclients'); //

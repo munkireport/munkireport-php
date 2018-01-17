@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Caching extends Migration
 {
     private $tableName = 'caching';
-    private $tableNameV2 = 'caching_v2';
+    private $tableNameV2 = 'caching_orig';
 
     public function up()
     {

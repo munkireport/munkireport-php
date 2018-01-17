@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Wifi extends Migration
 {
     private $tableName = 'wifi';
-    private $tableNameV2 = 'wifi_v2';
+    private $tableNameV2 = 'wifi_orig';
 
     public function up()
     {

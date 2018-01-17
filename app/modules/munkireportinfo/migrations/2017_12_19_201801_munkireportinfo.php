@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Munkireportinfo extends Migration
 {
     private $tableName = 'munkireportinfo';
-    private $tableNameV2 = 'munkireportinfo_v2';
+    private $tableNameV2 = 'munkireportinfo_orig';
 
     public function up()
     {

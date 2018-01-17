@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class NetworkShares extends Migration
 {
     private $tableName = 'network_shares';
-    private $tableNameV2 = 'network_shares_v2';
+    private $tableNameV2 = 'network_shares_orig';
 
     public function up()
     {

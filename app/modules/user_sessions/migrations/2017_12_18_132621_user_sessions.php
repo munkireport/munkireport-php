@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class UserSessions extends Migration
 {
     private $tableName = 'user_sessions';
-    private $tableNameV2 = 'user_sessions_v2';
+    private $tableNameV2 = 'user_sessions_orig';
 
     public function up()
     {

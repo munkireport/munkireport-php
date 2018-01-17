@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Extensions extends Migration
 {
     private $tableName = 'extensions';
-    private $tableNameV2 = 'extensions_v2';
+    private $tableNameV2 = 'extensions_orig';
 
     public function up()
     {

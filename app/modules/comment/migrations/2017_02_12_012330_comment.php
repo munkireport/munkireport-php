@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Comment extends Migration
 {
     private $tableName = 'comment';
-    private $tableNameV2 = 'comment_v2';
+    private $tableNameV2 = 'comment_orig';
 
     public function up()
     {
@@ -46,6 +46,7 @@ class Comment extends Migration
                 section,
                 user,
                 text,
+                html,
                 timestamp
             FROM
                 $this->tableNameV2");

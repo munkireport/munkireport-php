@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class FirmwareEscrow extends Migration
 {
     private $tableName = 'firmware_escrow';
-    private $tableNameV2 = 'firmware_escrow_v2';
+    private $tableNameV2 = 'firmware_escrow_orig';
 
     public function up()
     {

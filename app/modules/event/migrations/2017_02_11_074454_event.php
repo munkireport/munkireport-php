@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Event extends Migration
 {
     private $tableName = 'event';
-    private $tableNameV2 = 'event_v2';
+    private $tableNameV2 = 'event_orig';
 
     public function up()
     {

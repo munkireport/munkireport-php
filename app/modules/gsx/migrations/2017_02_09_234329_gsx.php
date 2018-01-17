@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Gsx extends Migration
 {
     private $tableName = 'gsx';
-    private $tableNameV2 = 'gsx_v2';
+    private $tableNameV2 = 'gsx_orig';
 
     public function up()
     {

@@ -106,13 +106,13 @@ $(document).on('appReady', function(e, lang) {
 
 		// Format filesizes
 		$('.mr-TotalSize').html(fileSize(machineData.TotalSize, 1));
-		$('.mr-UsedSize').html(fileSize(machineData.TotalSize - machineData.FreeSpace, 1));
-		$('.mr-FreeSpace').html(fileSize(machineData.FreeSpace, 1));
+		$('.mr-UsedSize').html(fileSize(machineData.TotalSize - machineData.freespace, 1));
+		$('.mr-freespace').html(fileSize(machineData.freespace, 1));
 
 		// Smart status
-		$('.mr-SMARTStatus').html(machineData.SMARTStatus);
-		if(machineData.SMARTStatus == 'Failing'){
-			$('.mr-SMARTStatus').addClass('label label-danger');
+		$('.mr-smartstatus').html(machineData.smartstatus);
+		if(machineData.smartstatus == 'Failing'){
+			$('.mr-smartstatus').addClass('label label-danger');
 		}
 
 		// Warranty status
@@ -321,7 +321,7 @@ $(document).on('appReady', function(e, lang) {
 	// Get ARD data
 	$.getJSON( appUrl + '/module/ard/get_data/' + serialNumber, function( data ) {
 		$.each(data, function(index, item){
-			if(/^Text[\d]$/.test(index))
+			if(/^text[\d]$/.test(index))
 			{
 				$('#ard-data')
 					.append($('<tr>')

@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Installhistory extends Migration
 {
     private $tableName = 'installhistory';
-    private $tableNameV2 = 'installhistory_v2';
+    private $tableNameV2 = 'installhistory_orig';
 
     public function up()
     {
