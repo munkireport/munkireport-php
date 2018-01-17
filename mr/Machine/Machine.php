@@ -85,4 +85,18 @@ class Machine extends Model
 
     //// SCOPES
     use CreatedSinceScope;
+
+    /**
+     * Retrieve a list of machines where the `reg_timestamp` date is at least $interval duration old.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \DateInterval $interval The duration that the row has not been updated for
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRegisteredNewerThan($query, \DateInterval $interval) {
+        $age = new \DateTime;
+        $age->sub($interval);
+
+        return $query->with('reportData')->where('reg_timestamp', '>', $age->getTimestamp());
+    }
 }

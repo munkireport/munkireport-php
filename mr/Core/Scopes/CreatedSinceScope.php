@@ -7,7 +7,7 @@ namespace Mr\Core\Scopes;
  *
  * NOTE: This was not implemented as a global scope object, since they cannot take parameters.
  *
- * @package Mr\Scopes
+ * @package Mr\Core\Scopes
  */
 trait CreatedSinceScope
 {

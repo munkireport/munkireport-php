@@ -1,5 +1,7 @@
 <?php
 
+use Mr\ManagedInstalls\ManagedInstall;
+
 /**
  * managedinstalls class
  *
@@ -55,6 +57,11 @@ class managedinstalls_controller extends Module_controller
         if (! $this->authorized()) {
             $out['error'] = 'Not authorized';
         } else {
+
+//            $pendingInstalls = ManagedInstall::pending()
+//                ->newerThan(new \DateInterval("P7D"))
+//                ->where('type', '=', $type); // TODO: machine group scope.
+
             $model = new Managedinstalls_model;
             $hoursBack = 24 * 7; // Hours back
             $out = array();
