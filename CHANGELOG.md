@@ -1,4 +1,4 @@
-### [3.0.0RC1](https://github.com/munkireport/munkireport-php/compare/v2.15.2...HEAD) (Unreleased)
+### [3.0.0RC1](https://github.com/munkireport/munkireport-php/compare/v2.15.2...v3.0.0RC1) (January 17, 2018)
 
 The third major version of munkireport attempts to solve a couple of longstanding issues concerning security, dependency management and database management. We're moving slowly to using eloquent as replacement for the KISS database abstraction. A ton of work has been done by @mosen to make this all work.
 
