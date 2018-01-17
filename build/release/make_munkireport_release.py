@@ -90,6 +90,9 @@ def get_version(commit_count=False):
     except BaseException:
         sys.exit("Couldn't determine current munkireport-php version!")
 
+def clean_version(version):
+    return re.sub("[^0-9\.].*", "", version)
+
 def set_version(version):
     helper = get_version_file_path()
     search = "(\$GLOBALS\['version'\] = ')[^']+"
@@ -230,8 +233,9 @@ https://github.com/settings/applications
                 '--ignore-platform-reqs', '--optimize-autoloader', pkg])
 
     # zip up
+    print "Zipping up the repository.."
     zip_file = 'munkireport-%s.zip' % current_version
-    run_command(['zip', '-r', zip_file, '.', '--exclude', '.git*'])
+    run_command(['zip', '-r', zip_file, '.', '--exclude', '.git*', '-q'])
     with open(zip_file, 'rb') as fdesc:
         zip_data = fdesc.read()
         
@@ -278,7 +282,7 @@ https://github.com/settings/applications
 
     # increment version
     print "Incrementing version to %s.." % next_version
-    set_version('%s.%s' % (next_version, get_commit_count() + 1))
+    set_version('%s.%s' % (clean_version(next_version), get_commit_count() + 1))
 
     # increment changelog
     new_changelog = "### [{0}](https://github.com/{1}/{2}/compare/v{3}...HEAD) (Unreleased)\n\n".format(
