@@ -560,7 +560,7 @@
 	|
 	*/
 	$conf['request_timeout'] = 5;
-	
+
 	/*
 	|===============================================
 	| Apple Hardware Icon Url
@@ -766,7 +766,7 @@
 	| Specify driver, username, password and options
 	| Supported engines: sqlite and mysql
 	| Mysql example:
-	| $conf['database'] = [
+	| $conf['connection'] = [
 	|     'driver'    => 'mysql',
 	|     'host'      => '127.0.0.1',
 	|     'port'      => 3306,
