@@ -28,7 +28,7 @@ class Inventoryitem extends Migration
 
             $table->string('serial_number');
             $table->string('name');
-            $table->string('version');
+            $table->string('version', 78); // 78 is the max length in MySQL 5.0 due to index length
             $table->string('bundleid');
             $table->string('bundlename');
             $table->text('path');
@@ -40,7 +40,7 @@ class Inventoryitem extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::select("INSERT INTO
                 $this->tableName
             SELECT
                 id,
