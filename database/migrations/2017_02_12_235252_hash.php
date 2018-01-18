@@ -26,7 +26,7 @@ class Hash extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number');
-            $table->string('name');
+            $table->string('name', 50);
             $table->string('hash');
             $table->bigInteger('timestamp');
 
@@ -35,7 +35,7 @@ class Hash extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::select("INSERT INTO
                 $this->tableName
             SELECT
                 id,
