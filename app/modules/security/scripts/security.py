@@ -254,8 +254,7 @@ def main():
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')
-    #plistlib.writePlist(result, output_plist)
-    print result
+    plistlib.writePlist(result, output_plist)
     
 if __name__ == "__main__":
     main()
