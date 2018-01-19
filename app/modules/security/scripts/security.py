@@ -102,8 +102,9 @@ def ssh_group_access_check():
         out, err = sp.communicate()
 
         if "com.apple.access_ssh-disabled" in out:
-            # if this group exists, all users are permitted to access SSH
-            return "All users permitted"
+            # if this group exists, all users are permitted to access SSH. 
+            # Nothing group specific
+            pass
 
         elif "com.apple.access_ssh" in out:
             # Get a list of UUIDs of Nested Groups
@@ -127,9 +128,10 @@ def ssh_group_access_check():
             return ' '.join(item for item in group_list)
 
         else:
-            # if neither SSH group exists but SSH is enabled, it was turned on with
+            # If neither SSH group exists but SSH is enabled, it was turned on with
             # systemsetup and all users are enabled.
-            return "All users permitted"
+            # Nothing group specific            
+            pass
 
 def ard_access_check():
     """Check for local users who have ARD permissions
@@ -252,7 +254,8 @@ def main():
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')
-    plistlib.writePlist(result, output_plist)
-
+    #plistlib.writePlist(result, output_plist)
+    print result
+    
 if __name__ == "__main__":
     main()
