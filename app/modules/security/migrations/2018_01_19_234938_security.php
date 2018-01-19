@@ -12,13 +12,13 @@ class Security extends Migration
     {
 		Schema::table($tableName, function($table) {
 			$table->string('ssh_groups')->after('sip');
-        }
-    });
+        });
+    }
 
     public function down()
     {
 		Schema::table($tableName, function($table) {
 			$table->dropColumn($columnName);
-        }
-    });
+        });
+    }
 }
