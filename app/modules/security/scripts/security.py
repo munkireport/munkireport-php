@@ -71,7 +71,7 @@ def ssh_user_access_check():
             user_out, user_err = user_sp.communicate()
             user_list = user_out.split()
                 
-            return user_list[1:]
+            return ' '.join(item for item in user_list[1:])
 
         else:
             # if neither SSH group exists but SSH is enabled, it was turned on with
@@ -124,7 +124,7 @@ def ssh_group_access_check():
             for group_id in group_ids:
                 group_list.append(grp.getgrgid(group_id).gr_name)
                 
-            return group_list
+            return ' '.join(item for item in group_list)
 
         else:
             # if neither SSH group exists but SSH is enabled, it was turned on with
