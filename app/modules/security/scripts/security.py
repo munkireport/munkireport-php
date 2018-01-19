@@ -7,6 +7,7 @@ import os
 import sys
 import subprocess
 import plistlib
+import grp
 
 def gatekeeper_check():
     """ Gatekeeper checks. Simply calls the spctl and parses status. Requires 10.7+"""
@@ -36,9 +37,10 @@ def sip_check():
         return "Not Supported"
 
 
-def ssh_access_check():
-    """Check for users who can log in via SSH using the built-in group. This will not
-    cover any users who are granted SSH via an AD/OD group."""
+def ssh_user_access_check():
+    """Check for users who can log in via SSH 
+    using the built-in group reporting.
+    Checks for explicitly added users , both local and directory based."""
 
     #Check first that SSH is enabled!
     sp = subprocess.Popen(['systemsetup', '-getremotelogin'], stdout=subprocess.PIPE)
@@ -64,23 +66,65 @@ def ssh_access_check():
 
         elif "com.apple.access_ssh" in out:
             # if this group exists, SSH is enabled but only some users are permitted
-            sp = subprocess.Popen(['dscl', '.', 'list', '/Users'], stdout=subprocess.PIPE)
-            out, err = sp.communicate()
+            # Get a list of users in the com.apple.access_ssh GroupMembership
+            user_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.access_ssh', 'GroupMembership'], stdout=subprocess.PIPE)
+            user_out, user_err = user_sp.communicate()
+            user_list = user_out.split()
+                
+            return user_list[1:]
 
-            user_list = out.split()
-            ssh_users = ''
+        else:
+            # if neither SSH group exists but SSH is enabled, it was turned on with
+            # systemsetup and all users are enabled.
+            return "All users permitted"
 
-            for user in user_list:
-                if user[0] in '_': # filter out system users that start with _
-                    continue
-                else:
-                    sp = subprocess.Popen(['dsmemberutil', 'checkmembership', '-U', user, '-G', 'com.apple.access_ssh'], stdout=subprocess.PIPE)
-                    out, err = sp.communicate()
-                    if 'is a member' in out:
-                        ssh_users += user + ' '
-                    else:
-                        pass
-            return ssh_users.strip()
+def ssh_group_access_check():
+    """Check for groups that have members who can log in via SSH 
+    using the built-in group reporting.
+    Checks for explicitly added groups, both local and directory based."""
+
+    #Check first that SSH is enabled!
+    sp = subprocess.Popen(['systemsetup', '-getremotelogin'], stdout=subprocess.PIPE)
+    out, err = sp.communicate()
+
+    if "Off" in out:
+        return "SSH Disabled"
+
+    else:
+        # First we need to check if SSH is open to all users. A few ways  to tell:
+        # -on 10.8 and older, systemsetup will show as on but the access_ssh groups are not present
+        # -on 10.9, systemsetup will show as on and list all users in access_ssh
+        # -on 10.10 and newer, systemsetup will show as on and access_ssh-disabled will be present
+        # Note for 10.10 and newer - root will show up as authorized if systemsetup was used to turn
+        # on SSH, and not if pref pane was used.
+
+        sp = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
+        out, err = sp.communicate()
+
+        if "com.apple.access_ssh-disabled" in out:
+            # if this group exists, all users are permitted to access SSH
+            return "All users permitted"
+
+        elif "com.apple.access_ssh" in out:
+            # Get a list of UUIDs of Nested Groups
+            group_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.access_ssh', 'NestedGroups'], stdout=subprocess.PIPE)
+            group_out, group_err = group_sp.communicate()
+            group_list_uuid = group_out.split()
+            
+            # Translate group UUIDs to gids
+            group_ids = []
+            for group_uuid in group_list_uuid[1:]:
+                group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
+                group_id_out, group_id_err = group_id_sp.communicate()
+                group_list_id = group_id_out.split()
+                group_ids.append(group_list_id[1])
+                
+            # Get the name of the gids
+            group_list = []
+            for group_id in group_ids:
+                group_list.append(grp.getgrgid(group_id).gr_name)
+                
+            return group_list
 
         else:
             # if neither SSH group exists but SSH is enabled, it was turned on with
@@ -199,7 +243,8 @@ def main():
     result = {}
     result.update({'gatekeeper': gatekeeper_check()})
     result.update({'sip': sip_check()})
-    result.update({'ssh_users': ssh_access_check()})
+    result.update({'ssh_users': ssh_user_access_check()})
+    result.update({'ssh_groups': ssh_group_access_check()})
     result.update({'ard_users': ard_access_check()})
     result.update({'firmwarepw': firmware_pw_check()})
     result.update({'firewall_state':firewall_enable_check()})
