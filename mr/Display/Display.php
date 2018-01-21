@@ -9,6 +9,7 @@ class Display extends SerialNumberModel
     const TYPE_EXTERNAL = 1;
 
     protected $table = 'displays';
+    public $timestamps = false;
 
     protected $fillable = [
         'type',

@@ -12,6 +12,7 @@ class ReportData extends Model
      * @inheritDoc
      */
     protected $table = 'reportdata';
+    public $timestamps = false;
 
     /**
      * @inheritDoc
@@ -37,9 +38,9 @@ class ReportData extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-//    public function machine() {
-//        return $this->belongsTo('Mr\Machine', 'serial_number', 'serial_number');
-//    }
+    public function machine() {
+        return $this->belongsTo('Mr\Machine\Machine', 'serial_number', 'serial_number');
+    }
 //
 //    // Leaky abstractions
 //    public function munkireport() {

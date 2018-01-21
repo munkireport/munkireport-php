@@ -3,7 +3,8 @@ namespace Mr\DeployStudio;
 
 use Mr\Core\SerialNumberModel;
 
-class DeployStudioInfo extends SerialNumberModel
+class DeployStudio extends SerialNumberModel
 {
     protected $table = 'deploystudio';
+    public $timestamps = false;
 }

@@ -6,4 +6,5 @@ use Mr\Core\SerialNumberModel;
 class InventoryItem extends SerialNumberModel
 {
     protected $table = 'inventoryitem';
+    public $timestamps = false;
 }

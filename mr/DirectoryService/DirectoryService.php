@@ -7,6 +7,7 @@ use Mr\Core\SerialNumberModel;
 class DirectoryService extends SerialNumberModel
 {
     protected $table = 'directoryservice';
+    public $timestamps = false;
 
     protected $fillable = [
         'which_directory_service',

@@ -6,6 +6,7 @@ $factory->define(Mr\Comment\Comment::class, function (Faker\Generator $faker) {
         'section' => $faker->word,
         'user' => $faker->userName,
         'text' => $faker->text,
-        'html' => $faker->text
+        'html' => $faker->text,
+        'timestamp' => $faker->unixTime
     ];
 });

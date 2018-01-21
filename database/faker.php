@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use munkireport\lib\Modules as ModuleMgr;
 
 define('KISS', 1);
 define('FC', __FILE__ .'/../' );
@@ -41,12 +42,59 @@ print("Creating fake database records...\n");
 $faker = Faker\Factory::create();
 $factory = new Illuminate\Database\Eloquent\Factory($faker);
 
+$moduleMgr = new ModuleMgr;
+$moduleMgr->loadinfo(true);
+$modules = [
+    'ARD',
+    'Backup2Go',
+    'Bluetooth',
+    'Certificate',
+    'Comment',
+    'DeployStudio',
+    'DirectoryService',
+    'DiskReport',
+    'Display',
+    'FindMyMac',
+    'GSX',
+    'Inventory',
+    'LocalAdmin',
+    'Location',
+    'Machine',
+    'ManagedInstalls',
+    'MunkiInfo',
+    'MunkiReport',
+    'Network',
+    'Power',
+    'Printer',
+    'Profile',
+    'ReportData',
+    'TimeMachine',
+    'Warranty'
+];
 
-$factory->load(__DIR__ . '/../mr/ARD');
-$factory->load(__DIR__ . '/../mr/Bluetooth');
-$factory->load(__DIR__ . '/../mr/Certificate');
+foreach($modules as $moduleName) {
+    print("Finding model factories in " . __DIR__ . "/../mr/${moduleName}\n");
+    $factory->load(__DIR__ . "/../mr/${moduleName}");
+}
 
+$reportData = $factory->of(Mr\ReportData\ReportData::class)->times(10);
+foreach ($reportData as $r) {
+    $machine = $factory->of(Mr\Machine\Machine::class)->create(['serial_number', $r->serial_number]);
+    $r->save($machine);
+}
 
-$factory->of(Mr\ARD\ARD::class)->times(10)->create();
-$factory->of(Mr\Bluetooth\Bluetooth::class)->times(10)->create();
-$factory->of(Mr\Certificate\Certificate::class)->times(10)->create();
+$reportData->create();
+
+//
+//
+//$factory->of(Mr\ARD\ARD::class)->times(10)->create();
+//$factory->of(Mr\Bluetooth\Bluetooth::class)->times(10)->create();
+////$factory->of(Mr\Certificate\Certificate::class)->times(10)->create();
+//$factory->of(Mr\Comment\Comment::class)->times(10)->create();
+//$factory->of(Mr\DeployStudio\DeployStudio::class)->times(10)->create();
+//$factory->of(Mr\DirectoryService\DirectoryService::class)->times(10)->create();
+////$factory->of(Mr\DiskReport\DiskReport::class)->times(10)->create();
+//$factory->of(Mr\Display\Display::class)->times(10)->create();
+//$factory->of(Mr\FindMyMac\FindMyMac::class)->times(10)->create();
+//$factory->of(Mr\GSX\GSX::class)->times(10)->create();
+//$factory->of(Mr\Inventory\InventoryItem::class)->times(10)->create();
