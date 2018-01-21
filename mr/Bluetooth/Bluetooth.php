@@ -3,9 +3,10 @@ namespace Mr\Bluetooth;
 
 use Mr\Core\SerialNumberModel;
 
-class BluetoothInfo extends SerialNumberModel
+class Bluetooth extends SerialNumberModel
 {
     protected $table = 'bluetooth';
+    public $timestamps = false;
 
     protected $fillable = [
         'battery_percent',

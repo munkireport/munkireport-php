@@ -5,7 +5,8 @@
     "license": "MIT",
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.5",
-        "phpunit/phpunit": "^6.5"
+        "phpunit/phpunit": "^6.5",
+        "fzaninotto/faker": "^1.7"
     },
     "config": {
         "platform": {

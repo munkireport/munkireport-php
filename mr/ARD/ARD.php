@@ -7,6 +7,7 @@ use Mr\Core\SerialNumberModel;
 class ARD extends SerialNumberModel
 {
     protected $table = 'ard';
+    public $timestamps = false;
 
     protected $fillable = [
         'serial_number',

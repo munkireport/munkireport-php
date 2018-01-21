@@ -1,5 +1,5 @@
 <?php
-namespace MrModule\Power;
+namespace Mr\Power;
 
 use Mr\Core\SerialNumberModel;
 

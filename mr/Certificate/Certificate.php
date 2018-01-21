@@ -6,6 +6,7 @@ use Mr\Core\SerialNumberModel;
 class Certificate extends SerialNumberModel
 {
     protected $table = 'certificate';
+    public $timestamps = false;
 
     protected $casts = [
         'cert_exp_time' => 'int'

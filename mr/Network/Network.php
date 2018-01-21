@@ -1,5 +1,5 @@
 <?php
-namespace MrModule\Network;
+namespace Mr\Network;
 
 use Mr\Core\SerialNumberModel;
 

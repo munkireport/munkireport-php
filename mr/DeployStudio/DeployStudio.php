@@ -1,5 +1,5 @@
 <?php
-namespace MrModule\DeployStudio;
+namespace Mr\DeployStudio;
 
 use Mr\Core\SerialNumberModel;
 
