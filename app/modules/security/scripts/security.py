@@ -71,7 +71,7 @@ def ssh_user_access_check():
             user_out, user_err = user_sp.communicate()
             user_list = user_out.split()
                 
-            return ' '.join(item for item in user_list[1:])
+            return ', '.join(item for item in user_list[1:])
 
         else:
             # if neither SSH group exists but SSH is enabled, it was turned on with
@@ -113,19 +113,13 @@ def ssh_group_access_check():
             group_list_uuid = group_out.split()
             
             # Translate group UUIDs to gids
-            group_ids = []
+            group_list = []
             for group_uuid in group_list_uuid[1:]:
                 group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
                 group_id_out, group_id_err = group_id_sp.communicate()
-                group_list_id = group_id_out.split()
-                group_ids.append(group_list_id[1])
+                group_list.append(grp.getgrgid(group_id_out.split()[1]).gr_name)
                 
-            # Get the name of the gids
-            group_list = []
-            for group_id in group_ids:
-                group_list.append(grp.getgrgid(group_id).gr_name)
-                
-            return ' '.join(item for item in group_list)
+            return ', '.join(item for item in group_list)
 
         else:
             # If neither SSH group exists but SSH is enabled, it was turned on with
