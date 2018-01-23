@@ -53,7 +53,8 @@ class manager extends Controller
                     break;
                 default:
                     // Get database name from dsn string
-                    if (conf('dbname')) {
+                    $dbname = isset(conf('connection')['database']) ? conf('connection')['database'] : '';
+                    if ($dbname) {
                         $tbl_query = "SELECT TABLE_NAME AS name FROM information_schema.TABLES
                         WHERE TABLE_TYPE='BASE TABLE' AND TABLE_SCHEMA='".conf('dbname')."'";
                     } else {
@@ -66,7 +67,7 @@ class manager extends Controller
             foreach ($machine->query($tbl_query) as $obj) {
                 $tables[] = $obj->name;
             }
-            
+
 
             // Get database handle
             $dbh = getdbh();
