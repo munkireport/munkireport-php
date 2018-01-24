@@ -41,7 +41,7 @@ class Security extends Migration
             $table->index('ssh_users');
             $table->index('ard_users');
             $table->index('firmwarepw');
-            $table->index('firewall_state');
+            $table->index('firewall_state')->nullable();
             $table->index('skel_state');
         });
 
