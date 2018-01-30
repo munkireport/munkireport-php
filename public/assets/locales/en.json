@@ -220,6 +220,9 @@
         "os": {
             "title": "OS Breakdown"
         },
+	"osbuild": {
+            "title": "OS Build Breakdown"
+	},
         "registered": {
             "title": "Client Registration Over Time"
         },
