@@ -9,5 +9,6 @@
     "bundle_id": "Bundle ID",
     "version": "Version",
     "codesign": "Codesign Cert",
-    "report": "Extensions Report"
+    "report": "Extensions Report",
+    "teamid": "Team Identifier"
 }

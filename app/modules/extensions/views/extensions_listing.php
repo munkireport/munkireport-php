@@ -23,6 +23,7 @@ new Extensions_model;
 			<th data-i18n="extensions.version" data-colname='extensions.version'></th>
 			<th data-i18n="extensions.path" data-colname='extensions.path'></th>
 			<th data-i18n="extensions.codesign" data-colname='extensions.codesign'></th>
+			<th data-i18n="extensions.teamid" data-colname='extensions.teamid'></th>
 			<th data-i18n="extensions.executable" data-colname='extensions.executable'></th>
 		  </tr>
 		</thead>
