@@ -8,7 +8,7 @@
     "executable": "Executable",
     "bundle_id": "Bundle ID",
     "version": "Version",
-    "codesign": "Codesign Cert",
+    "developer": "Developer",
     "report": "Extensions Report",
     "teamid": "Team Identifier"
 }

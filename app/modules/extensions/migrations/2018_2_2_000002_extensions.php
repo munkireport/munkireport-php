@@ -16,7 +16,7 @@ class Extensions extends Migration
 
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
 			$table->string('teamid')->after('codesign');
-						
+			$table->renameColumn('codesign', 'developer');						
         });
     }
 
@@ -27,6 +27,7 @@ class Extensions extends Migration
 
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
 			$table->dropColumn('teamid');
-        });
+ 			$table->renameColumn('developer', 'codesign');						
+       });
     }
 }

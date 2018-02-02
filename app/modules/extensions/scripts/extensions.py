@@ -49,7 +49,7 @@ for kernelname in kernel_dict:
                 developer_name = " ".join(bundle_codesign.split()[:-1])
                 team_id = bundle_codesign.split()[-1].strip("()")
 				
-        info[str(count)] = {'bundle_id':kernelname,'path':bundle_path,'version':bundle_version,'executable':bundle_executable,'codesign':developer_name, 'teamid':team_id}
+        info[str(count)] = {'bundle_id':kernelname,'path':bundle_path,'version':bundle_version,'executable':bundle_executable,'developer':developer_name, 'teamid':team_id}
         count = count+1
 
 # Write results to cache file
