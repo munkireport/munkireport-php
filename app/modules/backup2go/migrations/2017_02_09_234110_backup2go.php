@@ -11,7 +11,7 @@ class Backup2go extends Migration
         $migrateData = false;
 
         if ($capsule::schema()->hasTable('backup2go')) {
-            $capsule::schema()->rename('backup2go', 'backup2go_v2');
+            $capsule::schema()->rename('backup2go', 'backup2go_orig');
             $migrateData = true;
         }
 
@@ -31,7 +31,7 @@ class Backup2go extends Migration
                 serial_number,
                 backupdate
             FROM
-                backup2go_v2');
+                backup2go_orig');
         }
     }
     
@@ -39,8 +39,8 @@ class Backup2go extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('backup2go');
-        if ($capsule::schema()->hasTable('backup2go_v2')) {
-            $capsule::schema()->rename('backup2go_v2', 'backup2go');
+        if ($capsule::schema()->hasTable('backup2go_orig')) {
+            $capsule::schema()->rename('backup2go_orig', 'backup2go');
         }
     }
 }

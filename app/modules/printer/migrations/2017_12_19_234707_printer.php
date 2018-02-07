@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Printer extends Migration
 {
     private $tableName = 'printer';
-    private $tableNameV2 = 'printer_v2';
+    private $tableNameV2 = 'printer_orig';
 
     public function up()
     {

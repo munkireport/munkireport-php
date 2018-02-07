@@ -11,13 +11,13 @@ class Crashplan extends Migration
 
         $migrateData = false;
 
-        if ($capsule::schema()->hasTable('crashplan_v2')) {
+        if ($capsule::schema()->hasTable('crashplan_orig')) {
             // Migration already failed before, but didnt finish
             throw new Exception("previous failed migration exists");
         }
 
         if ($capsule::schema()->hasTable('crashplan')) {
-            $capsule::schema()->rename('crashplan', 'crashplan_v2');
+            $capsule::schema()->rename('crashplan', 'crashplan_orig');
             $migrateData = true;
         }
 
@@ -46,7 +46,7 @@ class Crashplan extends Migration
                 last_failure,
                 reason
             FROM
-                crashplan_v2');
+                crashplan_orig');
         }
 
     }
@@ -55,8 +55,8 @@ class Crashplan extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('crashplan');
-        if ($capsule::schema()->hasTable('crashplan_v2')) {
-            $capsule::schema()->rename('crashplan_v2', 'crashplan');
+        if ($capsule::schema()->hasTable('crashplan_orig')) {
+            $capsule::schema()->rename('crashplan_orig', 'crashplan');
         }
     }
 }

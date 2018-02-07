@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Warranty extends Migration
 {
     private $tableName = 'warranty';
-    private $tableNameV2 = 'warranty_v2';
+    private $tableNameV2 = 'warranty_orig';
 
     public function up()
     {

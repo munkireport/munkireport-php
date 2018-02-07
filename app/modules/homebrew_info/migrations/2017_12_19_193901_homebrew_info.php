@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class HomebrewInfo extends Migration
 {
     private $tableName = 'homebrew_info';
-    private $tableNameV2 = 'homebrew_info_v2';
+    private $tableNameV2 = 'homebrew_info_orig';
 
     public function up()
     {

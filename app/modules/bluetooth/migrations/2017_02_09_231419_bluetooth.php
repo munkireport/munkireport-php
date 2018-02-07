@@ -10,13 +10,13 @@ class Bluetooth extends Migration
         $capsule = new Capsule();
         $migrateData = false;
 
-        if ($capsule::schema()->hasTable('bluetooth_v2')) {
+        if ($capsule::schema()->hasTable('bluetooth_orig')) {
             // Migration already failed before, but didnt finish
             throw new Exception("previous failed migration exists");
         }
 
         if ($capsule::schema()->hasTable('bluetooth')) {
-            $capsule::schema()->rename('bluetooth', 'bluetooth_v2');
+            $capsule::schema()->rename('bluetooth', 'bluetooth_orig');
             $migrateData = true;
         }
 
@@ -39,7 +39,7 @@ class Bluetooth extends Migration
                 battery_percent,
                 device_type
             FROM
-                bluetooth_v2');
+                bluetooth_orig');
         }
     }
 
@@ -47,8 +47,8 @@ class Bluetooth extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('bluetooth');
-        if ($capsule::schema()->hasTable('bluetooth_v2')) {
-            $capsule::schema()->rename('bluetooth_v2', 'bluetooth');
+        if ($capsule::schema()->hasTable('bluetooth_orig')) {
+            $capsule::schema()->rename('bluetooth_orig', 'bluetooth');
         }
     }
 }

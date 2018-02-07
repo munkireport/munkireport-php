@@ -17,8 +17,12 @@
     padding: 2px 0;
 }
 
-.log-error {
+.log-level-error {
     color: red;
+}
+
+.log-level-info {
+    color: darkgrey;
 }
 
 .disclosure {

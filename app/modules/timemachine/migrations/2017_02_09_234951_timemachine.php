@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Timemachine extends Migration
 {
     private $tableName = 'timemachine';
-    private $tableNameV2 = 'timemachine_v2';
+    private $tableNameV2 = 'timemachine_orig';
 
     public function up()
     {

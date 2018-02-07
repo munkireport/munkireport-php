@@ -25,7 +25,7 @@ new Security_model;
 		        <th data-i18n="user.local_admins" data-colname='localadmin.users'></th>
 		        <th data-i18n="filevault_status.users" data-colname='filevault_status.filevault_users'></th>
 		        <th data-i18n="type"data-colname='machine.machine_name'></th>
-		        <th data-i18n="disk_report.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+		        <th data-i18n="disk_report.encryption_status" data-colname='diskreport.encrypted'></th>
 		        <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
@@ -106,7 +106,7 @@ new Security_model;
                     d.where = [
                         {
                             table: 'diskreport',
-                            column: 'MountPoint',
+                            column: 'mountpoint',
                             value: '/'
                         }
                     ];

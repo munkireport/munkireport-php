@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Usb extends Migration
 {
     private $tableName = 'usb';
-    private $tableNameV2 = 'usb_v2';
+    private $tableNameV2 = 'usb_orig';
 
     public function up()
     {

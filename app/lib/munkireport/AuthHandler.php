@@ -186,17 +186,23 @@ class AuthHandler
         }
 
         // Set machine_groups
-        if ($_SESSION['role'] == 'admin' or ! $bu_enabled) {
-        // Can access all defined groups (from machine_group)
-            // and used groups (from reportdata)
-            $mg = new Machine_group;
-            $report = new Reportdata_model;
-            $_SESSION['machine_groups'] = array_unique(array_merge($report->get_groups(), $mg->get_group_ids()));
-        } else {
-            // Only get machine_groups for business unit
-            $_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
+        try {
+            if ($_SESSION['role'] == 'admin' or ! $bu_enabled) {
+            // Can access all defined groups (from machine_group)
+                // and used groups (from reportdata)
+                $mg = new Machine_group;
+                $report = new Reportdata_model;
+                $_SESSION['machine_groups'] = array_unique(array_merge($report->get_groups(), $mg->get_group_ids()));
+            } else {
+                // Only get machine_groups for business unit
+                $_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
+            }
+            $_SESSION['initialized'] = true;
+        } catch (\Exception $e) {
+            $_SESSION['machine_groups'] = [0];
+            $_SESSION['initialized'] = false;
         }
-        
+
         return $_SESSION;
     }
 

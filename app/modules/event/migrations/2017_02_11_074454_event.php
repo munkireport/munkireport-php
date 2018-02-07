@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Event extends Migration
 {
     private $tableName = 'event';
-    private $tableNameV2 = 'event_v2';
+    private $tableNameV2 = 'event_orig';
 
     public function up()
     {
@@ -28,7 +28,7 @@ class Event extends Migration
 
             $table->string('serial_number');
             $table->string('type');
-            $table->string('module');
+            $table->string('module', 50);
             $table->string('msg');
             $table->string('data')->nullable();
             $table->bigInteger('timestamp');
@@ -40,9 +40,9 @@ class Event extends Migration
             $table->index(['serial_number', 'module']);
             $table->index('type');
         });
-        
+
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::select("INSERT INTO
                 $this->tableName
             SELECT
                 id,

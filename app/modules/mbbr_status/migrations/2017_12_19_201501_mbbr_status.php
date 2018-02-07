@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class MbbrStatus extends Migration
 {
     private $tableName = 'mbbr_status';
-    private $tableNameV2 = 'mbbr_status_v2';
+    private $tableNameV2 = 'mbbr_status_orig';
 
     public function up()
     {

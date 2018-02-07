@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Managedinstalls extends Migration
 {
     private $tableName = 'managedinstalls';
-    private $tableNameV2 = 'managedinstalls_v2';
+    private $tableNameV2 = 'managedinstalls_orig';
 
     public function up()
     {
@@ -30,7 +30,7 @@ class Managedinstalls extends Migration
             $table->string('serial_number');
             $table->string('name');
             $table->string('display_name');
-            $table->string('version')->nullable();
+            $table->string('version', 78)->nullable();
             $table->integer('size')->nullable();
             $table->integer('installed');
             $table->string('status');
@@ -46,7 +46,7 @@ class Managedinstalls extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::select("INSERT INTO
                 $this->tableName
             SELECT
                 id,
@@ -62,7 +62,7 @@ class Managedinstalls extends Migration
                 $this->tableNameV2");
         }
     }
-    
+
     public function down()
     {
         $capsule = new Capsule();

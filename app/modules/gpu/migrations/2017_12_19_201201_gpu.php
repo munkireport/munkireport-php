@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Gpu extends Migration
 {
     private $tableName = 'gpu';
-    private $tableNameV2 = 'gpu_v2';
+    private $tableNameV2 = 'gpu_orig';
 
     public function up()
     {

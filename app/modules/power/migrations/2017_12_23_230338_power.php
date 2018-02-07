@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Power extends Migration
 {
     private $tableName = 'power';
-    private $tableNameV2 = 'power_v2';
+    private $tableNameV2 = 'power_orig';
 
     public function up()
     {
@@ -39,7 +39,7 @@ class Power extends Migration
             $table->integer('temperature')->default(0);
             $table->string('condition');
             
-            $table->text('sleep_prevented_by');
+            $table->text('sleep_prevented_by')->nullable();
             $table->string('hibernatefile');
             $table->text('schedule');
             $table->string('adapter_id');

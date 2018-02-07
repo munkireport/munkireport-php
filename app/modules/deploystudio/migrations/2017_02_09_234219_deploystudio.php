@@ -10,13 +10,13 @@ class Deploystudio extends Migration
         $capsule = new Capsule();
         $migrateData = false;
 
-        if ($capsule::schema()->hasTable('deploystudio_v2')) {
+        if ($capsule::schema()->hasTable('deploystudio_orig')) {
             // Migration already failed before, but didnt finish
             throw new Exception("previous failed migration exists");
         }
 
         if ($capsule::schema()->hasTable('deploystudio')) {
-            $capsule::schema()->rename('deploystudio', 'deploystudio_v2');
+            $capsule::schema()->rename('deploystudio', 'deploystudio_orig');
             $migrateData = true;
         }
 
@@ -87,7 +87,7 @@ class Deploystudio extends Migration
                 dstudio_host_delete_other_locations,
                 dstudio_host_model_identifier
             FROM
-                deploystudio_v2');
+                deploystudio_orig');
         }
     }
     
@@ -95,8 +95,8 @@ class Deploystudio extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->dropIfExists('deploystudio');
-        if ($capsule::schema()->hasTable('deploystudio_v2')) {
-            $capsule::schema()->rename('deploystudio_v2', 'deploystudio');
+        if ($capsule::schema()->hasTable('deploystudio_orig')) {
+            $capsule::schema()->rename('deploystudio_orig', 'deploystudio');
         }
     }
 }
