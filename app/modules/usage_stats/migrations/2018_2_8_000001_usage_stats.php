@@ -3,7 +3,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class UsageStats extends Migration
+class UsageStats201828000001 extends Migration
 {
     
     private $tableName = 'usage_stats';
