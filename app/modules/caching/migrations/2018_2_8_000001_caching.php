@@ -3,7 +3,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Caching extends Migration
+class Caching201828000001 extends Migration
 {
     private $tableName = 'caching';
 
