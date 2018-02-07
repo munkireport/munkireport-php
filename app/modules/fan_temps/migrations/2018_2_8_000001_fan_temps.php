@@ -3,7 +3,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class FanTemps extends Migration
+class FanTemps201828000001 extends Migration
 {
     private $tableName = 'fan_temps';
 
