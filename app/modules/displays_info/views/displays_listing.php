@@ -11,7 +11,7 @@
 
 	<div class="col-lg-12">
 
-	<h3>Displays report <span id="total-count" class='label label-primary'>…</span></h3>
+	<h3><span data-i18n="displays_info.reporttitle"></span> <span id="total-count" class='label label-primary'>…</span></h3>
 
 	  <table class="table table-striped table-condensed table-bordered">
 

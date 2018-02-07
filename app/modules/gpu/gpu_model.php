@@ -1,5 +1,8 @@
 <?php
-class Gpu_model extends Model {
+
+use CFPropertyList\CFPropertyList;
+
+class Gpu_model extends \Model {
 
 	function __construct($serial='')
 	{
@@ -33,7 +36,7 @@ class Gpu_model extends Model {
 		$this->idx[] = array('rom_revision');
         
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}
@@ -80,7 +83,6 @@ class Gpu_model extends Model {
 		// Delete previous set        
 		$this->deleteWhere('serial_number=?', $this->serial_number);
 
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();
@@ -125,8 +127,11 @@ class Gpu_model extends Model {
 				$this->rs['vram'] = ($device['vram']." (Shared)");
             }
             
-            // Fix GMA model name
-            $this->rs['model'] = str_replace("GMA","Intel GMA",$this->rs['model']);
+            // Fix model names
+            $this->rs['model'] = str_replace(array("GMA","ATY,Radeon"),array("Intel GMA","ATI Radeon"),$this->rs['model']);
+            
+            // Fix vendors name
+            $this->rs['vendor'] = str_replace(array("sppci_vendor_amd","sppci_vendor_Nvidia"),array("AMD","NVIDIA"),$this->rs['model']);
             
 			// Save the GPU
 			$this->id = '';

@@ -1,45 +1,30 @@
 <?php
-class Munkireport_model extends Model
+
+use CFPropertyList\CFPropertyList;
+use munkireport\models\Hash;
+
+class Munkireport_model extends \Model
 {
 
     public function __construct($serial_number='')
     {
         parent::__construct('id', 'munkireport'); //primary key, tablename
         $this->rs['id'] = 0;
-        $this->rs['serial_number'] = $serial_number; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial_number;
         $this->rs['runtype'] = '';
         $this->rs['version'] = '';
         $this->rs['errors'] = 0;
         $this->rs['warnings'] = 0;
         $this->rs['manifestname'] = '';
         $this->rs['error_json'] = '';
-        $this->rt['error_json'] = 'BLOB'; // JSON object errors
         $this->rs['warning_json'] = '';
-        $this->rt['warning_json'] = 'BLOB'; // JSON object with warnings
         $this->rs['starttime'] = '';
         $this->rs['endtime'] = '';
         $this->rs['timestamp'] = '';
 
-
-        // Add indexes
-        $this->idx[] = array('timestamp');
-        $this->idx[] = array('runtype');
-        $this->idx[] = array('version');
-        $this->idx[] = array('manifestname');
-        $this->idx[] = array('errors');
-        $this->idx[] = array('warnings');
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 5;
-
-        // Create table if it does not exist
-        $this->create_table();
-
         if ($serial_number) {
             $this->retrieve_record($serial_number);
-            if (! $this->rs['serial_number']) {
-                $this->serial_number = $serial_number;
-            }
+            $this->serial_number = $serial_number;
         }
     }
 
@@ -114,7 +99,6 @@ class Munkireport_model extends Model
             throw new Exception("Error Processing Request: No property list found", 1);
         }
 
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();

@@ -1,5 +1,5 @@
 <?php
-class Homebrew_info_model extends Model {
+class Homebrew_info_model extends \Model {
 
 	function __construct($serial='')
 	{
@@ -29,9 +29,12 @@ class Homebrew_info_model extends Model {
 		$this->rs['x11'] = '';
 		$this->rs['xcode'] = '';
 		$this->rs['macos'] = '';
+		$this->rs['homebrew_git_config_file'] = '';
+		$this->rs['homebrew_noanalytics_this_run'] = '';
+		$this->rs['curl'] = '';
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
+		$this->schema_version = 1;
 
 		// Add indexes
 		$this->idx[] = array('core_tap_head');
@@ -57,9 +60,12 @@ class Homebrew_info_model extends Model {
 		$this->idx[] = array('x11');
 		$this->idx[] = array('xcode');
 		$this->idx[] = array('macos');
+		$this->idx[] = array('homebrew_git_config_file');
+		$this->idx[] = array('homebrew_noanalytics_this_run');
+		$this->idx[] = array('curl');
         
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);
@@ -111,27 +117,30 @@ class Homebrew_info_model extends Model {
             'Ruby' => 'ruby',
             'X11' => 'x11',
             'Xcode' => 'xcode',
+            'HOMEBREW_GIT_CONFIG_FILE' => 'homebrew_git_config_file',
+            'HOMEBREW_NO_ANALYTICS_THIS_RUN' => 'homebrew_noanalytics_this_run',
+            'Curl' => 'curl',
             'macOS' => 'macos'
         );
         
         // Traverse the brew info with translations
-        foreach ($translate as $search => $field) {  
-                // If key is not empty, save it to the object
-                if (! empty($brewinfo[0][$search])) {  
-                        $this->$field = $brewinfo[0][$search];
-                } else {
-                    if ($brewinfo[0][$search] == "0"){
-                        // Set the value to 0 if it's 0                        
-                        $this->$field = $brewinfo[0][$search];
-                    } else {  
-                        // Else, null the value
-                        $this->$field = '';
-                    }
-                }
+        foreach ($translate as $search => $field) { 
+
+            if (! array_key_exists($search, $brewinfo[0])){
+                // Skip keys that may not exist and null the value
+                $this->$field = '';
+            } else if (! empty($brewinfo[0][$search])) {  
+               // If key is not empty, save it to the object
+                    $this->$field = $brewinfo[0][$search];
+            } else if ($brewinfo[0][$search] == "0"){
+                // Set the value to 0 if it's 0                        
+                $this->$field = $brewinfo[0][$search];
+            } else {  
+                // Else, null the value
+                $this->$field = '';
             }
-        
+        }
         // Save the info
         $this->save();
-    
-		}
-	}
+    }
+}

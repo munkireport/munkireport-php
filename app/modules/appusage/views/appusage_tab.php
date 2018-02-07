@@ -17,7 +17,7 @@
       <?php $name_url=url('module/inventory/items/'. rawurlencode($item->app_name)); ?>
         <tr>
           <td><a href='<?php echo $name_url; ?>'><?php echo $item->app_name; ?></a></td>
-          <td><?php echo str_replace(array('quit','launch','activation'), array('Quit','Launch','Activation'), $item->event); ?></td>
+          <td><?php echo str_replace(array('quit','launch','activate'), array('Quit','Launch','Activation'), $item->event); ?></td>
           <td><?php echo $item->last_time; ?></td>
           <td><?php echo $item->number_times; ?></td>
           <td><?php echo $item->app_version; ?></td>

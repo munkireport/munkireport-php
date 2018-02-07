@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+array_shift($argv);
+
+if(count($argv) < 1){
+    die("ERROR: No module defined\n");
+}
+
+$scriptdir = dirname(__FILE__);
+$module_path = $argv[0];
+$module = basename($module_path);
+$migrations_dir = $module_path . '/migrations/';
+$filename = date('Y_m_d_His_') . $module .'.php';
+$classname = str_replace('_', '', ucwords($module, '_'));
+
+if (!file_exists($module_path)) {
+    die("ERROR: Module does not exist\n");
+}
+
+$template = file_get_contents("$scriptdir/templates/migration.php");
+
+$template = str_replace(
+    ['CLASSNAME', 'MODULE'],
+    [$classname, $module],
+    $template
+);
+if (!file_exists($migrations_dir)) {
+    mkdir($migrations_dir, 0777, true);
+}
+
+file_put_contents("${migrations_dir}${filename}", $template);
+
+echo "Created template at ${migrations_dir}${filename}\n";

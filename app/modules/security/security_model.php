@@ -1,5 +1,8 @@
 <?php
-class Security_model extends Model
+
+use CFPropertyList\CFPropertyList;
+
+class Security_model extends \Model
 {
     public function __construct($serial = '')
     {
@@ -10,8 +13,9 @@ class Security_model extends Model
     	$this->rs['sip'] = '';
     	$this->rs['ssh_users'] = '';
     	$this->rs['ard_users'] = '';
-	$this->rs['firmwarepw'] = '';
-	$this->rs['firewall_state'] = '';
+        $this->rs['firmwarepw'] = '';
+        $this->rs['firewall_state'] = '';
+        $this->rs['skel_state'] = '';
         
         // Add indexes
         $this->idx[] = array('serial_number');
@@ -19,14 +23,15 @@ class Security_model extends Model
         $this->idx[] = array('sip');
         $this->idx[] = array('ssh_users');
         $this->idx[] = array('ard_users');
-	$this->idx[] = array('firmwarepw');
-	$this->idx[] = array('firewall_state');
+        $this->idx[] = array('firmwarepw');
+        $this->idx[] = array('firewall_state');
+        $this->idx[] = array('skel_state');
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 5;
+        $this->schema_version = 6;
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);
@@ -46,26 +51,25 @@ class Security_model extends Model
      **/
     public function process($data)
     {
-	if (strpos($data, '<?xml') === false) {
-		// old style txt file data has been passed - throw an error.
-		throw new Exception("Error Processing Request: old format data found, please update the security module", 1);	
-	}
-	else {
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-		$parser = new CFPropertyList();
-		$parser->parse($data);
+    	if (strpos($data, '<?xml') === false) {
+    		// old style txt file data has been passed - throw an error.
+    		throw new Exception("Error Processing Request: old format data found, please update the security module", 1);	
+    	}
+    	else {
+    		$parser = new CFPropertyList();
+    		$parser->parse($data);
 
-		$plist = $parser->toArray();
+    		$plist = $parser->toArray();
 
-		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state') as $item) {
-			if (isset($plist[$item])) {
-				$this->$item = $plist[$item];
-			} else {
-				$this->$item = '';
-			}
-		}
-		$this->save();
-	}
+    		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state', 'skel_state') as $item) {
+    			if (isset($plist[$item])) {
+    				$this->$item = $plist[$item];
+    			} else {
+    				$this->$item = '';
+    			}
+    		}
+    		$this->save();
+    	}
     }
 
     public function get_sip_stats()
@@ -107,5 +111,15 @@ class Security_model extends Model
                 LEFT JOIN reportdata USING(serial_number)
 		".get_machine_group_filter();
 	return current($this->query($sql));
+    }
+
+    public function get_skel_stats()
+    {
+    $sql = "SELECT COUNT(CASE WHEN skel_state = '0' THEN 1 END) as disabled,
+                COUNT(CASE WHEN skel_state = '1' THEN 1 END) as enabled
+                FROM security
+                LEFT JOIN reportdata USING(serial_number)
+        ".get_machine_group_filter();
+    return current($this->query($sql));
     }
 }

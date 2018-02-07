@@ -74,14 +74,12 @@ abstract class KISS_Engine
             $this->params=array_slice($p, 2);
         }
 
-        try {
             //Route request to correct controller/action
-            $controllerClass = 'munkireport\\controller\\' . $this->controller;
-            $this->controller_obj = new $controllerClass;
-        } catch (Exception $e) {
+        $controllerClass = 'munkireport\\controller\\' . $this->controller;
+        if ( ! class_exists($controllerClass, true)) {
             $this->requestNotFound('Controller class not found: '.$controllerClass);
         }
-
+        $this->controller_obj = new $controllerClass;
 
         //call controller function
         if (! $this->validateAction() or ! method_exists($this->controller_obj, $this->action)) {

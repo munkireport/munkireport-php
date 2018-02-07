@@ -2,7 +2,8 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View, \Tablequery, \Exception;
+use \Controller, \View, \Exception;
+use munkireport\models\Tablequery;
 
 class datatables extends Controller
 {
@@ -11,6 +12,10 @@ class datatables extends Controller
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
         }
+
+        // Connect to database
+        $this->connectDB();
+
     }
 
     public function data()

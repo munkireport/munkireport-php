@@ -1,5 +1,5 @@
 <?php
-class Tag_model extends Model
+class Tag_model extends \Model
 {
     
     public function __construct($serial = '')
@@ -20,7 +20,7 @@ class Tag_model extends Model
         $this->idx[] = array('user');
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
     
     /**

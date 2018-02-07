@@ -1,6 +1,6 @@
 <?php
 
-class Network_model extends Model
+class Network_model extends \Model
 {
     
     public function __construct($serial_number = '')
@@ -21,7 +21,6 @@ class Network_model extends Model
         $this->rs['ipv6ip'] = ''; // IPv6 address as string
         $this->rs['ipv6prefixlen'] = 0; // IPv6 prefix length as int
         $this->rs['ipv6router'] = '';  // IPv6 router address as string
-        $this->rs['timestamp'] = time();
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 2;
@@ -30,7 +29,7 @@ class Network_model extends Model
         $this->idx[] = array('serial_number', 'service');
                 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
                 
         return $this;
     }

@@ -1,5 +1,8 @@
 <?php
-class Extensions_model extends Model {
+
+use CFPropertyList\CFPropertyList;
+
+class Extensions_model extends \Model {
 
 	function __construct($serial='')
 	{
@@ -23,7 +26,7 @@ class Extensions_model extends Model {
 		$this->idx[] = array('codesign');
 
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}
@@ -54,6 +57,25 @@ class Extensions_model extends Model {
         return $out;
      }
 
+     public function get_codesign()
+     {
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN NAME <> '' AND codesign IS NOT NULL THEN 1 END) AS count, codesign 
+                FROM extensions
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter()."
+                GROUP BY codesign
+                ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->codesign = $obj->codesign ? $obj->codesign : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+
     
 	/**
 	 * Process data sent by postflight
@@ -71,7 +93,6 @@ class Extensions_model extends Model {
 		// Delete previous set        
 		$this->deleteWhere('serial_number=?', $this->serial_number);
 
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();

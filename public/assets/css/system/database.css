@@ -1,0 +1,53 @@
+.table-console {
+    background: beige;
+    color: darkgrey;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 1.4rem;
+
+    padding: 1rem;
+}
+
+.table-console > tbody {
+    /*overflow-y: scroll;*/
+    display: none;
+}
+
+.table-console td {
+    border: none;
+    padding: 2px 0;
+}
+
+.log-level-error {
+    color: red;
+}
+
+.log-level-info {
+    color: darkgrey;
+}
+
+.disclosure {
+    cursor: pointer;
+}
+
+.disclosure > .glyphicon {
+    transition-property: transform;
+    transition-duration: 100ms;
+}
+
+.disclosure-active > .glyphicon {
+    transform: rotate(90deg);
+}
+
+.table-console.disclosure-active tbody {
+    display: block;
+}
+
+.loading {
+    opacity: 0.5;
+    transition-property: opacity;
+    transition-duration: 100ms;
+}
+
+.database-alert {
+    margin-top: 1rem;
+}

@@ -45,8 +45,10 @@
 	| determined. no trailing slash
 	|
 	*/
-	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
-		. '://'.$_SERVER[ 'HTTP_HOST' ];
+	if(PHP_SAPI != 'cli'){
+		$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
+			. '://'.$_SERVER[ 'HTTP_HOST' ];
+	}
 
 	/*
 	|===============================================
@@ -85,17 +87,17 @@
 	| Hide Non-active Modules
 	|===============================================
 	|
-	| When true, modules that are not in conf['modules'] will not be shown
+	| When false, all modules will be shown in the interface like
 	|	in the 'Listings' menu.
 	*/
-	$conf['hide_inactive_modules'] = FALSE;
+	$conf['hide_inactive_modules'] = true;
 
 	/*
         |===============================================
         | Local Admin Threshold Value
         |===============================================
         |
-	| This value specifies the minimum number of local admin accounts needed to 
+	| This value specifies the minimum number of local admin accounts needed to
 	|	list the computer in the Local Admin Report.  Default is 2.
 	*/
 	$conf['local_admin_threshold'] = 2;
@@ -108,7 +110,7 @@
 	| Currently four authentication methods are supported:
 	|
 	|	1) Don't require any authentication: paste the following line in your config.php
-	|			$conf['auth']['auth_noauth'] = array();
+	|			$conf['auth']['auth_noauth'] = [];
 	|
 	|	2) (default) Local accounts: visit /index.php?/auth/generate and paste
 	|	   the result in your config.php
@@ -118,8 +120,8 @@
 	|		$conf['auth']['auth_ldap']['server']      = 'ldap.server.local'; // One or more servers separated by commas.
 	|		$conf['auth']['auth_ldap']['usertree']    = 'uid=%{user},cn=users,dc=server,dc=local'; // Where to find the user accounts.
 	|		$conf['auth']['auth_ldap']['grouptree']   = 'cn=groups,dc=server,dc=local'; // Where to find the groups.
-	|		$conf['auth']['auth_ldap']['mr_allowed_users'] = array('user1','user2'); // For user based access, fill in users.
-	|		$conf['auth']['auth_ldap']['mr_allowed_groups'] = array('group1','group2'); // For group based access, fill in groups.
+	|		$conf['auth']['auth_ldap']['mr_allowed_users'] = ['user1','user2']; // For user based access, fill in users.
+	|		$conf['auth']['auth_ldap']['mr_allowed_groups'] = ['group1','group2']; // For group based access, fill in groups.
 	|
 	|		Optional items:
 	|		$conf['auth']['auth_ldap']['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))'; // LDAP filter to search for user accounts.
@@ -140,11 +142,11 @@
 	|		 e.g.
 	|		$conf['auth']['auth_AD']['account_suffix'] = '@mydomain.local';
 	|		$conf['auth']['auth_AD']['base_dn'] = 'DC=mydomain,DC=local'; //set to NULL to auto-detect
-	|		$conf['auth']['auth_AD']['domain_controllers'] = array('dc01.mydomain.local'); //can be an array of servers
+	|		$conf['auth']['auth_AD']['domain_controllers'] = ['dc01.mydomain.local']; //can be an array of servers
 	|		$conf['auth']['auth_AD']['admin_username'] = NULL; //if needed to perform the search
 	|		$conf['auth']['auth_AD']['admin_password'] = NULL; //if needed to perform the search
-	|		$conf['auth']['auth_AD']['mr_allowed_users'] = array('macadmin','bossman');
-	|		$conf['auth']['auth_AD']['mr_allowed_groups'] = array('AD Group 1','AD Group 2'); //case sensitive
+	|		$conf['auth']['auth_AD']['mr_allowed_users'] = ['macadmin','bossman'];
+	|		$conf['auth']['auth_AD']['mr_allowed_groups'] = ['AD Group 1','AD Group 2']; //case sensitive
 	|
 	| Authentication methods are checked in the order that they appear above. Not in the order of your
 	| config.php!. You can combine methods 2, 3 and 4
@@ -173,8 +175,8 @@
 	| also used by the Business Units
 	|
 	*/
-	$conf['authorization']['delete_machine'] = array('admin', 'manager');
-	$conf['authorization']['global'] = array('admin');
+	$conf['authorization']['delete_machine'] = ['admin', 'manager'];
+	$conf['authorization']['global'] = ['admin'];
 
 	/*
 	|===============================================
@@ -184,7 +186,7 @@
 	| Add users or groups to the appropriate roles array.
 	|
 	*/
-	$conf['roles']['admin'] = array('*');
+	$conf['roles']['admin'] = ['*'];
 
 	/*
 	|===============================================
@@ -194,7 +196,7 @@
 	| Create local groups, add users to groups.
 	|
 	*/
-	//$conf['groups']['admin_users'] = array();
+	//$conf['groups']['admin_users'] = [];
 
 	/*
 	|===============================================
@@ -241,7 +243,7 @@
 	| The list is processed using regex, examples:
 	|
 	| Skip  all virtual windows apps created by parallels and VMware
-	| $conf['bundleid_ignorelist'][] = array('com.parallels.winapp.*', 'com.vmware.proxyApp.*');
+	| $conf['bundleid_ignorelist'][] = ['com.parallels.winapp.*', 'com.vmware.proxyApp.*'];
 	|
 	| Skip all Apple apps, except iLife, iWork and Server
 	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
@@ -250,12 +252,12 @@
 	| '^$'
 	|
 	*/
-	$conf['bundleid_ignorelist'] = array(
+	$conf['bundleid_ignorelist'] = [
 	    'com.parallels.winapp.*',
 	    'com.vmware.proxyApp.*',
 	    'com.apple.print.PrinterProxy',
 	    'com.google.Chrome.app.*',
-	);
+	];
 
 	/*
 	|===============================================
@@ -272,13 +274,13 @@
 	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app';
 	|
 	*/
-	$conf['bundlepath_ignorelist'] = array(
+	$conf['bundlepath_ignorelist'] = [
 	    '/System/Library/.*',
 	    '.*/Library/AutoPkg.*',
 	    '/.DocumentRevisions-V100/.*',
 	    '/Library/Application Support/Adobe/Uninstall/.*',
 	    '.*/Library/Application Support/Google/Chrome/Default/Web Applications/.*',
-	);
+	];
 
 	/*
 	|===============================================
@@ -340,13 +342,13 @@
 	*/
 	$conf['usb_internal'] = TRUE;
 
-	
+
 	/*
 	|===============================================
 	| Fonts
 	|===============================================
 	|
-	| By default the fonts module will collect information on all fonts.  
+	| By default the fonts module will collect information on all fonts.
 	| Setting fonts_system to FALSE will skip all system fonts in /System/Library/Fonts.
 	|
 	*/
@@ -382,11 +384,11 @@
 	| checked.
 	|
 	*/
-	$conf['curl_cmd'] = array(
+	$conf['curl_cmd'] = [
 		"/usr/bin/curl",
 		"--fail",
 		"--silent",
-		"--show-error");
+		"--show-error"];
 
 
 	/*
@@ -410,13 +412,13 @@
 	| List of modules that have to be installed on the client
 	| See for possible values the names of the directories
 	| in app/modules/
-	| e.g. $conf['modules'] = array('disk_report', 'inventory');
+	| e.g. $conf['modules'] = ['disk_report', 'inventory'];
 	|
 	| An empty list installs only the basic reporting modules:
 	| Machine and Reportdata
 	|
 	*/
-	$conf['modules'] = array('munkireport', 'managedinstalls');
+	$conf['modules'] = ['munkireport', 'managedinstalls'];
 
 	/*
 	|===============================================
@@ -478,11 +480,23 @@
 	| defaults write /Library/Preferences/MunkiReport Passphrase 'secret1'
 	|
 	| On the server:
-	| $conf['client_passphrases'] = array('secret1', 'secret2');
+	| $conf['client_passphrases'] = ['secret1', 'secret2'];
 	|
 	|
 	*/
-	$conf['client_passphrases'] = array();
+	$conf['client_passphrases'] = [];
+
+	/*
+	|===============================================
+	| Client scriptnames
+	|===============================================
+	|
+	| Override these if you want to provide your own custom scripts that
+	| call the munkireport scripts
+	*/
+	$conf['preflight_script'] = 'preflight';
+	$conf['postflight_script'] = 'postflight';
+	$conf['report_broken_client_script'] = 'report_broken_client';
 
 	/*
 	|===============================================
@@ -514,11 +528,26 @@
 	| For example php on macOS server 12 cannot lookup the certificate for support.apple.com
 	| to fix that, you can override the cafile directive:
 	|
-	|    $conf['ssl_options'] = array(
+	|    $conf['ssl_options'] = [
 	|        'cafile' => '/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/site-packages/pip/_vendor/certifi/cacert.pem',
-	|    );
+	|    ];
 	*/
-	$conf['ssl_options']  = array();
+	$conf['ssl_options']  = [];
+
+	/*
+	|===============================================
+	| Guzzle settings
+	|===============================================
+	|
+	| Guzzle is used to make http connections to other servers (e.g. apple.com)
+	|
+	| Guzzle will choose the appropriate handler based on your php installation
+	| You can override this behaviour by specifying the handler here.
+	|
+	| Valid options are 'curl', 'stream' or 'auto' (default)
+	| For CA Bundle options see http://docs.guzzlephp.org/en/stable/request-options.html#verify
+	*/
+	$conf['guzzle_handler'] = 'auto';
 
 	/*
 	|===============================================
@@ -531,7 +560,7 @@
 	|
 	*/
 	$conf['request_timeout'] = 5;
-	
+
 	/*
 	|===============================================
 	| Apple Hardware Icon Url
@@ -551,7 +580,7 @@
 	| Only smtp is supported at the moment.
 	|
 	| 	$conf['email']['use_smtp'] = true;
-	| 	$conf['email']['from'] = array('noreply@example.com' => 'Munkireport Mailer');
+	| 	$conf['email']['from'] = ['noreply@example.com' => 'Munkireport Mailer'];
 	|	$conf['email']['smtp_host'] = 'smtp1.example.com;smtp2.example.com';
 	|	$conf['email']['smtp_auth'] = true;
 	|	$conf['email']['smtp_username'] = 'user@example.com';
@@ -572,10 +601,10 @@
 	| The IP adress part is queried with SQL LIKE
 	| Examples:
 	| $conf['ip_ranges']['MyOrg'] = '100.99.';
-	| $conf['ip_ranges']['AltLocation'] = array('211.88.12.', '211.88.13.');
+	| $conf['ip_ranges']['AltLocation'] = ['211.88.12.', '211.88.13.'];
 	|
 	*/
-    	$conf['ip_ranges'] = array();
+    	$conf['ip_ranges'] = [];
 
  	/*
 	|===============================================
@@ -588,16 +617,16 @@
 	| The router IP adress part is queried with SQL LIKE
 	| Examples:
 	| $conf['ipv4routers']['Wired'] = '211.88.10.1';
-	| $conf['ipv4routers']['WiFi'] = array('211.88.12.1', '211.88.13.1');
-	| $conf['ipv4routers']['Private range'] = array('10.%', '192.168.%',
+	| $conf['ipv4routers']['WiFi'] = ['211.88.12.1', '211.88.13.1'];
+	| $conf['ipv4routers']['Private range'] = ['10.%', '192.168.%',
 	| 	'172.16.%',
 	| 	'172.17.%',
 	| 	'172.18.%',
 	| 	'172.19.%',
 	| 	'172.2_.%',
 	| 	'172.30.%',
-	| 	'172.31.%', );
-	| $conf['ipv4routers']['Link-local'] = array('169.254.%');
+	| 	'172.31.%', ];
+	| $conf['ipv4routers']['Link-local'] = ['169.254.%'];
 	|
 	*/
 
@@ -667,11 +696,11 @@
 	|	network_vlan
 	|	registered clients
 	*/
-	$conf['dashboard_layout'] = array(
-		array('client', 'messages'),
-		array('new_clients', 'pending_apple', 'pending_munki'),
-		array('munki', 'disk_report','uptime')
-	);
+	$conf['dashboard_layout'] = [
+		['client', 'messages'],
+		['new_clients', 'pending_apple', 'pending_munki'],
+		['munki', 'disk_report','uptime']
+	];
 
 	/*
 	|===============================================
@@ -683,10 +712,10 @@
 	| This is case insensitive but must be an array.
 	|
 	| Eg:
-	| $conf['apps_to_track'] = array('Flash Player', 'Java', 'Firefox', 'Microsoft Excel');
+	| $conf['apps_to_track'] = ['Flash Player', 'Java', 'Firefox', 'Microsoft Excel'];
 	|
 	*/
-	$conf['apps_to_track'] = array('Safari');
+	$conf['apps_to_track'] = ['Safari'];
 
 	/*
 	|===============================================
@@ -699,7 +728,7 @@
 	| If there are more free bytes, the level is set to 'success'
 	|
 	*/
-	$conf['disk_thresholds'] = array('danger' => 5, 'warning' => 10);
+	$conf['disk_thresholds'] = ['danger' => 5, 'warning' => 10];
 
 	/*
 	|===============================================
@@ -726,27 +755,32 @@
 	$conf['module_path'] = $conf['application_path'] . "modules/";
 
 	// Routes
-	$conf['routes'] = array();
+	$conf['routes'] = [];
 	$conf['routes']['module(/.*)?']	= "module/load$1";
 
 	/*
 	|===============================================
-	| PDO Datasource
+	| Database configuration
 	|===============================================
 	|
-	| Specify dsn, username, password and options
+	| Specify driver, username, password and options
 	| Supported engines: sqlite and mysql
 	| Mysql example:
-	| 	$conf['pdo_dsn'] = 'mysql:host=localhost;dbname=munkireport';
-	| 	$conf['pdo_user'] = 'munki';
-	| 	$conf['pdo_pass'] = 'munki';
-	| 	$conf['pdo_opts'] = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
+	| $conf['connection'] = [
+	|     'driver'    => 'mysql',
+	|     'host'      => '127.0.0.1',
+	|     'port'      => 3306,
+	|     'database'  => 'munkireport',
+	|     'username'  => 'munkireport',
+	|     'password'  => 'munkireport',
+	|     'options'   => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
+	| ];
 	|
 	*/
-	$conf['pdo_dsn'] = 'sqlite:'.$conf['application_path'].'db/db.sqlite';
-	$conf['pdo_user'] = '';
-	$conf['pdo_pass'] = '';
-	$conf['pdo_opts'] = array();
+	$conf['connection'] = [
+	    'driver'    => 'sqlite',
+	    'database'  => $conf['application_path'].'db/db.sqlite',
+	];
 
 	/*
 	|===============================================

@@ -9,5 +9,9 @@ return array(
     ),
     'widgets' => array(
         'extensions' => array('view' => 'extensions_widget'),
+        'extensions_codesign' => array('view' => 'extensions_codesign_widget'),
+    ),
+    'reports' => array(
+        'extensions' => array('view' => 'extensions_report', 'i18n' => 'extensions.report'),
     ),
 );

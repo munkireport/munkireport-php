@@ -1,0 +1,8 @@
+{
+  "title": "Firmware Escrow",
+  "clienttitle": "Firmware Passwort Escrow",
+  "reporttitle": "Firmware Escrow-Bericht",
+  "enabled_date": "Aktivierungs-Datum",
+  "firmware_password": "Firmware Passwort",
+  "firmware_mode": "Firmware Modus"
+}

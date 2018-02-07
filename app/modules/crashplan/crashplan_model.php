@@ -1,5 +1,5 @@
 <?php
-class Crashplan_model extends Model
+class Crashplan_model extends \Model
 {
     
     public function __construct($serial = '')
@@ -12,7 +12,6 @@ class Crashplan_model extends Model
         $this->rs['duration'] = 0; // duration in seconds
         $this->rs['last_failure'] = 0; // Timestamp of last failed backup
         $this->rs['reason'] = ''; // Reason of last failure
-        $this->rs['timestamp'] = 0; // Timestamp of last update
         
         // Schema version, increment when creating a db migration
         $this->schema_version = 0;
@@ -22,7 +21,7 @@ class Crashplan_model extends Model
         $this->idx[] = array('reason');
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
 
     // ------------------------------------------------------------------------
@@ -55,7 +54,6 @@ class Crashplan_model extends Model
                 if ($this->last_success > 0 or $this->last_failure > 0) {
                     $this->id = '';
                     $this->serial_number = $serial_number;
-                    $this->timestamp = time();
                     $this->save();
                     
                     // Events

@@ -1,0 +1,68 @@
+#!/bin/bash
+# 
+# Broken client reporter
+# First argument is the message
+# Second argument is the module that is reporting
+# Third argument is the severity (danger, warning, info)
+
+MSG="$1"
+if [ -z "$MSG" ]; then
+    MSG="Unspecified client error"
+fi
+
+# Default module is reportbrokenclient
+MODULE="$2"
+if [ -z "$MODULE" ]; then
+    MODULE="reportbrokenclient"
+fi
+
+# Default type is danger, other possible types: warning, info
+TYPE="$3"
+if [ -z "$TYPE" ]; then
+    TYPE="danger"
+fi
+
+SERIAL=`ioreg -c IOPlatformExpertDevice | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
+NAME=`scutil --get ComputerName`
+OSVERSIONLONG=$(uname -r)
+OSVERS=${osversionlong/.*/}
+
+# Get pref from foundation if OS > 10.9
+if [[ "${OSVERS}" > "13" ]]
+then
+    BASEURL=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('BaseUrl', 'MunkiReport');")
+    PASSPHRASE=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('Passphrase', 'MunkiReport');" 2>/dev/null)
+else
+    BASEURL=$(defaults read /Library/Preferences/MunkiReport BaseUrl)
+    PASSPHRASE=$(defaults read /Library/Preferences/MunkiReport Passphrase 2>/dev/null)
+fi
+SUBMITURL="${BASEURL}/report/broken_client"
+
+# Application paths
+CURL="/usr/bin/curl"
+
+# Check if passphrase is set and submit it
+if [[ ${PASSPHRASE} == "" ]] ; then
+
+$CURL --max-time 5 --silent \
+    -d msg="$MSG" \
+    -d module="$MODULE" \
+    -d type="$TYPE" \
+    -d serial="$SERIAL" \
+    -d name="$NAME" \
+    "$SUBMITURL"
+
+# Has passphrase
+else
+
+$CURL --max-time 5 --silent \
+    -d msg="$MSG" \
+    -d module="$MODULE" \
+    -d type="$TYPE" \
+    -d serial="$SERIAL" \
+    -d passphrase="$PASSPHRASE" \
+    -d name="$NAME" \
+    "$SUBMITURL"
+fi
+
+exit 0

@@ -1,5 +1,5 @@
 <?php
-class gsx_model extends Model
+class Gsx_model extends \Model
 {
     
     protected $error = '';
@@ -43,7 +43,7 @@ class gsx_model extends Model
         $this->idx[] = array('configdescription');
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);

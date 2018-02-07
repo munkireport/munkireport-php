@@ -25,11 +25,12 @@ new Security_model;
 		        <th data-i18n="user.local_admins" data-colname='localadmin.users'></th>
 		        <th data-i18n="filevault_status.users" data-colname='filevault_status.filevault_users'></th>
 		        <th data-i18n="type"data-colname='machine.machine_name'></th>
-		        <th data-i18n="disk_report.encryption_status" data-colname='diskreport.CoreStorageEncrypted'></th>
+		        <th data-i18n="disk_report.encryption_status" data-colname='diskreport.encrypted'></th>
 		        <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
-		        <th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
+                <th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
+                <th data-i18n="security.skel.kext-loading" data-colname='security.skel_state'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
 		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
 		      </tr>
@@ -105,7 +106,7 @@ new Security_model;
                     d.where = [
                         {
                             table: 'diskreport',
-                            column: 'MountPoint',
+                            column: 'mountpoint',
                             value: '/'
                         }
                     ];
@@ -175,6 +176,17 @@ new Security_model;
                }
                // default case - return blank if client has not checked in with this info
                return "";
+            });
+
+            var skel_state = $('td:eq(11)', nRow).html();
+            $('td:eq(11)', nRow).html(function(){
+                if(skel_state == '1'){
+                    return '<span class="label label-info">'+i18n.t('security.skel.all-approved')+'</span>';
+                } else if (skel_state == '0'){
+                    return '<span class="label label-info">'+i18n.t('security.skel.user-approved')+'</span>';
+                }
+                // if skel_state is null, we don't have data
+                return '<span class="label label-default">'+i18n.t('unknown')+'</span>';
             });
 
         }

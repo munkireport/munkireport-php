@@ -4,6 +4,12 @@
 
 namespace munkireport\lib;
 
+use CFPropertyList\CFPropertyList;
+use CFPropertyList\CFDictionary;
+use CFPropertyList\CFNumber;
+use CFPropertyList\CFString;
+use CFPropertyList\CFArray;
+
 class ArrayToPlist
 {
 
@@ -11,8 +17,7 @@ class ArrayToPlist
 
     public function __construct()
     {
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-        $this->parser = new \CFPropertyList();
+        $this->parser = new CFPropertyList();
     }
 
     public function parse($array)

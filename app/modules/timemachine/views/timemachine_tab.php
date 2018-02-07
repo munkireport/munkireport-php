@@ -4,7 +4,7 @@
 <script>
 $(document).on('appReady', function(){
 	$.getJSON(appUrl + '/module/timemachine/get_tab_data/' + serialNumber, function(data){
-		var skipThese = ['id','serial_number','destinations','timestamp','localized_disk_image_volume_name','alias_volume_name'];
+		var skipThese = ['id','serial_number','destinations','localized_disk_image_volume_name','alias_volume_name'];
 		$.each(data, function(i,d){
 
 			// Generate rows from data
@@ -34,7 +34,7 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('timemachine.'+d[prop])+'</td></tr>';
 
                     } else if(d[prop] == 'NotEncrypted'){
-					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('storage.not_encrypted')+'</td></tr>';
+					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('unencrypted')+'</td></tr>';
                     } else if(d[prop] == 'Encrypted'){
 					   rows = rows + '<tr><th>'+i18n.t('timemachine.'+prop)+'</th><td>'+i18n.t('encrypted')+'</td></tr>';
 
