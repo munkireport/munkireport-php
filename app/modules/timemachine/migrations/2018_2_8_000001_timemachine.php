@@ -21,7 +21,7 @@ class Timemachine extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-+			$table->dropColumn('apfs_snapshots');
+			$table->dropColumn('apfs_snapshots');
         });
     }
 }
