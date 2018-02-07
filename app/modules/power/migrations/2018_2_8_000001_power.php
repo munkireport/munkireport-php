@@ -13,7 +13,6 @@ class Power extends Migration
     
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
                         
-            $table->double('ibyte_rate')->nullable()->change();
             $table->string('manufacture_date')->nullable()->change();
             $table->integer('design_capacity')->nullable()->change();
             $table->integer('max_capacity')->nullable()->change();
@@ -48,7 +47,6 @@ class Power extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->double('ibyte_rate')->change();
             $table->string('manufacture_date')->change();
             $table->integer('design_capacity')->change();
             $table->integer('max_capacity')->change();
@@ -75,7 +73,7 @@ class Power extends Migration
             $table->string('manufacturer')->change();
             $table->string('batteryserialnumber')->change();
             $table->string('fullycharged')->change();
-            $table->string('ischarging')a->change();            
+            $table->string('ischarging')->change();            
         });
     }
 }
