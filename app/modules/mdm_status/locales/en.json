@@ -1,0 +1,12 @@
+{
+	"dep": "DEP",
+    "mdm_enrollment_type": "Enrollment Type",
+    "mdm_enrolled": "MDM Enrolled",
+    "no": "No",
+	"non_dep": "Non-DEP",
+    "report": "MDM Report",
+    "title": "MDM Status",
+    "user_approved": "User Approved",
+    "yes": "Yes"
+
+}
