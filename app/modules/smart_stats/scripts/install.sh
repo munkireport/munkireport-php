@@ -14,7 +14,7 @@ then
 	exit 1
 else
 	# Make executable
-	chmod a+x "${MUNKIPATH}preflight.d/smart_stats.sh"
+	chmod a+x "${MUNKIPATH}preflight.d/smart_stats"
 
 	# Set preference to include this file in the preflight check
 	setreportpref "smart_stats" "${CACHEPATH}smart_stats.plist"
