@@ -11,7 +11,7 @@
 				</tr>
 				<tr>
 					<th data-i18n="filevault_escrow.enableddate"></th>
-					<td id="filevault-EnabledDate"></td>
+					<td id="filevault-enableddate"></td>
 				</tr>
 				<tr>
 					<th data-i18n="filevault_escrow.filevault_users"></th>
@@ -19,23 +19,23 @@
 				</tr>
 				<tr>
 					<th data-i18n="filevault_escrow.recoverykey"></th>
-					<td id="filevault-RecoveryKey"></td>
+					<td id="filevault-recoverykey"></td>
 				</tr>
 				<tr>
 					<th data-i18n="filevault_escrow.lvguuid"></th>
-					<td id="filevault-LVGUUID"></td>
+					<td id="filevault-lvguuid"></td>
 				</tr>
 				<tr>
 					<th data-i18n="filevault_escrow.lvuuid"></th>
-					<td id="filevault-LVUUID"></td>
+					<td id="filevault-lvuuid"></td>
 				</tr>
 				<tr>
 					<th data-i18n="filevault_escrow.pvuuid"></th>
-					<td id="filevault-PVUUID"></td>
+					<td id="filevault-pvuuid"></td>
 				</tr>
 				<tr>
 					<th data-i18n="filevault_escrow.hddserial"></th>
-					<td id="filevault-HddSerial"></td>
+					<td id="filevault-hddserial"></td>
 				</tr>
 			</table>
 		</div>
@@ -54,13 +54,13 @@ $(document).on('appReady', function(e, lang) {
 			$('#filevault-view').removeClass('hide');
 
             // Add strings
-			$('#filevault-EnabledDate').text(data.EnabledDate);
+			$('#filevault-enableddate').text(data.enableddate);
 			$('#filevault-filevault_users').text(data.filevault_users);
-			$('#filevault-RecoveryKey').text(data.RecoveryKey);
-			$('#filevault-LVGUUID').text(data.LVGUUID);
-			$('#filevault-LVUUID').text(data.LVUUID);
-			$('#filevault-PVUUID').text(data.PVUUID);
-			$('#filevault-HddSerial').text(data.HddSerial);
+			$('#filevault-recoverykey').text(data.recoverykey);
+			$('#filevault-lvguuid').text(data.lvguuid);
+			$('#filevault-lvuuid').text(data.lvuuid);
+			$('#filevault-pvuuid').text(data.pvuuid);
+			$('#filevault-hddserial').text(data.hddserial);
 
 			// Set FileVault status
 			if(data.filevault_status == "" && data.filevault_users !== "") {

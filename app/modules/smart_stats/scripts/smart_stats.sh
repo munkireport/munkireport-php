@@ -25,6 +25,19 @@ else
      exit 1
 fi
 
+# Check once a week for smartctl database updates
+DRIVEDB="/usr/local/share/smartmontools/drivedb.h"
+[ ! -e "$DRIVEDB" ] && touch "$DRIVEDB"
+if test $(find "$DRIVEDB" -mmin +10080)
+then
+	if [[ -f /usr/local/sbin/update-smart-drivedb ]]; then
+		 /usr/local/sbin/update-smart-drivedb > /dev/null 2>&1
+	elif [[ -f /usr/local/bin/update-smart-drivedb ]]; then
+		 /usr/local/bin/update-smart-drivedb > /dev/null 2>&1
+	fi
+	touch "$DRIVEDB"
+fi
+
 # Delete the old file or plistbuddy will complain :/
 rm "$smart_stats_file" 2>/dev/null
 

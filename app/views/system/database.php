@@ -17,13 +17,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-danger database-alert" style="display: none;"></div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div id="database-upgrade-log" class="col-lg-6">
+            <div id="database-upgrade-log" class="col-lg-12">
                 <table class="table table-console">
                     <thead>
                     <tr>
@@ -46,7 +40,29 @@
     </div>  <!-- /container -->
 
     <script>
+
+
       $(document).on('appReady', function (e, lang) {
+        var tbody = $('.table-console tbody');
+
+        function log(message, level) {
+          level = level || 'info';
+          tbody.append('<tr><td class="log-level-' + level + '">' + message + '</td></tr>');
+        }
+        
+        function disclose () {
+          var logDiv = $('#database-upgrade-log');
+          var disclosureEl = logDiv.find('.disclosure');
+          var logTbl = logDiv.find('table');
+
+          if (!disclosureEl.hasClass('disclosure-active')) {
+            disclosureEl.addClass('disclosure-active');
+          }
+
+          if (!logTbl.hasClass('disclosure-active')) {
+            logTbl.addClass('disclosure-active');
+          }
+        }
 
         // Show/Hide the upgrade log
         $('.disclosure').click(function () {
@@ -64,13 +80,22 @@
             $btn.find('#db-upgrade-label').html('Update');
           }
 
-          var tbody = $('.table-console tbody');
+          log('started update: ' + new Date());
 
           $.getJSON(appUrl + '/database/migrate', function (data) {
             done();
 
             if (data.error) {
-              $('.database-alert').show().text(data.error);
+              disclose();
+              log(data.error_message, 'error');
+
+              if (data.error_trace) {
+                log('stack trace follows:', 'error');
+                data.error_trace.forEach(function(stackItem) {
+                  var li = $('<li>in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '</li>');
+                    log('in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '.' , 'error');
+                });
+              }
             }
 
             if (data.notes) {
@@ -90,16 +115,17 @@
         $('.loading').removeClass('loading');
 
         if (data.error) {
-          $('.database-alert').show().text(data.error);
+          disclose();
+          log(data.error_message, 'error');
         }
 
         $('#database-update-count').text(data['files_pending'].length);
 
-        if (data['files_pending'].length) {
-          for (var i = 0; i < data['files_pending'].length; i++) {
-            tbody.append('<tr><td>' + data['files_pending'][i] + '</td></tr>');
-          }
-        }
+//        if (data['files_pending'].length) {
+//          for (var i = 0; i < data['files_pending'].length; i++) {
+//            tbody.append('<tr><td>' + data['files_pending'][i] + '</td></tr>');
+//          }
+//        }
       })
         .fail(function (jqxhr, textStatus, error) {
           var err = textStatus + ", " + error;

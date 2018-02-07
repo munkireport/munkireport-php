@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Softwareupdate extends Migration
 {
     private $tableName = 'softwareupdate';
-    private $tableNameV2 = 'softwareupdate_v2';
+    private $tableNameV2 = 'softwareupdate_orig';
 
     public function up()
     {

@@ -19,5 +19,6 @@
         "afp_users": "AFP Users",
         "connected_users": "Sharing – Connected Users",
         "smb_users": "SMB Users"
-    }
+    },
+    "title": "Servermetrics"
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class SmartStats extends Migration
 {
     private $tableName = 'smart_stats';
-    private $tableNameV2 = 'smart_stats_v2';
+    private $tableNameV2 = 'smart_stats_orig';
 
     public function up()
     {

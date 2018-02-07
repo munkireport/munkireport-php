@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Fonts extends Migration
 {
     private $tableName = 'fonts';
-    private $tableNameV2 = 'fonts_v2';
+    private $tableNameV2 = 'fonts_orig';
 
     public function up()
     {

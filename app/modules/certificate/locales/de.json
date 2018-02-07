@@ -1,14 +1,14 @@
 {
-    "cert_groups": "Certificates by Name",
-    "commonname": "Common Name",
-    "expiration_date": "Expiration Date",
-    "expired": "Abgelaufen",
-    "expires": "Ablaufdatum",
-    "issuer": "Issuer",
-    "location": "Location",
-    "nocertificate": "No Certificate",
-    "ok": "Gültig für mehr als ein Monat",
-    "report_title": "Zertifikats-Report",
-    "soon": "Läuft innerhalb der nächsten ein Monat ab",
-    "title": "Zertifikate"
+  "cert_groups": "Certificates nach Namen",
+  "commonname": "Common Name",
+  "expired": "Abgelaufen",
+  "expiration_date": "Ablaufdatum",
+  "expires": "läuft ab",
+  "ok": "Gültig für mehr als ein Monat",
+  "issuer": "Herausgeber",
+  "location": "Ort",
+  "nocertificate": "Kein Zertifikat",
+  "report_title": "Zertifikats-Report",
+  "soon": "Läuft innerhalb des nächsten Monats ab",
+  "title": "Zertifikate"
 }

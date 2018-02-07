@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Munkiinfo extends Migration
 {
     private $tableName = 'munkiinfo';
-    private $tableNameV2 = 'munkiinfo_v2';
+    private $tableNameV2 = 'munkiinfo_orig';
 
     public function up()
     {

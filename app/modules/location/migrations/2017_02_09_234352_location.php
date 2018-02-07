@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Location extends Migration
 {
     private $tableName = 'location';
-    private $tableNameV2 = 'location_v2';
+    private $tableNameV2 = 'location_orig';
 
     public function up()
     {

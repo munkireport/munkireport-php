@@ -18,7 +18,9 @@
 
   <div class="row">
 
-  <?php $widget->view($this, 'smart_status'); ?>
+	<?php $widget->view($this, 'smart_status'); ?>
+      
+	<?php $widget->view($this, 'filesystem_type'); ?>
 
   </div> <!-- /row -->
 

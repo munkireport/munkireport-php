@@ -22,6 +22,11 @@ class report extends Controller
         // Flag we're on report authorization
         $GLOBALS['auth'] = 'report';
 
+        // Check for maintenance mode
+        if(file_exists(APP_ROOT . 'storage/framework/down')) {
+            $this->error("MunkiReport is in maintenance mode, try again later.");
+        }
+
         if (isset($_POST['passphrase'])) {
             $this->group = passphrase_to_group($_POST['passphrase']);
         }
@@ -76,7 +81,6 @@ class report extends Controller
             $report->register()->save();
 
             //$req_items = unserialize($_POST['items']); //Todo: check if array
-            include_once(APP_PATH . '/lib/munkireport/Unserializer.php');
             $unserializer = new Unserializer($_POST['items']);
             $req_items = $unserializer->unserialize();
 
@@ -137,7 +141,6 @@ class report extends Controller
             $this->error("No items in POST");
         }
 
-        include_once(APP_PATH . '/lib/munkireport/Unserializer.php');
         $unserializer = new Unserializer($_POST['items']);
         $arr = $unserializer->unserialize();
 

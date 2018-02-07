@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Ard extends Migration
 {
     private $tableName = 'ard';
-    private $tableNameV2 = 'ard_v2';
+    private $tableNameV2 = 'ard_orig';
 
     public function up()
     {
@@ -26,15 +26,15 @@ class Ard extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
-            $table->string('Text1');
-            $table->string('Text2');
-            $table->string('Text3');
-            $table->string('Text4');
+            $table->string('text1');
+            $table->string('text2');
+            $table->string('text3');
+            $table->string('text4');
 
-            $table->index('Text1');
-            $table->index('Text2');
-            $table->index('Text3');
-            $table->index('Text4');
+            $table->index('text1');
+            $table->index('text2');
+            $table->index('text3');
+            $table->index('text4');
         });
 
         if ($migrateData) {

@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Network extends Migration
 {
     private $tableName = 'network';
-    private $tableNameV2 = 'network_v2';
+    private $tableNameV2 = 'network_orig';
 
     public function up()
     {
@@ -28,7 +28,7 @@ class Network extends Migration
             $table->increments('id');
 
             $table->string('serial_number')->nullable();
-            $table->string('service')->nullable();
+            $table->string('service', 78)->nullable();
             $table->integer('order')->nullable();
             $table->integer('status')->nullable();
             $table->string('ethernet')->nullable();
@@ -52,7 +52,7 @@ class Network extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::select("INSERT INTO
                 $this->tableName
             SELECT
                 id,

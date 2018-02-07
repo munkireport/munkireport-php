@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Appusage extends Migration
 {
     private $tableName = 'appusage';
-    private $tableNameV2 = 'appusage_v2';
+    private $tableNameV2 = 'appusage_orig';
 
     public function up()
     {
@@ -45,9 +45,9 @@ class Appusage extends Migration
             $table->index('last_time');
             $table->index('number_times');
         });
-        
+
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::select("INSERT INTO
                 $this->tableName
             SELECT
                 id,

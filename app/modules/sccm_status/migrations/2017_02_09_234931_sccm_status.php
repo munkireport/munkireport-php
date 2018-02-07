@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class SccmStatus extends Migration
 {
     private $tableName = 'sccm_status';
-    private $tableNameV2 = 'sccm_status_v2';
+    private $tableNameV2 = 'sccm_status_orig';
 
     public function up()
     {

@@ -11,9 +11,10 @@ class Detectx_model extends \Model {
     $this->rs['status'] = '';
     $this->rs['scantime'] = 0;
     $this->rs['spotlightindexing'] = true; $this->rt['spotlightindexing'] = 'BOOLEAN';
+    $this->rs['registered'] = true; $this->rt['registered'] = 'BOOLEAN';
+    $this->rs['infections'] = ''; $this->rt['infections'] = 'TEXT';
     $this->rs['issues'] = ''; $this->rt['issues'] = 'TEXT';
-
-
+    
   // Schema version, increment when creating a db migration
     $this->schema_version = 0;
 
@@ -24,8 +25,6 @@ class Detectx_model extends \Model {
     $this->idx[] = array('scantime');
     $this->idx[] = array('spotlightindexing');
 
-  // Create table if it does not exist
-    // $this->create_table();
     $this->serial_number = $serial;
   }
 
@@ -53,13 +52,17 @@ class Detectx_model extends \Model {
         $this->searchdate = strtotime($data['searchdate']);
         $this->scantime = isset($data['duration']) ? $data['duration'] : 0;
         $this->spotlightindexing = $data['spotlightindexing'];
-        $len = count($data['issues']);
+        $this->registered = $data['registered'];
+        $len = count($data['infections']);
         if ($len > 0)
         {
+          $this->status = "Infected";
           foreach($data['issues'] as $issue){
-            $this->status = "Infected";
             $this->issues .= ($issue . ";");
+            }
+          foreach($data['infections'] as $infectionname){
             $this->numberofissues += 1;
+            $this->infections .= ($infectionname . ";");
           }
         }
         else {
