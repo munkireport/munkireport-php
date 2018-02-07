@@ -25,19 +25,19 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 		
 		// Set statuses
-		if(data.unknown){
+		if(data.unknown != "0"){
 		panel.append(' <a href="'+baseUrl+'#unknown" class="btn btn-info"><span class="bigger-150">'+data.unknown+'</span><br>'+i18n.t('unknown')+'</a>');
 		}
-		if(data.off){
+		if(data.off != "0"){
 			panel.append(' <a href="'+baseUrl+'#off" class="btn btn-danger"><span class="bigger-150">'+data.off+'</span><br>&nbsp;&nbsp;'+i18n.t('off')+'&nbsp;&nbsp;</a>');
 		}
-		if(data.on_not_connected){
+		if(data.on_not_connected != "0"){
 			panel.append(' <a href="'+baseUrl+'#init" class="btn btn-warning"><span class="bigger-150">'+data.on_not_connected+'</span><br>&nbsp;&nbsp;'+i18n.t('on')+'&nbsp;&nbsp;</a>');
 		}
-		if(data.connected){
+		if(data.connected != "0"){
 			panel.append(' <a href="'+baseUrl+'#running" class="btn btn-success"><span class="bigger-150">'+data.connected+'</span><br>'+i18n.t('connected')+'</a>');
 		}
-		if(data.sharing){
+		if(data.sharing != "0"){
 			panel.append(' <a href="'+baseUrl+'#sharing" class="btn btn-info"><span class="bigger-150">'+data.sharing+'</span><br>'+i18n.t('wifi.sharing')+'</a>');
 		}
     });
