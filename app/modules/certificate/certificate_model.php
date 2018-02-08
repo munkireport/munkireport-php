@@ -96,7 +96,7 @@ class Certificate_model extends \Model
                     if ($this->cert_exp_time < $now) {
                         $errors[] = array(
                             'type' => 'danger',
-                            'msg' => 'cert.expired',
+                            'msg' => 'certificate.expired',
                             'data' => json_encode(array(
                                 'name' => $this->cert_cn,
                                 'timestamp' => $this->cert_exp_time
@@ -105,7 +105,7 @@ class Certificate_model extends \Model
                     } elseif ($this->cert_exp_time < $four_weeks) {
                         $errors[] = array(
                             'type' => 'warning',
-                            'msg' => 'cert.expire_warning',
+                            'msg' => 'certificate.expire_warning',
                             'data' => json_encode(array(
                                 'name' => $this->cert_cn,
                                 'timestamp' => $this->cert_exp_time
@@ -144,12 +144,12 @@ class Certificate_model extends \Model
                         $msg = $last_error['msg'];
                         $data = $last_error['data'];
                     } else {
-                        $msg = 'cert.multiple_errors';
+                        $msg = 'certificate.multiple_errors';
                         $data = $error_count;
                     }
                 } else {
                     $type = 'warning';
-                    $msg = 'cert.multiple_warnings';
+                    $msg = 'certificate.multiple_warnings';
                     $data = $warning_count;
                 }
                 $this->store_event($type, $msg, $data);
