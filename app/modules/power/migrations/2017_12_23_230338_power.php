@@ -39,7 +39,7 @@ class Power extends Migration
             $table->integer('temperature')->default(0);
             $table->string('condition');
             
-            $table->text('sleep_prevented_by');
+            $table->text('sleep_prevented_by')->nullable();
             $table->string('hibernatefile');
             $table->text('schedule');
             $table->string('adapter_id');

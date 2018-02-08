@@ -26,7 +26,7 @@ class Certificate extends Migration
             $table->bigInteger('cert_exp_time');
             $table->string('cert_path');
             $table->string('cert_cn');
-            $table->string('issuer');
+            $table->string('issuer')->nullable();
             $table->string('cert_location');
 
             $table->index('cert_cn');

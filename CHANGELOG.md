@@ -1,6 +1,6 @@
-### [3.0.0RC2](https://github.com/munkireport/munkireport-php/compare/v3.0.0RC1...HEAD) (Unreleased)
+### [3.0.1](https://github.com/munkireport/munkireport-php/compare/v3.0.0...HEAD) (Unreleased)
 
-### [3.0.0RC1](https://github.com/munkireport/munkireport-php/compare/v2.15.2...v3.0.0RC1) (January 17, 2018)
+### [3.0.0](https://github.com/munkireport/munkireport-php/compare/v3.0.0...v3.0.0) (February 07, 2018)
 
 The third major version of munkireport attempts to solve a couple of longstanding issues concerning security, dependency management and database management. We're moving slowly to using eloquent as replacement for the KISS database abstraction. A ton of work has been done by @mosen to make this all work.
 
@@ -20,6 +20,11 @@ FIXES
 - Fix vendors for 10.13 (#902) @tuxudo
 - Fix localization in client tab (#903) @tuxudo
 - Use CFPreferences to read BaseUrl and Passphrase. (#919) @MagerValp
+- Misc migration fixes
+- AuthLDAP fixed (#944)
+- Recaptcha uses proxy settings
+- Database info fixed
+- Installer postflight script (#949) @MagerValp
 
 NEW FEATURES
 - NVMe Support in SMART Stats module (#895) @tuxudo
@@ -32,7 +37,7 @@ NEW FEATURES
 - SAML support, see also [SAML authentication](https://github.com/munkireport/munkireport-php/wiki/SAML-authentication)
 - Added filesystem widget (#886) @tuxudo
 - Maintenance Mode, see also [Maintenance Mode](https://github.com/munkireport/munkireport-php/wiki/Maintenance-Mode)
-
+- German translation (#941) @fridomac
 
 ### [2.15.2](https://github.com/munkireport/munkireport-php/compare/v2.14.3...v2.15.2) (Sept 28, 2017)
 

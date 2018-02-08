@@ -36,9 +36,6 @@ class manager extends Controller
 
         $status = array('status' => 'undefined', 'rowcount' => 0);
 
-        // Don't process these tables
-        $skip_tables = array('migration', 'migrations', 'business_unit', 'machine_group');
-
         if (! $this->authorized('delete_machine')) {
             $status['status'] = 'unauthorized';
         } else {
@@ -53,9 +50,10 @@ class manager extends Controller
                     break;
                 default:
                     // Get database name from dsn string
-                    if (conf('dbname')) {
+                    $dbname = isset(conf('connection')['database']) ? conf('connection')['database'] : '';
+                    if ($dbname) {
                         $tbl_query = "SELECT TABLE_NAME AS name FROM information_schema.TABLES
-                        WHERE TABLE_TYPE='BASE TABLE' AND TABLE_SCHEMA='".conf('dbname')."'";
+                        WHERE TABLE_TYPE='BASE TABLE' AND TABLE_SCHEMA='".$dbname."'";
                     } else {
                         die('Admin:delete_machine: Cannot find database name.');
                     }
@@ -64,9 +62,10 @@ class manager extends Controller
             // Get tables
             $tables = array();
             foreach ($machine->query($tbl_query) as $obj) {
-                $tables[] = $obj->name;
+                if($this->isTableNameOk($obj->name)){
+                    $tables[] = $obj->name;
+                }
             }
-            
 
             // Get database handle
             $dbh = getdbh();
@@ -78,10 +77,6 @@ class manager extends Controller
             try {
                 // Delete entries
                 foreach ($tables as $table) {
-                // Migration has no serial number
-                    if (in_array($table, $skip_tables)) {
-                        continue;
-                    }
 
                     $sql = "DELETE FROM $table WHERE `serial_number`=?";
                     if (! $stmt = $dbh->prepare($sql)) {
@@ -105,5 +100,27 @@ class manager extends Controller
 
         $obj = new View();
         $obj->view('json', array('msg' => $status));
+    }
+    
+    private function isTableNameOk($name)
+    {
+        $skip_tables = [
+            'migration',
+            'migrations',
+            'business_unit',
+            'machine_group',
+        ];
+
+        // Check if old table
+        if(preg_match('/_orig$/', $name)){
+            return false;
+        }
+
+        // Check if in skip tables
+        if (in_array($name, $skip_tables)) {
+            return false;
+        }
+        
+        return true;
     }
 }

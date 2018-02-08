@@ -64,7 +64,7 @@ EOF
 
 # Set munkireport preference
 function setpref {
-	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write ${PREFPATH} ${1} \"${2}\"" )
+	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write \"\${TARGET}\"${PREFPATH} ${1} \"${2}\"" )
 }
 
 # Set munkireport reportitem preference
@@ -74,7 +74,7 @@ function setreportpref {
 
 # Reset reportitems
 function resetreportpref {
-	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write ${PREFPATH} ReportItems -dict" )
+	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write \"\${TARGET}\"${PREFPATH} ReportItems -dict" )
 }
 
 while getopts b:m:p:r:c:v:i:nh flag; do
@@ -104,7 +104,7 @@ while getopts b:m:p:r:c:v:i:nh flag; do
 			INSTALLROOT="$INSTALLTEMP"/install_root
 			MUNKIPATH="$INSTALLROOT"/usr/local/munki/
 			TARGET_VOLUME='$3'
-			PREFPATH="${TARGET_VOLUME}/Library/Preferences/MunkiReport"
+			PREFPATH="/Library/Preferences/MunkiReport"
 			PREFLIGHT=0
 			BUILDPKG=1
 
@@ -250,15 +250,19 @@ if [ $ERR = 0 ]; then
 
 		# Add Preference setting commands to postinstall
 		echo  "#!/bin/bash" > $SCRIPTDIR/postinstall
+        cat >>$SCRIPTDIR/postinstall <<EOF
+if [[ "\$3" == "/" ]]; then
+    TARGET=""
+else
+    TARGET="\$3"
+fi
 
-		# Create prefpath
-		PREFDIR=$(dirname ${PREFPATH})
-		echo "mkdir -p '${PREFDIR}'" >> $SCRIPTDIR/postinstall
+EOF
 
 		for i in "${PREF_CMDS[@]}";
 			do echo $i >> $SCRIPTDIR/postinstall
 		done
-        echo "defaults write ${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
+        echo "defaults write \"\${TARGET}\"${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
 		chmod +x $SCRIPTDIR/postinstall
 
 

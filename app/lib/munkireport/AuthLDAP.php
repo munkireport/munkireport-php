@@ -31,7 +31,7 @@ class AuthLDAP extends AbstractAuth
                 $auth_data = [
                     'user' => $login,
                     'groups' => $this->groups,
-                ]
+                ];
                 
                 if ($this->authorizeUserAndGroups($this->config, $auth_data)){
                     $this->authStatus = 'success';
