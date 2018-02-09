@@ -61,7 +61,7 @@
 	| http://mysite/munkireport/ you should set subdirectory to
 	| '/munkireport/'
 	| If you're using .htaccess to rewrite urls, you should change that too
-	| The code below is for automagically deterimining your subdirectory,
+	| The code below is for automagically determining your subdirectory,
 	| if it fails, just add $conf['subdirectory'] = '/your_sub_dir/' in
 	| config.php
 	|
@@ -333,6 +333,24 @@
 
 	/*
 	|===============================================
+	| User Sessions Events
+	|===============================================
+	|
+	| User Sessions will log all events. To skip some events, set
+	| the events that you want to skip to be false. By default the
+	| module also saves historical data. To disable this, set the 
+	| user_sessions_keep_historical key to false. 
+	|
+	*/
+	$conf['user_sessions_save_remote_ssh'] = TRUE;
+	$conf['user_sessions_save_login'] = TRUE;
+	$conf['user_sessions_save_logout'] = TRUE;
+	$conf['user_sessions_save_reboot'] = TRUE;
+	$conf['user_sessions_save_shutdown'] = TRUE;
+	$conf['user_sessions_keep_historical'] = TRUE;
+
+	/*
+	|===============================================
 	| USB Devices
 	|===============================================
 	|
@@ -380,7 +398,7 @@
 	| Define path to the curl binary and add options
 	| this is used by the installer script.
 	| Override to use custom path and add or remove options, some environments
-	| may need to add "--insecure" if the servercertificate is not to be
+	| may need to add "--insecure" if the server certificate is not to be
 	| checked.
 	|
 	*/
@@ -598,7 +616,7 @@
 	| Plot IP ranges by providing an array with labels and
 	| a partial IP address. Specify multiple partials in array
 	| if you want to group them together.
-	| The IP adress part is queried with SQL LIKE
+	| The IP address part is queried with SQL LIKE
 	| Examples:
 	| $conf['ip_ranges']['MyOrg'] = '100.99.';
 	| $conf['ip_ranges']['AltLocation'] = ['211.88.12.', '211.88.13.'];
@@ -614,7 +632,7 @@
 	| Plot VLANS by providing an array with labels and
 	| a partial IP address of the routers. Specify multiple partials in array
 	| if you want to group them together.
-	| The router IP adress part is queried with SQL LIKE
+	| The router IP address part is queried with SQL LIKE
 	| Examples:
 	| $conf['ipv4routers']['Wired'] = '211.88.10.1';
 	| $conf['ipv4routers']['WiFi'] = ['211.88.12.1', '211.88.13.1'];
