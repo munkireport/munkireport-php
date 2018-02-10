@@ -1,7 +1,6 @@
 <?php
 namespace Mr\ARD;
 
-use Mr\Core\Scopes\VueTableScope;
 use Mr\Core\SerialNumberModel;
 
 class ARD extends SerialNumberModel
