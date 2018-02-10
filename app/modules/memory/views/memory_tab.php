@@ -17,39 +17,39 @@ $(document).on('appReady', function(){
 				if(skipThese.indexOf(prop) == -1){
 					if(prop == 'global_ecc_state' && d[prop] == 1){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.ecc_enabled')+'</td></tr>';
-                    }
+					}
 					else if(prop == 'global_ecc_state' && d[prop] == 0){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.ecc_disabled')+'</td></tr>';
-                    } 
+					} 
 					else if(prop == 'global_ecc_state' && d[prop] == 2){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.ecc_errors')+'</td></tr>';
-                    } 
-                    else if(prop == 'is_memory_upgradeable' && d[prop] == 1){
+					} 
+					else if(prop == 'is_memory_upgradeable' && d[prop] == 1){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
-                    } 
-                    else if(prop == 'is_memory_upgradeable' && d[prop] == 0){
+					} 
+					else if(prop == 'is_memory_upgradeable' && d[prop] == 0){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
-                    } 
-                    else if(prop == 'dimm_size'){
-                        rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
-                        if(d[prop].indexOf("GB") !== -1 ){
-                            memorycapacity = memorycapacity + +d[prop].replace(/\D/g,'');
-                        }
-                    }
-                    else if(prop == 'dimm_status' && d[prop] == "empty"){
+					} 
+					else if(prop == 'dimm_size'){
+					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
+					   if(d[prop].indexOf("GB") !== -1 ){
+					        memorycapacity = memorycapacity + +d[prop].replace(/\D/g,'');
+					   }
+					}
+					else if(prop == 'dimm_status' && d[prop] == "empty"){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.empty')+'</td></tr>';
-                    } 
-                    else if(prop == 'dimm_status' && d[prop] == "ok"){
+					} 
+					else if(prop == 'dimm_status' && d[prop] == "ok"){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.ok')+'</td></tr>';
-                    } 
-                    else if(prop == 'dimm_status' && d[prop] == "unknown"){
+					} 
+					else if(prop == 'dimm_status' && d[prop] == "unknown"){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('unknown')+'</td></tr>';
-                    } 
-                    else if(d[prop] == ''){
-                        rows = rows
-                    }
-                    else {
-                        rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
+					} 
+					else if(d[prop] == ''){
+					   rows = rows
+					}
+					else {
+					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
 					}
 				}
 			}

@@ -110,7 +110,7 @@ new Memory_model;
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_memory-tab');
 	        	$('td:eq(0)', nRow).html(link);
 
-                // Status
+	        	// Status
 	        	var status=$('td:eq(6)', nRow).html();
 	        	status = status == 'empty' ? i18n.t('memory.empty') :
 	        	status = status == 'ok' ? i18n.t('memory.ok') :

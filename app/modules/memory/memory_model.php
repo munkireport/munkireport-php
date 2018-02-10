@@ -66,22 +66,22 @@ class Memory_model extends \Model {
 			'is_memory_upgradeable' => 0 // True or False
         );
 		
-		foreach ($myList as $memstick) {
+        foreach ($myList as $memstick) {
             
             // Check if we have a name
-			if( ! array_key_exists("name", $memstick)){
+            if( ! array_key_exists("name", $memstick)){
 				continue;
-			}
+            }
             
             // Don't process empty VMware memory
-			if( array_key_exists("name", $memstick) && substr($memstick['name'], 0, 10) === "RAM slot #" && array_key_exists("dimm_size", $memstick) && $memstick['dimm_size'] == "empty"){
+            if( array_key_exists("name", $memstick) && substr($memstick['name'], 0, 10) === "RAM slot #" && array_key_exists("dimm_size", $memstick) && $memstick['dimm_size'] == "empty"){
 				continue;
-			}         
+            }         
             
             // Don't process empty VMware memory
-			if( array_key_exists("name", $memstick) && substr($memstick['name'], 0, 10) === "NVD slot #" && array_key_exists("dimm_size", $memstick) && $memstick['dimm_size'] == "empty"){
+            if( array_key_exists("name", $memstick) && substr($memstick['name'], 0, 10) === "NVD slot #" && array_key_exists("dimm_size", $memstick) && $memstick['dimm_size'] == "empty"){
 				continue;
-			}  
+            }  
             
             // Add manufacturer name and cleanup
             if (array_key_exists("dimm_manufacturer",$memstick)) {
@@ -92,7 +92,7 @@ class Memory_model extends \Model {
             
 			foreach ($typeList as $key => $value) {
 				$this->rs[$key] = $value;
-                if(array_key_exists($key, $memstick))
+				if(array_key_exists($key, $memstick))
 				{
 					$this->rs[$key] = $memstick[$key];
 				}
@@ -102,7 +102,7 @@ class Memory_model extends \Model {
             $this->rs['name'] = str_replace("DIMM ","DIMM",$this->rs['name']);
             // The improve readability of bank name
             $this->rs['name'] = str_replace(array("BANK","/","DIMM"),array("Bank"," - ","DIMM "),$this->rs['name']);
-            
+                        
             // If empty, null the values
             if(array_key_exists("dimm_size", $memstick) && $memstick['dimm_size'] == "empty"){
                 
