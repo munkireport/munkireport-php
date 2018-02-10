@@ -9,8 +9,8 @@ class Memory_model extends \Model {
 		parent::__construct('id', 'memory'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial;
-        $this->rs['name'] = '';
-        $this->rs['dimm_size'] = '';
+		$this->rs['name'] = '';
+		$this->rs['dimm_size'] = '';
 		$this->rs['dimm_speed'] = '';
 		$this->rs['dimm_type'] = '';
 		$this->rs['dimm_status'] = '';
@@ -22,21 +22,7 @@ class Memory_model extends \Model {
 		$this->rs['is_memory_upgradeable'] = 0; // true/false
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-
-		// Add indexes
-		$this->idx[] = array('serial_number');
-		$this->idx[] = array('name');
-		$this->idx[] = array('dimm_size');
-		$this->idx[] = array('dimm_speed');
-		$this->idx[] = array('dimm_type');
-		$this->idx[] = array('dimm_status');
-		$this->idx[] = array('dimm_manufacturer');
-		$this->idx[] = array('dimm_part_number');
-		$this->idx[] = array('dimm_serial_number');
-		$this->idx[] = array('dimm_ecc_errors');
-		$this->idx[] = array('global_ecc_state');
-		$this->idx[] = array('is_memory_upgradeable');
+		$this->schema_version = 2;
         
 		// Create table if it does not exist
 		//$this->create_table();
@@ -112,7 +98,10 @@ class Memory_model extends \Model {
 				}
 			}
             
-            
+            // Remove space after DIMM
+            $this->rs['name'] = str_replace("DIMM ","DIMM",$this->rs['name']);
+            // The improve readability of bank name
+            $this->rs['name'] = str_replace(array("BANK","/","DIMM"),array("Bank"," - ","DIMM "),$this->rs['name']);
             
             // If empty, null the values
             if(array_key_exists("dimm_size", $memstick) && $memstick['dimm_size'] == "empty"){
@@ -124,10 +113,7 @@ class Memory_model extends \Model {
                 $this->rs['dimm_type'] = '';
                 $this->rs['dimm_part_number'] = '';
                 $this->rs['dimm_serial_number'] = '';
-                $this->rs['dimm_ecc_errors'] = '';
-                $this->rs['dimm_type'] = '';
-                $this->rs['dimm_type'] = '';
-                $this->rs['dimm_type'] = '';               
+                $this->rs['dimm_ecc_errors'] = '';            
             }
 			
 			// Save memory stick data
