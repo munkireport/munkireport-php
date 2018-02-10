@@ -56,4 +56,4 @@ if ( ! file_exists($migrations_dir)) {
 
 file_put_contents("${migrations_dir}${filename}", $template);
 
-echo "Created template at ${migrations_dir}${filename}\n";
+echo "Created migration at ${migrations_dir}${filename}\n";
