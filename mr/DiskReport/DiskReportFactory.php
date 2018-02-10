@@ -8,10 +8,10 @@ $factory->define(Mr\DiskReport\DiskReport::class, function (Faker\Generator $fak
         'Percentage' => $faker->numberBetween(0, 100),
         'SMARTStatus' => $faker->randomElement(['Not Supported', 'Verified', 'Failing']),
         'VolumeType' => $faker->randomElement(['ssd', 'hdd']),
-        'BusProtocol' => $faker->randomElement(['PCI', 'SATA']),
+        'BusProtocol' => $faker->randomElement(['PCI', 'PCI-Express', 'SATA', 'USB']),
         'Internal' => $faker->boolean,
         'MountPoint' => '/',
         'VolumeName' => 'Macintosh HD',
-        'CoreStorageEncrypted' => $faker->boolean
+        'encrypted' => $faker->boolean
     ];
 });
