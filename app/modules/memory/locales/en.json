@@ -1,0 +1,21 @@
+{
+    "clienttab": "Memory",
+    "reporttitle": "Memory Report",
+    "report": "Memory Report",
+    "name": "Name",
+    "dimm_size": "Size",
+    "dimm_speed": "Speed",
+    "dimm_type": "Type",
+    "dimm_status": "Status",
+    "dimm_manufacturer": "Manufacturer",
+    "dimm_part_number": "Part Number",
+    "dimm_serial_number": "Serial Number",
+    "dimm_ecc_errors": "Errors Detected",
+    "global_ecc_state": "ECC State",
+    "is_memory_upgradeable": "Upgradable Memory",
+    "ecc_enabled": "Enabled",
+    "ecc_disabled": "Disabled",
+    "ok": "OK",
+    "empty": "Empty",
+    "ecc_errors": "ECC Errors Detected"
+}
