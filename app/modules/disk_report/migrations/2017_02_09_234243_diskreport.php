@@ -15,7 +15,8 @@ class Diskreport extends Migration
 
         if ($capsule::schema()->hasTable($this->tableNameV2)) {
             // Migration already failed before, but didnt finish
-            throw new Exception("previous failed migration exists");
+//            throw new Exception("previous failed migration exists. You will need to delete table diskreport, and rename diskreport_orig back to diskreport");
+            $this->down();
         }
 
         if ($capsule::schema()->hasTable($this->tableName)) {
