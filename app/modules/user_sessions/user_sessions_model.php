@@ -58,7 +58,7 @@ class User_sessions_model extends \Model {
 			'remote_ssh' => ''
 		);
 
-		foreach ($myList as $event) {
+		foreach (array_reverse($myList) as $event) {
                
             if (array_key_exists('user', $event)){
             // Check if user key exsits
@@ -112,6 +112,11 @@ class User_sessions_model extends \Model {
             // Delete previous matches if user_sessions_keep_historical is true
             if (conf('user_sessions_keep_historical')) {
                 $this->deleteWhere('serial_number=? AND time=? AND event=?', array($this->serial_number, $this->time, $this->event));
+            }
+            
+            // Only save unique users if set to true
+            if (conf('user_sessions_unique_users_only')) {
+                $this->deleteWhere('serial_number=? AND user=?', array($this->serial_number, $this->user));
             }
             
 			// Save user session event
