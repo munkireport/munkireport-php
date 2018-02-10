@@ -32,7 +32,9 @@ $(document).on('appReady', function(){
                     } 
                     else if(prop == 'dimm_size'){
                         rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
-                        memorycapacity = memorycapacity + +d[prop].replace(/\D/g,'');
+                        if(d[prop].indexOf("GB") !== -1 ){
+                            memorycapacity = memorycapacity + +d[prop].replace(/\D/g,'');
+                        }
                     }
                     else if(prop == 'dimm_status' && d[prop] == "empty"){
 					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.empty')+'</td></tr>';
