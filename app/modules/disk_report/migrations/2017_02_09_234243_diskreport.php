@@ -32,7 +32,7 @@ class Diskreport extends Migration
             $table->bigInteger('percentage');
             $table->string('smartstatus');
             $table->string('volumetype');
-            $table->string('media_type');
+            $table->string('media_type')->nullable(); // In order to support upgrade from earlier versions
             $table->string('busprotocol');
             $table->integer('internal');
             $table->string('mountpoint');
