@@ -11,14 +11,7 @@ class UsageStats20180208000001 extends Migration
     
     public function up()
     {
-        $capsule = new Capsule();
-        $migrateData = false;
-        
-        if ($capsule::schema()->hasTable($this->tableName)) {
-            $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
-            $migrateData = true;
-        }
-                
+        $capsule = new Capsule();                
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
@@ -88,11 +81,10 @@ class UsageStats20180208000001 extends Migration
             $table->index('kern_bootargs');
         });
         
-        if ($migrateData) {
-            $capsule::select("INSERT INTO 
-                $this->tableName
+        $capsule::select("INSERT INTO 
+            $this->tableName
             SELECT
-                            id,
+                id,
                 serial_number,
                 timestamp,
                 thermal_pressure,
@@ -130,8 +122,6 @@ class UsageStats20180208000001 extends Migration
                 $this->tableNamebackup");
             
         $capsule::schema()->dropIfExists($this->tableNamebackup);
-        }
-        
     }
     
     public function down()
