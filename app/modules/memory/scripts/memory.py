@@ -23,11 +23,14 @@ def get_memory_info():
     
 def memory_upgradeable(array):
 
-    if array[0]['is_memory_upgradeable'] == 'No' :
-        return 0
+    if 'is_memory_upgradeable' in array[0]:
+        if array[0]['is_memory_upgradeable'] == 'No' :
+            return 0
+        else:
+            return 1
     else:
-        return 1
-    
+            return 1
+
 def ecc_state(array):
 
     if array[0]['global_ecc_state'] == 'ecc_enabled' :
