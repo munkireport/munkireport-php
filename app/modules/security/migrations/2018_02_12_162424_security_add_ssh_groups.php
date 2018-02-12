@@ -13,8 +13,7 @@ class SecurityAddSshGroups extends Migration
   $capsule = new Capsule();
 
       $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-    $table->string('ssh_groups')->after('sip');
-          
+          $table->string('ssh_groups')->after('sip')->default('');
       });
   }
 
@@ -24,7 +23,7 @@ class SecurityAddSshGroups extends Migration
   $capsule = new Capsule();
 
       $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-    $table->dropColumn('ssh_groups');
+          $table->dropColumn('ssh_groups');
       });
   }
 }
