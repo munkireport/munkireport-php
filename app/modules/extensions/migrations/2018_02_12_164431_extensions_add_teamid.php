@@ -26,7 +26,6 @@ class ExtensionsAddTeamid extends Migration
             $table->dropColumn('teamid');
             $table->renameColumn('developer', 'codesign');
 
-            $table->dropIndex('teamid');
             $table->index('codesign');
         });
     }
