@@ -11,12 +11,12 @@ class CLASSNAME extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-          // Example values, please visit https://laravel.com/docs/5.5/migrations#modifying-columns
-            $table->string('example_string', 50)->change();
-            $table->integer('example_integer')->nullable()->change();
-
-            $table->index('example_string');
-            $table->index('example_integer');
+            // Example values, please visit https://laravel.com/docs/5.5/migrations#modifying-columns
+            // $table->string('example_string', 50)->change();
+            // $table->integer('example_integer')->nullable()->change();
+            // $table->string('new_column');
+            
+            // $table->index('new_column');
         });
     }
     
@@ -24,11 +24,10 @@ class CLASSNAME extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->string('example_string', 100)->change();
-            $table->integer('example_integer')->change();
+            // $table->string('example_string', 100)->change();
+            // $table->integer('example_integer')->change();
 
-            $table->dropIndex('example_string_index');
-            $table->dropIndex('example_integer_index');
+            // $table->dropIndex('new_column_index');
         });
     }
 }
