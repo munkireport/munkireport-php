@@ -11,7 +11,7 @@ class ExtensionsAddTeamid extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->string('teamid')->after('codesign');
+            $table->string('teamid')->after('codesign')->default('');
             $table->renameColumn('codesign', 'developer');
 
             $table->index('teamid');
