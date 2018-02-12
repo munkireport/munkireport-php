@@ -11,7 +11,11 @@ class UsageStatsFixColumnTypes extends Migration
     
     public function up()
     {
-        $capsule = new Capsule();                
+        $capsule = new Capsule();
+
+        // Rename to backup
+        $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
+
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
@@ -126,14 +130,14 @@ class UsageStatsFixColumnTypes extends Migration
     
     public function down()
     {
-$capsule = new Capsule();
+        $capsule = new Capsule();
         $migrateData = false;
         
         if ($capsule::schema()->hasTable($this->tableName)) {
             $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
             $migrateData = true;
         }
-                
+
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
