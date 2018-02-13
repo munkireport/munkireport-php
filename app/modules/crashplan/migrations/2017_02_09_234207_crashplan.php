@@ -35,7 +35,7 @@ class Crashplan extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select('INSERT INTO 
+            $capsule::unprepared('INSERT INTO 
                 crashplan
             SELECT
                 id,

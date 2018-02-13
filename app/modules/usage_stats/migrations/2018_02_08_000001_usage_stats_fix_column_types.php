@@ -11,11 +11,7 @@ class UsageStatsFixColumnTypes extends Migration
     
     public function up()
     {
-        $capsule = new Capsule();
-
-        // Rename to backup
-        $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
-
+        $capsule = new Capsule();                
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
@@ -85,7 +81,7 @@ class UsageStatsFixColumnTypes extends Migration
             $table->index('kern_bootargs');
         });
         
-        $capsule::select("INSERT INTO 
+        $capsule::unprepared("INSERT INTO 
             $this->tableName
             SELECT
                 id,
@@ -130,14 +126,14 @@ class UsageStatsFixColumnTypes extends Migration
     
     public function down()
     {
-        $capsule = new Capsule();
+$capsule = new Capsule();
         $migrateData = false;
         
         if ($capsule::schema()->hasTable($this->tableName)) {
             $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
             $migrateData = true;
         }
-
+                
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
@@ -208,7 +204,7 @@ class UsageStatsFixColumnTypes extends Migration
         });
         
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                             id,

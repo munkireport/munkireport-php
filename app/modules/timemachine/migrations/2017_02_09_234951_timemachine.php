@@ -98,7 +98,7 @@ class Timemachine extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
