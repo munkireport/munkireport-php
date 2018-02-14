@@ -53,6 +53,8 @@ RUN mkdir -p app/db && \
     touch app/db/db.sqlite && \
     chmod -R 777 app/db
 
+RUN php database/migrate.php
+
 RUN rm -rf /var/www/html && \
     ln -s /var/munkireport/public /var/www/html
 
