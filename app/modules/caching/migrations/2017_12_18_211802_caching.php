@@ -52,13 +52,6 @@ class Caching extends Migration
             $table->bigInteger('bytesimportedbyhttp')->nullable();
             $table->bigInteger('importsbyxpc')->nullable();
             $table->bigInteger('importsbyhttp')->nullable();
-
-            $table->index('serial_number');
-            $table->index('collectiondate');
-            $table->index('collectiondateepoch');
-            $table->index('bytesfromcachetoclients');
-            $table->index('bytesfrompeerstoclients');
-            $table->index('bytesfromorigintoclients');
         });
 
         if ($migrateData) {
@@ -93,7 +86,18 @@ class Caching extends Migration
                 importsbyhttp
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('collectiondate');
+            $table->index('collectiondateepoch');
+            $table->index('bytesfromcachetoclients');
+            $table->index('bytesfrompeerstoclients');
+            $table->index('bytesfromorigintoclients');
+        });
     }
     
     public function down()
