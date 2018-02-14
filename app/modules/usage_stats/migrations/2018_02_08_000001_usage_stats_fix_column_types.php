@@ -8,10 +8,12 @@ class UsageStatsFixColumnTypes extends Migration
     
     private $tableName = 'usage_stats';
     private $tableNamebackup = 'usage_stats_backup';
-    
+
+    $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
+
     public function up()
     {
-        $capsule = new Capsule();                
+        $capsule = new Capsule();
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
@@ -126,14 +128,9 @@ class UsageStatsFixColumnTypes extends Migration
     
     public function down()
     {
-$capsule = new Capsule();
-        $migrateData = false;
-        
-        if ($capsule::schema()->hasTable($this->tableName)) {
-            $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
-            $migrateData = true;
-        }
-                
+        $capsule = new Capsule();
+        $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
+
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
@@ -203,48 +200,46 @@ $capsule = new Capsule();
             $table->index('kern_bootargs');
         });
         
-        if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
-                $this->tableName
-            SELECT
-                            id,
-                serial_number,
-                timestamp,
-                thermal_pressure,
-                backlight_max,
-                backlight_min,
-                backlight,
-                keyboard_backlight,
-                ibyte_rate,
-                ibytes,
-                ipacket_rate,
-                ipackets,
-                obyte_rate,
-                obytes,
-                opacket_rate,
-                opackets,
-                rbytes_per_s,
-                rops_per_s,
-                wbytes_per_s,
-                wops_per_s,
-                rbytes_diff,
-                rops_diff,
-                wbytes_diff,
-                wops_diff,
-                package_watts,
-                package_joules,
-                freq_hz,
-                freq_ratio,
-                gpu_name,
-                gpu_freq_hz,
-                gpu_freq_mhz,
-                gpu_freq_ratio,
-                gpu_busy,
-                kern_bootargs
-            FROM
-                $this->tableNamebackup");
+        $capsule::unprepared("INSERT INTO 
+            $this->tableName
+        SELECT
+                        id,
+            serial_number,
+            timestamp,
+            thermal_pressure,
+            backlight_max,
+            backlight_min,
+            backlight,
+            keyboard_backlight,
+            ibyte_rate,
+            ibytes,
+            ipacket_rate,
+            ipackets,
+            obyte_rate,
+            obytes,
+            opacket_rate,
+            opackets,
+            rbytes_per_s,
+            rops_per_s,
+            wbytes_per_s,
+            wops_per_s,
+            rbytes_diff,
+            rops_diff,
+            wbytes_diff,
+            wops_diff,
+            package_watts,
+            package_joules,
+            freq_hz,
+            freq_ratio,
+            gpu_name,
+            gpu_freq_hz,
+            gpu_freq_mhz,
+            gpu_freq_ratio,
+            gpu_busy,
+            kern_bootargs
+        FROM
+            $this->tableNamebackup");
             
         $capsule::schema()->dropIfExists($this->tableNamebackup);
-        }
     }
 }
