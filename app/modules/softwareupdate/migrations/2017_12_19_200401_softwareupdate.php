@@ -25,8 +25,7 @@ class Softwareupdate extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
-
+            $table->string('serial_number');
             $table->integer('automaticcheckenabled')->nullable();
             $table->integer('automaticdownload')->nullable();
             $table->integer('configdatainstall')->nullable();
@@ -45,24 +44,6 @@ class Softwareupdate extends Migration
             $table->string('mrxprotect')->nullable();
             $table->string('catalogurl')->nullable();
             $table->string('inactiveupdates')->nullable();
-            
-            $table->index('automaticcheckenabled');
-            $table->index('automaticdownload');
-            $table->index('configdatainstall');
-            $table->index('criticalupdateinstall');
-            $table->index('lastattemptsystemversion');
-            $table->index('lastbackgroundccdsuccessfuldate');
-            $table->index('lastbackgroundsuccessfuldate');
-            $table->index('lastfullsuccessfuldate');
-            $table->index('lastrecommendedupdatesavailable');
-            $table->index('lastresultcode');
-            $table->index('lastsessionsuccessful');
-            $table->index('lastsuccessfuldate');
-            $table->index('lastupdatesavailable');
-            $table->index('skiplocalcdn');
-            $table->index('recommendedupdates');
-            $table->index('mrxprotect');
-            $table->index('inactiveupdates');
         });
 
         if ($migrateData) {
@@ -91,7 +72,30 @@ class Softwareupdate extends Migration
                 inactiveupdates
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('automaticcheckenabled');
+            $table->index('automaticdownload');
+            $table->index('configdatainstall');
+            $table->index('criticalupdateinstall');
+            $table->index('lastattemptsystemversion');
+            $table->index('lastbackgroundccdsuccessfuldate');
+            $table->index('lastbackgroundsuccessfuldate');
+            $table->index('lastfullsuccessfuldate');
+            $table->index('lastrecommendedupdatesavailable');
+            $table->index('lastresultcode');
+            $table->index('lastsessionsuccessful');
+            $table->index('lastsuccessfuldate');
+            $table->index('lastupdatesavailable');
+            $table->index('skiplocalcdn');
+            $table->index('recommendedupdates');
+            $table->index('mrxprotect');
+            $table->index('inactiveupdates');
+        });
     }
     
     public function down()
