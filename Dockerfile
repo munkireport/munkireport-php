@@ -1,11 +1,12 @@
 FROM php:7.2-apache
 
+ENV APP_DIR /var/munkireport
+
 RUN apt-get update && \
     apt-get install --no-install-recommends -y libldap2-dev \
     libcurl4-openssl-dev \
     zlib1g-dev \
     libmcrypt-dev \
-    git \
     libxml2-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -35,12 +36,9 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
 ENV MR_SITENAME MunkiReport
 ENV MR_MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
 
-RUN mkdir /var/munkireport
+COPY . $APP_DIR
 
-WORKDIR /var/munkireport
-
-RUN git clone https://github.com/munkireport/munkireport-php.git . && \
-    git checkout -b wip remotes/origin/wip
+WORKDIR $APP_DIR
 
 RUN composer install --no-dev && \
     composer require adldap2/adldap2 --update-no-dev && \
