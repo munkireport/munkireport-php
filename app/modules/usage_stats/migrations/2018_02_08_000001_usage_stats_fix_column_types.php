@@ -9,11 +9,11 @@ class UsageStatsFixColumnTypes extends Migration
     private $tableName = 'usage_stats';
     private $tableNamebackup = 'usage_stats_backup';
 
-    $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
-
     public function up()
     {
         $capsule = new Capsule();
+        $capsule::schema()->rename($this->tableName, $this->tableNamebackup);
+
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
