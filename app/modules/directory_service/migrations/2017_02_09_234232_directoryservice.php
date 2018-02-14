@@ -58,7 +58,7 @@ class Directoryservice extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select('INSERT INTO 
+            $capsule::unprepared('INSERT INTO 
                 directoryservice (serial_number, which_directory_service, directory_service_comments, adforest, addomain, computeraccount, createmobileaccount, requireconfirmation, forcehomeinstartup, mounthomeassharepoint, usewindowsuncpathforhome, networkprotocoltobeused, defaultusershell, mappinguidtoattribute, mappingusergidtoattribute, mappinggroupgidtoattr, generatekerberosauth, preferreddomaincontroller, allowedadmingroups, authenticationfromanydomain, packetsigning, packetencryption, passwordchangeinterval, restrictdynamicdnsupdates, namespacemode) 
             SELECT 
                 serial_number,

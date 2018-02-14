@@ -24,7 +24,7 @@ class Backup2go extends Migration
         });
         
         if ($migrateData) {
-            $capsule::select('INSERT INTO 
+            $capsule::unprepared('INSERT INTO 
                 backup2go
             SELECT
                 id,

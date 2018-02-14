@@ -25,19 +25,19 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 		
 		// Set types
-		if(data.ssd){
+		if(data.ssd != "0"){
 			panel.append(' <a href="'+baseUrl+'#ssd" class="btn btn-success"><span class="bigger-150">'+data.ssd+'</span> <br>&nbsp;&nbsp;'+i18n.t('disk_report.ssd')+'&nbsp;&nbsp;</a>');
 		}
-		if(data.fusion){
+		if(data.fusion != "0"){
 			panel.append(' <a href="'+baseUrl+'#fusion" class="btn btn-info"><span class="bigger-150">'+data.fusion+'</span><br>'+i18n.t('disk_report.fusion')+'</a>');
 		}
-		if(data.hdd){
+		if(data.hdd != "0"){
 			panel.append(' <a href="'+baseUrl+'#hdd" class="btn btn-info"><span class="bigger-150">'+data.hdd+'</span><br>&nbsp;&nbsp;'+i18n.t('disk_report.hdd')+'&nbsp;&nbsp;</a>');
 		}
-		if(data.raid){
+		if(data.raid != "0"){
 			panel.append(' <a href="'+baseUrl+'#raid" class="btn btn-info"><span class="bigger-150">'+data.raid+'</span><br>&nbsp;'+i18n.t('disk_report.raid')+'&nbsp;</a>');
 		}
-//		if(data.bootcamp){
+//		if(data.bootcamp != "0"){
 //			panel.append(' <a href="'+baseUrl+'#bootcamp" class="btn btn-info"><span class="bigger-150">'+data.bootcamp+'</span><br>'+i18n.t('disk_report.bootcamp')+'</a>');
 //		}
     });

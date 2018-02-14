@@ -31,6 +31,7 @@ new Security_model;
 		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
                 <th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
                 <th data-i18n="security.skel.kext-loading" data-colname='security.skel_state'></th>
+                <th data-i18n="security.ssh_groups" data-colname='security.ssh_groups'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
 		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
 		      </tr>

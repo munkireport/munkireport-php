@@ -57,8 +57,35 @@ class Deploystudio extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select('INSERT INTO 
-                deploystudio (serial_number, architecture, cn, dstudio_auto_disable, dstudio_auto_reset_workflow, dstudio_auto_started_workflow, dstudio_bootcamp_windows_computer_name, dstudio_disabled, dstudio_group, dstudio_host_ard_field_1, dstudio_host_ard_field_2, dstudio_host_ard_field_3, dstudio_host_ard_field_4, dstudio_host_ard_ignore_empty_fields, dstudio_host_delete_other_locations, dstudio_host_model_identifier, dstudio_host_new_network_location, dstudio_host_primary_key, dstudio_host_serial_number, dstudio_host_type, dstudio_hostname, dstudio_last_workflow, dstudio_last_workflow_duration, dstudio_last_workflow_execution_date, dstudio_last_workflow_status, dstudio_mac_addr) 
+            $capsule::unprepared('INSERT INTO 
+                deploystudio (
+                  serial_number,
+                  architecture,
+                  cn,
+                  dstudio_host_new_network_location,
+                  dstudio_host_primary_key,
+                  dstudio_host_serial_number,
+                  dstudio_host_type,
+                  dstudio_hostname,
+                  dstudio_last_workflow,
+                  dstudio_last_workflow_duration,
+                  dstudio_last_workflow_execution_date,
+                  dstudio_last_workflow_status,
+                  dstudio_mac_addr,
+                  dstudio_auto_disable,
+                  dstudio_auto_reset_workflow,
+                  dstudio_auto_started_workflow,
+                  dstudio_bootcamp_windows_computer_name,
+                  dstudio_disabled,
+                  dstudio_group,
+                  dstudio_host_ard_field_1,
+                  dstudio_host_ard_field_2,
+                  dstudio_host_ard_field_3,
+                  dstudio_host_ard_field_4,
+                  dstudio_host_ard_ignore_empty_fields,
+                  dstudio_host_delete_other_locations,
+                  dstudio_host_model_identifier
+            ) 
             SELECT 
                 serial_number,
                 architecture,
@@ -77,7 +104,7 @@ class Deploystudio extends Migration
                 dstudio_auto_reset_workflow,
                 dstudio_auto_started_workflow,
                 dstudio_bootcamp_windows_computer_name,
-                dstudio_disabled,
+                0 + dstudio_disabled,
                 dstudio_group,
                 dstudio_host_ard_field_1,
                 dstudio_host_ard_field_2,

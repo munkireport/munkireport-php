@@ -11,6 +11,7 @@ class Security_model extends \Model
         $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['gatekeeper'] = '';
     	$this->rs['sip'] = '';
+    	$this->rs['ssh_groups'] = '';
     	$this->rs['ssh_users'] = '';
     	$this->rs['ard_users'] = '';
         $this->rs['firmwarepw'] = '';
@@ -21,6 +22,7 @@ class Security_model extends \Model
         $this->idx[] = array('serial_number');
         $this->idx[] = array('gatekeeper');
         $this->idx[] = array('sip');
+        $this->idx[] = array('ssh_groups');
         $this->idx[] = array('ssh_users');
         $this->idx[] = array('ard_users');
         $this->idx[] = array('firmwarepw');
@@ -28,7 +30,7 @@ class Security_model extends \Model
         $this->idx[] = array('skel_state');
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 6;
+        $this->schema_version = 7;
         
         // Create table if it does not exist
        //$this->create_table();
@@ -61,7 +63,7 @@ class Security_model extends \Model
 
     		$plist = $parser->toArray();
 
-    		foreach (array('sip', 'gatekeeper', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state', 'skel_state') as $item) {
+    		foreach (array('sip', 'gatekeeper', 'ssh_groups', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state', 'skel_state') as $item) {
     			if (isset($plist[$item])) {
     				$this->$item = $plist[$item];
     			} else {

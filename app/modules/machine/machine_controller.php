@@ -189,4 +189,29 @@ class Machine_controller extends Module_controller
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
+    /**
+     * Return json array with os build breakdown
+     *
+     * @author AkB
+     **/
+    public function osbuild()
+    {
+        $out = array();
+        $machine = new Machine_model();
+        $sql = "SELECT count(1) as count, buildversion
+        FROM machine
+        LEFT JOIN reportdata USING (serial_number)
+        ".get_machine_group_filter()."
+        GROUP BY buildversion
+        ORDER BY buildversion DESC";
+
+        foreach ($machine->query($sql) as $obj) {
+            $obj->buildversion = $obj->buildversion ? $obj->buildversion : '0';
+            $out[] = array('label' => $obj->buildversion, 'count' => intval($obj->count));
+        }
+
+
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
+    }
 } // END class Machine_controller

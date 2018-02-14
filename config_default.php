@@ -451,24 +451,6 @@
 	*/
 	//$conf['temperature_unit'] = 'F';
 
-
-	/*
-	|===============================================
-	| Migrations
-	|===============================================
-	|
-	| When a new version of munkireport comes out
-	| it might need to update your database structure
-	| if you want to allow this, set
-	| $conf['allow_migrations'] = TRUE;
-	|
-	| There is a small overhead (one database query) when setting allow_migrations
-	| to TRUE. If you are concerned about performance, you can set allow_migrations
-	| to FALSE when you're done migrating.
-	|
-	*/
-	$conf['allow_migrations'] = FALSE;
-
 	/*
 	|===============================================
 	| Client passphrases
@@ -773,7 +755,7 @@
 	|     'database'  => 'munkireport',
 	|     'username'  => 'munkireport',
 	|     'password'  => 'munkireport',
-	|     'options'   => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
+	|     'options'   => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci']
 	| ];
 	|
 	*/

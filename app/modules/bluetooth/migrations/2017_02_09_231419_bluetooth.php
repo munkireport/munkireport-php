@@ -32,7 +32,7 @@ class Bluetooth extends Migration
         });
 
         if ($migrateData) {
-            $capsule::select('INSERT INTO 
+            $capsule::unprepared('INSERT INTO 
                 bluetooth (serial_number, battery_percent, device_type) 
             SELECT 
                 serial_number,
