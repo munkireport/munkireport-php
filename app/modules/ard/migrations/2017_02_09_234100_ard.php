@@ -44,7 +44,7 @@ class Ard extends Migration
                 Text4
             FROM
                 $this->tableNameV2");
-                $capsule::schema()->drop($this->tableNameV2);
+            $capsule::schema()->drop($this->tableNameV2);
         }
 
         // (Re)create indexes
