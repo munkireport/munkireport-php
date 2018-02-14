@@ -19,7 +19,7 @@ class FontsAddIndex extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->dropIndex('serial_number_index');
+            $table->dropIndex('fonts_serial_number_index');
         });
     }
 }

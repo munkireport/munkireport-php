@@ -19,7 +19,7 @@ class TagAddIndex extends Migration
     {
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->dropIndex('serial_number');
+            $table->dropIndex('tag_serial_number_index');
         });
     }
 }
