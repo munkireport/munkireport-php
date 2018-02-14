@@ -30,10 +30,6 @@ class Munkiinfo extends Migration
             $table->string('serial_number');
             $table->string('munkiinfo_key');
             $table->string('munkiinfo_value');
-
-            $table->index('serial_number');
-            $table->index('munkiinfo_key');
-            $table->index('munkiinfo_value');
         });
 
         if ($migrateData) {
@@ -46,7 +42,15 @@ class Munkiinfo extends Migration
                 munkiinfo_value
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('munkiinfo_key');
+            $table->index('munkiinfo_value');
+        });
     }
 
     public function down()

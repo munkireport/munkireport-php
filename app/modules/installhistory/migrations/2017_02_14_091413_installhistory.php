@@ -25,8 +25,7 @@ class Installhistory extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('serial_number')->index();
+            $table->string('serial_number');
             $table->bigInteger('date');
             $table->string('displayName');
             $table->string('displayVersion');
@@ -47,7 +46,13 @@ class Installhistory extends Migration
                 processName
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+        });
     }
 
     public function down()

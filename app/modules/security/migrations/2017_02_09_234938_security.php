@@ -26,8 +26,7 @@ class Security extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('gatekeeper');
             $table->string('sip');
             $table->string('ssh_users');
@@ -35,14 +34,6 @@ class Security extends Migration
             $table->string('firmwarepw');
             $table->string('firewall_state');
             $table->string('skel_state');
-
-            $table->index('gatekeeper');
-            $table->index('sip');
-            $table->index('ssh_users');
-            $table->index('ard_users');
-            $table->index('firmwarepw');
-            $table->index('firewall_state')->nullable();
-            $table->index('skel_state');
         });
 
         if ($migrateData) {
@@ -60,7 +51,20 @@ class Security extends Migration
                 ''
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('gatekeeper');
+            $table->index('sip');
+            $table->index('ssh_users');
+            $table->index('ard_users');
+            $table->index('firmwarepw');
+            $table->index('firewall_state')->nullable();
+            $table->index('skel_state');
+        });
     }
 
     public function down()
