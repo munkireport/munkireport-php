@@ -25,7 +25,6 @@ class Diskreport extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('serial_number');
             $table->bigInteger('totalsize');
             $table->bigInteger('freespace');
@@ -38,12 +37,6 @@ class Diskreport extends Migration
             $table->string('mountpoint');
             $table->string('volumename');
             $table->integer('encrypted');
-
-            $table->index('serial_number');
-            $table->index('mountpoint');
-            $table->index('media_type');
-            $table->index('volumename');
-            $table->index('volumetype');
         });
 
         if ($migrateData) {
@@ -65,7 +58,17 @@ class Diskreport extends Migration
                 CoreStorageEncrypted
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('mountpoint');
+            $table->index('media_type');
+            $table->index('volumename');
+            $table->index('volumetype');
+        });
     }
 
     public function down()

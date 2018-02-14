@@ -26,7 +26,7 @@ class FanTemps extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->nullable();
+            $table->string('serial_number');
 
             $table->integer('fan_0')->nullable();
             $table->integer('fan_1')->nullable();
@@ -314,68 +314,6 @@ class FanTemps extends Migration
             $table->float('ttrd')->nullable();
             $table->float('tw0p')->nullable();
             $table->float('tw0p2')->nullable();
-
-            $table->index('serial_number');
-            $table->index('ta0p');
-            $table->index('tc0f');
-            $table->index('tc0d');
-            $table->index('tc0p');
-            $table->index('tb0t');
-            $table->index('tb1t');
-            $table->index('tb2t');
-            $table->index('tg0d');
-            $table->index('tg0h');
-            $table->index('tg0p');
-            $table->index('th0p');
-            $table->index('th0h');
-            $table->index('th1h');
-            $table->index('th2h');
-            $table->index('tm0s');
-            $table->index('tm0p');
-            $table->index('ts0p');
-            $table->index('tl0p');
-            $table->index('tm0p4');
-            $table->index('tn0h');
-            $table->index('tn0d');
-            $table->index('tn0p');
-            $table->index('tp0p');
-            $table->index('discin');
-            $table->index('fan_0');
-            $table->index('fan_1');
-            $table->index('fan_2');
-            $table->index('fan_3');
-            $table->index('fan_4');
-            $table->index('fan_5');
-            $table->index('fan_6');
-            $table->index('fan_7');
-            $table->index('fan_8');
-            $table->index('fanmin0');
-            $table->index('fanmin1');
-            $table->index('fanmin2');
-            $table->index('fanmin3');
-            $table->index('fanmin4');
-            $table->index('fanmin5');
-            $table->index('fanmin6');
-            $table->index('fanmin7');
-            $table->index('fanmin8');
-            $table->index('fanmax0');
-            $table->index('fanmax1');
-            $table->index('fanmax2');
-            $table->index('fanmax3');
-            $table->index('fanmax4');
-            $table->index('fanmax5');
-            $table->index('fanmax6');
-            $table->index('fanmax7');
-            $table->index('fanmax8');
-            $table->index('fanlabel0');
-            $table->index('fanlabel1');
-            $table->index('fanlabel2');
-            $table->index('fanlabel3');
-            $table->index('fanlabel4');
-            $table->index('fanlabel5');
-            $table->index('fanlabel6');
-            $table->index('fanlabel7');
-            $table->index('fanlabel8');
         });
         
         if ($migrateData) {
@@ -671,7 +609,73 @@ class FanTemps extends Migration
                 tw0p2
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('ta0p');
+            $table->index('tc0f');
+            $table->index('tc0d');
+            $table->index('tc0p');
+            $table->index('tb0t');
+            $table->index('tb1t');
+            $table->index('tb2t');
+            $table->index('tg0d');
+            $table->index('tg0h');
+            $table->index('tg0p');
+            $table->index('th0p');
+            $table->index('th0h');
+            $table->index('th1h');
+            $table->index('th2h');
+            $table->index('tm0s');
+            $table->index('tm0p');
+            $table->index('ts0p');
+            $table->index('tl0p');
+            $table->index('tm0p4');
+            $table->index('tn0h');
+            $table->index('tn0d');
+            $table->index('tn0p');
+            $table->index('tp0p');
+            $table->index('discin');
+            $table->index('fan_0');
+            $table->index('fan_1');
+            $table->index('fan_2');
+            $table->index('fan_3');
+            $table->index('fan_4');
+            $table->index('fan_5');
+            $table->index('fan_6');
+            $table->index('fan_7');
+            $table->index('fan_8');
+            $table->index('fanmin0');
+            $table->index('fanmin1');
+            $table->index('fanmin2');
+            $table->index('fanmin3');
+            $table->index('fanmin4');
+            $table->index('fanmin5');
+            $table->index('fanmin6');
+            $table->index('fanmin7');
+            $table->index('fanmin8');
+            $table->index('fanmax0');
+            $table->index('fanmax1');
+            $table->index('fanmax2');
+            $table->index('fanmax3');
+            $table->index('fanmax4');
+            $table->index('fanmax5');
+            $table->index('fanmax6');
+            $table->index('fanmax7');
+            $table->index('fanmax8');
+            $table->index('fanlabel0');
+            $table->index('fanlabel1');
+            $table->index('fanlabel2');
+            $table->index('fanlabel3');
+            $table->index('fanlabel4');
+            $table->index('fanlabel5');
+            $table->index('fanlabel6');
+            $table->index('fanlabel7');
+            $table->index('fanlabel8');
+        });
     }
     
     public function down()
