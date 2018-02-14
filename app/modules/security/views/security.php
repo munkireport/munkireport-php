@@ -30,6 +30,8 @@
 
         <?php $widget->view($this, 'skel_state'); ?>
 
+        <?php $widget->view($this, 'ssh_state'); ?>
+
     </div> <!-- /row -->
 
 

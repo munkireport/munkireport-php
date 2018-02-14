@@ -14,6 +14,7 @@
     "sip_status": "SIP Status",
     "ssh_groups": "SSH Groups",
     "ssh_users": "SSH Users",
+    "ssh_state": "SSH Status",
     "skel": {
         "kext-loading": "KEXT Loading",
         "all-approved": "Open",
