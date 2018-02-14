@@ -16,7 +16,7 @@ class UsageStatsFixColumnTypes extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->bigInteger('timestamp');
             $table->string('thermal_pressure')->nullable();
             $table->integer('backlight_max')->nullable();
@@ -49,38 +49,6 @@ class UsageStatsFixColumnTypes extends Migration
             $table->double('gpu_freq_ratio')->nullable();
             $table->double('gpu_busy')->nullable();
             $table->string('kern_bootargs')->nullable();
-            
-            $table->index('backlight_max');
-            $table->index('backlight_min');
-            $table->index('backlight');
-            $table->index('keyboard_backlight');
-            $table->index('ibyte_rate');
-            $table->index('ibytes');
-            $table->index('ipacket_rate');
-            $table->index('ipackets');
-            $table->index('obyte_rate');
-            $table->index('obytes');
-            $table->index('opacket_rate');
-            $table->index('opackets');
-            $table->index('rbytes_per_s');
-            $table->index('rops_per_s');
-            $table->index('wbytes_per_s');
-            $table->index('wops_per_s');
-            $table->index('rbytes_diff');
-            $table->index('rops_diff');
-            $table->index('wbytes_diff');
-            $table->index('wops_diff');
-            $table->index('thermal_pressure');
-            $table->index('package_watts');
-            $table->index('package_joules');
-            $table->index('freq_hz');
-            $table->index('freq_ratio');
-            $table->index('gpu_name');
-            $table->index('gpu_freq_hz');
-            $table->index('gpu_freq_mhz');
-            $table->index('gpu_freq_ratio');
-            $table->index('gpu_busy');
-            $table->index('kern_bootargs');
         });
         
         $capsule::unprepared("INSERT INTO 
@@ -122,8 +90,45 @@ class UsageStatsFixColumnTypes extends Migration
                 kern_bootargs
             FROM
                 $this->tableNamebackup");
-            
+
+        // Drop old table
         $capsule::schema()->dropIfExists($this->tableNamebackup);
+
+        // Recreate indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('backlight_max');
+            $table->index('backlight_min');
+            $table->index('backlight');
+            $table->index('keyboard_backlight');
+            $table->index('ibyte_rate');
+            $table->index('ibytes');
+            $table->index('ipacket_rate');
+            $table->index('ipackets');
+            $table->index('obyte_rate');
+            $table->index('obytes');
+            $table->index('opacket_rate');
+            $table->index('opackets');
+            $table->index('rbytes_per_s');
+            $table->index('rops_per_s');
+            $table->index('wbytes_per_s');
+            $table->index('wops_per_s');
+            $table->index('rbytes_diff');
+            $table->index('rops_diff');
+            $table->index('wbytes_diff');
+            $table->index('wops_diff');
+            $table->index('thermal_pressure');
+            $table->index('package_watts');
+            $table->index('package_joules');
+            $table->index('freq_hz');
+            $table->index('freq_ratio');
+            $table->index('gpu_name');
+            $table->index('gpu_freq_hz');
+            $table->index('gpu_freq_mhz');
+            $table->index('gpu_freq_ratio');
+            $table->index('gpu_busy');
+            $table->index('kern_bootargs');
+        });
     }
     
     public function down()
