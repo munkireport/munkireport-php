@@ -12,10 +12,10 @@ class ExtensionsAddTeamid extends Migration
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
             $table->string('teamid')->after('codesign')->default('');
-            $table->renameColumn('codesign', 'developer');
-
             $table->index('teamid');
+            $table->renameColumn('codesign', 'developer');
             $table->index('developer');
+            $table->dropIndex('extensions_codesign_index');
         });
     }
     
@@ -24,8 +24,9 @@ class ExtensionsAddTeamid extends Migration
         $capsule = new Capsule();
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
             $table->dropColumn('teamid');
+            
+            $table->dropIndex('extensions_developer_index');
             $table->renameColumn('developer', 'codesign');
-
             $table->index('codesign');
         });
     }

@@ -28,7 +28,7 @@ class Power extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('manufacture_date')->nullable();
             $table->integer('design_capacity')->default(0)->nullable();
             $table->integer('max_capacity')->default(0)->nullable();
@@ -107,64 +107,6 @@ class Power extends Migration
             $table->float('amperage')->nullable();
             $table->integer('designcyclecount')->nullable();
             $table->integer('avgtimetoempty')->nullable();
-
-            $table->index('manufacture_date');
-            $table->index('design_capacity');
-            $table->index('max_capacity');
-            $table->index('max_percent');
-            $table->index('current_capacity');
-            $table->index('current_percent');
-            $table->index('cycle_count');
-            $table->index('temperature');
-            $table->index('hibernatefile');
-            $table->index('active_profile');
-            $table->index('standbydelay');
-            $table->index('standby');
-            $table->index('womp');
-            $table->index('halfdim');
-            $table->index('gpuswitch');
-            $table->index('sms');
-            $table->index('networkoversleep');
-            $table->index('disksleep');
-            $table->index('sleep');
-            $table->index('autopoweroffdelay');
-            $table->index('hibernatemode');
-            $table->index('autopoweroff');
-            $table->index('ttyskeepawake');
-            $table->index('displaysleep');
-            $table->index('acwake');
-            $table->index('lidwake');
-            $table->index('sleep_on_power_button');
-            $table->index('autorestart');
-            $table->index('destroyfvkeyonstandby');
-            $table->index('powernap');
-            $table->index('sleep_count');
-            $table->index('dark_wake_count');
-            $table->index('user_wake_count');
-            $table->index('wattage');
-            $table->index('backgroundtask');
-            $table->index('applepushservicetask');
-            $table->index('userisactive');
-            $table->index('preventuseridledisplaysleep');
-            $table->index('preventsystemsleep');
-            $table->index('externalmedia');
-            $table->index('preventuseridlesystemsleep');
-            $table->index('networkclientactive');
-            $table->index('externalconnected');
-            $table->index('timeremaining');
-            $table->index('instanttimetoempty');
-            $table->index('cellvoltage');
-            $table->index('voltage');
-            $table->index('permanentfailurestatus');
-            $table->index('manufacturer');
-            $table->index('packreserve');
-            $table->index('avgtimetofull');
-            $table->index('batteryserialnumber');
-            $table->index('amperage');
-            $table->index('fullycharged');
-            $table->index('ischarging');
-            $table->index('designcyclecount');
-            $table->index('avgtimetoempty');
         });
 
         if ($migrateData) {
@@ -252,7 +194,70 @@ class Power extends Migration
                 avgtimetoempty
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('manufacture_date');
+            $table->index('design_capacity');
+            $table->index('max_capacity');
+            $table->index('max_percent');
+            $table->index('current_capacity');
+            $table->index('current_percent');
+            $table->index('cycle_count');
+            $table->index('temperature');
+            $table->index('hibernatefile');
+            $table->index('active_profile');
+            $table->index('standbydelay');
+            $table->index('standby');
+            $table->index('womp');
+            $table->index('halfdim');
+            $table->index('gpuswitch');
+            $table->index('sms');
+            $table->index('networkoversleep');
+            $table->index('disksleep');
+            $table->index('sleep');
+            $table->index('autopoweroffdelay');
+            $table->index('hibernatemode');
+            $table->index('autopoweroff');
+            $table->index('ttyskeepawake');
+            $table->index('displaysleep');
+            $table->index('acwake');
+            $table->index('lidwake');
+            $table->index('sleep_on_power_button');
+            $table->index('autorestart');
+            $table->index('destroyfvkeyonstandby');
+            $table->index('powernap');
+            $table->index('sleep_count');
+            $table->index('dark_wake_count');
+            $table->index('user_wake_count');
+            $table->index('wattage');
+            $table->index('backgroundtask');
+            $table->index('applepushservicetask');
+            $table->index('userisactive');
+            $table->index('preventuseridledisplaysleep');
+            $table->index('preventsystemsleep');
+            $table->index('externalmedia');
+            $table->index('preventuseridlesystemsleep');
+            $table->index('networkclientactive');
+            $table->index('externalconnected');
+            $table->index('timeremaining');
+            $table->index('instanttimetoempty');
+            $table->index('cellvoltage');
+            $table->index('voltage');
+            $table->index('permanentfailurestatus');
+            $table->index('manufacturer');
+            $table->index('packreserve');
+            $table->index('avgtimetofull');
+            $table->index('batteryserialnumber');
+            $table->index('amperage');
+            $table->index('fullycharged');
+            $table->index('ischarging');
+            $table->index('designcyclecount');
+            $table->index('avgtimetoempty');
+        });
     }
     
     public function down()

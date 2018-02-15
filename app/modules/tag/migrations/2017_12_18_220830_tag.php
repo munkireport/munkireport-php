@@ -30,10 +30,6 @@ class Tag extends Migration
             $table->string('tag');
             $table->string('user');
             $table->bigInteger('timestamp');
-
-            $table->index('tag');
-            $table->index('user');
-            $table->index('timestamp');
         });
 
         if ($migrateData) {
@@ -47,7 +43,15 @@ class Tag extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('tag');
+            $table->index('user');
+            $table->index('timestamp');
+        });
     }
     
     public function down()

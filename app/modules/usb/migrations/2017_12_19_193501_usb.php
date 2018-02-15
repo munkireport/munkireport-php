@@ -26,8 +26,7 @@ class Usb extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('serial_number')->nullable();
+            $table->string('serial_number');
             $table->string('name')->nullable();
             $table->string('type')->nullable();
             $table->string('manufacturer')->nullable();
@@ -40,18 +39,6 @@ class Usb extends Migration
             $table->integer('extra_current_used')->nullable();
             $table->string('usb_serial_number')->nullable();
             $table->text('printer_id')->nullable();
-            
-            
-            $table->index('name');
-            $table->index('type');
-            $table->index('manufacturer');
-            $table->index('vendor_id');
-            $table->index('device_speed');
-            $table->index('internal');
-            $table->index('bus_power');
-            $table->index('bus_power_used');
-            $table->index('extra_current_used');
-            $table->index('usb_serial_number');
         });
 
         if ($migrateData) {
@@ -74,7 +61,22 @@ class Usb extends Migration
                 printer_id
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('name');
+            $table->index('type');
+            $table->index('manufacturer');
+            $table->index('vendor_id');
+            $table->index('device_speed');
+            $table->index('internal');
+            $table->index('bus_power');
+            $table->index('bus_power_used');
+            $table->index('extra_current_used');
+            $table->index('usb_serial_number');
+        });
     }
     
     public function down()

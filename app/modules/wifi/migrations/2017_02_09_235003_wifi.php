@@ -25,8 +25,7 @@ class Wifi extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->integer('agrctlrssi')->nullable();
             $table->integer('agrextrssi')->nullable();
             $table->integer('agrctlnoise')->nullable();
@@ -42,10 +41,6 @@ class Wifi extends Migration
             $table->string('ssid')->nullable();
             $table->integer('mcs')->nullable();
             $table->string('channel')->nullable();
-
-            $table->index('bssid');
-            $table->index('ssid');
-            $table->index('state');
         });
 
         if ($migrateData) {
@@ -71,7 +66,16 @@ class Wifi extends Migration
                 channel
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('bssid');
+            $table->index('ssid');
+            $table->index('state');
+        });
     }
 
     public function down()

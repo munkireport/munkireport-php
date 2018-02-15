@@ -25,14 +25,10 @@ class FirmwareEscrow extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->dateTime('enabled_date')->nullable();
             $table->string('firmware_password')->nullable();
             $table->string('firmware_mode')->nullable();
-            
-            $table->index('enabled_date');
-            $table->index('firmware_password');
-            $table->index('firmware_mode');
         });
 
         if ($migrateData) {
@@ -46,7 +42,16 @@ class FirmwareEscrow extends Migration
                 firmware_mode
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('enabled_date');
+            $table->index('firmware_password');
+            $table->index('firmware_mode');
+        });
     }
     
     public function down()

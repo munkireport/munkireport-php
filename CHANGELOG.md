@@ -1,4 +1,14 @@
-### [3.0.2](https://github.com/munkireport/munkireport-php/compare/v3.0.1...HEAD) (Unreleased)
+### [3.0.3](https://github.com/munkireport/munkireport-php/compare/v3.0.2...HEAD) (Unreleased)
+
+### [3.0.2](https://github.com/munkireport/munkireport-php/compare/v3.0.1...v3.0.2) (February 15, 2018)
+
+More bugfixes, mostly migration related.
+
+FIXES
+- Fixed migrations for SQLite (#971)
+- Added indexes for the tag, usb, fonts, network_shares, homebrew and servermetrics modules
+- Improved Dockerfile
+
 
 ### [3.0.1](https://github.com/munkireport/munkireport-php/compare/v3.0.0...v3.0.1) (February 14, 2018)
 

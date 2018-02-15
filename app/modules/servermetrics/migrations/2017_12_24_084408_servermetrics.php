@@ -43,8 +43,6 @@ class Servermetrics extends Migration
             $table->float('network_in'); //
             $table->float('network_out'); //
             $table->string('datetime'); // Datetime from record
-
-            $table->index('datetime');
         });
 
         if ($migrateData) {
@@ -72,7 +70,13 @@ class Servermetrics extends Migration
                 datetime
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('datetime');
+        });
     }
 
     public function down()

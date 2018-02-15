@@ -5,24 +5,27 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Deploystudio extends Migration
 {
-    public function up()
-    {
-        $capsule = new Capsule();
-        $migrateData = false;
+  private $tableName = 'deploystudio';
+  private $tableNameV2 = 'deploystudio_orig';
 
-        if ($capsule::schema()->hasTable('deploystudio_orig')) {
-            // Migration already failed before, but didnt finish
-            throw new Exception("previous failed migration exists");
-        }
+  public function up()
+  {
+      $capsule = new Capsule();
+      $migrateData = false;
 
-        if ($capsule::schema()->hasTable('deploystudio')) {
-            $capsule::schema()->rename('deploystudio', 'deploystudio_orig');
-            $migrateData = true;
-        }
+      if ($capsule::schema()->hasTable($this->tableNameV2)) {
+          // Migration already failed before, but didnt finish
+          throw new Exception("previous failed migration exists");
+      }
 
-        $capsule::schema()->create('deploystudio', function (Blueprint $table) {
+      if ($capsule::schema()->hasTable($this->tableName)) {
+          $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+          $migrateData = true;
+      }
+
+      $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('architecture')->nullable();
             $table->string('cn')->nullable();
             $table->string('dstudio_host_new_network_location')->nullable();
@@ -48,17 +51,11 @@ class Deploystudio extends Migration
             $table->string('dstudio_host_ard_ignore_empty_fields')->nullable();
             $table->string('dstudio_host_delete_other_locations')->nullable();
             $table->string('dstudio_host_model_identifier')->nullable();
-
-            $table->index('cn');
-            $table->index('dstudio_host_serial_number');
-            $table->index('dstudio_hostname');
-            $table->index('dstudio_last_workflow');
-            $table->index('dstudio_mac_addr');
         });
 
         if ($migrateData) {
-            $capsule::unprepared('INSERT INTO 
-                deploystudio (
+            $capsule::unprepared("INSERT INTO 
+                $this->tableName (
                   serial_number,
                   architecture,
                   cn,
@@ -114,16 +111,27 @@ class Deploystudio extends Migration
                 dstudio_host_delete_other_locations,
                 dstudio_host_model_identifier
             FROM
-                deploystudio_orig');
+                $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('cn');
+            $table->index('dstudio_host_serial_number');
+            $table->index('dstudio_hostname');
+            $table->index('dstudio_last_workflow');
+            $table->index('dstudio_mac_addr');
+        });
     }
-    
+
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('deploystudio');
-        if ($capsule::schema()->hasTable('deploystudio_orig')) {
-            $capsule::schema()->rename('deploystudio_orig', 'deploystudio');
+        $capsule::schema()->dropIfExists($this->tableName);
+        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
         }
     }
 }

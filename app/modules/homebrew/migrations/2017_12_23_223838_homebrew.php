@@ -55,17 +55,6 @@ class Homebrew extends Migration
             $table->boolean('pinned')->default(0);
             $table->boolean('versions_devel')->default(0);
             $table->boolean('versions_head')->default(0);
-
-            $table->index('built_as_bottle');
-            $table->index('installed_as_dependency');
-            $table->index('installed_on_request');
-            $table->index('poured_from_bottle');
-            $table->index('keg_only');
-            $table->index('outdated');
-            $table->index('pinned');
-            $table->index('versions_devel');
-            $table->index('versions_bottle');
-            $table->index('versions_head');
         });
 
         if ($migrateData) {
@@ -105,7 +94,22 @@ class Homebrew extends Migration
                 versions_head
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('built_as_bottle');
+            $table->index('installed_as_dependency');
+            $table->index('installed_on_request');
+            $table->index('poured_from_bottle');
+            $table->index('keg_only');
+            $table->index('outdated');
+            $table->index('pinned');
+            $table->index('versions_devel');
+            $table->index('versions_bottle');
+            $table->index('versions_head');
+        });
     }
 
     public function down()

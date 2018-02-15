@@ -25,20 +25,12 @@ class Event extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('serial_number');
             $table->string('type');
             $table->string('module', 50);
             $table->string('msg');
             $table->string('data')->nullable();
             $table->bigInteger('timestamp');
-
-            //$table->timestamps();
-
-            $table->index('msg');
-            $table->index('serial_number');
-            $table->index(['serial_number', 'module']);
-            $table->index('type');
         });
 
         if ($migrateData) {
@@ -54,7 +46,16 @@ class Event extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('msg');
+            $table->index('serial_number');
+            $table->index(['serial_number', 'module']);
+            $table->index('type');
+        });
     }
 
     public function down()

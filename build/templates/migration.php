@@ -27,7 +27,7 @@ class CLASSNAME extends Migration
             // $table->string('example_string', 100)->change();
             // $table->integer('example_integer')->change();
 
-            // $table->dropIndex('new_column_index');
+            // $table->dropIndex('MODULE_new_column_index');
         });
     }
 }
