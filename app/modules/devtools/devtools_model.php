@@ -25,21 +25,6 @@ class Devtools_model extends \Model {
 		$this->rs['xcode_version'] = '';
 		$this->rs['xquartz'] = '';
 
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-
-		// Add indexes
-		$this->idx[] = array('cli_tools');
-		$this->idx[] = array('dashcode_version');
-		$this->idx[] = array('devtools_version');
-		$this->idx[] = array('instruments_version');
-		$this->idx[] = array('interface_builder_version');
-		$this->idx[] = array('xcode_version');
-		$this->idx[] = array('xquartz');
-        
-		// Create table if it does not exist
-		//$this->create_table();
-
 		if ($serial) {
 			$this->retrieve_record($serial);
 		}
