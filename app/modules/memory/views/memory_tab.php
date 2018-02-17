@@ -3,85 +3,68 @@
 
 <script>
 $(document).on('appReady', function(){
-	$.getJSON(appUrl + '/module/memory/get_data/' + serialNumber, function(data){
+	$.getJSON(appUrl + '/module/memory/get_memory_data/' + serialNumber, function(data){
 		// Set count of memory devices
-		var skipThese = ['name'];
+		var skipThese = [''];
         var memorycapacity = 0
-        var infokeep = ''
+        var mempressure = ''
 
 		$.each(data, function(i,d){
 			
 			// Generate rows from data
-			var rows = ''
 			var inforows = ''
+			var swaprows = ''
+            
 			for (var prop in d){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
-					if(prop == 'global_ecc_state' && d[prop] == 1 && infokeep.indexOf("global_ecc_state") === -1){
-					   inforows = inforows + '<div style="max-width:500px;"><table class="table-striped table-condensed"><tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.ecc_enabled')+'</td></tr>';
-					   infokeep = infokeep + 'global_ecc_state'
+                    // Blank empty rows
+                    if(d[prop] == '' || d[prop] == null){
+                        inforows = inforows
                     }
-					else if(prop == 'global_ecc_state' && d[prop] == 0 && infokeep.indexOf("global_ecc_state") === -1){
-					   inforows = inforows + '<div style="max-width:500px;"><table class="table-striped table-condensed"><tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.ecc_disabled')+'</td></tr>';
-					   infokeep = infokeep + 'global_ecc_state'
-                    } 
-					else if(prop == 'global_ecc_state' && d[prop] == 2 && infokeep.indexOf("global_ecc_state") === -1){
-					   inforows = inforows + '<div style="max-width:500px;"><table class="table-striped table-condensed"><tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.ecc_errors')+'</td></tr>';
-					   infokeep = infokeep + 'global_ecc_state'
-                    } 
-                    else if(prop == 'global_ecc_state'&& infokeep.indexOf("global_ecc_state") !== -1){
-					   rows = rows  
+                    else if(prop == 'free' || prop == 'active' || prop == 'inactive' || prop == 'speculative' || prop == 'throttled' || prop == 'wireddown' || prop == 'purgeable' || prop == 'zerofilled' || prop == 'reactivated' || prop == 'purged' || prop == 'filebacked' || prop == 'anonymous' || prop == 'storedincompressor' || prop == 'occupiedbycompressor' || prop == 'decompressions' || prop == 'compressions'){
+					   inforows = inforows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+fileSize(d[prop], 2)+'</td></tr>';
                     }
-                    else if(prop == 'is_memory_upgradeable' && d[prop] == 1 && infokeep.indexOf("is_memory_upgradeable") === -1){
-					   inforows = inforows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr></table></br></div>';
-					   infokeep = infokeep + 'is_memory_upgradeable'
+                    else if(prop == 'translationfaults' || prop == 'copyonwrite'){
+					   inforows = inforows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
                     }
-                    else if(prop == 'is_memory_upgradeable' && d[prop] == 0 && infokeep.indexOf("is_memory_upgradeable") === -1){
-					   inforows = inforows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr></table></br></div>';
-					   infokeep = infokeep + 'is_memory_upgradeable'
-                    } 
-                    else if(prop == 'is_memory_upgradeable' && infokeep.indexOf("is_memory_upgradeable") !== -1){
-					   rows = rows  
-                    } 
-                    else if(prop == 'dimm_size'){
-					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
-					   if(d[prop].indexOf("GB") !== -1){
-					        memorycapacity = memorycapacity + +d[prop].replace(/\D/g,'');
-					   }                    
+                    else if(prop == 'memorypressure'){
+					   inforows = inforows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'% </td></tr>';
+					   mempressure = d[prop]+'%';
                     }
-                    else if(prop == 'dimm_status' && d[prop] == "empty"){
-					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.empty')+'</td></tr>';
-                    } 
-                    else if(prop == 'dimm_status' && d[prop] == "ok"){
-					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('memory.ok')+'</td></tr>';
-                    } 
-                    else if(prop == 'dimm_status' && d[prop] == "unknown"){
-					   rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('unknown')+'</td></tr>';
-                    } 
-                    else if(d[prop] == ''){
-                        rows = rows
+                    else if(prop == 'swaptotal' || prop == 'swapused' || prop == 'swapfree' || prop == 'swapins' || prop == 'swapouts'){
+					   swaprows = swaprows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+fileSize(d[prop], 2)+'</td></tr>';
                     }
-                    else {
-                        rows = rows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
-					}
+                    else if(prop == 'pageins' || prop == 'pageouts'){
+					   swaprows = swaprows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
+                    }
+                    else if(prop == 'swapencrypted' && d[prop] == 1){
+					   swaprows = swaprows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
+                    }
+                    else if(prop == 'swapencrypted' && d[prop] == 0){
+					   swaprows = swaprows + '<tr><th>'+i18n.t('memory.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
+                    }
 				}
 			}
             
-            $('#memory-cnt').text(memorycapacity+" GB");
+            $('#memory-cnt').text(mempressure);
 
-			$('#memory-tab')
-
-            .append(inforows)
-
-            .append($('<h4>')
-                .append($('<i>')
-                    .addClass('fa fa-microchip'))
-            .append(' '+d.name))
+            $('#memory-tab')
+            
             .append($('<div style="max-width:450px;">')
                 .append($('<table>')
                     .addClass('table table-striped table-condensed')
                     .append($('<tbody>')
-                        .append(rows))))
+                        .append(inforows))))
+            
+            .append($('<h4>')
+                .append(i18n.t('memory.swap')))
+            .append($('<div style="max-width:450px;">')
+                .append($('<table>')
+                    .addClass('table table-striped table-condensed')
+                    .append($('<tbody>')
+                        .append(swaprows))))
+            return false;
 		})
 	});
 });

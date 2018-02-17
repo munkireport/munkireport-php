@@ -18,21 +18,23 @@ new Memory_model;
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-			<th data-i18n="memory.name" data-colname='memory.name'></th>
-			<th data-i18n="memory.dimm_size" data-colname='memory.dimm_size'></th>
-			<th data-i18n="memory.dimm_speed" data-colname='memory.dimm_speed'></th>
-			<th data-i18n="memory.dimm_type" data-colname='memory.dimm_type'></th>
-			<th data-i18n="memory.dimm_status" data-colname='memory.dimm_status'></th>
-			<th data-i18n="memory.dimm_manufacturer" data-colname='memory.dimm_manufacturer'></th>
-			<th data-i18n="memory.global_ecc_state" data-colname='memory.global_ecc_state'></th>
-			<th data-i18n="memory.is_memory_upgradeable" data-colname='memory.is_memory_upgradeable'></th>
-			<th data-i18n="memory.dimm_ecc_errors" data-colname='memory.dimm_ecc_errors'></th>
+			<th data-i18n="memory.memorypressure" data-colname='memory.memorypressure'></th>
+			<th data-i18n="memory.free" data-colname='memory.free'></th>
+			<th data-i18n="memory.active" data-colname='memory.active'></th>
+			<th data-i18n="memory.inactive" data-colname='memory.inactive'></th>
+			<th data-i18n="memory.wireddown" data-colname='memory.wireddown'></th>
+			<th data-i18n="memory.swapfree" data-colname='memory.swapfree'></th>
+			<th data-i18n="memory.swapused" data-colname='memory.swapused'></th>
+			<th data-i18n="memory.swaptotal" data-colname='memory.swaptotal'></th>
+			<th data-i18n="memory.swapencrypted" data-colname='memory.swapencrypted'></th>
+			<th data-i18n="memory.pageins" data-colname='memory.pageins'></th>
+			<th data-i18n="memory.pageouts" data-colname='memory.pageouts'></th>
 		  </tr>
 		</thead>
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="13" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 
@@ -80,7 +82,7 @@ new Memory_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                     d.mrColNotEmpty = "name";
+                     d.mrColNotEmpty = "memory.swapencrypted";
 
                     // Check for column in search
                     if(d.search.value){
@@ -109,26 +111,76 @@ new Memory_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_memory-tab');
 	        	$('td:eq(0)', nRow).html(link);
-
-	        	// Status
-	        	var status=$('td:eq(6)', nRow).html();
-	        	status = status == 'empty' ? i18n.t('memory.empty') :
-	        	status = status == 'ok' ? i18n.t('memory.ok') :
-	        	(status === 'unknown' ? i18n.t('unknown') : '')
-	        	$('td:eq(6)', nRow).html(status)
                 
-	        	// ECC Status
-	        	var eccstatus=$('td:eq(8)', nRow).html();
-	        	eccstatus = eccstatus == '2' ? i18n.t('memory.ecc_errors') :
-	        	eccstatus = eccstatus == '1' ? i18n.t('memory.ecc_enabled') :
-	        	(eccstatus === '0' ? i18n.t('memory.ecc_disabled') : '')
-	        	$('td:eq(8)', nRow).html(eccstatus)
+                // Memory Pressure
+                var memorypressure = $('td:eq(2)', nRow).html();
+                if (memorypressure != "" && (memorypressure)) {
+                    $('td:eq(2)', nRow).text(memorypressure+"%");
+                } else {
+                    $('td:eq(2)', nRow).html('');
+                }
+                
+	        	// Format free
+	        	var colvar = $('td:eq(3)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(3)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(3)', nRow).html('');
+                }
+                
+                // Format active
+	        	var colvar = $('td:eq(4)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(4)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(4)', nRow).html('');
+                }
+                
+                // Format inactive
+	        	var colvar = $('td:eq(5)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(5)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(5)', nRow).html('');
+                }
 
-	        	// upgradable
-	        	var upgradable=$('td:eq(9)', nRow).html();
-	        	upgradable = upgradable == '1' ? i18n.t('yes') :
-	        	(upgradable === '0' ? i18n.t('no') : '')
-	        	$('td:eq(9)', nRow).html(upgradable)
+                // Format wireddown
+	        	var colvar = $('td:eq(6)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(6)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(6)', nRow).html('');
+                }
+                
+                // Format swapfree
+	        	var colvar = $('td:eq(7)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(7)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(7)', nRow).html('');
+                }
+                
+                // Format swapused
+	        	var colvar = $('td:eq(8)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(8)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(8)', nRow).html('');
+                }
+                
+                // Format swaptotal
+	        	var colvar = $('td:eq(9)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(9)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(9)', nRow).html('');
+                }
+                
+	        	// Swap Encrypted
+	        	var swapencrypted=$('td:eq(10)', nRow).html();
+	        	swapencrypted = swapencrypted == '1' ? i18n.t('yes') :
+	        	(swapencrypted === '0' ? i18n.t('no') : '')
+	        	$('td:eq(10)', nRow).html(swapencrypted)
 		    }
 	    });
 
