@@ -147,36 +147,6 @@ class Smart_stats_model extends \Model {
         $this->rs['optional_admin_commands'] = ''; $this->rt['optional_admin_commands'] = 'TEXT';
         $this->rs['optional_nvm_commands'] = ''; $this->rt['optional_nvm_commands'] = 'TEXT';
         $this->rs['max_data_transfer_size'] = ''; // End of new NVMe columns 
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 4;
-
-        // Indexes to optimize queries
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('disk_number');
-        $this->idx[] = array('power_on_hours_and_msec');
-        $this->idx[] = array('power_on_hours');
-        $this->idx[] = array('model_family');
-        $this->idx[] = array('device_model');
-        $this->idx[] = array('serial_number_hdd');
-        $this->idx[] = array('lu_wwn_device_id');
-        $this->idx[] = array('firmware_version');
-        $this->idx[] = array('user_capacity');
-        $this->idx[] = array('sector_size');
-        $this->idx[] = array('rotation_rate');
-        $this->idx[] = array('device_is');
-        $this->idx[] = array('ata_version_is');
-        $this->idx[] = array('sata_version_is');
-        $this->idx[] = array('form_factor');
-        $this->idx[] = array('smart_support_is');
-        $this->idx[] = array('smart_is');
-        $this->idx[] = array('error_count');
-        $this->idx[] = array('error_poh');
-        $this->idx[] = array('timestamp');
-        $this->idx[] = array('overall_health');
-				        
-		// Create table if it does not exist
-		//$this->create_table();
 		
 		if ($serial)
 		{
