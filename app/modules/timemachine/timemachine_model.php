@@ -46,45 +46,6 @@ class Timemachine_model extends \Model
         $this->rs['destinations'] = 0;
         $this->rs['apfs_snapshots'] = ''; $this->rt['apfs_snapshots'] = 'TEXT';
         
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 3;
-        
-        // Indexes to optimize queries
-        $this->idx[] = array('last_success');
-        $this->idx[] = array('last_failure');
-        $this->idx[] = array('last_failure_msg');
-        $this->idx[] = array('duration');
-        $this->idx[] = array('always_show_deleted_backups_warning');
-        $this->idx[] = array('auto_backup');
-        $this->idx[] = array('bytes_available');
-        $this->idx[] = array('bytes_used');
-        $this->idx[] = array('consistency_scan_date');
-        $this->idx[] = array('date_of_latest_warning');
-        $this->idx[] = array('destination_id');
-        $this->idx[] = array('last_known_encryption_state');
-        $this->idx[] = array('result');
-        $this->idx[] = array('root_volume_uuid');
-        $this->idx[] = array('host_uuids');
-        $this->idx[] = array('last_configuration_trace_date');
-        $this->idx[] = array('last_destination_id');
-        $this->idx[] = array('localized_disk_image_volume_name');
-        $this->idx[] = array('mobile_backups');
-        $this->idx[] = array('skip_system_files');
-        $this->idx[] = array('alias_volume_name');
-        $this->idx[] = array('earliest_snapshot_date');
-        $this->idx[] = array('is_network_destination');
-        $this->idx[] = array('latest_snapshot_date');
-        $this->idx[] = array('mount_point');
-        $this->idx[] = array('network_url');
-        $this->idx[] = array('server_display_name');
-        $this->idx[] = array('snapshot_count');
-        $this->idx[] = array('time_capsule_display_name');
-        $this->idx[] = array('volume_display_name');
-        $this->idx[] = array('destinations');
-        
-        // Create table if it does not exist
-       //$this->create_table();
-        
         if ($serial) {
             $this->retrieve_record($serial);
         }
