@@ -13,18 +13,6 @@ class Supported_os_model extends \Model
         $this->rs['highest_supported'] = 0;
         $this->rs['machine_id'] = '';
         $this->rs['last_touch'] = 0; $this->rt['last_touch'] = 'BIGINT';
-        
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-        
-        //indexes to optimize queries
-        $this->idx[] = array('current_os');
-        $this->idx[] = array('highest_supported');
-        $this->idx[] = array('machine_id');
-        $this->idx[] = array('last_touch');
-        
-        // Create table if it does not exist
-        //$this->create_table();
     }
     
     // ------------------------------------------------------------------------
