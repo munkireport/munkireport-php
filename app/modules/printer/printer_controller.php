@@ -34,17 +34,19 @@ class Printer_controller extends Module_controller
     public function get_data($serial = '')
     {
 
-        $out = array();
+        $obj = new View();
+
         if (! $this->authorized()) {
-            $out['error'] = 'Not authorized';
-        } else {
-            $prm = new Printer_model;
-            foreach ($prm->retrieve_records($serial) as $printer) {
-                $out[] = $printer->rs;
-            }
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
-        $obj = new View();
+        $out = array();
+        $prm = new Printer_model;
+        foreach ($prm->retrieve_records($serial) as $printer) {
+            $out[] = $printer->rs;
+        }
+
         $obj->view('json', array('msg' => $out));
     }
 

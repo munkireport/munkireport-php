@@ -31,17 +31,18 @@ class Security_controller extends Module_controller
      **/
     public function get_data($serial = '')
     {
-        $out = array();
+        $obj = new View();
+
         if (! $this->authorized()) {
-            $out['error'] = 'Not authorized';
-        } else {
-            $prm = new Security_model;
-            foreach ($prm->retrieve_records($serial) as $security) {
-                $out[] = $security->rs;
-            }
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
-        $obj = new View();
+        $out = array();
+        $prm = new Security_model;
+        foreach ($prm->retrieve_records($serial) as $security) {
+            $out[] = $security->rs;
+        }
         $obj->view('json', array('msg' => $out));
     }
 
@@ -59,11 +60,10 @@ class Security_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-                $sip_report = new Security_model;
-
-                $out = array();
-                $out['stats'] = $sip_report->get_sip_stats();
-
+        
+        $sip_report = new Security_model;
+        $out = array();
+        $out['stats'] = $sip_report->get_sip_stats();
 
         $obj->view('json', array('msg' => $out));
     }    
@@ -82,11 +82,10 @@ class Security_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-                $sip_report = new Security_model;
-
-                $out = array();
-                $out['stats'] = $sip_report->get_gatekeeper_stats();
-
+        
+        $sip_report = new Security_model;
+        $out = array();
+        $out['stats'] = $sip_report->get_gatekeeper_stats();
 
         $obj->view('json', array('msg' => $out));
     }
@@ -105,11 +104,10 @@ class Security_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-                $firmwarepw_report = new Security_model;
-
-                $out = array();
-                $out['stats'] = $firmwarepw_report->get_firmwarepw_stats();
-
+        
+        $firmwarepw_report = new Security_model;
+        $out = array();
+        $out['stats'] = $firmwarepw_report->get_firmwarepw_stats();
 
         $obj->view('json', array('msg' => $out));
     }
@@ -122,18 +120,18 @@ class Security_controller extends Module_controller
      **/
     public function get_firewall_state_stats()
     {
-	$obj = new View();
+        $obj = new View();
 
-	if (! $this->authorized()) {
-		$obj->view('json', array('msg' => array('error' => 'Not authenticated')));
-		return;
-	}
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
 
-	$firewall_state_report = new Security_model;
-	$out = array();
-	$out['stats'] = $firewall_state_report->get_firewall_state_stats();
+        $firewall_state_report = new Security_model;
+        $out = array();
+        $out['stats'] = $firewall_state_report->get_firewall_state_stats();
 
-	$obj->view('json', array('msg' => $out));
+        $obj->view('json', array('msg' => $out));
 
     }
 
@@ -151,11 +149,10 @@ class Security_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-                $skel_report = new Security_model;
-
-                $out = array();
-                $out['stats'] = $skel_report->get_skel_stats();
-
+        
+        $skel_report = new Security_model;
+        $out = array();
+        $out['stats'] = $skel_report->get_skel_stats();
 
         $obj->view('json', array('msg' => $out));
     }
