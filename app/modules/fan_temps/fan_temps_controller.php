@@ -31,8 +31,10 @@ class Fan_temps_controller extends Module_controller
      **/
     public function get_temp_tab_data($serial_number = '')
     {        
+        $obj = new View();
+        
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
 
@@ -45,7 +47,6 @@ class Fan_temps_controller extends Module_controller
         // Add the temperature type to the object for the client tab
         $fan_temps_tab[0]->temperature_unit = conf('temperature_unit');
             
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $fan_temps_tab)))); 
     }
     
@@ -57,8 +58,10 @@ class Fan_temps_controller extends Module_controller
      **/
     public function get_smc_tab_data($serial_number = '')
     {        
+        $obj = new View();
+        
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
 
@@ -71,7 +74,6 @@ class Fan_temps_controller extends Module_controller
         // Add the temperature type to the object for the client tab
         $fan_temps_tab[0]->temperature_unit = conf('temperature_unit');
             
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $fan_temps_tab)))); 
     }
     
@@ -82,9 +84,11 @@ class Fan_temps_controller extends Module_controller
      * @author tuxudo
      **/
     public function get_amps_tab_data($serial_number = '')
-    {        
+    {       
+        $obj = new View();
+        
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
 
@@ -106,8 +110,10 @@ class Fan_temps_controller extends Module_controller
      **/
     public function get_fan_tab_data($serial_number = '')
     {        
+        $obj = new View();
+        
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
 
@@ -129,8 +135,10 @@ class Fan_temps_controller extends Module_controller
      **/
     public function get_client_tab_data($serial_number = '')
     {        
+        $obj = new View();
+        
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
 
@@ -143,7 +151,6 @@ class Fan_temps_controller extends Module_controller
         // Add the temperature type to the object for the client tab
         $fan_temps_tab[0]->temperature_unit = conf('temperature_unit');
             
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $fan_temps_tab)))); 
     }
 
