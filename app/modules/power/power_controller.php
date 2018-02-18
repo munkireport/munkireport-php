@@ -48,15 +48,15 @@ class Power_controller extends Module_controller
      **/
     public function get_stats()
     {
-        $out = array();
+        $obj = new View();
+        
         if (! $this->authorized()) {
-            $out['error'] = 'Not authorized';
-        } else {
-            $pm = new Power_model;
-            $out[] = $pm->get_stats();
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
-        $obj = new View();
+        $pm = new Power_model;
+        $out[] = $pm->get_stats();
         $obj->view('json', array('msg' => $out));
     }
 
@@ -70,8 +70,10 @@ class Power_controller extends Module_controller
     public function conditions()
     {
         
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $queryobj = new Power_model();
@@ -83,7 +85,6 @@ class Power_controller extends Module_controller
 			 			FROM power
 			 			LEFT JOIN reportdata USING (serial_number)
 			 			".get_machine_group_filter();
-        $obj = new View();
         $obj->view('json', array('msg' => current($queryobj->query($sql))));
     }
-} // END class default_module
+} // END class Power_controller

@@ -195,8 +195,12 @@ $(document).on('appReady', function(e, lang) {
                 $('#battery-battery').removeClass('hide'); // Unhide battery table
                 
                 // Update the tab battery percent
-                $('#battery-cnt').html(data.current_percent+"%");
-
+                if (data.current_percent){
+                    $('#battery-cnt').html(data.current_percent+"%");
+                } else {
+                    $('#battery-cnt').html("");
+                }
+                
                 // Format timeremaining
                 if(data.timeremaining == null || data.manufacture_date == '1980-00-00' || data.fullycharged == 'Yes') {
                      $('#battery-timeremaining').text('');
