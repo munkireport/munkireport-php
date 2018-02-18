@@ -31,8 +31,10 @@ class Smart_stats_controller extends Module_controller
      **/
     public function get_client_tab_data($serial_number = '')
     {        
+        $obj = new View();
+
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
             return;
         }
 
@@ -49,7 +51,6 @@ class Smart_stats_controller extends Module_controller
              $array_id--;
         }
         
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $smart_stats_tab)))); 
     }
 
