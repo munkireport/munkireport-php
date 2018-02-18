@@ -115,7 +115,7 @@ def get_swap_data():
             swap['swapused'] = int(re.sub('[^0-9]','', (item)).strip())*10000
         elif "free = " in item:
             swap['swapfree'] = int(re.sub('[^0-9]','', (item)).strip())*10000
-        elif "encrypted" in item:
+        elif "(encrypted)" in item:
             swap['swapencrypted'] = 1
     return swap
     
