@@ -38,6 +38,7 @@ class Caching_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $caching = new Caching_model;
@@ -52,8 +53,9 @@ class Caching_controller extends Module_controller
      **/
     public function get_client_tab_data($serial_number = '')
     {        
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $queryobj = new Caching_model();
@@ -139,7 +141,6 @@ class Caching_controller extends Module_controller
         
         $caching_tab = $queryobj->query($sql);
                 
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_tab)))); 
     }
     
@@ -150,8 +151,9 @@ class Caching_controller extends Module_controller
      **/
     public function caching_graph()
     {
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.');
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
         
         $cachingdata = new Caching_model();
@@ -214,7 +216,6 @@ class Caching_controller extends Module_controller
             $purgedassoc[$value] = intval($purged[$i]);
         }
         
-        $obj = new View();
         $obj->view('json', array('msg' => array('dates' => $dates, 'cache' => $cacheassoc, 'origin' => $originassoc, 'purged' => $purgedassoc)));
     }
     
@@ -226,8 +227,9 @@ class Caching_controller extends Module_controller
      **/
      public function caching_widget()
      {        
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $queryobj = new Caching_model();
@@ -241,7 +243,6 @@ class Caching_controller extends Module_controller
         
         $caching_array = $queryobj->query($sql);
                 
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
      }
     
@@ -252,8 +253,9 @@ class Caching_controller extends Module_controller
      **/
      public function caching_media_widget()
      {        
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $queryobj = new Caching_model();
@@ -267,7 +269,6 @@ class Caching_controller extends Module_controller
         
         $caching_array = $queryobj->query($sql);
                 
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
      }
     
@@ -278,8 +279,9 @@ class Caching_controller extends Module_controller
      **/
      public function caching_software_widget()
      {        
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $queryobj = new Caching_model();
@@ -293,7 +295,6 @@ class Caching_controller extends Module_controller
         
         $caching_array = $queryobj->query($sql);
                 
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
      }
     
@@ -304,8 +305,9 @@ class Caching_controller extends Module_controller
      **/
      public function caching_icloud_widget()
      {        
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $queryobj = new Caching_model();
@@ -319,7 +321,6 @@ class Caching_controller extends Module_controller
         
         $caching_array = $queryobj->query($sql);
                 
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
      }
     
@@ -330,8 +331,9 @@ class Caching_controller extends Module_controller
      **/
      public function caching_usage_widget()
      {        
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $queryobj = new Caching_model();
@@ -354,7 +356,6 @@ class Caching_controller extends Module_controller
         
         $caching_array = $queryobj->query($sql);
                 
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
      }
     
@@ -365,12 +366,12 @@ class Caching_controller extends Module_controller
      **/
     public function get_reachable_cache_name()
     {
+        $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
         
-        $obj = new View();
         $cache = new Caching_model;
         $obj->view('json', array('msg' => $cache->get_reachable_cache_name()));
     }
