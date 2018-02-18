@@ -17,6 +17,7 @@
 
 </div><!-- /col -->
 
+
 <script>
 $(document).on('appUpdate', function(e, lang) {
 
