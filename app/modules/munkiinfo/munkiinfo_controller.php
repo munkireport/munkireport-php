@@ -56,10 +56,11 @@ class munkiinfo_controller extends Module_controller
    **/
     public function get_protocol_stats()
     {
+        $obj = new View();
 
         if (! $this->authorized()) {
-        // die('Authenticate first.'); // Todo: return json
-            $out['error'] = 'Not authorized';
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $queryobj = new munkiinfo_model();
@@ -70,7 +71,6 @@ class munkiinfo_controller extends Module_controller
                        FROM munkiinfo
                        LEFT JOIN reportdata USING (serial_number)
                        ".get_machine_group_filter();
-        $obj = new View();
         $obj->view('json', array('msg' => current($queryobj->query($sql))));
     }
 

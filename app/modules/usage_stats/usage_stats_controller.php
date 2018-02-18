@@ -36,6 +36,7 @@ class Usage_stats_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $usage = new Usage_stats_model($serial_number);

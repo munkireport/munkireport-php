@@ -36,9 +36,11 @@ class Network_controller extends Module_controller
      **/
     public function routers()
     {
+        $obj = new View();
         
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $router_arr = array();
@@ -90,7 +92,6 @@ class Network_controller extends Module_controller
             }
         }
 
-        $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
 } // END class default_module
