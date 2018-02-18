@@ -19,7 +19,9 @@ new Memory_model;
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 			<th data-i18n="memory.memorypressure" data-colname='memory.memorypressure'></th>
-			<th data-i18n="memory.free" data-colname='memory.free'></th>
+			<th data-i18n="memory.global_ecc_state" data-colname='memory.global_ecc_state'></th>
+			<th data-i18n="memory.is_memory_upgradeable" data-colname='memory.is_memory_upgradeable'></th>
+            <th data-i18n="memory.free" data-colname='memory.free'></th>
 			<th data-i18n="memory.active" data-colname='memory.active'></th>
 			<th data-i18n="memory.inactive" data-colname='memory.inactive'></th>
 			<th data-i18n="memory.wireddown" data-colname='memory.wireddown'></th>
@@ -34,7 +36,7 @@ new Memory_model;
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="13" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="15" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 
@@ -120,31 +122,28 @@ new Memory_model;
                     $('td:eq(2)', nRow).html('');
                 }
                 
+	        	// ECC Status
+	        	var eccstatus=$('td:eq(3)', nRow).html();
+	        	eccstatus = eccstatus == '2' ? i18n.t('memory.ecc_errors') :
+	        	eccstatus = eccstatus == '1' ? i18n.t('memory.ecc_enabled') :
+	        	(eccstatus === '0' ? i18n.t('memory.ecc_disabled') : '')
+	        	$('td:eq(3)', nRow).html(eccstatus)
+
+	        	// Upgradable
+	        	var upgradable=$('td:eq(4)', nRow).html();
+	        	upgradable = upgradable == '1' ? i18n.t('yes') :
+	        	(upgradable === '0' ? i18n.t('no') : '')
+	        	$('td:eq(4)', nRow).html(upgradable)
+                
 	        	// Format free
-	        	var colvar = $('td:eq(3)', nRow).html();
-                if (colvar != "" && (colvar)) {
-                    $('td:eq(3)', nRow).html(fileSize(parseFloat(colvar), 2));
-                } else {
-                    $('td:eq(3)', nRow).html('');
-                }
-                
-                // Format active
-	        	var colvar = $('td:eq(4)', nRow).html();
-                if (colvar != "" && (colvar)) {
-                    $('td:eq(4)', nRow).html(fileSize(parseFloat(colvar), 2));
-                } else {
-                    $('td:eq(4)', nRow).html('');
-                }
-                
-                // Format inactive
 	        	var colvar = $('td:eq(5)', nRow).html();
                 if (colvar != "" && (colvar)) {
                     $('td:eq(5)', nRow).html(fileSize(parseFloat(colvar), 2));
                 } else {
                     $('td:eq(5)', nRow).html('');
                 }
-
-                // Format wireddown
+                
+                // Format active
 	        	var colvar = $('td:eq(6)', nRow).html();
                 if (colvar != "" && (colvar)) {
                     $('td:eq(6)', nRow).html(fileSize(parseFloat(colvar), 2));
@@ -152,15 +151,15 @@ new Memory_model;
                     $('td:eq(6)', nRow).html('');
                 }
                 
-                // Format swapfree
+                // Format inactive
 	        	var colvar = $('td:eq(7)', nRow).html();
                 if (colvar != "" && (colvar)) {
                     $('td:eq(7)', nRow).html(fileSize(parseFloat(colvar), 2));
                 } else {
                     $('td:eq(7)', nRow).html('');
                 }
-                
-                // Format swapused
+
+                // Format wireddown
 	        	var colvar = $('td:eq(8)', nRow).html();
                 if (colvar != "" && (colvar)) {
                     $('td:eq(8)', nRow).html(fileSize(parseFloat(colvar), 2));
@@ -168,7 +167,7 @@ new Memory_model;
                     $('td:eq(8)', nRow).html('');
                 }
                 
-                // Format swaptotal
+                // Format swapfree
 	        	var colvar = $('td:eq(9)', nRow).html();
                 if (colvar != "" && (colvar)) {
                     $('td:eq(9)', nRow).html(fileSize(parseFloat(colvar), 2));
@@ -176,11 +175,27 @@ new Memory_model;
                     $('td:eq(9)', nRow).html('');
                 }
                 
+                // Format swapused
+	        	var colvar = $('td:eq(10)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(10)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(10)', nRow).html('');
+                }
+                
+                // Format swaptotal
+	        	var colvar = $('td:eq(11)', nRow).html();
+                if (colvar != "" && (colvar)) {
+                    $('td:eq(11)', nRow).html(fileSize(parseFloat(colvar), 2));
+                } else {
+                    $('td:eq(11)', nRow).html('');
+                }
+                
 	        	// Swap Encrypted
-	        	var swapencrypted=$('td:eq(10)', nRow).html();
+	        	var swapencrypted=$('td:eq(12)', nRow).html();
 	        	swapencrypted = swapencrypted == '1' ? i18n.t('yes') :
 	        	(swapencrypted === '0' ? i18n.t('no') : '')
-	        	$('td:eq(10)', nRow).html(swapencrypted)
+	        	$('td:eq(12)', nRow).html(swapencrypted)
 		    }
 	    });
 

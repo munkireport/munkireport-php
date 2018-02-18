@@ -26,6 +26,61 @@ class Memory_controller extends Module_controller
 		echo "You've loaded the memory module!";
 	}
     
+     /**
+     * REST API for retrieving memory upgradable for widget
+     * @tuxudo
+     *
+     **/
+     public function memory_upgradable_widget()
+     {        
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+
+        $queryobj = new Memory_model();
+        
+        $sql = "SELECT COUNT(DISTINCT (CASE WHEN is_memory_upgradeable = '1' THEN 1 END)) AS upgradable,
+						COUNT(DISTINCT (CASE WHEN is_memory_upgradeable = '0' THEN 1 END)) AS notupgradable
+						FROM memory
+                        LEFT JOIN reportdata USING (serial_number)
+						".get_machine_group_filter()."
+                        GROUP BY serial_number";
+         
+//         print_r($sql);
+        $memory_array = $queryobj->query($sql);
+        $obj->view('json', array('msg' => current(array('msg' => $memory_array)))); 
+     }
+
+     /**
+     * REST API for retrieving memory pressure for widget
+     * @tuxudo
+     *
+     **/
+     public function memory_pressure_widget()
+     {        
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+        $queryobj = new Memory_model();
+        
+        $sql = "SELECT memorypressure, computer_name
+						FROM memory
+						LEFT JOIN machine USING (serial_number)
+						LEFT JOIN reportdata USING (serial_number)
+                        WHERE memorypressure <> ''
+						".get_machine_group_filter('AND')."
+						ORDER BY memorypressure DESC";
+                 
+        $memory_array = $queryobj->query($sql);
+        $obj->view('json', array('msg' => current(array('msg' => $memory_array)))); 
+     }
+    
 	/**
      * Retrieve data in json format
      *
@@ -36,6 +91,7 @@ class Memory_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
         $queryobj = new Memory_model();
@@ -60,6 +116,7 @@ class Memory_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
         $queryobj = new Memory_model();

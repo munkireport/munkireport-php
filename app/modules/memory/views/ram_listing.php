@@ -24,15 +24,13 @@ new Memory_model;
 			<th data-i18n="memory.dimm_type" data-colname='memory.dimm_type'></th>
 			<th data-i18n="memory.dimm_status" data-colname='memory.dimm_status'></th>
 			<th data-i18n="memory.dimm_manufacturer" data-colname='memory.dimm_manufacturer'></th>
-			<th data-i18n="memory.global_ecc_state" data-colname='memory.global_ecc_state'></th>
-			<th data-i18n="memory.is_memory_upgradeable" data-colname='memory.is_memory_upgradeable'></th>
 			<th data-i18n="memory.dimm_ecc_errors" data-colname='memory.dimm_ecc_errors'></th>
 		  </tr>
 		</thead>
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 
@@ -116,19 +114,6 @@ new Memory_model;
 	        	status = status == 'ok' ? i18n.t('memory.ok') :
 	        	(status === 'unknown' ? i18n.t('unknown') : '')
 	        	$('td:eq(6)', nRow).html(status)
-                
-	        	// ECC Status
-	        	var eccstatus=$('td:eq(8)', nRow).html();
-	        	eccstatus = eccstatus == '2' ? i18n.t('memory.ecc_errors') :
-	        	eccstatus = eccstatus == '1' ? i18n.t('memory.ecc_enabled') :
-	        	(eccstatus === '0' ? i18n.t('memory.ecc_disabled') : '')
-	        	$('td:eq(8)', nRow).html(eccstatus)
-
-	        	// Upgradable
-	        	var upgradable=$('td:eq(9)', nRow).html();
-	        	upgradable = upgradable == '1' ? i18n.t('yes') :
-	        	(upgradable === '0' ? i18n.t('no') : '')
-	        	$('td:eq(9)', nRow).html(upgradable)
 		    }
 	    });
 

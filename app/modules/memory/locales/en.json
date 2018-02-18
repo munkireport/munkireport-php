@@ -16,6 +16,8 @@
     "dimm_ecc_errors": "Errors Detected",
     "global_ecc_state": "ECC State",
     "is_memory_upgradeable": "Upgradable Memory",
+    "upgradable": "Upgradable",
+    "notupgradable": "Not Upgradable",
     "ecc_enabled": "Enabled",
     "ecc_disabled": "Disabled",
     "ok": "OK",
