@@ -43,10 +43,9 @@ class munkiinfo_model extends \Model
         $plist = $parser->toArray();
 
         $this->deleteWhere('serial_number=?', $this->serial_number);
-            $item = array_pop($plist);
-
-            reset($item);
-        while (list($key, $val) = each($item)) {
+        $item = array_pop($plist);
+        reset($item);
+        foreach($item as $key => $val) {
                 $this->munkiinfo_key = $key;
                 $this->munkiinfo_value = $val;
 
