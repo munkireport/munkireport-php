@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.0.3.3328';
+$GLOBALS['version'] = '3.0.3.3327';
 
 // Return version without commit count
 function get_version()
@@ -74,7 +74,6 @@ function getdbh()
     if (! isset($GLOBALS['dbh'])) {
         try {
             $conn = conf('connection');
-            $options = isset($conn['options']) ? $conn['options'] : [];
             switch ($conn['driver']) {
                 case 'sqlite':
                     $dsn = "sqlite:{$conn['database']}";
@@ -82,11 +81,6 @@ function getdbh()
 
                 case 'mysql':
                     $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
-                    // $charset = isset($conn['charset']) ? $conn['charset'] : 'utf8mb4';
-                    // $collation = isset($conn['collation']) ? $conn['collation'] : 'utf8mb4_unicode_ci';
-                    // if( ! isset($options['PDO::MYSQL_ATTR_INIT_COMMAND'])){
-                    //     $options['PDO::MYSQL_ATTR_INIT_COMMAND'] = "SET NAMES $charset COLLATE $collation";
-                    // }
                     break;
 
                 default:
@@ -96,7 +90,7 @@ function getdbh()
                 $dsn,
                 isset($conn['username']) ? $conn['username'] : '',
                 isset($conn['password']) ? $conn['password'] : '',
-                $options
+                isset($conn['options']) ? $conn['options'] : []
             );
         } catch (PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());
