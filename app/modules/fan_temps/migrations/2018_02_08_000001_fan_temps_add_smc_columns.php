@@ -122,7 +122,6 @@ class FanTempsAddSmcColumns extends Migration
             $table->double('in0c')->nullable();
             $table->double('iscc')->nullable();
             $table->double('ip0c')->nullable();
-            $table->double('icmc')->nullable();
             $table->double('ihir')->nullable();
             $table->double('ihcc')->nullable();
             $table->double('ihnc')->nullable();
@@ -179,7 +178,6 @@ class FanTempsAddSmcColumns extends Migration
             $table->double('pd2r')->nullable();
             $table->double('pp0r')->nullable();
             $table->double('pc0r')->nullable();
-            $table->double('pd0r')->nullable();
             $table->double('pd5r')->nullable();
             $table->double('pdmr')->nullable();
             $table->double('pm0r')->nullable();
@@ -219,7 +217,6 @@ class FanTempsAddSmcColumns extends Migration
             $table->double('vcac')->nullable();
             $table->double('vcbc')->nullable();
             $table->double('vc0c')->nullable();
-            $table->double('vc1c')->nullable();
             $table->double('vc2c')->nullable();
             $table->double('vc3c')->nullable();
             $table->double('vc4c')->nullable();
@@ -396,7 +393,6 @@ class FanTempsAddSmcColumns extends Migration
             $table->dropColumn('in0c');
             $table->dropColumn('iscc');
             $table->dropColumn('ip0c');
-            $table->dropColumn('icmc');
             $table->dropColumn('ihir');
             $table->dropColumn('ihcc');
             $table->dropColumn('ihnc');
@@ -440,7 +436,6 @@ class FanTempsAddSmcColumns extends Migration
             $table->dropColumn('pctr');
             $table->dropColumn('pcec');
             $table->dropColumn('pcsc');
-            $table->dropColumn('pd0r');
             $table->dropColumn('pg0r');
             $table->dropColumn('pg0c');
             $table->dropColumn('pgtr');
@@ -493,7 +488,6 @@ class FanTempsAddSmcColumns extends Migration
             $table->dropColumn('vcac');
             $table->dropColumn('vcbc');
             $table->dropColumn('vc0c');
-            $table->dropColumn('vc1c');
             $table->dropColumn('vc2c');
             $table->dropColumn('vc3c');
             $table->dropColumn('vc4c');
