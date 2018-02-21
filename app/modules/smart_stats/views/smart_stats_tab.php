@@ -26,9 +26,9 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (d[prop] == "Disabled"){ // Localize disabled
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
-                    } else if (d[prop] == "In smartctl database [for details use: -P show]"){ // Localize if drive is in database
+                    } else if (d[prop] == "In smartctl database [for details use: -P show]" || d[prop] == "In smartctl database"){ // Localize if drive is in database
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
-                    } else if (d[prop] == "Not in smartctl database [for details use: -P showall]"){ // Localize if drive is not in database
+                    } else if (d[prop] == "Not in smartctl database [for details use: -P showall]" || d[prop] == "Not smartctl database"){ // Localize if drive is not in database
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
                     } else if (prop == "error_poh" && d[prop] != 0){ // Format SMART Error Power on Hours
 					   rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td class="danger"><span title="'+Math.round((d[prop]/24), 2)+" "+i18n.t('date.day_plural')+'">'+d[prop]+'</span></td></tr>';
@@ -56,7 +56,7 @@ $(document).on('appReady', function(){
                         } else if (d['overall_health'] == "FAILED!"){
                            var drive_health = " <span class='label label-danger'>"+i18n.t('failing')+"</span>"
                            // Update the tab badge
-                           $('#smart_stats-cnt').html(i18n.t('failing'));
+                           $('#smart_stats-cnt').html("<span class='badge alert-danger'>"+i18n.t('failing')+"</span>");
                         } else { var drive_health = d['overall_health'] }
                     } else {
                         rows = rows + '<tr><th>'+i18n.t('smart_stats.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
