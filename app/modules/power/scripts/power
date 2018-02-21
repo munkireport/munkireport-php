@@ -1,0 +1,376 @@
+#! /usr/bin/python
+# power script by tuxudo for MunkiReport
+
+import subprocess
+import plistlib
+import os
+import sys
+import string
+import re
+
+def get_battery_profiler():
+    '''Uses system profiler to get power info for this machine.'''
+    cmd = ['/usr/sbin/system_profiler', 'SPPowerDataType', '-xml']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    plist = plistlib.readPlistFromString(output)
+
+    # system_profiler xml is an array
+    sp_dict = plist[0]
+    items = sp_dict['_items']
+
+    batteryprofiler = {}
+
+    for obj in items:
+        for item in obj:
+            if item == 'sppower_current_amperage':
+                batteryprofiler['AmperagemA'] = format((float(obj[item])/1000),'.3f')
+            elif item == 'sppower_current_voltage':
+                batteryprofiler['Voltage'] = format((float(obj[item])/1000),'.3f')
+            elif item == 'sppower_battery_charger_connected':
+                batteryprofiler['ExternalConnected'] = obj[item]
+            elif item == 'sppower_ac_charger_ID':
+                batteryprofiler['AdapterID'] = obj[item]
+            elif item == 'sppower_ac_charger_watts':
+                batteryprofiler['attage'] = obj[item] # This is not a typo
+            elif item == 'sppower_ac_charger_family':
+                batteryprofiler['FamilyCode'] = obj[item]
+            elif item == 'sppower_ac_charger_serial_number':
+                batteryprofiler['SerialNumber'] = obj[item]
+            elif item == 'sppower_ups_installed':
+                batteryprofiler['UPSInstalled'] = obj[item]
+            elif item == 'sppower_battery_installed' and obj['sppower_battery_installed'] == "TRUE":
+                batteryprofiler['condition'] = obj['sppower_battery_health_info']['sppower_battery_health']
+            elif item == 'sppower_battery_installed' and obj['sppower_battery_installed'] == "FALSE":
+                batteryprofiler['condition'] = "No Battery"
+            elif item == 'sppower_battery_charge_info':
+                try:
+                    batteryprofiler['MaxCapacity'] = obj[item]['sppower_battery_max_capacity']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['CurrentCapacity'] = obj[item]['sppower_battery_current_capacity']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['IsCharging'] = obj[item]['sppower_battery_is_charging']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['FullyCharged'] = obj[item]['sppower_battery_fully_charged']
+                except:
+                    batteryprofiler['error'] = ""
+            elif item == 'sppower_battery_health_info':
+                try:
+                    batteryprofiler['CycleCount'] = obj[item]['sppower_battery_cycle_count']
+                except:
+                    batteryprofiler['error'] = ""
+            elif item == 'sppower_battery_model_info':
+                try:
+                    batteryprofiler['FirmwareVersion'] = obj[item]['sppower_battery_firmware_version']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['BatteryName'] = obj[item]['sppower_battery_device_name']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['Manufacturer'] = obj[item]['sppower_battery_manufacturer']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['BatterySerialNumber'] = obj[item]['sppower_battery_serial_number']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['BatteryRevision'] = obj[item]['sppower_battery_hardware_revision']
+                except:
+                    batteryprofiler['error'] = ""
+                try:
+                    batteryprofiler['BatteryCellRevision'] = obj[item]['sppower_battery_cell_revision']
+                except:
+                    batteryprofiler['error'] = ""
+
+    return batteryprofiler
+
+def get_battery_stats():
+    cmd = ['/usr/sbin/ioreg', '-a', '-n', 'AppleSmartBattery', '-r']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    try:
+        plist = plistlib.readPlistFromString(output)
+        batteryxml = plist[0]
+
+        batteryinfo = get_battery_profiler()
+
+        for item in batteryxml:
+                if item == 'DesignCapacity':
+                    batteryinfo['DesignCapacity'] = batteryxml[item]
+                elif item == 'Temperature':
+                    batteryinfo['Temperature'] = batteryxml[item]
+                elif item == 'TimeRemaining':
+                    batteryinfo['TimeRemaining'] = batteryxml[item]
+                elif item == 'InstantTimeToEmpty':
+                    batteryinfo['InstantTimeToEmpty'] = batteryxml[item]
+                elif item == 'PackReserve':
+                    batteryinfo['PackReserve'] = batteryxml[item]
+                elif item == 'AvgTimeToFull':
+                    batteryinfo['AvgTimeToFull'] = batteryxml[item]
+                elif item == 'AvgTimeToEmpty':
+                    batteryinfo['AvgTimeToEmpty'] = batteryxml[item]
+                elif item == 'AvgTimeToEmpty':
+                    batteryinfo['AvgTimeToEmpty'] = batteryxml[item]
+                elif item == 'DesignCycleCount9C':
+                    batteryinfo['DesignCycleCount9C'] = batteryxml[item]
+                elif item == 'PermanentFailureStatus':
+                    batteryinfo['PermanentFailureStatus'] = batteryxml[item]
+                elif item == 'ManufactureDate':
+                    batteryinfo['ManufactureDate'] = batteryxml[item]
+                elif item == 'CellVoltage':
+                    cells = []
+                    for cell in batteryxml[item]:
+                        if cell > 0:
+                            cells.append(str(float(cell)/1000)+"v")
+                    batteryinfo['CellVoltage'] = (', '.join(map(str,(cells))))
+        return batteryinfo
+    except:
+        return get_battery_profiler()
+    
+def get_pmset_accps():
+    cmd = ['/usr/bin/pmset', '-g', 'accps']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+
+    accpsinfo = get_battery_stats()
+
+    for item in output.split("\n"):
+        if "UPS" in item:
+            item = item.replace("%;", "%;\n")
+            item = item.replace(")", ")\n")
+            item = item.replace("(id=", "\n(id=")
+            for upsonly in item.split("\n"):
+                if " -" in upsonly:
+                    accpsinfo['UPSName'] = upsonly[2:].strip()
+                elif "%;" in upsonly:
+                    accpsinfo['UPSPercent'] = re.sub('[^0-9]','', upsonly.strip())
+                elif "charging present: " in upsonly:
+                    accpsinfo['UPSStatus'] = remove_all("charging present: ", upsonly).strip()
+        elif "Now drawing from '" in item:
+                    accpsinfo['Nowdrawing'] = remove_all("'", remove_all("Now drawing from '", item)).strip()
+    return accpsinfo
+
+def get_pmset_assertions():
+    cmd = ['/usr/bin/pmset', '-g', 'assertions']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+
+    assertionsinfo = get_pmset_accps()
+
+    for item in output.split("\n"):
+        if "   BackgroundTask                 " in item:
+            assertionsinfo['BackgroundTask'] = re.sub('[^0-9]','', item.strip())
+        elif "   ApplePushServiceTask           " in item:
+            assertionsinfo['ApplePushServiceTask'] = re.sub('[^0-9]','', item.strip())
+        elif "   UserIsActive                   " in item:
+            assertionsinfo['UserIsActive'] = re.sub('[^0-9]','', item.strip())
+        elif "   PreventUserIdleDisplaySleep    " in item:
+            assertionsinfo['PreventUserIdleDisplaySleep'] = re.sub('[^0-9]','', item.strip())
+        elif "   PreventSystemSleep             " in item:
+            assertionsinfo['PreventSystemSleep'] = re.sub('[^0-9]','', item.strip())
+        elif "   ExternalMedia                  " in item:
+            assertionsinfo['ExternalMedia'] = re.sub('[^0-9]','', item.strip())
+        elif "   PreventUserIdleSystemSleep     " in item:
+            assertionsinfo['PreventUserIdleSystemSleep'] = re.sub('[^0-9]','', item.strip())
+        elif "   NetworkClientActive            " in item:
+            assertionsinfo['NetworkClientActive'] = re.sub('[^0-9]','', item.strip())
+    return assertionsinfo
+
+def get_pmset_sysload():
+    cmd = ['/usr/bin/pmset', '-g', 'sysload']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+
+    sysloadinfo = get_pmset_assertions()
+
+    for item in output.split("\n"):
+        if "  combined level = " in item:
+            sysloadinfo['combinedlevel'] = remove_all("  combined level = ", item).strip()
+        elif "  - user level = " in item:
+            sysloadinfo['user'] = remove_all("  - user level = ", item).strip()
+        elif "  - battery level = " in item:
+            sysloadinfo['battery'] = remove_all("  - battery level = ", item).strip()
+        elif "  - thermal level = " in item:
+            sysloadinfo['thermal'] = remove_all("  - thermal level = ", item).strip()
+    return sysloadinfo
+
+def get_pmset_therm():
+    cmd = ['/usr/bin/pmset', '-g', 'therm']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    output = output.replace("CPU_Scheduler_Limit", "\nCPU_Scheduler_Limit")
+
+    therminfo = get_pmset_sysload()
+
+    for item in output.split("\n"):
+        if "CPU_Scheduler_Limit 	= " in item:
+            therminfo['CPUSchedulerLimit'] = re.sub('[^0-9]','', item.strip())
+        elif "	CPU_Available_CPUs 	= " in item:
+            therminfo['CPUAvailableCPUs'] = re.sub('[^0-9]','', item.strip())
+        elif "	CPU_Speed_Limit 	= " in item:
+            therminfo['CPUSpeedLimit'] = re.sub('[^0-9]','', item.strip())
+    return therminfo
+
+def get_pmset_stats():
+    cmd = ['/usr/bin/pmset', '-g', 'stats']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+
+    statsinfo = get_pmset_therm()
+
+    for item in output.split("\n"):
+        if "Sleep Count:" in item:
+            statsinfo['SleepCount'] = re.sub('[^0-9]','', item.strip())
+        elif "Dark Wake Count:" in item:
+            statsinfo['DarkWake'] = re.sub('[^0-9]','', item.strip())
+        elif "User Wake Count:" in item:
+            statsinfo['UserWake'] = re.sub('[^0-9]','', item.strip())
+    return statsinfo
+
+def get_pmset_sched():
+    cmd = ['/usr/bin/pmset', '-g', 'sched']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+
+    schedinfo = get_pmset_stats()
+    schedinfo['schedule'] = output
+    return schedinfo
+
+def get_pmset_ups():
+    cmd = ['/usr/bin/pmset', '-g', 'ups']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+
+    upsinfo = get_pmset_sched()
+
+    for item in output.split("\n"):
+        if "  haltlevel	" in item:
+            upsinfo['haltlevel'] = re.sub('[^0-9]','', item.strip())
+        elif "  haltafter	" in item:
+            upsinfo['haltafter'] = re.sub('[^0-9]','', item.strip())
+        elif "  haltremain	" in item:
+            upsinfo['haltremain'] = re.sub('[^0-9]','', item.strip())
+    return upsinfo
+            
+def get_pmset_general():
+    cmd = ['/usr/bin/pmset', '-g']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+
+    powerinfo = get_pmset_ups()
+
+    for item in output.split("\n"):
+        if " standbydelay" in item:
+            powerinfo['standbydelay'] = re.sub('[^0-9]','', item.strip())
+        elif " standby" in item:
+            powerinfo['standby'] = re.sub('[^0-9]','', item.strip())
+        elif " womp" in item:
+            powerinfo['womp'] = re.sub('[^0-9]','', item.strip())
+        elif " halfdim" in item:
+            powerinfo['halfdim'] = re.sub('[^0-9]','', item.strip())
+        elif " hibernatefile" in item:
+            powerinfo['hibernatefile'] = remove_all(" hibernatefile", item).strip()
+        elif " gpuswitch" in item:
+            powerinfo['gpuswitch'] = re.sub('[^0-9]','', item.strip())
+        elif " sms" in item:
+            powerinfo['sms'] = re.sub('[^0-9]','', item.strip())
+        elif " networkoversleep" in item:
+            powerinfo['networkoversleep'] = re.sub('[^0-9]','', item.strip())
+        elif " disksleep" in item:
+            powerinfo['disksleep'] = re.sub('[^0-9]','', item.strip())
+        elif " displaysleep" in item:
+            powerinfo['displaysleep'] = re.sub('[^0-9]','', item.strip())
+        elif " autopoweroffdelay" in item:
+            powerinfo['autopoweroffdelay'] = re.sub('[^0-9]','', item.strip())
+        elif " hibernatemode" in item:
+            powerinfo['hibernatemode'] = re.sub('[^0-9]','', item.strip())
+        elif " autopoweroff" in item:
+            powerinfo['autopoweroff'] = re.sub('[^0-9]','', item.strip())
+        elif " ttyskeepawake" in item:
+            powerinfo['ttyskeepawake'] = re.sub('[^0-9]','', item.strip())
+        elif " acwake" in item:
+            powerinfo['acwake'] = re.sub('[^0-9]','', item.strip())
+        elif " lidwake" in item:
+            powerinfo['lidwake'] = re.sub('[^0-9]','', item.strip())
+        elif " powernap" in item:
+            powerinfo['powernap'] = re.sub('[^0-9]','', item.strip())
+        elif " autorestart" in item:
+            powerinfo['autorestart'] = re.sub('[^0-9]','', item.strip())
+        elif " DestroyFVKeyOnStandby" in item:
+            powerinfo['DestroyFVKeyOnStandby'] = re.sub('[^0-9]','', item.strip())
+        elif " Sleep On Power Button " in item:
+            powerinfo['SleepOn'] = re.sub('[^0-9]','', item.strip())
+        elif " lessbright" in item:
+            powerinfo['lessbright'] = re.sub('[^0-9]','', item.strip())
+        elif " sleep" in item:
+            try:
+                powerinfo['sleep_prevented_by'] = re.search('\(.*\)', item).group(0).replace("(sleep prevented by ", "").replace(")", "").strip()
+            except:
+                powerinfo['sleep_prevented_by_error'] = ""
+            powerinfo['sleep'] = (re.sub('[^0-9]','', re.sub(r'\(.+?\)', '', item))).strip()
+
+#    print powerinfo
+    return powerinfo
+
+
+def remove_all(substr, str):
+    index = 0
+    length = len(substr)
+    while string.find(str, substr) != -1:
+        index = string.find(str, substr)
+        str = str[0:index] + str[index+length:]
+    return str
+    
+def main():
+    
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
+
+    # Skip manual check
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'manualcheck':
+            print 'Manual check: skipping'
+            exit(0)
+
+    # Get results
+    info = get_pmset_general()
+        
+    # Write power results to cache file
+    output_plist = os.path.join(cachedir, 'powerinfo.plist')
+    plistlib.writePlist(info, output_plist)
+#    print plistlib.writePlistToString(info)
+
+if __name__ == "__main__":
+    main()

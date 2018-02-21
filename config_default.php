@@ -350,6 +350,18 @@
 	$conf['user_sessions_keep_historical'] = TRUE;
 	$conf['user_sessions_unique_users_only'] = FALSE;
 
+	/*
+	|=======
+	| Legacy Caching Listing
+	|===============================================
+	|
+	| Starting with 10.13, Apple changed the caching server. In MunkiReport,
+	| you can hide the legacy caching server listing that shows an itemized
+	| listing for all caching server transactions for caching servers running
+	| 10.8-10.12. To hide the "Caching (Legacy)" listing, set this to FALSE.
+	|
+	*/
+	$conf['caching_show_legacy'] = TRUE;
 
 	/*
 	|===============================================

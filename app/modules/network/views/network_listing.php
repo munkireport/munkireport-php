@@ -25,13 +25,15 @@ new Network_model;
 		        <th data-i18n="status" data-colname='network.status'></th>
 		        <th data-i18n="network.ethernet" data-colname='network.ethernet'></th>
 		        <th data-i18n="network.ip_address" data-colname='network.ipv4ip'></th>
+		        <th data-i18n="network.dns" data-colname='network.ipv4dns'></th>
 		        <th data-i18n="network.router" data-colname='network.ipv4router'></th>
 		        <th data-i18n="network.mask" data-colname='network.ipv4mask'></th>
+		        <th data-i18n="network.activemedia" data-colname='network.activemedia'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -95,6 +97,14 @@ new Network_model;
 	        	status = status == 1 ? '<span class="label label-success">'+i18n.t('enabled')+'</span>' :
 	        	(status === '0' ? '<span class="label label-danger">'+i18n.t('disabled')+'</span>' : '')
 	        	$('td:eq(4)', nRow).html(status)
+                
+                // Active Media
+	        	var colvar=$('td:eq(10)', nRow).html();
+	        	colvar = colvar == 'none' ? '' :
+	        	colvar = colvar == 'not set' ? i18n.t('network.notset') :
+	        	colvar = colvar == 'autoselect (half-duplex)' ? i18n.t('network.autoselecthalf') :
+	        	(colvar === 'autoselect (full-duplex)' ? i18n.t('network.autoselectfull') : colvar)
+	        	$('td:eq(10)', nRow).html(colvar)
 		    }
 	    } );
 	} );

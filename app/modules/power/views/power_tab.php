@@ -4,7 +4,6 @@
 	
 	<div id="power-view" class="row hide">
 		<div class="col-md-4">
-			<table>
 			<table class="table table-striped">
 				<tr>
 					<th data-i18n="power.active_profile"></th>
@@ -184,35 +183,6 @@
 					<td id="power-sleep_prevented_by"></td>
 				</tr>
 			</table>
-                <div id="power-ups" class="row hide">
-                <h2 data-i18n="power.ups_status"></h2>
-			<table class="table table-striped">
-				<tr>
-					<th data-i18n="power.ups_name"></th>
-					<td id="power-ups_name"></td>
-				</tr>
-				<tr>
-					<th data-i18n="power.ups_percent"></th>
-					<td id="power-ups_percent"></td>
-				</tr>
-				<tr>
-					<th data-i18n="power.ups_charging_status"></th>
-					<td id="power-ups_charging_status"></td>
-				</tr>
-				<tr>
-					<th data-i18n="power.haltlevel"></th>
-					<td id="power-haltlevel"></td>
-				</tr>
-				<tr>
-					<th data-i18n="power.haltafter"></th>
-					<td id="power-haltafter"></td>
-				</tr>
-				<tr>
-					<th data-i18n="power.haltremain"></th>
-					<td id="power-haltremain"></td>
-				</tr>
-			</table>
-         </div>
 	</div>
 </div>
 <script>
@@ -513,50 +483,6 @@ $(document).on('appReady', function(e, lang) {
 			} else{
 				 $('#power-womp').text("");
 			}
-            
-            // Unhide and fill out UPS if UPS is present
-            if (data.ups_percent != "" && (data.ups_percent)) {
-	        	$('#power-ups').removeClass('hide'); // unhide UPS table
-	        	$('#power-ups_percent').text(data.ups_percent+'%');
-	        	$('#power-haltlevel').text(data.haltlevel+'%');
-	        	//$('#power-haltafter').text(data.haltafter);
-	        	//$('#power-haltremain').text(data.haltremain);
-	        	//$('#power-ups_charging_status').text(data.ups_charging_status);
-	        	$('#power-ups_name').text(data.ups_name);
-                
-			if(data.ups_charging_status === "true " ) {
-				 $('#power-ups_charging_status').text(i18n.t('power.charging'));
-			} else if(data.ups_charging_status === "false") {
-				 $('#power-ups_charging_status').text(i18n.t('power.discharging'));
-			} else{
-				 $('#power-ups_charging_status').text(data.ups_charging_status);
-			} 
-                
-			if(data.haltafter == null) {
-				 $('#power-haltafter').text('');
-			} else if(data.haltafter == "1") {
-				 $('#power-haltafter').text(data.haltafter+' '+i18n.t('power.minute'));
-			} else{
-				 $('#power-haltafter').text(data.haltafter+' '+i18n.t('power.minutes'));
-			}
-                
-			if(data.haltremain == null) {
-				 $('#power-haltremain').text('');
-			} else if(data.haltremain == "1") {
-				 $('#power-haltremain').text(data.haltremain+' '+i18n.t('power.minute'));
-			} else{
-				 $('#power-haltremain').text(data.haltremain+' '+i18n.t('power.minutes'));
-			}
-                
-            } else {
-	        	$('#power-ups_percent').html('');  
-	        	$('#power-haltlevel').html('');
-	        	$('#power-haltafter').html('');
-	        	$('#power-haltremain').html('');
-	        	$('#power-ups_charging_status').text('');
-	        	$('#power-ups_name').text("");
-
-            }
 		}
 	});
 });

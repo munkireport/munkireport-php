@@ -1,0 +1,1226 @@
+#! /usr/bin/python
+# fans/temps script by tuxudo for MunkiReport
+
+import subprocess
+import plistlib
+import os
+import sys
+import string
+import re
+
+
+def get_fan_labels():
+    cmd = ['/usr/local/munki/smc', '-f']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+
+    output = output.replace(':\n', ':')
+        
+    faninfo = {}
+    
+    for item in output.split("\n"):
+        if "Fan #0" in item:
+            faninfo['FAN_0_Label'] = item.split(':')[2].strip()
+        elif "Fan #1" in item:
+            faninfo['FAN_1_Label'] = item.split(':')[2].strip()
+        elif "Fan #2" in item:
+            faninfo['FAN_2_Label'] = item.split(':')[2].strip()
+        elif "Fan #3" in item:
+            faninfo['FAN_3_Label'] = item.split(':')[2].strip()
+        elif "Fan #4" in item:
+            faninfo['FAN_4_Label'] = item.split(':')[2].strip()            
+        elif "Fan #5" in item:
+            faninfo['FAN_5_Label'] = item.split(':')[2].strip()            
+        elif "Fan #6" in item:
+            faninfo['FAN_6_Label'] = item.split(':')[2].strip()          
+        elif "Fan #7" in item:
+            faninfo['FAN_7_Label'] = item.split(':')[2].strip()           
+        elif "Fan #8" in item:
+            faninfo['FAN_8_Label'] = item.split(':')[2].strip()
+
+    return faninfo
+            
+def get_smc_results():
+    cmd = ['/usr/local/munki/smc', '-l']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    
+    
+    model = subprocess.check_output(['/usr/sbin/sysctl', '-n','hw.model'], shell=False, bufsize=-1)
+    if 'Xserve' in model:
+        smcinfo = {}
+    else:
+        smcinfo = get_fan_labels()
+
+    for item in output.split("\n"):
+        if "TA0P" in item:
+            smcinfo['TA0P'] = item.split(' ')[6].strip()
+        elif "TA1P" in item:
+            smcinfo['TA1P'] = item.split(' ')[6].strip()
+        elif "TC0D" in item:
+            smcinfo['TC0D'] = item.split(' ')[6].strip()
+        elif "TC0P" in item:
+            smcinfo['TC0P'] = item.split(' ')[6].strip()
+        elif "TC0H" in item:
+            smcinfo['TC0H'] = item.split(' ')[6].strip()
+        elif "TB0T" in item:
+            smcinfo['TB0T'] = item.split(' ')[6].strip()
+        elif "TB1T" in item:
+            smcinfo['TB1T'] = item.split(' ')[6].strip()
+        elif "TB2T" in item:
+            smcinfo['TB2T'] = item.split(' ')[6].strip()
+        elif "TB3T" in item:
+            smcinfo['TB3T'] = item.split(' ')[6].strip()
+        elif "TG0D" in item:
+            smcinfo['TG0D'] = item.split(' ')[6].strip()
+        elif "TG0P" in item:
+            smcinfo['TG0P'] = item.split(' ')[6].strip()
+        elif "TG0H" in item:
+            smcinfo['TG0H'] = item.split(' ')[6].strip()
+        elif "Th0H" in item:
+            smcinfo['Th0H'] = item.split(' ')[6].strip()
+        elif "Th1H" in item:
+            smcinfo['Th1H'] = item.split(' ')[6].strip()
+        elif "Th2H" in item:
+            smcinfo['Th2H'] = item.split(' ')[6].strip() 
+        elif "TM0P" in item:
+            smcinfo['TM0P'] = item.split(' ')[6].strip()
+        elif "TM0S" in item:
+            smcinfo['TM0S'] = item.split(' ')[6].strip()
+        elif "Ts0P" in item:
+            smcinfo['Ts0P'] = item.split(' ')[6].strip()
+        elif "TN0D" in item:
+            smcinfo['TN0D'] = item.split(' ')[6].strip()
+        elif "TN0P" in item:
+            smcinfo['TN0P'] = item.split(' ')[6].strip()
+        elif "TI0P" in item:
+            smcinfo['TI0P'] = item.split(' ')[6].strip()
+        elif "TI1P" in item:
+            smcinfo['TI1P'] = item.split(' ')[6].strip()
+        elif "TTF0" in item:
+            smcinfo['TTF0'] = item.split(' ')[6].strip()
+        elif "TNFP" in item:
+            smcinfo['TNFP'] = item.split(' ')[6].strip()
+        elif "TCFP" in item:
+            smcinfo['TCFP'] = item.split(' ')[6].strip()
+        elif "TC0E" in item:
+            smcinfo['TC0E'] = item.split(' ')[6].strip()
+        elif "TC1C" in item:
+            smcinfo['TC1C'] = item.split(' ')[6].strip()
+        elif "TC2C" in item:
+            smcinfo['TC2C'] = item.split(' ')[6].strip()
+        elif "TC3C" in item:
+            smcinfo['TC3C'] = item.split(' ')[6].strip()
+        elif "TC4C" in item:
+            smcinfo['TC4C'] = item.split(' ')[6].strip()
+        elif "TCGC" in item:
+            smcinfo['TCGC'] = item.split(' ')[6].strip()
+        elif "TCSA" in item:
+            smcinfo['TCSA'] = item.split(' ')[6].strip()
+        elif "TCXC" in item:
+            smcinfo['TCXC'] = item.split(' ')[6].strip()
+        elif "TG1D" in item:
+            smcinfo['TG1D'] = item.split(' ')[6].strip()
+        elif "TG1F" in item:
+            smcinfo['TG1F'] = item.split(' ')[6].strip()
+        elif "TG1d" in item:
+            smcinfo['TG1d'] = item.split(' ')[6].strip()
+        elif "TGTC" in item:
+            smcinfo['TGTC'] = item.split(' ')[6].strip()
+        elif "TGTD" in item:
+            smcinfo['TGTD'] = item.split(' ')[6].strip()
+        elif "TPCD" in item:
+            smcinfo['TPCD'] = item.split(' ')[6].strip()
+        elif "Ts1S" in item:
+            smcinfo['Ts1S'] = item.split(' ')[6].strip()
+        elif "Tsqf" in item:
+            smcinfo['Tsqf'] = item.split(' ')[6].strip()
+        elif "TO0P" in item:
+            smcinfo['TO0P'] = item.split(' ')[6].strip()
+        elif "TN0H" in item:
+            smcinfo['TN0H'] = item.split(' ')[6].strip() 
+        elif "Tm0P" in item:
+            smcinfo['Tm0P'] = item.split(' ')[6].strip()
+        elif "TL0P" in item:
+            smcinfo['TL0P'] = item.split(' ')[6].strip()
+        elif "TC0F" in item:
+            smcinfo['TC0F'] = item.split(' ')[6].strip()
+        elif "TA0p" in item:
+            smcinfo['TA0p'] = item.split(' ')[6].strip()
+        elif "TC0C" in item:
+            smcinfo['TC0C'] = item.split(' ')[6].strip()
+        elif "TG0p" in item:
+            smcinfo['TG0p'] = item.split(' ')[6].strip()
+        elif "TH0O" in item:
+            smcinfo['TH0O'] = item.split(' ')[6].strip()
+        elif "TH1O" in item:
+            smcinfo['TH1O'] = item.split(' ')[6].strip()
+        elif "TL0V" in item:
+            smcinfo['TL0V'] = item.split(' ')[6].strip()
+        elif "TL0p" in item:
+            smcinfo['TL0p'] = item.split(' ')[6].strip()
+        elif "TL1V" in item:
+            smcinfo['TL1V'] = item.split(' ')[6].strip()
+        elif "TL2V" in item:
+            smcinfo['TL2V'] = item.split(' ')[6].strip()
+        elif "TLAV" in item:
+            smcinfo['TLAV'] = item.split(' ')[6].strip()
+        elif "TLBV" in item:
+            smcinfo['TLBV'] = item.split(' ')[6].strip()
+        elif "TLCV" in item:
+            smcinfo['TLCV'] = item.split(' ')[6].strip()
+        elif "TO0p" in item:
+            smcinfo['TO0p'] = item.split(' ')[6].strip()
+        elif "TS0V" in item:
+            smcinfo['TS0V'] = item.split(' ')[6].strip()
+        elif "TS2V" in item:
+            smcinfo['TS2V'] = item.split(' ')[6].strip()
+        elif "Tm0p" in item:
+            smcinfo['Tm0p'] = item.split(' ')[6].strip()
+        elif "Tp1P" in item:
+            smcinfo['Tp1P'] = item.split(' ')[6].strip()
+        elif "Tp2H" in item:
+            smcinfo['Tp2H'] = item.split(' ')[6].strip()
+        elif "Tp3H" in item:
+            smcinfo['Tp3H'] = item.split(' ')[6].strip()
+        elif "Tp3v" in item:
+            smcinfo['Tp3v'] = item.split(' ')[6].strip()
+        elif "Tp0P" in item:
+            smcinfo['Tp0P'] = item.split(' ')[6].strip()
+        elif "TH0P" in item:
+            smcinfo['TH0P'] = item.split(' ')[6].strip()
+        elif "TA1p" in item:
+            smcinfo['TA1p'] = item.split(' ')[6].strip()
+        elif "TC0G" in item:
+            smcinfo['TC0G'] = item.split(' ')[6].strip()
+        elif "TC0J" in item:
+            smcinfo['TC0J'] = item.split(' ')[6].strip() 
+        elif "TC0c" in item:
+            smcinfo['TC0c'] = item.split(' ')[6].strip()
+        elif "TC0d" in item:
+            smcinfo['TC0d'] = item.split(' ')[6].strip()
+        elif "TC0p" in item:
+            smcinfo['TC0p'] = item.split(' ')[6].strip()
+        elif "TC1c" in item:
+            smcinfo['TC1c'] = item.split(' ')[6].strip()
+        elif "TC2c" in item:
+            smcinfo['TC2c'] = item.split(' ')[6].strip()
+        elif "TC3c" in item:
+            smcinfo['TC3c'] = item.split(' ')[6].strip()
+        elif "TCGc" in item:
+            smcinfo['TCGc'] = item.split(' ')[6].strip()
+        elif "TCPG" in item:
+            smcinfo['TCPG'] = item.split(' ')[6].strip()
+        elif "TCSC" in item:
+            smcinfo['TCSC'] = item.split(' ')[6].strip()
+        elif "TCSc" in item:
+            smcinfo['TCSc'] = item.split(' ')[6].strip()
+        elif "TCTD" in item:
+            smcinfo['TCTD'] = item.split(' ')[6].strip()
+        elif "TCXc" in item:
+            smcinfo['TCXc'] = item.split(' ')[6].strip()
+        elif "TCXr" in item:
+            smcinfo['TCXr'] = item.split(' ')[6].strip()
+        elif "TH0A" in item:
+            smcinfo['TH0A'] = item.split(' ')[6].strip()
+        elif "TH0B" in item:
+            smcinfo['TH0B'] = item.split(' ')[6].strip()
+        elif "TH0C" in item:
+            smcinfo['TH0C'] = item.split(' ')[6].strip()
+        elif "TH0F" in item:
+            smcinfo['TH0F'] = item.split(' ')[6].strip()
+        elif "TH0X" in item:
+            smcinfo['TH0X'] = item.split(' ')[6].strip()
+        elif "TH0a" in item:
+            smcinfo['TH0a'] = item.split(' ')[6].strip()
+        elif "TH0b" in item:
+            smcinfo['TH0b'] = item.split(' ')[6].strip()
+        elif "TH0c" in item:
+            smcinfo['TH0c'] = item.split(' ')[6].strip()
+        elif "TH1A" in item:
+            smcinfo['TH1A'] = item.split(' ')[6].strip()
+        elif "TH1B" in item:
+            smcinfo['TH1B'] = item.split(' ')[6].strip()
+        elif "TH1C" in item:
+            smcinfo['TH1C'] = item.split(' ')[6].strip()
+        elif "TH1F" in item:
+            smcinfo['TH1F'] = item.split(' ')[6].strip()
+        elif "TH1X" in item:
+            smcinfo['TH1X'] = item.split(' ')[6].strip()
+        elif "TH1a" in item:
+            smcinfo['TH1a'] = item.split(' ')[6].strip()
+        elif "TH1b" in item:
+            smcinfo['TH1b'] = item.split(' ')[6].strip() 
+        elif "TH1c" in item:
+            smcinfo['TH1c'] = item.split(' ')[6].strip()
+        elif "TI0p" in item:
+            smcinfo['TI0p'] = item.split(' ')[6].strip()
+        elif "TI1p" in item:
+            smcinfo['TI1p'] = item.split(' ')[6].strip()
+        elif "TM0p" in item:
+            smcinfo['TM0p'] = item.split(' ')[6].strip()
+        elif "TMBS" in item:
+            smcinfo['TMBS'] = item.split(' ')[6].strip()
+        elif "TP0p" in item:
+            smcinfo['TP0p'] = item.split(' ')[6].strip()
+        elif "TW0P" in item:
+            smcinfo['TW0P'] = item.split(' ')[6].strip()
+        elif "TW0p" in item:
+            smcinfo['TW0p'] = item.split(' ')[6].strip()
+        elif "Tp0C" in item:
+            smcinfo['Tp0C'] = item.split(' ')[6].strip()
+        elif "Ts0G" in item:
+            smcinfo['Ts0G'] = item.split(' ')[6].strip()
+        elif "TBXT" in item:
+            smcinfo['TBXT'] = item.split(' ')[6].strip()
+        elif "TH0R" in item:
+            smcinfo['TH0R'] = item.split(' ')[6].strip()
+        elif "TH0V" in item:
+            smcinfo['TH0V'] = item.split(' ')[6].strip()
+        elif "TH0x" in item:
+            smcinfo['TH0x'] = item.split(' ')[6].strip()
+        elif "THSP" in item:
+            smcinfo['THSP'] = item.split(' ')[6].strip()
+        elif "TMLB" in item:
+            smcinfo['TMLB'] = item.split(' ')[6].strip()
+        elif "Ts0S" in item:
+            smcinfo['Ts0S'] = item.split(' ')[6].strip()
+        elif "Ts1P" in item:
+            smcinfo['Ts1P'] = item.split(' ')[6].strip()
+        elif "Ts2S" in item:
+            smcinfo['Ts2S'] = item.split(' ')[6].strip()
+        elif "TCAC" in item:
+            smcinfo['TCAC'] = item.split(' ')[6].strip()
+        elif "TCAD" in item:
+            smcinfo['TCAD'] = item.split(' ')[6].strip()
+        elif "TCAG" in item:
+            smcinfo['TCAG'] = item.split(' ')[6].strip()
+        elif "TCAH" in item:
+            smcinfo['TCAH'] = item.split(' ')[6].strip()
+        elif "TCAS" in item:
+            smcinfo['TCAS'] = item.split(' ')[6].strip()
+        elif "TCBC" in item:
+            smcinfo['TCBC'] = item.split(' ')[6].strip()
+        elif "TCBD" in item:
+            smcinfo['TCBD'] = item.split(' ')[6].strip()
+        elif "TCBG" in item:
+            smcinfo['TCBG'] = item.split(' ')[6].strip()
+        elif "TCBH" in item:
+            smcinfo['TCBH'] = item.split(' ')[6].strip() 
+        elif "TCBS" in item:
+            smcinfo['TCBS'] = item.split(' ')[6].strip()
+        elif "TH1P" in item:
+            smcinfo['TH1P'] = item.split(' ')[6].strip()
+        elif "TH1V" in item:
+            smcinfo['TH1V'] = item.split(' ')[6].strip()
+        elif "TH2F" in item:
+            smcinfo['TH2F'] = item.split(' ')[6].strip()
+        elif "TH2P" in item:
+            smcinfo['TH2P'] = item.split(' ')[6].strip()
+        elif "TH2V" in item:
+            smcinfo['TH2V'] = item.split(' ')[6].strip()
+        elif "TH3F" in item:
+            smcinfo['TH3F'] = item.split(' ')[6].strip()
+        elif "TH3P" in item:
+            smcinfo['TH3P'] = item.split(' ')[6].strip()
+        elif "TH3V" in item:
+            smcinfo['TH3V'] = item.split(' ')[6].strip()
+        elif "TH4F" in item:
+            smcinfo['TH4F'] = item.split(' ')[6].strip()
+        elif "TH4P" in item:
+            smcinfo['TH4P'] = item.split(' ')[6].strip()
+        elif "TH4V" in item:
+            smcinfo['TH4V'] = item.split(' ')[6].strip()
+        elif "THPS" in item:
+            smcinfo['THPS'] = item.split(' ')[6].strip()
+        elif "THTG" in item:
+            smcinfo['THTG'] = item.split(' ')[6].strip()
+        elif "TM1P" in item:
+            smcinfo['TM1P'] = item.split(' ')[6].strip()
+        elif "TM2P" in item:
+            smcinfo['TM2P'] = item.split(' ')[6].strip()
+        elif "TM3P" in item:
+            smcinfo['TM3P'] = item.split(' ')[6].strip()
+        elif "TM4P" in item:
+            smcinfo['TM4P'] = item.split(' ')[6].strip()
+        elif "TM5P" in item:
+            smcinfo['TM5P'] = item.split(' ')[6].strip()
+        elif "TM6P" in item:
+            smcinfo['TM6P'] = item.split(' ')[6].strip()
+        elif "TM7P" in item:
+            smcinfo['TM7P'] = item.split(' ')[6].strip()
+        elif "TM8P" in item:
+            smcinfo['TM8P'] = item.split(' ')[6].strip()
+        elif "TMA1" in item:
+            smcinfo['TMA1'] = item.split(' ')[6].strip()
+        elif "TMA2" in item:
+            smcinfo['TMA2'] = item.split(' ')[6].strip()
+        elif "TMA3" in item:
+            smcinfo['TMA3'] = item.split(' ')[6].strip()
+        elif "TMA4" in item:
+            smcinfo['TMA4'] = item.split(' ')[6].strip()
+        elif "TMB1" in item:
+            smcinfo['TMB1'] = item.split(' ')[6].strip()
+        elif "TMB2" in item:
+            smcinfo['TMB2'] = item.split(' ')[6].strip() 
+        elif "TMB3" in item:
+            smcinfo['TMB3'] = item.split(' ')[6].strip()
+        elif "TMB4" in item:
+            smcinfo['TMB4'] = item.split(' ')[6].strip()
+        elif "TMHS" in item:
+            smcinfo['TMHS'] = item.split(' ')[6].strip()
+        elif "TMLS" in item:
+            smcinfo['TMLS'] = item.split(' ')[6].strip()
+        elif "TMPS" in item:
+            smcinfo['TMPS'] = item.split(' ')[6].strip()
+        elif "TMPV" in item:
+            smcinfo['TMPV'] = item.split(' ')[6].strip()
+        elif "TMTG" in item:
+            smcinfo['TMTG'] = item.split(' ')[6].strip()
+        elif "TNTG" in item:
+            smcinfo['TNTG'] = item.split(' ')[6].strip()
+        elif "Te1F" in item:
+            smcinfo['Te1F'] = item.split(' ')[6].strip()
+        elif "Te1P" in item:
+            smcinfo['Te1P'] = item.split(' ')[6].strip()
+        elif "Te1S" in item:
+            smcinfo['Te1S'] = item.split(' ')[6].strip()
+        elif "Te2F" in item:
+            smcinfo['Te2F'] = item.split(' ')[6].strip()
+        elif "Te2S" in item:
+            smcinfo['Te2S'] = item.split(' ')[6].strip()
+        elif "Te3F" in item:
+            smcinfo['Te3F'] = item.split(' ')[6].strip()
+        elif "Te3S" in item:
+            smcinfo['Te3S'] = item.split(' ')[6].strip()
+        elif "Te4F" in item:
+            smcinfo['Te4F'] = item.split(' ')[6].strip()
+        elif "Te4S" in item:
+            smcinfo['Te4S'] = item.split(' ')[6].strip()
+        elif "Te5S" in item:
+            smcinfo['Te5S'] = item.split(' ')[6].strip()
+        elif "Te5F" in item:
+            smcinfo['Te5F'] = item.split(' ')[6].strip()
+        elif "TeGG" in item:
+            smcinfo['TeGG'] = item.split(' ')[6].strip()
+        elif "TeGP" in item:
+            smcinfo['TeGP'] = item.split(' ')[6].strip()
+        elif "TeRG" in item:
+            smcinfo['TeRG'] = item.split(' ')[6].strip()
+        elif "TeRP" in item:
+            smcinfo['TeRP'] = item.split(' ')[6].strip()
+        elif "Tp1C" in item:
+            smcinfo['Tp1C'] = item.split(' ')[6].strip()
+        elif "TpPS" in item:
+            smcinfo['TpPS'] = item.split(' ')[6].strip()
+        elif "TpTG" in item:
+            smcinfo['TpTG'] = item.split(' ')[6].strip()
+        elif "TA0S" in item:
+            smcinfo['TA0S'] = item.split(' ')[6].strip()
+        elif "TA1S" in item:
+            smcinfo['TA1S'] = item.split(' ')[6].strip() 
+        elif "TA2S" in item:
+            smcinfo['TA2S'] = item.split(' ')[6].strip()
+        elif "TA3S" in item:
+            smcinfo['TA3S'] = item.split(' ')[6].strip()
+        elif "Tb0P" in item:
+            smcinfo['Tb0P'] = item.split(' ')[6].strip()
+        elif "TC1D" in item:
+            smcinfo['TC1D'] = item.split(' ')[6].strip()
+        elif "TC1E" in item:
+            smcinfo['TC1E'] = item.split(' ')[6].strip()
+        elif "TC1F" in item:
+            smcinfo['TC1F'] = item.split(' ')[6].strip()
+        elif "TC1H" in item:
+            smcinfo['TC1H'] = item.split(' ')[6].strip()
+        elif "TC1P" in item:
+            smcinfo['TC1P'] = item.split(' ')[6].strip()
+        elif "TC5C" in item:
+            smcinfo['TC5C'] = item.split(' ')[6].strip()
+        elif "TC6C" in item:
+            smcinfo['TC6C'] = item.split(' ')[6].strip()
+        elif "TC7C" in item:
+            smcinfo['TC7C'] = item.split(' ')[6].strip()
+        elif "TC8C" in item:
+            smcinfo['TC8C'] = item.split(' ')[6].strip()
+        elif "TCHP" in item:
+            smcinfo['TCHP'] = item.split(' ')[6].strip()
+        elif "TG1H" in item:
+            smcinfo['TG1H'] = item.split(' ')[6].strip()
+        elif "TM1S" in item:
+            smcinfo['TM1S'] = item.split(' ')[6].strip()
+        elif "TM8S" in item:
+            smcinfo['TM8S'] = item.split(' ')[6].strip()
+        elif "TM9P" in item:
+            smcinfo['TM9P'] = item.split(' ')[6].strip()
+        elif "TM9S" in item:
+            smcinfo['TM9S'] = item.split(' ')[6].strip()
+        elif "TN0C" in item:
+            smcinfo['TN0C'] = item.split(' ')[6].strip()
+        elif "TN1P" in item:
+            smcinfo['TN1P'] = item.split(' ')[6].strip()
+        elif "TP0D" in item:
+            smcinfo['TP0D'] = item.split(' ')[6].strip()
+        elif "Tp2P" in item:
+            smcinfo['Tp2P'] = item.split(' ')[6].strip()
+        elif "Tp3P" in item:
+            smcinfo['Tp3P'] = item.split(' ')[6].strip()
+        elif "Tp4P" in item:
+            smcinfo['Tp4P'] = item.split(' ')[6].strip()
+        elif "Tp5P" in item:
+            smcinfo['Tp5P'] = item.split(' ')[6].strip()
+        elif "TS0C" in item:
+            smcinfo['TS0C'] = item.split(' ')[6].strip()
+        elif "TL1p" in item:
+            smcinfo['TL1p'] = item.split(' ')[6].strip()
+        elif "TGVP" in item:
+            smcinfo['TGVP'] = item.split(' ')[6].strip() 
+        elif "TaRC" in item:
+            smcinfo['TaRC'] = item.split(' ')[6].strip()
+        elif "TaLC" in item:
+            smcinfo['TaLC'] = item.split(' ')[6].strip()
+        elif "TTRD" in item:
+            smcinfo['TTRD'] = item.split(' ')[6].strip()
+        elif "TTLD" in item:
+            smcinfo['TTLD'] = item.split(' ')[6].strip()
+        elif "Th0N" in item:
+            smcinfo['Th0N'] = item.split(' ')[6].strip()
+        elif "TS2P" in item:
+            smcinfo['TS2P'] = item.split(' ')[6].strip()
+        elif "TG0T" in item:
+            smcinfo['TG0T'] = item.split(' ')[6].strip()
+        elif "TC2P" in item:
+            smcinfo['TC2P'] = item.split(' ')[6].strip()
+        elif "TC3P" in item:
+            smcinfo['TC3P'] = item.split(' ')[6].strip()
+        elif "TG0C" in item:
+            smcinfo['TG0C'] = item.split(' ')[6].strip()
+        elif "TA2p" in item:
+            smcinfo['TA2p'] = item.split(' ')[6].strip()
+        elif "TG0r" in item:
+            smcinfo['TG0r'] = item.split(' ')[6].strip()
+        elif "TG1p" in item:
+            smcinfo['TG1p'] = item.split(' ')[6].strip()
+        elif "TG1r" in item:
+            smcinfo['TG1r'] = item.split(' ')[6].strip()
+        elif "TM0r" in item:
+            smcinfo['TM0r'] = item.split(' ')[6].strip()
+        elif "TM1r" in item:
+            smcinfo['TM1r'] = item.split(' ')[6].strip()
+        elif "Te0t" in item:
+            smcinfo['Te0t'] = item.split(' ')[6].strip()
+        elif "Tp0t" in item:
+            smcinfo['Tp0t'] = item.split(' ')[6].strip()
+        elif "TMAP" in item:
+            smcinfo['TMAP'] = item.split(' ')[6].strip()
+        elif "TH1R" in item:
+            smcinfo['TH1R'] = item.split(' ')[6].strip()
+        elif "TA0G" in item:
+            smcinfo['TA0G'] = item.split(' ')[6].strip()
+        elif "TA2G" in item:
+            smcinfo['TA2G'] = item.split(' ')[6].strip()
+        elif "TA4S" in item:
+            smcinfo['TA4S'] = item.split(' ')[6].strip()
+        elif "TA5S" in item:
+            smcinfo['TA5S'] = item.split(' ')[6].strip()
+        elif "TC2D" in item:
+            smcinfo['TC2D'] = item.split(' ')[6].strip()
+        elif "TG0G" in item:
+            smcinfo['TG0G'] = item.split(' ')[6].strip()
+        elif "TH1G" in item:
+            smcinfo['TH1G'] = item.split(' ')[6].strip()
+        elif "TH2G" in item:
+            smcinfo['TH2G'] = item.split(' ')[6].strip() 
+        elif "TH3G" in item:
+            smcinfo['TH3G'] = item.split(' ')[6].strip()
+        elif "TM2S" in item:
+            smcinfo['TM2S'] = item.split(' ')[6].strip()
+        elif "TM3S" in item:
+            smcinfo['TM3S'] = item.split(' ')[6].strip()
+        elif "TM4S" in item:
+            smcinfo['TM4S'] = item.split(' ')[6].strip()
+        elif "TM5S" in item:
+            smcinfo['TM5S'] = item.split(' ')[6].strip()
+        elif "TM6S" in item:
+            smcinfo['TM6S'] = item.split(' ')[6].strip()
+        elif "TM7S" in item:
+            smcinfo['TM7S'] = item.split(' ')[6].strip()
+        elif "TMAS" in item:
+            smcinfo['TMAS'] = item.split(' ')[6].strip()
+        elif "TMCS" in item:
+            smcinfo['TMCS'] = item.split(' ')[6].strip()
+        elif "Tp0G" in item:
+            smcinfo['Tp0G'] = item.split(' ')[6].strip()
+        elif "Tp1G" in item:
+            smcinfo['Tp1G'] = item.split(' ')[6].strip()
+        elif "Tp2G" in item:
+            smcinfo['Tp2G'] = item.split(' ')[6].strip()
+        elif "MSDI" in item and "(bytes 01)" in item:
+            smcinfo['DiscIn'] = "true"
+        elif "MSDI" in item and "(bytes 00)" in item:
+            smcinfo['DiscIn'] = "false"
+        elif "F0Ac" in item:
+            smcinfo['FAN_0_Current'] = item.split(' ')[6].strip()
+        elif "F0Mn" in item:
+            smcinfo['FAN_0_Min'] = item.split(' ')[6].strip()
+        elif "F0Mx" in item:
+            smcinfo['FAN_0_Max'] = item.split(' ')[6].strip()
+        elif "F1Ac" in item:
+            smcinfo['FAN_1_Current'] = item.split(' ')[6].strip()
+        elif "F1Mn" in item:
+            smcinfo['FAN_1_Min'] = item.split(' ')[6].strip()
+        elif "F1Mx" in item:
+            smcinfo['FAN_1_Max'] = item.split(' ')[6].strip()
+        elif "F2Ac" in item:
+            smcinfo['FAN_2_Current'] = item.split(' ')[6].strip()
+        elif "F2Mn" in item:
+            smcinfo['FAN_2_Min'] = item.split(' ')[6].strip()
+        elif "F2Mx" in item:
+            smcinfo['FAN_2_Max'] = item.split(' ')[6].strip()
+        elif "F3Ac" in item:
+            smcinfo['FAN_3_Current'] = item.split(' ')[6].strip()
+        elif "F3Mn" in item:
+            smcinfo['FAN_3_Min'] = item.split(' ')[6].strip()
+        elif "F3Mx" in item:
+            smcinfo['FAN_3_Max'] = item.split(' ')[6].strip()
+        elif "F4Ac" in item:
+            smcinfo['FAN_4_Current'] = item.split(' ')[6].strip()
+        elif "F4Mn" in item:
+            smcinfo['FAN_4_Min'] = item.split(' ')[6].strip()
+        elif "F4Mx" in item:
+            smcinfo['FAN_4_Max'] = item.split(' ')[6].strip()
+        elif "F5Ac" in item:
+            smcinfo['FAN_5_Current'] = item.split(' ')[6].strip()
+        elif "F5Mn" in item:
+            smcinfo['FAN_5_Min'] = item.split(' ')[6].strip()
+        elif "F5Mx" in item:
+            smcinfo['FAN_5_Max'] = item.split(' ')[6].strip()
+        elif "F6Ac" in item:
+            smcinfo['FAN_6_Current'] = item.split(' ')[6].strip()
+        elif "F6Mn" in item:
+            smcinfo['FAN_6_Min'] = item.split(' ')[6].strip()
+        elif "F6Mx" in item:
+            smcinfo['FAN_6_Max'] = item.split(' ')[6].strip()
+        elif "F7Ac" in item:
+            smcinfo['FAN_7_Current'] = item.split(' ')[6].strip()
+        elif "F7Mn" in item:
+            smcinfo['FAN_7_Min'] = item.split(' ')[6].strip()
+        elif "F7Mx" in item:
+            smcinfo['FAN_7_Max'] = item.split(' ')[6].strip()
+        elif "F8Ac" in item:
+            smcinfo['FAN_8_Current'] = item.split(' ')[6].strip()
+        elif "F8Mn" in item:
+            smcinfo['FAN_8_Min'] = item.split(' ')[6].strip()
+        elif "F8Mx" in item:
+            smcinfo['FAN_8_Max'] = item.split(' ')[6].strip()
+        elif "F9Ac" in item:
+            smcinfo['FAN_9_Current'] = item.split(' ')[6].strip()
+        elif "F9Mn" in item:
+            smcinfo['FAN_9_Min'] = item.split(' ')[6].strip()
+        elif "F9Mx" in item:
+            smcinfo['FAN_9_Max'] = item.split(' ')[6].strip()
+        elif "FAAc" in item:
+            smcinfo['FAN_10_Current'] = item.split(' ')[6].strip()
+        elif "FAMn" in item:
+            smcinfo['FAN_10_Min'] = item.split(' ')[6].strip()
+        elif "FAMx" in item:
+            smcinfo['FAN_10_Max'] = item.split(' ')[6].strip()
+        elif "FBAc" in item:
+            smcinfo['FAN_11_Current'] = item.split(' ')[6].strip()
+        elif "FBMn" in item:
+            smcinfo['FAN_11_Min'] = item.split(' ')[6].strip()
+        elif "FBMx" in item:
+            smcinfo['FAN_11_Max'] = item.split(' ')[6].strip()
+        elif "FCAc" in item:
+            smcinfo['FAN_12_Current'] = item.split(' ')[6].strip()
+        elif "FCMn" in item:
+            smcinfo['FAN_12_Min'] = item.split(' ')[6].strip()
+        elif "FCMx" in item:
+            smcinfo['FAN_12_Max'] = item.split(' ')[6].strip()
+        elif "FDAc" in item:
+            smcinfo['FAN_13_Current'] = item.split(' ')[6].strip()
+        elif "FDMn" in item:
+            smcinfo['FAN_13_Min'] = item.split(' ')[6].strip()
+        elif "FDMx" in item:
+            smcinfo['FAN_13_Max'] = item.split(' ')[6].strip()
+        elif "FEAc" in item:
+            smcinfo['FAN_14_Current'] = item.split(' ')[6].strip()
+        elif "FEMn" in item:
+            smcinfo['FAN_14_Min'] = item.split(' ')[6].strip()
+        elif "FEMx" in item:
+            smcinfo['FAN_14_Max'] = item.split(' ')[6].strip()
+        elif "FFAc" in item:
+            smcinfo['FAN_15_Current'] = item.split(' ')[6].strip()
+        elif "FFMn" in item:
+            smcinfo['FAN_15_Min'] = item.split(' ')[6].strip()
+        elif "FFMx" in item:
+            smcinfo['FAN_15_Max'] = item.split(' ')[6].strip()
+        elif "FGAc" in item:
+            smcinfo['FAN_16_Current'] = item.split(' ')[6].strip()
+        elif "FGMn" in item:
+            smcinfo['FAN_16_Min'] = item.split(' ')[6].strip()
+        elif "FGMx" in item:
+            smcinfo['FAN_16_Max'] = item.split(' ')[6].strip()
+        elif "FHAc" in item:
+            smcinfo['FAN_17_Current'] = item.split(' ')[6].strip()
+        elif "FHMn" in item:
+            smcinfo['FAN_17_Min'] = item.split(' ')[6].strip()
+        elif "FHMx" in item:
+            smcinfo['FAN_17_Max'] = item.split(' ')[6].strip()
+        # Start the new keys    
+        elif "ALSL" in item:
+            if 'iMac' in model:
+                if (int(re.sub('[^0-9]','', model)) > 120):
+                    smcinfo['ALSL'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('ALSL', ''))).strip()
+            elif "(bytes 01 2c)" in item:
+                smcinfo['ALSL'] = "0"
+            else: 
+                smcinfo['ALSL'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('ALSL', ''))).strip()
+        elif "AUPO" in item:
+            smcinfo['AUPO'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('AUPO', ''))).strip()
+        elif "BNum" in item:
+            if 'Book' in model:
+                smcinfo['BNum'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('BNum', ''))).strip()
+        elif "FNum" in item:
+            smcinfo['FNum'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('FNum', ''))).strip() #Number of supported fans.
+        elif "FS!" in item:
+            smcinfo['FNFD'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('FS!', ''))).strip() #Fan force bits. FS![15:0] Setting bit to 1 allows for external control over fan speed target and prevents thermal manager from actively overidding value set via key access. 
+        elif "IC0C" in item:
+            smcinfo['IC0C'] = item.split(' ')[6].strip() #CPU 1 Core Amps
+        elif "IC1C" in item:
+            smcinfo['IC1C'] = item.split(' ')[6].strip() #CPU 2 Core Amps
+        elif "IC2C" in item:
+            smcinfo['IC2C'] = item.split(' ')[6].strip() #CPU 3 Core Amps
+        elif "IC3C" in item:
+            smcinfo['IC3C'] = item.split(' ')[6].strip() #CPU 4 Core Amps
+        elif "IC4C" in item:
+            smcinfo['IC4C'] = item.split(' ')[6].strip() #CPU 5 Core Amps
+        elif "IC5C" in item:
+            smcinfo['IC5C'] = item.split(' ')[6].strip() #CPU 6 Core Amps
+        elif "IC6C" in item:
+            smcinfo['IC6C'] = item.split(' ')[6].strip() #CPU 7 Core Amps
+        elif "IC7C" in item:
+            smcinfo['IC7C'] = item.split(' ')[6].strip() #CPU 8 Core Amps            
+        elif "ID0R" in item:
+            smcinfo['ID0R'] = item.split(' ')[6].strip() #Mainboard S0 Rail Amps
+        elif "ID5R" in item:
+            smcinfo['ID5R'] = item.split(' ')[6].strip() #Mainboard S5 Rail Amps
+        elif "IG0R" in item:
+            smcinfo['IG0R'] = item.split(' ')[6].strip() #GPU Amps
+        elif "LSOF" in item and "(bytes 00)" in item:
+            smcinfo['LSOF'] = "0" #Reads TRUE (1) if the SIL is Off
+        elif "LSOF" in item and "(bytes 01)" in item:
+            smcinfo['LSOF'] = "1" #Reads TRUE (1) if the SIL is Off
+        elif "LSPV" in item:
+            smcinfo['LSPV'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('LSPV', ''))).strip() #SIL's Current PWM value
+        elif "MSAc" in item:
+            smcinfo['MSAc'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSAc', ''))).strip() #Returns the average CPU PLIMIT sent by the SMC
+        elif "MSAg" in item:
+            smcinfo['MSAg'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSAg', ''))).strip() #Returns the average GPU PLIMIT sent by the SMC
+        elif "MSAm" in item:
+            smcinfo['MSAm'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSAm', ''))).strip() #Returns the average MEM PLIMIT sent by the SMC
+        elif "MSLD" in item:
+            if 'Book' in model:
+                smcinfo['MSLD'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSLD', ''))).strip() #Returns the current Lid Switch state
+        elif "MSHA" in item:
+            smcinfo['MSHA'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSHA', ''))).strip() #Average HDD activity (range 0 to 1) in U7.9 format.
+        elif "SPHT" in item:
+            smcinfo['SPHT'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('SPHT', ''))).strip() #Current state of all Prochots and whether the SMC itself is asserting each one.
+        elif "MSSD" in item:
+            smcinfo['MSSD'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSSD', ''))).strip() #Shutdown cause
+        elif "MSSF" in item:
+            smcinfo['MSSF'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSSF', ''))).strip() #Bad fan flag bits.
+        elif "MSSP" in item:
+            smcinfo['MSSP'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSSP', ''))).strip() #Stores the last known Sleep Request cause
+        elif "MSTM" in item:
+            smcinfo['MSTM'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSTM', ''))).strip() #Returns whether power balancing is enabled or not.
+        elif "MSTc" in item:
+            smcinfo['MSTc'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSTc', ''))).strip()
+        elif "MSTg" in item and "(bytes 00)" not in item:
+            smcinfo['MSTg'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('MSTg', ''))).strip()
+        elif "NATJ" in item:
+            smcinfo['NATJ'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('NATJ', ''))).strip() #Ninja Action Timer Job.  This job is performed when the Ninja Action Timer
+        elif "NATi" in item:
+            smcinfo['NATi'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('NATi', ''))).strip() #Ninja Action Timer.  This timer can be set to the number of seconds before a job (defined in NATJ) is performed.  Value is in seconds and counts down to zero.  Setting to zero cancels any previously set timer. 
+        elif "PD0R" in item:
+            smcinfo['PD0R'] = item.split(' ')[6].strip() #Mainboard S0 Rail Watts
+        elif "PD5R" in item:
+            smcinfo['PD5R'] = item.split(' ')[6].strip() #Mainboard S5 Rail Watts
+        elif "PDMR" in item:
+            smcinfo['PDMR'] = item.split(' ')[6].strip() #Mainboard Total Watts
+        elif "PDTR" in item:
+            smcinfo['PDTR'] = item.split(' ')[6].strip() #System Total Watts
+        elif "PG0R" in item:
+            smcinfo['PG0R'] = item.split(' ')[6].strip() #GPU Rail Watts
+        elif "HDBS" in item:
+            smcinfo['HDBS'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('HDBS', ''))).strip()
+        elif "SGHT" in item:
+            smcinfo['SGHT'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('SGHT', ''))).strip()
+        elif "SGTT" in item:
+            smcinfo['SGTT'] = item.split(' ')[6].strip() #GPU Heatsink Throttle Threshold Temperature.
+        elif "SGTg" in item:
+            smcinfo['SGTg'] = item.split(' ')[6].strip() #GPU Thermal Target Temp
+        elif "SHTg" in item:
+            smcinfo['SHTg'] = item.split(' ')[6].strip() #HDD Thermal Target Temp
+        elif "SCTg" in item:
+            smcinfo['SCTg'] = item.split(' ')[6].strip() #CPU Thermal Target Temp
+        elif "SLPT" in item:
+            smcinfo['SLPT'] = item.split(' ')[6].strip() #LCD Prochot threshold. TL0P temp at which Prochot will be asserted.
+        elif "SLST" in item:
+            smcinfo['SLST'] = item.split(' ')[6].strip() #LCD Sleep threshold. TL0P temp at which Sleep will be requested.
+        elif "SLTg" in item:
+            smcinfo['SLTg'] = item.split(' ')[6].strip() #LCD Fan Temp Target
+        elif "SLTp" in item:
+            smcinfo['SLTp'] = item.split(' ')[6].strip() #LCD Power Temp Target
+        elif "SOTg" in item:
+            smcinfo['SOTg'] = item.split(' ')[6].strip() #ODD Thermal Target Temp
+        elif "SPH0" in item:
+            smcinfo['SPH0'] = re.sub(r'\(.+?\)', '', re.sub(r'\[.+?\]', '', item.replace('SPH0', ''))).strip() #CPU Prochot event count since last boot
+        elif "SpPT" in item:
+            smcinfo['SpPT'] = item.split(' ')[6].strip() #PS Prochot threshold.
+        elif "SpST" in item:
+            smcinfo['SpST'] = item.split(' ')[6].strip() #PS Sleep threshold.
+        elif "SpTg" in item:
+            smcinfo['SpTg'] = item.split(' ')[6].strip() #PS Fan Temp Target
+        elif "VC0C" in item:
+            smcinfo['VC0C'] = item.split(' ')[6].strip() #CPU 1 Core Voltage
+        elif "VD0R" in item:
+            smcinfo['VD0R'] = item.split(' ')[6].strip() #Mainboard S0 Rail Volts
+        elif "VD5R" in item:
+            smcinfo['VD5R'] = item.split(' ')[6].strip() #Mainboard S5 Rail Volts
+        elif "VG0R" in item:
+            smcinfo['VG0R'] = item.split(' ')[6].strip() #GPU Rail voltage.
+        elif "MO_X" in item:
+            smcinfo['MO_X'] = item.split(' ')[6].strip() #MOTION_SENSOR_X_KEY	
+        elif "MO_Y" in item:
+            smcinfo['MO_Y'] = item.split(' ')[6].strip() #MOTION_SENSOR_Y_KEY
+        elif "MO_Z" in item:
+            smcinfo['MO_Z'] = item.split(' ')[6].strip() #MOTION_SENSOR_Y_KEY
+        elif "VS2C" in item:
+            smcinfo['VS2C'] = item.split(' ')[6].strip() #CPU PLL Volts
+        elif "VN0C" in item:
+            smcinfo['VN0C'] = item.split(' ')[6].strip() #CPU IMC/QPI/DRAM Volts
+        elif "VS1C" in item:
+            smcinfo['VS1C'] = item.split(' ')[6].strip() #PCH Volts
+        elif "VS8C" in item:
+            smcinfo['VS8C'] = item.split(' ')[6].strip() #Main 3.3V Volts
+        elif "Vp0C" in item:
+            smcinfo['Vp0C'] = item.split(' ')[6].strip() #Power Supply 12V Volts
+        elif "IN0C" in item:
+            smcinfo['IN0C'] = item.split(' ')[6].strip() #PCH Amps
+        elif "Ip0C" in item:
+            smcinfo['Ip0C'] = item.split(' ')[6].strip() #Power Supply 12V Volts
+        elif "PN0C" in item:
+            smcinfo['PN0C'] = item.split(' ')[6].strip() #PCH Core Watts
+        elif "Pp0C" in item:
+            smcinfo['Pp0C'] = item.split(' ')[6].strip() #Power Supply 12V Watts
+        elif "PpSM" in item:
+            smcinfo['PpSM'] = item.split(' ')[6].strip() #Memory Modules Watts
+        elif "IC0R" in item:
+            smcinfo['IC0R'] = item.split(' ')[6].strip() #CPU Rail Amps
+        elif "IG0C" in item:
+            smcinfo['IG0C'] = item.split(' ')[6].strip() #GPU Amps
+        elif "IBAC" in item:
+            smcinfo['IBAC'] = item.split(' ')[6].strip() #Battery Amps
+        elif "PCPC" in item:
+            smcinfo['PCPC'] = item.split(' ')[6].strip() #CPU Package Cores Watts
+        elif "PCPG" in item:
+            smcinfo['PCPG'] = item.split(' ')[6].strip() #CPU Package Graphics Watts
+        elif "PCPT" in item:
+            smcinfo['PCPT'] = item.split(' ')[6].strip() #CPU Package Total Watts
+        elif "PBLC" in item:
+            smcinfo['PBLC'] = item.split(' ')[6].strip() #Battery Rail Watts
+        elif "PC0R" in item:
+            smcinfo['PC0R'] = item.split(' ')[6].strip() #Mainboard S0 Rail Watts
+        elif "PSTR" in item:
+            smcinfo['PSTR'] = item.split(' ')[6].strip() #System Total Watts
+        elif "IB0P" in item:
+            smcinfo['IB0P'] = item.split(' ')[6].strip() #Battery Amps
+        elif "VP0R" in item:
+            smcinfo['VP0R'] = item.split(' ')[6].strip() #+12V Rail Volts
+        elif "PG0C" in item:
+            smcinfo['PG0C'] = item.split(' ')[6].strip() #GPU Watts
+        elif "PB0R" in item:
+            smcinfo['PB0R'] = item.split(' ')[6].strip() #Battery Rail Watts
+        elif "VC2C" in item:
+            smcinfo['VC2C'] = item.split(' ')[6].strip() #PCH Core Volts
+        elif "VC0G" in item:
+            smcinfo['VC0G'] = item.split(' ')[6].strip() #CPU GFX Volts
+        elif "VC1C" in item:
+            smcinfo['VC1C'] = item.split(' ')[6].strip() #CPU 1.05V Volts
+        elif "VCS0" in item:
+            smcinfo['VCS0'] = item.split(' ')[6].strip() #CPU 1.8V Volts
+        elif "VAPC" in item:
+            smcinfo['VAPC'] = item.split(' ')[6].strip() #SMC 3.3V Volts
+        elif "VMAS" in item:
+            smcinfo['VMAS'] = item.split(' ')[6].strip() #Memory Back A Volts
+        elif "VMBS" in item:
+            smcinfo['VMBS'] = item.split(' ')[6].strip() #Memory Back B Volts
+        elif "IH1Z" in item:
+            smcinfo['IH1Z'] = item.split(' ')[6].strip() #HDD Bay 1 Amps
+        elif "IH2Z" in item:
+            smcinfo['IH2Z'] = item.split(' ')[6].strip() #HDD Bay 2 Amps
+        elif "IH3Z" in item:
+            smcinfo['IH3Z'] = item.split(' ')[6].strip() #HDD Bay 3 Amps
+        elif "IH4Z" in item:
+            smcinfo['IH4Z'] = item.split(' ')[6].strip() #HDD Bay 4 Amps
+        elif "IMAS" in item:
+            smcinfo['IMAS'] = item.split(' ')[6].strip() #Memory Back A Amps
+        elif "IMBS" in item:
+            smcinfo['IMBS'] = item.split(' ')[6].strip() #Memory Back B Amps
+        elif "Ie1S" in item:
+            smcinfo['Ie1S'] = item.split(' ')[6].strip() #PCIe Slot 1 Amps
+        elif "Ie2S" in item:
+            smcinfo['Ie2S'] = item.split(' ')[6].strip() #PCIe Slot 2 Amps
+        elif "Ie3S" in item:
+            smcinfo['Ie3S'] = item.split(' ')[6].strip() #PCIe Slot 3 Amps
+        elif "Ie4S" in item:
+            smcinfo['Ie4S'] = item.split(' ')[6].strip() #PCIe Slot 4 Amps
+        elif "IeAS" in item:
+            smcinfo['IeAS'] = item.split(' ')[6].strip() #PCIe Booster A Amps
+        elif "IeBS" in item:
+            smcinfo['IeBS'] = item.split(' ')[6].strip() #PCIe Booster B Amps
+        elif "PMAS" in item:
+            smcinfo['PMAS'] = item.split(' ')[6].strip() #Memory Bank A Watts
+        elif "PMBS" in item:
+            smcinfo['PMBS'] = item.split(' ')[6].strip() #Memory Back B Watts
+        elif "PH1Z" in item:
+            smcinfo['PH1Z'] = item.split(' ')[6].strip() #HDD Bay 1 Watts
+        elif "PH2Z" in item:
+            smcinfo['PH2Z'] = item.split(' ')[6].strip() #HDD Bay 2 Watts
+        elif "PH3Z" in item:
+            smcinfo['PH3Z'] = item.split(' ')[6].strip() #HDD Bay 3 Watts
+        elif "PH4Z" in item:
+            smcinfo['PH4Z'] = item.split(' ')[6].strip() #HDD Bay 4 Watts
+        elif "Pe1S" in item:
+            smcinfo['Pe1S'] = item.split(' ')[6].strip() #PCIe Slot 1 Watts
+        elif "Pe2S" in item:
+            smcinfo['Pe2S'] = item.split(' ')[6].strip() #PCIe Slot 2 Watts
+        elif "Pe3S" in item:
+            smcinfo['Pe3S'] = item.split(' ')[6].strip() #PCIe Slot 3 Watts
+        elif "Pe4S" in item:
+            smcinfo['Pe4S'] = item.split(' ')[6].strip() #PCIe Slot 4 Watts
+        elif "PeAS" in item:
+            smcinfo['PeAS'] = item.split(' ')[6].strip() #PCIe Booster A Watts
+        elif "PeBS" in item:
+            smcinfo['PeBS'] = item.split(' ')[6].strip() #PCIe Booster B Watts
+        elif "PCAC" in item:
+            smcinfo['PCAC'] = item.split(' ')[6].strip() #CPU A Watts
+        elif "PCBC" in item:
+            smcinfo['PCBC'] = item.split(' ')[6].strip() #CPU B Watts
+        elif "ICAC" in item:
+            smcinfo['ICAC'] = item.split(' ')[6].strip() #CPU A Amps
+        elif "ICBC" in item:
+            smcinfo['ICBC'] = item.split(' ')[6].strip() #CPU B Amps
+        elif "VCAC" in item:
+            smcinfo['VCAC'] = item.split(' ')[6].strip() #CPU A Volts
+        elif "VCBC" in item:
+            smcinfo['VCBC'] = item.split(' ')[6].strip() #CPU A Volts
+        elif "PTHC" in item:
+            smcinfo['PTHC'] = item.split(' ')[6].strip() #System Total Watts
+        elif "PM0C" in item:
+            smcinfo['PM0C'] = item.split(' ')[6].strip() #Memory Module 1 Watts
+        elif "PM1C" in item:
+            smcinfo['PM1C'] = item.split(' ')[6].strip() #Memory Module 2 Watts
+        elif "PO0R" in item:
+            smcinfo['PO0R'] = item.split(' ')[6].strip() #Misc. Rail Watts
+        elif "PD2R" in item:
+            smcinfo['PD2R'] = item.split(' ')[6].strip() #Main 12V Rail Watts
+        elif "Pp0R" in item:
+            smcinfo['Pp0R'] = item.split(' ')[6].strip() #12V Rail Watts
+        elif "PH05" in item:
+            smcinfo['PH05'] = item.split(' ')[6].strip() #Main 5V Rail Watts
+        elif "PH02" in item:
+            smcinfo['PH02'] = item.split(' ')[6].strip() #Main 3.3V Rail
+        elif "PN1R" in item:
+            smcinfo['PN1R'] = item.split(' ')[6].strip() #PCH Rail Watts
+        elif "PM0R" in item:
+            smcinfo['PM0R'] = item.split(' ')[6].strip() #Memory Rail
+        elif "PGTR" in item:
+            smcinfo['PGTR'] = item.split(' ')[6].strip() #GPU Total
+        elif "PC5R" in item:
+            smcinfo['PC5R'] = item.split(' ')[6].strip() #CPU S0 Rail
+        elif "PC1R" in item:
+            smcinfo['PC1R'] = item.split(' ')[6].strip() #CPU Rail
+        elif "PCPL" in item:
+            smcinfo['PCPL'] = item.split(' ')[6].strip() #CPU Total
+        elif "PCTR" in item:
+            smcinfo['PCTR'] = item.split(' ')[6].strip() #CPU Total
+        elif "PCPD" in item:
+            smcinfo['PCPD'] = item.split(' ')[6].strip() #CPU DRAM
+        elif "PC0C" in item:
+            smcinfo['PC0C'] = item.split(' ')[6].strip() #CPU Core 1 Watts
+        elif "PC1C" in item:
+            smcinfo['PC1C'] = item.split(' ')[6].strip() #CPU Core 2 Watts
+        elif "PC2C" in item:
+            smcinfo['PC2C'] = item.split(' ')[6].strip() #CPU Core 3 Watts
+        elif "PC3C" in item:
+            smcinfo['PC3C'] = item.split(' ')[6].strip() #CPU Core 4 Watts
+        elif "PC4C" in item:
+            smcinfo['PC4C'] = item.split(' ')[6].strip() #CPU Core 5 Watts
+        elif "PC5C" in item:
+            smcinfo['PC5C'] = item.split(' ')[6].strip() #CPU Core 6 Watts
+        elif "PC6C" in item:
+            smcinfo['PC6C'] = item.split(' ')[6].strip() #CPU Core 7 Watts
+        elif "PC7C" in item:
+            smcinfo['PC7C'] = item.split(' ')[6].strip() #CPU Core 8 Watts
+        elif "IPBR" in item:
+            smcinfo['IPBR'] = item.split(' ')[6].strip() #Charger BMON Amps
+        elif "IB0R" in item:
+            smcinfo['IB0R'] = item.split(' ')[6].strip() #Battery Rail Amps
+        elif "IO0R" in item:
+            smcinfo['IO0R'] = item.split(' ')[6].strip() #Misc. Rail Amps
+        elif "IM0R" in item:
+            smcinfo['IM0R'] = item.split(' ')[6].strip() #Memory Rail Amps
+        elif "IM0C" in item:
+            smcinfo['IM0C'] = item.split(' ')[6].strip() #Memory Controller
+        elif "IC0M" in item:
+            smcinfo['IC0M'] = item.split(' ')[6].strip() #CPU Memory Amps
+        elif "IC0G" in item:
+            smcinfo['IC0G'] = item.split(' ')[6].strip() #CPU GFX
+        elif "IC8R" in item:
+            smcinfo['IC8R'] = item.split(' ')[6].strip() #CPU PLL Amps
+        elif "IC5R" in item:
+            smcinfo['IC5R'] = item.split(' ')[6].strip() #CPU DRAM Amps
+        elif "IC1C" in item:
+            smcinfo['IC1C'] = item.split(' ')[6].strip() #CPU VccIO
+        elif "Vb0R" in item:
+            smcinfo['Vb0R'] = item.split(' ')[6].strip() #CMOS Battery Volts
+        elif "VBAT" in item:
+            smcinfo['VBAT'] = item.split(' ')[6].strip() #Battery Volts
+        elif "VeES" in item:
+            smcinfo['VeES'] = item.split(' ')[6].strip() #PCIe 12V Volts
+        elif "VV8S" in item:
+            smcinfo['VV8S'] = item.split(' ')[6].strip() #Standby 5V Volts
+        elif "VV3S" in item:
+            smcinfo['VV3S'] = item.split(' ')[6].strip() #Standby 3V Volts
+        elif "VV7S" in item:
+            smcinfo['VV7S'] = item.split(' ')[6].strip() #Auxiliary 3V Volts
+        elif "VD2R" in item:
+            smcinfo['VD2R'] = item.split(' ')[6].strip() #Main 12V Volts
+        elif "VV9S" in item:
+            smcinfo['VV9S'] = item.split(' ')[6].strip() #Main 12V Volts
+        elif "VH05" in item:
+            smcinfo['VH05'] = item.split(' ')[6].strip() #Main 5V Volts
+        elif "VV1S" in item:
+            smcinfo['VV1S'] = item.split(' ')[6].strip() #Main 5V Volts
+        elif "VR3R" in item:
+            smcinfo['VR3R'] = item.split(' ')[6].strip() #Main 3.3V Volts
+        elif "VV2S" in item:
+            smcinfo['VV2S'] = item.split(' ')[6].strip() #Main 3V Volts
+        elif "VN1R" in item:
+            smcinfo['VN1R'] = item.split(' ')[6].strip() #PCH Volts
+        elif "VM0R" in item:
+            smcinfo['VM0R'] = item.split(' ')[6].strip() #Memory Volts
+        elif "VG0C" in item:
+            smcinfo['VG0C'] = item.split(' ')[6].strip() #GPU Core Volts
+        elif "VV1R" in item:
+            smcinfo['VV1R'] = item.split(' ')[6].strip() #CPU VTT
+        elif "VC1C" in item:
+            smcinfo['VC1C'] = item.split(' ')[6].strip() #CPU 2 core voltage
+        elif "VC2C" in item:
+            smcinfo['VC2C'] = item.split(' ')[6].strip() #CPU 3 core voltage
+        elif "VC3C" in item:
+            smcinfo['VC3C'] = item.split(' ')[6].strip() #CPU 4 core voltage
+        elif "VC4C" in item:
+            smcinfo['VC4C'] = item.split(' ')[6].strip() #CPU 5 core voltage
+        elif "VC5C" in item:
+            smcinfo['VC5C'] = item.split(' ')[6].strip() #CPU 6 core voltage
+        elif "VC6C" in item:
+            smcinfo['VC6C'] = item.split(' ')[6].strip() #CPU 7 core voltage
+        elif "VC7C" in item:
+            smcinfo['VC7C'] = item.split(' ')[6].strip() #CPU 8 core voltage
+        elif "dBA0" in item:
+            smcinfo['dBA0'] = item.split(' ')[6].strip() #Acoustic Reporting. Fan 0 Noise Component (dBA)
+        elif "dBA1" in item:
+            smcinfo['dBA1'] = item.split(' ')[6].strip() #Acoustic Reporting. Fan 1 Noise Component (dBA)
+        elif "dBA2" in item:
+            smcinfo['dBA2'] = item.split(' ')[6].strip() #Acoustic Reporting. Fan 2 Noise Component (dBA)
+        elif "dBAH" in item:
+            smcinfo['dBAH'] = item.split(' ')[6].strip() #Acoustic Reporting. HDD Noise Component (dBDA)
+        elif "dBAT" in item:
+            smcinfo['dBAT'] = item.split(' ')[6].strip() #Acoustic Reporting. Total Noise of all calculated components (dBDA)
+        elif "IPBF" in item:
+            smcinfo['IPBF'] = item.split(' ')[6].strip() #Battery discharge Amps
+        elif "PHPC" in item:
+            smcinfo['PHPC'] = item.split(' ')[6].strip() #Thermal control power Watts
+        elif "PPBR" in item:
+            smcinfo['PPBR'] = item.split(' ')[6].strip() #PBus on battery power Watts
+        elif "VACC" in item:
+            smcinfo['VACC'] = item.split(' ')[6].strip() #ACC voltage Volts
+        elif "VCFR" in item:
+            smcinfo['VCFR'] = item.split(' ')[6].strip() #FIVR CPU Supply voltage
+        elif "ICS0" in item:
+            smcinfo['ICS0'] = item.split(' ')[6].strip() #CPU core Amps
+        elif "ICS1" in item:
+            smcinfo['ICS1'] = item.split(' ')[6].strip() #CPU current from CPU IMON
+        elif "IM3C" in item:
+            smcinfo['IM3C'] = item.split(' ')[6].strip() #DDR S3 Amps
+        elif "IPB1" in item:
+            smcinfo['IPB1'] = item.split(' ')[6].strip() #BMON Discrete Amps
+        elif "ISDC" in item:
+            smcinfo['ISDC'] = item.split(' ')[6].strip() #SSD Amps
+        elif "IO5R" in item:
+            smcinfo['IO5R'] = item.split(' ')[6].strip() #Other 5v Amps
+        elif "IO3R" in item:
+            smcinfo['IO3R'] = item.split(' ')[6].strip() #Other 3v Amps
+        elif "IC3C" in item:
+            smcinfo['IC3C'] = item.split(' ')[6].strip() #CPU DDR Amps
+        elif "ILCD" in item:
+            smcinfo['ILCD'] = item.split(' ')[6].strip() #LCD Panel Amps
+        elif "IBLC" in item:
+            smcinfo['IBLC'] = item.split(' ')[6].strip() #LCD Backlight Amps
+        elif "IAPC" in item:
+            smcinfo['IAPC'] = item.split(' ')[6].strip() #AirPort Card Amps
+        elif "IHSC" in item:
+            smcinfo['IHSC'] = item.split(' ')[6].strip() #Thunderbolt Amps
+        elif "ICMC" in item:
+            smcinfo['ICMC'] = item.split(' ')[6].strip() #S2 Amps
+        elif "ITPC" in item:
+            smcinfo['ITPC'] = item.split(' ')[6].strip() #Trackpad Actuator Amps
+        elif "VTPC" in item:
+            smcinfo['VTPC'] = item.split(' ')[6].strip() #T101 Volts
+        elif "PTGR" in item:
+            smcinfo['PTGR'] = item.split(' ')[6].strip() #GPU Package Watts
+        elif "PCPR" in item:
+            smcinfo['PCPR'] = item.split(' ')[6].strip() #CPU Package Total Watts
+        elif "VC0M" in item:
+            smcinfo['VC0M'] = item.split(' ')[6].strip() #CPU MEM 1.5v Amps
+        elif "VG1C" in item:
+            smcinfo['VG1C'] = item.split(' ')[6].strip() #GPU Core Volts
+        elif "IG1C" in item:
+            smcinfo['IG1C'] = item.split(' ')[6].strip() #GPU Core Amps  
+        elif "VG0F" in item:
+            smcinfo['VG0F'] = item.split(' ')[6].strip() #GPU Framebuffer Volts
+        elif "IG0F" in item:
+            smcinfo['IG0F'] = item.split(' ')[6].strip() #GPU Framebuffer Amps
+        elif "IH05" in item:
+            smcinfo['IH05'] = item.split(' ')[6].strip() #3.5 HDD 5v Amps
+        elif "V1R1" in item:
+            smcinfo['V1R1'] = item.split(' ')[6].strip() #1.05v S0 Volts
+        elif "IH02" in item:
+            smcinfo['IH02'] = item.split(' ')[6].strip() #3.5 HDD 12v Amps
+        elif "IH1R" in item:
+            smcinfo['IH1R'] = item.split(' ')[6].strip() #SSD 3.3v Amps 
+        elif "ID2R" in item:
+            smcinfo['ID2R'] = item.split(' ')[6].strip() #12v Rail Amps
+        elif "I18C" in item:
+            smcinfo['I18C'] = item.split(' ')[6].strip() #1.8V Amps
+        elif "IB0L" in item:
+            smcinfo['IB0L'] = item.split(' ')[6].strip() #Battery Discrete Amps
+        elif "IBLR" in item:
+            smcinfo['IBLR'] = item.split(' ')[6].strip() #LDC Backlight Amps  
+        elif "IBTC" in item:
+            smcinfo['IBTC'] = item.split(' ')[6].strip() #Bluetooth Amps
+        elif "ISCC" in item:
+            smcinfo['ISCC'] = item.split(' ')[6].strip() #PCH PrimeCore Amps  
+        elif "ICAM" in item:
+            smcinfo['ICAM'] = item.split(' ')[6].strip() #CPU IA Core Amps
+        elif "ICEC" in item:
+            smcinfo['ICEC'] = item.split(' ')[6].strip() #CPU VCCEDRAM Amps
+        elif "ICGC" in item:
+            smcinfo['ICGC'] = item.split(' ')[6].strip() #CPU GT+GTX Discrete Amps
+        elif "ICGM" in item:
+            smcinfo['ICGM'] = item.split(' ')[6].strip() #CPU GT+GTX Amps  
+        elif "ICMC" in item:
+            smcinfo['ICMC'] = item.split(' ')[6].strip() #Camera Amps
+        elif "ICSC" in item:
+            smcinfo['ICSC'] = item.split(' ')[6].strip() #CPU VCCSA Amps
+        elif "IF3C" in item:
+            smcinfo['IF3C'] = item.split(' ')[6].strip() #T139 3.3v Amps
+        elif "IF5C" in item:
+            smcinfo['IF5C'] = item.split(' ')[6].strip() #T139 5v Amps 
+        elif "IHCC" in item:
+            smcinfo['IHCC'] = item.split(' ')[6].strip() #SSD 3.3v Amps
+        elif "IHNC" in item:
+            smcinfo['IHNC'] = item.split(' ')[6].strip() #SSD NAND Amps 
+        elif "IIDC" in item:
+            smcinfo['IIDC'] = item.split(' ')[6].strip() #T151 MESA Amps
+        elif "IKBC" in item:
+            smcinfo['IKBC'] = item.split(' ')[6].strip() #Keyboard Backlight Amps
+        elif "IM1C" in item:
+            smcinfo['IM1C'] = item.split(' ')[6].strip() #LPDDR 1.8v Amps
+        elif "IMCC" in item:
+            smcinfo['IMCC'] = item.split(' ')[6].strip() #CPU LPDDR 1.2v Amps
+        elif "IS1C" in item:
+            smcinfo['IS1C'] = item.split(' ')[6].strip() #Southbridge IO 1.0v Amps
+        elif "IT3C" in item:
+            smcinfo['IT3C'] = item.split(' ')[6].strip() #Trackpad and Keyboard 3.3v Amps
+        elif "ITAR" in item:
+            smcinfo['ITAR'] = item.split(' ')[6].strip() #Trackpad Actuator Amps
+        elif "IULC" in item:
+            smcinfo['IULC'] = item.split(' ')[6].strip() #Thunderbolt Left Side Amps
+        elif "IURC" in item:
+            smcinfo['IURC'] = item.split(' ')[6].strip() #Thunderbold Right Side
+        elif "PCAM" in item:
+            smcinfo['PCAM'] = item.split(' ')[6].strip() #CPU Core IMON Watts
+        elif "PCEC" in item:
+            smcinfo['PCEC'] = item.split(' ')[6].strip() #CPU VCCEDRAM Watts
+        elif "PCGC" in item:
+            smcinfo['PCGC'] = item.split(' ')[6].strip() #CPU GT Watts
+        elif "PCGM" in item:
+            smcinfo['PCGM'] = item.split(' ')[6].strip() #CPU GT IMON Watts
+        elif "PCSC" in item:
+            smcinfo['PCSC'] = item.split(' ')[6].strip() #CPU VCCSA Watts
+        elif "PHCC" in item:
+            smcinfo['PHCC'] = item.split(' ')[6].strip() #SSD Watts  
+        elif "PHNC" in item:
+            smcinfo['PHNC'] = item.split(' ')[6].strip() #NAND Watts
+        elif "PMCC" in item:
+            smcinfo['PMCC'] = item.split(' ')[6].strip() #CPU LPDDR 1.2v Watts
+        elif "PO3R" in item:
+            smcinfo['PO3R'] = item.split(' ')[6].strip() #Other 3.3v Watts
+        elif "PO5R" in item:
+            smcinfo['PO5R'] = item.split(' ')[6].strip() #Other 5v Watts
+        elif "PS1C" in item:
+            smcinfo['PS1C'] = item.split(' ')[6].strip() #Southbridge IO 1.0v Watts
+        elif "PTAR" in item:
+            smcinfo['PTAR'] = item.split(' ')[6].strip() #Trackpad Actuator Watts  
+        elif "VCGC" in item:
+            smcinfo['VCGC'] = item.split(' ')[6].strip() #CPU VCCGT/GTX Volts
+        elif "VCSC" in item:
+            smcinfo['VCSC'] = item.split(' ')[6].strip() #CPU VCCSA Volts
+        elif "VCSS" in item:
+            smcinfo['VCSS'] = item.split(' ')[6].strip() #Southbridge VCC PrimeCore Volts
+        elif "PD0R" in item:
+            smcinfo['PD0R'] = item.split(' ')[6].strip() #DC In rail Watts   
+            
+    return smcinfo
+
+
+def remove_all(substr, str):
+    index = 0
+    length = len(substr)
+    while string.find(str, substr) != -1:
+        index = string.find(str, substr)
+        str = str[0:index] + str[index+length:]
+    return str
+    
+def main():
+    
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
+
+    # Skip manual check
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'manualcheck':
+            print 'Manual check: skipping'
+            exit(0)
+
+    # Get results
+    info = get_smc_results()
+    
+    # Write smc results to cache file
+    output_plist = os.path.join(cachedir, 'fan_temps.plist')
+    plistlib.writePlist(info, output_plist)
+#    print plistlib.writePlistToString(info)
+
+if __name__ == "__main__":
+    main()

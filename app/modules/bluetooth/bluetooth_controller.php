@@ -31,22 +31,23 @@ class Bluetooth_controller extends Module_controller
      **/
     public function get_data($serial = '')
     {
-
+        $obj = new View();
+        
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+        
         $out = array();
         $temp = array();
-        if (! $this->authorized()) {
-            $out['error'] = 'Not authorized';
-        } else {
-            $bluetooth = new bluetooth_model;
-            foreach ($bluetooth->retrieve_records($serial) as $prefs) {
-                $temp[] = $prefs->rs;
-            }
-            foreach ($temp as $value) {
-                $out[$value['device_type']] = $value['battery_percent'];
-            }
+        $bluetooth = new Bluetooth_model;
+        foreach ($bluetooth->retrieve_records($serial) as $prefs) {
+            $temp[] = $prefs->rs;
+        }
+        foreach ($temp as $value) {
+            $out[$value['device_type']] = $value['battery_percent'];
         }
 
-        $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
     
@@ -61,6 +62,7 @@ class Bluetooth_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $bt = new Bluetooth_model();
