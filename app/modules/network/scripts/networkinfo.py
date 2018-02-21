@@ -24,12 +24,22 @@ def bashCommand(script):
 def get_network_info():
     networkservices = bashCommand(['/usr/sbin/networksetup', '-listallnetworkservices']).split('\n')[:-1]
     for network in networkservices:
+        dns = "DNS: "
         if "asterisk" in network:
             pass
         else:
             network_service_list.append('Service: %s' % network)
             network_info = bashCommand(['/usr/sbin/networksetup', '-getinfo', network]).split('\n')[:-1]
-            network_info.append("DNS: "+re.sub("There aren't any DNS Servers set on "+network+".","",re.sub('\n',', ',bashCommand(['/usr/sbin/networksetup', '-getdnsservers', network])))[:-2])
+            getdns = bashCommand(['/usr/sbin/networksetup', '-getdnsservers', network])
+            if "There aren't any DNS Servers set on " in getdns:
+                nameservers = bashCommand(['/bin/cat', '/etc/resolv.conf']).split('\n')[:-1]
+                for nameserver in nameservers:
+                    if "nameserver " in nameserver:
+                        dns = dns + re.sub('nameserver ','', nameserver)+", " 
+            else:
+                dns = "DNS: "+re.sub("There aren't any DNS Servers set on "+network+".","",re.sub('\n',', ',getdns))
+            
+            network_info.append(dns[:-2])
             network_info.append("VLANS: "+re.sub("There are no VLANs currently configured on this system.","",re.sub('\n',', ',bashCommand(['/usr/sbin/networksetup', '-listVLANs'])))[:-2])
             network_info.append("Active MTU: "+re.sub('[^0-9]','', re.sub("[\(\[].*?[\)\]]", "", bashCommand(['/usr/sbin/networksetup', '-getMTU', network])[:-1])))
             network_info.append(bashCommand(['/usr/sbin/networksetup', '-listvalidMTUrange', network])[:-1])
