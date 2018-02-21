@@ -25,8 +25,7 @@ class Gsx extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('serial_number')->unique()->nullable();
+            $table->string('serial_number');
             $table->string('warrantystatus')->nullable();
             $table->string('coverageenddate')->nullable();
             $table->string('coveragestartdate')->nullable();
@@ -46,17 +45,10 @@ class Gsx extends Migration
             $table->string('warrantymod')->nullable();
             $table->string('isvintage')->nullable();
             $table->string('isobsolete')->nullable();
-
-            $table->index('configdescription');
-            $table->index('coverageenddate');
-            $table->index('daysremaining');
-            $table->index('estimatedpurchasedate');
-            $table->index('isvintage');
-            $table->index('warrantystatus');
         });
         
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -82,7 +74,19 @@ class Gsx extends Migration
                 isobsolete
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('configdescription');
+            $table->index('coverageenddate');
+            $table->index('daysremaining');
+            $table->index('estimatedpurchasedate');
+            $table->index('isvintage');
+            $table->index('warrantystatus');
+        });
     }
     
     public function down()

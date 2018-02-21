@@ -16,7 +16,6 @@ class Caching_controller extends Module_controller
         $this->module_path = dirname(__FILE__);
     }
 
-
     /**
      * Default method
      *
@@ -39,6 +38,7 @@ class Caching_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $caching = new Caching_model;
@@ -53,55 +53,107 @@ class Caching_controller extends Module_controller
      **/
     public function get_client_tab_data($serial_number = '')
     {        
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $queryobj = new Caching_model();
         
-        $sql = "SELECT substr(collectiondate,1,10) AS 'groupdate', 
-                        SUM(bytesfromcachetoclients) AS 'bytesfromcachetoclients', 
-                        SUM(bytesfromorigintoclients) AS 'bytesfromorigintoclients', 
-                        SUM(bytesfrompeerstoclients) AS 'bytesfrompeerstoclients', 
-                        SUM(bytesfromcachetopeers) AS 'bytesfromcachetopeers', 
-                        SUM(bytesfromorigintopeers) AS 'bytesfromorigintopeers', 
-                        SUM(requestsfromclients) AS 'requestsfromclients', 
-                        SUM(requestsfrompeers) AS 'requestsfrompeers',
-                        SUM(bytespurgedyoungerthan1day) AS 'bytespurgedyoungerthan1day', 
-                        SUM(bytespurgedyoungerthan7days) AS 'bytespurgedyoungerthan7days', 
-                        SUM(bytespurgedyoungerthan30days) AS 'bytespurgedyoungerthan30days', 
-                        SUM(bytespurgedtotal) AS 'bytespurgedtotal', 
-                        SUM(bytesdropped) AS 'bytesdropped', 
-                        SUM(repliesfromcachetoclients) AS 'repliesfromcachetoclients', 
-                        SUM(repliesfromorigintoclients) AS 'repliesfromorigintoclients', 
-                        SUM(repliesfrompeerstoclients) AS 'repliesfrompeerstoclients',
-                        SUM(repliesfromcachetopeers) AS 'repliesfromcachetopeers',    
-                        SUM(repliesfromorigintopeers) AS 'repliesfromorigintopeers', 
-                        SUM(bytesimportedbyhttp) AS 'bytesimportedbyhttp', 
-                        SUM(bytesimportedbyxpc) AS 'bytesimportedbyxpc', 
-                        SUM(importsbyhttp) AS 'importsbyhttp',
-                        SUM(importsbyxpc) AS 'importsbyxpc'
-                        FROM caching 
-                        WHERE serial_number = '$serial_number'
-                        GROUP BY groupdate
-                        ORDER BY groupdate DESC";
+        // Check which version of data to return
+        $sqlcheck = "SELECT startupstatus
+                        FROM caching
+                        WHERE serial_number = '$serial_number'";
+            
+        $caching_check = $queryobj->query($sqlcheck);  
+                        
+        if ( ! empty($caching_check[0]->startupstatus)) {
+            // If column startupstatus is not empty/null, run SQL query for new dataset
+            $sql = "SELECT ' ' AS 'groupdate', 
+                            activated AS 'activated', 
+                            active AS 'active', 
+                            cachestatus AS 'cachestatus',
+                            startupstatus AS 'startupstatus',
+                            reachability AS 'reachability',
+                            cachefree AS 'cachefree',
+                            cacheused AS 'cacheused', 
+                            cachelimit AS 'cachelimit', 
+                            macsoftware AS 'macsoftware', 
+                            appletvsoftware AS 'appletvsoftware', 
+                            iossoftware AS 'iossoftware', 
+                            iclouddata AS 'iclouddata', 
+                            booksdata AS 'booksdata',
+                            itunesudata AS 'itunesudata', 
+                            moviesdata AS 'moviesdata', 
+                            musicdata AS 'musicdata', 
+                            otherdata AS 'otherdata', 
+                            personalcachefree AS 'personalcachefree',
+                            personalcacheused AS 'personalcacheused', 
+                            personalcachelimit AS 'personalcachelimit',    
+                            publicaddress AS 'publicaddress', 
+                            privateaddresses AS 'privateaddresses',
+                            port AS 'port', 
+                            registrationstatus AS 'registrationstatus',
+                            registrationerror AS 'registrationerror',
+                            registrationresponsecode AS 'registrationresponsecode',
+                            restrictedmedia AS 'restrictedmedia',
+                            serverguid AS 'serverguid',
+                            totalbytesreturnedtoclients AS 'totalbytesreturnedtoclients',
+                            totalbytesreturnedtochildren AS 'totalbytesreturnedtochildren',
+                            totalbytesreturnedtopeers AS 'totalbytesreturnedtopeers',
+                            totalbytesstoredfromorigin AS 'totalbytesstoredfromorigin',
+                            totalbytesstoredfromparents AS 'totalbytesstoredfromparents',
+                            totalbytesstoredfrompeers AS 'totalbytesstoredfrompeers',
+                            totalbytesdropped AS 'totalbytesdropped',
+                            totalbytesimported AS 'totalbytesimported'
+                            FROM caching 
+                            WHERE serial_number = '$serial_number'";
+        } else {
+        
+            // Else run legacy SQL query
+            $sql = "SELECT substr(collectiondate,1,10) AS 'groupdate', 
+                            SUM(bytesfromcachetoclients) AS 'bytesfromcachetoclients', 
+                            SUM(bytesfromorigintoclients) AS 'bytesfromorigintoclients', 
+                            SUM(bytesfrompeerstoclients) AS 'bytesfrompeerstoclients', 
+                            SUM(bytesfromcachetopeers) AS 'bytesfromcachetopeers', 
+                            SUM(bytesfromorigintopeers) AS 'bytesfromorigintopeers', 
+                            SUM(requestsfromclients) AS 'requestsfromclients', 
+                            SUM(requestsfrompeers) AS 'requestsfrompeers',
+                            SUM(bytespurgedyoungerthan1day) AS 'bytespurgedyoungerthan1day', 
+                            SUM(bytespurgedyoungerthan7days) AS 'bytespurgedyoungerthan7days', 
+                            SUM(bytespurgedyoungerthan30days) AS 'bytespurgedyoungerthan30days', 
+                            SUM(bytespurgedtotal) AS 'bytespurgedtotal', 
+                            SUM(bytesdropped) AS 'bytesdropped', 
+                            SUM(repliesfromcachetoclients) AS 'repliesfromcachetoclients', 
+                            SUM(repliesfromorigintoclients) AS 'repliesfromorigintoclients', 
+                            SUM(repliesfrompeerstoclients) AS 'repliesfrompeerstoclients',
+                            SUM(repliesfromcachetopeers) AS 'repliesfromcachetopeers',    
+                            SUM(repliesfromorigintopeers) AS 'repliesfromorigintopeers', 
+                            SUM(bytesimportedbyhttp) AS 'bytesimportedbyhttp', 
+                            SUM(bytesimportedbyxpc) AS 'bytesimportedbyxpc', 
+                            SUM(importsbyhttp) AS 'importsbyhttp',
+                            SUM(importsbyxpc) AS 'importsbyxpc'
+                            FROM caching 
+                            WHERE serial_number = '$serial_number'
+                            GROUP BY groupdate
+                            ORDER BY groupdate DESC";
+        }
         
         $caching_tab = $queryobj->query($sql);
                 
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_tab)))); 
     }
     
     /**
      * REST API for retrieving caching data for chart
      * @tuxudo
-     * Don't know how to make the graph work :(
      * 
      **/
     public function caching_graph()
     {
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.');
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
         
         $cachingdata = new Caching_model();
@@ -164,7 +216,6 @@ class Caching_controller extends Module_controller
             $purgedassoc[$value] = intval($purged[$i]);
         }
         
-        $obj = new View();
         $obj->view('json', array('msg' => array('dates' => $dates, 'cache' => $cacheassoc, 'origin' => $originassoc, 'purged' => $purgedassoc)));
     }
     
@@ -176,8 +227,9 @@ class Caching_controller extends Module_controller
      **/
      public function caching_widget()
      {        
+        $obj = new View();
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json
+            $obj->view('json', array('msg' => 'Not authorized'));
         }
 
         $queryobj = new Caching_model();
@@ -191,8 +243,137 @@ class Caching_controller extends Module_controller
         
         $caching_array = $queryobj->query($sql);
                 
-        $obj = new View();
         $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
      }
+    
+     /**
+     * REST API for retrieving media caching data for media widget
+     * @tuxudo
+     *
+     **/
+     public function caching_media_widget()
+     {        
+        $obj = new View();
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $queryobj = new Caching_model();
+        
+        $sql = "SELECT sum(booksdata) AS books,
+                        sum(musicdata) AS music,
+                        sum(moviesdata) AS movies
+                        FROM caching
+                        LEFT JOIN reportdata USING (serial_number)
+                        ".get_machine_group_filter();
+        
+        $caching_array = $queryobj->query($sql);
+                
+        $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
+     }
+    
+     /**
+     * REST API for retrieving software caching data for software widget
+     * @tuxudo
+     *
+     **/
+     public function caching_software_widget()
+     {        
+        $obj = new View();
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $queryobj = new Caching_model();
+        
+        $sql = "SELECT sum(appletvsoftware) AS appletv,
+                        sum(macsoftware) AS mac,
+                        sum(iossoftware) AS ios
+                        FROM caching
+                        LEFT JOIN reportdata USING (serial_number)
+                        ".get_machine_group_filter();
+        
+        $caching_array = $queryobj->query($sql);
+                
+        $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
+     }
+    
+     /**
+     * REST API for retrieving icloud caching data for iCloud widget
+     * @tuxudo
+     *
+     **/
+     public function caching_icloud_widget()
+     {        
+        $obj = new View();
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $queryobj = new Caching_model();
+        
+        $sql = "SELECT sum(iclouddata) AS icloud,
+                        sum(itunesudata) AS itunesu,
+                        sum(otherdata) AS other
+                        FROM caching
+                        LEFT JOIN reportdata USING (serial_number)
+                        ".get_machine_group_filter();
+        
+        $caching_array = $queryobj->query($sql);
+                
+        $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
+     }
+    
+     /**
+     * REST API for retrieving caching data for usage widget
+     * @tuxudo
+     *
+     **/
+     public function caching_usage_widget()
+     {        
+        $obj = new View();
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+        }
+
+        $queryobj = new Caching_model();
+        
+        $sql = "SELECT SUM(CASE WHEN activated = '1' 
+                        THEN cachefree 
+                        ELSE 0 
+                        END) AS cachefree,
+                        SUM(CASE WHEN activated = '1' 
+                        THEN cachelimit 
+                        ELSE 0 
+                        END) AS cachelimit,
+                        SUM(CASE WHEN activated = '1' 
+                        THEN cacheused 
+                        ELSE 0 
+                        END) AS cacheused
+                        FROM caching
+                        LEFT JOIN reportdata USING (serial_number)
+                        ".get_machine_group_filter();
+        
+        $caching_array = $queryobj->query($sql);
+                
+        $obj->view('json', array('msg' => current(array('msg' => $caching_array[0])))); 
+     }
+    
+    /**
+     * Get reachability IP address for widget
+     * @tuxudo
+     *
+     **/
+    public function get_reachable_cache_name()
+    {
+        $obj = new View();
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $cache = new Caching_model;
+        $obj->view('json', array('msg' => $cache->get_reachable_cache_name()));
+    }
 
 } // END class Caching_controller

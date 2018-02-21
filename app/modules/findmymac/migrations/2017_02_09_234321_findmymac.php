@@ -25,24 +25,16 @@ class Findmymac extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('status');
             $table->string('ownerdisplayname')->nullable();
             $table->string('email')->nullable();
             $table->string('personid')->nullable();
             $table->string('hostname')->nullable();
-
-            
-            $table->index('serial_number');
-            $table->index('status');
-            $table->index('ownerdisplayname');
-            $table->index('email');
-            $table->index('personid');
-            $table->index('hostname');
         });
         
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -54,7 +46,18 @@ class Findmymac extends Migration
                 hostname
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('status');
+            $table->index('ownerdisplayname');
+            $table->index('email');
+            $table->index('personid');
+            $table->index('hostname');
+        });
     }
     
     public function down()

@@ -25,7 +25,6 @@ class Printer extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('serial_number');
             $table->string('name');
             $table->string('ppd');
@@ -34,19 +33,10 @@ class Printer extends Migration
             $table->string('default_set');
             $table->string('printer_status');
             $table->string('printer_sharing');
-
-            $table->index('serial_number');
-            $table->index('name');
-            $table->index('ppd');
-            $table->index('driver_version');
-            $table->index('url');
-            $table->index('default_set');
-            $table->index('printer_status');
-            $table->index('printer_sharing');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -60,7 +50,20 @@ class Printer extends Migration
                 printer_sharing
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('name');
+            $table->index('ppd');
+            $table->index('driver_version');
+            $table->index('url');
+            $table->index('default_set');
+            $table->index('printer_status');
+            $table->index('printer_sharing');
+        });
     }
 
     public function down()

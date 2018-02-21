@@ -26,7 +26,6 @@ class Managedinstalls extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('serial_number');
             $table->string('name');
             $table->string('display_name');
@@ -35,18 +34,10 @@ class Managedinstalls extends Migration
             $table->integer('installed');
             $table->string('status');
             $table->string('type');
-
-            $table->index('display_name');
-            $table->index('name');
-            $table->index(['name', 'version']);
-            $table->index('serial_number');
-            $table->index('status');
-            $table->index('type');
-            $table->index('version');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO
+            $capsule::unprepared("INSERT INTO
                 $this->tableName
             SELECT
                 id,
@@ -60,7 +51,19 @@ class Managedinstalls extends Migration
                 type
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('display_name');
+            $table->index('name');
+            $table->index(['name', 'version']);
+            $table->index('serial_number');
+            $table->index('status');
+            $table->index('type');
+            $table->index('version');
+        });
     }
 
     public function down()

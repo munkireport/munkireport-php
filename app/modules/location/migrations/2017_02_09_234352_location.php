@@ -27,7 +27,7 @@ class Location extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('address')->nullable();
             $table->integer('altitude')->default(0);
             $table->string('currentstatus');
@@ -39,13 +39,10 @@ class Location extends Migration
             $table->double('longitude')->default(0.0);
             $table->integer('longitudeaccuracy')->default(0);
             $table->string('stalelocation')->nullable();
-
-            $table->index('address');
-            $table->index('currentstatus');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -63,7 +60,15 @@ class Location extends Migration
                 stalelocation
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('address');
+            $table->index('currentstatus');
+        });
     }
 
     public function down()

@@ -26,7 +26,7 @@ class Machine extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('hostname');
             $table->string('machine_model');
             $table->string('machine_desc')->nullable();
@@ -46,30 +46,10 @@ class Machine extends Migration
             $table->string('machine_name')->nullable();
             $table->string('packages')->nullable();
             $table->string('buildversion')->nullable();
-            
-            $table->index(['serial_number']);
-            $table->index(['hostname']);
-            $table->index(['machine_model']);
-            $table->index(['machine_desc']);
-            $table->index(['cpu']);
-            $table->index(['current_processor_speed']);
-            $table->index(['cpu_arch']);
-            $table->index(['os_version']);
-            $table->index(['physical_memory']);
-            $table->index(['platform_UUID']);
-            $table->index(['number_processors']);
-            $table->index(['SMC_version_system']);
-            $table->index(['boot_rom_version']);
-            $table->index(['bus_speed']);
-            $table->index(['computer_name']);
-            $table->index(['l2_cache']);
-            $table->index(['machine_name']);
-            $table->index(['packages']);
-            $table->index(['buildversion']);
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -95,7 +75,32 @@ class Machine extends Migration
                 buildversion
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index(['serial_number']);
+            $table->index(['hostname']);
+            $table->index(['machine_model']);
+            $table->index(['machine_desc']);
+            $table->index(['cpu']);
+            $table->index(['current_processor_speed']);
+            $table->index(['cpu_arch']);
+            $table->index(['os_version']);
+            $table->index(['physical_memory']);
+            $table->index(['platform_UUID']);
+            $table->index(['number_processors']);
+            $table->index(['SMC_version_system']);
+            $table->index(['boot_rom_version']);
+            $table->index(['bus_speed']);
+            $table->index(['computer_name']);
+            $table->index(['l2_cache']);
+            $table->index(['machine_name']);
+            $table->index(['packages']);
+            $table->index(['buildversion']);
+        });
     }
     
     public function down()

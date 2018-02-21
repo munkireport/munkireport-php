@@ -25,13 +25,11 @@ class Timemachine extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('serial_number')->unique()->nullable();
+            $table->string('serial_number');
             $table->string('last_success')->nullable();
             $table->string('last_failure')->nullable();
             $table->string('last_failure_msg')->nullable();
             $table->integer('duration')->nullable();
-
             $table->integer('always_show_deleted_backups_warning')->nullable();
             $table->integer('auto_backup')->nullable();
             $table->bigInteger('bytes_available')->nullable();
@@ -63,42 +61,10 @@ class Timemachine extends Migration
             $table->string('time_capsule_display_name')->nullable();
             $table->string('volume_display_name')->nullable();
             $table->integer('destinations')->nullable();
-
-            $table->index('alias_volume_name');
-            $table->index('always_show_deleted_backups_warning');
-            $table->index('auto_backup');
-            $table->index('bytes_available');
-            $table->index('bytes_used');
-            $table->index('consistency_scan_date');
-            $table->index('date_of_latest_warning');
-            $table->index('destination_id');
-            $table->index('destinations');
-            $table->index('duration');
-            $table->index('earliest_snapshot_date');
-            $table->index('host_uuids');
-            $table->index('is_network_destination');
-            $table->index('last_configuration_trace_date');
-            $table->index('last_destination_id');
-            $table->index('last_failure');
-            $table->index('last_failure_msg');
-            $table->index('last_known_encryption_state');
-            $table->index('last_success');
-            $table->index('latest_snapshot_date');
-            $table->index('localized_disk_image_volume_name');
-            $table->index('mobile_backups');
-            $table->index('mount_point');
-            $table->index('network_url');
-            $table->index('result');
-            $table->index('root_volume_uuid');
-            $table->index('server_display_name');
-            $table->index('skip_system_files');
-            $table->index('snapshot_count');
-            $table->index('time_capsule_display_name');
-            $table->index('volume_display_name');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -140,7 +106,44 @@ class Timemachine extends Migration
                 destinations
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('alias_volume_name');
+            $table->index('always_show_deleted_backups_warning');
+            $table->index('auto_backup');
+            $table->index('bytes_available');
+            $table->index('bytes_used');
+            $table->index('consistency_scan_date');
+            $table->index('date_of_latest_warning');
+            $table->index('destination_id');
+            $table->index('destinations');
+            $table->index('duration');
+            $table->index('earliest_snapshot_date');
+            $table->index('host_uuids');
+            $table->index('is_network_destination');
+            $table->index('last_configuration_trace_date');
+            $table->index('last_destination_id');
+            $table->index('last_failure');
+            $table->index('last_failure_msg');
+            $table->index('last_known_encryption_state');
+            $table->index('last_success');
+            $table->index('latest_snapshot_date');
+            $table->index('localized_disk_image_volume_name');
+            $table->index('mobile_backups');
+            $table->index('mount_point');
+            $table->index('network_url');
+            $table->index('result');
+            $table->index('root_volume_uuid');
+            $table->index('server_display_name');
+            $table->index('skip_system_files');
+            $table->index('snapshot_count');
+            $table->index('time_capsule_display_name');
+            $table->index('volume_display_name');
+        });
     }
 
     public function down()

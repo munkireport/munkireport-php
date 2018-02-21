@@ -26,7 +26,6 @@ class Gpu extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number');
-
             $table->string('model')->nullable();
             $table->string('vendor')->nullable();
             $table->string('vram')->nullable();
@@ -37,22 +36,10 @@ class Gpu extends Migration
             $table->string('efi_version')->nullable();
             $table->string('revision_id')->nullable();
             $table->string('rom_revision')->nullable();
-
-            $table->index('serial_number');
-            $table->index('model');
-            $table->index('vendor');
-            $table->index('vram');
-            $table->index('pcie_width');
-            $table->index('slot_name');
-            $table->index('device_id');
-            $table->index('gmux_version');
-            $table->index('efi_version');
-            $table->index('revision_id');
-            $table->index('rom_revision');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -69,7 +56,23 @@ class Gpu extends Migration
                 rom_revision
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('model');
+            $table->index('vendor');
+            $table->index('vram');
+            $table->index('pcie_width');
+            $table->index('slot_name');
+            $table->index('device_id');
+            $table->index('gmux_version');
+            $table->index('efi_version');
+            $table->index('revision_id');
+            $table->index('rom_revision');
+        });
     }
     
     public function down()

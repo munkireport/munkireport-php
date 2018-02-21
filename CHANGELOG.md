@@ -1,6 +1,39 @@
-### [3.0.1](https://github.com/munkireport/munkireport-php/compare/v3.0.0...HEAD) (Unreleased)
+### [3.0.3](https://github.com/munkireport/munkireport-php/compare/v3.0.2...HEAD) (Unreleased)
 
-### [3.0.0](https://github.com/munkireport/munkireport-php/compare/v3.0.0...v3.0.0) (February 07, 2018)
+### [3.0.2](https://github.com/munkireport/munkireport-php/compare/v3.0.1...v3.0.2) (February 15, 2018)
+
+More bugfixes, mostly migration related.
+
+FIXES
+- Fixed migrations for SQLite (#971)
+- Added indexes for the tag, usb, fonts, network_shares, homebrew and servermetrics modules
+- Improved Dockerfile
+
+
+### [3.0.1](https://github.com/munkireport/munkireport-php/compare/v3.0.0...v3.0.1) (February 14, 2018)
+
+This is a small bugfix release that fixes some issues with the 3.0.0 release.
+
+FIXES
+- Fixed certificate warnings in events (#959) @tuxudo
+- Hide zero blocks on disk widgets (#958) @tuxudo
+- Security ssh detection update (#943) @poundbangbash
+- Smart stats report title fix (#942) @poundbangbash
+- Changed power columns to be nullable in migration (#955) @tuxudo
+- Smart stats widget title localization fix (#961) @poundbangbash
+- Fixed WiFi nullable migration (#957) @tuxudo
+- Fix migration files @poundbangbash
+- Disk report error fix (#965) @tuxudo
+- Extensions migration name fix (#968) @poundbangbash
+- Adjust database log view to use theme for readability. (#963) @poundbangbash
+- Fix bad datatype in usage_stats migration (#956) @tuxudo
+
+NEW FEATURES
+- Extension module TeamID breakout (#953) @poundbangbash
+- Create widget for os build breakdown and add it to the client report (#951) @AaronBurchfield
+- Update Dockerfile for php7.2
+
+### [3.0.0](https://github.com/munkireport/munkireport-php/compare/v2.15.2...v3.0.0) (February 07, 2018)
 
 The third major version of munkireport attempts to solve a couple of longstanding issues concerning security, dependency management and database management. We're moving slowly to using eloquent as replacement for the KISS database abstraction. A ton of work has been done by @mosen to make this all work.
 

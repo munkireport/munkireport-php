@@ -25,19 +25,14 @@ class MbbrStatus extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('entitlement_status');
             $table->string('machine_id');
             $table->string('install_token');
-
-
-            $table->index('entitlement_status');
-            $table->index('machine_id');
-            $table->index('install_token');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -47,7 +42,16 @@ class MbbrStatus extends Migration
                 install_token
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('entitlement_status');
+            $table->index('machine_id');
+            $table->index('install_token');
+        });
     }
     
     public function down()

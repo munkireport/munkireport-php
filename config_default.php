@@ -147,6 +147,7 @@
 	|		$conf['auth']['auth_AD']['admin_password'] = NULL; //if needed to perform the search
 	|		$conf['auth']['auth_AD']['mr_allowed_users'] = ['macadmin','bossman'];
 	|		$conf['auth']['auth_AD']['mr_allowed_groups'] = ['AD Group 1','AD Group 2']; //case sensitive
+	|		$conf['auth']['auth_AD']['mr_recursive_groupsearch'] = false; //set to true to allow recursive searching
 	|
 	| Authentication methods are checked in the order that they appear above. Not in the order of your
 	| config.php!. You can combine methods 2, 3 and 4
@@ -333,6 +334,7 @@
 
 	/*
 	|===============================================
+
 	| User Sessions Events
 	|===============================================
 	|
@@ -349,6 +351,19 @@
 	$conf['user_sessions_save_shutdown'] = TRUE;
 	$conf['user_sessions_keep_historical'] = TRUE;
 	$conf['user_sessions_unique_users_only'] = FALSE;
+
+	/*
+	|=======
+	| Legacy Caching Listing
+	|===============================================
+	|
+	| Starting with 10.13, Apple changed the caching server. In MunkiReport,
+	| you can hide the legacy caching server listing that shows an itemized
+	| listing for all caching server transactions for caching servers running
+	| 10.8-10.12. To hide the "Caching (Legacy)" listing, set this to FALSE.
+	|
+	*/
+	$conf['caching_show_legacy'] = TRUE;
 
 
 	/*
@@ -470,24 +485,6 @@
 	|
 	*/
 	//$conf['temperature_unit'] = 'F';
-
-
-	/*
-	|===============================================
-	| Migrations
-	|===============================================
-	|
-	| When a new version of munkireport comes out
-	| it might need to update your database structure
-	| if you want to allow this, set
-	| $conf['allow_migrations'] = TRUE;
-	|
-	| There is a small overhead (one database query) when setting allow_migrations
-	| to TRUE. If you are concerned about performance, you can set allow_migrations
-	| to FALSE when you're done migrating.
-	|
-	*/
-	$conf['allow_migrations'] = FALSE;
 
 	/*
 	|===============================================
@@ -793,7 +790,10 @@
 	|     'database'  => 'munkireport',
 	|     'username'  => 'munkireport',
 	|     'password'  => 'munkireport',
-	|     'options'   => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
+	|     'charset' => 'utf8mb4',
+	|     'collation' => 'utf8mb4_unicode_ci',
+	|     'strict' => true,
+	|     'engine' => 'InnoDB',
 	| ];
 	|
 	*/

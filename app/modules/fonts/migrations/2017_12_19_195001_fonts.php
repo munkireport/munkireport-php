@@ -26,7 +26,6 @@ class Fonts extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number');
-
             $table->string('name');
             $table->boolean('enabled');
             $table->string('type_name');
@@ -48,26 +47,10 @@ class Fonts extends Migration
             $table->text('vendor');
             $table->text('designer');
             $table->text('trademark');
-            
-            $table->index('name');
-            $table->index('type');
-            $table->index('type_name');
-            $table->index('family');
-            $table->index('fullname');
-            $table->index('style');
-            $table->index('unique_id');
-            $table->index('version');
-            $table->index('enabled');
-            $table->index('copy_protected');
-            $table->index('duplicate');
-            $table->index('embeddable');
-            $table->index('type_enabled');
-            $table->index('outline');
-            $table->index('valid');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -95,7 +78,27 @@ class Fonts extends Migration
                 trademark
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('name');
+            $table->index('type');
+            $table->index('type_name');
+            $table->index('family');
+            $table->index('fullname');
+            $table->index('style');
+            $table->index('unique_id');
+            $table->index('version');
+            $table->index('enabled');
+            $table->index('copy_protected');
+            $table->index('duplicate');
+            $table->index('embeddable');
+            $table->index('type_enabled');
+            $table->index('outline');
+            $table->index('valid');
+        });
     }
     
     public function down()

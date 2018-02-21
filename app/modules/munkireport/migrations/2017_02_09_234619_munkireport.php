@@ -27,7 +27,7 @@ class Munkireport extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('runtype')->nullable();
             $table->string('version')->nullable();
             $table->integer('errors')->nullable();
@@ -38,17 +38,10 @@ class Munkireport extends Migration
             $table->string('starttime')->nullable();
             $table->string('endtime')->nullable();
             $table->string('timestamp')->nullable();
-
-            $table->index('errors');
-            $table->index('manifestname');
-            $table->index('runtype');
-            $table->index('timestamp');
-            $table->index('version');
-            $table->index('warnings');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -65,7 +58,19 @@ class Munkireport extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('errors');
+            $table->index('manifestname');
+            $table->index('runtype');
+            $table->index('timestamp');
+            $table->index('version');
+            $table->index('warnings');
+        });
     }
 
     public function down()

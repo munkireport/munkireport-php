@@ -25,7 +25,6 @@ class Displays extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('serial_number')->nullable();
             $table->integer('type')->nullable();
             $table->string('display_serial')->nullable();
@@ -34,17 +33,10 @@ class Displays extends Migration
             $table->string('manufactured')->nullable();
             $table->string('native')->nullable();
             $table->bigInteger('timestamp')->nullable();
-
-            $table->index('serial_number');
-            $table->index('display_serial');
-            $table->index('vendor');
-            $table->index('model');
-            $table->index('native');
-            $table->index('timestamp');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -58,7 +50,18 @@ class Displays extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('display_serial');
+            $table->index('vendor');
+            $table->index('model');
+            $table->index('native');
+            $table->index('timestamp');
+        });
     }
 
     public function down()

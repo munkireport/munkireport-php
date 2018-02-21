@@ -1,48 +1,47 @@
 #!/bin/bash
 
-# Check if caching is 10.9 or higher, only install if it is
-if [[ $(/usr/bin/sw_vers -productVersion | /usr/bin/cut -d . -f 2) -lt 9 ]]; then
-
-	echo "Error: Fans and Temperatures modules requires 10.9 or higher!"
-	
-else
-
 # fan_temps_controller
 NW_CTL="${BASEURL}index.php?/module/fan_temps/"
 
 # Get the script in the proper directory
-"${CURL[@]}"  -s "${NW_CTL}get_script/fan_temps.sh" -o "${MUNKIPATH}preflight.d/fan_temps.sh"
+"${CURL[@]}"  -s "${NW_CTL}get_script/fan_temps" -o "${MUNKIPATH}preflight.d/fan_temps"
 
-# Uncomment next line if upgrading smckit
-# rm -f "${MUNKIPATH}smckit"
-
-# Only download smckit.zip if smckit doesn't existi
-if [ ! -f "${MUNKIPATH}smckit" ]; then
-    "${CURL[@]}"  -s "${NW_CTL}get_script/smckit.zip" -o "${MUNKIPATH}smckit.zip"
+# Only download smc.zip if smc doesn't exist
+if [ ! -f "${MUNKIPATH}smc" ]; then
+    "${CURL[@]}"  -s "${NW_CTL}get_script/smc.zip" -o "${MUNKIPATH}smc.zip"
 fi
 
-if [ "${?}" != 0 ]
-then
+if [ "${?}" != 0 ]; then
 	echo "Failed to download all required components!"
-	rm -f "${MUNKIPATH}preflight.d/fan_temps.sh"
-	rm -f "${MUNKIPATH}smckit.zip"
+	rm -f "${MUNKIPATH}preflight.d/fan_temps"
+	rm -f "${MUNKIPATH}smc.zip"
 	exit 1
 else
+
+    # Delete smckit
+    if [ -f "${MUNKIPATH}smckit" ]; then
+        rm -f "${MUNKIPATH}smckit"
+    fi
+
+    # Delete fan_temps.sh
+    if [ -f "${MUNKIPATH}preflight.d/fan_temps.sh" ]; then
+        rm -f "${MUNKIPATH}preflight.d/fan_temps.sh"
+    fi
+
 	# Unzip the executable only if it exists
-	if [ -f "${MUNKIPATH}smckit.zip" ]; then
-	     unzip  -oqq "${MUNKIPATH}smckit.zip" -d "${MUNKIPATH}"
+	if [ -f "${MUNKIPATH}smc.zip" ]; then
+	     unzip  -oqq "${MUNKIPATH}smc.zip" -d "${MUNKIPATH}"
 	fi
 
 	# Make executable
-	chmod a+x "${MUNKIPATH}preflight.d/fan_temps.sh"
-	chmod a+x "${MUNKIPATH}smckit"
+	chmod a+x "${MUNKIPATH}preflight.d/fan_temps"
+	chmod a+x "${MUNKIPATH}smc"
     
-	# Clean up smckit.zip only if it exists
-	if [ -f "${MUNKIPATH}smckit.zip" ]; then
-	     rm -f "${MUNKIPATH}smckit.zip"
+	# Clean up smc.zip only if it exists
+	if [ -f "${MUNKIPATH}smc.zip" ]; then
+	     rm -f "${MUNKIPATH}smc.zip"
 	fi
     
 	# Set preference to include this file in the preflight check
 	setreportpref "fan_temps" "${CACHEPATH}fan_temps.plist"
-fi
 fi

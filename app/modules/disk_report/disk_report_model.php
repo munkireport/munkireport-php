@@ -182,7 +182,7 @@ class Disk_report_model extends \Model
             $this->merge($disk);
 
             // Typecast Boolean values
-            $this->Internal = (int) $this->Internal;
+            $this->internal = (int) $this->internal;
             $this->encrypted = (int) $this->encrypted;
 
             $this->id = '';
