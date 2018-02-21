@@ -105,8 +105,8 @@ $(document).on('appReady', function(e, lang) {
 
 
 		// Format filesizes
-		$('.mr-TotalSize').html(fileSize(machineData.totalsize, 1));
-		$('.mr-UsedSize').html(fileSize(machineData.totalsize - machineData.freespace, 1));
+		$('.mr-TotalSize').html(fileSize(machineData.TotalSize, 1));
+		$('.mr-UsedSize').html(fileSize(machineData.TotalSize - machineData.freespace, 1));
 		$('.mr-freespace').html(fileSize(machineData.freespace, 1));
 
 		// Smart status

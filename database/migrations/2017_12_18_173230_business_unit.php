@@ -28,10 +28,13 @@ class BusinessUnit extends Migration
             $table->integer('unitid');
             $table->string('property');
             $table->string('value');
+
+            $table->index('property');
+            $table->index('value');
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
+            $capsule::select("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -40,14 +43,7 @@ class BusinessUnit extends Migration
                 value
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->index('property');
-            $table->index('value');
-        });
     }
 
     public function down()

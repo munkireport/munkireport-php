@@ -31,7 +31,7 @@ class MachineGroup extends Migration
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
+            $capsule::select("INSERT INTO 
                 $this->tableName
             SELECT
                 id,

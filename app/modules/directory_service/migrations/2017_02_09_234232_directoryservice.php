@@ -26,7 +26,7 @@ class Directoryservice extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number');
+            $table->string('serial_number')->unique();
             $table->string('which_directory_service')->nullable();
             $table->string('directory_service_comments')->nullable();
             $table->string('adforest')->nullable();
@@ -51,11 +51,15 @@ class Directoryservice extends Migration
             $table->string('passwordchangeinterval')->nullable();
             $table->string('restrictdynamicdnsupdates')->nullable();
             $table->string('namespacemode')->nullable();
+
+            $table->index('allowedadmingroups');
+            $table->index('directory_service_comments');
+            $table->index('which_directory_service');
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
-                $this->tableName (serial_number, which_directory_service, directory_service_comments, adforest, addomain, computeraccount, createmobileaccount, requireconfirmation, forcehomeinstartup, mounthomeassharepoint, usewindowsuncpathforhome, networkprotocoltobeused, defaultusershell, mappinguidtoattribute, mappingusergidtoattribute, mappinggroupgidtoattr, generatekerberosauth, preferreddomaincontroller, allowedadmingroups, authenticationfromanydomain, packetsigning, packetencryption, passwordchangeinterval, restrictdynamicdnsupdates, namespacemode) 
+            $capsule::select('INSERT INTO 
+                directoryservice (serial_number, which_directory_service, directory_service_comments, adforest, addomain, computeraccount, createmobileaccount, requireconfirmation, forcehomeinstartup, mounthomeassharepoint, usewindowsuncpathforhome, networkprotocoltobeused, defaultusershell, mappinguidtoattribute, mappingusergidtoattribute, mappinggroupgidtoattr, generatekerberosauth, preferreddomaincontroller, allowedadmingroups, authenticationfromanydomain, packetsigning, packetencryption, passwordchangeinterval, restrictdynamicdnsupdates, namespacemode) 
             SELECT 
                 serial_number,
                 which_directory_service,
@@ -83,17 +87,8 @@ class Directoryservice extends Migration
                 restrictdynamicdnsupdates,
                 namespacemode
             FROM
-                $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
+                directoryservice_orig');
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->unique('serial_number');
-            $table->index('allowedadmingroups');
-            $table->index('directory_service_comments');
-            $table->index('which_directory_service');
-        });
     }
 
     public function down()

@@ -25,17 +25,25 @@ class SccmStatus extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number');
+
+            $table->string('serial_number')->unique();
             $table->string('agent_status')->nullable();
             $table->string('mgmt_point')->nullable();
             $table->string('enrollment_name')->nullable();
             $table->string('enrollment_server')->nullable();
             $table->string('last_checkin')->nullable();
             $table->string('cert_exp')->nullable();
+
+            $table->index('agent_status');
+            $table->index('cert_exp');
+            $table->index('enrollment_name');
+            $table->index('enrollment_server');
+            $table->index('last_checkin');
+            $table->index('mgmt_point');
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
+            $capsule::select("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -48,19 +56,7 @@ class SccmStatus extends Migration
                 cert_exp
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->unique('serial_number');
-            $table->index('agent_status');
-            $table->index('cert_exp');
-            $table->index('enrollment_name');
-            $table->index('enrollment_server');
-            $table->index('last_checkin');
-            $table->index('mgmt_point');
-        });
     }
 
     public function down()

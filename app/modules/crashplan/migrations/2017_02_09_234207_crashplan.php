@@ -5,25 +5,23 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Crashplan extends Migration
 {
-    private $tableName = 'crashplan';
-    private $tableNameV2 = 'crashplan_orig';
-
     public function up()
     {
         $capsule = new Capsule();
+
         $migrateData = false;
 
-        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+        if ($capsule::schema()->hasTable('crashplan_orig')) {
             // Migration already failed before, but didnt finish
             throw new Exception("previous failed migration exists");
         }
 
-        if ($capsule::schema()->hasTable($this->tableName)) {
-            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+        if ($capsule::schema()->hasTable('crashplan')) {
+            $capsule::schema()->rename('crashplan', 'crashplan_orig');
             $migrateData = true;
         }
 
-        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
+        $capsule::schema()->create('crashplan', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->nullable();
             $table->string('destination')->nullable();
@@ -31,11 +29,14 @@ class Crashplan extends Migration
             $table->integer('duration')->nullable();
             $table->bigInteger('last_failure')->nullable();
             $table->string('reason')->nullable();
+
+            $table->index('reason');
+            $table->index('serial_number');
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
-                $this->tableName
+            $capsule::select('INSERT INTO 
+                crashplan
             SELECT
                 id,
                 serial_number,
@@ -45,23 +46,17 @@ class Crashplan extends Migration
                 last_failure,
                 reason
             FROM
-                $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
+                crashplan_orig');
         }
 
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->index('reason');
-            $table->index('serial_number');
-        });
     }
-
+    
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists($this->tableName);
-        if ($capsule::schema()->hasTable($this->tableNameV2)) {
-            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        $capsule::schema()->dropIfExists('crashplan');
+        if ($capsule::schema()->hasTable('crashplan_orig')) {
+            $capsule::schema()->rename('crashplan_orig', 'crashplan');
         }
     }
 }
