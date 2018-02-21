@@ -94,4 +94,30 @@ class Network_controller extends Module_controller
 
         $obj->view('json', array('msg' => $out));
     }
-} // END class default_module
+    
+     /**
+     * Retrieve data in json format
+     * @author tuxudo
+     *
+     **/
+    public function get_tab_data($serial_number = '')
+    {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+        
+        $queryobj = new Network_model();
+        
+        $sql = "SELECT service, `order`, status, ethernet, clientid, ipv4conf, ipv4ip, ipv4dns, ipv4mask, ipv4router, ipv6conf, ipv6ip, ipv6prefixlen, ipv6router, vlans, activemtu, validmturange, currentmedia, activemedia
+                        FROM network 
+                        WHERE serial_number = '$serial_number'";
+        
+        $network_tab = $queryobj->query($sql);
+
+        $network = new Network_model;
+        $obj->view('json', array('msg' => current(array('msg' => $network_tab)))); 
+    }
+} // END class Network_controller
