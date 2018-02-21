@@ -31,10 +31,14 @@ class Comment extends Migration
             $table->text('text');
             $table->text('html');
             $table->bigInteger('timestamp');
+            
+            $table->index('serial_number');
+            $table->index('section');
+            $table->index('user');
         });
         
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
+            $capsule::select("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -46,15 +50,7 @@ class Comment extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->index('serial_number');
-            $table->index('section');
-            $table->index('user');
-        });
     }
 
     public function down()

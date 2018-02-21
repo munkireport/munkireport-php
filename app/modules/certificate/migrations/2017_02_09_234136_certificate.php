@@ -5,37 +5,41 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Certificate extends Migration
 {
-    private $tableName = 'certificate';
-    private $tableNameV2 = 'certificate_orig';
-
     public function up()
     {
         $capsule = new Capsule();
         $migrateData = false;
 
-        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+        if ($capsule::schema()->hasTable('certificate_orig')) {
             // Migration already failed before, but didnt finish
             throw new Exception("previous failed migration exists");
         }
 
-        if ($capsule::schema()->hasTable($this->tableName)) {
-            $capsule::schema()->rename($this->tableName, $this->tableNameV2);
+        if ($capsule::schema()->hasTable('certificate')) {
+            $capsule::schema()->rename('certificate', 'certificate_orig');
             $migrateData = true;
         }
 
-        $capsule::schema()->create($this->tableName, function (Blueprint $table) {
-              $table->increments('id');
-              $table->string('serial_number');
-              $table->bigInteger('cert_exp_time');
-              $table->string('cert_path');
-              $table->string('cert_cn');
-              $table->string('issuer')->nullable();
-              $table->string('cert_location');
+        $capsule::schema()->create('certificate', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('serial_number');
+            $table->bigInteger('cert_exp_time');
+            $table->string('cert_path');
+            $table->string('cert_cn');
+            $table->string('issuer')->nullable();
+            $table->string('cert_location');
+
+            $table->index('cert_cn');
+            $table->index('cert_exp_time');
+            $table->index('cert_location');
+            $table->index('cert_path');
+            $table->index('issuer');
+            $table->index('serial_number');
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
-                $this->tableName
+            $capsule::select('INSERT INTO 
+                certificate
             SELECT
                 id,
                 serial_number,
@@ -45,27 +49,16 @@ class Certificate extends Migration
                 issuer,
                 cert_location
             FROM
-                $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
+                certificate_orig');
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->index('serial_number');
-            $table->index('cert_cn');
-            $table->index('cert_exp_time');
-            $table->index('cert_location');
-            $table->index('cert_path');
-            $table->index('issuer');
-        });
     }
     
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists($this->tableName);
-        if ($capsule::schema()->hasTable($this->tableNameV2)) {
-            $capsule::schema()->rename($this->tableNameV2, $this->tableName);
+        $capsule::schema()->dropIfExists('certificate');
+        if ($capsule::schema()->hasTable('certificate_orig')) {
+            $capsule::schema()->rename('certificate_orig', 'certificate');
         }
     }
 }

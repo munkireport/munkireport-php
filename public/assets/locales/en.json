@@ -70,7 +70,7 @@
         "four_weeks_plus": "Latest backup older then 4 weeks",
         "kind": "Backup Kind",
         "last_failure": "Last Failed Backup",
-        "last_failure_msg": "Last Failure Message",
+        "last_failure_msg": "Message",
         "last_success": "Last Successful Backup",
         "lastweek": "Latest backup more than a day ago",
         "location_name": "Location Name",

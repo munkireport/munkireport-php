@@ -25,7 +25,8 @@ class Installhistory extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number');
+
+            $table->string('serial_number')->index();
             $table->bigInteger('date');
             $table->string('displayName');
             $table->string('displayVersion');
@@ -34,7 +35,7 @@ class Installhistory extends Migration
         });
         
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
+            $capsule::select("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -46,13 +47,7 @@ class Installhistory extends Migration
                 processName
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->index('serial_number');
-        });
     }
 
     public function down()

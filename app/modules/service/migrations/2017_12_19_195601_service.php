@@ -30,10 +30,13 @@ class Service extends Migration
             $table->string('service_state');
             $table->bigInteger('timestamp');
             
+            $table->index('serial_number');
+            $table->index('service_name');
+            $table->index('service_state');
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
+            $capsule::select("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -43,15 +46,7 @@ class Service extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-          $table->index('serial_number');
-          $table->index('service_name');
-          $table->index('service_state');
-        });
     }
 
     public function down()

@@ -3,7 +3,7 @@
 return array(
     'client_tabs' => array(
         'power-tab' => array('view' => 'power_tab', 'i18n' => 'power.power'),
-        'battery-tab' => array('view' => 'battery_tab', 'i18n' => 'power.battery', 'badge' => 'battery-cnt'),
+        'battery-tab' => array('view' => 'battery_tab', 'i18n' => 'power.battery'),
     ),
     'listings' => array(
         'batteries' => array('view' => 'batteries_listing', 'i18n' => 'power.batteries'),

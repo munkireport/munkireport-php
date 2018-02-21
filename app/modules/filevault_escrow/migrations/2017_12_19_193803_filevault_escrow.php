@@ -26,7 +26,7 @@ class FilevaultEscrow extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number');
+            $table->string('serial_number')->unique();
             $table->string('enableddate');
             $table->string('enableduser');
             $table->string('lvguuid');
@@ -34,10 +34,17 @@ class FilevaultEscrow extends Migration
             $table->string('pvuuid');
             $table->text('recoverykey');
             $table->string('hddserial');
+
+            $table->index('enableddate');
+            $table->index('enableduser');
+            $table->index('lvguuid');
+            $table->index('lvuuid');
+            $table->index('pvuuid');
+            $table->index('hddserial');
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
+            $capsule::select("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -51,19 +58,7 @@ class FilevaultEscrow extends Migration
                 HddSerial
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->unique('serial_number');
-            $table->index('enableddate');
-            $table->index('enableduser');
-            $table->index('lvguuid');
-            $table->index('lvuuid');
-            $table->index('pvuuid');
-            $table->index('hddserial');
-        });
     }
     
     public function down()

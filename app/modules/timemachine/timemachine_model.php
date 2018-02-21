@@ -44,7 +44,45 @@ class Timemachine_model extends \Model
         $this->rs['time_capsule_display_name'] = '';
         $this->rs['volume_display_name'] = '';
         $this->rs['destinations'] = 0;
-        $this->rs['apfs_snapshots'] = ''; $this->rt['apfs_snapshots'] = 'TEXT';
+        
+        // Schema version, increment when creating a db migration
+        $this->schema_version = 2;
+        
+        // Indexes to optimize queries
+        $this->idx[] = array('last_success');
+        $this->idx[] = array('last_failure');
+        $this->idx[] = array('last_failure_msg');
+        $this->idx[] = array('duration');
+        $this->idx[] = array('always_show_deleted_backups_warning');
+        $this->idx[] = array('auto_backup');
+        $this->idx[] = array('bytes_available');
+        $this->idx[] = array('bytes_used');
+        $this->idx[] = array('consistency_scan_date');
+        $this->idx[] = array('date_of_latest_warning');
+        $this->idx[] = array('destination_id');
+        $this->idx[] = array('last_known_encryption_state');
+        $this->idx[] = array('result');
+        $this->idx[] = array('root_volume_uuid');
+        $this->idx[] = array('host_uuids');
+        $this->idx[] = array('last_configuration_trace_date');
+        $this->idx[] = array('last_destination_id');
+        $this->idx[] = array('localized_disk_image_volume_name');
+        $this->idx[] = array('mobile_backups');
+        $this->idx[] = array('skip_system_files');
+        $this->idx[] = array('alias_volume_name');
+        $this->idx[] = array('earliest_snapshot_date');
+        $this->idx[] = array('is_network_destination');
+        $this->idx[] = array('latest_snapshot_date');
+        $this->idx[] = array('mount_point');
+        $this->idx[] = array('network_url');
+        $this->idx[] = array('server_display_name');
+        $this->idx[] = array('snapshot_count');
+        $this->idx[] = array('time_capsule_display_name');
+        $this->idx[] = array('volume_display_name');
+        $this->idx[] = array('destinations');
+        
+        // Create table if it does not exist
+       //$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);
@@ -82,7 +120,6 @@ class Timemachine_model extends \Model
      *
      * @param string data
      * Author tuxudo
-     * Time Machine errors can be found at /System/Library/CoreServices/backupd.bundle/Contents/Resources/English.lproj/Localizable.strings
      *
      **/
     public function process($data)
@@ -116,187 +153,153 @@ class Timemachine_model extends \Model
             
         } else { // Else process with new XML handler    
             
-            // Process incoming timemachine.plist
+            // Process incoming powerinfo.xml
             $parser = new CFPropertyList();
             $parser->parse($data, CFPropertyList::FORMAT_XML);
             $plist = $parser->toArray();
+                    
+            // Array of ints
+            $ints =  array('always_show_deleted_backups_warning', 'auto_backup', 'bytes_available', 'bytes_used', 'mobile_backups', 'skip_system_files', 'is_network_destination', 'snapshot_count');
             
-            // Check if Time Machine is active/setup
-            if ( array_key_exists("Destinations",$plist)){
-                
-                // Array of ints
-                $ints =  array('always_show_deleted_backups_warning', 'auto_backup', 'bytes_available', 'bytes_used', 'mobile_backups', 'skip_system_files', 'is_network_destination', 'snapshot_count');
+            // Array of elements nested in Destination array
+            $nested =  array('backup_alias', 'bytes_available', 'bytes_used', 'consistency_scan_date', 'date_of_latest_warning', 'destination_id', 'last_known_encryption_state', 'result', 'root_volume_uuid');
+            
+            // Array of booleans
+            $bools =  array('always_show_deleted_backups_warning','auto_backup','mobile_backups','skip_system_files','is_network_destination');
 
-                // Array of elements nested in Destination array
-                $nested =  array('backup_alias', 'bytes_available', 'bytes_used', 'consistency_scan_date', 'date_of_latest_warning', 'destination_id', 'last_known_encryption_state', 'result', 'root_volume_uuid');
+            // Translate battery strings to db fields
+            $translate = array(
+                'latestSnapshotDate' => 'last_success', // The mis-match is correct
+                'AlwaysShowDeletedBackupsWarning' => 'always_show_deleted_backups_warning',
+                'AutoBackup' => 'auto_backup',
+                'BytesAvailable' => 'bytes_available',
+                'BytesUsed' => 'bytes_used',
+                'ConsistencyScanDate' => 'consistency_scan_date',
+                'condition' => 'condition',
+                'DateOfLatestWarning' => 'date_of_latest_warning',
+                'DestinationID' => 'destination_id',
+                'LastKnownEncryptionState' => 'last_known_encryption_state',
+                'RESULT' => 'result',
+                'RootVolumeUUID' => 'root_volume_uuid',
+                'LastConfigurationTraceDate' => 'last_configuration_trace_date',
+                'LastDestinationID' => 'last_destination_id',
+                'LocalizedDiskImageVolumeName' => 'localized_disk_image_volume_name',
+                'MobileBackups' => 'mobile_backups',
+                'SkipSystemFiles' => 'skip_system_files',
+                'alias_volume_name' => 'alias_volume_name',
+                'earliest_snapshot_date' => 'earliest_snapshot_date',
+                'is_network_destination' => 'is_network_destination',
+                'latestSnapshotDate' => 'latest_snapshot_date',
+                'mount_point' => 'mount_point',
+                'network_url' => 'network_url',
+                'server_display_name' => 'server_display_name',
+                'snapshot_count' => 'snapshot_count',
+                'time_capsule_display_name' => 'time_capsule_display_name',
+                'volume_display_name' => 'volume_display_name'
+            );
+                        
+            // Traverse the xml with translations
+            foreach ($translate as $search => $field) {  
+                // If key is not empty, save it to the object
+                if (! empty($plist[$search]) && ! in_array($field, $nested) && $plist[$search] != "None" && isset($plist[$search])) { 
+                    $this->$field = $plist[$search];
+                } else if (in_array($field, $nested) && isset($plist["Destinations"][0][$search])){
+                    // If a nested element, extract from nested array
+                    $this->$field = $plist["Destinations"][0][$search];
+                } else if (array_key_exists($search, $plist) && in_array($field, $bools) && $plist[$search] == true){
+                    // If true boolean, set accordingly
+                    $this->$field = '1';
+                } else if (array_key_exists($search, $plist) && in_array($field, $bools) && $plist[$search] == false){
+                    // If false boolean, set accordingly
+                    $this->$field = '0';
+                } else if ( ! array_key_exists($search, $plist) && in_array($field, $bools)){
+                    // If boolean and does not exist in plist, set to null
+                    $this->$field = null;
+                } else if (array_key_exists($search, $plist) && in_array($field, $ints) && $plist[$search] == "0"){
+                    // Set the int to 0 if it's 0
+                    $this->$field = $plist[$search];
+                } else if ( ! array_key_exists($search, $plist) && in_array($field, $ints)){
+                    // If int and does not exist in plist, set to null
+                    $this->$field = null;
+                } else if (in_array($field, $ints)){
+                    // Set the int to 0 if it's 0
+                    $this->$field = 0;
+                } else {  
+                    // Else, null the value
+                    $this->$field = '';
+                }
+            }
+            
+            // Parse log data from the legacy key
+            $start = ''; // Start date
+            foreach (explode("\n", $plist["legacy_output"]) as $line) {
+                $date = substr($line, 0, 19);
+                $message = substr($line, 21);
 
-                // Array of booleans
-                $bools =  array('always_show_deleted_backups_warning','auto_backup','mobile_backups','skip_system_files','is_network_destination');
-
-                // Translate battery strings to db fields
-                $translate = array(
-                    'latestSnapshotDate' => 'last_success', // The mis-match is correct
-                    'AlwaysShowDeletedBackupsWarning' => 'always_show_deleted_backups_warning',
-                    'AutoBackup' => 'auto_backup',
-                    'BytesAvailable' => 'bytes_available',
-                    'BytesUsed' => 'bytes_used',
-                    'ConsistencyScanDate' => 'consistency_scan_date',
-                    'condition' => 'condition',
-                    'DateOfLatestWarning' => 'date_of_latest_warning',
-                    'DestinationID' => 'destination_id',
-                    'LastKnownEncryptionState' => 'last_known_encryption_state',
-                    'RESULT' => 'result',
-                    'RootVolumeUUID' => 'root_volume_uuid',
-                    'LastConfigurationTraceDate' => 'last_configuration_trace_date',
-                    'LastDestinationID' => 'last_destination_id',
-                    'LocalizedDiskImageVolumeName' => 'localized_disk_image_volume_name',
-                    'MobileBackups' => 'mobile_backups',
-                    'SkipSystemFiles' => 'skip_system_files',
-                    'alias_volume_name' => 'alias_volume_name',
-                    'earliest_snapshot_date' => 'earliest_snapshot_date',
-                    'is_network_destination' => 'is_network_destination',
-                    'latestSnapshotDate' => 'latest_snapshot_date',
-                    'mount_point' => 'mount_point',
-                    'network_url' => 'network_url',
-                    'server_display_name' => 'server_display_name',
-                    'snapshot_count' => 'snapshot_count',
-                    'time_capsule_display_name' => 'time_capsule_display_name',
-                    'volume_display_name' => 'volume_display_name',
-                    'apfs_snapshots' => 'apfs_snapshots'
-                );
-
-                // Traverse the xml with translations
-                foreach ($translate as $search => $field) {  
-                    // If key is not empty, save it to the object
-                    if (! empty($plist[$search]) && ! in_array($field, $nested) && $plist[$search] != "None" && isset($plist[$search])) { 
-                        $this->$field = $plist[$search];
-                    } else if (in_array($field, $nested) && isset($plist["Destinations"][0][$search])){
-                        // If a nested element, extract from nested array
-                        $this->$field = $plist["Destinations"][0][$search];
-                    } else if (array_key_exists($search, $plist) && in_array($field, $bools) && $plist[$search] == true){
-                        // If true boolean, set accordingly
-                        $this->$field = '1';
-                    } else if (array_key_exists($search, $plist) && in_array($field, $bools) && $plist[$search] == false){
-                        // If false boolean, set accordingly
-                        $this->$field = '0';
-                    } else if ( ! array_key_exists($search, $plist) && in_array($field, $bools)){
-                        // If boolean and does not exist in plist, set to null
-                        $this->$field = null;
-                    } else if (array_key_exists($search, $plist) && in_array($field, $ints) && $plist[$search] == "0"){
-                        // Set the int to 0 if it's 0
-                        $this->$field = $plist[$search];
-                    } else if ( ! array_key_exists($search, $plist) && in_array($field, $ints)){
-                        // If int and does not exist in plist, set to null
-                        $this->$field = null;
-                    } else if (in_array($field, $ints)){
-                        // Set the int to 0 if it's 0
-                        $this->$field = 0;
-                    } else {  
-                        // Else, null the value
-                        $this->$field = '';
+                if (preg_match('/^Starting (automatic|manual) backup/', $message)) {
+                    $start = $date;
+                } elseif (preg_match('/^Backup completed successfully/', $message)) {
+                    if ($start) {
+                        $this->duration = strtotime($date) - strtotime($start);
+                    } else {
+                        $this->duration = 0;
                     }
+                    $this->last_success = $date;
+                } elseif (preg_match('/^Backup failed/', $message)) {
+                    $this->last_failure = $date;
+                    $this->last_failure_msg = $message;
                 }
-
-                // Parse log data from the legacy key
-                $start = ''; // Start date
-                foreach (explode("\n", $plist["legacy_output"]) as $line) {
-                    $date = substr($line, 0, 19);
-                    $message = substr($line, 21);
-
-                    if (preg_match('/^Starting (automatic|manual) backup/', $message)) {
-                        $start = $date;
-                    } elseif (preg_match('/^Backup completed successfully/', $message)) {
-                        if ($start) {
-                            $this->duration = strtotime($date) - strtotime($start);
-                        } else {
-                            $this->duration = 0;
-                        }
-                        $this->last_success = $date;
-                    } elseif (preg_match('/^Backup failed/', $message)) {
-                        $this->last_failure = $date;
-                        $this->last_failure_msg = $message;
-                    }
-                }
-
-                // Verify last_success is not blank
-                if (array_key_exists("latestSnapshotDate", $plist) && empty($last_success)) {
-                    $this->last_success = str_replace(" +0000","",$plist["latestSnapshotDate"]);
-                }
-
-                // Format dates, if they exist
-                if (array_key_exists("earliest_snapshot_date", $plist) && empty($last_success)) {
-                    $this->earliest_snapshot_date = str_replace(" +0000","",$plist["earliest_snapshot_date"]);
-                }
-                if (array_key_exists("latestSnapshotDate", $plist) && empty($last_success)) {
-                    $this->latest_snapshot_date = str_replace(" +0000","",$plist["latestSnapshotDate"]);
-                }
-
-                // Condense arrays into strings after checking if they exist
-                if (array_key_exists("Destinations",$plist) && array_key_exists("DestinationUUIDs",$plist["Destinations"][0])){
-                    $this->destination_uuids = implode(", ", $plist["Destinations"][0]["DestinationUUIDs"]);
-                } else {
-                    $this->destination_uuids = "";
-                }
-
-                if (array_key_exists("Destinations",$plist) && array_key_exists("SnapshotDates",$plist["Destinations"][0])){
-                    $this->snapshot_dates = implode(", ", $plist["Destinations"][0]["SnapshotDates"]);
-                } else {
-                    $this->snapshot_dates = "";
-                }
-
-                if (array_key_exists("ExcludeByPath",$plist)){
-                    $this->exclude_by_path = implode(", ", $plist["ExcludeByPath"]);
-                } else {
-                    $this->exclude_by_path = "";
-                }
-
-                if (array_key_exists("HostUUIDs",$plist)){
-                    $this->host_uuids = implode(", ", $plist["HostUUIDs"]);
-                } else {
-                    $this->host_uuids = "";
-                }
-
-                if (array_key_exists("SkipPaths",$plist)){
-                    $this->skip_paths = implode(", ", $plist["SkipPaths"]);
-                } else {
-                    $this->skip_paths = "";
-                }
-
-                // Set destinations count
-                if (array_key_exists("Destinations",$plist)){
-                    $this->destinations = count($plist["Destinations"]);
-                } else {
-                    $this->destinations = "0";
-                }
-
-                // Format apfs_snapshots data, if it exist
-                if (array_key_exists("apfs_snapshots", $plist)) {
-
-                    $apfs_array = explode("\n", $plist["apfs_snapshots"]);
-                    array_shift($apfs_array);
-                    $apfs_snapshots = "";
-                    foreach ($apfs_array as $apfs_element) {
-                        // Check that element is not empty
-                        if ($apfs_element != ""){
-                            $date = DateTime::createFromFormat('Y-m-d-His', $apfs_element);
-                            $apfs_unix = $date->format('U');
-                            $apfs_snapshots = $apfs_unix.", ".$apfs_snapshots;
-                        }
-                    }
-                    $this->apfs_snapshots = $apfs_snapshots;
-                }
-
-                // Fill in older legacy values
-                if (array_key_exists("legacy_output", $plist) && $plist["legacy_output"] == "Mac OS X 10.12+ not supported with legacy Time Machine log output") {
-                    // Null the duration because we can't get that on 10.12+ *sad panda*
-                    $this->duration = null;
-                    if ($plist["Destinations"][0]["RESULT"] != "0"){
-                        // Record failure time using same format as legacy
-                        $this->last_failure = date("Y-m-d H:i:s");
-                        // Record the result for processing by the UI view
-                        $this->last_failure_msg = $plist["Destinations"][0]["RESULT"];
-                    }
-                }
+            }
+            
+            // Verify last_success is not blank
+            if (array_key_exists("latestSnapshotDate", $plist) && empty($last_success)) {
+                $this->last_success = str_replace(" +0000","",$plist["latestSnapshotDate"]);
+            }
+            
+            // Format dates, if they exist
+            if (array_key_exists("earliest_snapshot_date", $plist) && empty($last_success)) {
+                $this->earliest_snapshot_date = str_replace(" +0000","",$plist["earliest_snapshot_date"]);
+            }
+            if (array_key_exists("latestSnapshotDate", $plist) && empty($last_success)) {
+                $this->latest_snapshot_date = str_replace(" +0000","",$plist["latestSnapshotDate"]);
+            }
+            
+            // Condense arrays into strings after checking if they exist
+            if (array_key_exists("Destinations",$plist) && array_key_exists("DestinationUUIDs",$plist["Destinations"][0])){
+                $this->destination_uuids = implode(", ", $plist["Destinations"][0]["DestinationUUIDs"]);
+            } else {
+                $this->destination_uuids = "";
+            }
+            
+            if (array_key_exists("Destinations",$plist) && array_key_exists("SnapshotDates",$plist["Destinations"][0])){
+                $this->snapshot_dates = implode(", ", $plist["Destinations"][0]["SnapshotDates"]);
+            } else {
+                $this->snapshot_dates = "";
+            }
+            
+            if (array_key_exists("ExcludeByPath",$plist)){
+                $this->exclude_by_path = implode(", ", $plist["ExcludeByPath"]);
+            } else {
+                $this->exclude_by_path = "";
+            }
+            
+            if (array_key_exists("HostUUIDs",$plist)){
+                $this->host_uuids = implode(", ", $plist["HostUUIDs"]);
+            } else {
+                $this->host_uuids = "";
+            }
+            
+            if (array_key_exists("SkipPaths",$plist)){
+                $this->skip_paths = implode(", ", $plist["SkipPaths"]);
+            } else {
+                $this->skip_paths = "";
+            }
+            
+            // Set destinations count
+            if (array_key_exists("Destinations",$plist)){
+                $this->destinations = count($plist["Destinations"]);
+            } else {
+                $this->destinations = "0";
             }
         }
         

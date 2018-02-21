@@ -6,12 +6,26 @@ class Certificate_model extends \Model
     {
         parent::__construct('id', 'certificate'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = $serial;
-        $this->rs['cert_exp_time'] = 0; // Unix timestamp of expiration time
+        $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['cert_exp_time'] = 0; $this->rt['cert_exp_time'] = 'BIGINT'; // Unix timestamp of expiration time
         $this->rs['cert_path'] = ''; // Path to certificate
         $this->rs['cert_cn'] = ''; // Common name
         $this->rs['issuer'] = ''; //Certificate issuer
         $this->rs['cert_location'] = ''; //Certificate location
+        
+        // Schema version, increment when creating a db migration
+        $this->schema_version = 2;
+        
+        //indexes to optimize queries
+        $this->idx[] = array('serial_number');
+        $this->idx[] = array('cert_exp_time');
+        $this->idx[] = array('cert_path');
+        $this->idx[] = array('cert_cn');
+        $this->idx[] = array('issuer');
+        $this->idx[] = array('cert_location');
+        
+        // Create table if it does not exist
+       //$this->create_table();
     }
 
      public function get_certificates()

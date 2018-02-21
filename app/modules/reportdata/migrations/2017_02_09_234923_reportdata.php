@@ -25,7 +25,8 @@ class Reportdata extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number');
+
+            $table->string('serial_number')->unique();
             $table->string('console_user')->nullable();
             $table->string('long_username')->nullable();
             $table->string('remote_ip');
@@ -33,10 +34,17 @@ class Reportdata extends Migration
             $table->integer('machine_group')->nullable()->default(0);
             $table->bigInteger('reg_timestamp')->default(0);
             $table->bigInteger('timestamp')->default(0);
+
+            $table->index(['console_user']);
+            $table->index(['long_username']);
+            $table->index(['remote_ip']);
+            $table->index(['machine_group']);
+            $table->index(['reg_timestamp']);
+            $table->index(['timestamp']);
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO 
+            $capsule::select("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -50,19 +58,7 @@ class Reportdata extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->unique('serial_number');
-            $table->index(['console_user']);
-            $table->index(['long_username']);
-            $table->index(['remote_ip']);
-            $table->index(['machine_group']);
-            $table->index(['reg_timestamp']);
-            $table->index(['timestamp']);
-        });
     }
 
     public function down()

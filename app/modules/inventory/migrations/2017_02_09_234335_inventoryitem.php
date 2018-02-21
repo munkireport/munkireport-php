@@ -32,10 +32,15 @@ class Inventoryitem extends Migration
             $table->string('bundleid');
             $table->string('bundlename');
             $table->text('path');
+
+            $table->index(['name', 'version']);
+            $table->index('serial_number');
+            $table->index('bundleid');
+            $table->index('bundlename');
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO
+            $capsule::select("INSERT INTO
                 $this->tableName
             SELECT
                 id,
@@ -47,16 +52,7 @@ class Inventoryitem extends Migration
                 path
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->index(['name', 'version']);
-            $table->index('serial_number');
-            $table->index('bundleid');
-            $table->index('bundlename');
-        });
     }
 
     public function down()

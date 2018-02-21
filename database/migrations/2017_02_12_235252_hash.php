@@ -29,10 +29,13 @@ class Hash extends Migration
             $table->string('name', 50);
             $table->string('hash');
             $table->bigInteger('timestamp');
+
+            $table->index(['serial_number']);
+            $table->index(['serial_number', 'name']);
         });
 
         if ($migrateData) {
-            $capsule::unprepared("INSERT INTO
+            $capsule::select("INSERT INTO
                 $this->tableName
             SELECT
                 id,
@@ -42,14 +45,7 @@ class Hash extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
-            $capsule::schema()->drop($this->tableNameV2);
         }
-
-        // (Re)create indexes
-        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-          $table->index(['serial_number']);
-          $table->index(['serial_number', 'name']);
-        });
     }
 
     public function down()

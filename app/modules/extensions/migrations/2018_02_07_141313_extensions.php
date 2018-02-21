@@ -1,25 +1,33 @@
 <?php
+
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class FontsAddIndex extends Migration
-{
-    private $tableName = 'fonts';
+class Extensions extends Migration
+{    
+    private $tableName = 'extensions';
 
     public function up()
     {
-        $capsule = new Capsule();
+    
+		$capsule = new Capsule();
+
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->index('serial_number');
+			$table->string('teamid')->after('codesign');
+			$table->renameColumn('codesign', 'developer');						
         });
     }
-    
+
     public function down()
     {
-        $capsule = new Capsule();
+
+		$capsule = new Capsule();
+
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-            $table->dropIndex('fonts_serial_number_index');
-        });
+			$table->dropColumn('teamid');
+ 			$table->renameColumn('developer', 'codesign');						
+       });
     }
 }
