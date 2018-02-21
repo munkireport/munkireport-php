@@ -27,7 +27,7 @@ class AuthAD extends AbstractAuth
                 if($provider->auth()->attempt($login, $password, ! $this->bindAsAdmin())){
                     $search = $provider->search();
 
-                    $user = $search->findOrFail($login);
+                    $user = $search->users()->findOrFail($login);
                     $this->groups = $user->getGroupNames();
 
                     $auth_data = [
