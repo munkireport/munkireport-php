@@ -9,6 +9,8 @@
     "manual": "Manual",
     "vlans": "VLANs",
     "autoselect": "Autoselect",
+    "autoselectfull": "Autoselect (Full-Duplex)",
+    "autoselecthalf": "Autoselect (Half-Duplex)",
     "notset": "Not Set",
     "activemedia": "Active Media",
     "currentmedia": "Current Media",

@@ -28,6 +28,10 @@ $(document).on('appReady', function(){
 					   rows = rows + '<tr><th>'+i18n.t('network.'+prop)+'</th><td>'+i18n.t('network.automatic')+'</td></tr>';
                     } else if(d[prop] == "autoselect"){
 					   rows = rows + '<tr><th>'+i18n.t('network.'+prop)+'</th><td>'+i18n.t('network.autoselect')+'</td></tr>';
+                    } else if(d[prop] == "autoselect (half-duplex)"){
+					   rows = rows + '<tr><th>'+i18n.t('network.'+prop)+'</th><td>'+i18n.t('network.autoselecthalf')+'</td></tr>';
+                    } else if(d[prop] == "autoselect (full-duplex)"){
+					   rows = rows + '<tr><th>'+i18n.t('network.'+prop)+'</th><td>'+i18n.t('network.autoselectfull')+'</td></tr>';
                     } else if(d[prop] == "not set"){
 					   rows = rows + '<tr><th>'+i18n.t('network.'+prop)+'</th><td>'+i18n.t('network.notset')+'</td></tr>';
                     } else if(d[prop] == "dhcp"){

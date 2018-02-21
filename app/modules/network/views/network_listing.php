@@ -97,6 +97,14 @@ new Network_model;
 	        	status = status == 1 ? '<span class="label label-success">'+i18n.t('enabled')+'</span>' :
 	        	(status === '0' ? '<span class="label label-danger">'+i18n.t('disabled')+'</span>' : '')
 	        	$('td:eq(4)', nRow).html(status)
+                
+                // Active Media
+	        	var colvar=$('td:eq(10)', nRow).html();
+	        	colvar = colvar == 'none' ? '' :
+	        	colvar = colvar == 'not set' ? i18n.t('network.notset') :
+	        	colvar = colvar == 'autoselect (half-duplex)' ? i18n.t('network.autoselecthalf') :
+	        	(colvar === 'autoselect (full-duplex)' ? i18n.t('network.autoselectfull') : colvar)
+	        	$('td:eq(10)', nRow).html(colvar)
 		    }
 	    } );
 	} );
