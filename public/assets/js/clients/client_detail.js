@@ -261,11 +261,30 @@ $(document).on('appReady', function(e, lang) {
 								return moment(tmData.last_success + 'Z').fromNow();
 							}
 						})))
-				.append($('<tr>')
+                .append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.duration')))
 					.append($('<td>')
-						.text(moment.duration(tmData.duration, "seconds").humanize())))
+                        .text(function() {
+                            var duration = tmData.duration
+                            if(!duration){
+                                return "";
+                            } else {
+                                return moment.duration(tmData.duration, "seconds").humanize();
+                            }
+                        })))
+				.append($('<tr>')
+					.append($('<th>')
+						.text(i18n.t('backup.last_failure_msg')))
+					.append($('<td>')
+                        .text(function() {
+                            var message = tmData.last_failure_msg
+                            if(! message.startsWith("Backup failed with error ", 0) && message !== ""){
+                                return i18n.t('timemachine.'+message);
+                            } else if (message.startsWith("Backup failed with error ", 0)) {
+                                return message.replace("Backup failed with error ", "Error ");
+                            }
+                        })))
 				.append($('<tr>')
 					.append($('<th>')
 						.text(i18n.t('backup.last_failure')))
