@@ -101,7 +101,7 @@ class Deploystudio extends Migration
                 dstudio_auto_reset_workflow,
                 dstudio_auto_started_workflow,
                 dstudio_bootcamp_windows_computer_name,
-                0 + dstudio_disabled,
+                dstudio_disabled,
                 dstudio_group,
                 dstudio_host_ard_field_1,
                 dstudio_host_ard_field_2,
