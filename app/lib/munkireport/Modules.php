@@ -16,7 +16,9 @@ class Modules
     private $allowedModules = array(
       'machine',
       'reportdata',
-      'tag'
+      'tag',
+      'event',
+      'comment',
     );
     private $skipInactiveModules = False;
 
@@ -50,6 +52,24 @@ class Modules
         foreach ($this->moduleSearchPaths as $type => $path) {
             if ( file_exists($path . $moduleName . '/' . $moduleName . '_model.php')) {
                 $modelPath = $path . $moduleName . '/' . $moduleName . '_model.php';
+                return True;
+            }
+        }
+        return False;
+    }
+
+    /**
+     * Retrieve moduleProcessorPath
+     *
+     *
+     * @param type var Description
+     * @return return type
+     */
+    public function getModuleProcessorPath($moduleName, &$modelPath)
+    {
+        foreach ($this->moduleSearchPaths as $type => $path) {
+            if ( file_exists($path . $moduleName . '/' . $moduleName . '_processor.php')) {
+                $modelPath = $path . $moduleName . '/' . $moduleName . '_processor.php';
                 return True;
             }
         }

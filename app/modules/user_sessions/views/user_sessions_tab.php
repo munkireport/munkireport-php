@@ -10,7 +10,7 @@
 	</thead>
 	<tbody>
 <?php $user_sessionsitemobj = new user_sessions_model(); ?>
-      <?php foreach($user_sessionsitemobj->retrieve_records('serial_number=?', array($serial_number)) as $item): ?>
+      <?php foreach($user_sessionsitemobj->retrieve_records($serial_number) as $item): ?>
         <tr>
           <td><?php echo str_replace(array('sshlogin','login','logout','shutdown','reboot'), array('SSH Login','Login','Logout','Shutdown','Reboot'), $item->event); ?></td>
           <td><?php echo $item->user; ?></td>

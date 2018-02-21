@@ -1,5 +1,8 @@
 <?php
-class Munkireportinfo_model extends Model 
+
+use CFPropertyList\CFPropertyList;
+
+class Munkireportinfo_model extends \Model 
 {
 
         public function __construct($serial='')
@@ -22,7 +25,7 @@ class Munkireportinfo_model extends Model
                 $this->idx[] = array('passphrase');
                 
                 // Create table if it does not exist
-                $this->create_table();
+               //$this->create_table();
                 
                 if ($serial) {
                         $this->retrieve_record($serial);
@@ -47,7 +50,6 @@ class Munkireportinfo_model extends Model
             }    
             
             // Process incoming MunkiReport.plist
-            require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
             $parser = new CFPropertyList();
             $parser->parse($data);
             
@@ -56,7 +58,6 @@ class Munkireportinfo_model extends Model
             // Convert version to int
             if (isset($plist['version'])) {
                 $digits = explode('.', $plist['version']);
-                array_pop($digits);
                 $mult = 10000;
                 $plist['version'] = 0;
                 foreach ($digits as $digit) {
@@ -77,13 +78,7 @@ class Munkireportinfo_model extends Model
                         $modulelist = array_keys($plist["reportitems"]);
                         sort($modulelist);
                         $modulelistproper = implode(", ",$modulelist);
-                        $this->$item = $modulelistproper;
-                        // Check if both GSX and warranty modules are enabled. They should not be
-                        // the warranty module runs after then GSX module and can overwrite actual
-                        // data with estimated data, such as warranty expiration dates.
-                        if (strpos($modulelistproper, "gsx") !== false && strpos($modulelistproper , "warranty") !== false ){
-                            print_r("***** You should not have both the GSX and Warranty modules enabled at the same time. Please disable the Warranty module *****\r\n");  
-                        }                        
+                        $this->$item = $modulelistproper;                  
                     } else {    
                         $this->$item = $plist[$item];
                     }

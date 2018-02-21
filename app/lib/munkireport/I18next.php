@@ -21,7 +21,7 @@ class I18next
         $this->locale = $locale ? $locale : 'en';
 
         // Load the localisation JSON
-        if ($json = @file_get_contents(APP_ROOT . 'assets/locales/' . $this->locale . '.json')) {
+        if ($json = @file_get_contents(PUBLIC_ROOT . 'assets/locales/' . $this->locale . '.json')) {
             $this->i18nArray = json_decode($json, true);
         } else {
             $this->i18nArray = array();

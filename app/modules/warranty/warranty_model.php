@@ -1,5 +1,5 @@
 <?php
-class Warranty_model extends Model
+class Warranty_model extends \Model
 {
     
     protected $error = '';
@@ -18,7 +18,7 @@ class Warranty_model extends Model
         $this->schema_version = 0;
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);
@@ -101,39 +101,40 @@ class Warranty_model extends Model
      **/
     public function process()
     {
+        if (! in_array("gsx", conf('modules'))) {
+            alert("warranty: current status: $this->status");
 
-        alert("warranty: current status: $this->status");
-
-        switch ($this->status) {
-            case 'Supported':
-                // If not expired, return;
-                if (strtotime($this->rs['end_date']) > time()) {
+            switch ($this->status) {
+                case 'Supported':
+                    // If not expired, return;
+                    if (strtotime($this->rs['end_date']) > time()) {
+                        return;
+                    }
+                    break;
+                case "Can't lookup warranty":
+                    // No need to check anymore
                     return;
-                }
-                break;
-            case "Can't lookup warranty":
-                // No need to check anymore
-                return;
-            case 'No Applecare':
-                break;
-            case 'Unregistered serialnumber':
-                break;
-            case 'Expired':
-                // Don't check
-                return;
-            case 'No information found':
-                break;
-            case 'Lookup failed':
-                break;
-            case 'Virtual Machine':
-                // Don't check
-                return;
-            default:
-                // Unknown status
-                alert('warranty: unknown status: '.$this->status, 'warning');
-        }
-        $this->check_status($force = true);
+                case 'No Applecare':
+                    break;
+                case 'Unregistered serialnumber':
+                    break;
+                case 'Expired':
+                    // Don't check
+                    return;
+                case 'No information found':
+                    break;
+                case 'Lookup failed':
+                    break;
+                case 'Virtual Machine':
+                    // Don't check
+                    return;
+                default:
+                    // Unknown status
+                    alert('warranty: unknown status: '.$this->status, 'warning');
+            }
+            $this->check_status($force = true);
 
-        alert(sprintf("warranty: new status: %s", $this->status));
+            alert(sprintf("warranty: new status: %s", $this->status));
+       }
     }
 }

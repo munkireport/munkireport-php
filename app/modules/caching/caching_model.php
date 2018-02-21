@@ -1,5 +1,5 @@
 <?php
-class Caching_model extends Model
+class Caching_model extends \Model
 {
     public function __construct($serial = '')
     {
@@ -43,7 +43,7 @@ class Caching_model extends Model
         $this->idx[] = array('bytesfromorigintoclients');
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
 
     // ------------------------------------------------------------------------

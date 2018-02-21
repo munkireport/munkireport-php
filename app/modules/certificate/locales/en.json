@@ -2,13 +2,16 @@
     "cert_groups": "Certificates by Name",
     "commonname": "Common Name",
     "expired": "Expired",
+    "expire_warning": "Expiring soon",
     "expiration_date": "Expiration Date",
     "expires": "Expires",
-    "ok": "3 Months +",
+    "ok": "1 Month +",
     "issuer": "Issuer",
     "location": "Location",
     "nocertificate": "No Certificate",
     "report_title": "Certificate Report",
-    "soon": "< 3 Months",
+    "soon": "< 1 Month",
+    "multiple_errors": "Multiple errors",
+    "multiple_warnings": "Multiple warnings",
     "title": "Certificates"
 }

@@ -1,5 +1,8 @@
 <?php
-class Location_model extends Model
+
+use CFPropertyList\CFPropertyList;
+
+class Location_model extends \Model
 {
 
     // Defaults array
@@ -34,7 +37,7 @@ class Location_model extends Model
         $this->schema_version = 1;
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
 
         if ($serial) {
             $this->retrieve_record($serial);
@@ -77,7 +80,6 @@ class Location_model extends Model
      **/
     public function process($data)
     {
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data);
 

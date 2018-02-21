@@ -35,6 +35,10 @@
 				<a data-i18n="auth.go_secure" href="<?php echo secure_url(); ?>">Go to secure site</a>
 					
 <?php break; ?>
+<?php case '503': ?>
+
+				<span data-i18n="errors.503">MunkiReport is down for maintenance.</span>
+<?php break; ?>
 <?php default: ?>
 	
 				Unknown error
@@ -42,6 +46,10 @@
 
 
 			</p>
+            
+            <p>
+            <?php echo $msg ?>
+            </p>
 
 		
 

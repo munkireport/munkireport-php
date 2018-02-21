@@ -1,5 +1,5 @@
 <?php
-class wifi_model extends Model
+class Wifi_model extends \Model
 {
 
     public function __construct($serial = '')
@@ -33,7 +33,7 @@ class wifi_model extends Model
         $this->idx[] = array('state');
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);

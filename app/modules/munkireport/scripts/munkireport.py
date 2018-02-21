@@ -43,6 +43,10 @@ def dict_from_plist(path):
     except Exception, message:
         raise Exception("Error creating plist from output: %s" % message)
 
+def unique_list(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
 
 def main():
     """Main"""
@@ -73,7 +77,7 @@ def main():
         #  causing duplicate entries for the same catalog.
         if item == 'Errors' or item == 'Warnings':
             if install_report.get(item):
-                report_list[item] = list(set(install_report[item]))
+                report_list[item] = unique_list(install_report[item])
         else:
             if install_report.get(item):
                 report_list[item] = install_report[item]

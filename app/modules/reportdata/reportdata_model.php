@@ -1,6 +1,8 @@
 <?php
 
-class Reportdata_model extends Model
+use CFPropertyList\CFPropertyList;
+
+class Reportdata_model extends \Model
 {
 
     public function __construct($serial = '')
@@ -33,7 +35,7 @@ class Reportdata_model extends Model
 
 
         // Create table if it does not exist
-        $this->create_table();
+        //$this->create_table();
 
         if ($serial) {
             $this->retrieve_record($serial);
@@ -98,7 +100,7 @@ class Reportdata_model extends Model
 
         return $out;
     }
-    
+
     /**
      * Get uptime for Clients
      *
@@ -113,11 +115,11 @@ class Reportdata_model extends Model
                     FROM reportdata
                     WHERE uptime > 0
                     ".get_machine_group_filter('AND');
-            
+
             return current($this->query($sql));
     }
-    
-    
+
+
     /**
      * Get check-in statistics
      *
@@ -131,9 +133,9 @@ class Reportdata_model extends Model
         $week_ago = $now - 3600 * 24 * 7;
         $month_ago = $now - 3600 * 24 * 30;
         $three_month_ago = $now - 3600 * 24 * 90;
-        $sql = "SELECT COUNT(1) as total, 
-        	COUNT(CASE WHEN timestamp > $hour_ago THEN 1 END) AS lasthour, 
-        	COUNT(CASE WHEN timestamp > $today THEN 1 END) AS today, 
+        $sql = "SELECT COUNT(1) as total,
+        	COUNT(CASE WHEN timestamp > $hour_ago THEN 1 END) AS lasthour,
+        	COUNT(CASE WHEN timestamp > $today THEN 1 END) AS today,
         	COUNT(CASE WHEN timestamp > $week_ago THEN 1 END) AS lastweek,
         	COUNT(CASE WHEN timestamp > $month_ago THEN 1 END) AS lastmonth,
         	COUNT(CASE WHEN timestamp BETWEEN $month_ago AND $week_ago THEN 1 END) AS inactive_week,
@@ -150,8 +152,7 @@ class Reportdata_model extends Model
     {
         // Check if uptime is set to determine this is a new client
         $new_client = $this->uptime ? false : true;
-        
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+
         $parser = new CFPropertyList();
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();
@@ -170,7 +171,7 @@ class Reportdata_model extends Model
         }
 
         $this->merge($mylist)->register()->save();
-        
+
         if ($new_client) {
             store_event($this->serial_number, 'reportdata', 'info', 'new_client');
         }

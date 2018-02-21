@@ -15,7 +15,7 @@ class Themes
 
     public function __construct()
     {
-        foreach(scandir(APP_ROOT.'assets/themes') AS $theme)
+        foreach(scandir(PUBLIC_ROOT.'assets/themes') AS $theme)
         {
             if( $theme != 'fonts' && strpos($theme, '.') === false)
             {

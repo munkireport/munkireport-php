@@ -80,11 +80,14 @@ def munki_prefs():
         'MSUDebugLogEnabled',
         'LocalOnlyManifest',
         'FollowHTTPRedirects',
+        'PerformAuthRestarts',
+        'RecoveryKeyFile',
+        'UseNotificationCenterDays'
     ]
     return our_prefs
 
-def formated_prefs():
-    """Formated dictionary object for output to plist"""
+def formatted_prefs():
+    """Formatted dictionary object for output to plist"""
     my_dict = {}
     for pref in munki_prefs():
         pref_value = pref_to_str(prefs.pref(pref))
@@ -141,7 +144,7 @@ def munkiinfo_report():
         'Middleware': middleware_info
     }
 
-    report.update(formated_prefs())
+    report.update(formatted_prefs())
     return [report]
 
 def main():

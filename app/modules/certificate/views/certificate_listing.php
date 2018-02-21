@@ -96,7 +96,7 @@ new Certificate_model;
 	        	var checkin = parseInt($('td:eq(3)', nRow).html());
 	        	var date = new Date(checkin * 1000);
 	        	var diff = moment().diff(date, 'days');
-	        	var cls = diff > 0 ? 'danger' : (diff > -90 ? 'warning' : 'success');
+	        	var cls = diff > 0 ? 'danger' : (diff > -30 ? 'warning' : 'success');
 	        	$('td:eq(3)', nRow).html('<span class="label label-'+cls+'"><span title="'+date+'">'+moment(date).fromNow()+'</span>');
 
 	        	// Format expiration date

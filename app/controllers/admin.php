@@ -2,7 +2,9 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View, \Machine_group, \Business_unit, \Reportdata_model;
+use \Controller, \View, \Reportdata_model;
+use munkireport\models\Business_unit;
+use munkireport\models\Machine_group;
 
 class admin extends Controller
 {
@@ -15,6 +17,10 @@ class admin extends Controller
         if (! $this->authorized('global')) {
             die('You need to be admin');
         }
+        
+        // Connect to database
+        $this->connectDB();
+
     }
 
 

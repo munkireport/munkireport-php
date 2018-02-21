@@ -108,13 +108,14 @@ class Warranty_controller extends Module_controller
         $where = get_machine_group_filter();
 
         $sql = "SELECT count(1) as count, 
-				$agesql AS age 
-				FROM warranty
-				LEFT JOIN reportdata USING (serial_number)
-				$where
-				GROUP by age 
-				ORDER BY age ASC";
+                $agesql as age FROM warranty 
+                LEFT JOIN reportdata USING (serial_number)
+                $where
+                AND $agesql IS NOT NULL 
+                GROUP by age 
+                ORDER BY age ASC;";
         $cnt = 0;
+        
         foreach ($warranty->query($sql) as $obj) {
             $obj->age = $obj->age ? $obj->age : '<1';
             $out[] = array('label' => $obj->age, 'count' => intval($obj->count));

@@ -1,4 +1,8 @@
 <?php
+
+use munkireport\models\Migration;
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 require('kissmvc_core.php');
 
 //===============================================================
@@ -20,7 +24,7 @@ class Engine extends KISS_Engine
 
         // Don't show a detailed message when not in debug mode
         conf('debug') && $data['msg'] = $msg;
-            
+
         $obj = new View();
 
         $obj->view('error/client_error', $data);
@@ -39,6 +43,25 @@ class Engine extends KISS_Engine
 //===============================================================
 class Controller extends KISS_Controller
 {
+    protected $capsule;
+    
+    protected function connectDB()
+    {
+        if(! $this->capsule){
+            $this->capsule = new Capsule;
+            
+            if( ! $connection = conf('connection')){
+                die('Connection not configured in config.php');
+            }
+
+            $this->capsule->addConnection($connection);
+            $this->capsule->setAsGlobal();
+            $this->capsule->bootEloquent();
+        }
+        
+        return $this->capsule;
+    }
+
     /**
      * Check if there is a valid session
      * and if the person is authorized for $what
@@ -105,10 +128,10 @@ class Model extends KISS_Model
             //primary key exists, so update
             $this->update();
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Get SQL partial for trim
      *
@@ -126,16 +149,6 @@ class Model extends KISS_Model
                 return "TRIM('$remove' FROM $string)";
                 break;
         }
-    }
-
-    /**
-     * Get schema version
-     *
-     * @return integer schema version number
-     **/
-    public function get_version()
-    {
-        return $this->schema_version;
     }
 
     /**
@@ -176,26 +189,6 @@ class Model extends KISS_Model
     public function get_errors()
     {
         return $this->errors;
-    }
-
-     /**
-     * Get indexes
-     *
-     * @return string errors
-     **/
-    public function get_indexes()
-    {
-        return $this->idx;
-    }
-
-     /**
-     * Get types
-     *
-     * @return string errors
-     **/
-    public function get_types()
-    {
-        return $this->rt;
     }
 
     // ------------------------------------------------------------------------
@@ -256,12 +249,12 @@ class Model extends KISS_Model
 
         // Push serial number in front of the array
         array_unshift($bindings, $serial_number);
-        
+
         return $this->retrieveOne($where, $bindings);
     }
 
     // ------------------------------------------------------------------------
-    
+
     /**
      * Delete one considering machine_group membership
      * use this instead of deleteWhere
@@ -280,7 +273,7 @@ class Model extends KISS_Model
 
         // Push serial number in front of the array
         array_unshift($bindings, $serial_number);
-        
+
         return $this->deleteWhere($where, $bindings);
     }
 
@@ -337,190 +330,9 @@ class Model extends KISS_Model
         return 0;
     }
 
-    /**
-     * Get database type of value
-     *
-     * Returns INTEGER, VARCHAR(255), REAL or MEDIUMBLOB
-     *
-     * @return string database type
-     * @author AvB
-     **/
-    public function get_type($val = '')
-    {
-        return is_int($val) ? 'INTEGER' : (is_string($val) ? 'VARCHAR(255)' : (is_float($val) ? 'REAL' : 'MEDIUMBLOB'));
-    }
-
-    /**
-     * Get compound index name
-     *
-     * @return string index name
-     * @author
-     **/
-    public function get_index_name($idx_data = array())
-    {
-        return $this->tablename . '_' . join('_', $idx_data);
-    }
-
     // ------------------------------------------------------------------------
 
-    /**
-     * Create table
-     *
-     * Create table based on $this->rs array
-     * and $this->rt array
-     *
-     * @param array assoc array with optional type strings
-     * @return boolean TRUE on success, FALSE if failed
-     * @author bochoven
-     **/
-    public function create_table()
-    {
-        // Check if we instantiated this table before
-        if (isset($GLOBALS['tables'][$this->tablename])) {
-            return true;
-        }
 
-        // Check if table exists and is up-to-date
-        try {
-            $dbh = $this->getdbh();
-        
-            $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
-            // Check if table exists
-            $this->prepare("SELECT * FROM ".$this->enquote($this->tablename)." LIMIT 1");
-
-            // Existing table, is it up-to date?
-            if (conf('allow_migrations')) {
-                if ($this->get_schema_version() !== $this->schema_version) {
-                    try {
-                        require_once(conf('application_path').'helpers/database_helper.php');
-
-                        migrate($this);
-
-                        $model_name = get_class($this);
-                        alert('Migrated '.$model_name.' to version '.$this->schema_version);
-                    } catch (Exception $e) {
-                        error("Migration error: $this->tablename: ".$e->getMessage());
-
-                        // Rollback any open transaction
-                        try {
-                            $dbh->rollBack();
-                        } catch (Exception $e2) {
-
-                        }
-                    }
-                    
-                }
-            }
-        } catch (Exception $e) {
-        // If the prepare fails, the table does not exist.
-
-            // Get columns
-            $columns = array();
-            foreach ($this->rs as $name => $val) {
-            // Determine type automagically
-                $type = $this->get_type($val);
-                
-                // Or set type from type array
-                $columns[$name] = isset($this->rt[$name]) ? $this->rt[$name] : $type;
-            }
-            
-            // Set primary key
-            $columns[$this->pkname] = 'INTEGER PRIMARY KEY';
-
-            // Table options, override per driver
-            $tbl_options = '';
-            
-            // Driver specific options
-            switch ($this->get_driver()) {
-                case 'sqlite':
-                    $columns[$this->pkname] .= ' AUTOINCREMENT';
-                    break;
-                case 'mysql':
-                    $columns[$this->pkname] .= ' AUTO_INCREMENT';
-                    $tbl_options = conf('mysql_create_tbl_opts');
-                    break;
-            }
-            
-            // Compile columns sql
-            $sql = '';
-            foreach ($columns as $name => $type) {
-                $sql .= $this->enquote($name) . " $type,";
-            }
-            $sql = rtrim($sql, ',');
-
-            try {
-
-                $dbh->exec(sprintf("CREATE TABLE %s (%s) %s", $this->enquote($this->tablename), $sql, $tbl_options));
-
-                // Set indexes
-                $this->set_indexes();
-
-                // Store schema version in migration table
-                $migration = new Migration($this->tablename);
-                $migration->version = $this->schema_version;
-                $migration->save();
-
-                alert("Created table '$this->tablename' version $this->schema_version");
-
-            } catch (Exception $e) {
-                $dbh->exec('DROP TABLE '.$this->enquote($this->tablename));
-                error("Create table '$this->tablename' failed: " . $e->getMessage());
-                return false;
-            }
-            
-        }
-
-        // Store this table in the instantiated tables array
-        $GLOBALS['tables'][$this->tablename] = $this->tablename;
-
-        // Create table succeeded
-        return true;
-    }
-    
-    // ------------------------------------------------------------------------
-
-    /**
-     * Set indexes for this table
-     *
-     * @param string optional provide alternative create index
-     * @author bochoven
-     **/
-    public function set_indexes($sql = "CREATE INDEX %s ON %s (%s)")
-    {
-        $dbh = $this->getdbh();
-        
-        foreach ($this->idx as $idx_data) {
-        // Create name
-            $idx_name = $this->get_index_name($idx_data);
-            $this->exec(sprintf($sql, $idx_name, $this->enquote($this->tablename), join(',', $idx_data)));
-        }
-        
-    }
-
-    /**
-     * Get schema version in the database
-     *
-     * @return void
-     * @author
-     **/
-    public function get_schema_version()
-    {
-        // Get schema versions
-        if (! isset($GLOBALS['schema_versions'])) {
-        // Store schema versions in global, other models may need it too
-            $GLOBALS['schema_versions'] = array();
-
-            $migration = new Migration;
-            foreach ($migration->query('SELECT table_name, version FROM migration') as $obj) {
-                $GLOBALS['schema_versions'][$obj->table_name] = $obj->version;
-            }
-        }
-
-        return array_key_exists($this->tablename, $GLOBALS['schema_versions']) ?
-            intval($GLOBALS['schema_versions'][$this->tablename]) : 0;
-    }
-    
     /**
      * Store event
      *
@@ -533,7 +345,7 @@ class Model extends KISS_Model
     {
         store_event($this->serial_number, $this->tablename, $type, $msg, $data);
     }
-    
+
     /**
      * Delete event
      *
@@ -551,7 +363,7 @@ class Model extends KISS_Model
 //===============================================================
 class View extends KISS_View
 {
-    
+
 }
 
 /**
@@ -562,7 +374,7 @@ class View extends KISS_View
  **/
 class Module_controller extends Controller
 {
-    
+
     // Module, override in child object
     protected $module_path;
 
@@ -575,7 +387,7 @@ class Module_controller extends Controller
         } else {
             $scripts = array();
         }
-        
+
         $script_path = $this->module_path . '/scripts/' . basename($name);
 
         if (! in_array($name, $scripts) or ! is_readable($script_path)) {

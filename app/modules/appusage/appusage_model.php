@@ -1,5 +1,5 @@
 <?php
-class Appusage_model extends Model
+class Appusage_model extends \Model
 {
     public function __construct($serial = '')
     {
@@ -29,7 +29,7 @@ class Appusage_model extends Model
         $this->idx[] = array('number_times');
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
 
     // ------------------------------------------------------------------------
@@ -41,11 +41,13 @@ class Appusage_model extends Model
     public function get_applaunch()
     {
         $out = array();
-        $sql = "SELECT number_times AS count, app_name, event
-				    FROM appusage
-				    LEFT JOIN reportdata USING (serial_number)
+        $sql = "SELECT SUM(number_times) AS count, app_name, event
+                    FROM appusage
+                    LEFT JOIN reportdata USING (serial_number)
                     ".get_machine_group_filter()."
                     AND event = 'launch'
+                    AND app_name <> ''
+                    GROUP BY app_name
                     ORDER BY count DESC";
 
         foreach ($this->query($sql) as $obj) {

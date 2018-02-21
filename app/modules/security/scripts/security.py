@@ -7,6 +7,7 @@ import os
 import sys
 import subprocess
 import plistlib
+import grp
 
 def gatekeeper_check():
     """ Gatekeeper checks. Simply calls the spctl and parses status. Requires 10.7+"""
@@ -36,9 +37,10 @@ def sip_check():
         return "Not Supported"
 
 
-def ssh_access_check():
-    """Check for users who can log in via SSH using the built-in group. This will not
-    cover any users who are granted SSH via an AD/OD group."""
+def ssh_user_access_check():
+    """Check for users who can log in via SSH 
+    using the built-in group reporting.
+    Checks for explicitly added users , both local and directory based."""
 
     #Check first that SSH is enabled!
     sp = subprocess.Popen(['systemsetup', '-getremotelogin'], stdout=subprocess.PIPE)
@@ -64,28 +66,66 @@ def ssh_access_check():
 
         elif "com.apple.access_ssh" in out:
             # if this group exists, SSH is enabled but only some users are permitted
-            sp = subprocess.Popen(['dscl', '.', 'list', '/Users'], stdout=subprocess.PIPE)
-            out, err = sp.communicate()
-
-            user_list = out.split()
-            ssh_users = ''
-
-            for user in user_list:
-                if user[0] in '_': # filter out system users that start with _
-                    continue
-                else:
-                    sp = subprocess.Popen(['dsmemberutil', 'checkmembership', '-U', user, '-G', 'com.apple.access_ssh'], stdout=subprocess.PIPE)
-                    out, err = sp.communicate()
-                    if 'is a member' in out:
-                        ssh_users += user + ' '
-                    else:
-                        pass
-            return ssh_users.strip()
+            # Get a list of users in the com.apple.access_ssh GroupMembership
+            user_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.access_ssh', 'GroupMembership'], stdout=subprocess.PIPE)
+            user_out, user_err = user_sp.communicate()
+            user_list = user_out.split()
+                
+            return ', '.join(item for item in user_list[1:])
 
         else:
             # if neither SSH group exists but SSH is enabled, it was turned on with
             # systemsetup and all users are enabled.
             return "All users permitted"
+
+def ssh_group_access_check():
+    """Check for groups that have members who can log in via SSH 
+    using the built-in group reporting.
+    Checks for explicitly added groups, both local and directory based."""
+
+    #Check first that SSH is enabled!
+    sp = subprocess.Popen(['systemsetup', '-getremotelogin'], stdout=subprocess.PIPE)
+    out, err = sp.communicate()
+
+    if "Off" in out:
+        return "SSH Disabled"
+
+    else:
+        # First we need to check if SSH is open to all users. A few ways  to tell:
+        # -on 10.8 and older, systemsetup will show as on but the access_ssh groups are not present
+        # -on 10.9, systemsetup will show as on and list all users in access_ssh
+        # -on 10.10 and newer, systemsetup will show as on and access_ssh-disabled will be present
+        # Note for 10.10 and newer - root will show up as authorized if systemsetup was used to turn
+        # on SSH, and not if pref pane was used.
+
+        sp = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
+        out, err = sp.communicate()
+
+        if "com.apple.access_ssh-disabled" in out:
+            # if this group exists, all users are permitted to access SSH. 
+            # Nothing group specific
+            pass
+
+        elif "com.apple.access_ssh" in out:
+            # Get a list of UUIDs of Nested Groups
+            group_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.access_ssh', 'NestedGroups'], stdout=subprocess.PIPE)
+            group_out, group_err = group_sp.communicate()
+            group_list_uuid = group_out.split()
+            
+            # Translate group UUIDs to gids
+            group_list = []
+            for group_uuid in group_list_uuid[1:]:
+                group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
+                group_id_out, group_id_err = group_id_sp.communicate()
+                group_list.append(grp.getgrgid(group_id_out.split()[1]).gr_name)
+                
+            return ', '.join(item for item in group_list)
+
+        else:
+            # If neither SSH group exists but SSH is enabled, it was turned on with
+            # systemsetup and all users are enabled.
+            # Nothing group specific            
+            pass
 
 def ard_access_check():
     """Check for local users who have ARD permissions
@@ -133,10 +173,16 @@ def firmware_pw_check():
     The command firmwarepassword appeared in 10.10, so we use nvram for older versions.
     Thank you @steffan for this check."""
     if float(os.uname()[2][0:2]) >= 14:
-        sp = subprocess.Popen(['firmwarepasswd', '-check'], stdout=subprocess.PIPE)
-        out, err = sp.communicate()
-        firmwarepw = out.split()[2]
-
+        try:
+            sp = subprocess.Popen(['/usr/sbin/firmwarepasswd', '-check'], stdout=subprocess.PIPE)
+            out, err = sp.communicate()
+            firmwarepw = out.split()[2]
+        except OSError as e:
+            # firmwarepasswd command not found at the path we specified
+            # so set the data to blank and print a warning.
+            print "Error: firmwarepasswd binary not found or accessible."
+            firmwarepw = ""
+        
     else:
         sp = subprocess.Popen(['nvram', 'security-mode'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         mode_out, mode_err = sp.communicate()
@@ -152,11 +198,27 @@ def firmware_pw_check():
 def firewall_enable_check():
     """Checks to see if firewall is enabled using a one-shot defaults read command.
     Doing it this way because shelling out is easier than having to convert..."""
-    
-    sp = subprocess.Popen(['defaults', 'read', '/Library/Preferences/com.apple.alf.plist', 'globalstate'], stdout=subprocess.PIPE)
+
+    sp = subprocess.Popen(['defaults', 'read', '/Library/Preferences/com.apple.alf', 'globalstate'], stdout=subprocess.PIPE)
     out, err = sp.communicate()
-    
+
     return out[0]
+
+
+def skel_state_check():
+    """Checks to see if Secure Kernel Extension Loading ("SKEL") is enabled or disabled.
+    Only supported with macOS High Sierra (10.13 / 17) and up."""
+
+    if float(os.uname()[2][0:2]) >= 17:
+        sp = subprocess.Popen(['spctl', 'kext-consent', 'status'], stdout=subprocess.PIPE)
+        out, err = sp.communicate()
+
+        if "ENABLED" in out:
+            return 1
+        else:
+            return 0
+    else:
+        return 1 # if the OS is < 10.13, KEXT loading is open by default.
 
 
 def main():
@@ -177,14 +239,16 @@ def main():
     result = {}
     result.update({'gatekeeper': gatekeeper_check()})
     result.update({'sip': sip_check()})
-    result.update({'ssh_users': ssh_access_check()})
+    result.update({'ssh_users': ssh_user_access_check()})
+    result.update({'ssh_groups': ssh_group_access_check()})
     result.update({'ard_users': ard_access_check()})
     result.update({'firmwarepw': firmware_pw_check()})
     result.update({'firewall_state':firewall_enable_check()})
+    result.update({'skel_state':skel_state_check()})
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')
     plistlib.writePlist(result, output_plist)
-
+    
 if __name__ == "__main__":
     main()

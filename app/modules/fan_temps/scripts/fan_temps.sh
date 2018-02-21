@@ -1,6 +1,12 @@
 #!/bin/bash
 # Created by tuxudo for MunkiReport-PHP
 
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
 # Create cache dir if it does not exist
 DIR=$(dirname $0)
 mkdir -p "$DIR/cache"
@@ -33,7 +39,7 @@ for TRANSLATE in 'FAN_0_Label ' 'FAN_1_Label ' 'FAN_2_Label ' 'FAN_3_Label ' 'FA
 do 
 	OUTVALUE=$(grep -e "${TRANSLATE}" <<< "${FANDATA}" | sed -e "s/${TRANSLATE}//g" -e 's/[[:space:]]*$//')
     OUTKEY=$(awk -F' ' '{printf "%s%s\n", $1, $2}' <<< "${TRANSLATE}" | tr -cd '[[:alnum:]]._' )
-    /usr/libexec/plistbuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$fan_temps_file" 1>/dev/null
+    /usr/libexec/PlistBuddy -c "add :${OUTKEY} string ${OUTVALUE}" "$fan_temps_file" 1>/dev/null
 done
 
 exit 0

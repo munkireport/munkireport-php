@@ -1,11 +1,15 @@
 <?php
 
-class Business_unit extends Model
+namespace munkireport\models;
+
+use \PDO;
+
+class Business_unit extends \Model
 {
     
     public function __construct($unitid = '', $property = '')
     {
-        parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
+        parent::__construct('id', 'business_unit'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['unitid'] = 0;
         $this->rs['property'] = '';
@@ -18,7 +22,7 @@ class Business_unit extends Model
         $this->schema_version = 0;
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
         
         if ($unitid and $property) {
             $this->retrieveOne('unitid=? AND property=?', array($unitid, $property));

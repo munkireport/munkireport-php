@@ -13,6 +13,7 @@ return array(
       'memory' => array('view' => 'memory_widget'),
       'new_clients' => array('view' => 'new_clients_widget'),
       'os' => array('view' => 'os_widget'),
+      'osbuild' => array('view' => 'osbuild_widget'),
     ),
     'reports' => array(
         'hardware' => array('view' => 'hardware', 'i18n' => 'machine.hardware_report'),
