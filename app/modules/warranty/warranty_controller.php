@@ -86,12 +86,9 @@ class Warranty_controller extends Module_controller
      **/
     public function age()
     {
-        $obj = new View();
-
         // Authenticate
         if (! $this->authorized()) {
-            $obj->view('json', array('msg' => 'Not authorized'));
-            return;
+            die('Authenticate first.'); // Todo: return json?
         }
 
         $out = array();
@@ -126,6 +123,7 @@ class Warranty_controller extends Module_controller
             $out[] = array('label' => $obj->age, 'count' => intval($obj->count));
         }
 
+        $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
 } // END class Warranty_module
