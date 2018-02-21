@@ -46,7 +46,7 @@ class munkiinfo_model extends \Model
             $item = array_pop($plist);
 
             reset($item);
-        while (list($key, $val) = each($item)) {
+        foreach($item as $key => $val) {
                 $this->munkiinfo_key = $key;
                 $this->munkiinfo_value = $val;
 
