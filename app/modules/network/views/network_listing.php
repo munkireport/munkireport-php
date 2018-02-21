@@ -25,13 +25,14 @@ new Network_model;
 		        <th data-i18n="status" data-colname='network.status'></th>
 		        <th data-i18n="network.ethernet" data-colname='network.ethernet'></th>
 		        <th data-i18n="network.ip_address" data-colname='network.ipv4ip'></th>
+		        <th data-i18n="network.dns" data-colname='network.ipv4dns'></th>
 		        <th data-i18n="network.router" data-colname='network.ipv4router'></th>
 		        <th data-i18n="network.mask" data-colname='network.ipv4mask'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

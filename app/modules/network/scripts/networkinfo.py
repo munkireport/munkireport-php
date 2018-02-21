@@ -4,6 +4,7 @@ import os
 import subprocess
 import sys
 import socket, struct
+import re
 
 network_service_list = []
 
@@ -21,6 +22,7 @@ def get_network_info():
         else:
             network_service_list.append('Service: %s' % network)
             network_info = bashCommand(['/usr/sbin/networksetup', '-getinfo', network]).split('\n')[:-1]
+            network_info.append("DNS: "+re.sub("There aren't any DNS Servers set on "+network+".","",re.sub('\n',', ',bashCommand(['/usr/sbin/networksetup', '-getdnsservers', network])))[:-2])
             for info in network_info:
                 network_service_list.append(info)
 

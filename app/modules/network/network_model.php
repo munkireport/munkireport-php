@@ -21,15 +21,10 @@ class Network_model extends \Model
         $this->rs['ipv6ip'] = ''; // IPv6 address as string
         $this->rs['ipv6prefixlen'] = 0; // IPv6 prefix length as int
         $this->rs['ipv6router'] = '';  // IPv6 router address as string
+        $this->rs['ipv4dns'] = '';  // IPv4 DNS address(es) as string
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 2;
-
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('serial_number', 'service');
-                
-        // Create table if it does not exist
-       //$this->create_table();
                 
         return $this;
     }
@@ -48,6 +43,7 @@ class Network_model extends \Model
             'Client ID: ' => 'clientid',
             'Wi-Fi ID: ' => 'ethernet',
             'IP address: ' => 'ipv4ip',
+            'DNS: ' => 'ipv4dns',
             'Subnet mask: ' => 'ipv4mask',
             'Router: ' => 'ipv4router',
             'IPv6: ' => 'ipv6conf',
@@ -59,10 +55,10 @@ class Network_model extends \Model
         // Unfortunately you cannot detect if IPv4 is off with
         // netwerksetup -getinfo
         $ipv4conf = array(
-            'DHCP Configuration' => 'dhcp',
-            'Manually Using DHCP Router Configuration' => 'manual',
-            'BOOTP Configuration' => 'bootp',
-            'Manual Configuration' => 'manual');
+            'DHCP Configuration' => 'DHCP',
+            'Manually Using DHCP Router Configuration' => 'Manual',
+            'BOOTP Configuration' => 'BOOTP',
+            'Manual Configuration' => 'Manual');
         
         $services = array();
         $order = 1; // Service order

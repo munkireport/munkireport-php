@@ -2,6 +2,7 @@
     "ethernet": "Ethernet",
     "hostname": "Hostname",
     "ip_address": "IP Address",
+    "dns": "DNS",
     "mask": "Mask",
     "network": "Network",
     "prefix_length": "Prefix Length",

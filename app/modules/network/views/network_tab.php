@@ -23,6 +23,7 @@ $nw = new Network_model();?>
 			<tr>
 				<th data-i18n="network.ethernet"></th>
 				<th data-i18n="network.ip_address"></th>
+				<th data-i18n="network.dns"></th>
 				<th data-i18n="network.mask"></th>
 				<th data-i18n="network.router"></th>
 				<th data-i18n="configuration"></th>
@@ -30,6 +31,7 @@ $nw = new Network_model();?>
 			<tr>
 				<td><?php echo $item->ethernet; ?></td>
 				<td><?php echo $item->ipv4ip; ?></td>
+				<td><?php echo $item->ipv4dns; ?></td>
 				<td><?php echo $item->ipv4mask; ?></td>
 				<td><?php echo $item->ipv4router; ?></td>
 				<td><?php echo $item->ipv4conf; ?></td>
