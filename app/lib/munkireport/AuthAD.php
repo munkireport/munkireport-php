@@ -28,7 +28,7 @@ class AuthAD extends AbstractAuth
                     $search = $provider->search();
 
                     $user = $search->users()->findOrFail($login);
-                    $this->groups = $user->getGroupNames();
+                    $this->groups = $user->getGroupNames($this->recursiveGroupSearch());
 
                     $auth_data = [
                         'user' => $login,
@@ -61,6 +61,11 @@ class AuthAD extends AbstractAuth
     private function bindAsAdmin()
     {
          return isset($this->config['admin_username']) && isset($this->config['admin_password']);
+    }
+
+    private function recursiveGroupSearch()
+    {
+        return isset($this->config['mr_recursive_groupsearch']) ? $this->config['mr_recursive_groupsearch'] : false;
     }
 
     public function getAuthMechanism()
