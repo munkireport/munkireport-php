@@ -73,6 +73,7 @@ class Gsx_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $gsx = new gsx_model($serial_number);

@@ -36,6 +36,7 @@ class sccm_status_controller extends Module_controller
 
             if (! $this->authorized()) {
                 $obj->view('json', array('msg' => 'Not authorized'));
+                return;
             }
 
             $sccm_status_model = new sccm_status_model($serial_number);
