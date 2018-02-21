@@ -28,11 +28,12 @@ new Network_model;
 		        <th data-i18n="network.dns" data-colname='network.ipv4dns'></th>
 		        <th data-i18n="network.router" data-colname='network.ipv4router'></th>
 		        <th data-i18n="network.mask" data-colname='network.ipv4mask'></th>
+		        <th data-i18n="network.activemedia" data-colname='network.activemedia'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

@@ -12,7 +12,14 @@ def bashCommand(script):
     try:
         return subprocess.check_output(script)
     except (subprocess.CalledProcessError, OSError), err:
-        return "[* Error] **%s** [%s]" % (err, str(script))
+        if "-getMTU" in script:
+            return "Active MTU: "
+        elif "-listvalidMTUrange" in script:
+            return "Valid MTU Range: "
+        elif "-getmedia" in script:
+            return "Current: \nActive: "
+        else:
+            return "[* Error] **%s** [%s]" % (err, str(script))
 
 def get_network_info():
     networkservices = bashCommand(['/usr/sbin/networksetup', '-listallnetworkservices']).split('\n')[:-1]
@@ -23,6 +30,11 @@ def get_network_info():
             network_service_list.append('Service: %s' % network)
             network_info = bashCommand(['/usr/sbin/networksetup', '-getinfo', network]).split('\n')[:-1]
             network_info.append("DNS: "+re.sub("There aren't any DNS Servers set on "+network+".","",re.sub('\n',', ',bashCommand(['/usr/sbin/networksetup', '-getdnsservers', network])))[:-2])
+            network_info.append("VLANS: "+re.sub("There are no VLANs currently configured on this system.","",re.sub('\n',', ',bashCommand(['/usr/sbin/networksetup', '-listVLANs'])))[:-2])
+            network_info.append("Active MTU: "+re.sub('[^0-9]','', re.sub("[\(\[].*?[\)\]]", "", bashCommand(['/usr/sbin/networksetup', '-getMTU', network])[:-1])))
+            network_info.append(bashCommand(['/usr/sbin/networksetup', '-listvalidMTUrange', network])[:-1])
+            network_info.append(bashCommand(['/usr/sbin/networksetup', '-getmedia', network])[:-1])
+            network_info.append("Network Location: "+bashCommand(['/usr/sbin/networksetup', '-getcurrentlocation'])[:-1])
             for info in network_info:
                 network_service_list.append(info)
 
