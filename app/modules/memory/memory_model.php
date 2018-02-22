@@ -118,7 +118,7 @@ class Memory_model extends \Model {
 
             // Add manufacturer name and cleanup
             if (array_key_exists("dimm_manufacturer",$memstick)) {
-                $memstick['dimm_manufacturer'] = str_replace(array('0x029E','0x014F','0x802C','0x830B','0x80AD','0x02FE','0x0000','0x8394','0x0D9B','0x2C00','0x80CE','0xAD00','0xCE00','0x5105','0x8551','0x0198','0x859b'), array('Corsair (0x029E)','Transcend Information (0x014F)','Micron Technology (0x802C)','Nanya (0x830B)','Hynix Semiconductor (0x80AD)','Elpida Memory (0x02FE)','TransIntl (0x0000)','Mushkin (0x8394)','Crucial (0x0D9B)','Micron Technology (0x2C00)','Samsung Electronics (0x80CE)','Hynix Semiconductor (0xAD00)','Samsung Electronics (0xCE00)','Qimonda AG (0x5105)','Qimonda AG (0x8551)','Kingston (0x0198)',' Crucial (0x859b)'),$memstick['dimm_manufacturer']);
+                $memstick['dimm_manufacturer'] = str_replace(array('0x029E','0x014F','0x802C','0x830B','0x80AD','0x02FE','0x0000','0x8394','0x0D9B','0x2C00','0x80CE','0xAD00','0xCE00','0x5105','0x8551','0x0198','0x859b','0x859B'), array('Corsair (0x029E)','Transcend Information (0x014F)','Micron Technology (0x802C)','Nanya (0x830B)','Hynix Semiconductor (0x80AD)','Elpida Memory (0x02FE)','TransIntl (0x0000)','Mushkin (0x8394)','Crucial (0x0D9B)','Micron Technology (0x2C00)','Samsung Electronics (0x80CE)','Hynix Semiconductor (0xAD00)','Samsung Electronics (0xCE00)','Qimonda AG (0x5105)','Qimonda AG (0x8551)','Kingston (0x0198)',' Crucial (0x859b)',' Crucial (0x859B)'),$memstick['dimm_manufacturer']);
                 $memstick['dimm_manufacturer'] = str_replace(array("000000000000","FE0000000000"),array("",""),$memstick['dimm_manufacturer']);
 			}
 
