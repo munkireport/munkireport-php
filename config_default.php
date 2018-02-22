@@ -61,7 +61,7 @@
 	| http://mysite/munkireport/ you should set subdirectory to
 	| '/munkireport/'
 	| If you're using .htaccess to rewrite urls, you should change that too
-	| The code below is for automagically deterimining your subdirectory,
+	| The code below is for automagically determining your subdirectory,
 	| if it fails, just add $conf['subdirectory'] = '/your_sub_dir/' in
 	| config.php
 	|
@@ -147,7 +147,6 @@
 	|		$conf['auth']['auth_AD']['admin_password'] = NULL; //if needed to perform the search
 	|		$conf['auth']['auth_AD']['mr_allowed_users'] = ['macadmin','bossman'];
 	|		$conf['auth']['auth_AD']['mr_allowed_groups'] = ['AD Group 1','AD Group 2']; //case sensitive
-	|		$conf['auth']['auth_AD']['mr_recursive_groupsearch'] = false; //set to true to allow recursive searching
 	|
 	| Authentication methods are checked in the order that they appear above. Not in the order of your
 	| config.php!. You can combine methods 2, 3 and 4
@@ -338,6 +337,38 @@
 
 	/*
 	|===============================================
+	| User Sessions Events
+	|===============================================
+	|
+	| User Sessions will log all events. To skip some events, set
+	| the events that you want to skip to be false. By default the
+	| module also saves historical data. To disable this, set the 
+	| user_sessions_keep_historical key to false. 
+	|
+	*/
+	$conf['user_sessions_save_remote_ssh'] = TRUE;
+	$conf['user_sessions_save_login'] = TRUE;
+	$conf['user_sessions_save_logout'] = TRUE;
+	$conf['user_sessions_save_reboot'] = TRUE;
+	$conf['user_sessions_save_shutdown'] = TRUE;
+	$conf['user_sessions_keep_historical'] = TRUE;
+	$conf['user_sessions_unique_users_only'] = FALSE;
+
+	/*
+	|=======
+	| Legacy Caching Listing
+	|===============================================
+	|
+	| Starting with 10.13, Apple changed the caching server. In MunkiReport,
+	| you can hide the legacy caching server listing that shows an itemized
+	| listing for all caching server transactions for caching servers running
+	| 10.8-10.12. To hide the "Caching (Legacy)" listing, set this to FALSE.
+	|
+	*/
+	$conf['caching_show_legacy'] = TRUE;
+
+	/*
+	|===============================================
 	| USB Devices
 	|===============================================
 	|
@@ -385,7 +416,7 @@
 	| Define path to the curl binary and add options
 	| this is used by the installer script.
 	| Override to use custom path and add or remove options, some environments
-	| may need to add "--insecure" if the servercertificate is not to be
+	| may need to add "--insecure" if the server certificate is not to be
 	| checked.
 	|
 	*/
@@ -455,6 +486,24 @@
 	|
 	*/
 	//$conf['temperature_unit'] = 'F';
+
+
+	/*
+	|===============================================
+	| Migrations
+	|===============================================
+	|
+	| When a new version of munkireport comes out
+	| it might need to update your database structure
+	| if you want to allow this, set
+	| $conf['allow_migrations'] = TRUE;
+	|
+	| There is a small overhead (one database query) when setting allow_migrations
+	| to TRUE. If you are concerned about performance, you can set allow_migrations
+	| to FALSE when you're done migrating.
+	|
+	*/
+	$conf['allow_migrations'] = FALSE;
 
 	/*
 	|===============================================
@@ -585,7 +634,7 @@
 	| Plot IP ranges by providing an array with labels and
 	| a partial IP address. Specify multiple partials in array
 	| if you want to group them together.
-	| The IP adress part is queried with SQL LIKE
+	| The IP address part is queried with SQL LIKE
 	| Examples:
 	| $conf['ip_ranges']['MyOrg'] = '100.99.';
 	| $conf['ip_ranges']['AltLocation'] = ['211.88.12.', '211.88.13.'];
@@ -601,7 +650,7 @@
 	| Plot VLANS by providing an array with labels and
 	| a partial IP address of the routers. Specify multiple partials in array
 	| if you want to group them together.
-	| The router IP adress part is queried with SQL LIKE
+	| The router IP address part is queried with SQL LIKE
 	| Examples:
 	| $conf['ipv4routers']['Wired'] = '211.88.10.1';
 	| $conf['ipv4routers']['WiFi'] = ['211.88.12.1', '211.88.13.1'];
@@ -760,10 +809,7 @@
 	|     'database'  => 'munkireport',
 	|     'username'  => 'munkireport',
 	|     'password'  => 'munkireport',
-	|     'charset' => 'utf8mb4',
-	|     'collation' => 'utf8mb4_unicode_ci',
-	|     'strict' => true,
-	|     'engine' => 'InnoDB',
+	|     'options'   => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8']
 	| ];
 	|
 	*/

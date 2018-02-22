@@ -137,147 +137,150 @@ class Power_model extends \Model
             throw new Exception("Error Processing Power Module Request: No data found", 1);
         } else if (substr( $data, 0, 30 ) != '<?xml version="1.0" encoding="' ) { // Else if old style text, process with old text based handler
 
-        // Translate network strings to db fields
-        $translate = array(
-            'manufacture_date = ' => 'manufacture_date',
-            'design_capacity = ' => 'design_capacity',
-            'max_capacity = ' => 'max_capacity',
-            'max_percent = ' => 'max_percent',
-            'current_capacity = ' => 'current_capacity',
-            'cycle_count = ' => 'cycle_count',
-            'temperature = ' => 'temperature',
-            'condition = ' => 'condition');
-        // Reset values
-        $this->manufacture_date = '';
-        $this->design_capacity = 1;
-        $this->max_capacity = 1;
-        $this->max_percent = 100;
-        $this->current_capacity = 0;
-        $this->current_percent = 0;
-        $this->cycle_count = 0;
-        $this->temperature = 0;
-        $this->condition = '';
-        // Parse data
-        foreach(explode("\n", $data) as $line) {
-            // Translate standard entries
-            foreach($translate as $search => $field) {
+            // Translate network strings to db fields
+            $translate = array(
+                'manufacture_date = ' => 'manufacture_date',
+                'design_capacity = ' => 'design_capacity',
+                'max_capacity = ' => 'max_capacity',
+                'max_percent = ' => 'max_percent',
+                'current_capacity = ' => 'current_capacity',
+                'cycle_count = ' => 'cycle_count',
+                'temperature = ' => 'temperature',
+                'condition = ' => 'condition');
+            // Reset values
+            $this->manufacture_date = '';
+            $this->design_capacity = 1;
+            $this->max_capacity = 1;
+            $this->max_percent = 100;
+            $this->current_capacity = 0;
+            $this->current_percent = 0;
+            $this->cycle_count = 0;
+            $this->temperature = 0;
+            $this->condition = '';
+            $this->timestamp = 0;
+            // Parse data
+            foreach(explode("\n", $data) as $line) {
+                // Translate standard entries
+                foreach($translate as $search => $field) {
 
-                if(strpos($line, $search) === 0) {
+                    if(strpos($line, $search) === 0) {
 
-                    $value = substr($line, strlen($search));
+                        $value = substr($line, strlen($search));
 
-                    $this->$field = $value;
-                    break;
+                        $this->$field = $value;
+                        break;
+                    }
                 }
-            }
-        } //end foreach explode lines
+            } //end foreach explode lines
 
         } else { // Else process with new XML handler
 
-        // Array of ints for nulling
-        $ints =  array('standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','haltlevel','haltafter','haltremain','lessbright','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','cpu_scheduler_limit','cpu_available_cpus','cpu_speed_limit','ups_percent','timeremaining','instanttimetoempty','permanentfailurestatus','packreserve','avgtimetofull','designcyclecount','avgtimetoempty','voltage','amperage','temperature','cycle_count','current_percent','current_capacity','max_percent','max_capacity','design_capacity');
+            // Process incoming powerinfo.xml
+            $parser = new CFPropertyList();
+            $parser->parse($data, CFPropertyList::FORMAT_XML);
+            $plist = $parser->toArray();
 
-        // Process incoming powerinfo.xml
-        $parser = new CFPropertyList();
-        $parser->parse($data, CFPropertyList::FORMAT_XML);
-        $plist = $parser->toArray();
+            // Translate battery strings to db fields
+            $translate = array(
+                'ManufactureDate' => 'manufacture_date',
+                'DesignCapacity' => 'design_capacity',
+                'CurrentCapacity' => 'current_capacity',
+                'CycleCount' => 'cycle_count',
+                'Temperature' => 'temperature',
+                'MaxCapacity' => 'max_capacity',
+                'condition' => 'condition',
+                'standbydelay' => 'standbydelay',
+                'standby' => 'standby',
+                'womp' => 'womp',
+                'halfdim' => 'halfdim',
+                'hibernatefile' => 'hibernatefile',
+                'gpuswitch' => 'gpuswitch',
+                'sms' => 'sms',
+                'networkoversleep' => 'networkoversleep',
+                'disksleep' => 'disksleep',
+                'sleep' => 'sleep',
+                'autopoweroffdelay' => 'autopoweroffdelay',
+                'hibernatemode' => 'hibernatemode',
+                'autopoweroff' => 'autopoweroff',
+                'ttyskeepawake' => 'ttyskeepawake',
+                'displaysleep' => 'displaysleep',
+                'acwake' => 'acwake',
+                'lidwake' => 'lidwake',
+                'SleepOn' => 'sleep_on_power_button',
+                'powernap' => 'powernap',
+                'autorestart' => 'autorestart',
+                'DestroyFVKeyOnStandby' => 'destroyfvkeyonstandby',
+                'schedule' => 'schedule',
+                'haltlevel' => 'haltlevel',
+                'haltafter' => 'haltafter',
+                'haltremain' => 'haltremain',
+                'lessbright' => 'lessbright',
+                'SleepCount' => 'sleep_count',
+                'DarkWake' => 'dark_wake_count',
+                'UserWake' => 'user_wake_count',
+                'attage' => 'wattage', // This is spelled correctly
+                'AdapterID' => 'adapter_id',
+                'FamilyCode' => 'family_code',
+                'SerialNumber' => 'adapter_serial_number',
+                'CPUSchedulerLimit' => 'cpu_scheduler_limit',
+                'CPUAvailableCPUs' => 'cpu_available_cpus',
+                'CPUSpeedLimit' => 'cpu_speed_limit',
+                'BackgroundTask' => 'backgroundtask',
+                'ApplePushServiceTask' => 'applepushservicetask',
+                'UserIsActive' => 'userisactive',
+                'PreventUserIdleDisplaySleep' => 'preventuseridledisplaysleep',
+                'PreventSystemSleep' => 'preventsystemsleep',
+                'ExternalMedia' => 'externalmedia',
+                'PreventUserIdleSystemSleep' => 'preventuseridlesystemsleep',
+                'NetworkClientActive' => 'networkclientactive',
+                'combinedlevel' => 'combined_sys_load',
+                'user' => 'user_sys_load',
+                'battery' => 'battery_level',
+                'thermal' => 'thermal_level',
+                'UPSName' => 'ups_name',
+                'Nowdrawing' => 'active_profile',
+                'UPSPercent' => 'ups_percent',
+                'UPSStatus' => 'ups_charging_status',
+                'ExternalConnected' => 'externalconnected',
+                'TimeRemaining' => 'timeremaining',
+                'InstantTimeToEmpty' => 'instanttimetoempty',
+                'CellVoltage' => 'cellvoltage',
+                'Voltage' => 'voltage',
+                'PermanentFailureStatus' => 'permanentfailurestatus',
+                'Manufacturer' => 'manufacturer',
+                'PackReserve' => 'packreserve',
+                'AvgTimeToFull' => 'avgtimetofull',
+                'BatterySerialNumber' => 'batteryserialnumber',
+                'AmperagemA' => 'amperage',
+                'FullyCharged' => 'fullycharged',
+                'IsCharging' => 'ischarging',
+                'DesignCycleCount9C' => 'designcyclecount',
+                'AvgTimeToEmpty' => 'avgtimetoempty',
+                'sleep_prevented_by' => 'sleep_prevented_by'
+            );
+            
+            // Array of strings
+            $strings =  array('manufacture_date', 'condition', 'hibernatefile', 'adapter_id', 'family_code', 'adapter_serial_number', 'combined_sys_load', 'user_sys_load', 'thermal_level', 'battery_level', 'ups_name', 'active_profile', 'ups_charging_status', 'externalconnected', 'cellvoltage', 'manufacturer', 'batteryserialnumber', 'fullycharged', 'ischarging','sleep_prevented_by','schedule');
 
-        // Translate battery strings to db fields
-        $translate = array(
-            'ManufactureDate' => 'manufacture_date',
-            'DesignCapacity' => 'design_capacity',
-            'CurrentCapacity' => 'current_capacity',
-            'CycleCount' => 'cycle_count',
-            'Temperature' => 'temperature',
-            'MaxCapacity' => 'max_capacity',
-            'condition' => 'condition',
-            'standbydelay' => 'standbydelay',
-            'standby' => 'standby',
-            'womp' => 'womp',
-            'halfdim' => 'halfdim',
-            'hibernatefile' => 'hibernatefile',
-            'gpuswitch' => 'gpuswitch',
-            'sms' => 'sms',
-            'networkoversleep' => 'networkoversleep',
-            'disksleep' => 'disksleep',
-            'sleep' => 'sleep',
-            'autopoweroffdelay' => 'autopoweroffdelay',
-            'hibernatemode' => 'hibernatemode',
-            'autopoweroff' => 'autopoweroff',
-            'ttyskeepawake' => 'ttyskeepawake',
-            'displaysleep' => 'displaysleep',
-            'acwake' => 'acwake',
-            'lidwake' => 'lidwake',
-            'SleepOn' => 'sleep_on_power_button',
-            'powernap' => 'powernap',
-            'autorestart' => 'autorestart',
-            'DestroyFVKeyOnStandby' => 'destroyfvkeyonstandby',
-            'schedule' => 'schedule',
-            'haltlevel' => 'haltlevel',
-            'haltafter' => 'haltafter',
-            'haltremain' => 'haltremain',
-            'lessbright' => 'lessbright',
-            'SleepCount' => 'sleep_count',
-            'DarkWake' => 'dark_wake_count',
-            'UserWake' => 'user_wake_count',
-            'attage' => 'wattage', // This is spelled correctly
-            'AdapterID' => 'adapter_id',
-            'FamilyCode' => 'family_code',
-            'SerialNumber' => 'adapter_serial_number',
-            'CPUSchedulerLimit' => 'cpu_scheduler_limit',
-            'CPUAvailableCPUs' => 'cpu_available_cpus',
-            'CPUSpeedLimit' => 'cpu_speed_limit',
-            'BackgroundTask' => 'backgroundtask',
-            'ApplePushServiceTask' => 'applepushservicetask',
-            'UserIsActive' => 'userisactive',
-            'PreventUserIdleDisplaySleep' => 'preventuseridledisplaysleep',
-            'PreventSystemSleep' => 'preventsystemsleep',
-            'ExternalMedia' => 'externalmedia',
-            'PreventUserIdleSystemSleep' => 'preventuseridlesystemsleep',
-            'NetworkClientActive' => 'networkclientactive',
-            'combinedlevel' => 'combined_sys_load',
-            'user' => 'user_sys_load',
-            'battery' => 'battery_level',
-            'thermal' => 'thermal_level',
-            'UPSName' => 'ups_name',
-            'Nowdrawing' => 'active_profile',
-            'UPSPercent' => 'ups_percent',
-            'UPSStatus' => 'ups_charging_status',
-            'ExternalConnected' => 'externalconnected',
-            'TimeRemaining' => 'timeremaining',
-            'InstantTimeToEmpty' => 'instanttimetoempty',
-            'CellVoltage' => 'cellvoltage',
-            'Voltage' => 'voltage',
-            'PermanentFailureStatus' => 'permanentfailurestatus',
-            'Manufacturer' => 'manufacturer',
-            'PackReserve' => 'packreserve',
-            'AvgTimeToFull' => 'avgtimetofull',
-            'BatterySerialNumber' => 'batteryserialnumber',
-            'AmperagemA' => 'amperage',
-            'FullyCharged' => 'fullycharged',
-            'IsCharging' => 'ischarging',
-            'DesignCycleCount9C' => 'designcyclecount',
-            'AvgTimeToEmpty' => 'avgtimetoempty'
-        );
-
-        // Traverse the xml with translations
-        foreach ($translate as $search => $field) {
-                // If key is not empty, save it to the object
-                if (! empty($plist[$search])) {
-                        $this->$field = $plist[$search];
+            // Traverse the xml with translations
+            foreach ($translate as $search => $field) {
+            
+                // If key does not exist in $plist, null it
+				if ( ! array_key_exists($search, $plist)) {
+                    $this->$field = null;
+                    
+                // Else if is not a string and is numeric, save the value
+                } else if ( ! in_array($field, $strings) && is_numeric($plist[$search])) {                 
+                    $this->$field = $plist[$search];
+                
+                // Else if a string, save the value
+                } else if ( in_array($field, $strings)) {
+                    $this->$field = $plist[$search];
+                
+                // Else null the field
                 } else {
-                    // Else, check if key is an int
-                    if (in_array($field, $ints) && $plist[$search] != "0"){
-                        // Set the int to null
-                        $this->$field = null;
-                    } else if (in_array($field, $ints) && $plist[$search] == "0"){
-                        // Set the int to null
-                        $this->$field = $plist[$search];
-                    } else {
-                        // Else, null the value
-                        $this->$field = '';
-                    }
-                }
+                    $this->$field = null;
+				}
             }
         }
 
@@ -322,62 +325,11 @@ class Power_model extends \Model
             $this->manufacture_date = sprintf("%d-%02d-%02d", $mfgyear, $mfgmonth, $mfgday);
         }
 
-        // Fix sleep and make sleep_prevented_by
-        $sleep_long = $this->sleep;
-
-        if (strpos($sleep_long, '(') !== false) {
-            preg_match('/\((.*?)\)/s', $sleep_long, $sleep_array);
-            $this->sleep = explode(" (", $sleep_long)[0];
-            $this->sleep_prevented_by = preg_replace("/[^A-Za-z0-9 ]/", '',(implode(", ", array_unique(explode(", ", str_replace("sleep prevented by ", "", $sleep_array[1]))))));
-        } else {
-            $this->sleep = preg_replace("/[^0-9 ]/", '', $sleep_long);
-            $this->sleep_prevented_by = "";
-        }
-
-        // Correct empty UPS percentage
-        if (trim($this->ups_percent) === '') {
-            $this->ups_percent = null;
-        }
-
-        // Remove single quotes from active_profile
-        $this->active_profile = str_replace("'", "", $this->active_profile);
-
-        // Format cell voltages
-        if ( $this->cellvoltage != "") {
-            $this->cellvoltage = str_replace(array('(',')'), array('',''), $this->cellvoltage);
-            $cellvoltagearray = explode(',', $this->cellvoltage);
-            $cellvoltageout = array();
-            foreach ($cellvoltagearray as $cell) {
-                if ($cell !== "0") {
-                       array_push($cellvoltageout, (intval($cell) / 1000));
-                }
-            }
-            $this->cellvoltage = implode($cellvoltageout,'v, ');
-        }
-
-        // Format voltage
-        if ( $this->voltage != "") {
-             $this->voltage = (intval($this->voltage) / 1000);
-        }
-
-        // Format amperage
-        if ( $this->amperage != "") {
-             $this->amperage = (intval($this->amperage) / 1000);
-        }
-
-        // Format manufacturer
-        $this->manufacturer = str_replace('"', '', $this->manufacturer);
+        //timestamp added by the server
+        $this->timestamp = time();
 
         // Fix condition
         $this->condition = str_replace(array('ServiceBattery','ReplaceSoon','ReplaceNow'),array('Service Battery','Replace Soon','Replace Now'), $this->condition);
-
-        // Format batteryserialnumber
-        $this->batteryserialnumber = str_replace('"', '', $this->batteryserialnumber);
-
-        // Clean pmset -g values
-        $this->displaysleep = intval(strtok($this->displaysleep, ' '));
-        $this->disksleep = intval(strtok($this->disksleep, ' '));
-        $this->standby = intval(strtok($this->standby, ' '));
 
         $this->save();
     }

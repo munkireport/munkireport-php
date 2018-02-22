@@ -50,14 +50,15 @@ class Warranty_controller extends Module_controller
      **/
     public function estimate_manufactured_date($serial_number = '')
     {
-        // Authenticate
+        $obj = new View();
+
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         require_once(conf('application_path') . "helpers/warranty_helper.php");
         $out = array('date' => estimate_manufactured_date($serial_number));
-        $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
     
@@ -71,10 +72,11 @@ class Warranty_controller extends Module_controller
         $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => array('error' => 'Not authorized')));
-        } else {
-            $wm = new Warranty_model();
-            $obj->view('json', array('msg' => $wm->get_stats($alert)));
-        }
+            return;
+        } 
+        
+        $wm = new Warranty_model();
+        $obj->view('json', array('msg' => $wm->get_stats($alert)));
     }
 
     /**
@@ -84,9 +86,12 @@ class Warranty_controller extends Module_controller
      **/
     public function age()
     {
+        $obj = new View();
+
         // Authenticate
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $out = array();
@@ -121,7 +126,6 @@ class Warranty_controller extends Module_controller
             $out[] = array('label' => $obj->age, 'count' => intval($obj->count));
         }
 
-        $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
 } // END class Warranty_module

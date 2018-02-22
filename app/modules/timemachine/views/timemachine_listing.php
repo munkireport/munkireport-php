@@ -109,6 +109,14 @@ new Timemachine_model;
 	        	if(date){
 		        	$('td:eq(5)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date + 'Z').fromNow()+'</span>');
 	        	}
+                
+	        	// Format last failed message
+	        	var message = $('td:eq(6)', nRow).html();
+	        	if(! message.startsWith("Backup failed with error ", 0) && message !== ""){
+		        	$('td:eq(6)', nRow).html(function() {return i18n.t('timemachine.'+message)});
+	        	} else if (message.startsWith("Backup failed with error ", 0)) {
+		        	$('td:eq(6)', nRow).html(message.replace("Backup failed with error ", "Error "));
+                }
 
 	        	// Format Check-In timestamp
 	        	var checkin = parseInt($('td:eq(7)', nRow).html());

@@ -1,11 +1,11 @@
 
-<div id="fan_temps"></div>
+<div id="temps"></div>
 
 
 <script>
 $(document).on('appReady', function(){
-	$.getJSON(appUrl + '/module/fan_temps/get_client_tab_data/' + serialNumber, function(data){
-		var skipThese = ['id','serial_number','temperature_unit','fanlabel0','fanlabel1','fanlabel2','fanlabel3','fanlabel4','fanlabel5','fanlabel6','fanlabel7','fanlabel8','fanmin0','fanmin1','fanmin2','fanmin3','fanmin4','fanmin5','fanmin6','fanmin7','fanmin8','fanmax0','fanmax1','fanmax2','fanmax3','fanmax4','fanmax5','fanmax6','fanmax7','fanmax8'];
+	$.getJSON(appUrl + '/module/fan_temps/get_temp_tab_data/' + serialNumber, function(data){
+		var skipThese = ['temperature_unit'];
 		$.each(data, function(i,d){
 			
 			// Generate rows from data
@@ -13,12 +13,8 @@ $(document).on('appReady', function(){
 			for (var prop in d){
 				// Skip skipThese
 				if(skipThese.indexOf(prop) == -1){
-					if(prop.indexOf('fan_') > -1){
-					   if (d[prop] != null){
-					        rows = rows + '<tr><th>'+d[(prop.replace('fan_', 'fanlabel'))]+' '+i18n.t('fan_temps.fan')+'</th><td><span title="'+i18n.t('fan_temps.minfan')+': '+d[(prop.replace('fan_', 'fanmin'))]+' '+i18n.t('fan_temps.rpm')+'\x0A'+i18n.t('fan_temps.maxfan')+': '+d[(prop.replace('fan_', 'fanmax'))]+' '+i18n.t('fan_temps.rpm')+'">'+d[prop]+' '+i18n.t('fan_temps.rpm')+'</span></td></tr>';
-					   }
-                    } else if (d[prop] == null){
-					   // Do nothing for the fake nulls to blank them
+					if (d[prop] == null){
+					   // Do nothing for nulls to blank them
                     } else if (d[prop] == "true"){
 					   rows = rows + '<tr><th>'+i18n.t('fan_temps.'+prop)+'</th><td>'+i18n.t('yes')+'</td></tr>';
                     } else if (d[prop] == "false"){
@@ -36,11 +32,11 @@ $(document).on('appReady', function(){
 				}
 			}
             
-			$('#fan_temps-tab')
+			$('#temps-tab')
 				.append($('<h2>')
 					.append($('<i>')
 						.addClass('fa fa-thermometer-three-quarters '))
-					.append(' '+i18n.t('fan_temps.tabtitle')))
+					.append(' '+i18n.t('fan_temps.tabtitle_temps')))
 				.append($('<div style="max-width:370px;">')
 					.addClass('table-responsive')
 					.append($('<table>')

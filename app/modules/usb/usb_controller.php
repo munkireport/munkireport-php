@@ -74,6 +74,7 @@ class Usb_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
         $queryobj = new Usb_model();
@@ -85,7 +86,6 @@ class Usb_controller extends Module_controller
         $usb_tab = $queryobj->query($sql);
 
         $usb = new Usb_model;
-        //$obj->view('json', array('msg' => $usb->retrieve_records($serial_number)));
         $obj->view('json', array('msg' => current(array('msg' => $usb_tab)))); 
     }
 		

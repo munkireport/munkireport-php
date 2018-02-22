@@ -124,4 +124,15 @@ class Security_model extends \Model
         ".get_machine_group_filter();
     return current($this->query($sql));
     }
+
+    public function get_ssh_stats()
+    {
+    $sql = "SELECT COUNT(CASE WHEN ssh_users <> 'SSH Disabled' THEN 1 END) as enabled,
+                COUNT(CASE WHEN ssh_users = 'SSH Disabled' THEN 1 END) as disabled
+                FROM security
+                LEFT JOIN reportdata USING(serial_number)
+        ".get_machine_group_filter();
+    return current($this->query($sql));
+    }
+
 }

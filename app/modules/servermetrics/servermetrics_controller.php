@@ -37,6 +37,7 @@ class Servermetrics_controller extends Module_controller
 
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $servermetrics = new Servermetrics_model;

@@ -36,8 +36,18 @@ def get_time_machine():
         out['legacy_output'] = output
     else:
         out['legacy_output'] = "Mac OS X 10.12+ not supported with legacy Time Machine log output"
-
         
+    # Check if 10.13 or higher and get data about APFS local snapshots
+    if getOsVersion() > 12:
+        cmd = ['/usr/bin/tmutil', 'listlocalsnapshotdates', '/']
+        proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (output, unused_error) = proc.communicate()
+        out['apfs_snapshots'] = output
+    else:
+        out['apfs_snapshots'] = ""
+  
     # Check if 10.9 or higher and extract extra data from Time Machine menu item. Extraction does not work on <10.8
     if getOsVersion() > 8:
 
