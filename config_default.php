@@ -787,7 +787,7 @@
         |      Default: Value of $conf['webhost'] with 403.html added to the end
         |
         */
-        //$conf['report_ipwhitelist'] = array('xxx.xxx.xxx.xxx', 'xxx.xxx.xxx.xxx/yy');
+        //$conf['manage_ipwhitelist'] = array('xxx.xxx.xxx.xxx', 'xxx.xxx.xxx.xxx/yy');
         //$conf['403_unauth'] = 'http://fqdn/403.html';
 
         

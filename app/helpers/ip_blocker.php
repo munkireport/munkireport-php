@@ -17,7 +17,7 @@ function check_ip($remote_address) {
   // if user is going to the report uri, allow the connection regardless
   if (substr(($GLOBALS[ 'engine' ]->get_uri_string()), 0, 8) === "report/") { return 1; }
   //for loop through the configuration setting to check if any IP addresses match - if so allow traffic, otherwise redirect to the 403 location
-  foreach (conf('report_ipwhitelist') as $range) {
+  foreach (conf('manage_ipwhitelist') as $range) {
     if (parse_range($remote_address, $range)) { return 1; }
   }
   // if a custom 403 page is defined, send traffic to that page
