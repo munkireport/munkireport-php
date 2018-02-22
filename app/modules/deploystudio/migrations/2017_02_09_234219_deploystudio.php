@@ -42,7 +42,7 @@ class Deploystudio extends Migration
             $table->string('dstudio_auto_reset_workflow')->nullable();
             $table->string('dstudio_auto_started_workflow')->nullable();
             $table->string('dstudio_bootcamp_windows_computer_name')->nullable();
-            $table->boolean('dstudio_disabled');
+            $table->string('dstudio_disabled')->nullable();
             $table->string('dstudio_group')->nullable();
             $table->string('dstudio_host_ard_field_1')->nullable();
             $table->string('dstudio_host_ard_field_2')->nullable();
@@ -101,7 +101,7 @@ class Deploystudio extends Migration
                 dstudio_auto_reset_workflow,
                 dstudio_auto_started_workflow,
                 dstudio_bootcamp_windows_computer_name,
-                0 + dstudio_disabled,
+                dstudio_disabled,
                 dstudio_group,
                 dstudio_host_ard_field_1,
                 dstudio_host_ard_field_2,
