@@ -120,6 +120,7 @@ error_reporting( conf('debug') ? E_ALL : 0 );
 //===============================================
 require( SYS_PATH.'kissmvc.php' );
 require( APP_PATH.'helpers/site_helper'.EXT );
+require( APP_PATH.'helpers/ip_blocker.php' );
 
 //===============================================
 // Autoloading

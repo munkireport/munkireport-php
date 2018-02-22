@@ -47,14 +47,14 @@
 		foreach($scripts as $script): ?>
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/<?php echo $script; ?>" type="text/javascript"></script>
 <?php endforeach; ?>
-
+<?php
+    if(!empty(conf('report_ipwhitelist'))){ check_ip($_SERVER['REMOTE_ADDR']); }?>
 </head>
 
-<body>
+<body >
 
 	<?php if( isset($_SESSION['user'])):?>
 	<?php $modules = getMrModuleObj()->loadInfo(); ?>
-
 
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
 	<div class="container">
