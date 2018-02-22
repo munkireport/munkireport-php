@@ -19,6 +19,7 @@ class NetworkAddDns extends Migration
             $table->string('validmturange')->nullable();
             $table->string('currentmedia')->nullable();
             $table->string('activemedia')->nullable();
+            $table->string('searchdomain')->nullable();
         });
 
         // (Re)create indexes
@@ -29,6 +30,7 @@ class NetworkAddDns extends Migration
             $table->index('validmturange');
             $table->index('currentmedia');
             $table->index('activemedia');
+            $table->index('searchdomain');
         });
     }
 
@@ -42,6 +44,7 @@ class NetworkAddDns extends Migration
 			$table->dropColumn('validmturange');
 			$table->dropColumn('currentmedia');
 			$table->dropColumn('activemedia');
+			$table->dropColumn('searchdomain');
         });
     }
 }

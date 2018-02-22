@@ -25,14 +25,21 @@ def get_network_info():
     networkservices = bashCommand(['/usr/sbin/networksetup', '-listallnetworkservices']).split('\n')[:-1]
     for network in networkservices:
         dns = "DNS: "
+        search = "Search Domain: "
         if "asterisk" in network:
             pass
         else:
             network_service_list.append('Service: %s' % network)
             network_info = bashCommand(['/usr/sbin/networksetup', '-getinfo', network]).split('\n')[:-1]
+            
+            nameservers = bashCommand(['/bin/cat', '/etc/resolv.conf']).split('\n')[:-1]
+            for searchdomain in nameservers:
+                    if "search " in searchdomain:
+                        search = search + re.sub('search ','', searchdomain)+", " 
+            network_info.append(search[:-2])
+            
             getdns = bashCommand(['/usr/sbin/networksetup', '-getdnsservers', network])
             if "There aren't any DNS Servers set on " in getdns:
-                nameservers = bashCommand(['/bin/cat', '/etc/resolv.conf']).split('\n')[:-1]
                 for nameserver in nameservers:
                     if "nameserver " in nameserver:
                         dns = dns + re.sub('nameserver ','', nameserver)+", " 

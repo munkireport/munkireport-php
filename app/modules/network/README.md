@@ -17,10 +17,17 @@ The table provides the following information per 'networkservice':
 * ipv6ip (string) IPv6 address
 * ipv6prefixlen (int) IPv6 prefix length
 * ipv6router (string) IPv6 router address
+* ipv4dns (string) IPv4 DNS server
+* vlans (string) Set VLANs
+* activemtu (interger) MTU in use by interface
+* validmturange (string) Range of supported MTUs
+* currentmedia (string) Current network media
+* activemedia (string) Active network media
+* searchdomain (string) Search domain
 
 Remarks
 ---
 
 * 'Wi-Fi ID' is stored as ethernet
-* Entries without an ethernet address are not stored
+* Entries without an ethernet address or valid IP address are not stored
 * ipv4conf is undetermined when the ipv4 configuration is 'Off' in the user interface.

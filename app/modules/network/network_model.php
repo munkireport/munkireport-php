@@ -27,6 +27,7 @@ class Network_model extends \Model
         $this->rs['validmturange'] = '';  // Range of valid MTUs as string
         $this->rs['currentmedia'] = '';  // Current media as string
         $this->rs['activemedia'] = '';  // Active media as string
+        $this->rs['searchdomain'] = '';  // Search domain(s) 
 
         // Schema version, increment when creating a db migration
         $this->schema_version = 2;
@@ -49,6 +50,7 @@ class Network_model extends \Model
             'Wi-Fi ID: ' => 'ethernet',
             'IP address: ' => 'ipv4ip',
             'DNS: ' => 'ipv4dns',
+            'Search Domain: ' => 'searchdomain',
             'Subnet mask: ' => 'ipv4mask',
             'Router: ' => 'ipv4router',
             'IPv6: ' => 'ipv6conf',

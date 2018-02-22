@@ -4,6 +4,7 @@
     "ip_address": "IP Address",
     "automatic": "Automatic",
     "dns": "DNS",
+    "searchdomain": "Search Domain",
     "mask": "Mask",
     "network": "Network",
     "manual": "Manual",
