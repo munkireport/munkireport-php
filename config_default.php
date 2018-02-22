@@ -352,12 +352,12 @@
 	| Events Module on Dashboard 
 	|===============================================
 	|
-	| By default the USB module will show events from 10 past 10 minutes.
+	| By default the Events module will show events for the last 10 minutes.
 	| Setting events_history to any number to show history for that many minutes in past
 	| e.g.: 1440 will show history for past 24 hours 
 	|
 	*/
-	$conf['events_history'] = 1440;
+	$conf['events_history'] = 600;
 
 
 	/*
