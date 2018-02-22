@@ -774,6 +774,24 @@
 	*/
 	$conf['mysql_create_tbl_opts'] = 'ENGINE=InnoDB DEFAULT CHARSET=utf8';
 
+        /*
+        |===============================================
+        | Whitelist Management Console Access
+        |===============================================
+        |
+        | Whitelisting of IP addresses that can access the management interface 
+        |    (anything except for index.php?/report/ which is always allowed)
+        |  - You can provide either indivigual IP addresses (which will have /32 appended automatically)
+        |      or you can provide CIDR notation. See https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing for reference
+        |  - You can also provide a custom 403 page for traffic that does not have access to the management interface
+        |      Default: Value of $conf['webhost'] with 403.html added to the end
+        |
+        */
+        $conf['report_ipwhitelist'] = array('xxx.xxx.xxx.xxx', 'xxx.xxx.xxx.xxx/yy');
+        $conf['403_unauth'] = 'http://fqdn/403.html';
+
+        
+
 	/*
 	|===============================================
 	| Timezone
