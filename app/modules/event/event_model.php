@@ -9,35 +9,41 @@
  * @package munkireport
  * @author AvB
  **/
-class Event_model extends Model
+class Event_model extends \Model
 {
-	function __construct($serial_number = '', $module = '')
+    public function __construct($serial_number = '', $module = '')
     {
-		parent::__construct('id', 'event'); //primary key, tablename
+        parent::__construct('id', 'event'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = ''; $this->rt['serial_number'] = 'VARCHAR(30)';
-        $this->rs['type'] = ''; $this->rt['type'] = 'VARCHAR(10)';
-        $this->rs['module'] = ''; $this->rt['module'] = 'VARCHAR(20)';
-		$this->rs['msg'] = '';
-		$this->rs['data'] = '';
+        $this->rs['serial_number'] = '';
+        $this->rt['serial_number'] = 'VARCHAR(30)';
+        $this->rs['type'] = '';
+        $this->rt['type'] = 'VARCHAR(10)';
+        $this->rs['module'] = '';
+        $this->rt['module'] = 'VARCHAR(20)';
+        $this->rs['msg'] = '';
+        $this->rs['data'] = '';
         $this->rs['timestamp'] = time();
-		
-		$this->idx[] = array('serial_number');
-		$this->idx[] = array('serial_number', 'module');
-		$this->idx[] = array('type');
-		$this->idx[] = array('msg');
+
+        $this->idx[] = array('serial_number');
+        $this->idx[] = array('serial_number', 'module');
+        $this->idx[] = array('type');
+        $this->idx[] = array('msg');
 
 
-		// Create table if it does not exist
-        $this->create_table();
-        
-        if($serial_number && $module)
-        {
-            $this->retrieve_one('serial_number=? AND module=?', array($serial_number, $module));
-			$this->serial_number = $serial_number;
-			$this->module = $module;
+        // Create table if it does not exist
+        //$this->create_table();
+
+        if ($serial_number && $module) {
+            if (! authorized_for_serial($serial_number)) {
+                return false;
+            }
+
+            $this->retrieveOne('serial_number=? AND module=?', array($serial_number, $module));
+            $this->serial_number = $serial_number;
+            $this->module = $module;
         }
-        
+
         return $this;
     }
 
@@ -46,42 +52,44 @@ class Event_model extends Model
      *
      * @param string serial number
      * @param string optional module
-     * @author 
+     * @author
      **/
-    function reset($serial_number = '', $module = '')
+    public function reset($serial_number = '', $module = '')
     {
+        if (! authorized_for_serial($serial_number)) {
+            return false;
+        }
+
         $where_params = array($serial_number);
         $where_string = ' WHERE serial_number=?';
 
-        if($module)
-        {
+        if ($module) {
             $where_params[] = $module;
             $where_string .= ' AND module=?';
         }
 
         $sql = "DELETE FROM $this->tablename $where_string";
-        $stmt = $this->prepare( $sql );
+        $stmt = $this->prepare($sql);
 
         return $stmt->execute($where_params);
-
     }
-	
-	/**
-	 * Store message
-	 *
-	 * Store a message
-	 *
-	 * @param string $type message type
-	 * @param string $type message
-	 **/
-	public function store($type, $msg, $data = '')
-	{
-		$this->type = $type;
-		$this->msg = $msg;
-		$this->data = $data;
+
+    /**
+     * Store message
+     *
+     * Store a message
+     *
+     * @param string $type message type
+     * @param string $type message
+     **/
+    public function store($type, $msg, $data = '')
+    {
+        $this->type = $type;
+        $this->msg = $msg;
+        $this->data = $data;
         $this->timestamp = time();
-		$this->save();
-	}
+        $this->save();
+    }
 
     /**
      * Add message
@@ -90,9 +98,7 @@ class Event_model extends Model
      * @param string type
      * @author AvB
      **/
-    function danger($module, $msg)
+    public function danger($module, $msg)
     {
-
     }
-
-} // END class 
+} // END class

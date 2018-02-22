@@ -7,14 +7,24 @@ import os
 import plistlib
 import sys
 import urlparse
+import importlib
+
+# pylint: disable=E0611
 from Foundation import CFPreferencesCopyAppValue
+# pylint: enable=E0611
 
 sys.path.append('/usr/local/munki')
 try:
-    from munkilib import munkicommon
-except ImportError, msg:
-    print "%s" % msg
-    exit(1)
+    from munkilib import prefs
+except ImportError:
+    # Legacy support
+    try:
+        from munkilib import munkicommon as prefs
+    except ImportError, msg:
+        print "%s" % msg
+        exit(1)
+
+
 
 def pref_to_str(pref_value):
     """If the value of a preference is None return an empty string type
@@ -70,25 +80,51 @@ def munki_prefs():
         'MSUDebugLogEnabled',
         'LocalOnlyManifest',
         'FollowHTTPRedirects',
+        'PerformAuthRestarts',
+        'RecoveryKeyFile',
+        'UseNotificationCenterDays'
     ]
     return our_prefs
 
-def formated_prefs():
-    """Formated dictionary object for output to plist"""
+def formatted_prefs():
+    """Formatted dictionary object for output to plist"""
     my_dict = {}
     for pref in munki_prefs():
-        pref_value = pref_to_str(munkicommon.pref(pref))
+        pref_value = pref_to_str(prefs.pref(pref))
         my_dict.update({pref: pref_value})
     return my_dict
 
 def get_munkiprotocol():
     """The protocol munki is using"""
-    software_repo_url = pref_to_str(munkicommon.pref('SoftwareRepoURL'))
+    software_repo_url = pref_to_str(prefs.pref('SoftwareRepoURL'))
     try:
         url_parse = urlparse.urlparse(software_repo_url)
         return url_parse.scheme
     except AttributeError:
         return 'Could not obtain protocol'
+
+def middleware_checks():
+    """Check for middleware, get version if supported"""
+
+    middleware_version = None
+    middleware_name = None
+    for filename in os.listdir('/usr/local/munki'):
+        if filename.startswith('middleware') and os.path.splitext(filename)[1] == '.py':
+            middleware_name = os.path.splitext(filename)[0]
+            try:
+                middleware = importlib.import_module(middleware_name)
+                middleware_version = middleware.__version__
+            except ImportError:
+                print "Error: munkiinfo.py - Error importing middleware for version checks."
+            except AttributeError:
+                print "Error: munkiinfo.py - Error getting version attribute from middleware."
+
+    if middleware_name and middleware_version:
+        return middleware_name + '-' + middleware_version
+    elif middleware_name:
+        return middleware_name
+    else:
+        return ""
 
 def munkiinfo_report():
     """Build our report data for our munkiinfo plist"""
@@ -96,16 +132,20 @@ def munkiinfo_report():
     if 'file' in munkiprotocol:
         munkiprotocol = 'localrepo'
 
-    AppleCatalogURL = str(CFPreferencesCopyAppValue('CatalogURL', 'com.apple.softwareupdate'))
+    AppleCatalogURL = str(CFPreferencesCopyAppValue('CatalogURL', 'com.apple.SoftwareUpdate'))
     if AppleCatalogURL == 'None':
         AppleCatalogURL = ''
+
+    middleware_info = middleware_checks()
 
     report = {
         'AppleCatalogURL': AppleCatalogURL,
         'munkiprotocol': munkiprotocol,
+        'Middleware': middleware_info
     }
-    report.update(formated_prefs())
-    return ([report])
+
+    report.update(formatted_prefs())
+    return [report]
 
 def main():
     """Main"""

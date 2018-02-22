@@ -24,14 +24,14 @@ new Tag_model;
 		      <tr>
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
-				<th data-i18n="listing.username" data-colname='reportdata.long_username'>Username</th>
+				<th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="tag.name" data-colname='tag.tag'></th>
 				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="6" class="dataTables_empty">Loading data from server</td>
+					<td data-i18n="listing.loading"  colspan="5" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -74,10 +74,20 @@ $(document).on('appReady', function(e, lang) {
 
     oTable = $('.table').dataTable( {
         ajax: {
-            url: "<?=url('datatables/data')?>",
+            url: appUrl + '/datatables/data',
             type: "POST",
             data: function(d){
-                d.mrColNotEmpty = "tag.id"
+                d.mrColNotEmpty = "tag.id";
+
+				// Look for a bigger/smaller/equal statement
+				if(d.search.value.match(/^tag = .+$/))
+				{
+					// Add column specific search
+					d.columns[3].search.value = d.search.value.replace(/tag = /, '');
+					// Clear global search
+					d.search.value = '';
+				}
+
             }
         },
         dom: mr.dt.buttonDom,
@@ -89,13 +99,13 @@ $(document).on('appReady', function(e, lang) {
         	var name=$('td:eq(0)', nRow).html();
         	if(name == ''){name = "No Name"};
         	var sn=$('td:eq(1)', nRow).html();
-        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_summary');
+        	var link = mr.getClientDetailLink(name, sn, '#tab_summary');
         	$('td:eq(0)', nRow).html(link);
-			
+
 			// Format Check-In timestamp
 			var checkin = parseInt($('td:last', nRow).html());
 			var date = new Date(checkin * 1000);
-			$('td:last', nRow).html(moment(date).fromNow());
+			$('td:last', nRow).html('<span title="'+i18n.t('checkin')+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 	    }
     } );
     // Use hash as searchquery
@@ -103,8 +113,8 @@ $(document).on('appReady', function(e, lang) {
     {
 		oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
     }
-    
+
 } );
 </script>
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot')?>

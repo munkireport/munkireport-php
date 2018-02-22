@@ -18,16 +18,16 @@ new Service_model;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
+		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='machine.serial_number'></th>
 		        <th data-i18n="service.name" data-colname='service.service_name'></th>
 		        <th data-i18n="service.status" data-colname='service.service_state'></th>
-				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
+		        <th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="6" class="dataTables_empty">Loading data from server</td>
+					<td colspan="5" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>
@@ -63,7 +63,7 @@ $(document).on('appReady', function(e, lang) {
     
     oTable = $('.table').dataTable( {
         ajax: {
-            url: "<?=url('datatables/data')?>",
+            url: appUrl + '/datatables/data',
             type: "POST",
             data: function(d){
                 d.mrColNotEmpty = "service.id"
@@ -76,7 +76,7 @@ $(document).on('appReady', function(e, lang) {
         	var name=$('td:eq(0)', nRow).html();
         	if(name == ''){name = "No Name"};
         	var sn=$('td:eq(1)', nRow).html();
-        	var link = get_client_detail_link(name, sn, '<?=url()?>/', '#tab_power-tab');
+        	var link = mr.getClientDetailLink(name, sn, '#tab_power-tab');
         	$('td:eq(0)', nRow).html(link);
 
         	
@@ -95,4 +95,4 @@ $(document).on('appReady', function(e, lang) {
 } );
 </script>
 
-<?$this->view('partials/foot')?>
+<?php $this->view('partials/foot')?>

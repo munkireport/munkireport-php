@@ -4,7 +4,10 @@
 
     <div class="panel-heading">
 
-        <h3 class="panel-title"><i class="fa fa-tags"></i> <span data-i18n="tag.widget_title"></span></h3>
+        <h3 class="panel-title"><i class="fa fa-tags"></i>
+            <span data-i18n="tag.widget_title"></span>
+            <list-link data-url="/module/tag/listing"></list-link>
+        </h3>
     
     </div>
 
@@ -24,7 +27,7 @@ $.getJSON( appUrl + '/module/tag/all_tags/add_count', function( data ) {
     if(data.length){
         $.each(data, function(i,d){
             var badge = '<span class="badge pull-right">'+d.cnt+'</span>';
-            list.append('<a href="'+appUrl+'/module/tag/listing#'+d.tag+'" class="list-group-item">'+d.tag+badge+'</a>')
+            list.append('<a href="'+appUrl+'/module/tag/listing#tag%20=%20'+d.tag+'" class="list-group-item">'+d.tag+badge+'</a>')
         });
     }
     else{

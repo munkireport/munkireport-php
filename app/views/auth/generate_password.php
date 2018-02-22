@@ -9,9 +9,9 @@
 							<legend data-i18n="auth.generate_hash">
 								Generate password hash
 							</legend>
-							<?foreach($GLOBALS['alerts'] AS $type => $list):?>
+							<?php foreach($GLOBALS['alerts'] AS $type => $list):?>
 
-						    	<?foreach ($list AS $msg):?>
+						    	<?php foreach ($list AS $msg):?>
 
 								<p class="text-<?php echo $type; ?>"><?php echo $msg; ?></p>
 
@@ -43,24 +43,24 @@
 							</div><!-- /.modal -->
 						<?php endif; ?>
 				    		<div class="form-group">
-								<label for="loginusername" class="col-lg-5 control-label"><span data-i18n="auth.username">Username</span></label>
+								<label for="loginusername" class="col-lg-5 control-label"><span data-i18n="username">Username</span></label>
 								<div class="col-lg-7">
-									<input type="text" id="loginusername" name="login" class="form-control" value="" data-i18n="[placeholder]auth.username" placeholder="Username">
+									<input type="text" id="loginusername" name="login" class="form-control" value="" data-i18n="[placeholder]username" placeholder="Username">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="loginpassword" class="col-lg-5 control-label"><span data-i18n="auth.password">Password</span></label>
 								<div class="col-lg-7">
-									<input type="password" id="loginpassword" name="password" class="form-control">
+									<input type="password" id="loginpassword" name="password" class="form-control" autocomplete="new-password">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary" data-i18n="auth.generate">Generate</button> 
-								<a href="<?php echo url(); ?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>	
+								<button type="submit" class="btn btn-primary" data-i18n="auth.generate">Generate</button>
+								<a href="<?php echo url(); ?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>
 								</div>
 							</div>
-						<?php //endif; ?>				
+						<?php //endif; ?>
 			            </fieldset>
 			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
 					</form>

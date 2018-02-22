@@ -7,49 +7,72 @@
  **/
 class munkiinfo_controller extends Module_controller
 {
+    
+    protected $module_path;
+    protected $view_path;
+
 
   /*** Protect methods with auth! ****/
-  function __construct()
-  {
-    // Store module path
-    $this->module_path = dirname(__FILE__);
-  }
+    public function __construct()
+    {
+      // Store module path
+        $this->module_path = dirname(__FILE__);
+        $this->view_path = dirname(__FILE__) . '/views/';
+    }
   /**
    * Default method
    *
    * @author
    **/
-  function index()
-  {
-    echo "You've loaded the munkiinfo module!";
-  }
+    public function index()
+    {
+        echo "You've loaded the munkiinfo module!";
+    }
+  
+    /**
+    * undocumented function summary
+    *
+    * Undocumented function long description
+    *
+    * @param type var Description
+    * @return {11:return type}
+    */
+    public function listing($value = '')
+    {
+        if (! $this->authorized()) {
+            redirect('auth/login');
+        }
+        $data['page'] = 'clients';
+        $data['scripts'] = array("clients/client_list.js");
+        $obj = new View();
+        $obj->view('munkiprotocol_listing', $data, $this->view_path);
+    }
+
   
   /**
    * Get Munki Protocol Statistics
    *
    * @author erikng
    **/
-  function get_protocol_stats()
-  {
+    public function get_protocol_stats()
+    {
 
-      if( ! $this->authorized())
-      {
-          // die('Authenticate first.'); // Todo: return json
-          $out['error'] = 'Not authorized';
-      }
+        if (! $this->authorized()) {
+        // die('Authenticate first.'); // Todo: return json
+            $out['error'] = 'Not authorized';
+        }
 
-      $queryobj = new munkiinfo_model();
-      $sql = "SELECT  COUNT(1) as total,
+        $queryobj = new munkiinfo_model();
+        $sql = "SELECT  COUNT(1) as total,
                       COUNT(CASE WHEN `munkiinfo_key` = 'munkiprotocol' AND `munkiinfo_value` = 'http' THEN 1 END) AS http,
                       COUNT(CASE WHEN `munkiinfo_key` = 'munkiprotocol' AND `munkiinfo_value` = 'https' THEN 1 END) AS https,
                       COUNT(CASE WHEN `munkiinfo_key` = 'munkiprotocol' AND `munkiinfo_value` = 'localrepo' THEN 1 END) AS localrepo
                        FROM munkiinfo
                        LEFT JOIN reportdata USING (serial_number)
                        ".get_machine_group_filter();
-      $obj = new View();
-      $obj->view('json', array('msg' => current($queryobj->query($sql))));
-
-  }
+        $obj = new View();
+        $obj->view('json', array('msg' => current($queryobj->query($sql))));
+    }
 
   /**
    * Get munki preferences for serial_number
@@ -57,30 +80,24 @@ class munkiinfo_controller extends Module_controller
    * @param string $serial serial number
    * @author clburlison
    **/
-  public function get_data($serial = '')
-  {
-
-    $out = array();
-    $temp = array();
-    if( ! $this->authorized())
+    public function get_data($serial = '')
     {
-      $out['error'] = 'Not authorized';
-    }
-    else
-    {
-      $munkiinfo = new munkiinfo_model;
-      foreach($munkiinfo->retrieve_records($serial) as $prefs)
-      {
-        $temp[] = $prefs->rs;
-      }
-      foreach($temp as $value)
-      {
-        $out[$value['munkiinfo_key']] = $value['munkiinfo_value'];
-      }
-    }
 
-    $obj = new View();
-    $obj->view('json', array('msg' => $out));
-  }
+        $out = array();
+        $temp = array();
+        if (! $this->authorized()) {
+            $out['error'] = 'Not authorized';
+        } else {
+            $munkiinfo = new munkiinfo_model;
+            foreach ($munkiinfo->retrieve_records($serial) as $prefs) {
+                $temp[] = $prefs->rs;
+            }
+            foreach ($temp as $value) {
+                $out[$value['munkiinfo_key']] = $value['munkiinfo_value'];
+            }
+        }
 
+        $obj = new View();
+        $obj->view('json', array('msg' => $out));
+    }
 } // END class default_module

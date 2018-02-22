@@ -10,21 +10,11 @@
 // 'badge' => id of a badge for this tab
 $tab_list = array(
 	'summary' => array('view' => 'client/summary_tab', 'i18n' => 'client.tab.summary'),
-	'munki' => array('view' => 'client/munki_tab', 'i18n' => 'client.tab.munki'),
-	'apple-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 1), 'i18n' => 'client.tab.apple_software', 'badge' => 'history-cnt-1'),
-	'third-party-software' => array('view' => 'client/install_history_tab', 'view_vars' => array('apple'=> 0), 'i18n' => 'client.tab.third_party_software', 'badge' => 'history-cnt-0'),
-	'inventory-items' => array('view' => 'client/inventory_items_tab', 'i18n' => 'client.tab.inventory_items', 'badge' => 'inventory-cnt'),
-	'location-tab' => array('view' => 'client/location_tab', 'i18n' => 'client.tab.location'),
-	'network-tab' => array('view' => 'client/network_tab', 'i18n' => 'client.tab.network', 'badge' => 'network-cnt'),
-	'wifi-tab' => array('view' => 'client/wifi_tab', 'i18n' => 'client.tab.wifi'),
-	'directory-tab' => array('view' => 'client/directory_tab', 'i18n' => 'client.tab.ds', 'badge' => 'directory-cnt'),
-	'displays-tab' => array('view' => 'client/displays_tab', 'i18n' => 'client.tab.displays', 'badge' => 'displays-cnt'),
-	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
-	'gsx-tab' => array('view' => 'client/gsx_tab', 'i18n' => 'client.tab.gsx'),
-	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
-	'printer-tab' => array('view' => 'client/printer_tab', 'i18n' => 'client.tab.printers', 'badge' => 'printer-cnt'),
-	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles')
-		);
+);
+
+// Include module tabs
+$modules = getMrModuleObj()->loadInfo();
+$modules->addTabs($tab_list);
 
 // Add custom tabs
 $tab_list = array_merge($tab_list, conf('client_tabs', array()));
@@ -48,7 +38,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 						<i class="fa fa-list fa-fw"></i>
 					</button>
 					<ul class="dropdown-menu client-tabs" role="tablist">
-							<?foreach($tab_list as $name => $data):?>
+							<?php foreach($tab_list as $name => $data):?>
 
 								<li>
 									<a href="#<?php echo $name?>" data-toggle="tab"><span data-i18n="<?php echo $data['i18n']?>"></span>
@@ -58,9 +48,8 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 									</a>
 								</li>
 
-							<?endforeach?>
+							<?php endforeach?>
 
-							<li class="divider"></li>
 						</ul>
 				</div><!-- /btn-group -->
 
@@ -85,13 +74,13 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 
 			<div class="tab-content">
 
-			<?foreach($tab_list as $name => $data):?>
+			<?php foreach($tab_list as $name => $data):?>
 
-				<div class="tab-pane <?if(isset($data['class'])):?>active<?endif?>" id='<?php echo $name?>'>
+				<div class="tab-pane <?php if(isset($data['class'])):?>active<?php endif?>" id='<?php echo $name?>'>
 					<?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:VIEW_PATH);?>
 				</div>
 
-			<?endforeach?>
+			<?php endforeach?>
 
 			</div>
 	    </div> <!-- /span 12 -->

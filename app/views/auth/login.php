@@ -4,13 +4,13 @@
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4">
 		        <div class="well">
-		        	<form action="<?php echo $url?>" method="post" accept-charset="UTF-8" class="form-horizontal">
+		        	<form id="login-form" action="<?php echo $url?>" method="post" accept-charset="UTF-8" class="form-horizontal">
 						<fieldset>
 							<legend>
 
 								<?php echo conf('sitename'); ?>
 
-								<?php if(empty($_SERVER['HTTPS'])): ?>
+								<?php if( empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off" ): ?>
 
 									<a href="<?php echo secure_url(); ?>"><i data-i18n="[title]auth.insecure" title="Insecure connection, switch to secure" class="text-danger fa fa-unlock-alt pull-right"></i></a>
 
@@ -33,9 +33,9 @@
 							<?php endforeach; ?>
 
 							<div class="form-group">
-								<label for="loginusername" class="col-md-5 control-label"><span data-i18n="auth.username">Username</span></label>
+								<label for="loginusername" class="col-md-5 control-label"><span data-i18n="username">Username</span></label>
 								<div class="col-md-7">
-									<input type="text" id="loginusername" name="login" class="form-control" value="<?php echo $login; ?>" data-i18n="[placeholder]auth.username">
+									<input type="text" id="loginusername" name="login" class="form-control" value="<?php echo $login; ?>" data-i18n="[placeholder]username">
 								</div>
 							</div>
 							<div class="form-group">
@@ -44,11 +44,24 @@
 									<input type="password" id="loginpassword" name="password" class="form-control">
 								</div>
 							</div>
+					<?php if (conf('recaptchaloginpublickey')):?>
+						
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button> 
+									<button class="btn btn-primary g-recaptcha" data-sitekey="<?=conf('recaptchaloginpublickey')?>" data-callback="onSubmit" data-i18n="auth.signin"></button>
 								</div>
 							</div>
+							
+					<?php else:?>
+						
+							<div class="form-group">
+								<div class="col-lg-10 col-lg-offset-3">
+									<button type="submit" class="btn btn-primary" data-i18n="auth.signin">Sign in</button>
+								</div>
+							</div>
+							
+					<?php endif?>
+
 			            </fieldset>
 			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
 					</form>
@@ -56,20 +69,5 @@
 			</div>
 		</div>
 	</div><!-- /container -->
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
-  <script>
-    $.i18n.init({
-        useLocalStorage: false,
-        debug: true,
-        resGetPath: "<?php echo conf('subdirectory'); ?>assets/locales/__lng__.json",
-        fallbackLng: 'en'
-    }, function() {
-        $('form').i18n();
-        $('[title]').tooltip();
-    });
-
-</script>
-
-</body>
-</html>
+	
+	<?php $this->view('partials/foot', array('recaptcha' => true)); ?>

@@ -7,9 +7,9 @@
 <div class="container">
 
   <div class="row">
-    
+
     <div class="col-lg-12">
-    
+
       <script type="text/javascript" charset="utf-8">
           $(document).on('appReady', function(e, lang) {
               $('.table').dataTable({
@@ -17,18 +17,19 @@
               });
           } );
       </script>
-      
+
       <h3><?php echo $name; ?> <span id="inv-count" class='label label-primary'><?php echo count($profile_items); ?></span></h3>
-      
+
       <?php if (count($profile_items)): ?>
           <!--
-          <h2>Machines (<?php echo count($profile_items); ?>)</h2> 
+          <h2>Machines (<?php echo count($profile_items); ?>)</h2>
           -->
           <table class='table table-striped table-condensed table-bordered'>
               <thead>
                   <tr>
-                    <th>Hostname</th>
-                    <th>Profile Name</th>
+                    <th data-i18n="network.hostname"></th>
+                    <th data-i18n="profile.profilename"></th>
+                    <th data-i18n="profile.payloadname"></th>
                   </tr>
               </thead>
               <tbody>
@@ -40,6 +41,7 @@
                           <?php echo $item['hostname']; ?>
                         </a>
                       </td>
+                      <td><?php echo $item['profile']; ?></td>
                       <td><?php echo $item['payload']; ?></td>
                   </tr>
               <?php endforeach; ?>
@@ -50,9 +52,9 @@
           <p><i>No machines.</i></p>
       <?php endif ?>
     </div> <!-- /span 12 -->
-    
+
   </div> <!-- /row -->
-  
+
 </div>  <!-- /container -->
 
 <?php $this->view('partials/foot'); ?>

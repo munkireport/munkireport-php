@@ -1,0 +1,359 @@
+{
+    "about": {
+        "author": "Fridolin Koch"
+    },
+    "active": "Aktiv",
+    "admin": {
+        "bu": {
+            "more_info": "Mehr Informationen"
+        },
+        "bu_overview": "Geschäftsbereiche",
+        "delete_failed": "Löschen fehlgeschlagen: ",
+        "edit_bu": {
+            "address": "Adresse",
+            "link": "Link (zu externer Website)",
+            "name": "Name des Geschäftsbereiches",
+            "title": "Geschäftsbereiche editieren"
+        },
+        "edit_mg": {
+            "title": "Computergruppen editieren"
+        },
+        "edit_user": {
+            "add_user": "Benutzer hinzufügen",
+            "title": "Benutzer editieren"
+        },
+        "mg": {
+            "add_group": "Neue Gruppe",
+            "edit_group": "Computergruppe editieren",
+            "new_group": "Neue Computergruppe",
+            "title": "Computergruppen"
+        },
+        "new_bu": {
+            "title": "Neuer Geschäftsbereich"
+        },
+        "remove_bu": {
+            "content": "Wenn Sie diesen Geschäftsbereich löschen, werden alle betreffenden Daten gelöscht. Dies kann nicht widerrufen werden.",
+            "title": "Geschäftsbereich löschen"
+        },
+        "unassigned_groups": "Nicht zugeordnete Gruppen"
+    },
+    "all": "Alle",
+    "auth": {
+        "addtoconfig": "Fügen Sie diese Zeile zur config.php hinzu:",
+        "back_to_site": "Zurück zur Seite",
+        "captcha": {
+            "empty": "Bitte Captcha ausfüllen",
+            "invalid": "Falsche Captcha-Antwort"
+        },
+        "empty_not_allowed": "Leere Werte sind nicht erlaubt",
+        "error_contacting_AD": "Es ist ein Fehler bei der Verbindung mit der AD aufgetreten",
+        "gen_other": "Weitere erstellen",
+        "generate": "Erstellen",
+        "generate_hash": "Generiere Passwort Hash",
+        "generated_hash": "Hash generiert",
+        "go_secure": "Gehe zur verschlüsselten Seite",
+        "insecure": "Unsichere Verbindung, aktiviere Verschlüsselung",
+        "noauth_found": "Keine Authentifizierungs-Informationen gefunden. Bitte fügen Sie der Konfiguration ein Benutzerkonto hinzu.",
+        "not_authorized": "Nicht authorisiert",
+        "password": "Passwort",
+        "secure": "Sie nutzen eine verschlüsselte Verbindung",
+        "signin": "Anmelden",
+        "wrong_user_or_pass": "Falscher Benutzername oder falches Kennwort"
+    },
+    "backup": {
+        "backup_location": "Backuport",
+        "destination": "Backupziel",
+        "destinations": "Backupziele",
+        "duration": "Dauer des Backups",
+        "four_weeks_less": "Letztes Backup vor 4 Wochen",
+        "four_weeks_plus": "Letztes Backup vor mehr als 4 Wochen",
+        "kind": "Backup-Art",
+        "last_failure": "Letztes Fehlgeschlagenes Backup",
+        "last_failure_msg": "Fehlermeldung",
+        "last_success": "Letztes Erfolgreiches Backup",
+        "lastweek": "Letztes Backup vor mehr als einen Tag",
+        "location_name": "Name des Backup-Orts",
+        "ok": "Letztes Backup vor 2 Wochen",
+        "report": "Backup Report",
+        "today": "Backup heute",
+        "week_plus": "Letztes Backup vor mehr als einer Woche"
+    },
+    "boot_time": "Startzeit",
+    "buildversion": "Build Version",
+    "bundle_id": "BundleID",
+    "business_unit": {
+        "disabled": "Geschäftsbereiche deaktiviert",
+        "machine_group": "Computergruppe",
+        "machine_groups": "Computergruppen",
+        "managers": "Manager",
+        "users": "Benutzer"
+    },
+    "cert": {
+        "expired": "__name__ expired __moment__"
+    },
+    "cfbundlename": "CFBundleName",
+    "chart": {
+        "stackedarea": {
+            "expanded": "Ausführlich",
+            "stacked": "Gestapelt",
+            "stream": "Stream"
+        }
+    },
+    "client": {
+        "activity": "Clientaktivität",
+        "clients": "Clients",
+        "comment": "Kommentar",
+        "hour": "Clients pro Stunde",
+        "panel_title": "Clientaktivität im letzten Monat",
+        "report": "Client Report",
+        "tab": {
+            "summary": "Zusammenfassung"
+        },
+        "total": "Gesamtanzahl Clients"
+    },
+    "configuration": "Konfiguration",
+    "connected": "Verbunden",
+    "cpu": {
+        "arch": "CPU Architektur",
+        "core": "Kerne",
+        "cpu": "CPU",
+        "type": "CPU Typ"
+    },
+    "danger": "Fehler",
+    "database": "Datenbank",
+    "date": {
+        "day": "Tag",
+        "day_plural": "Tage",
+        "year": "Jahr"
+    },
+    "db": {
+        "connectable": "Erreichbar",
+        "driver": "Treiber",
+        "writable": "Beschreibbar"
+    },
+    "delete": "Löschen",
+    "description": "Beschreibung",
+    "dialog": {
+        "cancel": "Abbrechen",
+        "close": "Schließen",
+        "comment": {
+            "add": "Kommentar hinzufügen",
+            "label": "Kommentar"
+        },
+        "ok": "Ok",
+        "ok_remove": "Ok, entfernen",
+        "save": "Speichern"
+    },
+    "disabled": "Deaktiviert",
+    "disconnected": "Getrennt",
+    "displayname": "Anzeigename",
+    "edit": "Editieren",
+    "email": {
+        "email": "Email",
+        "show_machine_in_browser": "Zeige Maschine im Browser"
+    },
+    "enabled": "Aktiviert",
+    "encrypted": "Verschlüsselt",
+    "error": "Fehler",
+    "error_plural": "Fehler",
+    "errors": {
+        "client_nonexistent": "Client mit der Seriennummer \"__serial__\" existiert nicht",
+        "loading": "Es gab ein Problem beim Abruf dieser Daten: __error__",
+        "title": "Fehler"
+    },
+    "event": "Ereignis",
+    "event_plural": "Ereignisse",
+    "events": {
+        "widget_title": "Ereignisse der letzten Stunde"
+    },
+    "external": "Extern",
+    "failed": "Fehlgeschlagen",
+    "failing": "Schlägt fehl!",
+    "filter": {
+        "title": "Filter setzen"
+    },
+    "free_disk_space": "Verfügbarer Speicherplatz",
+    "free_disk_space_less_than": "Verfügbarer Speicherplatz < __gb__GB",
+    "hardware": {
+        "hardware": "Hardware",
+        "uuid": "Hardware UUID"
+    },
+    "inactive": "Inaktiv",
+    "info": "Information",
+    "installed": "Installiert",
+    "internal": "Intern",
+    "keyboard": "Tastatur",
+    "last_seen": "Zuletzt gesehen",
+    "last_user": "Letzter User",
+    "listing": {
+        "checkin": "Check-in",
+        "computername": "Name",
+        "loading": "Lade Daten vom Server"
+    },
+    "loading": "Lade Daten vom Server",
+    "machine": {
+        "arch": "Architektur",
+        "base_model_widget_title": "Aufstellung der Basis-Modelle",
+        "cores": "Kerne",
+        "cpu_speed": "CPU Geschwindigkeit",
+        "duplicate_computernames": {
+            "notfound": "Keine Duplikate gefunden",
+            "title": "Doppelte Computernamen"
+        },
+        "hardware": "Hardware",
+        "hardware_report": "Hardware-Report",
+        "hardware_type_title": "Aufstellung der Hardware-Typen",
+        "hardware_widget_title": "Aufstellung der Hardware-Modelle",
+        "memory": {
+            "title": "Aufstellung der Speicherausstattung"
+        },
+        "model": "Modell",
+        "new_clients": {
+            "no_new_clients": "keine neuen Clients",
+            "title": "Neue Clients",
+            "tooltip": "Neue Clients diese Woche"
+        },
+        "os": {
+            "title": "Aufstellung der OS Versionen"
+        },
+        "registered": {
+            "title": "Zeitachse der Clientregistrierung"
+        },
+        "rom_version": "ROM Version",
+        "uptime": {
+            "title": "Uptime"
+        }
+    },
+    "memory": "Speicher",
+    "model": "Modell",
+    "mouse": "Maus",
+    "munki": {
+        "error": "Munki-Fehler: __error__",
+        "error_plural": "__count__ Munki-Fehler",
+        "package_installed": "__pkg__ installiert",
+        "package_installed_plural": "__count__ Pakete installiert",
+        "warning": "Munki-Warnung: __warning__",
+        "warning_plural": "__count__ Munki-Warnungen"
+    },
+    "mwa": {
+        "mwa_link": "In Munki Web Admin öffnen"
+    },
+    "name": "Name",
+    "nav": {
+        "admin": {
+            "business_units": "Geschäftsbereiche verwalten"
+        },
+        "lang": {
+            "de": "Deutsch",
+            "en": "English",
+            "es": "Español",
+            "fr": "Francais",
+            "nl": "Nederlands",
+            "ru": "Русский"
+        },
+        "main": {
+            "admin": "Admin",
+            "dashboard": "Dashboard",
+            "listings": "Listen",
+            "reports": "Reports"
+        },
+        "user": {
+            "logout": "Abmelden"
+        }
+    },
+    "new_client": "Neuer Client",
+    "new_client_plural": "Neue Clients",
+    "no": "nein",
+    "no_clients": "Keine Clients",
+    "no_data": "Keine Daten",
+    "no_errors_or_warnings": "Keine Fehler oder Warnungen",
+    "notification": {
+        "all_levels": "Alle Levels",
+        "business_unit": "Geschäftsbereich",
+        "business_units_all": "Alle Geschäftsbereiche",
+        "confirm_delete": "Nachricht löschen bestätigen",
+        "edit": "Nachricht editieren",
+        "menu_link": "Nachrichten verwalten",
+        "new": "Neue Nachricht",
+        "notification_enabled": "Aktiviert",
+        "notification_how": "Methode",
+        "notification_module": "Modul",
+        "notification_severity": "Level",
+        "notification_title": "Beschreibung",
+        "notification_who": "Email-Adresse",
+        "title": "Nachrichten",
+        "widget": {
+            "title": "Regeln für Nachrichten"
+        }
+    },
+    "off": "Aus",
+    "on": "An",
+    "os": {
+        "version": "OS Version"
+    },
+    "path": "Pfad",
+    "pending": "Anstehend",
+    "php": {
+        "dom": "DOM Extension",
+        "moreinfo": "Extended PHP info",
+        "pdo": "PDO Extension",
+        "pdodrivers": "PDO Database drivers",
+        "php": "PHP",
+        "soap": "SOAP Extension (wird für GSX Modul gebraucht)",
+        "version": "Version"
+    },
+    "pkg_failed_to_install": "__pkg__ wurde nicht installiert: __reason__",
+    "pkg_failed_to_install_plural": "__count__ Pakete wurden nicht installiert",
+    "ratio": "Verhältnis",
+    "reg_date": "Registrierungsdatum",
+    "remote_control": "Fernsteuerung",
+    "report": {
+        "generate": "Report erzeugen"
+    },
+    "serial": "Seriennummer",
+    "servermetrics": {
+        "tab": "Server Statistik"
+    },
+    "show": "Anzeigen",
+    "size": "Größe",
+    "software": {
+        "boot_rom_version": "Boot ROM Version",
+        "smc_version": "SMC Version",
+        "software": "Software"
+    },
+    "status": "Status",
+    "success": "Erfolg",
+    "system": {
+        "status": "Munkireport Systemstatus",
+        "system": "System"
+    },
+    "systemstatus": {
+        "menu_link": "Systemstatus zeigen"
+    },
+    "total_clients": "Gesamte Anzahl Clients",
+    "trackpad": "Trackpad",
+    "type": "Typ",
+    "unauthorized": "Sie sind nicht autorisiert",
+    "unavailable": "Nicht verfügbar",
+    "unencrypted": "Unverschlüsselt",
+    "unknown": "Unbekannt",
+    "unsupported": "Nicht unterstützt",
+    "uptime": "Uptime",
+    "user": {
+        "local_admins": "Lokaler Admins",
+        "user": "Benutzer",
+        "users": "Benutzer"
+    },
+    "username": "Benutzername",
+    "verified": "Verifiziert",
+    "version": "Version",
+    "warning": "Warnung",
+    "warning_plural": "Warnungen",
+    "widget": {
+        "unknown": {
+            "alert": "Dieses Widget konnte nicht gefunden werden",
+            "title": "Unbekanntes Widget"
+        }
+    },
+    "yes": "Ja"
+}

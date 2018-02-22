@@ -49,27 +49,48 @@
 
   <script>
     $('.mr-alert').prependTo('body>div.container:first');
-	var munkireport = { debug: <?php echo conf('debug') ? 'true' : 'false'; ?>, subdirectory: "<?php echo conf('subdirectory'); ?>" }
   </script>
 
 
   <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/datatables.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/moment.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/flotr2.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/d3/d3.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/nv.d3.min.js"></script>
   <script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.hotkeys/jquery.hotkeys.js"></script>
+  <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.settings.js"></script>
+
   <script>
-
-
+    // Inject debug value from php
+    mr.debug = <?php echo conf('debug') ? 'true' : 'false'; ?>;
   </script>
+  
+
   <?php if(conf('custom_js')): ?> 
   <script src="<?php echo conf('custom_js'); ?>"></script>
   <?php endif; ?>
 
   <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.js"></script>
+  
+  <?php if(isset($recaptcha) && conf('recaptchaloginpublickey')):?>
+      <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+      <script>
+          function onSubmit(token) {
+            document.getElementById("login-form").submit();
+          }
+      </script>
+  <?php endif?>
+  
+  <script>
+  $(document).on('appUpdate', function(){
+      //$.getJSON( appUrl + '/module/notification/runCheck', function( data ) {
+          // Maybe add some counter to only run every 10 mins.
+          // CHeck if the data contains errors
+          // Check if there are desktop notifications
+      //});
+  });
+  </script>
 
 </body>
 </html>

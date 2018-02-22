@@ -1,7 +1,20 @@
 #!/bin/bash
 
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
+# OS check
+OSVERSION=$(/usr/bin/sw_vers -productVersion | /usr/bin/cut -d . -f 2)
+
 # Serveradmin executable
-SERVERADMIN="/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin"
+if [[ ${OSVERSION} -lt 8 ]]; then
+    SERVERADMIN="/usr/sbin/serveradmin"
+else
+    SERVERADMIN="/Applications/Server.app/Contents/ServerRoot/usr/sbin/serveradmin"
+fi
 
 # Out file
 OUT="/usr/local/munki/preflight.d/cache/services.txt"

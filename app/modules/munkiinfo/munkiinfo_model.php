@@ -1,8 +1,12 @@
 <?php
-class munkiinfo_model extends Model {
 
-  function __construct($serial='')
-  {
+use CFPropertyList\CFPropertyList;
+
+class munkiinfo_model extends \Model
+{
+
+    public function __construct($serial = '')
+    {
           parent::__construct('id', 'munkiinfo'); //primary key, tablename
           $this->rs['id'] = 0;
           $this->rs['serial_number'] = $serial;
@@ -16,41 +20,37 @@ class munkiinfo_model extends Model {
           $this->idx[] = array('serial_number');
 
           // Create table if it does not exist
-          $this->create_table();
+         //$this->create_table();
             
-          if ($serial) {
+        if ($serial) {
             $this->retrieve_record($serial);
           
-          $this->serial = $serial;
-          }
-
-  }
+            $this->serial = $serial;
+        }
+    }
 
   /**
    * Process data sent by postflight
    *
    * @param string data
    * @author erikng
-   **/  
-  function process($plist)
-  {
-      require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
-      $parser = new CFPropertyList();
-      $parser->parse($plist);
+   **/
+    public function process($plist)
+    {
+        $parser = new CFPropertyList();
+        $parser->parse($plist);
 
-      $plist = $parser->toArray();
+        $plist = $parser->toArray();
 
-      $this->delete_where('serial_number=?', $this->serial_number);
-			$item = array_pop($plist);
+        $this->deleteWhere('serial_number=?', $this->serial_number);
+        $item = array_pop($plist);
+        reset($item);
+        foreach($item as $key => $val) {
+                $this->munkiinfo_key = $key;
+                $this->munkiinfo_value = $val;
 
-			reset($item);
-			while (list($key, $val) = each($item)) {
-					$this->munkiinfo_key = $key;
-					$this->munkiinfo_value = $val;
-
-					$this->id = '';
-					$this->save();
-
-			}
-  }
+                $this->id = '';
+                $this->save();
+        }
+    }
 }

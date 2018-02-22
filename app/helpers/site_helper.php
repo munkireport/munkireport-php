@@ -1,12 +1,14 @@
 <?php
 
+use munkireport\models\Machine_group, munkireport\lib\Modules;
+
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.8.2.1802';
+$GLOBALS['version'] = '3.0.3.3330';
 
 // Return version without commit count
 function get_version()
 {
-	return preg_replace('/(.*)\.\d+$/', '$1', $GLOBALS['version']);
+    return preg_replace('/(.*)\.\d+$/', '$1', $GLOBALS['version']);
 }
 
 //===============================================
@@ -14,23 +16,22 @@ function get_version()
 //===============================================s
 function uncaught_exception_handler($e)
 {
-	// Dump out remaining buffered text
-	if (ob_get_level())
-	{
-		ob_end_clean();
-	}
+    // Dump out remaining buffered text
+    if (ob_get_level()) {
+        ob_end_clean();
+    }
 
   // Get error message
-  error('Uncaught Exception: '.$e->getMessage());
+    error('Uncaught Exception: '.$e->getMessage());
 
   // Write footer
-  die(View::do_fetch(conf('view_path').'partials/foot.php'));
+    die(View::doFetch(conf('view_path').'partials/foot.php'));
 }
 
-function custom_error($msg='')
+function custom_error($msg = '')
 {
-	$vars['msg']=$msg;
-	die(View::do_fetch(APP_PATH.'errors/custom_error.php',$vars));
+    $vars['msg']=$msg;
+    die(View::doFetch(APP_PATH.'errors/custom_error.php', $vars));
 }
 
 //===============================================
@@ -45,9 +46,9 @@ $GLOBALS['alerts'] = array();
  * @param string alert message
  * @param string type (danger, warning, success, info)
  **/
-function alert($msg, $type="info")
+function alert($msg, $type = "info")
 {
-	$GLOBALS['alerts'][$type][] = $msg;
+    $GLOBALS['alerts'][$type][] = $msg;
 }
 
 /**
@@ -57,12 +58,11 @@ function alert($msg, $type="info")
  **/
 function error($msg, $i18n = '')
 {
-	if( $i18n )
-	{
-		$msg = sprintf('<span data-i18n="%s">%s</span>', $i18n, $msg);
-	}
+    if ($i18n) {
+        $msg = sprintf('<span data-i18n="%s">%s</span>', $i18n, $msg);
+    }
 
-	alert($msg, 'danger');
+    alert($msg, 'danger');
 }
 
 //===============================================
@@ -71,65 +71,85 @@ function error($msg, $i18n = '')
 
 function getdbh()
 {
-	if ( ! isset($GLOBALS['dbh']))
-	{
-		try
-		{
-			$GLOBALS['dbh'] = new PDO(
-				conf('pdo_dsn'),
-				conf('pdo_user'),
-				conf('pdo_pass'),
-				conf('pdo_opts')
-				);
-		}
-		catch (PDOException $e)
-		{
-			fatal('Connection failed: '.$e->getMessage());
-		}
+    if (! isset($GLOBALS['dbh'])) {
+        try {
+            $conn = conf('connection');
+            switch ($conn['driver']) {
+                case 'sqlite':
+                    $dsn = "sqlite:{$conn['database']}";
+                    break;
 
-		// Set error mode
-		$GLOBALS['dbh']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                case 'mysql':
+                    $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
+                    break;
 
-		// Store database name in config array
-		if(preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result))
-		{
-			$GLOBALS['conf']['dbname'] = $result[1];
-		}
-	}
-	return $GLOBALS['dbh'];
+                default:
+                    throw new \Exception("Unknown driver in config", 1);
+            }
+            $GLOBALS['dbh'] = new PDO(
+                $dsn,
+                isset($conn['username']) ? $conn['username'] : '',
+                isset($conn['password']) ? $conn['password'] : '',
+                isset($conn['options']) ? $conn['options'] : []
+            );
+        } catch (PDOException $e) {
+            fatal('Connection failed: '.$e->getMessage());
+        }
+
+        // Set error mode
+        $GLOBALS['dbh']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Store database name in config array
+        if (preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result)) {
+            $GLOBALS['conf']['dbname'] = $result[1];
+        }
+    }
+    return $GLOBALS['dbh'];
 }
 
 //===============================================
 // Autoloading for Business Classes
 //===============================================
 // module classes end with _model
-function __autoload( $classname )
+function munkireport_autoload($classname)
 {
-	// Switch to lowercase filename for models
-	$classname = strtolower($classname);
+    // Switch to lowercase filename for models
+    $lowercaseClassname = strtolower($classname);
 
-	if(substr($classname, -4) == '_api')
-	{
-		require_once( APP_PATH.'modules/'.substr($classname, 0, -4).'/api'.EXT );
-	}
-	elseif(substr($classname, -6) == '_model')
-	{
-		$module = substr($classname, 0, -6);
-		require_once( APP_PATH."modules/${module}/${module}_model".EXT );
-	}
-	else
-	{
-		require_once( APP_PATH.'models/'.$classname.EXT );
-	}
+    if (substr($lowercaseClassname, -6) == '_model') {
+        $module = substr($lowercaseClassname, 0, -6);
+        if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
+            throw new Exception("Cannot load model: ".$classname, 1);
+        }
+        require_once($model);
+    }
 }
 
-function url($url='', $fullurl = FALSE)
+function url($url = '', $fullurl = false, $queryArray = [])
 {
-  $s = $fullurl ? conf('webhost') : '';
-  $s .= conf('subdirectory').($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
-  return $s;
+    $s = $fullurl ? conf('webhost') : '';
+    $s .= conf('subdirectory').($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
+    if($queryArray){
+        $s .= (INDEX_PAGE ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
+    }
+    return $s;
 }
 
+/**
+ * Retrieve Remote IP
+ *
+ * Take Proxy headers into account
+ *
+ * @return string IP address
+ */
+function getRemoteAddress()
+{
+    if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+        return $_SERVER["HTTP_X_FORWARDED_FOR"];
+    }
+
+    return $_SERVER['REMOTE_ADDR'];
+}
 /**
  * Return a secure url
  *
@@ -139,36 +159,36 @@ function url($url='', $fullurl = FALSE)
  **/
 function secure_url($url = '')
 {
-	$parse_url = parse_url(url($url, TRUE));
-	$parse_url['scheme'] = 'https';
+    $parse_url = parse_url(url($url, true));
+    $parse_url['scheme'] = 'https';
 
-	return
-		 ((isset($parse_url['scheme'])) ? $parse_url['scheme'] . '://' : '')
-		.((isset($parse_url['user'])) ? $parse_url['user']
-		.((isset($parse_url['pass'])) ? ':' . $parse_url['pass'] : '') .'@' : '')
-		.((isset($parse_url['host'])) ? $parse_url['host'] : '')
-		.((isset($parse_url['port'])) ? ':' . $parse_url['port'] : '')
-		.((isset($parse_url['path'])) ? $parse_url['path'] : '')
-		.((isset($parse_url['query'])) ? '?' . $parse_url['query'] : '')
-		.((isset($parse_url['fragment'])) ? '#' . $parse_url['fragment'] : '')
+    return
+         ((isset($parse_url['scheme'])) ? $parse_url['scheme'] . '://' : '')
+        .((isset($parse_url['user'])) ? $parse_url['user']
+        .((isset($parse_url['pass'])) ? ':' . $parse_url['pass'] : '') .'@' : '')
+        .((isset($parse_url['host'])) ? $parse_url['host'] : '')
+        .((isset($parse_url['port'])) ? ':' . $parse_url['port'] : '')
+        .((isset($parse_url['path'])) ? $parse_url['path'] : '')
+        .((isset($parse_url['query'])) ? '?' . $parse_url['query'] : '')
+        .((isset($parse_url['fragment'])) ? '#' . $parse_url['fragment'] : '')
         ;
 }
 
 function redirect($uri = '', $method = 'location', $http_response_code = 302)
 {
-	if ( ! preg_match('#^https?://#i', $uri))
-	{
-		$uri = url($uri);
-	}
+    if (! preg_match('#^https?://#i', $uri)) {
+        $uri = url($uri);
+    }
 
-	switch($method)
-	{
-		case 'refresh'	: header("Refresh:0;url=".$uri);
-			break;
-		default			: header("Location: ".$uri, TRUE, $http_response_code);
-			break;
-	}
-	exit;
+    switch ($method) {
+        case 'refresh':
+            header("Refresh:0;url=".$uri);
+            break;
+        default:
+            header("Location: ".$uri, true, $http_response_code);
+            break;
+    }
+    exit;
 }
 
 /**
@@ -176,14 +196,13 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
  *
  * @return string post value
  **/
-function post($what='', $alt='')
+function post($what = '', $alt = '')
 {
-	if(isset($_POST[$what]))
-	{
-		return $_POST[$what];
-	}
+    if (isset($_POST[$what])) {
+        return $_POST[$what];
+    }
 
-	return $alt;
+    return $alt;
 }
 
 /**
@@ -194,13 +213,12 @@ function post($what='', $alt='')
  **/
 function passphrase_to_group($passphrase)
 {
-	$machine_group = new Machine_group;
-	if( $machine_group->retrieve_one('property=? AND value=?', array('key', $passphrase)))
-	{
-		return $machine_group->groupid;
-	}
+    $machine_group = new Machine_group;
+    if ($machine_group->retrieveOne('property=? AND value=?', array('key', $passphrase))) {
+        return $machine_group->groupid;
+    }
 
-	return 0;
+    return 0;
 }
 
 /**
@@ -211,10 +229,17 @@ function passphrase_to_group($passphrase)
  **/
 function get_guid()
 {
-	return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X',
-		mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535),
-		mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535),
-		mt_rand(0, 65535), mt_rand(0, 65535));
+    return sprintf(
+        '%04X%04X-%04X-%04X-%04X-%04X%04X%04X',
+        mt_rand(0, 65535),
+        mt_rand(0, 65535),
+        mt_rand(0, 65535),
+        mt_rand(16384, 20479),
+        mt_rand(32768, 49151),
+        mt_rand(0, 65535),
+        mt_rand(0, 65535),
+        mt_rand(0, 65535)
+    );
 }
 
 /**
@@ -225,13 +250,12 @@ function get_guid()
  **/
 function authorized_for_serial($serial_number)
 {
-	// Make sure the reporting script is authorized
-	if(isset($GLOBALS['auth']) && $GLOBALS['auth'] == 'report')
-	{
-		return TRUE;
-	}
+    // Make sure the reporting script is authorized
+    if (isset($GLOBALS['auth']) && $GLOBALS['auth'] == 'report') {
+        return true;
+    }
 
-	return id_in_machine_group(get_machine_group($serial_number));
+    return id_in_machine_group(get_machine_group($serial_number));
 }
 
 /**
@@ -242,20 +266,16 @@ function authorized_for_serial($serial_number)
  **/
 function get_machine_group($serial_number = '')
 {
-	if( ! isset($GLOBALS['machine_groups'][$serial_number]))
-	{
-		$reportdata = new Reportdata_model;
-		if( $reportdata->retrieve_one('serial_number=?', $serial_number))
-		{
-			$GLOBALS['machine_groups'][$serial_number] = $reportdata->machine_group;
-		}
-		else
-		{
-			$GLOBALS['machine_groups'][$serial_number] = 0;
-		}
-	}
+    if (! isset($GLOBALS['machine_groups'][$serial_number])) {
+        $reportdata = new Reportdata_model;
+        if ($reportdata->retrieveOne('serial_number=?', $serial_number)) {
+            $GLOBALS['machine_groups'][$serial_number] = $reportdata->machine_group;
+        } else {
+            $GLOBALS['machine_groups'][$serial_number] = 0;
+        }
+    }
 
-	return $GLOBALS['machine_groups'][$serial_number];
+    return $GLOBALS['machine_groups'][$serial_number];
 }
 
 /**
@@ -268,17 +288,15 @@ function get_machine_group($serial_number = '')
  **/
 function id_in_machine_group($id)
 {
-	if($_SESSION['role'] == 'admin')
-	{
-		return TRUE;
-	}
+    if ($_SESSION['role'] == 'admin') {
+        return true;
+    }
 
-	if(isset($_SESSION['machine_groups']))
-	{
-		return in_array($id, $_SESSION['machine_groups']);
-	}
+    if (isset($_SESSION['machine_groups'])) {
+        return in_array($id, $_SESSION['machine_groups']);
+    }
 
-	return FALSE;
+    return false;
 }
 
 /**
@@ -292,16 +310,13 @@ function id_in_machine_group($id)
 function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
 {
 
-	// Get filtered groups
-	if($groups = get_filtered_groups())
-	{
-		return sprintf('%s %s.machine_group IN (%s)', $prefix, $reportdata, implode(', ', $groups));
-	}
-	else // No filter
-	{
-		return '';
-	}
-
+    // Get filtered groups
+    if ($groups = get_filtered_groups()) {
+        return sprintf('%s %s.machine_group IN (%s)', $prefix, $reportdata, implode(', ', $groups));
+    } else // No filter
+    {
+        return '';
+    }
 }
 
 /**
@@ -312,26 +327,22 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
  **/
 function get_filtered_groups()
 {
-	$out = array();
+    $out = array();
 
-	// Get filter
-	if(isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group'])
-	{
-		$filter = $_SESSION['filter']['machine_group'];
-		$out = array_diff($_SESSION['machine_groups'], $filter);
-	}
-	else
-	{
-		$out = $_SESSION['machine_groups'];
-	}
+    // Get filter
+    if (isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group']) {
+        $filter = $_SESSION['filter']['machine_group'];
+        $out = array_diff($_SESSION['machine_groups'], $filter);
+    } else {
+        $out = $_SESSION['machine_groups'];
+    }
 
-	// If out is empty, signal no groups
-	if( ! $out)
-	{
-		$out[] = -1;
-	}
+    // If out is empty, signal no groups
+    if (! $out) {
+        $out[] = -1;
+    }
 
-	return $out;
+    return $out;
 }
 
 /**
@@ -342,10 +353,10 @@ function get_filtered_groups()
  * @param string $type info, error
  * @param string $msg long message
  **/
-function store_event($serial, $module = '', $type = '', $msg = 'no_message', $data='')
+function store_event($serial, $module = '', $type = '', $msg = 'no_message', $data = '')
 {
-	$evtobj = new Event_model($serial, $module);
-	$evtobj->store($type, $msg, $data);
+    $evtobj = new Event_model($serial, $module);
+    $evtobj->store($type, $msg, $data);
 }
 
 /**
@@ -356,24 +367,28 @@ function store_event($serial, $module = '', $type = '', $msg = 'no_message', $da
  **/
 function delete_event($serial, $module = '')
 {
-	$evtobj = new Event_model();
-	$evtobj->reset($serial, $module);
+    $evtobj = new Event_model();
+    $evtobj->reset($serial, $module);
 }
 
-
-// Original PHP code by Chirp Internet: www.chirp.com.au
-// Please acknowledge use of this code by including this header.
-function truncate_string($string, $limit=100, $break=".", $pad="...")
+// Truncate string
+function truncate_string($string, $limit = 100, $pad = "...")
 {
-  // return with no change if string is shorter than $limit
-  if(strlen($string) <= $limit) return $string;
-
-  // is $break present between $limit and the end of the string?
-  if(false !== ($breakpoint = strpos($string, $break, $limit))) {
-    if($breakpoint < strlen($string) - 1) {
-      $string = substr($string, 0, $breakpoint) . $pad;
+    if (strlen($string) <= $limit) {
+        return $string;
     }
-  }
 
-  return $string;
+    return substr($string, 0, $limit - strlen($pad)) . $pad;
+}
+
+// Create a singleton moduleObj
+function getMrModuleObj()
+{
+    static $moduleObj;
+
+    if( ! $moduleObj){
+      $moduleObj = new Modules;
+    }
+
+    return $moduleObj;
 }

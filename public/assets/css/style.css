@@ -1,0 +1,193 @@
+/* Remove tick lines in multiBarHorizontalChart */
+g.nv-multiBarHorizontalChart .nv-x.nv-axis line {
+    stroke: none;
+    fill: none;
+}
+
+svg.clickLabels .nv-bar{
+    cursor: pointer;
+}
+
+/* Panel title */
+.panel-title{
+    line-height: 1.1;
+}
+
+body {
+  padding-bottom: 40px;
+}
+/* color for list group items */
+a.list-group-item-success > .badge
+{
+  background-color: #5cb85c;
+}
+a.list-group-item-warning > .badge
+{
+  background-color: #f0ad4e;
+}
+a.list-group-item-danger > .badge
+{
+  background-color: #d9534f;
+}
+
+/* Scroll box for list widgets */
+.scroll-box
+{
+  max-height: 200px; overflow-y: scroll;
+}
+
+/* Fix paging */
+.paging_bootstrap ul.pagination
+{
+  margin-top: 0;
+}
+
+/* DataTables processing */
+.dataTables_processing
+{
+  padding: 4px;
+  float: left;
+}
+
+/* Machine button */
+.machine
+{
+  width: 100%;
+  min-width: 150px;
+}
+.machine a.btn-default
+{
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.machine a.btn-danger
+{
+  width: 20px;
+  display:none;
+}
+.edit a.btn-default
+{
+  width: calc(100% - 20px);
+}
+.edit a.btn-danger
+{
+  width: 20px;
+  display:block;
+}
+
+/* Stretch to screen width for large screens */
+@media (min-width: 1200px){
+  .container {
+  width: auto;
+  }
+}
+
+.progress{margin-bottom: 0}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 21px;
+  line-height: 40px;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5
+}
+
+.bigger-150
+{
+  font-size:150%
+}
+
+/* datatable make room for arrows */
+table.table thead th{
+  padding-right: 20px;
+}
+
+/* Responsive table all widths */
+@media screen {
+  .table-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #ddd;
+  }
+  .table-responsive > .table {
+    margin-bottom: 0;
+  }
+  .table-responsive > .table > thead > tr > th,
+  .table-responsive > .table > tbody > tr > th,
+  .table-responsive > .table > tfoot > tr > th,
+  .table-responsive > .table > thead > tr > td,
+  .table-responsive > .table > tbody > tr > td,
+  .table-responsive > .table > tfoot > tr > td {
+    white-space: nowrap;
+  }
+  .table-responsive > .table-bordered {
+    border: 0;
+  }
+  .table-responsive > .table-bordered > thead > tr > th:first-child,
+  .table-responsive > .table-bordered > tbody > tr > th:first-child,
+  .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+  .table-responsive > .table-bordered > thead > tr > td:first-child,
+  .table-responsive > .table-bordered > tbody > tr > td:first-child,
+  .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+    border-left: 0;
+  }
+  .table-responsive > .table-bordered > thead > tr > th:last-child,
+  .table-responsive > .table-bordered > tbody > tr > th:last-child,
+  .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+  .table-responsive > .table-bordered > thead > tr > td:last-child,
+  .table-responsive > .table-bordered > tbody > tr > td:last-child,
+  .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+    border-right: 0;
+  }
+  .table-responsive > .table-bordered > tbody > tr:last-child > th,
+  .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+  .table-responsive > .table-bordered > tbody > tr:last-child > td,
+  .table-responsive > .table-bordered > tfoot > tr:last-child > td {
+    border-bottom: 0;
+  }
+}
+
+/* Client detail header */
+.form-control[readonly] {
+    background-color:inherit;
+    color:inherit;
+    font-size: 1.2em;
+}
+
+/* Donut chart title */
+svg .nv-label text
+{
+  font-size: .8em;
+}
+
+@media print{
+
+  a[href]:after {
+    content: "";
+  }
+
+  .scroll-box
+  {
+    max-height: inherit;
+    overflow: auto;
+  }
+
+  .panel {
+    page-break-inside: avoid;
+  }
+}
+
+.popover{
+    max-width: 800px;
+    max-height: 600px;
+    overflow: scroll
+}
+
+.modal-body {
+    max-height: calc(100vh - 212px);
+    overflow-y: auto;
+}
