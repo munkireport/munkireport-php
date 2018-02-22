@@ -231,6 +231,10 @@
 	| want the links, set either to an empty string, eg:
 	| $conf['vnc_link'] = "";
 	|
+	| If you want to authenticate with SSH using the currently logged in user 
+	| replace the username in the SSH config with %u: 
+	| $conf['ssh_link'] = "ssh://%u@%s";
+	|
 	*/
 	$conf['vnc_link'] = "vnc://%s:5900";
 	$conf['ssh_link'] = "ssh://adminuser@%s";
