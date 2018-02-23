@@ -10,12 +10,13 @@ CTL="${BASEURL}index.php?/module/devtools/"
 if [ $? = 0 ]; then
 	# Make executable
 	chmod a+x "${MUNKIPATH}preflight.d/devtools.py"
+    
+	# Touch the cache file to prevent errors
+	mkdir -p "${MUNKIPATH}preflight.d/cache"
+	touch "${MUNKIPATH}preflight.d/cache/homebrew_info.json"
 
 	# Set preference to include this file in the preflight check
 	setreportpref "devtools" "${CACHEPATH}devtools.plist"
-
-	# Touch cache file to prevent errors
-	touch "${CACHEPATH}devtools.plist"
 
 else
 	echo "Failed to download all required components!"
