@@ -12,16 +12,7 @@ class munkiinfo_model extends \Model
           $this->rs['serial_number'] = $serial;
           $this->rs['munkiinfo_key'] = '';
           $this->rs['munkiinfo_value'] = '';
-        
-          // Schema version, increment when creating a db migration
-          $this->schema_version = 0;
-        
-          // Add indexes
-          $this->idx[] = array('serial_number');
 
-          // Create table if it does not exist
-         //$this->create_table();
-            
         if ($serial) {
             $this->retrieve_record($serial);
           

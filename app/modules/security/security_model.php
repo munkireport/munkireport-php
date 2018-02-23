@@ -8,33 +8,16 @@ class Security_model extends \Model
     {
         parent::__construct('id', 'security'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial;
         $this->rs['gatekeeper'] = '';
-    	$this->rs['sip'] = '';
-    	$this->rs['ssh_groups'] = '';
-    	$this->rs['ssh_users'] = '';
-    	$this->rs['ard_users'] = '';
+        $this->rs['sip'] = '';
+        $this->rs['ssh_groups'] = '';
+        $this->rs['ssh_users'] = '';
+        $this->rs['ard_users'] = '';
         $this->rs['firmwarepw'] = '';
         $this->rs['firewall_state'] = '';
         $this->rs['skel_state'] = '';
-        
-        // Add indexes
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('gatekeeper');
-        $this->idx[] = array('sip');
-        $this->idx[] = array('ssh_groups');
-        $this->idx[] = array('ssh_users');
-        $this->idx[] = array('ard_users');
-        $this->idx[] = array('firmwarepw');
-        $this->idx[] = array('firewall_state');
-        $this->idx[] = array('skel_state');
 
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 7;
-        
-        // Create table if it does not exist
-       //$this->create_table();
-        
         if ($serial) {
             $this->retrieve_record($serial);
         }
