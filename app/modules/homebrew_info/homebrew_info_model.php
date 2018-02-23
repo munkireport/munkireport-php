@@ -5,7 +5,7 @@ class Homebrew_info_model extends \Model {
 	{
 		parent::__construct('id', 'homebrew_info'); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial;
 		$this->rs['core_tap_head'] = '';
 		$this->rs['core_tap_origin'] = ''; 
 		$this->rs['core_tap_last_commit'] = '';
@@ -33,40 +33,6 @@ class Homebrew_info_model extends \Model {
 		$this->rs['homebrew_noanalytics_this_run'] = '';
 		$this->rs['curl'] = '';
 
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 1;
-
-		// Add indexes
-		$this->idx[] = array('core_tap_head');
-		$this->idx[] = array('core_tap_origin');
-		$this->idx[] = array('core_tap_last_commit');
-		$this->idx[] = array('head');
-		$this->idx[] = array('last_commit');
-		$this->idx[] = array('origin');
-		$this->idx[] = array('homebrew_bottle_domain');
-		$this->idx[] = array('homebrew_cellar');
-		$this->idx[] = array('homebrew_prefix');
-		$this->idx[] = array('homebrew_repository');
-		$this->idx[] = array('homebrew_version');
-		$this->idx[] = array('homebrew_ruby');
-		$this->idx[] = array('command_line_tools');
-		$this->idx[] = array('cpu');
-		$this->idx[] = array('git');
-		$this->idx[] = array('clang');
-		$this->idx[] = array('java');
-		$this->idx[] = array('perl');
-		$this->idx[] = array('python');
-		$this->idx[] = array('ruby');
-		$this->idx[] = array('x11');
-		$this->idx[] = array('xcode');
-		$this->idx[] = array('macos');
-		$this->idx[] = array('homebrew_git_config_file');
-		$this->idx[] = array('homebrew_noanalytics_this_run');
-		$this->idx[] = array('curl');
-        
-		// Create table if it does not exist
-		//$this->create_table();
-        
         if ($serial) {
             $this->retrieve_record($serial);
         }

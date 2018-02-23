@@ -12,23 +12,10 @@ class Extensions_model extends \Model {
 		$this->rs['name'] = '';
 		$this->rs['bundle_id'] = '';
 		$this->rs['version'] = '';
-		$this->rs['path'] = ''; $this->rt['path'] = 'VARCHAR(1024)';
+		$this->rs['path'] = '';
 		$this->rs['developer'] = '';
 		$this->rs['teamid'] = '';
-		$this->rs['executable'] = ''; $this->rt['executable'] = 'VARCHAR(1024)';
-
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 2;
-
-		// Add indexes
-		$this->idx[] = array('name');
-		$this->idx[] = array('bundle_id');
-		$this->idx[] = array('version');
-		$this->idx[] = array('developer');
-		$this->idx[] = array('teamid');
-
-		// Create table if it does not exist
-		//$this->create_table();
+		$this->rs['executable'] = '';
 
 		$this->serial_number = $serial;
 	}

@@ -10,20 +10,20 @@ class Homebrew_model extends \Model {
 		$this->rs['full_name'] = '';
 		$this->rs['oldname'] = '';
 		$this->rs['aliases'] = '';
-		$this->rs['desc'] = ''; $this->rt['desc'] = 'TEXT';
+		$this->rs['desc'] = '';
 		$this->rs['homepage'] = '';
 		$this->rs['installed_versions'] = '';
 		$this->rs['versions_stable'] = '';
 		$this->rs['linked_keg'] = '';  
-		$this->rs['dependencies'] = ''; $this->rt['dependencies'] = 'TEXT';
-		$this->rs['build_dependencies'] = ''; $this->rt['build_dependencies'] = 'TEXT';
-		$this->rs['recommended_dependencies'] = ''; $this->rt['recommended_dependencies'] = 'TEXT';
-		$this->rs['runtime_dependencies'] = ''; $this->rt['runtime_dependencies'] = 'TEXT';
-		$this->rs['optional_dependencies'] = ''; $this->rt['optional_dependencies'] = 'TEXT';
-		$this->rs['requirements'] = ''; $this->rt['requirements'] = 'TEXT';
-		$this->rs['options'] = ''; $this->rt['options'] = 'TEXT';
-		$this->rs['used_options'] = ''; $this->rt['used_options'] = 'TEXT';
-		$this->rs['caveats'] = ''; $this->rt['caveats'] = 'TEXT';
+		$this->rs['dependencies'] = '';
+		$this->rs['build_dependencies'] = '';
+		$this->rs['recommended_dependencies'] = '';
+		$this->rs['runtime_dependencies'] = '';
+		$this->rs['optional_dependencies'] = '';
+		$this->rs['requirements'] = '';
+		$this->rs['options'] = '';
+		$this->rs['used_options'] = '';
+		$this->rs['caveats'] = '';
 		$this->rs['conflicts_with'] = '';
 		$this->rs['built_as_bottle'] = 0; //TF
 		$this->rs['installed_as_dependency'] = 0; //TF
@@ -35,24 +35,6 @@ class Homebrew_model extends \Model {
 		$this->rs['pinned'] = 0; //TF
 		$this->rs['versions_devel'] = 0; //TF
 		$this->rs['versions_head'] = 0; //TF
-
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-
-		// Add indexes
-		$this->idx[] = array('built_as_bottle');
-		$this->idx[] = array('installed_as_dependency');
-		$this->idx[] = array('installed_on_request');
-		$this->idx[] = array('poured_from_bottle');
-		$this->idx[] = array('keg_only');
-		$this->idx[] = array('outdated');
-		$this->idx[] = array('pinned');
-		$this->idx[] = array('versions_devel');
-		$this->idx[] = array('versions_bottle');
-		$this->idx[] = array('versions_head');
-        
-		// Create table if it does not exist
-		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}

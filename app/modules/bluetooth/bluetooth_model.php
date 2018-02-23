@@ -13,17 +13,6 @@ class Bluetooth_model extends \Model
         $this->rs['battery_percent'] = -1; //-1 means unknown
         $this->rs['device_type'] = ''; // status, kb, mouse, trackpad
 
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
-
-        // Add indexes
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('device_type');
-
-        // Create table if it does not exist
-//       //$this->create_table();
-
         $this->$serial = $serial;
     }
 
