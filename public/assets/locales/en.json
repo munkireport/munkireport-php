@@ -231,7 +231,7 @@
             "title": "Uptime"
         }
     },
-    "memory": "Memory",
+    "memory_physical": "Memory",
     "model": "Model",
     "mouse": "Mouse",
     "munki": {

@@ -232,11 +232,7 @@
   "manifest": {
     "name": "Manifest Naam"
   },
-  "memory": {
-    "memory": "Geheugen",
-    "usage": "Geheugengebruik",
-    "pressure": "Geheugendruk"
-  },
+  "memory_physical": "Geheugen",
   "model": "Model",
   "munki": {
     "error": "Munki fout: __error__",

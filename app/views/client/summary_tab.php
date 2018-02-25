@@ -66,7 +66,7 @@
 					<th data-i18n="cpu.type"></th><td><span class="mr-number_processors"></span> <span data-i18n="cpu.core"></span></td>
 				</tr>
 				<tr>
-					<th data-i18n="memory"></th><td><span class="mr-physical_memory"></span> GB</td>
+					<th data-i18n="memory_physical"></th><td><span class="mr-physical_memory"></span> GB</td>
 				</tr>
 				<tr>
 					<th data-i18n="hardware.uuid"></th><td class="mr-platform_UUID"></td>

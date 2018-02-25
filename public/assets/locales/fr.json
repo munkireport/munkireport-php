@@ -227,7 +227,7 @@
             "title": "Temps de fonctionnement"
         }
     },
-    "memory": "Mémoire",
+    "memory_physical": "Mémoire",
     "model": "Modèle",
     "mouse": " Souris",
     "munki": {

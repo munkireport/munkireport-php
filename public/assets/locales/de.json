@@ -224,7 +224,7 @@
             "title": "Uptime"
         }
     },
-    "memory": "Speicher",
+    "memory_physical": "Speicher",
     "model": "Modell",
     "mouse": "Maus",
     "munki": {
