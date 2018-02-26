@@ -11,21 +11,21 @@ class Devtools extends Migration
         $capsule::schema()->create('devtools', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
-            $table->string('cli_tools');
-            $table->string('dashcode_version');
-            $table->text('devtools_path');
-            $table->string('devtools_version');
-            $table->string('instruments_version');
-            $table->string('interface_builder_version');
-            $table->text('ios_sdks');
-            $table->text('ios_simulator_sdks');
-            $table->text('macos_sdks');
-            $table->text('tvos_sdks');
-            $table->text('tvos_simulator_sdks');
-            $table->text('watchos_sdks');
-            $table->text('watchos_simulator_sdks');
-            $table->string('xcode_version');
-            $table->string('xquartz');
+            $table->string('cli_tools')->nullable();
+            $table->string('dashcode_version')->nullable();
+            $table->text('devtools_path')->nullable();
+            $table->string('devtools_version')->nullable();
+            $table->string('instruments_version')->nullable();
+            $table->string('interface_builder_version')->nullable();
+            $table->text('ios_sdks')->nullable();
+            $table->text('ios_simulator_sdks')->nullable();
+            $table->text('macos_sdks')->nullable();
+            $table->text('tvos_sdks')->nullable();
+            $table->text('tvos_simulator_sdks')->nullable();
+            $table->text('watchos_sdks')->nullable();
+            $table->text('watchos_simulator_sdks')->nullable();
+            $table->string('xcode_version')->nullable();
+            $table->string('xquartz')->nullable();
 
             $table->index('cli_tools');
             $table->index('dashcode_version');
