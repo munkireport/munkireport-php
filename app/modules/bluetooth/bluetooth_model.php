@@ -72,8 +72,9 @@ class Bluetooth_model extends \Model
         foreach ($mylist as $key => $value) {
 
             $this->device_type = str_replace(' ', '_', strtolower($key));
-
-            if($this->device_type == "bluetooth_power"){
+            if($this->device_type == "bluetooth_power" && ! is_bool($value)){
+                $this->battery_percent = -1;
+            } else if($this->device_type == "bluetooth_power"){
                 $this->battery_percent = $value == true ? 1 : 0;
             } else {
                 $this->battery_percent = $value;
