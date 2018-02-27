@@ -20,8 +20,24 @@ def bashCommand(script):
             return "Current: \nActive: "
         else:
             return "[* Error] **%s** [%s]" % (err, str(script))
+        
+def get_external_ip():
+    
+    cmd = ['/usr/bin/curl', '--connect-timeout', '5', 'https://api.ipify.org']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    try:
+        return "External IP: "+output
+    except Exception:
+        return ""
 
 def get_network_info():
+    # Get external IP only once
+    external_ip = get_external_ip()
+    
+    # Get list of network services/interfaces
     networkservices = bashCommand(['/usr/sbin/networksetup', '-listallnetworkservices']).split('\n')[:-1]
     for network in networkservices:
         dns = "DNS: "
@@ -32,6 +48,9 @@ def get_network_info():
             network_service_list.append('Service: %s' % network)
             network_info = bashCommand(['/usr/sbin/networksetup', '-getinfo', network]).split('\n')[:-1]
             
+            if any("Subnet mask" in s for s in network_info):
+                network_info.append(external_ip)
+        
             nameservers = bashCommand(['/bin/cat', '/etc/resolv.conf']).split('\n')[:-1]
             for searchdomain in nameservers:
                     if "search " in searchdomain:

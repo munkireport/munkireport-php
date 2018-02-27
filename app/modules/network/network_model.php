@@ -22,6 +22,7 @@ class Network_model extends \Model
         $this->rs['ipv6prefixlen'] = 0; // IPv6 prefix length as int
         $this->rs['ipv6router'] = '';  // IPv6 router address as string
         $this->rs['ipv4dns'] = '';  // IPv4 DNS address(es) as string
+        $this->rs['externalip'] = '';  // External IP address as string
         $this->rs['vlans'] = '';  // VLANs on service as string
         $this->rs['activemtu'] = 0;  // Active MTU as int
         $this->rs['validmturange'] = '';  // Range of valid MTUs as string
@@ -50,6 +51,7 @@ class Network_model extends \Model
             'Wi-Fi ID: ' => 'ethernet',
             'IP address: ' => 'ipv4ip',
             'DNS: ' => 'ipv4dns',
+            'External IP: ' => 'externalip',
             'Search Domain: ' => 'searchdomain',
             'Subnet mask: ' => 'ipv4mask',
             'Router: ' => 'ipv4router',

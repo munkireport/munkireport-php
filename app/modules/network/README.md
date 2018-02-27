@@ -24,6 +24,7 @@ The table provides the following information per 'networkservice':
 * currentmedia (string) Current network media
 * activemedia (string) Active network media
 * searchdomain (string) Search domain
+* externalip (string) External IP address
 
 Remarks
 ---

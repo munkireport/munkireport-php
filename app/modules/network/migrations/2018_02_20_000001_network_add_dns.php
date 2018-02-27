@@ -20,6 +20,7 @@ class NetworkAddDns extends Migration
             $table->string('currentmedia')->nullable();
             $table->string('activemedia')->nullable();
             $table->string('searchdomain')->nullable();
+            $table->string('externalip')->nullable();
         });
 
         // (Re)create indexes
@@ -31,6 +32,7 @@ class NetworkAddDns extends Migration
             $table->index('currentmedia');
             $table->index('activemedia');
             $table->index('searchdomain');
+            $table->index('externalip');
         });
     }
 
@@ -45,6 +47,7 @@ class NetworkAddDns extends Migration
 			$table->dropColumn('currentmedia');
 			$table->dropColumn('activemedia');
 			$table->dropColumn('searchdomain');
+			$table->dropColumn('externalip');
         });
     }
 }

@@ -110,7 +110,7 @@ class Network_controller extends Module_controller
         
         $queryobj = new Network_model();
         
-        $sql = "SELECT service, `order`, status, ethernet, clientid, ipv4conf, ipv4ip, ipv4dns, ipv4mask, ipv4router, ipv6conf, ipv6ip, ipv6prefixlen, ipv6router, vlans, activemtu, validmturange, currentmedia, activemedia
+        $sql = "SELECT service, `order`, status, ethernet, clientid, ipv4conf, ipv4ip, ipv4dns, ipv4mask, ipv4router, ipv6conf, ipv6ip, ipv6prefixlen, ipv6router, vlans, activemtu, validmturange, currentmedia, activemedia, externalip
                         FROM network 
                         WHERE serial_number = '$serial_number'";
         

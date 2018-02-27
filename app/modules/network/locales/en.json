@@ -32,6 +32,7 @@
     "ipv6router": "IPv6 Router",
     "prefix_length": "Prefix Length",
     "remote_ip": "Remote IP Address",
+    "externalip": "External IP Address",
     "router": "Router",
     "service": "Service",
     "tab": "Network Interfaces",
