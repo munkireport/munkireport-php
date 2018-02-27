@@ -70,6 +70,10 @@ class Auth extends Controller
             }
         }
 
+       if(!empty(conf('manage_ipwhitelist'))) { 
+         check_ip($_SERVER['REMOTE_ADDR']); 
+       }
+
         // Check if pre-authentication is successful
         if (! $pre_auth_failed && $this->authHandler->login($login, $password)) {
             if($_SESSION['initialized']){
