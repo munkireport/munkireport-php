@@ -147,6 +147,7 @@
 	|		$conf['auth']['auth_AD']['admin_password'] = NULL; //if needed to perform the search
 	|		$conf['auth']['auth_AD']['mr_allowed_users'] = ['macadmin','bossman'];
 	|		$conf['auth']['auth_AD']['mr_allowed_groups'] = ['AD Group 1','AD Group 2']; //case sensitive
+	|		$conf['auth']['auth_AD']['mr_recursive_groupsearch'] = false; //set to true to allow recursive searching
 	|
 	| Authentication methods are checked in the order that they appear above. Not in the order of your
 	| config.php!. You can combine methods 2, 3 and 4
@@ -229,6 +230,10 @@
 	| connection to a client, enable these settings. If you don't
 	| want the links, set either to an empty string, eg:
 	| $conf['vnc_link'] = "";
+	|
+	| If you want to authenticate with SSH using the currently logged in user 
+	| replace the username in the SSH config with %u: 
+	| $conf['ssh_link'] = "ssh://%u@%s";
 	|
 	*/
 	$conf['vnc_link'] = "vnc://%s:5900";

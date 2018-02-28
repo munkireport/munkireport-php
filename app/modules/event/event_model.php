@@ -25,15 +25,6 @@ class Event_model extends \Model
         $this->rs['data'] = '';
         $this->rs['timestamp'] = time();
 
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('serial_number', 'module');
-        $this->idx[] = array('type');
-        $this->idx[] = array('msg');
-
-
-        // Create table if it does not exist
-        //$this->create_table();
-
         if ($serial_number && $module) {
             if (! authorized_for_serial($serial_number)) {
                 return false;

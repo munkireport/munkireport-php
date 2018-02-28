@@ -8,7 +8,7 @@ class Power_model extends \Model
     {
         parent::__construct('id', 'power'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial;
         $this->rs['manufacture_date'] = '';
         $this->rs['design_capacity'] = 0;
         $this->rs['max_capacity'] = 0;
@@ -18,9 +18,9 @@ class Power_model extends \Model
         $this->rs['cycle_count'] = 0;
         $this->rs['temperature'] = 0;
         $this->rs['condition'] = '';
-        $this->rs['sleep_prevented_by'] = ''; $this->rt['sleep_prevented_by'] = 'TEXT';
+        $this->rs['sleep_prevented_by'] = '';
         $this->rs['hibernatefile'] = '';
-        $this->rs['schedule'] = ''; $this->rt['schedule'] = 'TEXT';
+        $this->rs['schedule'] = '';
         $this->rs['adapter_id'] = '';
         $this->rs['family_code'] = '';
         $this->rs['adapter_serial_number'] = '';
@@ -86,19 +86,6 @@ class Power_model extends \Model
         $this->rs['amperage'] = 0.0;
         $this->rs['designcyclecount'] = 0;
         $this->rs['avgtimetoempty'] = 0;
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 4;
-
-        // Indexes to optimize queries
-        // MySQL allows for a maximum of 64 indexes per table, not all columns are indexed.
-        // Some lesser used, more static columns have been omitted
-        foreach (array('manufacture_date','design_capacity','max_capacity','max_percent','current_capacity','current_percent','cycle_count','temperature','hibernatefile','active_profile','standbydelay','standby','womp','halfdim','gpuswitch','sms','networkoversleep','disksleep','sleep','autopoweroffdelay','hibernatemode','autopoweroff','ttyskeepawake','displaysleep','acwake','lidwake','sleep_on_power_button','autorestart','destroyfvkeyonstandby','powernap','sleep_count','dark_wake_count','user_wake_count','wattage','backgroundtask','applepushservicetask','userisactive','preventuseridledisplaysleep','preventsystemsleep','externalmedia','preventuseridlesystemsleep','networkclientactive','externalconnected','timeremaining','instanttimetoempty','cellvoltage','voltage','permanentfailurestatus','manufacturer','packreserve','avgtimetofull','batteryserialnumber','amperage','fullycharged','ischarging','designcyclecount','avgtimetoempty') as $item) {
-            $this->idx[] = array($item);
-        }
-
-        // Create table if it does not exist
-       //$this->create_table();
 
         if ($serial) {
             $this->retrieve_record($serial);

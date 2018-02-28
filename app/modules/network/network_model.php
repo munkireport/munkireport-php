@@ -30,9 +30,6 @@ class Network_model extends \Model
         $this->rs['activemedia'] = '';  // Active media as string
         $this->rs['searchdomain'] = '';  // Search domain(s) 
 
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
-                
         return $this;
     }
 
