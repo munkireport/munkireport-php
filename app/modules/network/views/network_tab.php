@@ -68,7 +68,7 @@ $(document).on('appReady', function(){
                             .addClass('table table-striped table-condensed')
                             .append($('<tbody>')
                                 .append(rows))))
-            } else if (d.service.indexOf("iPhone") !=-1){
+            } else if (d.service.indexOf("iPhone") !=-1 || d.service.indexOf("phone") !=-1){
                 $('#network-tab')
                     .append($('<h4>')
                         .append($('<i>')
@@ -79,6 +79,18 @@ $(document).on('appReady', function(){
                             .addClass('table table-striped table-condensed')
                             .append($('<tbody>')
                                 .append(rows))))
+            } else if (d.service.indexOf("iPad") !=-1 || d.service.indexOf("ablet") !=-1){
+                $('#network-tab')
+                    .append($('<h4>')
+                        .append($('<i>')
+                            .addClass('fa fa-tablet'))
+                        .append(' '+d.service))
+                    .append($('<div style="max-width:450px;">')
+                        .append($('<table>')
+                            .addClass('table table-striped table-condensed')
+                            .append($('<tbody>')
+                                .append(rows))))
+            
             } else if (d.service.indexOf("Bluetooth") !=-1){
                 $('#network-tab')
                     .append($('<h4>')
