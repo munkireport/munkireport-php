@@ -90,6 +90,9 @@ def get_version(commit_count=False):
     except BaseException:
         sys.exit("Couldn't determine current munkireport-php version!")
 
+def clean_version(version):
+    return re.sub("[^0-9\.].*", "", version)
+
 def set_version(version):
     helper = get_version_file_path()
     search = "(\$GLOBALS\['version'\] = ')[^']+"
@@ -155,7 +158,7 @@ https://github.com/settings/applications
     api_call('/users/%s' % publish_user, token)
 
     # set up some paths and important variables
-    munkireport_root = tempfile.mkdtemp()
+    munkireport_root = tempfile.mkdtemp('', 'mr_release_')
     changelog_path = os.path.join(munkireport_root, 'CHANGELOG.md')
 
     # clone Git master
@@ -171,15 +174,17 @@ https://github.com/settings/applications
         
     # get the current munkireport-php version
     current_version = get_version()
-    print "Current munkireport-php version: %s" % current_version
-    if LooseVersion(next_version) <= LooseVersion(current_version):
-        sys.exit(
-            "Next version (gave %s) must be greater than current version %s!"
-            % (next_version, current_version))
-
     tag_name = 'v%s' % current_version
     if opts.prerelease:
         tag_name += opts.prerelease
+        current_version += opts.prerelease
+
+    # print "Current munkireport-php version: %s" % current_version
+    # if LooseVersion(next_version) < LooseVersion(current_version):
+    #     sys.exit(
+    #         "Next version (gave %s) must be greater than current version %s!"
+    #         % (next_version, current_version))
+
     published_releases = api_call(
         '/repos/%s/%s/releases' % (publish_user, publish_repo), token)
     for rel in published_releases:
@@ -195,9 +200,9 @@ https://github.com/settings/applications
     with open(changelog_path, 'r') as fdesc:
         changelog = fdesc.read()
     release_date = strftime('(%B %d, %Y)')
-    new_changelog = re.sub(r'\(Unreleased\)', release_date, changelog)
+    new_changelog = re.sub(r'### \[.+\]', '### [%s]' % current_version, changelog, 1)
+    new_changelog = re.sub(r'\(Unreleased\)', release_date, new_changelog)
     new_changelog = re.sub('...HEAD', '...v%s' % current_version, new_changelog)
-    print new_changelog
     with open(changelog_path, 'w') as fdesc:
         fdesc.write(new_changelog)
 
@@ -211,7 +216,7 @@ https://github.com/settings/applications
         run_command(['git', 'push', '--tags', 'origin', branch])
 
     # extract release notes for this new version
-    notes_rex = r"(?P<current_ver_notes>\#\#\# \[%s\].+?)\#\#\#" % current_version
+    notes_rex = r"(?P<current_ver_notes>\#\#\# \[.+?)\#\#\#"
     match = re.search(notes_rex, new_changelog, re.DOTALL)
     if not match:
         sys.exit("Couldn't extract release notes for this version!")
@@ -230,8 +235,9 @@ https://github.com/settings/applications
                 '--ignore-platform-reqs', '--optimize-autoloader', pkg])
 
     # zip up
+    print "Zipping up the repository.."
     zip_file = 'munkireport-%s.zip' % current_version
-    run_command(['zip', '-r', zip_file, '.', '--exclude', '.git*'])
+    run_command(['zip', '-r', zip_file, '.', '--exclude', '.git*', '-q'])
     with open(zip_file, 'rb') as fdesc:
         zip_data = fdesc.read()
         
@@ -278,7 +284,7 @@ https://github.com/settings/applications
 
     # increment version
     print "Incrementing version to %s.." % next_version
-    set_version('%s.%s' % (next_version, get_commit_count() + 1))
+    set_version('%s.%s' % (clean_version(next_version), get_commit_count() + 1))
 
     # increment changelog
     new_changelog = "### [{0}](https://github.com/{1}/{2}/compare/v{3}...HEAD) (Unreleased)\n\n".format(

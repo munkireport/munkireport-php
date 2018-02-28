@@ -41,10 +41,10 @@
 					<th data-i18n="disk_report.used"></th><td class="mr-UsedSize"></td>
 				</tr>
 				<tr>
-					<th data-i18n="disk_report.free"></th><td class="mr-FreeSpace"></td>
+					<th data-i18n="disk_report.free"></th><td class="mr-freespace"></td>
 				</tr>
 				<tr>
-					<th data-i18n="disk_report.smartstatus"></th><td class="mr-SMARTStatus"></td>
+					<th data-i18n="disk_report.smartstatus"></th><td class="mr-smartstatus"></td>
 				</tr>
 			</table>
 		</div>
@@ -185,6 +185,9 @@
 				</tr>
 				<tr>
 					<th data-i18n="security.sip"></th><td class="mr-sip"></td>
+				</tr>
+				<tr>
+					<th data-i18n="security.ssh_groups"></th><td class="mr-ssh_groups"></td>
 				</tr>
 				<tr>
 					<th data-i18n="security.ssh_users"></th><td class="mr-ssh_users"></td>

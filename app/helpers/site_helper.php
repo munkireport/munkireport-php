@@ -3,21 +3,13 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.16.0.2795';
+$GLOBALS['version'] = '3.0.3.3342';
 
 // Return version without commit count
 function get_version()
 {
     return preg_replace('/(.*)\.\d+$/', '$1', $GLOBALS['version']);
 }
-
-//===============================================
-// Legacy support
-//===============================================s
-if (version_compare(phpversion(), '5.5.0', '<')) {
-    include 'php_legacy_helper.php';
-}
-
 
 //===============================================
 // Uncaught Exception Handling
@@ -86,7 +78,7 @@ function getdbh()
                 case 'sqlite':
                     $dsn = "sqlite:{$conn['database']}";
                     break;
-                
+
                 case 'mysql':
                     $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
                     break;

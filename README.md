@@ -34,7 +34,7 @@ Apart from munki clients doing reporting, Munkireport relies on:
 ### Serverside:
 
 * A webserver (runs fine with Apache, IIS and nginx)
-* php version 5.3 or higher with pdo-sqlite3 and libxml
+* php version 7.0 or higher with pdo-sqlite3 and libxml
 
 ### Clientside
 
@@ -77,7 +77,7 @@ Munkireport-php makes use of these fine software packages:
 * [Moment.js](http://momentjs.com) for displaying time
 * [Bootstrap 3.0](http://getbootstrap.com) the main webframework
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/) for icons
-* [adLDAP](http://adldap.sourceforge.net) for authenticating against AD
+* [adLDAP](https://github.com/Adldap2/Adldap2) for authenticating against AD
 * [i18next](http://i18next.com) js library for localization
 * [libgsx](https://github.com/filipp/gsxlib) libgsx library used for GSX integration 
 

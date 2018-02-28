@@ -4,13 +4,13 @@ Integration with [the Crypt authentication plugin](https://github.com/grahamgilb
 
 The table provides the following information per client:
 
-+ EnabledDate - The data FileVault was enabled
-+ EnabledUser - Users added to the EFI login (authorized to unlock the drive)
-+ LVGUUID - (CoreStorage) Logical Volume Group UUID
-+ LVUUID - (CoreStorage) Logical Volume UUID
-+ PVUUID - (CoreStorage) Physical Volume UUID
-+ RecoveryKey -  The personal recovery key
-+ Also added is HddSerial - The serial number of the hard drive 
++ enableddate - The data FileVault was enabled
++ enableduser - Users added to the EFI login (authorized to unlock the drive)
++ lvguuid - (CoreStorage) Logical Volume Group UUID
++ lvuuid - (CoreStorage) Logical Volume UUID
++ pvuuid - (CoreStorage) Physical Volume UUID
++ recoverykey -  The personal recovery key
++ Also added is hddserial - The serial number of the hard drive 
 
 # Remarks
 

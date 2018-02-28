@@ -11,22 +11,10 @@ class Munki_facts_model extends Model
           $this->rs['id'] = 0;
           $this->rs['serial_number'] = $serial;
           $this->rs['fact_key'] = '';
-          $this->rt['fact_key'] = 'TEXT';
           $this->rs['fact_value'] = '';
-          $this->rt['fact_value'] = 'TEXT';
-        
-          // Schema version, increment when creating a db migration
-          $this->schema_version = 0;
-        
-          // Add indexes
-          $this->idx[] = array('serial_number');
 
-          // Create table if it does not exist
-         //$this->create_table();
-            
         if ($serial) {
             $this->retrieve_record($serial);
-          
             $this->serial = $serial;
         }
     }

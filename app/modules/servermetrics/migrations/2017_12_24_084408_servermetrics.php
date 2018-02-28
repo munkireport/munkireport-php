@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Servermetrics extends Migration
 {
     private $tableName = 'servermetrics';
-    private $tableNameV2 = 'servermetrics_v2';
+    private $tableNameV2 = 'servermetrics_orig';
 
     public function up()
     {
@@ -25,7 +25,7 @@ class Servermetrics extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->integer('afp_sessions'); // number of afp connections
             $table->integer('smb_sessions'); // number of smb connections
             $table->float('caching_cache_toclients'); //
@@ -43,12 +43,10 @@ class Servermetrics extends Migration
             $table->float('network_in'); //
             $table->float('network_out'); //
             $table->string('datetime'); // Datetime from record
-
-            $table->index('datetime');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -72,7 +70,13 @@ class Servermetrics extends Migration
                 datetime
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('datetime');
+        });
     }
 
     public function down()

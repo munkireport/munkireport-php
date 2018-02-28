@@ -44,7 +44,7 @@ class Extensions_controller extends Module_controller
         $obj->view('json', array('msg' => $extension->get_bundle_ids()));
      }
     
-     public function get_codesign()
+     public function get_developer()
      {
         $obj = new View();
 
@@ -54,9 +54,21 @@ class Extensions_controller extends Module_controller
         }
         
         $extension = new Extensions_model;
-        $obj->view('json', array('msg' => $extension->get_codesign()));
+        $obj->view('json', array('msg' => $extension->get_developer()));
      }
     
+     public function get_teamid()
+     {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $extension = new Extensions_model;
+        $obj->view('json', array('msg' => $extension->get_teamid()));
+     }
 	/**
      * Retrieve data in json format
      *
@@ -72,7 +84,7 @@ class Extensions_controller extends Module_controller
         
         $queryobj = new Extensions_model();
         
-        $sql = "SELECT name, bundle_id, version, path, codesign, executable
+        $sql = "SELECT name, bundle_id, version, path, developer, teamid, executable
                         FROM extensions 
                         WHERE serial_number = '$serial_number'";
         

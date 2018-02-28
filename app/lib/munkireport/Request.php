@@ -59,9 +59,19 @@ class Request
 
     public function get($url, $options = [])
     {
+        return $this->request('GET', $url, $options);
+    }
+
+    public function post($url, $options = [])
+    {
+        return $this->request('POST', $url, $options);
+    }
+
+    private function request($type, $url, $options = [])
+    {
         $client = new Client();
         try {
-            $response = $client->request('GET', $url, array_merge($this->options, $options));
+            $response = $client->request($type, $url, array_merge($this->options, $options));
             return $response->getBody();
         } catch (TransferException $e) {
             if(conf('debug')){

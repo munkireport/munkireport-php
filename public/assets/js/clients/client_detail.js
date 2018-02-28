@@ -105,14 +105,14 @@ $(document).on('appReady', function(e, lang) {
 
 
 		// Format filesizes
-		$('.mr-TotalSize').html(fileSize(machineData.TotalSize, 1));
-		$('.mr-UsedSize').html(fileSize(machineData.TotalSize - machineData.FreeSpace, 1));
-		$('.mr-FreeSpace').html(fileSize(machineData.FreeSpace, 1));
+		$('.mr-TotalSize').html(fileSize(machineData.totalsize, 1));
+		$('.mr-UsedSize').html(fileSize(machineData.totalsize - machineData.freespace, 1));
+		$('.mr-freespace').html(fileSize(machineData.freespace, 1));
 
 		// Smart status
-		$('.mr-SMARTStatus').html(machineData.SMARTStatus);
-		if(machineData.SMARTStatus == 'Failing'){
-			$('.mr-SMARTStatus').addClass('label label-danger');
+		$('.mr-smartstatus').html(machineData.smartstatus);
+		if(machineData.smartstatus == 'Failing'){
+			$('.mr-smartstatus').addClass('label label-danger');
 		}
 
 		// Warranty status
@@ -173,11 +173,12 @@ $(document).on('appReady', function(e, lang) {
 		$( "time" ).each(function( index ) {
 				$(this).tooltip().css('cursor', 'pointer');
 		});
-
+		
+		var username=$('nav i.fa-user')[0].nextSibling.nodeValue.trim();
 		// Remote control links
 		$.getJSON( appUrl + '/clients/get_links', function( links ) {
 			$.each(links, function(prop, val){
-				$('#client_links').append('<li><a href="'+(val.replace(/%s/, machineData.remote_ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a></li>');
+				$('#client_links').append('<li><a href="'+(val.replace(/%s/, machineData.remote_ip).replace(/%u/, username))+'">'+i18n.t('remote_control')+' ('+prop+')</a></li>');
 			});
 		});
 
@@ -321,7 +322,7 @@ $(document).on('appReady', function(e, lang) {
 	// Get ARD data
 	$.getJSON( appUrl + '/module/ard/get_data/' + serialNumber, function( data ) {
 		$.each(data, function(index, item){
-			if(/^Text[\d]$/.test(index))
+			if(/^text[\d]$/.test(index))
 			{
 				$('#ard-data')
 					.append($('<tr>')
@@ -349,6 +350,9 @@ $(document).on('appReady', function(e, lang) {
 							}
 							if(data.bluetooth_power == 0){
 								return i18n.t('off');
+							}
+							if(data.bluetooth_power == -1){
+								return i18n.t('bluetooth.nobluetooth');
 							}
 							return i18n.t('unknown');
 						})));

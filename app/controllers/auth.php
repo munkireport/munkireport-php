@@ -72,7 +72,11 @@ class Auth extends Controller
 
         // Check if pre-authentication is successful
         if (! $pre_auth_failed && $this->authHandler->login($login, $password)) {
-            redirect($return);
+            if($_SESSION['initialized']){
+                redirect($return);
+            }else{
+                redirect('/system/show/database');
+            }
         }
 
         // If POST and no other alerts, auth has failed

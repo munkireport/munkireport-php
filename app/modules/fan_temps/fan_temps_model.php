@@ -8,7 +8,7 @@ class Fan_temps_model extends \Model {
 	{
 		parent::__construct('id', 'fan_temps'); //primary key, tablename
 		$this->rs['id'] = 0;
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial;
 		$this->rs['fan_0'] = 0;
 		$this->rs['fan_1'] = 0;
 		$this->rs['fan_2'] = 0;
@@ -536,31 +536,31 @@ class Fan_temps_model extends \Model {
 		$this->rs['vmbs'] = 0.0;
 		$this->rs['vn1r'] = 0.0;
 		$this->rs['fan_9'] = 0;
-        $this->rs['fanmin9'] = 0;
+		$this->rs['fanmin9'] = 0;
 		$this->rs['fanmax9'] = 0;
 		$this->rs['fan_10'] = 0;
-        $this->rs['fanmin10'] = 0;
+		$this->rs['fanmin10'] = 0;
 		$this->rs['fanmax10'] = 0;
 		$this->rs['fan_11'] = 0;
-        $this->rs['fanmin11'] = 0;
+		$this->rs['fanmin11'] = 0;
 		$this->rs['fanmax11'] = 0;
 		$this->rs['fan_12'] = 0;
-        $this->rs['fanmin12'] = 0;
+		$this->rs['fanmin12'] = 0;
 		$this->rs['fanmax12'] = 0;
 		$this->rs['fan_13'] = 0;
-        $this->rs['fanmin13'] = 0;
+		$this->rs['fanmin13'] = 0;
 		$this->rs['fanmax13'] = 0;
 		$this->rs['fan_14'] = 0;
-        $this->rs['fanmin14'] = 0;
+		$this->rs['fanmin14'] = 0;
 		$this->rs['fanmax14'] = 0;
 		$this->rs['fan_15'] = 0;
-        $this->rs['fanmin15'] = 0;
+		$this->rs['fanmin15'] = 0;
 		$this->rs['fanmax15'] = 0;
 		$this->rs['fan_16'] = 0;
-        $this->rs['fanmin16'] = 0;
+		$this->rs['fanmin16'] = 0;
 		$this->rs['fanmax16'] = 0;
 		$this->rs['fan_17'] = 0;
-        $this->rs['fanmin17'] = 0;
+		$this->rs['fanmin17'] = 0;
 		$this->rs['fanmax17'] = 0;
 		
 		if ($serial)

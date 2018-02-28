@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Localadmin extends Migration
 {
     private $tableName = 'localadmin';
-    private $tableNameV2 = 'localadmin_v2';
+    private $tableNameV2 = 'localadmin_orig';
 
     public function up()
     {
@@ -25,15 +25,12 @@ class Localadmin extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('users');
-
-            $table->index('users');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -41,7 +38,14 @@ class Localadmin extends Migration
                 users
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('users');
+        });
     }
     
     public function down()

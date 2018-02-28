@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class FilevaultEscrow extends Migration
 {
     private $tableName = 'filevault_escrow';
-    private $tableNameV2 = 'filevault_escrow_v2';
+    private $tableNameV2 = 'filevault_escrow_orig';
 
     public function up()
     {
@@ -26,25 +26,18 @@ class FilevaultEscrow extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
-            $table->string('EnabledDate');
-            $table->string('EnabledUser');
-            $table->string('LVGUUID');
-            $table->string('LVUUID');
-            $table->string('PVUUID');
-            $table->text('RecoveryKey');
-            $table->string('HddSerial');
-
-            $table->index('EnabledDate');
-            $table->index('EnabledUser');
-            $table->index('LVGUUID');
-            $table->index('LVUUID');
-            $table->index('PVUUID');
-            $table->index('HddSerial');
+            $table->string('serial_number');
+            $table->string('enableddate');
+            $table->string('enableduser');
+            $table->string('lvguuid');
+            $table->string('lvuuid');
+            $table->string('pvuuid');
+            $table->text('recoverykey');
+            $table->string('hddserial');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -58,7 +51,19 @@ class FilevaultEscrow extends Migration
                 HddSerial
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('enableddate');
+            $table->index('enableduser');
+            $table->index('lvguuid');
+            $table->index('lvuuid');
+            $table->index('pvuuid');
+            $table->index('hddserial');
+        });
     }
     
     public function down()

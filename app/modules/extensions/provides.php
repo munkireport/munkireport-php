@@ -9,7 +9,8 @@ return array(
     ),
     'widgets' => array(
         'extensions' => array('view' => 'extensions_widget'),
-        'extensions_codesign' => array('view' => 'extensions_codesign_widget'),
+        'extensions_developer' => array('view' => 'extensions_developer_widget'),
+        'extensions_teamid' => array('view' => 'extensions_teamid_widget'),       
     ),
     'reports' => array(
         'extensions' => array('view' => 'extensions_report', 'i18n' => 'extensions.report'),

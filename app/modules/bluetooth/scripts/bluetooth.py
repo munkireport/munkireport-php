@@ -72,9 +72,12 @@ def main():
     # Get results
     result = dict()
     info = get_bluetooth_info()
-    result.update(bluetooth_devices(info))
-    result['bluetooth_power'] = bluetooth_power(info)
-
+    if info != {} :
+        result.update(bluetooth_devices(info))
+        result['bluetooth_power'] = bluetooth_power(info)
+    else:
+        result['bluetooth_power'] = '-1'
+    
     # Write bluetooth results to cache
     output_plist = os.path.join(cachedir, 'bluetoothinfo.plist')
     plistlib.writePlist(result, output_plist)

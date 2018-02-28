@@ -10,32 +10,13 @@ class Reportdata_model extends \Model
         parent::__construct('id', 'reportdata'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = '';
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['console_user'] = '';
         $this->rs['long_username'] = '';
         $this->rs['remote_ip'] = '';
         $this->rs['uptime'] = 0;
-        $this->rt['uptime'] = 'INTEGER DEFAULT 0';// Uptime in seconds
         $this->rs['reg_timestamp'] = time(); // Registration date
         $this->rs['machine_group'] = 0;
-        $this->rt['machine_group'] = 'INT DEFAULT 0';
         $this->rs['timestamp'] = time();
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 3;
-
-
-        // Create indexes
-        $this->idx[] = array('console_user');
-        $this->idx[] = array('long_username');
-        $this->idx[] = array('remote_ip');
-        $this->idx[] = array('reg_timestamp');
-        $this->idx[] = array('timestamp');
-        $this->idx[] = array('machine_group');
-
-
-        // Create table if it does not exist
-        //$this->create_table();
 
         if ($serial) {
             $this->retrieve_record($serial);
