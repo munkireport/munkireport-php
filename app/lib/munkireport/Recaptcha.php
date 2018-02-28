@@ -2,6 +2,8 @@
 
 namespace munkireport\lib;
 
+use munkireport\lib\Request;
+
 /**
 * Recaptcha class
 *
@@ -36,8 +38,15 @@ class Recaptcha
                     'content' => http_build_query($data),
                 )
             );
-            $context  = stream_context_create($options);
-            $result = file_get_contents($this->url, false, $context);
+            $options = array(
+                'form_params' => [
+                  'secret'   => $this->secret,
+                  'response' => $recaptcharesponse,
+                  'remoteip' => $userip,
+                ],
+            );
+            $client = new Request();
+            $result = $client->post($this->url, $options);
             $this->json_result = json_decode($result);
             
             if ($this->json_result->success == 1) {

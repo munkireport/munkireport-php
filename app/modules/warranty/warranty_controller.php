@@ -95,10 +95,10 @@ class Warranty_controller extends Module_controller
         // Time calculations differ between sql implementations
         switch ($warranty->get_driver()) {
             case 'sqlite':
-                $agesql = "CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', purchase_date) AS INT)";
+                $agesql = "ROUND((strftime('%Y', 'now') + strftime('%j', 'now') / 366.0) - (strftime('%Y', purchase_date) + strftime('%j', purchase_date) / 366.0))";
                 break;
             case 'mysql':
-                $agesql = "TIMESTAMPDIFF(YEAR,purchase_date,CURDATE())";
+                $agesql = "TIMESTAMPDIFF(YEAR,purchase_date,CURDATE() + INTERVAL 183 DAY)";
                 break;
             default: // FIXME for other DB engines
                 $agesql = "SUBSTR(purchase_date, 1, 4)";
@@ -115,7 +115,7 @@ class Warranty_controller extends Module_controller
                 GROUP by age 
                 ORDER BY age ASC;";
         $cnt = 0;
-        
+
         foreach ($warranty->query($sql) as $obj) {
             $obj->age = $obj->age ? $obj->age : '<1';
             $out[] = array('label' => $obj->age, 'count' => intval($obj->count));

@@ -16,16 +16,6 @@ class Inventory_model extends \Model
         $this->rs['bundlename'] = '';
         $this->rs['path'] = '';
         $this->rt['path'] = 'VARCHAR(1024)';
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 3;
-        
-        // Add indexes
-        $this->idx['serial'] = array('serial_number');
-        $this->idx['name_version'] = array('name', 'version');
-
-        // Create table if it does not exist
-       //$this->create_table();
     }
 
     /**

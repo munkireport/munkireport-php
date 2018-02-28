@@ -6,26 +6,12 @@ class Certificate_model extends \Model
     {
         parent::__construct('id', 'certificate'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-        $this->rs['cert_exp_time'] = 0; $this->rt['cert_exp_time'] = 'BIGINT'; // Unix timestamp of expiration time
+        $this->rs['serial_number'] = $serial;
+        $this->rs['cert_exp_time'] = 0; // Unix timestamp of expiration time
         $this->rs['cert_path'] = ''; // Path to certificate
         $this->rs['cert_cn'] = ''; // Common name
         $this->rs['issuer'] = ''; //Certificate issuer
         $this->rs['cert_location'] = ''; //Certificate location
-        
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
-        
-        //indexes to optimize queries
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('cert_exp_time');
-        $this->idx[] = array('cert_path');
-        $this->idx[] = array('cert_cn');
-        $this->idx[] = array('issuer');
-        $this->idx[] = array('cert_location');
-        
-        // Create table if it does not exist
-       //$this->create_table();
     }
 
      public function get_certificates()
@@ -96,7 +82,7 @@ class Certificate_model extends \Model
                     if ($this->cert_exp_time < $now) {
                         $errors[] = array(
                             'type' => 'danger',
-                            'msg' => 'cert.expired',
+                            'msg' => 'certificate.expired',
                             'data' => json_encode(array(
                                 'name' => $this->cert_cn,
                                 'timestamp' => $this->cert_exp_time
@@ -105,7 +91,7 @@ class Certificate_model extends \Model
                     } elseif ($this->cert_exp_time < $four_weeks) {
                         $errors[] = array(
                             'type' => 'warning',
-                            'msg' => 'cert.expire_warning',
+                            'msg' => 'certificate.expire_warning',
                             'data' => json_encode(array(
                                 'name' => $this->cert_cn,
                                 'timestamp' => $this->cert_exp_time
@@ -144,12 +130,12 @@ class Certificate_model extends \Model
                         $msg = $last_error['msg'];
                         $data = $last_error['data'];
                     } else {
-                        $msg = 'cert.multiple_errors';
+                        $msg = 'certificate.multiple_errors';
                         $data = $error_count;
                     }
                 } else {
                     $type = 'warning';
-                    $msg = 'cert.multiple_warnings';
+                    $msg = 'certificate.multiple_warnings';
                     $data = $warning_count;
                 }
                 $this->store_event($type, $msg, $data);

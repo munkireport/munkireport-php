@@ -16,7 +16,7 @@ class Fonts_model extends \Model {
 		$this->rs['type_enabled'] = 0; // True or False
 		$this->rs['valid'] = 0; // True or False
 		$this->rs['duplicate'] = 0; // True or False
-		$this->rs['path'] = ''; $this->rt['path'] = 'TEXT';
+		$this->rs['path'] = '';
 		$this->rs['type'] = '';
 		$this->rs['family'] = '';
 		$this->rs['style'] = '';
@@ -30,29 +30,6 @@ class Fonts_model extends \Model {
 		$this->rs['vendor'] = ''; $this->rt['vendor'] = 'TEXT';
 		$this->rs['designer'] = ''; $this->rt['designer'] = 'TEXT';
 		$this->rs['trademark'] = ''; $this->rt['trademark'] = 'TEXT';
-
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-
-		// Add indexes
-		$this->idx[] = array('name');
-		$this->idx[] = array('type');
-		$this->idx[] = array('type_name');
-		$this->idx[] = array('family');
-		$this->idx[] = array('fullname');
-		$this->idx[] = array('style');
-		$this->idx[] = array('unique_id');
-		$this->idx[] = array('version');
-		$this->idx[] = array('enabled');
-		$this->idx[] = array('copy_protected');
-		$this->idx[] = array('duplicate');
-		$this->idx[] = array('embeddable');
-		$this->idx[] = array('type_enabled');
-		$this->idx[] = array('outline');
-		$this->idx[] = array('valid');
-        
-		// Create table if it does not exist
-		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}

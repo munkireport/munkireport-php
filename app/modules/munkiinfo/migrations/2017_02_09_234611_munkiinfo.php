@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Munkiinfo extends Migration
 {
     private $tableName = 'munkiinfo';
-    private $tableNameV2 = 'munkiinfo_v2';
+    private $tableNameV2 = 'munkiinfo_orig';
 
     public function up()
     {
@@ -30,14 +30,10 @@ class Munkiinfo extends Migration
             $table->string('serial_number');
             $table->string('munkiinfo_key');
             $table->string('munkiinfo_value');
-
-            $table->index('serial_number');
-            $table->index('munkiinfo_key');
-            $table->index('munkiinfo_value');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -46,7 +42,15 @@ class Munkiinfo extends Migration
                 munkiinfo_value
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('munkiinfo_key');
+            $table->index('munkiinfo_value');
+        });
     }
 
     public function down()

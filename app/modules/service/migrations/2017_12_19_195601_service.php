@@ -6,7 +6,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Service extends Migration
 {
     private $tableName = 'service';
-    private $tableNameV2 = 'service_v2';
+    private $tableNameV2 = 'service_orig';
 
     public function up()
     {
@@ -30,13 +30,10 @@ class Service extends Migration
             $table->string('service_state');
             $table->bigInteger('timestamp');
             
-            $table->index('serial_number');
-            $table->index('service_name');
-            $table->index('service_state');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -46,7 +43,15 @@ class Service extends Migration
                 timestamp
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+          $table->index('serial_number');
+          $table->index('service_name');
+          $table->index('service_state');
+        });
     }
 
     public function down()

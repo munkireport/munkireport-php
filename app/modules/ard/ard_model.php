@@ -10,10 +10,10 @@ class Ard_model extends \Model
         parent::__construct('id', 'ard'); //primary key, tablename
         $this->rs['id'] = 0;
         $this->rs['serial_number'] = $serial;
-        $this->rs['Text1'] = '';
-        $this->rs['Text2'] = '';
-        $this->rs['Text3'] = '';
-        $this->rs['Text4'] = '';
+        $this->rs['text1'] = '';
+        $this->rs['text2'] = '';
+        $this->rs['text3'] = '';
+        $this->rs['text4'] = '';
         
         if ($serial) {
             $this->retrieve_record($serial);
@@ -26,10 +26,9 @@ class Ard_model extends \Model
     {
         $parser = new CFPropertyList();
         $parser->parse($data);
-        
-        $plist = $parser->toArray();
+        $plist = array_change_key_case($parser->toArray(), CASE_LOWER);
 
-        foreach (array('Text1', 'Text2', 'Text3', 'Text4') as $item) {
+        foreach (array('text1', 'text2', 'text3', 'text4') as $item) {
             if (isset($plist[$item])) {
                 $this->$item = $plist[$item];
             } else {

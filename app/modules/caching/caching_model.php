@@ -9,86 +9,63 @@ class Caching_model extends \Model
         $this->rs['collectiondate'] = ""; // Date when data was written
         $this->rs['expirationdate'] = ""; // Date when data will expire
         $this->rs['collectiondateepoch'] = 0; // Date when data was written, in UNIX time
-        $this->rs['requestsfrompeers'] = 0; $this->rt['requestsfrompeers'] = 'BIGINT';
-        $this->rs['requestsfromclients'] = 0; $this->rt['requestsfromclients'] = 'BIGINT';
-        $this->rs['bytespurgedyoungerthan1day'] = 0; $this->rt['bytespurgedyoungerthan1day'] = 'BIGINT';
-        $this->rs['bytespurgedyoungerthan7days'] = 0; $this->rt['bytespurgedyoungerthan7days'] = 'BIGINT';
-        $this->rs['bytespurgedyoungerthan30days'] = 0; $this->rt['bytespurgedyoungerthan30days'] = 'BIGINT';
-        $this->rs['bytespurgedtotal'] = 0; $this->rt['bytespurgedtotal'] = 'BIGINT';
-        $this->rs['bytesfrompeerstoclients'] = 0; $this->rt['bytesfrompeerstoclients'] = 'BIGINT';
-        $this->rs['bytesfromorigintopeers'] = 0; $this->rt['bytesfromorigintopeers'] = 'BIGINT';
-        $this->rs['bytesfromorigintoclients'] = 0; $this->rt['bytesfromorigintoclients'] = 'BIGINT';
-        $this->rs['bytesfromcachetopeers'] = 0; $this->rt['bytesfromcachetopeers'] = 'BIGINT';
-        $this->rs['bytesfromcachetoclients'] = 0; $this->rt['bytesfromcachetoclients'] = 'BIGINT';
-        $this->rs['bytesdropped'] = 0; $this->rt['bytesdropped'] = 'BIGINT';
-        $this->rs['repliesfrompeerstoclients'] = 0; $this->rt['repliesfrompeerstoclients'] = 'BIGINT';
-        $this->rs['repliesfromorigintopeers'] = 0; $this->rt['repliesfromorigintopeers'] = 'BIGINT';
-        $this->rs['repliesfromorigintoclients'] = 0; $this->rt['repliesfromorigintoclients'] = 'BIGINT';
-        $this->rs['repliesfromcachetopeers'] = 0; $this->rt['repliesfromcachetopeers'] = 'BIGINT';
-        $this->rs['repliesfromcachetoclients'] = 0; $this->rt['repliesfromcachetoclients'] = 'BIGINT';
-        $this->rs['bytesimportedbyxpc'] = 0; $this->rt['bytesimportedbyxpc'] = 'BIGINT';
-        $this->rs['bytesimportedbyhttp'] = 0; $this->rt['bytesimportedbyhttp'] = 'BIGINT';
-        $this->rs['importsbyxpc'] = 0; $this->rt['importsbyxpc'] = 'BIGINT';
-        $this->rs['importsbyhttp'] = 0; $this->rt['importsbyhttp'] = 'BIGINT';
+        $this->rs['requestsfrompeers'] = 0;
+        $this->rs['requestsfromclients'] = 0;
+        $this->rs['bytespurgedyoungerthan1day'] = 0;
+        $this->rs['bytespurgedyoungerthan7days'] = 0;
+        $this->rs['bytespurgedyoungerthan30days'] = 0;
+        $this->rs['bytespurgedtotal'] = 0;
+        $this->rs['bytesfrompeerstoclients'] = 0;
+        $this->rs['bytesfromorigintopeers'] = 0;
+        $this->rs['bytesfromorigintoclients'] = 0;
+        $this->rs['bytesfromcachetopeers'] = 0;
+        $this->rs['bytesfromcachetoclients'] = 0;
+        $this->rs['bytesdropped'] = 0;
+        $this->rs['repliesfrompeerstoclients'] = 0;
+        $this->rs['repliesfromorigintopeers'] = 0;
+        $this->rs['repliesfromorigintoclients'] = 0;
+        $this->rs['repliesfromcachetopeers'] = 0;
+        $this->rs['repliesfromcachetoclients'] = 0;
+        $this->rs['bytesimportedbyxpc'] = 0;
+        $this->rs['bytesimportedbyhttp'] = 0;
+        $this->rs['importsbyxpc'] = 0;
+        $this->rs['importsbyhttp'] = 0;
         $this->rs['activated'] = 0; // Start of High Sierra columns
         $this->rs['active'] = 0;
         $this->rs['cachestatus'] = "";
-        $this->rs['appletvsoftware'] = 0; $this->rt['appletvsoftware'] = 'BIGINT';
-        $this->rs['macsoftware'] = 0; $this->rt['macsoftware'] = 'BIGINT';
-        $this->rs['iclouddata'] = 0; $this->rt['iclouddata'] = 'BIGINT';
-        $this->rs['iossoftware'] = 0; $this->rt['iossoftware'] = 'BIGINT';
-        $this->rs['booksdata'] = 0; $this->rt['booksdata'] = 'BIGINT';
-        $this->rs['itunesudata'] = 0; $this->rt['itunesudata'] = 'BIGINT';
-        $this->rs['moviesdata'] = 0; $this->rt['moviesdata'] = 'BIGINT';
-        $this->rs['musicdata'] = 0; $this->rt['musicdata'] = 'BIGINT';
-        $this->rs['otherdata'] = 0; $this->rt['otherdata'] = 'BIGINT';
-        $this->rs['cachefree'] = 0; $this->rt['cachefree'] = 'BIGINT';
-        $this->rs['cachelimit'] = 0; $this->rt['cachelimit'] = 'BIGINT';
-        $this->rs['cacheused'] = 0; $this->rt['cacheused'] = 'BIGINT';
-        $this->rs['personalcachefree'] = 0; $this->rt['personalcachefree'] = 'BIGINT';
-        $this->rs['personalcachelimit'] = 0; $this->rt['personalcachelimit'] = 'BIGINT';
-        $this->rs['personalcacheused'] = 0; $this->rt['personalcacheused'] = 'BIGINT';
+        $this->rs['appletvsoftware'] = 0;
+        $this->rs['macsoftware'] = 0;
+        $this->rs['iclouddata'] = 0;
+        $this->rs['iossoftware'] = 0;
+        $this->rs['booksdata'] = 0;
+        $this->rs['itunesudata'] = 0;
+        $this->rs['moviesdata'] = 0;
+        $this->rs['musicdata'] = 0;
+        $this->rs['otherdata'] = 0;
+        $this->rs['cachefree'] = 0;
+        $this->rs['cachelimit'] = 0;
+        $this->rs['cacheused'] = 0;
+        $this->rs['personalcachefree'] = 0;
+        $this->rs['personalcachelimit'] = 0;
+        $this->rs['personalcacheused'] = 0;
         $this->rs['port'] = 0;
-        $this->rs['publicaddress'] = ""; $this->rt['publicaddress'] = 'TEXT';
-        $this->rs['privateaddresses'] = ""; $this->rt['privateaddresses'] = 'TEXT';
+        $this->rs['publicaddress'] = "";
+        $this->rs['privateaddresses'] = "";
         $this->rs['registrationstatus'] = 0;
         $this->rs['registrationerror'] = "";
         $this->rs['registrationresponsecode'] = "";
         $this->rs['restrictedmedia'] = 0;
         $this->rs['serverguid'] = "";
         $this->rs['startupstatus'] = "";
-        $this->rs['totalbytesdropped'] = 0; $this->rt['totalbytesdropped'] = 'BIGINT';
-        $this->rs['totalbytesimported'] = 0; $this->rt['totalbytesimported'] = 'BIGINT';
-        $this->rs['totalbytesreturnedtochildren'] = 0; $this->rt['totalbytesreturnedtochildren'] = 'BIGINT';
-        $this->rs['totalbytesreturnedtoclients'] = 0; $this->rt['totalbytesreturnedtoclients'] = 'BIGINT';
-        $this->rs['totalbytesreturnedtopeers'] = 0; $this->rt['totalbytesreturnedtopeers'] = 'BIGINT';
-        $this->rs['totalbytesstoredfromorigin'] = 0; $this->rt['totalbytesstoredfromorigin'] = 'BIGINT';
-        $this->rs['totalbytesstoredfromparents'] = 0; $this->rt['totalbytesstoredfromparents'] = 'BIGINT';
-        $this->rs['totalbytesstoredfrompeers'] = 0;  $this->rt['totalbytesstoredfrompeers'] = 'BIGINT';
-        $this->rs['reachability'] = "";  $this->rt['reachability'] = 'TEXT'; // end of High Sierra Columns
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
-        
-        //indexes to optimize queries
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('collectiondate');
-        $this->idx[] = array('collectiondateepoch');
-        $this->idx[] = array('bytesfromcachetoclients');
-        $this->idx[] = array('bytesfrompeerstoclients');
-        $this->idx[] = array('bytesfromorigintoclients');
-        $this->idx[] = array('activated');
-        $this->idx[] = array('active');
-        $this->idx[] = array('cachestatus');
-        $this->idx[] = array('totalbytesreturnedtoclients');
-        $this->idx[] = array('totalbytesreturnedtochildren');
-        $this->idx[] = array('totalbytesreturnedtopeers');
-        $this->idx[] = array('totalbytesstoredfromorigin');
-        $this->idx[] = array('totalbytesstoredfromparents');
-        $this->idx[] = array('totalbytesstoredfrompeers');
-
-        // Create table if it does not exist
-       //$this->create_table();
+        $this->rs['totalbytesdropped'] = 0;
+        $this->rs['totalbytesimported'] = 0;
+        $this->rs['totalbytesreturnedtochildren'] = 0;
+        $this->rs['totalbytesreturnedtoclients'] = 0;
+        $this->rs['totalbytesreturnedtopeers'] = 0;
+        $this->rs['totalbytesstoredfromorigin'] = 0;
+        $this->rs['totalbytesstoredfromparents'] = 0;
+        $this->rs['totalbytesstoredfrompeers'] = 0;
+        $this->rs['reachability'] = ""; // end of High Sierra Columns
     }
 
     // ------------------------------------------------------------------------
