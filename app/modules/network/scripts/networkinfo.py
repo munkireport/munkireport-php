@@ -32,11 +32,26 @@ def get_external_ip():
         return "External IP: "+output
     except Exception:
         return ""
+    
+def get_dns():
+    
+    cmd = ['/bin/cat', '/etc/resolv.conf']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    try:
+        return output
+    except Exception:
+        return ""
 
 def get_network_info():
     # Get external IP only once
     external_ip = get_external_ip()
     
+    # Get global DNS only once
+    dns_info = get_dns()
+
     # Get list of network services/interfaces
     networkservices = bashCommand(['/usr/sbin/networksetup', '-listallnetworkservices']).split('\n')[:-1]
     for network in networkservices:
@@ -50,22 +65,23 @@ def get_network_info():
             
             if any("Subnet mask" in s for s in network_info):
                 network_info.append(external_ip)
-        
-            nameservers = bashCommand(['/bin/cat', '/etc/resolv.conf']).split('\n')[:-1]
-            for searchdomain in nameservers:
-                    if "search " in searchdomain:
-                        search = search + re.sub('search ','', searchdomain)+", " 
-            network_info.append(search[:-2])
+                nameservers = dns_info.split('\n')[:-1]
+                for searchdomain in nameservers:
+                    if "search " in searchdomain or "domain " in searchdomain:
+                        search = search + re.sub('domain ','', re.sub('search ','', searchdomain))+", "
+                network_info.append(search[:-2])
             
             getdns = bashCommand(['/usr/sbin/networksetup', '-getdnsservers', network])
             if "There aren't any DNS Servers set on " in getdns:
-                for nameserver in nameservers:
-                    if "nameserver " in nameserver:
-                        dns = dns + re.sub('nameserver ','', nameserver)+", " 
+                if any("Subnet mask" in s for s in network_info):
+                    for nameserver in nameservers:
+                        if "nameserver " in nameserver:
+                            dns = dns + re.sub('nameserver ','', nameserver)+", "
+                    network_info.append(dns[:-2])
             else:
                 dns = "DNS: "+re.sub("There aren't any DNS Servers set on "+network+".","",re.sub('\n',', ',getdns))
+                network_info.append(dns[:-2])
             
-            network_info.append(dns[:-2])
             network_info.append("VLANS: "+re.sub("There are no VLANs currently configured on this system.","",re.sub('\n',', ',bashCommand(['/usr/sbin/networksetup', '-listVLANs'])))[:-2])
             network_info.append("Active MTU: "+re.sub('[^0-9]','', re.sub("[\(\[].*?[\)\]]", "", bashCommand(['/usr/sbin/networksetup', '-getMTU', network])[:-1])))
             network_info.append(bashCommand(['/usr/sbin/networksetup', '-listvalidMTUrange', network])[:-1])
