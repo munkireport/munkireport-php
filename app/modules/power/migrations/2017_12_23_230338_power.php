@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Power extends Migration
 {
     private $tableName = 'power';
-    private $tableNameV2 = 'power_v2';
+    private $tableNameV2 = 'power_orig';
 
     public function up()
     {
@@ -28,36 +28,36 @@ class Power extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('serial_number')->unique();
-            $table->string('manufacture_date');
-            $table->integer('design_capacity')->default(0);
-            $table->integer('max_capacity')->default(0);
-            $table->integer('max_percent')->default(0);
-            $table->integer('current_capacity')->default(0);
-            $table->integer('current_percent')->default(0);
-            $table->integer('cycle_count')->default(0);
-            $table->integer('temperature')->default(0);
-            $table->string('condition');
+            $table->string('serial_number');
+            $table->string('manufacture_date')->nullable();
+            $table->integer('design_capacity')->default(0)->nullable();
+            $table->integer('max_capacity')->default(0)->nullable();
+            $table->integer('max_percent')->default(0)->nullable();
+            $table->integer('current_capacity')->default(0)->nullable();
+            $table->integer('current_percent')->default(0)->nullable();
+            $table->integer('cycle_count')->default(0)->nullable();
+            $table->integer('temperature')->default(0)->nullable();
+            $table->string('condition')->nullable();
             
-            $table->text('sleep_prevented_by');
-            $table->string('hibernatefile');
-            $table->text('schedule');
-            $table->string('adapter_id');
-            $table->string('family_code');
-            $table->string('adapter_serial_number');
-            $table->string('combined_sys_load');
-            $table->string('user_sys_load');
-            $table->string('thermal_level');
-            $table->string('battery_level');
-            $table->string('ups_name');
-            $table->string('active_profile');
-            $table->string('ups_charging_status');
-            $table->string('externalconnected');
-            $table->string('cellvoltage');
-            $table->string('manufacturer');
-            $table->string('batteryserialnumber');
-            $table->string('fullycharged');
-            $table->string('ischarging');
+            $table->text('sleep_prevented_by')->nullable();
+            $table->string('hibernatefile')->nullable();
+            $table->text('schedule')->nullable();
+            $table->string('adapter_id')->nullable();
+            $table->string('family_code')->nullable();
+            $table->string('adapter_serial_number')->nullable();
+            $table->string('combined_sys_load')->nullable();
+            $table->string('user_sys_load')->nullable();
+            $table->string('thermal_level')->nullable();
+            $table->string('battery_level')->nullable();
+            $table->string('ups_name')->nullable();
+            $table->string('active_profile')->nullable();
+            $table->string('ups_charging_status')->nullable();
+            $table->string('externalconnected')->nullable();
+            $table->string('cellvoltage')->nullable();
+            $table->string('manufacturer')->nullable();
+            $table->string('batteryserialnumber')->nullable();
+            $table->string('fullycharged')->nullable();
+            $table->string('ischarging')->nullable();
             $table->integer('standbydelay')->nullable();
             $table->integer('standby')->nullable();
             $table->integer('womp')->nullable();
@@ -107,68 +107,10 @@ class Power extends Migration
             $table->float('amperage')->nullable();
             $table->integer('designcyclecount')->nullable();
             $table->integer('avgtimetoempty')->nullable();
-
-            $table->index('manufacture_date');
-            $table->index('design_capacity');
-            $table->index('max_capacity');
-            $table->index('max_percent');
-            $table->index('current_capacity');
-            $table->index('current_percent');
-            $table->index('cycle_count');
-            $table->index('temperature');
-            $table->index('hibernatefile');
-            $table->index('active_profile');
-            $table->index('standbydelay');
-            $table->index('standby');
-            $table->index('womp');
-            $table->index('halfdim');
-            $table->index('gpuswitch');
-            $table->index('sms');
-            $table->index('networkoversleep');
-            $table->index('disksleep');
-            $table->index('sleep');
-            $table->index('autopoweroffdelay');
-            $table->index('hibernatemode');
-            $table->index('autopoweroff');
-            $table->index('ttyskeepawake');
-            $table->index('displaysleep');
-            $table->index('acwake');
-            $table->index('lidwake');
-            $table->index('sleep_on_power_button');
-            $table->index('autorestart');
-            $table->index('destroyfvkeyonstandby');
-            $table->index('powernap');
-            $table->index('sleep_count');
-            $table->index('dark_wake_count');
-            $table->index('user_wake_count');
-            $table->index('wattage');
-            $table->index('backgroundtask');
-            $table->index('applepushservicetask');
-            $table->index('userisactive');
-            $table->index('preventuseridledisplaysleep');
-            $table->index('preventsystemsleep');
-            $table->index('externalmedia');
-            $table->index('preventuseridlesystemsleep');
-            $table->index('networkclientactive');
-            $table->index('externalconnected');
-            $table->index('timeremaining');
-            $table->index('instanttimetoempty');
-            $table->index('cellvoltage');
-            $table->index('voltage');
-            $table->index('permanentfailurestatus');
-            $table->index('manufacturer');
-            $table->index('packreserve');
-            $table->index('avgtimetofull');
-            $table->index('batteryserialnumber');
-            $table->index('amperage');
-            $table->index('fullycharged');
-            $table->index('ischarging');
-            $table->index('designcyclecount');
-            $table->index('avgtimetoempty');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -252,7 +194,70 @@ class Power extends Migration
                 avgtimetoempty
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('manufacture_date');
+            $table->index('design_capacity');
+            $table->index('max_capacity');
+            $table->index('max_percent');
+            $table->index('current_capacity');
+            $table->index('current_percent');
+            $table->index('cycle_count');
+            $table->index('temperature');
+            $table->index('hibernatefile');
+            $table->index('active_profile');
+            $table->index('standbydelay');
+            $table->index('standby');
+            $table->index('womp');
+            $table->index('halfdim');
+            $table->index('gpuswitch');
+            $table->index('sms');
+            $table->index('networkoversleep');
+            $table->index('disksleep');
+            $table->index('sleep');
+            $table->index('autopoweroffdelay');
+            $table->index('hibernatemode');
+            $table->index('autopoweroff');
+            $table->index('ttyskeepawake');
+            $table->index('displaysleep');
+            $table->index('acwake');
+            $table->index('lidwake');
+            $table->index('sleep_on_power_button');
+            $table->index('autorestart');
+            $table->index('destroyfvkeyonstandby');
+            $table->index('powernap');
+            $table->index('sleep_count');
+            $table->index('dark_wake_count');
+            $table->index('user_wake_count');
+            $table->index('wattage');
+            $table->index('backgroundtask');
+            $table->index('applepushservicetask');
+            $table->index('userisactive');
+            $table->index('preventuseridledisplaysleep');
+            $table->index('preventsystemsleep');
+            $table->index('externalmedia');
+            $table->index('preventuseridlesystemsleep');
+            $table->index('networkclientactive');
+            $table->index('externalconnected');
+            $table->index('timeremaining');
+            $table->index('instanttimetoempty');
+            $table->index('cellvoltage');
+            $table->index('voltage');
+            $table->index('permanentfailurestatus');
+            $table->index('manufacturer');
+            $table->index('packreserve');
+            $table->index('avgtimetofull');
+            $table->index('batteryserialnumber');
+            $table->index('amperage');
+            $table->index('fullycharged');
+            $table->index('ischarging');
+            $table->index('designcyclecount');
+            $table->index('avgtimetoempty');
+        });
     }
     
     public function down()

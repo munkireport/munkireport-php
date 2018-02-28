@@ -6,17 +6,17 @@ Provides information on all mounted HFS volumes by running
 
 The table provides the following information per client:
 
-* TotalSize (int) Size in Bytes
-* FreeSpace (int) Size in Bytes
-* Percentage (int) percentage 0-100
-* SMARTStatus (string) Verified, Unsupported or Failing
-* VolumeType (string) HFS+, APFS, BOOTCAMP
+* totalsize (int) Size in Bytes
+* freespace (int) Size in Bytes
+* percentage (int) percentage 0-100
+* smartstatus (string) Verified, Unsupported or Failing
+* volumetype (string) HFS+, APFS, BOOTCAMP
 * media_type (string) SSD, FUSION, RAID or HDD
-* BusProtocol (string) PCI, SAS, SATA, USB
-* Internal (bool)
-* MountPoint (string)
-* VolumeName (string)
-* CoreStorageEncrypted (bool)
+* busprotocol (string) PCI, SAS, SATA, USB
+* internal (bool)
+* mountpoint (string)
+* volumename (string)
+* encrypted (bool)
 
 
 Remarks

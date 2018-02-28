@@ -13,7 +13,6 @@ class Location_model extends \Model
         parent::__construct('id', 'location'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial;
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['address'] = '';
         $this->rs['altitude'] = 0;
         $this->rs['currentstatus'] = '';
@@ -28,16 +27,6 @@ class Location_model extends \Model
 
         // Store default values
         $this->defaults = $this->rs;
-
-        // Add indexes
-        $this->idx[] = array('address');
-        $this->idx[] = array('currentstatus');
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
-
-        // Create table if it does not exist
-       //$this->create_table();
 
         if ($serial) {
             $this->retrieve_record($serial);

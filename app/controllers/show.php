@@ -14,6 +14,11 @@ class show extends Controller
             redirect('auth/login');
         }
 
+        // Check for maintenance mode
+        if(file_exists(APP_ROOT . 'storage/framework/down')) {
+            redirect('error/client_error/503');
+        }
+
         $this->modules = $modules = getMrModuleObj()->loadInfo();
     }
 

@@ -1,5 +1,4 @@
 .table-console {
-    background: beige;
     color: darkgrey;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     font-size: 1.4rem;
@@ -17,8 +16,12 @@
     padding: 2px 0;
 }
 
-.log-error {
+.log-level-error {
     color: red;
+}
+
+.log-level-info {
+    color: darkgrey;
 }
 
 .disclosure {

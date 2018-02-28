@@ -34,13 +34,13 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 
 		// Set statuses
-		if(data.failing){
+		if(data.failing != "0"){
 			panel.append('<a href="'+baseUrl+'#failing" class="btn btn-danger"><span class="bigger-150">'+data.failing+'</span><br>'+i18n.t('failing')+'</a>');
 		}
-		if(data.verified){
+		if(data.verified != "0"){
 			panel.append(' <a href="'+baseUrl+'#verified" class="btn btn-success"><span class="bigger-150">'+data.verified+'</span><br>'+i18n.t('verified')+'</a>');
 		}
-		if(data.unsupported){
+		if(data.unsupported != "0"){
 			panel.append(' <a href="'+baseUrl+'#not supported" class="btn btn-info"><span class="bigger-150">'+data.unsupported+'</span><br>'+i18n.t('unsupported')+'</a>');
 		}
 

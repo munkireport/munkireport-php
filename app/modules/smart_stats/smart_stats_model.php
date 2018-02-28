@@ -4,8 +4,8 @@ use CFPropertyList\CFPropertyList;
 
 class Smart_stats_model extends \Model {
     
-	function __construct($serial='')
-	{
+    function __construct($serial='')
+    {
         parent::__construct('id', 'smart_stats'); //primary key, tablename
         $this->rs['id'] = 0;
         $this->rs['serial_number'] = $serial;
@@ -27,143 +27,143 @@ class Smart_stats_model extends \Model {
         $this->rs['error_count'] = 0;
         $this->rs['error_poh'] = 0;
         $this->rs['timestamp'] = 0; // Unix time when the report was uploaded
-        $this->rs['raw_read_error_rate'] = 0; $this->rt['raw_read_error_rate'] = 'BIGINT';
-        $this->rs['throughput_performance'] = 0; $this->rt['throughput_performance'] = 'BIGINT';
-        $this->rs['spin_up_time'] = 0; $this->rt['spin_up_time'] = 'BIGINT';
-        $this->rs['start_stop_count'] = 0; $this->rt['start_stop_count'] = 'BIGINT'; 
-        $this->rs['reallocated_sector_ct'] = 0; $this->rt['reallocated_sector_ct'] = 'BIGINT';
-        $this->rs['read_channel_margin'] = 0; $this->rt['read_channel_margin'] = 'BIGINT'; 
-        $this->rs['seek_error_rate'] = 0; $this->rt['seek_error_rate'] = 'BIGINT'; 
-        $this->rs['seek_time_performance'] = 0; $this->rt['seek_time_performance'] = 'BIGINT';
-        $this->rs['power_on_hours'] = 0; $this->rt['power_on_hours'] = 'BIGINT'; 
+        $this->rs['raw_read_error_rate'] = 0;
+        $this->rs['throughput_performance'] = 0;
+        $this->rs['spin_up_time'] = 0;
+        $this->rs['start_stop_count'] = 0;
+        $this->rs['reallocated_sector_ct'] = 0;
+        $this->rs['read_channel_margin'] = 0;
+        $this->rs['seek_error_rate'] = 0;
+        $this->rs['seek_time_performance'] = 0;
+        $this->rs['power_on_hours'] = 0;
         $this->rs['power_on_hours_and_msec'] = ''; 
-        $this->rs['spin_retry_count'] = 0; $this->rt['spin_retry_count'] = 'BIGINT';
-        $this->rs['calibration_retry_count'] = 0; $this->rt['calibration_retry_count'] = 'BIGINT';
-        $this->rs['power_cycle_count'] = 0; $this->rt['power_cycle_count'] = 'BIGINT'; 
-        $this->rs['read_soft_error_rate'] = 0; $this->rt['read_soft_error_rate'] = 'BIGINT'; 
-        $this->rs['program_fail_count_chip'] = 0; $this->rt['program_fail_count_chip'] = 'BIGINT';
-        $this->rs['erase_fail_count_chip'] = 0; $this->rt['erase_fail_count_chip'] = 'BIGINT';
-        $this->rs['wear_leveling_count'] = 0; $this->rt['wear_leveling_count'] = 'BIGINT';
-        $this->rs['used_rsvd_blk_cnt_chip'] = 0; $this->rt['used_rsvd_blk_cnt_chip'] = 'BIGINT';
-        $this->rs['used_rsvd_blk_cnt_tot'] = 0; $this->rt['used_rsvd_blk_cnt_tot'] = 'BIGINT';
-        $this->rs['unused_rsvd_blk_cnt_tot'] = 0; $this->rt['unused_rsvd_blk_cnt_tot'] = 'BIGINT';
-        $this->rs['program_fail_cnt_total'] = 0; $this->rt['program_fail_cnt_total'] = 'BIGINT';
-        $this->rs['erase_fail_count_total'] = 0; $this->rt['erase_fail_count_total'] = 'BIGINT';
-        $this->rs['runtime_bad_block'] = 0; $this->rt['runtime_bad_block'] = 'BIGINT';
-        $this->rs['endtoend_error'] = 0; $this->rt['endtoend_error'] = 'BIGINT';
-        $this->rs['reported_uncorrect'] = 0; $this->rt['reported_uncorrect'] = 'BIGINT';
-        $this->rs['command_timeout'] = 0; $this->rt['command_timeout'] = 'BIGINT';
-        $this->rs['high_fly_writes'] = 0; $this->rt['high_fly_writes'] = 'BIGINT';
+        $this->rs['spin_retry_count'] = 0;
+        $this->rs['calibration_retry_count'] = 0;
+        $this->rs['power_cycle_count'] = 0;
+        $this->rs['read_soft_error_rate'] = 0;
+        $this->rs['program_fail_count_chip'] = 0;
+        $this->rs['erase_fail_count_chip'] = 0;
+        $this->rs['wear_leveling_count'] = 0;
+        $this->rs['used_rsvd_blk_cnt_chip'] = 0;
+        $this->rs['used_rsvd_blk_cnt_tot'] = 0;
+        $this->rs['unused_rsvd_blk_cnt_tot'] = 0;
+        $this->rs['program_fail_cnt_total'] = 0;
+        $this->rs['erase_fail_count_total'] = 0;
+        $this->rs['runtime_bad_block'] = 0;
+        $this->rs['endtoend_error'] = 0;
+        $this->rs['reported_uncorrect'] = 0;
+        $this->rs['command_timeout'] = 0;
+        $this->rs['high_fly_writes'] = 0;
         $this->rs['airflow_temperature_cel'] = '';
-        $this->rs['gsense_error_rate'] = 0; $this->rt['gsense_error_rate'] = 'BIGINT';
-        $this->rs['poweroff_retract_count'] = 0; $this->rt['poweroff_retract_count'] = 'BIGINT';
-        $this->rs['load_cycle_count'] = 0; $this->rt['load_cycle_count'] = 'BIGINT';
+        $this->rs['gsense_error_rate'] = 0;
+        $this->rs['poweroff_retract_count'] = 0;
+        $this->rs['load_cycle_count'] = 0;
         $this->rs['temperature_celsius'] = '';
-        $this->rs['hardware_ecc_recovered'] = 0; $this->rt['hardware_ecc_recovered'] = 'BIGINT';
-        $this->rs['reallocated_event_count'] = 0; $this->rt['reallocated_event_count'] = 'BIGINT';
-        $this->rs['current_pending_sector'] = 0; $this->rt['current_pending_sector'] = 'BIGINT';
-        $this->rs['offline_uncorrectable'] = 0; $this->rt['offline_uncorrectable'] = 'BIGINT';
-        $this->rs['udma_crc_error_count'] = 0; $this->rt['udma_crc_error_count'] = 'BIGINT';
-        $this->rs['multi_zone_error_rate'] = 0; $this->rt['multi_zone_error_rate'] = 'BIGINT';
-        $this->rs['soft_read_error_rate'] = 0; $this->rt['soft_read_error_rate'] = 'BIGINT';
-        $this->rs['data_address_mark_errs'] = 0; $this->rt['data_address_mark_errs'] = 'BIGINT';
-        $this->rs['run_out_cancel'] = 0; $this->rt['run_out_cancel'] = 'BIGINT';
-        $this->rs['soft_ecc_correction'] = 0; $this->rt['soft_ecc_correction'] = 'BIGINT';
-        $this->rs['thermal_asperity_rate'] = 0; $this->rt['thermal_asperity_rate'] = 'BIGINT';
-        $this->rs['flying_height'] = 0; $this->rt['flying_height'] = 'BIGINT';
-        $this->rs['spin_high_current'] = 0; $this->rt['spin_high_current'] = 'BIGINT';
-        $this->rs['spin_buzz'] = 0; $this->rt['spin_buzz'] = 'BIGINT';
-        $this->rs['offline_seek_performnce'] = 0; $this->rt['offline_seek_performnce'] = 'BIGINT';	
-        $this->rs['disk_shift'] = 0; $this->rt['disk_shift'] = 'BIGINT';
-        $this->rs['loaded_hours'] = 0; $this->rt['loaded_hours'] = 'BIGINT';
-        $this->rs['load_retry_count'] = 0; $this->rt['load_retry_count'] = 'BIGINT';
-        $this->rs['load_friction'] = 0; $this->rt['load_friction'] = 'BIGINT';
-        $this->rs['loadin_time'] = 0; $this->rt['loadin_time'] = 'BIGINT';
-        $this->rs['torqamp_count'] = 0; $this->rt['torqamp_count'] = 'BIGINT';
-        $this->rs['head_amplitude'] = 0; $this->rt['head_amplitude'] = 'BIGINT';
-        $this->rs['available_reservd_space'] = 0; $this->rt['available_reservd_space'] = 'BIGINT';
-        $this->rs['media_wearout_indicator'] = 0; $this->rt['media_wearout_indicator'] = 'BIGINT';
-        $this->rs['head_flying_hours'] = 0; $this->rt['head_flying_hours'] = 'BIGINT';
-        $this->rs['total_lbas_written'] = 0; $this->rt['total_lbas_written'] = 'BIGINT';
-        $this->rs['total_lbas_read'] = 0; $this->rt['total_lbas_read'] = 'BIGINT';
-        $this->rs['read_error_retry_rate'] = 0; $this->rt['read_error_retry_rate'] = 'BIGINT';
-        $this->rs['free_fall_sensor'] = 0; $this->rt['free_fall_sensor'] = 'BIGINT';
-        $this->rs['host_reads_mib'] = 0; $this->rt['host_reads_mib'] = 'BIGINT';
-        $this->rs['host_writes_mib'] = 0; $this->rt['host_writes_mib'] = 'BIGINT';
-        $this->rs['grown_failing_block_ct'] = 0; $this->rt['grown_failing_block_ct'] = 'BIGINT';
-        $this->rs['unexpect_power_loss_ct'] = 0; $this->rt['unexpect_power_loss_ct'] = 'BIGINT';
-        $this->rs['non4k_aligned_access'] = 0; $this->rt['non4k_aligned_access'] = 'BIGINT';
-        $this->rs['sata_iface_downshift'] = 0; $this->rt['sata_iface_downshift'] = 'BIGINT';
-        $this->rs['factory_bad_block_ct'] = 0; $this->rt['factory_bad_block_ct'] = 'BIGINT';
-        $this->rs['percent_lifetime_used'] = 0; $this->rt['percent_lifetime_used'] = 'BIGINT';
-        $this->rs['write_error_rate'] = 0; $this->rt['write_error_rate'] = 'BIGINT';
-        $this->rs['success_rain_recov_cnt'] = 0; $this->rt['success_rain_recov_cnt'] = 'BIGINT';
-        $this->rs['total_host_sector_write'] = 0; $this->rt['total_host_sector_write'] = 'BIGINT';
-        $this->rs['host_program_page_count'] = 0; $this->rt['host_program_page_count'] = 'BIGINT';
-        $this->rs['bckgnd_program_page_cnt'] = 0; $this->rt['bckgnd_program_page_cnt'] = 'BIGINT';
-        $this->rs['perc_rated_life_used'] = 0; $this->rt['perc_rated_life_used'] = 'BIGINT';
-        $this->rs['reallocate_nand_blk_cnt'] = 0; $this->rt['reallocate_nand_blk_cnt'] = 'BIGINT';
-        $this->rs['ave_blockerase_count'] = 0; $this->rt['ave_blockerase_count'] = 'BIGINT';
-        $this->rs['unused_reserve_nand_blk'] = 0; $this->rt['unused_reserve_nand_blk'] = 'BIGINT';
-        $this->rs['sata_interfac_downshift'] = 0; $this->rt['sata_interfac_downshift'] = 'BIGINT';
-        $this->rs['ssd_life_left'] = 0; $this->rt['ssd_life_left'] = 'BIGINT';
-        $this->rs['life_curve_status'] = 0; $this->rt['life_curve_status'] = 'BIGINT';
-        $this->rs['supercap_health'] = 0; $this->rt['supercap_health'] = 'BIGINT';
-        $this->rs['lifetime_writes_gib'] = 0; $this->rt['lifetime_writes_gib'] = 'BIGINT';
-        $this->rs['lifetime_reads_gib'] = 0; $this->rt['lifetime_reads_gib'] = 'BIGINT';
-        $this->rs['uncorrectable_error_cnt'] = 0; $this->rt['uncorrectable_error_cnt'] = 'BIGINT';
-        $this->rs['ecc_error_eate'] = 0; $this->rt['ecc_error_eate'] = 'BIGINT';
-        $this->rs['crc_error_count'] = 0; $this->rt['crc_error_count'] = 'BIGINT';
-        $this->rs['supercap_status'] = 0; $this->rt['supercap_status'] = 'BIGINT';
-        $this->rs['exception_mode_status'] = 0; $this->rt['exception_mode_status'] = 'BIGINT';
-        $this->rs['por_recovery_count'] = 0; $this->rt['por_recovery_count'] = 'BIGINT';
-        $this->rs['total_reads_gib'] = 0; $this->rt['total_reads_gib'] = 'BIGINT';
-        $this->rs['total_writes_gib'] = 0; $this->rt['total_writes_gib'] = 'BIGINT';
-        $this->rs['thermal_throttle'] = 0; $this->rt['thermal_throttle'] = 'BIGINT';
-        $this->rs['perc_writeerase_count'] = 0; $this->rt['perc_writeerase_count'] = 'BIGINT';
-        $this->rs['perc_avail_resrvd_space'] = 0; $this->rt['perc_avail_resrvd_space'] = 'BIGINT';
-        $this->rs['perc_writeerase_ct_bc'] = 0; $this->rt['perc_writeerase_ct_bc'] = 'BIGINT';
-        $this->rs['avg_writeerase_count'] = 0; $this->rt['avg_writeerase_count'] = 'BIGINT';
-        $this->rs['sata_phy_error'] = 0; $this->rt['sata_phy_error'] = 'BIGINT';
+        $this->rs['hardware_ecc_recovered'] = 0;
+        $this->rs['reallocated_event_count'] = 0;
+        $this->rs['current_pending_sector'] = 0;
+        $this->rs['offline_uncorrectable'] = 0;
+        $this->rs['udma_crc_error_count'] = 0;
+        $this->rs['multi_zone_error_rate'] = 0;
+        $this->rs['soft_read_error_rate'] = 0;
+        $this->rs['data_address_mark_errs'] = 0;
+        $this->rs['run_out_cancel'] = 0;
+        $this->rs['soft_ecc_correction'] = 0;
+        $this->rs['thermal_asperity_rate'] = 0;
+        $this->rs['flying_height'] = 0;
+        $this->rs['spin_high_current'] = 0;
+        $this->rs['spin_buzz'] = 0;
+        $this->rs['offline_seek_performnce'] = 0;
+        $this->rs['disk_shift'] = 0;
+        $this->rs['loaded_hours'] = 0;
+        $this->rs['load_retry_count'] = 0;
+        $this->rs['load_friction'] = 0;
+        $this->rs['loadin_time'] = 0;
+        $this->rs['torqamp_count'] = 0;
+        $this->rs['head_amplitude'] = 0;
+        $this->rs['available_reservd_space'] = 0;
+        $this->rs['media_wearout_indicator'] = 0;
+        $this->rs['head_flying_hours'] = 0;
+        $this->rs['total_lbas_written'] = 0;
+        $this->rs['total_lbas_read'] = 0;
+        $this->rs['read_error_retry_rate'] = 0;
+        $this->rs['free_fall_sensor'] = 0;
+        $this->rs['host_reads_mib'] = 0;
+        $this->rs['host_writes_mib'] = 0;
+        $this->rs['grown_failing_block_ct'] = 0;
+        $this->rs['unexpect_power_loss_ct'] = 0;
+        $this->rs['non4k_aligned_access'] = 0;
+        $this->rs['sata_iface_downshift'] = 0;
+        $this->rs['factory_bad_block_ct'] = 0;
+        $this->rs['percent_lifetime_used'] = 0;
+        $this->rs['write_error_rate'] = 0;
+        $this->rs['success_rain_recov_cnt'] = 0;
+        $this->rs['total_host_sector_write'] = 0;
+        $this->rs['host_program_page_count'] = 0;
+        $this->rs['bckgnd_program_page_cnt'] = 0;
+        $this->rs['perc_rated_life_used'] = 0;
+        $this->rs['reallocate_nand_blk_cnt'] = 0;
+        $this->rs['ave_blockerase_count'] = 0;
+        $this->rs['Unused_Reserve_NAND_Blk'] = 0;
+        $this->rs['sata_interfac_downshift'] = 0;
+        $this->rs['ssd_life_left'] = 0;
+        $this->rs['life_curve_status'] = 0;
+        $this->rs['supercap_health'] = 0;
+        $this->rs['lifetime_writes_gib'] = 0;
+        $this->rs['lifetime_reads_gib'] = 0;
+        $this->rs['uncorrectable_error_cnt'] = 0;
+        $this->rs['ecc_error_eate'] = 0;
+        $this->rs['crc_error_count'] = 0;
+        $this->rs['supercap_status'] = 0;
+        $this->rs['exception_mode_status'] = 0;
+        $this->rs['por_recovery_count'] = 0;
+        $this->rs['total_reads_gib'] = 0;
+        $this->rs['total_writes_gib'] = 0;
+        $this->rs['thermal_throttle'] = 0;
+        $this->rs['perc_writeerase_count'] = 0;
+        $this->rs['perc_avail_resrvd_space'] = 0;
+        $this->rs['perc_writeerase_ct_bc'] = 0;
+        $this->rs['avg_writeerase_count'] = 0;
+        $this->rs['sata_phy_error'] = 0;
         $this->rs['overall_health'] = '';
         $this->rs['pci_vender_subsystem_id'] = ''; // Start of NVMe columns
         $this->rs['model_number'] = '';
         $this->rs['critical_warning'] = '';  
-        $this->rs['available_spare'] = 0; $this->rt['available_spare'] = 'BIGINT';
-        $this->rs['available_spare_threshold'] = 0; $this->rt['available_spare_threshold'] = 'BIGINT';
-        $this->rs['percentage_used'] = 0; $this->rt['percentage_used'] = 'BIGINT';
+        $this->rs['available_spare'] = 0;
+        $this->rs['available_spare_threshold'] = 0;
+        $this->rs['percentage_used'] = 0;
         $this->rs['data_units_read'] = '';
         $this->rs['data_units_written'] = '';
-        $this->rs['host_read_commands'] = 0; $this->rt['host_read_commands'] = 'BIGINT';
-        $this->rs['host_write_commands'] = 0; $this->rt['host_write_commands'] = 'BIGINT';
-        $this->rs['controller_busy_time'] = 0; $this->rt['controller_busy_time'] = 'BIGINT';
-        $this->rs['unsafe_shutdowns'] = 0; $this->rt['unsafe_shutdowns'] = 'BIGINT';
-        $this->rs['media_data_integrity_errors'] = 0; $this->rt['media_data_integrity_errors'] = 'BIGINT';
-        $this->rs['error_info_log_entries'] = 0; $this->rt['error_info_log_entries'] = 'BIGINT';
+        $this->rs['host_read_commands'] = 0;
+        $this->rs['host_write_commands'] = 0;
+        $this->rs['controller_busy_time'] = 0;
+        $this->rs['unsafe_shutdowns'] = 0;
+        $this->rs['media_data_integrity_errors'] = 0;
+        $this->rs['error_info_log_entries'] = 0;
         $this->rs['ieee_oui_id'] = '';
-        $this->rs['controller_id'] = 0; $this->rt['controller_id'] = 'BIGINT';
-        $this->rs['number_of_namespaces'] = 0; $this->rt['number_of_namespaces'] = 'BIGINT';
+        $this->rs['controller_id'] = 0;
+        $this->rs['number_of_namespaces'] = 0;
         $this->rs['firmware_updates'] = '';
-        $this->rs['optional_admin_commands'] = ''; $this->rt['optional_admin_commands'] = 'TEXT';
-        $this->rs['optional_nvm_commands'] = ''; $this->rt['optional_nvm_commands'] = 'TEXT';
+        $this->rs['optional_admin_commands'] = '';
+        $this->rs['optional_nvm_commands'] = '';
         $this->rs['max_data_transfer_size'] = ''; // End of new NVMe columns 
-		
-		if ($serial)
-		{
-			$this->retrieve_record($serial);
-		}
-		
-		$this->serial = $serial;
+
+        if ($serial)
+        {
+            $this->retrieve_record($serial);
+        }
+        
+        $this->serial = $serial;
     }
 
     public function getSmartStats()
     {
         $sql = "SELECT COUNT(CASE WHEN overall_health='PASSED' THEN 1 END) AS passed,
-						COUNT(CASE WHEN overall_health='UNKNOWN!' THEN 1 END) AS unknown,
-						COUNT(CASE WHEN overall_health='FAILED!' THEN 1 END) AS failed
-						FROM smart_stats
-						LEFT JOIN reportdata USING(serial_number)
-						".get_machine_group_filter();
+                        COUNT(CASE WHEN overall_health='UNKNOWN!' THEN 1 END) AS unknown,
+                        COUNT(CASE WHEN overall_health='FAILED!' THEN 1 END) AS failed
+                        FROM smart_stats
+                        LEFT JOIN reportdata USING(serial_number)
+                        ".get_machine_group_filter();
         return current($this->query($sql));
     }
 

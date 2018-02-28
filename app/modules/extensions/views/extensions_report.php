@@ -9,7 +9,8 @@
   <div class="row">
 
 	  <?php $widget->view($this, 'extensions'); ?>
-	  <?php $widget->view($this, 'extensions_codesign'); ?>
+	  <?php $widget->view($this, 'extensions_developer'); ?>
+	  <?php $widget->view($this, 'extensions_teamid'); ?>
 
   </div> <!-- /row -->
 

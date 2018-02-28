@@ -13,17 +13,6 @@ class Bluetooth_model extends \Model
         $this->rs['battery_percent'] = -1; //-1 means unknown
         $this->rs['device_type'] = ''; // status, kb, mouse, trackpad
 
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
-
-        // Add indexes
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('device_type');
-
-        // Create table if it does not exist
-//       //$this->create_table();
-
         $this->$serial = $serial;
     }
 
@@ -83,8 +72,9 @@ class Bluetooth_model extends \Model
         foreach ($mylist as $key => $value) {
 
             $this->device_type = str_replace(' ', '_', strtolower($key));
-
-            if($this->device_type == "bluetooth_power"){
+            if($this->device_type == "bluetooth_power" && ! is_bool($value)){
+                $this->battery_percent = -1;
+            } else if($this->device_type == "bluetooth_power"){
                 $this->battery_percent = $value == true ? 1 : 0;
             } else {
                 $this->battery_percent = $value;

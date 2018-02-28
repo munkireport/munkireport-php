@@ -1,20 +1,92 @@
-### [2.16.0](https://github.com/munkireport/munkireport-php/compare/v2.15.2...HEAD) (Unreleased)
+### [3.0.3](https://github.com/munkireport/munkireport-php/compare/v3.0.2...HEAD) (Unreleased)
+
+### [3.0.2](https://github.com/munkireport/munkireport-php/compare/v3.0.1...v3.0.2) (February 15, 2018)
+
+More bugfixes, mostly migration related.
+
+FIXES
+- Fixed migrations for SQLite (#971)
+- Added indexes for the tag, usb, fonts, network_shares, homebrew and servermetrics modules
+- Improved Dockerfile
+
+
+### [3.0.1](https://github.com/munkireport/munkireport-php/compare/v3.0.0...v3.0.1) (February 14, 2018)
+
+This is a small bugfix release that fixes some issues with the 3.0.0 release.
+
+FIXES
+- Fixed certificate warnings in events (#959) @tuxudo
+- Hide zero blocks on disk widgets (#958) @tuxudo
+- Security ssh detection update (#943) @poundbangbash
+- Smart stats report title fix (#942) @poundbangbash
+- Changed power columns to be nullable in migration (#955) @tuxudo
+- Smart stats widget title localization fix (#961) @poundbangbash
+- Fixed WiFi nullable migration (#957) @tuxudo
+- Fix migration files @poundbangbash
+- Disk report error fix (#965) @tuxudo
+- Extensions migration name fix (#968) @poundbangbash
+- Adjust database log view to use theme for readability. (#963) @poundbangbash
+- Fix bad datatype in usage_stats migration (#956) @tuxudo
+
+NEW FEATURES
+- Extension module TeamID breakout (#953) @poundbangbash
+- Create widget for os build breakdown and add it to the client report (#951) @AaronBurchfield
+- Update Dockerfile for php7.2
+
+### [3.0.0](https://github.com/munkireport/munkireport-php/compare/v2.15.2...v3.0.0) (February 07, 2018)
+
+The third major version of munkireport attempts to solve a couple of longstanding issues concerning security, dependency management and database management. We're moving slowly to using eloquent as replacement for the KISS database abstraction. A ton of work has been done by @mosen to make this all work.
+
+Most notable changes are:
+
+- Minimum PHP version is 7.0
+- Document root is now in a directory called `/public`. The best practice is to serve your munkireport instance from this directory or make a symlink to this directory.
+- If you install munkireport via the commandline, you need to install all dependencies first via [composer](https://getcomposer.org)
+- There is a new database configuration format `$conf['connection']`. See `config_default.php` on how to use it.
+- Database migrations (also the initial ones) are not running automatically. You need to run migrations via the commandline tool `php database/migrate.php`
+
+See also the [Upgrade v3 guide](https://github.com/munkireport/munkireport-php/wiki/How-to-Upgrade-to-v3) and [Quick demo v3](https://github.com/munkireport/munkireport-php/wiki/Quick-demo-V3)
+
+FIXES
+- Certificate Module fix for multiple certs with same name (#893) @sphen13
+- Misc UI fixes (#885) @tuxudo
+- Fix vendors for 10.13 (#902) @tuxudo
+- Fix localization in client tab (#903) @tuxudo
+- Use CFPreferences to read BaseUrl and Passphrase. (#919) @MagerValp
+- Misc migration fixes
+- AuthLDAP fixed (#944)
+- Recaptcha uses proxy settings
+- Database info fixed
+- Installer postflight script (#949) @MagerValp
+
+NEW FEATURES
+- NVMe Support in SMART Stats module (#895) @tuxudo
+- Update Network Info script to now pull Tunnel adapter information (#897) @jbaker10
+- Sort machine groups by name (#898) @choules
+- New module: Munki-facts (#850) @nathanperkins and @poundbangbash
+- New module: Usage Stats module (#843) @tuxudo
+- New module: Applications Module (#917) @tuxudo
+- New module: DetectX Module (#916) @WardsParadox
+- SAML support, see also [SAML authentication](https://github.com/munkireport/munkireport-php/wiki/SAML-authentication)
+- Added filesystem widget (#886) @tuxudo
+- Maintenance Mode, see also [Maintenance Mode](https://github.com/munkireport/munkireport-php/wiki/Maintenance-Mode)
+- German translation (#941) @fridomac
 
 ### [2.15.2](https://github.com/munkireport/munkireport-php/compare/v2.14.3...v2.15.2) (Sept 28, 2017)
 
 FIXES
 - Fixed Apple icon url
 - Removed `default` method from Schema.php which caused errors in PHP < 7.0.0
-- Fix for #812 
-- Fix for #813 
-- en.json and fr.json - @lolipale 
-- Improved error handling around the firmwarepasswd binary @rickheil 
-- Case Sensitivity for PlistBuddy - @GordSpence 
+- Fix for #812
+- Fix for #813
+- en.json and fr.json - @lolipale
+- Improved error handling around the firmwarepasswd binary @rickheil
+- Case Sensitivity for PlistBuddy - @GordSpence
 
 NEW FEATURES
 - Add Munki 3 ManagedInstalls Keys
-- Kernel Extensions Module (KEXT) - @tuxudo 
-- More default filters for inventory module - @poundbangbash 
+- Kernel Extensions Module (KEXT) - @tuxudo
+- More default filters for inventory module - @poundbangbash
 - APFS support in disk_report module
 - Invisible CAPTCHA (you need to generate new keys if you were using the previous version)
 - Schema class to help with migrations
@@ -24,32 +96,32 @@ NEW FEATURES
 FIXES
 - Blank client detail page on php < v5.5
 - Errors on submit in smart_stats module
-- Sorting in Machinegroups - @cwhits 
+- Sorting in Machinegroups - @cwhits
 - event module enabled by default
 - uninstall script for mbbr_status (#790) - @gmarnin  
-- app usage widget duplicates (#789)- @tuxudo 
-- missing caching graph and app usage widgets (#788) - @tuxudo 
+- app usage widget duplicates (#789)- @tuxudo
+- missing caching graph and app usage widgets (#788) - @tuxudo
 - gsx migration
 - file permissions
-- Client detail button scaling 
+- Client detail button scaling
 - Misc small fixes
-- Power module adjustments - @tuxudo 
+- Power module adjustments - @tuxudo
 - Certificate parsing - @kevinmcox
-- Unique error reporting  - @poundbangbash 
-- Updated GSX module - @tuxudo 
+- Unique error reporting  - @poundbangbash
+- Updated GSX module - @tuxudo
 - Firewall widget fix
-- Changed soon expiration for certs to 1 month - @poundbangbash 
-- Drive health status - @poundbangbash 
-- Lets Encrypt cert check - @poundbangbash 
-- Fixed theme (and added one extra) - @WardsParadox 
+- Changed soon expiration for certs to 1 month - @poundbangbash
+- Drive health status - @poundbangbash
+- Lets Encrypt cert check - @poundbangbash
+- Fixed theme (and added one extra) - @WardsParadox
 
 NEW FEATURES
 - List links on widgets - @poundbangbash
-- French translation - @lolipale 
+- French translation - @lolipale
 - Uninstall status messages in events
-- Firewall state reporting - @rickheil 
+- Firewall state reporting - @rickheil
 - Malware Bytes Breach Remediation module - @cleavenworth
-- User sessions module - @tuxudo 
+- User sessions module - @tuxudo
 - Uptime widget and munki widget UI
 
 ### [2.13.2](https://github.com/munkireport/munkireport-php/compare/v2.12.0...v2.13.2) (April 7, 2017)
@@ -58,13 +130,13 @@ FIXES
 - Converting 'fake' null placeholders to actual null values in smart stats module - @poundbangbash  
 - Older munkireport client support
 - Support for storing and retrieving null values from the db
-- Converting 'fake' null placeholders to actual null values - @tuxudo 
-- Additional USB categories -  @poundbangbash 
-- ARD_AllLocalUsers - @rickheil 
+- Converting 'fake' null placeholders to actual null values - @tuxudo
+- Additional USB categories -  @poundbangbash
+- ARD_AllLocalUsers - @rickheil
 - PHP < 5.5 support
-- Missing munkiinfo locales - @tuxudo 
+- Missing munkiinfo locales - @tuxudo
 - Munkiprotocol widget links - @tuxudo
-- Time Machine module by @tuxudo 
+- Time Machine module by @tuxudo
 - Misc small fixes
 
 NEW FEATURES
@@ -72,25 +144,25 @@ NEW FEATURES
 - SSL options for https lookups
 - Support for munki v3
 - Aggregate 'registered_clients_widget' data per month
-- App Usage module - made by @tuxudo 
+- App Usage module - made by @tuxudo
 - added hardware base model widget
 - localisation updates by @tuxudo
-- Caching module by @tuxudo 
-- USB module by @MiqViq and @tuxudo 
-- MunkireportInfo module by @tuxudo 
-- Software Update module by @tuxudo 
-- Revamped Power module by @tuxudo 
-- GPU module by @tuxudo 
-- Dynamic lookup for managed_install_dir by @weswhet 
-- Fonts module by @tuxudo 
-- Homebrew module by @tuxudo 
-- Network shares module by @tuxudo 
-- SMART Stat Module by @tuxudo 
-- Fans and Temperatures Module by @tuxudo 
-- Firmware Escrow module by @gmarnin 
+- Caching module by @tuxudo
+- USB module by @MiqViq and @tuxudo
+- MunkireportInfo module by @tuxudo
+- Software Update module by @tuxudo
+- Revamped Power module by @tuxudo
+- GPU module by @tuxudo
+- Dynamic lookup for managed_install_dir by @weswhet
+- Fonts module by @tuxudo
+- Homebrew module by @tuxudo
+- Network shares module by @tuxudo
+- SMART Stat Module by @tuxudo
+- Fans and Temperatures Module by @tuxudo
+- Firmware Escrow module by @gmarnin
 - Option to hide unused modules from the WebGUI by @nathanperkins
-- French localisation by @lolipale 
-- German localisation by @fridomac 
+- French localisation by @lolipale
+- German localisation by @fridomac
 
 ### [2.12.0](https://github.com/munkireport/munkireport-php/compare/v2.11.0...v2.12.0) (December 6, 2016)
 
@@ -99,22 +171,22 @@ FIXES
 
 NEW FEATURES
 - Theme switcher with 16 themes from https://bootswatch.com
-- All graphs are now converted to d3 
+- All graphs are now converted to d3
 - Widget search (#581) See also: https://github.com/munkireport/munkireport-php/wiki/Custom-Widgets
 - Allow for graph color customisation See also: https://github.com/munkireport/munkireport-php/wiki/Graphs
 
 ### [2.11.0](https://github.com/munkireport/munkireport-php/compare/v2.10.1...v2.11.0) (December 6, 2016)
 
 FIXES
-- Disk free space on non mounted volumes thanks to @VitosX 
+- Disk free space on non mounted volumes thanks to @VitosX
 - Network location widget thanks to @poundbangbash
 - French localisation updates thanks to @lolipale
-- German localisation updates thanks to @fridomac 
+- German localisation updates thanks to @fridomac
 - Misc bugfixes
 
 NEW FEATURES
 - Clientside script now reports sizes of uploaded files
-- SCCM module thanks to @computeronix 
+- SCCM module thanks to @computeronix
 - Backup2go module thanks to @pnerum and @johannijdam
 
 ### [2.10.1](https://github.com/munkireport/munkireport-php/compare/v2.9.2...v2.10.1) (October 13, 2016)
@@ -130,7 +202,7 @@ FIXES
 - Misc bugfixes
 
 NEW FEATURES
-- New Favicon thanks to @WardsParadox 
+- New Favicon thanks to @WardsParadox
 
 ### [2.9.2](https://github.com/munkireport/munkireport-php/compare/v2.8.5...v2.9.2) (August 28, 2016)
 
@@ -138,17 +210,17 @@ FIXES
 
 * Fix munkireport table for new installs
 * Fix deploystudio tab in client view
-* Link from inventory listing thanks to @poundbangbash 
-* Manager role can remove machines thanks to @poundbangbash 
-* Divide by zero error for MacBooks without battery thanks to @poundbangbash 
-* GSX and Find My Mac presentation thanks to @gmarnin 
+* Link from inventory listing thanks to @poundbangbash
+* Manager role can remove machines thanks to @poundbangbash
+* Divide by zero error for MacBooks without battery thanks to @poundbangbash
+* GSX and Find My Mac presentation thanks to @gmarnin
 * Improved tag search (#372)
 * SIP status reporting improved thanks to @clburlison
 * Update for GSX module thanks to @tuxudo
 * Scrollable modal window, fixes #461
 * Fix several deep links, #460, #462
 * French localisation updates thanks to @lolipale
-* German localisation updates thanks to @fridomac 
+* German localisation updates thanks to @fridomac
 * Event widget only shows 50 events
 * Increase inventorypath limit to 1024 chars, fixes #478
 * Fix target volume (#492)
@@ -186,8 +258,8 @@ NEW FEATURES
 ### [2.8.5](https://github.com/munkireport/munkireport-php/compare/v2.7.2...v2.8.5) (April 4, 2016)
 
 FIXES since 2.8.4
-* WiFi module robustness thanks to @tuxudo and @kujeger 
-* documentation on GSX module thanks to @tuxudo and @gmarnin 
+* WiFi module robustness thanks to @tuxudo and @kujeger
+* documentation on GSX module thanks to @tuxudo and @gmarnin
 * location report
 
 FIXES since 2.8.3
@@ -195,7 +267,7 @@ FIXES since 2.8.3
 
 FIXES since 2.8.2
 
-* SIP status thanks to @clburlison 
+* SIP status thanks to @clburlison
 * Wi-Fi module more robust thanks to @tuxudo
 * Location module packaging thanks to @clburlison
 
@@ -203,26 +275,26 @@ FIXES
 
 * Markdown now accepts line breaks in client comments
 * FileVault 2 reporting fix for #375 and #378
-* curl options for submit.preflight thanks to @kujeger 
+* curl options for submit.preflight thanks to @kujeger
 
 NEW FEATURES
 
 * Location module - thanks to @clburlison and @gmarnin
-* GSX module thanks to @tuxudo 
+* GSX module thanks to @tuxudo
 * Security module thanks to @gmarnin
-* Munkiinfo module thanks to @erikng and @clburlison 
+* Munkiinfo module thanks to @erikng and @clburlison
 * Wi-Fi module thanks to @tuxudo
 * Printer widget thanks to @tuxudo
 * Hotkey support
-* German localisation updates thanks to @fridomac 
-* French localisation updates thanks to @lolipale 
+* German localisation updates thanks to @fridomac
+* French localisation updates thanks to @lolipale
 * stretch map to viewport thanks to @rfitzwater
 
 ### [2.7.2](https://github.com/munkireport/munkireport-php/compare/v2.6.0...v2.7.2) (December 12, 2015)
 
 FIXES
 
-* Fix Delete machine (which was broken in the 2.7.1 release) thanks to @gmarnin 
+* Fix Delete machine (which was broken in the 2.7.1 release) thanks to @gmarnin
 * RESTified all widgets
 * Tags input
 * Warranty check removed (can't use that anymore since Apple put a captcha on the status page)
@@ -235,7 +307,7 @@ NEW FEATURES
 * New client graph
 * Printer module thanks to @gmarnin
 * German translation thanks to @fridomac
-* Support for curl headers (and authentication) thanks to @morgant 
+* Support for curl headers (and authentication) thanks to @morgant
 
 ### [2.6.0](https://github.com/munkireport/munkireport-php/compare/v2.5.3...v2.6.0) (October 7, 2015)
 
@@ -281,7 +353,7 @@ NEW FEATURES
 * Comment module (for custom views: add admin comments)
 * Improved Disk reporting (now reports on all connected HFS Disks, reports on RAID and FUSION drives)
 * Live updates on certain widgets
-* German localisation thanks to @fridomac 
+* German localisation thanks to @fridomac
 * Reporting on OS Buildversion
 * Disk size thresholds
 
@@ -351,7 +423,7 @@ NEW FEATURES
 
 ### [2.0.11](https://github.com/munkireport/munkireport-php/compare/2.0.10...v2.0.11) (July 6, 2014)
 
-This release has some changes to the way preflight scripts are handled: 
+This release has some changes to the way preflight scripts are handled:
 
 * scripts with a non-zero exit status will **not** terminate a munki run. If you rely on this behaviour, you should move your script to <code>preflight_abort.d</code>
 * all scripts (including preflight) are aborted after 10 seconds. Munkireport will emit a warning when a timeout is reached.
@@ -382,7 +454,7 @@ NEW FEATURES
 
 ### [2.0.10](https://github.com/munkireport/munkireport-php/compare/2.0.9...2.0.10) (June 30, 2014) - PRE-RELEASE
 
-This release has some changes to the way preflight scripts are handled: 
+This release has some changes to the way preflight scripts are handled:
 
 * scripts with a non-zero exit status will **not** terminate a munki run. If you rely on this behaviour, you should move your script to <code>preflight_abort.d</code>
 * all scripts (including preflight) are aborted after 10 seconds. Munkireport will emit a warning when a timeout is reached.
@@ -435,7 +507,7 @@ FIXES
 * Updated disk_info for 10.5 clients
 * Updated to Bootstrap 3.1.0
 * Improved error handling
-* Compatible with MySQL sql_mode = TRADITIONAL 
+* Compatible with MySQL sql_mode = TRADITIONAL
 
 FEATURES
 

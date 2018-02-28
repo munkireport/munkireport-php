@@ -16,7 +16,10 @@ class Detectx extends Migration
             $table->string('status');
             $table->integer('scantime');
             $table->boolean('spotlightindexing');
+            $table->boolean('registered');
+            $table->text('infections');
             $table->text('issues');
+
 
             $table->index('numberofissues');
             $table->index('searchdate');
@@ -25,7 +28,7 @@ class Detectx extends Migration
             $table->index('spotlightindexing');
         });
     }
-    
+
     public function down()
     {
         $capsule = new Capsule();
