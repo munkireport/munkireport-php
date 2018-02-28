@@ -352,8 +352,8 @@ $(document).on('appReady', function(e, lang) {
 								return i18n.t('off');
 							}
 							if(data.bluetooth_power == -1){
-+								return i18n.t('bluetooth.nobluetooth');
-+							}
+								return i18n.t('bluetooth.nobluetooth');
+							}
 							return i18n.t('unknown');
 						})));
 
