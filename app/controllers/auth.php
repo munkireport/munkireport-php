@@ -70,8 +70,17 @@ class Auth extends Controller
             }
         }
 
-       if(!empty(conf('manage_ipwhitelist'))) { 
-         check_ip($_SERVER['REMOTE_ADDR']); 
+       if(array_key_exists('network', conf('auth'))) {
+           if ($this->authHandler->check_ip(getRemoteAddress()) == 0) {
+               // if a custom 403 page is defined, send traffic to that page
+               if (array_key_exists('redirect_unauthorized', conf('auth')['network'])) {
+                   header(("Location: " . (conf('auth')['network']['redirect_unauthorized'])), true, 301);
+                   exit();
+               }
+
+               // otherwise send it to the local servers 403 page
+               redirect('error/client_error/403');
+           } 
        }
 
         // Check if pre-authentication is successful

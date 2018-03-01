@@ -47,6 +47,7 @@
 		foreach($scripts as $script): ?>
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/<?php echo $script; ?>" type="text/javascript"></script>
 <?php endforeach; ?>
+
 </head>
 
 <body>

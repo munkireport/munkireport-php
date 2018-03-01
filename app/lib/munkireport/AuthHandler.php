@@ -206,4 +206,34 @@ class AuthHandler
         return $_SESSION;
     }
 
+    private function parse_range($ip, $range) {
+        if (strpos($range, '/')) return $this->cidr_match($ip, $range);
+        $range = $range . '/32';
+        return $this->cidr_match($ip, $range);
+    }
+
+    private function cidr_match($ip, $range) {
+        list ($subnet, $bits) = explode('/', $range);
+        $ip = ip2long($ip);
+        $subnet = ip2long($subnet);
+        $mask = -1 << (32 - $bits);
+        $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+        return ($ip & $mask) == $subnet;
+    }
+
+    public function check_ip($remote_address) {
+        // if user is going to the report uri, allow the connection regardless
+        if (substr(($GLOBALS[ 'engine' ]->get_uri_string()), 0, 8) === "report/") { return 1; }
+
+        // for loop through the configuration setting to check if any IP addresses match - if so
+        //     allow traffic
+        
+        foreach (conf('auth')['network']['whitelist_ipv4'] as $range) {
+            if ($this->parse_range($remote_address, $range)) { return 1; }
+        }
+        
+        // return 0 if the client is not in a valid cidr range 
+        return 0;
+    }
+
 }
