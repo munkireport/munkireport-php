@@ -1,0 +1,22 @@
+{
+    "teamviewer": "TeamViewer",
+    "reporttitle": "TeamViewer Report",
+    "version": "Version",
+    "connect": "Connect",
+    "always_online": "Always Online",
+    "autoupdatemode": "Auto Update Mode",
+    "clientid": "Client ID",
+    "clientic": "Client IC",
+    "had_a_commercial_connection": "Had a Commercial Connection",
+    "ipc_port_service": "IPC Port Service",
+    "lastmacused": "Last MAC Address Used",
+    "licensetype": "License Type",
+    "midversion": "MID Version",
+    "moverestriction": "Move Restriction",
+    "security_adminrights": "Security Admin Rights",
+    "security_passwordstrength": "Security Password Strength",
+    "update_available": "Update Available",
+    "is_not_first_run_without_connection": "Is Not First Run Without Connection",
+    "is_not_running_test_connection": "Is Not Running Test Connection",
+    "meeting_username": "Meeting Username"
+}
