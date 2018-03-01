@@ -231,9 +231,15 @@ class AuthHandler
         foreach (conf('auth')['network']['whitelist_ipv4'] as $range) {
             if ($this->parse_range($remote_address, $range)) { return 1; }
         }
-        
-        // return 0 if the client is not in a valid cidr range 
-        return 0;
+
+        // if a custom 403 page is defined, send traffic to that page
+        if (array_key_exists('redirect_unauthorized', conf('auth')['network'])) {
+            header(("Location: " . (conf('auth')['network']['redirect_unauthorized'])), true, 301);
+            exit();
+        }
+
+        // otherwise send it to the local servers 403 page
+        redirect('error/client_error/403');
     }
 
 }

@@ -793,7 +793,8 @@
         |        'xxx.xxx.xxx.xxx',
         |    ],
         |    'redirect_unauthorized' => 'http://fqdn/403.html',
-        */]
+        |]
+        */
         
 
 	/*
