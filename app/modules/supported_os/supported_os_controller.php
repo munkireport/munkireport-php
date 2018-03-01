@@ -28,7 +28,7 @@ class Supported_os_controller extends Module_controller
      **/
     public function os()
     {
-        
+        $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
             return;
@@ -48,7 +48,6 @@ class Supported_os_controller extends Module_controller
             $out[] = array('label' => $obj->highest_supported, 'count' => intval($obj->count));
         }
         
-        $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
     
