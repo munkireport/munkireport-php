@@ -55,6 +55,7 @@
 	<?php if( isset($_SESSION['user'])):?>
 	<?php $modules = getMrModuleObj()->loadInfo(); ?>
 
+
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
 	<div class="container">
 		<div class="navbar-header">
