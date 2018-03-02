@@ -29,7 +29,7 @@ $(document).on('appReady', function(e, lang) {
                        
                     // Make Connect button
                     } else if(prop == 'clientid') {                        
-                        connectbutton = '<a class="btn btn-success" href="teamviewer10://control?device="'+d[prop]+'target="_blank">'+i18n.t('teamviewer.connect')+'</a>'
+                        connectbutton = '<a class="btn btn-success" href="teamviewer10://control?device='+d[prop]+'"  target="_blank">'+i18n.t('teamviewer.connect')+'</a>'
                         rows = rows + '<tr><th>'+i18n.t('teamviewer.'+prop)+'</th><td>'+d[prop]+'</td></tr>';
                         
                     } else {
