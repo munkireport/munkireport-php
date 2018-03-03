@@ -1,7 +1,7 @@
 Launch Daemons Module
 ==============
 
-Gets data about Launch Daemons and Launch Agents on in the /Library/ and /Users/Library folders. The columns are the keys listed for launchd. To find out a more indepth discrition for them, run `man launchd.plist` in Terminal. The module uses binplist to process the binary plists: [https://github.com/google/binplist](https://github.com/google/binplist)
+Gets data about Launch Daemons and Launch Agents on in the /Library/ and /Users/Library folders. The columns are the keys listed for launchd. To find out a more indepth discrition for them, run `man launchd.plist` in Terminal.
 
 
 * label - VARCHAR(255)

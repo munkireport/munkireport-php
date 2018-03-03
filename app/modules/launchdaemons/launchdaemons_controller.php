@@ -26,8 +26,6 @@ class Launchdaemons_controller extends Module_controller
     }
     
     /**
-
-    /**
     * Retrieve data in json format
     *
     * @return void
