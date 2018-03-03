@@ -18,5 +18,7 @@
     "update_available": "Update Available",
     "is_not_first_run_without_connection": "Is Not First Run Without Connection",
     "is_not_running_test_connection": "Is Not Running Test Connection",
-    "meeting_username": "Meeting Username"
+    "meeting_username": "Meeting Username",
+    "updateversion": "Updates Available",
+    "prefpath": "Location of Preference File"
 }

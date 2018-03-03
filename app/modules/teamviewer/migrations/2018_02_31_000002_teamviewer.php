@@ -28,6 +28,8 @@ class Teamviewer extends Migration
             $table->boolean('is_not_first_run_without_connection')->nullable();
             $table->boolean('is_not_running_test_connection')->nullable();
             $table->boolean('had_a_commercial_connection')->nullable();
+            $table->string('prefpath')->nullable();
+            $table->string('updateversion')->nullable();
 
             $table->index('serial_number');
             $table->index('always_online');
@@ -47,6 +49,8 @@ class Teamviewer extends Migration
             $table->index('is_not_first_run_without_connection');
             $table->index('is_not_running_test_connection');
             $table->index('meeting_username');
+            $table->index('prefpath');
+            $table->index('updateversion');
         });
     }
     

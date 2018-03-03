@@ -40,7 +40,7 @@ class Teamviewer_controller extends Module_controller
 
         $queryobj = new Teamviewer_model();
         
-        $sql = "SELECT clientid, clientic, always_online, autoupdatemode, version, update_available, lastmacused, security_adminrights, security_passwordstrength, meeting_username, ipc_port_service, licensetype, is_not_first_run_without_connection, is_not_running_test_connection, had_a_commercial_connection FROM teamviewer WHERE serial_number = '$serial_number'";
+        $sql = "SELECT clientid, clientic, always_online, autoupdatemode, version, update_available, lastmacused, security_adminrights, security_passwordstrength, meeting_username, ipc_port_service, licensetype, is_not_first_run_without_connection, is_not_running_test_connection, had_a_commercial_connection, prefpath, updateversion FROM teamviewer WHERE serial_number = '$serial_number'";
         
         $teamviewer_tab = $queryobj->query($sql);        
         $obj->view('json', array('msg' => current(array('msg' => $teamviewer_tab)))); 

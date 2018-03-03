@@ -7,7 +7,7 @@ $(document).on('appReady', function(e, lang) {
 	
 	// Get teamviewer data
 	$.getJSON( appUrl + '/module/teamviewer/get_data/' + serialNumber, function( data ) {
-		var skipThese = ['id','serial_number','midversion','moverestriction'];
+		var skipThese = ['id','serial_number','midversion','moverestriction','prefpath'];
 		$.each(data, function(i,d){
 			
 			// Generate rows from data
@@ -26,6 +26,10 @@ $(document).on('appReady', function(e, lang) {
                     // Format No booleans
                     } else if((prop == 'always_online' || prop == 'had_a_commercial_connection' || prop == 'security_adminrights' || prop == 'update_available' || prop == 'is_not_first_run_without_connection' || prop == 'is_not_running_test_connection') && d[prop] == 0){
 					   rows = rows + '<tr><th>'+i18n.t('teamviewer.'+prop)+'</th><td>'+i18n.t('no')+'</td></tr>';
+                        
+                    // Format returns
+                    } else if(prop == 'lastmacused' || prop == 'updateversion'){
+					   rows = rows + '<tr><th>'+i18n.t('teamviewer.'+prop)+'</th><td>'+d[prop].replace(/\n/g,'<br>')+'</td></tr>';
                        
                     // Make Connect button
                     } else if(prop == 'clientid') {                        
@@ -38,10 +42,12 @@ $(document).on('appReady', function(e, lang) {
 				}
 			}
             
+            prefpath = d.prefpath.replace('Library/Preferences/com.teamviewer.teamviewer.preferences.Machine.plist','').replace('Preferences/com.teamviewer.teamviewer.preferences.plist','')
             
 			$('#teamviewer-tab')
-                .append(connectbutton)
-                .append('<p>')
+                .append($('<h4>')
+					.append(' '+connectbutton)
+					.append(' '+prefpath+' '))
 				.append($('<div style="max-width:450px;">')
 					.append($('<table>')
 						.addClass('table table-striped table-condensed')
