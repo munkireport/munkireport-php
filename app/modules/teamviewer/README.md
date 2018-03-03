@@ -1,7 +1,7 @@
 TeamViewer Module
 ==============
 
-Collects data about the TeamView instance on the client and provides a link to connect to it in the client tab. Requires TeamViewer 10 or higher to be installed and configured on the client. The module uses binplist to process the binary plists: [https://github.com/google/binplist](https://github.com/google/binplist)
+Collects data about the TeamView instance on the client and provides a link to connect to it in the client tab. Requires TeamViewer 10 or higher to be installed and configured on the client.
 
 * clientid - int - Client ID (the magic number)
 * clientic - int - Client IC
