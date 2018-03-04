@@ -1,0 +1,118 @@
+#!/usr/bin/python
+
+import os
+import subprocess
+import sys
+import plistlib
+import re
+import glob
+from datetime import datetime, timedelta, tzinfo
+sys.path.insert(0, '/usr/local/munki')
+
+from munkilib import FoundationPlist
+
+def get_prefs():
+                
+#    if os.path.isfile('/Library/Preferences/com.apple.iPod.plist'):
+#        prefs = "/Library/Preferences/com.apple.iPod.plist" + "\n"
+#    else:
+#        prefs = ""
+#   Commented out because this file is deprecated^^
+
+    prefs = ""
+        
+    # Get user prefs
+    for file in glob.glob('/Users/*/Library/Preferences/com.apple.iPod.plist'):
+        prefs = prefs + file + "\n"
+            
+    return prefs[:-1]
+    
+def process_prefs(prefs):
+        
+    out = []
+    for pref in prefs.split('\n'):
+        pl = FoundationPlist.readPlist(pref)
+        for device in pl["Devices"]:
+            preffile ={'serial':''}
+            for item in pl["Devices"][device]:
+                preffile['prefpath'] = pref.replace("Library/Preferences/com.apple.iPod.plist", "")
+                if item == 'Build Version':
+                    preffile['build_version'] = pl["Devices"][device][item]
+                elif item == 'Connected':
+                    connected = str(pl["Devices"][device][item])                    
+                    date_str, tz = connected[:-5], connected[-5:]
+                    dt_utc = datetime.strptime(date_str.strip(), "%Y-%m-%d %H:%M:%S")
+                    dt = dt_utc.replace(tzinfo=FixedOffset(tz))
+                    utc_naive = dt.replace(tzinfo=None) - dt.utcoffset()
+                    preffile['connected'] = int((utc_naive - datetime(1970, 1, 1)).total_seconds())
+                elif item == 'Device Class':
+                    preffile['device_class'] = pl["Devices"][device][item]
+                elif item == 'Family ID':
+                    preffile['family_id'] = pl["Devices"][device][item]
+                elif item == 'Firmware Version':
+                    preffile['firmware_version'] = pl["Devices"][device][item]
+                elif item == 'Firmware Version String':
+                    preffile['firmware_version_string'] = pl["Devices"][device][item]
+                elif item == 'ID':
+                    preffile['ios_id'] = pl["Devices"][device][item]
+                elif item == 'Product Type':
+                    preffile['product_type'] = pl["Devices"][device][item]
+                elif item == 'Region Info':
+                    preffile['region_info'] = pl["Devices"][device][item]
+                elif item == 'Serial Number':
+                    preffile['serial'] = pl["Devices"][device][item]
+                elif item == 'Use Count':
+                    preffile['use_count'] = pl["Devices"][device][item]
+                elif item == 'IMEI':
+                    preffile['imei'] = pl["Devices"][device][item]
+                elif item == 'MEID':
+                    preffile['meid'] = pl["Devices"][device][item]
+                elif item == 'Software Version':
+                    preffile['software_version'] = pl["Devices"][device][item]
+                    
+            out.append(preffile)
+    return out
+
+class FixedOffset(tzinfo):
+    """offset_str: Fixed offset in str: e.g. '-0400'"""
+    def __init__(self, offset_str):
+        sign, hours, minutes = offset_str[0], offset_str[1:3], offset_str[3:]
+        offset = (int(hours) * 60 + int(minutes)) * (-1 if sign == "-" else 1)
+        self.__offset = timedelta(minutes=offset)
+        # NOTE: the last part is to remind about deprecated POSIX GMT+h timezones
+        # that have the opposite sign in the name;
+        # the corresponding numeric value is not used e.g., no minutes
+        '<%+03d%02d>%+d' % (int(hours), int(minutes), int(hours)*-1)
+    def utcoffset(self, dt=None):
+        return self.__offset
+    def tzname(self, dt=None):
+        return self.__name
+    def dst(self, dt=None):
+        return timedelta(0)
+    def __repr__(self):
+        return 'FixedOffset(%d)' % (self.utcoffset().total_seconds() / 60)
+
+def main():
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
+
+    # Skip manual check
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'manualcheck':
+            print 'Manual check: skipping'
+            exit(0)
+
+    # Get information about the iOS devices
+    prefs = get_prefs()
+    result = process_prefs(prefs)
+    
+    # Write iOS devices results to cache
+    output_plist = os.path.join(cachedir, 'ios_devices.plist')
+    plistlib.writePlist(result, output_plist)
+    #print plistlib.writePlistToString(result)
+
+if __name__ == "__main__":
+    main()

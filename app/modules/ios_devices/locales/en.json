@@ -1,0 +1,19 @@
+{
+    "ios_devices": "iOS Devices",
+    "report": "iOS Devices Report",
+    "prefpath": "Preference Path",
+    "build_version": "Build Version",
+    "connected": "Last Connected",
+    "device_class": "Device Class",
+    "family_id": "Family ID",
+    "firmware_version": "Firmware Version",
+    "firmware_version_string": "iOS Version",
+    "software_version": "Software Version",
+    "ios_id": "Device ID",
+    "product_type": "Model ID",
+    "region_info": "Region ID",
+    "serial": "Serial Number",
+    "use_count": "Connection Count",
+    "imei": "IMEI",
+    "meid": "MEID"
+}
