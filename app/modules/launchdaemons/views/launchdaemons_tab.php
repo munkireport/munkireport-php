@@ -5,7 +5,7 @@
 $(document).on('appReady', function(){
 	$.getJSON(appUrl + '/module/launchdaemons/get_tab_data/' + serialNumber, function(data){
         // Set count of launchdaemons
-		$('#launcdaemons-cnt').text(data.length);
+		$('#launchdaemons-cnt').text(data.length);
 		var skipThese = ['id','serial_number','label'];
 		$.each(data, function(i,d){
 
