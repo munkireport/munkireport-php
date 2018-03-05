@@ -2,10 +2,12 @@
 # Time Machine menu code by frogor, wrapped by tuxudo for MunkiReport
 
 import subprocess
-import plistlib
 import os
 import sys
 import platform
+sys.path.insert(0, '/usr/local/munki')
+
+from munkilib import FoundationPlist
 
 def getOsVersion():
     """Returns the minor OS version."""
@@ -13,20 +15,13 @@ def getOsVersion():
     return int(os_version_tuple[1])
 
 def get_time_machine():
-
-    # Make the binary plist into xml for processing
-    cmd = ['plutil', '-convert', 'xml1', '/Library/Preferences/com.apple.TimeMachine.plist']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
     
     # Read in com.apple.TimeMachine.plist for processing 
     try:
-        out = plistlib.readPlist('/Library/Preferences/com.apple.TimeMachine.plist')
+        out = FoundationPlist.readPlist('/Library/Preferences/com.apple.TimeMachine.plist')
     except Exception:
         return {}
-    
+        
     # If less than 10.12, run legacy log collector
     if getOsVersion() < 12:
         # Get legacy informtion, only supported on 10.6-10.11
@@ -103,7 +98,7 @@ def main():
     
     # Write Time Machine results to cache file
     output_plist = os.path.join(cachedir, 'timemachine.plist')
-    plistlib.writePlist(info, output_plist)
+    FoundationPlist.writePlist(info, output_plist)
 
 if __name__ == "__main__":
     main()
