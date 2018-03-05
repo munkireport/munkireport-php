@@ -137,7 +137,7 @@ def ard_access_check():
     # First method: check if all users are permitted.
     # Thank you to @steffan for pointing out this plist key!
     plist_path = '/Library/Preferences/com.apple.RemoteManagement.plist'
-    if os.path.exists(plist_path):n
+    if os.path.exists(plist_path):
         plist = FoundationPlist.readPlist(plist_path)
 
         if plist.get('ARD_AllLocalUsers', None):
