@@ -83,7 +83,9 @@ def get_network_info():
                 network_info.append(dns[:-2])
             
             network_info.append("VLANS: "+re.sub("There are no VLANs currently configured on this system.","",re.sub('\n',', ',bashCommand(['/usr/sbin/networksetup', '-listVLANs'])))[:-2])
-            network_info.append("Active MTU: "+re.sub('[^0-9]','', re.sub("[\(\[].*?[\)\]]", "", bashCommand(['/usr/sbin/networksetup', '-getMTU', network])[:-1])))
+            mtudata = bashCommand(['/usr/sbin/networksetup', '-getMTU', network])[:-1]
+            if "Current Setting" in mtudata:
+                network_info.append("Active MTU: "+re.sub('[^0-9]','', re.sub("[\(\[].*?[\)\]]", "", mtudata)))
             network_info.append(bashCommand(['/usr/sbin/networksetup', '-listvalidMTUrange', network])[:-1])
             network_info.append(re.sub('>',')', re.sub('<','(', bashCommand(['/usr/sbin/networksetup', '-getmedia', network])[:-1])))
             network_info.append("Network Location: "+bashCommand(['/usr/sbin/networksetup', '-getcurrentlocation'])[:-1])
