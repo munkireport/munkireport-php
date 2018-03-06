@@ -58,6 +58,9 @@ def get_daemons():
     
 def process_daemons(daemons):
     
+    if daemons == "":
+        return []
+    
     # man launchd.plist
     
     out = []
