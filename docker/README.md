@@ -43,5 +43,5 @@ docker run -d --name="munkireport" \
 -v munkireport-db:/var/munkireport/app/db \
 -v /your/local/path/config.php:/var/munkireport/config.php \
 -p 80:80 \
-macadmins/munkireport-php:latest
+munkireport/munkireport-php:release-latest
 ```
