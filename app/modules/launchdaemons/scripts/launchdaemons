@@ -24,10 +24,22 @@ def get_daemons():
         if file.endswith(".plist"):
             daemons = daemons + "/Library/LaunchAgents/" + file + "\n"
             
+            
+    # Get all users' home folders
+    cmd = ['dscl', '.', '-readall', '/Users', 'NFSHomeDirectory']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    
     # Get User Agents
-    for file in glob.glob('/Users/*/Library/LaunchAgents/*'):
-        if file.endswith(".plist"):
-            daemons = daemons + file + "\n"
+    for user in output.split('\n'):
+        if 'NFSHomeDirectory' in user and '/var/empty' not in user:
+            userpath = user.replace("NFSHomeDirectory: ", "")+'/Library/LaunchAgents/'
+            if os.path.isdir(userpath):
+                for file in glob.glob(userpath+'*'):
+                        if file.endswith(".plist"):
+                            daemons = daemons + file + "\n"
      
     # Systems ones commented out because we don't need to gather that
     # But they are great for testing with :D
