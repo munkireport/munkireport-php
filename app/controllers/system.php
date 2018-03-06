@@ -1,5 +1,4 @@
 <?php
-
 namespace munkireport\controller;
 
 use \Controller, \View;
@@ -34,11 +33,26 @@ class system extends Controller
             'db.writable' => false,
             'error' => '',
         );
+
+        $conn = conf('connection');
+        switch ($conn['driver']) {
+            case 'sqlite':
+                $dsn = "sqlite:{$conn['database']}";
+                break;
+
+            case 'mysql':
+                $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
+                break;
+
+            default:
+                throw new \Exception("Unknown driver in config", 1);
+        }
+
         $config = array(
-            'pdo_dsn' => conf('pdo_dsn'),
-            'pdo_user' => conf('pdo_user'),
-            'pdo_pass' => conf('pdo_pass'),
-            'pdo_opts' => conf('pdo_opts'),
+            'pdo_dsn' => $dsn,
+            'pdo_user' => isset($conn['username']) ? $conn['username'] : '',
+            'pdo_pass' => isset($conn['password']) ? $conn['password'] : '',
+            'pdo_opts' => isset($conn['options']) ? $conn['options'] : []
         );
 
         $db = new Database($config);
@@ -126,13 +140,21 @@ class system extends Controller
      **/
     public function show($which = '')
     {
-        if ($which) {
-            $data['page'] = 'clients';
-            $data['scripts'] = array("clients/client_list.js");
-            $view = 'system/'.$which;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
+        switch ($which) {
+            case 'status':
+                $data['page'] = 'clients';
+                $data['scripts'] = array("clients/client_list.js");
+                $view = 'system/status';
+                break;
+            case 'database':
+                $data['page'] = 'clients';
+                $data['scripts'] = array("clients/client_list.js");
+                $data['stylesheets'] = array('system/database.css');
+                $view = 'system/database';
+                break;
+            default:
+                $data = array('status_code' => 404);
+                $view = 'error/client_error';
         }
 
         $obj = new View();

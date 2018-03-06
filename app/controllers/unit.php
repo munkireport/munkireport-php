@@ -2,7 +2,9 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View, \Business_unit, \Machine_group;
+use \Controller, \View;
+use munkireport\models\Business_unit;
+use munkireport\models\Machine_group;
 
 class unit extends Controller
 {
@@ -88,6 +90,10 @@ class unit extends Controller
             $group['checked'] = in_array($group['groupid'], $groups);
         }
 
+        usort($out, function($a, $b) {
+            return strcasecmp($a['name'], $b['name']);
+        });
+        
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }

@@ -1,5 +1,8 @@
 <?php
-class Fonts_model extends Model {
+
+use CFPropertyList\CFPropertyList;
+
+class Fonts_model extends \Model {
 
 	function __construct($serial='')
 	{
@@ -49,7 +52,7 @@ class Fonts_model extends Model {
 		$this->idx[] = array('valid');
         
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}
@@ -96,7 +99,6 @@ class Fonts_model extends Model {
 		// Delete previous set        
 		$this->deleteWhere('serial_number=?', $this->serial_number);
 
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();

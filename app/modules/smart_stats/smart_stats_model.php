@@ -1,10 +1,12 @@
 <?php
 
-class Smart_stats_model extends Model {
+use CFPropertyList\CFPropertyList;
+
+class Smart_stats_model extends \Model {
     
 	function __construct($serial='')
 	{
-		parent::__construct('id', 'smart_stats'); //primary key, tablename
+        parent::__construct('id', 'smart_stats'); //primary key, tablename
         $this->rs['id'] = 0;
         $this->rs['serial_number'] = $serial;
         $this->rs['disk_number'] = 0;
@@ -100,12 +102,12 @@ class Smart_stats_model extends Model {
         $this->rs['host_program_page_count'] = 0; $this->rt['host_program_page_count'] = 'BIGINT';
         $this->rs['bckgnd_program_page_cnt'] = 0; $this->rt['bckgnd_program_page_cnt'] = 'BIGINT';
         $this->rs['perc_rated_life_used'] = 0; $this->rt['perc_rated_life_used'] = 'BIGINT';
-		$this->rs['reallocate_nand_blk_cnt'] = 0; $this->rt['reallocate_nand_blk_cnt'] = 'BIGINT';
-		$this->rs['ave_blockerase_count'] = 0; $this->rt['ave_blockerase_count'] = 'BIGINT';
-		$this->rs['Unused_Reserve_NAND_Blk'] = 0; $this->rt['Unused_Reserve_NAND_Blk'] = 'BIGINT';
-		$this->rs['sata_interfac_downshift'] = 0; $this->rt['sata_interfac_downshift'] = 'BIGINT';
+        $this->rs['reallocate_nand_blk_cnt'] = 0; $this->rt['reallocate_nand_blk_cnt'] = 'BIGINT';
+        $this->rs['ave_blockerase_count'] = 0; $this->rt['ave_blockerase_count'] = 'BIGINT';
+        $this->rs['Unused_Reserve_NAND_Blk'] = 0; $this->rt['Unused_Reserve_NAND_Blk'] = 'BIGINT';
+        $this->rs['sata_interfac_downshift'] = 0; $this->rt['sata_interfac_downshift'] = 'BIGINT';
         $this->rs['ssd_life_left'] = 0; $this->rt['ssd_life_left'] = 'BIGINT';
-		$this->rs['life_curve_status'] = 0; $this->rt['life_curve_status'] = 'BIGINT';
+        $this->rs['life_curve_status'] = 0; $this->rt['life_curve_status'] = 'BIGINT';
         $this->rs['supercap_health'] = 0; $this->rt['supercap_health'] = 'BIGINT';
         $this->rs['lifetime_writes_gib'] = 0; $this->rt['lifetime_writes_gib'] = 'BIGINT';
         $this->rs['lifetime_reads_gib'] = 0; $this->rt['lifetime_reads_gib'] = 'BIGINT';
@@ -124,9 +126,33 @@ class Smart_stats_model extends Model {
         $this->rs['avg_writeerase_count'] = 0; $this->rt['avg_writeerase_count'] = 'BIGINT';
         $this->rs['sata_phy_error'] = 0; $this->rt['sata_phy_error'] = 'BIGINT';
         $this->rs['overall_health'] = '';
+        $this->rs['pci_vender_subsystem_id'] = ''; // Start of NVMe columns
+        $this->rs['model_number'] = '';
+        $this->rs['temperature_nvme'] = 0;
+        $this->rs['power_on_hours_nvme'] = 0;
+        $this->rs['power_cycle_count_nvme'] = 0;
+        $this->rs['critical_warning'] = '';  
+        $this->rs['available_spare'] = 0; $this->rt['available_spare'] = 'BIGINT';
+        $this->rs['available_spare_threshold'] = 0; $this->rt['available_spare_threshold'] = 'BIGINT';
+        $this->rs['percentage_used'] = 0; $this->rt['percentage_used'] = 'BIGINT';
+        $this->rs['data_units_read'] = '';
+        $this->rs['data_units_written'] = '';
+        $this->rs['host_read_commands'] = 0; $this->rt['host_read_commands'] = 'BIGINT';
+        $this->rs['host_write_commands'] = 0; $this->rt['host_write_commands'] = 'BIGINT';
+        $this->rs['controller_busy_time'] = 0; $this->rt['controller_busy_time'] = 'BIGINT';
+        $this->rs['unsafe_shutdowns'] = 0; $this->rt['unsafe_shutdowns'] = 'BIGINT';
+        $this->rs['media_data_integrity_errors'] = 0; $this->rt['media_data_integrity_errors'] = 'BIGINT';
+        $this->rs['error_info_log_entries'] = 0; $this->rt['error_info_log_entries'] = 'BIGINT';
+        $this->rs['ieee_oui_id'] = '';
+        $this->rs['controller_id'] = 0; $this->rt['controller_id'] = 'BIGINT';
+        $this->rs['number_of_namespaces'] = 0; $this->rt['number_of_namespaces'] = 'BIGINT';
+        $this->rs['firmware_updates'] = '';
+        $this->rs['optional_admin_commands'] = ''; $this->rt['optional_admin_commands'] = 'TEXT';
+        $this->rs['optional_nvm_commands'] = ''; $this->rt['optional_nvm_commands'] = 'TEXT';
+        $this->rs['max_data_transfer_size'] = ''; // End of new NVMe columns 
 
         // Schema version, increment when creating a db migration
-        $this->schema_version = 3;
+        $this->schema_version = 4;
 
         // Indexes to optimize queries
         $this->idx[] = array('serial_number');
@@ -153,7 +179,7 @@ class Smart_stats_model extends Model {
         $this->idx[] = array('overall_health');
 				        
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 		
 		if ($serial)
 		{
@@ -274,7 +300,7 @@ class Smart_stats_model extends Model {
         	'Lifetime_Writes_GiB' => 'lifetime_writes_gib',
         	'Lifetime_Reads_GiB' => 'lifetime_reads_gib',
         	'Uncorrectable_Error_Cnt' => 'uncorrectable_error_cnt',
-        	'ECC_Error_Rate' => 'ecc_error_rate',
+        	'ECC_Error_Rate' => 'ecc_error_eate',
         	'CRC_Error_Count' => 'crc_error_count',
         	'Supercap_Status' => 'supercap_status',
         	'Exception_Mode_Status' => 'exception_mode_status',
@@ -282,7 +308,7 @@ class Smart_stats_model extends Model {
         	'Total_Reads_GiB' => 'total_reads_gib',
         	'Total_Writes_GiB' => 'total_writes_gib',
         	'Thermal_Throttle' => 'thermal_throttle',
-        	'Perc_WriteErase_Count' => 'perc_writeerase_Count',
+        	'Perc_WriteErase_Count' => 'perc_writeerase_count',
         	'Perc_Avail_Resrvd_Space' => 'perc_avail_resrvd_space',
         	'Perc_WriteErase_Ct_BC' => 'perc_writeerase_ct_bc',
         	'SATA_PHY_Error' => 'sata_phy_error',
@@ -291,33 +317,56 @@ class Smart_stats_model extends Model {
         	'ModelFamily' => 'model_family',
         	'DeviceModel' => 'device_model',
         	'SerialNumber' => 'serial_number_hdd',
-        	'LUWWN' => 'lu_wwn_device_id',
+        	'LUWWNDeviceID' => 'lu_wwn_device_id',
         	'FirmwareVersion' => 'firmware_version',
         	'UserCapacity' => 'user_capacity',
         	'SectorSize' => 'sector_size',
         	'RotationRate' => 'rotation_rate',
         	'Deviceis' => 'device_is',
-        	'ATAVersion' => 'ata_version_is',
-        	'SATAVersion' => 'sata_version_is',
+        	'ATAVersionis' => 'ata_version_is',
+        	'SATAVersionis' => 'sata_version_is',
         	'FormFactor' => 'form_factor',
         	'ErrorPoH' => 'error_poh',
         	'error_count' => 'error_count',
-        	'SMARTsupport' => 'smart_support_is',
+        	'SMARTsupportis' => 'smart_support_is',
         	'DiskNumber' => 'disk_number',
         	'SMARTis' => 'smart_is',
+        	'CriticalWarning' => 'critical_warning', // Start of NVMe translations
+        	'AvailableSpare' => 'available_spare',
+        	'AvailableSpareThreshold' => 'available_spare_threshold',
+        	'PercentageUsed' => 'percentage_used',
+        	'DataUnitsRead' => 'data_units_read',
+        	'DataUnitsWritten' => 'data_units_written',
+        	'HostReadCommands' => 'host_read_commands',
+        	'HostWriteCommands' => 'host_write_commands',
+        	'ControllerBusyTime' => 'controller_busy_time',
+        	'UnsafeShutdowns' => 'unsafe_shutdowns',
+        	'MediaandDataIntegrityErrors' => 'media_data_integrity_errors',
+        	'ErrorInformationLogEntries' => 'error_info_log_entries',
+        	'PCIVendorSubsystemID' => 'pci_vender_subsystem_id',
+        	'IEEEOUIIdentifier' => 'ieee_oui_id',
+        	'ControllerID' => 'controller_id',
+        	'NumberofNamespaces' => 'number_of_namespaces',
+        	'FirmwareUpdates0x06' => 'firmware_updates',
+        	'OptionalAdminCommands0x0006' => 'optional_admin_commands',
+        	'OptionalNVMCommands0x001f' => 'optional_nvm_commands',
+        	'ModelNumber' => 'model_number',
+        	'Temperature' => 'temperature_nvme',
+        	'PowerCycles' => 'power_cycle_count_nvme',
+        	'PowerOnHours' => 'power_on_hours_nvme',
+        	'MaximumDataTransferSize' => 'max_data_transfer_size', // End of NVMe translations  
         	'Overall_Health' => 'overall_health');
 
         // Delete previous entries
         $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // Process incoming smart_stats.xml
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $plist = $parser->toArray();
         
         // Array of string for nulling with ""
-        $strings =  array('model_family','device_model','serial_number_hdd','lu_wwn_device_id','firmware_version','user_capacity','sector_size','rotation_rate','device_is','ata_version_is','sata_version_is','form_factor','smart_support_is','smart_is','serial_number','power_on_hours_and_msec','airflow_temperature_cel','temperature_celsius','overall_health');
+        $strings =  array('model_family','device_model','serial_number_hdd','lu_wwn_device_id','firmware_version','user_capacity','sector_size','rotation_rate','device_is','ata_version_is','sata_version_is','form_factor','smart_support_is','smart_is','serial_number','power_on_hours_and_msec','airflow_temperature_cel','temperature_celsius','overall_health','critical_warning', 'data_units_read', 'data_units_written', 'pci_vender_subsystem_id', 'ieee_oui_id', 'firmware_updates', 'optional_admin_commands', 'optional_nvm_commands', 'max_data_transfer_size');
 
         // Get index ID
         $disk_id = (count($plist) -1 );
@@ -327,12 +376,15 @@ class Smart_stats_model extends Model {
 
         // Traverse the xml with translations
         foreach ($translate as $search => $field) {
-            // If key is empty
+                // If key is empty
             if ( ! isset($plist[$disk_id][$search])) {
-                if ( ! in_array($field, $strings)) {
                     $this->$field = null;
-                }
-            } else { // Key is set
+                // If key has blank value, null it in the db
+            } else if ( $plist[$disk_id][$search] == "") {
+                $this->$field = null;
+                
+                // Key is set
+            } else {
                 if ($search == "Head_Flying_Hours" && stripos($plist[$disk_id][$search], 'h') !== false) {
 
                     $headhours = explode("h+",$plist[$disk_id][$search]);

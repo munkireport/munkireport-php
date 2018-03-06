@@ -34,7 +34,7 @@
 
 	<script>
 		var baseUrl = "<?php echo conf('subdirectory'); ?>",
-			appUrl = baseUrl + 'index.php?',
+			appUrl = "<?php echo rtrim(url(), '/'); ?>",
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
@@ -164,7 +164,7 @@
 					</a>
 					<ul class="dropdown-menu theme">
 
-							<?php foreach(scandir(APP_ROOT.'assets/themes') AS $theme): ?>
+							<?php foreach(scandir(PUBLIC_ROOT.'assets/themes') AS $theme): ?>
 
 								<?php if( $theme != 'fonts' && strpos($theme, '.') === false):?>
 
@@ -184,13 +184,13 @@
 					</a>
 					<ul class="dropdown-menu locale">
 
-							<?php foreach(scandir(APP_ROOT.'assets/locales') AS $list_url): ?>
+							<?php foreach(scandir(PUBLIC_ROOT.'assets/locales') AS $list_url): ?>
 
 								<?php if( strpos($list_url, 'json')):?>
 
 								<?php $lang = strtok($list_url, '.'); ?>
 
-								<li><a href="<?php echo url("$page&amp;setLng=$lang"); ?>" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
+								<li><a href="<?php echo url($page, false, ['setLng' => $lang]); ?>" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
 
 								<?php endif; ?>
 

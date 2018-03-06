@@ -1,5 +1,8 @@
 <?php
-class Usb_model extends Model {
+
+use CFPropertyList\CFPropertyList;
+
+class Usb_model extends \Model {
 
 	function __construct($serial='')
 	{
@@ -10,12 +13,12 @@ class Usb_model extends Model {
 		$this->rs['type'] = ''; // Mouse, Trackpad, Hub, etc.
 		$this->rs['manufacturer'] = '';
 		$this->rs['vendor_id'] = '';
-		$this->rs['device_speed'] = ''; // Speed
+		$this->rs['device_speed'] = ''; // USB Speed
 		$this->rs['internal'] = 0; // True or False
 		$this->rs['media'] = 0; // True or False
-		$this->rs['bus_power'] = 0; // True or False
-		$this->rs['bus_power_used'] = 0; // True or False
-		$this->rs['extra_current_used'] = 0; // True or False
+		$this->rs['bus_power'] = 0;
+		$this->rs['bus_power_used'] = 0;
+		$this->rs['extra_current_used'] = 0;
 		$this->rs['usb_serial_number'] = ''; // USB device serial number
 		$this->rs['printer_id'] = ''; $this->rt['printer_id'] = 'TEXT'; // 1284 Device ID information, only used by printers
 
@@ -35,7 +38,7 @@ class Usb_model extends Model {
 		$this->idx[] = array('usb_serial_number');
         
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}
@@ -105,7 +108,6 @@ class Usb_model extends Model {
 		// Delete previous set        
 		$this->deleteWhere('serial_number=?', $this->serial_number);
 
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();

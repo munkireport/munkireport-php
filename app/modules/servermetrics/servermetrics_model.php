@@ -1,5 +1,5 @@
 <?php
-class Servermetrics_model extends Model
+class Servermetrics_model extends \Model
 {
 
     // Field order as sent by postflight and served by get_data().
@@ -53,7 +53,7 @@ class Servermetrics_model extends Model
         $this->idx[] = array('datetime');
 
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
 
         $this->serial_number = $serial;
     }

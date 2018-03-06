@@ -9,7 +9,7 @@
  * @package munkireport
  * @author AvB
  **/
-class Event_model extends Model
+class Event_model extends \Model
 {
     public function __construct($serial_number = '', $module = '')
     {
@@ -24,7 +24,7 @@ class Event_model extends Model
         $this->rs['msg'] = '';
         $this->rs['data'] = '';
         $this->rs['timestamp'] = time();
-        
+
         $this->idx[] = array('serial_number');
         $this->idx[] = array('serial_number', 'module');
         $this->idx[] = array('type');
@@ -32,8 +32,8 @@ class Event_model extends Model
 
 
         // Create table if it does not exist
-        $this->create_table();
-        
+        //$this->create_table();
+
         if ($serial_number && $module) {
             if (! authorized_for_serial($serial_number)) {
                 return false;
@@ -43,7 +43,7 @@ class Event_model extends Model
             $this->serial_number = $serial_number;
             $this->module = $module;
         }
-        
+
         return $this;
     }
 
@@ -59,7 +59,7 @@ class Event_model extends Model
         if (! authorized_for_serial($serial_number)) {
             return false;
         }
-        
+
         $where_params = array($serial_number);
         $where_string = ' WHERE serial_number=?';
 
@@ -73,7 +73,7 @@ class Event_model extends Model
 
         return $stmt->execute($where_params);
     }
-    
+
     /**
      * Store message
      *

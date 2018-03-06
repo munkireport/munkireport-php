@@ -1,5 +1,8 @@
 <?php
-class Timemachine_model extends Model
+
+use CFPropertyList\CFPropertyList;
+
+class Timemachine_model extends \Model
 {
     public function __construct($serial = '')
     {
@@ -10,7 +13,6 @@ class Timemachine_model extends Model
         $this->rs['last_failure'] = ''; // Datetime of last failure
         $this->rs['last_failure_msg'] = ''; // Message of the last failure
         $this->rs['duration'] = 0; // Duration in seconds
-        $this->rs['timestamp'] = ''; // Timestamp of last update
         $this->rs['always_show_deleted_backups_warning'] = 0; // bool
         $this->rs['auto_backup'] = 0; // bool
         $this->rs['bytes_available'] = 0; $this->rt['bytes_available'] = 'BIGINT';
@@ -51,7 +53,6 @@ class Timemachine_model extends Model
         $this->idx[] = array('last_failure');
         $this->idx[] = array('last_failure_msg');
         $this->idx[] = array('duration');
-        $this->idx[] = array('timestamp');
         $this->idx[] = array('always_show_deleted_backups_warning');
         $this->idx[] = array('auto_backup');
         $this->idx[] = array('bytes_available');
@@ -81,7 +82,7 @@ class Timemachine_model extends Model
         $this->idx[] = array('destinations');
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);
@@ -153,7 +154,6 @@ class Timemachine_model extends Model
         } else { // Else process with new XML handler    
             
             // Process incoming powerinfo.xml
-            require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
             $parser = new CFPropertyList();
             $parser->parse($data, CFPropertyList::FORMAT_XML);
             $plist = $parser->toArray();
@@ -305,7 +305,6 @@ class Timemachine_model extends Model
         
         // Only store if there is data
         if ($this->last_success or $this->last_failure) {
-            $this->timestamp = time();
             $this->save();
         }
     }

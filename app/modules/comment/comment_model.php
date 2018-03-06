@@ -1,5 +1,5 @@
 <?php
-class Comment_model extends Model
+class Comment_model extends \Model
 {
     
     public function __construct($serial = '')
@@ -24,6 +24,6 @@ class Comment_model extends Model
         $this->idx[] = array('user');
         
         // Create table if it does not exist
-        $this->create_table();
+       //$this->create_table();
     }
 }

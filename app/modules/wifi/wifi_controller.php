@@ -1,12 +1,12 @@
 <?php
 
 /**
- * wifi_controller class
+ * Wifi_controller class
  *
  * @package wifi
  * @author John Eberle
  **/
-class wifi_controller extends Module_controller
+class Wifi_controller extends Module_controller
 {
     public function __construct()
     {
@@ -94,4 +94,4 @@ class wifi_controller extends Module_controller
         $wifi = new wifi_model($serial_number);
         $obj->view('json', array('msg' => $wifi->rs));
     }
-} // END class wifi_controller
+} // END class Wifi_controller

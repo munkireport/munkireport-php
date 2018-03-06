@@ -1,5 +1,8 @@
 <?php
-class Network_shares_model extends Model {
+
+use CFPropertyList\CFPropertyList;
+
+class Network_shares_model extends \Model {
 
 	function __construct($serial='')
 	{
@@ -22,16 +25,16 @@ class Network_shares_model extends Model {
 		$this->idx[] = array('fstypename');
 		$this->idx[] = array('fsmtnonname');
 		$this->idx[] = array('automounted');
-        
+
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}
-	
+
 	// ------------------------------------------------------------------------
 
-    
+
      /**
      * Get network shares for widget
      *
@@ -39,13 +42,13 @@ class Network_shares_model extends Model {
      public function get_network_shares()
      {
         $out = array();
-        $sql = "SELECT COUNT(CASE WHEN name <> '' AND name IS NOT NULL THEN 1 END) AS count, name 
+        $sql = "SELECT COUNT(CASE WHEN name <> '' AND name IS NOT NULL THEN 1 END) AS count, name
                 FROM network_shares
                 LEFT JOIN reportdata USING (serial_number)
                 ".get_machine_group_filter()."
                 GROUP BY name
                 ORDER BY count DESC";
-        
+
         foreach ($this->query($sql) as $obj) {
             if ("$obj->count" !== "0") {
                 $obj->name = $obj->name ? $obj->name : 'Unknown';
@@ -54,8 +57,8 @@ class Network_shares_model extends Model {
         }
         return $out;
      }
-    
-    
+
+
 	/**
 	 * Process data sent by postflight
 	 *
@@ -64,19 +67,18 @@ class Network_shares_model extends Model {
 	 **/
 	function process($plist)
 	{
-		
+
 		if ( ! $plist){
 			throw new Exception("Error Processing Request: No property list found", 1);
 		}
-		
-		// Delete previous set        
+
+		// Delete previous set
 		$this->deleteWhere('serial_number=?', $this->serial_number);
 
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();
-        		
+
 		$typeList = array(
 			'name' => '',
 			'mntfromname' => '',
@@ -84,19 +86,19 @@ class Network_shares_model extends Model {
 			'fsmtnonname' => '',
 			'automounted' => 0
 		);
-		
+
 		foreach ($myList as $device) {
 			// Check if we have a name
 			if( ! array_key_exists("name", $device)){
 				continue;
 			}
-			
+
 			// Network shares to exclude
             $excludeshares = array("/net","/home","/Volumes/MobileBackups","/Volumes/MobileBackups 1","/Volumes/MobileBackups 2","/Network/Servers");
             if (in_array($device['fsmtnonname'], $excludeshares)) {
 				continue;
 			}
-            
+
 			foreach ($typeList as $key => $value) {
 				$this->rs[$key] = $value;
 				if(array_key_exists($key, $device))
@@ -104,7 +106,7 @@ class Network_shares_model extends Model {
 					$this->rs[$key] = $device[$key];
 				}
 			}
-			
+
 			// Save network share
 			$this->id = '';
 			$this->save();

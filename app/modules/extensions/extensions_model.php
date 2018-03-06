@@ -1,5 +1,8 @@
 <?php
-class Extensions_model extends Model {
+
+use CFPropertyList\CFPropertyList;
+
+class Extensions_model extends \Model {
 
 	function __construct($serial='')
 	{
@@ -10,20 +13,22 @@ class Extensions_model extends Model {
 		$this->rs['bundle_id'] = '';
 		$this->rs['version'] = '';
 		$this->rs['path'] = ''; $this->rt['path'] = 'VARCHAR(1024)';
-		$this->rs['codesign'] = '';
+		$this->rs['developer'] = '';
+		$this->rs['teamid'] = '';
 		$this->rs['executable'] = ''; $this->rt['executable'] = 'VARCHAR(1024)';
 
 		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
+		$this->schema_version = 2;
 
 		// Add indexes
 		$this->idx[] = array('name');
 		$this->idx[] = array('bundle_id');
 		$this->idx[] = array('version');
-		$this->idx[] = array('codesign');
+		$this->idx[] = array('developer');
+		$this->idx[] = array('teamid');
 
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 
 		$this->serial_number = $serial;
 	}
@@ -54,7 +59,44 @@ class Extensions_model extends Model {
         return $out;
      }
 
-    
+     public function get_developer()
+     {
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN NAME <> '' AND developer IS NOT NULL THEN 1 END) AS count, developer 
+                FROM extensions
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter()."
+                GROUP BY developer
+                ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->developer = $obj->developer ? $obj->developer : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+
+      public function get_teamid()
+     {
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN NAME <> '' AND teamid IS NOT NULL THEN 1 END) AS count, teamid 
+                FROM extensions
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter()."
+                GROUP BY teamid
+                ORDER BY count DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->teamid = $obj->teamid ? $obj->teamid : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+   
 	/**
 	 * Process data sent by postflight
 	 *
@@ -71,7 +113,6 @@ class Extensions_model extends Model {
 		// Delete previous set        
 		$this->deleteWhere('serial_number=?', $this->serial_number);
 
-		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
 		$parser = new CFPropertyList();
 		$parser->parse($plist, CFPropertyList::FORMAT_XML);
 		$myList = $parser->toArray();
@@ -81,7 +122,8 @@ class Extensions_model extends Model {
 			'bundle_id' => '',
 			'version' => '',
 			'path' => '',
-			'codesign' => '',
+			'developer' => '',
+			'teamid' => '',
 			'executable' => ''
 		);
 		

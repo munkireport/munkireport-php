@@ -29,7 +29,7 @@ new Crashplan_model;
 		        <th data-i18n="backup.duration" data-colname='crashplan.duration'></th>
 		        <th data-i18n="backup.last_failure" data-colname='crashplan.last_failure'></th>
 		        <th data-i18n="backup.last_failure_msg" data-colname='crashplan.reason'></th>
-		        <th data-i18n="listing.checkin" data-colname='crashplan.timestamp'></th>
+				<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

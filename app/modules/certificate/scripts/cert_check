@@ -63,21 +63,23 @@ done
 
 
 # Parse non-Apple certificates in Keychain
-for CERT in $(security find-certificate -a "${SYSTEM_KEYCHAIN}" | awk -F = '/labl/ {gsub(/"/, "", $2); print $2}')
+IFS=","
+for CERT in $(/usr/bin/security find-certificate -a -p -Z "$SYSTEM_KEYCHAIN" | sed s/"-----END CERTIFICATE-----"/"-----END CERTIFICATE-----,"/g)
 do
-    if [[ "$CERT" != "com.apple"* ]] && [[ "$CERT" != *"Apple"* ]]  && [[ "$CERT" != *"Server Fallback SSL Certificate"* ]] && [[ "$CERT" != "Software Signing" ]] && [[ "$CERT" != "Dashboard Advisory" ]]
+    CN=$(/usr/bin/openssl x509 -noout -subject -nameopt multiline <<< $CERT | grep commonName | sed -n 's/ *commonName *= //p' 2>/dev/null)
+    if [[ "$CN" != "com.apple"* ]] && [[ "$CN" != *"Apple"* ]]  && [[ "$CN" != *"Server Fallback SSL Certificate"* ]] && [[ "$CN" != "Software Signing" ]] && [[ "$CN" != "Dashboard Advisory" ]]
     then     
         # read the subject on each certificate
-        SUBJECT=$(security find-certificate -a -c "$CERT" -p | openssl x509 -subject -nameopt oneline -noout 2>/dev/null)
-        ISSUER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -issuer -nameopt oneline -noout 2>/dev/null)
+        SUBJECT=$(/usr/bin/openssl x509 -subject -nameopt oneline -noout <<< $CERT 2>/dev/null)
+        ISSUER=$(/usr/bin/openssl x509 -issuer -nameopt oneline -noout <<< $CERT 2>/dev/null)
         if [[ -z "$SUBJECT" ]]
         then
             # this cert could not be read.
             printf "INFO - $CERT could not be loaded by openssl\n"
         else
-            NOTAFTER=$(security find-certificate -a -c "$CERT" -p | openssl x509 -enddate -noout | cut -d= -f2 2>/dev/null)
+            NOTAFTER=$(/usr/bin/openssl x509 -noout -enddate <<< $CERT | cut -d= -f2 2>/dev/null)
             EXPIRYDATE=$(date -j -f "%b %e %T %Y %Z" "$NOTAFTER" "+%s")
-                echo "${EXPIRYDATE}${SEP}${CERT}${SEP}${SUBJECT}${SEP}${ISSUER}${SEP}${SYSTEM_KEYCHAIN}" >> "${OUT}"
+                echo "${EXPIRYDATE}${SEP}${CN}${SEP}${SUBJECT}${SEP}${ISSUER}${SEP}${SYSTEM_KEYCHAIN}" >> "${OUT}"
         fi
     fi
 done

@@ -1,21 +1,15 @@
 <?php
 
+use munkireport\models\Machine_group, munkireport\lib\Modules;
+
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '2.15.2.2795';
+$GLOBALS['version'] = '3.0.2.3318';
 
 // Return version without commit count
 function get_version()
 {
     return preg_replace('/(.*)\.\d+$/', '$1', $GLOBALS['version']);
 }
-
-//===============================================
-// Legacy support
-//===============================================s
-if (version_compare(phpversion(), '5.5.0', '<')) {
-    include 'php_legacy_helper.php';
-}
-
 
 //===============================================
 // Uncaught Exception Handling
@@ -79,11 +73,24 @@ function getdbh()
 {
     if (! isset($GLOBALS['dbh'])) {
         try {
+            $conn = conf('connection');
+            switch ($conn['driver']) {
+                case 'sqlite':
+                    $dsn = "sqlite:{$conn['database']}";
+                    break;
+
+                case 'mysql':
+                    $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
+                    break;
+
+                default:
+                    throw new \Exception("Unknown driver in config", 1);
+            }
             $GLOBALS['dbh'] = new PDO(
-                conf('pdo_dsn'),
-                conf('pdo_user'),
-                conf('pdo_pass'),
-                conf('pdo_opts')
+                $dsn,
+                isset($conn['username']) ? $conn['username'] : '',
+                isset($conn['password']) ? $conn['password'] : '',
+                isset($conn['options']) ? $conn['options'] : []
             );
         } catch (PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());
@@ -104,42 +111,27 @@ function getdbh()
 // Autoloading for Business Classes
 //===============================================
 // module classes end with _model
-function __autoload($classname)
+function munkireport_autoload($classname)
 {
     // Switch to lowercase filename for models
     $lowercaseClassname = strtolower($classname);
 
-    if (substr($lowercaseClassname, -4) == '_api') {
-        require_once(APP_PATH.'modules/'.substr($lowercaseClassname, 0, -4).'/api'.EXT);
-    } elseif (substr($lowercaseClassname, -6) == '_model') {
+    if (substr($lowercaseClassname, -6) == '_model') {
         $module = substr($lowercaseClassname, 0, -6);
         if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
             throw new Exception("Cannot load model: ".$classname, 1);
         }
         require_once($model);
-    }  elseif (strpos($classname, 'munkireport\\lib') === 0){
-        require_once(APP_PATH.'lib/munkireport/'.str_replace('munkireport\\lib\\', '', $classname).EXT);
-    } elseif (strpos($classname, 'munkireport\\controller\\') === 0){
-        $controller = str_replace('munkireport\\controller\\', '', $classname);
-        if ( ! preg_match('#^[A-Za-z0-9_-]+$#', $controller)){
-            throw new Exception("Illegal controller name: ".$controller, 1);
-        }
-        if( ! file_exists(CONTROLLER_PATH.$controller.EXT)){
-            throw new Exception("Controller does not exist: $controller", 1);
-        }
-        require_once CONTROLLER_PATH.$controller.EXT;
-    } elseif ($classname == 'Hautelook\\Phpass\\PasswordHash'){
-        require(APP_PATH . '/lib/phpass-0.3.5/src/Hautelook/Phpass/PasswordHash.php');
-    }
-    else {
-        require_once(APP_PATH.'models/'.$lowercaseClassname.EXT);
     }
 }
 
-function url($url = '', $fullurl = false)
+function url($url = '', $fullurl = false, $queryArray = [])
 {
     $s = $fullurl ? conf('webhost') : '';
     $s .= conf('subdirectory').($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
+    if($queryArray){
+        $s .= (INDEX_PAGE ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
+    }
     return $s;
 }
 
@@ -379,24 +371,14 @@ function delete_event($serial, $module = '')
     $evtobj->reset($serial, $module);
 }
 
-
-// Original PHP code by Chirp Internet: www.chirp.com.au
-// Please acknowledge use of this code by including this header.
-function truncate_string($string, $limit = 100, $break = ".", $pad = "...")
+// Truncate string
+function truncate_string($string, $limit = 100, $pad = "...")
 {
-  // return with no change if string is shorter than $limit
     if (strlen($string) <= $limit) {
         return $string;
     }
 
-  // is $break present between $limit and the end of the string?
-    if (false !== ($breakpoint = strpos($string, $break, $limit))) {
-        if ($breakpoint < strlen($string) - 1) {
-            $string = substr($string, 0, $breakpoint) . $pad;
-        }
-    }
-
-    return $string;
+    return substr($string, 0, $limit - strlen($pad)) . $pad;
 }
 
 // Create a singleton moduleObj
@@ -405,7 +387,7 @@ function getMrModuleObj()
     static $moduleObj;
 
     if( ! $moduleObj){
-      $moduleObj = new munkireport\lib\Modules;
+      $moduleObj = new Modules;
     }
 
     return $moduleObj;

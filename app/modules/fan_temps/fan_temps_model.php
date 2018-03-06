@@ -1,6 +1,8 @@
 <?php
 
-class Fan_temps_model extends Model {
+use CFPropertyList\CFPropertyList;
+
+class Fan_temps_model extends \Model {
     
 	function __construct($serial='')
 	{
@@ -361,7 +363,7 @@ class Fan_temps_model extends Model {
         $this->idx[] = array('fanlabel8');
         
 		// Create table if it does not exist
-		$this->create_table();
+		//$this->create_table();
 		
 		if ($serial)
 		{
@@ -684,7 +686,6 @@ class Fan_temps_model extends Model {
         $fans =  array('fanl0','fan_1','fan_2','fan_3','fan_4','fan_5','fan_6','fan_7','fan_8');
         
         // Process incoming fan_temps.xml
-        require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
         $plist = $parser->toArray();
