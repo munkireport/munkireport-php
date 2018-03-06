@@ -20,10 +20,19 @@ def get_prefs():
 #   Commented out because this file is deprecated^^
 
     prefs = ""
-        
-    # Get user prefs
-    for file in glob.glob('/Users/*/Library/Preferences/com.apple.iPod.plist'):
-        prefs = prefs + file + "\n"
+    
+    # Get all users' home folders
+    cmd = ['dscl', '.', '-readall', '/Users', 'NFSHomeDirectory']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    
+    for user in output.split('\n'):
+        if 'NFSHomeDirectory' in user and '/var/empty' not in user:
+            userpath = user.replace("NFSHomeDirectory: ", "")+'/Library/Preferences/com.apple.iPod.plist'
+            if os.path.isfile(userpath):
+                prefs = userpath + "\n"        
             
     return prefs[:-1]
     

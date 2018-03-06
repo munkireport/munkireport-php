@@ -24,8 +24,6 @@ class Ios_devices_model extends \Model
         $this->rs['use_count'] = 0;
         $this->rs['imei'] = '';
         $this->rs['meid'] = '';
-
-        $this->serial = $serial;
     }
 
 
