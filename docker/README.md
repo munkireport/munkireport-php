@@ -20,9 +20,9 @@ Then start the MR-PHP container as follows:
 
 ```
 docker run -d --name="munkireport" \
--v munkireport-db:/var/munkireport/app/db \
--p 80:80 \
-macadmins/munkireport-php:latest
+  -v munkireport-db:/var/munkireport/app/db \
+  -p 80:80 \
+  munkireport/munkireport-php:release-latest
 ```
 
 Environment Variables
