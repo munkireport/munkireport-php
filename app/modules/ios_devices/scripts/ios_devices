@@ -37,6 +37,9 @@ def get_prefs():
     return prefs[:-1]
     
 def process_prefs(prefs):
+    
+    if prefs == "":
+        return []
         
     out = []
     for pref in prefs.split('\n'):
