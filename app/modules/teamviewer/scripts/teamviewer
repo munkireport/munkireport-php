@@ -18,8 +18,11 @@ def get_prefs():
         prefs = ""
         
     # Get user prefs
-    for file in glob.glob('/Users/*/Library/Preferences/com.teamviewer.teamviewer.preferences.Machine.plist'):
-        prefs = prefs + file + "\n"
+    for user in output.split('\n'):
+        if 'NFSHomeDirectory' in user and '/var/empty' not in user:
+            userpath = user.replace("NFSHomeDirectory: ", "")+'/Library/Preferences/com.teamviewer.teamviewer.preferences.Machine.plist'
+            if os.path.isfile(userpath):
+                prefs = userpath + "\n" 
             
     return prefs[:-1]
     
