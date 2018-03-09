@@ -1,0 +1,187 @@
+#!/usr/bin/python
+
+import os
+import subprocess
+import sys
+import re
+import glob
+import platform
+from datetime import datetime, timedelta, tzinfo
+sys.path.insert(0, '/usr/local/munki')
+
+from munkilib import FoundationPlist
+
+def get_prefs():
+                
+    prefs = ""
+        
+    # Get all users' home folders
+    cmd = ['dscl', '.', '-readall', '/Users', 'NFSHomeDirectory']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    
+    for user in output.split('\n'):
+        if 'NFSHomeDirectory' in user and '/var/empty' not in user:
+            userpath = user.replace("NFSHomeDirectory: ", "")+'/Library/Preferences/MobileMeAccounts.plist'
+            if os.path.isfile(userpath):
+                prefs = prefs + userpath + "\n" 
+            
+    return prefs[:-1]
+    
+def process_prefs(prefs):
+    
+    if prefs == "":
+        return []
+        
+    out = []
+    for pref in prefs.split('\n'):
+        pl = FoundationPlist.readPlist(pref)
+        for account in pl["Accounts"]:
+            preffile = {'account_id':'', 'logged_in': '0'}
+            for item in account:
+                preffile['prefpath'] = pref.replace("/Library/Preferences/MobileMeAccounts.plist", "").replace("/Users/", "")
+                if item == 'AccountAlternateDSID':
+                    preffile['account_alternate_dsid'] = account[item]                    
+                elif item == 'AccountDSID':
+                    preffile['account_dsid'] = account[item]
+                elif item == 'AccountDescription':
+                    preffile['account_description'] = account[item]
+                elif item == 'AccountID':
+                    preffile['account_id'] = account[item]
+                elif item == 'AccountUUID':
+                    preffile['account_uuid'] = account[item]
+                elif item == 'DisplayName':
+                    preffile['display_name'] = account[item]
+                elif item == 'LoggedIn':
+                    preffile['logged_in'] = to_bool(account[item])
+                elif item == 'ShouldConfigure':
+                    preffile['should_configure'] = to_bool(account[item])
+                elif item == 'beta':
+                    preffile['beta'] = to_bool(account[item])
+#                elif item == 'firstName':
+#                    preffile['first_name'] = account[item]
+                elif item == 'isManagedAppleID':
+                    preffile['is_managed_apple_id'] = to_bool(account[item])
+#                elif item == 'lastName':
+#                    preffile['last_name'] = account[item]
+                elif item == 'primaryEmailVerified':
+                    preffile['primary_email_verified'] = to_bool(account[item])
+                elif item == 'Services':
+                    for service in account[item]:
+                        preffile[service['Name'].lower()+'_enabled'] = 0
+                        for serviceitem in service:
+                            if "FAMILY" not in service['Name'] and "BACK_TO_MY_MAC" not in service['Name'] and serviceitem == 'Enabled' and to_bool(service[serviceitem]) == 1:
+                                preffile[service['Name'].lower()+'_enabled'] = 1
+                            if "FAMILY" not in service['Name'] and "BACK_TO_MY_MAC" in service['Name'] and serviceitem == 'Enabled' and to_bool(service[serviceitem]) == 1:
+                                preffile[service['Name'].lower()+'_enabled'] = 1  
+                                preffile.update(get_extra_prefs(pref))
+                            elif serviceitem == 'status':
+                                preffile[service['Name'].lower()+'_status'] = service[serviceitem]
+                            elif serviceitem == 'showManageFamily':
+                                preffile[service['Name'].lower()+'_show_manage_family'] = to_bool(service[serviceitem])
+#                            elif serviceitem == 'apsEnv':
+#                                preffile[service['Name'].lower()+'_aps_env'] = service[serviceitem]
+#                            elif serviceitem == 'authMechanism':
+#                                preffile[service['Name'].lower()+'_auth_mechanism'] = service[serviceitem]
+#                            elif serviceitem == 'beta':
+#                                preffile[service['Name'].lower()+'_beta'] = to_bool(service[serviceitem])
+                            elif serviceitem == 'EmailAddress':
+                                preffile[service['Name'].lower()+'_email_address'] = service[serviceitem]
+                            elif serviceitem == 'FullUserName':
+                                preffile[service['Name'].lower()+'_full_user_name'] = service[serviceitem]
+                            elif serviceitem == 'Username':
+                                preffile[service['Name'].lower()+'_username'] = service[serviceitem]
+                            elif serviceitem == 'dotMacMailSupported':
+                                preffile[service['Name'].lower()+'_dot_mac_mail_supported'] = to_bool(service[serviceitem])
+#                            elif serviceitem == 'protocol':
+#                                preffile[service['Name'].lower()+'_protocol'] = service[serviceitem]
+                            elif serviceitem == 'relayPort':
+                                preffile[service['Name'].lower()+'_relay_port'] = service[serviceitem]    
+                                                  
+            out.append(preffile)
+    return out
+
+def to_bool(s):
+    if s == True:
+        return 1
+    else:
+        return 0
+    
+def get_extra_prefs(pref):
+
+    preffile = {}
+
+    # Get iCloud Drive settings, if OS version is greater than 12
+    if getOsVersion() > 12:
+        finderpath = pref.replace("MobileMeAccounts.plist", "com.apple.finder.plist")
+        if os.path.isfile(finderpath):
+            pl = FoundationPlist.readPlist(finderpath)
+            preffile['clouddesktop_declined_upgrade'] = 0
+            preffile['clouddesktop_desktop_enabled'] = 0
+            preffile['clouddesktop_documents_enabled'] = 0
+            preffile['clouddesktop_drive_enabled'] = 0
+            preffile['clouddesktop_first_sync_down_complete'] = 0
+            for item in pl:
+                if item == 'FXICloudDriveDeclinedUpgrade':
+                        preffile['clouddesktop_declined_upgrade'] = to_bool(pl[item])
+                elif item == 'FXICloudDriveDesktop':
+                        preffile['clouddesktop_desktop_enabled'] = to_bool(pl[item])
+                elif item == 'FXICloudDriveDocuments':
+                        preffile['clouddesktop_documents_enabled'] = to_bool(pl[item])
+                elif item == 'FXICloudDriveEnabled':
+                        preffile['clouddesktop_drive_enabled'] = to_bool(pl[item])
+                elif item == 'FXICloudDriveFirstSyncDownComplete':
+                        preffile['clouddesktop_first_sync_down_complete'] = to_bool(pl[item])
+
+    # Get iCloud Photo Library settings
+    photospath = pref.replace("Preferences/MobileMeAccounts.plist", "Containers/com.apple.CloudPhotosConfiguration/Data/Library/Preferences/com.apple.CloudPhotosConfiguration.plist")
+    if os.path.isfile(photospath):
+        pl = FoundationPlist.readPlist(photospath)
+        preffile['cloud_photo_enabled'] = 0
+        preffile['photo_stream_enabled'] = 0
+        preffile['shared_streams_enabled'] = 0
+        for item in pl:            
+            if item == 'com.apple.photo.icloud.cloudphoto':
+                    preffile['cloud_photo_enabled'] = pl[item]
+            elif item == 'com.apple.photo.icloud.myphotostream':
+                    preffile['photo_stream_enabled'] = pl[item]
+            elif item == 'com.apple.photo.icloud.sharedstreams':
+                    preffile['shared_streams_enabled'] = pl[item]
+            elif item == 'service-preferences-com.apple.photo.icloud.cloudphoto':
+                for prefitem in pl[item]:
+                    if prefitem == 'CPSPreferenceOnlyKeepThumbnailsKey':
+                            preffile['cloud_photo_only_keep_thumbnail'] = to_bool(pl[item][prefitem])
+                            
+    return preffile
+    
+def getOsVersion():
+    """Returns the minor OS version."""
+    os_version_tuple = platform.mac_ver()[0].split('.')
+    return int(os_version_tuple[1])
+
+def main():
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
+
+    # Skip manual check
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'manualcheck':
+            print 'Manual check: skipping'
+            exit(0)
+
+    # Get information about iCloud accounts
+    prefs = get_prefs()
+    result = process_prefs(prefs)
+    
+    # Write iCloud results to cache
+    output_plist = os.path.join(cachedir, 'icloud.plist')
+    FoundationPlist.writePlist(result, output_plist)
+    #print FoundationPlist.writePlistToString(result)
+
+if __name__ == "__main__":
+    main()
