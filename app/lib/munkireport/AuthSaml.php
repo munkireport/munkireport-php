@@ -184,6 +184,12 @@ class AuthSaml extends AbstractAuth
                 echo '<p>' . implode(', ', $errors) . '</p>';
             }
         } catch (OneLogin_Saml2_Error $e) {
+            if(isset($this->config['disable_sso_sls_verify']) && $this->config['disable_sso_sls_verify'] === true){
+                session_destroy();
+                $obj = new View();
+                $obj->view('auth/logout', ['loginurl' => url()]);
+                return;
+            }
             echo 'An error occurred during logout';
             print_r($e->getMessage());
         }
