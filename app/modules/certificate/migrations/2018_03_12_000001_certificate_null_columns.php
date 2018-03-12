@@ -13,11 +13,11 @@ class CertificateNullColumns extends Migration
         $capsule = new Capsule();
         
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
-              $table->bigInteger('cert_exp_time')->nullable();
-              $table->string('cert_path')->nullable();
-              $table->string('cert_cn')->nullable();
-              $table->string('issuer')->nullable();
-              $table->string('cert_location')->nullable();
+              $table->bigInteger('cert_exp_time')->nullable()->change();
+              $table->string('cert_path')->nullable()->change();
+              $table->string('cert_cn')->nullable()->change();
+              $table->string('issuer')->nullable()->change();
+              $table->string('cert_location')->nullable()->change();
         });
     }
 
