@@ -10,10 +10,13 @@
     "false": "False",
     "scantime": "Scandauer",
     "spotlightindexing": "Spotlight Index"
+    "infections": "Infections",
+    "registered": "Registered"
   },
   "widget": {
     "title": "DetectX status",
     "clean": "Sauber",
+    "issues": "Issues",
     "infected": "Infiziert"
   },
   "title": "DetectX"

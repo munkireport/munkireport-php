@@ -54,6 +54,7 @@ class Detectx_model extends \Model {
         $this->spotlightindexing = $data['spotlightindexing'];
         $this->registered = $data['registered'];
         $len = count($data['infections']);
+        $lis = count($data['issues']);
         if ($len > 0)
         {
           $this->status = "Infected";
@@ -65,7 +66,19 @@ class Detectx_model extends \Model {
             $this->infections .= ($infectionname . ";");
           }
         }
-        else {
+         else if ($lis > 0)
+        {
+          $this->status = "Issues";
+          foreach($data['issues'] as $issue){
+            $this->issues .= ($issue . ";");
+            }
+          foreach($data['issues'] as $issuesname){
+            $this->numberofissues += 1;
+            $this->issues .= ($issuesname . ";");
+          }
+        }
+         else
+        {
           $this->status = "Clean";
           $this->issues = 'No Issues Detected';
           $this->numberofissues = 0;
