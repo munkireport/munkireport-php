@@ -1,4 +1,4 @@
-### [3.0.3](https://github.com/munkireport/munkireport-php/compare/v3.0.2...HEAD) (Unreleased)
+### [3.1.0](https://github.com/munkireport/munkireport-php/compare/v3.0.2...v3.1.0) (March 21, 2018)
 
 ### [3.0.2](https://github.com/munkireport/munkireport-php/compare/v3.0.1...v3.0.2) (February 15, 2018)
 
