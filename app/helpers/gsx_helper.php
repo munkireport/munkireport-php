@@ -18,6 +18,7 @@ function get_gsx_stats(&$gsx_model)
     $_ENV['GSX_CERT'] = conf('gsx_cert');
     $_ENV['GSX_KEYPASS'] = conf('gsx_cert_keypass');
     $sold_to = conf('gsx_sold_to');
+    $ship_to = conf('gsx_ship_to');
     $username = conf('gsx_username');
     
     //$conf['gsx_date_format'] = 'd/m/y';
@@ -29,10 +30,15 @@ function get_gsx_stats(&$gsx_model)
         $gsx_date_format = conf('gsx_date_format');
     }
     
+    // If gsx_ship_to is not set, set it to gsx_sold_to
+    if (! conf('gsx_ship_to')) {
+        $ship_to = $sold_to;
+    }
+    
     // Pull from gsxlib
     $gsx = GsxLib::getInstance($sold_to, $username);
     try {
-        $result = $gsx->warrantyStatus($gsx_model->serial_number, $sold_to);
+        $result = $gsx->warrantyStatus($gsx_model->serial_number, $ship_to);
     } // Catch errors
     catch (Exception $e) {
         // If obsolete, process and run stock warranty lookup
@@ -74,7 +80,7 @@ function get_gsx_stats(&$gsx_model)
 
         // Update the stock machine tables
             $machine = new Machine_model($gsx_model->serial_number);
-    //$machine->img_url = $matches[1]; Todo: get image url for VM
+            //$machine->img_url = $matches[1]; Todo: get image url for VM
             $machine->machine_desc = $gsx_model->productdescription;
             $machine->save();
 
@@ -153,7 +159,7 @@ function get_gsx_stats(&$gsx_model)
         
         // Update the stock machine tables
         $machine = new Machine_model($gsx_model->serial_number);
-    //$machine->img_url = $matches[1]; Todo: get image url for VM
+        //$machine->img_url = $matches[1]; Todo: get image url for VM
         $machine->machine_desc = str_replace(array('~VIN,'), array(''), $result->productDescription);
         $machine->save();
         

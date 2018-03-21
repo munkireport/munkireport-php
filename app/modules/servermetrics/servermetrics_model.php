@@ -45,16 +45,6 @@ class Servermetrics_model extends \Model
         $this->rs['network_out'] = 0.0; //
         $this->rs['datetime'] = ''; // Datetime from record
 
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-
-        //indexes to optimize queries
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('datetime');
-
-        // Create table if it does not exist
-       //$this->create_table();
-
         $this->serial_number = $serial;
     }
     // ------------------------------------------------------------------------

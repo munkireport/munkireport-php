@@ -49,5 +49,22 @@ class Applications_controller extends Module_controller
         $applications = new Applications_model;
         $obj->view('json', array('msg' => current(array('msg' => $applications_tab)))); 
     }
+    
+     /**
+     * Retrieve data in json format for widget
+     *
+     **/
+     public function get_32_bit_apps()
+     {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $apps_32 = new Applications_model;
+        $obj->view('json', array('msg' => $apps_32->get_32_bit_apps()));
+     }
 		
 } // END class Applications_controller

@@ -9,7 +9,6 @@ class Gsx_model extends \Model
         parent::__construct('id', 'gsx'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial;
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['warrantystatus'] = '';
         $this->rs['coverageenddate'] = '';
         $this->rs['coveragestartdate'] = '';
@@ -30,25 +29,10 @@ class Gsx_model extends \Model
         $this->rs['isvintage'] = '';
         $this->rs['isobsolete'] = '';
 
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
-        
-        // Indexes to optimize queries
-           $this->idx[] = array('warrantystatus');
-        $this->idx[] = array('coverageenddate');
-        $this->idx[] = array('estimatedpurchasedate');
-        $this->idx[] = array('daysremaining');
-        $this->idx[] = array('isvintage');
-        $this->idx[] = array('configdescription');
-        
-        // Create table if it does not exist
-       //$this->create_table();
-        
         if ($serial) {
             $this->retrieve_record($serial);
         }
-        
+
         $this->serial_number = $serial;
     }
     

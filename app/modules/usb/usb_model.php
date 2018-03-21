@@ -172,7 +172,7 @@ class Usb_model extends \Model {
 			$device_types = array(
 				'Camera' => 'isight|camera|video',
 				'USB Hub' => 'hub',
-				'Keyboard' => 'keyboard',
+				'Keyboard' => 'keyboard|keykoard|usb kb',
 				'IR Receiver' => 'ir receiver',
 				'Bluetooth Controller' => 'bluetooth',
 				'iPhone' => 'iphone',
@@ -184,7 +184,7 @@ class Usb_model extends \Model {
 				'Composite Device' => 'composite device',
 				'Network' => 'network|ethernet|modem',
 				'UPS' => 'ups',
-				'Audio Device' => 'audio',
+				'Audio Device' => 'audio|sound',
 				'TouchBar' => 'ibridge',
 				'Scanner' => 'scanner',
 				'Wacom Tablet' => 'wacom|ptz-|intuos|ctl-'

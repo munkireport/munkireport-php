@@ -147,6 +147,7 @@
 	|		$conf['auth']['auth_AD']['admin_password'] = NULL; //if needed to perform the search
 	|		$conf['auth']['auth_AD']['mr_allowed_users'] = ['macadmin','bossman'];
 	|		$conf['auth']['auth_AD']['mr_allowed_groups'] = ['AD Group 1','AD Group 2']; //case sensitive
+	|		$conf['auth']['auth_AD']['mr_recursive_groupsearch'] = false; //set to true to allow recursive searching
 	|
 	| Authentication methods are checked in the order that they appear above. Not in the order of your
 	| config.php!. You can combine methods 2, 3 and 4
@@ -230,6 +231,10 @@
 	| want the links, set either to an empty string, eg:
 	| $conf['vnc_link'] = "";
 	|
+	| If you want to authenticate with SSH using the currently logged in user 
+	| replace the username in the SSH config with %u: 
+	| $conf['ssh_link'] = "ssh://%u@%s";
+	|
 	*/
 	$conf['vnc_link'] = "vnc://%s:5900";
 	$conf['ssh_link'] = "ssh://adminuser@%s";
@@ -308,6 +313,7 @@
 	//$conf['gsx_cert'] = '/Library/Keychains/GSX/certbundle.pem';
 	//$conf['gsx_cert_keypass'] = '';
 	//$conf['gsx_sold_to'] = '1234567890';
+	//$conf['gsx_ship_to'] = '0987654321'; // Often the same as the sold to number
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
 
@@ -755,7 +761,11 @@
 	|     'database'  => 'munkireport',
 	|     'username'  => 'munkireport',
 	|     'password'  => 'munkireport',
-	|     'options'   => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci']
+	|     'charset' => 'utf8mb4',
+	|     'collation' => 'utf8mb4_unicode_ci',
+	|     'strict' => true,
+	|     'engine' => 'InnoDB',
+	|     'options' => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4'],
 	| ];
 	|
 	*/
