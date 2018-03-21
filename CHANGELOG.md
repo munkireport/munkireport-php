@@ -2,6 +2,30 @@
 
 ### [3.1.0](https://github.com/munkireport/munkireport-php/compare/v3.0.2...v3.1.0) (March 21, 2018)
 
+FIXES
+- Totalsize of disk in client detail
+- Updated MySQL default config example
+- munkiinfo module
+- Adjusted security report loading data (#983) @tuxudo
+- Fix DeployStudio migration (#982) @tuxudo
+- Fixed DeployStudio processing on MR3 (#985) @tuxudo
+- Add option to use current username for ssh link (#976) @poundbangbash
+- Check for no Bluetooth in BT module (#992) @tuxudo
+- Fixed postflight error in homebrew modules (#991) @tuxudo
+- Migration adjustment for nullable values. (#973) @poundbangbash
+- Fixed vendor column (#998) @tuxudo
+- Docker (#1003) @sphen13
+- Remove index.php .htacces and web.config from src root
+- Fix certificate migration
+- Add fv key encryption migration
+- Add filter to getLocalAdmins
+- Extensions module - Added variable declaration (#1017) @poundbangbash
+
+NEW FEATURES
+- Add optional recursive group searching to AD auth
+- Added widget for 32-bit apps (#1021) @tuxudo
+- Added support for different ship to in GSX (#1028)
+
 ### [3.0.2](https://github.com/munkireport/munkireport-php/compare/v3.0.1...v3.0.2) (February 15, 2018)
 
 More bugfixes, mostly migration related.
