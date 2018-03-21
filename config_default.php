@@ -309,6 +309,7 @@
 	//$conf['gsx_cert'] = '/Library/Keychains/GSX/certbundle.pem';
 	//$conf['gsx_cert_keypass'] = '';
 	//$conf['gsx_sold_to'] = '1234567890';
+	//$conf['gsx_ship_to'] = '0987654321'; // Often the same as the sold to number
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
 
