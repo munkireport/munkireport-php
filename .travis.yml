@@ -1,0 +1,26 @@
+language: php
+php:
+- '7.0'
+- '7.1'
+mysql:
+  database: travis_ci_munkireport_php_test
+  username: root
+  encoding: utf8
+install:
+- export PATH="$HOME/.composer/vendor/bin:$PATH"
+- composer install --no-dev
+- composer require adldap2/adldap2 --update-no-dev
+- composer require onelogin/php-saml --update-no-dev
+before_deploy:
+- git config --local user.name "mosen"
+- git config --local user.email "mosen@users.noreply.github.com"
+- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: gALehPtdzMGk2XOV40iRS171ZpENzA09T4175vETqYnLogYQQPIlYqBAkSRbtFEea63yz8yrs7SBYj55wKuhI88SQ0SziICSRGa5zC9V+ewX+cMuxylGHTj91mnRYH/YEveBMCRBtRNG40yrs4Ani7zZoIKt0myzFT/ZIYYhvM6CmrRq8D0fceWorDqtb1COkXWXVeBaEWkKp0QnBKV0O3SKHMFpqiI5Q87WdyNXnA/yFbc9vSKSSXmg4Hg7wxCQLh6wwvRczqoyXxmT7NE2H7twNxz1LpyXBGH8mNOWIoJo4uCmZjOjmUghNHAvQvC2SJI38WPsPT9FOq9N2L2dA02jWjVsAYK0M9ofPxxe3nox8u6igL4moyeQnCMG7WYPZHRHhH3FW/1R6/EqE/9KZn35smSnw30bY4yvL8Zt0zFsLWKjYIc+ZLRXYgDNCZZFG8qZm0R6A//mbD7n/SZuCaz9FcdIlQaRmDLWIuBnKTLqwDpSqhY72OnF3BhbO+29zlAOumPGxNCqOWjs9h8s2aBACBJs1pek9jiV4PJnccg5zBCkdSc4AEisdX6BMLR+XtTGB+eF063qGUYoDgTNlcl4WJ6+SNg10Q4/E5FFeBxVLcHrDSk2s8e2Dfu8mvBrBQJCQ+nCcoGHa5FLSiYp/D1mUaqEgxGXiYKgFweZEto=
+  file: munkireport-php.tar.gz
+  on:
+    repo: mosen/munkireport-php
+    branch: travis_ci
