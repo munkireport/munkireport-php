@@ -7,10 +7,11 @@ use munkireport\lib\Recaptcha;
 use munkireport\lib\AuthHandler;
 use munkireport\lib\AuthSaml;
 use munkireport\lib\AuthConfig;
+use munkireport\lib\AuthWhitelist;
 
 class Auth extends Controller
 {
-    private $authHandler;
+    private $authHandler, $authWhitelist;
     
     public function __construct()
     {
@@ -18,7 +19,8 @@ class Auth extends Controller
             redirect('error/client_error/426'); // Switch protocol
         }
         
-        $this->authHandler = new AuthHandler;
+        $this->authHandler = new AuthHandler;        
+        $this->authWhitelist = new AuthWhitelist;
     }
 
     //===============================================================
@@ -71,7 +73,7 @@ class Auth extends Controller
         }
 
        if(array_key_exists('network', conf('auth'))) {
-           $this->authHandler->check_ip(getRemoteAddress());
+           $this->authWhitelist->check_ip(getRemoteAddress());
        }
 
         // Check if pre-authentication is successful

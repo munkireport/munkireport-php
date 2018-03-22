@@ -785,7 +785,7 @@
         |      or you can provide CIDR notation. See https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing for reference
         |  - You can also provide a custom 403 page for traffic that does not have access to the management interface
         |      Default: The default munkireport-php 403 client error page (no need to add this object if you 
-        |                  dont want the custom 403 page
+        |                 dont want the custom 403 page
         |
         */
         /*
