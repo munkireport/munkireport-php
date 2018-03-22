@@ -11,6 +11,6 @@ return array(
         'profile_group' => array('view' => 'profile_group_widget'),
     ),
     'reports' => array(
-        'profile' => array('view' => 'profile_report', 'i18n' => 'profile.profile'),
+        'profile' => array('view' => 'profile_report', 'i18n' => 'profile.report'),
     ),
 );
