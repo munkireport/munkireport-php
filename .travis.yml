@@ -30,3 +30,4 @@ deploy:
   on:
     repo: mosen/munkireport-php
     branch: travis_ci
+  skip_cleanup: true
