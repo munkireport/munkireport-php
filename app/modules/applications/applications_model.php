@@ -25,6 +25,25 @@ class Applications_model extends \Model {
 	// ------------------------------------------------------------------------
     
 	/**
+	 * Retrieve data in json format for widget
+	 *
+	 **/
+	public function get_32_bit_apps()
+	{
+        $out = array();
+        $sql = "SELECT COUNT(CASE WHEN name <> '' AND has64bit = 0 THEN 1 END) AS count, name
+                FROM applications
+                LEFT JOIN reportdata USING (serial_number)
+                WHERE has64bit = 0
+                ".get_machine_group_filter('AND')."
+                GROUP BY name
+                ORDER BY count DESC";
+        
+        $out = $this->query($sql);
+        return $out;
+	}
+    
+	/**
 	 * Process data sent by postflight
 	 *
 	 * @param string data
