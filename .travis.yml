@@ -16,6 +16,9 @@ before_deploy:
 - git config --local user.email "mosen@users.noreply.github.com"
 - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 
+script:
+  - tar cvfz munkireport-php.tar.gz *
+
 deploy:
   provider: releases
   api_key:
