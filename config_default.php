@@ -819,9 +819,22 @@ function getenv_default($key, $default = null, $typehint = null) {
 	|
 	*/
 	$conf['connection'] = [
-	    'driver'    => 'sqlite',
-	    'database'  => $conf['application_path'].'db/db.sqlite',
+	    'driver'    => getenv_default('CONNECTION_DRIVER', 'sqlite'),
+	    'database'  => getenv_default('CONNECTION_DATABASE', $conf['application_path'].'db/db.sqlite'),
 	];
+
+	if ($conf['connection']['driver'] !== 'sqlite') {
+	    $conf['connection']['host'] = getenv_default('CONNECTION_HOST', '127.0.0.1');
+	    $conf['connection']['port'] = getenv_default('CONNECTION_PORT', 3306, 'int');
+	    $conf['connection']['database'] = getenv_default('CONNECTION_DATABASE', 'munkireport');
+	    $conf['connection']['username'] = getenv_default('CONNECTION_USERNAME', 'munkireport');
+	    $conf['connection']['password'] = getenv_default('CONNECTION_PASSWORD', 'munkireport');
+	    $conf['connection']['charset'] = getenv_default('CONNECTION_CHARSET', 'utf8mb4');
+	    $conf['connection']['collation'] = getenv_default('CONNECTION_COLLATION', 'utf8mb4_unicode_ci');
+	    $conf['connection']['strict'] = getenv_default('CONNECTION_STRICT', true, 'bool');
+	    $conf['connection']['engine'] = getenv_default('CONNECTION_ENGINE', 'InnoDB');
+	    // TODO: connection options
+    }
 
 	/*
 	|===============================================
@@ -831,7 +844,7 @@ function getenv_default($key, $default = null, $typehint = null) {
 	| For MySQL, define the default table and charset
 	|
 	*/
-	$conf['mysql_create_tbl_opts'] = 'ENGINE=InnoDB DEFAULT CHARSET=utf8';
+	$conf['mysql_create_tbl_opts'] = getenv_default('MYSQL_CREATE_TBL_OPTS','ENGINE=InnoDB DEFAULT CHARSET=utf8');
 
 	/*
 	|===============================================
