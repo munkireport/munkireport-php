@@ -3,7 +3,7 @@
 namespace munkireport\controller;
 
 use \Controller, \View;
-use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model;
+use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model, \Network_model;
 
 
 
@@ -45,18 +45,20 @@ class clients extends Controller
             new Warranty_model;
             new Localadmin_model;
             new Security_model;
+	    new Network_model;
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
 			s.gatekeeper, s.sip, s.ssh_groups, s.ssh_users, s.ard_users, s.firmwarepw, s.firewall_state, s.skel_state,
 			w.purchase_date, w.end_date, w.status, l.users, d.totalsize, d.freespace,
-                        d.smartstatus, d.encrypted
+                        d.smartstatus, d.encrypted, n.ipv4ip, n.ipv6ip
                 FROM machine m
                 LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
                 LEFT JOIN security s ON (m.serial_number = s.serial_number)
                 LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
                 LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
                 LEFT JOIN diskreport d ON (m.serial_number = d.serial_number AND d.mountpoint = '/')
+		LEFT JOIN network n ON (m.serial_number = n.serial_number)
                 WHERE m.serial_number = ?
                 ";
 
