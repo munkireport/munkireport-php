@@ -11,7 +11,7 @@ use munkireport\lib\AuthWhitelist;
 
 class Auth extends Controller
 {
-    private $authHandler, $authWhitelist;
+    private $authHandler;
     
     public function __construct()
     {
@@ -20,7 +20,6 @@ class Auth extends Controller
         }
         
         $this->authHandler = new AuthHandler;        
-        $this->authWhitelist = new AuthWhitelist;
     }
 
     //===============================================================
@@ -73,7 +72,8 @@ class Auth extends Controller
         }
 
        if(array_key_exists('network', conf('auth'))) {
-           $this->authWhitelist->check_ip(getRemoteAddress());
+           $authWhitelist = new AuthWhitelist;
+           $authWhitelist->check_ip(getRemoteAddress());
        }
 
         // Check if pre-authentication is successful
