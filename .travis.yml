@@ -29,5 +29,5 @@ deploy:
   file: munkireport-php.tar.gz
   on:
     repo: mosen/munkireport-php
-    branch: travis_ci
+    tags: true
   skip_cleanup: true
