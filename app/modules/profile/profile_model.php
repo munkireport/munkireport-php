@@ -35,6 +35,22 @@ class Profile_model extends \Model
         $json_string = str_replace('null', 'No payload', $json_string);
         return '<div style="white-space: pre-wrap">'.$json_string.'</div>';
     }
+
+     public function get_profiles()
+     {
+        $out = array();
+        $sql = "SELECT profile_name, COUNT(DISTINCT serial_number) AS count FROM profile 
+                GROUP BY profile_name
+                ORDER BY COUNT DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->profile_name = $obj->profile_name ? $obj->profile_name : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
     
     // ------------------------------------------------------------------------
     /**

@@ -25,6 +25,19 @@ class Profile_controller extends Module_controller
         echo "You've loaded the profile module!";
     }
 
+    public function get_profiles()
+    {
+    $obj = new View();
+
+    if (! $this->authorized()) {
+        $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+        return;
+    }
+
+    $profile = new Profile_model;
+    $obj->view('json', array('msg' => $profile->get_profiles()));
+    }
+
     public function items($name = '', $payload = '')
     {
         // Protect this handler
