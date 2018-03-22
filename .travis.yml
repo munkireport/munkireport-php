@@ -1,23 +1,26 @@
 language: php
 php:
-- '7.0'
-- '7.1'
+  - '7.0'
+  - '7.1'
 mysql:
   database: travis_ci_munkireport_php_test
   username: root
   encoding: utf8
+cache:
+  directories:
+    - vendor
 install:
-- export PATH="$HOME/.composer/vendor/bin:$PATH"
-- composer install --no-dev
-- composer require adldap2/adldap2 --update-no-dev
-- composer require onelogin/php-saml --update-no-dev
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - composer install --no-dev
+  - composer require adldap2/adldap2 --update-no-dev
+  - composer require onelogin/php-saml --update-no-dev
 before_deploy:
-- git config --local user.name "mosen"
-- git config --local user.email "mosen@users.noreply.github.com"
-- git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+  - git config --local user.name "munkireport-php"
+  - git config --local user.email "munkireport-php@users.noreply.github.com"
+  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
 
 script:
-  - tar cvfz munkireport-php.tar.gz *
+  - tar cvfz "${TRAVIS_BUILD_DIR}"/munkireport-php.tar.gz *
 
 deploy:
   provider: releases
