@@ -3,7 +3,7 @@
 // Get a value from $_ENV with fallback to default
 // typehint parameter processes env var as the suggested type.
 function getenv_default($key, $default = null, $typehint = null) {
-    if (getenv($key) != null) {
+    if (getenv($key)) {
         $v = getenv($key);
         switch ($typehint) {
             case 'array':

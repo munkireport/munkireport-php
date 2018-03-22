@@ -4,7 +4,8 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5"
+        "squizlabs/php_codesniffer": "^2.5",
+        "phpunit/phpunit": "^7.0"
     },
     "require": {
         "php": ">=7.0.27",
@@ -28,7 +29,8 @@
         "psr-4": {
             "munkireport\\models\\": "app/models/",
             "munkireport\\controller\\": "app/controllers",
-            "munkireport\\lib\\": "app/lib/munkireport"
+            "munkireport\\lib\\": "app/lib/munkireport",
+            "Tests\\": "tests/"
         }
     }
 }
