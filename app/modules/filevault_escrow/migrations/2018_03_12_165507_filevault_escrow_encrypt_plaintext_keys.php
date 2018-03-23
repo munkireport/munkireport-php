@@ -48,6 +48,9 @@ class FilevaultEscrowEncryptPlaintextKeys extends Migration
     private function getUnencryptedEntries()
     {
         $capsule = new Capsule();
+        if ( !$capsule->schema()->hasTable('filevault_escrow') ) {
+		return false;
+	}
         return $capsule::select("SELECT id, recoverykey 
           FROM $this->tableName
           WHERE recoverykey LIKE '%-%-%-%-%-%'");
