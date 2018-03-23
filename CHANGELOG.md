@@ -1,4 +1,13 @@
-### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.0...HEAD) (Unreleased)
+### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...HEAD) (Unreleased)
+
+### [3.1.1](https://github.com/munkireport/munkireport-php/compare/v3.1.0...v3.1.1) (March 23, 2018)
+
+FIXES
+- filevault escrow migration
+
+NEW FEATURES
+- Travis CI integration (#1031) @mosen
+- Added support for server-side IP filtering (#990) @danner26
 
 ### [3.1.0](https://github.com/munkireport/munkireport-php/compare/v3.0.2...v3.1.0) (March 21, 2018)
 
