@@ -1,4 +1,7 @@
-### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.0...HEAD) (Unreleased)
+### [3.1.1](https://github.com/munkireport/munkireport-php/compare/v3.1.0...HEAD) (Unreleased)
+
+FIXES
+- filevault escrow migration
 
 ### [3.1.0](https://github.com/munkireport/munkireport-php/compare/v3.0.2...v3.1.0) (March 21, 2018)
 
