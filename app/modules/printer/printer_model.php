@@ -5,7 +5,7 @@ class Printer_model extends \Model
     {
         parent::__construct('id', 'printer'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial;
         $this->rs['name'] = '';
         $this->rs['ppd'] = '';
         $this->rs['driver_version'] = '';
@@ -13,21 +13,7 @@ class Printer_model extends \Model
         $this->rs['default_set'] = '';
         $this->rs['printer_status'] = '';
         $this->rs['printer_sharing'] = '';
-        
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('name');
-        $this->idx[] = array('ppd');
-        $this->idx[] = array('url');
-        $this->idx[] = array('default_set');
-        $this->idx[] = array('printer_status');
-        $this->idx[] = array('printer_sharing');
 
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
-
-        // Create table if it does not exist
-       //$this->create_table();
-        
         if ($serial) {
             $this->retrieve_record($serial);
         }

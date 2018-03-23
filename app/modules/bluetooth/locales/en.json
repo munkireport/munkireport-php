@@ -18,5 +18,6 @@
     "panel_title": "Bluetooth devices with less than 15% battery life",
     "status": "Bluetooth Status",
     "title": "Bluetooth",
-    "trackpad": "Trackpad Status"
+    "trackpad": "Trackpad Status",
+    "nobluetooth": "No Bluetooth"
 }

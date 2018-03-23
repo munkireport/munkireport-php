@@ -12,16 +12,6 @@ class Crashplan_model extends \Model
         $this->rs['duration'] = 0; // duration in seconds
         $this->rs['last_failure'] = 0; // Timestamp of last failed backup
         $this->rs['reason'] = ''; // Reason of last failure
-        
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-        
-        //indexes to optimize queries
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('reason');
-        
-        // Create table if it does not exist
-       //$this->create_table();
     }
 
     // ------------------------------------------------------------------------

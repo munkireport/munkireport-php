@@ -231,6 +231,10 @@
 	| want the links, set either to an empty string, eg:
 	| $conf['vnc_link'] = "";
 	|
+	| If you want to authenticate with SSH using the currently logged in user 
+	| replace the username in the SSH config with %u: 
+	| $conf['ssh_link'] = "ssh://%u@%s";
+	|
 	*/
 	$conf['vnc_link'] = "vnc://%s:5900";
 	$conf['ssh_link'] = "ssh://adminuser@%s";
@@ -309,6 +313,7 @@
 	//$conf['gsx_cert'] = '/Library/Keychains/GSX/certbundle.pem';
 	//$conf['gsx_cert_keypass'] = '';
 	//$conf['gsx_sold_to'] = '1234567890';
+	//$conf['gsx_ship_to'] = '0987654321'; // Often the same as the sold to number
 	//$conf['gsx_username'] = 'steve@apple.com';
 	//$conf['gsx_date_format'] = 'm/d/y';
 
@@ -760,6 +765,7 @@
 	|     'collation' => 'utf8mb4_unicode_ci',
 	|     'strict' => true,
 	|     'engine' => 'InnoDB',
+	|     'options' => [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4'],
 	| ];
 	|
 	*/
@@ -777,6 +783,31 @@
 	|
 	*/
 	$conf['mysql_create_tbl_opts'] = 'ENGINE=InnoDB DEFAULT CHARSET=utf8';
+
+        /*
+        |===============================================
+        | Whitelist Management Console Access
+        |===============================================
+        |
+        | Whitelisting of IP addresses that can access the management interface 
+        |    (anything except for index.php?/report/ which is always allowed)
+        |  - You can provide either individual IP addresses (which will have /32 appended automatically)
+        |      or you can provide CIDR notation. See https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing for reference
+        |  - You can also provide a custom 403 page for traffic that does not have access to the management interface
+        |      Default: The default munkireport-php 403 client error page (no need to add this object if you 
+        |                 dont want the custom 403 page
+        |
+        */
+        /*
+        | $conf['auth']['network'] = [
+        |     'whitelist_ipv4' => [
+        |         'xxx.xxx.xxx.xxx',
+        |         'xxx.xxx.xxx.xxx',
+        |     ],
+        |     'redirect_unauthorized' => 'http://fqdn/403.html',
+        | ]
+        */
+        
 
 	/*
 	|===============================================

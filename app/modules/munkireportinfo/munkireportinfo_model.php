@@ -10,23 +10,11 @@ class Munkireportinfo_model extends \Model
                 parent::__construct('id', 'munkireportinfo'); //primary key, tablename
                 $this->rs['id'] = 0;
                 $this->rs['serial_number'] = $serial;
-                $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
                 $this->rs['version'] = 0;
                 $this->rs['baseurl'] = '';
                 $this->rs['passphrase'] = '';
-                $this->rs['reportitems'] = ''; $this->rt['reportitems'] = 'TEXT';
+                $this->rs['reportitems'] = '';
 
-                // Schema version, increment when creating a db migration
-                $this->schema_version = 1;
-                
-                //indexes to optimize queries
-                $this->idx[] = array('version');
-                $this->idx[] = array('baseurl');
-                $this->idx[] = array('passphrase');
-                
-                // Create table if it does not exist
-               //$this->create_table();
-                
                 if ($serial) {
                         $this->retrieve_record($serial);
                 }

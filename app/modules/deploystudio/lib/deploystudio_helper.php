@@ -99,7 +99,7 @@ class Deploystudio_helper
         $deploystudio_server = conf('deploystudio_server');
         $url = "{$deploystudio_server}/workflows/get/entry?id={$workflow_id}";
         $deploystudio_auto_workflow_result = $this->get_deploystudio_url($url);
-        $workflow = new \CFPropertyList();
+        $workflow = new CFPropertyList();
         $workflow->parse($deploystudio_auto_workflow_result);
         $deploystudio_auto_workflow_result = $workflow->toArray();
         return $deploystudio_auto_workflow_result['title'];
