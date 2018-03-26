@@ -218,6 +218,15 @@
 
 				<?php endif; ?>
 
+				<li class="">
+                                        <a href="<?php 
+							if( conf('help_url') ) { echo conf('help_url'); }
+							else { echo 'https://github.com/munkireport/munkireport-php/wiki'; }
+						?>" target="_blank">
+                                                <i class="fa fa-question"></i>
+                                        </a>
+                                </li>
+
 			</ul>
 
 		</nav>

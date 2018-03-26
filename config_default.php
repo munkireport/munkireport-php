@@ -833,6 +833,18 @@
 	//$conf['custom_folder'] = APP_ROOT . '/custom/';
 
 	/*
+        |===============================================
+        | Custom Help URL
+        |===============================================
+        |
+        | If you want to override the default help url
+        | (MunkiReport's GitHub Wiki), you can specify which URL
+        | to redirect to (in a new tab).
+        |
+        */
+	//$conf['help_url'] = 'https://kb.stockton.edu/confluence';
+
+	/*
 	|===============================================
 	| Custom css and js
 	|===============================================
