@@ -837,12 +837,17 @@
         | Custom Help URL
         |===============================================
         |
+	| If you want to have a help URL provided, define the 
+	| help_url as a blank string ('') to redirect to the 
+	| MunkiReport-PHP's GitHub Wiki page (in a new tab).
+	|
         | If you want to override the default help url
         | (MunkiReport's GitHub Wiki), you can specify which URL
         | to redirect to (in a new tab).
         |
         */
-	//$conf['help_url'] = 'https://kb.stockton.edu/confluence';
+	// $conf['help_url'] = '';
+	// $conf['help_url'] = 'https://path/to/help';
 
 	/*
 	|===============================================

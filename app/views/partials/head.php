@@ -218,6 +218,7 @@
 
 				<?php endif; ?>
 
+				<?php if( conf('help_url') || conf('help_url') == ''): // Hide logout button if auth_noauth?>
 				<li class="">
                                         <a href="<?php 
 							if( conf('help_url') ) { echo conf('help_url'); }
@@ -226,6 +227,7 @@
                                                 <i class="fa fa-question"></i>
                                         </a>
                                 </li>
+				<?php endif; ?>
 
 			</ul>
 
