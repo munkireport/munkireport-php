@@ -838,6 +838,7 @@ class Fan_temps_model extends \Model {
 		    'Tp0G' => 'tp0g',
 		    'Tp1G' => 'tp1g',
 		    'Tp2G' => 'tp2g',
+		    'DiscIn' => 'discin',
 		    'FAN_0_Label' => 'fanlabel0',
 		    'FAN_1_Label' => 'fanlabel1',
 		    'FAN_2_Label' => 'fanlabel2',
