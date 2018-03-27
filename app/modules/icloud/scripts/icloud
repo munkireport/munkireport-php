@@ -71,6 +71,10 @@ def process_prefs(prefs):
                 elif item == 'Services':
                     for service in account[item]:
                         preffile[service['Name'].lower()+'_enabled'] = 0
+                        # Show default of Siri enabled, if OS version is greater than 12
+                        # Because the Siri settings are stubborn
+                        if getOsVersion() > 12 and "SIRI" in service['Name']:
+                            preffile[service['Name'].lower()+'_enabled'] = 1
                         for serviceitem in service:
                             if "FAMILY" not in service['Name'] and "BACK_TO_MY_MAC" not in service['Name'] and serviceitem == 'Enabled' and to_bool(service[serviceitem]) == 1:
                                 preffile[service['Name'].lower()+'_enabled'] = 1
@@ -98,7 +102,7 @@ def process_prefs(prefs):
 #                            elif serviceitem == 'protocol':
 #                                preffile[service['Name'].lower()+'_protocol'] = service[serviceitem]
                             elif serviceitem == 'relayPort':
-                                preffile[service['Name'].lower()+'_relay_port'] = service[serviceitem]    
+                                preffile[service['Name'].lower()+'_relay_port'] = service[serviceitem]
                                                   
             out.append(preffile)
     return out
