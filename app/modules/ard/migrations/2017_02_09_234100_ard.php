@@ -25,20 +25,15 @@ class Ard extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('text1');
             $table->string('text2');
             $table->string('text3');
             $table->string('text4');
-
-            $table->index('text1');
-            $table->index('text2');
-            $table->index('text3');
-            $table->index('text4');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -49,7 +44,17 @@ class Ard extends Migration
                 Text4
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('text1');
+            $table->index('text2');
+            $table->index('text3');
+            $table->index('text4');
+        });
     }
 
     public function down()

@@ -9,16 +9,9 @@ class Firmware_escrow_model extends \Model
         parent::__construct('id', 'firmware_escrow'); //primary key, tablename
         $this->rs['id'] = 0;
         $this->rs['serial_number'] = $serial;
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['enabled_date'] = '';
         $this->rs['firmware_password'] = '';
         $this->rs['firmware_mode'] = '';
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-        
-        // Create table if it does not exist
-       //$this->create_table();
         
         if ($serial) {
             $this->retrieve_record($serial);

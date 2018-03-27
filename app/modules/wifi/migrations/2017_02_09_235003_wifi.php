@@ -25,31 +25,26 @@ class Wifi extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            
-            $table->string('serial_number')->unique();
-            $table->integer('agrctlrssi');
-            $table->integer('agrextrssi');
-            $table->integer('agrctlnoise');
-            $table->integer('agrextnoise');
-            $table->string('state');
-            $table->string('op_mode');
-            $table->integer('lasttxrate');
-            $table->string('lastassocstatus');
-            $table->integer('maxrate');
-            $table->string('x802_11_auth');
-            $table->string('link_auth');
-            $table->string('bssid');
-            $table->string('ssid');
-            $table->integer('mcs');
-            $table->string('channel');
-
-            $table->index('bssid');
-            $table->index('ssid');
-            $table->index('state');
+            $table->string('serial_number');
+            $table->integer('agrctlrssi')->nullable();
+            $table->integer('agrextrssi')->nullable();
+            $table->integer('agrctlnoise')->nullable();
+            $table->integer('agrextnoise')->nullable();
+            $table->string('state')->nullable();
+            $table->string('op_mode')->nullable();
+            $table->integer('lasttxrate')->nullable();
+            $table->string('lastassocstatus')->nullable();
+            $table->integer('maxrate')->nullable();
+            $table->string('x802_11_auth')->nullable();
+            $table->string('link_auth')->nullable();
+            $table->string('bssid')->nullable();
+            $table->string('ssid')->nullable();
+            $table->integer('mcs')->nullable();
+            $table->string('channel')->nullable();
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -71,7 +66,16 @@ class Wifi extends Migration
                 channel
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('bssid');
+            $table->index('ssid');
+            $table->index('state');
+        });
     }
 
     public function down()

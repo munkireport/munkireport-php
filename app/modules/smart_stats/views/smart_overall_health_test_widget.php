@@ -5,7 +5,7 @@
 		<div class="panel-heading" data-container="body">
 
 			<h3 class="panel-title"><i class="fa fa-user-md"></i>
-			    <span data-i18n="smart_stats.smart_overall_health_test"></span>
+			    <span data-i18n="smart_stats.reporttitle"></span>
 			    <list-link data-url="/show/listing/smart_stats/smart_stats"></list-link>
 			</h3>
 

@@ -29,15 +29,16 @@ new Security_model;
 		        <th data-i18n="security.gatekeeper" data-colname='security.gatekeeper'></th>
 		        <th data-i18n="security.sip" data-colname='security.sip'></th>
 		        <th data-i18n="security.firmwarepw" data-colname='security.firmwarepw'></th>
-                <th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
-                <th data-i18n="security.skel.kext-loading" data-colname='security.skel_state'></th>
+		        <th data-i18n="security.firewall_state" data-colname='security.firewall_state'></th>
+		        <th data-i18n="security.skel.kext-loading" data-colname='security.skel_state'></th>
+		        <th data-i18n="security.ssh_groups" data-colname='security.ssh_groups'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
 		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="14" class="dataTables_empty"></td>
+					<td data-i18n="listing.loading" colspan="15" class="dataTables_empty"></td>
 				</tr>
 		    </tbody>
 		  </table>

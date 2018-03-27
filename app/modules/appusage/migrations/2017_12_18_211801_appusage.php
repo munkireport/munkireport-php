@@ -34,20 +34,10 @@ class Appusage extends Migration
             $table->bigInteger('last_time_epoch');
             $table->string('last_time');
             $table->integer('number_times');
-
-            $table->index('serial_number');
-            $table->index('event');
-            $table->index('bundle_id');
-            $table->index('app_version');
-            $table->index('app_name');
-            $table->index('app_path');
-            $table->index('last_time_epoch');
-            $table->index('last_time');
-            $table->index('number_times');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO
+            $capsule::unprepared("INSERT INTO
                 $this->tableName
             SELECT
                 id,
@@ -62,7 +52,22 @@ class Appusage extends Migration
                 number_times
             FROM
                 $this->tableNameV2");
+
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+          $table->index('serial_number');
+          $table->index('event');
+          $table->index('bundle_id');
+          $table->index('app_version');
+          $table->index('app_name');
+          $table->index('app_path');
+          $table->index('last_time_epoch');
+          $table->index('last_time');
+          $table->index('number_times');
+        });
     }
 
     public function down()

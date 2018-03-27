@@ -7,7 +7,6 @@ class Directory_service_model extends \Model
         parent::__construct('id', 'directoryservice'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial;
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['which_directory_service'] = '';
         $this->rs['directory_service_comments'] = '';
         $this->rs['adforest'] = ''; // string
@@ -40,16 +39,6 @@ class Directory_service_model extends \Model
         $this->rs['restrictdynamicdnsupdates'] = ''; // string?
         $this->rs['namespacemode'] = '';  // string?
 
-        $this->idx[] = array('which_directory_service');
-        $this->idx[] = array('directory_service_comments');
-        $this->idx[] = array('allowedadmingroups');
-        
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 2;
-        
-        // Create table if it does not exist
-       //$this->create_table();
-        
         if ($serial) {
             $this->retrieve_record($serial);
             $this->serial = $serial;

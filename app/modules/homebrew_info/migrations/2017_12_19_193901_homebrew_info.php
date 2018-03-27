@@ -26,8 +26,7 @@ class HomebrewInfo extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('serial_number')->unique();
+            $table->string('serial_number');
             $table->string('core_tap_head')->nullable();
             $table->string('core_tap_origin')->nullable();
             $table->string('core_tap_last_commit')->nullable();
@@ -54,37 +53,10 @@ class HomebrewInfo extends Migration
             $table->string('homebrew_git_config_file')->nullable();
             $table->string('homebrew_noanalytics_this_run')->nullable();
             $table->string('curl')->nullable();
-
-            $table->index('core_tap_head');
-            $table->index('core_tap_origin');
-            $table->index('core_tap_last_commit');
-            $table->index('head');
-            $table->index('last_commit');
-            $table->index('origin');
-            $table->index('homebrew_bottle_domain');
-            $table->index('homebrew_cellar');
-            $table->index('homebrew_prefix');
-            $table->index('homebrew_repository');
-            $table->index('homebrew_version');
-            $table->index('homebrew_ruby');
-            $table->index('command_line_tools');
-            $table->index('cpu');
-            $table->index('git');
-            $table->index('clang');
-            $table->index('java');
-            $table->index('perl');
-            $table->index('python');
-            $table->index('ruby');
-            $table->index('x11');
-            $table->index('xcode');
-            $table->index('macos');
-            $table->index('homebrew_git_config_file');
-            $table->index('homebrew_noanalytics_this_run');
-            $table->index('curl');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -117,7 +89,39 @@ class HomebrewInfo extends Migration
                 null
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->unique('serial_number');
+            $table->index('core_tap_head');
+            $table->index('core_tap_origin');
+            $table->index('core_tap_last_commit');
+            $table->index('head');
+            $table->index('last_commit');
+            $table->index('origin');
+            $table->index('homebrew_bottle_domain');
+            $table->index('homebrew_cellar');
+            $table->index('homebrew_prefix');
+            $table->index('homebrew_repository');
+            $table->index('homebrew_version');
+            $table->index('homebrew_ruby');
+            $table->index('command_line_tools');
+            $table->index('cpu');
+            $table->index('git');
+            $table->index('clang');
+            $table->index('java');
+            $table->index('perl');
+            $table->index('python');
+            $table->index('ruby');
+            $table->index('x11');
+            $table->index('xcode');
+            $table->index('macos');
+            $table->index('homebrew_git_config_file');
+            $table->index('homebrew_noanalytics_this_run');
+            $table->index('curl');
+        });
     }
     
     public function down()

@@ -61,7 +61,7 @@ abstract class AbstractAuth
      */
     public function stripMunkireportItemsFromConfig($config)
     {
-        foreach(['mr_allowed_users', 'mr_allowed_groups'] as $item){
+        foreach(['mr_allowed_users', 'mr_allowed_groups', 'mr_recursive_groupsearch'] as $item){
             unset($config[$item]);
         }
         return $config;

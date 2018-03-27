@@ -25,13 +25,13 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 		
 		// Set types
-		if(data.hfs){
+		if(data.hfs != "0"){
 			panel.append(' <a href="'+baseUrl+'#hfs" class="btn btn-info"><span class="bigger-150">'+data.hfs+'</span><br>&nbsp;&nbsp;&nbsp;HFS+&nbsp;&nbsp;</a>');
 		}
-		if(data.apfs){
+		if(data.apfs != "0"){
 			panel.append(' <a href="'+baseUrl+'#apfs" class="btn btn-info"><span class="bigger-150">'+data.apfs+'</span><br>&nbsp;&nbsp;APFS&nbsp;&nbsp;</a>');
 		}
-		if(data.bootcamp){
+		if(data.bootcamp != "0"){
 			panel.append(' <a href="'+baseUrl+'#bootcamp" class="btn btn-info"><span class="bigger-150">'+data.bootcamp+'</span><br>'+i18n.t('disk_report.bootcamp')+'</a>');
 		}
     });

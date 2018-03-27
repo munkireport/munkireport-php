@@ -8,6 +8,6 @@
   "executable": "Executable",
   "bundle_id": "Bundle ID",
   "version": "Version",
-  "codesign": "Codesign Zertifikat",
+  "developer": "Developer",
   "report": "Extensions-Bericht"
 }

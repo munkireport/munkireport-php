@@ -14,22 +14,6 @@ class Appusage_model extends \Model
         $this->rs['last_time_epoch'] = 0;
         $this->rs['last_time'] = "";
         $this->rs['number_times'] = 0;
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-
-        //indexes to optimize queries
-        $this->idx[] = array('event');
-        $this->idx[] = array('bundle_id');
-        $this->idx[] = array('app_version');
-        $this->idx[] = array('app_path');
-        $this->idx[] = array('app_name');
-        $this->idx[] = array('last_time_epoch');
-        $this->idx[] = array('last_time');
-        $this->idx[] = array('number_times');
-
-        // Create table if it does not exist
-       //$this->create_table();
     }
 
     // ------------------------------------------------------------------------

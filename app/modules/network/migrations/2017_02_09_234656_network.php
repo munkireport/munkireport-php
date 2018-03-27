@@ -41,18 +41,10 @@ class Network extends Migration
             $table->string('ipv6ip')->nullable();
             $table->integer('ipv6prefixlen')->nullable();
             $table->string('ipv6router')->nullable();
-
-            $table->index('serial_number');
-            $table->index(['serial_number', 'service']);
-            $table->index('service');
-            $table->index('ethernet');
-            $table->index('ipv4ip');
-            $table->index('ipv4router');
-            $table->index('ipv4mask');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO
+            $capsule::unprepared("INSERT INTO
                 $this->tableName
             SELECT
                 id,
@@ -72,7 +64,19 @@ class Network extends Migration
                 ipv6router
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index(['serial_number', 'service']);
+            $table->index('service');
+            $table->index('ethernet');
+            $table->index('ipv4ip');
+            $table->index('ipv4router');
+            $table->index('ipv4mask');
+        });
     }
 
     public function down()

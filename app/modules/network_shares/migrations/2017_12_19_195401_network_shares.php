@@ -25,22 +25,16 @@ class NetworkShares extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->nullable();
+            $table->string('serial_number');
             $table->string('name')->nullable();
             $table->string('mntfromname')->nullable();
             $table->string('fstypename')->nullable();
             $table->string('fsmtnonname')->nullable();
             $table->boolean('automounted')->nullable();
-
-            $table->index('name');
-            $table->index('mntfromname');
-            $table->index('fstypename');
-            $table->index('fsmtnonname');
-            $table->index('automounted');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -52,7 +46,17 @@ class NetworkShares extends Migration
                 automounted
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('name');
+            $table->index('mntfromname');
+            $table->index('fstypename');
+            $table->index('fsmtnonname');
+            $table->index('automounted');
+        });
     }
     
     public function down()

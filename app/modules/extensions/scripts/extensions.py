@@ -16,13 +16,13 @@ import sys
 cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
 if not os.path.exists(cachedir):
     os.makedirs(cachedir)
-    
+
 # Skip manual check
 if len(sys.argv) > 1:
     if sys.argv[1] == 'manualcheck':
         print 'Manual check: skipping'
         exit(0)
-    
+
 # Get kexts info
 IOKit = NSBundle.bundleWithIdentifier_('com.apple.framework.IOKit')
 functions = [('KextManagerCopyLoadedKextInfo', '@@@'),('KextManagerCreateURLForBundleIdentifier', '@@@'),]
@@ -38,6 +38,8 @@ for kernelname in kernel_dict:
         bundle_version = kernel_dict[kernelname]['CFBundleVersion']
         bundle_executable = kernel_dict[kernelname]['OSBundleExecutablePath']
         bundle_codesign = ''
+        developer_name = ''
+        team_id = ''
 
         from subprocess import Popen, PIPE
         stdout = Popen("/usr/bin/codesign -dv --verbose=4 '"+bundle_path+"'", shell=True, stderr=PIPE).stderr        
@@ -46,8 +48,10 @@ for kernelname in kernel_dict:
         for line in output.splitlines():
             if "Authority=Developer ID Application: " in line:
                 bundle_codesign = line.replace("Authority=Developer ID Application: ", "")
+                developer_name = " ".join(bundle_codesign.split()[:-1])
+                team_id = bundle_codesign.split()[-1].strip("()")
 
-        info[str(count)] = {'bundle_id':kernelname,'path':bundle_path,'version':bundle_version,'executable':bundle_executable,'codesign':bundle_codesign}
+        info[str(count)] = {'bundle_id':kernelname,'path':bundle_path,'version':bundle_version,'executable':bundle_executable,'developer':developer_name, 'teamid':team_id}
         count = count+1
 
 # Write results to cache file

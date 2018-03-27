@@ -16,7 +16,7 @@ The table provides the following information per client:
 
 The workflow:
 
-1. Create a crypto key by calling `vendor/bin/generate-defuse-key` in the root of the munkireport directory. Add the resulting key to `config.php` as `$conf['encryption_key'] = 'def00000505fe726...34'`
+1. Create a crypto key by calling `vendor/bin/generate-defuse-key` in the root of the munkireport directory. Add the resulting key to `config.php` as `$conf['encryption_key'] = 'def00000505fe726...34'`;
 
 2. Install and configure Crypt make sure to prevent the removal of the plist:
 ``` bash

@@ -25,22 +25,15 @@ class UserSessions extends Migration
 
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('serial_number');
             $table->string('event')->nullable();
             $table->bigInteger('time')->nullable();
             $table->string('user')->nullable();
             $table->string('remote_ssh')->nullable();
-
-            $table->index('serial_number');
-            $table->index('event');
-            $table->index('time');
-            $table->index('user');
-            $table->index('remote_ssh');
         });
 
         if ($migrateData) {
-            $capsule::select("INSERT INTO 
+            $capsule::unprepared("INSERT INTO 
                 $this->tableName
             SELECT
                 id,
@@ -51,7 +44,17 @@ class UserSessions extends Migration
                 remote_ssh
             FROM
                 $this->tableNameV2");
+            $capsule::schema()->drop($this->tableNameV2);
         }
+
+        // (Re)create indexes
+        $capsule::schema()->table($this->tableName, function (Blueprint $table) {
+            $table->index('serial_number');
+            $table->index('event');
+            $table->index('time');
+            $table->index('user');
+            $table->index('remote_ssh');
+        });
     }
 
     public function down()

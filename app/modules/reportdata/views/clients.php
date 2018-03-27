@@ -24,6 +24,9 @@
 
     <?php $widget->view($this, 'os'); ?>
 
+    <?php $widget->view($this, 'osbuild'); ?>
+
+
   </div> <!-- /row -->
 
 </div>  <!-- /container -->

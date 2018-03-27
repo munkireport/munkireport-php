@@ -40,7 +40,7 @@ new Usage_stats_model;
 		        <th data-i18n="usage_stats.gpu_freq_hz_short" data-colname='usage_stats.gpu_freq_hz'></th>
 		        <th data-i18n="usage_stats.gpu_freq_ratio" data-colname='usage_stats.gpu_freq_ratio'></th>
 		        <th data-i18n="usage_stats.gpu_busy" data-colname='usage_stats.gpu_busy'></th>
-		        <th data-i18n="usage_stats.timestamp" data-colname='usage_stats.timestamp'></th>
+		        <th data-i18n="usage_stats.kern_bootargs" data-colname='usage_stats.kern_bootargs'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -92,7 +92,7 @@ new Usage_stats_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    d.mrColNotEmpty = "usage_stats.timestamp";
+                    d.mrColNotEmpty = "usage_stats.thermal_pressure";
 
                 }
             },
@@ -251,11 +251,6 @@ new Usage_stats_model;
                 } else {
                     $('td:eq(25)', nRow).html('');
                 }
-                
-                // Format Check-In timestamp
-	        	var checkin = parseInt($('td:eq(26)', nRow).html());
-	        	var date = new Date(checkin * 1000);
-	        	$('td:eq(26)', nRow).html('<span title=" '+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 		    }
 	    } );
 	    // Use hash as searchquery

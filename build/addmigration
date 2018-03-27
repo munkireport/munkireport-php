@@ -3,31 +3,57 @@
 array_shift($argv);
 
 if(count($argv) < 1){
-    die("ERROR: No module defined\n");
+    die("Usage: addmigration path/to/module [migration_name]\n");
 }
 
 $scriptdir = dirname(__FILE__);
 $module_path = $argv[0];
 $module = basename($module_path);
+$migration_name = $module . '_' . (isset($argv[1]) ? $argv[1] : 'init');
 $migrations_dir = $module_path . '/migrations/';
-$filename = date('Y_m_d_His_') . $module .'.php';
-$classname = str_replace('_', '', ucwords($module, '_'));
+$filename = date('Y_m_d_His_') . $migration_name .'.php';
+$classname = str_replace('_', '', ucwords($migration_name, '_'));
 
-if (!file_exists($module_path)) {
-    die("ERROR: Module does not exist\n");
+if ( ! file_exists($module_path)) {
+    die("ERROR: Module does not exist, please provide an existing path to a module directory.\n");
 }
 
-$template = file_get_contents("$scriptdir/templates/migration.php");
+if ( ! file_exists($migrations_dir)) {
+    mkdir($migrations_dir, 0777, true);
+}
+
+$initial_migration_found = false;
+foreach(scandir($migrations_dir) as $migration_filename){
+  $regex = '/' . $module . '(_init)?\.php/';
+  if (preg_match($regex, $migration_filename)){
+    $initial_migration_found = true;
+  }elseif (strpos($migration_filename, "${migration_name}.php")){
+    die("ERROR: Found migration ending in $migration_name, please provide another migration name\n");
+  }
+}
+
+if ($initial_migration_found && $migration_name == $module . '_init'){
+  die("ERROR: Found initial migration: $migration_name, please provide a migration name\n");
+}
+
+if ($initial_migration_found){
+  $template_path = "$scriptdir/templates/migration.php";
+}else{
+  $template_path = "$scriptdir/templates/init_migration.php";
+}
+
+$template = file_get_contents($template_path);
 
 $template = str_replace(
     ['CLASSNAME', 'MODULE'],
     [$classname, $module],
     $template
 );
-if (!file_exists($migrations_dir)) {
+
+if ( ! file_exists($migrations_dir)) {
     mkdir($migrations_dir, 0777, true);
 }
 
 file_put_contents("${migrations_dir}${filename}", $template);
 
-echo "Created template at ${migrations_dir}${filename}\n";
+echo "Created migration at ${migrations_dir}${filename}\n";

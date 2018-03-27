@@ -30,20 +30,6 @@ class Caching_model extends \Model
         $this->rs['bytesimportedbyhttp'] = 0; $this->rt['bytesimportedbyhttp'] = 'BIGINT';
         $this->rs['importsbyxpc'] = 0; $this->rt['importsbyxpc'] = 'BIGINT';
         $this->rs['importsbyhttp'] = 0; $this->rt['importsbyhttp'] = 'BIGINT';
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-        
-        //indexes to optimize queries
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('collectiondate');
-        $this->idx[] = array('collectiondateepoch');
-        $this->idx[] = array('bytesfromcachetoclients');
-        $this->idx[] = array('bytesfrompeerstoclients');
-        $this->idx[] = array('bytesfromorigintoclients');
-
-        // Create table if it does not exist
-       //$this->create_table();
     }
 
     // ------------------------------------------------------------------------
