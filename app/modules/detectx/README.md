@@ -1,7 +1,9 @@
 DetectX Module
 ==============
 
-Module pulls data from DetectX results json. It does not **run** DetectX, admins are responsible for creating their own launch daemon that runs DetectX and provides the results data to:
+Module pulls data from DetectX Swift (requires Pro or Management License!) results `json`. It does not **run** DetectX!
+
+**Admins are responsible for creating their own launch daemon that runs DetectX and provides the results data to:**
 ```
 /usr/local/munki/preflight.d/cache/detectx.json
 ```
