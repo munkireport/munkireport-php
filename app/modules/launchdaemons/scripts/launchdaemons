@@ -65,7 +65,11 @@ def process_daemons(daemons):
     
     out = []
     for daemon in daemons.split('\n'):
-        pl = FoundationPlist.readPlist(daemon)
+        # Skip malformed plists
+        try:
+            pl = FoundationPlist.readPlist(daemon)
+        except:
+            continue
         daemonfile ={'label':''}
         for item in pl:
             daemonfile['path'] = daemon
