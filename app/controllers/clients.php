@@ -48,8 +48,8 @@ class clients extends Controller
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
-			s.gatekeeper, s.sip, s.ssh_groups, s.ssh_users, s.ard_users, s.firmwarepw, s.firewall_state, s.skel_state,
-			w.purchase_date, w.end_date, w.status, l.users, d.totalsize, d.freespace,
+                        s.gatekeeper, s.sip, s.ssh_groups, s.ssh_users, s.ard_users, s.firmwarepw, s.firewall_state, s.skel_state,
+                        w.purchase_date, w.end_date, w.status, l.users, d.totalsize, d.freespace,
                         d.smartstatus, d.encrypted
                 FROM machine m
                 LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
@@ -69,16 +69,27 @@ class clients extends Controller
     /**
      * Retrieve links from config
      *
-     * @author
+     * @author AvB
      **/
-    public function get_links()
+    public function get_links($serial_number = '')
     {
         $out = array();
         if (conf('vnc_link')) {
-            $out['vnc'] = conf('vnc_link');
+            $out['VNC'] = conf('vnc_link');
         }
         if (conf('ssh_link')) {
-            $out['ssh'] = conf('ssh_link');
+            $out['SSH'] = conf('ssh_link');
+        }
+        if (in_array("teamviewer", conf('modules')) && $this->authorized()) {
+                       
+            $queryobj = new Reportdata_model();
+            $sql = "SELECT clientid FROM teamviewer WHERE serial_number = '$serial_number'";
+            $teamviewer_client_ids = $queryobj->query($sql);
+
+            foreach ($teamviewer_client_ids as $tv_id){
+                $client_id = $tv_id->clientid;
+                $out['TeamViewer '.$client_id] = 'teamviewer10://control?device='.$client_id;
+            } 
         }
 
         $obj = new View();

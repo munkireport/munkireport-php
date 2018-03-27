@@ -30,7 +30,11 @@ def process_prefs(prefs):
         
     out = []
     for pref in prefs.split('\n'):
-        pl = FoundationPlist.readPlist(pref)
+        # Skip malformed plists
+        try:
+            pl = FoundationPlist.readPlist(pref)
+        except:
+            continue
         preffile ={'ClientID':''}
         for item in pl:
             preffile['prefpath'] = pref

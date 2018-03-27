@@ -31,7 +31,7 @@ class Teamviewer_model extends \Model
         $this->rs['updateversion'] = '';
 
         if ($serial) {
-                $this->retrieve_record($serial);
+            $this->retrieve_record($serial);
         }
 
         $this->serial = $serial;
