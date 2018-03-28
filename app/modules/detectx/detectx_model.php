@@ -5,25 +5,15 @@ class Detectx_model extends \Model {
   {
   parent::__construct('id', 'detectx'); //primary key, tablename
     $this->rs['id'] = '';
-    $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-    $this->rs['searchdate'] = 0; $this->rt['searchdate'] = 'BIGINT';
+    $this->rs['serial_number'] = $serial;
+    $this->rs['searchdate'] = 0;
     $this->rs['numberofissues'] = 0;
     $this->rs['status'] = '';
     $this->rs['scantime'] = 0;
-    $this->rs['spotlightindexing'] = true; $this->rt['spotlightindexing'] = 'BOOLEAN';
-    $this->rs['registered'] = true; $this->rt['registered'] = 'BOOLEAN';
-    $this->rs['infections'] = ''; $this->rt['infections'] = 'TEXT';
-    $this->rs['issues'] = ''; $this->rt['issues'] = 'TEXT';
-    
-  // Schema version, increment when creating a db migration
-    $this->schema_version = 0;
-
-  // Add indexes
-    $this->idx[] = array('numberofissues');
-    $this->idx[] = array('searchdate');
-    $this->idx[] = array('status');
-    $this->idx[] = array('scantime');
-    $this->idx[] = array('spotlightindexing');
+    $this->rs['spotlightindexing'] = true;
+    $this->rs['registered'] = true;
+    $this->rs['infections'] = '';
+    $this->rs['issues'] = '';
 
     $this->serial_number = $serial;
   }
@@ -51,8 +41,8 @@ class Detectx_model extends \Model {
         $data = json_decode($json, true);
         $this->searchdate = strtotime($data['searchdate']);
         $this->scantime = isset($data['duration']) ? $data['duration'] : 0;
-        $this->spotlightindexing = $data['spotlightindexing'];
-        $this->registered = $data['registered'];
+        $this->spotlightindexing = (bool) $data['spotlightindexing'];
+        $this->registered = (bool) $data['registered'];
         $len = count($data['infections']);
         //$lis = count($data['issues']);
         if ($len > 0)
