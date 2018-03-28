@@ -44,6 +44,9 @@ class ConfigTest extends TestCase
         $this->assertEquals(4, count($v));
     }
 
+    /**
+     * Assert that all these configuration variables can be configured via an environment variable.
+     */
     public function testFixtureEnvs() {
         $this->assertEquals('FOOBAR', $this->conf['index_page']);
         $this->assertEquals('FOOBAR', $this->conf['uri_protocol']);
@@ -58,6 +61,25 @@ class ConfigTest extends TestCase
         $this->assertEquals(true, $this->conf['auth_secure']);
         $this->assertEquals('FOOBAR', $this->conf['vnc_link']);
         $this->assertEquals('FOOBAR', $this->conf['ssh_link']);
+
+        $this->assertEquals(['FOO','BAR'], $this->conf['bundleid_ignorelist']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['bundlepath_ignorelist']);
+
+        // GSX
+        $this->assertEquals(true, $this->conf['gsx_enable']);
+        $this->assertEquals('FOOBAR', $this->conf['gsx_cert']);
+        $this->assertEquals('FOOBAR', $this->conf['gsx_cert_keypass']);
+        $this->assertEquals('FOOBAR', $this->conf['gsx_sold_to']);
+        $this->assertEquals('FOOBAR', $this->conf['gsx_ship_to']);
+        $this->assertEquals('FOOBAR', $this->conf['gsx_username']);
+
+        $this->assertEquals(true, $this->conf['usb_internal']);
+        $this->assertEquals(true, $this->conf['fonts_system']);
+        $this->assertEquals('FOOBAR', $this->conf['google_maps_api_key']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['curl_cmd']);
+        $this->assertEquals('FOOBAR', $this->conf['mwa2_link']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['modules']);
+
 
     }
 }
