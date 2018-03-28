@@ -43,3 +43,21 @@ Now when you run /usr/local/munki/postflight on the client, you should see that 
 ### Notes
 
 Munkireport will **not** set the passphrase on the client through the install script, it would be too easy for someone to get the passphrase that way. So you need to roll your own method of distributing the passphrase (via munki)
+
+### Environment Variables
+
+- `CONNECTION_DRIVER`: Any driver that is valid for Illuminate/Database. Examples are `sqlite` and `mysql`.
+- `CONNECTION_DATABASE`: For sqlite: the path to the sqlite file. Otherwise, the name of the database.
+- `CONNECTION_HOST`: The hostname or IP address of the database server.
+- `CONNECTION_PORT`: The port to connect to (if non standard).
+- `CONNECTION_USERNAME`: The database connection username.
+- `CONNECTION_PASSWORD`: The database connection password.
+- `INDEX_PAGE`: The page appended to the app root, default is `index.php?`.
+- `URI_PROTOCOL`: Which server variable to use for the correct request path. Defaults to `Auto`.
+- `WEBHOST`: The URL to the server hosting the application, including the schema eg. `https://munkireport.local`.
+- `SUBDIRECTORY`: If your application is installed underneath a subdirectory, define this, eg. `/munkireport`.
+- `SITENAME`: The site name which will appear in the title bar of your browser, Default: `MunkiReport`.
+- `AUTH_METHODS`: A comma separated list of supported Authentication methods. Any combination of:
+    - `NOAUTH`: No authentication required
+    - `LDAP`: LDAP Authentication
+    - `AD`: Active Directory Authentication
