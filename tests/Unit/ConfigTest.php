@@ -16,9 +16,11 @@ class ConfigTest extends TestCase
         putenv("BOOLVALUE=TRUE");
         putenv("INTVALUE=1234");
         putenv("ARRAYVALUE=ONE,TWO,THREE,FOUR");
+        putenv("AUTH_METHODS=NOAUTH,LDAP,AD");
 
         // Mock configuration load
         global $conf;
+        require_once __DIR__ . '/../../app/helpers/site_helper.php';
         require_once __DIR__ . '/../../config_default.php';
         //include_once APP_ROOT . "config.php";
         $this->conf = $conf;
@@ -80,6 +82,15 @@ class ConfigTest extends TestCase
         $this->assertEquals('FOOBAR', $this->conf['mwa2_link']);
         $this->assertEquals(['FOO','BAR'], $this->conf['modules']);
 
+        // AUTH_AD
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_AD']['account_suffix']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_AD']['base_dn']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_AD']['domain_controllers']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_AD']['admin_username']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_AD']['admin_password']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_AD']['mr_allowed_users']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_AD']['mr_allowed_groups']);
+        $this->assertEquals(true, $this->conf['auth']['auth_AD']['mr_recursive_groupsearch']);
 
     }
 }
