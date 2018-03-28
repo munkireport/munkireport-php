@@ -8,25 +8,6 @@ try {
     // .env is missing, but not really an issue since configuration is specified here anyway.
 }
 
-// Get a value from $_ENV with fallback to default
-// typehint parameter processes env var as the suggested type.
-function getenv_default($key, $default = null, $typehint = null) {
-    if (getenv($key)) {
-        $v = getenv($key);
-        switch ($typehint) {
-            case 'array':
-                return explode(',', $v);
-            case 'bool':
-                return $v == 'TRUE' || $v == '1';
-            case 'int':
-                return (int)$v;
-            default:
-                return $v;
-        }
-    } else {
-        return $default;
-    }
-}
 
 	/*
 	|===============================================
@@ -183,26 +164,19 @@ function getenv_default($key, $default = null, $typehint = null) {
 	| config.php!. You can combine methods 2, 3 and 4
 	|
 	*/
-	function ldap_auth_from_env() {
-
-    }
-
-    function ad_auth_from_env() {
-
-    }
 
 	$auth_methods = explode(',', getenv_default('AUTH_METHODS', ''));
     if (count($auth_methods) > 0) {
         foreach ($auth_methods as $auth_method) {
             switch (strtoupper($auth_method)) {
                 case 'NOAUTH':
-                    $conf['auth']['auth_noauth'] = [];
+                    $conf['auth']['auth_noauth'] = require APP_ROOT . 'config/auth_noauth.php';
                     break;
                 case 'LDAP':
-                    ldap_auth_from_env();
+                    $conf['auth']['auth_ldap'] = require APP_ROOT . 'config/auth_ldap.php';
                     break;
                 case 'AD':
-                    ad_auth_from_env();
+                    $conf['auth']['auth_AD'] = require APP_ROOT . 'config/auth_ad.php';
                     break;
             }
         }
