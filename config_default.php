@@ -1,5 +1,13 @@
 <?php if ( ! defined( 'KISS' ) ) exit;
 
+try {
+    $envfile = defined('MUNKIREPORT_SETTINGS') ? MUNKIREPORT_SETTINGS : '.env';
+    $dotenv = new Dotenv\Dotenv(__DIR__, $envfile);
+    $dotenv->load();
+} catch (\Dotenv\Exception\InvalidPathException $e) {
+    // .env is missing, but not really an issue since configuration is specified here anyway.
+}
+
 // Get a value from $_ENV with fallback to default
 // typehint parameter processes env var as the suggested type.
 function getenv_default($key, $default = null, $typehint = null) {
@@ -112,7 +120,7 @@ function getenv_default($key, $default = null, $typehint = null) {
 	| When false, all modules will be shown in the interface like
 	|	in the 'Listings' menu.
 	*/
-	$conf['hide_inactive_modules'] = getenv_default('HIDE_INACTIVE_MODULES', true);
+	$conf['hide_inactive_modules'] = getenv_default('HIDE_INACTIVE_MODULES', true, 'bool');
 
 	/*
     |===============================================
@@ -122,7 +130,7 @@ function getenv_default($key, $default = null, $typehint = null) {
 	| This value specifies the minimum number of local admin accounts needed to
 	|	list the computer in the Local Admin Report.  Default is 2.
 	*/
-	$conf['local_admin_threshold'] = getenv_default('LOCAL_ADMIN_THRESHOLD', 2);
+	$conf['local_admin_threshold'] = getenv_default('LOCALADMIN_THRESHOLD', 2, 'int');
 
 	/*
 	|===============================================
@@ -254,7 +262,7 @@ function getenv_default($key, $default = null, $typehint = null) {
 	| For more information, see docs/business_units.md
 	|
 	*/
-	$conf['enable_business_units'] = getenv_default('ENABLE_BUSINESS_UNITS',FALSE);
+	$conf['enable_business_units'] = getenv_default('ENABLE_BUSINESS_UNITS',FALSE, 'bool');
 
 	/*
 	|===============================================
@@ -265,7 +273,7 @@ function getenv_default($key, $default = null, $typehint = null) {
 	| This is useful for sites that serve MR both via http and https
 	|
 	*/
-	$conf['auth_secure'] = getenv_default('AUTH_SECURE', FALSE);
+	$conf['auth_secure'] = getenv_default('AUTH_SECURE', FALSE, 'bool');
 
 	/*
 	|===============================================
@@ -489,7 +497,7 @@ function getenv_default($key, $default = null, $typehint = null) {
 	|
 	| When not configured, or if set to FALSE, the default behaviour applies.
 	*/
-	$conf['keep_previous_displays'] = getenv_default('KEEP_PREVIOUS_DISPLAYS', TRUE, 'bool');
+	$conf['keep_previous_displays'] = getenv_default('DISPLAYS_INFO_KEEP_PREVIOUS', TRUE, 'bool');
 
 	/*
 	|===============================================
@@ -765,7 +773,10 @@ function getenv_default($key, $default = null, $typehint = null) {
 	| If there are more free bytes, the level is set to 'success'
 	|
 	*/
-	$conf['disk_thresholds'] = ['danger' => 5, 'warning' => 10];
+	$conf['disk_thresholds'] = [
+	    'danger' => getenv_default('DISK_REPORT_THRESHOLD_DANGER', 5, 'int'),
+        'warning' => getenv_default('DISK_REPORT_THRESHOLD_WARNING', 10, 'int')
+    ];
 
 	/*
 	|===============================================
