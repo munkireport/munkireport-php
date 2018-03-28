@@ -34,6 +34,7 @@ Please run `composer install` in the munkireport directory</p>");
 }
 
 // Load config
+require APP_ROOT.'app/helpers/config_helper.php';
 load_conf();
 
 // Load conf (keeps variables out of global space)

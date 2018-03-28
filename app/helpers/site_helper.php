@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.2.0.3386';
+$GLOBALS['version'] = '3.2.0.3387';
 
 // Return version without commit count
 function get_version()
@@ -392,24 +392,3 @@ function getMrModuleObj()
 
     return $moduleObj;
 }
-
-// Get a value from $_ENV with fallback to default
-// typehint parameter processes env var as the suggested type.
-function getenv_default($key, $default = null, $typehint = null) {
-    if (getenv($key)) {
-        $v = getenv($key);
-        switch ($typehint) {
-            case 'array':
-                return explode(',', $v);
-            case 'bool':
-                return $v == 'TRUE' || $v == '1';
-            case 'int':
-                return (int)$v;
-            default:
-                return $v;
-        }
-    } else {
-        return $default;
-    }
-}
-
