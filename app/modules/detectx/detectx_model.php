@@ -45,7 +45,7 @@ class Detectx_model extends \Model
         $this->spotlightindexing = (int) $data['spotlightindexing'];
         $this->registered = (int) $data['registered'];
         $len = count($data['infections']);
-        //$lis = count($data['issues']);
+        $lis = count($data['issues']);
         if ($len > 0) {
             $this->status = "Infected";
             foreach ($data['issues'] as $issue) {
