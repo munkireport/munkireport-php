@@ -1,7 +1,19 @@
 How to configure Munkireport
 =====
 
-Munkireport is configured using a config file (config.php).
+Munkireport is configured using a config file (config.php). 
+
+You can also configure Munkireport using the environment, or using a `.env` file placed in the root
+which contains environment variables. See `.env.example` for environment settings. This is more common for
+docker deployments.
+
+**NOTE**: Configuration is loaded in this order:
+
+1. `config_default.php`
+2. `.env / ENVIRONMENT`
+3. `config.php`
+
+Which means that `config.php` overwrites everything else.
 
 For the time being, read config_default.php. In the comments you'll find information about each setting.
 
