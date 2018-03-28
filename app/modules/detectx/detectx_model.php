@@ -5,15 +5,25 @@ class Detectx_model extends \Model {
   {
   parent::__construct('id', 'detectx'); //primary key, tablename
     $this->rs['id'] = '';
-    $this->rs['serial_number'] = $serial;
-    $this->rs['searchdate'] = 0;
+    $this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+    $this->rs['searchdate'] = 0; $this->rt['searchdate'] = 'BIGINT';
     $this->rs['numberofissues'] = 0;
     $this->rs['status'] = '';
     $this->rs['scantime'] = 0;
-    $this->rs['spotlightindexing'] = true;
-    $this->rs['registered'] = true;
-    $this->rs['infections'] = '';
-    $this->rs['issues'] = '';
+    $this->rs['spotlightindexing'] = true; $this->rt['spotlightindexing'] = 'BOOLEAN';
+    $this->rs['registered'] = true; $this->rt['registered'] = 'BOOLEAN';
+    $this->rs['infections'] = ''; $this->rt['infections'] = 'TEXT';
+    $this->rs['issues'] = ''; $this->rt['issues'] = 'TEXT';
+    
+  // Schema version, increment when creating a db migration
+    $this->schema_version = 0;
+
+  // Add indexes
+    $this->idx[] = array('numberofissues');
+    $this->idx[] = array('searchdate');
+    $this->idx[] = array('status');
+    $this->idx[] = array('scantime');
+    $this->idx[] = array('spotlightindexing');
 
     $this->serial_number = $serial;
   }
@@ -44,6 +54,7 @@ class Detectx_model extends \Model {
         $this->spotlightindexing = $data['spotlightindexing'];
         $this->registered = $data['registered'];
         $len = count($data['infections']);
+        //$lis = count($data['issues']);
         if ($len > 0)
         {
           $this->status = "Infected";
@@ -55,7 +66,19 @@ class Detectx_model extends \Model {
             $this->infections .= ($infectionname . ";");
           }
         }
-        else {
+         else if ($lis > 0)
+        {
+          $this->status = "Issues";
+          foreach($data['issues'] as $issue){
+            $this->issues .= ($issue . ";");
+            }
+          foreach($data['issues'] as $issuesname){
+            $this->numberofissues += 1;
+            $this->issues .= ($issuesname . ";");
+          }
+        }
+         else
+        {
           $this->status = "Clean";
           $this->issues = 'No Issues Detected';
           $this->numberofissues = 0;
