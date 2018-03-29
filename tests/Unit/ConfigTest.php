@@ -92,5 +92,27 @@ class ConfigTest extends TestCase
         $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_AD']['mr_allowed_groups']);
         $this->assertEquals(true, $this->conf['auth']['auth_AD']['mr_recursive_groupsearch']);
 
+        // AUTH_LDAP
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['server']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['usertree']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['grouptree']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_ldap']['mr_allowed_users']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_ldap']['mr_allowed_groups']);
+
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['userfilter']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['groupfilter']);
+        $this->assertEquals(99, $this->conf['auth']['auth_ldap']['port']);
+        $this->assertEquals(99, $this->conf['auth']['auth_ldap']['version']);
+        $this->assertEquals(true, $this->conf['auth']['auth_ldap']['starttls']);
+        $this->assertEquals(true, $this->conf['auth']['auth_ldap']['referrals']);
+        $this->assertEquals(99, $this->conf['auth']['auth_ldap']['deref']);
+
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['binddn']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['bindpw']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['userscope']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['groupscope']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['groupkey']);
+        $this->assertEquals(true, $this->conf['auth']['auth_ldap']['debug']);
+
     }
 }
