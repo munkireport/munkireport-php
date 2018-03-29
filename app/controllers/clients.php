@@ -88,7 +88,7 @@ class clients extends Controller
 
             foreach ($teamviewer_client_ids as $tv_id){
                 $client_id = $tv_id->clientid;
-                $out['TeamViewer '.$client_id] = 'teamviewer10://control?device='.$client_id;
+                $out['TeamViewer '.$client_id] = conf('teamviewer_link').$client_id;
             } 
         }
 

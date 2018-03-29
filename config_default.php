@@ -223,7 +223,7 @@
 
 	/*
 	|===============================================
-	| VNC and SSH links, optional links in the client detail view
+	| VNC, SSH, and TeamViewer links, optional links in the client detail view
 	|===============================================
 	|
 	| If you want to have link that opens a screensharing or SSH
@@ -238,6 +238,7 @@
 	*/
 	$conf['vnc_link'] = "vnc://%s:5900";
 	$conf['ssh_link'] = "ssh://adminuser@%s";
+	$conf['teamviewer_link'] = "teamviewer10://control?device=";
 
 	/*
 	|===============================================
