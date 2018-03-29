@@ -21,7 +21,9 @@ class ConfigTest extends TestCase
         // Mock configuration load
         global $conf;
         require_once __DIR__ . '/../../app/helpers/config_helper.php';
+        initDotEnv();
         require_once __DIR__ . '/../../config_default.php';
+
         //include_once APP_ROOT . "config.php";
         $this->conf = $conf;
     }

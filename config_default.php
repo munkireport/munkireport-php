@@ -1,12 +1,5 @@
 <?php if ( ! defined( 'KISS' ) ) exit;
 
-try {
-    $envfile = defined('MUNKIREPORT_SETTINGS') ? MUNKIREPORT_SETTINGS : '.env';
-    $dotenv = new Dotenv\Dotenv(__DIR__, $envfile);
-    $dotenv->load();
-} catch (\Dotenv\Exception\InvalidPathException $e) {
-    // .env is missing, but not really an issue since configuration is specified here anyway.
-}
 
 
 	/*
