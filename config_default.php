@@ -158,25 +158,25 @@
 	|
 	*/
 
-	$auth_methods = explode(',', getenv_default('AUTH_METHODS', ''));
-    if (count($auth_methods) > 0) {
-        foreach ($auth_methods as $auth_method) {
-            switch (strtoupper($auth_method)) {
-                case 'NOAUTH':
-                    $conf['auth']['auth_noauth'] = require APP_ROOT . 'config/auth_noauth.php';
-                    break;
-                case 'SAML':
-                    $conf['auth']['auth_saml'] = require APP_ROOT . 'config/auth_saml.php';
-                    break;
-                case 'LDAP':
-                    $conf['auth']['auth_ldap'] = require APP_ROOT . 'config/auth_ldap.php';
-                    break;
-                case 'AD':
-                    $conf['auth']['auth_AD'] = require APP_ROOT . 'config/auth_ad.php';
-                    break;
-            }
-        }
-    }
+	$auth_methods = getenv_default('AUTH_METHODS', [], 'array');
+  if (count($auth_methods) > 0) {
+      foreach ($auth_methods as $auth_method) {
+          switch (strtoupper($auth_method)) {
+              case 'NOAUTH':
+                  $conf['auth']['auth_noauth'] = require APP_ROOT . 'config/auth_noauth.php';
+                  break;
+              case 'SAML':
+                  $conf['auth']['auth_saml'] = require APP_ROOT . 'config/auth_saml.php';
+                  break;
+              case 'LDAP':
+                  $conf['auth']['auth_ldap'] = require APP_ROOT . 'config/auth_ldap.php';
+                  break;
+              case 'AD':
+                  $conf['auth']['auth_AD'] = require APP_ROOT . 'config/auth_ad.php';
+                  break;
+          }
+      }
+  }
 
 	/*
 	|===============================================
