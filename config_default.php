@@ -165,6 +165,9 @@
                 case 'NOAUTH':
                     $conf['auth']['auth_noauth'] = require APP_ROOT . 'config/auth_noauth.php';
                     break;
+                case 'SAML':
+                    $conf['auth']['auth_saml'] = require APP_ROOT . 'config/auth_saml.php';
+                    break;
                 case 'LDAP':
                     $conf['auth']['auth_ldap'] = require APP_ROOT . 'config/auth_ldap.php';
                     break;

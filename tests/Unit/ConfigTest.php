@@ -16,7 +16,7 @@ class ConfigTest extends TestCase
         putenv("BOOLVALUE=TRUE");
         putenv("INTVALUE=1234");
         putenv("ARRAYVALUE=ONE,TWO,THREE,FOUR");
-        putenv("AUTH_METHODS=NOAUTH,LDAP,AD");
+        putenv("AUTH_METHODS=NOAUTH,SAML,LDAP,AD");
 
         // Mock configuration load
         global $conf;
@@ -115,6 +115,18 @@ class ConfigTest extends TestCase
         $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['groupscope']);
         $this->assertEquals('FOOBAR', $this->conf['auth']['auth_ldap']['groupkey']);
         $this->assertEquals(true, $this->conf['auth']['auth_ldap']['debug']);
+
+        // AUTH_SAML
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['sp']['NameIDFormat']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['sp']['entityId']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['idp']['entityId']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['idp']['singleSignOnService']['url']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['idp']['singleLogoutService']['url']);
+        $this->assertEquals(['FOO' => 'user', 'BAR' => 'groups'], $this->conf['auth']['auth_saml']['attr_mapping']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_saml']['mr_allowed_users']);
+        $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_saml']['mr_allowed_groups']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['disable_sso']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['debug']);
 
     }
 }
