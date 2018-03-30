@@ -13,6 +13,7 @@ return [
     'singleLogoutService' => [
       'url' => getenv_default('AUTH_SAML_IDP_SLO_URL', 'https://yourorg.onelogin.com/trust/saml2/http-redirect/slo/xxxx'),
     ],
+    'x509cert' => getenv_default('AUTH_SAML_IDP_X509CERT'),
   ],
   'attr_mapping' => [
     getenv_default('AUTH_SAML_GROUP_ATTR', 'memberOf') => 'groups',

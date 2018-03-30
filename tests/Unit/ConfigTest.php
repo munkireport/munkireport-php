@@ -122,6 +122,7 @@ class ConfigTest extends TestCase
         $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['idp']['entityId']);
         $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['idp']['singleSignOnService']['url']);
         $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['idp']['singleLogoutService']['url']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['idp']['x509cert']);
         $this->assertEquals(['FOO' => 'user', 'BAR' => 'groups'], $this->conf['auth']['auth_saml']['attr_mapping']);
         $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_saml']['mr_allowed_users']);
         $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_saml']['mr_allowed_groups']);
