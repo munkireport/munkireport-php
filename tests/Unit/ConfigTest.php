@@ -128,6 +128,23 @@ class ConfigTest extends TestCase
         $this->assertEquals(['FOO','BAR'], $this->conf['auth']['auth_saml']['mr_allowed_groups']);
         $this->assertEquals(true, $this->conf['auth']['auth_saml']['disable_sso']);
         $this->assertEquals(true, $this->conf['auth']['auth_saml']['debug']);
+        
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['nameIdEncrypted']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['authnRequestsSigned']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['logoutRequestSigned']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['logoutResponseSigned']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['signMetadata']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['wantMessagesSigned']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['wantAssertionsEncrypted']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['wantAssertionsSigned']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['wantNameId']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['wantNameIdEncrypted']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['requestedAuthnContext']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['wantXMLValidation']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['relaxDestinationValidation']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['security']['signatureAlgorithm']);
+        $this->assertEquals('FOOBAR', $this->conf['auth']['auth_saml']['security']['digestAlgorithm']);
+        $this->assertEquals(true, $this->conf['auth']['auth_saml']['security']['lowercaseUrlencoding']);
 
     }
 }
