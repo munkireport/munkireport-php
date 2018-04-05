@@ -80,7 +80,7 @@ class clients extends Controller
         if (conf('ssh_link')) {
             $out['SSH'] = conf('ssh_link');
         }
-        if (in_array("teamviewer", conf('modules')) && $this->authorized()) {
+        if (in_array("teamviewer", conf('modules'))) {
                        
             $queryobj = new Reportdata_model();
             $sql = "SELECT clientid FROM teamviewer WHERE serial_number = '$serial_number'";
