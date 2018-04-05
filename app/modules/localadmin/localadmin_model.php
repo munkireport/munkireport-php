@@ -25,13 +25,16 @@ class Localadmin_model extends \Model
         $threshold=2;
         if(conf('local_admin_threshold') != '') {
             $threshold=conf('local_admin_threshold');
-            }
+        }
+        $filter = get_machine_group_filter();
         $sql = "SELECT machine.serial_number, computer_name,
                     LENGTH(users) - LENGTH(REPLACE(users, ' ', '')) + 1 AS count,
                     users
                     FROM localadmin
                     LEFT JOIN machine USING (serial_number)
-                    WHERE localadmin.users LIKE '%'
+                    LEFT JOIN reportdata USING (serial_number)
+                    $filter
+                    AND localadmin.users LIKE '%'
                     ORDER BY count DESC";
 
         foreach ($this->query($sql) as $obj) {

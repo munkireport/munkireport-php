@@ -31,7 +31,8 @@ $(document).on('appUpdate', function(e, lang) {
     panel.empty();
     // Set statuses
     panel.append(' <a href="'+baseUrl+'clean" class="btn btn-success"><span class="bigger-150">'+data.Clean+'</span><br>'+i18n.t('detectx.widget.clean')+'</a>');
-    panel.append(' <a href="'+baseUrl+'infected" class="btn btn-danger"><span class="bigger-150">'+data.Infected+'</span><br>'+i18n.t('detectx.widget.infected')+'</a>');
+    panel.append(' <a href="'+baseUrl+'issues" class="btn btn-warning"><span class="bigger-150">'+data.Issues+'</span><br>'+i18n.t('detectx.widget.issues')+'</a>');
+	panel.append(' <a href="'+baseUrl+'infected" class="btn btn-danger"><span class="bigger-150">'+data.Infected+'</span><br>'+i18n.t('detectx.widget.infected')+'</a>');
 
   });
 });

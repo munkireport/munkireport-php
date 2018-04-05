@@ -13,7 +13,29 @@ if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO
 	$_SERVER['HTTPS'] = 'on';
 }
 
+/**
+ * Fatal error, show message and die
+ *
+ * @author AvB
+ **/
+function fatal($msg)
+{
+    include('assets/html/fatal_error.html');
+    exit(1);
+}
+
+//===============================================
+// Autoloading
+//===============================================
+if ((include APP_ROOT . "vendor/autoload.php") === false)
+{
+    fatal("vendor/autoload.php is missing!<br>
+Please run `composer install` in the munkireport directory</p>");
+}
+
 // Load config
+require APP_ROOT.'app/helpers/config_helper.php';
+initDotEnv();
 load_conf();
 
 // Load conf (keeps variables out of global space)
@@ -86,18 +108,6 @@ function sess_set($sess_item, $value)
 	return true;
 }
 
-/**
- * Fatal error, show message and die
- *
- * @author AvB
- **/
-function fatal($msg)
-{
-	include('assets/html/fatal_error.html');
-	exit(1);
-}
-
-
 //===============================================
 // Defines
 //===============================================
@@ -121,16 +131,7 @@ error_reporting( conf('debug') ? E_ALL : 0 );
 require( SYS_PATH.'kissmvc.php' );
 require( APP_PATH.'helpers/site_helper'.EXT );
 
-//===============================================
-// Autoloading
-//===============================================
 spl_autoload_register('munkireport_autoload');
-if ((include APP_ROOT . "vendor/autoload.php") === false)
-{
-	fatal("vendor/autoload.php is missing!<br>
-Please run `composer install` in the munkireport directory</p>");
-}
-
 
 //===============================================
 // Timezone

@@ -283,6 +283,7 @@ var mr = {
             "30ae": "Lenovo",
             "469": "Asus",
             "4249": "Insignia",
+            "41d2": "Planar",
             "5c85": "Westinghouse"
         }
 

@@ -113,7 +113,7 @@ class Gpu_model extends \Model {
             $this->rs['model'] = str_replace(array("GMA","ATY,Radeon"),array("Intel GMA","ATI Radeon"),$this->rs['model']);
             
             // Fix vendors name
-            $this->rs['vendor'] = str_replace(array("sppci_vendor_amd","sppci_vendor_Nvidia"),array("AMD","NVIDIA"),$this->rs['model']);
+            $this->rs['vendor'] = str_replace(array("sppci_vendor_amd","sppci_vendor_Nvidia"),array("AMD","NVIDIA"),$this->rs['vendor']);
             
 			// Save the GPU
 			$this->id = '';
