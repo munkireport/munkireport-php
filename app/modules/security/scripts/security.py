@@ -31,7 +31,13 @@ def sip_check():
     if float(os.uname()[2][0:2]) >= 15:
         sp = subprocess.Popen(['csrutil', 'status'], stdout=subprocess.PIPE)
         out, err = sp.communicate()
-        if "enabled" in out:
+
+        # just read the first line of the output, the
+        # System Integrity Protection status: ....
+        # search for a full stop, as custom configurations don't have
+        # that there. 
+        first_line = stdout.split("\n")[0]
+        if "enabled." in out:
             return "Active"
         else:
             return "Disabled"
