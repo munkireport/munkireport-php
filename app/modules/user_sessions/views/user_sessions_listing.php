@@ -19,6 +19,7 @@ new User_sessions_model;
 		      	<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		      	<th data-i18n="event" data-colname='user_sessions.event'></th>
 		      	<th data-i18n="username" data-colname='user_sessions.user'></th>
+		      	<th data-i18n="user_sessions.uid" data-colname='user_sessions.uid'></th>		      	
 		      	<th data-i18n="user_sessions.ipaddress" data-colname='user_sessions.remote_ssh'></th>
 		      	<th data-i18n="user_sessions.time" data-colname='user_sessions.time'></th>
 		      </tr>
@@ -97,9 +98,9 @@ new User_sessions_model;
 	        	$('td:eq(2)', nRow).html(eventlocal)
 
 	        	// Format date
-	        	var event = parseInt($('td:eq(5)', nRow).html());
+	        	var event = parseInt($('td:eq(6)', nRow).html());
 	        	var date = new Date(event * 1000);
-	        	$('td:eq(5)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date).fromNow()+'</span>');
+	        	$('td:eq(6)', nRow).html('<span title="' + moment(date).format('llll') + '">'+moment(date).fromNow()+'</span>');
 
 		    }
 	    } );

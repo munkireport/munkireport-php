@@ -4,6 +4,7 @@
 		<tr>
             <th data-i18n="event"></th>
             <th data-i18n="username"></th>
+            <th data-i18n="user_sessions.uid"></th>
             <th data-i18n="user_sessions.ipaddress"></th>
             <th data-i18n="user_sessions.time"></th>
 		</tr>
@@ -14,6 +15,7 @@
         <tr>
           <td><?php echo str_replace(array('sshlogin','login','logout','shutdown','reboot'), array('SSH Login','Login','Logout','Shutdown','Reboot'), $item->event); ?></td>
           <td><?php echo $item->user; ?></td>
+          <td><?php echo $item->uid; ?></td>
           <td><?php echo $item->remote_ssh; ?></td>
           <td><?php echo date("Y-m-d H:i:s", $item->time); ?></td>
         </tr>
@@ -26,7 +28,7 @@
         // Initialize datatables
             $('.user_sessions').dataTable({
                 "bServerSide": false,
-                "aaSorting": [[3,'asc']]
+                "aaSorting": [[4,'asc']]
             });
   });
 </script>

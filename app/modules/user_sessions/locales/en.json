@@ -7,5 +7,6 @@
     "sshlogin": "SSH Login",
     "ipaddress": "Remote SSH IP Address",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "uid": "UID"
 }
