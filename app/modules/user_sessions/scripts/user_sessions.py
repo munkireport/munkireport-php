@@ -55,8 +55,8 @@ class utmpx(Structure):
                ]
 
 
-def get_uid(uid):
-    cmd = ['/usr/bin/id', '-u', uid]
+def get_uid(username):
+    cmd = ['/usr/bin/id', '-u', username]
     proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
