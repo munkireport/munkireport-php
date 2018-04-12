@@ -241,6 +241,22 @@
 
 	/*
 	|===============================================
+	| LaunchDaemons - label ignore list
+	|===============================================
+	|
+	| List of launchdaemon to be ignored when processing daemons
+	| The list is processed using regex, examples:
+	|
+	| For example to skip all Apple daemons and agents
+	| $conf['launchdaemon_ignorelist'][] = ['com.apple.*'];
+	|
+	*/
+	$conf['launchdaemon_ignorelist'] = [
+	    '',
+	];
+
+	/*
+	|===============================================
 	| Inventory - bundle ignore list
 	|===============================================
 	|

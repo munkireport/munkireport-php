@@ -185,10 +185,20 @@ class Launchdaemons_model extends \Model
                 'hardresourcelimitsresidentsetsize' => 'hardresourcelimitsresidentsetsize',
                 'hardresourcelimitsstack' => 'hardresourcelimitsstack'
             );
+            
+            // List of labels to ignore
+            $label_ignorelist = is_array(conf('launchdaemon_ignorelist')) ? conf('launchdaemon_ignorelist') : array();
+            $regex = '/^'.implode('|', $label_ignorelist).'$/';
 
             // Traverse the xml with translations
             foreach ($plist as $daemon) {
                 foreach ($translate as $search => $field) {
+                    
+                    // Check if we should skip this daemon
+                    if (preg_match($regex, $daemon[$label])) {
+                        continue;
+                    }
+                    
                     // If key does not exist in $plist, null it
                     if ( ! array_key_exists($search, $daemon) || $daemon[$search] == '') {
                         $this->$field = null;
