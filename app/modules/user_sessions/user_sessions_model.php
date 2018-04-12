@@ -12,7 +12,7 @@ class User_sessions_model extends \Model {
 		$this->rs['event'] = '';
 		$this->rs['time'] = 0;
 		$this->rs['user'] = '';
-		$this->rs['uid'] = 0;
+		$this->rs['uid'] = NULL;
 		$this->rs['remote_ssh'] = '';
 
 		// Schema version, increment when creating a db migration
@@ -56,7 +56,7 @@ class User_sessions_model extends \Model {
 			'event' => '',
 			'time' => 0,
 			'user' => '',
-			'uid' => 0,
+			'uid' => NULL,
 			'remote_ssh' => ''
 		);
 
