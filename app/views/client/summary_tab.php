@@ -143,7 +143,7 @@
 				(<span class="mr-console_user"></span>)</td>
 				</tr>
 				<tr>
-					<th data-i18n="user_sessions.uid"></th><td><span class="mr-uid"></span></td>
+					<th data-i18n="user_sessions.last_user_uid"></th><td><span class="mr-uid"></span></td>
 				</tr>
 				<tr>
 					<th data-i18n="user.local_admins"></th><td class="mr-users"></td>
