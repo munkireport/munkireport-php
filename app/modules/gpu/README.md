@@ -15,6 +15,6 @@ Database:
 * efi_version - varchar(255) - EFI driver version of card
 * revision_id - varchar(255) - Revision ID
 * rom_revision - varchar(255) - ROM version of GPU
-* metal - int(11) - boolean of is Metal supported on GPU
+* metal - int(11) - What version of Metal supported on GPU
 
 

@@ -107,7 +107,10 @@ new Gpu_model;
                 
 	        	// Metal supported
 	        	var metal=$('td:eq(7)', nRow).html();
-	        	metal = metal == '1' ? i18n.t('yes') :
+	        	metal = metal == '4' ? i18n.t('gpu.metal4') :
+	        	metal = metal == '3' ? i18n.t('gpu.metal3') :
+	        	metal = metal == '2' ? i18n.t('gpu.metal2') :
+	        	metal = metal == '1' ? i18n.t('gpu.metal1') :
 	        	(metal === '0' ? i18n.t('no') : '')
 	        	$('td:eq(7)', nRow).html(metal)
                 
