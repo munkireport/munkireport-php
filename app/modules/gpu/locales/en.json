@@ -5,6 +5,7 @@
     "nogpu": "No GPUs Found",
     "model": "Model",
     "vendor": "Vendor",
+    "metal": "Metal Support",
     "vram": "Video Memory",
     "vram_short": "VRAM",
     "vram_shared": "Shared Video Memory",

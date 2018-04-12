@@ -19,6 +19,7 @@ class Gpu_model extends \Model {
 		$this->rs['efi_version'] = '';
 		$this->rs['revision_id'] = '';
 		$this->rs['rom_revision'] = '';
+		$this->rs['metal_supported'] = 0;
 
 		$this->serial_number = $serial;
 	}
@@ -80,6 +81,7 @@ class Gpu_model extends \Model {
 			'efi_version' => '',
 			'revision_id' => '',
 			'rom_revision' => '',
+			'metal' => '',
 		);
 		
 		foreach ($myList as $device) {
