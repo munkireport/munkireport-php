@@ -13,24 +13,15 @@ class backup2go_model extends \Model {
 
 		//initialise tables
 		$this->rs['id'] = 0;
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial;
 		$this->rs['backupdate'] = '';
         
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
+    if ($serial)
+    {
+        $this->retrieve_record($serial);
+    }
 
-		// id is serial number
-		$this->idx[] = array('serial_number');
-		
-        // Create table if it does not exist
-       //$this->create_table();
-
-        if ($serial)
-        {
-            $this->retrieve_record($serial);
-        }
-
-        $this->serial = $serial;
+    $this->serial = $serial;
 	}
 
 	/**

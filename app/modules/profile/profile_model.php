@@ -5,25 +5,15 @@ class Profile_model extends \Model
     {
         parent::__construct('id', 'profile'); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+        $this->rs['serial_number'] = $serial;
         $this->rs['profile_uuid'] = ''; //
         $this->rs['profile_name'] = ''; //
         $this->rs['profile_removal_allowed'] = ''; //Yes or No
         $this->rs['payload_name'] = ''; //
         $this->rs['payload_display'] = ''; //
         $this->rs['payload_data'] = '';
-        $this->rt['payload_data'] = 'BLOB'; // Payload can exceed 255 chars
         $this->rs['timestamp'] = 0; // Unix time when the report was uploaded
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-        
-        //indexes to optimize queries
-        $this->idx[] = array('profile_uuid');
-        $this->idx[] = array('serial_number');
-        
-        // Create table if it does not exist
-       //$this->create_table();
-        
+
         if ($serial) {
             $this->retrieve_record($serial);
         }
@@ -45,6 +35,22 @@ class Profile_model extends \Model
         $json_string = str_replace('null', 'No payload', $json_string);
         return '<div style="white-space: pre-wrap">'.$json_string.'</div>';
     }
+
+     public function get_profiles()
+     {
+        $out = array();
+        $sql = "SELECT profile_name, COUNT(DISTINCT serial_number) AS count FROM profile 
+                GROUP BY profile_name
+                ORDER BY COUNT DESC";
+        
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->profile_name = $obj->profile_name ? $obj->profile_name : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
     
     // ------------------------------------------------------------------------
     /**

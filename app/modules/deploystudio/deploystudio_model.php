@@ -10,7 +10,6 @@ class Deploystudio_model extends \Model
         parent::__construct('id', 'deploystudio'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial;
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['architecture'] = '';
         $this->rs['cn'] = '';
         $this->rs['dstudio_auto_disable'] = '';
@@ -36,20 +35,7 @@ class Deploystudio_model extends \Model
         $this->rs['dstudio_last_workflow_execution_date'] = '';
         $this->rs['dstudio_last_workflow_status'] = '';
         $this->rs['dstudio_mac_addr'] = '';
-        
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-        
-        // Add indexes
-        $this->idx[] = array('dstudio_host_serial_number');
-        $this->idx[] = array('dstudio_hostname');
-        $this->idx[] = array('dstudio_mac_addr');
-        $this->idx[] = array('dstudio_last_workflow');
-        $this->idx[] = array('cn');
-        
-        // Create table if it does not exist
-       //$this->create_table();
-        
+
         if ($serial) {
             $this->retrieve_record($serial);
         }

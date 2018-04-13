@@ -198,7 +198,7 @@ class Disk_report_model extends \Model
                 // Check SMART Status
                 if ($this->smartstatus=='Failing') {
                     $type = 'danger';
-                    $msg = 'smartstatus_failing';
+                    $msg = 'disk_report.smartstatus_failing';
                 }
                 foreach (conf('disk_thresholds', array()) as $name => $value) {
                     if ($this->freespace < $value * 1000000000) {

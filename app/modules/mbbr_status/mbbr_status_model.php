@@ -9,19 +9,9 @@ class mbbr_status_model extends \Model
         parent::__construct('id', 'mbbr_status'); //primary key, tablename
         $this->rs['id'] = 0;
         $this->rs['serial_number'] = $serial;
-        $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
         $this->rs['entitlement_status'] = '';
         $this->rs['machine_id'] = '';
         $this->rs['install_token'] = '';
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-        // Add indexes
-        $this->idx[] = array('entitlement_status');
-        $this->idx[] = array('machine_id');
-        $this->idx[] = array('install_token');
-
-        // Create table if it does not exist
-       //$this->create_table();
 
         if ($serial) {
             $this->retrieve_record($serial);

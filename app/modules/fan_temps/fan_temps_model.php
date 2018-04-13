@@ -8,7 +8,7 @@ class Fan_temps_model extends \Model {
 	{
 		parent::__construct('id', 'fan_temps'); //primary key, tablename
 		$this->rs['id'] = 0;
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial;
 		$this->rs['fan_0'] = 0;
 		$this->rs['fan_1'] = 0;
 		$this->rs['fan_2'] = 0;
@@ -295,76 +295,7 @@ class Fan_temps_model extends \Model {
 		$this->rs['ttrd'] = 0.0;
 		$this->rs['tw0p'] = 0.0;
 		$this->rs['tw0p2'] = 0.0;
-        		
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 1;
 
-        // Indexes to optimize queries
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('ta0p');
-        $this->idx[] = array('tc0f');
-        $this->idx[] = array('tc0d');
-        $this->idx[] = array('tc0p');
-        $this->idx[] = array('tb0t');
-        $this->idx[] = array('tb1t');
-        $this->idx[] = array('tb2t');
-        $this->idx[] = array('tg0d');
-        $this->idx[] = array('tg0h');
-        $this->idx[] = array('tg0p');
-        $this->idx[] = array('th0p');
-        $this->idx[] = array('th0h');
-        $this->idx[] = array('th1h');
-        $this->idx[] = array('th2h');
-        $this->idx[] = array('tm0s');
-        $this->idx[] = array('tm0p');
-        $this->idx[] = array('ts0p');
-        $this->idx[] = array('tl0p');
-        $this->idx[] = array('tm0p4');
-        $this->idx[] = array('tn0h');
-        $this->idx[] = array('tn0d');
-        $this->idx[] = array('tn0p');
-        $this->idx[] = array('tp0p');
-        $this->idx[] = array('discin');
-        $this->idx[] = array('fan_0');
-        $this->idx[] = array('fan_1');
-        $this->idx[] = array('fan_2');
-        $this->idx[] = array('fan_3');
-        $this->idx[] = array('fan_4');
-        $this->idx[] = array('fan_5');
-        $this->idx[] = array('fan_6');
-        $this->idx[] = array('fan_7');
-        $this->idx[] = array('fan_8');
-        $this->idx[] = array('fanmin0');
-        $this->idx[] = array('fanmin1');
-        $this->idx[] = array('fanmin2');
-        $this->idx[] = array('fanmin3');
-        $this->idx[] = array('fanmin4');
-        $this->idx[] = array('fanmin5');
-        $this->idx[] = array('fanmin6');
-        $this->idx[] = array('fanmin7');
-        $this->idx[] = array('fanmin8');
-        $this->idx[] = array('fanmax0');
-        $this->idx[] = array('fanmax1');
-        $this->idx[] = array('fanmax2');
-        $this->idx[] = array('fanmax3');
-        $this->idx[] = array('fanmax4');
-        $this->idx[] = array('fanmax5');
-        $this->idx[] = array('fanmax6');
-        $this->idx[] = array('fanmax7');
-        $this->idx[] = array('fanmax8');
-        $this->idx[] = array('fanlabel0');
-        $this->idx[] = array('fanlabel1');
-        $this->idx[] = array('fanlabel2');
-        $this->idx[] = array('fanlabel3');
-        $this->idx[] = array('fanlabel4');
-        $this->idx[] = array('fanlabel5');
-        $this->idx[] = array('fanlabel6');
-        $this->idx[] = array('fanlabel7');
-        $this->idx[] = array('fanlabel8');
-        
-		// Create table if it does not exist
-		//$this->create_table();
-		
 		if ($serial)
 		{
 			$this->retrieve_record($serial);

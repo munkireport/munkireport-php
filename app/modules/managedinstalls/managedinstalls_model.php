@@ -18,26 +18,9 @@ class managedinstalls_model extends \Model
         $this->rs['status'] = ''; // installed, pending, failed
         $this->rs['type'] = ''; // munki, applesus
 
-        // Add indexes
-        $this->idx[] = array('serial_number');
-        $this->idx[] = array('name');
-        $this->idx[] = array('version');
-        $this->idx[] = array('name', 'version');
-        $this->idx[] = array('display_name');
-        $this->idx[] = array('status');
-        $this->idx[] = array('type');
-
-        // Schema version, increment when creating a db migration
-        $this->schema_version = 0;
-
-        // Create table if it does not exist
-       //$this->create_table();
-
         if ($serial_number) {
             $this->retrieve_record($serial_number);
-            if (! $this->rs['serial_number']) {
-                $this->serial_number = $serial_number;
-            }
+            $this->serial_number = $serial_number;
         }
     }
 

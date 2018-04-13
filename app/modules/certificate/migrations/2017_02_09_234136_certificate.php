@@ -26,11 +26,11 @@ class Certificate extends Migration
         $capsule::schema()->create($this->tableName, function (Blueprint $table) {
               $table->increments('id');
               $table->string('serial_number');
-              $table->bigInteger('cert_exp_time');
-              $table->string('cert_path');
-              $table->string('cert_cn');
+              $table->bigInteger('cert_exp_time')->nullable();
+              $table->string('cert_path')->nullable();
+              $table->string('cert_cn')->nullable();
               $table->string('issuer')->nullable();
-              $table->string('cert_location');
+              $table->string('cert_location')->nullable();
         });
 
         if ($migrateData) {

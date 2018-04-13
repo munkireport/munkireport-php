@@ -3,37 +3,20 @@ class sccm_status_model extends \Model {
 
         public function __construct($serial='')
         {
-                parent::__construct('id', 'sccm_status'); //primary key, tablename
-                $this->rs['id'] = '';
-                $this->rs['serial_number'] = $serial;
-                $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-                $this->rs['agent_status'] = '';
-                $this->rs['mgmt_point'] = '';
-                $this->rs['enrollment_name'] = '';
-                $this->rs['enrollment_server'] = '';     
-                $this->rs['last_checkin'] = '';
-                $this->rs['cert_exp'] = '';       
+              parent::__construct('id', 'sccm_status'); //primary key, tablename
+              $this->rs['id'] = '';
+              $this->rs['serial_number'] = $serial;
+              $this->rs['agent_status'] = '';
+              $this->rs['mgmt_point'] = '';
+              $this->rs['enrollment_name'] = '';
+              $this->rs['enrollment_server'] = '';     
+              $this->rs['last_checkin'] = '';
+              $this->rs['cert_exp'] = '';       
 
-                // Schema version, increment when creating a db migration
-                $this->schema_version = 0;
-                
-                //indexes to optimize queries
-                $this->idx[] = array('agent_status');
-                $this->idx[] = array('mgmt_point');
-                $this->idx[] = array('enrollment_name');
-                $this->idx[] = array('enrollment_server');
-                $this->idx[] = array('last_checkin');
-                $this->idx[] = array('cert_exp');
-                
-                // Create table if it does not exist
-               //$this->create_table();
-                
-                if ($serial) {
-                        $this->retrieve_record($serial);
-                }
-                
-                $this->serial = $serial;
-                  
+              if ($serial) {
+                  $this->retrieve_record($serial);
+                  $this->serial = $serial;
+              }
         }
         
         // ------------------------------------------------------------------------

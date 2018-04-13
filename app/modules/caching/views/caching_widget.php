@@ -27,14 +27,22 @@ $(document).on('appUpdate', function(e, lang) {
 		// Set statuses
 		if(data.purgedbytes != "0"){
 			panel.append(' <a href="'+baseUrl+'" class="btn btn-warning"><span class="bigger-150">'+fileSize(data.purgedbytes, 2)+'</span><br>'+i18n.t('caching.purgedbytes')+'</a>');
-		}
-		if(data.fromorigin){
+		} else if(data.purgedbytes) {
+            panel.append(' <a href="'+baseUrl+'" class="btn btn-warning disabled"><span class="bigger-150">'+fileSize(data.purgedbytes, 2)+'</span><br>'+i18n.t('caching.purgedbytes')+'</a>');
+        }
+        
+		if(data.fromorigin != "0"){
 			panel.append(' <a href="'+baseUrl+'" class="btn btn-info"><span class="bigger-150">'+fileSize(data.fromorigin, 2)+'</span><br>'+i18n.t('caching.from_origin')+'</a>');
-		}
-		if(data.fromcache){
+		} else if(data.fromorigin) {
+            panel.append(' <a href="'+baseUrl+'" class="btn btn-info disabled"><span class="bigger-150">'+fileSize(data.fromorigin, 2)+'</span><br>'+i18n.t('caching.from_origin')+'</a>');
+        }
+        
+		if(data.fromcache != "0"){
 			panel.append(' <a href="'+baseUrl+'" class="btn btn-success"><span class="bigger-150">'+fileSize(data.fromcache, 2)+'</span><br>'+i18n.t('caching.from_cache')+'</a>');
-		}
-
+		} else if(data.fromcache) {
+            panel.append(' <a href="'+baseUrl+'" class="btn btn-success disabled"><span class="bigger-150">'+fileSize(data.fromcache, 2)+'</span><br>'+i18n.t('caching.from_cache')+'</a>');
+        }
+        
     });
 });
 </script>

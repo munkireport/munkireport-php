@@ -6,8 +6,10 @@ Extracts information about SIP, Gatekeeper, and users who have remote access.
 import os
 import sys
 import subprocess
-import plistlib
 import grp
+sys.path.insert(0, '/usr/local/munki')
+
+from munkilib import FoundationPlist
 
 def gatekeeper_check():
     """ Gatekeeper checks. Simply calls the spctl and parses status. Requires 10.7+"""
@@ -29,7 +31,13 @@ def sip_check():
     if float(os.uname()[2][0:2]) >= 15:
         sp = subprocess.Popen(['csrutil', 'status'], stdout=subprocess.PIPE)
         out, err = sp.communicate()
-        if "enabled" in out:
+
+        # just read the first line of the output, the
+        # System Integrity Protection status: ....
+        # search for a full stop, as custom configurations don't have
+        # that there. 
+        first_line = stdout.split("\n")[0]
+        if "enabled." in out:
             return "Active"
         else:
             return "Disabled"
@@ -136,11 +144,7 @@ def ard_access_check():
     # Thank you to @steffan for pointing out this plist key!
     plist_path = '/Library/Preferences/com.apple.RemoteManagement.plist'
     if os.path.exists(plist_path):
-        # plist lib likes to barf on binary plists, so hack around it by converting to xml
-        # TODO - use foundationplist to avoid conversion
-        sp = subprocess.Popen(['plutil', '-convert', 'xml1', plist_path])
-        out, err = sp.communicate()
-        plist = plistlib.readPlist(plist_path)
+        plist = FoundationPlist.readPlist(plist_path)
 
         if plist.get('ARD_AllLocalUsers', None):
             return "All users permitted"
@@ -248,7 +252,7 @@ def main():
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'security.plist')
-    plistlib.writePlist(result, output_plist)
+    FoundationPlist.writePlist(result, output_plist)
     
 if __name__ == "__main__":
     main()

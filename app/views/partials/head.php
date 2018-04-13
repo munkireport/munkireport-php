@@ -2,6 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
+	<meta name=apple-mobile-web-app-capable content=yes>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 

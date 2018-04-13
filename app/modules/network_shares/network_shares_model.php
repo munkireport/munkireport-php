@@ -15,20 +15,6 @@ class Network_shares_model extends \Model {
 		$this->rs['fsmtnonname'] = '';
 		$this->rs['automounted'] = 0; // True or False
 
-
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-
-		// Add indexes
-		$this->idx[] = array('name');
-		$this->idx[] = array('mntfromname');
-		$this->idx[] = array('fstypename');
-		$this->idx[] = array('fsmtnonname');
-		$this->idx[] = array('automounted');
-
-		// Create table if it does not exist
-		//$this->create_table();
-
 		$this->serial_number = $serial;
 	}
 

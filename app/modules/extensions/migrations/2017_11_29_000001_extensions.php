@@ -31,7 +31,7 @@ class Extensions extends Migration
             $table->string('version');
             $table->string('path');
             $table->string('codesign');
-            $table->string('executable');
+            $table->string('executable', 1024);
         });
 
         if ($migrateData) {
