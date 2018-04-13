@@ -26,10 +26,10 @@ $(document).on('appUpdate', function(e, lang) {
 
 		// Set statuses
         if(data.not_dep_enrolled){
-			panel.append(' <a href="'+baseUrl+'No" class="btn btn-warning"><span class="bigger-150">'+data.not_dep_enrolled+'</span><br>'+i18n.t('mdm_status.no')+'</a>');
+			panel.append(' <a href="'+baseUrl+'No" class="btn btn-danger"><span class="bigger-150">'+data.not_dep_enrolled+'</span><br>'+"  "+i18n.t('mdm_status.not_enrolled')+"  "+'</a>');
 		}
 		if(data.dep_enrolled){
-			panel.append(' <a href="'+baseUrl+'Yes" class="btn btn-success"><span class="bigger-150">'+data.dep_enrolled+'</span><br>'+i18n.t('mdm_status.yes')+'</a>');
+			panel.append(' <a href="'+baseUrl+'Yes" class="btn btn-success"><span class="bigger-150">'+data.dep_enrolled+'</span><br>'+"  "+i18n.t('mdm_status.dep_enrolled')+"  "+'</a>');
 		}
     });
 });

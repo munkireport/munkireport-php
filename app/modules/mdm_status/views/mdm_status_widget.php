@@ -2,7 +2,7 @@
     <div class="panel panel-default" id="mdm-status-widget">
         <div class="panel-heading" data-container="body" title="">
             <h3 class="panel-title"><i class="fa fa-cogs"></i>
-                <span data-i18n="mdm_status.mdm_enrolled"></span>
+                <span data-i18n="mdm_status.mdm_enrollment"></span>
                 <list-link data-url="/show/listing/mdm_status/mdm_status"></list-link>
             </h3>
         </div>
@@ -26,13 +26,16 @@ $(document).on('appUpdate', function(e, lang) {
 
 		// Set statuses
         if(data.mdm_no){
-			panel.append(' <a href="'+baseUrl+'No" class="btn btn-danger"><span class="bigger-150">'+data.mdm_no+'</span><br>'+i18n.t('mdm_status.no')+'</a>');
+			panel.append(' <a href="'+baseUrl+'No" class="btn btn-danger"><span class="bigger-150">'+data.mdm_no+'</span><br>'+i18n.t('mdm_status.not_enrolled')+'</a>');
 		}
-		if(data.mdm_yes){
-			panel.append(' <a href="'+baseUrl+'Yes" class="btn btn-warning"><span class="bigger-150">'+data.mdm_yes+'</span><br>'+i18n.t('mdm_status.yes')+'</a>');
+		if(data.non_uamdm){
+			panel.append(' <a href="'+baseUrl+'Yes" class="btn btn-warning"><span class="bigger-150">'+data.non_uamdm+'</span><br>'+i18n.t('mdm_status.non_uamdm')+'</a>');
 		}
-		if(data.mdm_yes_ua){
-			panel.append(' <a href="'+baseUrl+'Yes (User Approved)" class="btn btn-success"><span class="bigger-150">'+data.mdm_yes_ua+'</span><br>'+i18n.t('mdm_status.user_approved')+'</a>');
+        if(data.uamdm){
+			panel.append(' <a href="'+baseUrl+'Approved" class="btn btn-success"><span class="bigger-150">'+data.uamdm+'</span><br>'+i18n.t('mdm_status.uamdm')+'</a>');
+		}
+        if(data.dep_enrolled){
+			panel.append(' <a href="'+baseUrl+'Approved" class="btn btn-success"><span class="bigger-150">'+data.dep_enrolled+'</span><br>'+i18n.t('mdm_status.dep_enrolled')+'</a>');
 		}
     });
 });
