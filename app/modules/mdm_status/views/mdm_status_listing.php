@@ -21,7 +21,7 @@ new Mdm_status_model;
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="mdm_status.mdm_enrolled_via_dep" data-colname='mdm_status.mdm_enrolled_via_dep'></th>
-		        <th data-i18n="mdm_status.mdm_enrolled" data-colname='mdm_status.mdm_enrolled'></th>
+		        <th data-i18n="mdm_status.mdm_enrollment" data-colname='mdm_status.mdm_enrolled'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
