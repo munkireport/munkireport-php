@@ -23,6 +23,7 @@ new Gpu_model;
 			<th data-i18n="gpu.vram_short" data-colname='gpu.vram'></th>
 			<th data-i18n="gpu.pcie_width" data-colname='gpu.pcie_width'></th>
 			<th data-i18n="gpu.slot_name" data-colname='gpu.slot_name'></th>
+			<th data-i18n="gpu.metal" data-colname='gpu.metal'></th>
 			<th data-i18n="gpu.device_id" data-colname='gpu.device_id'></th>
 			<th data-i18n="gpu.efi_version" data-colname='gpu.efi_version'></th>
 			<th data-i18n="gpu.revision_id" data-colname='gpu.revision_id'></th>
@@ -32,7 +33,7 @@ new Gpu_model;
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 
@@ -103,6 +104,15 @@ new Gpu_model;
 	        	var sn=$('td:eq(1)', nRow).html();
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_gpu-tab');
 	        	$('td:eq(0)', nRow).html(link);
+                
+	        	// Metal supported
+	        	var metal=$('td:eq(7)', nRow).html();
+	        	metal = metal == '4' ? i18n.t('gpu.metal4') :
+	        	metal = metal == '3' ? i18n.t('gpu.metal3') :
+	        	metal = metal == '2' ? i18n.t('gpu.metal2') :
+	        	metal = metal == '1' ? i18n.t('gpu.metal1') :
+	        	(metal === '0' ? i18n.t('no') : '')
+	        	$('td:eq(7)', nRow).html(metal)
                 
 		    }
 	    });
