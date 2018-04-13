@@ -208,7 +208,7 @@
 			<h4><i class="fa fa-cogs"></i> <span data-i18n="mdm_status.title"></span></h4>
 			<table>
 				<tr>
-					<th data-i18n="mdm_status.mdm_enrolled"></th><td><span class="mr-mdm_enrolled"></span></td>
+					<th data-i18n="mdm_status.mdm_enrollment"></th><td><span class="mr-mdm_enrolled"></span></td>
 				</tr>
 				<tr>
 					<th data-i18n="mdm_status.mdm_enrolled_via_dep"></th><td class="mr-mdm_enrolled_via_dep"></td>
