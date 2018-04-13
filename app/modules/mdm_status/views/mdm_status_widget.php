@@ -29,7 +29,7 @@ $(document).on('appUpdate', function(e, lang) {
 			panel.append(' <a href="'+baseUrl+'No" class="btn btn-danger"><span class="bigger-150">'+data.mdm_no+'</span><br>'+i18n.t('mdm_status.no')+'</a>');
 		}
 		if(data.mdm_yes){
-			panel.append(' <a href="'+baseUrl+'Yes" class="btn btn-warning"><span class="bigger-150">'+data.mdm_yes+'</span><br>'+i18n.t('mdm_status.yes')+'</a>');
+			panel.append(' <a href="'+baseUrl+'Yes" class="btn btn-success"><span class="bigger-150">'+data.mdm_yes+'</span><br>'+i18n.t('mdm_status.dep')+'</a>');
 		}
 		if(data.mdm_yes_ua){
 			panel.append(' <a href="'+baseUrl+'Yes (User Approved)" class="btn btn-success"><span class="bigger-150">'+data.mdm_yes_ua+'</span><br>'+i18n.t('mdm_status.user_approved')+'</a>');
