@@ -12,7 +12,7 @@ import sys
 
 
 def get_gpu_info():
-    '''Uses system profiler to get gpu info for this machine.'''
+    '''Uses system profiler to get GPU info for this machine.'''
     cmd = ['/usr/sbin/system_profiler', 'SPDisplaysDataType', '-xml']
     proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
                             stdin=subprocess.PIPE,
@@ -28,7 +28,7 @@ def get_gpu_info():
         return {}
 
 def flatten_gpu_info(array):
-    '''Un-nest USB devices, return array with objects with relevant keys'''
+    '''Un-nest GPUs, return array with objects with relevant keys'''
     out = []
     for obj in array:
         device = {'model': ''}
@@ -59,6 +59,16 @@ def flatten_gpu_info(array):
                 device['slot_name'] = obj[item]
             elif item == 'spdisplays_ndrvs':
                 device['ndrvs'] = obj[item]
+            elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily14':
+                device['metal_supported'] = 4
+            elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily13':
+                device['metal_supported'] = 3 
+            elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_metalfeaturesetfamily12':
+                device['metal_supported'] = 2
+            elif item == 'spdisplays_metal' and (obj[item] == 'spdisplays_supported' or obj[item] == 'spdisplays_metalfeaturesetfamily11'):
+                device['metal_supported'] = 1
+            elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_notsupported':
+                device['metal_supported'] = 0
         out.append(device)
     return out
     
@@ -81,7 +91,7 @@ def main():
     info = get_gpu_info()
     result = flatten_gpu_info(info)
     
-        # Write bluetooth results to cache
+    # Write GPU results to cache
     output_plist = os.path.join(cachedir, 'gpuinfo.plist')
     plistlib.writePlist(result, output_plist)
     #print plistlib.writePlistToString(result)

@@ -73,7 +73,7 @@
         $_SERVER['PHP_SELF'],
         0,
         strpos($_SERVER['PHP_SELF'], basename(FC))
-    );
+        );
 	$conf['subdirectory'] = getenv_default('SUBDIRECTORY', $subdirectory_default);
 
 	/*
@@ -97,10 +97,10 @@
 	$conf['hide_inactive_modules'] = getenv_default('HIDE_INACTIVE_MODULES', true, 'bool');
 
 	/*
-    |===============================================
-    | Local Admin Threshold Value
-    |===============================================
-    |
+        |===============================================
+        | Local Admin Threshold Value
+        |===============================================
+        |
 	| This value specifies the minimum number of local admin accounts needed to
 	|	list the computer in the Local Admin Report.  Default is 2.
 	*/
@@ -250,6 +250,13 @@
 	| VNC, SSH, and TeamViewer links, optional links in the client detail view
 	|===============================================
 	|
+	| Substitutions key:
+	|   %s = remote IP
+	|   %remote_ip = remote IP (same as above but easier to read in the config)
+        |   %u = logged in username
+        |   %network_ip_v4 = local network ipv4 address
+        |   %network_ip_v6 = local network ipv6 address
+	|
 	| If you want to have link that opens a screensharing or SSH
 	| connection to a client, enable these settings. If you don't
 	| want the links, set either to an empty string, eg:
@@ -258,7 +265,6 @@
 	| If you want to authenticate with SSH using the currently logged in user 
 	| replace the username in the SSH config with %u: 
 	| $conf['ssh_link'] = "ssh://%u@%s";
-	|
 	*/
 
 	$conf['vnc_link'] = getenv_default('VNC_LINK', "vnc://%s:5900");
@@ -289,7 +295,7 @@
         'com.vmware.proxyApp.*',
         'com.apple.print.PrinterProxy',
         'com.google.Chrome.app.*',
-    ];
+        ];
 	$conf['bundleid_ignorelist'] = getenv_default('BUNDLEID_IGNORELIST', $default_ignorelist, 'array');
 
 	/*
@@ -313,8 +319,33 @@
         '/.DocumentRevisions-V100/.*',
         '/Library/Application Support/Adobe/Uninstall/.*',
         '.*/Library/Application Support/Google/Chrome/Default/Web Applications/.*',
-    ];
+        ];
 	$conf['bundlepath_ignorelist'] = getenv_default('BUNDLEPATH_IGNORELIST', $default_path_ignorelist, 'array');
+
+	/*
+	|===============================================
+	| Application Usage - bundle ID ignore list
+	|===============================================
+	|
+	| List of bundle-ID's to be ignored when processing application usage
+	| The list is processed using regex, examples:
+	|
+	| Skip  all virtual windows apps created by parallels and VMware
+	| $conf['bundleid_ignorelist'][] = ['com.parallels.winapp.*', 'com.vmware.proxyApp.*'];
+	|
+	| Skip all Apple apps, except iLife, iWork and Server
+	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
+	|
+	| Skip all apps with empty bundle-id's
+	| '^$'
+	|
+	*/
+	$conf['appusage_ignorelist'] = [
+	    'com.apple.SecurityAgent',
+	    'com.apple.cloudphotosd',
+	    'com.apple.dock.extra',
+	    'com.apple.PowerChime*',
+	];
 
 	/*
 	|===============================================
@@ -365,6 +396,19 @@
 	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443'; // no trailing slash
 	$conf['deploystudio_username'] = 'deploystudio_user';
 	$conf['deploystudio_password'] = 'deploystudio_password';
+
+	/*
+	|===============================================
+	| Legacy Caching Listing
+	|===============================================
+	|
+	| Starting with 10.13, Apple changed the caching server. In MunkiReport,
+	| you can hide the legacy caching server listing that shows an itemized
+	| listing for all caching server transactions for caching servers running
+	| 10.8-10.12. To hide the "Caching (Legacy)" listing, set this to FALSE.
+	|
+	*/
+	$conf['caching_show_legacy'] = TRUE;
 
 	/*
 	|===============================================
@@ -419,7 +463,7 @@
 	| checked.
 	|
 	*/
-    $default_curl_cmd = [
+        $default_curl_cmd = [
         "/usr/bin/curl",
         "--fail",
         "--silent",
@@ -438,7 +482,7 @@
 	| To learn more about MWA2 visit: https://github.com/munki/mwa2
 	|
 	*/
-    $conf['mwa2_link'] = getenv_default('MWA2_LINK');
+        $conf['mwa2_link'] = getenv_default('MWA2_LINK');
 
 	/*
 	|===============================================
@@ -732,7 +776,7 @@
 	$conf['disk_thresholds'] = [
 	    'danger' => getenv_default('DISK_REPORT_THRESHOLD_DANGER', 5, 'int'),
         'warning' => getenv_default('DISK_REPORT_THRESHOLD_WARNING', 10, 'int')
-    ];
+        ];
 
 	/*
 	|===============================================
@@ -801,7 +845,7 @@
 	    $conf['connection']['strict'] = getenv_default('CONNECTION_STRICT', true, 'bool');
 	    $conf['connection']['engine'] = getenv_default('CONNECTION_ENGINE', 'InnoDB');
 	    // TODO: connection options
-    }
+        }
 
 	/*
 	|===============================================
@@ -827,6 +871,7 @@
         |                 dont want the custom 403 page
         |
         */
+
         /*
         | $conf['auth']['network'] = [
         |     'whitelist_ipv4' => [
@@ -836,7 +881,6 @@
         |     'redirect_unauthorized' => 'http://fqdn/403.html',
         | ]
         */
-        
 
 	/*
 	|===============================================
@@ -847,7 +891,6 @@
 	|
 	*/
 	$conf['timezone'] = @date_default_timezone_get();
-
 
 	/*
 	|===============================================
