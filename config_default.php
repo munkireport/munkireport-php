@@ -250,6 +250,13 @@
 	| VNC and SSH links, optional links in the client detail view
 	|===============================================
 	|
+	| Substitutions key:
+	|   %s = remote IP
+	|   %remote_ip = remote IP (same as above but easier to read in the config)
+        |   %u = logged in username
+        |   %network_ip_v4 = local network ipv4 address
+        |   %network_ip_v6 = local network ipv6 address
+	|
 	| If you want to have link that opens a screensharing or SSH
 	| connection to a client, enable these settings. If you don't
 	| want the links, set either to an empty string, eg:
@@ -258,7 +265,6 @@
 	| If you want to authenticate with SSH using the currently logged in user 
 	| replace the username in the SSH config with %u: 
 	| $conf['ssh_link'] = "ssh://%u@%s";
-	|
 	*/
 	$conf['vnc_link'] = getenv_default('VNC_LINK', "vnc://%s:5900");
 	$conf['ssh_link'] = getenv_default('SSH_LINK',"ssh://adminuser@%s");
