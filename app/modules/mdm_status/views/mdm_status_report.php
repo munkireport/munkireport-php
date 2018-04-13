@@ -9,7 +9,7 @@
  	<div class="row">
 
 		<?php $widget->view($this, 'mdm_status'); ?>
-		<?php $widget->view($this, 'enrollment_type'); ?>
+		<?php $widget->view($this, 'enrolled_via_dep'); ?>
 
 	</div> <!-- /row -->
 

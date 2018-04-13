@@ -9,12 +9,12 @@ class Mdm_status_model extends \Model
         parent::__construct('id', 'mdm_status'); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['serial_number'] = $serial; //$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-        $this->rs['mdm_enrollment_type'] = '';
+        $this->rs['mdm_enrolled_via_dep'] = '';
         $this->rs['mdm_enrolled'] = '';
         
         // Add indexes
         $this->idx[] = array('serial_number');
-        $this->idx[] = array('mdm_enrollment_type');
+        $this->idx[] = array('mdm_enrolled_via_dep');
         $this->idx[] = array('mdm_enrolled');
 
         // Schema version, increment when creating a db migration
@@ -46,7 +46,7 @@ class Mdm_status_model extends \Model
 
         $plist = $parser->toArray();
 
-        foreach (array('mdm_enrollment_type', 'mdm_enrolled') as $item) {
+        foreach (array('mdm_enrolled_via_dep', 'mdm_enrolled') as $item) {
             if (isset($plist[$item])) {
                 $this->$item = $plist[$item];
             } else {
@@ -56,10 +56,10 @@ class Mdm_status_model extends \Model
         $this->save();
     }
 
-    public function get_mdm_enrollment_type_stats()
+    public function get_mdm_enrolled_via_dep_stats()
     {
-        $sql = "SELECT COUNT(CASE WHEN mdm_enrollment_type = 'DEP' THEN 1 END) AS dep, 
-			COUNT(CASE WHEN mdm_enrollment_type = 'Non-DEP' THEN 1 END) AS non_dep
+        $sql = "SELECT COUNT(CASE WHEN mdm_enrolled_via_dep = 'Yes' THEN 1 END) AS dep_enrolled, 
+			COUNT(CASE WHEN mdm_enrolled_via_dep = 'No' THEN 1 END) AS not_dep_enrolled
 			FROM mdm_status
 			LEFT JOIN reportdata USING (serial_number)
 			".get_machine_group_filter();

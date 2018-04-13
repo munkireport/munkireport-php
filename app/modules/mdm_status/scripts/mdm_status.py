@@ -19,20 +19,22 @@ def get_mdm_status():
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (output, unused_error) = proc.communicate()
     
+    enrolled_via_dep = ''
+    mdm_enrollment = ''
     values = output.split('\n')
     for value in values:
         if "Enrolled via DEP:" in value:
-            enrollment_yes_no = value.split(':')[1].lstrip()
-            if "Yes" in enrollment_yes_no:
-                enrollment_type = "DEP"
+            enrolled_via_dep = value.split(':')[1].lstrip()
+            if "Yes" in enrolled_via_dep:
+                enrolled_via_dep = "Yes"
             else:
-                enrollment_type = "Non-DEP"
+                enrolled_via_dep = "No"
                 
         if "MDM enrollment:" in value:
             mdm_enrollment = value.split(':')[1].lstrip()
             
     result = {}
-    result.update({'mdm_enrollment_type': enrollment_type})
+    result.update({'mdm_enrolled_via_dep': enrolled_via_dep})
     result.update({'mdm_enrolled': mdm_enrollment})
     return result
 
@@ -60,7 +62,7 @@ def main():
             exit(0)
     
     if getMinorOsVersion() <= 13 and getPatchOsVersion() < 4:
-        #result = {'mdm_enrolled': 'Output Not Supported', 'enrollment_type': 'Output Not Supported'}
+        #result = {'mdm_enrolled': 'Output Not Supported', 'enrolled_via_dep': 'Output Not Supported'}
         exit(0) # OS not supported, don't report anything
     else:
         # Get results

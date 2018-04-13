@@ -16,10 +16,10 @@ class MDMStatusInitialize extends Migration
             $table->increments('id');
             $table->string('serial_number')->unique();
             $table->string('mdm_enrolled')->default('');
-            $table->string('mdm_enrollment_type')->default('');
+            $table->string('mdm_enrolled_via_dep')->default('');
 
             $table->index('mdm_enrolled');
-            $table->index('mdm_enrollment_type');
+            $table->index('mdm_enrolled_via_dep');
         });
     }
 

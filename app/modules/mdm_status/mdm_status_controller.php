@@ -45,7 +45,7 @@ class Mdm_status_controller extends Module_controller
         $obj->view('json', array('msg' => $out));
     }
 
-    public function get_mdm_enrollment_type_stats()
+    public function get_mdm_enrolled_via_dep_stats()
     {
         $obj = new View();
 
@@ -55,7 +55,7 @@ class Mdm_status_controller extends Module_controller
         }
 
         $mdm_type = new Mdm_status_model;
-        $obj->view('json', array('msg' => $mdm_type->get_mdm_enrollment_type_stats()));
+        $obj->view('json', array('msg' => $mdm_type->get_mdm_enrolled_via_dep_stats()));
     }
 
     public function get_mdm_stats()

@@ -50,12 +50,13 @@ class clients extends Controller
                         r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
 			s.gatekeeper, s.sip, s.ssh_users, s.ard_users, s.firmwarepw, s.firewall_state, s.skel_state,
 			w.purchase_date, w.end_date, w.status, l.users, d.totalsize, d.freespace,
-                        d.smartstatus, d.encrypted
+                        d.smartstatus, d.encrypted, mdm.mdm_enrolled, mdm.mdm_enrolled_via_dep
                 FROM machine m
                 LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
                 LEFT JOIN security s ON (m.serial_number = s.serial_number)
                 LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
                 LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
+                LEFT JOIN mdm_status mdm ON (m.serial_number = mdm.serial_number)
                 LEFT JOIN diskreport d ON (m.serial_number = d.serial_number AND d.mountpoint = '/')
                 WHERE m.serial_number = ?
                 ";

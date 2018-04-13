@@ -20,7 +20,7 @@ new Mdm_status_model;
 		        <th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="mdm_status.mdm_enrollment_type" data-colname='mdm_status.mdm_enrollment_type'></th>
+		        <th data-i18n="mdm_status.mdm_enrolled_via_dep" data-colname='mdm_status.mdm_enrolled_via_dep'></th>
 		        <th data-i18n="mdm_status.mdm_enrolled" data-colname='mdm_status.mdm_enrolled'></th>
 		      </tr>
 		    </thead>
