@@ -27,7 +27,7 @@ new Directory_service_model;
 		        <th data-i18n="directory_service.mobileaccount" data-colname='directoryservice.createmobileaccount'></th>
 		        <th data-i18n="directory_service.networkprotocol" data-colname='directoryservice.networkprotocoltobeused'></th>
 		        <th data-i18n="directory_service.admin_groups" data-colname='directoryservice.allowedadmingroups'></th>
-		        <th data-i18n="directory_service.bound" data-colname='direcoryservice.bound'></th>
+		        <th data-i18n="directory_service.bound" data-colname='directoryservice.bound'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
