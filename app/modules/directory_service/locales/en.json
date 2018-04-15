@@ -35,11 +35,11 @@
     "packetsigning": "Packet Signing",
     "passwordchangeinterval": "Password Change Interval",
     "preferreddomaincontroller": "Preferred Domain Controller",
-    "report": "Directory Services Report"
+    "report": "Directory Services Report",
     "requireconfirmation": "Require Confirmation",
     "restrictdynamicdnsupdates": "Restrict Dynamic DNS Updates",
     "title": "Directory Services",
     "user_experience": "Advanced Options - User Experience",
     "usewindowsuncpathforhome": "Use Windows UNC Path for Home",
-    "which_directory_service": "Directory Service Used",
+    "which_directory_service": "Directory Service Used"
 }
