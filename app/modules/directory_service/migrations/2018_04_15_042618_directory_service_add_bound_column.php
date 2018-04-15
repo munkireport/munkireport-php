@@ -8,7 +8,7 @@ class DirectoryServiceAddBoundColumn extends Migration
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('directory_service', function (Blueprint $table) {
+        $capsule::schema()->create('directoryservice', function (Blueprint $table) {
         
             $table->string('bound');            
             $table->index('bound');
@@ -19,7 +19,7 @@ class DirectoryServiceAddBoundColumn extends Migration
   {
 
         $capsule = new Capsule();
-        $capsule::schema()->table('directory_service', function (Blueprint $table) {
+        $capsule::schema()->table('directoryservice', function (Blueprint $table) {
         
             $table->dropColumn('bound');
       });
