@@ -29,15 +29,17 @@ def sip_check():
     """ SIP checks. We need to be running 10.11 or newer."""
 
     if float(os.uname()[2][0:2]) >= 15:
-        sp = subprocess.Popen(['csrutil', 'status'], stdout=subprocess.PIPE)
+        sp = subprocess.Popen(['csrutil', 'status'],
+                              stdout=subprocess.PIPE,
+                              universal_newlines=True)
         out, err = sp.communicate()
 
         # just read the first line of the output, the
         # System Integrity Protection status: ....
         # search for a full stop, as custom configurations don't have
-        # that there. 
-        first_line = stdout.split("\n")[0]
-        if "enabled." in out:
+        # that there.
+        first_line = out.split("\n")[0]
+        if "enabled." in first_line:
             return "Active"
         else:
             return "Disabled"
