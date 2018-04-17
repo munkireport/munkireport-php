@@ -33,7 +33,10 @@ class findmymac_controller extends Module_controller
         $sql = "SELECT  COUNT(1) as total,
                       COUNT(CASE WHEN `status` = 'Enabled' THEN 1 END) AS Enabled,
                       COUNT(CASE WHEN `status` = 'Disabled' THEN 1 END) AS Disabled
-                      FROM findmymac";
+                      FROM findmymac
+                      LEFT JOIN reportdata USING (serial_number)
+                      ".get_machine_group_filter();
+        
         $obj->view('json', array('msg' => current($queryobj->query($sql))));
     }
     
