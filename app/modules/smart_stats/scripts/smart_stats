@@ -359,6 +359,10 @@ def remove_all(substr, str):
 def main():
     
     """Main"""
+    # Remove old smart_stats.sh script, if it exists
+    if os.path.isfile(os.path.dirname(os.path.realpath(__file__))+'/smart_stats.sh'):
+        os.remove(os.path.dirname(os.path.realpath(__file__))+'/smart_stats.sh')
+        
     # Create cache dir if it does not exist
     cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
     if not os.path.exists(cachedir):
