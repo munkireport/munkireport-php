@@ -47,7 +47,8 @@ class Supported_os_controller extends Module_controller
             $obj->highest_supported = $obj->highest_supported ? $obj->highest_supported : '0';
             $out[] = array('label' => $obj->highest_supported, 'count' => intval($obj->count));
         }
-        
+
+        $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
     
