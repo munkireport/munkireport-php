@@ -101,6 +101,10 @@
 					<th data-i18n="directory_service.namespacemode"></th>
 					<td id="directoryservice-namespacemode"></td>
 				</tr>
+				<tr>
+					<th data-i18n="directory_service.bound"></th>
+					<td id="directoryservice-bound"></td>
+				</tr>
 			</table>
 		</div>
 		<div class="col-md-6">
@@ -145,6 +149,7 @@ $(document).on('appReady', function(e, lang) {
 			$('#directoryservice-passwordchangeinterval').text(data.passwordchangeinterval);
 			$('#directoryservice-restrictdynamicdnsupdates').text(data.restrictdynamicdnsupdates);
 			$('#directoryservice-namespacemode').text(data.namespacemode);
+			$('#directoryservice-bound').text(data.bound);
 
 			if(data.createmobileaccount === "1" || data.createmobileaccount === 1) {
 				 $('#directoryservice-createmobileaccount').text(i18n.t('yes'));

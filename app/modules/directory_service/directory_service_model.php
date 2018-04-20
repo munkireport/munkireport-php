@@ -11,6 +11,7 @@ class Directory_service_model extends \Model
         $this->rs['directory_service_comments'] = '';
         $this->rs['adforest'] = ''; // string
         $this->rs['addomain'] = ''; // string
+        $this->rs['bound'] = ''; //string
         $this->rs['computeraccount'] = ''; // string
         $this->rs['createmobileaccount'] = 0;
         $this->rt['createmobileaccount'] = 'BOOL';  // Enabled = 1, Disabled = 0
@@ -98,6 +99,7 @@ class Directory_service_model extends \Model
                                 'Active Directory Comments = ' => 'directory_service_comments',
                                 'Active Directory Forest = ' => 'adforest',
                                 'Active Directory Domain = ' => 'addomain',
+                                'Bound = ' => 'bound',
                                 'Computer Account = ' => 'computeraccount',
                                 'Create mobile account at login = ' => 'createmobileaccount',
                                 'Require confirmation = ' => 'requireconfirmation',

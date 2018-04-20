@@ -34,8 +34,8 @@ $(document).on('appUpdate', function(e, lang) {
 		panel.empty();
 
 		// Set statuses
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-danger"><span class="bigger-150">'+notbound+'</span><br>'+i18n.t('directory_service.notbound')+'</a>');
-		panel.append(' <a href="'+baseUrl+'" class="btn btn-success"><span class="bigger-150">'+data.arebound+'</span><br>'+i18n.t('directory_service.bound')+'</a>');
+		panel.append(' <a href="'+baseUrl+'#false" class="btn btn-danger"><span class="bigger-150">'+notbound+'</span><br>'+i18n.t('directory_service.notbound')+'</a>');
+		panel.append(' <a href="'+baseUrl+'#true" class="btn btn-success"><span class="bigger-150">'+data.arebound+'</span><br>'+i18n.t('directory_service.bound')+'</a>');
 
 
     });
