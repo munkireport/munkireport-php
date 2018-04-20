@@ -44,6 +44,7 @@ def main():
     report_info = {}
     report_info['console_user'] = "%s" % osutils.getconsoleuser()
     report_info['long_username'] = reportcommon.get_long_username(report_info['console_user'])
+    report_info['uid'] = reportcommon.get_uid(report_info['console_user'])
     report_info['runtype'] = runtype
     report_info['runstate'] = 'done'
     report_info['uptime'] = reportcommon.get_uptime()

@@ -148,6 +148,13 @@ def get_long_username(username):
         long_name = ''
     return long_name.decode('utf-8')
 
+def get_uid(username):
+    try:
+        uid = pwd.getpwnam(username)[2]
+    except:
+        uid = ''
+    return uid
+
 def get_computername():
     cmd = ['/usr/sbin/scutil', '--get', 'ComputerName']
     proc = subprocess.Popen(cmd, shell=False, bufsize=-1,

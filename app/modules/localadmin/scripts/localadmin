@@ -16,7 +16,8 @@ admin_users=''
 for user in $(dscl . -list /Users | grep -v "^_\|^root$") ; do
 	ismember=$(dsmemberutil checkmembership -U $user -G admin)
 	case $ismember in
-		*'user is a member of the group'*) admin_users+=( $user );;
+		*'user is a member of the group'*)  uid=$(/usr/bin/id -u $user)
+											admin_users+=( $user \($uid\) );;
 	esac
 done
 
