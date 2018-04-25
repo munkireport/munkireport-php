@@ -25,13 +25,18 @@
 			<th data-i18n="serial" data-colname='displays.display_serial'></th>
 			<th data-i18n="displays_info.manufactured" data-colname='displays.manufactured'></th>
 			<th data-i18n="displays_info.nativeresolution" data-colname='displays.native'></th>
+			<th data-i18n="displays_info.current_resolution" data-colname='displays.current_resolution'></th>
+			<th data-i18n="displays_info.connection_type" data-colname='displays.connection_type'></th>
+			<th data-i18n="displays_info.display_asleep_short" data-colname='displays.display_asleep'></th>
+			<th data-i18n="displays_info.display_type" data-colname='displays.display_type'></th>
+			<th data-i18n="displays_info.television" data-colname='displays.television'></th>
 			<th data-i18n="displays_info.detected" data-sort="desc" data-colname='displays.timestamp'></th>
 		  </tr>
 		</thead>
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="14" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 
@@ -127,32 +132,52 @@
                 $('td:eq(2)', nRow).html(status)
 
                 // Translating vendors column
-                //todo: find how the hell Apple translates the EDID/DDC to these values
+                // todo: find how the hell Apple translates the EDID/DDC to these values
                 // http://ftp.netbsd.org/pub/NetBSD/NetBSD-current/src/sys/dev/videomode/ediddevs
                 // https://github.com/GNOME/gnome-desktop/blob/master/libgnome-desktop/gnome-pnp-ids.c
                 // https://www.opensource.apple.com/source/xnu/xnu-124.7/iokit/Families/IOGraphics/AppleDDCDisplay.cpp
                 var vendor=$('td:eq(3)', nRow).html();
                 $('td:eq(3)', nRow).html(mr.display_vendors[vendor] || vendor);
+                
+                // Blank n/a display serial numbers
+	        	var naserial=$('td:eq(5)', nRow).html();
+	        	naserial = naserial == 'n/a' ? '' :
+	        	(naserial === ' ' ? '' : naserial)
+	        	$('td:eq(5)', nRow).html(naserial)
 
                 // Format manufactured from unix to human friendly and the title to relative
                 date = $('td:eq(6)', nRow).html();
-                if(moment(date, 'YYYY-MM', true).isValid())
+                if(moment(date, 'YYYY-W', true).isValid() && date.toLowerCase().indexOf("model") === -1)
                 {
-                	  var formatted='<time title="'+ moment(date).fromNow() + '" </time>' + moment(date).format("MMMM YYYY");
-                	  $('td:eq(6)', nRow).html(formatted);
+                    var formatted='<time title="'+ moment(date, 'YYYY-W').fromNow() + '" </time>' + moment(date, 'YYYY-W').format("MMMM Do, YYYY");
+                    $('td:eq(6)', nRow).html(formatted);
+                } else if (date) {
+                    $('td:eq(6)', nRow).html(date)
                 }
 
+                // Display Asleep
+	        	var asleep=$('td:eq(10)', nRow).html();
+	        	asleep = asleep == '1' ? i18n.t('yes') :
+	        	(asleep === '0' ? i18n.t('no') : '')
+	        	$('td:eq(10)', nRow).html(asleep)
+                
+                // Television
+	        	var asleep=$('td:eq(12)', nRow).html();
+	        	asleep = asleep == '1' ? i18n.t('yes') :
+	        	(asleep === '0' ? i18n.t('no') : '')
+	        	$('td:eq(12)', nRow).html(asleep)
+                
                 // Format timestamp from unix to relative and the title to timezone detail
-                date = $('td:eq(8)', nRow).html();
+                date = $('td:eq(13)', nRow).html();
                 if(date)
                 {
-                	  var formatted='<time title="'+ moment.unix(date).format("LLLL (Z)") + '" </time>' + moment.unix(date).fromNow();
-                	  $('td:eq(8)', nRow).html(formatted);
+                    var formatted='<time title="'+ moment.unix(date).format("LLLL (Z)") + '" </time>' + moment.unix(date).fromNow();
+                    $('td:eq(13)', nRow).html(formatted);
                 }
 
-            } //end fnCreatedRow
+            } // End fnCreatedRow
 
-        }); //end oTable
+        }); // End oTable
 
 	});
 </script>

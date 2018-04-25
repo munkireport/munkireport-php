@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Remove directoryservice script
+# Remove displays script
 rm -f "${MUNKIPATH}preflight.d/displays.py"
 
-# Remove directoryservice.txt
-rm -f "${CACHEPATH}displays.txt"
+# Remove displays.plist
+rm -f "${CACHEPATH}displays.plist"

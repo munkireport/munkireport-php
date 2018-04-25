@@ -454,9 +454,9 @@
 	$conf['modules'] = getenv_default('MODULES', ['munkireport', 'managedinstalls'], 'array');
 
 	/*
-	|===============================================
-	| Displays module history option
-	|===============================================
+	|============================================================
+	| Displays module history and virtual displays option
+	|============================================================
 	|
 	| By default this module overrides the information of a client computer
 	| on each client's report submission.
@@ -466,8 +466,14 @@
 	|			$conf['keep_previous_displays'] = TRUE;
 	|
 	| When not configured, or if set to FALSE, the default behaviour applies.
+	|
+	| By default the displays_info module saves virtual displays. To disable them
+	| set show_virtual_displays to FALSE.
+	|
 	*/
 	$conf['keep_previous_displays'] = getenv_default('DISPLAYS_INFO_KEEP_PREVIOUS', TRUE, 'bool');
+	$conf['show_virtual_displays'] = getenv_default('SHOW_VIRTUAL_DISPLAYS', TRUE, 'bool');
+
 
 	/*
 	|===============================================

@@ -10,9 +10,39 @@ This is the table of values for 'displays':
 * serial_number (string) Serial number of the computer it's connected to
 * vendor (string) Public name translated by the model from hex value
 * model (string) Model reported
-* manufactured (string) Aproximate date when it was manufactured
+* manufactured (string) Approximate date when it was manufactured
 * native (string) Native resolution
 * timestamp (int) UNIX timestamp
+* ui_resolution (string) Resolution of the user interface
+* current_resolution (string) Current resolution
+* color_depth (string) Color depth in use by the framebuffer
+* display_type (string) Type of display; LCD/CRT/Projector
+* main_display (boolean) Is main display
+* mirror (boolean) Is Mirrored
+* mirror_status (string) Mirroring status
+* online (boolean) Display online
+* interlaced (boolean) Interlacing in use
+* rotation_supported (boolean) Supports rotation
+* television (boolean) Is a television
+* display_asleep (boolean) Is display asleep
+* ambient_brightness (boolean) Ambient brightness set
+* automatic_graphics_switching (boolean) Automatic graphics switching in use
+* retina (boolean) Is Retina display
+* edr_enabled (boolean) EDR enabled
+* edr_limit (float) EDR limit
+* edr_supported (boolean) Supports EDR
+* connection_type (string) Type of display connection in use
+* dp_dpcd_version (string) Version of DisplayPort
+* dp_current_bandwidth (string) Current bandwidth of DisplayPort
+* dp_current_lanes (int) Current number of lanes in use by DisplayPort
+* dp_current_spread (string) Current DisplayPort spread
+* dp_hdcp_capability (boolean) Supports HDCP
+* dp_max_bandwidth (string) Maximum DisplayPort bandwidth
+* dp_max_lanes (int) Maximum DisplayPort lanes
+* dp_max_spread (string) Maximum DisplayPort spread
+* virtual_device (boolean) Is virtual display device
+* dynamic_range (string) Dynamic range currently in use
+* dp_adapter_firmware_version (string) Firmware version of DisplayPort adapter
 
 Remarks
 ---
