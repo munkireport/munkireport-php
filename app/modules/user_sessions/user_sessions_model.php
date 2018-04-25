@@ -12,6 +12,7 @@ class User_sessions_model extends \Model {
 		$this->rs['event'] = '';
 		$this->rs['time'] = 0;
 		$this->rs['user'] = '';
+		$this->rs['uid'] = NULL;
 		$this->rs['remote_ssh'] = '';
 
 		// Schema version, increment when creating a db migration
@@ -21,6 +22,7 @@ class User_sessions_model extends \Model {
 		$this->idx[] = array('event');
 		$this->idx[] = array('time');
 		$this->idx[] = array('user');
+		$this->idx[] = array('uid');
 		$this->idx[] = array('remote_ssh');
 
 		// Create table if it does not exist
@@ -54,6 +56,7 @@ class User_sessions_model extends \Model {
 			'event' => '',
 			'time' => 0,
 			'user' => '',
+			'uid' => NULL,
 			'remote_ssh' => ''
 		);
 

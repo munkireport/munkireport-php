@@ -48,7 +48,7 @@ class clients extends Controller
 	    new Network_model;
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
-                        r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
+                        r.uid, r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
                         s.gatekeeper, s.sip, s.ssh_groups, s.ssh_users, s.ard_users, 
                         s.firmwarepw, s.firewall_state, s.skel_state,
                         w.purchase_date, w.end_date, w.status, l.users, d.totalsize, d.freespace,
