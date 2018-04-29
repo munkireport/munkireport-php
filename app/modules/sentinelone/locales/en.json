@@ -1,0 +1,23 @@
+{
+    "active_threats": "Active Threats",
+	"agent_running": "Agent Running",
+	"threats_present": "Threats Present",
+	"threats_not_present": "Threats Not Present",
+	"running": "Running",
+	"not_running": "Not Running",
+	"enforcing_security": "Enforcing Security",
+	"enforced": "Enforced",
+	"not_enforced": "Not Enforced",
+	"self_protection": "Self Protection",
+	"enabled": "Enabled",
+	"disabled": "Disabled",
+	"version": "Version",
+	"noversion": "No Version",
+	"agent_id": "Agent ID",
+	"agent_install_time": "Agent Install Time",
+	"agent_version": "Agent Version",
+	"mgmt_url": "Management URL",
+	"self_protection_enabled": "Self Protection Enabled",
+	"last_seen": "Last Seen",
+	
+}
