@@ -111,5 +111,4 @@ class Sentinelone_model extends \Model
 		return $out;
      }
 
-    }
 }
