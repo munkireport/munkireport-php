@@ -16,7 +16,7 @@
 
 	<div class="row">
 
-		<?php $widget->view($this, 'encorcing_security'); ?>
+		<?php $widget->view($this, 'enforcing_security'); ?>
 
 		<?php $widget->view($this, 'self_protection'); ?>
 

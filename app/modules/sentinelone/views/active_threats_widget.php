@@ -16,7 +16,7 @@
 
             <a id="at-threats_not_present" class="btn btn-danger hide">
                 <span class="at-count bigger-150"></span><br>
-                <span data-i18n="sentinelone.threats_not_present"></span>
+                <span data-i18n="sentinelone.no_active_threats"></span>
             </a>
             <a id="at-threats_present" class="btn btn-success hide">
                 <span class="at-count bigger-150"></span><br>

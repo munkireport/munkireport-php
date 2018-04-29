@@ -2,7 +2,7 @@
     "active_threats": "Active Threats",
 	"agent_running": "Agent Running",
 	"threats_present": "Threats Present",
-	"threats_not_present": "Threats Not Present",
+	"no_active_threats": "No Active Threats",
 	"running": "Running",
 	"not_running": "Not Running",
 	"enforcing_security": "Enforcing Security",

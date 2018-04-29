@@ -126,45 +126,45 @@ new Sentinelone_model;
 	        	var link = mr.getClientDetailLink(name, sn);
 	        	$('td:eq(0)', nRow).html(link);
 
-            var ar = $('td:eq(3)', nRow).html();
-            $('td:eq(3)', nRow).html(function(){
-                if( ar == 1){
-                    return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                }
-                return '<span class="label label-danger">'+i18n.t('false')+'</span>';
-            });
+				var ar = $('td:eq(3)', nRow).html();
+				$('td:eq(3)', nRow).html(function(){
+					if( ar == 1){
+						return '<span class="label label-success">'+i18n.t('true')+'</span>';
+					}
+					return '<span class="label label-danger">'+i18n.t('false')+'</span>';
+				});
 
-            var at = $('td:eq(4)', nRow).html();
-            $('td:eq(4)', nRow).html(function(){
-              if( at == '1'){
-                    return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                } else {
-                    return '<span class="label label-danger">'+i18n.t('false')+'</span>';
-                }
-            });
+				var at = $('td:eq(4)', nRow).html();
+				$('td:eq(4)', nRow).html(function(){
+				  if( at == '1'){
+						return '<span class="label label-success">'+i18n.t('true')+'</span>';
+					} else {
+						return '<span class="label label-danger">'+i18n.t('false')+'</span>';
+					}
+				});
 
-            var es = $('td:eq(8)', nRow).html();
-            $('td:eq(8)', nRow).html(function(){
-                if( es == '1'){
-                    return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                } else {
-                    return '<span class="label label-danger">'+i18n.t('false')+'</span>';
-                }
-            });
+				var es = $('td:eq(8)', nRow).html();
+				$('td:eq(8)', nRow).html(function(){
+					if( es == '1'){
+						return '<span class="label label-success">'+i18n.t('true')+'</span>';
+					} else {
+						return '<span class="label label-danger">'+i18n.t('false')+'</span>';
+					}
+				});
 
-            var es = $('td:eq(10)', nRow).html();
-            $('td:eq(10)', nRow).html(function(){
-                if( es == '1'){
-                    return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                } else {
-                    return '<span class="label label-danger">'+i18n.t('false')+'</span>';
-                }
-            });
+				var es = $('td:eq(10)', nRow).html();
+				$('td:eq(10)', nRow).html(function(){
+					if( es == '1'){
+						return '<span class="label label-success">'+i18n.t('true')+'</span>';
+					} else {
+						return '<span class="label label-danger">'+i18n.t('false')+'</span>';
+					}
+				});
 
-			// Format date
-			var last_seen = parseInt($('td:eq(11)', nRow).html());
-			var date = new Date(checkin * 1000);
-			$('td:eq(11)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
+				// Format date
+				var last_seen = parseInt($('td:eq(11)', nRow).html());
+				var date = new Date(last_seen * 1000);
+				$('td:eq(11)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 
         }
     });
