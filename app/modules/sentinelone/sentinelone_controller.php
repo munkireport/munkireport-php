@@ -29,20 +29,17 @@ class Sentinelone_controller extends Module_controller
      *
      * @param string $serial serial number
      **/
-    public function get_data($serial = '')
+    public function get_data($serial_number = '')
     {
-        $out = array();
-        if (! $this->authorized()) {
-            $out['error'] = 'Not authorized';
-        } else {
-            $prm = new Sentinelone_model;
-            foreach ($prm->retrieve_records($serial) as $sentinelone) {
-                $out[] = $sentinelone->rs;
-            }
-        }
-        
         $obj = new View();
-        $obj->view('json', array('msg' => $out));
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => 'Not authorized'));
+            return;
+        }
+
+        $s1 = new Sentinelone_model($serial_number);
+        $obj->view('json', array('msg' => $s1->rs));
     }
 
 
