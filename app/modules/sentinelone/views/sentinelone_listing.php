@@ -137,9 +137,9 @@ new Sentinelone_model;
                 var at = $('td:eq(4)', nRow).html();
                 $('td:eq(4)', nRow).html(function(){
                   if( at == '1'){
-                        return '<span class="label label-success">'+i18n.t('true')+'</span>';
+                        return '<span class="label label-danger">'+i18n.t('true')+'</span>';
                     } else {
-                        return '<span class="label label-danger">'+i18n.t('false')+'</span>';
+                        return '<span class="label label-success">'+i18n.t('false')+'</span>';
                     }
                 });
 
