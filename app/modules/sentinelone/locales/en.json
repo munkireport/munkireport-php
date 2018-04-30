@@ -20,6 +20,8 @@
 	"agent_version": "Agent Version",
 	"mgmt_url": "Management URL",
 	"self_protection_enabled": "Self Protection Enabled",
-	"last_seen": "Last Seen"
+	"last_seen": "Last Seen",
+	"client_tab": "SentinelOne",
+	"not_found": "Not Found"
 	
 }
