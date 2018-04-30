@@ -68,12 +68,12 @@ $(document).on('appReady', function(e, lang) {
 			$('#sentinelone-self_protection_enabled').text(data.self_protection_enabled);
 
 			if(data.last_seen) {
-				// Format date
-				var last_seen = parseInt($(data.last_seen));
-				var date = new Date(0);
-				new_date = date.setUTCSeconds(last_seen);
-				$('#sentinelone-last_seen').text(i18n.t(new_date));
+					// Format date
+					var last_seen = parseInt(data.last_seen);
+					var date = new Date(last_seen * 1000);
+					$('#sentinelone-last_seen').text(date);
 			}
+
 
 		});
 });
