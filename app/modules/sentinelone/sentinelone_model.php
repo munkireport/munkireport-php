@@ -18,8 +18,12 @@ class Sentinelone_model extends \Model
         $this->rs['last_seen'] = '';
         $this->rs['mgmt_url'] = '';
         $this->rs['self_protection_enabled'] = 0; //boolean
+       
+        if ($serial) {
+            $this->retrieve_record($serial);
+        } 
         
-        $this->serial_number = $serial;
+	$this->serial_number = $serial;
     }
     
     

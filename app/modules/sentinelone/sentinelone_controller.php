@@ -24,6 +24,7 @@ class Sentinelone_controller extends Module_controller
         echo "You've loaded the sentinelone module!";
     }
     
+
     /**
      * Get sentinelone for serial_number
      *
