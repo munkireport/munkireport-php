@@ -14,11 +14,11 @@
         <div class="panel-body text-center">
 
 
-            <a id="sp-not_self_protected" class="btn btn-danger hide">
+            <a id="sp-not_self_protected" class="btn btn-danger disabled">
                 <span class="sp-count bigger-150"></span><br>
                 <span data-i18n="sentinelone.disabled"></span>
             </a>
-            <a id="sp-self_protected" class="btn btn-success hide">
+            <a id="sp-self_protected" class="btn btn-success disabled">
                 <span class="sp-count bigger-150"></span><br>
                 <span data-i18n="sentinelone.enabled"></span>
             </a>
@@ -34,7 +34,7 @@
 <script>
 $(document).on('appUpdate', function(e, lang) {
 
-    $.getJSON( appUrl + '/module/sentinelone/get_enforcing_security_stats', function( data ) {
+    $.getJSON( appUrl + '/module/sentinelone/get_self_protection_stats', function( data ) {
 
         if(data.error){
             //alert(data.error);
@@ -48,20 +48,20 @@ $(document).on('appUpdate', function(e, lang) {
         $('#sp-self_protected').attr('href', url + encodeURIComponent('self_protection_enabled = 1'));
 
         // Show no clients span
-        $('#sp-nodata').removeClass('hide');
+        $('#sp-nodata').removeClass('disabled');
 
         $.each(data.stats, function(prop, val){
             if(val > 0)
             {
-                $('#sp-' + prop).removeClass('hide');
+                $('#sp-' + prop).removeClass('disabled');
                 $('#sp-' + prop + '>span.sp-count').text(val);
 
                 // Hide no clients span
-                $('#sp-nodata').addClass('hide');
+                $('#sp-nodata').addClass('disabled');
             }
             else
             {
-                $('#sp-' + prop).addClass('hide');
+                $('#sp-' + prop).addClass('disabled');
             }
         });
     });

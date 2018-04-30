@@ -14,11 +14,11 @@
         <div class="panel-body text-center">
 
 
-            <a id="es-threats_not_present" class="btn btn-danger hide">
+            <a id="es-not_enforced" class="btn btn-danger disabled">
                 <span class="es-count bigger-150"></span><br>
                 <span data-i18n="sentinelone.not_enforced"></span>
             </a>
-            <a id="es-threats_present" class="btn btn-success hide">
+            <a id="es-enforced" class="btn btn-success disabled">
                 <span class="es-count bigger-150"></span><br>
                 <span data-i18n="sentinelone.enforced"></span>
             </a>
@@ -44,24 +44,24 @@ $(document).on('appUpdate', function(e, lang) {
         var url = appUrl + '/show/listing/sentinelone/sentinelone#'
 
         // Set urls
-        $('#es-threats_not_present').attr('href', url + encodeURIComponent('enforcing_security = 0'));
-        $('#es-threats_present').attr('href', url + encodeURIComponent('enforcing_security = 1'));
+        $('#es-not_enforced').attr('href', url + encodeURIComponent('enforcing_security = 0'));
+        $('#es-enforced').attr('href', url + encodeURIComponent('enforcing_security = 1'));
 
         // Show no clients span
-        $('#es-nodata').removeClass('hide');
+        $('#es-nodata').removeClass('disabled');
 
         $.each(data.stats, function(prop, val){
             if(val > 0)
             {
-                $('#es-' + prop).removeClass('hide');
+                $('#es-' + prop).removeClass('disabled');
                 $('#es-' + prop + '>span.es-count').text(val);
 
                 // Hide no clients span
-                $('#es-nodata').addClass('hide');
+                $('#es-nodata').addClass('disabled');
             }
             else
             {
-                $('#es-' + prop).addClass('hide');
+                $('#es-' + prop).addClass('disabled');
             }
         });
     });

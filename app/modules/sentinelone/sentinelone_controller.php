@@ -88,8 +88,8 @@ class Sentinelone_controller extends Module_controller
                 $out['stats'] = $agent_running->get_agent_running_stats();
 
 
-        $obj->view('json', array('msg' => $out));
-    }    
+           $obj->view('json', array('msg' => $out));
+}    
 
 
     /**

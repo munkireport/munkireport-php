@@ -13,14 +13,13 @@
 
         <div class="panel-body text-center">
 
-
-            <a id="at-threats_not_present" class="btn btn-danger hide">
-                <span class="at-count bigger-150"></span><br>
-                <span data-i18n="sentinelone.no_active_threats"></span>
-            </a>
-            <a id="at-threats_present" class="btn btn-success hide">
+            <a id="at-threats_present" class="btn btn-danger disabled">
                 <span class="at-count bigger-150"></span><br>
                 <span data-i18n="sentinelone.threats_present"></span>
+            </a>
+            <a id="at-threats_not_present" class="btn btn-success disabled">
+                <span class="at-count bigger-150"></span><br>
+                <span data-i18n="sentinelone.no_active_threats"></span>
             </a>
 
             <span id="at-nodata" data-i18n=""></span>
@@ -48,20 +47,20 @@ $(document).on('appUpdate', function(e, lang) {
         $('#at-threats_present').attr('href', url + encodeURIComponent('active_threats_present = 1'));
 
         // Show no clients span
-        $('#at-nodata').removeClass('hide');
+        $('#at-nodata').removeClass('disabled');
 
         $.each(data.stats, function(prop, val){
             if(val > 0)
             {
-                $('#at-' + prop).removeClass('hide');
+                $('#at-' + prop).removeClass('disabled');
                 $('#at-' + prop + '>span.at-count').text(val);
 
                 // Hide no clients span
-                $('#at-nodata').addClass('hide');
+                $('#at-nodata').addClass('disabled');
             }
             else
             {
-                $('#at-' + prop).addClass('hide');
+                $('#at-' + prop).addClass('disabled');
             }
         });
     });

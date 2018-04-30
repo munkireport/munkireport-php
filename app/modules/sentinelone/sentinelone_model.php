@@ -29,32 +29,34 @@ class Sentinelone_model extends \Model
     
     // ------------------------------------------------------------------------
 
-    /**
-     * Process data sent by postflight
-     *
-     * @param string data
-     *
-     **/
-    public function process($data)
+       public function process($data)
     {
+		print $data;
 		$parser = new CFPropertyList();
-		$parser->parse($data);
+        $parser->parse($data, CFPropertyList::FORMAT_XML);
 
 		$plist = $parser->toArray();
-		
-		foreach (array('active_threats_present', 'agent_id', 'agent_install_time', 'agent_running', 'agent_version', 'enforcing_security', 'last_seen', 'mgmt_url', 'self_protection_enabled') as $item) {
+		print_r ($plist);
+		foreach (array('agent_id', 'agent_install_time', 'agent_version', 'mgmt_url', 'active_threats_present', 'agent_running', 'enforcing_security', 'self_protection_enabled', 'last_seen') as $item) {
 			if (isset($plist[$item])) {
-				if($this->$item && is_bool($this->$value)){
-                	$this->$value = $value == true ? 1 : 0;
-                }
-				$this->$item = $plist[$item];
+                if ($plist[$item] == true){
+                    // If true boolean, set accordingly
+                    $this->$item = '1';
+                } else if ($plist[$item] == false){
+                    // If false boolean, set accordingly
+                    $this->$item = '0';		
+                } else if ($plist[$item] == '') {
+                	$this->$item = '0';
+				} else {
+					$this->$item = $plist[$item];
+				}
 			} else {
 				$this->$item = '';
 			}
 		}
-			
+		var_dump($this->rs);			
 		$this->save();
-    }
+    } 
 
     public function get_active_threats_stats()
     {
@@ -99,18 +101,18 @@ class Sentinelone_model extends \Model
 	 public function get_versions()
 	 {
 		$out = array();
-		$sql = "SELECT version, COUNT(1) AS count
+		$sql = "SELECT agent_version, COUNT(1) AS count
 				FROM sentinelone
-				GROUP BY version
+				GROUP BY agent_version
 				ORDER BY COUNT DESC";
 	
 		foreach ($this->query($sql) as $obj) {
 			if ("$obj->count" !== "0") {
-				$obj->version = $obj->version ? $obj->version : 'Unknown';
+				$obj->agent_version = $obj->agent_version ? $obj->agent_version : 'Unknown';
 				$out[] = $obj;
 			}
 		}
 		return $out;
      }
-
 }
+

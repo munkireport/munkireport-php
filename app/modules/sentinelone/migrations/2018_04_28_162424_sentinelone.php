@@ -11,15 +11,15 @@ class Sentinelone extends Migration
 		$capsule::schema()->create('sentinelone', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('serial_number');
-			$table->boolean('active_threats_present')->nullable();
+			$table->integer('active_threats_present')->nullable();
 			$table->string('agent_id')->nullable();
 			$table->string('agent_install_time')->nullable();
-			$table->boolean('agent_running')->nullable();
+			$table->integer('agent_running')->nullable();
 			$table->string('agent_version')->nullable();
-			$table->boolean('enforcing_security')->nullable();
+			$table->integer('enforcing_security')->nullable();
 			$table->string('last_seen')->nullable();
 			$table->string('mgmt_url')->nullable();
-			$table->boolean('self_protection_enabled')->nullable();
+			$table->integer('self_protection_enabled')->nullable();
 
 			$table->index('serial_number');
 			$table->index('active_threats_present');

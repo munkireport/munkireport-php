@@ -1,4 +1,6 @@
 {
+	"sentinelone": "SentinelOne",
+	"report": "SentinelOne Report",
     "active_threats": "Active Threats",
 	"agent_running": "Agent Running",
 	"threats_present": "Threats Present",
@@ -11,7 +13,7 @@
 	"self_protection": "Self Protection",
 	"enabled": "Enabled",
 	"disabled": "Disabled",
-	"version": "Version",
+	"agent_version": "Agent Version",
 	"noversion": "No Version",
 	"agent_id": "Agent ID",
 	"agent_install_time": "Agent Install Time",
