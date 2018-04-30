@@ -148,4 +148,17 @@ class Sentinelone_controller extends Module_controller
         $obj->view('json', array('msg' => $version->get_versions()));
     }    
 
+    public function get_mgmt_url()
+    {
+        $obj = new View();
+
+        if (! $this->authorized()) {
+            $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
+            return;
+        }
+        
+        $mgmt_url= new Sentinelone_model;
+        $obj->view('json', array('msg' => $mgmt_url->get_mgmt_url()));
+    }    
+
 } // END class default_module

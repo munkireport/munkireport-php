@@ -123,6 +123,24 @@ class Sentinelone_model extends \Model
         }
         return $out;
      }
+
+     public function get_mgmt_url()
+     {
+        $out = array();
+        $sql = "SELECT mgmt_url, COUNT(1) AS count
+                FROM sentinelone
+                GROUP BY mgmt_url
+                ORDER BY COUNT DESC";
+    
+        foreach ($this->query($sql) as $obj) {
+            if ("$obj->count" !== "0") {
+                $obj->mgmt_url = $obj->mgmt_url ? $obj->mgmt_url : 'Unknown';
+                $out[] = $obj;
+            }
+        }
+        return $out;
+     }
+
 }
 
 

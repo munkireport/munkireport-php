@@ -26,6 +26,8 @@
 
         <?php $widget->view($this, 'version'); ?>
 
+        <?php $widget->view($this, 'mgmt_url'); ?>
+
     </div> <!-- /row -->
 
 

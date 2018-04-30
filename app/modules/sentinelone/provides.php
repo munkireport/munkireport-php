@@ -13,6 +13,7 @@ return array(
         'enforcing_security' => array('view' => 'enforcing_security_widget'),
         'self_protection' => array('view' => 'self_protection_widget'),
         'version' => array('view' => 'version_widget'),
+        'mgmt_url' => array('view' => 'mgmt_url_widget')
     ),
     'reports' => array(
         'sentinelone' => array('view' => 'sentinelone_report', 'i18n' => 'sentinelone.report'),
