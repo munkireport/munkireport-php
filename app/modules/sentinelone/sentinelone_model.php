@@ -18,45 +18,31 @@ class Sentinelone_model extends \Model
         $this->rs['last_seen'] = '';
         $this->rs['mgmt_url'] = '';
         $this->rs['self_protection_enabled'] = 0; //boolean
-
-        if ($serial) {
-            $this->retrieve_record($serial);
-        }
         
-        $this->serial = $serial;
+		$this->serial_number = $serial;
     }
     
     
     // ------------------------------------------------------------------------
 
-       public function process($data)
+    public function process($data)
     {
-		print $data;
-		$parser = new CFPropertyList();
+print $data;
+        $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
+        $plist = $parser->toArray();
+print_r ($plist);
 
-		$plist = $parser->toArray();
-		print_r ($plist);
-		foreach (array('agent_id', 'agent_install_time', 'agent_version', 'mgmt_url', 'active_threats_present', 'agent_running', 'enforcing_security', 'self_protection_enabled', 'last_seen') as $item) {
-			if (isset($plist[$item])) {
-                if ($plist[$item] == true){
-                    // If true boolean, set accordingly
-                    $this->$item = '1';
-                } else if ($plist[$item] == false){
-                    // If false boolean, set accordingly
-                    $this->$item = '0';		
-                } else if ($plist[$item] == '') {
-                	$this->$item = '0';
-				} else {
-					$this->$item = $plist[$item];
-				}
-			} else {
-				$this->$item = '';
-			}
-		}
-		var_dump($this->rs);			
-		$this->save();
-    } 
+        foreach ($plist as $search => $item) {
+            if (isset($plist[$search])) {
+                $this->$item = $plist[$search];
+            } else {
+                $this->$item = '';
+            }
+        }
+var_dump($this->rs);	
+        $this->save();
+    }
 
     public function get_active_threats_stats()
     {
