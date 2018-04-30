@@ -12,7 +12,7 @@
 	"mgmt_url": "Management URL",
 	"no_active_threats": "No Active Threats",
 	"not_enforced": "Not Enforced",
-	"not_found": "Not Found"
+	"not_found": "Not Found",
 	"not_running": "Not Running",
 	"noversion": "No Version",
 	"report": "SentinelOne Report",
@@ -21,6 +21,5 @@
 	"self_protection": "Self Protection",
 	"sentinelone": "SentinelOne",
 	"threats_present": "Threats Present",
-    "active_threats": "Active Threats",
-	
+    "active_threats": "Active Threats"
 }
