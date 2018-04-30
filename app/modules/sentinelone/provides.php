@@ -3,7 +3,7 @@
 return array(
     'client_tabs' => array(
       'sentinelone' => array('view' => 'sentinelone_client_tab', 'i18n' => 'sentinelone.client_tab'),
-	),
+    ),
     'listings' => array(
         'sentinelone' => array('view' => 'sentinelone_listing', 'i18n' => 'sentinelone.sentinelone'),
     ),

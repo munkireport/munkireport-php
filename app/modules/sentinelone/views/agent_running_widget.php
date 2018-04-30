@@ -25,8 +25,8 @@
 
             <span id="ar-nodata" data-i18n=""></span>
 
-		</div>
-		
+        </div>
+        
     </div><!-- /panel -->
 
 </div><!-- /col -->
@@ -40,7 +40,7 @@ $(document).on('appUpdate', function(e, lang) {
             //alert(data.error);
             return;
         }
-		
+        
         var url = appUrl + '/show/listing/sentinelone/sentinelone#'
 
         // Set urls

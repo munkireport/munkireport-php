@@ -126,37 +126,42 @@ new Sentinelone_model;
                 var link = mr.getClientDetailLink(name, sn, '#tab_sentinelone');
                 $('td:eq(0)', nRow).html(link);
 
+                //agent-running formatting
                 var ar = $('td:eq(3)', nRow).html();
                 $('td:eq(3)', nRow).html(function(){
-                    if( ar == 1){
+                    if( ar == '1'){
                         return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                    }
-                    return '<span class="label label-danger">'+i18n.t('false')+'</span>';
-                });
-
-                var at = $('td:eq(4)', nRow).html();
-                $('td:eq(4)', nRow).html(function(){
-                  if( at == '1'){
-                        return '<span class="label label-danger">'+i18n.t('true')+'</span>';
-                    } else {
-                        return '<span class="label label-success">'+i18n.t('false')+'</span>';
-                    }
-                });
-
-                var es = $('td:eq(8)', nRow).html();
-                $('td:eq(8)', nRow).html(function(){
-                    if( es == '1'){
-                        return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                    } else {
+                    } elseif (ar == '0') {
                         return '<span class="label label-danger">'+i18n.t('false')+'</span>';
                     }
                 });
 
-                var es = $('td:eq(10)', nRow).html();
-                $('td:eq(10)', nRow).html(function(){
+                //active-threats formatting
+                var at = $('td:eq(4)', nRow).html();
+                $('td:eq(4)', nRow).html(function(){
+                  if( at == '1'){
+                        return '<span class="label label-danger">'+i18n.t('true')+'</span>';
+                    } elseif( at == '0'){
+                        return '<span class="label label-success">'+i18n.t('false')+'</span>';
+                    }
+                });
+
+                //enforcing-security formatting
+                var es = $('td:eq(8)', nRow).html();
+                $('td:eq(8)', nRow).html(function(){
                     if( es == '1'){
                         return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                    } else {
+                    } elseif (es == '0') {
+                        return '<span class="label label-danger">'+i18n.t('false')+'</span>';
+                    }
+                });
+
+                //self-protection-enabled formatting
+                var sp = $('td:eq(10)', nRow).html();
+                $('td:eq(10)', nRow).html(function(){
+                    if( sp == '1'){
+                        return '<span class="label label-success">'+i18n.t('true')+'</span>';
+                    } elseif (sp == '0') {
                         return '<span class="label label-danger">'+i18n.t('false')+'</span>';
                     }
                 });

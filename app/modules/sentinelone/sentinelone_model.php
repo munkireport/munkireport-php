@@ -23,7 +23,7 @@ class Sentinelone_model extends \Model
             $this->retrieve_record($serial);
         } 
         
-	$this->serial_number = $serial;
+    $this->serial_number = $serial;
     }
     
     
