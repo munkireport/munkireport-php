@@ -131,7 +131,7 @@ new Sentinelone_model;
                 $('td:eq(3)', nRow).html(function(){
                     if( ar == '1'){
                         return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                    } elseif (ar == '0') {
+                    } else if (ar == '0') {
                         return '<span class="label label-danger">'+i18n.t('false')+'</span>';
                     }
                 });
@@ -141,7 +141,7 @@ new Sentinelone_model;
                 $('td:eq(4)', nRow).html(function(){
                   if( at == '1'){
                         return '<span class="label label-danger">'+i18n.t('true')+'</span>';
-                    } elseif( at == '0'){
+                    } else if( at == '0'){
                         return '<span class="label label-success">'+i18n.t('false')+'</span>';
                     }
                 });
@@ -151,7 +151,7 @@ new Sentinelone_model;
                 $('td:eq(8)', nRow).html(function(){
                     if( es == '1'){
                         return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                    } elseif (es == '0') {
+                    } else if (es == '0') {
                         return '<span class="label label-danger">'+i18n.t('false')+'</span>';
                     }
                 });
@@ -161,16 +161,17 @@ new Sentinelone_model;
                 $('td:eq(10)', nRow).html(function(){
                     if( sp == '1'){
                         return '<span class="label label-success">'+i18n.t('true')+'</span>';
-                    } elseif (sp == '0') {
+                    } else if (sp == '0') {
                         return '<span class="label label-danger">'+i18n.t('false')+'</span>';
                     }
                 });
 
                 // Format date
                 var last_seen = parseInt($('td:eq(11)', nRow).html());
-                var date = new Date(last_seen * 1000);
-                $('td:eq(11)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
-
+                if (last_seen) {
+                    var date = new Date(last_seen * 1000);
+                    $('td:eq(11)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
+                }
         }
     });
   });
