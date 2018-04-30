@@ -75,8 +75,7 @@ $(document).on('appReady', function(e, lang) {
 				$('#sentinelone-last_seen').text(i18n.t(new_date));
 			}
 
-		}
-
+		});
 });
 
 </script>
