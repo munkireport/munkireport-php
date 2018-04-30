@@ -145,14 +145,9 @@ class Sentinelone_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-                $version= new Sentinelone_model;
-
-                $out = array();
-                $out['stats'] = $version->get_versions();
-
-
-        $obj->view('json', array('msg' => $out));
+		
+		$version= new Sentinelone_model;
+        $obj->view('json', array('msg' => $version->get_versions()));
     }    
-
 
 } // END class default_module
