@@ -27,6 +27,9 @@ class Sentinelone_model extends \Model
 
     public function process($data)
     {
+		// Delete previous set        
+		$this->deleteWhere('serial_number=?', $this->serial_number);
+
 print $data;
         $parser = new CFPropertyList();
         $parser->parse($data, CFPropertyList::FORMAT_XML);
