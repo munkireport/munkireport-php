@@ -74,7 +74,38 @@ $(document).on('appReady', function(e, lang) {
 					$('#sentinelone-last_seen').text(date);
 			}
 
+			if(data.active_threats_present === "0" ) {
+				$('#sentinelone-active_threats_present').text("false");
+			} else if(data.active_threats_present === "1" ) {
+				$('#sentinelone-active_threats_present').text("true");
+			} else{
+				 $('#sentinelone-active_threats_present').text(data.active_threats_present);
+			} 
 
+			if(data.agent_running === "0" ) {
+				$('#sentinelone-agent_running').text("false");
+			} else if(data.agent_running === "1" ) {
+				$('#sentinelone-agent_running').text("true");
+			} else{
+				 $('#sentinelone-agent_running').text(data.agent_running);
+			}
+			
+			if(data.enforcing_security === "0" ) {
+				$('#sentinelone-enforcing_security').text("false");
+			} else if(data.enforcing_security === "1" ) {
+				$('#sentinelone-enforcing_security').text("true");
+			} else{
+				 $('#sentinelone-enforcing_security').text(data.enforcing_security);
+			}
+			
+			if(data.self_protection_enabled === "0" ) {
+				$('#sentinelone-self_protection_enabled').text("false");
+			} else if(data.self_protection_enabled === "1" ) {
+				$('#sentinelone-self_protection_enabled').text("true");
+			} else{
+				 $('#sentinelone-self_protection_enabled').text(data.self_protection_enabled);
+			}
+			
 		});
 });
 
