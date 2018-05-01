@@ -168,7 +168,18 @@ def ard_access_check():
                     ard_users.append(user)
                 else:
                     pass
-            return " ".join(ard_users)
+
+            remote_user_check = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
+            remote_out, remote_err = remote_user_check.communicate()
+
+            ard_user_list = []
+            if "com.apple.local.ard_interact" in remote_out:
+                ard_user_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_interact', 'GroupMembership'], stdout=subprocess.PIPE)
+                ard_user_out, ard_user_err = ard_user_sp.communicate()
+                ard_user_list = ard_user_out.split()
+                ard_users.extend(ard_user_list[1:])
+ 
+            return ard_users
     else:
         # plist_path does not exist, which indicates that ARD is not enabled.
         return "ARD Disabled"
