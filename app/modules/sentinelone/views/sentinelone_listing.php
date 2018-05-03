@@ -167,8 +167,13 @@ new Sentinelone_model;
 
                 // Format date
                 var last_seen = parseInt($('td:eq(10)', nRow).html());
-                if (last_seen) {
-                    var date = new Date(last_seen * 1000);
+                 if (last_seen) {
+                    // The data coming in is UTC. This calculates the timezone difference
+                    var now = new Date;
+                    var utc_timestamp = Date.UTC(now.getFullYear(),now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+                    var epoch_tz_diff = (now.getTime() - utc_timestamp) / 1000;
+                    var adjusted_date = new Date(0);
+                    var date = adjusted_date.setUTCSeconds(last_seen - epoch_tz_diff);
                     $('td:eq(10)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
                 }
         }
