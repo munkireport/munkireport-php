@@ -22,12 +22,11 @@ new Sentinelone_model;
                 <th data-i18n="username" data-colname='reportdata.long_username'></th>
                 <th data-i18n="sentinelone.agent_running" data-colname='sentinelone.agent_running'></th>
                 <th data-i18n="sentinelone.active_threats" data-colname='sentinelone.active_threats_present'></th>
-                <th data-i18n="sentinelone.agent_id" data-colname='sentinelone.agent_id'></th>
-                <th data-i18n="sentinelone.agent_install_time" data-colname='sentinelone.agent_install_time'></th>
-                <th data-i18n="sentinelone.agent_version" data-colname='sentinelone.agent_version'></th>
-                <th data-i18n="sentinelone.enforcing_security" data-colname='sentinelone.enforcing_security'></th>
-                <th data-i18n="sentinelone.mgmt_url" data-colname='sentinelone.mgmt_url'></th>
                 <th data-i18n="sentinelone.self_protection_enabled" data-colname='sentinelone.self_protection_enabled'></th>
+                <th data-i18n="sentinelone.enforcing_security" data-colname='sentinelone.enforcing_security'></th>
+                <th data-i18n="sentinelone.agent_version" data-colname='sentinelone.agent_version'></th>
+                <th data-i18n="sentinelone.mgmt_url" data-colname='sentinelone.mgmt_url'></th>
+                <th data-i18n="sentinelone.agent_id" data-colname='sentinelone.agent_id'></th>
                 <th data-i18n="sentinelone.last_seen" data-colname='sentinelone.last_seen'></th>
               </tr>
             </thead>
@@ -100,14 +99,14 @@ new Sentinelone_model;
                     if(d.search.value.match(/^enforcing_security = \d$/))
                     {
                         // Add column specific search
-                        d.columns[8].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
+                        d.columns[5].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
                         // Clear global search
                         d.search.value = '';
                     }
                     if(d.search.value.match(/^self_protection_enabled = \d$/))
                     {
                         // Add column specific search
-                        d.columns[10].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
+                        d.columns[6].search.value = d.search.value.replace(/.*(\d)$/, '= $1');
                         // Clear global search
                         d.search.value = '';
                     }
@@ -147,8 +146,8 @@ new Sentinelone_model;
                 });
 
                 //enforcing-security formatting
-                var es = $('td:eq(8)', nRow).html();
-                $('td:eq(8)', nRow).html(function(){
+                var es = $('td:eq(5)', nRow).html();
+                $('td:eq(5)', nRow).html(function(){
                     if( es == '1'){
                         return '<span class="label label-success">'+i18n.t('true')+'</span>';
                     } else if (es == '0') {
@@ -157,8 +156,8 @@ new Sentinelone_model;
                 });
 
                 //self-protection-enabled formatting
-                var sp = $('td:eq(10)', nRow).html();
-                $('td:eq(10)', nRow).html(function(){
+                var sp = $('td:eq(6)', nRow).html();
+                $('td:eq(6)', nRow).html(function(){
                     if( sp == '1'){
                         return '<span class="label label-success">'+i18n.t('true')+'</span>';
                     } else if (sp == '0') {
@@ -167,10 +166,10 @@ new Sentinelone_model;
                 });
 
                 // Format date
-                var last_seen = parseInt($('td:eq(11)', nRow).html());
+                var last_seen = parseInt($('td:eq(10)', nRow).html());
                 if (last_seen) {
                     var date = new Date(last_seen * 1000);
-                    $('td:eq(11)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
+                    $('td:eq(10)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
                 }
         }
     });

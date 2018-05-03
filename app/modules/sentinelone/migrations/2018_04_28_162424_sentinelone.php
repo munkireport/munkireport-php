@@ -13,7 +13,6 @@ class Sentinelone extends Migration
             $table->string('serial_number');
             $table->integer('active_threats_present')->nullable();
             $table->string('agent_id')->nullable();
-            $table->string('agent_install_time')->nullable();
             $table->integer('agent_running')->nullable();
             $table->string('agent_version')->nullable();
             $table->integer('enforcing_security')->nullable();
@@ -24,7 +23,6 @@ class Sentinelone extends Migration
             $table->index('serial_number');
             $table->index('active_threats_present');
             $table->index('agent_id');
-            $table->index('agent_install_time');
             $table->index('agent_running');
             $table->index('agent_version');
             $table->index('enforcing_security');

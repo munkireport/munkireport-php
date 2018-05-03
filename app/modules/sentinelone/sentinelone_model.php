@@ -11,7 +11,6 @@ class Sentinelone_model extends \Model
         $this->rs['serial_number'] = $serial;
         $this->rs['active_threats_present'] = 0; //boolean
         $this->rs['agent_id'] = '';
-        $this->rs['agent_install_time'] = '';
         $this->rs['agent_running'] = 0; //boolean
         $this->rs['agent_version'] = '';
         $this->rs['enforcing_security'] = 0; //boolean
@@ -41,7 +40,6 @@ class Sentinelone_model extends \Model
         $translate = array(
           'active-threats-present' => 'active_threats_present',
           'agent-id' => 'agent_id',
-          'agent-install-time' => 'agent_install_time',
           'agent-running' => 'agent_running',
           'agent-version' => 'agent_version',
           'enforcing-security' => 'enforcing_security',
@@ -63,6 +61,7 @@ class Sentinelone_model extends \Model
                 $this->$item = '';
             }
         }
+        $this->id = '';
         $this->save();
     }
 
