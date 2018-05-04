@@ -2,16 +2,23 @@
 
 namespace munkireport\lib;
 
-use \Adldap\Adldap, \Exception;
-
+use Adldap\Adldap, \Exception;
+use Adldap\Schemas\FreeIPA; Adldap\Schemas\OpenLDAP; Adldap\Schemas\ActiveDirectory;
 
 class AuthAD extends AbstractAuth
 {
-    private $config, $groups, $login, $auth_status;
+    private $config, $schema, $groups, $login, $auth_status;
 
     public function __construct($config)
     {
         $this->config = $config;
+        // Schema support
+        if (isset($this->config['schema'])){
+            $this->schema = new $this->config['schema'];
+            unset($this->config['schema']);
+        } else {
+            $this->schema = new ActiveDirectory;
+        }
         $this->groups = [];
     }
 
@@ -20,7 +27,13 @@ class AuthAD extends AbstractAuth
         $this->login = $login;
         if ($login && $password) {
             $adldap = new adLDAP;
-            $adldap->addProvider($this->stripMunkireportItemsFromConfig($this->config));
+
+            $adldap->addProvider(
+                $this->stripMunkireportItemsFromConfig($this->config),
+                $name = 'default',
+                null,
+                $this->schema
+            );
 
             try {
                 $provider = $adldap->connect();
