@@ -39,7 +39,8 @@ def main():
                                 stderr=subprocess.PIPE)
 
         (q_stdout, q_stderr) = task.communicate()
-        
+ 
+        quarantine_list = []
         if "No files quarantined" in q_stdout:
             pass 
         else:
@@ -50,7 +51,6 @@ def main():
             for items in mylist:
                 items[3:] = [''.join(items[3:])]
 
-            quarantine_list = []
             sub_q_dict = {}
         #iterate thru the list of lists
             for i in range(len(mylist)):
