@@ -3,7 +3,6 @@
 namespace munkireport\lib;
 
 use Adldap\Adldap, \Exception;
-use Adldap\Schemas\FreeIPA; Adldap\Schemas\OpenLDAP; Adldap\Schemas\ActiveDirectory;
 
 class AuthAD extends AbstractAuth
 {
@@ -14,7 +13,8 @@ class AuthAD extends AbstractAuth
         $this->config = $config;
         // Schema support
         if (isset($this->config['schema'])){
-            $this->schema = new $this->config['schema'];
+            $schemaName = 'Adldap\\Schemas\\'.$this->config['schema'];
+            $this->schema = new $schemaName;
             unset($this->config['schema']);
         } else {
             $this->schema = new ActiveDirectory;
