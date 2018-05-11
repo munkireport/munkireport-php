@@ -10,7 +10,7 @@ The table provides the following information per client:
 + lvuuid - (CoreStorage) Logical Volume UUID
 + pvuuid - (CoreStorage) Physical Volume UUID
 + recoverykey -  The personal recovery key
-+ Also added is hddserial - The serial number of the hard drive 
++ Also added is hddserial - The serial number of the hard drive
 
 # Remarks
 
@@ -25,7 +25,14 @@ $ sudo defaults write /Library/Preferences/com.grahamgilbert.crypt RemovePlist -
 
 The recovery key is encrypted before it enters the database and is decrypted after retrieval. Don't lose the encryption key or your recovery keys are lost forever!
 
+
+You can specify the ServerURL in the crypt preferences to a special url that will respond in a way that the crypt client stops attempting to Escrow.
+
+```bash
+$ sudo defaults write /Library/Preferences/com.grahamgilbert.crypt ServerURL "http://munkireportURL/index.php?/module/filevault_escrow/"
+```
+The client will then checkin at `munkireporturl/index.php?/module/filevault_escrow/checkin`.
+
 # Dependencies
 
 This module is dependent on the filevault_status model to provide the current status of FileVault and to list the user accounts who are authorized to unlock the drive
-
