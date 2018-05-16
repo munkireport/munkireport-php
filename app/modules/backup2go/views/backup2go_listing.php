@@ -107,7 +107,7 @@ new Backup2go_Model;
 					   cls = 'danger';
 					}
 
-					$('td:eq(3)', nRow).html('<span class="label label-'+cls+'"><span title="'+backupdate+''+bdate.fromNow()+'</span>');
+					$('td:eq(3)', nRow).html('<span class="label label-'+cls+'"><span title="'+backupdate+'">'+bdate.fromNow()+'</span>');
 				} else {
 					$('td:eq(3)', nRow).html('<span class="label">'+i18n.t('unknown')+'</span>');
 				}

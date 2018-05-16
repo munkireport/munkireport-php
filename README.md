@@ -1,6 +1,8 @@
-[![Stories in Ready](https://badge.waffle.io/munkireport/munkireport-php.png?label=ready&title=Ready)](https://waffle.io/munkireport/munkireport-php)
+
 munkireport-php
 ===============
+
+master: [![Build Status](https://travis-ci.org/munkireport/munkireport-php.svg?branch=master)](https://travis-ci.org/munkireport/munkireport-php)  wip: [![Build Status](https://travis-ci.org/munkireport/munkireport-php.svg?branch=wip)](https://travis-ci.org/munkireport/munkireport-php)
 
 ![Dashboard view](https://github.com/munkireport/munkireport-php/wiki/assets/pics/dashboard.png)
 
