@@ -14,4 +14,3 @@ config.php
 vendor/*
 
 composer.lock
-.env
