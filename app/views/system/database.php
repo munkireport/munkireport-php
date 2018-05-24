@@ -85,6 +85,12 @@
           $.getJSON(appUrl + '/database/migrate', function (data) {
             done();
 
+            if (data.notes) {
+              for (var i = 0; i < data.notes.length; i++) {
+                tbody.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
+              }
+            }
+
             if (data.error) {
               disclose();
               log(data.error_message, 'error');
@@ -92,19 +98,11 @@
               if (data.error_trace) {
                 log('stack trace follows:', 'error');
                 data.error_trace.forEach(function(stackItem) {
-                  var li = $('<li>in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '</li>');
                     log('in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '.' , 'error');
                 });
               }
             }
 
-            if (data.notes) {
-              tbody.empty();
-
-              for (var i = 0; i < data.notes.length; i++) {
-                tbody.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
-              }
-            }
         }).fail(function (jqXHR, textStatus, error) {
           done();
         })
