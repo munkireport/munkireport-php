@@ -59,6 +59,50 @@ class Database extends Controller
         }
     }
 
+    public function rollback()
+    {
+        $repository = new DatabaseMigrationRepository($this->capsule->getDatabaseManager(), 'migrations');
+
+        try {
+            if (!$repository->repositoryExists()) {
+                $repository->createRepository();
+            }
+
+            $files = new Filesystem();
+            $migrator = new Migrator($repository, $this->capsule->getDatabaseManager(), $files);
+            $dirs = [APP_ROOT . 'database/migrations'];
+            $this->appendModuleMigrations($dirs);
+
+            try {
+                $migrator->rollback();
+
+                $obj->view('json', [
+                    'msg' => [
+                        'files' => $migrationFiles,
+                        'notes' => $migrator->getNotes()
+                    ]
+                ]);
+            } catch (\PDOException $exception) {
+                $obj->view('json', [
+                    'msg' => [
+                        'error' => true,
+                        'error_message' => $exception->getMessage(),
+                        'notes' => $migrator->getNotes()
+                    ]
+                ]);
+            }
+        } catch (\Exception $e) {
+            $obj = new View();
+            $obj->view('json', [
+                'msg' => [
+                    'error' => true,
+                    'error_message' => $e->getMessage(),
+                    'error_trace' => $e->getTrace()
+                ]
+            ]);
+        }
+    }
+
     public function migrate()
     {
         $repository = new DatabaseMigrationRepository($this->capsule->getDatabaseManager(), 'migrations');
