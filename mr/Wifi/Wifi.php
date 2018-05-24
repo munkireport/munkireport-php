@@ -33,4 +33,9 @@ class Wifi extends SerialNumberModel
         'lasttxrate' => 'integer',
         'maxrate' => 'integer'
     ];
+
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope(new \Mr\Scope\MachineGroupScope);
+    }
 }

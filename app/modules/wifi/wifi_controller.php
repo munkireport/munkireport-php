@@ -39,7 +39,8 @@ class Wifi_controller extends Module_controller
         }
 
         $this->connectDB();
-        $wifi = Wifi::where('serial_number', '=', $serial_number)->first();
+        $wifi = Wifi::withoutGlobalScope(\Mr\Scope\MachineGroupScope::class)
+            ->where('serial_number', '=', $serial_number)->first();
         $obj->view('json', array('msg' => $wifi));
     }
     
@@ -57,9 +58,18 @@ class Wifi_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-        
-        $wifi = new wifi_model;
-        $obj->view('json', array('msg' =>$wifi->get_wifi_state()));
+        $db = $this->connectDB();
+
+        // TODO: Machine Group Filter
+        $wifiStates = $db::table('wifi')->select(
+            $db::raw("COUNT(CASE WHEN state = 'running' THEN 1 END) AS connected"),
+            $db::raw("COUNT(CASE WHEN state = 'init' THEN 1 END) AS on_not_connected"),
+            $db::raw("COUNT(CASE WHEN state = 'sharing' THEN 1 END) AS sharing"),
+            $db::raw("COUNT(CASE WHEN state = 'unknown' THEN 1 END) AS unknown"),
+            $db::raw("COUNT(CASE WHEN state = 'off' THEN 1 END) AS off")
+        )->leftJoin('reportdata', 'wifi.serial_number', '=', 'reportdata.serial_number')->first();
+
+        $obj->view('json', array('msg' => $wifiStates));
     }
     
     /**
@@ -76,9 +86,18 @@ class Wifi_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-        
-        $wifi = new wifi_model;
-        $obj->view('json', array('msg' => $wifi->get_wifi_name()));
+
+        $db = $this->connectDB();
+        $wifiNames = $db::table('wifi')
+            ->select(
+                $db::raw('count(*) as count'),
+                'ssid'
+            )
+            ->leftJoin('reportdata', 'wifi.serial_number', '=', 'reportdata.serial_number')
+            ->whereNotNull('wifi.ssid')
+            ->groupBy('ssid');
+
+        $obj->view('json', array('msg' => $wifiNames->get()));
     }
 
     /**
