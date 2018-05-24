@@ -68,8 +68,18 @@ class Certificate_controller extends Module_controller
             return;
         }
 
-        $cert = new Certificate_model;
-        $obj->view('json', array('msg' => $cert->get_stats()));
+        $db = $this->connectDB();
+
+        $now = time();
+        $one_month = $now + 3600 * 24 * 30 * 1;
+        $certificate_stats = $db::table('certificate')->select(
+        $db::raw("COUNT(1) as total"),
+            $db::raw("COUNT(CASE WHEN cert_exp_time < '${now}' THEN 1 END) AS expired"),
+            $db::raw("COUNT(CASE WHEN cert_exp_time BETWEEN $now AND $one_month THEN 1 END) AS soon"),
+            $db::raw("COUNT(CASE WHEN cert_exp_time > $one_month THEN 1 END) AS ok")
+        )->leftJoin('reportdata', 'certificate.serial_number', '=', 'reportdata.serial_number')->first();
+
+        $obj->view('json', array('msg' => $certificate_stats));
     }
 
     public function get_certificates()
