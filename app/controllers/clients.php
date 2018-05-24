@@ -3,7 +3,6 @@
 namespace munkireport\controller;
 
 use \Controller, \View;
-use Illuminate\Database\Query\JoinClause;
 use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model, \Network_model;
 
 
@@ -47,48 +46,6 @@ class clients extends Controller
             new Localadmin_model;
             new Security_model;
 	    new Network_model;
-
-            $db = $this->connectDB();
-            $results = $db::table('machine')->select([
-                'reportdata.console_user',
-                'reportdata.long_username',
-                'reportdata.remote_ip',
-                'reportdata.uptime',
-                'reportdata.reg_timestamp',
-                'reportdata.machine_group',
-                'reportdata.timestamp',
-                'security.gatekeeper',
-                'security.sip',
-                'security.ssh_users',
-                'security.ard_users',
-            ])
-                ->leftJoin('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
-                ->leftJoin('security', 'machine.serial_number', '=', 'security.serial_number')
-                ->leftJoin('warranty', 'machine.serial_number', '=', 'warranty.serial_number')
-                ->leftJoin('localadmin', 'machine.serial_number', '=', 'localadmin.serial_number')
-                ->leftJoin('diskreport', 'machine.serial_number', '=', 'diskreport.serial_number')
-                ->where('serial_number', '=', $serial_number);
-
-            $db = $this->connectDB();
-            $results = $db::table('machine')->select([
-                'reportdata.console_user',
-                'reportdata.long_username',
-                'reportdata.remote_ip',
-                'reportdata.uptime',
-                'reportdata.reg_timestamp',
-                'reportdata.machine_group',
-                'reportdata.timestamp',
-                'security.gatekeeper',
-                'security.sip',
-                'security.ssh_users',
-                'security.ard_users',
-            ])
-                ->leftJoin('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
-                ->leftJoin('security', 'machine.serial_number', '=', 'security.serial_number')
-                ->leftJoin('warranty', 'machine.serial_number', '=', 'warranty.serial_number')
-                ->leftJoin('localadmin', 'machine.serial_number', '=', 'localadmin.serial_number')
-                ->leftJoin('diskreport', 'machine.serial_number', '=', 'diskreport.serial_number')
-                ->where('serial_number', '=', $serial_number);
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uid, r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
