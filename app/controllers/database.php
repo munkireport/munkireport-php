@@ -73,8 +73,10 @@ class Database extends Controller
             $dirs = [APP_ROOT . 'database/migrations'];
             $this->appendModuleMigrations($dirs);
 
+            $obj = new View();
+
             try {
-                $migrator->rollback();
+                $migrationFiles = $migrator->rollback();
 
                 $obj->view('json', [
                     'msg' => [

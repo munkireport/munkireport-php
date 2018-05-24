@@ -13,6 +13,10 @@
                 <button id="db-upgrade" class="btn btn-primary">
                     <span id="db-upgrade-label" data-i18n="database.update">Update</span>
                 </button>
+
+<!--                <button id="db-rollback" class="btn btn-warning">-->
+<!--                    <span id="db-rollback-label" data-i18n="database.rollback">Rollback 1</span>-->
+<!--                </button>-->
             </div>
         </div>
 
@@ -70,6 +74,45 @@
           $(this).closest('table').toggleClass('disclosure-active');
         });
 
+        $('#db-rollback').click(function (e) {
+          $(this).attr('disabled', true);
+          $(this).find('#db-rollback-label').html('Rolling Back&hellip;');
+          var $btn = $(this);
+
+          function done () {
+            $btn.attr('disabled', false);
+            $btn.find('#db-rollback-label').html('Rollback 1');
+          }
+
+            log('Started single rollback: ' + new Date());
+
+
+            $.getJSON(appUrl + '/database/rollback', function (data) {
+              done();
+              disclose();
+              if (data.notes) {
+                for (var i = 0; i < data.notes.length; i++) {
+                  tbody.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
+                }
+              }
+
+              if (data.error) {
+                disclose();
+                log(data.error_message, 'error');
+
+                if (data.error_trace) {
+                  log('stack trace follows:', 'error');
+                  data.error_trace.forEach(function(stackItem) {
+                    log('in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '.' , 'error');
+                  });
+                }
+              }
+            }).fail(function() {
+              done();
+            });
+
+        });
+
         $('#db-upgrade').click(function (e) {
           $(this).attr('disabled', true);
           $(this).find('#db-upgrade-label').html('Upgrading&hellip;');
@@ -80,7 +123,7 @@
             $btn.find('#db-upgrade-label').html('Update');
           }
 
-          log('started update: ' + new Date());
+          log('Started update: ' + new Date());
 
           $.getJSON(appUrl + '/database/migrate', function (data) {
             done();
