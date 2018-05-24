@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use Mr\USB\USB;
 
 /**
  * USB status module class
@@ -40,9 +42,18 @@ class Usb_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-        
-        $usb = new Usb_model;
-        $obj->view('json', array('msg' => $usb->get_usb_devices()));
+
+        $db = $this->connectDB();
+        $usbDevices = $db::table('usb')
+             ->select(
+                 $db::raw('count(*) as count'),
+                 'name'
+             )
+             ->leftJoin('reportdata', 'usb.serial_number', '=', 'reportdata.serial_number')
+             ->whereNotNull('usb.name')
+             ->orderBy('count', 'DESC')
+             ->groupBy('name');
+        $obj->view('json', array('msg' => $usbDevices->get()));
      }
     
      /**
@@ -59,9 +70,18 @@ class Usb_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-        
-        $usb = new Usb_model;
-        $obj->view('json', array('msg' => $usb->get_usb_types()));
+
+         $db = $this->connectDB();
+         $usbTypes = $db::table('usb')
+             ->select(
+                 $db::raw('count(*) as count'),
+                 'type'
+             )
+             ->leftJoin('reportdata', 'usb.serial_number', '=', 'reportdata.serial_number')
+             ->whereNotNull('usb.type')
+             ->orderBy('count', 'DESC')
+             ->groupBy('type');
+         $obj->view('json', array('msg' => $usbTypes->get()));
      }
     
 	/**
@@ -77,7 +97,8 @@ class Usb_controller extends Module_controller
         }
 
         $this->connectDB();
-        $usbDevices = \Mr\USB\USB::where('serial_number', '=', $serial_number)->get();
+        $usbDevices = USB::withoutGlobalScope(\Mr\Scope\MachineGroupScope::class)
+            ->where('serial_number', '=', $serial_number)->get();
         $obj->view('json', array('msg' => $usbDevices));
     }
 		
