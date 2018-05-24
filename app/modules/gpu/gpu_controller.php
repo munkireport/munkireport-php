@@ -42,9 +42,17 @@ class Gpu_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
+        $db = $this->connectDB();
+        $gpuModels = $db::table('gpu')
+            ->select(
+                $db::raw('count(*) as count'),
+                'model'
+            )
+            ->leftJoin('reportdata', 'gpu.serial_number', '=', 'reportdata.serial_number')
+            ->whereNotNull('gpu.model')
+            ->groupBy('model');
 
-        $gpu = new Gpu_model;
-        $obj->view('json', array('msg' => $gpu->get_gpu_models()));
+        $obj->view('json', array('msg' => $gpuModels->get()));
      }
 
 	/**
@@ -61,7 +69,8 @@ class Gpu_controller extends Module_controller
         }
 
         $this->connectDB();
-        $gpus = GPU::where('serial_number', '=', $serial_number)->get();
+        $gpus = GPU::withoutGlobalScope(\Mr\Scope\MachineGroupScope::class)
+            ->where('serial_number', '=', $serial_number)->get();
         $obj->view('json', array('msg' => $gpus));
     }
 

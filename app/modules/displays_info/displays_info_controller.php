@@ -63,8 +63,10 @@ class Displays_info_controller extends Module_controller
             $obj->view('json', array('msg' => array('error' => 'Not authenticated')));
             return;
         }
-        
-        $dim = new Displays_info_model();
-        $obj->view('json', array('msg' => $dim->get_count($type)));
+        $db = $this->connectDB();
+        $externalDisplays = Display::external()->count();
+        $obj->view('json', array('msg' => array('total' => $externalDisplays)));
+//        $dim = new Displays_info_model();
+//        $obj->view('json', array('msg' => $dim->get_count($type)));
     }
 } // END class default_module

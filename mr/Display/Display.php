@@ -24,4 +24,21 @@ class Display extends SerialNumberModel
         'type' => 'integer',
         'manufactured' => 'integer'
     ];
+
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope(new \Mr\Scope\MachineGroupScope);
+    }
+
+    //// SCOPES
+
+    public function scopeExternal($query)
+    {
+        return $query->where('type', Display::TYPE_EXTERNAL);
+    }
+
+    public function scopeInternal($query)
+    {
+        return $query->where('type', Display::TYPE_INTERNAL);
+    }
 }
