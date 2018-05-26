@@ -18,7 +18,7 @@ class PowerFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('power');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('power', function (Blueprint $table) {
                 $table->index('manufacture_date', 'power_manufacture_date');
                 $table->index('design_capacity', 'power_design_capacity');

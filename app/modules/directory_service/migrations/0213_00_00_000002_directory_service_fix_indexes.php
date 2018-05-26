@@ -18,7 +18,7 @@ class DirectoryServiceFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('directoryservice');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('directoryservice', function (Blueprint $table) {
                 $table->index('which_directory_service', 'directoryservice_which_directory_service');
                 $table->index('directory_service_comments', 'directoryservice_directory_service_comments');
@@ -32,7 +32,7 @@ class DirectoryServiceFixIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('directoryservice');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'directoryservice',
                 function (Blueprint $table) {

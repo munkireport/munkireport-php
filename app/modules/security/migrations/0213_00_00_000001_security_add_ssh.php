@@ -18,7 +18,7 @@ class SecurityAddSsh extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('security', function (Blueprint $table) {
                 $table->string('ssh_users')->nullable();
                 $table->index('ssh_users', 'security_ssh_users');
@@ -31,7 +31,7 @@ class SecurityAddSsh extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'security',
                 function (Blueprint $table) {

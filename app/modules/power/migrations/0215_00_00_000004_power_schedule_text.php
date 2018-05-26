@@ -18,7 +18,7 @@ class PowerScheduleText extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('power');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('power', function(Blueprint $table) {
                 $table->text('schedule')->change();
             });
@@ -30,7 +30,7 @@ class PowerScheduleText extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('power');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table('power', function(Blueprint $table) {
                 $table->string('schedule')->change();
             });

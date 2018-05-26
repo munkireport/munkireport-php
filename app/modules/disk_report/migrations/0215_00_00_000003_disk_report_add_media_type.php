@@ -18,16 +18,18 @@ class DiskReportAddMediaType extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('diskreport');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('diskreport', function (Blueprint $table) {
                 $table->string('media_type')->default('-');
                 $table->index('media_type', 'diskreport_media_type');
             });
 
-            // TODO:
-            /*        $sql = "UPDATE diskreport
-                SET media_type = volumeType, volumeType = '-'
-                WHERE volumeType IN ('hdd', 'ssd', 'fusion', 'raid')";*/
+            $capsule::table('diskreport')
+                ->whereIn('volumeType', ['hdd', 'ssd', 'fusion', 'raid'])
+                ->update(Array(
+                    'media_type' => $capsule::raw('volumeType'),  // TODO: Not literally volumeType but the column named this.
+                    'volumeType' => '-'
+                ));
 
             $this->markLegacyMigrationRan();
         }
@@ -36,7 +38,7 @@ class DiskReportAddMediaType extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('diskreport');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'diskreport',
                 function (Blueprint $table) {

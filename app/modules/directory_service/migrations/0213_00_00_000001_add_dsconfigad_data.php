@@ -18,7 +18,7 @@ class AddDsconfigadData extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('directoryservice');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('directoryservice', function (Blueprint $table) {
                 $table->string('adforest')->nullable();
                 $table->string('addomain')->nullable();
@@ -51,7 +51,7 @@ class AddDsconfigadData extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('directoryservice');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'directoryservice',
                 function (Blueprint $table) {

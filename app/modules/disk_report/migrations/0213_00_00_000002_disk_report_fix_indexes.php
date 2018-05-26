@@ -18,7 +18,7 @@ class DiskreportFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('diskreport');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('diskreport', function (Blueprint $table) {
                 $table->index('serial_number', 'diskreport_serial_number');
                 $table->index('VolumeType', 'diskreport_VolumeType');
@@ -33,7 +33,7 @@ class DiskreportFixIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('diskreport');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'diskreport',
                 function (Blueprint $table) {

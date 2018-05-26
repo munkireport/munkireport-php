@@ -18,7 +18,7 @@ class SecurityAddArd extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('security', function (Blueprint $table) {
                 $table->string('ard_users')->nullable();
                 $table->index('ard_users', 'security_ard_users');
@@ -31,7 +31,7 @@ class SecurityAddArd extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'security',
                 function (Blueprint $table) {

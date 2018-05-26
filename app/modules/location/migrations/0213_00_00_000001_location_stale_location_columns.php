@@ -18,7 +18,7 @@ class LocationStaleLocationColumns extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('location');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('location', function (Blueprint $table) {
                 $table->string('stalelocation');
                 $table->string('lastlocationrun');
@@ -34,7 +34,7 @@ class LocationStaleLocationColumns extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('location');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'location',
                 function (Blueprint $table) {

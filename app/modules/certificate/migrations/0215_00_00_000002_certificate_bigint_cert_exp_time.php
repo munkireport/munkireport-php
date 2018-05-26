@@ -18,7 +18,7 @@ class CertificateBigintCertExpTime extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('certificate');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('certificate', function (Blueprint $table) {
                 $table->bigInteger('cert_exp_time')->change();
             });
@@ -30,7 +30,7 @@ class CertificateBigintCertExpTime extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('certificate');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'certificate',
                 function (Blueprint $table) {

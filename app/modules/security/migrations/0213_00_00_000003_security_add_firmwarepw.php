@@ -18,7 +18,7 @@ class SecurityAddFirmwarepw extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('security', function (Blueprint $table) {
                 $table->string('firmwarepw')->nullable();
                 $table->index('firmwarepw', 'security_firmwarepw');
@@ -31,7 +31,7 @@ class SecurityAddFirmwarepw extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'security',
                 function (Blueprint $table) {

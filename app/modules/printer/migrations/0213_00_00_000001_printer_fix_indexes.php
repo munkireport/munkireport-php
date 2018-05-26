@@ -18,7 +18,7 @@ class PrinterFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('printer');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('printer', function (Blueprint $table) {
                 $table->index('serial_number', 'printer_serial_number');
                 $table->index('name', 'printer_name');
@@ -36,7 +36,7 @@ class PrinterFixIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('printer');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'printer',
                 function (Blueprint $table) {

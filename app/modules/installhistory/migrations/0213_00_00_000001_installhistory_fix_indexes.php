@@ -18,7 +18,7 @@ class InstallhistoryFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('installhistory');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('installhistory', function (Blueprint $table) {
                 $table->index('serial_number', 'installhistory_serial_number');
             });
@@ -30,7 +30,7 @@ class InstallhistoryFixIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('installhistory');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'installhistory',
                 function (Blueprint $table) {

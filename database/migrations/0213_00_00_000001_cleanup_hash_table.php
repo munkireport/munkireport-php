@@ -18,7 +18,7 @@ class CleanupHashTable extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('hash');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $rename_list = array(
                 'InstallHistory' => 'installhistory',
                 'Machine' => 'machine',

@@ -18,7 +18,7 @@ class SecurityAddFirewallState extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('security', function (Blueprint $table) {
                 $table->integer('firewall_state')->nullable();
                 $table->index('firewall_state', 'security_firewall_state');
@@ -31,7 +31,7 @@ class SecurityAddFirewallState extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'security',
                 function (Blueprint $table) {

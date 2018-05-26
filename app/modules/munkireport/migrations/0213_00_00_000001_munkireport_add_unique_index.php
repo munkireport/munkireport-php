@@ -18,7 +18,7 @@ class MunkireportAddUniqueIndex extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('munkireport');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('munkireport', function (Blueprint $table) {
                 $table->unique('serial_number', 'serial_number');
             });
@@ -30,7 +30,7 @@ class MunkireportAddUniqueIndex extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('munkireport');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table('munkireport', function (Blueprint $table) {
                 $table->dropUnique('serial_number');
             });

@@ -18,7 +18,7 @@ class FilevaultStatusFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('filevault_status');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('filevault_status', function (Blueprint $table) {
                 $table->index('filevault_status', 'filevault_status_filevault_status');
                 $table->index('filevault_users', 'filevault_status_filevault_users');
@@ -31,7 +31,7 @@ class FilevaultStatusFixIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('filevault_status');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'filevault_status',
                 function (Blueprint $table) {

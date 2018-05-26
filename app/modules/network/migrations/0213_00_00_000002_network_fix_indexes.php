@@ -18,7 +18,7 @@ class NetworkFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('network');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('network', function (Blueprint $table) {
                 $table->index('serial_number', 'network_serial_number');
                 $table->index(['serial_number', 'service'], 'network_serial_number_service');
@@ -31,7 +31,7 @@ class NetworkFixIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('network');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'network',
                 function (Blueprint $table) {

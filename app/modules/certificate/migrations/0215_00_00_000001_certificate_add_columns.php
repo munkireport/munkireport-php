@@ -18,7 +18,7 @@ class CertificateAddColumns extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('certificate');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $cols = $capsule::schema()->getColumnListing('certificate');
 
             $capsule::schema()->table('certificate', function (Blueprint $table) use ($cols) {
@@ -38,7 +38,7 @@ class CertificateAddColumns extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('certificate');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'certificate',
                 function (Blueprint $table) {

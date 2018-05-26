@@ -21,7 +21,7 @@ class TimemachineRemoveFakeNull extends Migration
         $legacyVersion = $this->getLegacyModelSchemaVersion('timemachine');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $cols = array(
                 'destinations',
                 'snapshot_count',
@@ -50,7 +50,7 @@ class TimemachineRemoveFakeNull extends Migration
     {
         $legacyVersion = $this->getLegacyModelSchemaVersion('timemachine');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
 //            $capsule::schema()->table(
 //                'timemachine',
 //                function (Blueprint $table) {

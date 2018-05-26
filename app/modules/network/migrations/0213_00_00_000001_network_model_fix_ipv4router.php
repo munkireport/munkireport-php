@@ -18,7 +18,7 @@ class NetworkModelFixIpv4router extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('network');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('network', function (Blueprint $table) {
                 $table->string('ipv4router')->change();
             });
@@ -30,7 +30,7 @@ class NetworkModelFixIpv4router extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('network');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table('network', function (Blueprint $table) {
                 $table->integer('ipv4router')->change();
             });

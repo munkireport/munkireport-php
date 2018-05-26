@@ -18,7 +18,7 @@ class SecurityAddIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('security', function (Blueprint $table) {
                 //$table->index('serial_number', 'security_serial_number');
                 //$table->index('gatekeeper', 'security_gatekeeper');
@@ -36,7 +36,7 @@ class SecurityAddIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('security');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'security',
                 function (Blueprint $table) {

@@ -75,7 +75,7 @@ class PowerRemoveFakeNull extends Migration {
             'avgtimetoempty'
         );
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             foreach ($cols as $col) {
                 $capsule::table('power')
                     ->where($col, '=', -9876543)
@@ -90,7 +90,7 @@ class PowerRemoveFakeNull extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('power');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
 
 
             $this->markLegacyRollbackRan();

@@ -18,7 +18,7 @@ class ReportdataAddUptime extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('reportdata');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('reportdata', function (Blueprint $table) {
                 $table->integer('uptime')->default(0);
             });
@@ -30,7 +30,7 @@ class ReportdataAddUptime extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('reportdata');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table('reportdata', function (Blueprint $table) {
                 $table->dropColumn('uptime');
             });

@@ -18,7 +18,7 @@ class MultipleDisksAddition extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('diskreport');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
 
 
             $this->markLegacyMigrationRan();
@@ -28,7 +28,7 @@ class MultipleDisksAddition extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('diskreport');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
 
 
             $this->markLegacyRollbackRan();

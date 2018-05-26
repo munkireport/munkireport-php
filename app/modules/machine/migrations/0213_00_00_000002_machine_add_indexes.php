@@ -18,7 +18,7 @@ class MachineAddIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('machine');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('machine', function (Blueprint $table) {
                 $table->index('hostname', 'machine_hostname');
                 $table->index('machine_model', 'machine_machine_model');
@@ -45,7 +45,7 @@ class MachineAddIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('machine');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'machine',
                 function (Blueprint $table) {

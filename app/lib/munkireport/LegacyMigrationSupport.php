@@ -33,6 +33,8 @@ trait LegacyMigrationSupport
      */
     function getLegacyModelSchemaVersion($tableName) {
         $capsule = $this->connectDB();
+        if (!$capsule::schema()->hasTable('migration')) return null;
+
         $currentVersion = $capsule::table('migration')
             ->where('table_name', '=', $tableName)
             ->first();

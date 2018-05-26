@@ -18,7 +18,7 @@ class ReportdataAddGroup extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('reportdata');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('reportdata', function (Blueprint $table) {
                 $table->integer('machine_group')->default(0);
             });
@@ -30,7 +30,7 @@ class ReportdataAddGroup extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('reportdata');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table('reportdata', function (Blueprint $table) {
                 $table->dropColumn('machine_group');
             });

@@ -18,7 +18,7 @@ class ReportdataFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('reportdata');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('reportdata', function (Blueprint $table) {
                 $table->index('console_user', 'reportdata_console_user');
                 $table->index('long_username', 'reportdata_long_username');
@@ -34,7 +34,7 @@ class ReportdataFixIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('reportdata');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table('reportdata', function (Blueprint $table) {
                 $table->dropIndex('reportdata_console_user');
                 $table->dropIndex('reportdata_long_username');

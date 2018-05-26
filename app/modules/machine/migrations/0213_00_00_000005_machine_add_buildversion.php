@@ -18,7 +18,7 @@ class MachineAddBuildversion extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('machine');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('machine', function (Blueprint $table) {
                 $table->string('buildversion');
                 $table->index('buildversion', 'machine_buildversion');
@@ -31,7 +31,7 @@ class MachineAddBuildversion extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('machine');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'machine',
                 function (Blueprint $table) {

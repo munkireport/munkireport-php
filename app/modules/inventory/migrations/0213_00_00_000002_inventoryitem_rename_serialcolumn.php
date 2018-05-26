@@ -18,7 +18,7 @@ class InventoryitemRenameSerialcolumn extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('inventoryitem');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('inventoryitem', function (Blueprint $table) {
                 $table->renameColumn('serial', 'serial_number');
             });
@@ -30,7 +30,7 @@ class InventoryitemRenameSerialcolumn extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('inventoryitem');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table('inventoryitem', function (Blueprint $table) {
                 $table->renameColumn('serial_number', 'serial');
             });

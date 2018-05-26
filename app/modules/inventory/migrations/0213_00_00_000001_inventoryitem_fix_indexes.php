@@ -18,7 +18,7 @@ class InventoryitemFixIndexes extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('inventoryitem');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('inventoryitem', function (Blueprint $table) {
                 $table->index('serial', 'inventoryitem_serial');
                 $table->index(['name', 'version'], 'inventoryitem_name_version');
@@ -31,7 +31,7 @@ class InventoryitemFixIndexes extends Migration {
     public function down() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('inventoryitem');
 
-        if ($legacyVersion == static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion == static::$legacySchemaVersion) {
             $capsule::schema()->table(
                 'inventoryitem',
                 function (Blueprint $table) {
