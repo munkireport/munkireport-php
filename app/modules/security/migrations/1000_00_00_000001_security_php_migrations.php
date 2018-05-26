@@ -12,29 +12,9 @@ class SecurityPhpMigrations extends Migration
     public function up() {
         $capsule = new Capsule();
 
-        // 001_security_add_ssh.php
-        if (!$capsule::schema()->hasColumn('security', 'ssh_users')) {
-            $capsule::schema()->table('security', function (Blueprint $table) {
-                $table->string('ssh_users')->nullable();
-                $table->index('ssh_users', 'security_ssh_users');
-            });
-        }
 
-        // 002_security_add_ard.php
-        if (!$capsule::schema()->hasColumn('security', 'ard_users')) {
-            $capsule::schema()->table('security', function (Blueprint $table) {
-                $table->string('ard_users')->nullable();
-                $table->index('ard_users', 'security_ard_users');
-            });
-        }
 
-        // 003_security_add_firmwarepw.php
-        if (!$capsule::schema()->hasColumn('security', 'firmwarepw')) {
-            $capsule::schema()->table('security', function (Blueprint $table) {
-                $table->string('firmwarepw')->nullable();
-                $table->index('firmwarepw', 'security_firmwarepw');
-            });
-        }
+
 
         // Omitted: 004_security_add_indexes.php
 
