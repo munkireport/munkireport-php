@@ -19,7 +19,7 @@ class Diskreport extends Migration
             $this->down();
         }
 
-        if ($capsule::schema()->hasTable($this->tableName)) {
+        if ($capsule::schema()->hasTable($this->tableName) && !$capsule::schema()->hasTable($this->tableNameV2)) {
             $capsule::schema()->rename($this->tableName, $this->tableNameV2);
             $migrateData = true;
         }

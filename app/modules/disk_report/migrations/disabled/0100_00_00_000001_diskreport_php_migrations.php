@@ -6,8 +6,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 /**
  * If you have MunkiReport v2 installed and it hasn't yet run the php migrations, these migrations will run as a part
  * of the v3 upgrade.
- *
- * This migration replaces `phpmigrations/001_certificate_add_columns.php`.
  */
 class DiskreportPhpMigrations extends Migration
 {

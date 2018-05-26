@@ -4,6 +4,25 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 trait LegacyMigrationSupport
 {
+    protected $capsule;
+
+    protected function connectDB()
+    {
+        if(!$this->capsule){
+            $this->capsule = new Capsule;
+
+            if( ! $connection = conf('connection')){
+                die('Connection not configured in config.php');
+            }
+
+            $this->capsule->addConnection($connection);
+            $this->capsule->setAsGlobal();
+            $this->capsule->bootEloquent();
+        }
+
+        return $this->capsule;
+    }
+
     /**
      * Query the `migration` table to retrieve the current model version for a MunkiReport PHP v2 model.
      *
@@ -13,30 +32,34 @@ trait LegacyMigrationSupport
      *  older than v2 migrations or newer than v3)
      */
     function getLegacyModelSchemaVersion($tableName) {
-        $capsule = new Capsule();
+        $capsule = $this->connectDB();
         $currentVersion = $capsule::table('migration')
-            ->select('version')->where('table_name', $tableName)
-            ->first()->version;
+            ->where('table_name', '=', $tableName)
+            ->first();
 
-        return $currentVersion;
+        if ($currentVersion) {
+            return $currentVersion->version;
+        } else {
+            return null;
+        }
     }
 
     function setLegacyModelSchemaVersion($tableName, $version) {
-        $capsule = new Capsule();
+        $capsule = $this->connectDB();
         $capsule::table('migration')
             ->where('table_name', $tableName)
             ->update(['version' => $version]);
     }
 
     function markLegacyMigrationRan() {
-        $capsule = new Capsule();
+        $capsule = $this->connectDB();
         $capsule::table('migration')
             ->where('table_name', static::$legacyTableName)
             ->update(['version' => static::$legacySchemaVersion]);
     }
 
     function markLegacyRollbackRan() {
-        $capsule = new Capsule();
+        $capsule = $this->connectDB();
         $capsule::table('migration')
             ->where('table_name', static::$legacyTableName)
             ->update(['version' => static::$legacySchemaVersion - 1]);
