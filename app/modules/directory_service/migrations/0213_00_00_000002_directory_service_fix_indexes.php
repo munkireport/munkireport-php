@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class DirectoryService_fix_indexes extends Migration {
+class DirectoryServiceFixIndexes extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

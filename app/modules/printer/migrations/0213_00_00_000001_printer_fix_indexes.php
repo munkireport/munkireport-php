@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Printer_Fix_Indexes extends Migration {
+class PrinterFixIndexes extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

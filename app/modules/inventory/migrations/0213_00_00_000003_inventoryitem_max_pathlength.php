@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Inventoryitem_Max_Pathlength extends Migration {
+class InventoryitemMaxPathlength extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

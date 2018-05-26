@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Timemachine_Add_Columns_For_Rewrite extends Migration {
+class TimemachineAddColumnsForRewrite extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

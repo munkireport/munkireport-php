@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Inventoryitem_Fix_Indexes extends Migration {
+class InventoryitemFixIndexes extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

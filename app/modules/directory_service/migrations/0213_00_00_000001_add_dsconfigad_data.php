@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class DirectoryService_add_dsconfigad_data extends Migration {
+class AddDsconfigadData extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

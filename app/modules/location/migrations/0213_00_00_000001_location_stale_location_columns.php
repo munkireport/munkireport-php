@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Location_Stale_Location_Columns extends Migration {
+class LocationStaleLocationColumns extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

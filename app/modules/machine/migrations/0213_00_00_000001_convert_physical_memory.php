@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Convert_Physical_Memory extends Migration {
+class ConvertPhysicalMemory extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

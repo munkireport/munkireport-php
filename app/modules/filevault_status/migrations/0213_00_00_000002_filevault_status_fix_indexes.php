@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class FileVaultStatus_fix_indexes extends Migration {
+class FilevaultStatusFixIndexes extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

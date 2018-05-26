@@ -16,7 +16,7 @@ trait LegacyMigrationSupport
         $capsule = new Capsule();
         $currentVersion = $capsule::table('migration')
             ->select('version')->where('table_name', $tableName)
-            ->first();
+            ->first()->version;
 
         return $currentVersion;
     }

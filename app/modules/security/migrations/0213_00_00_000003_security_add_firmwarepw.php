@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Security_Add_Firmwarepw extends Migration {
+class SecurityAddFirmwarepw extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

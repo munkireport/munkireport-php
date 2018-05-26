@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Network_Model_Fix_Ipv4router extends Migration {
+class NetworkModelFixIpv4router extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

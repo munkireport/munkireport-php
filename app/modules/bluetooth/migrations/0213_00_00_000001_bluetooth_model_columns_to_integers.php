@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Bluetooth_Model_ColsToIntegers extends Migration {
+class BluetoothModelColumnsToIntegers extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

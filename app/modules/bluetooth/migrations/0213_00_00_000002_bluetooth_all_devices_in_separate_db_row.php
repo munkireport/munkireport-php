@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Bluetooth_All_Devices_In_Separate_Row extends Migration {
+class BluetoothAllDevicesInSeparateDbRow extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 

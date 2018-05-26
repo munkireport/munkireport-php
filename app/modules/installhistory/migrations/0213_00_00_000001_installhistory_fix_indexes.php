@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Installhistory_Fix_Indexes extends Migration {
+class InstallhistoryFixIndexes extends Migration {
 
     use \munkireport\lib\LegacyMigrationSupport;
 
