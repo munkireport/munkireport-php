@@ -27,7 +27,7 @@ class Supported_os_model extends \Model
     {
         
         if ( ! $data){
-			throw new Exception("Error Processing Request: No property list found", 1);
+            throw new Exception("Error Processing Request: No property list found", 1);
         }
         
         // Delete previous set        
@@ -46,8 +46,10 @@ class Supported_os_model extends \Model
             }
         } else if (strpos($plist['machine_id'], 'iMac') !== false) {
             $model_num = preg_replace("/[^0-9]/", "", $plist['machine_id']);
-            if ($model_num >= 101) {
+            if ($model_num >= 131) {
                 $plist['highest_supported'] = $most_current_os;
+            } else if ($model_num >= 101) {
+                $plist['highest_supported'] = "10.13.6";
             } else if ($model_num >= 71) {
                 $plist['highest_supported'] = "10.11.6";
             } else if ($model_num >= 51) {
@@ -57,8 +59,10 @@ class Supported_os_model extends \Model
             }
         } else if (strpos($plist['machine_id'], 'Macmini') !== false) {
             $model_num = preg_replace("/[^0-9]/", "", $plist['machine_id']);
-            if ($model_num >= 41) {
+            if ($model_num >= 61) {
                 $plist['highest_supported'] = $most_current_os;
+            } else if ($model_num >= 41) {
+                $plist['highest_supported'] = "10.13.6";
             } else if ($model_num >= 31) {
                 $plist['highest_supported'] = "10.11.6";
             } else if ($model_num >= 21) {
@@ -77,8 +81,10 @@ class Supported_os_model extends \Model
             }
         } else if (strpos($plist['machine_id'], 'MacBookPro') !== false) {
             $model_num = preg_replace("/[^0-9]/", "", $plist['machine_id']);
-            if ($model_num >= 71) {
+            if ($model_num >= 91) {
                 $plist['highest_supported'] = $most_current_os;
+            } else if ($model_num >= 71) {
+                $plist['highest_supported'] = "10.13.6";
             } else if ($model_num >= 31) {
                 $plist['highest_supported'] = "10.11.6";
             } else if ($model_num >= 21) {
@@ -88,8 +94,10 @@ class Supported_os_model extends \Model
             }        
         } else if (strpos($plist['machine_id'], 'MacBookAir') !== false) {
             $model_num = preg_replace("/[^0-9]/", "", $plist['machine_id']);
-            if ($model_num >= 31) {
+            if ($model_num >= 51) {
                 $plist['highest_supported'] = $most_current_os;
+            } else if ($model_num >= 31) {
+                $plist['highest_supported'] = "10.13.6";
             } else if ($model_num >= 21) {
                 $plist['highest_supported'] = "10.11.6";
             } else {
@@ -97,8 +105,10 @@ class Supported_os_model extends \Model
             } 
         } else if (strpos($plist['machine_id'], 'MacBook') !== false) {
             $model_num = preg_replace("/[^0-9]/", "", $plist['machine_id']);
-            if ($model_num >= 61) {
+            if ($model_num >= 81) {
                 $plist['highest_supported'] = $most_current_os;
+            } else if ($model_num >= 61) {
+                $plist['highest_supported'] = "10.13.6";
             } else if ($model_num >= 51) {
                 $plist['highest_supported'] = "10.11.6";
             } else if ($model_num >= 21) {
