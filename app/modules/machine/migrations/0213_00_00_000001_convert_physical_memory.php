@@ -18,7 +18,7 @@ class ConvertPhysicalMemory extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('machine');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             // Chop "GB" suffix and change column to integer
             $capsule::table('machine')
                 ->update(['physical_memory' => $capsule::raw("SUBSTRING(physical_memory, ' ', 1)")]);

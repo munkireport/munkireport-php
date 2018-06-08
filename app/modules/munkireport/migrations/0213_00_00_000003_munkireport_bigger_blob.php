@@ -18,7 +18,7 @@ class MunkireportBiggerBlob extends Migration {
         $legacyVersion = $this->getLegacyModelSchemaVersion('munkireport');
         $capsule = new Capsule();
 
-        if ($legacyVersion < static::$legacySchemaVersion) {
+        if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $capsule::schema()->table('munkireport', function (Blueprint $table) {
                 //$table->binary('report_plist')->change();
             });
