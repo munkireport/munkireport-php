@@ -14,18 +14,18 @@ class MunkireportBiggerBlob extends Migration {
     public static $legacySchemaVersion = 3;
     public static $legacyTableName = 'munkireport';
 
-//    public function up() {
-//        $legacyVersion = $this->getLegacyModelSchemaVersion('munkireport');
-//        $capsule = new Capsule();
-//
-//        if ($legacyVersion < static::$legacySchemaVersion) {
-//            $capsule::schema()->table('munkireport', function (Blueprint $table) {
-//
-//            });
-//
-//            $this->markLegacyMigrationRan();
-//        }
-//    }
+    public function up() {
+        $legacyVersion = $this->getLegacyModelSchemaVersion('munkireport');
+        $capsule = new Capsule();
+
+        if ($legacyVersion < static::$legacySchemaVersion) {
+            $capsule::schema()->table('munkireport', function (Blueprint $table) {
+                //$table->binary('report_plist')->change();
+            });
+
+            $this->markLegacyMigrationRan();
+        }
+    }
 //
 //    public function down() {
 //        $legacyVersion = $this->getLegacyModelSchemaVersion('munkireport');

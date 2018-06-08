@@ -24,6 +24,19 @@ class MunkireportNew extends Migration {
 //                $table->binary('warning_json');
 //            });
 //
+//            $toConvert = $capsule::table('munkireport')
+//                ->where('report_plist', '!=', '')->count();
+//            if ($toConvert > 0) {
+//                $records = $capsule::table('munkireport')
+//                    ->where('report_plist', '!=', '')
+//                    ->take(50);
+//
+//                foreach ($records as $record) {
+//
+//                }
+//            }
+//
+//
 //            $this->markLegacyMigrationRan();
 //        }
 //    }
