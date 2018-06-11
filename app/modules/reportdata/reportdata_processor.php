@@ -36,6 +36,11 @@ class Reportdata_processor
             unset($mylist['long_username']);
         }
 
+        // If uid is empty, retain previous entry
+        if (array_key_exists('uid', $mylist) && empty($mylist['uid'])) {
+            unset($mylist['uid']);
+        }
+
         $model = Reportdata_model::updateOrCreate(
             ['serial_number' => $this->serial_number],
             $mylist

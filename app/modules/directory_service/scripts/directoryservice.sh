@@ -12,6 +12,7 @@ mkdir -p "$DIR/cache"
 
 DS=''
 AD_COMMENTS=''
+BOUND=''
 
 # Find which Directory Service we are bound to
 DS=`/usr/bin/dscl localhost -list . | head -n 1`
@@ -20,6 +21,10 @@ echo "Directory Service = ${DS}" > "$DIR/cache/directoryservice.txt"
 
 case "$DS" in
 "Active Directory")
+    # Set Bound to true
+    BOUND="true"
+    echo "Bound = ${BOUND}" >> "$DIR/cache/directoryservice.txt"
+    
 	# Get major OS version (uses uname -r and bash substitution)
 	# osvers is 10 for 10.6, 11 for 10.7, 12 for 10.8, 13 for 10.9, etc.
 	osversionlong=$(uname -r)
@@ -44,6 +49,10 @@ case "$DS" in
 ;;
 
 "LDAPv3")
+        # Set Bound to true
+        BOUND="true"
+        echo "Bound = ${BOUND}" >> "$DIR/cache/directoryservice.txt"
+
         # Get major OS version (uses uname -r and bash substitution)
         # osvers is 10 for 10.6, 11 for 10.7, 12 for 10.8, etc.
         osversionlong=$(uname -r)
@@ -54,11 +63,19 @@ case "$DS" in
 ;;
 
 "Local") # Indicates not bound to a directory
+        # Set Bound to false
+        BOUND="false"
+        echo "Bound = ${BOUND}" >> "$DIR/cache/directoryservice.txt"
+
 		DS="Not bound to Directory"
 		domain="Local"	
 ;;
 
 *) #Default Case
+        # Set Bound to false
+        BOUND="false"
+        echo "Bound = ${BOUND}" >> "$DIR/cache/directoryservice.txt"
+
 		DS="Unexpected binding type"
 ;;
 esac

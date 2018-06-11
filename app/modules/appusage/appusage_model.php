@@ -55,10 +55,15 @@ class Appusage_model extends \Model
     {
         // Delete previous entries
         $this->deleteWhere('serial_number=?', $this->serial_number);
-
+        
+        // List of bundle IDs to ignore
+        $bundleid_ignorelist = is_array(conf('appusage_ignorelist')) ? conf('appusage_ignorelist') : array();
+        $regex = '/^'.implode('|', $bundleid_ignorelist).'$/';
+                
         // Split into lines
         foreach(str_getcsv($data, "\n") as $line)
         {
+            // Skip if empty line
             if(trim($line) === ''){
                 continue;
             }
@@ -68,6 +73,11 @@ class Appusage_model extends \Model
 
             if ( count($appusage_line) > 1)
             {
+                // Check if we should skip this bundle ID
+                if (preg_match($regex, $appusage_line[1])) {
+                    continue;
+                }
+                
                 $this->event = $appusage_line[0];
                 $this->bundle_id = $appusage_line[1];
                 $this->app_version = $appusage_line[2];

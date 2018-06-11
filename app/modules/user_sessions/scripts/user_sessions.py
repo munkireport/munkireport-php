@@ -25,6 +25,7 @@ import plistlib
 import os
 import sys
 import time
+import subprocess
 
 # constants
 c = CDLL(find_library("System"))
@@ -53,6 +54,15 @@ class utmpx(Structure):
                 ("ut_pad",  c_uint32*16),
                ]
 
+
+def get_uid(username):
+    cmd = ['/usr/bin/id', '-u', username]
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    output = output.strip()
+    return output
 
 def fast_last(session='gui_ssh'):
     """This method will replicate the functionallity of the /usr/bin/last
@@ -99,6 +109,9 @@ def fast_last(session='gui_ssh'):
             event = {'event': event_label,
                      'user': e.ut_user,
                      'time': e.ut_tv.tv_sec}
+                     
+            if e.ut_user != "":
+            	event['uid'] = get_uid(e.ut_user)
             if e.ut_host != "":
                 event['remote_ssh'] = e.ut_host
 

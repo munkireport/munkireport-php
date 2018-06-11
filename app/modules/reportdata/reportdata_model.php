@@ -12,6 +12,7 @@ class Reportdata_model extends \Model
         $this->rs['serial_number'] = '';
         $this->rs['console_user'] = '';
         $this->rs['long_username'] = '';
+        $this->rs['uid'] = 0;
         $this->rs['remote_ip'] = '';
         $this->rs['uptime'] = 0;
         $this->rs['reg_timestamp'] = time(); // Registration date
@@ -149,6 +150,11 @@ class Reportdata_model extends \Model
         // If long_username is empty, retain previous entry
         if (array_key_exists('long_username', $mylist) && empty($mylist['long_username'])) {
             unset($mylist['long_username']);
+        }
+
+        // If uid is empty, retain previous entry
+        if (array_key_exists('uid', $mylist) && empty($mylist['uid'])) {
+            unset($mylist['uid']);
         }
 
         $this->merge($mylist)->register()->save();

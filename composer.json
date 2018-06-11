@@ -4,7 +4,13 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5"
+        "squizlabs/php_codesniffer": "^2.5",
+        "phpunit/phpunit": "^6.5"
+    },
+    "config": {
+        "platform": {
+            "php": "7.0.27"
+        }
     },
     "require": {
         "php": ">=7.0.27",
@@ -17,7 +23,8 @@
         "league/flysystem": "~1.0",
         "rodneyrehm/plist": "^2.0",
         "doctrine/dbal": "~2.5",
-        "defuse/php-encryption": "^2.1"
+        "defuse/php-encryption": "^2.1",
+        "vlucas/phpdotenv": "^2.4"
     },
     "suggest": {
         "onelogin/php-saml": "^2.12 Required for SAML authentication",
@@ -27,7 +34,11 @@
         "psr-4": {
             "munkireport\\models\\": "app/models/",
             "munkireport\\controller\\": "app/controllers",
-            "munkireport\\lib\\": "app/lib/munkireport"
+            "munkireport\\lib\\": "app/lib/munkireport",
+            "Tests\\": "tests/"
         }
+    },
+    "config": {
+        "optimize-autoloader": true
     }
 }

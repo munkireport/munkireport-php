@@ -9,18 +9,38 @@ fi
 # OS check
 OSVERSION=$(/usr/bin/sw_vers -productVersion | /usr/bin/cut -d . -f 2)
 
+# If OS version is 10.7 or lower
 if [[ ${OSVERSION} -lt 8 ]]; then
 
     echo "Error: Caching module is only supported on 10.8 or higher"
     exit
+    
+# If OS version is 10.12 or lower
+elif [[ ${OSVERSION} -lt 13 ]]; then
 
+    if [ ! -f /Library/Server/Caching/Logs/Metrics.sqlite ]; then
+        echo "Error: Caching metrics database not found! Is caching turned on?"
+
+    else
+        /usr/bin/sqlite3 /Library/Server/Caching/Logs/Metrics.sqlite "SELECT * FROM statsData;" > /usr/local/munki/preflight.d/cache/caching.txt
+    fi
+
+# Everything else, ie OS version is 13 or higher
 else
 
-if [ ! -f /Library/Server/Caching/Logs/Metrics.sqlite ]; then
-    echo "Error: Caching metrics database not found! Is caching turned on?"
-
-else
-    /usr/bin/sqlite3 /Library/Server/Caching/Logs/Metrics.sqlite "SELECT * FROM statsData;" > /usr/local/munki/preflight.d/cache/caching.txt
-fi
+    # Get caching server data
+    MANAGER=$(/usr/bin/AssetCacheManagerUtil -aj status 2>/dev/null)
+    
+    # Get cache locator data
+    LOCATOR=$(/usr/bin/AssetCacheLocatorUtil -j 2>/dev/null)
+    
+    # Merge the two variables as an invalid JSON
+    CACHINGOUTPUT="${MANAGER}${LOCATOR}]"
+    
+    # Get epoch date
+    DATE=$(date +%s)
+    
+    # Write the two JSON file to disk after merging them and include the datestamp
+    echo "${CACHINGOUTPUT//\}\}]{\"results\":\{/,\"rundate\":$DATE,}" > /usr/local/munki/preflight.d/cache/caching.txt
 
 fi
