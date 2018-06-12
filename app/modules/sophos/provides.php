@@ -7,6 +7,8 @@ return array(
     'listings' => array(
         'sophos' => array('view' => 'sophos_listing', 'i18n' => 'sophos.sophos'),
     ),
-    'widgets' => array(),
+    'widgets' => array(
+        'sophos_installs' => array('view' => 'sophos_installs_widget', 'i18n' => 'sophos.installs-widget'),
+    ),
     'reports' => array(),
 );
