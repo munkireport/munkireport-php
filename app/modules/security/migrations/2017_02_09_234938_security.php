@@ -16,7 +16,8 @@ class Security extends Migration
 
         if ($capsule::schema()->hasTable($this->tableNameV2)) {
             // Migration already failed before, but didnt finish
-            throw new Exception("previous failed migration exists");
+//            throw new Exception("previous failed migration exists");
+            $this->down();
         }
 
         if ($capsule::schema()->hasTable($this->tableName)) {
