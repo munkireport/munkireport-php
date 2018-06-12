@@ -1,0 +1,45 @@
+#!/bin/sh
+# Check the supported_os once a week
+
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
+# Seconds between checks
+CHECK=604800
+
+# Make sure the cache directory exists
+DIR=$(dirname $0)
+mkdir -p "$DIR/cache"
+
+
+# Check if supported_os.plist exists
+if [ -e "$DIR/cache/supported_os.plist" ]; then
+
+	# Get current time
+	TIME=$(date +%s)
+
+	# Get file modified time
+	FILEMTIME=$(stat -f "%Sm" -t "%s" "$DIR/cache/supported_os.plist")
+
+	# Calculate the difference in seconds
+	DIFF=$(( $TIME - $FILEMTIME ))
+
+	if [ $DIFF -gt $CHECK ]; then
+		# Store date in file
+		defaults write "$DIR/cache/supported_os.plist" last_touch $(date +%s)
+		defaults write "$DIR/cache/supported_os.plist" current_os $(sw_vers -productVersion)
+		defaults write "$DIR/cache/supported_os.plist" machine_id $(/usr/sbin/system_profiler SPHardwareDataType | grep "Model Identifier" | awk '{print $NF}')
+	fi
+
+
+else
+
+	# Store date in file
+	defaults write "$DIR/cache/supported_os.plist" last_touch $(date +%s)
+	defaults write "$DIR/cache/supported_os.plist" current_os $(sw_vers -productVersion)
+	defaults write "$DIR/cache/supported_os.plist" machine_id $(/usr/sbin/system_profiler SPHardwareDataType | grep "Model Identifier" | awk '{print $NF}')
+
+fi
