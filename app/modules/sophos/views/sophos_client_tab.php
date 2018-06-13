@@ -56,7 +56,7 @@ $(document).on('appReady', function(e, lang) {
             // Set running status
             if(data.running == "1") {
                  $('#sophos-running-status').text(i18n.t('sophos.running-status'));
-            } else if(data.sophos_status == "0") {
+            } else if(data.running == "0") {
                  $('#sophos-running-status').text(i18n.t('sophos.not-running-status'));
             } else{
                  $('sophos-running-status').text("");
