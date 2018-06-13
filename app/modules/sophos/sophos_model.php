@@ -66,16 +66,4 @@ class Sophos_model extends \Model
         return current($this->query($sql));
     }
 
-
-    public function get_sophos_product_version_stats()
-    {
-        $sql = "SELECT count(1) as count, product_version
-            FROM sophos
-            LEFT JOIN reportdata USING(serial_number)
-            ".get_machine_group_filter()."
-            GROUP BY product_version
-            ORDER BY product_version DESC";
-
-        return current($this->query($sql));
-    }
 }
