@@ -31,13 +31,12 @@ class Sophos_controller extends Module_controller
      **/
     public function get_data($serial = '')
     {
-        $out = array();
         if (! $this->authorized()) {
             $out['error'] = 'Not authorized';
         } else {
             $prm = new Sophos_model;
             foreach ($prm->retrieve_records($serial) as $sophos) {
-                $out[] = $sophos->rs;
+                $out = $sophos->rs;
             }
         }
 
