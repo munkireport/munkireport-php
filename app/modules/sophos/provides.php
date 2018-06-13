@@ -14,5 +14,7 @@ return array(
         'sophos_virus_data_versions' => array('view' => 'sophos_virus_data_versions_widget', 'i18n' => 'sophos.virus-data-versions-title'),
         'sophos_user_interface_versions' => array('view' => 'sophos_user_interface_versions_widget', 'i18n' => 'sophos.user_interface_versions-title'),
     ),
-    'reports' => array(),
+    'reports' => array(
+        'sophos' => array('view' => 'sophos', 'i18n' => 'sophos.report'),
+    ),
 );
