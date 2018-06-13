@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'sophos' => array('view' => 'sophos_client_tab', 'i18n' => 'sophos.client_tab'),
+        'sophos-tab' => array('view' => 'sophos_client_tab', 'i18n' => 'sophos.sophos'),
     ),
     'listings' => array(
         'sophos' => array('view' => 'sophos_listing', 'i18n' => 'sophos.sophos'),
