@@ -10,6 +10,10 @@
     "sophos-business": "Sophos Business",
     "sophos-central": "Sophos Central",
     "product-version": "Product Version",
+    "product-versions-title": "Sophos Product Versions",
+    "engine-versions-title": "Sophos Engine Versions",
+    "virus-data-versions-title": "Sophos Virus Data Versions",
+    "user-interface-versions-title": "Sophos User Interface Versions",
     "engine-version": "Engine Version",
     "virus-data-version": "Virus Data Version",
     "ui-version": "User Interface Version"
