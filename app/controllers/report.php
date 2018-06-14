@@ -149,7 +149,6 @@ class report extends Controller
             $this->error("Could not parse items, not a proper serialized file");
         }
 
-        include_once(APP_PATH . '/lib/munkireport/Modules.php');
         $moduleMgr = new Modules;
 
         foreach ($arr as $name => $val) {
