@@ -113,9 +113,8 @@ class report extends Controller
                 }
             }
         } catch (Exception $e) {
-            error('hash_check: '.$e->getMessage());
+            $this->error('hash_check: '.$e->getMessage());
         }
-
 
         // Handle errors
         foreach ($GLOBALS['alerts'] as $type => $list) {
