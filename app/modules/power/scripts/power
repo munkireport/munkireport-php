@@ -11,10 +11,7 @@ import re
 def get_battery_profiler():
     '''Uses system profiler to get power info for this machine.'''
     cmd = ['/usr/sbin/system_profiler', 'SPPowerDataType', '-xml']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
+    output = subprocess.check_output(cmd)
     plist = plistlib.readPlistFromString(output)
 
     # system_profiler xml is an array
@@ -46,61 +43,36 @@ def get_battery_profiler():
             elif item == 'sppower_battery_installed' and obj['sppower_battery_installed'] == "FALSE":
                 batteryprofiler['condition'] = "No Battery"
             elif item == 'sppower_battery_charge_info':
-                try:
+                if 'sppower_battery_max_capacity' in obj[item]:
                     batteryprofiler['MaxCapacity'] = obj[item]['sppower_battery_max_capacity']
-                except:
-                    batteryprofiler['error'] = ""
-                try:
+                if 'sppower_battery_current_capacity' in obj[item]:
                     batteryprofiler['CurrentCapacity'] = obj[item]['sppower_battery_current_capacity']
-                except:
-                    batteryprofiler['error'] = ""
-                try:
+                if 'sppower_battery_is_charging' in obj[item]:
                     batteryprofiler['IsCharging'] = obj[item]['sppower_battery_is_charging']
-                except:
-                    batteryprofiler['error'] = ""
-                try:
+                if 'sppower_battery_fully_charged' in obj[item]:
                     batteryprofiler['FullyCharged'] = obj[item]['sppower_battery_fully_charged']
-                except:
-                    batteryprofiler['error'] = ""
             elif item == 'sppower_battery_health_info':
-                try:
+                if 'sppower_battery_cycle_count' in obj[item]:
                     batteryprofiler['CycleCount'] = obj[item]['sppower_battery_cycle_count']
-                except:
-                    batteryprofiler['error'] = ""
             elif item == 'sppower_battery_model_info':
-                try:
+                if 'sppower_battery_firmware_version' in obj[item]:
                     batteryprofiler['FirmwareVersion'] = obj[item]['sppower_battery_firmware_version']
-                except:
-                    batteryprofiler['error'] = ""
-                try:
+                if 'sppower_battery_device_name' in obj[item]:
                     batteryprofiler['BatteryName'] = obj[item]['sppower_battery_device_name']
-                except:
-                    batteryprofiler['error'] = ""
-                try:
+                if 'sppower_battery_manufacturer' in obj[item]:
                     batteryprofiler['Manufacturer'] = obj[item]['sppower_battery_manufacturer']
-                except:
-                    batteryprofiler['error'] = ""
-                try:
+                if 'sppower_battery_serial_number' in obj[item]:
                     batteryprofiler['BatterySerialNumber'] = obj[item]['sppower_battery_serial_number']
-                except:
-                    batteryprofiler['error'] = ""
-                try:
+                if 'sppower_battery_hardware_revision' in obj[item]:
                     batteryprofiler['BatteryRevision'] = obj[item]['sppower_battery_hardware_revision']
-                except:
-                    batteryprofiler['error'] = ""
-                try:
+                if 'sppower_battery_cell_revision' in obj[item]:
                     batteryprofiler['BatteryCellRevision'] = obj[item]['sppower_battery_cell_revision']
-                except:
-                    batteryprofiler['error'] = ""
 
     return batteryprofiler
 
 def get_battery_stats():
     cmd = ['/usr/sbin/ioreg', '-a', '-n', 'AppleSmartBattery', '-r']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
+    output = subprocess.check_output(cmd)
     try:
         plist = plistlib.readPlistFromString(output)
         batteryxml = plist[0]
@@ -142,11 +114,7 @@ def get_battery_stats():
     
 def get_pmset_accps():
     cmd = ['/usr/bin/pmset', '-g', 'accps']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-
+    output = subprocess.check_output(cmd)
     accpsinfo = get_battery_stats()
 
     for item in output.split("\n"):
@@ -167,11 +135,7 @@ def get_pmset_accps():
 
 def get_pmset_assertions():
     cmd = ['/usr/bin/pmset', '-g', 'assertions']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-
+    output = subprocess.check_output(cmd)
     assertionsinfo = get_pmset_accps()
 
     for item in output.split("\n"):
@@ -195,11 +159,7 @@ def get_pmset_assertions():
 
 def get_pmset_sysload():
     cmd = ['/usr/bin/pmset', '-g', 'sysload']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-
+    output = subprocess.check_output(cmd)
     sysloadinfo = get_pmset_assertions()
 
     for item in output.split("\n"):
@@ -215,12 +175,8 @@ def get_pmset_sysload():
 
 def get_pmset_therm():
     cmd = ['/usr/bin/pmset', '-g', 'therm']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
+    output = subprocess.check_output(cmd)
     output = output.replace("CPU_Scheduler_Limit", "\nCPU_Scheduler_Limit")
-
     therminfo = get_pmset_sysload()
 
     for item in output.split("\n"):
@@ -234,11 +190,7 @@ def get_pmset_therm():
 
 def get_pmset_stats():
     cmd = ['/usr/bin/pmset', '-g', 'stats']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-
+    output = subprocess.check_output(cmd)
     statsinfo = get_pmset_therm()
 
     for item in output.split("\n"):
@@ -252,22 +204,14 @@ def get_pmset_stats():
 
 def get_pmset_sched():
     cmd = ['/usr/bin/pmset', '-g', 'sched']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-
+    output = subprocess.check_output(cmd)
     schedinfo = get_pmset_stats()
     schedinfo['schedule'] = output
     return schedinfo
 
 def get_pmset_ups():
     cmd = ['/usr/bin/pmset', '-g', 'ups']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-
+    output = subprocess.check_output(cmd)
     upsinfo = get_pmset_sched()
 
     for item in output.split("\n"):
@@ -281,11 +225,7 @@ def get_pmset_ups():
             
 def get_pmset_general():
     cmd = ['/usr/bin/pmset', '-g']
-    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    (output, unused_error) = proc.communicate()
-
+    output = subprocess.check_output(cmd)
     powerinfo = get_pmset_ups()
 
     for item in output.split("\n"):
@@ -338,9 +278,7 @@ def get_pmset_general():
                 powerinfo['sleep_prevented_by_error'] = ""
             powerinfo['sleep'] = (re.sub('[^0-9]','', re.sub(r'\(.+?\)', '', item))).strip()
 
-#    print powerinfo
     return powerinfo
-
 
 def remove_all(substr, str):
     index = 0
