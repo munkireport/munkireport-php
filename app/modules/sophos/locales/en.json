@@ -1,0 +1,20 @@
+{
+    "sophos": "Sophos Anti-Virus",
+    "report": "Sophos Anti-Virus Report",
+    "install-status": "Installed Product",
+    "running-label": "Anti-Virus Process",
+    "running-status": "Running",
+    "not-running-status": "Not Running",
+    "installs-widget": "Sophos Anti-Virus Installs",
+    "not-installed": "Not Installed",
+    "sophos-business": "Sophos Business",
+    "sophos-central": "Sophos Central",
+    "product-version": "Product Version",
+    "product-versions-title": "Sophos Product Versions",
+    "engine-versions-title": "Sophos Engine Versions",
+    "virus-data-versions-title": "Sophos Virus Data Versions",
+    "user-interface-versions-title": "Sophos User Interface Versions",
+    "engine-version": "Engine Version",
+    "virus-data-version": "Virus Data Version",
+    "ui-version": "User Interface Version"
+}
