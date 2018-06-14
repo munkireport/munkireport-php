@@ -10,7 +10,8 @@
     "config": {
         "platform": {
             "php": "7.0.27"
-        }
+        },
+        "optimize-autoloader": true
     },
     "require": {
         "php": ">=7.0.27",
@@ -37,8 +38,5 @@
             "munkireport\\lib\\": "app/lib/munkireport",
             "Tests\\": "tests/"
         }
-    },
-    "config": {
-        "optimize-autoloader": true
     }
 }
