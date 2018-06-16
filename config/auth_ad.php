@@ -1,8 +1,8 @@
 <?php
 
 return [
-  'account_suffix'           => getenv_default('AUTH_AD_ACCOUNT_SUFFIX', '@mydomain.local'),
-  'base_dn'                  => getenv_default('AUTH_AD_BASE_DN', 'dc=>mydomain,dc=>local'),
+  'account_suffix'           => getenv_default('AUTH_AD_ACCOUNT_SUFFIX', NULL),
+  'base_dn'                  => getenv_default('AUTH_AD_BASE_DN', 'dc=mydomain,dc=local'),
   'domain_controllers'       => getenv_default('AUTH_AD_DOMAIN_CONTROLLERS', [], 'array'),
   'admin_username'           => getenv_default('AUTH_AD_ADMIN_USERNAME', ''),
   'admin_password'           => getenv_default('AUTH_AD_ADMIN_PASSWORD', ''),
