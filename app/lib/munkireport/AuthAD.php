@@ -2,7 +2,9 @@
 
 namespace munkireport\lib;
 
-use Adldap\Adldap, \Exception;
+use Adldap\Adldap;
+use Adldap\Schemas\ActiveDirectory as ActiveDirectorySchema;
+use \Exception;
 
 class AuthAD extends AbstractAuth
 {
@@ -17,7 +19,7 @@ class AuthAD extends AbstractAuth
             $this->schema = new $schemaName;
             unset($this->config['schema']);
         } else {
-            $this->schema = new ActiveDirectory;
+            $this->schema = new ActiveDirectorySchema;
         }
         $this->groups = [];
     }
@@ -40,8 +42,12 @@ class AuthAD extends AbstractAuth
                 if($provider->auth()->attempt($login, $password, ! $this->bindAsAdmin())){
                     $search = $provider->search();
 
-                    if ($this->schema instanceof ActiveDirectory) {
-                        $user = $search->users()->findOrFail($login);
+                    if ($this->schema instanceof ActiveDirectorySchema) {
+                        if (empty($this->config['account_suffix'])) {
+                            $user = $search->users()->findByOrFail('userPrincipalName', $login);
+                        } else {
+                            $user = $search->users()->findOrFail($login);
+                        }
                     }
                     else {
                         $user = $search->users()->findByOrFail('uid', $login);
