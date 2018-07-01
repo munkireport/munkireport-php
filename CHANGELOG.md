@@ -1,4 +1,4 @@
-### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...HEAD) (Unreleased)
+### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...v3.2.0) (July 01, 2018)
 
 FIXES
 - detectx @WardsParadox
