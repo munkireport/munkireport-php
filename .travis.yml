@@ -27,8 +27,8 @@ deploy:
   api_key:
     secure: FdFNw8Qz1doHtJ6x+SrXW2P0jDWv3sS32V4Qq61rVrphF0MSskwq+WtUVkuk5+Q9ZDTRGImqHOzxpWnYe336cthB5hrzjHyt4hpzno1X7BDZfoaMydNDHzGcAvQ9oEzrHaXrI2Fj94pHW1oKB+Pw4DSDYnsa3OyxbTnNHvb8uhU=
   file:
-    - munkireport-php-${TRAVIS_TAG}.zip
-    - munkireport-php-${TRAVIS_TAG}.tar.gz
+    - ${HOME}/munkireport-php-${TRAVIS_TAG}.zip
+    - ${HOME}/munkireport-php-${TRAVIS_TAG}.tar.gz
   on:
     repo: munkireport/munkireport-php
     tags: true
