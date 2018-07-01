@@ -9,18 +9,18 @@ cache:
   directories:
     - vendor
 install:
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer install --no-dev
   - composer require adldap2/adldap2 --update-no-dev
   - composer require onelogin/php-saml --update-no-dev
+
+script:
+  - tar cfz "${HOME}/munkireport-php-${TRAVIS_TAG}.tar.gz" *
+  - zip -r "${HOME}/munkireport-php-${TRAVIS_TAG}.zip" *
+
 before_deploy:
   - git config --local user.name "munkireport-php"
   - git config --local user.email "munkireport-php@users.noreply.github.com"
   - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
-
-script:
-  - tar cvfz "${TRAVIS_BUILD_DIR}/munkireport-php-${TRAVIS_TAG}.tar.gz" *
-  - zip "munkireport-php-${TRAVIS_TAG}.zip" *
 
 deploy:
   provider: releases
