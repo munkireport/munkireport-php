@@ -20,13 +20,14 @@ new Directory_service_model;
 		      	<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
-		        <th data-i18n="directory_service.boundstatus" data-colname='directoryservice.which_directory_service'></th>
+		        <th data-i18n="directory_service.directory_service" data-colname='directoryservice.which_directory_service'></th>
 		        <th data-i18n="directory_service.ad_domain" data-colname='directoryservice.addomain'></th>
 		        <th data-i18n="directory_service.computeraccount" data-colname='directoryservice.computeraccount'></th>
 		        <th data-i18n="directory_service.ad_comments" data-colname='directoryservice.directory_service_comments'></th>
 		        <th data-i18n="directory_service.mobileaccount" data-colname='directoryservice.createmobileaccount'></th>
 		        <th data-i18n="directory_service.networkprotocol" data-colname='directoryservice.networkprotocoltobeused'></th>
 		        <th data-i18n="directory_service.admin_groups" data-colname='directoryservice.allowedadmingroups'></th>
+		        <th data-i18n="directory_service.bound" data-colname='directoryservice.bound'></th>
 		      </tr>
 		    </thead>
 		    <tbody>

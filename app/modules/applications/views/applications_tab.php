@@ -8,8 +8,8 @@
           <th data-i18n="applications.obtained_from"></th>
           <th data-i18n="applications.last_modified"></th>
           <th data-i18n="applications.has64bit"></th>
-          <th data-i18n="info"></th>
           <th data-i18n="path"></th>
+          <th data-i18n="info"></th>
 		</tr>
 	</thead>
 	<tbody>

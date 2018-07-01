@@ -46,6 +46,8 @@ function conf($cf_item, $default = '')
 	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
 }
 
+require_once APP_ROOT . 'app/helpers/config_helper.php';
+initDotEnv();
 load_conf();
 
 $capsule = new Capsule();

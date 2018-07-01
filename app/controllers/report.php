@@ -113,9 +113,8 @@ class report extends Controller
                 }
             }
         } catch (Exception $e) {
-            error('hash_check: '.$e->getMessage());
+            $this->error('hash_check: '.$e->getMessage());
         }
-
 
         // Handle errors
         foreach ($GLOBALS['alerts'] as $type => $list) {
@@ -149,7 +148,6 @@ class report extends Controller
             $this->error("Could not parse items, not a proper serialized file");
         }
 
-        include_once(APP_PATH . '/lib/munkireport/Modules.php');
         $moduleMgr = new Modules;
 
         foreach ($arr as $name => $val) {

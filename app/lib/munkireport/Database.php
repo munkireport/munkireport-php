@@ -5,11 +5,11 @@ namespace munkireport\lib;
 class Database
 {
 
-    private $config, $dbh, $error;
+    private $connection, $dbh, $error;
 
-    public function __construct($config)
+    public function __construct($connection)
     {
-        $this->config = $config;
+        $this->connection = $connection;
     }
 
     /**
@@ -23,16 +23,64 @@ class Database
     {
         try {
             $this->dbh = new \PDO(
-                $this->config['pdo_dsn'],
-                $this->config['pdo_user'],
-                $this->config['pdo_pass'],
-                $this->config['pdo_opts']
+                $this->getDSN(),
+                $this->getUser(),
+                $this->getPassword(),
+                $this->getOptions()
             );
         } catch (\PDOException $e) {
             $this->error = $e->getMessage();
             return false;
         }
         return $this;
+    }
+    
+    /**
+     * Get dsn
+     *
+     *
+     * @return string dsn
+     */
+    private function getDSN()
+    {
+        switch ($this->connection['driver']) {
+            case 'sqlite':
+                return "sqlite:{$this->connection['database']}";
+            case 'mysql':
+                return "mysql:host={$this->connection['host']};dbname={$this->connection['database']}";
+            default:
+                throw new \Exception("Unknown driver in connection", 1);
+        }
+    }
+    
+    /**
+     * Get pdo user
+     *
+     * @return string user
+     */
+    private function getUser()
+    {
+      return isset($this->connection['username']) ? $this->connection['username'] : '';
+    }
+    
+    /**
+     * Get pdo password
+     *
+     * @return string password
+     */
+    private function getPassword()
+    {
+      return isset($this->connection['password']) ? $this->connection['password'] : '';
+    }
+    
+    /**
+     * Get pdo options
+     *
+     * @return array options
+     */
+    private function getOptions()
+    {
+      return isset($this->connection['options']) ? $this->connection['options'] : [];
     }
 
     /**
@@ -71,6 +119,84 @@ class Database
             $dbh->exec("CREATE TABLE mr_temp (id TEXT)");
             $dbh->exec("DROP TABLE mr_temp");
             return true;
+        } catch (\PDOException $e) {
+            $this->error = $e->getMessage();
+            return false;
+        }
+    }
+
+
+    /**
+     * Size
+     *
+     * Calculate database size
+     *
+     * @return boolean true on succes, false on failure
+     */
+    public function size()
+    {
+        if($this->connection['driver'] == 'mysql'){
+          return $this->sizeMySQL();
+        }
+        
+        if($this->connection['driver'] == 'sqlite'){
+          return $this->sizeSQLite();
+        }
+    }
+    
+    /**
+     * Size
+     *
+     * Calculate database size
+     *
+     * @return float size in mb
+     */
+    public function sizeMySQL()
+    {
+        $sql = sprintf(
+          "SELECT SUM(ROUND(((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024 ), 2)) AS size_mb
+            FROM information_schema.TABLES
+            WHERE TABLE_SCHEMA = '%s'",
+            $this->connection['database']
+          );
+        if($result = $this->fetchOne($sql)){
+            return (float) $result['size_mb'];
+        }
+
+    }
+
+    /**
+     * Size
+     *
+     * Calculate database size
+     *
+     * @return boolean true on succes, false on failure
+     */
+    public function sizeSQLite()
+    {
+        $result = $this->fetchOne('PRAGMA PAGE_SIZE');
+        $page_size = $result['page_size'];
+        $result = $this->fetchOne('PRAGMA PAGE_COUNT');
+        $page_count = $result['page_count'];
+        return $page_size * $page_count / 1024.0/1024.0;
+    }
+    
+    /**
+     * Fetch one
+     *
+     * Retrieve last error message
+     *
+     * @return string error message
+     */
+    public function fetchOne($sql)
+    {
+        $dbh = $this->getDBH();
+        if (! $dbh) {
+            return false;
+        }
+        try {
+            $query = $dbh->query($sql);
+            return $query->fetch();
         } catch (\PDOException $e) {
             $this->error = $e->getMessage();
             return false;

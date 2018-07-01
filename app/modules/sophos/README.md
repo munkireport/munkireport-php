@@ -1,0 +1,1 @@
+This module gathers status and versions from Sophos Antivirus. It was created for Sophos Central (cloud controller) but should be compatible with Sophos Business (on-prem controller) as well. Support for the home version is unknown at this time.

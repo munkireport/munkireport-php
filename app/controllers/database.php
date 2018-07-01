@@ -87,8 +87,9 @@ class Database extends Controller
             } catch (\PDOException $exception) {
                 $obj->view('json', [
                     'msg' => [
-                        'notes' => $migrator->getNotes(),
-                        'error' => $exception->getMessage()
+                        'error' => true,
+                        'error_message' => $exception->getMessage(),
+                        'notes' => $migrator->getNotes()
                     ]
                 ]);
             }

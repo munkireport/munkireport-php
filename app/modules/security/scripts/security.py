@@ -29,9 +29,17 @@ def sip_check():
     """ SIP checks. We need to be running 10.11 or newer."""
 
     if float(os.uname()[2][0:2]) >= 15:
-        sp = subprocess.Popen(['csrutil', 'status'], stdout=subprocess.PIPE)
+        sp = subprocess.Popen(['csrutil', 'status'],
+                              stdout=subprocess.PIPE,
+                              universal_newlines=True)
         out, err = sp.communicate()
-        if "enabled" in out:
+
+        # just read the first line of the output, the
+        # System Integrity Protection status: ....
+        # search for a full stop, as custom configurations don't have
+        # that there.
+        first_line = out.split("\n")[0]
+        if "enabled." in first_line:
             return "Active"
         else:
             return "Disabled"
@@ -160,7 +168,18 @@ def ard_access_check():
                     ard_users.append(user)
                 else:
                     pass
-            return " ".join(ard_users)
+
+            remote_user_check = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
+            remote_out, remote_err = remote_user_check.communicate()
+
+            ard_user_list = []
+            if "com.apple.local.ard_interact" in remote_out:
+                ard_user_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_interact', 'GroupMembership'], stdout=subprocess.PIPE)
+                ard_user_out, ard_user_err = ard_user_sp.communicate()
+                ard_user_list = ard_user_out.split()
+                ard_users.extend(ard_user_list[1:])
+ 
+            return ard_users
     else:
         # plist_path does not exist, which indicates that ARD is not enabled.
         return "ARD Disabled"
