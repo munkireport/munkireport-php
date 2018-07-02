@@ -48,9 +48,9 @@ $(document).on('appUpdate', function(e, lang) {
         var url = appUrl + '/show/listing/sophos/sophos#'
 
         // Set urls
-        $('#sophos-notinstalled').attr('href', url + encodeURIComponent('installed = 0'));
-        $('#sophos-business').attr('href', url + encodeURIComponent('installed = Sophos Business'));
-        $('#sophos-central').attr('href', url + encodeURIComponent('installed = Sophos Central'));
+        $('#sophos-notinstalled').attr('href', url + encodeURIComponent('Not Installed'));
+        $('#sophos-business').attr('href', url + encodeURIComponent('Sophos Business'));
+        $('#sophos-central').attr('href', url + encodeURIComponent('Sophos Central'));
 
         // Show no clients span
         $('#sophos-nodata').removeClass('hide');
