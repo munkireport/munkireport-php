@@ -150,13 +150,14 @@
 		},
 		deleteGroup = function(groupid) // Delete group from machineGroups
 		{
-			// Look for group
-			$.each(machineGroups, function(index, group){
-				if( +group.groupid == +groupid){
-					machineGroups.splice(index, 1);
-					return;
-				}
-			});
+            // Look for group
+		    for (var idx = 0; idx < machineGroups.length; idx++) {
+		      var group = machineGroups[idx];
+		      if (+group.groupid == +groupid) {
+                machineGroups.splice(idx, 1);
+                return;
+              }
+            }
 		},
 		guid = function(){
 

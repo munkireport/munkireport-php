@@ -13,12 +13,13 @@ class Diskreport extends Migration
         $capsule = new Capsule();
         $migrateData = false;
 
-        if ($capsule::schema()->hasTable($this->tableNameV2)) {
+        if ($capsule::schema()->hasTable($this->tableNameV2) && !$capsule::schema()->hasTable($this->tableName)) {
             // Migration already failed before, but didnt finish
-            throw new Exception("previous failed migration exists");
+//            throw new Exception("previous failed migration exists. You will need to delete table diskreport, and rename diskreport_orig back to diskreport");
+            $this->down();
         }
 
-        if ($capsule::schema()->hasTable($this->tableName)) {
+        if ($capsule::schema()->hasTable($this->tableName) && !$capsule::schema()->hasTable($this->tableNameV2)) {
             $capsule::schema()->rename($this->tableName, $this->tableNameV2);
             $migrateData = true;
         }
@@ -31,7 +32,7 @@ class Diskreport extends Migration
             $table->bigInteger('percentage');
             $table->string('smartstatus');
             $table->string('volumetype');
-            $table->string('media_type');
+            $table->string('media_type')->nullable(); // In order to support upgrade from earlier versions
             $table->string('busprotocol');
             $table->integer('internal');
             $table->string('mountpoint');

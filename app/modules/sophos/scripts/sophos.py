@@ -59,15 +59,13 @@ def main():
     elif os.path.isdir('/Applications/Sophos Anti-Virus.app'):
         result.update({'Installed': 'Sophos Business'})
     else:
-        result.update({'Installed': 'Not Installed'})
+        result.update({'Installed': False})
 
     # check if Sophos is running
-    if result['Installed']:
-        # check if Sophos is running
-        result.update({'Running': check_sophos_running()})
+    result.update({'Running': check_sophos_running()})
     
-        # check component versions
-        result.update({'Versions': check_sophos_versions()})
+    # check component versions
+    result.update({'Versions': check_sophos_versions()})
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'sophos.plist')

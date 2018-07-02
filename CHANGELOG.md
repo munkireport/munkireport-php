@@ -1,4 +1,45 @@
-### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...HEAD) (Unreleased)
+### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.2.0...HEAD) (Unreleased)
+
+### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...v3.2.0) (July 01, 2018)
+
+FIXES
+- detectx @WardsParadox
+- backup2go list view fix (#1056) @pnerum
+- Make the SIP check more resilient (#1063) @barn-stripe
+- Drop Down the Login Page (#1062) @gmarnin
+- Add disable_sso_sls_verify config option (#1007) @sphen13
+- Fixed localized event message (#1051) @tuxudo
+- Actually fix security.py module (#1068) @barn-stripe
+- Fix for Find My Macs widget not supporting business units (#1067) @tuxudo
+- Fixed apps tab order (#1069) @tuxudo
+- Added basic crypt checkin url (#1077) @WardsParadox
+- Hotfix/migration patches (#1087) @mosen
+- Fix for no workflow title (#1082) @tuxudo
+- AD Auth (#1096) @mosen
+- Removing Machine-Groups/Business Units (#1097) @mosen
+- Changed Extensions add teamid column method (#1098) @tuxudo
+
+NEW FEATURES
+- Help button @danner26
+- phpdotenv support (#1032) @mosen
+- Added advanced SAML settings
+- Adds Metal support to GPU module (#1058) @tuxudo
+- Added ability to skip bundle IDs in Appusage module (#1055) @tuxudo
+- Profile count report (#1030) @poundbangbash
+- Added local network ip option for vnc and ssh links (#1029) @poundbangbash
+- Added another USB device type (#1022) @tuxudo
+- Add column to filter bound status against (#1065) @poundbangbash
+- Add UID to reportdata, user_sessions module, localadmin module @poundbangbash
+- Add check network based users added to com.apple.local.ard_interact (#1071) @poundbangbash
+- Free ipa support (#1080)
+- Implement db size calcs (#1094)
+
+NEW MODULES
+- Devtools Module (#913) @tuxudo
+- Highest Supported OS module (#834) @tuxudo
+- Sophos Anti-virus module (#1093) @rickheil
+- SentinelOne (#1072) @poundbangbash
+- SentinelOne Quarantine module (@1073) @poundbangbash
 
 ### [3.1.1](https://github.com/munkireport/munkireport-php/compare/v3.1.0...v3.1.1) (March 23, 2018)
 
@@ -6,7 +47,7 @@ FIXES
 - filevault escrow migration
 
 NEW FEATURES
-- Travis CI integration (#1031) @mosen
+- Travis CI integration (#1031) @danner26
 - Added support for server-side IP filtering (#990) @danner26
 
 ### [3.1.0](https://github.com/munkireport/munkireport-php/compare/v3.0.2...v3.1.0) (March 21, 2018)
