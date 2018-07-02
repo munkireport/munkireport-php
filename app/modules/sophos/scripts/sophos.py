@@ -59,7 +59,7 @@ def main():
     elif os.path.isdir('/Applications/Sophos Anti-Virus.app'):
         result.update({'Installed': 'Sophos Business'})
     else:
-        result.update({'Installed': False})
+        result.update({'Installed': 'Not Installed'})
 
     # check if Sophos is running
     if result['Installed']:
