@@ -49,7 +49,7 @@ class Sophos_model extends \Model
 
     public function get_sophos_install_stats()
     {
-        $sql = "SELECT COUNT(CASE WHEN installed = 'Sophos Business' THEN 1 END) AS 'business', COUNT(CASE WHEN installed = 'Sophos Central' THEN 1 END) AS 'central', COUNT(CASE WHEN installed IS NULL THEN 1 END) AS 'notinstalled'
+        $sql = "SELECT COUNT(CASE WHEN installed = 'Sophos Business' THEN 1 END) AS 'business', COUNT(CASE WHEN installed = 'Sophos Central' THEN 1 END) AS 'central', COUNT(CASE WHEN installed = 'Not Installed' THEN 1 END) AS 'notinstalled'
             FROM sophos
             LEFT JOIN reportdata USING(serial_number)
             ".get_machine_group_filter();
