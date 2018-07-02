@@ -24,14 +24,25 @@ def check_sophos_running():
 
 
 def check_sophos_versions():
-    cmd = ['/usr/local/bin/sweep', '-v']
-    sp = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = sp.communicate()
-    data = out.splitlines()
-
-    version_regex = re.compile(r'(\d+\.*){1,3}')
-    components = ['Product version', 'Engine version', 'Virus data version', 'User interface version']
+    components = ['Product version',
+                  'Engine version',
+                  'Virus data version',
+                  'User interface version']
     versions = {}
+
+    try:
+        cmd = ['/usr/local/bin/sweep', '-v']
+        sp = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = sp.communicate()
+        data = out.splitlines()
+    except OSError:
+        # sweep binary doesn't exist
+        for component in components:
+            versions.update({component: ''})
+        return versions
+
+    # continue if no error on calling sweep
+    version_regex = re.compile(r'(\d+\.*){1,3}')
     for component in components:
         component_version = [string for string in data if component in string]
         version_number = version_regex.search(repr(component_version))
@@ -51,7 +62,7 @@ def main():
     cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
     if not os.path.exists(cachedir):
         os.makedirs(cachedir)
-    
+
     result = {}
     # check if Sophos is installed
     if os.path.isdir('/Applications/Sophos Endpoint.app'):
@@ -59,13 +70,15 @@ def main():
     elif os.path.isdir('/Applications/Sophos Anti-Virus.app'):
         result.update({'Installed': 'Sophos Business'})
     else:
-        result.update({'Installed': False})
+        result.update({'Installed': 'Not Installed'})
 
     # check if Sophos is running
-    result.update({'Running': check_sophos_running()})
-    
+    if result['Installed']:
+        # check if Sophos is running
+        result.update({'Running': check_sophos_running()})
+
     # check component versions
-    result.update({'Versions': check_sophos_versions()})
+        result.update({'Versions': check_sophos_versions()})
 
     # Write results of checks to cache file
     output_plist = os.path.join(cachedir, 'sophos.plist')
