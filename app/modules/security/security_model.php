@@ -13,6 +13,7 @@ class Security_model extends \Model
         $this->rs['sip'] = '';
         $this->rs['ssh_groups'] = '';
         $this->rs['ssh_users'] = '';
+        $this->rs['ard_groups'] = '';
         $this->rs['ard_users'] = '';
         $this->rs['firmwarepw'] = '';
         $this->rs['firewall_state'] = '';
@@ -46,7 +47,7 @@ class Security_model extends \Model
 
     		$plist = $parser->toArray();
 
-    		foreach (array('sip', 'gatekeeper', 'ssh_groups', 'ssh_users', 'ard_users', 'firmwarepw', 'firewall_state', 'skel_state') as $item) {
+    		foreach (array('sip', 'gatekeeper', 'ssh_groups', 'ssh_users', 'ard_groups', 'ard_users', 'firmwarepw', 'firewall_state', 'skel_state') as $item) {
     			if (isset($plist[$item])) {
     				$this->$item = $plist[$item];
     			} else {

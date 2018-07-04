@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ard_groups</key>
+	<string>MEREDITH\ard_interact, MEREDITH\ard_admin, MEREDITH\ard_manage</string>
+	<key>ard_users</key>
+	<string>homeadmin, macadmin</string>
+	<key>firewall_state</key>
+	<string>0</string>
+	<key>firmwarepw</key>
+	<string>No</string>
+	<key>gatekeeper</key>
+	<string>Active</string>
+	<key>sip</key>
+	<string>Active</string>
+	<key>skel_state</key>
+	<integer>1</integer>
+	<key>ssh_groups</key>
+	<string>MEREDITH\ard_admin</string>
+	<key>ssh_users</key>
+	<string>qualysscanner</string>
+</dict>
+</plist>

@@ -34,6 +34,7 @@ new Security_model;
 		        <th data-i18n="security.ssh_groups" data-colname='security.ssh_groups'></th>
 		        <th data-i18n="security.ssh_users" data-colname='security.ssh_users'></th>
 		        <th data-i18n="security.ard_users" data-colname='security.ard_users'></th>
+		        <th data-i18n="security.ard_groups" data-colname='security.ard_groups'></th>
 		      </tr>
 		    </thead>
 		    <tbody>
