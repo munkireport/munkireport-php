@@ -245,8 +245,9 @@ def ard_group_access_check():
                     for group_uuid in group_list_uuid[1:]:
                         group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
                         group_id_out, group_id_err = group_id_sp.communicate()
-                        if group_id_out.split()[1] not in group_list:
-                            group_list.append(grp.getgrgid(group_id_out.split()[1]).gr_name)
+                        group_name = grp.getgrgid(group_id_out.split()[1]).gr_name
+                        if group_name not in group_list:
+                            group_list.append(group_name)
                 
             #Check if ard_admin is in the group list
             if "com.apple.local.ard_admin" in remote_group_out:
@@ -265,8 +266,9 @@ def ard_group_access_check():
                         group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
                         group_id_out, group_id_err = group_id_sp.communicate()
                         ard_group = grp.getgrgid(group_id_out.split()[1]).gr_name
-                        if group_id_out.split()[1] not in group_list:
-                            group_list.append(ard_group)
+                        group_name = grp.getgrgid(group_id_out.split()[1]).gr_name
+                        if group_name not in group_list:
+                            group_list.append(group_name)
 
             #Check if ard_manage is in the group list
             if "com.apple.local.ard_manage" in remote_group_out:
@@ -284,8 +286,9 @@ def ard_group_access_check():
                     for group_uuid in group_list_uuid[1:]:
                         group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
                         group_id_out, group_id_err = group_id_sp.communicate()
-                        if group_id_out.split()[1] not in group_list:
-                            group_list.append(grp.getgrgid(group_id_out.split()[1]).gr_name)
+                        group_name = grp.getgrgid(group_id_out.split()[1]).gr_name
+                        if group_name not in group_list:
+                            group_list.append(group_name)
             
             return ', '.join(item for item in group_list)
                     
