@@ -1,4 +1,5 @@
 {
+    "ard_groups": "ARD Groups",
     "ard_users": "ARD Users",
     "block_all": "Block All",
     "firewall_state": "Firewall State",
