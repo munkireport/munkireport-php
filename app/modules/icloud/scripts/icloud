@@ -158,12 +158,29 @@ def get_extra_prefs(pref):
                     if prefitem == 'CPSPreferenceOnlyKeepThumbnailsKey':
                             preffile['cloud_photo_only_keep_thumbnail'] = to_bool(pl[item][prefitem])
                             
+    # Get iMessages in iCloud settings, if OS version is greater than 10.13.4, Messages in the Cloud was introduced with 10.13.5
+    if getOsVersionLonger() > 134:
+        madridpath = pref.replace("MobileMeAccounts.plist", "com.apple.madrid.plist")
+        if os.path.isfile(madridpath):
+            pl = FoundationPlist.readPlist(madridpath)
+            preffile['imessage_syncing_enabled'] = 0
+            preffile['imessage_currently_syncing'] = 0
+            if item == 'CloudKitSyncingEnabled':
+                preffile['imessage_syncing_enabled'] = pl[item]
+            elif item == 'CloudKitIsSyncing':
+                preffile['imessage_currently_syncing'] = pl[item]
+    
     return preffile
     
 def getOsVersion():
     """Returns the minor OS version."""
     os_version_tuple = platform.mac_ver()[0].split('.')
     return int(os_version_tuple[1])
+
+def getOsVersionLonger():
+    """Returns the minor and point OS version."""
+    os_version_tuple = platform.mac_ver()[0].split('.')
+    return int(os_version_tuple[1]+os_version_tuple[2])
 
 def main():
     """Main"""

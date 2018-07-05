@@ -41,4 +41,5 @@ Gets data about iCloud accounts that are on the clients.
 * shared_streams_enabled - BOOLEAN - Shared Photo Streams enabled
 * should_configure - BOOLEAN - Should configure account
 * siri_enabled - BOOLEAN - Siri enabled
-
+* imessage_syncing_enabled - BOOLEAN - Messages in iCloud enabled
+* imessage_currently_syncing - BOOLEAN - Messages in iCloud currently syncing

@@ -47,6 +47,8 @@ class Icloud_model extends \Model
         $this->rs['shared_streams_enabled'] = 0;
         $this->rs['should_configure'] = 0;
         $this->rs['siri_enabled'] = 0;
+        $this->rs['imessage_syncing_enabled'] = 0;
+        $this->rs['imessage_currently_syncing'] = 0;
 
         $this->serial = $serial;
     }
@@ -77,7 +79,7 @@ class Icloud_model extends \Model
             // Process each account
             foreach ($plist as $account) {
                 // Process each key in the account, if it exists
-                foreach (array('account_alternate_dsid', 'account_description', 'account_dsid', 'account_id', 'account_uuid', 'back_to_my_mac_enabled', 'back_to_my_mac_relay_port', 'beta', 'bookmarks_enabled', 'calendar_enabled', 'cloud_photo_enabled', 'cloud_photo_only_keep_thumbnail', 'clouddesktop_declined_upgrade', 'clouddesktop_desktop_enabled', 'clouddesktop_documents_enabled', 'clouddesktop_drive_enabled', 'clouddesktop_first_sync_down_complete', 'contacts_enabled', 'display_name', 'family_show_manage_family', 'find_my_mac_enabled', 'is_managed_apple_id', 'keychain_sync_enabled', 'logged_in', 'mail_and_notes_dot_mac_mail_supported', 'mail_and_notes_email_address', 'mail_and_notes_enabled', 'mail_and_notes_full_user_name', 'mail_and_notes_username', 'mobile_documents_enabled', 'notes_enabled', 'photo_stream_enabled', 'prefpath', 'primary_email_verified', 'reminders_enabled', 'shared_streams_enabled', 'should_configure', 'siri_enabled') as $item) {
+                foreach (array('account_alternate_dsid', 'account_description', 'account_dsid', 'account_id', 'account_uuid', 'back_to_my_mac_enabled', 'back_to_my_mac_relay_port', 'beta', 'bookmarks_enabled', 'calendar_enabled', 'cloud_photo_enabled', 'cloud_photo_only_keep_thumbnail', 'clouddesktop_declined_upgrade', 'clouddesktop_desktop_enabled', 'clouddesktop_documents_enabled', 'clouddesktop_drive_enabled', 'clouddesktop_first_sync_down_complete', 'contacts_enabled', 'display_name', 'family_show_manage_family', 'find_my_mac_enabled', 'is_managed_apple_id', 'keychain_sync_enabled', 'logged_in', 'mail_and_notes_dot_mac_mail_supported', 'mail_and_notes_email_address', 'mail_and_notes_enabled', 'mail_and_notes_full_user_name', 'mail_and_notes_username', 'mobile_documents_enabled', 'notes_enabled', 'photo_stream_enabled', 'prefpath', 'primary_email_verified', 'reminders_enabled', 'shared_streams_enabled', 'should_configure', 'siri_enabled', 'imessage_syncing_enabled', 'imessage_currently_syncing') as $item) {
 
                     // If key does not exist in $account, null it
                     if ( ! array_key_exists($item, $account)) {

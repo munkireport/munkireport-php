@@ -49,6 +49,8 @@ class Icloud extends Migration
             $table->boolean('shared_streams_enabled')->nullable();
             $table->boolean('should_configure')->nullable();
             $table->boolean('siri_enabled')->nullable();
+            $table->boolean('imessage_syncing_enabled')->nullable();
+            $table->boolean('imessage_currently_syncing')->nullable();
 
             $table->index('account_alternate_dsid');
             $table->index('account_description');
@@ -88,6 +90,8 @@ class Icloud extends Migration
             $table->index('shared_streams_enabled');
             $table->index('should_configure');
             $table->index('siri_enabled');
+            $table->index('imessage_syncing_enabled');
+            $table->index('imessage_currently_syncing');
         });
     }
     

@@ -34,6 +34,7 @@ new Icloud_model;
 		        <th data-i18n="icloud.bookmarks_enabled" data-colname='icloud.bookmarks_enabled'></th>
 		        <th data-i18n="icloud.notes_enabled" data-colname='icloud.notes_enabled'></th>
 		        <th data-i18n="icloud.siri_enabled" data-colname='icloud.siri_enabled'></th>
+		        <th data-i18n="icloud.imessage_syncing_enabled" data-colname='icloud.imessage_syncing_enabled'></th>
 		        <th data-i18n="icloud.keychain_sync_enabled" data-colname='icloud.keychain_sync_enabled'></th>
 		        <th data-i18n="icloud.back_to_my_mac_enabled" data-colname='icloud.back_to_my_mac_enabled'></th>
 		        <th data-i18n="icloud.find_my_mac_enabled" data-colname='icloud.find_my_mac_enabled'></th>
@@ -199,41 +200,47 @@ new Icloud_model;
                 (status == 0 && status != '' ? '<span class="label label-success">'+i18n.t('disabled')+'</span>' : '')
                 $('td:eq(18)', nRow).html(status)
                 
-                // keychain_sync_enabled
+                // imessage_syncing_enabled
                 var status=$('td:eq(19)', nRow).html();
                 status = status == 1 ? '<span class="label label-danger">'+i18n.t('enabled')+'</span>' :
                 (status == 0 && status != '' ? '<span class="label label-success">'+i18n.t('disabled')+'</span>' : '')
                 $('td:eq(19)', nRow).html(status)
                 
-                // back_to_my_mac_enabled
+                // keychain_sync_enabled
                 var status=$('td:eq(20)', nRow).html();
                 status = status == 1 ? '<span class="label label-danger">'+i18n.t('enabled')+'</span>' :
                 (status == 0 && status != '' ? '<span class="label label-success">'+i18n.t('disabled')+'</span>' : '')
                 $('td:eq(20)', nRow).html(status)
                 
-                // find_my_mac_enabled
+                // back_to_my_mac_enabled
                 var status=$('td:eq(21)', nRow).html();
                 status = status == 1 ? '<span class="label label-danger">'+i18n.t('enabled')+'</span>' :
                 (status == 0 && status != '' ? '<span class="label label-success">'+i18n.t('disabled')+'</span>' : '')
                 $('td:eq(21)', nRow).html(status)
                 
-                // beta
+                // find_my_mac_enabled
                 var status=$('td:eq(22)', nRow).html();
-                status = status == 1 ? '<span class="label label-danger">'+i18n.t('yes')+'</span>' :
-                (status == 0 && status != '' ? '<span class="label label-success">'+i18n.t('no')+'</span>' : '')
+                status = status == 1 ? '<span class="label label-danger">'+i18n.t('enabled')+'</span>' :
+                (status == 0 && status != '' ? '<span class="label label-success">'+i18n.t('disabled')+'</span>' : '')
                 $('td:eq(22)', nRow).html(status)
                 
-                // is_managed_apple_id
+                // beta
                 var status=$('td:eq(23)', nRow).html();
                 status = status == 1 ? '<span class="label label-danger">'+i18n.t('yes')+'</span>' :
                 (status == 0 && status != '' ? '<span class="label label-success">'+i18n.t('no')+'</span>' : '')
                 $('td:eq(23)', nRow).html(status)
                 
-                // primary_email_verified
+                // is_managed_apple_id
                 var status=$('td:eq(24)', nRow).html();
+                status = status == 1 ? '<span class="label label-danger">'+i18n.t('yes')+'</span>' :
+                (status == 0 && status != '' ? '<span class="label label-success">'+i18n.t('no')+'</span>' : '')
+                $('td:eq(24)', nRow).html(status)
+                
+                // primary_email_verified
+                var status=$('td:eq(25)', nRow).html();
                 status = status == 1 ? '<span class="label label-success">'+i18n.t('yes')+'</span>' :
                 (status == 0 && status != '' ? '<span class="label label-danger">'+i18n.t('no')+'</span>' : '')
-                $('td:eq(24)', nRow).html(status)
+                $('td:eq(25)', nRow).html(status)
                 
             }
 	    } );

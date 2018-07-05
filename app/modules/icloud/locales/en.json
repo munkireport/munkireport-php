@@ -22,6 +22,8 @@
     "display_name": "Display Name",
     "family_show_manage_family": "Show Manage Family",
     "find_my_mac_enabled": "Find My Mac",
+    "imessage_syncing_enabled": "Messages in iCloud",
+    "imessage_currently_syncing": "Messages in iCloud Currently Syncing",
     "is_managed_apple_id": "Managed Apple ID",
     "keychain_sync_enabled": "Keychain",
     "logged_in": "Logged In",
