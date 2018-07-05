@@ -1,4 +1,12 @@
-### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...HEAD) (Unreleased)
+### [3.2.1](https://github.com/munkireport/munkireport-php/compare/v3.2.0...HEAD) (Unreleased)
+
+FIXES
+- Addressed duplication of ARD groups. (#1106) @poundbangbash
+- Security module fix ard_users - add nested ard_groups (#1105) @poundbangbash
+- Fix for issue #1102 @tuxudo
+- Improvements to Sophos module (#1100) @rickheil
+
+### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...v3.2.0) (July 01, 2018)
 
 FIXES
 - detectx @WardsParadox
