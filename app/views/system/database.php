@@ -84,6 +84,13 @@
 
           $.getJSON(appUrl + '/database/migrate', function (data) {
             done();
+            tbody.empty();
+
+            if (data.notes) {
+              for (var i = 0; i < data.notes.length; i++) {
+                tbody.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
+              }
+            }
 
             if (data.notes) {
               for (var i = 0; i < data.notes.length; i++) {
@@ -93,7 +100,7 @@
 
             if (data.error) {
               disclose();
-              log(data.error_message, 'error');
+              log(data.error, 'error');
 
               if (data.error_trace) {
                 log('stack trace follows:', 'error');
@@ -109,12 +116,20 @@
       });
 
       $.getJSON(appUrl + '/database/migrationsPending', function (data) {
-        var tbody = $('.table-console tbody').empty();
+        $('.table-console tbody').empty();
         $('.loading').removeClass('loading');
 
         if (data.error) {
           disclose();
           log(data.error_message, 'error');
+
+          if (data.error_trace) {
+            log('stack trace follows:', 'error');
+            data.error_trace.forEach(function(stackItem) {
+              var li = $('<li>in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '</li>');
+              log('in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '.' , 'error');
+            });
+          }
         }
 
         $('#database-update-count').text(data['files_pending'].length);

@@ -30,7 +30,7 @@ class Modules
         }
 
         // Custom modules go first
-        if(conf('custom_folder')){
+        if(conf('custom_folder') && is_dir(conf('custom_folder').'modules/')){
             $this->moduleSearchPaths['custom'] = conf('custom_folder').'modules/';
         }
 

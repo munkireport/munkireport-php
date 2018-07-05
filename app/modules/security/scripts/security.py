@@ -174,12 +174,125 @@ def ard_access_check():
 
             ard_user_list = []
             if "com.apple.local.ard_interact" in remote_out:
-                ard_user_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_interact', 'GroupMembership'], stdout=subprocess.PIPE)
-                ard_user_out, ard_user_err = ard_user_sp.communicate()
-                ard_user_list = ard_user_out.split()
-                ard_users.extend(ard_user_list[1:])
- 
-            return ard_users
+                ard_gm_check = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_interact'], stdout=subprocess.PIPE)
+                ard_gm_check_out, ard_gm_check_err = ard_gm_check.communicate()
+                
+                if "GroupMembership" in ard_gm_check_out:
+                    ard_user_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_interact', 'GroupMembership'], stdout=subprocess.PIPE)
+                    ard_user_out, ard_user_err = ard_user_sp.communicate()
+                    ard_user_list = ard_user_out.split()
+                    ard_users.extend(ard_user_list[1:])
+
+            if "com.apple.local.ard_admin" in remote_out:
+                ard_gm_check = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_admin'], stdout=subprocess.PIPE)
+                ard_gm_check_out, ard_gm_check_err = ard_gm_check.communicate()
+                
+                if "GroupMembership" in ard_gm_check_out:
+                    ard_user_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_admin', 'GroupMembership'], stdout=subprocess.PIPE)
+                    ard_user_out, ard_user_err = ard_user_sp.communicate()
+                    ard_user_list = ard_user_out.split()
+                    if ard_user_out not in ard_user_list:
+                        ard_users.extend(ard_user_list[1:])
+
+            if "com.apple.local.ard_manage" in remote_out:
+                ard_gm_check = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_manage'], stdout=subprocess.PIPE)
+                ard_gm_check_out, ard_gm_check_err = ard_gm_check.communicate()
+                
+                if "GroupMembership" in ard_gm_check_out:
+                    ard_user_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_manage', 'GroupMembership'], stdout=subprocess.PIPE)
+                    ard_user_out, ard_user_err = ard_user_sp.communicate()
+                    ard_user_list = ard_user_out.split()
+                    if ard_user_out not in ard_user_list:
+                        ard_users.extend(ard_user_list[1:])
+
+            return ', '.join(item for item in ard_users)
+    else:
+        # plist_path does not exist, which indicates that ARD is not enabled.
+        return "ARD Disabled"
+
+def ard_group_access_check():
+    """Check for local users who have ARD permissions
+    First we need to check if all users are allowed. If not, we look for granular permissions
+    in the directory. Thank you @frogor and @foigus for help on the directory part."""
+
+    # First method: check if all users are permitted.
+    # Thank you to @steffan for pointing out this plist key!
+    plist_path = '/Library/Preferences/com.apple.RemoteManagement.plist'
+    if os.path.exists(plist_path):
+        plist = FoundationPlist.readPlist(plist_path)
+
+        if plist.get('ARD_AllLocalUsers', None):
+            return "All users permitted"
+        else:
+            # Get list of groups from dscl
+            remote_group_check = subprocess.Popen(['dscl', '.', 'list', '/Groups'], stdout=subprocess.PIPE)
+            remote_group_out, remote_group_err = remote_group_check.communicate()
+            group_list = []
+            
+            #Check if ard_interact is in the group list
+            if "com.apple.local.ard_interact" in remote_group_out:
+                # If so read the group and check if there is a NestedGroups value
+                ard_ng_check = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_interact'], stdout=subprocess.PIPE)
+                ard_ng_check_out, ard_ng_check_err = ard_ng_check.communicate()
+
+                if "NestedGroups" in ard_ng_check_out:
+                    # Get a list of UUIDs of Nested Groups
+                    group_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_interact', 'NestedGroups'], stdout=subprocess.PIPE)
+                    group_out, group_err = group_sp.communicate()
+                    group_list_uuid = group_out.split()
+            
+                    # Translate group UUIDs to gids
+                    for group_uuid in group_list_uuid[1:]:
+                        group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
+                        group_id_out, group_id_err = group_id_sp.communicate()
+                        group_name = grp.getgrgid(group_id_out.split()[1]).gr_name
+                        if group_name not in group_list:
+                            group_list.append(group_name)
+                
+            #Check if ard_admin is in the group list
+            if "com.apple.local.ard_admin" in remote_group_out:
+                # If so read the group and check if there is a NestedGroups value
+                ard_ng_check = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_admin'], stdout=subprocess.PIPE)
+                ard_ng_check_out, ard_ng_check_err = ard_ng_check.communicate()
+
+                if "NestedGroups" in ard_ng_check_out:
+                    # Get a list of UUIDs of Nested Groups
+                    group_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_admin', 'NestedGroups'], stdout=subprocess.PIPE)
+                    group_out, group_err = group_sp.communicate()
+                    group_list_uuid = group_out.split()
+            
+                    # Translate group UUIDs to gids
+                    for group_uuid in group_list_uuid[1:]:
+                        group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
+                        group_id_out, group_id_err = group_id_sp.communicate()
+                        ard_group = grp.getgrgid(group_id_out.split()[1]).gr_name
+                        group_name = grp.getgrgid(group_id_out.split()[1]).gr_name
+                        if group_name not in group_list:
+                            group_list.append(group_name)
+
+            #Check if ard_manage is in the group list
+            if "com.apple.local.ard_manage" in remote_group_out:
+                # If so read the group and check if there is a NestedGroups value
+                ard_ng_check = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_manage'], stdout=subprocess.PIPE)
+                ard_ng_check_out, ard_ng_check_err = ard_ng_check.communicate()
+
+                if "NestedGroups" in ard_ng_check_out:
+                    # Get a list of UUIDs of Nested Groups
+                    group_sp = subprocess.Popen(['dscl', '.', 'read', '/Groups/com.apple.local.ard_manage', 'NestedGroups'], stdout=subprocess.PIPE)
+                    group_out, group_err = group_sp.communicate()
+                    group_list_uuid = group_out.split()
+            
+                    # Translate group UUIDs to gids
+                    for group_uuid in group_list_uuid[1:]:
+                        group_id_sp = subprocess.Popen(['dsmemberutil', 'getid', '-x', group_uuid], stdout=subprocess.PIPE)
+                        group_id_out, group_id_err = group_id_sp.communicate()
+                        group_name = grp.getgrgid(group_id_out.split()[1]).gr_name
+                        if group_name not in group_list:
+                            group_list.append(group_name)
+            
+            return ', '.join(item for item in group_list)
+                    
+#            return group_list
     else:
         # plist_path does not exist, which indicates that ARD is not enabled.
         return "ARD Disabled"
@@ -259,6 +372,7 @@ def main():
     result.update({'ssh_users': ssh_user_access_check()})
     result.update({'ssh_groups': ssh_group_access_check()})
     result.update({'ard_users': ard_access_check()})
+    result.update({'ard_groups': ard_group_access_check()})
     result.update({'firmwarepw': firmware_pw_check()})
     result.update({'firewall_state':firewall_enable_check()})
     result.update({'skel_state':skel_state_check()})

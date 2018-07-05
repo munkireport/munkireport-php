@@ -130,7 +130,9 @@
     "db": {
         "connectable": "Connectable",
         "driver": "Driver",
-        "writable": "Writable"
+        "writable": "Writable",
+        "size": "Size"
+
     },
     "delete": "Delete",
     "description": "Description",
