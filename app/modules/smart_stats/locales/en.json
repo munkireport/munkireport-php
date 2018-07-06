@@ -147,5 +147,5 @@
     "used_rsvd_blk_cnt_tot": "Used Reserved Block Count Total",
     "user_capacity": "Raw Capactiy",
     "wear_leveling_count": "Wear Leveling Count",
-    "write_error_rate": "Write Error Rate",
+    "write_error_rate": "Write Error Rate"
 }
