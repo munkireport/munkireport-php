@@ -1,4 +1,11 @@
-### [3.2.1](https://github.com/munkireport/munkireport-php/compare/v3.2.0...HEAD) (Unreleased)
+### [3.2.2](https://github.com/munkireport/munkireport-php/compare/v3.2.1...HEAD) (Unreleased)
+
+FIXES
+- SentinelOne uninstallers
+- MigrationsPending (#1108) @mosen
+- Smart widget ui fix (#1107) @poundbangbash
+
+### [3.2.1](https://github.com/munkireport/munkireport-php/compare/v3.2.0...v3.2.1) (July 05, 2018)
 
 FIXES
 - Addressed duplication of ARD groups. (#1106) @poundbangbash
