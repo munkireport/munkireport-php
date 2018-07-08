@@ -36,12 +36,12 @@ class Database extends Controller
             $migrator = new Migrator($repository, $this->capsule->getDatabaseManager(), $files);
             $dirs = [APP_ROOT . 'database/migrations'];
             $this->appendModuleMigrations($dirs);
-            $migrationFiles = $migrator->run($dirs, Array('pretend' => true));
+            //$migrationFiles = $migrator->run($dirs, Array('pretend' => true));
             $migrationFilenames = Array();
 
-            foreach ($migrationFiles as $mf) {
-                $migrationFilenames[] = basename($mf);
-            }
+//            foreach ($migrationFiles as $mf) {
+//                $migrationFilenames[] = basename($mf);
+//            }
 
 
             $obj = new View();
@@ -52,8 +52,7 @@ class Database extends Controller
         } catch (\Exception $e) {
             $obj = new View();
             $obj->view('json', array('msg' => Array(
-                'error' => true,
-                'error_message' => $e->getMessage(),
+                'error' => $e->getMessage(),
                 'error_trace' => $e->getTrace()
             )));
         }
@@ -87,8 +86,7 @@ class Database extends Controller
             } catch (\PDOException $exception) {
                 $obj->view('json', [
                     'msg' => [
-                        'error' => true,
-                        'error_message' => $exception->getMessage(),
+                        'error' => $exception->getMessage(),
                         'notes' => $migrator->getNotes()
                     ]
                 ]);
@@ -96,11 +94,8 @@ class Database extends Controller
         } catch (\Exception $e) {
             $obj = new View();
             $obj->view('json', [
-                'msg' => [
-                    'error' => true,
-                    'error_message' => $e->getMessage(),
+                    'error' => $e->getMessage(),
                     'error_trace' => $e->getTrace()
-                ]
             ]);
         }
     }
