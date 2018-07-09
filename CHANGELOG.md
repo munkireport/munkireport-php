@@ -1,4 +1,19 @@
-### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.2.0...HEAD) (Unreleased)
+### [3.2.3](https://github.com/munkireport/munkireport-php/compare/v3.2.2...HEAD) (Unreleased)
+
+### [3.2.2](https://github.com/munkireport/munkireport-php/compare/v3.2.1...v3.2.2) (July 08, 2018)
+
+FIXES
+- SentinelOne uninstallers
+- MigrationsPending (#1108) @mosen
+- Smart widget ui fix (#1107) @poundbangbash
+
+### [3.2.1](https://github.com/munkireport/munkireport-php/compare/v3.2.0...v3.2.1) (July 05, 2018)
+
+FIXES
+- Addressed duplication of ARD groups. (#1106) @poundbangbash
+- Security module fix ard_users - add nested ard_groups (#1105) @poundbangbash
+- Fix for issue #1102 @tuxudo
+- Improvements to Sophos module (#1100) @rickheil
 
 ### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...v3.2.0) (July 01, 2018)
 

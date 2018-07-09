@@ -1,10 +1,7 @@
 #!/bin/bash
 
-MODULESCRIPT="sentinelone_quarantine.py"
-QUARANTINE_CACHE_FILE="sentinelone_quarantine.plist"
-
 # Remove preflight script
-rm -f "${MUNKIPATH}preflight.d/${MODULESCRIPT}"
+rm -f "${MUNKIPATH}preflight.d/sentinelone_quarantine.py"
 
 # Remove cache file
-rm -f "${CACHEPATH}${QUARANTINE_CACHE_FILE}"
+rm -f "${CACHEPATH}sentinelone_quarantine.plist"
