@@ -396,6 +396,33 @@
 
 	/*
 	|===============================================
+	| Jamf
+	|===============================================
+	|
+	| A working Jamf server is required for use of this module.
+	|
+	| To use the Jamf module, set 'jamf_enable' to TRUE and
+	| enter the server, username, and password for accessing your
+	| Jamf instance.
+	|
+	| This module pulls data about Macs that are in Jamf. It
+	| should work properly with Jamf Cloud. It has been tested
+	| with Jamf version 10.4.1, but should work down to 9.9x.
+	| 
+	| jamf_verify_ssl is to disable SSL verification when
+	| connecting to your Jamf server. If using a self signed
+	| certificate, set this to false.
+	|
+	*/
+
+	$conf['jamf_enable'] = FALSE;
+	$conf['jamf_verify_ssl'] = TRUE;
+	$conf['jamf_username'] = "JSS_API_Username";
+	$conf['jamf_password'] = "p@ssw0rd";
+	$conf['jamf_server'] = "https://jamf.server.com:8443";
+
+	/*
+	|===============================================
 	| Legacy Caching Listing
 	|===============================================
 	|

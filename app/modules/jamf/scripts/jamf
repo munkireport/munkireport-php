@@ -1,0 +1,30 @@
+#!/bin/sh
+# Trigger MunkiReport server to do a Jamf lookup
+
+# Skip manual check
+if [ "$1" = 'manualcheck' ]; then
+	echo 'Manual check: skipping'
+	exit 0
+fi
+
+# Check if Jamf binary is installed
+if [ ! -e "/usr/local/jamf/bin/jamf " ] ; then
+    echo "Jamf doesn't appear to be installed. Is it enrolled?"
+    exit 0
+fi
+
+# Get preference for Jamf checks, if exists
+CHECK=$(defaults read /Library/Preferences/MunkiReport JamfCheck 2>/dev/null)
+
+# If set to 0, disable automatic Jamf lookups for this machine
+if [[ ${CHECK} == "0" ]] ; then
+    echo "Jamf lookups for this machine are disabled."
+    exit 0
+else
+    # Make sure the cache directory exists
+    DIR=$(dirname $0)
+    mkdir -p "$DIR/cache"
+
+    # Store date in file to trigger Jamf lookup
+    date > "$DIR/cache/jamf.txt"
+fi

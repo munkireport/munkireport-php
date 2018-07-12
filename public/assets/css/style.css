@@ -191,3 +191,47 @@ svg .nv-label text
     max-height: calc(100vh - 212px);
     overflow-y: auto;
 }
+
+
+/* Veritical nav tabs for Jamf client tab */
+/* Style the tab */
+.jamf-left{
+    float: left;
+    border-bottom: 0px;
+}
+
+/* Style the buttons that are used to open the tab content */
+#jamf-button{
+    display: block;
+    margin-bottom: 0px;
+    float: none;
+    border-radius: 0px;
+}
+
+.jamf-tablink{
+    border-radius: 0px !important;
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+#jamf-tabsubject{
+    font-size: 12px;
+}
+
+.jamf-tab-content {
+    float: left;
+    width: 80%;
+    border: none;
+}
+
+.jamf-table-right {
+    text-align: right;
+    width: 50%;
+    max-width: 50%;
+}
+
+.jamf-table-left {
+    text-align: left;
+    width: 50%;
+    max-width: 50%;
+}

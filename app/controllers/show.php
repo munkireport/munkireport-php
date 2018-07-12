@@ -50,6 +50,22 @@ class show extends Controller
         $obj->view($view, $data);
     }
 
+    public function admins($module = '', $name = '')
+    {
+        if ($admins = $this->modules->getAdmins($module, $name)) {
+            $data['page'] = 'clients';
+            $viewpath = $admins->view_path;
+            $view = $admins->view;
+        } else {
+            $data = array('status_code' => 404);
+            $view = 'error/client_error';
+            $viewpath = conf('view_path');
+        }
+
+        $obj = new View();
+        $obj->view($view, $data, $viewpath);
+    }
+    
     public function listing($module = '', $name = '')
     {
         if ($listing = $this->modules->getListing($module, $name)) {
