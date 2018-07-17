@@ -1,29 +1,20 @@
 <div class="col-lg-4 col-md-6">
-
 	<div class="panel panel-default" id="client-widget">
-
 		<div class="panel-heading">
-
 			<h3 class="panel-title"><i class="fa fa-group"></i>
 				<span data-i18n="client.activity"></span>
 				<list-link data-url="/show/listing/reportdata/clients"></list-link>
 			</h3>
-
 		</div>
-
 		<div class="panel-body">
-
 			<svg id="test1" class="center-block" style="width:258px; height: 258px"></svg>
 			<div class="text-muted text-center">
 				<span data-i18n="client.total"></span>: <span class="total-clients"></span> <span class="total-change"></span>
 				|
 				<span data-i18n="client.hour"></span>: <span class="hour-clients"></span> <span class="lasthour-change"></span>
 			</div>
-
 		</div>
-
 	</div>
-
 </div>
 
 <script>
@@ -31,8 +22,9 @@
 $(document).on('appReady', function() {
 
 	// Add tooltip
+    var inactive_days = "<?php echo conf('days_inactive'); ?>";
 	$('#client-widget>div.panel-heading')
-		.attr('title', i18n.t('client.panel_title'))
+		.attr('title', (i18n.t('client.panel_title_custom')+" "+inactive_days+" "+i18n.t('date.day_plural')))
 		.tooltip();
 
 	var active = i18n.t('active'),
@@ -72,9 +64,9 @@ $(document).on('appReady', function() {
 	var drawGraph = function(){
 		var url = appUrl + '/module/reportdata/get_lastseen_stats';
 		d3.json(url, function(data) {
-			testdata1[0].y = data.lastmonth // Active
-			testdata1[1].y = data.total - data.lastmonth // Inactive
-			chart.title("" + data.lastmonth);
+			testdata1[0].y = data.lastcustom // Active
+			testdata1[1].y = data.total - data.lastcustom // Inactive
+			chart.title("" + data.lastcustom);
 
 			d3.select('#test1').datum(testdata1).transition().duration(500).call(chart);
 			chart.update();
