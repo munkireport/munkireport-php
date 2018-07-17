@@ -106,6 +106,7 @@
         "comment": "Comments",
         "hour": "Clients per hour",
         "panel_title": "Client activity in the last month",
+        "panel_title_custom": "Client activity in the last",
         "report": "Client Report",
         "tab": {
             "summary": "Summary"
