@@ -29,13 +29,14 @@ new Munkireport_model;
 			<th data-i18n="warranty.status" data-colname='warranty.status'></th>
 			<th data-i18n="uptime" data-i18n="uptime" data-colname='reportdata.uptime'></th>
 			<th data-i18n="listing.checkin" data-colname='reportdata.timestamp'></th>
+			<th data-i18n="reg_date" data-colname='reportdata.reg_timestamp'></th>
 			<th data-i18n="munkireport.manifest.manifest" data-colname='munkireport.manifestname'></th>
 		  </tr>
 		</thead>
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 
@@ -110,11 +111,6 @@ new Munkireport_model;
 				var link = mr.getClientDetailLink(name, sn);
 				$('td:eq(0)', nRow).html(link);
 
-				// Format date
-				var checkin = parseInt($('td:eq(8)', nRow).html());
-				var date = new Date(checkin * 1000);
-				$('td:eq(8)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
-
 				// Format OS Version
 				var osvers = mr.integerToVersion($('td:eq(3)', nRow).html());
 				$('td:eq(3)', nRow).html(osvers);
@@ -128,6 +124,16 @@ new Munkireport_model;
 				{
 				  $('td:eq(7)', nRow).html('<span title="'+i18n.t('boot_time')+': '+moment(date).subtract( uptime, 'seconds').format('llll')+'">'+moment().subtract(uptime, 'seconds').fromNow(true)+'</span>');
 				}
+                
+				// Format check in date
+				var checkin = parseInt($('td:eq(8)', nRow).html());
+				var date = new Date(checkin * 1000);
+				$('td:eq(8)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
+                
+				// Format registration date
+				var registration = parseInt($('td:eq(9)', nRow).html());
+				var date = new Date(registration * 1000);
+				$('td:eq(9)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
 			}
 		});
 	});

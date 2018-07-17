@@ -60,7 +60,7 @@ class Deploystudio_helper
             }
         }
 
-      // Save the data
+        // Save the data
         $deploystudio_model->save();
         $error = 'DeployStudio data processed';
         return $error;
@@ -102,6 +102,10 @@ class Deploystudio_helper
         $workflow = new CFPropertyList();
         $workflow->parse($deploystudio_auto_workflow_result);
         $deploystudio_auto_workflow_result = $workflow->toArray();
-        return $deploystudio_auto_workflow_result['title'];
+        if (array_key_exists('title', $deploystudio_auto_workflow_result)) {
+            return $deploystudio_auto_workflow_result['title'];
+        } else {
+            return NULL;
+        }
     }
 }

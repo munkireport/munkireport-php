@@ -42,6 +42,9 @@ $(document).on('appReady', function(e, lang) {
             if(data[prop] === true){
                 data[prop] = '<span class="label label-success">Yes</span>';
             }
+            if(prop == 'db.size'){
+              data[prop] = data[prop].toFixed(2) + ' MB'
+            }
 
             table.append($('<tr>')
                 .append($('<th>')

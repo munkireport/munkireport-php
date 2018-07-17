@@ -49,8 +49,7 @@ class clients extends Controller
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uid, r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
-                        s.gatekeeper, s.sip, s.ssh_groups, s.ssh_users, s.ard_users, 
-                        s.firmwarepw, s.firewall_state, s.skel_state,
+                        s.gatekeeper, s.sip, s.ssh_groups, s.ssh_users, s.ard_users, s.ard_groups, s.firmwarepw, s.firewall_state, s.skel_state,
                         w.purchase_date, w.end_date, w.status, l.users, d.totalsize, d.freespace,
                         d.smartstatus, d.encrypted, n.ipv4ip, n.ipv6ip
                 FROM machine m

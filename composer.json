@@ -5,7 +5,13 @@
     "license": "MIT",
     "require-dev": {
         "squizlabs/php_codesniffer": "^2.5",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^6.5"
+    },
+    "config": {
+        "platform": {
+            "php": "7.0.27"
+        },
+        "optimize-autoloader": true
     },
     "require": {
         "php": ">=7.0.27",
