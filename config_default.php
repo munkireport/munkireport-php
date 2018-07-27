@@ -731,7 +731,7 @@
 	|	hardware_age
 	|	hardware_model
 	|	memory
-	|	os
+	|	os breakdown
 	|	printer
 	|
 	| Responsive horizontal widgets:
