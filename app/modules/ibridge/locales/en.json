@@ -1,0 +1,12 @@
+{
+    "clienttab": "iBridge",
+    "ibridge_boot_uuid": "Boot UUID",
+    "ibridge_build": "OS Build",
+    "ibridge_marketing_name": "Version",
+    "ibridge_model_identifier": "Model ID",
+    "ibridge_model_name": "Model Name",
+    "ibridge_serial_number": "iBridge Serial Number",
+    "noibridge": "No iBridge Devices",
+    "reporttitle": "iBridge Report",
+    "widgettitle": "iBridge Versions"
+}
