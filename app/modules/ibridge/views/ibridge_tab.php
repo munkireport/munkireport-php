@@ -34,7 +34,7 @@ $(document).on('appReady', function(){
                         .append($('<i>')
                             .addClass('fa fa-link'))
                         .append(' '+d.ibridge_model_name))
-                    .append($('<div style="max-width:400px;">')
+                    .append($('<div style="max-width:475px;">')
                         .append($('<table>')
                             .addClass('table table-striped table-condensed')
                             .append($('<tbody>')
