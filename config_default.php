@@ -534,7 +534,7 @@
 	|===============================================
 	|
 	| Set this to be the number of days until a client shows as
-	| being inactive in the round Client Activity widget, defaul is
+	| being inactive in the round Client Activity widget, default is
 	| 30 days.
 	|
 	*/
