@@ -1,0 +1,13 @@
+{
+    "laps": "macOSLAPS",
+    "reporttitle": "macOSLAPS Report",
+    "useraccount": "User Account",
+    "dateset": "Date Set",
+    "dateexpires": "Expiration Date",
+    "showpassword": "Show Password",
+    "password": "Password",
+    "nodata": "No macOSLAPS Data",
+    "hddserial": "Hard Drive Serial Number",
+    "unencrypted": "Unencrypted",
+    "fv_escrow": "Filevault Escrow"
+}

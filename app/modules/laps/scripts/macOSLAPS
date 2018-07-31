@@ -1,0 +1,239 @@
+#!/usr/bin/python
+'''LAPS for macOS devices'''
+# pylint: disable=C0103, E0611, W0703
+# ############################################################
+# This python script will set a randomly generated password for your
+# local adminsitrator account on macOS if the expiration date has passed
+# on your MunkiReport server. Mimics behavior of LAPS
+# (Local Administrator Password Solution) for Windows
+# #############################################################
+# Joshua D. Miller - josh@psu.edu - The Pennsylvania State University
+# Script was Last Updated June 2, 2017
+# #############################################################
+#
+# #############################################################
+# Reworked by tuxudo for use in MunkiReport's LAPS module
+# #############################################################
+
+from Foundation import CFPreferencesCopyAppValue
+from datetime import datetime, timedelta
+from logging import (basicConfig as log_config,
+                     error as log_error, info as log_info)
+from OpenDirectory import (ODSession, ODNode,
+                           kODRecordTypeComputers, kODRecordTypeUsers)
+from os import path
+from random import choice
+from shutil import rmtree
+from string import ascii_letters, punctuation, digits
+from SystemConfiguration import (SCDynamicStoreCreate,
+                                 SCDynamicStoreCopyValue)
+import time
+import plistlib
+import os
+import sys
+import json
+from datetime import datetime, timedelta
+from unicodedata import normalize
+
+import objc
+from Foundation import NSBundle
+
+sys.path.insert(0, '/usr/local/munki')
+from munkilib import reportcommon
+
+class macOSLAPS(object):
+    '''main class of application'''
+    # Current time
+    now = datetime.now()
+    # Preference Variables
+    bundleid = 'org.munkireport.laps'
+    defaultpreferences = {
+        'LocalAdminAccount': 'admin',
+        'PasswordLength': 12,
+        'DaysTillExpiration': 60,
+        'RemoveKeyChain': True,
+        'AlphaNumericOnly': True,
+        'RemovePassChars': '\'{}[]|'
+    }
+
+    # Setup Logging
+    log_format = '%(asctime)s|%(levelname)s:%(message)s'
+    log_config(filename='/Library/Logs/macOSLAPS.log',
+               level=10, format=log_format)
+ 
+    def get_config_settings(self, preference_key):
+        '''Function to retrieve configuration settings from
+        /Library/Preferences or /Library/Managed Preferences'''
+        preference_file = self.bundleid
+        preference_value = CFPreferencesCopyAppValue(preference_key,
+                                                     preference_file)
+        if preference_value is None:
+            preference_value = self.defaultpreferences.get(preference_key)
+        if isinstance(preference_value, unicode):
+            preference_value = normalize(
+                'NFKD', preference_value).encode('ascii', 'ignore')
+        return preference_value
+
+    @staticmethod
+    def make_random_password(length):
+        '''Generate a Random Password
+        Thanks Mike Lynn - @frogor'''
+        alpha_numeric_only = LAPS.get_config_settings('AlphaNumericOnly')
+        # Characters used for random password
+        if alpha_numeric_only:
+            characters = ascii_letters + digits
+        else:
+            characters = ascii_letters + punctuation + digits
+        remove_pass_characters = macOSLAPS().get_config_settings(
+            'RemovePassChars')
+        # Remove Characters if specified
+        if remove_pass_characters:
+            characters = characters.translate(None, remove_pass_characters)
+        password = []
+        for i in range(length):
+            password.insert(i, choice(characters))
+        return ''.join(password)
+
+    def password_check(self):
+        '''Perform a password check and change the local
+        admin password and write it to the plist if
+        needed - Thanks to Tom Burgin and Ben Toms
+                           @tomjburgin, @macmuleblog'''
+        local_admin = LAPS.get_config_settings('LocalAdminAccount')
+        exp_days = LAPS.get_config_settings('DaysTillExpiration')
+        pass_length = LAPS.get_config_settings('PasswordLength')
+        keychain_remove = LAPS.get_config_settings('RemoveKeyChain')
+        password = LAPS.make_random_password(pass_length)
+
+        # Get password expiration in future epoch time
+        utc_time = datetime.utcfromtimestamp(int(time.time()))
+        expiration_time = utc_time + timedelta(exp_days)
+        epoch_time = int(time.time())
+        epoch_expiration_time = (int(time.time())+(86400*exp_days))
+
+        # This is all mostly stolen from reportcommon
+        # Get BaseURL and passphrase
+        baseurl = reportcommon.pref('BaseUrl') or \
+            prefs.pref('SoftwareRepoURL') + '/report/'
+        checkin = baseurl + "index.php?/module/laps/checkin"
+        passphrase = reportcommon.pref('Passphrase')
+        
+        # Get serial number
+        IOKit_bundle = NSBundle.bundleWithIdentifier_('com.apple.framework.IOKit')
+        functions = [("IOServiceGetMatchingService", b"II@"),
+                     ("IOServiceMatching", b"@*"),
+                     ("IORegistryEntryCreateCFProperty", b"@I@@I"),
+                    ]
+
+        objc.loadBundleFunctions(IOKit_bundle, globals(), functions)
+        serial = IORegistryEntryCreateCFProperty(IOServiceGetMatchingService(0, IOServiceMatching("IOPlatformExpertDevice".encode("utf-8"))), "IOPlatformSerialNumber", None, 0).encode("utf-8")
+        
+        try:
+            # Send serial and passphrase to server
+            values = {'serial': serial,\
+                     'passphrase' : passphrase}
+            server_data = reportcommon.curl(checkin, values)
+
+            # Decode server response
+            result = json.loads(server_data)
+        except:
+            if os.path.isfile('/var/root/.mrlaps'):
+                result = plistlib.readPlist('/var/root/.mrlaps')
+            else:
+                result = {"dateexpires": "1", "dateset": "1"}
+    
+        # Determine if the password expired and then change it
+        if int(result['dateexpires']) < epoch_time:
+            # Log that the password change is being started
+            log_info('Password change required.'
+                     ' Performing password change...')
+            try:
+                plistout = {}
+                # Set new random password in plist
+                plistout['password'] = password
+                # Change the local admin password
+                log_info('Setting random password for local'
+                         ' admin account %s...', local_admin)
+                # Connect to Local Node
+                local_node, error = ODNode.nodeWithSession_name_error_(
+                    ODSession.defaultSession(), '/Local/Default', None)
+                # Pull Local Administrator Record
+                local_admin_change, error = local_node.\
+                    recordWithRecordType_name_attributes_error_(
+                        kODRecordTypeUsers, local_admin, None, None)
+                # Change the password for the account
+                local_admin_change.changePassword_toPassword_error_(
+                    None, password, None)
+                # Set expiration time in plist
+                plistout['dateexpires'] = epoch_expiration_time
+                log_info('Password change has been completed. '
+                         'New expiration date is %s',
+                         expiration_time)
+                if keychain_remove is True:
+                    local_admin_path = '/Users/{0:}/Library/Keychains'.\
+                        format(local_admin)
+                    if path.exists(local_admin_path):
+                        rmtree(local_admin_path)
+                        log_info('Removed keychains for local '
+                                 'administrator account {0:}.'
+                                 .format(local_admin))
+                    else:
+                        log_info('The keychain directory for '
+                                 '{0:} does not exist. Keychain '
+                                 'removal not required...'.format(local_admin))
+                else:
+                    log_info('Keychain has NOT been modified. Keep '
+                             'in mind that this may cause keychain '
+                             'prompts and the old password may not '
+                             'be accessible.')
+                    
+                # Set user account in plist
+                plistout['useraccount'] = local_admin                    
+                # Set password set date in plist
+                plistout['dateset'] = epoch_time
+
+                # Write out plist to save password and other info
+                plistlib.writePlist(plistout, '/var/root/.mrlaps')
+                log_info('Writing out cache file for postflight to pick up.')
+
+            except Exception as error:
+                log_error(error)
+                exit(1)
+        else:
+            # Log that a password change is not necessary at this time
+            log_info('Password change not necessary at this time as'
+                     ' the expiration date is %s', expiration_time)
+            
+            # If plist exists
+            if os.path.isfile('/var/root/.mrlaps'):
+                stored_plist = plistlib.readPlist('/var/root/.mrlaps')
+
+                # Get date set key and compare to server value
+                if int(result['dateset']) == int(stored_plist['dateset']):
+                    
+                    # If the same, remove the password in the plist
+                    if 'password' in stored_plist:
+                        del stored_plist['password']
+                        plistlib.writePlist(stored_plist, '/var/root/.mrlaps')
+                        log_info('Clearing cached password, because it is in MunkiReport.')
+            exit(0)
+            
+# Skip manual check
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'manualcheck':
+        print 'Manual check: skipping'
+        exit(0)
+
+# Exit if Joshua Miller's macOSLAPS is installed
+if os.path.isfile('/usr/local/laps/macOSLAPS'):
+    print 'Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured'
+    log_info('Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured.')
+    exit(0)
+if os.path.isfile('/Library/LaunchDaemons/edu.psu.macoslaps-check.plist'):
+    print 'Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured'
+    log_info('Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured.')
+    exit(0)
+            
+            
+LAPS = macOSLAPS()
+LAPS.password_check()
