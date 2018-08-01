@@ -1,13 +1,17 @@
 {
-    "laps": "macOSLAPS",
-    "reporttitle": "macOSLAPS Report",
-    "useraccount": "User Account",
-    "dateset": "Date Set",
+    "alpha_numeric_only": "Alpha Numeric Only",
     "dateexpires": "Expiration Date",
-    "showpassword": "Show Password",
-    "password": "Password",
+    "dateset": "Date Set",
+    "days_till_expiration": "Days Between Expiration",
+    "keychain_remove": "Remove Keychain",
+    "laps": "macOSLAPS",
     "nodata": "No macOSLAPS Data",
-    "hddserial": "Hard Drive Serial Number",
-    "unencrypted": "Unencrypted",
-    "fv_escrow": "Filevault Escrow"
+    "password": "Password",
+    "pass_length": "Password Length",
+    "remote_management": "Remote Management",
+    "reporttitle": "macOSLAPS Report",
+    "script_enabled": "macOSLAPS Enabled",
+    "script_enabled_short": "Enabled",
+    "showpassword": "Show Password",
+    "useraccount": "User Account"
 }

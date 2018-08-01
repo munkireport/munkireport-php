@@ -18,11 +18,17 @@ new Laps_model;
                     <th data-i18n="laps.useraccount" data-colname='laps.useraccount'></th>
                     <th data-i18n="laps.dateset" data-colname='laps.dateset'></th>
                     <th data-i18n="laps.dateexpires" data-colname='laps.dateexpires'></th>
+                    <th data-i18n="laps.script_enabled_short" data-colname='laps.script_enabled'></th>
+                    <th data-i18n="laps.days_till_expiration" data-colname='laps.days_till_expiration'></th>
+                    <th data-i18n="laps.pass_length" data-colname='laps.pass_length'></th>
+                    <th data-i18n="laps.alpha_numeric_only" data-colname='laps.alpha_numeric_only'></th>
+                    <th data-i18n="laps.remote_management" data-colname='laps.remote_management'></th>
+                    <th data-i18n="laps.keychain_remove" data-colname='laps.keychain_remove'></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td data-i18n="listing.loading" colspan="5" class="dataTables_empty"></td>
+                    <td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
                 </tr>
             </tbody>
             </table>
@@ -102,6 +108,37 @@ new Laps_model;
 	        	var date = new Date(checkin * 1000);
 	        	$('td:eq(4)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
                 
+	        	// script_enabled
+	        	var script_enabled=$('td:eq(5)', nRow).html();
+	        	script_enabled = script_enabled == '1' ? i18n.t('yes') :
+	        	(script_enabled === '0' ? i18n.t('no') : '')
+	        	$('td:eq(5)', nRow).html(script_enabled)
+                
+	        	// days_till_expiration
+                var days_till_expiration=$('td:eq(6)', nRow).html();
+                if(days_till_expiration == "") {
+                     $('td:eq(6)', nRow).html('');
+                } else{				 
+                     $('td:eq(6)', nRow).html(days_till_expiration+" Days");
+                }
+                
+	        	// alpha_numeric_only
+	        	var alpha_numeric_only=$('td:eq(8)', nRow).html();
+	        	alpha_numeric_only = alpha_numeric_only == '1' ? i18n.t('yes') :
+	        	(alpha_numeric_only === '0' ? i18n.t('no') : '')
+	        	$('td:eq(8)', nRow).html(alpha_numeric_only)
+                
+	        	// remote_management
+	        	var remote_management=$('td:eq(9)', nRow).html();
+	        	remote_management = remote_management == '1' ? i18n.t('enabled') :
+	        	(remote_management === '0' ? i18n.t('disabled') : '')
+	        	$('td:eq(9)', nRow).html(remote_management)
+                
+	        	// keychain_remove
+	        	var keychain_remove=$('td:eq(10)', nRow).html();
+	        	keychain_remove = keychain_remove == '1' ? i18n.t('yes') :
+	        	(keychain_remove === '0' ? i18n.t('no') : '')
+	        	$('td:eq(10)', nRow).html(keychain_remove)
 		    }
 	    });
 

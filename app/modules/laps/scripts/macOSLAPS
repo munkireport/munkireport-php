@@ -53,6 +53,8 @@ class macOSLAPS(object):
         'DaysTillExpiration': 60,
         'RemoveKeyChain': True,
         'AlphaNumericOnly': True,
+        'Enabled': True,
+        'RemoteManagementEnabled': True,
         'RemovePassChars': '\'{}[]|'
     }
 
@@ -99,10 +101,14 @@ class macOSLAPS(object):
         admin password and write it to the plist if
         needed - Thanks to Tom Burgin and Ben Toms
                            @tomjburgin, @macmuleblog'''
+        # Fill in local variables from preferences
         local_admin = LAPS.get_config_settings('LocalAdminAccount')
         exp_days = LAPS.get_config_settings('DaysTillExpiration')
         pass_length = LAPS.get_config_settings('PasswordLength')
         keychain_remove = LAPS.get_config_settings('RemoveKeyChain')
+        alpha_numeric_only = LAPS.get_config_settings('AlphaNumericOnly')
+        script_enabled = LAPS.get_config_settings('Enabled')
+        remote_management = LAPS.get_config_settings('RemoteManagementEnabled')
         password = LAPS.make_random_password(pass_length)
 
         # Get password expiration in future epoch time
@@ -110,49 +116,70 @@ class macOSLAPS(object):
         expiration_time = utc_time + timedelta(exp_days)
         epoch_time = int(time.time())
         epoch_expiration_time = (int(time.time())+(86400*exp_days))
-
-        # This is all mostly stolen from reportcommon
-        # Get BaseURL and passphrase
-        baseurl = reportcommon.pref('BaseUrl') or \
-            prefs.pref('SoftwareRepoURL') + '/report/'
-        checkin = baseurl + "index.php?/module/laps/checkin"
-        passphrase = reportcommon.pref('Passphrase')
         
-        # Get serial number
-        IOKit_bundle = NSBundle.bundleWithIdentifier_('com.apple.framework.IOKit')
-        functions = [("IOServiceGetMatchingService", b"II@"),
-                     ("IOServiceMatching", b"@*"),
-                     ("IORegistryEntryCreateCFProperty", b"@I@@I"),
-                    ]
-
-        objc.loadBundleFunctions(IOKit_bundle, globals(), functions)
-        serial = IORegistryEntryCreateCFProperty(IOServiceGetMatchingService(0, IOServiceMatching("IOPlatformExpertDevice".encode("utf-8"))), "IOPlatformSerialNumber", None, 0).encode("utf-8")
-        
+        # Try to get JSON from MunkiReport server
         try:
+            # This is all mostly stolen from reportcommon
+            # Get BaseURL and passphrase
+            baseurl = reportcommon.pref('BaseUrl') or \
+                prefs.pref('SoftwareRepoURL') + '/report/'
+            checkin = baseurl + "index.php?/module/laps/checkin"
+            passphrase = reportcommon.pref('Passphrase')
+                
+            # Get serial number using @frogor's GitHub gist
+            IOKit_bundle = NSBundle.bundleWithIdentifier_('com.apple.framework.IOKit')
+            functions = [("IOServiceGetMatchingService", b"II@"),
+                         ("IOServiceMatching", b"@*"),
+                         ("IORegistryEntryCreateCFProperty", b"@I@@I"),
+                        ]
+
+            objc.loadBundleFunctions(IOKit_bundle, globals(), functions)
+            serial = IORegistryEntryCreateCFProperty(IOServiceGetMatchingService(0, IOServiceMatching("IOPlatformExpertDevice".encode("utf-8"))), "IOPlatformSerialNumber", None, 0).encode("utf-8")
+            
             # Send serial and passphrase to server
             values = {'serial': serial,\
                      'passphrase' : passphrase}
             server_data = reportcommon.curl(checkin, values)
+            log_info(' Got MunkiReport server response, decoding response...')
 
             # Decode server response
             result = json.loads(server_data)
+            
+            # If remote management is enabled, use the preferences from the MunkiReport server instead
+            if remote_management:
+                exp_days = int(result['days_till_expiration'])
+                pass_length = int(result['pass_length'])
+                keychain_remove = bool(result['keychain_remove'])
+                alpha_numeric_only = bool(result['alpha_numeric_only'])
+                script_enabled = bool(result['script_enabled'])
+                log_info(' Finished setting remote management preferences.')
+            
         except:
+            # Something in the process of getting the server response errored, using cached response
+            log_info(' Problem getting data from MunkiReport server or with decoding response, using local cached preferences.')
             if os.path.isfile('/var/root/.mrlaps'):
                 result = plistlib.readPlist('/var/root/.mrlaps')
             else:
+                # Cached response doesn't exist, likely first run, using defaults
                 result = {"dateexpires": "1", "dateset": "1"}
+                log_info(' Appears to be first run, using defaults and cycling password.')
+                
+        # Check if script is disabled
+        if not script_enabled:
+            log_info(' Skipping macOSLAPS run, script disabled via preferences.')
+            exit(0)
     
         # Determine if the password expired and then change it
         if int(result['dateexpires']) < epoch_time:
             # Log that the password change is being started
-            log_info('Password change required.'
+            log_info(' Password change required.'
                      ' Performing password change...')
             try:
                 plistout = {}
                 # Set new random password in plist
                 plistout['password'] = password
                 # Change the local admin password
-                log_info('Setting random password for local'
+                log_info(' Setting random password for local'
                          ' admin account %s...', local_admin)
                 # Connect to Local Node
                 local_node, error = ODNode.nodeWithSession_name_error_(
@@ -166,47 +193,77 @@ class macOSLAPS(object):
                     None, password, None)
                 # Set expiration time in plist
                 plistout['dateexpires'] = epoch_expiration_time
-                log_info('Password change has been completed. '
-                         'New expiration date is %s',
+                log_info(' Password change has been completed. '
+                         ' New expiration date is %s',
                          expiration_time)
+                # Delete local admin's keychain if removal is enabled
                 if keychain_remove is True:
                     local_admin_path = '/Users/{0:}/Library/Keychains'.\
                         format(local_admin)
                     if path.exists(local_admin_path):
                         rmtree(local_admin_path)
-                        log_info('Removed keychains for local '
+                        log_info(' Removed keychains for local '
                                  'administrator account {0:}.'
                                  .format(local_admin))
                     else:
-                        log_info('The keychain directory for '
+                        log_info(' The keychain directory for '
                                  '{0:} does not exist. Keychain '
                                  'removal not required...'.format(local_admin))
                 else:
-                    log_info('Keychain has NOT been modified. Keep '
+                    log_info(' Keychain has NOT been modified. Keep '
                              'in mind that this may cause keychain '
                              'prompts and the old password may not '
                              'be accessible.')
-                    
+
                 # Set user account in plist
-                plistout['useraccount'] = local_admin                    
+                plistout['useraccount'] = local_admin
                 # Set password set date in plist
                 plistout['dateset'] = epoch_time
+                # Set days between password expiration in plist
+                plistout['days_till_expiration'] = exp_days
+                # Set alpha_numeric_only in plist
+                plistout['alpha_numeric_only'] = alpha_numeric_only
+                # Set script_enabled in plist
+                plistout['script_enabled'] = script_enabled
+                # Set keychain_remove in plist
+                plistout['keychain_remove'] = keychain_remove
+                # Set pass_length in plist
+                plistout['pass_length'] = pass_length
+                # Set remote_management in plist
+                plistout['remote_management'] = remote_management
 
                 # Write out plist to save password and other info
                 plistlib.writePlist(plistout, '/var/root/.mrlaps')
-                log_info('Writing out cache file for postflight to pick up.')
+                log_info(' Writing out cache file for postflight to pick up.')
 
             except Exception as error:
                 log_error(error)
                 exit(1)
         else:
             # Log that a password change is not necessary at this time
-            log_info('Password change not necessary at this time as'
+            log_info(' Password change not necessary at this time as'
                      ' the expiration date is %s', expiration_time)
             
             # If plist exists
             if os.path.isfile('/var/root/.mrlaps'):
                 stored_plist = plistlib.readPlist('/var/root/.mrlaps')
+                
+                # If remote management is set, update cache file with preferences
+                if remote_management:   
+                    # Set days between password expiration in plist
+                    stored_plist['days_till_expiration'] = exp_days
+                    # Set alpha_numeric_only in plist
+                    stored_plist['alpha_numeric_only'] = alpha_numeric_only
+                    # Set script_enabled in plist
+                    stored_plist['script_enabled'] = script_enabled
+                    # Set keychain_remove in plist
+                    stored_plist['keychain_remove'] = keychain_remove
+                    # Set pass_length in plist
+                    stored_plist['pass_length'] = pass_length
+                    
+                    # Write out cache file
+                    plistlib.writePlist(stored_plist, '/var/root/.mrlaps')
+                    log_info(' Saved remote management preferences to cache file.')
 
                 # Get date set key and compare to server value
                 if int(result['dateset']) == int(stored_plist['dateset']):
@@ -215,7 +272,7 @@ class macOSLAPS(object):
                     if 'password' in stored_plist:
                         del stored_plist['password']
                         plistlib.writePlist(stored_plist, '/var/root/.mrlaps')
-                        log_info('Clearing cached password, because it is in MunkiReport.')
+                        log_info(' Clearing cached password, because it is in MunkiReport.')
             exit(0)
             
 # Skip manual check
@@ -227,11 +284,11 @@ if len(sys.argv) > 1:
 # Exit if Joshua Miller's macOSLAPS is installed
 if os.path.isfile('/usr/local/laps/macOSLAPS'):
     print 'Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured'
-    log_info('Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured.')
+    log_info(' Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured.')
     exit(0)
 if os.path.isfile('/Library/LaunchDaemons/edu.psu.macoslaps-check.plist'):
     print 'Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured'
-    log_info('Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured.')
+    log_info(' Skipping macOSLAPS run, Joshua Miller\'s macOSLAPS script appears to be installed and configured.')
     exit(0)
             
             

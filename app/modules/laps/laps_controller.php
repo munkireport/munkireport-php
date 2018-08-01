@@ -39,7 +39,6 @@ class Laps_controller extends Module_controller
 
         $laps_tab = new Laps_model($serial_number);
         $obj->view('json', array('msg' => $laps_tab->rs));
-
     }
     
     /**
@@ -86,7 +85,7 @@ class Laps_controller extends Module_controller
         }
         
         $serial_number = $_POST['serial'];
-        $sql = "SELECT dateexpires, dateset
+        $sql = "SELECT dateexpires, dateset, script_enabled, days_till_expiration, alpha_numeric_only, keychain_remove, pass_length
                     FROM laps 
                     WHERE serial_number = '$serial_number'";
         
