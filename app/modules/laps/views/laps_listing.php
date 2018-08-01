@@ -82,7 +82,6 @@ new Laps_model;
                                 d.columns[index].search.value = '> 0';
                             }
                         });
-
                     }                 
                 }
             },
@@ -98,12 +97,12 @@ new Laps_model;
 	        	var link = mr.getClientDetailLink(name, sn, '#tab_laps-tab');
 	        	$('td:eq(0)', nRow).html(link);
                 
-                // Format dateset timestamp
+	        	// Format dateset timestamp
 	        	var checkin = parseInt($('td:eq(3)', nRow).html());
 	        	var date = new Date(checkin * 1000);
 	        	$('td:eq(3)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
                 
-                // Format dateexpires timestamp
+	        	// Format dateexpires timestamp
 	        	var checkin = parseInt($('td:eq(4)', nRow).html());
 	        	var date = new Date(checkin * 1000);
 	        	$('td:eq(4)', nRow).html('<span title="'+moment(date).format('llll')+'">'+moment(date).fromNow()+'</span>');
@@ -115,12 +114,12 @@ new Laps_model;
 	        	$('td:eq(5)', nRow).html(script_enabled)
                 
 	        	// days_till_expiration
-                var days_till_expiration=$('td:eq(6)', nRow).html();
-                if(days_till_expiration == "") {
-                     $('td:eq(6)', nRow).html('');
-                } else{				 
-                     $('td:eq(6)', nRow).html(days_till_expiration+" Days");
-                }
+	        	var days_till_expiration=$('td:eq(6)', nRow).html();
+	        	if(days_till_expiration == "") {
+                                $('td:eq(6)', nRow).html('');
+	        	} else{				 
+                                $('td:eq(6)', nRow).html(days_till_expiration+" Days");
+	        	}
                 
 	        	// alpha_numeric_only
 	        	var alpha_numeric_only=$('td:eq(8)', nRow).html();
