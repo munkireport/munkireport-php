@@ -48,7 +48,7 @@ Configuration
 ---
 
 Before you use the GSX module, you need to configure the config.php file with your GSX account information.
-See: https://github.com/munkireport/munkireport-php/blob/master/config_default.php#L274-L300
+See: https://github.com/munkireport/munkireport-php/blob/master/config_default.php#L348-L375
 
 Making the certbundle.pem
 ---
