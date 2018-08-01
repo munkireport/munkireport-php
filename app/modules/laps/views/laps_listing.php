@@ -118,7 +118,7 @@ new Laps_model;
 	        	if(days_till_expiration == "") {
                                 $('td:eq(6)', nRow).html('');
 	        	} else{				 
-                                $('td:eq(6)', nRow).html(days_till_expiration+" Days");
+                                $('td:eq(6)', nRow).html(days_till_expiration+" "+i18n.t('date.day_plural'));
 	        	}
                 
 	        	// alpha_numeric_only
