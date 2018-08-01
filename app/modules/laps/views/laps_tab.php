@@ -115,9 +115,9 @@ $(document).on('appReady', function(e, lang) {
 	});
     
     $('#laps_show_button').click(function (e) {
-        // Disable button and unhide password field
+        // Hide button and unhide password field
         $('#laps-password').removeClass('hide');
-        $('#laps_show_button').addClass('disabled');
+        $('#laps_show_button').addClass('hide');
     })
     
 });
