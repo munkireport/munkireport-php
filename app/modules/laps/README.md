@@ -9,8 +9,8 @@ The table provides the following information per client:
 + dateset - Epoch of when password was last set
 + dateexpires - Epoch of when password expired
 + script_enabled - Boolean of if password changing is enabled on client
-+ days_till_expiration - Number of days between changing password
-+ alpha_numeric_only - Boolean of if password should only contain alphanumeric characters
++ days\_till_expiration - Number of days between changing password
++ alpha\_numeric_only - Boolean of if password should only contain alphanumeric characters
 + keychain_remove - Boolean of if local admin keychain should be deleted when password is changed
 + pass_length - Length of the new password
 + remote_management - Boolean of if remote management is enabled
