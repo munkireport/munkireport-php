@@ -41,7 +41,7 @@ class Ibridge_model extends \Model {
         
         foreach ($this->query($sql) as $obj) {
             if ("$obj->count" !== "0") {
-                $obj->type_name = $obj->type_name ? $obj->type_name : 'Unknown';
+                $obj->ibridge_model_name = $obj->ibridge_model_name ? $obj->ibridge_model_name : 'Unknown';
                 $out[] = $obj;
             }
         }
