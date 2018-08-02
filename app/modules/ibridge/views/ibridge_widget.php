@@ -1,5 +1,5 @@
-	<div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="fonts-widget">
+<div class="col-lg-4 col-md-6">
+	<div class="panel panel-default" id="ibridge-widget">
 		<div class="panel-heading" data-container="body" >
 			<h3 class="panel-title"><i class="fa fa-link"></i>
 			    <span data-i18n="ibridge.widgettitle"></span>
