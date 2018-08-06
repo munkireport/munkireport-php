@@ -10,6 +10,7 @@ Database:
 * type - varchar(255) - type of device, manually set via model
 * manufacturer - varchar(255) - reported maker of device
 * vendor_id - varchar(255) - device's vendor ID
+* product_id - varchar(255) - device's product ID
 * device_speed - varchar(255) - USB bus speed
 * internal - int - 0/1 for internal USB device
 * media - int - 0/1 for removable media device

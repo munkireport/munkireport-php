@@ -13,6 +13,7 @@ class Usb_model extends \Model {
 		$this->rs['type'] = ''; // Mouse, Trackpad, Hub, etc.
 		$this->rs['manufacturer'] = '';
 		$this->rs['vendor_id'] = '';
+		$this->rs['product_id'] = '';
 		$this->rs['device_speed'] = ''; // USB Speed
 		$this->rs['internal'] = 0; // True or False
 		$this->rs['media'] = 0; // True or False
@@ -30,6 +31,7 @@ class Usb_model extends \Model {
 		$this->idx[] = array('type');
 		$this->idx[] = array('manufacturer');
 		$this->idx[] = array('vendor_id');
+		$this->idx[] = array('product_id');
 		$this->idx[] = array('device_speed');
 		$this->idx[] = array('internal');
 		$this->idx[] = array('bus_power');
@@ -117,6 +119,7 @@ class Usb_model extends \Model {
 			'type' => 'unknown', // Mouse, Trackpad, Hub, etc.
 			'manufacturer' => '',
 			'vendor_id' => '',
+			'product_id' => '',
 			'device_speed' => '', // Speed
 			'internal' => 0, // True or False
 			'media' => 0, // True or False

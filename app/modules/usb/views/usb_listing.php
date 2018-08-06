@@ -25,6 +25,7 @@ new Usb_model;
 			<th data-i18n="usb.device_speed" data-colname='usb.device_speed'></th>
 			<th data-i18n="usb.internal" data-colname='usb.internal'></th>
 			<th data-i18n="usb.media" data-colname='usb.media'></th>
+			<th data-i18n="usb.product_id" data-colname='usb.product_id'></th>
 		  </tr>
 		</thead>
 

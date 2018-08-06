@@ -17,5 +17,6 @@
     "usbtype": "USB Device Types",
     "vendor_id": "Vendor ID",
     "devices": "USB Devices",
-    "report": "USB Report"
+    "report": "USB Report",
+    "product_id": "Product ID"
 }
