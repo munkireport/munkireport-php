@@ -31,7 +31,7 @@ new Usb_model;
 
 		<tbody>
 		  <tr>
-			<td data-i18n="listing.loading" colspan="9" class="dataTables_empty"></td>
+			<td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
 		  </tr>
 		</tbody>
 

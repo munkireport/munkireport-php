@@ -40,7 +40,7 @@ def flatten_usb_info(array):
                 device['name'] = obj[item]
             elif item == 'vendor_id' or item == 'b_vendor_id':
                 device['vendor_id'] = obj[item]
-            elif item == 'product_id':
+            elif item == 'product_id' or item == 'a_product_id':
                 device['product_id'] = obj[item]
             elif item == 'manufacturer' or item == 'f_manufacturer':
                 device['manufacturer'] = obj[item]
