@@ -48,7 +48,7 @@ class clients extends Controller
 	    new Network_model;
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
-                        r.uid, r.uptime, r.reg_timestamp, r.machine_group, r.timestamp,
+                        r.uid, r.uptime, r.reg_timestamp, r.timestamp, g.value AS machine_group,
 			s.gatekeeper, s.sip, s.ssh_groups, s.ssh_users, s.ard_users, s.ard_groups, s.firmwarepw, s.firewall_state, s.skel_state,
 			w.purchase_date, w.end_date, w.status, l.users, d.totalsize, d.freespace,
                         d.smartstatus, d.encrypted, n.ipv4ip, n.ipv6ip
@@ -58,7 +58,8 @@ class clients extends Controller
                 LEFT JOIN warranty w ON (m.serial_number = w.serial_number)
                 LEFT JOIN localadmin l ON (m.serial_number = l.serial_number)
                 LEFT JOIN diskreport d ON (m.serial_number = d.serial_number AND d.mountpoint = '/')
-		LEFT JOIN network n ON (m.serial_number = n.serial_number)
+                LEFT JOIN network n ON (m.serial_number = n.serial_number)
+                LEFT JOIN machine_group g ON (r.machine_group = g.groupid AND g.property = 'name')
                 WHERE m.serial_number = ?
                 ";
 
