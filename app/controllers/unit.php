@@ -72,7 +72,7 @@ class unit extends Controller
             foreach ($_SESSION['machine_groups'] as $group) {
                 if ($mg_data = $mg->all($group)) {
                     $out[] = $mg->all($group);
-                } else // Not in Machine_group table
+                } else if ( $group != 0) // Not in Machine_group table
                 {
                     $out[] = array(
                     'name' => 'Group '.$group,
