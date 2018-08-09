@@ -33,7 +33,7 @@ class system extends Controller
             'db.writable' => false,
             'db.size' => '',
             'error' => '',
-            'db.version' => ''
+            'version' => ''
         );
 
         $db = new Database(conf('connection'));
@@ -52,7 +52,7 @@ class system extends Controller
         } else {
             $out['error'] = $db->getError();
         }
-        $out['db.version'] = $db->get_version();
+        $out['version'] = $db->get_version();
         //echo '<pre>'; var_dump($db);
         // Get engine
         // Get permissions

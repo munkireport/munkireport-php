@@ -131,9 +131,7 @@
         "connectable": "Connectable",
         "driver": "Driver",
         "writable": "Writable",
-        "size": "Size",
-        "version": "Version"
-
+        "size": "Size"
     },
     "delete": "Delete",
     "description": "Description",
