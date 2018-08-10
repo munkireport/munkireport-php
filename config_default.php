@@ -108,6 +108,16 @@
 
 	/*
 	|===============================================
+	| Default Theme
+	|===============================================
+	|
+	| Sets the default theme for new logins/users. May need to clear cache on existing logins
+	|
+	*/
+	$conf['default_theme'] = getenv_default('DEFAULT_THEME', 'Default');
+
+	/*
+	|===============================================
 	| Authentication
 	|===============================================
 	|
