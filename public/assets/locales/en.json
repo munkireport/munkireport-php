@@ -345,6 +345,7 @@
     "systemstatus": {
         "menu_link": "Show System Status"
     },
+    "text": "Text",
     "total_clients": "Total Clients",
     "trackpad": "Trackpad",
     "type": "Type",
