@@ -162,20 +162,6 @@ class unit extends Controller
         $obj->view('json', array('msg' => $out));
     }
 
-    public function admins($which = '')
-    {
-        if ($which) {
-            $data['page'] = 'clients';
-            $data['scripts'] = array("clients/client_list.js");
-            $view = 'admins/'.$which;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-        }
-
-        $obj = new View();
-        $obj->view($view, $data);
-    }
 
     public function listing($which = '')
     {

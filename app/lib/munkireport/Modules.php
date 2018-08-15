@@ -189,19 +189,6 @@ class Modules
      * @param string $name Name of listing
      * @return Object of false
      */
-    public function getAdmins($module, $name)
-    {
-        if(isset($this->moduleList[$module]['admins'])){
-            if( isset($this->moduleList[$module]['admins'][$name]['view'])) {
-                return (object) array(
-                    'view_path' => $this->getPath($module, '/views/'),
-                    'view' => $this->moduleList[$module]['admins'][$name]['view'],
-                );
-            }
-        }
-        return False;
-    }
-
     public function getListing($module, $name)
     {
         if(isset($this->moduleList[$module]['listings'])){
@@ -248,8 +235,8 @@ class Modules
     /**
      * Get data to create dropdown nav
      *
-     * @param string $kind 'reports', 'listings', or 'admins'
-     * @param string $baseUrl 'show/report', 'show/listing', or 'show/admins'
+     * @param string $kind 'reports' or 'listings'
+     * @param string $baseUrl 'show/report' or 'show/listing'
      * @param $page current page url path
      * @return array
      */
@@ -260,63 +247,17 @@ class Modules
             foreach($kindArray as $itemName => $itemData){
                 $i18n = isset($itemData['i18n']) ? $itemData['i18n'] : 'nav.' . $kind . '.' . $itemName;
                 $out[] = (object) array(
-                    'url' => url($baseUrl.'/'.$module.'/'.$itemName),
-                    'name' => $itemName,
-                    'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
-                    'i18n' => $i18n,
-                );
-            }
-        }
-        
-        // Add system level admin tabs
-        if ($kind == "admins"){
-            $out[] = (object) array(
-                'url' => url('/system/show/status'),
-                'i18n' => 'systemstatus.menu_link',
-            );
-            $out[] = (object) array(
-                'url' => url('/system/show/database'),
-                'i18n' => 'system.database.menu_link',
-            );
-//            $out[] = (object) array(
-//                  'url' => url('/module/notification/manage'),
-//                  'i18n' => 'notification.menu_link',
-//            );
-            
-            // Scan for views in the /app/views/admin/ folder to add to the dropdown menu
-            foreach(scandir(conf('view_path').'admin') as $list_url){
-                // Only add php files to the list
-                if( strpos($list_url, 'php')){
-                    $out[] = (object) array(
-                        'url' => url('/admin/show/'.strtok($list_url, '.')),
-                        'i18n' => 'nav.admin.'.strtok($list_url, '.'),
-                    );
-                }
-            }
-        }
-        return $out;
-    }
-
-
-    //  Get admin tabs info
-    public function getAdminsDropdownData($page)
-    {
-        $out = array();
-        foreach( $this->getInfo('admins') as $module => $admins){
-            foreach($admins as $adminInfo){
-                $name = str_replace('_listing', '', $adminInfo['view']);
-                $i18n = isset($adminInfo['i18n']) ? $adminInfo['i18n'] : 'nav.admins.' . $name;
-                $out[] = (object) array(
-                  'url' => url('show/admin/'.$module.'/'.$name),
-                  'name' => $name,
-                  'class' => substr_compare( $page, $name, -strlen( $name ) ) === 0 ? 'active' : '',
+                  'url' => url($baseUrl.'/'.$module.'/'.$itemName),
+                  'name' => $itemName,
+                  'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
                   'i18n' => $i18n,
                 );
             }
         }
-
+        
         return $out;
     }
+
     
     //  Get listings info
     public function getListingDropdownData($page)

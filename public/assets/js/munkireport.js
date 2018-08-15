@@ -7,6 +7,24 @@ $(document).on('appReady', function(e, lang) {
 
     $('html.no-js').removeClass('no-js');
 
+    // addMenuItem({
+    //     menu: 'admin',
+    //     i18n: 'notification.menu_link',
+    //     url: appUrl + '/module/notification/manage'
+    // });
+
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'systemstatus.menu_link',
+        url: appUrl + '/system/show/status'
+    });
+
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'system.database.menu_link',
+        url: appUrl + '/system/show/database'
+    });
+
     // Add list link
     $('list-link').each(function( index ){
         var url = appUrl + $(this).data('url');
@@ -58,7 +76,6 @@ $( document ).ready(function() {
         mr.sortMenu('ul.report');
         mr.sortMenu('ul.listing');
         mr.sortMenu('ul.client-tabs');
-        mr.sortMenu('ul.admin');
 
         // Put summary on top
         $('ul.client-tabs').prepend($('ul.client-tabs a[href="#summary"]').closest('li'));

@@ -130,12 +130,17 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="admin dropdown-menu">
-                        
-                        <?php foreach($modules->getDropdownData('admins', 'show/admins', $page) as $item): ?>
 
-							<li class="<?=$item->class?>">
-							<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
+						<?php foreach(scandir(conf('view_path').'admin') as $list_url): ?>
+
+							<?php if( strpos($list_url, 'php')): ?>
+							<?php $page_url = $url.strtok($list_url, '.'); ?>
+
+							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
+								<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
 							</li>
+
+							<?php endif; ?>
 
 						<?php endforeach; ?>
 
