@@ -47,19 +47,13 @@ class Detectx_model extends \Model
         $len = count($data['infections']);
         $lis = count($data['issues']);
         if ($len > 0) {
-            $this->status = "Infected";
-            foreach ($data['issues'] as $issue) {
-                $this->issues .= ($issue . ";");
-            }
+            $this->infectionstatus = "Infected";
             foreach ($data['infections'] as $infectionname) {
                 $this->numberofissues += 1;
                 $this->infections .= ($infectionname . ";");
             }
         } else if ($lis > 0) {
             $this->status = "Issues";
-            foreach ($data['issues'] as $issue) {
-                $this->issues .= ($issue . ";");
-            }
             foreach ($data['issues'] as $issuesname) {
                 $this->numberofissues += 1;
                 $this->issues .= ($issuesname . ";");
