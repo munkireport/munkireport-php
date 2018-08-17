@@ -18,6 +18,8 @@ $(document).on('appReady', function(){
 
            } else if(d[prop] == 'No Issues Detected'){
                    rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+i18n.t('detectx.listing.noissues')+'</td></tr>';
+           } else if(d[prop] == 'Problems Found'){
+                   rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+i18n.t('detectx.listing.problemsfound')+'</td></tr>';
            } else if(d[prop] == 'Clean'){
                    rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+i18n.t('detectx.listing.clean')+'</td></tr>';
            } else if(prop == 'issues' || prop == 'infections'){
@@ -27,9 +29,9 @@ $(document).on('appReady', function(){
            } else if(prop == 'searchdate'){
                    var date = new Date(d[prop] * 1000);
                    rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td><span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span></td></tr>';
-           } else if ((prop == 'spotlightindexing' || prop == 'registered') && d[prop] == 1){
+           } else if ((prop == 'spotlightindexing' || prop == 'registered' || prop == 'infectionstatus' || prop == 'issuestatus') && d[prop] == 1){
                    rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+i18n.t('detectx.listing.true')+'</td></tr>';
-           } else if ((prop == 'spotlightindexing' || prop == 'registered') && d[prop] == 0){
+           } else if ((prop == 'spotlightindexing' || prop == 'registered' || prop == 'infectionstatus' || prop == 'issuestatus') && d[prop] == 0){
                    rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+i18n.t('detectx.listing.false')+'</td></tr>';
            } else{
                    rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+d[prop]+'</td></tr>';

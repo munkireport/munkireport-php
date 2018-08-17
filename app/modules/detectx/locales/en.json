@@ -5,13 +5,16 @@
     "status": "Status",
     "issues":"Issues",
     "noissues": "No Issues Found!",
+    "problemsfound": "Problems Found!",
     "clean":"Clean",
     "true":"True",
     "false":"False",
     "scantime": "Scan Duration",
     "spotlightindexing": "Spotlight Indexing",
     "infections": "Infections",
-    "registered": "Registered"
+    "registered": "Registered",
+    "infectionstatus": "Infected",
+    "issuestatus": "Issues"
   },
   "widget": {
     "title": "DetectX Status",
