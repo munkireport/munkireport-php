@@ -116,9 +116,9 @@ new Laps_model;
 	        	// days_till_expiration
 	        	var days_till_expiration=$('td:eq(6)', nRow).html();
 	        	if(days_till_expiration == "") {
-                                $('td:eq(6)', nRow).html('');
+                    $('td:eq(6)', nRow).html('');
 	        	} else{				 
-                                $('td:eq(6)', nRow).html(days_till_expiration+" "+i18n.t('date.day_plural'));
+                    $('td:eq(6)', nRow).html(days_till_expiration+" "+i18n.t('date.day_plural'));
 	        	}
                 
 	        	// alpha_numeric_only

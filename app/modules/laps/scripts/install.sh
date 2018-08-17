@@ -21,5 +21,3 @@ else
 	# Signal that we had an error
 	ERR=1
 fi
-
-

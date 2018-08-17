@@ -7,4 +7,7 @@ return array(
     'listings' => array(
         'laps' => array('view' => 'laps_listing', 'i18n' => 'laps.laps'),
     ),
+    'admins' => array(
+        'laps' => array('view' => 'laps_admin', 'i18n' => 'laps.admin'),
+    ),
 );
