@@ -18,8 +18,6 @@ $(document).on('appReady', function(){
 
            } else if(d[prop] == 'No Issues Detected'){
                    rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+i18n.t('detectx.listing.noissues')+'</td></tr>';
-           } else if(d[prop] == 'Problems Found'){
-                   rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+i18n.t('detectx.listing.problemsfound')+'</td></tr>';
            } else if(d[prop] == 'Clean'){
                    rows = rows + '<tr><th>'+i18n.t('detectx.listing.'+prop)+'</th><td>'+i18n.t('detectx.listing.clean')+'</td></tr>';
            } else if(prop == 'issues' || prop == 'infections'){
