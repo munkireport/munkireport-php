@@ -282,6 +282,10 @@ class Modules
 //                  'url' => url('/module/notification/manage'),
 //                  'i18n' => 'notification.menu_link',
 //            );
+//            $out[] = (object) array(
+//                  'url' => url('/system/show/widget_gallery'),
+//                  'i18n' => 'widget.gallery',
+            );
             
             // Scan for views in the /app/views/admin/ folder to add to the dropdown menu
             foreach(scandir(conf('view_path').'admin') as $list_url){
