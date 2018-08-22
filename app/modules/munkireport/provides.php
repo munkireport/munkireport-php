@@ -8,9 +8,9 @@ return array(
         'munki' => array('view' => 'munki_listing', 'i18n' => 'munkireport.munki'),
     ),
     'widgets' => array(
-        'manifests' => array('view' => 'manifests_widget'),
-        'munki_versions' => array('view' => 'munki_versions_widget'),
-        'munki' => array('view' => 'munki_widget'),
+        'manifests' => array('view' => 'manifests_widget', 'icon' => 'fa-book'),
+        'munki_versions' => array('view' => 'munki_versions_widget', 'icon' => 'fa-sitemap'),
+        'munki' => array('view' => 'munki_widget', 'icon' => 'fa-smile-o'),
     ),
     'reports' => array(
         'munki' => array('view' => 'munki', 'i18n' => 'munkireport.managedsoftware'),

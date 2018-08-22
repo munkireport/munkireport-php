@@ -8,8 +8,8 @@ return array(
         'certificate' => array('view' => 'certificate_listing', 'i18n' => 'certificate.title'),
     ),
     'widgets' => array(
-        'certificate' => array('view' => 'certificate_widget'),
-        'certificate_group' => array('view' => 'certificate_group_widget'),
+        'certificate' => array('view' => 'certificate_widget', 'icon' => 'fa-certificate'),
+        'certificate_group' => array('view' => 'certificate_group_widget', 'icon' => 'fa-certificate'),
     ),
     'reports' => array(
         'certificate' => array('view' => 'certificate_report', 'i18n' => 'certificate.report_title'),

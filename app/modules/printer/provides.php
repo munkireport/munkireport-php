@@ -8,7 +8,7 @@ return array(
         'printers' => array('view' => 'printers_listing', 'i18n' => 'printer.printers'),
     ),
     'widgets' => array(
-        'printer' => array('view' => 'printer_widget'),
+        'printer' => array('view' => 'printer_widget', 'icon' => 'fa-print'),
     ),
     'reports' => array(
         'printer' => array('view' => 'printer_report', 'i18n' => 'printer.report'),

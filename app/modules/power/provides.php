@@ -10,8 +10,8 @@ return array(
         'power' => array('view' => 'power_listing', 'i18n' => 'power.power'),
     ),
     'widgets' => array(
-        'power_battery_condition' => array('view' => 'power_battery_condition_widget'),
-        'power_battery_health' => array('view' => 'power_battery_health_widget'),
+        'power_battery_condition' => array('view' => 'power_battery_condition_widget', 'icon' => 'fa-bolt'),
+        'power_battery_health' => array('view' => 'power_battery_health_widget', 'icon' => 'fa-medkit'),
     ),
     'reports' => array(
         'power' => array('view' => 'power', 'i18n' => 'power.report'),

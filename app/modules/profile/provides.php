@@ -8,7 +8,7 @@ return array(
         'profile' => array('view' => 'profile_listing', 'i18n' => 'profile.profile'),
     ),
     'widgets' => array(
-        'profile_group' => array('view' => 'profile_group_widget'),
+        'profile_group' => array('view' => 'profile_group_widget', 'icon' => 'fa-group'),
     ),
     'reports' => array(
         'profile' => array('view' => 'profile_report', 'i18n' => 'profile.report'),

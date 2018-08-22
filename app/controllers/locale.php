@@ -30,8 +30,13 @@ class Locale extends Controller
      *
      * @param string $lang Locale definition, defaults to 'en'
      */
-    public function get($lang = 'en')
+    public function get($lang = 'en', $loadAll = False)
     {
+        // Check if we should load all modules' locales
+        if($loadAll){
+            $this->modules = getMrModuleObj()->loadInfo(True);
+        }
+        
         $locales = array(
             'messages' => '{}',
             'fallback_main' => '{}',

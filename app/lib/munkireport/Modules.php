@@ -278,6 +278,65 @@ class Modules
 
         return $out;
     }
+    
+    /**
+     * Returns all widgets for widget gallery
+     *
+     * @author tuxudo
+     */
+    public function getWidgets()
+    {
+        // Get array of all enabled widgets
+        $widget_array = [];
+        foreach(conf('dashboard_layout') as $widgetRow){
+            foreach($widgetRow as $singleWidget){
+                array_push($widget_array, $singleWidget."_widget");
+            }
+        }
+        
+        // Get list of all the modules that contain a widget
+        $out = array();
+        foreach ($this->moduleList as $module => $moduleInfo) {
+            if(array_key_exists('widgets', $moduleInfo)){
+                $out[$module] = $moduleInfo['widgets'];
+            }
+        }
+           
+        // Generate list for widget gallery
+        foreach( $out as $module => $widgets){
+            foreach($widgets as $id => $info){
+                // Check if widget is enabled
+                if (in_array($info['view'], $widget_array)){
+                    $widget_enabled = '<span class="label label-success" data-i18n="yes"></span>';
+                } else {
+                    $widget_enabled = '<span class="label label-danger" data-i18n="no"></span>';
+                }
+                
+                // Check if widget's module is active
+                if (in_array($module, conf('modules'))){
+                    $module_active = '<span class="label label-success" data-i18n="yes"></span>';
+                } else {
+                    $module_active = '<span class="label label-danger" data-i18n="no"></span>';
+                }
+                
+                // Found a widget, add it to widgetList
+                $this->widgetList[$id] = (object) array(
+                    'widget_file' => str_replace(array(APP_ROOT,"//"),array('','/'),$this->getPath($module, '/views/')),
+                    'name' => $info['view'],
+                    'path' => $this->getPath($module, '/views/'),
+                    'module' => $module,
+                    'vars' => $vars,
+                    'enabled' => $widget_enabled,
+                    'active' => $module_active,
+                    'icon' => $info['icon'],
+                );
+            }
+        }
+        
+        // Sort the widgets by widget name
+        usort($this->widgetList, array($this, "sort_widgets"));
+        return $this->widgetList;
+    }
 
     public function getModuleLocales($lang='en')
     {
@@ -291,6 +350,11 @@ class Modules
         return '{'.implode(",\n", $localeList).'}';
     }
 
+    // Sort widgets
+    private function sort_widgets($a, $b)
+    {
+        return strcmp($a->name, $b->name);
+    }
 
     private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
     {

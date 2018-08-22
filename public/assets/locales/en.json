@@ -365,6 +365,12 @@
     "warning": "Warning",
     "warning_plural": "Warnings",
     "widget": {
+        "config_name": "Config Entry",
+        "file_name": "Filename",
+        "gallery": "Widget Gallery",
+        "module": "Module",
+        "module_active": "Module Active",
+        "path": "Path",
         "unknown": {
             "alert": "This widget cannot be found",
             "title": "Unknown widget"

@@ -3,6 +3,7 @@ namespace munkireport\controller;
 
 use \Controller, \View;
 use munkireport\lib\Database;
+use munkireport\lib\Widgets;
 
 class system extends Controller
 {
@@ -127,6 +128,10 @@ class system extends Controller
                 $data['page'] = 'clients';
                 $data['scripts'] = array("clients/client_list.js");
                 $view = 'system/status';
+                break;
+            case 'widget_gallery':
+                $data['widget'] = new Widgets();
+                $view = 'system/widget_gallery';
                 break;
             case 'database':
                 $data['page'] = 'clients';

@@ -8,9 +8,9 @@ return array(
         'extensions' => array('view' => 'extensions_listing', 'i18n' => 'extensions.clienttab'),
     ),
     'widgets' => array(
-        'extensions' => array('view' => 'extensions_widget'),
-        'extensions_developer' => array('view' => 'extensions_developer_widget'),
-        'extensions_teamid' => array('view' => 'extensions_teamid_widget'),       
+        'extensions' => array('view' => 'extensions_widget', 'icon' => 'fa-puzzle-piece'),
+        'extensions_developer' => array('view' => 'extensions_developer_widget', 'icon' => 'fa-puzzle-piece'),
+        'extensions_teamid' => array('view' => 'extensions_teamid_widget', 'icon' => 'fa-puzzle-piece'),       
     ),
     'reports' => array(
         'extensions' => array('view' => 'extensions_report', 'i18n' => 'extensions.report'),
