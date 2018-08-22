@@ -678,7 +678,9 @@
 	|===============================================
 	|
 	| Dashboard layout is an array of rows that contain
-	| an array of widgets. Omit the _widget postfix
+	| an array of widgets. Omit the _widget postfix. You can 
+	| view a preview of all available widgets by visiting
+	| the Widget Gallery found in the Admin drop down menu.
 	|
 	| Up to three small horizontal widgets will show on one line
 	|
@@ -691,52 +693,51 @@
 	| This is a list of the current dashboard widgets
 	|
 	| Small horizontal widgets:
-        |       bound_to_ds
-        |       client (two items)
-        |       disk_report
-        |       external_displays_count
-        |       firmwarepw
-        |       gatekeeper
-        |       hardware_model
-        |       installed memory
-        |       localadmin
-        |       munki
-        |       power_battery_condition
-        |       power_battery_health
-        |       sip
-        |       smart_status
-        |       uptime
-        |       wifi_state
-        |       	|
+    |       bound_to_ds
+    |       client (two items)
+    |       disk_report
+    |       external_displays_count
+    |       firmwarepw
+    |       gatekeeper
+    |       hardware_model
+    |       installed memory
+    |       localadmin
+    |       munki
+    |       power_battery_condition
+    |       power_battery_health
+    |       sip
+    |       smart_status
+    |       uptime
+    |       wifi_state
+    |
+    |
 	| Small horizontal / medium vertical widgets:
-	|	network_location
+	|       network_location
 	|
 	| Small horizontal / dynamic vertical widgets:
-	|	app
-	|	duplicated_computernames
-	|	filevault
-	|	hardware_model
-	|	manifests
-	|	modified_computernames
-	|	munki_versions
-	|	new_clients
-	|	pending
-	|	pending_munki
-	|	pending_apple
-	|	warranty
-	|
-	| Medium horizontal widgets:
+	|       app
+	|       duplicated_computernames
+	|       filevault
+	|       hardware_model
+	|       manifests
+	|       modified_computernames
+	|       munki_versions
+	|       new_clients
+	|       pending
+	|       pending_munki
+	|       pending_apple
+	|       warranty
 	|
 	| Medium horizontal / dynamic vertical widgets:
-	|	hardware_age
-	|	hardware_model
-	|	memory
-	|	os
-	|	printer
+	|       hardware_age
+	|       hardware_model
+	|       memory
+	|       os
+	|       printer
 	|
 	| Responsive horizontal widgets:
-	|	network_vlan
-	|	registered clients
+	|       network_vlan
+	|       registered clients
 	*/
 	$conf['dashboard_layout'] = [
 		['client', 'messages'],
