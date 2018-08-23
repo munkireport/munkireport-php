@@ -132,7 +132,6 @@
         "driver": "Driver",
         "writable": "Writable",
         "size": "Size"
-
     },
     "delete": "Delete",
     "description": "Description",
