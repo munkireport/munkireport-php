@@ -11,7 +11,9 @@
     "scantime": "Scan Duration",
     "spotlightindexing": "Spotlight Indexing",
     "infections": "Infections",
-    "registered": "Registered"
+    "registered": "Registered",
+    "infectionstatus": "Infected",
+    "issuestatus": "Issues"
   },
   "widget": {
     "title": "DetectX Status",

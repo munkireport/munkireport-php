@@ -17,9 +17,10 @@ class Detectx extends Migration
             $table->integer('scantime');
             $table->boolean('spotlightindexing');
             $table->boolean('registered');
+            $table->boolean('infectionstatus');
+            $table->boolean('issuestatus');
             $table->text('infections');
             $table->text('issues');
-
 
             $table->index('numberofissues');
             $table->index('searchdate');
