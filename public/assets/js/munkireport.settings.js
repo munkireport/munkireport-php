@@ -236,10 +236,10 @@ var mr = {
             	var an = $(a).find('a').text(),
             		bn = $(b).find('a').text();
 
-            	if(an > bn) {
+            	if(an.toLowerCase() > bn.toLowerCase()) {
             		return 1;
             	}
-            	if(an < bn) {
+            	if(an.toLowerCase() < bn.toLowerCase()) {
             		return -1;
             	}
             	return 0;
