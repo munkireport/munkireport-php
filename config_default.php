@@ -712,6 +712,7 @@
 	|	network_location
 	|
 	| Small horizontal / dynamic vertical widgets:
+	|	32_bit_apps
 	|	app
 	|	duplicated_computernames
 	|	filevault
