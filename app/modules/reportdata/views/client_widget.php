@@ -24,7 +24,7 @@ $(document).on('appReady', function() {
 	// Add tooltip
     var inactive_days = "<?php echo conf('days_inactive'); ?>";
 	$('#client-widget>div.panel-heading')
-		.attr('title', (i18n.t('client.panel_title_custom')+" "+inactive_days+" "+i18n.t('date.day_plural')))
+		.attr('title', (i18n.t('client.panel_title')+" "+inactive_days+" "+i18n.t('date.day_plural')))
 		.tooltip();
 
 	var active = i18n.t('active'),
