@@ -21,6 +21,7 @@ new Detectx_model;
             <th data-i18n="detectx.listing.searchdate" data-colname='detectx.searchdate'></th>
             <th data-i18n="detectx.listing.status" data-colname='detectx.status'></th>
             <th data-i18n="detectx.listing.numberofissues" data-colname='detectx.numberofissues'></th>
+            <th data-i18n="username" data-colname='reportdata.long_username'></th>
           </tr>
         </thead>
 
