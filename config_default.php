@@ -111,7 +111,7 @@
 	| Default Theme
 	|===============================================
 	|
-	| Sets the default theme for new logins/users. May need to clear cache on existing logins
+	| Sets the default theme for new logins/users.
 	|
 	*/
 	$conf['default_theme'] = getenv_default('DEFAULT_THEME', 'Default');
