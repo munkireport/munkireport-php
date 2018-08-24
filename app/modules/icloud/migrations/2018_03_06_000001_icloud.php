@@ -13,7 +13,7 @@ class Icloud extends Migration
             $table->string('serial_number');
             $table->string('account_alternate_dsid')->nullable();
             $table->string('account_description')->nullable();
-            $table->integer('account_dsid')->nullable();
+            $table->bigInteger('account_dsid')->nullable();
             $table->string('account_id')->nullable();
             $table->string('account_uuid')->nullable();
             $table->boolean('back_to_my_mac_enabled')->nullable();
