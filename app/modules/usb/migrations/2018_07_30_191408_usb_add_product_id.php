@@ -13,7 +13,7 @@ class UsbAddProductId extends Migration
         $capsule::schema()->table($this->tableName, function (Blueprint $table) {
           $table->string('product_id')->nullable();
 
-          $table->index('product_id', 'product_id_index');
+          $table->index('product_id');
         });
     }
 
