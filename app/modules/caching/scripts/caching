@@ -40,7 +40,20 @@ else
     # Get epoch date
     DATE=$(date +%s)
     
+    if [[ -f '/Library/Application Support/Apple/AssetCache/Metrics/Metrics.db' ]] ; then
+        # Exact Metrics, only available on 10.13.4 and higher
+        EXACT_METRICS=$(/usr/bin/sqlite3 "/Library/Application Support/Apple/AssetCache/Metrics/Metrics.db" <<!
+.headers off
+.mode csv
+SELECT ZCREATIONDATE AS collectiondateepoch, ZREQUESTSFROMPEER AS requestsfrompeers, ZREQUESTSFROMCLIENT AS requestsfromclients, ZBYTESPURGEDYOUNGERTHAN1DAY AS bytespurgedyoungerthan1day, ZBYTESPURGEDYOUNGERTHAN7DAYS AS bytespurgedyoungerthan7days, ZBYTESPURGEDYOUNGERTHAN30DAYS AS bytespurgedyoungerthan30days, ZBYTESPURGEDTOTAL AS bytespurgedtotal, ZBYTESFROMPEERTOCLIENT AS bytesfrompeerstoclients, ZBYTESFROMORIGINTOPEER AS bytesfromorigintopeers, ZBYTESFROMORIGINTOCLIENT AS bytesfromorigintoclients, ZBYTESFROMCACHETOPEER AS bytesfromcachetopeers, ZBYTESFROMCACHETOCLIENT AS bytesfromcachetoclients, ZBYTESDROPPED AS bytesdropped, ZREPLIESFROMPEERTOCLIENT AS repliesfrompeerstoclients, ZREPLIESFROMORIGINTOPEER AS repliesfromorigintopeers, ZREPLIESFROMORIGINTOCLIENT AS repliesfromorigintoclients, ZREPLIESFROMCACHETOPEER AS repliesfromcachetopeers, ZREPLIESFROMCACHETOCLIENT AS repliesfromcachetoclients, ZBYTESIMPORTEDBYXPC AS bytesimportedbyxpc, ZBYTESIMPORTEDBYHTTP AS bytesimportedbyhttp, ZIMPORTSBYXPC AS importsbyxpc, ZIMPORTSBYHTTP AS importsbyhttp FROM ZMETRIC;
+!)
+        # Clean up returns to prevent JSON from complaining
+        EXACT_METRICS='"'$(echo "${EXACT_METRICS}" | tr '\r\n' _)'"'
+    else
+        EXACT_METRICS='""'
+    fi
+        
     # Write the two JSON file to disk after merging them and include the datestamp
-    echo "${CACHINGOUTPUT//\}\}]{\"results\":\{/,\"rundate\":$DATE,}" > /usr/local/munki/preflight.d/cache/caching.txt
+    echo "${CACHINGOUTPUT//\}\}]{\"results\":\{/,\"rundate\":$DATE,\"exact_metrics\":${EXACT_METRICS},}" > /usr/local/munki/preflight.d/cache/caching.txt
 
 fi

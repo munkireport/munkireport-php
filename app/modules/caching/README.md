@@ -7,7 +7,7 @@ Get status of macOS' caching service.
 
 ##Config Options
 
-Because of the drastic change in how the caching data is stored between 10.8-10.12 and 10.13+, the listing was completely rewritten. The older, itemized listing is still available under the "Caching (Legacy)" listing. To hide the older Legacy listing, set the config option "caching_show_legacy" to FALSE.
+Because of the drastic change in how the caching data is stored between 10.8-10.12 and 10.13+, the listing was completely rewritten. The older, itemized listing is still available under the "Caching Itemized" listing. To hide the Itemized listing, set the config option "caching_show_itemized" to FALSE.
 
  
 ## Database Columns
@@ -41,7 +41,7 @@ The results are stored in the table:
 * importsbyxpc - Number of XPC imports
 * importsbyhttp - Number of HTTPS imports
 
-###The above columns are used by 10.8-10.12 clients.
+###The above columns are used by 10.8-10.12 and 10.13.4+ clients.
 
 ###The following columns are used by 10.13+ clients.
 

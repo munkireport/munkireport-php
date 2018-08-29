@@ -1,6 +1,6 @@
 <?php
 
-if (!conf('caching_show_legacy')) {
+if (!conf('caching_show_itemized')) {
 
     return array(
         'client_tabs' => array(

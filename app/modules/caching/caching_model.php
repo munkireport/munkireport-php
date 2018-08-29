@@ -8,7 +8,7 @@ class Caching_model extends \Model
         $this->rs['serial_number'] = $serial;
         $this->rs['collectiondate'] = ""; // Date when data was written
         $this->rs['expirationdate'] = ""; // Date when data will expire
-        $this->rs['collectiondateepoch'] = 0; // Date when data was written, in UNIX time
+        $this->rs['collectiondateepoch'] = 0; // Date when data was written, in UNIX time // Here down also used by 10.13.4+
         $this->rs['requestsfrompeers'] = 0;
         $this->rs['requestsfromclients'] = 0;
         $this->rs['bytespurgedyoungerthan1day'] = 0;
@@ -29,7 +29,7 @@ class Caching_model extends \Model
         $this->rs['bytesimportedbyxpc'] = 0;
         $this->rs['bytesimportedbyhttp'] = 0;
         $this->rs['importsbyxpc'] = 0;
-        $this->rs['importsbyhttp'] = 0;
+        $this->rs['importsbyhttp'] = 0; // Here up also used by 10.13.4+
         $this->rs['activated'] = 0; // Start of High Sierra columns
         $this->rs['active'] = 0;
         $this->rs['cachestatus'] = "";
@@ -71,7 +71,7 @@ class Caching_model extends \Model
     // ------------------------------------------------------------------------
     
     /**
-     * Get reability IP address for widget
+     * Get reachability IP address for widget
      *
      **/
     public function get_reachable_cache_name()
@@ -103,7 +103,8 @@ class Caching_model extends \Model
     {
         // If data is empty, throw error
         if (! $data) {
-            //throw new Exception("Error Processing Caching Module Request: No data found", 1);
+            // Throw error if no data
+            print_r("Error Processing Caching Module Request: No data found");
         } else if (substr( $data, 0, 26 ) != '[{"name":"status","result"' ) { // Else if old style text, process with old text based handler
             
             // Delete previous entries
@@ -112,7 +113,8 @@ class Caching_model extends \Model
             $cache_array = array();
             $i=1;
             $c=21;
-
+            $pastEight = (time()-691200);
+            
             // Parse data
             foreach(explode("\n", $data) as $line) {
                 $cache_line = explode("|", $line);
@@ -122,21 +124,26 @@ class Caching_model extends \Model
                       $i++;
                     
                     if ( $i == 22 ) {
+                        // Check if data is from the past 8 one days
+                        if ($cache_line[1] > $pastEight){
+                            $dt = new DateTime("@$cache_line[1]");
+                            $cache_array['collectiondate'] = ($dt->format('Y-m-d H:i:s'));
+                            $dt = new DateTime("@$cache_line[2]");
+                            $cache_array['expirationdate'] = ($dt->format('Y-m-d H:i:s')); 
+                            $cache_array['collectiondateepoch'] = $cache_line[1]; 
 
-                          $dt = new DateTime("@$cache_line[1]");
-                          $cache_array['collectiondate'] = ($dt->format('Y-m-d H:i:s'));
-                          $dt = new DateTime("@$cache_line[2]");
-                          $cache_array['expirationdate'] = ($dt->format('Y-m-d H:i:s')); 
-                          $cache_array['collectiondateepoch'] = $cache_line[1]; 
+                            foreach($cache_array as $cache_item => $item) {
+                                $this->$cache_item = $cache_array[$cache_item]; 
+                            }
 
-                          foreach($cache_array as $cache_item => $item) {
-                            $this->$cache_item = $cache_array[$cache_item]; 
-                          }
-
-                        // Save the entry
-                        $this->id = '';
-                        $this->create(); 
-                        $i=1;
+                            // Save the entry                            
+                            $this->id = '';
+                            $this->create(); 
+                            $i=1;
+                        } else {
+                            // If data is older than 31 days, skip it
+                            $i=1; 
+                        }
                     }
                 }
             } // End foreach explode lines
@@ -242,9 +249,107 @@ class Caching_model extends \Model
                 }
             }
             
+            if($cachingjson[0]["result"]['exact_metrics']){
+                $this->expirationdate = -1;
+            }
+            
             // Save it, like that cake you just dropped onto the floor after pulling it out of the oven. Yea, I saw that
             $this->id = '';
             $this->create(); 
+            
+            // Process exact_metrics, if it exists
+            if($cachingjson[0]["result"]['exact_metrics']){
+                $pastThirtyone = (time()-2678400);
+                // Split entries into array
+                $exact_array = explode("__", $cachingjson[0]["result"]['exact_metrics']);
+                // Process each entry
+                foreach($exact_array as $metric){
+                    // Make sure entry isn't empty
+                    if (! empty($metric)) {
+                        // Split entry 
+                        $metric_array = explode(",",$metric);
+                        
+                        // Format collection date epoch
+                        $metric_array[0] = (round(explode(".",$metric_array[0])[0])+978307200);
+                        
+                        // Only save data if it is less than 31 days old
+                        if ($metric_array[0] > $pastThirtyone){
+                            // Assign data to columns from metric_array
+                            $this->collectiondateepoch = $metric_array[0];
+                            $this->requestsfrompeers = $metric_array[1];
+                            $this->requestsfromclients = $metric_array[2];
+                            $this->bytespurgedyoungerthan1day = $metric_array[3];
+                            $this->bytespurgedyoungerthan7days = $metric_array[4];
+                            $this->bytespurgedyoungerthan30days = $metric_array[5];
+                            $this->bytespurgedtota = $metric_array[6];
+                            $this->bytesfrompeerstoclients = $metric_array[7];
+                            $this->bytesfromorigintopeers = $metric_array[8];
+                            $this->bytesfromorigintoclients = $metric_array[9];
+                            $this->bytesfromcachetopeers = $metric_array[10];
+                            $this->bytesfromcachetoclients =$metric_array[11];
+                            $this->bytesdropped = $metric_array[12];
+                            $this->repliesfrompeerstoclients = $metric_array[13];
+                            $this->repliesfromorigintopeers = $metric_array[14];
+                            $this->repliesfromorigintoclients = $metric_array[15];
+                            $this->repliesfromcachetopeers = $metric_array[16];
+                            $this->repliesfromcachetoclients = $metric_array[17];
+                            $this->bytesimportedbyxpc = $metric_array[17];
+                            $this->bytesimportedbyhttp = $metric_array[17];
+                            $this->importsbyxpc = $metric_array[18];
+                            $this->importsbyhttp = $metric_array[19];
+
+                            // null out the rest of the columns because we don't need duplicate data
+                            $this->activated = null;
+                            $this->active = null;
+                            $this->cachestatus = null;
+                            $this->appletvsoftware = null;
+                            $this->macsoftware = null;
+                            $this->iclouddata = null;
+                            $this->iossoftware = null;
+                            $this->booksdata = null;
+                            $this->itunesudata = null;
+                            $this->moviesdata = null;
+                            $this->musicdata = null;
+                            $this->otherdata = null;
+                            $this->cachefree = null;
+                            $this->cachelimit = null;
+                            $this->cacheused = null;
+                            $this->personalcachefree = null;
+                            $this->personalcachelimit = null;
+                            $this->personalcacheused = null;
+                            $this->port = null;
+                            $this->publicaddress = null;
+                            $this->privateaddresses = null;
+                            $this->registrationstatus = null;
+                            $this->registrationerror = null;
+                            $this->registrationresponsecode = null;
+                            $this->restrictedmedia = null;
+                            $this->serverguid = null;
+                            $this->startupstatus = null;
+                            $this->totalbytesdropped = null;
+                            $this->totalbytesimported = null;
+                            $this->totalbytesreturnedtochildren = null;
+                            $this->totalbytesreturnedtoclients = null;
+                            $this->totalbytesreturnedtopeers = null;
+                            $this->totalbytesstoredfromorigin = null;
+                            $this->totalbytesstoredfromparents = null;
+                            $this->totalbytesstoredfrompeers = null;
+                            $this->reachability = null;
+
+                            // Format the date
+                            $dt = new DateTime("@$metric_array[0]");
+                            $this->collectiondate = ($dt->format('Y-m-d H:i:s'));
+                            $expireationdate = $metric_array[0]+604800;
+                            $dt = new DateTime("@$expireationdate");
+                            $this->expirationdate = ($dt->format('Y-m-d H:i:s'));
+
+                            // Save the metric, because we want that data. Mmmmm data, tastes like floor cake
+                            $this->id = '';
+                            $this->create();
+                        }
+                    }
+                }
+            }
         }
     } // End process()
 }

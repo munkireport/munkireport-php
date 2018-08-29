@@ -396,16 +396,15 @@
 
 	/*
 	|===============================================
-	| Legacy Caching Listing
+	| Itemized Caching Listing
 	|===============================================
 	|
-	| Starting with 10.13, Apple changed the caching server. In MunkiReport,
-	| you can hide the legacy caching server listing that shows an itemized
-	| listing for all caching server transactions for caching servers running
-	| 10.8-10.12. To hide the "Caching (Legacy)" listing, set this to FALSE.
+	| You can hide the itemized caching server listing that shows an itemized
+	| listing for all caching server transactions.
+	| To hide the "Caching Itemized" listing, set this to FALSE.
 	|
 	*/
-	$conf['caching_show_legacy'] = TRUE;
+	$conf['caching_show_itemized'] = TRUE;
 
 	/*
 	|===============================================
