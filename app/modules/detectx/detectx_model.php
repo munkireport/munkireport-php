@@ -13,6 +13,8 @@ class Detectx_model extends \Model
         $this->rs['scantime'] = 0;
         $this->rs['spotlightindexing'] = true;
         $this->rs['registered'] = true;
+        $this->rs['infectionstatus'] = false;
+        $this->rs['issuestatus'] = false;
         $this->rs['infections'] = '';
         $this->rs['issues'] = '';
 
@@ -47,19 +49,15 @@ class Detectx_model extends \Model
         $len = count($data['infections']);
         $lis = count($data['issues']);
         if ($len > 0) {
-            $this->status = "Infected";
-            foreach ($data['issues'] as $issue) {
-                $this->issues .= ($issue . ";");
-            }
+            $this->infectionstatus = true;
+            $this->status = "Infections";
             foreach ($data['infections'] as $infectionname) {
                 $this->numberofissues += 1;
                 $this->infections .= ($infectionname . ";");
             }
         } else if ($lis > 0) {
+            $this->issuestatus = true;
             $this->status = "Issues";
-            foreach ($data['issues'] as $issue) {
-                $this->issues .= ($issue . ";");
-            }
             foreach ($data['issues'] as $issuesname) {
                 $this->numberofissues += 1;
                 $this->issues .= ($issuesname . ";");

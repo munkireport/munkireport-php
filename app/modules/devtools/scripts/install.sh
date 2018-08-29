@@ -13,7 +13,7 @@ if [ $? = 0 ]; then
     
 	# Touch the cache file to prevent errors
 	mkdir -p "${MUNKIPATH}preflight.d/cache"
-	touch "${MUNKIPATH}preflight.d/cache/homebrew_info.json"
+	touch "${MUNKIPATH}preflight.d/cache/devtools.plist"
 
 	# Set preference to include this file in the preflight check
 	setreportpref "devtools" "${CACHEPATH}devtools.plist"
