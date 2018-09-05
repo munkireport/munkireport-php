@@ -56,7 +56,8 @@ class Caching_controller extends Module_controller
         $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
-        }
+            return;
+    }
 
         $queryobj = new Caching_model();
         
@@ -239,6 +240,7 @@ class Caching_controller extends Module_controller
         $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
         
         $cachingdata = new Caching_model();
@@ -318,6 +320,7 @@ class Caching_controller extends Module_controller
         $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $queryobj = new Caching_model();
@@ -344,6 +347,7 @@ class Caching_controller extends Module_controller
         $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $queryobj = new Caching_model();
@@ -370,6 +374,7 @@ class Caching_controller extends Module_controller
         $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $queryobj = new Caching_model();
@@ -396,6 +401,7 @@ class Caching_controller extends Module_controller
         $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $queryobj = new Caching_model();
@@ -422,6 +428,7 @@ class Caching_controller extends Module_controller
         $obj = new View();
         if (! $this->authorized()) {
             $obj->view('json', array('msg' => 'Not authorized'));
+            return;
         }
 
         $queryobj = new Caching_model();
