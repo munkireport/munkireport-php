@@ -49,7 +49,7 @@ def main():
 
             # recombine file path since it split at spaces
             for items in mylist:
-                items[3:] = [''.join(items[3:])]
+                items[3:] = [' '.join(items[3:])]
 
             sub_q_dict = {}
         #iterate thru the list of lists

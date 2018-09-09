@@ -132,7 +132,6 @@
         "driver": "Driver",
         "writable": "Writable",
         "size": "Size"
-
     },
     "delete": "Delete",
     "description": "Description",
@@ -345,6 +344,7 @@
     "systemstatus": {
         "menu_link": "Show System Status"
     },
+    "text": "Text",
     "total_clients": "Total Clients",
     "trackpad": "Trackpad",
     "type": "Type",

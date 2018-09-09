@@ -327,7 +327,7 @@ $(document).on('appReady', function(e, lang) {
 				$('#ard-data')
 					.append($('<tr>')
 						.append($('<th>')
-							.text(index))
+							.text(index.replace("text","ARD "+i18n.t("text")+" ")))
 						.append($('<td>')
 							.text(item)));
 			}

@@ -214,7 +214,7 @@ var mr = {
 
         loadTheme: function() {
             // Get global state
-            var theme = mr.getPref('theme') || 'Default';
+            var theme = mr.getPref('theme') || default_theme;
             var theme_dir = baseUrl + 'assets/themes/' + theme + '/';
             var theme_file = theme_dir + 'bootstrap.min.css';
             $('#bootstrap-stylesheet').attr('href', theme_dir + 'bootstrap.min.css');
@@ -236,10 +236,10 @@ var mr = {
             	var an = $(a).find('a').text(),
             		bn = $(b).find('a').text();
 
-            	if(an > bn) {
+            	if(an.toLowerCase() > bn.toLowerCase()) {
             		return 1;
             	}
-            	if(an < bn) {
+            	if(an.toLowerCase() < bn.toLowerCase()) {
             		return -1;
             	}
             	return 0;
