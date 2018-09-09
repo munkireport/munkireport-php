@@ -29,23 +29,29 @@
 		  </tr>
 		</thead>
 
-		<tbody>
-	<?php $profile_item_obj = new Profile_model();
-    $sql = 'profile_name, COUNT(DISTINCT serial_number) AS num_profiles, payload_name, GROUP_CONCAT(DISTINCT payload_data) as payload_data';
-    $where = '1 GROUP BY profile_name, payload_name';
-	$items = $profile_item_obj->select($sql, $where);
-	$profile = array();
-	$profilecount = array();
-	$payloaddata = array();
-	foreach($items as $item)
-	{
-		$name = $item['profile_name'];
-		$version = $item['payload_name'];
-		$profiles = $item['num_profiles'];
-		$profile[$name][$version] = $profiles;
-		$payloaddata[$name][$version] = $profile_item_obj->json_to_html($item['payload_data']);
-		$profilecount[$name] = $profiles;
-	}
+        <tbody>
+        <?php $profile_item_obj = new Profile_model();
+        $sql = "SELECT profile_name, COUNT(DISTINCT serial_number) AS num_profiles, payload_name, GROUP_CONCAT(DISTINCT payload_data) as payload_data
+						FROM profile
+						LEFT JOIN machine USING (serial_number)
+						LEFT JOIN reportdata USING (serial_number)
+						".get_machine_group_filter()."
+						GROUP BY profile_name, payload_name";
+                 
+        $items = $profile_item_obj->query($sql);
+        $items = json_decode(json_encode($items), true);
+        $profile = array();
+        $profilecount = array();
+        $payloaddata = array();
+        foreach($items as $item)
+        {
+            $name = $item['profile_name'];
+            $version = $item['payload_name'];
+            $profiles = $item['num_profiles'];
+            $profile[$name][$version] = $profiles;
+            $payloaddata[$name][$version] = $profile_item_obj->json_to_html($item['payload_data']);
+            $profilecount[$name] = $profiles;
+        }
 	?>
 
 	<?php foreach($profile as $name => $value): ?>
