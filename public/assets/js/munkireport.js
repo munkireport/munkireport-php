@@ -63,7 +63,7 @@ $( document ).ready(function() {
    // Detect Widget Gallery
    try {
        var url_string = location.search;
-   } catch {
+   } catch(err) {
        var url_string = "/";
    }
 
