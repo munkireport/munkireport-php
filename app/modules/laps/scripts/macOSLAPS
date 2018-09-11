@@ -145,6 +145,11 @@ class macOSLAPS(object):
             # Decode server response
             result = json.loads(server_data)
             
+            # If plist does not exist, force password cycle
+            if not os.path.isfile('/var/root/.mrlaps'):
+                log_info(' Appears to be first run, using defaults and cycling password.')
+                result['dateexpires'] = "1"
+            
             # If remote management is enabled, use the preferences from the MunkiReport server instead
             if remote_management:
                 exp_days = int(result['days_till_expiration'])
@@ -198,8 +203,13 @@ class macOSLAPS(object):
                          expiration_time)
                 # Delete local admin's keychain if removal is enabled
                 if keychain_remove is True:
-                    local_admin_path = '/Users/{0:}/Library/Keychains'.\
-                        format(local_admin)
+                    # Get local admin's home folder
+                    cmd = ['/usr/bin/dscl', '.', '-read', '/Users/'+local_admin, 'NFSHomeDirectory']
+                    proc = subprocess.Popen(cmd, shell=False, bufsize=-1, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    (output, unused_error) = proc.communicate()
+                    local_admin_path = output.strip('NFSHomeDirectory: ').rstrip("\n\r")+'/Library/Keychains'
+                    
+                    # Delete if exists
                     if path.exists(local_admin_path):
                         rmtree(local_admin_path)
                         log_info(' Removed keychains for local '
