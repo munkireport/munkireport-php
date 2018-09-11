@@ -111,9 +111,15 @@ $( document ).ready(function() {
             return true;
         });
 
-        // search
+        // Search
         $(document).bind('keydown', '/', function(){
             $('input[type="search"]').focus();
+            return false;
+        });
+
+        // Filter popup
+        $(document).bind('keydown', 'f', function(){
+            document.getElementById("filter-popup").click();
             return false;
         });
 
