@@ -58,7 +58,7 @@ class Ibridge_controller extends Module_controller
             return;
         }
         
-        $sql = "SELECT ibridge_model_name, ibridge_model_identifier, ibridge_build, ibridge_serial_number, ibridge_boot_uuid, ibridge_marketing_name
+        $sql = "SELECT model_name, model_identifier, build, ibridge_serial_number, boot_uuid, marketing_name
                     FROM ibridge 
                     WHERE serial_number = '$serial_number'";
         

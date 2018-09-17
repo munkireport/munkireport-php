@@ -43,13 +43,13 @@ def flatten_ibridge_info(array):
             if item == '_items':
                 out = out + flatten_ibridge_info(obj['_items'])
             elif item == 'ibridge_boot_uuid':
-                ibridge['ibridge_boot_uuid'] = obj[item]
+                ibridge['boot_uuid'] = obj[item]
             elif item == 'ibridge_build':
-                ibridge['ibridge_build'] = obj[item]
+                ibridge['build'] = obj[item]
             elif item == 'ibridge_model_identifier':
-                ibridge['ibridge_model_identifier'] = obj[item]
+                ibridge['model_identifier'] = obj[item]
             elif item == 'ibridge_model_name':
-                ibridge['ibridge_model_name'] = obj[item]
+                ibridge['model_name'] = obj[item]
             elif item == 'ibridge_serial_number':
                 ibridge['ibridge_serial_number'] = obj[item]
            

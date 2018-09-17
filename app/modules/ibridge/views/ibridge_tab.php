@@ -21,7 +21,7 @@ $(document).on('appReady', function(){
                     if(skipThese.indexOf(prop) == -1){
                         if (d[prop] == ''){
                             // Do nothing for empty values to blank them
-                        } else if (prop == "ibridge_marketing_name"){
+                        } else if (prop == "marketing_name"){
                             // Set the tab badge
                             $('#ibridge-cnt').text(d[prop])
                         } else {

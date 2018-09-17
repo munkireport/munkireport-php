@@ -11,19 +11,19 @@ class Ibridge extends Migration
         $capsule::schema()->create('ibridge', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
-            $table->string('ibridge_boot_uuid',128)->nullable();
-            $table->string('ibridge_build',128)->nullable();
-            $table->string('ibridge_model_identifier',128)->nullable();
-            $table->string('ibridge_model_name',128)->nullable();
+            $table->string('boot_uuid',128)->nullable();
+            $table->string('build',128)->nullable();
+            $table->string('model_identifier',128)->nullable();
+            $table->string('model_name',128)->nullable();
             $table->string('ibridge_serial_number',128)->nullable();
-            $table->string('ibridge_marketing_name',128)->nullable();
+            $table->string('marketing_name',128)->nullable();
            
-            $table->index('ibridge_boot_uuid');
-            $table->index('ibridge_build');
-            $table->index('ibridge_model_identifier');
-            $table->index('ibridge_model_name');
+            $table->index('boot_uuid');
+            $table->index('build');
+            $table->index('model_identifier');
+            $table->index('model_name');
             $table->index('ibridge_serial_number');
-            $table->index('ibridge_marketing_name');
+            $table->index('marketing_name');
         });
     }
     

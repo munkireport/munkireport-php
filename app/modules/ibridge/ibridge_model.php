@@ -9,12 +9,12 @@ class Ibridge_model extends \Model {
 		parent::__construct('id', 'ibridge'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial;
-		$this->rs['ibridge_boot_uuid'] = '';
-		$this->rs['ibridge_build'] = '';
-		$this->rs['ibridge_model_identifier'] = '';
-		$this->rs['ibridge_model_name'] = '';
+		$this->rs['boot_uuid'] = '';
+		$this->rs['build'] = '';
+		$this->rs['model_identifier'] = '';
+		$this->rs['model_name'] = '';
 		$this->rs['ibridge_serial_number'] = '';
-		$this->rs['ibridge_marketing_name'] = '';
+		$this->rs['marketing_name'] = '';
 		
 		if ($serial) {
 			$this->retrieve_record($serial);
@@ -32,16 +32,16 @@ class Ibridge_model extends \Model {
      public function get_ibridge()
      {
         $out = array();
-        $sql = "SELECT COUNT(CASE WHEN ibridge_model_name <> '' AND ibridge_model_name IS NOT NULL THEN 1 END) AS count, ibridge_model_name 
+        $sql = "SELECT COUNT(CASE WHEN model_name <> '' AND model_name IS NOT NULL THEN 1 END) AS count, model_name 
                 FROM ibridge
                 LEFT JOIN reportdata USING (serial_number)
                 ".get_machine_group_filter()."
-                GROUP BY ibridge_model_name
+                GROUP BY model_name
                 ORDER BY count DESC";
         
         foreach ($this->query($sql) as $obj) {
             if ("$obj->count" !== "0") {
-                $obj->ibridge_model_name = $obj->ibridge_model_name ? $obj->ibridge_model_name : 'Unknown';
+                $obj->model_name = $obj->model_name ? $obj->model_name : 'Unknown';
                 $out[] = $obj;
             }
         }
@@ -67,12 +67,12 @@ class Ibridge_model extends \Model {
             $myList = $parser->toArray();
 
             $typeList = array(
-                'ibridge_boot_uuid' => '',
-                'ibridge_build' => '',
-                'ibridge_model_identifier' => '',
-                'ibridge_model_name' => '',
+                'boot_uuid' => '',
+                'build' => '',
+                'model_identifier' => '',
+                'model_name' => '',
                 'ibridge_serial_number' => '',
-                'ibridge_marketing_name' => ''
+                'marketing_name' => ''
             );
 
             foreach ($myList as $ibridge) {
@@ -87,14 +87,14 @@ class Ibridge_model extends \Model {
                 // Resolve marketing name
                 // Arrays will have to be updated to include new T chips are they released
                 // Because Apple doesn't use the same names for the iMac Pro and Macbook Pro
-                if ( $this->rs['ibridge_model_identifier'] == '') {
+                if ( $this->rs['model_identifier'] == '') {
                     // Macbook Pro
-                    $this->rs['ibridge_model_identifier'] = str_replace(array('Apple T1 chip','Apple T2 chip','Apple T3 chip'), array('iBridge1,1','iBridge2,1','iBridge3,1'), $this->rs['ibridge_model_name']);
-                    $this->rs['ibridge_marketing_name'] = str_replace(array('Apple',' ','chip'), array('','',''), $this->rs['ibridge_model_name']);
+                    $this->rs['model_identifier'] = str_replace(array('Apple T1 chip','Apple T2 chip','Apple T3 chip'), array('iBridge1,1','iBridge2,1','iBridge3,1'), $this->rs['model_name']);
+                    $this->rs['marketing_name'] = str_replace(array('Apple',' ','chip'), array('','',''), $this->rs['model_name']);
                 } else {
                     // iMac Pro
-                    $this->rs['ibridge_model_name'] = str_replace(array('iBridge1,1','iBridge2,1','iBridge3,1'), array('Apple T1 chip','Apple T2 chip','Apple T3 chip'), $this->rs['ibridge_model_identifier']);
-                    $this->rs['ibridge_marketing_name'] = str_replace(array('iBridge1,1','iBridge2,1','iBridge3,1'), array('T1','T2','T3'), $this->rs['ibridge_model_identifier']);
+                    $this->rs['model_name'] = str_replace(array('iBridge1,1','iBridge2,1','iBridge3,1'), array('Apple T1 chip','Apple T2 chip','Apple T3 chip'), $this->rs['model_identifier']);
+                    $this->rs['marketing_name'] = str_replace(array('iBridge1,1','iBridge2,1','iBridge3,1'), array('T1','T2','T3'), $this->rs['model_identifier']);
                 }
                 
                 //Save the data (and save London Bridge from falling down!)

@@ -18,11 +18,11 @@ new Ibridge_model;
 		  <tr>
 			<th data-i18n="listing.computername" data-colname='machine.computer_name'></th>
 			<th data-i18n="serial" data-colname='reportdata.serial_number'></th>
-			<th data-i18n="ibridge.ibridge_model_name" data-colname='ibridge.ibridge_model_name'></th>
-			<th data-i18n="ibridge.ibridge_model_identifier" data-colname='ibridge.ibridge_model_identifier'></th>
-			<th data-i18n="ibridge.ibridge_build" data-colname='ibridge.ibridge_build'></th>
+			<th data-i18n="ibridge.model_name" data-colname='ibridge.model_name'></th>
+			<th data-i18n="ibridge.model_identifier" data-colname='ibridge.model_identifier'></th>
+			<th data-i18n="ibridge.build" data-colname='ibridge.build'></th>
 			<th data-i18n="ibridge.ibridge_serial_number" data-colname='ibridge.ibridge_serial_number'></th>
-			<th data-i18n="ibridge.ibridge_boot_uuid" data-colname='ibridge.ibridge_boot_uuid'></th>
+			<th data-i18n="ibridge.boot_uuid" data-colname='ibridge.boot_uuid'></th>
 		  </tr>
 		</thead>
 
@@ -75,7 +75,7 @@ new Ibridge_model;
                 url: appUrl + '/datatables/data',
                 type: "POST",
                 data: function(d){
-                    d.mrColNotEmpty = "ibridge_boot_uuid";
+                    d.mrColNotEmpty = "boot_uuid";
                     
                     // Check for column in search
                     if(d.search.value){
