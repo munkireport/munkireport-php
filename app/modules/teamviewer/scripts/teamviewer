@@ -16,14 +16,21 @@ def get_prefs():
         prefs = "/Library/Preferences/com.teamviewer.teamviewer.preferences.plist" + "\n"
     else:
         prefs = ""
-        
+                
+    # Get all users' home folders
+    cmd = ['dscl', '.', '-readall', '/Users', 'NFSHomeDirectory']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, unused_error) = proc.communicate()
+    
     # Get user prefs
     for user in output.split('\n'):
         if 'NFSHomeDirectory' in user and '/var/empty' not in user:
             userpath = user.replace("NFSHomeDirectory: ", "")+'/Library/Preferences/com.teamviewer.teamviewer.preferences.Machine.plist'
             if os.path.isfile(userpath):
-                prefs = userpath + "\n" 
-            
+                prefs = userpath + "\n" + prefs 
+                    
     return prefs[:-1]
     
 def process_prefs(prefs):
