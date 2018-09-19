@@ -253,7 +253,9 @@ class Caching_controller extends Module_controller
                         sum(bytesfromorigintoclients) AS fromorigin,
                         sum(bytespurgedtotal) AS purgedbytes
                         FROM caching
+                        LEFT JOIN reportdata USING (serial_number)
                         WHERE collectiondateepoch > ".$pastThirtyOne."
+                        ".get_machine_group_filter('AND')."
                         GROUP BY date
                         ORDER BY date";
                 break;
@@ -263,7 +265,9 @@ class Caching_controller extends Module_controller
                         sum(bytesfromorigintoclients) AS fromorigin,
                         sum(bytespurgedtotal) AS purgedbytes
                         FROM caching
+                        LEFT JOIN reportdata USING (serial_number)
                         WHERE collectiondateepoch > ".$pastThirtyOne."
+                        ".get_machine_group_filter('AND')."
                         GROUP BY date
                         ORDER BY date";
                 break;
