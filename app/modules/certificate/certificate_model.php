@@ -19,6 +19,8 @@ class Certificate_model extends \Model
         $out = array();
         $sql = "SELECT cert_cn, COUNT(1) AS count
                 FROM certificate
+		LEFT JOIN reportdata USING (serial_number)
+		".get_machine_group_filter()."
                 GROUP BY cert_cn
                 ORDER BY COUNT DESC";
         
@@ -30,6 +32,26 @@ class Certificate_model extends \Model
         }
         return $out;
      }
+	
+    /**
+     * Get statistics
+     *
+     * @return void
+     * @author
+     **/
+    public function get_stats()
+    {
+        $now = time();
+        $one_month = $now + 3600 * 24 * 30 * 1;
+        $sql = "SELECT COUNT(1) as total, 
+			COUNT(CASE WHEN cert_exp_time < '$now' THEN 1 END) AS expired, 
+			COUNT(CASE WHEN cert_exp_time BETWEEN $now AND $one_month THEN 1 END) AS soon,
+			COUNT(CASE WHEN cert_exp_time > $one_month THEN 1 END) AS ok
+			FROM certificate
+			LEFT JOIN reportdata USING (serial_number)
+			".get_machine_group_filter();
+        return current($this->query($sql));
+    }
 
     // ------------------------------------------------------------------------
     /**
@@ -142,24 +164,4 @@ class Certificate_model extends \Model
             }
         }
     } // end process()
-
-    /**
-     * Get statistics
-     *
-     * @return void
-     * @author
-     **/
-    public function get_stats()
-    {
-        $now = time();
-        $one_month = $now + 3600 * 24 * 30 * 1;
-        $sql = "SELECT COUNT(1) as total, 
-			COUNT(CASE WHEN cert_exp_time < '$now' THEN 1 END) AS expired, 
-			COUNT(CASE WHEN cert_exp_time BETWEEN $now AND $one_month THEN 1 END) AS soon,
-			COUNT(CASE WHEN cert_exp_time > $one_month THEN 1 END) AS ok
-			FROM certificate
-			LEFT JOIN reportdata USING (serial_number)
-			".get_machine_group_filter();
-        return current($this->query($sql));
-    }
 }
