@@ -312,7 +312,7 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
 
     // Get filtered groups
     if ($groups = get_filtered_groups()) {
-        return sprintf('%s %s.machine_group IN (%s)', $prefix, $reportdata, implode(', ', $groups));
+        return sprintf(' %s %s.machine_group IN (%s) ', $prefix, $reportdata, implode(', ', $groups));
     } else // No filter
     {
         return '';
