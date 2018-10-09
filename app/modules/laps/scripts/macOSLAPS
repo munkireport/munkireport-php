@@ -151,13 +151,16 @@ class macOSLAPS(object):
                 result['dateexpires'] = "1"
             
             # If remote management is enabled, use the preferences from the MunkiReport server instead
-            if remote_management:
+            if remote_management and result['days_till_expiration'] != "-1":
                 exp_days = int(result['days_till_expiration'])
                 pass_length = int(result['pass_length'])
                 keychain_remove = bool(result['keychain_remove'])
                 alpha_numeric_only = bool(result['alpha_numeric_only'])
                 script_enabled = bool(result['script_enabled'])
                 log_info(' Finished setting remote management preferences.')
+            else:
+                # Machine doesn't exist on server, using defaults
+                log_info(" Server doesn't have record of machine, using local defaults.")
             
         except:
             # Something in the process of getting the server response errored, using cached response
