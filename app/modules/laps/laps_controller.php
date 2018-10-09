@@ -375,7 +375,11 @@ class Laps_controller extends Module_controller
         // Return data to client
         $queryobj = new Laps_model();
         $laps_return = $queryobj->query($sql);
-        $obj->view('json', array('msg' => $laps_return[0]));
-        
+	// Check if data exists for client in database
+        if (!isset($laps_return[0])){
+            print_r('{"days_till_expiration":"-1","dateexpires": "1", "dateset": "1"}');
+        } else {
+            $obj->view('json', array('msg' => $laps_return[0]));
+        }        
     }
 } // END class Laps_controller
