@@ -122,12 +122,6 @@ $( document ).ready(function() {
             document.getElementById("filter-popup").click();
             return false;
         });
-	   
-        // Close filter popup
-        $(document).bind('keydown', 'shift+f', function(){
-            document.getElementById("filter-popup-close").click();
-            return false;
-        });
 
         // Trigger appReady
         $(document).trigger('appReady', [i18n.lng()]);
@@ -264,8 +258,7 @@ var showFilterModal = function(e){
 			.append($('<b>')
 				.text(i18n.t("business_unit.machine_groups")));
 
-		$('#myModal button.ok').text(i18n.t("dialog.close"))
-			.attr('id', 'filter-popup-close');
+		$('#myModal button.ok').text(i18n.t("dialog.close"));
 
 		// Set ok button
 		$('#myModal button.ok')
