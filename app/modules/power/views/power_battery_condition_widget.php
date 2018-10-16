@@ -29,19 +29,19 @@ $(document).on('appReady appUpdate', function(e, lang) {
 		
 		// Set statuses
 		if(data.now){
-			panel.append(' <a href="'+baseUrl+'#Replace%20Now" class="btn btn-danger"><span class="bigger-150">'+data.now+'</span><br>'+i18n.t('power.widget.now')+'</a>');
+			panel.append(' <a href="'+baseUrl+'#poor" class="btn btn-danger"><span class="bigger-150">'+data.now+'</span><br>'+i18n.t('power.widget.now')+'</a>');
 		}
 		if(data.service){
-			panel.append(' <a href="'+baseUrl+'#Service%20Battery" class="btn btn-danger"><span class="bigger-150">'+data.service+'</span><br>'+i18n.t('power.widget.service')+'</a>');
+			panel.append(' <a href="'+baseUrl+'#service" class="btn btn-danger"><span class="bigger-150">'+data.service+'</span><br>'+i18n.t('power.widget.service')+'</a>');
 		}
 		if(data.soon){
-			panel.append(' <a href="'+baseUrl+'#Replace%20Soon" class="btn btn-warning"><span class="bigger-150">'+data.soon+'</span><br>'+i18n.t('power.widget.soon')+'</a>');
+			panel.append(' <a href="'+baseUrl+'#soon" class="btn btn-warning"><span class="bigger-150">'+data.soon+'</span><br>'+i18n.t('power.widget.soon')+'</a>');
 		}
 		if(data.normal){
-			panel.append(' <a href="'+baseUrl+'#Normal" class="btn btn-success"><span class="bigger-150">'+data.normal+'</span><br>'+i18n.t('power.widget.normal')+'</a>');
+			panel.append(' <a href="'+baseUrl+'#normal" class="btn btn-success"><span class="bigger-150">'+data.normal+'</span><br>'+i18n.t('power.widget.normal')+'</a>');
 		}
 		if(data.missing){
-			panel.append(' <a href="'+baseUrl+'#No%20Battery" class="btn btn-info"><span class="bigger-150">'+data.missing+'</span><br>'+i18n.t('power.widget.nobattery')+'</a>');
+			panel.append(' <a href="'+baseUrl+'#nobattery" class="btn btn-info"><span class="bigger-150">'+data.missing+'</span><br>'+i18n.t('power.widget.nobattery')+'</a>');
 		}
     });
 });
