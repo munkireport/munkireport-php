@@ -70,7 +70,7 @@ def flatten_displays_info(array, localization):
                     except KeyError, error: # This catches the error for 10.6 where there is no vendor for built-in displays
                         display['type'] = 0 #Internal
                     
-            elif item == '_name' and obj[item] is not "spdisplays_displayport_info" and obj[item] is not "spdisplays_display_connector" and not obj[item].startswith('kHW_')  and not obj[item].startswith('NVIDIA')  and not obj[item].startswith('AMD') and not obj[item].startswith('ATI') and not obj[item].startswith('Intel'):
+            elif item == '_name' and obj[item] is not "spdisplays_displayport_info" and obj[item] is not "spdisplays_display_connector" and not obj[item].startswith('kHW_') and not obj[item].startswith('NVIDIA')  and not obj[item].startswith('AMD') and not obj[item].startswith('ATI') and not obj[item].startswith('Intel'):
                 if obj[item] == "spdisplays_display":
                     display['model'] = "Virtual Display"
                 else:
@@ -80,9 +80,18 @@ def flatten_displays_info(array, localization):
                     display['display_asleep'] = to_bool(obj['spdisplays_asleep'])
                 except KeyError, error:
                     display['display_asleep'] = 0
+                    
+                # Set inital Retina
+                display['retina'] = 0
+                
             elif item == '_spdisplays_pixels':
                 display['native'] = obj[item].strip()
-            
+                
+            elif item == 'spdisplays_pixelresolution':
+                # Set Retina 
+                if "etina" in obj[item]:
+                    display['retina'] = 1
+                    
             elif item == 'spdisplays_resolution':
                 try:
                     try:
@@ -100,15 +109,7 @@ def flatten_displays_info(array, localization):
                         display['ui_resolution'] = obj[item].strip()                  
                 except KeyError, error:
                     display['ui_resolution'] = obj[item].strip()
-                
-                # Get Retina
-                try:
-                    display['retina'] = to_bool(obj['spdisplays_retina'])
-                except KeyError, error:
-                    if "Retina" in obj[item]:
-                        display['retina'] = 1
-                    else:
-                        display['retina'] = 0
+
             elif item == 'spdisplays_depth':
                 try:
                     display['color_depth'] = localization[obj[item]].strip()
@@ -119,6 +120,9 @@ def flatten_displays_info(array, localization):
                     display['display_type'] = localization[obj[item]].strip()
                 except KeyError, error:
                     display['display_type'] = obj[item].strip()
+                # Set Retina 
+                if "etina" in obj[item]:
+                    display['retina'] = 1
             elif item == 'spdisplays_main':
                 display['main_display'] = to_bool(obj[item])
             elif item == 'spdisplays_mirror':
@@ -150,8 +154,7 @@ def flatten_displays_info(array, localization):
                 try:
                     display['connection_type'] = localization[obj[item]].strip()
                 except KeyError, error:
-                    display['connection_type'] = obj[item].strip()
-                   
+                    display['connection_type'] = obj[item].strip()                    
             elif item == 'spdisplays_displayport_DPCD_version':
                 display['dp_dpcd_version'] = obj[item].strip()
             elif item == 'spdisplays_displayport_current_bandwidth':
