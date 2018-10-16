@@ -80,7 +80,7 @@ function getdbh()
                     break;
 
                 case 'mysql':
-                    $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
+                    $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
                     break;
 
                 default:
