@@ -140,8 +140,8 @@ class Usb_model extends \Model {
 			}
 			
 			// Check for USB bus devices and simulated USB devices to exclude
-            $excludeusb = array("OHCI Root Hub Simulation","UHCI Root Hub Simulation","EHCI Root Hub Simulation","RHCI Root Hub Simulation","XHCI Root Hub Simulation","XHCI Root Hub SS Simulation","XHCI Root Hub USB 2.0 Simulation");
-            if (in_array($device['name'], $excludeusb)) {
+			$excludeusb = array("OHCI Root Hub Simulation","UHCI Root Hub Simulation","EHCI Root Hub Simulation","RHCI Root Hub Simulation","XHCI Root Hub Simulation","XHCI Root Hub SS Simulation","XHCI Root Hub USB 2.0 Simulation");
+			if (in_array($device['name'], $excludeusb)) {
 				continue;
 			}
             
@@ -178,16 +178,17 @@ class Usb_model extends \Model {
 				'iPhone' => 'iphone',
 				'iPad' => 'ipad',
 				'iPod' => 'ipod',
-				'Mouse' => 'mouse|ps2 orbit',
+				'Mouse' => 'mouse|ps2 orbit|trackpad',
 				'Mass Storage' => 'card reader|os x install disk|apple usb superdrive|ultra fast media reader|usb to serial-ata bridge',
 				'Display' => 'displaylink|display|monitor',
 				'Composite Device' => 'composite device',
-				'Network' => 'network|ethernet|modem',
+				'Network' => 'network|ethernet|modem|bcm',
 				'UPS' => 'ups',
-				'Audio Device' => 'audio|sound|headset',
+				'Audio Device' => 'audio|sound|headset|mircophone|akm',
 				'TouchBar' => 'ibridge',
 				'Scanner' => 'scanner',
-				'Wacom Tablet' => 'wacom|ptz-|intuos|ctl-'
+				'Wacom Tablet' => 'wacom|ptz-|intuos|ctl-',
+				'Interactive Board' => 'smartboard|activboard'
 			);
 			$device_name = strtolower($device['name']);
 			foreach($device_types as $type => $pattern){
@@ -204,19 +205,19 @@ class Usb_model extends \Model {
 				$device['type'] = 'Printer'; // Set type to printer if printer_id field is not blank
 			}
 
-            // Check for Mass Storage
-            if ($device['media'] == 1 ) {
+			// Check for Mass Storage
+			if ($device['media'] == 1 ) {
 				$device['type'] = 'Mass Storage';
 			}
                                     
-            // Override Internal T/F based on name
-            if (stripos($device['name'], 'Internal') !== false) {
+			// Override Internal T/F based on name
+			if (stripos($device['name'], 'Internal') !== false) {
 				$device['internal'] = 1;
 			}
             
-            // Adjust Apple vendor ID
-            if (array_key_exists('vendor_id',$device)) {
-            if ($device['vendor_id'] == 'apple_vendor_id') {
+			// Adjust Apple vendor ID
+			if (array_key_exists('vendor_id',$device)) {
+			if ($device['vendor_id'] == 'apple_vendor_id') {
 				$device['vendor_id'] = '0x05ac (Apple, Inc.)';
 			}
             
