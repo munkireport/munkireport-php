@@ -87,12 +87,7 @@ class User_sessions_model extends \Model {
                 $this->rs[$key] = $value;
 
                 if(array_key_exists($key, $event)) {
-                    // Check if uid is '' if it is, set the value to NULL
-                    if ($key == "uid" && $event[$key] == '') {
-                        $this->rs[$key] = NULL;
-                    } else {
-                        $this->rs[$key] = $event[$key];
-                    }
+                    $this->rs[$key] = $event[$key];
                 }
             }
 
