@@ -4,32 +4,19 @@ use CFPropertyList\CFPropertyList;
 
 class User_sessions_model extends \Model {
 
-	function __construct($serial='')
-	{
-		parent::__construct('id', 'user_sessions'); //primary key, tablename
-		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial;
-		$this->rs['event'] = '';
-		$this->rs['time'] = 0;
-		$this->rs['user'] = '';
-		$this->rs['uid'] = NULL;
-		$this->rs['remote_ssh'] = '';
-
-		// Schema version, increment when creating a db migration
-		$this->schema_version = 0;
-
-		// Add indexes
-		$this->idx[] = array('event');
-		$this->idx[] = array('time');
-		$this->idx[] = array('user');
-		$this->idx[] = array('uid');
-		$this->idx[] = array('remote_ssh');
-
-		// Create table if it does not exist
-		//$this->create_table();
-
-		$this->serial_number = $serial;
-	}
+    function __construct($serial='')
+    {
+        parent::__construct('id', 'user_sessions'); //primary key, tablename
+        $this->rs['id'] = '';
+        $this->rs['serial_number'] = $serial;
+        $this->rs['event'] = '';
+        $this->rs['time'] = 0;
+        $this->rs['user'] = '';
+        $this->rs['uid'] = NULL;
+        $this->rs['remote_ssh'] = '';
+        
+        $this->serial_number = $serial;
+    }
 
 	// ------------------------------------------------------------------------
 
@@ -41,43 +28,47 @@ class User_sessions_model extends \Model {
 	 **/
 	function process($plist)
 	{
-		if ( ! $plist){
-			throw new Exception("Error Processing Request: No property list found", 1);
-		}
+        if ( ! $plist){
+            throw new Exception("Error Processing Request: No property list found", 1);
+        }
 
-		// Delete previous set
-		$this->deleteWhere('serial_number=?', $this->serial_number);
+        // Delete previous set
+        $this->deleteWhere('serial_number=?', $this->serial_number);
 
-		$parser = new CFPropertyList();
-		$parser->parse($plist, CFPropertyList::FORMAT_XML);
-		$myList = $parser->toArray();
+        $parser = new CFPropertyList();
+        $parser->parse($plist, CFPropertyList::FORMAT_XML);
+        $myList = $parser->toArray();
 
-		$typeList = array(
-			'event' => '',
-			'time' => 0,
-			'user' => '',
-			'uid' => NULL,
-			'remote_ssh' => ''
-		);
+        $typeList = array(
+            'event' => '',
+            'time' => 0,
+            'user' => '',
+            'uid' => NULL,
+            'remote_ssh' => ''
+        );
 
-		foreach ($myList as $event) {
-			foreach ($typeList as $key => $value) {
+        foreach ($myList as $event) {
+            foreach ($typeList as $key => $value) {
 
-				$this->rs[$key] = $value;
+                $this->rs[$key] = $value;
 
-				if(array_key_exists($key, $event))
-				{
-					$this->rs[$key] = $event[$key];
-				}
-			}
+                if(array_key_exists($key, $event)) {
+                    // Check if uid is '' if it is, set the value to NULL
+                    if ($key == "uid" && $event[$key] == '') {
+                        $this->rs[$key] = NULL;
+                    } else {
+                        $this->rs[$key] = $event[$key];
+                    }
+                }
+            }
 
             if (array_key_exists("remote_ssh", $event)){
                 $this->rs["event"] = "sshlogin";
             }
 
-			// Save user session event
-			$this->id = '';
-			$this->save();
-		}
-	}
+            // Save user session event
+            $this->id = '';
+            $this->save();
+        }
+    }
 }
