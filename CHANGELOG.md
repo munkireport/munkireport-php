@@ -26,6 +26,8 @@ NEW FEATURES
 - Added version of database server (#1128) @WardsParadox
 - Add support for default theme (#1131) @tuxudo
 - Added more USB devices (#1165) @tuxudo
+
+NEW MODULES
 - Added iBridge module (#1116) @tuxudo
 
 ### [3.2.2](https://github.com/munkireport/munkireport-php/compare/v3.2.1...v3.2.2) (July 08, 2018)
