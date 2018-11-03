@@ -25,7 +25,8 @@
         "rodneyrehm/plist": "^2.0",
         "doctrine/dbal": "~2.5",
         "defuse/php-encryption": "^2.1",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "wikimedia/composer-merge-plugin": "^1.4"
     },
     "suggest": {
         "onelogin/php-saml": "^2.12 Required for SAML authentication",
