@@ -24,6 +24,8 @@ class Munki_facts_model extends Model
         $out = array();
         $sql = "SELECT fact_key, COUNT(1) AS count
                 FROM munki_facts
+                LEFT JOIN reportdata USING (serial_number)
+                ".get_machine_group_filter('')."
                 GROUP BY fact_key
                 ORDER BY COUNT DESC";
         

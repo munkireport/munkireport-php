@@ -21,8 +21,8 @@ new Reportdata_model;
 		        <th data-i18n="serial" data-colname='reportdata.serial_number'></th>
 		        <th data-i18n="username" data-colname='reportdata.long_username'></th>
 		        <th data-i18n="disk_report.mountpoint" data-colname='diskreport.mountpoint'></th>
-                <th data-i18n="disk_report.media_type" data-colname='diskreport.media_type'></th>
-                <th data-i18n="disk_report.volume_type" data-colname='diskreport.volumetype'></th>
+		        <th data-i18n="disk_report.media_type" data-colname='diskreport.media_type'></th>
+		        <th data-i18n="disk_report.volume_type" data-colname='diskreport.volumetype'></th>
 		        <th data-i18n="disk_report.percentage" data-sort='desc' data-colname='diskreport.percentage'></th>
 		        <th data-i18n="disk_report.free" data-colname='diskreport.freespace'></th>
 		        <th data-i18n="disk_report.total_size" data-colname='diskreport.totalsize'></th>
@@ -32,7 +32,7 @@ new Reportdata_model;
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td data-i18n="listing.loading" colspan="10" class="dataTables_empty"></td>
+		        	<td data-i18n="listing.loading" colspan="11" class="dataTables_empty"></td>
 		    	</tr>
 		    </tbody>
 		  </table>

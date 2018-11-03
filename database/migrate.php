@@ -46,17 +46,44 @@ function conf($cf_item, $default = '')
 	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
 }
 
+function has_sqlite_db()
+{
+  $connection = conf('connection');
+  if( isset($connection['driver']) && $connection['driver'] == 'sqlite'){
+    return true;
+  }
+  return false;
+}
+
+function ensure_sqlite_db_exists()
+{
+  $connection = conf('connection');
+  touch($connection['database']);
+}
+
 require_once APP_ROOT . 'app/helpers/config_helper.php';
 initDotEnv();
 load_conf();
 
-$capsule = new Capsule();
-$capsule->addConnection(conf('connection'));
-$capsule->setAsGlobal();
-$repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
-if (!$repository->repositoryExists()) {
-    $repository->createRepository();
+if(has_sqlite_db()){
+  ensure_sqlite_db_exists();
 }
+
+
+try {
+  $capsule = new Capsule();
+  $capsule->addConnection(conf('connection'));
+  $capsule->setAsGlobal();
+  $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
+  if (!$repository->repositoryExists()) {
+      $repository->createRepository();
+  }
+} catch (\Exception $e) {
+  echo $e->getMessage();
+  exit();
+}
+
+
 
 $files = new \Illuminate\Filesystem\Filesystem();
 $migrator = new Migrator($repository, $capsule->getDatabaseManager(), $files);

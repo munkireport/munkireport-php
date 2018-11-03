@@ -31,7 +31,7 @@ def flatten_gpu_info(array):
     '''Un-nest GPUs, return array with objects with relevant keys'''
     out = []
     for obj in array:
-        device = {'model': ''}
+        device = {'model': '','metal': 0}
         for item in obj:
             if item == '_items':
                 out = out + flatten_gpu_info(obj['_items'])
@@ -67,8 +67,6 @@ def flatten_gpu_info(array):
                 device['metal'] = 2
             elif item == 'spdisplays_metal' and (obj[item] == 'spdisplays_supported' or obj[item] == 'spdisplays_metalfeaturesetfamily11'):
                 device['metal'] = 1
-            elif item == 'spdisplays_metal' and obj[item] == 'spdisplays_notsupported':
-                device['metal'] = 0
         out.append(device)
     return out
     

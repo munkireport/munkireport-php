@@ -1,4 +1,32 @@
-### [3.2.2](https://github.com/munkireport/munkireport-php/compare/v3.2.1...HEAD) (Unreleased)
+### [3.2.3](https://github.com/munkireport/munkireport-php/compare/v3.2.2...HEAD) (Unreleased)
+
+FIXES
+- Add magic_keyboard_with_numeric_keypad to bluetooth locale
+- Removed app_usage widget from managedinstalls... (#1138) @tuxudo
+- Detectx patch (#1137) @WardsParadox
+- Localize ARD Text on client summary (#1132) @tuxudo
+- Added space to paths that had space removed. (#1124) @poundbangbash
+- Updated current highest OS (#1123) @tuxudo
+- Fixed menu sorting case sensitivity (#1121) @tuxudo
+- Corrected devtools install script (#1114) @tuxudo
+- Added support for machine groups (#1144) @tuxudo
+- Remove group check from AuthSaml.php
+- Added machine group filtering to munki_facts widget (#1158) @tuxudo
+- Add machine group filtering (#1157) @tuxudo
+- Minor database fixes
+- Add port to MySQL dsn
+- Fixed clickthrough button URLs (#1153) @tuxudo
+- Fixed storage listing loading column count (#1151) @tuxudo
+- Fixed for Macs without Metal support (#1169) @tuxudo
+
+NEW FEATURES
+- Show machine group name instead of number (#1129) @tuxudo
+- Added version of database server (#1128) @WardsParadox
+- Add support for default theme (#1131) @tuxudo
+- Added more USB devices (#1165) @tuxudo
+- Added iBridge module (#1116) @tuxudo
+
+### [3.2.2](https://github.com/munkireport/munkireport-php/compare/v3.2.1...v3.2.2) (July 08, 2018)
 
 FIXES
 - SentinelOne uninstallers
