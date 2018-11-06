@@ -807,7 +807,7 @@
 	$conf['controller_path'] = $conf['application_path'].'controllers/';
 
 	// Path to modules directory, with trailing slash
-	$conf['module_path'] = $conf['application_path'] . "modules/";
+	$conf['module_path'] = APP_ROOT . "/vendor/munkireport/";
 
 	// Routes
 	$conf['routes'] = [];
