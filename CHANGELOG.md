@@ -1,5 +1,8 @@
 ### [3.2.4](https://github.com/munkireport/munkireport-php/compare/v3.2.3...HEAD) (Unreleased)
 
+FIXES
+- Fixed detectx migration
+
 ### [3.2.3](https://github.com/munkireport/munkireport-php/compare/v3.2.2...v3.2.3) (November 03, 2018)
 
 FIXES
