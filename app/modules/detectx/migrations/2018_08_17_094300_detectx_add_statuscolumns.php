@@ -7,12 +7,13 @@ class Detectx extends Migration
 {
     public function up()
     {
-        $capsule = new Capsule();
-        $capsule::schema()->table('detectx', function (Blueprint $table) {
-            $table->boolean('infectionstatus')->nullable();
-            $table->boolean('issuestatus')->nullable();
-        });
-
+        $capsule = new DetectxAddStatuscolumns();
+        if (!$capsule::schema()->hasColumn('detectx', 'infectionstatus')) {
+          $capsule::schema()->table('detectx', function (Blueprint $table) {
+              $table->boolean('infectionstatus')->nullable();
+              $table->boolean('issuestatus')->nullable();
+          });
+        }
     }
 
     public function down()
