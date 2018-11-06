@@ -1,4 +1,9 @@
-### [3.2.3](https://github.com/munkireport/munkireport-php/compare/v3.2.2...HEAD) (Unreleased)
+### [3.2.4](https://github.com/munkireport/munkireport-php/compare/v3.2.3...HEAD) (Unreleased)
+
+FIXES
+- Fixed detectx migration
+
+### [3.2.3](https://github.com/munkireport/munkireport-php/compare/v3.2.2...v3.2.3) (November 03, 2018)
 
 FIXES
 - Add magic_keyboard_with_numeric_keypad to bluetooth locale
@@ -24,6 +29,8 @@ NEW FEATURES
 - Added version of database server (#1128) @WardsParadox
 - Add support for default theme (#1131) @tuxudo
 - Added more USB devices (#1165) @tuxudo
+
+NEW MODULES
 - Added iBridge module (#1116) @tuxudo
 
 ### [3.2.2](https://github.com/munkireport/munkireport-php/compare/v3.2.1...v3.2.2) (July 08, 2018)
