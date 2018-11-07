@@ -722,6 +722,7 @@
 	|	network_location
 	|
 	| Small horizontal / dynamic vertical widgets:
+	|	32_bit_apps
 	|	app
 	|	duplicated_computernames
 	|	filevault
@@ -741,7 +742,7 @@
 	|	hardware_age
 	|	hardware_model
 	|	memory
-	|	os
+	|	os breakdown
 	|	printer
 	|
 	| Responsive horizontal widgets:
