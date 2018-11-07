@@ -3,11 +3,11 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Detectx extends Migration
+class DetectxAddStatuscolumns extends Migration
 {
     public function up()
     {
-        $capsule = new DetectxAddStatuscolumns();
+        $capsule = new Capsule();
         if (!$capsule::schema()->hasColumn('detectx', 'infectionstatus')) {
           $capsule::schema()->table('detectx', function (Blueprint $table) {
               $table->boolean('infectionstatus')->nullable();
