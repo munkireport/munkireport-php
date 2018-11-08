@@ -1,4 +1,4 @@
-### [3.2.6](https://github.com/munkireport/munkireport-php/compare/v3.2.5...HEAD) (Unreleased)
+### [3.2.6](https://github.com/munkireport/munkireport-php/compare/v3.2.5...v3.2.6) (November 08, 2018)
 
 FIXES
 - detectx I ❤️ u
