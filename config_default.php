@@ -106,6 +106,16 @@
 
 	/*
 	|===============================================
+	| Default Theme
+	|===============================================
+	|
+	| Sets the default theme for new logins/users.
+	|
+	*/
+	$conf['default_theme'] = getenv_default('DEFAULT_THEME', 'Default');
+
+	/*
+	|===============================================
 	| Authentication
 	|===============================================
 	|
@@ -728,25 +738,28 @@
 	|       network_location
 	|
 	| Small horizontal / dynamic vertical widgets:
-	|       app
-	|       duplicated_computernames
-	|       filevault
-	|       hardware_model
-	|       manifests
-	|       modified_computernames
-	|       munki_versions
-	|       new_clients
-	|       pending
-	|       pending_munki
-	|       pending_apple
-	|       warranty
-    |
+	|	32_bit_apps
+	|	app
+	|	duplicated_computernames
+	|	filevault
+	|	hardware_model
+	|	manifests
+	|	modified_computernames
+	|	munki_versions
+	|	new_clients
+	|	pending
+	|	pending_munki
+	|	pending_apple
+	|	warranty
+	|
+	| Medium horizontal widgets:
+	|
 	| Medium horizontal / dynamic vertical widgets:
-	|       hardware_age
-	|       hardware_model
-	|       memory
-	|       os
-	|       printer
+	|	hardware_age
+	|	hardware_model
+	|	memory
+	|	os breakdown
+	|	printer
 	|
 	| Responsive horizontal widgets:
 	|       network_vlan
@@ -811,7 +824,7 @@
 	$conf['controller_path'] = $conf['application_path'].'controllers/';
 
 	// Path to modules directory, with trailing slash
-	$conf['module_path'] = $conf['application_path'] . "modules/";
+	$conf['module_path'] = APP_ROOT . "/vendor/munkireport/";
 
 	// Routes
 	$conf['routes'] = [];
