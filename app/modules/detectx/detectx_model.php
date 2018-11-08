@@ -37,8 +37,6 @@ class Detectx_model extends \Model
         if (! $json ) {
             throw new Exception("Error Processing Request: No JSON file found", 1);
         }
-        // Delete previous set
-        $this->deleteWhere('serial_number=?', $this->serial_number);
 
         // Process json into object thingy
         $data = json_decode($json, true);
@@ -67,6 +65,9 @@ class Detectx_model extends \Model
             $this->issues = 'No Issues Detected';
             $this->numberofissues = 0;
         }
+        $this->infectionstatus = (int) $this->infectionstatus;
+        $this->issuestatus = (int) $this->issuestatus;
+
         $this->save();
     }
 }
