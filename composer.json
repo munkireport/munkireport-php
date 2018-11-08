@@ -19,7 +19,7 @@
         "guzzlehttp/guzzle": "~6.0",
         "hautelook/phpass": "^1.1",
         "illuminate/console": "~5.4",
-        "illuminate/database": "5.4.36",
+        "illuminate/database": "^5.5",
         "illuminate/filesystem": "~5.4",
         "league/flysystem": "~1.0",
         "rodneyrehm/plist": "^2.0",
