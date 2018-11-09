@@ -431,7 +431,7 @@
 	| 10.8-10.12. To hide the "Caching (Legacy)" listing, set this to FALSE.
 	|
 	*/
-	$conf['caching_show_legacy'] = getenv_default('CACHING_SHOW_LEGACY', TRUE, 'bool');
+	$conf['caching_show_legacy'] = TRUE;
 
 	/*
 	|===============================================
