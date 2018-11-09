@@ -334,6 +334,18 @@
 
 	/*
 	|===============================================
+	| Itemized Caching Listing
+	|===============================================
+	|
+	| You can hide the itemized caching server listing that shows an itemized
+	| listing for all caching server transactions.
+	| To hide the "Caching Itemized" listing, set this to FALSE.
+	|
+	*/
+	$conf['caching_show_itemized'] = getenv_default('USB_INTERNAL', TRUE, 'bool');
+
+	/*
+	|===============================================
 	| USB Devices
 	|===============================================
 	|
