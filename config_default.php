@@ -703,25 +703,24 @@
 	| This is a list of the current dashboard widgets
 	|
 	| Small horizontal widgets:
-    |       bound_to_ds
-    |       client (two items)
-    |       disk_report
-    |       external_displays_count
-    |       firmwarepw
-    |       gatekeeper
-    |       hardware_model
-    |       installed memory
-    |       localadmin
-    |       munki
-    |       power_battery_condition
-    |       power_battery_health
-    |       sip
-    |       smart_status
-    |       uptime
-    |       wifi_state
-    |
-    |
-	| Small horizontal / medium vertical widgets:
+	|       bound_to_ds
+	|       client (two items)
+	|       disk_report
+	|       external_displays_count
+	|       firmwarepw
+	|       gatekeeper
+	|       hardware_model
+	|       installed memory
+	|       localadmin
+	|       munki
+	|       power_battery_condition
+	|       power_battery_health
+	|       sip
+	|       smart_status
+	|       uptime
+	|       wifi_state
+	|
+  | Small horizontal / medium vertical widgets:
 	|       network_location
 	|
 	| Small horizontal / dynamic vertical widgets:
@@ -808,7 +807,7 @@
 	$conf['controller_path'] = $conf['application_path'].'controllers/';
 
 	// Path to modules directory, with trailing slash
-	$conf['module_path'] = $conf['application_path'] . "modules/";
+	$conf['module_path'] = APP_ROOT . "/vendor/munkireport/";
 
 	// Routes
 	$conf['routes'] = [];
