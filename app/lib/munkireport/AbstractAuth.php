@@ -13,8 +13,8 @@ abstract class AbstractAuth
 
     protected function authorizeUserAndGroups($auth_config, $auth_data)
     {
-        $checkUser = isset($auth_config['mr_allowed_users']);
-        $checkGroups = isset($auth_config['mr_allowed_groups']);
+        $checkUser = !empty($auth_config['mr_allowed_users']);
+        $checkGroups = !empty($auth_config['mr_allowed_groups']);
 
         if( ! $checkUser && ! $checkGroups){
             return true;

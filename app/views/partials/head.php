@@ -2,6 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
+	<meta name=apple-mobile-web-app-capable content=yes>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -35,6 +36,7 @@
 	<script>
 		var baseUrl = "<?php echo conf('subdirectory'); ?>",
 			appUrl = "<?php echo rtrim(url(), '/'); ?>",
+			default_theme = "<?php echo conf('default_theme'); ?>",
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
@@ -216,6 +218,19 @@
 					</ul>
 				</li>
 
+				<?php endif; ?>
+
+				<?php if( conf('help_url') || conf('help_url') == ''): // Hide logout button if auth_noauth?>
+				
+				<li>
+                                        <a href="<?php 
+							if( conf('help_url') ) { echo conf('help_url'); }
+							else { echo 'https://github.com/munkireport/munkireport-php/wiki'; }
+						?>" target="_blank">
+                                                <i class="fa fa-question"></i>
+                                        </a>
+                                </li>
+				
 				<?php endif; ?>
 
 			</ul>

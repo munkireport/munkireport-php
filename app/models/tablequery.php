@@ -121,16 +121,11 @@ class Tablequery
             }
         }
 
-        // Business unit filter (assumes we are selecting the reportdata table)
-        if ($machine_groups = get_filtered_groups()) {
-        // Todo: We should check if a requested machine_group is allowed
-
-            $bu_where = 'reportdata.machine_group IN ('. implode(', ', $machine_groups). ')';
-            if ($where) {
-                $where .= ' AND (' . $bu_where . ')';
-            } else {
-                $where = 'WHERE (' .$bu_where . ')';
-            }
+        // Business unit filter
+        if ($where) {
+            $where .= get_machine_group_filter('AND');
+        } else {
+            $where = get_machine_group_filter();
         }
 
         // Get total records

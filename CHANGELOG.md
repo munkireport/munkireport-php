@@ -1,4 +1,130 @@
-### [3.0.3](https://github.com/munkireport/munkireport-php/compare/v3.0.2...HEAD) (Unreleased)
+### [3.3.0](https://github.com/munkireport/munkireport-php/compare/v3.2.4...HEAD) (Unreleased)
+
+### [3.2.4](https://github.com/munkireport/munkireport-php/compare/v3.2.3...v3.2.4) (November 06, 2018)
+
+FIXES
+- Fixed detectx migration
+
+### [3.2.3](https://github.com/munkireport/munkireport-php/compare/v3.2.2...v3.2.3) (November 03, 2018)
+
+FIXES
+- Add magic_keyboard_with_numeric_keypad to bluetooth locale
+- Removed app_usage widget from managedinstalls... (#1138) @tuxudo
+- Detectx patch (#1137) @WardsParadox
+- Localize ARD Text on client summary (#1132) @tuxudo
+- Added space to paths that had space removed. (#1124) @poundbangbash
+- Updated current highest OS (#1123) @tuxudo
+- Fixed menu sorting case sensitivity (#1121) @tuxudo
+- Corrected devtools install script (#1114) @tuxudo
+- Added support for machine groups (#1144) @tuxudo
+- Remove group check from AuthSaml.php
+- Added machine group filtering to munki_facts widget (#1158) @tuxudo
+- Add machine group filtering (#1157) @tuxudo
+- Minor database fixes
+- Add port to MySQL dsn
+- Fixed clickthrough button URLs (#1153) @tuxudo
+- Fixed storage listing loading column count (#1151) @tuxudo
+- Fixed for Macs without Metal support (#1169) @tuxudo
+
+NEW FEATURES
+- Show machine group name instead of number (#1129) @tuxudo
+- Added version of database server (#1128) @WardsParadox
+- Add support for default theme (#1131) @tuxudo
+- Added more USB devices (#1165) @tuxudo
+
+NEW MODULES
+- Added iBridge module (#1116) @tuxudo
+
+### [3.2.2](https://github.com/munkireport/munkireport-php/compare/v3.2.1...v3.2.2) (July 08, 2018)
+
+FIXES
+- SentinelOne uninstallers
+- MigrationsPending (#1108) @mosen
+- Smart widget ui fix (#1107) @poundbangbash
+
+### [3.2.1](https://github.com/munkireport/munkireport-php/compare/v3.2.0...v3.2.1) (July 05, 2018)
+
+FIXES
+- Addressed duplication of ARD groups. (#1106) @poundbangbash
+- Security module fix ard_users - add nested ard_groups (#1105) @poundbangbash
+- Fix for issue #1102 @tuxudo
+- Improvements to Sophos module (#1100) @rickheil
+
+### [3.2.0](https://github.com/munkireport/munkireport-php/compare/v3.1.1...v3.2.0) (July 01, 2018)
+
+FIXES
+- detectx @WardsParadox
+- backup2go list view fix (#1056) @pnerum
+- Make the SIP check more resilient (#1063) @barn-stripe
+- Drop Down the Login Page (#1062) @gmarnin
+- Add disable_sso_sls_verify config option (#1007) @sphen13
+- Fixed localized event message (#1051) @tuxudo
+- Actually fix security.py module (#1068) @barn-stripe
+- Fix for Find My Macs widget not supporting business units (#1067) @tuxudo
+- Fixed apps tab order (#1069) @tuxudo
+- Added basic crypt checkin url (#1077) @WardsParadox
+- Hotfix/migration patches (#1087) @mosen
+- Fix for no workflow title (#1082) @tuxudo
+- AD Auth (#1096) @mosen
+- Removing Machine-Groups/Business Units (#1097) @mosen
+- Changed Extensions add teamid column method (#1098) @tuxudo
+
+NEW FEATURES
+- Help button @danner26
+- phpdotenv support (#1032) @mosen
+- Added advanced SAML settings
+- Adds Metal support to GPU module (#1058) @tuxudo
+- Added ability to skip bundle IDs in Appusage module (#1055) @tuxudo
+- Profile count report (#1030) @poundbangbash
+- Added local network ip option for vnc and ssh links (#1029) @poundbangbash
+- Added another USB device type (#1022) @tuxudo
+- Add column to filter bound status against (#1065) @poundbangbash
+- Add UID to reportdata, user_sessions module, localadmin module @poundbangbash
+- Add check network based users added to com.apple.local.ard_interact (#1071) @poundbangbash
+- Free ipa support (#1080)
+- Implement db size calcs (#1094)
+
+NEW MODULES
+- Devtools Module (#913) @tuxudo
+- Highest Supported OS module (#834) @tuxudo
+- Sophos Anti-virus module (#1093) @rickheil
+- SentinelOne (#1072) @poundbangbash
+- SentinelOne Quarantine module (@1073) @poundbangbash
+
+### [3.1.1](https://github.com/munkireport/munkireport-php/compare/v3.1.0...v3.1.1) (March 23, 2018)
+
+FIXES
+- filevault escrow migration
+
+NEW FEATURES
+- Travis CI integration (#1031) @danner26
+- Added support for server-side IP filtering (#990) @danner26
+
+### [3.1.0](https://github.com/munkireport/munkireport-php/compare/v3.0.2...v3.1.0) (March 21, 2018)
+
+FIXES
+- Totalsize of disk in client detail
+- Updated MySQL default config example
+- munkiinfo module
+- Adjusted security report loading data (#983) @tuxudo
+- Fix DeployStudio migration (#982) @tuxudo
+- Fixed DeployStudio processing on MR3 (#985) @tuxudo
+- Add option to use current username for ssh link (#976) @poundbangbash
+- Check for no Bluetooth in BT module (#992) @tuxudo
+- Fixed postflight error in homebrew modules (#991) @tuxudo
+- Migration adjustment for nullable values. (#973) @poundbangbash
+- Fixed vendor column (#998) @tuxudo
+- Docker (#1003) @sphen13
+- Remove index.php .htacces and web.config from src root
+- Fix certificate migration
+- Add fv key encryption migration
+- Add filter to getLocalAdmins
+- Extensions module - Added variable declaration (#1017) @poundbangbash
+
+NEW FEATURES
+- Add optional recursive group searching to AD auth
+- Added widget for 32-bit apps (#1021) @tuxudo
+- Added support for different ship to in GSX (#1028)
 
 ### [3.0.2](https://github.com/munkireport/munkireport-php/compare/v3.0.1...v3.0.2) (February 15, 2018)
 
