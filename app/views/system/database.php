@@ -3,8 +3,8 @@
     <div class="container">
         <div class="row">
             <div id="mr-migrations" class="col-lg-12 loading">
-                <h1><span id="database-update-count">(n/a)</span> <span data-i18n="database.migrations.pending">Database Update(s) Pending</span>
-                </h1>
+                <h1>Upgrade Database</h1>
+                <h3>Click the update button to begin database upgrade.</h3>
             </div>
         </div>
 
@@ -40,16 +40,14 @@
     </div>  <!-- /container -->
 
     <script>
-
-
       $(document).on('appReady', function (e, lang) {
         var tbody = $('.table-console tbody');
 
-        function log(message, level) {
+        function log (message, level) {
           level = level || 'info';
           tbody.append('<tr><td class="log-level-' + level + '">' + message + '</td></tr>');
         }
-        
+
         function disclose () {
           var logDiv = $('#database-upgrade-log');
           var disclosureEl = logDiv.find('.disclosure');
@@ -80,62 +78,42 @@
             $btn.find('#db-upgrade-label').html('Update');
           }
 
-          log('started update: ' + new Date());
+          tbody.empty();
+          log('Started update: ' + new Date());
 
           $.getJSON(appUrl + '/database/migrate', function (data) {
             done();
 
-            if (data.error) {
-              disclose();
-              log(data.error_message, 'error');
-
-              if (data.error_trace) {
-                log('stack trace follows:', 'error');
-                data.error_trace.forEach(function(stackItem) {
-                  var li = $('<li>in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '</li>');
-                    log('in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '.' , 'error');
-                });
-              }
-            }
-
             if (data.notes) {
-              tbody.empty();
-
               for (var i = 0; i < data.notes.length; i++) {
                 tbody.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
               }
             }
-        }).fail(function (jqXHR, textStatus, error) {
-          done();
-        })
-      });
 
-      $.getJSON(appUrl + '/database/migrationsPending', function (data) {
-        var tbody = $('.table-console tbody').empty();
-        $('.loading').removeClass('loading');
+            if (data.notes) {
+              for (var i = 0; i < data.notes.length; i++) {
+                tbody.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
+              }
+            }
 
-        if (data.error) {
-          disclose();
-          log(data.error_message, 'error');
-        }
+            if (data.error) {
+              disclose();
+              log(data.error, 'error');
 
-        $('#database-update-count').text(data['files_pending'].length);
+              if (data.error_trace) {
+                log('stack trace follows:', 'error');
+                data.error_trace.forEach(function (stackItem) {
+                  log('in ' + stackItem.file + ':' + stackItem.line + '  ' + stackItem.class + stackItem.type + stackItem.function + '.', 'error');
+                });
+              }
+            }
 
-//        if (data['files_pending'].length) {
-//          for (var i = 0; i < data['files_pending'].length; i++) {
-//            tbody.append('<tr><td>' + data['files_pending'][i] + '</td></tr>');
-//          }
-//        }
-      })
-        .fail(function (jqxhr, textStatus, error) {
-          var err = textStatus + ", " + error;
-          $('#mr-db table tr td')
-            .empty()
-            .addClass('text-danger')
-            .text(i18n.t('errors.loading', {error: err}));
+          }).fail(function (jqXHR, textStatus, error) {
+            log(error, 'error');
+            done();
+          })
         });
-      })
-      ;
+      });
     </script>
 <?php
 $this->view('partials/foot');

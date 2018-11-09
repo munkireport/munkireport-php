@@ -221,26 +221,7 @@ https://github.com/settings/applications
     if not match:
         sys.exit("Couldn't extract release notes for this version!")
     release_notes = match.group('current_ver_notes')
-    
-    # install dependencies
-    run_command(['composer', 'install', '--no-dev',
-        '--ignore-platform-reqs', '--optimize-autoloader'])
 
-    # also install all suggested packages
-    data = json.load(open('composer.json'))
-    for key, value in  data['suggest'].iteritems():
-        version = get_version_from_string(value)
-        pkg = "%s:%s" % (key, version)
-        run_command(['composer', 'require', '--update-no-dev',
-                '--ignore-platform-reqs', '--optimize-autoloader', pkg])
-
-    # zip up
-    print "Zipping up the repository.."
-    zip_file = 'munkireport-%s.zip' % current_version
-    run_command(['zip', '-r', zip_file, '.', '--exclude', '.git*', '-q'])
-    with open(zip_file, 'rb') as fdesc:
-        zip_data = fdesc.read()
-        
     # prepare release metadata
     release_data = dict()
     release_data['tag_name'] = tag_name
@@ -261,26 +242,6 @@ https://github.com/settings/applications
             print "Release successfully created. Server response:"
             pprint(create_release)
             print
-
-            # upload the pkg as a release asset
-            new_release_id = create_release['id']
-            endpoint = ('/repos/%s/%s/releases/%s/assets?name=%s'
-                        % (publish_user,
-                           publish_repo,
-                           new_release_id,
-                           zip_file))
-            upload_asset = api_call(
-                endpoint,
-                token,
-                baseurl='https://uploads.github.com',
-                data=zip_data,
-                json_data=False,
-                additional_headers={'Content-Type': 'application/octet-stream'})
-            if upload_asset:
-                print ("Successfully attached .zip release asset. Server "
-                       "response:")
-                pprint(upload_asset)
-                print
 
     # increment version
     print "Incrementing version to %s.." % next_version

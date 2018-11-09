@@ -173,11 +173,12 @@ $(document).on('appReady', function(e, lang) {
 		$( "time" ).each(function( index ) {
 				$(this).tooltip().css('cursor', 'pointer');
 		});
-
+		
+		var username=$('nav i.fa-user')[0].nextSibling.nodeValue.trim();
 		// Remote control links
 		$.getJSON( appUrl + '/clients/get_links', function( links ) {
 			$.each(links, function(prop, val){
-				$('#client_links').append('<li><a href="'+(val.replace(/%s/, machineData.remote_ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a></li>');
+				$('#client_links').append('<li><a href="'+(val.replace(/%s/, machineData.remote_ip).replace(/%remote_ip/, machineData.remote_ip).replace(/%u/, username).replace(/%network_ip_v4/, machineData.ipv4ip).replace(/%network_ip_v6/, machineData.ipv6ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a></li>');
 			});
 		});
 
@@ -326,7 +327,7 @@ $(document).on('appReady', function(e, lang) {
 				$('#ard-data')
 					.append($('<tr>')
 						.append($('<th>')
-							.text(index))
+							.text(index.replace("text","ARD "+i18n.t("text")+" ")))
 						.append($('<td>')
 							.text(item)));
 			}
@@ -349,6 +350,9 @@ $(document).on('appReady', function(e, lang) {
 							}
 							if(data.bluetooth_power == 0){
 								return i18n.t('off');
+							}
+							if(data.bluetooth_power == -1){
+								return i18n.t('bluetooth.nobluetooth');
 							}
 							return i18n.t('unknown');
 						})));

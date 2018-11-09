@@ -1,5 +1,12 @@
 <?php $this->view('partials/head'); ?>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-4 col-lg-offset-4">

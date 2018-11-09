@@ -43,7 +43,7 @@ class Settings extends Controller
         }
 
         $obj = new View();
-        $obj->view('json', array('msg' => sess_get('theme', 'Default')));
+        $obj->view('json', array('msg' => sess_get('theme', conf('default_theme'))));
     }
 
 }

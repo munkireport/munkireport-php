@@ -31,31 +31,12 @@ class system extends Controller
             'db.driver' => '',
             'db.connectable' => false,
             'db.writable' => false,
+            'db.size' => '',
             'error' => '',
+            'version' => ''
         );
 
-        $conn = conf('connection');
-        switch ($conn['driver']) {
-            case 'sqlite':
-                $dsn = "sqlite:{$conn['database']}";
-                break;
-
-            case 'mysql':
-                $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
-                break;
-
-            default:
-                throw new \Exception("Unknown driver in config", 1);
-        }
-
-        $config = array(
-            'pdo_dsn' => $dsn,
-            'pdo_user' => isset($conn['username']) ? $conn['username'] : '',
-            'pdo_pass' => isset($conn['password']) ? $conn['password'] : '',
-            'pdo_opts' => isset($conn['options']) ? $conn['options'] : []
-        );
-
-        $db = new Database($config);
+        $db = new Database(conf('connection'));
         //echo '<pre>'; var_dump($db);
         if ($db->connect()) {
             $out['db.connectable'] = true;
@@ -66,9 +47,12 @@ class system extends Controller
             } else {
                 $out['error'] = $db->getError();
             }
+            $out['db.size'] = $db->size();
+
         } else {
             $out['error'] = $db->getError();
         }
+        $out['version'] = $db->get_version();
         //echo '<pre>'; var_dump($db);
         // Get engine
         // Get permissions

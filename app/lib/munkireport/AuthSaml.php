@@ -184,6 +184,12 @@ class AuthSaml extends AbstractAuth
                 echo '<p>' . implode(', ', $errors) . '</p>';
             }
         } catch (OneLogin_Saml2_Error $e) {
+            if(isset($this->config['disable_sso_sls_verify']) && $this->config['disable_sso_sls_verify'] === true && strpos($e->getMessage(),'Only supported HTTP_REDIRECT Binding') !== false ){
+                session_destroy();
+                $obj = new View();
+                $obj->view('auth/logout', ['loginurl' => url()]);
+                return;
+            }
             echo 'An error occurred during logout';
             print_r($e->getMessage());
         }
@@ -224,13 +230,6 @@ class AuthSaml extends AbstractAuth
         {
             $attr_list = implode(', ', array_keys($attrs));
             die("<pre>SAML Mapping error: user not found in SAML attributes ($attr_list)");
-        }
-
-        // Check if we have a user
-        if( $this->debug() && ! $out['groups'] )
-        {
-            $attr_list = implode(', ', array_keys($attrs));
-            die("<pre>SAML Mapping error: no groups found in SAML attributes ($attr_list)");
         }
 
         return $out;
