@@ -101,5 +101,12 @@
             "munkireport\\lib\\": "app/lib/munkireport",
             "Tests\\": "tests/"
         }
+    },
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "composer.local.json"
+            ]
+        }
     }
 }
