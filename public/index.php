@@ -24,6 +24,9 @@ function fatal($msg)
     exit(1);
 }
 
+// Include config helper before autoload
+require APP_ROOT.'app/helpers/config_helper.php';
+
 //===============================================
 // Autoloading
 //===============================================
@@ -34,7 +37,6 @@ Please run `composer install` in the munkireport directory</p>");
 }
 
 // Load config
-require APP_ROOT.'app/helpers/config_helper.php';
 initDotEnv();
 load_conf();
 

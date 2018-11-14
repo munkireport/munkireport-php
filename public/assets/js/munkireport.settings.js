@@ -284,7 +284,12 @@ var mr = {
             "469": "Asus",
             "4249": "Insignia",
             "41d2": "Planar",
-            "5c85": "Westinghouse"
+            "5c85": "Westinghouse",
+            "c87": "Christie",
+            "2247": "Bush",
+            "34a4": "Medion",
+            "1ab3": "Fujitsu",
+            "2db2": "Kramer Electronics"
         }
 
     };

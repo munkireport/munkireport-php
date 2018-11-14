@@ -232,13 +232,6 @@ class AuthSaml extends AbstractAuth
             die("<pre>SAML Mapping error: user not found in SAML attributes ($attr_list)");
         }
 
-        // Check if we have a user
-        if( $this->debug() && ! $out['groups'] )
-        {
-            $attr_list = implode(', ', array_keys($attrs));
-            die("<pre>SAML Mapping error: no groups found in SAML attributes ($attr_list)");
-        }
-
         return $out;
     }
 

@@ -175,9 +175,9 @@ class Database
     public function sizeSQLite()
     {
         $result = $this->fetchOne('PRAGMA PAGE_SIZE');
-        $page_size = $result['page_size'];
+        $page_size = (int) $result[0];
         $result = $this->fetchOne('PRAGMA PAGE_COUNT');
-        $page_count = $result['page_count'];
+        $page_count = (int) $result[0];
         return $page_size * $page_count / 1024.0/1024.0;
     }
 

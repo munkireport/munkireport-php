@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.2.3.3455';
+$GLOBALS['version'] = '3.3.0.3523';
 
 // Return version without commit count
 function get_version()
@@ -80,7 +80,7 @@ function getdbh()
                     break;
 
                 case 'mysql':
-                    $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
+                    $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
                     break;
 
                 default:
@@ -312,7 +312,7 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
 
     // Get filtered groups
     if ($groups = get_filtered_groups()) {
-        return sprintf('%s %s.machine_group IN (%s)', $prefix, $reportdata, implode(', ', $groups));
+        return sprintf(' %s %s.machine_group IN (%s) ', $prefix, $reportdata, implode(', ', $groups));
     } else // No filter
     {
         return '';
