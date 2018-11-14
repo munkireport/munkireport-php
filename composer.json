@@ -4,8 +4,7 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5",
-        "phpunit/phpunit": "^6.5"
+        "squizlabs/php_codesniffer": "^2.5"
     },
     "config": {
         "platform": {
