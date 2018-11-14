@@ -24,17 +24,19 @@ function fatal($msg)
     exit(1);
 }
 
-// Include config helper before autoload
-require APP_ROOT.'app/helpers/config_helper.php';
 
 //===============================================
 // Autoloading
 //===============================================
+require_once APP_ROOT.'app/helpers/env_helper.php';
 if ((include APP_ROOT . "vendor/autoload.php") === false)
 {
     fatal("vendor/autoload.php is missing!<br>
 Please run `composer install` in the munkireport directory</p>");
 }
+
+// Include config helper
+require APP_ROOT.'app/helpers/config_helper.php';
 
 // Load config
 initDotEnv();

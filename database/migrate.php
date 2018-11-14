@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../app/helpers/env_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Illuminate\Filesystem\Filesystem;
