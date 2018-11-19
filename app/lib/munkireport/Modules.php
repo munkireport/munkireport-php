@@ -11,15 +11,15 @@ namespace munkireport\lib;
 class Modules
 {
 
-    private $moduleList = array();
-    private $moduleSearchPaths = array();
-    private $allowedModules = array(
+    private $moduleList = [];
+    private $moduleSearchPaths = [];
+    private $allowedModules = [
       'machine',
       'reportdata',
       'tag',
       'event',
       'comment',
-    );
+    ];
     private $skipInactiveModules = False;
 
     public function __construct()
@@ -28,16 +28,20 @@ class Modules
         if(conf('hide_inactive_modules')){
             $this->skipInactiveModules = True;
         }
-
-        // Custom modules go first
-        if(conf('custom_folder') && is_dir(conf('custom_folder').'modules/')){
-            $this->moduleSearchPaths['custom'] = conf('custom_folder').'modules/';
+        
+        // Module search paths from config
+        $moduleSearchPaths = [];
+        if(is_array(conf('module_search_paths'))){
+            $moduleSearchPaths = conf('module_search_paths');
         }
-
         // And then built-in modules
-        $this->moduleSearchPaths['builtin'] = conf('module_path');
-
-
+        $moduleSearchPaths[] = conf('module_path');
+        
+        foreach ($moduleSearchPaths as $path) {
+            if(is_dir($path)){
+                $this->moduleSearchPaths[] = rtrim($path, '/') . '/';
+            }
+        }
     }
 
     /**
@@ -118,7 +122,7 @@ class Modules
      */
     public function getModuleList()
     {
-        $modules = array();
+        $modules = [];
         foreach ($this->moduleSearchPaths as $path)
         {
             foreach (scandir($path) as $module)
@@ -152,9 +156,9 @@ class Modules
         }
 
         if($skipInactiveModules){
-            $allowedModules = array_merge($this->allowedModules, conf('modules', array()));
+            $allowedModules = array_merge($this->allowedModules, conf('modules', []));
         }else{
-            $allowedModules = array(); // No need to set this.
+            $allowedModules = []; // No need to set this.
         }
 
         $this->collectModuleInfo($this->moduleSearchPaths, $skipInactiveModules, $allowedModules);
@@ -170,7 +174,7 @@ class Modules
             return $this->moduleList;
         }
 
-        $out = array();
+        $out = [];
         foreach ($this->moduleList as $module => $moduleInfo) {
             if(array_key_exists($about, $moduleInfo)){
                 $out[$module] = $moduleInfo[$about];
@@ -193,10 +197,10 @@ class Modules
     {
         if(isset($this->moduleList[$module]['listings'])){
             if( isset($this->moduleList[$module]['listings'][$name]['view'])) {
-                return (object) array(
+                return (object) [
                     'view_path' => $this->getPath($module, '/views/'),
                     'view' => $this->moduleList[$module]['listings'][$name]['view'],
-                );
+                ];
             }
         }
         return False;
@@ -205,10 +209,10 @@ class Modules
     public function getReport($module, $name)
     {
         if(isset($this->moduleList[$module]['reports'][$name])){
-            return (object) array(
+            return (object) [
                 'view_path' => $this->getPath($module, '/views/'),
                 'view' => $this->moduleList[$module]['reports'][$name]['view'],
-            );
+            ];
         }
         return False;
     }
@@ -242,16 +246,16 @@ class Modules
      */
     public function getDropdownData($kind, $baseUrl, $page)
     {
-        $out = array();
+        $out = [];
         foreach( $this->getInfo($kind) as $module => $kindArray){
             foreach($kindArray as $itemName => $itemData){
                 $i18n = isset($itemData['i18n']) ? $itemData['i18n'] : 'nav.' . $kind . '.' . $itemName;
-                $out[] = (object) array(
+                $out[] = (object) [
                   'url' => url($baseUrl.'/'.$module.'/'.$itemName),
                   'name' => $itemName,
                   'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
                   'i18n' => $i18n,
-                );
+                ];
             }
         }
 
@@ -262,17 +266,17 @@ class Modules
     //  Get listings info
     public function getListingDropdownData($page)
     {
-        $out = array();
+        $out = [];
         foreach( $this->getInfo('listings') as $module => $listings){
             foreach($listings as $listingInfo){
                 $name = str_replace('_listing', '', $listingInfo['view']);
                 $i18n = isset($listingInfo['i18n']) ? $listingInfo['i18n'] : 'nav.listings.' . $name;
-                $out[] = (object) array(
+                $out[] = (object) [
                   'url' => url('show/listing/'.$module.'/'.$name),
                   'name' => $name,
                   'class' => substr_compare( $page, $name, -strlen( $name ) ) === 0 ? 'active' : '',
                   'i18n' => $i18n,
-                );
+                ];
             }
         }
 
@@ -281,7 +285,7 @@ class Modules
 
     public function getModuleLocales($lang='en')
     {
-        $localeList = array();
+        $localeList = [];
         foreach( $this->moduleList as $module => $info){
             $localePath = sprintf('%s/locales/%s.json', $info['path'], $lang);
             if(is_file($localePath)){
