@@ -24,7 +24,7 @@
 	| figure out how to rewrite urls in the server of your choice.
 	|
 	*/
-	$conf['index_page'] = getenv_default('INDEX_PAGE', 'index.php?');
+	$conf['index_page'] = env('INDEX_PAGE', 'index.php?');
 
 	/*
 	|===============================================
@@ -36,7 +36,7 @@
 	| defaults to AUTO
 	|
 	*/
-	$conf['uri_protocol'] = getenv_default('URI_PROTOCOL', 'AUTO');
+	$conf['uri_protocol'] = env('URI_PROTOCOL', 'AUTO');
 
 	/*
 	|===============================================
@@ -50,7 +50,7 @@
 	if(PHP_SAPI != 'cli') {
 	    $webhost_default = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
             . '://'.$_SERVER[ 'HTTP_HOST' ];
-	    $conf['webhost'] = getenv_default('WEBHOST', $webhost_default);
+	    $conf['webhost'] = env('WEBHOST', $webhost_default);
 	}
 
 	/*
@@ -74,7 +74,7 @@
         0,
         strpos($_SERVER['PHP_SELF'], basename(FC))
         );
-	$conf['subdirectory'] = getenv_default('SUBDIRECTORY', $subdirectory_default);
+	$conf['subdirectory'] = env('SUBDIRECTORY', $subdirectory_default);
 
 	/*
 	|===============================================
@@ -84,7 +84,7 @@
 	| Will appear in the title bar of your browser and as heading on each webpage
 	|
 	*/
-	$conf['sitename'] = getenv_default('SITENAME', 'MunkiReport');
+	$conf['sitename'] = env('SITENAME', 'MunkiReport');
 
 	/*
 	|===============================================
@@ -94,17 +94,27 @@
 	| When false, all modules will be shown in the interface like
 	|	in the 'Listings' menu.
 	*/
-	$conf['hide_inactive_modules'] = getenv_default('HIDE_INACTIVE_MODULES', true, 'bool');
+	$conf['hide_inactive_modules'] = env('HIDE_INACTIVE_MODULES', true);
+	
+	/*
+	|===============================================
+	| Module Search Paths
+	|===============================================
+	|
+	| Filesystem paths to search for modules
+	|	replaces the implicit 'custom' module path
+	*/
+	$conf['module_search_paths'] = env('MODULE_SEARCH_PATHS', []);
 
 	/*
-        |===============================================
-        | Local Admin Threshold Value
-        |===============================================
-        |
+  |===============================================
+  | Local Admin Threshold Value
+  |===============================================
+  |
 	| This value specifies the minimum number of local admin accounts needed to
 	|	list the computer in the Local Admin Report.  Default is 2.
 	*/
-	$conf['local_admin_threshold'] = getenv_default('LOCALADMIN_THRESHOLD', 2, 'int');
+	$conf['local_admin_threshold'] = env('LOCALADMIN_THRESHOLD', 2);
 
 	/*
 	|===============================================
@@ -114,7 +124,7 @@
 	| Sets the default theme for new logins/users.
 	|
 	*/
-	$conf['default_theme'] = getenv_default('DEFAULT_THEME', 'Default');
+	$conf['default_theme'] = env('DEFAULT_THEME', 'Default');
 
 	/*
 	|===============================================
@@ -168,7 +178,7 @@
 	|
 	*/
 
-	$auth_methods = getenv_default('AUTH_METHODS', [], 'array');
+	$auth_methods = env('AUTH_METHODS', []);
   if (count($auth_methods) > 0) {
       foreach ($auth_methods as $auth_method) {
           switch (strtoupper($auth_method)) {
@@ -197,8 +207,8 @@
 	| Request API keys from https://www.google.com/recaptcha
 	|
 	*/
-	$conf['recaptchaloginpublickey'] = getenv_default('RECAPTCHA_LOGIN_PUBLIC_KEY', '');
-	$conf['recaptchaloginprivatekey'] = getenv_default('RECAPTCHA_LOGIN_PRIVATE_KEY', '');
+	$conf['recaptchaloginpublickey'] = env('RECAPTCHA_LOGIN_PUBLIC_KEY', '');
+	$conf['recaptchaloginprivatekey'] = env('RECAPTCHA_LOGIN_PRIVATE_KEY', '');
 
 	/*
 	|===============================================
@@ -210,8 +220,8 @@
 	| also used by the Business Units
 	|
 	*/
-	$conf['authorization']['delete_machine'] = getenv_default('AUTHORIZATION_DELETE_MACHINE', ['admin', 'manager'], 'array');
-	$conf['authorization']['global'] = getenv_default('AUTHORIZATION_GLOBAL', ['admin'], 'array');
+	$conf['authorization']['delete_machine'] = env('AUTHORIZATION_DELETE_MACHINE', ['admin', 'manager']);
+	$conf['authorization']['global'] = env('AUTHORIZATION_GLOBAL', ['admin']);
 
 	/*
 	|===============================================
@@ -221,7 +231,7 @@
 	| Add users or groups to the appropriate roles array.
 	|
 	*/
-	$conf['roles']['admin'] = getenv_default('ROLES_ADMIN', ['*'], 'array');
+	$conf['roles']['admin'] = env('ROLES_ADMIN', ['*']);
 
 	/*
 	|===============================================
@@ -231,7 +241,7 @@
 	| Create local groups, add users to groups.
 	|
 	*/
-	$conf['groups']['admin_users'] = getenv_default('GROUPS_ADMIN_USERS', [], 'array');
+	$conf['groups']['admin_users'] = env('GROUPS_ADMIN_USERS', []);
 
 	/*
 	|===============================================
@@ -242,7 +252,7 @@
 	| For more information, see docs/business_units.md
 	|
 	*/
-	$conf['enable_business_units'] = getenv_default('ENABLE_BUSINESS_UNITS',FALSE, 'bool');
+	$conf['enable_business_units'] = env('ENABLE_BUSINESS_UNITS', false);
 
 	/*
 	|===============================================
@@ -253,7 +263,7 @@
 	| This is useful for sites that serve MR both via http and https
 	|
 	*/
-	$conf['auth_secure'] = getenv_default('AUTH_SECURE', FALSE, 'bool');
+	$conf['auth_secure'] = env('AUTH_SECURE', false);
 
 	/*
 	|===============================================
@@ -276,8 +286,8 @@
 	| replace the username in the SSH config with %u: 
 	| $conf['ssh_link'] = "ssh://%u@%s";
 	*/
-	$conf['vnc_link'] = getenv_default('VNC_LINK', "vnc://%s:5900");
-	$conf['ssh_link'] = getenv_default('SSH_LINK',"ssh://adminuser@%s");
+	$conf['vnc_link'] = env('VNC_LINK', "vnc://%s:5900");
+	$conf['ssh_link'] = env('SSH_LINK',"ssh://adminuser@%s");
 
 	/*
 	|===============================================
@@ -303,7 +313,7 @@
         'com.apple.print.PrinterProxy',
         'com.google.Chrome.app.*',
         ];
-	$conf['bundleid_ignorelist'] = getenv_default('BUNDLEID_IGNORELIST', $default_ignorelist, 'array');
+	$conf['bundleid_ignorelist'] = env('BUNDLEID_IGNORELIST', $default_ignorelist);
 
 	/*
 	|===============================================
@@ -327,7 +337,7 @@
         '/Library/Application Support/Adobe/Uninstall/.*',
         '.*/Library/Application Support/Google/Chrome/Default/Web Applications/.*',
         ];
-	$conf['bundlepath_ignorelist'] = getenv_default('BUNDLEPATH_IGNORELIST', $default_path_ignorelist, 'array');
+	$conf['bundlepath_ignorelist'] = env('BUNDLEPATH_IGNORELIST', $default_path_ignorelist);
 
 	/*
 	|===============================================
@@ -376,13 +386,13 @@
 	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
 	| are required.
 	*/
-	$conf['gsx_enable'] = getenv_default('GSX_ENABLE', false, 'bool');
-	$conf['gsx_cert'] = getenv_default('GSX_CERT');
-	$conf['gsx_cert_keypass'] = getenv_default('GSX_CERT_KEYPASS');
-	$conf['gsx_sold_to'] = getenv_default('GSX_SOLD_TO');
-	$conf['gsx_ship_to'] = getenv_default('GSX_SHIP_TO'); // Often the same as the sold to number
-	$conf['gsx_username'] = getenv_default('GSX_USERNAME');
-	$conf['gsx_date_format'] = getenv_default('GSX_DATE_FORMAT', 'm/d/y');
+	$conf['gsx_enable'] = env('GSX_ENABLE', false);
+	$conf['gsx_cert'] = env('GSX_CERT');
+	$conf['gsx_cert_keypass'] = env('GSX_CERT_KEYPASS');
+	$conf['gsx_sold_to'] = env('GSX_SOLD_TO');
+	$conf['gsx_ship_to'] = env('GSX_SHIP_TO'); // Often the same as the sold to number
+	$conf['gsx_username'] = env('GSX_USERNAME');
+	$conf['gsx_date_format'] = env('GSX_DATE_FORMAT', 'm/d/y');
 
 	/*
 	|===============================================
@@ -426,7 +436,7 @@
 	| Setting usb_internal to FALSE will skip all internal devices.
 	|
 	*/
-	$conf['usb_internal'] = getenv_default('USB_INTERNAL', TRUE, 'bool');
+	$conf['usb_internal'] = env('USB_INTERNAL', true);
 
 
 	/*
@@ -438,7 +448,7 @@
 	| Setting fonts_system to FALSE will skip all system fonts in /System/Library/Fonts.
 	|
 	*/
-	$conf['fonts_system'] = getenv_default('FONTS_SYSTEM', TRUE, 'bool');
+	$conf['fonts_system'] = env('FONTS_SYSTEM', true);
 
 	/*
 	|===============================================
@@ -456,7 +466,7 @@
 	| $conf['google_maps_api_key'] = 'YOUR_API_KEY';
 	|
 	*/
-	$conf['google_maps_api_key'] = getenv_default('GOOGLE_MAPS_API_KEY', '');
+	$conf['google_maps_api_key'] = env('GOOGLE_MAPS_API_KEY', '');
 
 	/*
 	|===============================================
@@ -475,7 +485,7 @@
         "--fail",
         "--silent",
         "--show-error"];
-	$conf['curl_cmd'] = getenv_default('CURL_CMD', $default_curl_cmd, 'array');
+	$conf['curl_cmd'] = env('CURL_CMD', $default_curl_cmd);
 
 
 	/*
@@ -489,7 +499,7 @@
 	| To learn more about MWA2 visit: https://github.com/munki/mwa2
 	|
 	*/
-        $conf['mwa2_link'] = getenv_default('MWA2_LINK');
+        $conf['mwa2_link'] = env('MWA2_LINK');
 
 	/*
 	|===============================================
@@ -505,7 +515,7 @@
 	| Machine and Reportdata
 	|
 	*/
-	$conf['modules'] = getenv_default('MODULES', ['munkireport', 'managedinstalls'], 'array');
+	$conf['modules'] = env('MODULES', ['munkireport', 'managedinstalls']);
 
 	/*
 	|===============================================
@@ -521,7 +531,7 @@
 	|
 	| When not configured, or if set to FALSE, the default behaviour applies.
 	*/
-	$conf['keep_previous_displays'] = getenv_default('DISPLAYS_INFO_KEEP_PREVIOUS', TRUE, 'bool');
+	$conf['keep_previous_displays'] = env('DISPLAYS_INFO_KEEP_PREVIOUS', true);
 
 	/*
 	|===============================================
@@ -536,7 +546,7 @@
 	| By default temperature units are displayed in Celsius °C.
 	|
 	*/
-	$conf['temperature_unit'] = getenv_default('TEMPERATURE_UNIT', 'F');
+	$conf['temperature_unit'] = env('TEMPERATURE_UNIT', 'F');
 
 	/*
 	|===============================================
@@ -553,7 +563,7 @@
 	|
 	|
 	*/
-	$conf['client_passphrases'] = getenv_default('CLIENT_PASSPHRASES', [], 'array');
+	$conf['client_passphrases'] = env('CLIENT_PASSPHRASES', []);
 
 	/*
 	|===============================================
@@ -563,9 +573,9 @@
 	| Override these if you want to provide your own custom scripts that
 	| call the munkireport scripts
 	*/
-	$conf['preflight_script'] = getenv_default('PREFLIGHT_SCRIPT', 'preflight');
-	$conf['postflight_script'] = getenv_default('POSTFLIGHT_SCRIPT', 'postflight');
-	$conf['report_broken_client_script'] = getenv_default('REPORT_BROKEN_CLIENT_SCRIPT', 'report_broken_client');
+	$conf['preflight_script'] = env('PREFLIGHT_SCRIPT', 'preflight');
+	$conf['postflight_script'] = env('POSTFLIGHT_SCRIPT', 'postflight');
+	$conf['report_broken_client_script'] = env('REPORT_BROKEN_CLIENT_SCRIPT', 'report_broken_client');
 
 	/*
 	|===============================================
@@ -599,7 +609,7 @@
 	| Valid options are 'curl', 'stream' or 'auto' (default)
 	| For CA Bundle options see http://docs.guzzlephp.org/en/stable/request-options.html#verify
 	*/
-	$conf['guzzle_handler'] = getenv_default('GUZZLE_HANDLER', 'auto');
+	$conf['guzzle_handler'] = env('GUZZLE_HANDLER', 'auto');
 
 	/*
 	|===============================================
@@ -611,7 +621,7 @@
 	| Timeout in seconds
 	|
 	*/
-	$conf['request_timeout'] = getenv_default('REQUEST_TIMEOUT', 5, 'int');
+	$conf['request_timeout'] = env('REQUEST_TIMEOUT', 5);
 
 	/*
 	|===============================================
@@ -621,7 +631,7 @@
 	| URL to retrieve icon from Apple
 	|
 	*/
-	$conf['apple_hardware_icon_url'] = getenv_default('APPLE_HARDWARE_ICON_URL', 'https://km.support.apple.com/kb/securedImage.jsp?configcode=%s&amp;size=240x240');
+	$conf['apple_hardware_icon_url'] = env('APPLE_HARDWARE_ICON_URL', 'https://km.support.apple.com/kb/securedImage.jsp?configcode=%s&amp;size=240x240');
 
 	/*
 	|===============================================
@@ -768,7 +778,7 @@
 	| $conf['apps_to_track'] = ['Flash Player', 'Java', 'Firefox', 'Microsoft Excel'];
 	|
 	*/
-	$conf['apps_to_track'] = getenv_default('APPS_TO_TRACK', ['Safari'], 'array');
+	$conf['apps_to_track'] = env('APPS_TO_TRACK', ['Safari']);
 
 	/*
 	|===============================================
@@ -782,8 +792,8 @@
 	|
 	*/
 	$conf['disk_thresholds'] = [
-	    'danger' => getenv_default('DISK_REPORT_THRESHOLD_DANGER', 5, 'int'),
-        'warning' => getenv_default('DISK_REPORT_THRESHOLD_WARNING', 10, 'int')
+	    'danger' => env('DISK_REPORT_THRESHOLD_DANGER', 5),
+        'warning' => env('DISK_REPORT_THRESHOLD_WARNING', 10)
         ];
 
 	/*
@@ -808,7 +818,7 @@
 	$conf['controller_path'] = $conf['application_path'].'controllers/';
 
 	// Path to modules directory, with trailing slash
-	$conf['module_path'] = $conf['application_path'] . "modules/";
+	$conf['module_path'] = APP_ROOT . "/vendor/munkireport/";
 
 	// Routes
 	$conf['routes'] = [];
@@ -838,20 +848,20 @@
 	|
 	*/
 	$conf['connection'] = [
-	    'driver'    => getenv_default('CONNECTION_DRIVER', 'sqlite'),
-	    'database'  => getenv_default('CONNECTION_DATABASE', $conf['application_path'].'db/db.sqlite'),
+	    'driver'    => env('CONNECTION_DRIVER', 'sqlite'),
+	    'database'  => env('CONNECTION_DATABASE', $conf['application_path'].'db/db.sqlite'),
 	];
 
 	if ($conf['connection']['driver'] !== 'sqlite') {
-	    $conf['connection']['host'] = getenv_default('CONNECTION_HOST', '127.0.0.1');
-	    $conf['connection']['port'] = getenv_default('CONNECTION_PORT', 3306, 'int');
-	    $conf['connection']['database'] = getenv_default('CONNECTION_DATABASE', 'munkireport');
-	    $conf['connection']['username'] = getenv_default('CONNECTION_USERNAME', 'munkireport');
-	    $conf['connection']['password'] = getenv_default('CONNECTION_PASSWORD', 'munkireport');
-	    $conf['connection']['charset'] = getenv_default('CONNECTION_CHARSET', 'utf8mb4');
-	    $conf['connection']['collation'] = getenv_default('CONNECTION_COLLATION', 'utf8mb4_unicode_ci');
-	    $conf['connection']['strict'] = getenv_default('CONNECTION_STRICT', true, 'bool');
-	    $conf['connection']['engine'] = getenv_default('CONNECTION_ENGINE', 'InnoDB');
+	    $conf['connection']['host'] = env('CONNECTION_HOST', '127.0.0.1');
+	    $conf['connection']['port'] = env('CONNECTION_PORT', 3306);
+	    $conf['connection']['database'] = env('CONNECTION_DATABASE', 'munkireport');
+	    $conf['connection']['username'] = env('CONNECTION_USERNAME', 'munkireport');
+	    $conf['connection']['password'] = env('CONNECTION_PASSWORD', 'munkireport');
+	    $conf['connection']['charset'] = env('CONNECTION_CHARSET', 'utf8mb4');
+	    $conf['connection']['collation'] = env('CONNECTION_COLLATION', 'utf8mb4_unicode_ci');
+	    $conf['connection']['strict'] = env('CONNECTION_STRICT', true);
+	    $conf['connection']['engine'] = env('CONNECTION_ENGINE', 'InnoDB');
 	    // TODO: connection options
         }
 
@@ -863,7 +873,7 @@
 	| For MySQL, define the default table and charset
 	|
 	*/
-	$conf['mysql_create_tbl_opts'] = getenv_default('MYSQL_CREATE_TBL_OPTS','ENGINE=InnoDB DEFAULT CHARSET=utf8');
+	$conf['mysql_create_tbl_opts'] = env('MYSQL_CREATE_TBL_OPTS','ENGINE=InnoDB DEFAULT CHARSET=utf8');
 
         /*
         |===============================================
@@ -950,4 +960,4 @@
 	| If set to TRUE, will deliver debugging messages in the page. Set to
 	| FALSE in a production environment
 	*/
-	$conf['debug'] = getenv_default('DEBUG', FALSE, 'bool');
+	$conf['debug'] = env('DEBUG', false);

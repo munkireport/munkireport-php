@@ -1,4 +1,14 @@
-### [3.2.6](https://github.com/munkireport/munkireport-php/compare/v3.2.5...HEAD) (Unreleased)
+### [3.3.0](https://github.com/munkireport/munkireport-php/compare/v3.2.6...HEAD) (Unreleased)
+
+FIXES
+- Fix Database sizing (#1177)
+
+NEW FEATURES
+- Add module search path (#1187)
+- Modules are split off into separate repos
+- Added composer-merge plugin (allows for local composer.json file)
+
+### [3.2.6](https://github.com/munkireport/munkireport-php/compare/v3.2.5...v3.2.6) (November 08, 2018)
 
 FIXES
 - detectx I ❤️ u
