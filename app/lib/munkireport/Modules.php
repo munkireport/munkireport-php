@@ -28,16 +28,20 @@ class Modules
         if(conf('hide_inactive_modules')){
             $this->skipInactiveModules = True;
         }
-
-        // Custom modules go first
-        if(conf('custom_folder') && is_dir(conf('custom_folder').'modules/')){
-            $this->moduleSearchPaths['custom'] = conf('custom_folder').'modules/';
+        
+        // Module search paths from config
+        $moduleSearchPaths = [];
+        if(is_array(conf('module_search_paths'))){
+            $moduleSearchPaths = conf('module_search_paths');
         }
-
         // And then built-in modules
-        $this->moduleSearchPaths['builtin'] = conf('module_path');
-
-
+        $moduleSearchPaths[] = conf('module_path');
+        
+        foreach ($moduleSearchPaths as $path) {
+            if(is_dir($path)){
+                $this->moduleSearchPaths[] = rtrim($path, '/') . '/';
+            }
+        }
     }
 
     /**
