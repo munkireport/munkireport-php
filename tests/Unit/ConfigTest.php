@@ -2,9 +2,7 @@
 namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 
-define('KISS', true);
 define('APP_ROOT', __DIR__ . '/../../');
-define('FC', APP_ROOT . '/public/index.php');
 define('MUNKIREPORT_SETTINGS', 'tests/fixtures/env.fixture');
 
 class ConfigTest extends TestCase

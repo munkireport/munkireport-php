@@ -1,8 +1,4 @@
 <?php
-define( 'KISS', 1 );
-
-// Front controller
-define('FC', __FILE__ .'/' );
 
 define('PUBLIC_ROOT', dirname(__FILE__) . '/' );
 define('APP_ROOT', dirname(PUBLIC_ROOT) . '/' );
