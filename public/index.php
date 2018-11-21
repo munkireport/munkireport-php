@@ -62,6 +62,28 @@ function load_conf()
 
 }
 
+/**
+ * Add config array to global config array
+ *
+ *
+ * @param array $configArray
+ */
+function configAppendArray($configArray)
+{
+	$GLOBALS['conf'] += $configArray;
+}
+
+/**
+ * Add config file to global config array
+ *
+ *
+ * @param array $configPath
+ */
+function configAppendFile($configPath)
+{
+	$config = require_once($configPath);
+	configAppendArray($config);
+}
 
 /**
  * Get config item
