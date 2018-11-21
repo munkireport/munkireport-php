@@ -499,7 +499,7 @@
 	| To learn more about MWA2 visit: https://github.com/munki/mwa2
 	|
 	*/
-        $conf['mwa2_link'] = env('MWA2_LINK');
+	$conf['mwa2_link'] = env('MWA2_LINK');
 
 	/*
 	|===============================================
