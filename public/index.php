@@ -81,7 +81,7 @@ function configAppendArray($configArray)
  */
 function configAppendFile($configPath)
 {
-	$config = require_once($configPath);
+	$config = require $configPath;
 	configAppendArray($config);
 }
 
