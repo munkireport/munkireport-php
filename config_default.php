@@ -279,17 +279,6 @@
 
 	/*
 	|===============================================
-	| USB Devices
-	|===============================================
-	|
-	| By default the USB module will collect information on all USB devices.
-	| Setting usb_internal to FALSE will skip all internal devices.
-	|
-	*/
-	$conf['usb_internal'] = env('USB_INTERNAL', true);
-
-	/*
-	|===============================================
 	| Fonts
 	|===============================================
 	|
