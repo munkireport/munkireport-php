@@ -538,21 +538,6 @@
 
 	/*
 	|===============================================
-	| Apps Version Report
-	|===============================================
-	|
-	| List of applications, by name, that you want to see in the apps
-	| version report. If this is not set the report page will appear empty.
-	| This is case insensitive but must be an array.
-	|
-	| Eg:
-	| $conf['apps_to_track'] = ['Flash Player', 'Java', 'Firefox', 'Microsoft Excel'];
-	|
-	*/
-	$conf['apps_to_track'] = env('APPS_TO_TRACK', ['Safari']);
-
-	/*
-	|===============================================
 	| App settings
 	|===============================================
 	|
