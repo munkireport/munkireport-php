@@ -16,7 +16,7 @@ function env($key, $default = null, $typehint = null) {
         }
         switch ($typehint) {
             case 'array':
-                return explode(',', $v);
+                return array_map('trim', explode(',', $v));
             case 'bool':
             case 'boolean':
                 return $v == 'TRUE' || $v == '1';
