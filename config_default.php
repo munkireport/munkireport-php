@@ -287,53 +287,6 @@
 	$conf['vnc_link'] = env('VNC_LINK', "vnc://%s:5900");
 	$conf['ssh_link'] = env('SSH_LINK',"ssh://adminuser@%s");
 
-
-	/*
-	|===============================================
-	| Application Usage - bundle ID ignore list
-	|===============================================
-	|
-	| List of bundle-ID's to be ignored when processing application usage
-	| The list is processed using regex, examples:
-	|
-	| Skip  all virtual windows apps created by parallels and VMware
-	| $conf['bundleid_ignorelist'][] = ['com.parallels.winapp.*', 'com.vmware.proxyApp.*'];
-	|
-	| Skip all Apple apps, except iLife, iWork and Server
-	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
-	|
-	| Skip all apps with empty bundle-id's
-	| '^$'
-	|
-	*/
-	$conf['appusage_ignorelist'] = [
-	    'com.apple.SecurityAgent',
-	    'com.apple.cloudphotosd',
-	    'com.apple.dock.extra',
-	    'com.apple.PowerChime*',
-	];
-
-
-	/*
-	|===============================================
-	| DeployStudio
-	|===============================================
-	|
-	| A working DeployStudio server is required for use of this module.
-	|
-	| To use the DeployStudio module, set 'deploystudio_enable' to TRUE and
-	| enter the server, username, and password for accessing your primary
-	| DeployStudio server.
-	|
-	| This module currently only pulls data from the primary DeployStudio
-	| server. This means if a machine was imaged off of a replica server
-	| its data may not show in MunkiReport.
-	*/
-	$conf['deploystudio_enable'] = FALSE;
-	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443'; // no trailing slash
-	$conf['deploystudio_username'] = 'deploystudio_user';
-	$conf['deploystudio_password'] = 'deploystudio_password';
-
 	/*
 	|===============================================
 	| Legacy Caching Listing
@@ -357,7 +310,6 @@
 	|
 	*/
 	$conf['usb_internal'] = env('USB_INTERNAL', true);
-
 
 	/*
 	|===============================================
