@@ -346,22 +346,6 @@
 
 	/*
 	|===============================================
-	| Displays module history option
-	|===============================================
-	|
-	| By default this module overrides the information of a client computer
-	| on each client's report submission.
-	|
-	| If you would like to keep displays information until the display is seen again
-	| on a different computer use:
-	|			$conf['keep_previous_displays'] = TRUE;
-	|
-	| When not configured, or if set to FALSE, the default behaviour applies.
-	*/
-	$conf['keep_previous_displays'] = env('DISPLAYS_INFO_KEEP_PREVIOUS', true);
-
-	/*
-	|===============================================
 	| Unit of temperature °C or °F
 	|===============================================
 	|
