@@ -279,17 +279,6 @@
 
 	/*
 	|===============================================
-	| Fonts
-	|===============================================
-	|
-	| By default the fonts module will collect information on all fonts.
-	| Setting fonts_system to FALSE will skip all system fonts in /System/Library/Fonts.
-	|
-	*/
-	$conf['fonts_system'] = env('FONTS_SYSTEM', true);
-
-	/*
-	|===============================================
 	| Google Maps API Key
 	|===============================================
 	|
