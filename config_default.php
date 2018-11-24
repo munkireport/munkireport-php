@@ -333,10 +333,11 @@
 	| Modules
 	|===============================================
 	|
-	| List of modules that have to be installed on the client
-	| See for possible values the names of the directories
-	| in app/modules/
-	| e.g. $conf['modules'] = ['disk_report', 'inventory'];
+	| List of modules that have to be installed on the client.
+	| For possible values see the names of the directories in
+	| vendor/munkireport/
+	| e.g.
+	| $conf['modules'] = env('MODULES', ['munkireport', 'managedinstalls', 'disk_report', 'inventory']);
 	|
 	| An empty list installs only the basic reporting modules:
 	| Machine and Reportdata
