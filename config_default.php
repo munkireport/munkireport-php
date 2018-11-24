@@ -523,7 +523,7 @@
 	|	hardware_age
 	|	hardware_model
 	|	memory
-	|	os breakdown
+	|	os
 	|	printer
 	|
 	| Responsive horizontal widgets:
