@@ -351,7 +351,7 @@
 	|
 	| Unit of temperature, possible values: F for Fahrenheit, C for Celsius
 	|
-	|			$conf['temperature_unit'] = 'F';
+	| $conf['temperature_unit'] = env('TEMPERATURE_UNIT', 'F');
 	|
 	| When not configured, the default behaviour applies.
 	| By default temperature units are displayed in Celsius °C.
