@@ -371,8 +371,7 @@
 	| defaults write /Library/Preferences/MunkiReport Passphrase 'secret1'
 	|
 	| On the server:
-	| $conf['client_passphrases'] = ['secret1', 'secret2'];
-	|
+	| $conf['client_passphrases'] = env('CLIENT_PASSPHRASES', ['secret1', 'secret2']);
 	|
 	*/
 	$conf['client_passphrases'] = env('CLIENT_PASSPHRASES', []);
