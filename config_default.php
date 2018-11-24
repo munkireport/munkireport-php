@@ -261,9 +261,9 @@
 	| Substitutions key:
 	|   %s = remote IP
 	|   %remote_ip = remote IP (same as above but easier to read in the config)
-        |   %u = logged in username
-        |   %network_ip_v4 = local network ipv4 address
-        |   %network_ip_v6 = local network ipv6 address
+	|   %u = logged in username
+	|   %network_ip_v4 = local network ipv4 address
+	|   %network_ip_v6 = local network ipv6 address
 	|
 	| If you want to have link that opens a screensharing or SSH
 	| connection to a client, enable these settings. If you don't
