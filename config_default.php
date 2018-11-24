@@ -261,9 +261,9 @@
 	| Substitutions key:
 	|   %s = remote IP
 	|   %remote_ip = remote IP (same as above but easier to read in the config)
-        |   %u = logged in username
-        |   %network_ip_v4 = local network ipv4 address
-        |   %network_ip_v6 = local network ipv6 address
+	|   %u = logged in username
+	|   %network_ip_v4 = local network ipv4 address
+	|   %network_ip_v6 = local network ipv6 address
 	|
 	| If you want to have link that opens a screensharing or SSH
 	| connection to a client, enable these settings. If you don't
@@ -290,8 +290,8 @@
 	| https://console.developers.google.com/flows/enableapi?apiid=maps_backend&keyType=CLIENT_SIDE&reusekey=true
 	| And choose - Create browser API key
 	| Add the following line to your config.php file and insert your key.
-	| $conf['google_maps_api_key'] = 'YOUR_API_KEY';
-	|
+	| $conf['google_maps_api_key'] = env('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY');
+	| 
 	*/
 	$conf['google_maps_api_key'] = env('GOOGLE_MAPS_API_KEY', '');
 
@@ -307,11 +307,11 @@
 	| checked.
 	|
 	*/
-        $default_curl_cmd = [
-        "/usr/bin/curl",
-        "--fail",
-        "--silent",
-        "--show-error"];
+	$default_curl_cmd = [
+		"/usr/bin/curl",
+		"--fail",
+		"--silent",
+		"--show-error"];
 	$conf['curl_cmd'] = env('CURL_CMD', $default_curl_cmd);
 
 
@@ -326,17 +326,18 @@
 	| To learn more about MWA2 visit: https://github.com/munki/mwa2
 	|
 	*/
-        $conf['mwa2_link'] = env('MWA2_LINK');
+	$conf['mwa2_link'] = env('MWA2_LINK');
 
 	/*
 	|===============================================
 	| Modules
 	|===============================================
 	|
-	| List of modules that have to be installed on the client
-	| See for possible values the names of the directories
-	| in app/modules/
-	| e.g. $conf['modules'] = ['disk_report', 'inventory'];
+	| List of modules that have to be installed on the client.
+	| For possible values see the names of the directories in
+	| vendor/munkireport/
+	| e.g.
+	| $conf['modules'] = env('MODULES', ['munkireport', 'managedinstalls', 'disk_report', 'inventory']);
 	|
 	| An empty list installs only the basic reporting modules:
 	| Machine and Reportdata
@@ -351,7 +352,7 @@
 	|
 	| Unit of temperature, possible values: F for Fahrenheit, C for Celsius
 	|
-	|			$conf['temperature_unit'] = 'F';
+	| $conf['temperature_unit'] = env('TEMPERATURE_UNIT', 'F');
 	|
 	| When not configured, the default behaviour applies.
 	| By default temperature units are displayed in Celsius °C.
@@ -370,8 +371,7 @@
 	| defaults write /Library/Preferences/MunkiReport Passphrase 'secret1'
 	|
 	| On the server:
-	| $conf['client_passphrases'] = ['secret1', 'secret2'];
-	|
+	| $conf['client_passphrases'] = env('CLIENT_PASSPHRASES', ['secret1', 'secret2']);
 	|
 	*/
 	$conf['client_passphrases'] = env('CLIENT_PASSPHRASES', []);
@@ -482,23 +482,23 @@
 	| This is a list of the current dashboard widgets
 	|
 	| Small horizontal widgets:
-        |       bound_to_ds
-        |       client (two items)
-        |       disk_report
-        |       external_displays_count
-        |       firmwarepw
-        |       gatekeeper
-        |       hardware_model
-        |       installed memory
-        |       localadmin
-        |       munki
-        |       power_battery_condition
-        |       power_battery_health
-        |       sip
-        |       smart_status
-        |       uptime
-        |       wifi_state
-        |       	|
+	|	bound_to_ds
+	|	client (two items)
+	|	disk_report
+	|	external_displays_count
+	|	firmwarepw
+	|	gatekeeper
+	|	hardware_model
+	|	installed memory
+	|	localadmin
+	|	munki
+	|	power_battery_condition
+	|	power_battery_health
+	|	sip
+	|	smart_status
+	|	uptime
+	|	wifi_state
+	|
 	| Small horizontal / medium vertical widgets:
 	|	network_location
 	|
@@ -523,7 +523,7 @@
 	|	hardware_age
 	|	hardware_model
 	|	memory
-	|	os breakdown
+	|	os
 	|	printer
 	|
 	| Responsive horizontal widgets:
@@ -615,30 +615,30 @@
 	*/
 	$conf['mysql_create_tbl_opts'] = env('MYSQL_CREATE_TBL_OPTS','ENGINE=InnoDB DEFAULT CHARSET=utf8');
 
-        /*
-        |===============================================
-        | Whitelist Management Console Access
-        |===============================================
-        |
-        | Whitelisting of IP addresses that can access the management interface 
-        |    (anything except for index.php?/report/ which is always allowed)
-        |  - You can provide either individual IP addresses (which will have /32 appended automatically)
-        |      or you can provide CIDR notation. See https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing for reference
-        |  - You can also provide a custom 403 page for traffic that does not have access to the management interface
-        |      Default: The default munkireport-php 403 client error page (no need to add this object if you 
-        |                 dont want the custom 403 page
-        |
-        */
+	/*
+	|===============================================
+	| Whitelist Management Console Access
+	|===============================================
+	|
+	| Whitelisting of IP addresses that can access the management interface 
+	|    (anything except for index.php?/report/ which is always allowed)
+	|  - You can provide either individual IP addresses (which will have /32 appended automatically)
+	|      or you can provide CIDR notation. See https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing for reference
+	|  - You can also provide a custom 403 page for traffic that does not have access to the management interface
+	|      Default: The default munkireport-php 403 client error page (no need to add this object if you 
+	|                 dont want the custom 403 page
+	|
+	*/
 
-        /*
-        | $conf['auth']['network'] = [
-        |     'whitelist_ipv4' => [
-        |         'xxx.xxx.xxx.xxx',
-        |         'xxx.xxx.xxx.xxx',
-        |     ],
-        |     'redirect_unauthorized' => 'http://fqdn/403.html',
-        | ]
-        */
+	/*
+	| $conf['auth']['network'] = [
+	|     'whitelist_ipv4' => [
+	|         'xxx.xxx.xxx.xxx',
+	|         'xxx.xxx.xxx.xxx',
+	|     ],
+	|     'redirect_unauthorized' => 'http://fqdn/403.html',
+	| ]
+	*/
 
 	/*
 	|===============================================
@@ -676,19 +676,19 @@
 	//$conf['custom_js'] = '/custom.js';
 
 	/*
-        |===============================================
-        | Custom Help URL
-        |===============================================
-        |
+	|===============================================
+	| Custom Help URL
+	|===============================================
+	|
 	| If you want to have a help URL provided, define the 
 	| help_url as a blank string ('') to redirect to the 
 	| MunkiReport-PHP's GitHub Wiki page (in a new tab).
 	|
-        | If you want to override the default help url
-        | (MunkiReport's GitHub Wiki), you can specify which URL
-        | to redirect to (in a new tab).
-        |
-        */
+	| If you want to override the default help url
+	| (MunkiReport's GitHub Wiki), you can specify which URL
+	| to redirect to (in a new tab).
+	|
+	*/
 	// $conf['help_url'] = '';
 	// $conf['help_url'] = 'https://path/to/help';
 
