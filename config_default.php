@@ -290,8 +290,8 @@
 	| https://console.developers.google.com/flows/enableapi?apiid=maps_backend&keyType=CLIENT_SIDE&reusekey=true
 	| And choose - Create browser API key
 	| Add the following line to your config.php file and insert your key.
-	| $conf['google_maps_api_key'] = 'YOUR_API_KEY';
-	|
+	| $conf['google_maps_api_key'] = env('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY');
+	| 
 	*/
 	$conf['google_maps_api_key'] = env('GOOGLE_MAPS_API_KEY', '');
 
