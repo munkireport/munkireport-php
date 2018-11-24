@@ -307,11 +307,11 @@
 	| checked.
 	|
 	*/
-        $default_curl_cmd = [
-        "/usr/bin/curl",
-        "--fail",
-        "--silent",
-        "--show-error"];
+	$default_curl_cmd = [
+		"/usr/bin/curl",
+		"--fail",
+		"--silent",
+		"--show-error"];
 	$conf['curl_cmd'] = env('CURL_CMD', $default_curl_cmd);
 
 
