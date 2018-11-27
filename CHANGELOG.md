@@ -1,4 +1,4 @@
-### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...HEAD) (Unreleased)
+### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...v3.3.1) (November 27, 2018)
 
 FIXES
 - `build/add_module.sh`
