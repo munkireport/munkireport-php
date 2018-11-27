@@ -1,8 +1,4 @@
 <?php
-define( 'KISS', 1 );
-
-// Front controller
-define('FC', __FILE__ .'/' );
 
 define('PUBLIC_ROOT', dirname(__FILE__) . '/' );
 define('APP_ROOT', dirname(PUBLIC_ROOT) . '/' );
@@ -66,6 +62,28 @@ function load_conf()
 
 }
 
+/**
+ * Add config array to global config array
+ *
+ *
+ * @param array $configArray
+ */
+function configAppendArray($configArray)
+{
+	$GLOBALS['conf'] += $configArray;
+}
+
+/**
+ * Add config file to global config array
+ *
+ *
+ * @param array $configPath
+ */
+function configAppendFile($configPath)
+{
+	$config = require $configPath;
+	configAppendArray($config);
+}
 
 /**
  * Get config item

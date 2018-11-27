@@ -1,4 +1,16 @@
-### [3.3.0](https://github.com/munkireport/munkireport-php/compare/v3.2.6...HEAD) (Unreleased)
+### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...HEAD) (Unreleased)
+
+FIXES
+- `build/add_module.sh`
+
+CHANGES
+- Update docker files (#1192)
+- Moved config items to their respective modules
+
+NOTES
+- Docker users: renamed MR_SITENAME to SITENAME and MR_MODULES to MODULES
+
+### [3.3.0](https://github.com/munkireport/munkireport-php/compare/v3.2.6...v3.3.0) (November 20, 2018)
 
 FIXES
 - Fix Database sizing (#1177)

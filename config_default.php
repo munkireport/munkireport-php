@@ -1,6 +1,4 @@
-<?php if ( ! defined( 'KISS' ) ) exit;
-
-
+<?php
 
 	/*
 	|===============================================
@@ -72,7 +70,7 @@
 	$subdirectory_default = substr(
         $_SERVER['PHP_SELF'],
         0,
-        strpos($_SERVER['PHP_SELF'], basename(FC))
+        strpos($_SERVER['PHP_SELF'], 'index.php')
         );
 	$conf['subdirectory'] = env('SUBDIRECTORY', $subdirectory_default);
 
@@ -105,16 +103,6 @@
 	|	replaces the implicit 'custom' module path
 	*/
 	$conf['module_search_paths'] = env('MODULE_SEARCH_PATHS', []);
-
-	/*
-  |===============================================
-  | Local Admin Threshold Value
-  |===============================================
-  |
-	| This value specifies the minimum number of local admin accounts needed to
-	|	list the computer in the Local Admin Report.  Default is 2.
-	*/
-	$conf['local_admin_threshold'] = env('LOCALADMIN_THRESHOLD', 2);
 
 	/*
 	|===============================================
@@ -273,9 +261,9 @@
 	| Substitutions key:
 	|   %s = remote IP
 	|   %remote_ip = remote IP (same as above but easier to read in the config)
-        |   %u = logged in username
-        |   %network_ip_v4 = local network ipv4 address
-        |   %network_ip_v6 = local network ipv6 address
+	|   %u = logged in username
+	|   %network_ip_v4 = local network ipv4 address
+	|   %network_ip_v6 = local network ipv6 address
 	|
 	| If you want to have link that opens a screensharing or SSH
 	| connection to a client, enable these settings. If you don't
@@ -291,167 +279,6 @@
 
 	/*
 	|===============================================
-	| Inventory - bundle ignore list
-	|===============================================
-	|
-	| List of bundle-id's to be ignored when processing inventory
-	| The list is processed using regex, examples:
-	|
-	| Skip  all virtual windows apps created by parallels and VMware
-	| $conf['bundleid_ignorelist'][] = ['com.parallels.winapp.*', 'com.vmware.proxyApp.*'];
-	|
-	| Skip all Apple apps, except iLife, iWork and Server
-	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
-	|
-	| Skip all apps with empty bundle-id's
-	| '^$'
-	|
-	*/
-	$default_ignorelist = [
-        'com.parallels.winapp.*',
-        'com.vmware.proxyApp.*',
-        'com.apple.print.PrinterProxy',
-        'com.google.Chrome.app.*',
-        ];
-	$conf['bundleid_ignorelist'] = env('BUNDLEID_IGNORELIST', $default_ignorelist);
-
-	/*
-	|===============================================
-	| Inventory - path ignore list
-	|===============================================
-	|
-	| List of bundle-paths to be ignored when processing inventory
-	| The list is processed using regex, examples:
-	|
-	| Skip all apps in /System/Library
-	| $conf['bundlepath_ignorelist'][] = '/System/Library/.*';
-	|
-	| Skip all apps that are contained in an app bundle
-	| $conf['bundlepath_ignorelist'][] = '.*\.app\/.*\.app';
-	|
-	*/
-	$default_path_ignorelist = [
-        '/System/Library/.*',
-        '.*/Library/AutoPkg.*',
-        '/.DocumentRevisions-V100/.*',
-        '/Library/Application Support/Adobe/Uninstall/.*',
-        '.*/Library/Application Support/Google/Chrome/Default/Web Applications/.*',
-        ];
-	$conf['bundlepath_ignorelist'] = env('BUNDLEPATH_IGNORELIST', $default_path_ignorelist);
-
-	/*
-	|===============================================
-	| Application Usage - bundle ID ignore list
-	|===============================================
-	|
-	| List of bundle-ID's to be ignored when processing application usage
-	| The list is processed using regex, examples:
-	|
-	| Skip  all virtual windows apps created by parallels and VMware
-	| $conf['bundleid_ignorelist'][] = ['com.parallels.winapp.*', 'com.vmware.proxyApp.*'];
-	|
-	| Skip all Apple apps, except iLife, iWork and Server
-	| 'com.apple.(?!iPhoto)(?!iWork)(?!Aperture)(?!iDVD)(?!garageband)(?!iMovieApp)(?!Server).*'
-	|
-	| Skip all apps with empty bundle-id's
-	| '^$'
-	|
-	*/
-	$conf['appusage_ignorelist'] = [
-	    'com.apple.SecurityAgent',
-	    'com.apple.cloudphotosd',
-	    'com.apple.dock.extra',
-	    'com.apple.PowerChime*',
-	];
-
-	/*
-	|===============================================
-	| GSX lookups
-	|===============================================
-	|
-	| Access to GSX and certificates are required for use of this module
-	|
-	| The GSX module is designed to be used as a supplement to the warranty module.
-	| It is now required for both the warranty and GSX modules to be enabled at
-	| the same time. This is different from before when it was recommended that only
-	| one of the modules be enabled at a time.
-	|
-	| Use GSX article OP1474 and
-	| https://www.watchmanmonitoring.com/generating-ssl-certificates-to-meet-applecares-august-2015-requirements/
-	| to assist with creating certificates and whitelisting your IPs. Additional documentation can be found in the
-	| Readme.md located in the GSX module.
-	|
-	| To use the GSX module, set enable to TRUE and uncomment and
-	| fill out rest of configuration options. When setting the date format
-	| make sure it is either 'd/m/y', 'm/d/y', or 'y/m/d'. Lower case letters
-	| are required.
-	*/
-	$conf['gsx_enable'] = env('GSX_ENABLE', false);
-	$conf['gsx_cert'] = env('GSX_CERT');
-	$conf['gsx_cert_keypass'] = env('GSX_CERT_KEYPASS');
-	$conf['gsx_sold_to'] = env('GSX_SOLD_TO');
-	$conf['gsx_ship_to'] = env('GSX_SHIP_TO'); // Often the same as the sold to number
-	$conf['gsx_username'] = env('GSX_USERNAME');
-	$conf['gsx_date_format'] = env('GSX_DATE_FORMAT', 'm/d/y');
-
-	/*
-	|===============================================
-	| DeployStudio
-	|===============================================
-	|
-	| A working DeployStudio server is required for use of this module.
-	|
-	| To use the DeployStudio module, set 'deploystudio_enable' to TRUE and
-	| enter the server, username, and password for accessing your primary
-	| DeployStudio server.
-	|
-	| This module currently only pulls data from the primary DeployStudio
-	| server. This means if a machine was imaged off of a replica server
-	| its data may not show in MunkiReport.
-	*/
-	$conf['deploystudio_enable'] = FALSE;
-	$conf['deploystudio_server'] = 'https://deploystudio.apple.com:60443'; // no trailing slash
-	$conf['deploystudio_username'] = 'deploystudio_user';
-	$conf['deploystudio_password'] = 'deploystudio_password';
-
-	/*
-	|===============================================
-	| Legacy Caching Listing
-	|===============================================
-	|
-	| Starting with 10.13, Apple changed the caching server. In MunkiReport,
-	| you can hide the legacy caching server listing that shows an itemized
-	| listing for all caching server transactions for caching servers running
-	| 10.8-10.12. To hide the "Caching (Legacy)" listing, set this to FALSE.
-	|
-	*/
-	$conf['caching_show_legacy'] = TRUE;
-
-	/*
-	|===============================================
-	| USB Devices
-	|===============================================
-	|
-	| By default the USB module will collect information on all USB devices.
-	| Setting usb_internal to FALSE will skip all internal devices.
-	|
-	*/
-	$conf['usb_internal'] = env('USB_INTERNAL', true);
-
-
-	/*
-	|===============================================
-	| Fonts
-	|===============================================
-	|
-	| By default the fonts module will collect information on all fonts.
-	| Setting fonts_system to FALSE will skip all system fonts in /System/Library/Fonts.
-	|
-	*/
-	$conf['fonts_system'] = env('FONTS_SYSTEM', true);
-
-	/*
-	|===============================================
 	| Google Maps API Key
 	|===============================================
 	|
@@ -463,8 +290,8 @@
 	| https://console.developers.google.com/flows/enableapi?apiid=maps_backend&keyType=CLIENT_SIDE&reusekey=true
 	| And choose - Create browser API key
 	| Add the following line to your config.php file and insert your key.
-	| $conf['google_maps_api_key'] = 'YOUR_API_KEY';
-	|
+	| $conf['google_maps_api_key'] = env('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY');
+	| 
 	*/
 	$conf['google_maps_api_key'] = env('GOOGLE_MAPS_API_KEY', '');
 
@@ -480,11 +307,11 @@
 	| checked.
 	|
 	*/
-        $default_curl_cmd = [
-        "/usr/bin/curl",
-        "--fail",
-        "--silent",
-        "--show-error"];
+	$default_curl_cmd = [
+		"/usr/bin/curl",
+		"--fail",
+		"--silent",
+		"--show-error"];
 	$conf['curl_cmd'] = env('CURL_CMD', $default_curl_cmd);
 
 
@@ -499,17 +326,18 @@
 	| To learn more about MWA2 visit: https://github.com/munki/mwa2
 	|
 	*/
-        $conf['mwa2_link'] = env('MWA2_LINK');
+	$conf['mwa2_link'] = env('MWA2_LINK');
 
 	/*
 	|===============================================
 	| Modules
 	|===============================================
 	|
-	| List of modules that have to be installed on the client
-	| See for possible values the names of the directories
-	| in app/modules/
-	| e.g. $conf['modules'] = ['disk_report', 'inventory'];
+	| List of modules that have to be installed on the client.
+	| For possible values see the names of the directories in
+	| vendor/munkireport/
+	| e.g.
+	| $conf['modules'] = env('MODULES', ['munkireport', 'managedinstalls', 'disk_report', 'inventory']);
 	|
 	| An empty list installs only the basic reporting modules:
 	| Machine and Reportdata
@@ -519,34 +347,18 @@
 
 	/*
 	|===============================================
-	| Displays module history option
-	|===============================================
-	|
-	| By default this module overrides the information of a client computer
-	| on each client's report submission.
-	|
-	| If you would like to keep displays information until the display is seen again
-	| on a different computer use:
-	|			$conf['keep_previous_displays'] = TRUE;
-	|
-	| When not configured, or if set to FALSE, the default behaviour applies.
-	*/
-	$conf['keep_previous_displays'] = env('DISPLAYS_INFO_KEEP_PREVIOUS', true);
-
-	/*
-	|===============================================
 	| Unit of temperature °C or °F
 	|===============================================
 	|
 	| Unit of temperature, possible values: F for Fahrenheit, C for Celsius
 	|
-	|			$conf['temperature_unit'] = 'F';
+	| $conf['temperature_unit'] = env('TEMPERATURE_UNIT', 'F');
 	|
 	| When not configured, the default behaviour applies.
 	| By default temperature units are displayed in Celsius °C.
 	|
 	*/
-	$conf['temperature_unit'] = env('TEMPERATURE_UNIT', 'F');
+	$conf['temperature_unit'] = env('TEMPERATURE_UNIT', 'C');
 
 	/*
 	|===============================================
@@ -559,8 +371,7 @@
 	| defaults write /Library/Preferences/MunkiReport Passphrase 'secret1'
 	|
 	| On the server:
-	| $conf['client_passphrases'] = ['secret1', 'secret2'];
-	|
+	| $conf['client_passphrases'] = env('CLIENT_PASSPHRASES', ['secret1', 'secret2']);
 	|
 	*/
 	$conf['client_passphrases'] = env('CLIENT_PASSPHRASES', []);
@@ -654,46 +465,6 @@
 
 	/*
 	|===============================================
-	| Dashboard - IP Ranges
-	|===============================================
-	|
-	| Plot IP ranges by providing an array with labels and
-	| a partial IP address. Specify multiple partials in array
-	| if you want to group them together.
-	| The IP adress part is queried with SQL LIKE
-	| Examples:
-	| $conf['ip_ranges']['MyOrg'] = '100.99.';
-	| $conf['ip_ranges']['AltLocation'] = ['211.88.12.', '211.88.13.'];
-	|
-	*/
-    	$conf['ip_ranges'] = [];
-
- 	/*
-	|===============================================
-	| Dashboard - VLANS
-	|===============================================
-	|
-	| Plot VLANS by providing an array with labels and
-	| a partial IP address of the routers. Specify multiple partials in array
-	| if you want to group them together.
-	| The router IP adress part is queried with SQL LIKE
-	| Examples:
-	| $conf['ipv4routers']['Wired'] = '211.88.10.1';
-	| $conf['ipv4routers']['WiFi'] = ['211.88.12.1', '211.88.13.1'];
-	| $conf['ipv4routers']['Private range'] = ['10.%', '192.168.%',
-	| 	'172.16.%',
-	| 	'172.17.%',
-	| 	'172.18.%',
-	| 	'172.19.%',
-	| 	'172.2_.%',
-	| 	'172.30.%',
-	| 	'172.31.%', ];
-	| $conf['ipv4routers']['Link-local'] = ['169.254.%'];
-	|
-	*/
-
-	/*
-	|===============================================
 	| Dashboard - Layout
 	|===============================================
 	|
@@ -711,23 +482,23 @@
 	| This is a list of the current dashboard widgets
 	|
 	| Small horizontal widgets:
-        |       bound_to_ds
-        |       client (two items)
-        |       disk_report
-        |       external_displays_count
-        |       firmwarepw
-        |       gatekeeper
-        |       hardware_model
-        |       installed memory
-        |       localadmin
-        |       munki
-        |       power_battery_condition
-        |       power_battery_health
-        |       sip
-        |       smart_status
-        |       uptime
-        |       wifi_state
-        |       	|
+	|	bound_to_ds
+	|	client (two items)
+	|	disk_report
+	|	external_displays_count
+	|	firmwarepw
+	|	gatekeeper
+	|	hardware_model
+	|	installed memory
+	|	localadmin
+	|	munki
+	|	power_battery_condition
+	|	power_battery_health
+	|	sip
+	|	smart_status
+	|	uptime
+	|	wifi_state
+	|
 	| Small horizontal / medium vertical widgets:
 	|	network_location
 	|
@@ -752,7 +523,7 @@
 	|	hardware_age
 	|	hardware_model
 	|	memory
-	|	os breakdown
+	|	os
 	|	printer
 	|
 	| Responsive horizontal widgets:
@@ -764,37 +535,6 @@
 		['new_clients', 'pending_apple', 'pending_munki'],
 		['munki', 'disk_report','uptime']
 	];
-
-	/*
-	|===============================================
-	| Apps Version Report
-	|===============================================
-	|
-	| List of applications, by name, that you want to see in the apps
-	| version report. If this is not set the report page will appear empty.
-	| This is case insensitive but must be an array.
-	|
-	| Eg:
-	| $conf['apps_to_track'] = ['Flash Player', 'Java', 'Firefox', 'Microsoft Excel'];
-	|
-	*/
-	$conf['apps_to_track'] = env('APPS_TO_TRACK', ['Safari']);
-
-	/*
-	|===============================================
-	| Disk Report Widget Thresholds
-	|===============================================
-	|
-	| Thresholds for disk report widget. This array holds two values:
-	| free gigabytes below which the level is set to 'danger'
-	| free gigabytes below which the level is set as 'warning'
-	| If there are more free bytes, the level is set to 'success'
-	|
-	*/
-	$conf['disk_thresholds'] = [
-	    'danger' => env('DISK_REPORT_THRESHOLD_DANGER', 5),
-        'warning' => env('DISK_REPORT_THRESHOLD_WARNING', 10)
-        ];
 
 	/*
 	|===============================================
@@ -875,30 +615,30 @@
 	*/
 	$conf['mysql_create_tbl_opts'] = env('MYSQL_CREATE_TBL_OPTS','ENGINE=InnoDB DEFAULT CHARSET=utf8');
 
-        /*
-        |===============================================
-        | Whitelist Management Console Access
-        |===============================================
-        |
-        | Whitelisting of IP addresses that can access the management interface 
-        |    (anything except for index.php?/report/ which is always allowed)
-        |  - You can provide either individual IP addresses (which will have /32 appended automatically)
-        |      or you can provide CIDR notation. See https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing for reference
-        |  - You can also provide a custom 403 page for traffic that does not have access to the management interface
-        |      Default: The default munkireport-php 403 client error page (no need to add this object if you 
-        |                 dont want the custom 403 page
-        |
-        */
+	/*
+	|===============================================
+	| Whitelist Management Console Access
+	|===============================================
+	|
+	| Whitelisting of IP addresses that can access the management interface 
+	|    (anything except for index.php?/report/ which is always allowed)
+	|  - You can provide either individual IP addresses (which will have /32 appended automatically)
+	|      or you can provide CIDR notation. See https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing for reference
+	|  - You can also provide a custom 403 page for traffic that does not have access to the management interface
+	|      Default: The default munkireport-php 403 client error page (no need to add this object if you 
+	|                 dont want the custom 403 page
+	|
+	*/
 
-        /*
-        | $conf['auth']['network'] = [
-        |     'whitelist_ipv4' => [
-        |         'xxx.xxx.xxx.xxx',
-        |         'xxx.xxx.xxx.xxx',
-        |     ],
-        |     'redirect_unauthorized' => 'http://fqdn/403.html',
-        | ]
-        */
+	/*
+	| $conf['auth']['network'] = [
+	|     'whitelist_ipv4' => [
+	|         'xxx.xxx.xxx.xxx',
+	|         'xxx.xxx.xxx.xxx',
+	|     ],
+	|     'redirect_unauthorized' => 'http://fqdn/403.html',
+	| ]
+	*/
 
 	/*
 	|===============================================
@@ -936,19 +676,19 @@
 	//$conf['custom_js'] = '/custom.js';
 
 	/*
-        |===============================================
-        | Custom Help URL
-        |===============================================
-        |
+	|===============================================
+	| Custom Help URL
+	|===============================================
+	|
 	| If you want to have a help URL provided, define the 
 	| help_url as a blank string ('') to redirect to the 
 	| MunkiReport-PHP's GitHub Wiki page (in a new tab).
 	|
-        | If you want to override the default help url
-        | (MunkiReport's GitHub Wiki), you can specify which URL
-        | to redirect to (in a new tab).
-        |
-        */
+	| If you want to override the default help url
+	| (MunkiReport's GitHub Wiki), you can specify which URL
+	| to redirect to (in a new tab).
+	|
+	*/
 	// $conf['help_url'] = '';
 	// $conf['help_url'] = 'https://path/to/help';
 

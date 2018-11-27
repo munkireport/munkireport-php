@@ -33,8 +33,10 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
  && composer --ansi --version --no-interaction \
  && rm -rf /tmp/* /tmp/.htaccess
  
-ENV MR_SITENAME MunkiReport
-ENV MR_MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
+ENV SITENAME MunkiReport
+ENV MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
+ENV INDEX_PAGE ""
+ENV AUTH_METHODS NOAUTH
 
 COPY . $APP_DIR
 
