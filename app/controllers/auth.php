@@ -72,7 +72,7 @@ class Auth extends Controller
         }
 
        if(array_key_exists('network', conf('auth'))) {
-           $authWhitelist = new AuthWhitelist;
+           $authWhitelist = new AuthWhitelist(conf('auth')['network']);
            $authWhitelist->check_ip(getRemoteAddress());
        }
 
