@@ -33,7 +33,16 @@ require APP_ROOT.'app/helpers/config_helper.php';
 
 // Load config
 initDotEnv();
-load_conf();
+init_conf();
+configAppendFile(APP_ROOT . 'config/app.php');
+configAppendFile(APP_ROOT . 'config/db.php', 'connection');
+configAppendFile(APP_ROOT . 'config/dashboard.php', 'dashboard_layout');
+// echo '<pre>';print_r($GLOBALS['conf']);exit;
+
+function init_conf()
+{
+    $GLOBALS['conf'] = [];
+}
 
 // Load conf (keeps variables out of global space)
 function load_conf()
@@ -41,15 +50,6 @@ function load_conf()
 	$conf = array();
 
 	$GLOBALS['conf'] =& $conf;
-
-	// Load default configuration
-	require_once(APP_ROOT . "config_default.php");
-
-	if ((include_once APP_ROOT . "config.php") !== 1)
-	{
-		fatal(APP_ROOT. "config.php is missing!<br>
-	Unfortunately, Munkireport does not work without it</p>");
-	}
 
 	// Convert auth_config to config item
 	if(isset($auth_config))
@@ -65,9 +65,14 @@ function load_conf()
  *
  * @param array $configArray
  */
-function configAppendArray($configArray)
+function configAppendArray($configArray, $namespace = '')
 {
-	$GLOBALS['conf'] += $configArray;
+	if($namespace){
+    $GLOBALS['conf'] += [$namespace => $configArray];
+  }
+  else{
+    $GLOBALS['conf'] += $configArray;
+  }
 }
 
 /**
@@ -76,10 +81,10 @@ function configAppendArray($configArray)
  *
  * @param array $configPath
  */
-function configAppendFile($configPath)
+function configAppendFile($configPath, $namespace = '')
 {
 	$config = require $configPath;
-	configAppendArray($config);
+	configAppendArray($config, $namespace);
 }
 
 /**
@@ -131,8 +136,6 @@ function sess_set($sess_item, $value)
 // Defines
 //===============================================
 define('INDEX_PAGE', conf('index_page'));
-define('SYS_PATH', conf('system_path') );
-define('APP_PATH', conf('application_path') );
 define('VIEW_PATH', conf('view_path'));
 define('MODULE_PATH', conf('module_path'));
 define('CONTROLLER_PATH', conf('controller_path'));
@@ -147,8 +150,8 @@ error_reporting( conf('debug') ? E_ALL : 0 );
 //===============================================
 // Includes
 //===============================================
-require( SYS_PATH.'kissmvc.php' );
-require( APP_PATH.'helpers/site_helper'.EXT );
+require( APP_ROOT.'/system/kissmvc.php' );
+require( APP_ROOT.'/app/helpers/site_helper'.EXT );
 
 spl_autoload_register('munkireport_autoload');
 
