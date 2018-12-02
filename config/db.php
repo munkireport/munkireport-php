@@ -5,7 +5,7 @@ switch ($driver) {
   case 'sqlite':
     return [
         'driver'    => 'sqlite',
-        'database'  => env('CONNECTION_DATABASE', APP_PATH . 'db/db.sqlite'),
+        'database'  => env('CONNECTION_DATABASE', APP_ROOT . 'app/db/db.sqlite'),
     ];
     break;
   case 'mysql':
