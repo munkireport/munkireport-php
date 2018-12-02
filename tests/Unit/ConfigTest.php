@@ -20,10 +20,13 @@ class ConfigTest extends TestCase
         global $conf;
         require_once __DIR__ . '/../../app/helpers/config_helper.php';
         initDotEnv();
-        require_once __DIR__ . '/../../config_default.php';
+        initConfig();
+        configAppendFile(APP_ROOT . 'config/app.php');
+        configAppendFile(APP_ROOT . 'config/db.php', 'connection');
+        configAppendFile(APP_ROOT . 'config/dashboard.php', 'dashboard_layout');
 
         //include_once APP_ROOT . "config.php";
-        $this->conf = $conf;
+        $this->conf = $GLOBALS['conf'];
     }
 
     public function testGetEnvDefault() {
