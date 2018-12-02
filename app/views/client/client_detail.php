@@ -77,7 +77,7 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 			<?php foreach($tab_list as $name => $data):?>
 
 				<div class="tab-pane <?php if(isset($data['class'])):?>active<?php endif?>" id='<?php echo $name?>'>
-					<?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:VIEW_PATH);?>
+					<?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:conf('view_path'));?>
 				</div>
 
 			<?php endforeach?>

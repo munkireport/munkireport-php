@@ -90,14 +90,6 @@ function sess_set($sess_item, $value)
 }
 
 //===============================================
-// Defines
-//===============================================
-define('VIEW_PATH', conf('view_path'));
-define('MODULE_PATH', conf('module_path'));
-define('CONTROLLER_PATH', conf('controller_path'));
-define('EXT', '.php'); // Default extension
-
-//===============================================
 // Debug
 //===============================================
 ini_set('display_errors', conf('debug') ? 'On' : 'Off' );
@@ -107,7 +99,7 @@ error_reporting( conf('debug') ? E_ALL : 0 );
 // Includes
 //===============================================
 require( APP_ROOT.'/system/kissmvc.php' );
-require( APP_ROOT.'/app/helpers/site_helper'.EXT );
+require( APP_ROOT.'/app/helpers/site_helper.php' );
 
 spl_autoload_register('munkireport_autoload');
 

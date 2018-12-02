@@ -30,18 +30,18 @@ class show extends Controller
     public function dashboard($which = '')
     {
         $data['widget'] = new Widgets();
-
+        $viewpath = conf('view_path');
         if ($which) {
             $view = 'dashboard/'.$which;
         } else {
-            if (file_exists(VIEW_PATH.'dashboard/custom_dashboard'.EXT)) {
+            if (file_exists($viewpath.'dashboard/custom_dashboard.php')) {
                 $view = 'dashboard/custom_dashboard';
             } else {
                 $view = 'dashboard/dashboard';
             }
         }
 
-        if (! file_exists(VIEW_PATH.$view.EXT)) {
+        if (! file_exists($viewpath.$view.'.php')) {
             $data = array('status_code' => 404);
             $view = 'error/client_error';
         }
@@ -97,7 +97,7 @@ class show extends Controller
         } else {
             $data = array('status_code' => 404);
             $view = 'error/client_error';
-            $viewpath = VIEW_PATH;
+            $viewpath = conf('view_path');
         }
 
         $obj = new View();
