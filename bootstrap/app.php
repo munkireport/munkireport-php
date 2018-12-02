@@ -13,7 +13,7 @@ if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO
  **/
 function fatal($msg)
 {
-    include('assets/html/fatal_error.html');
+    include(APP_ROOT . 'public/assets/html/fatal_error.html');
     exit(1);
 }
 
