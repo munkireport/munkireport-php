@@ -272,7 +272,7 @@ return [
     | Machine and Reportdata
     |
     */
-    'modules' => env('MODULES', ['munkireport', 'managedinstalls']),
+    'modules' => env('MODULES', ['munkireport', 'managedinstalls', 'disk_report']),
 
     /*
     |===============================================
