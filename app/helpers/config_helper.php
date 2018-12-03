@@ -20,6 +20,32 @@ function initDotEnv()
 
 }
 
+function loadAuthConfig()
+{
+    $auth_config = [];
+    foreach (env('AUTH_METHODS', []) as $auth_method) {
+        switch (strtoupper($auth_method)) {
+            case 'NOAUTH':
+                $auth_config['auth_noauth'] = require APP_ROOT . 'config/auth/noauth.php';
+                //$conf['auth']['auth_noauth'] = require APP_ROOT . 'config/auth_noauth.php';
+                break;
+            case 'SAML':
+                $auth_config['auth_saml'] = require APP_ROOT . 'config/auth/saml.php';
+                break;
+            case 'LDAP':
+                $auth_config['auth_ldap'] = require APP_ROOT . 'config/auth/ldap.php';
+                break;
+            case 'AD':
+                $auth_config['auth_AD'] = require APP_ROOT . 'config/auth/ad.php';
+                break;
+            case 'NETWORK':
+                $auth_config['network'] = require APP_ROOT . 'config/auth/network.php';
+                break;
+        }
+    }
+    configAppendArray($auth_config, 'auth');
+}
+
 function initConfig()
 {
     $GLOBALS['conf'] = [];

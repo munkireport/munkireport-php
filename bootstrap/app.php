@@ -37,6 +37,7 @@ initConfig();
 configAppendFile(APP_ROOT . 'config/app.php');
 configAppendFile(APP_ROOT . 'config/db.php', 'connection');
 configAppendFile(APP_ROOT . 'config/dashboard.php', 'dashboard_layout');
+loadAuthConfig();
 // echo '<pre>';print_r($GLOBALS['conf']);exit;
 
 
