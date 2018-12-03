@@ -59,7 +59,6 @@ class ConfigTest extends TestCase
         //$this->assertEquals('FOOBAR', $this->conf['subdirectory']);
         $this->assertEquals('FOOBAR', $this->conf['sitename']);
         $this->assertEquals(true, $this->conf['hide_inactive_modules']);
-        $this->assertEquals(99, $this->conf['local_admin_threshold']);
         $this->assertEquals('FOOBAR', $this->conf['recaptchaloginpublickey']);
         $this->assertEquals('FOOBAR', $this->conf['recaptchaloginprivatekey']);
         $this->assertEquals(true, $this->conf['enable_business_units']);
