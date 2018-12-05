@@ -18,3 +18,5 @@ composer.lock
 composer.local.*
 
 users/*.yml
+dashboards/*.yml
+

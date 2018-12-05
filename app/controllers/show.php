@@ -4,6 +4,7 @@ namespace munkireport\controller;
 
 use \Controller, \View;
 use munkireport\lib\Widgets;
+use munkireport\lib\Dashboard;
 
 class show extends Controller
 {
@@ -29,25 +30,8 @@ class show extends Controller
 
     public function dashboard($which = '')
     {
-        $data['widget'] = new Widgets();
-        $viewpath = conf('view_path');
-        if ($which) {
-            $view = 'dashboard/'.$which;
-        } else {
-            if (file_exists($viewpath.'dashboard/custom_dashboard.php')) {
-                $view = 'dashboard/custom_dashboard';
-            } else {
-                $view = 'dashboard/dashboard';
-            }
-        }
-
-        if (! file_exists($viewpath.$view.'.php')) {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-        }
-
-        $obj = new View();
-        $obj->view($view, $data);
+        $db = new Dashboard(conf('dashboard'));
+        $db->render($which);
     }
 
     public function listing($module = '', $name = '')
