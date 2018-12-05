@@ -27,6 +27,6 @@ function env($key, $default = null, $typehint = null) {
                 return $v;
         }
     } else {
-        return $default;
+        return $default instanceof Closure ? $default() : $default;
     }
 }

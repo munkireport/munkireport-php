@@ -20,10 +20,14 @@ class ConfigTest extends TestCase
         global $conf;
         require_once __DIR__ . '/../../app/helpers/config_helper.php';
         initDotEnv();
-        require_once __DIR__ . '/../../config_default.php';
+        initConfig();
+        configAppendFile(APP_ROOT . 'app/config/app.php');
+        configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
+        configAppendFile(APP_ROOT . 'app/config/auth.php');
+        loadAuthConfig();
 
         //include_once APP_ROOT . "config.php";
-        $this->conf = $conf;
+        $this->conf = $GLOBALS['conf'];
     }
 
     public function testGetEnvDefault() {
@@ -56,7 +60,6 @@ class ConfigTest extends TestCase
         //$this->assertEquals('FOOBAR', $this->conf['subdirectory']);
         $this->assertEquals('FOOBAR', $this->conf['sitename']);
         $this->assertEquals(true, $this->conf['hide_inactive_modules']);
-        $this->assertEquals(99, $this->conf['local_admin_threshold']);
         $this->assertEquals('FOOBAR', $this->conf['recaptchaloginpublickey']);
         $this->assertEquals('FOOBAR', $this->conf['recaptchaloginprivatekey']);
         $this->assertEquals(true, $this->conf['enable_business_units']);
@@ -64,20 +67,20 @@ class ConfigTest extends TestCase
         $this->assertEquals('FOOBAR', $this->conf['vnc_link']);
         $this->assertEquals('FOOBAR', $this->conf['ssh_link']);
 
-        $this->assertEquals(['FOO','BAR'], $this->conf['bundleid_ignorelist']);
-        $this->assertEquals(['FOO','BAR'], $this->conf['bundlepath_ignorelist']);
+        //$this->assertEquals(['FOO','BAR'], $this->conf['bundleid_ignorelist']);
+        //$this->assertEquals(['FOO','BAR'], $this->conf['bundlepath_ignorelist']);
 
         // GSX
-        $this->assertEquals(true, $this->conf['gsx_enable']);
-        $this->assertEquals('FOOBAR', $this->conf['gsx_cert']);
-        $this->assertEquals('FOOBAR', $this->conf['gsx_cert_keypass']);
-        $this->assertEquals('FOOBAR', $this->conf['gsx_sold_to']);
-        $this->assertEquals('FOOBAR', $this->conf['gsx_ship_to']);
-        $this->assertEquals('FOOBAR', $this->conf['gsx_username']);
+        // $this->assertEquals(true, $this->conf['gsx_enable']);
+        // $this->assertEquals('FOOBAR', $this->conf['gsx_cert']);
+        // $this->assertEquals('FOOBAR', $this->conf['gsx_cert_keypass']);
+        // $this->assertEquals('FOOBAR', $this->conf['gsx_sold_to']);
+        // $this->assertEquals('FOOBAR', $this->conf['gsx_ship_to']);
+        // $this->assertEquals('FOOBAR', $this->conf['gsx_username']);
 
-        $this->assertEquals(true, $this->conf['usb_internal']);
-        $this->assertEquals(true, $this->conf['fonts_system']);
-        $this->assertEquals('FOOBAR', $this->conf['google_maps_api_key']);
+        // $this->assertEquals(true, $this->conf['usb_internal']);
+        // $this->assertEquals(true, $this->conf['fonts_system']);
+        // $this->assertEquals('FOOBAR', $this->conf['google_maps_api_key']);
         $this->assertEquals(['FOO','BAR'], $this->conf['curl_cmd']);
         $this->assertEquals('FOOBAR', $this->conf['mwa2_link']);
         $this->assertEquals(['FOO','BAR'], $this->conf['modules']);

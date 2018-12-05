@@ -87,7 +87,8 @@
         "munkireport/usage_stats": "^1.0",
         "munkireport/usb": "^1.0",
         "munkireport/user_sessions": "^1.0",
-        "munkireport/wifi": "^1.0"
+        "munkireport/wifi": "^1.0",
+        "symfony/yaml": "^3.4"
     },
     "suggest": {
         "onelogin/php-saml": "^2.12 Required for SAML authentication",

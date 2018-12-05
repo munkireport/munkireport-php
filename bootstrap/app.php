@@ -13,7 +13,7 @@ if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO
  **/
 function fatal($msg)
 {
-    include('assets/html/fatal_error.html');
+    include(APP_ROOT . 'public/assets/html/fatal_error.html');
     exit(1);
 }
 
@@ -33,7 +33,14 @@ require APP_ROOT.'app/helpers/config_helper.php';
 
 // Load config
 initDotEnv();
-load_conf();
+initConfig();
+configAppendFile(APP_ROOT . 'app/config/app.php');
+configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
+configAppendFile(APP_ROOT . 'app/config/dashboard.php', 'dashboard');
+configAppendFile(APP_ROOT . 'app/config/auth.php');
+loadAuthConfig();
+// echo '<pre>';print_r($GLOBALS['conf']);exit;
+
 
 // Load conf (keeps variables out of global space)
 function load_conf()
@@ -42,55 +49,12 @@ function load_conf()
 
 	$GLOBALS['conf'] =& $conf;
 
-	// Load default configuration
-	require_once(APP_ROOT . "config_default.php");
-
-	if ((include_once APP_ROOT . "config.php") !== 1)
-	{
-		fatal(APP_ROOT. "config.php is missing!<br>
-	Unfortunately, Munkireport does not work without it</p>");
-	}
-
 	// Convert auth_config to config item
 	if(isset($auth_config))
 	{
 		$conf['auth']['auth_config'] = $auth_config;
 	}
 
-}
-
-/**
- * Add config array to global config array
- *
- *
- * @param array $configArray
- */
-function configAppendArray($configArray)
-{
-	$GLOBALS['conf'] += $configArray;
-}
-
-/**
- * Add config file to global config array
- *
- *
- * @param array $configPath
- */
-function configAppendFile($configPath)
-{
-	$config = require $configPath;
-	configAppendArray($config);
-}
-
-/**
- * Get config item
- * @param string config item
- * @param string default value (optional)
- * @author AvB
- **/
-function conf($cf_item, $default = '')
-{
-	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
 }
 
 /**
@@ -128,17 +92,6 @@ function sess_set($sess_item, $value)
 }
 
 //===============================================
-// Defines
-//===============================================
-define('INDEX_PAGE', conf('index_page'));
-define('SYS_PATH', conf('system_path') );
-define('APP_PATH', conf('application_path') );
-define('VIEW_PATH', conf('view_path'));
-define('MODULE_PATH', conf('module_path'));
-define('CONTROLLER_PATH', conf('controller_path'));
-define('EXT', '.php'); // Default extension
-
-//===============================================
 // Debug
 //===============================================
 ini_set('display_errors', conf('debug') ? 'On' : 'Off' );
@@ -147,8 +100,8 @@ error_reporting( conf('debug') ? E_ALL : 0 );
 //===============================================
 // Includes
 //===============================================
-require( SYS_PATH.'kissmvc.php' );
-require( APP_PATH.'helpers/site_helper'.EXT );
+require( APP_ROOT.'/system/kissmvc.php' );
+require( APP_ROOT.'/app/helpers/site_helper.php' );
 
 spl_autoload_register('munkireport_autoload');
 
