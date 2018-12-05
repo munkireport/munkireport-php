@@ -46,6 +46,16 @@ return [
     |
     */
     'temperature_unit' => env('TEMPERATURE_UNIT', 'C'),
+    
+    /*
+    |===============================================
+    | Encryption key
+    |===============================================
+    |
+    | Used by several modules to encrypt sensitive data before it enters the database
+    |
+    */
+    'encryption_key' => env('ENCRYPTION_KEY'),
 
     /*
     |===============================================
