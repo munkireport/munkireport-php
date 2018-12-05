@@ -34,9 +34,10 @@ require APP_ROOT.'app/helpers/config_helper.php';
 // Load config
 initDotEnv();
 initConfig();
-configAppendFile(APP_ROOT . 'config/app.php');
-configAppendFile(APP_ROOT . 'config/db.php', 'connection');
-configAppendFile(APP_ROOT . 'config/dashboard.php', 'dashboard_layout');
+configAppendFile(APP_ROOT . 'app/config/app.php');
+configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
+configAppendFile(APP_ROOT . 'app/config/dashboard.php', 'dashboard_layout');
+configAppendFile(APP_ROOT . 'app/config/auth.php');
 loadAuthConfig();
 // echo '<pre>';print_r($GLOBALS['conf']);exit;
 

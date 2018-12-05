@@ -16,3 +16,5 @@ vendor/*
 composer.lock
 .env
 composer.local.*
+
+users/*.yml

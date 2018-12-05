@@ -20,7 +20,7 @@
 							<?php endforeach; ?>
 
 						<?php if($reason == 'noauth'): ?>
-						    <div class="alert alert-danger" data-i18n="auth.noauth_found">No authentication information found, please add an account to the config file.</div>
+						    <div class="alert alert-danger" data-i18n="auth.noauth_found"></div>
 						<?php endif; ?>
 					    <?php if(isset($generated_pwd)): ?>
 							<!-- Modal -->
@@ -28,11 +28,11 @@
 								<div class="modal-dialog">
 								  <div class="modal-content">
 								    <div class="modal-header">
-								      <h4 class="modal-title" data-i18n="auth.generated_hash">Generated hash</h4>
+								      <h4 class="modal-title" data-i18n="auth.generated_hash"></h4>
 								    </div>
 								    <div class="modal-body has-success">
-								      	<label class="control-label" for="genpwd" data-i18n="auth.addtoconfig">Add this line to config.php:</label>
-										<input type="text" id="genpwd" name="genpwd" class="form-control" value="$auth_config['<?php echo $login?>'] = '<?php echo $generated_pwd; ?>';"></input><br/>
+								      	<label class="control-label" for="genpwd" data-i18n="auth.create_user_file" data-i18n-options='{"name":"<?php echo $login; ?>"}'></label>
+										<input type="text" id="genpwd" name="genpwd" class="form-control" value="password_hash: <?php echo $generated_pwd; ?>"></input><br/>
 								    </div>
 								    <div class="modal-footer">
 								      <a href="" class="btn btn-default" data-i18n="auth.gen_other">Generate another</a>
@@ -56,13 +56,13 @@
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary" data-i18n="auth.generate">Generate</button>
-								<a href="<?php echo url(); ?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site">Back to site</a>
+								<button type="submit" class="btn btn-primary" data-i18n="auth.generate"></button>
+								<a href="<?php echo url(); ?>" class="btn btn-default" data-dismiss="modal" data-i18n="auth.back_to_site"></a>
 								</div>
 							</div>
 						<?php //endif; ?>
 			            </fieldset>
-			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
+			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version"></span> <?php echo $GLOBALS['version']; ?></small></p>
 					</form>
 				</div>
 			</div>
@@ -74,10 +74,11 @@
     $.i18n.init({
         useLocalStorage: false,
         debug: true,
+				useDataAttrOptions: true,
         resGetPath: "<?php echo conf('subdirectory'); ?>assets/locales/__lng__.json",
         fallbackLng: 'en'
     }, function() {
-        $('form').i18n();
+        $('div.container').i18n();
     });
 
 </script>

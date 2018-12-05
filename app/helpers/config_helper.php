@@ -26,20 +26,23 @@ function loadAuthConfig()
     foreach (env('AUTH_METHODS', []) as $auth_method) {
         switch (strtoupper($auth_method)) {
             case 'NOAUTH':
-                $auth_config['auth_noauth'] = require APP_ROOT . 'config/auth/noauth.php';
+                $auth_config['auth_noauth'] = require APP_ROOT . 'app/config/auth/noauth.php';
                 //$conf['auth']['auth_noauth'] = require APP_ROOT . 'config/auth_noauth.php';
                 break;
             case 'SAML':
-                $auth_config['auth_saml'] = require APP_ROOT . 'config/auth/saml.php';
+                $auth_config['auth_saml'] = require APP_ROOT . 'app/config/auth/saml.php';
+                break;
+            case 'LOCAL':
+                $auth_config['auth_local'] = require APP_ROOT . 'app/config/auth/local.php';
                 break;
             case 'LDAP':
-                $auth_config['auth_ldap'] = require APP_ROOT . 'config/auth/ldap.php';
+                $auth_config['auth_ldap'] = require APP_ROOT . 'app/config/auth/ldap.php';
                 break;
             case 'AD':
-                $auth_config['auth_AD'] = require APP_ROOT . 'config/auth/ad.php';
+                $auth_config['auth_AD'] = require APP_ROOT . 'app/config/auth/ad.php';
                 break;
             case 'NETWORK':
-                $auth_config['network'] = require APP_ROOT . 'config/auth/network.php';
+                $auth_config['network'] = require APP_ROOT . 'app/config/auth/network.php';
                 break;
         }
     }
