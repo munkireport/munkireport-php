@@ -62,7 +62,6 @@ class Dashboard
           } catch (\Exception $e) {
              // Do something
           }
-          print_r($data['dashboard_layout']);
       }
       else
       {
