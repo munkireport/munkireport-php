@@ -30,8 +30,8 @@ Environment Variables
 
 The following variables are exposed for configuration via environment:
 
-- `MR_SITENAME`: The name of your site, displayed in the title.
-- `MR_MODULES`: A comma delimited list of enabled modules.
+- `SITENAME`: The name of your site, displayed in the title.
+- `MODULES`: A comma delimited list of enabled modules.
 
 Settings
 ========

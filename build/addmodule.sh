@@ -35,8 +35,11 @@ cat "${DIR}/templates/widget.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${M
 # Copy locale template
 cat "${DIR}/templates/en.json" | sed "s/MODULE/${MODULE}/g" > "${LOCALE_DIR}en.json"
 
+# Copy composer.json template
+cat "${DIR}/templates/composer.json" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/composer.json"
+
 # Copy migration
-${DIR}/addmigration.sh "${MODULE}"
+${DIR}/addmigration "${MODULE_PATH}"
 
 echo "** Created module ${MODULE} **"
 

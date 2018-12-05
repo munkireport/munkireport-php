@@ -1,6 +1,4 @@
 <?php
-// must be run within App
-if(!defined('KISS')) die();
 
 /**
  * LDAP authentication backend

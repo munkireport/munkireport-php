@@ -6,7 +6,7 @@ use \Controller, \View;
 use munkireport\lib\Recaptcha;
 use munkireport\lib\AuthHandler;
 use munkireport\lib\AuthSaml;
-use munkireport\lib\AuthConfig;
+use munkireport\lib\AuthLocal;
 use munkireport\lib\AuthWhitelist;
 
 class Auth extends Controller
@@ -72,7 +72,7 @@ class Auth extends Controller
         }
 
        if(array_key_exists('network', conf('auth'))) {
-           $authWhitelist = new AuthWhitelist;
+           $authWhitelist = new AuthWhitelist(conf('auth')['network']);
            $authWhitelist->check_ip(getRemoteAddress());
        }
 
@@ -136,6 +136,8 @@ class Auth extends Controller
 
     public function generate()
     {
+        $obj = new View();
+
         // Add a reason why generate is called
         $data = array('reason' => empty($this->auth_mechanisms) ? 'noauth' : 'none');
 
@@ -147,13 +149,14 @@ class Auth extends Controller
         }
 
         if ($data['login'] && $password) {
-            $auth_config = new AuthConfig([]);
+            $auth_config = new AuthLocal([]);
             $t_hasher = $auth_config->load_phpass();
-            $data['generated_pwd'] = $t_hasher->HashPassword($password);
+            $data['password_hash'] = $t_hasher->HashPassword($password);
+            $obj->view('auth/user', $data);
         }
-
-        $obj = new View();
-        $obj->view('auth/generate_password', $data);
+        else {
+          $obj->view('auth/generate_password', $data);
+        }
     }
     
     

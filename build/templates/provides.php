@@ -2,7 +2,7 @@
 
 return array(
     'client_tabs' => array(
-        'MODULE-tab' => array('view' => 'MODULE_tab', 'i18n' => 'MODULE.listing.title', 'badge' => 'usb-cnt'),
+        'MODULE-tab' => array('view' => 'MODULE_tab', 'i18n' => 'MODULE.listing.title'),
     ),
     'listings' => array(
         'MODULE' => array('view' => 'MODULE_listing', 'i18n' => 'MODULE.listing.title'),

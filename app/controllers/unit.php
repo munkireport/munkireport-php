@@ -23,16 +23,6 @@ class unit extends Controller
 
         print_r($_SESSION);
         return;
-
-        $obj = new View();
-
-
-        // Check if there's a custom dashboard
-        if (file_exists(VIEW_PATH.'dashboard/custom_dashboard'.EXT)) {
-            $obj->view('dashboard/custom_dashboard', $data);
-        } else {
-            $obj->view('dashboard/dashboard', $data);
-        }
     }
 
     /**

@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.2.3.3455';
+$GLOBALS['version'] = '3.4.0.3618';
 
 // Return version without commit count
 function get_version()
@@ -80,7 +80,7 @@ function getdbh()
                     break;
 
                 case 'mysql':
-                    $dsn = "mysql:host={$conn['host']};dbname={$conn['database']}";
+                    $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
                     break;
 
                 default:
@@ -128,9 +128,10 @@ function munkireport_autoload($classname)
 function url($url = '', $fullurl = false, $queryArray = [])
 {
     $s = $fullurl ? conf('webhost') : '';
-    $s .= conf('subdirectory').($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
+    $index_page = conf('index_page');
+    $s .= conf('subdirectory').($url && $index_page ? $index_page.'/' : $index_page) . ltrim($url, '/');
     if($queryArray){
-        $s .= (INDEX_PAGE ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
+        $s .= ($index_page ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
     }
     return $s;
 }
@@ -179,7 +180,6 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
     if (! preg_match('#^https?://#i', $uri)) {
         $uri = url($uri);
     }
-
     switch ($method) {
         case 'refresh':
             header("Refresh:0;url=".$uri);
@@ -312,7 +312,7 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
 
     // Get filtered groups
     if ($groups = get_filtered_groups()) {
-        return sprintf('%s %s.machine_group IN (%s)', $prefix, $reportdata, implode(', ', $groups));
+        return sprintf(' %s %s.machine_group IN (%s) ', $prefix, $reportdata, implode(', ', $groups));
     } else // No filter
     {
         return '';

@@ -42,8 +42,8 @@ $(document).on('appReady', function(e, lang) {
             if(data[prop] === true){
                 data[prop] = '<span class="label label-success">Yes</span>';
             }
-            if(prop == 'db.size'){
-              data[prop] = data[prop].toFixed(2) + ' MB'
+            if(prop == 'db.size' && data[prop]){
+              data[prop] = parseFloat(data[prop]).toFixed(2) + ' MB'
             }
 
             table.append($('<tr>')
@@ -90,7 +90,7 @@ $(document).on('appReady', function(e, lang) {
 
         // There is a difference between servers on how to find PHP version
         var phpVersion = data.Core ? data.Core['PHP Version'] : (data.phpinfo ? data.phpinfo[0] : 'Could not find version');
-        
+
         // Get Core variables
         var coreVars = data.Core ? data.Core : (data['HTTP Headers Information'] ? data['HTTP Headers Information'] : {});
 

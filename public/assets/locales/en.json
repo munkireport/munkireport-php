@@ -45,6 +45,7 @@
             "empty": "Please fill out captcha",
             "invalid": "Invalid captcha response"
         },
+        "create_user_file": "Create a file called \"__name__.yml\" to your users directory an add the following line:",
         "empty_not_allowed": "Empty values are not allowed",
         "error_contacting_AD": "An error ocurred while contacting AD",
         "gen_other": "Generate another",
@@ -54,7 +55,7 @@
         "go_secure": "Go to secure site",
         "insecure": "Insecure connection, switch to secure",
         "logout_success": "You successfully logged out",
-        "noauth_found": "No authentication information found, please add an account to the config file.",
+        "noauth_found": "No authentication information found, please create an account and add it to the users directory.",
         "not_authorized": "Not authorized",
         "password": "Password",
         "secure": "You're using a secure connection",
@@ -132,7 +133,6 @@
         "driver": "Driver",
         "writable": "Writable",
         "size": "Size"
-
     },
     "delete": "Delete",
     "description": "Description",
@@ -345,6 +345,7 @@
     "systemstatus": {
         "menu_link": "Show System Status"
     },
+    "text": "Text",
     "total_clients": "Total Clients",
     "trackpad": "Trackpad",
     "type": "Type",
