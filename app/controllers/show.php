@@ -28,7 +28,7 @@ class show extends Controller
         redirect('show/dashboard');
     }
 
-    public function dashboard($which = '')
+    public function dashboard($which = 'default')
     {
         $db = new Dashboard(conf('dashboard'));
         $db->render($which);

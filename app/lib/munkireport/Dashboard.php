@@ -51,17 +51,17 @@ class Dashboard
     {
       $view = $this->config['template'];
 
-      if ( ! $dashboard )
-      {
-          $data['dashboard_layout'] = $this->config['default_layout'];
-      }
-      elseif($this->dashboardExists($dashboard))
+      if($this->dashboardExists($dashboard))
       {
           try {
               $data['dashboard_layout'] = Yaml::parseFile($this->getDashboard($dashboard));
           } catch (\Exception $e) {
              // Do something
           }
+      }
+      elseif ( $dashboard == 'default')
+      {
+          $data['dashboard_layout'] = $this->config['default_layout'];
       }
       else
       {
