@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../app/helpers/env_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Illuminate\Filesystem\Filesystem;
@@ -7,8 +8,6 @@ use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use munkireport\lib\Modules as ModuleMgr;
 
-define('KISS', 1);
-define('FC', __FILE__ .'/../' );
 define('PUBLIC_ROOT', dirname(__FILE__) . '/public' );
 define('APP_ROOT', dirname(__FILE__) . '/../' );
 

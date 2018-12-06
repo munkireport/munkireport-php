@@ -2,7 +2,7 @@
 
 <div class="container">
 
-	<?php foreach(conf('dashboard_layout', array()) AS $row):?>
+	<?php foreach($dashboard_layout AS $row):?>
 
 	<div class="row">
 

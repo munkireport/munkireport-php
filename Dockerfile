@@ -33,16 +33,18 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
  && composer --ansi --version --no-interaction \
  && rm -rf /tmp/* /tmp/.htaccess
  
-ENV MR_SITENAME MunkiReport
-ENV MR_MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
+ENV SITENAME MunkiReport
+ENV MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
+ENV INDEX_PAGE ""
+ENV AUTH_METHODS NOAUTH
 
 COPY . $APP_DIR
 
 WORKDIR $APP_DIR
 
 RUN composer install --no-dev && \
-    composer require adldap2/adldap2 --update-no-dev && \
-    composer require onelogin/php-saml --update-no-dev && \
+    composer require adldap2/adldap2:^8.0 --update-no-dev && \
+    composer require onelogin/php-saml:^2.12 --update-no-dev && \
     composer dumpautoload -o
 
 COPY docker/docker_config.php config.php

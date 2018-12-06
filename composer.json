@@ -4,8 +4,7 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5",
-        "phpunit/phpunit": "^6.5"
+        "squizlabs/php_codesniffer": "^2.5"
     },
     "config": {
         "platform": {
@@ -88,7 +87,8 @@
         "munkireport/usage_stats": "^1.0",
         "munkireport/usb": "^1.0",
         "munkireport/user_sessions": "^1.0",
-        "munkireport/wifi": "^1.0"
+        "munkireport/wifi": "^1.0",
+        "symfony/yaml": "^3.4"
     },
     "suggest": {
         "onelogin/php-saml": "^2.12 Required for SAML authentication",
@@ -100,6 +100,13 @@
             "munkireport\\controller\\": "app/controllers",
             "munkireport\\lib\\": "app/lib/munkireport",
             "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "composer.local.json"
+            ]
         }
     }
 }

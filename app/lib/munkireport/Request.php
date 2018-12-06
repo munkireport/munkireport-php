@@ -43,7 +43,7 @@ class Request
 
         // Add proxy
         $proxy = conf('proxy');
-        if (isset($proxy['server'])) {
+        if (isset($proxy['server']) && $proxy['server']) {
             $proxy['server'] = str_replace('tcp://', '', $proxy['server']);
             $proxy['port'] = isset($proxy['port']) ? $proxy['port'] : 8080;
             $this->options['proxy'] = 'http://' . $proxy['server'].':'.$proxy['port'];

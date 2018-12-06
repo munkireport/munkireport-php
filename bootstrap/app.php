@@ -58,7 +58,7 @@ function load_conf()
 	// Override hiding inactive modules for widget gallery
 	if (strpos($_SERVER['QUERY_STRING'], 'widget_gallery')){
         $GLOBALS['conf']['hide_inactive_modules'] = False;
-    }
+	}
 }
 
 /**

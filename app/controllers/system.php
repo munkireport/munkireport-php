@@ -49,11 +49,11 @@ class system extends Controller
                 $out['error'] = $db->getError();
             }
             $out['db.size'] = $db->size();
+            $out['version'] = $db->get_version();
 
         } else {
             $out['error'] = $db->getError();
         }
-        $out['version'] = $db->get_version();
         //echo '<pre>'; var_dump($db);
         // Get engine
         // Get permissions

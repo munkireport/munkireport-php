@@ -1,4 +1,36 @@
-### [3.3.0](https://github.com/munkireport/munkireport-php/compare/v3.2.4...HEAD) (Unreleased)
+### [3.3.2](https://github.com/munkireport/munkireport-php/compare/v3.3.1...HEAD) (Unreleased)
+
+### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...v3.3.1) (November 27, 2018)
+
+FIXES
+- `build/add_module.sh`
+
+CHANGES
+- Update docker files (#1192)
+- Moved config items to their respective modules
+
+NOTES
+- Docker users: renamed MR_SITENAME to SITENAME and MR_MODULES to MODULES
+
+### [3.3.0](https://github.com/munkireport/munkireport-php/compare/v3.2.6...v3.3.0) (November 20, 2018)
+
+FIXES
+- Fix Database sizing (#1177)
+
+NEW FEATURES
+- Add module search path (#1187)
+- Modules are split off into separate repos
+- Added composer-merge plugin (allows for local composer.json file)
+
+### [3.2.6](https://github.com/munkireport/munkireport-php/compare/v3.2.5...v3.2.6) (November 08, 2018)
+
+FIXES
+- detectx I ❤️ u
+
+### [3.2.5](https://github.com/munkireport/munkireport-php/compare/v3.2.4...v3.2.5) (November 07, 2018)
+
+FIXES
+- Fixed detectx migration - again
 
 ### [3.2.4](https://github.com/munkireport/munkireport-php/compare/v3.2.3...v3.2.4) (November 06, 2018)
 
