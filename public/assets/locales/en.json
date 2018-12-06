@@ -60,6 +60,7 @@
         "password": "Password",
         "secure": "You're using a secure connection",
         "signin": "Sign in",
+        "unavailable": "Configuration failure: No authentication method configured in AUTH_METHODS.",
         "wrong_user_or_pass": "Wrong username or password"
     },
     "backup": {

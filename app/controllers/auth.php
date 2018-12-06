@@ -42,7 +42,7 @@ class Auth extends Controller
 
         // If no valid mechanisms found, redirect to account generator
         if (! $this->authHandler->authConfigured()) {
-            redirect('auth/generate');
+            redirect('auth/unavailable');
         }
         
         $auth_verified = false;
@@ -116,6 +116,12 @@ class Auth extends Controller
     {
         $obj = new View();
         $obj->view('auth/unauthorized', ['why' => $value]);
+    }
+    
+    public function unavailable()
+    {
+        $obj = new View();
+        $obj->view('auth/unavailable');
     }
 
     public function logout()
