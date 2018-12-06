@@ -139,13 +139,10 @@ class Auth extends Controller
             redirect('');
         }
     }
-
-    public function generate()
+    
+    public function create_local_user()
     {
         $obj = new View();
-
-        // Add a reason why generate is called
-        $data = array('reason' => empty($this->auth_mechanisms) ? 'noauth' : 'none');
 
         $password = isset($_POST['password']) ? $_POST['password'] : '';
         $data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
@@ -161,8 +158,14 @@ class Auth extends Controller
             $obj->view('auth/user', $data);
         }
         else {
-          $obj->view('auth/generate_password', $data);
+          $obj->view('auth/create_local_user', $data);
         }
+    }
+
+    public function generate()
+    {
+      // Legacy function
+      redirect('auth/create_local_user');
     }
     
     
