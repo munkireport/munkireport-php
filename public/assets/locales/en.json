@@ -266,6 +266,7 @@
         "main": {
             "admin": "Admin",
             "dashboard": "Dashboard",
+            "dashboard_plural": "Dashboards",
             "listings": "Listings",
             "reports": "Reports"
         },

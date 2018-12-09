@@ -47,6 +47,13 @@ var mr = {
             var globalPrefs = mr.state('global') || {};
             return globalPrefs[key];
         },
+        
+        setHotKey: function(key, url){
+          $(document).bind('keydown', key, function(){
+              window.location = url;
+              return true;
+          });
+        },
 
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)

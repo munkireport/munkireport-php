@@ -56,8 +56,8 @@
 
 	<?php if( isset($_SESSION['user'])):?>
 	<?php $modules = getMrModuleObj()->loadInfo(); ?>
-
-
+	<?php $dashboard = getDashboard()->loadAll();?>
+	
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
 	<div class="container">
 		<div class="navbar-header">
@@ -72,13 +72,36 @@
 		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav">
 				<?php $page = $GLOBALS[ 'engine' ]->get_uri_string(); ?>
-
+				
+				<?php if($dashboard->getCount() === 1):?>
 				<li <?php echo $page==''?'class="active"':''; ?>>
 					<a href="<?php echo url(); ?>">
 						<i class="fa fa-th-large"></i>
 						<span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
 					</a>
 				</li>
+				<?php else:?>
+					<?php $url = 'show/dashboard/'; ?>
+					<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-th-large"></i>
+							<span data-i18n="nav.main.dashboard_plural"></span>
+							<b class="caret"></b>
+						</a>
+						<ul class="dashboard dropdown-menu">
+
+							<?php foreach($dashboard->getDropdownData('show/dashboard', $page) as $item): ?>
+
+								<li class="<?=$item->class?>">
+								<a href="<?=$item->url?>"><?=$item->display_name?></a>
+								</li>
+
+							<?php endforeach; ?>
+
+						</ul>
+
+					</li>
+				<?php endif?>
 
 				<?php $url = 'show/reports/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">

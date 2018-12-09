@@ -100,16 +100,10 @@ $( document ).ready(function() {
 
         // *******   Define hotkeys  *******
         // Dashboard
-        $(document).bind('keydown', 'd', function(){
-            window.location = appUrl + '/show/dashboard';
-            return true;
-        });
+        mr.setHotKey('d', appUrl + '/show/dashboard');
 
         // Client listing
-        $(document).bind('keydown', 'c', function(){
-            window.location = appUrl + '/show/listing/reportdata/clients';
-            return true;
-        });
+        mr.setHotKey('c', appUrl + '/show/listing/reportdata/clients');
 
         // search
         $(document).bind('keydown', '/', function(){

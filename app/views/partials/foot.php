@@ -64,6 +64,14 @@
   <script>
     // Inject debug value from php
     mr.debug = <?php echo conf('debug') ? 'true' : 'false'; ?>;
+    <?php $dashboard = getDashboard()->loadAll();?>
+    <?php foreach($dashboard->getDropdownData('show/dashboard', $page) as $item): ?>
+      <?php if($item->hotkey):?>
+      
+    mr.setHotKey('<?php echo $item->hotkey?>', appUrl + '/show/dashboard/<?php echo $item->name?>');
+    
+      <?php endif?>
+    <?php endforeach?>
   </script>
   
 

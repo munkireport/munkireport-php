@@ -1,9 +1,9 @@
 <?php
 
-use munkireport\models\Machine_group, munkireport\lib\Modules;
+use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.4.0.3625';
+$GLOBALS['version'] = '3.4.0.3626';
 
 // Return version without commit count
 function get_version()
@@ -391,4 +391,16 @@ function getMrModuleObj()
     }
 
     return $moduleObj;
+}
+
+// Create a singleton dashboard
+function getDashboard()
+{
+    static $dashboardObj;
+
+    if( ! $dashboardObj){
+      $dashboardObj = new Dashboard(conf('dashboard'));
+    }
+
+    return $dashboardObj;
 }
