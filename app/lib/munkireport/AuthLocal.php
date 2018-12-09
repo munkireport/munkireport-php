@@ -91,26 +91,27 @@ class AuthLocal extends AbstractAuth
     
     private function loadUsers()
     {
-        if(! is_dir($this->config['user_path'])){
-            return false;
-        }
-        
-        foreach(scandir($this->config['user_path']) AS $file)
-        {
-            $full_path = $this->fullPath($this->config['user_path'], $file);
-            if(! $this->isYaml($full_path)) 
-            {
-                continue;
-            }
-            try {
-                $user_data = Yaml::parseFile($full_path);
-                if(isset($user_data['password_hash'])){
-                    $this->users[$this->getName($full_path)] = $user_data;
-                }
-            } catch (\Exception $e) {
-               // Do something
-            }
-            
+        foreach($this->config['search_paths'] as $user_path){
+          if(! is_dir($user_path)){
+              continue;
+          }
+          
+          foreach(scandir($user_path) AS $file)
+          {
+              $full_path = $this->fullPath($user_path, $file);
+              if(! $this->isYaml($full_path)) 
+              {
+                  continue;
+              }
+              try {
+                  $user_data = Yaml::parseFile($full_path);
+                  if(isset($user_data['password_hash'])){
+                      $this->users[$this->getName($full_path)] = $user_data;
+                  }
+              } catch (\Exception $e) {
+                 // Do something
+              }
+          }
         }
     }
 

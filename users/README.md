@@ -16,8 +16,8 @@ password_hash: $P$BnYH6NRCRO1lWHK6rkjFb0s.CmDtmm0
 
 After you downloaded the `.yml` file you can drop it in the `users` directory in the root of the project and you should be able to log in.
 
-Note: You can provide an alternative directory location to store the users in by setting 
+Note: You can provide alternative directory locations to store the users in by setting 
 
 ```bash
-AUTH_LOCAL_USER_PATH=/path/to/your/users
+AUTH_LOCAL_SEARCH_PATHS=/path/to/your/users[, /another/path]
 ```
