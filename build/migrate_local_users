@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+array_shift($argv);
+
+$app_root = dirname(__DIR__);
+$config_path = $app_root . '/config.php';
+$user_path = $app_root . '/users/';
+
+function loadConfig($config_path)
+{
+	if ((include_once $config_path) !== 1)
+	{
+		die("$config_path is missing!\n");
+	}
+  return $auth_config;
+}
+
+function fullPath($user_path, $user)
+{
+    return $user_path . $user . '.yml';
+}
+
+function userExists($full_path)
+{
+    return file_exists($full_path);
+}
+
+function createUser($full_path, $hash)
+{
+    $data = "password_hash: $hash\n";
+    file_put_contents($full_path, $data);
+}
+
+$auth_config = loadConfig($config_path);
+foreach ($auth_config as $user => $hash) {
+    $full_path = fullPath($user_path, $user);
+    if (userExists($full_path)) {
+        echo "User already exists: $user\n";
+    }
+    else {
+      echo "Creating user: $user\n";
+      createUser($full_path, $hash);
+    }
+};
