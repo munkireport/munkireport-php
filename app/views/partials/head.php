@@ -220,16 +220,13 @@
 
 				<?php endif; ?>
 
-				<?php if( conf('help_url') || conf('help_url') == ''): // Hide logout button if auth_noauth?>
+				<?php if(conf('show_help')):?>
 				
 				<li>
-                                        <a href="<?php 
-							if( conf('help_url') ) { echo conf('help_url'); }
-							else { echo 'https://github.com/munkireport/munkireport-php/wiki'; }
-						?>" target="_blank">
-                                                <i class="fa fa-question"></i>
-                                        </a>
-                                </li>
+						<a href="<?php echo conf('help_url');?>" target="_blank">
+								<i class="fa fa-question"></i>
+						</a>
+				</li>
 				
 				<?php endif; ?>
 

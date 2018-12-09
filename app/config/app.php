@@ -310,19 +310,25 @@ return [
 
     /*
     |===============================================
-    | Custom Help URL
+    | Show help
     |===============================================
     |
-    | If you want to have a help URL provided, define the 
-    | help_url as a blank string ('') to redirect to the 
-    | MunkiReport-PHP's GitHub Wiki page (in a new tab).
+    | Add a help button to the navigation bar, defaults to false
+    |
+    */
+    'show_help' => env('SHOW_HELP', false),
+
+    /*
+    |===============================================
+    | Custom Help URL
+    |===============================================
     |
     | If you want to override the default help url
     | (MunkiReport's GitHub Wiki), you can specify which URL
     | to redirect to (in a new tab).
     |
     */
-    'help_url' => env('HELP_URL', ''),
+    'help_url' => env('HELP_URL', 'https://github.com/munkireport/munkireport-php/wiki'),
 
     /*
     |===============================================
