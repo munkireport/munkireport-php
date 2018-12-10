@@ -25,11 +25,15 @@ class show extends Controller
 
     public function index()
     {
-        redirect('show/dashboard');
+        redirect('show/dashboard/default');
     }
 
-    public function dashboard($which = 'default')
+    public function dashboard($which = '')
     {
+        if($which == '')
+        {
+            redirect('show/dashboard/default');
+        }
         $db = new Dashboard(conf('dashboard'));
         $db->render($which);
     }

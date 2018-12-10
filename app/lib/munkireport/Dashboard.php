@@ -14,8 +14,10 @@ class Dashboard
     {
         $this->config = $config;
         $this->dashboards['default'] = [
+          'name' => 'default',
           'dashboard_layout' => $config['default_layout'],
           'display_name' => 'Dashboard',
+          'hotkey' => 'd',
         ];
         $this->loadAll();
     }

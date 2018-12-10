@@ -99,9 +99,6 @@ $( document ).ready(function() {
         $('a.filter-popup').click(showFilterModal);
 
         // *******   Define hotkeys  *******
-        // Dashboard
-        mr.setHotKey('d', appUrl + '/show/dashboard');
-
         // Client listing
         mr.setHotKey('c', appUrl + '/show/listing/reportdata/clients');
 

@@ -6,6 +6,8 @@ To override the default dashboard, create a file called `default.yml`.
 Structure each file as follows:
 
 ```yaml
+display_name: My Awesome Dashboard
+hotkey: q
 row1:
     - client
     - messages
