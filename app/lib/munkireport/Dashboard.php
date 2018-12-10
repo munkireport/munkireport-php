@@ -3,62 +3,37 @@
 namespace munkireport\lib;
 
 use Symfony\Component\Yaml\Yaml;
+use Illuminate\Filesystem\Filesystem;
 use \View;
 
 class Dashboard
 {
-    private $config, $dashboards, $loaded = false;
+    private $config, $dashboards = [], $loaded = false;
     
     public function __construct($config)
     {
         $this->config = $config;
+        $this->dashboards['default'] = [
+          'dashboard_layout' => $config['default_layout'],
+          'display_name' => 'Dashboard',
+        ];
+        $this->loadAll();
     }
-    
-    private function fullPath($dir, $file)
+
+    private function dashboardExists($dashboard)
     {
-        return rtrim($dir, '/') . '/' . $file;
+        return isset($this->dashboards[$dashboard]);
     }
     
-    public function dashboardExists($dashboard)
+    private function getDashboardLayout($dashboard)
     {
-        foreach($this->config['search_paths'] as $dir)
-        {
-            foreach(scandir($dir) AS $filename)
-            {
-                if($filename == $dashboard . '.yml')
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return $this->dashboards[$dashboard]['dashboard_layout'];
     }
-    
-    public function getDashboard($dashboard)
-    {
-        foreach($this->config['search_paths'] as $dir)
-        {
-            if(is_file($this->fullPath($dir, $dashboard . '.yml')))
-            {
-                return $this->fullPath($dir, $dashboard . '.yml');
-            }
-        }
-        return false;
-    }
-    
-    private function isYaml($file)
-    {
-        return pathinfo($file, PATHINFO_EXTENSION) == 'yml';
-    }
-    
-    private function getName($file)
-    {
-        return pathinfo($file, PATHINFO_FILENAME);
-    }
-    
-    private function addDashboard($path, $filename)
+
+    private function addDashboard($path)
     {
         try {
+            $filename = Filesystem::name($path);
             $display_name = $filename;
             $hotkey = '';
             $data = Yaml::parseFile($path);
@@ -72,7 +47,7 @@ class Dashboard
                 $hotkey = $data['hotkey'];
                 unset($data['hotkey']);
             }
-            $this->dashboards[$path] = [
+            $this->dashboards[$filename] = [
                 'name' => $filename,
                 'display_name' => $display_name,
                 'hotkey' => $hotkey,
@@ -88,15 +63,9 @@ class Dashboard
         if(! $this->loaded){
           foreach($this->config['search_paths'] as $dir)
           {
-              foreach(scandir($dir) AS $file)
+              foreach(Filesystem::glob($dir . '/*.yml') AS $file)
               {
-                  if($this->isYaml($file))
-                  {
-                      $this->addDashboard(
-                        $this->fullPath($dir, $file),
-                        $this->getName($file)
-                      );
-                  }
+                  $this->addDashboard($file);
               }
           }
           $this->loaded = true;
@@ -131,15 +100,7 @@ class Dashboard
 
       if($this->dashboardExists($dashboard))
       {
-          try {
-              $data['dashboard_layout'] = Yaml::parseFile($this->getDashboard($dashboard));
-          } catch (\Exception $e) {
-             // Do something
-          }
-      }
-      elseif ( $dashboard == 'default')
-      {
-          $data['dashboard_layout'] = $this->config['default_layout'];
+          $data['dashboard_layout'] = $this->getDashboardLayout($dashboard);
       }
       else
       {
@@ -147,12 +108,8 @@ class Dashboard
           $view = 'error/client_error';
       }
       $data['widget'] = new Widgets();
-
       $obj = new View();
       $obj->view($view, $data);
 
     }
-
-    
-
 }
