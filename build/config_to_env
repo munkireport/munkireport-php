@@ -1,0 +1,51 @@
+#!/usr/bin/env php
+<?php
+define("KISS", 1);
+
+require_once __DIR__ . '/../app/helpers/env_helper.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../app/helpers/config_helper.php';
+
+initDotEnv();
+initConfig();
+configAppendFile( __DIR__ . '/../app/config/app.php');
+configAppendFile( __DIR__ . '/../app/config/db.php', 'connection');
+
+
+array_shift($argv);
+
+$app_root = dirname(__DIR__);
+$config_path = $app_root . '/config.php';
+$env_path = $app_root . '/.env';
+
+
+function loadConfig($config_path)
+{
+    if ((include_once $config_path) !== 1)
+    {
+        die("$config_path is missing!\n");
+    }
+    return $conf;
+}
+
+echo "IN PROGRESS - DO NOT USE UNLESS FOR TESTING PURPOSES\n\n";
+
+echo "Are you sure you want to do this?  Type 'yes' to continue: ";
+$handle = fopen ("php://stdin","r");
+$line = fgets($handle);
+if(trim($line) != 'yes'){
+    echo "ABORTING!\n";
+    exit;
+}
+fclose($handle);
+echo "\n";
+echo "Thank you, continuing...\n";
+
+
+printf("Loading %s\n", $config_path);
+
+$config = loadConfig($config_path);
+print_r($config);
+foreach ($config as $key => $value) {
+    echo $key . " -> " . print_r($value, TRUE) ."\n";
+};
