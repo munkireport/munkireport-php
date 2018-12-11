@@ -6,6 +6,8 @@ $app_root = dirname(__DIR__);
 $config_path = $app_root . '/config.php';
 $user_path = $app_root . '/users/';
 
+define("KISS", 1);
+
 function loadConfig($config_path)
 {
 	if ((include_once $config_path) !== 1)
