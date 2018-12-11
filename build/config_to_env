@@ -1,23 +1,21 @@
 #!/usr/bin/env php
 <?php
-define("KISS", 1);
 
+use Symfony\Component\Yaml\Yaml;
+
+define("KISS", 1);
+define("APP_ROOT", dirname(__DIR__));
 require_once __DIR__ . '/../app/helpers/env_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../app/helpers/config_helper.php';
 
 initDotEnv();
-initConfig();
-configAppendFile( __DIR__ . '/../app/config/app.php');
-configAppendFile( __DIR__ . '/../app/config/db.php', 'connection');
-
 
 array_shift($argv);
 
 $app_root = dirname(__DIR__);
 $config_path = $app_root . '/config.php';
 $env_path = $app_root . '/.env';
-
 
 function loadConfig($config_path)
 {
@@ -44,12 +42,62 @@ function warn()
     echo "Thank you, continuing...\n";
 }
 
+// Fix saml array
+function samlFix($conf)
+{
+    if(isset($conf['auth']['auth_saml']['attr_mapping']))
+    {
+      $user = ''; $groups = [];
+      foreach ($conf['auth']['auth_saml']['attr_mapping'] as $val => $key)
+      {
+        if($key == 'groups')
+        {
+          $groups[] = $val;
+        }
+        if($key == 'user')
+        {
+          $user = $val;
+        }
+        unset($conf['auth']['auth_saml']['attr_mapping'][$val]);
+      }
+      $conf['auth']['auth_saml']['attr_mapping']['user'] = $user;
+      $conf['auth']['auth_saml']['attr_mapping']['groups'] = $groups;
+    }
+    return $conf;
+}
 
-warn();
+function convert($key, $value, $conversion){
+  if(array_key_exists($key, $conversion)){
+    switch (gettype($value)) {
+      case 'boolean':
+        return sprintf("%s=\"%s\"\n", $conversion[$key], $value ? 'TRUE' : 'FALSE');
+      case 'array':
+        if (is_array($conversion[$key])) {
+          $out = '';
+          foreach($value as $skey => $sval){
+            $out .= convert($skey, $sval, $conversion[$key]);
+          }
+          return $out;
+        }
+        else {
+          return sprintf("%s=\"%s\"\n", $conversion[$key], implode(', ', $value));
+        }
+      default:
+        return sprintf("%s=\"%s\"\n", $conversion[$key], $value);
+    }
+  }
+  else {
+    echo "### CONFIG ITEM NOT FOUND: $key ###\n";
+  }
+}
+
+#warn();
 printf("Loading %s\n", $config_path);
 
 $config = loadConfig($config_path);
+$config = samlFix($config);
 print_r($config);
+$conversion = Yaml::parseFile(__DIR__ . '/config/config_to_env.yml');
 foreach ($config as $key => $value) {
-    echo $key . " -> " . print_r($value, TRUE) ."\n";
+    echo convert($key, $value, $conversion);
 };
