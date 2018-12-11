@@ -28,20 +28,24 @@ function loadConfig($config_path)
     return $conf;
 }
 
-echo "IN PROGRESS - DO NOT USE UNLESS FOR TESTING PURPOSES\n\n";
+function warn()
+{
+    echo "IN PROGRESS - DO NOT USE UNLESS FOR TESTING PURPOSES\n\n";
 
-echo "Are you sure you want to do this?  Type 'yes' to continue: ";
-$handle = fopen ("php://stdin","r");
-$line = fgets($handle);
-if(trim($line) != 'yes'){
-    echo "ABORTING!\n";
-    exit;
+    echo "Are you sure you want to do this?  Type 'yes' to continue: ";
+    $handle = fopen ("php://stdin","r");
+    $line = fgets($handle);
+    if(trim($line) != 'yes'){
+        echo "ABORTING!\n";
+        exit;
+    }
+    fclose($handle);
+    echo "\n";
+    echo "Thank you, continuing...\n";
 }
-fclose($handle);
-echo "\n";
-echo "Thank you, continuing...\n";
 
 
+warn();
 printf("Loading %s\n", $config_path);
 
 $config = loadConfig($config_path);
