@@ -54,6 +54,17 @@ function warn()
     echo "Thank you, continuing...\n";
 }
 
+function convertDashboard($conf, $path)
+{
+    if(array_key_exists('dashboard_layout', $conf)){
+        $conf['dashboard_layout']['display_name'] = 'Dashboard';
+        $conf['dashboard_layout']['hotkey'] = 'd';
+        file_put_contents($path, Yaml::dump($conf['dashboard_layout']));
+        unset($conf['dashboard_layout']);
+    }
+    return $conf;
+}
+
 function filterObsoleteItems($config, $obsolete_items)
 {
   foreach ($obsolete_items as $item) {
@@ -152,6 +163,9 @@ $auth_config = loadConfig($config_path, 'auth_config');
 $config = samlFix($config);
 $config = filterObsoleteItems($config, $obsolete_items);
 $config = detectAuthMethods($config, $auth_config);
+$config = convertDashboard($config, $app_root . '/dashboards/default.yml');
+exit;
+
 // print_r($config);
 $conversion = Yaml::parseFile(__DIR__ . '/config/config_to_env.yml');
 foreach ($config as $key => $value) {
