@@ -16,6 +16,8 @@ array_shift($argv);
 $app_root = dirname(__DIR__);
 $config_path = $app_root . '/config.php';
 $env_path = $app_root . '/.env';
+$user_path = $app_root . '/users/';
+$conversion_file = $app_root . '/build/config/config_to_env.yml';
 $obsolete_items = [
   'system_path',
   'application_path',
@@ -38,6 +40,11 @@ function loadConfig($config_path, $what = 'conf')
     return [];
 }
 
+function logit($txt)
+{
+    echo $txt . "\n";
+}
+
 function warn()
 {
     echo "IN PROGRESS - DO NOT USE UNLESS FOR TESTING PURPOSES\n\n";
@@ -54,18 +61,29 @@ function warn()
     echo "Thank you, continuing...\n";
 }
 
-function convertDashboard($conf, $path)
+function writeFile($path, $data)
 {
+    logit("Writing $path");
+    file_put_contents($path, $data);
+}
+
+function convertDashboard(&$conf, $path)
+{
+    if(file_exists($path)){
+      logit("Skipping dashboard: $path already exists");
+      return false;
+    }
+    
     if(array_key_exists('dashboard_layout', $conf)){
         $conf['dashboard_layout']['display_name'] = 'Dashboard';
         $conf['dashboard_layout']['hotkey'] = 'd';
-        file_put_contents($path, Yaml::dump($conf['dashboard_layout']));
+        writeFile($path, Yaml::dump($conf['dashboard_layout']));
         unset($conf['dashboard_layout']);
     }
-    return $conf;
+    return true;
 }
 
-function filterObsoleteItems($config, $obsolete_items)
+function filterObsoleteItems(&$config, $obsolete_items)
 {
   foreach ($obsolete_items as $item) {
     if(array_key_exists($item, $config))
@@ -73,7 +91,7 @@ function filterObsoleteItems($config, $obsolete_items)
       unset($config[$item]);
     }
   }
-  return $config;
+  return true;
 }
 
 function trimNewlines($string)
@@ -82,7 +100,7 @@ function trimNewlines($string)
 }
 
 // Fix saml array
-function samlFix($conf)
+function samlFix(&$conf)
 {
     if(isset($conf['auth']['auth_saml']['attr_mapping']))
     {
@@ -101,15 +119,18 @@ function samlFix($conf)
       }
       $conf['auth']['auth_saml']['attr_mapping']['user'] = $user;
       $conf['auth']['auth_saml']['attr_mapping']['groups'] = $groups;
+      return true;
     }
-    return $conf;
 }
 
-function detectAuthMethods($conf, $auth_conf)
+function detectAuthMethods(&$conf, $auth_conf)
 {
   $conf['auth_methods'] = [];
   if(! empty($auth_conf)){
     $conf['auth_methods'][] = 'LOCAL';
+  }
+  if (! isset($conf['auth'])) {
+    return false;
   }
   $conversion = [
     'auth_noauth' => 'NOAUTH',
@@ -127,7 +148,54 @@ function detectAuthMethods($conf, $auth_conf)
   // Remove auth_noath as it has no options
   unset($conf['auth']['auth_noauth']);
   
-  return $conf;
+  return true;
+}
+
+function convertUsers($auth_config, $user_path)
+{
+  foreach ($auth_config as $user => $hash) {
+      $full_path = fullPath($user_path, $user);
+      if (userExists($full_path)) {
+          logit("User already exists: $user");
+      }
+      else {
+        logit("Creating user: $user");
+        createUser($full_path, $hash);
+      }
+  };
+
+}
+
+function fullPath($user_path, $user)
+{
+    return $user_path . $user . '.yml';
+}
+
+function userExists($full_path)
+{
+    return file_exists($full_path);
+}
+
+function createUser($full_path, $hash)
+{
+    $data = "password_hash: $hash\n";
+    file_put_contents($full_path, $data);
+}
+
+function convertPrefsToDotEnv($config, $conversion_file, $dotenv_path)
+{
+  if(file_exists($dotenv_path))
+  {
+    logit("Skipping .env: file exists");
+    return false;
+  }
+  $conversion = Yaml::parseFile($conversion_file);
+  $out = '';
+  foreach ($config as $key => $value) {
+      $out .= convert($key, $value, $conversion);
+  };
+  writeFile($dotenv_path, $out);
+
 }
 
 function convert($key, $value, $conversion){
@@ -155,19 +223,15 @@ function convert($key, $value, $conversion){
   }
 }
 
-#warn();
-printf("## Loading %s\n##\n", $config_path);
-
+warn();
+logit("Loading $config_path");
 $config = loadConfig($config_path);
 $auth_config = loadConfig($config_path, 'auth_config');
-$config = samlFix($config);
-$config = filterObsoleteItems($config, $obsolete_items);
-$config = detectAuthMethods($config, $auth_config);
-$config = convertDashboard($config, $app_root . '/dashboards/default.yml');
-exit;
-
-// print_r($config);
-$conversion = Yaml::parseFile(__DIR__ . '/config/config_to_env.yml');
-foreach ($config as $key => $value) {
-    echo convert($key, $value, $conversion);
-};
+logit("Analyzing...");
+samlFix($config);
+filterObsoleteItems($config, $obsolete_items);
+detectAuthMethods($config, $auth_config);
+convertDashboard($config, $app_root . '/dashboards/default.yml');
+convertPrefsToDotEnv($config, $conversion_file, $env_path);
+convertUsers($auth_config, $user_path);
+logit("Done");
