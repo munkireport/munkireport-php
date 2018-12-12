@@ -207,20 +207,20 @@ class AuthSaml extends AbstractAuth
         }
         else{
             $attr_mapping = [
-                'memberOf' => 'groups',
-                'User.email' => 'user',
+                'user': 'User.email',
+                'groups': ['memberOf'],
             ];
         }
         foreach($attr_mapping as $key => $mappedKey)
         {
-            if(isset($attrs[$key]))
+            if(isset($attrs[$mappedKey]))
             {
-                if($mappedKey == 'groups')
+                if($key == 'groups')
                 {
-                    $out['groups'] = array_merge( $out['groups'], $attrs[$key]);
+                    $out['groups'] = array_merge( $out['groups'], $attrs[$mappedKey]);
                 }
                 else{
-                    $out[$mappedKey] = $attrs[$key][0];
+                    $out['user'] = $attrs[$mappedKey][0];
                 }
             }
         }

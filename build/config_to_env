@@ -1,0 +1,159 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Yaml\Yaml;
+
+define("KISS", 1);
+define("APP_ROOT", dirname(__DIR__));
+require_once __DIR__ . '/../app/helpers/env_helper.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../app/helpers/config_helper.php';
+
+initDotEnv();
+
+array_shift($argv);
+
+$app_root = dirname(__DIR__);
+$config_path = $app_root . '/config.php';
+$env_path = $app_root . '/.env';
+$obsolete_items = [
+  'system_path',
+  'application_path',
+  'view_path',
+  'controller_path',
+  'module_path',
+  'routes',
+  'mysql_create_tbl_opts',
+];
+
+function loadConfig($config_path, $what = 'conf')
+{
+    if ((include $config_path) !== 1)
+    {
+        die("$config_path is missing!\n");
+    }
+    if(isset(${$what})){
+      return ${$what};
+    }
+    return [];
+}
+
+function warn()
+{
+    echo "IN PROGRESS - DO NOT USE UNLESS FOR TESTING PURPOSES\n\n";
+
+    echo "Are you sure you want to do this?  Type 'yes' to continue: ";
+    $handle = fopen ("php://stdin","r");
+    $line = fgets($handle);
+    if(trim($line) != 'yes'){
+        echo "ABORTING!\n";
+        exit;
+    }
+    fclose($handle);
+    echo "\n";
+    echo "Thank you, continuing...\n";
+}
+
+function filterObsoleteItems($config, $obsolete_items)
+{
+  foreach ($obsolete_items as $item) {
+    if(array_key_exists($item, $config))
+    {
+      unset($config[$item]);
+    }
+  }
+  return $config;
+}
+
+function trimNewlines($string)
+{
+  return str_replace(array("\n", "\r"), '', $string);
+}
+
+// Fix saml array
+function samlFix($conf)
+{
+    if(isset($conf['auth']['auth_saml']['attr_mapping']))
+    {
+      $user = ''; $groups = [];
+      foreach ($conf['auth']['auth_saml']['attr_mapping'] as $val => $key)
+      {
+        if($key == 'groups')
+        {
+          $groups[] = $val;
+        }
+        if($key == 'user')
+        {
+          $user = $val;
+        }
+        unset($conf['auth']['auth_saml']['attr_mapping'][$val]);
+      }
+      $conf['auth']['auth_saml']['attr_mapping']['user'] = $user;
+      $conf['auth']['auth_saml']['attr_mapping']['groups'] = $groups;
+    }
+    return $conf;
+}
+
+function detectAuthMethods($conf, $auth_conf)
+{
+  $conf['auth_methods'] = [];
+  if(! empty($auth_conf)){
+    $conf['auth_methods'][] = 'LOCAL';
+  }
+  $conversion = [
+    'auth_noauth' => 'NOAUTH',
+    'auth_saml' => 'SAML',
+    'auth_ldap' => 'LDAP',
+    'auth_AD' => 'AD',
+    'network' => 'NETWORK'
+  ];
+  foreach($conversion as $key => $val){
+    if(array_key_exists($key, $conf['auth']))
+    {
+      $conf['auth_methods'][] = $val;
+    }
+  }
+  // Remove auth_noath as it has no options
+  unset($conf['auth']['auth_noauth']);
+  
+  return $conf;
+}
+
+function convert($key, $value, $conversion){
+  if(array_key_exists($key, $conversion)){
+    switch (gettype($value)) {
+      case 'boolean':
+        return sprintf("%s=\"%s\"\n", $conversion[$key], $value ? 'TRUE' : 'FALSE');
+      case 'array':
+        if (is_array($conversion[$key])) {
+          $out = '';
+          foreach($value as $skey => $sval){
+            $out .= convert($skey, $sval, $conversion[$key]);
+          }
+          return $out;
+        }
+        else {
+          return sprintf("%s=\"%s\"\n", $conversion[$key], implode(', ', trimNewlines($value)));
+        }
+      default:
+        return sprintf("%s=\"%s\"\n", $conversion[$key], trimNewlines($value));
+    }
+  }
+  else {
+    echo "### CONFIG ITEM NOT FOUND: $key ###\n";
+  }
+}
+
+#warn();
+printf("## Loading %s\n##\n", $config_path);
+
+$config = loadConfig($config_path);
+$auth_config = loadConfig($config_path, 'auth_config');
+$config = samlFix($config);
+$config = filterObsoleteItems($config, $obsolete_items);
+$config = detectAuthMethods($config, $auth_config);
+// print_r($config);
+$conversion = Yaml::parseFile(__DIR__ . '/config/config_to_env.yml');
+foreach ($config as $key => $value) {
+    echo convert($key, $value, $conversion);
+};

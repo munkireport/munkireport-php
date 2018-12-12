@@ -16,8 +16,8 @@ return [
     'x509cert' => env('AUTH_SAML_IDP_X509CERT'),
   ],
   'attr_mapping' => [
-    env('AUTH_SAML_GROUP_ATTR', 'memberOf') => 'groups',
-    env('AUTH_SAML_USER_ATTR', 'User.email') => 'user',
+    'user' => env('AUTH_SAML_USER_ATTR', 'User.email'),
+    'groups' => env('AUTH_SAML_GROUP_ATTR', ['memberOf']),
   ],
   'mr_allowed_users'  => env('AUTH_SAML_ALLOWED_USERS', []),
   'mr_allowed_groups' => env('AUTH_SAML_ALLOWED_GROUPS', []),
