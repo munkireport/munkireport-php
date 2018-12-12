@@ -57,6 +57,8 @@ proxy:
 auth_secure: AUTH_SECURE
 auth_methods: AUTH_METHODS
 auth:
+  auth_local:
+    search_paths: AUTH_LOCAL_SEARCH_PATHS
   auth_AD:
     account_suffix: AUTH_AD_ACCOUNT_SUFFIX
     base_dn: AUTH_AD_BASE_DN
@@ -126,3 +128,9 @@ auth:
       lowercaseUrlencoding: AUTH_SAML_SECURITY_LOWERCASE_URLENCODING
 ### MODULE VARS
 google_maps_api_key: GOOGLE_MAPS_API_KEY
+deploystudio_enable: DEPLOYSTUDIO_ENABLE
+deploystudio_server: DEPLOYSTUDIO_SERVER
+deploystudio_username: DEPLOYSTUDIO_USERNAME
+deploystudio_password: DEPLOYSTUDIO_PASSWORD
+bundleid_ignorelist: BUNDLEID_IGNORELIST
+bundlepath_ignorelist: BUNDLEPATH_IGNORELIST
