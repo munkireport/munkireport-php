@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/MODULE/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/MODULE.sh" -o "${MUNKIPATH}preflight.d/MODULE.sh"
+"${CURL[@]}" "${CTL}get_script/MODULE.sh" -o "${MUNKIPATH}preflight.d/MODULE.sh"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

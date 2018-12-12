@@ -47,6 +47,13 @@ var mr = {
             var globalPrefs = mr.state('global') || {};
             return globalPrefs[key];
         },
+        
+        setHotKey: function(key, url){
+          $(document).bind('keydown', key, function(){
+              window.location = url;
+              return true;
+          });
+        },
 
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)
@@ -214,7 +221,7 @@ var mr = {
 
         loadTheme: function() {
             // Get global state
-            var theme = mr.getPref('theme') || 'Default';
+            var theme = mr.getPref('theme') || default_theme;
             var theme_dir = baseUrl + 'assets/themes/' + theme + '/';
             var theme_file = theme_dir + 'bootstrap.min.css';
             $('#bootstrap-stylesheet').attr('href', theme_dir + 'bootstrap.min.css');
@@ -236,10 +243,10 @@ var mr = {
             	var an = $(a).find('a').text(),
             		bn = $(b).find('a').text();
 
-            	if(an > bn) {
+            	if(an.toLowerCase() > bn.toLowerCase()) {
             		return 1;
             	}
-            	if(an < bn) {
+            	if(an.toLowerCase() < bn.toLowerCase()) {
             		return -1;
             	}
             	return 0;
@@ -284,7 +291,12 @@ var mr = {
             "469": "Asus",
             "4249": "Insignia",
             "41d2": "Planar",
-            "5c85": "Westinghouse"
+            "5c85": "Westinghouse",
+            "c87": "Christie",
+            "2247": "Bush",
+            "34a4": "Medion",
+            "1ab3": "Fujitsu",
+            "2db2": "Kramer Electronics"
         }
 
     };

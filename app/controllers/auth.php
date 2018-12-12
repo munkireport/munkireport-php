@@ -6,7 +6,7 @@ use \Controller, \View;
 use munkireport\lib\Recaptcha;
 use munkireport\lib\AuthHandler;
 use munkireport\lib\AuthSaml;
-use munkireport\lib\AuthConfig;
+use munkireport\lib\AuthLocal;
 use munkireport\lib\AuthWhitelist;
 
 class Auth extends Controller
@@ -42,7 +42,7 @@ class Auth extends Controller
 
         // If no valid mechanisms found, redirect to account generator
         if (! $this->authHandler->authConfigured()) {
-            redirect('auth/generate');
+            redirect('auth/unavailable');
         }
         
         $auth_verified = false;
@@ -72,7 +72,7 @@ class Auth extends Controller
         }
 
        if(array_key_exists('network', conf('auth'))) {
-           $authWhitelist = new AuthWhitelist;
+           $authWhitelist = new AuthWhitelist(conf('auth')['network']);
            $authWhitelist->check_ip(getRemoteAddress());
        }
 
@@ -117,6 +117,12 @@ class Auth extends Controller
         $obj = new View();
         $obj->view('auth/unauthorized', ['why' => $value]);
     }
+    
+    public function unavailable()
+    {
+        $obj = new View();
+        $obj->view('auth/unavailable');
+    }
 
     public function logout()
     {
@@ -133,11 +139,10 @@ class Auth extends Controller
             redirect('');
         }
     }
-
-    public function generate()
+    
+    public function create_local_user()
     {
-        // Add a reason why generate is called
-        $data = array('reason' => empty($this->auth_mechanisms) ? 'noauth' : 'none');
+        $obj = new View();
 
         $password = isset($_POST['password']) ? $_POST['password'] : '';
         $data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
@@ -147,13 +152,20 @@ class Auth extends Controller
         }
 
         if ($data['login'] && $password) {
-            $auth_config = new AuthConfig([]);
+            $auth_config = new AuthLocal([]);
             $t_hasher = $auth_config->load_phpass();
-            $data['generated_pwd'] = $t_hasher->HashPassword($password);
+            $data['password_hash'] = $t_hasher->HashPassword($password);
+            $obj->view('auth/user', $data);
         }
+        else {
+          $obj->view('auth/create_local_user', $data);
+        }
+    }
 
-        $obj = new View();
-        $obj->view('auth/generate_password', $data);
+    public function generate()
+    {
+      // Legacy function
+      redirect('auth/create_local_user');
     }
     
     

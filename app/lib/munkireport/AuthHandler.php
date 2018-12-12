@@ -10,7 +10,7 @@ class AuthHandler
     // Authentication mechanisms we handle => classname
     private $mechanisms = [
         'noauth' => 'AuthNoauth',
-        'config' => 'AuthConfig',
+        'local' => 'AuthLocal',
         'ldap' => 'AuthLDAP',
         'AD' => 'AuthAD',
         'saml' => 'AuthSaml'];
@@ -122,7 +122,7 @@ class AuthHandler
         $_SESSION['role_why'] = 'Default role';
 
         // Find role in config for current user
-        foreach (conf('roles', array()) as $role => $members) {
+        foreach (conf('roles') as $role => $members) {
         // Check for wildcard
             if (in_array('*', $members)) {
                 $_SESSION['role'] = $role;

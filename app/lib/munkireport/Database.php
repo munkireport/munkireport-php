@@ -34,7 +34,7 @@ class Database
         }
         return $this;
     }
-    
+
     /**
      * Get dsn
      *
@@ -52,7 +52,7 @@ class Database
                 throw new \Exception("Unknown driver in connection", 1);
         }
     }
-    
+
     /**
      * Get pdo user
      *
@@ -62,7 +62,7 @@ class Database
     {
       return isset($this->connection['username']) ? $this->connection['username'] : '';
     }
-    
+
     /**
      * Get pdo password
      *
@@ -72,7 +72,7 @@ class Database
     {
       return isset($this->connection['password']) ? $this->connection['password'] : '';
     }
-    
+
     /**
      * Get pdo options
      *
@@ -138,12 +138,12 @@ class Database
         if($this->connection['driver'] == 'mysql'){
           return $this->sizeMySQL();
         }
-        
+
         if($this->connection['driver'] == 'sqlite'){
           return $this->sizeSQLite();
         }
     }
-    
+
     /**
      * Size
      *
@@ -175,12 +175,12 @@ class Database
     public function sizeSQLite()
     {
         $result = $this->fetchOne('PRAGMA PAGE_SIZE');
-        $page_size = $result['page_size'];
+        $page_size = (int) $result[0];
         $result = $this->fetchOne('PRAGMA PAGE_COUNT');
-        $page_count = $result['page_count'];
+        $page_count = (int) $result[0];
         return $page_size * $page_count / 1024.0/1024.0;
     }
-    
+
     /**
      * Fetch one
      *
@@ -224,4 +224,14 @@ class Database
     {
         return $this->getDBH()->getAttribute(\PDO::ATTR_DRIVER_NAME);
     }
+    /**
+     * Get PDO Server version
+     *
+     * @return string serverversion
+     **/
+     public function get_version()
+     {
+       return $this->getDBH()->getAttribute(\PDO::ATTR_SERVER_VERSION);
+     }
+
 }

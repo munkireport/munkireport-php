@@ -33,6 +33,7 @@ class system extends Controller
             'db.writable' => false,
             'db.size' => '',
             'error' => '',
+            'version' => ''
         );
 
         $db = new Database(conf('connection'));
@@ -47,6 +48,7 @@ class system extends Controller
                 $out['error'] = $db->getError();
             }
             $out['db.size'] = $db->size();
+            $out['version'] = $db->get_version();
 
         } else {
             $out['error'] = $db->getError();
