@@ -1,4 +1,18 @@
-### [3.3.2](https://github.com/munkireport/munkireport-php/compare/v3.3.1...HEAD) (Unreleased)
+### [3.4.0](https://github.com/munkireport/munkireport-php/compare/v3.3.1...HEAD) (Unreleased)
+
+IMPORTANT CHANGES
+
+This release changes the entire configuration system to `.env`. This means that `config.php` and `config_default.php` are no longer in use.
+
+FIXES
+- Fixing the Listing title (#1194) @joncrain
+- Removing unnecessary data (#1195) @joncrain
+- Including preset curl options by default (#1197) @joncrain
+- Added local users config info to .env.example and README.md (#1204) @fridomac
+
+OTHER CHANGES
+- SAML attribute mapping for user and groups
+
 
 ### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...v3.3.1) (November 27, 2018)
 
