@@ -3,6 +3,7 @@
 Users are defined by a file called `username.yml`
 This file should contain the password hash called `password_hash`
 You can generate these files by visiting `index.php?/auth/create_local_user`
+Please make shure that in your .env "AUTH_METHODS" contains "LOCAL", otherwise it will not work.
 
 ## Example:
 
