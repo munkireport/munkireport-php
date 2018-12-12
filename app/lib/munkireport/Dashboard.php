@@ -8,7 +8,7 @@ use \View;
 
 class Dashboard
 {
-    private $config, $dashboards = [], $loaded = false;
+    private $config, $dashboards = [], $loaded = false, $filesystem;
     
     public function __construct($config)
     {
@@ -19,6 +19,7 @@ class Dashboard
           'display_name' => 'Dashboard',
           'hotkey' => 'd',
         ];
+        $this->fileSystem = new Filesystem;
         $this->loadAll();
     }
 
@@ -35,7 +36,7 @@ class Dashboard
     private function addDashboard($path)
     {
         try {
-            $filename = Filesystem::name($path);
+            $filename = $this->fileSystem->name($path);
             $display_name = $filename;
             $hotkey = '';
             $data = Yaml::parseFile($path);
@@ -65,7 +66,7 @@ class Dashboard
         if(! $this->loaded){
           foreach($this->config['search_paths'] as $dir)
           {
-              foreach(Filesystem::glob($dir . '/*.yml') AS $file)
+              foreach($this->fileSystem->glob($dir . '/*.yml') AS $file)
               {
                   $this->addDashboard($file);
               }
