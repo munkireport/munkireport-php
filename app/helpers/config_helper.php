@@ -27,7 +27,6 @@ function loadAuthConfig()
         switch (strtoupper($auth_method)) {
             case 'NOAUTH':
                 $auth_config['auth_noauth'] = require APP_ROOT . 'app/config/auth/noauth.php';
-                //$conf['auth']['auth_noauth'] = require APP_ROOT . 'config/auth_noauth.php';
                 break;
             case 'SAML':
                 $auth_config['auth_saml'] = require APP_ROOT . 'app/config/auth/saml.php';
