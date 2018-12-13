@@ -134,3 +134,11 @@ deploystudio_username: DEPLOYSTUDIO_USERNAME
 deploystudio_password: DEPLOYSTUDIO_PASSWORD
 bundleid_ignorelist: BUNDLEID_IGNORELIST
 bundlepath_ignorelist: BUNDLEPATH_IGNORELIST
+disk_thresholds: DISK_THRESHOLDS
+gsx_enable: GSX_ENABLE
+gsx_cert: GSX_CERT
+gsx_cert_keypass: GSX_CERT_KEYPASS
+gsx_sold_to: GSX_SOLD_TO
+gsx_ship_to: GSX_SHIP_TO
+gsx_username: GSX_USERNAME
+gsx_date_format: GSX_DATE_FORMAT
