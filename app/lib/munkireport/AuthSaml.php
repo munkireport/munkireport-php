@@ -1,20 +1,27 @@
 <?php
 
 namespace munkireport\lib;
-use \OneLogin_Saml2_Auth, \OneLogin_Saml2_Settings, \OneLogin_Saml2_Error;
+use \OneLogin\Saml2\Auth as OneLogin_Saml2_Auth;
+use \OneLogin\Saml2\Settings as OneLogin_Saml2_Settings;
+use \OneLogin\Saml2\Error as OneLogin_Saml2_Error;
 use \Exception, \View;
+use \Illuminate\Filesystem\Filesystem;
 
 class AuthSaml extends AbstractAuth
 
 {
-    private $config, $error, $authController, $groups, $login, $forceAuthn;
+    private $config, $mr_config, $error, $authController, $groups, $login, $forceAuthn, $filesystem;
 
     public function __construct($config, $authHandler)
     {
         $this->authController = $authHandler;
+        
+        $this->filesystem = new Filesystem;
 
-        // TODO Check config
         $this->config = $config;
+        $this->mr_config = $this->config['munkireport'];
+        unset($this->config['munkireport']);
+        
         if( empty($this->config['sp']['entityId'])){
             $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
         }
@@ -25,6 +32,23 @@ class AuthSaml extends AbstractAuth
             'url' => url('auth/saml/sls', true)
         ];
         $this->forceAuthn = $this->config['disable_sso'];
+        
+        if( ! $this->certificatesInConfig()){
+            $this->loadCertificatesFromFiles();
+        }
+    }
+    
+    private function certificatesInConfig()
+    {
+        return ! empty($this->config['idp']['x509cert']);
+    }
+    
+    private function loadCertificatesFromFiles()
+    {
+        $certdir = $this->mr_config['cert_directory'];
+        if(empty($this->config['idp']['x509cert'])){
+            $this->config['idp']['x509cert'] = $this->filesystem->get($certdir . 'idp.crt');
+        }
     }
 
     public function handle($endpoint)
@@ -116,7 +140,7 @@ class AuthSaml extends AbstractAuth
 
         $attrs = $auth->getAttributes();
         $auth_data = $this->mapSamlAttrs($attrs);
-        if ($this->authorizeUserAndGroups($this->config, $auth_data)) {
+        if ($this->authorizeUserAndGroups($this->mr_config, $auth_data)) {
             $this->login = $auth_data['user'];
             $this->groups = $auth_data['groups'];
             $this->authController->storeAuthData($this);
@@ -199,21 +223,20 @@ class AuthSaml extends AbstractAuth
     {
         $out = [
             'auth' => 'saml',
+            'user' => '',
             'groups' => [],
         ];
-
-        $attr_mapping = $this->config['attr_mapping'];
-        foreach($attr_mapping as $key => $mappedKey)
-        {
-            if(isset($attrs[$mappedKey]))
-            {
-                if($key == 'groups')
-                {
-                    $out['groups'] = array_merge( $out['groups'], $attrs[$mappedKey]);
-                }
-                else{
-                    $out['user'] = $attrs[$mappedKey][0];
-                }
+        
+        $userAttribute = $this->config['attr_mapping']['user'];
+        $groupAttributes = $this->config['attr_mapping']['groups'];
+        
+        if(isset($attrs[$userAttribute])){
+            $out['user'] = $attrs[$userAttribute][0];
+        }
+        
+        foreach ($groupAttributes as $groupAttribute) {
+            if(isset($attrs[$groupAttribute])){
+                $out['groups'] = array_merge( $out['groups'], $attrs[$groupAttribute]);
             }
         }
 
