@@ -81,6 +81,11 @@ function getdbh()
 
                 case 'mysql':
                     $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
+                    if( ! isset($conn['options']) && isset($conn['charset']) && isset($conn['collation'])){
+                      $conn['options'] = [
+                        PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
+                      ];
+                    }
                     break;
 
                 default:

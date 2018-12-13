@@ -207,8 +207,8 @@ class AuthSaml extends AbstractAuth
         }
         else{
             $attr_mapping = [
-                'user': 'User.email',
-                'groups': ['memberOf'],
+                'user' => 'User.email',
+                'groups' => ['memberOf'],
             ];
         }
         foreach($attr_mapping as $key => $mappedKey)
