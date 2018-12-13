@@ -15,7 +15,7 @@ class AuthSaml extends AbstractAuth
 
         // TODO Check config
         $this->config = $config;
-        if( ! isset($this->config['sp']['entityId'])){
+        if( empty($this->config['sp']['entityId'])){
             $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
         }
         $this->config['sp']['assertionConsumerService'] = [
@@ -24,7 +24,7 @@ class AuthSaml extends AbstractAuth
         $this->config['sp']['singleLogoutService'] = [
             'url' => url('auth/saml/sls', true)
         ];
-        $this->forceAuthn = isset($this->config['disable_sso']) ? $this->config['disable_sso'] : false;
+        $this->forceAuthn = $this->config['disable_sso'];
     }
 
     public function handle($endpoint)
@@ -136,7 +136,7 @@ class AuthSaml extends AbstractAuth
     private function slo()
     {
         // Check if SSO is disabled, if yes, destroy session and move on
-        if(isset($this->config['disable_sso']) && $this->config['disable_sso'] === true){
+        if($this->config['disable_sso']){
             session_destroy();
             $obj = new View();
             $obj->view('auth/logout', ['loginurl' => url()]);
@@ -202,15 +202,7 @@ class AuthSaml extends AbstractAuth
             'groups' => [],
         ];
 
-        if(isset($this->config['attr_mapping'])){
-            $attr_mapping = $this->config['attr_mapping'];
-        }
-        else{
-            $attr_mapping = [
-                'user' => 'User.email',
-                'groups' => ['memberOf'],
-            ];
-        }
+        $attr_mapping = $this->config['attr_mapping'];
         foreach($attr_mapping as $key => $mappedKey)
         {
             if(isset($attrs[$mappedKey]))
