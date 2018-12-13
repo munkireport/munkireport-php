@@ -6,6 +6,9 @@ switch ($driver) {
     return [
         'driver'    => 'sqlite',
         'database'  => env('CONNECTION_DATABASE', APP_ROOT . 'app/db/db.sqlite'),
+        'username' => '',
+        'password' => '',
+        'options' => env('CONNECTION_OPTIONS', []),
     ];
     break;
   case 'mysql':
