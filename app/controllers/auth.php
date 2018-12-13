@@ -12,14 +12,14 @@ use munkireport\lib\AuthWhitelist;
 class Auth extends Controller
 {
     private $authHandler;
-    
+
     public function __construct()
     {
         if (conf('auth_secure') && empty($_SERVER['HTTPS'])) {
             redirect('error/client_error/426'); // Switch protocol
         }
-        
-        $this->authHandler = new AuthHandler;        
+
+        $this->authHandler = new AuthHandler;
     }
 
     //===============================================================
@@ -44,7 +44,7 @@ class Auth extends Controller
         if (! $this->authHandler->authConfigured()) {
             redirect('auth/unavailable');
         }
-        
+
         $auth_verified = false;
         $pre_auth_failed = false;
 
@@ -99,7 +99,7 @@ class Auth extends Controller
         $obj = new View();
         $obj->view('auth/login', $data);
     }
-    
+
     public function set_session_props($show = false)
     {
         // Initialize session
@@ -111,13 +111,13 @@ class Auth extends Controller
             $obj->view('json', array('msg' => $props));
         }
     }
-    
+
     public function unauthorized($value='')
     {
         $obj = new View();
         $obj->view('auth/unauthorized', ['why' => $value]);
     }
-    
+
     public function unavailable()
     {
         $obj = new View();
@@ -128,9 +128,9 @@ class Auth extends Controller
     {
         // Initialize session
         $this->authorized();
-        
+
         // Check if saml
-        if($_SESSION['auth'] == 'saml'){
+        if(isset($_SESSION['auth']) && $_SESSION['auth'] == 'saml'){
             redirect('auth/saml/slo');
         }
         else{
@@ -139,7 +139,7 @@ class Auth extends Controller
             redirect('');
         }
     }
-    
+
     public function create_local_user()
     {
         $obj = new View();
@@ -152,7 +152,7 @@ class Auth extends Controller
         }
 
         if ($data['login'] && $password) {
-            $auth_config = new AuthLocal([]);
+            $auth_config = new AuthLocal(conf('auth')['auth_local']);
             $t_hasher = $auth_config->load_phpass();
             $data['password_hash'] = $t_hasher->HashPassword($password);
             $obj->view('auth/user', $data);
@@ -167,10 +167,10 @@ class Auth extends Controller
       // Legacy function
       redirect('auth/create_local_user');
     }
-    
-    
+
+
     public function saml($endpoint = 'sso')
-    {        
+    {
         $saml_config = $this->authHandler->getConfig('saml');
         if($saml_config){
             $this->authorized();
