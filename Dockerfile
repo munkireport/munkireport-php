@@ -43,8 +43,6 @@ COPY . $APP_DIR
 WORKDIR $APP_DIR
 
 RUN composer install --no-dev && \
-    composer require adldap2/adldap2:^9.0 --update-no-dev && \
-    composer require onelogin/php-saml:^2.12 --update-no-dev && \
     composer dumpautoload -o
 
 COPY docker/docker_config.php config.php
