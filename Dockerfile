@@ -32,7 +32,7 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url 
  && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} \
  && composer --ansi --version --no-interaction \
  && rm -rf /tmp/* /tmp/.htaccess
- 
+
 ENV SITENAME MunkiReport
 ENV MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
 ENV INDEX_PAGE ""
@@ -43,7 +43,7 @@ COPY . $APP_DIR
 WORKDIR $APP_DIR
 
 RUN composer install --no-dev && \
-    composer require adldap2/adldap2:^8.0 --update-no-dev && \
+    composer require adldap2/adldap2:^9.0 --update-no-dev && \
     composer require onelogin/php-saml:^2.12 --update-no-dev && \
     composer dumpautoload -o
 
