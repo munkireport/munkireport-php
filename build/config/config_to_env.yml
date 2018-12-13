@@ -63,9 +63,8 @@ auth:
   auth_AD:
     account_suffix: AUTH_AD_ACCOUNT_SUFFIX
     base_dn: AUTH_AD_BASE_DN
-    domain_controllers: AUTH_AD_DOMAIN_CONTROLLERS
-    admin_username: AUTH_AD_ADMIN_USERNAME
-    admin_password: AUTH_AD_ADMIN_PASSWORD
+    domain_controllers: AUTH_AD_HOSTS
+    hosts: AUTH_AD_HOSTS
     schema: AUTH_AD_SCHEMA
     mr_allowed_users: AUTH_AD_ALLOWED_USERS
     mr_allowed_groups: AUTH_AD_ALLOWED_GROUPS
