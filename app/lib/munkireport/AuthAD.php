@@ -14,13 +14,13 @@ class AuthAD extends AbstractAuth
     {
         $this->config = $config;
         // Schema support
-        if (isset($this->config['schema'])){
+        if (empty($this->config['schema'])){
             $schemaName = 'Adldap\\Schemas\\'.$this->config['schema'];
             $this->schema = new $schemaName;
-            unset($this->config['schema']);
         } else {
             $this->schema = new ActiveDirectorySchema;
         }
+        unset($this->config['schema']);
         $this->groups = [];
     }
 

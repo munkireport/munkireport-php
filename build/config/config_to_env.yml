@@ -40,6 +40,7 @@ connection:
     collation: CONNECTION_COLLATION
     strict: CONNECTION_STRICT
     engine: CONNECTION_ENGINE
+    options: CONNECTION_OPTIONS
 recaptchaloginpublickey: RECAPTCHA_LOGIN_PUBLIC_KEY
 recaptchaloginprivatekey: RECAPTCHA_LOGIN_PRIVATE_KEY
 groups:

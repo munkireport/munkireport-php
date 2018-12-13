@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.4.0.3648';
+$GLOBALS['version'] = '3.4.0.3649';
 
 // Return version without commit count
 function get_version()
@@ -252,6 +252,7 @@ function get_guid()
 
 /**
  * Convert an array of values to a key => value array
+ * [a, b] is converted to [a => b]
  *
  * @return array assoc array
  * @author
@@ -265,6 +266,24 @@ function arrayToAssoc($array)
     while (count($array)) {
         list($key, $value) = array_splice($array, 0, 2);
         $result[$key] = $value;
+    }
+    return $result;
+}
+
+/**
+ * Convert a key => value array to an array of values
+ * [a => b] is converted to [a, b]
+ *
+ * @return array array
+ * @author
+ **/
+function assocToArray($array)
+{
+    $result = [];
+    foreach($array as $k => $v)
+    {
+      $result[] = $k;
+      $result[] = $v;
     }
     return $result;
 }

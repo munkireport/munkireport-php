@@ -6,6 +6,7 @@ use Symfony\Component\Yaml\Yaml;
 define("KISS", 1);
 define("APP_ROOT", dirname(__DIR__));
 require_once __DIR__ . '/../app/helpers/env_helper.php';
+require_once __DIR__ . '/../app/helpers/site_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../app/helpers/config_helper.php';
 
@@ -73,7 +74,7 @@ function convertDashboard(&$conf, $path)
       logit("Skipping dashboard: $path already exists");
       return false;
     }
-    
+
     if(array_key_exists('dashboard_layout', $conf)){
         $conf['dashboard_layout']['display_name'] = 'Dashboard';
         $conf['dashboard_layout']['hotkey'] = 'd';
@@ -82,6 +83,16 @@ function convertDashboard(&$conf, $path)
     }
     return true;
 }
+
+function convertConnectionOptions(&$conf)
+{
+    if(array_key_exists('options', $conf['connection'])){
+        $conf['connection']['options'] = assocToArray($conf['connection']['options']);
+        return true;
+    }
+    return false;
+}
+
 
 function filterObsoleteItems(&$config, $obsolete_items)
 {
@@ -147,7 +158,7 @@ function detectAuthMethods(&$conf, $auth_conf)
   }
   // Remove auth_noath as it has no options
   unset($conf['auth']['auth_noauth']);
-  
+
   return true;
 }
 
@@ -230,6 +241,7 @@ $auth_config = loadConfig($config_path, 'auth_config');
 logit("Analyzing...");
 samlFix($config);
 filterObsoleteItems($config, $obsolete_items);
+convertConnectionOptions($config);
 detectAuthMethods($config, $auth_config);
 convertDashboard($config, $app_root . '/dashboards/default.yml');
 convertPrefsToDotEnv($config, $conversion_file, $env_path);
