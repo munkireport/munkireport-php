@@ -19,4 +19,6 @@ composer.local.*
 
 users/*.yml
 dashboards/*.yml
+certs/*.crt
+certs/*.key
 
