@@ -20,6 +20,7 @@ switch ($driver) {
       'collation' => env('CONNECTION_COLLATION', 'utf8mb4_unicode_ci'),
       'strict' => env('CONNECTION_STRICT', true),
       'engine' => env('CONNECTION_ENGINE', 'InnoDB'),
+      'options' => env('CONNECTION_OPTIONS', []),
     ];
   default:
       throw new \Exception(sprintf("Unknown driver: %s", $driver), 1);

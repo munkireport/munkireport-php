@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.4.0.3647';
+$GLOBALS['version'] = '3.4.0.3648';
 
 // Return version without commit count
 function get_version()
@@ -74,6 +74,9 @@ function getdbh()
     if (! isset($GLOBALS['dbh'])) {
         try {
             $conn = conf('connection');
+            if($conn['options']){
+                $conn['options'] = arrayToAssoc($conn['options']);
+            }
             switch ($conn['driver']) {
                 case 'sqlite':
                     $dsn = "sqlite:{$conn['database']}";
@@ -81,7 +84,7 @@ function getdbh()
 
                 case 'mysql':
                     $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
-                    if( ! isset($conn['options']) && isset($conn['charset']) && isset($conn['collation'])){
+                    if( empty($conn['options'])){
                       $conn['options'] = [
                         PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
                       ];
@@ -93,9 +96,9 @@ function getdbh()
             }
             $GLOBALS['dbh'] = new PDO(
                 $dsn,
-                isset($conn['username']) ? $conn['username'] : '',
-                isset($conn['password']) ? $conn['password'] : '',
-                isset($conn['options']) ? $conn['options'] : []
+                $conn['username'],
+                $conn['password'],
+                $conn['options']
             );
         } catch (PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());
@@ -245,6 +248,25 @@ function get_guid()
         mt_rand(0, 65535),
         mt_rand(0, 65535)
     );
+}
+
+/**
+ * Convert an array of values to a key => value array
+ *
+ * @return array assoc array
+ * @author
+ **/
+function arrayToAssoc($array)
+{
+    if(count($array) % 2){
+      throw new \Exception("Cannot convert array: array is of uneven length", 1);
+    }
+    $result = [];
+    while (count($array)) {
+        list($key, $value) = array_splice($array, 0, 2);
+        $result[$key] = $value;
+    }
+    return $result;
 }
 
 /**
