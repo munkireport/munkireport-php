@@ -17,7 +17,8 @@ array_shift($argv);
 $app_root = dirname(__DIR__);
 $config_path = $app_root . '/config.php';
 $env_path = $app_root . '/.env';
-$user_path = $app_root . '/users/';
+$user_path = $app_root . '/local/users/';
+$dashboard_path = $app_root . '/local/dashboards/';
 $conversion_file = $app_root . '/build/config/config_to_env.yml';
 $obsolete_items = [
   'system_path',
@@ -243,7 +244,7 @@ samlFix($config);
 filterObsoleteItems($config, $obsolete_items);
 convertConnectionOptions($config);
 detectAuthMethods($config, $auth_config);
-convertDashboard($config, $app_root . '/dashboards/default.yml');
+convertDashboard($config, $dashboard_path . 'default.yml');
 convertPrefsToDotEnv($config, $conversion_file, $env_path);
 convertUsers($auth_config, $user_path);
 logit("Done");
