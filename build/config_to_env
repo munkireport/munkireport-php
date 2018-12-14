@@ -15,10 +15,12 @@ initDotEnv();
 array_shift($argv);
 
 $app_root = dirname(__DIR__);
-$config_path = $app_root . '/config.php';
 $env_path = $app_root . '/.env';
 $user_path = $app_root . '/local/users/';
 $dashboard_path = $app_root . '/local/dashboards/';
+$network_path = $app_root . '/local/module_configs/ipv4routers.yml';
+
+$config_path = $app_root . '/config.php';
 $conversion_file = $app_root . '/build/config/config_to_env.yml';
 $obsolete_items = [
   'system_path',
@@ -83,6 +85,20 @@ function convertDashboard(&$conf, $path)
         unset($conf['dashboard_layout']);
     }
     return true;
+}
+
+function convertNetworks(&$conf, $path)
+{
+  if(file_exists($path)){
+    logit("Skipping networks: $path already exists");
+    return false;
+  }
+  
+  if(isset($conf['ipv4routers']))
+  {
+    writeFile($path, Yaml::dump($conf['ipv4routers']));
+  }
+
 }
 
 function convertConnectionOptions(&$conf)
@@ -245,6 +261,7 @@ filterObsoleteItems($config, $obsolete_items);
 convertConnectionOptions($config);
 detectAuthMethods($config, $auth_config);
 convertDashboard($config, $dashboard_path . 'default.yml');
+convertNetworks($config, $network_path);
 convertPrefsToDotEnv($config, $conversion_file, $env_path);
 convertUsers($auth_config, $user_path);
 logit("Done");
