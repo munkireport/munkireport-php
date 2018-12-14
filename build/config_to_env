@@ -19,6 +19,7 @@ $env_path = $app_root . '/.env';
 $user_path = $app_root . '/local/users/';
 $dashboard_path = $app_root . '/local/dashboards/';
 $network_path = $app_root . '/local/module_configs/ipv4routers.yml';
+$ip_ranges_path = $app_root . '/local/module_configs/ip_ranges.yml';
 
 $config_path = $app_root . '/config.php';
 $conversion_file = $app_root . '/build/config/config_to_env.yml';
@@ -93,12 +94,26 @@ function convertNetworks(&$conf, $path)
     logit("Skipping networks: $path already exists");
     return false;
   }
-  
+
   if(isset($conf['ipv4routers']))
   {
     writeFile($path, Yaml::dump($conf['ipv4routers']));
   }
+  unset($conf['ipv4routers']);
+}
 
+function convertIPranges(&$conf, $path)
+{
+  if(file_exists($path)){
+    logit("Skipping ipranges: $path already exists");
+    return false;
+  }
+
+  if(isset($conf['ip_ranges']))
+  {
+    writeFile($path, Yaml::dump($conf['ip_ranges']));
+  }
+  unset($conf['ip_ranges']);
 }
 
 function convertConnectionOptions(&$conf)
@@ -262,6 +277,7 @@ convertConnectionOptions($config);
 detectAuthMethods($config, $auth_config);
 convertDashboard($config, $dashboard_path . 'default.yml');
 convertNetworks($config, $network_path);
+convertIPranges($config, $ip_ranges_path);
 convertPrefsToDotEnv($config, $conversion_file, $env_path);
 convertUsers($auth_config, $user_path);
 logit("Done");
