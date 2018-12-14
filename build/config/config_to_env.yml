@@ -151,3 +151,7 @@ user_sessions_keep_historical: USER_SESSIONS_KEEP_HISTORICAL
 user_sessions_unique_users_only: USER_SESSIONS_UNIQUE_USERS_ONLY
 usb_internal: USB_INTERNAL
 caching_show_itemized: CACHING_SHOW_ITEMIZED
+disk_thresholds:
+  danger: DISK_REPORT_THRESHOLD_DANGER
+  warning: DISK_REPORT_THRESHOLD_WARNING 
+apps_to_track: APPS_TO_TRACK
