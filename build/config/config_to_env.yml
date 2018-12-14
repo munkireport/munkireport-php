@@ -142,3 +142,12 @@ gsx_sold_to: GSX_SOLD_TO
 gsx_ship_to: GSX_SHIP_TO
 gsx_username: GSX_USERNAME
 gsx_date_format: GSX_DATE_FORMAT
+user_sessions_save_remote_ssh: USER_SESSIONS_SAVE_REMOTE_SSH
+user_sessions_save_login: USER_SESSIONS_SAVE_LOGIN
+user_sessions_save_logout: USER_SESSIONS_SAVE_LOGOUT
+user_sessions_save_reboot: USER_SESSIONS_SAVE_REBOOT
+user_sessions_save_shutdown: USER_SESSIONS_SAVE_SHUTDOWN
+user_sessions_keep_historical: USER_SESSIONS_KEEP_HISTORICAL
+user_sessions_unique_users_only: USER_SESSIONS_UNIQUE_USERS_ONLY
+usb_internal: USB_INTERNAL
+caching_show_itemized: CACHING_SHOW_ITEMIZED
