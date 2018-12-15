@@ -54,6 +54,10 @@ class Widgets
 
     public function get($widgetName, $data = [])
     {
+        if (isset($data['widget'])) {
+            $widgetName = $data['widget'];
+        }
+        
         if(isset($this->widgetList[$widgetName]))
         {
             $widget = $this->widgetList[$widgetName];

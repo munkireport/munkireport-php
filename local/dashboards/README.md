@@ -20,3 +20,14 @@ row3:
     disk_report:
     uptime:
 ```
+
+You can use a widget multiple times on a row by explicitly stating the associated widget.
+This will be useful for widgets that accept additional data.
+
+```yaml
+row1:
+  uptime1: { widget: uptime }
+  uptime2: { widget: uptime }
+  uptime3: { widget: uptime }
+```
+
