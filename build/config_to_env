@@ -80,6 +80,16 @@ function convertDashboard(&$conf, $path)
     }
 
     if(array_key_exists('dashboard_layout', $conf)){
+        $conf['dashboard_layout'] = array_map (
+            function($row){
+              $out = [];
+              foreach($row as $key => $value){
+                $out[$value] = [];
+              }
+              return $out;
+            },
+            $conf['dashboard_layout']
+        );
         $conf['dashboard_layout']['display_name'] = 'Dashboard';
         $conf['dashboard_layout']['hotkey'] = 'd';
         writeFile($path, Yaml::dump($conf['dashboard_layout']));

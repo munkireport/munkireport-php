@@ -52,11 +52,13 @@ class Widgets
         }
     }
 
-    public function get($widgetName)
+    public function get($widgetName, $data = [])
     {
         if(isset($this->widgetList[$widgetName]))
         {
-            return $this->widgetList[$widgetName];
+            $widget = $this->widgetList[$widgetName];
+            $widget->vars = $data;
+            return $widget;
         }
 
         $this->widgetNotFound->vars = array('widgetName' => $widgetName);
@@ -64,9 +66,9 @@ class Widgets
         return $this->widgetNotFound;
     }
 
-    public function view($viewObj, $widgetName)
+    public function view($viewObj, $widgetName, $data = [])
     {
-        $widget = $this->get($widgetName);
+        $widget = $this->get($widgetName, $data);
         $viewObj->view($widget->file, $widget->vars, $widget->path);
     }
 

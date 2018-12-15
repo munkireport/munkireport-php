@@ -9,14 +9,14 @@ Structure each file as follows:
 display_name: My Awesome Dashboard
 hotkey: q
 row1:
-    - client
-    - messages
+    client:
+    messages:
 row2:
-    - new_clients
-    - pending_apple
-    - pending_munki
+    new_clients:
+    pending_apple:
+    pending_munki:
 row3:
-    - munki
-    - disk_report
-    - uptime
+    munki:
+    disk_report:
+    uptime:
 ```
