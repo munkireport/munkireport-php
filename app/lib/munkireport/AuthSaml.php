@@ -46,7 +46,7 @@ class AuthSaml extends AbstractAuth
     private function loadCertificatesFromFiles()
     {
         $certdir = $this->mr_config['cert_directory'];
-        if(empty($this->config['idp']['x509cert'])){
+        if($this->filesystem->exists($certdir . 'idp.crt')){
             $this->config['idp']['x509cert'] = $this->filesystem->get($certdir . 'idp.crt');
         }
     }

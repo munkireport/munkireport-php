@@ -59,6 +59,16 @@ return [
 
     /*
     |===============================================
+    | Local directory
+    |===============================================
+    |
+    | Path to the local directory where settings, users and certificates are stored
+    |
+    */
+    'local' => env('LOCAL_DIRECTORY_PATH', APP_ROOT . 'local/'),
+
+    /*
+    |===============================================
     | HTTP host
     |===============================================
     |

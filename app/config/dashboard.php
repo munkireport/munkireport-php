@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'search_paths' => env('DASHBOARD_SEARCH_PATHS', [APP_ROOT . 'local/dashboards']),
+    'search_paths' => env('DASHBOARD_SEARCH_PATHS', [local_conf('dashboards')]),
     'template' => env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
     'default_layout' => [
         [

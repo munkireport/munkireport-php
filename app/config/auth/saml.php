@@ -42,6 +42,6 @@ return [
   'munkireport' => [
     'mr_allowed_users'  => env('AUTH_SAML_ALLOWED_USERS', []),
     'mr_allowed_groups' => env('AUTH_SAML_ALLOWED_GROUPS', []),
-    'cert_directory' => env('AUTH_SAML_CERT_DIR', APP_ROOT.'local/certs/'),
+    'cert_directory' => env('AUTH_SAML_CERT_DIR', local_conf('certs/')),
   ],
 ];

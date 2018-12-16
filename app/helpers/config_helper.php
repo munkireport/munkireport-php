@@ -92,3 +92,12 @@ function conf($cf_item, $default = '')
 	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
 }
 
+function local_conf($item)
+{
+    return rtrim(conf('local'), '/') . '/' . $item;
+}
+
+function module_conf($item)
+{
+  return local_conf('module_configs/' .$item);
+}
