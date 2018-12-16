@@ -2,7 +2,8 @@
 
 IMPORTANT CHANGES
 
-This release changes the entire configuration system to `.env`. This means that `config.php` and `config_default.php` are no longer in use.
+- This release changes the entire configuration system to `.env`. This means that `config.php` and `config_default.php` are no longer in use.
+- There is a new directory called `local` that is used for user accounts, dashboards, certificates and module specific yaml files.
 
 FIXES
 - Fixing the Listing title (#1194) @joncrain
