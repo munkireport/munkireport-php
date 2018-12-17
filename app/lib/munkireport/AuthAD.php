@@ -8,7 +8,7 @@ use \Exception;
 
 class AuthAD extends AbstractAuth
 {
-    private $config, $schema, $groups, $login, $auth_status;
+    private $config, $schema, $groups, $login, $authStatus;
 
     public function __construct($config)
     {
