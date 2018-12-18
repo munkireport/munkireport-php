@@ -15,7 +15,7 @@ FIXES
 
 OTHER CHANGES
 - SAML attribute mapping for user and groups
-
+- The `adldap2/adldap2` and `onelogin/php-saml` libraries are updated to the latest version and included in the default installation.
 
 ### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...v3.3.1) (November 27, 2018)
 
