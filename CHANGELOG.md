@@ -1,9 +1,11 @@
-### [3.4.0](https://github.com/munkireport/munkireport-php/compare/v3.3.1...HEAD) (Unreleased)
+### [4.0.0](https://github.com/munkireport/munkireport-php/compare/v3.3.1...HEAD) (Unreleased)
 
 IMPORTANT CHANGES
 
 - This release changes the entire configuration system to `.env`. This means that `config.php` and `config_default.php` are no longer in use.
 - There is a new directory called `local` that is used for user accounts, dashboards, certificates and module specific yaml files.
+
+Please read https://github.com/munkireport/munkireport-php/wiki/How-to-Upgrade-Versions#version-3x---4x for more information
 
 FIXES
 - Fixing the Listing title (#1194) @joncrain

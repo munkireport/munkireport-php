@@ -52,8 +52,8 @@ function logit($txt)
 
 function warn()
 {
-    echo "IN PROGRESS - DO NOT USE UNLESS FOR TESTING PURPOSES\n\n";
-
+    echo "MIGRATION SCRIPT TO MIGRATE MUNKIREPORT TO MUNKIREPORT VERSION 4\n\n";
+    echo "This script will generate the necessary configuration files based on the contents of `config.php`\n";
     echo "Are you sure you want to do this?  Type 'yes' to continue: ";
     $handle = fopen ("php://stdin","r");
     $line = fgets($handle);
