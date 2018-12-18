@@ -2,6 +2,14 @@
 namespace munkireport\lib;
 
 class AuthWhitelist {
+  
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     private function parse_range($ip, $range) {
         if (strpos($range, '/')) return $this->cidr_match($ip, $range);
         $range = $range . '/32';
@@ -24,13 +32,13 @@ class AuthWhitelist {
         // for loop through the configuration setting to check if any IP addresses match - if so
         //     allow traffic
 
-        foreach (conf('auth')['network']['whitelist_ipv4'] as $range) {
+        foreach ($this->config['whitelist_ipv4'] as $range) {
             if ($this->parse_range($remote_address, $range)) { return 1; }
         }
 
         // if a custom 403 page is defined, send traffic to that page
-        if (array_key_exists('redirect_unauthorized', conf('auth')['network'])) {
-            header(("Location: " . (conf('auth')['network']['redirect_unauthorized'])), true, 301);
+        if (isset($this->config['redirect_unauthorized']) && ! empty($this->config['redirect_unauthorized'])) {
+            header(("Location: " . ($this->config['redirect_unauthorized'])), true, 301);
             exit();
         }
 

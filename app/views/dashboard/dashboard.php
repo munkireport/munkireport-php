@@ -2,13 +2,13 @@
 
 <div class="container">
 
-	<?php foreach(conf('dashboard_layout', array()) AS $row):?>
+	<?php foreach($dashboard_layout AS $row):?>
 
 	<div class="row">
 
-		<?php foreach($row as $item):?>
+		<?php foreach($row as $item => $data):?>
 
-		<?php $widget->view($this, $item); ?>
+		<?php $widget->view($this, $item, $data); ?>
 
 		<?php endforeach?>
 

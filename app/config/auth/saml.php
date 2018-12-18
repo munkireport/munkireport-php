@@ -16,11 +16,9 @@ return [
     'x509cert' => env('AUTH_SAML_IDP_X509CERT'),
   ],
   'attr_mapping' => [
-    env('AUTH_SAML_GROUP_ATTR', 'memberOf') => 'groups',
-    env('AUTH_SAML_USER_ATTR', 'User.email') => 'user',
+    'user' => env('AUTH_SAML_USER_ATTR', 'User.email'),
+    'groups' => env('AUTH_SAML_GROUP_ATTR', ['memberOf']),
   ],
-  'mr_allowed_users'  => env('AUTH_SAML_ALLOWED_USERS', []),
-  'mr_allowed_groups' => env('AUTH_SAML_ALLOWED_GROUPS', []),
   'disable_sso'       => env('AUTH_SAML_DISABLE_SSO', false),
   'debug'             => env('AUTH_SAML_DEBUG', false),
   'security'          => [
@@ -40,5 +38,10 @@ return [
     'signatureAlgorithm'         => env('AUTH_SAML_SECURITY_SIGNATURE_ALGORITHM', 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'),
     'digestAlgorithm'            => env('AUTH_SAML_SECURITY_DIGEST_ALGORITHM', 'http://www.w3.org/2001/04/xmlenc#sha256'),
     'lowercaseUrlencoding'       => env('AUTH_SAML_SECURITY_LOWERCASE_URLENCODING', false),
+  ],
+  'munkireport' => [
+    'mr_allowed_users'  => env('AUTH_SAML_ALLOWED_USERS', []),
+    'mr_allowed_groups' => env('AUTH_SAML_ALLOWED_GROUPS', []),
+    'cert_directory' => env('AUTH_SAML_CERT_DIR', local_conf('certs/')),
   ],
 ];

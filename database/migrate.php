@@ -24,27 +24,6 @@ function colorize($string){
     return str_replace(array_keys($colorTable), array_values($colorTable), $string);
 }
 
-function load_conf()
-{
-	$conf = array();
-
-	$GLOBALS['conf'] =& $conf;
-
-	// Load default configuration
-	require_once(APP_ROOT . "config_default.php");
-
-	if ((include_once APP_ROOT . "config.php") !== 1)
-	{
-		die(APP_ROOT. "config.php is missing!\n
-	Unfortunately, Munkireport does not work without it\n");
-	}
-}
-
-function conf($cf_item, $default = '')
-{
-	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
-}
-
 function has_sqlite_db()
 {
   $connection = conf('connection');
@@ -62,7 +41,9 @@ function ensure_sqlite_db_exists()
 
 require_once APP_ROOT . 'app/helpers/config_helper.php';
 initDotEnv();
-load_conf();
+initConfig();
+configAppendFile(APP_ROOT . 'app/config/app.php');
+configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
 
 if(has_sqlite_db()){
   ensure_sqlite_db_exists();

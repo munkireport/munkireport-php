@@ -99,17 +99,8 @@ $( document ).ready(function() {
         $('a.filter-popup').click(showFilterModal);
 
         // *******   Define hotkeys  *******
-        // Dashboard
-        $(document).bind('keydown', 'd', function(){
-            window.location = appUrl + '/show/dashboard';
-            return true;
-        });
-
         // Client listing
-        $(document).bind('keydown', 'c', function(){
-            window.location = appUrl + '/show/listing/reportdata/clients';
-            return true;
-        });
+        mr.setHotKey('c', appUrl + '/show/listing/reportdata/clients');
 
         // search
         $(document).bind('keydown', '/', function(){

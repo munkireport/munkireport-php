@@ -87,11 +87,10 @@
         "munkireport/usage_stats": "^1.0",
         "munkireport/usb": "^1.0",
         "munkireport/user_sessions": "^1.0",
-        "munkireport/wifi": "^1.0"
-    },
-    "suggest": {
-        "onelogin/php-saml": "^2.12 Required for SAML authentication",
-        "adldap2/adldap2": "^8.0 Required for AD authentication"
+        "munkireport/wifi": "^1.0",
+        "symfony/yaml": "^3.4",
+        "adldap2/adldap2": "^9.1",
+        "onelogin/php-saml": "^3.0"
     },
     "autoload": {
         "psr-4": {

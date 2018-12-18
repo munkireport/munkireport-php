@@ -1,4 +1,25 @@
-### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...HEAD) (Unreleased)
+### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...HEAD) (Unreleased)
+
+### [4.0.0](https://github.com/munkireport/munkireport-php/compare/v3.3.1...v4.0.0) (December 18, 2018)
+
+IMPORTANT CHANGES
+
+- This release changes the entire configuration system to `.env`. This means that `config.php` and `config_default.php` are no longer in use.
+- There is a new directory called `local` that is used for user accounts, dashboards, certificates and module specific yaml files.
+
+Please read https://github.com/munkireport/munkireport-php/wiki/How-to-Upgrade-Versions#version-3x---4x for more information
+
+FIXES
+- Fixing the Listing title (#1194) @joncrain
+- Removing unnecessary data (#1195) @joncrain
+- Including preset curl options by default (#1197) @joncrain
+- Added local users config info to .env.example and README.md (#1204) @fridomac
+
+OTHER CHANGES
+- SAML attribute mapping for user and groups
+- The `adldap2/adldap2` and `onelogin/php-saml` libraries are updated to the latest version and included in the default installation.
+
+### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...v3.3.1) (November 27, 2018)
 
 FIXES
 - `build/add_module.sh`

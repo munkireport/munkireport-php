@@ -1,0 +1,156 @@
+# Conversion list
+timezone: TIMEZONE
+debug: DEBUG
+client_passphrases: CLIENT_PASSPHRASES
+modules: MODULES
+temperature_unit: TEMPERATURE_UNIT
+index_page: INDEX_PAGE
+uri_protocol: URI_PROTOCOL
+sitename: SITENAME
+encryption_key: ENCRYPTION_KEY
+webhost: WEBHOST
+subdirectory: SUBDIRECTORY
+hide_inactive_modules: HIDE_INACTIVE_MODULES
+module_search_paths: MODULE_SEARCH_PATHS
+default_theme: DEFAULT_THEME
+enable_business_units: ENABLE_BUSINESS_UNITS
+vnc_link: VNC_LINK
+ssh_link: SSH_LINK
+curl_cmd: CURL_CMD
+mwa2_link: MWA2_LINK
+custom_folder: CUSTOM_FOLDER
+custom_css: CUSTOM_CSS
+custom_js: CUSTOM_JS
+show_help: SHOW_HELP
+help_url: HELP_URL
+preflight_script: PREFLIGHT_SCRIPT
+postflight_script: POSTFLIGHT_SCRIPT
+report_broken_client_script: REPORT_BROKEN_CLIENT_SCRIPT
+guzzle_handler: GUZZLE_HANDLER
+request_timeout: REQUEST_TIMEOUT
+apple_hardware_icon_url: APPLE_HARDWARE_ICON_URL
+connection:
+    driver: CONNECTION_DRIVER
+    host: CONNECTION_HOST
+    port: CONNECTION_PORT
+    database: CONNECTION_DATABASE
+    username: CONNECTION_USERNAME
+    password: CONNECTION_PASSWORD
+    charset: CONNECTION_CHARSET
+    collation: CONNECTION_COLLATION
+    strict: CONNECTION_STRICT
+    engine: CONNECTION_ENGINE
+    options: CONNECTION_OPTIONS
+recaptchaloginpublickey: RECAPTCHA_LOGIN_PUBLIC_KEY
+recaptchaloginprivatekey: RECAPTCHA_LOGIN_PRIVATE_KEY
+groups:
+  admin_users: GROUPS_ADMIN_USERS
+roles:
+  admin: ROLES_ADMIN
+authorization:
+  delete_machine: AUTHORIZATION_DELETE_MACHINE
+  global: AUTHORIZATION_GLOBAL
+proxy:
+  server: PROXY_SERVER
+  username: PROXY_USERNAME
+  password: PROXY_PASSWORD
+  port: PROXY_PORT
+auth_secure: AUTH_SECURE
+auth_methods: AUTH_METHODS
+auth:
+  auth_local:
+    search_paths: AUTH_LOCAL_SEARCH_PATHS
+  auth_AD:
+    account_suffix: AUTH_AD_ACCOUNT_SUFFIX
+    base_dn: AUTH_AD_BASE_DN
+    domain_controllers: AUTH_AD_HOSTS
+    hosts: AUTH_AD_HOSTS
+    schema: AUTH_AD_SCHEMA
+    mr_allowed_users: AUTH_AD_ALLOWED_USERS
+    mr_allowed_groups: AUTH_AD_ALLOWED_GROUPS
+    mr_recursive_groupsearch: AUTH_AD_RECURSIVE_GROUPSEARCH
+  auth_ldap:
+    server: AUTH_LDAP_SERVER
+    usertree: AUTH_LDAP_USER_BASE
+    grouptree: AUTH_LDAP_GROUP_BASE
+    mr_allowed_users: AUTH_LDAP_ALLOWED_USERS
+    mr_allowed_groups: AUTH_LDAP_ALLOWED_GROUPS
+    userfilter: AUTH_LDAP_USER_FILTER
+    groupfilter: AUTH_LDAP_GROUP_FILTER
+    port: AUTH_LDAP_PORT
+    version: AUTH_LDAP_VERSION
+    starttls: AUTH_LDAP_USE_STARTTLS
+    referrals: AUTH_LDAP_FOLLOW_REFERRALS
+    deref: AUTH_LDAP_DEREF
+    binddn: AUTH_LDAP_BIND_DN
+    bindpw: AUTH_LDAP_BIND_PASSWORD
+    userscope: AUTH_LDAP_USER_SCOPE
+    groupscope: AUTH_LDAP_GROUP_SCOPE
+    groupkey: AUTH_LDAP_GROUP_KEY
+    debug: AUTH_LDAP_DEBUG
+  network:
+    whitelist_ipv4: AUTH_NETWORK_WHITELIST_IP4
+    redirect_unauthorized: AUTH_NETWORK_REDIRECT_UNAUTHORIZED
+  auth_saml:
+    sp:
+      NameIDFormat: AUTH_SAML_SP_NAME_ID_FORMAT
+      entityId: AUTH_SAML_SP_ENTITY_ID
+    idp:
+      entityId: AUTH_SAML_IDP_ENTITY_ID
+      singleSignOnService:
+        url: AUTH_SAML_IDP_SSO_URL
+      singleLogoutService:
+        url: AUTH_SAML_IDP_SLO_URL
+      x509cert: AUTH_SAML_IDP_X509CERT
+    attr_mapping:
+      groups: AUTH_SAML_GROUP_ATTR
+      user: AUTH_SAML_USER_ATTR
+    mr_allowed_users: AUTH_SAML_ALLOWED_USERS
+    mr_allowed_groups: AUTH_SAML_ALLOWED_GROUPS
+    disable_sso: AUTH_SAML_DISABLE_SSO
+    debug: AUTH_SAML_DEBUG
+    security:
+      nameIdEncrypted: AUTH_SAML_SECURITY_NAME_ID_ENCRYPTED
+      authnRequestsSigned: AUTH_SAML_SECURITY_AUTHN_REQUESTS_SIGNED
+      logoutRequestSigned: AUTH_SAML_SECURITY_LOGOUT_REQUEST_SIGNED
+      logoutResponseSigned: AUTH_SAML_SECURITY_LOGOUT_RESPONSE_SIGNED
+      signMetadata: AUTH_SAML_SECURITY_SIGN_METADATA
+      wantMessagesSigned: AUTH_SAML_SECURITY_WANT_MESSAGES_SIGNED
+      wantAssertionsEncrypted: AUTH_SAML_SECURITY_WANT_ASSERTIONS_ENCRYPTED
+      wantAssertionsSigned: AUTH_SAML_SECURITY_WANT_ASSERTIONS_SIGNED
+      wantNameId: AUTH_SAML_SECURITY_WANT_NAME_ID
+      wantNameIdEncrypted: AUTH_SAML_SECURITY_WANT_NAME_ID_ENCRYPTED
+      requestedAuthnContext: AUTH_SAML_SECURITY_REQUESTED_AUTHN_CONTEXT
+      wantXMLValidation: AUTH_SAML_SECURITY_WANT_XML_VALIDATION
+      relaxDestinationValidation: AUTH_SAML_SECURITY_RELAX_DESTINATION_VALIDATION
+      signatureAlgorithm: AUTH_SAML_SECURITY_SIGNATURE_ALGORITHM
+      digestAlgorithm: AUTH_SAML_SECURITY_DIGEST_ALGORITHM
+      lowercaseUrlencoding: AUTH_SAML_SECURITY_LOWERCASE_URLENCODING
+### MODULE VARS
+google_maps_api_key: GOOGLE_MAPS_API_KEY
+deploystudio_enable: DEPLOYSTUDIO_ENABLE
+deploystudio_server: DEPLOYSTUDIO_SERVER
+deploystudio_username: DEPLOYSTUDIO_USERNAME
+deploystudio_password: DEPLOYSTUDIO_PASSWORD
+bundleid_ignorelist: BUNDLEID_IGNORELIST
+bundlepath_ignorelist: BUNDLEPATH_IGNORELIST
+gsx_enable: GSX_ENABLE
+gsx_cert: GSX_CERT
+gsx_cert_keypass: GSX_CERT_KEYPASS
+gsx_sold_to: GSX_SOLD_TO
+gsx_ship_to: GSX_SHIP_TO
+gsx_username: GSX_USERNAME
+gsx_date_format: GSX_DATE_FORMAT
+user_sessions_save_remote_ssh: USER_SESSIONS_SAVE_REMOTE_SSH
+user_sessions_save_login: USER_SESSIONS_SAVE_LOGIN
+user_sessions_save_logout: USER_SESSIONS_SAVE_LOGOUT
+user_sessions_save_reboot: USER_SESSIONS_SAVE_REBOOT
+user_sessions_save_shutdown: USER_SESSIONS_SAVE_SHUTDOWN
+user_sessions_keep_historical: USER_SESSIONS_KEEP_HISTORICAL
+user_sessions_unique_users_only: USER_SESSIONS_UNIQUE_USERS_ONLY
+usb_internal: USB_INTERNAL
+caching_show_itemized: CACHING_SHOW_ITEMIZED
+disk_thresholds:
+  danger: DISK_REPORT_THRESHOLD_DANGER
+  warning: DISK_REPORT_THRESHOLD_WARNING 
+apps_to_track: APPS_TO_TRACK

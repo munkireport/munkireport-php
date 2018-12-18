@@ -290,16 +290,20 @@ abstract class KISS_View
         $this->vars[$key][]=$var;
     }
 
-    public function view($file = '', $vars = '', $view_path = VIEW_PATH)
+    public function view($file = '', $vars = '', $view_path = '')
     {
         //Bluebus addition
+        if(empty($view_path)){
+            $view_path = conf('view_path');
+        }
+        
         if (is_array($vars)) {
             $this->vars=array_merge($this->vars, $vars);
         }
         extract($this->vars);
 
-        if (! @include($view_path.$file.EXT)) {
-            echo '<!-- Could not open '.$view_path.$file.EXT.'-->';
+        if (! @include($view_path.$file.'.php')) {
+            echo '<!-- Could not open '.$view_path.$file.'.php -->';
         }
 
     }

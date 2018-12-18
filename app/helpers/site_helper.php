@@ -1,9 +1,9 @@
 <?php
 
-use munkireport\models\Machine_group, munkireport\lib\Modules;
+use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.3.1.3566';
+$GLOBALS['version'] = '4.0.1.3675';
 
 // Return version without commit count
 function get_version()
@@ -74,6 +74,9 @@ function getdbh()
     if (! isset($GLOBALS['dbh'])) {
         try {
             $conn = conf('connection');
+            if($conn['options']){
+                $conn['options'] = arrayToAssoc($conn['options']);
+            }
             switch ($conn['driver']) {
                 case 'sqlite':
                     $dsn = "sqlite:{$conn['database']}";
@@ -81,6 +84,11 @@ function getdbh()
 
                 case 'mysql':
                     $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
+                    if( empty($conn['options'])){
+                      $conn['options'] = [
+                        PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
+                      ];
+                    }
                     break;
 
                 default:
@@ -88,9 +96,9 @@ function getdbh()
             }
             $GLOBALS['dbh'] = new PDO(
                 $dsn,
-                isset($conn['username']) ? $conn['username'] : '',
-                isset($conn['password']) ? $conn['password'] : '',
-                isset($conn['options']) ? $conn['options'] : []
+                $conn['username'],
+                $conn['password'],
+                $conn['options']
             );
         } catch (PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());
@@ -128,9 +136,10 @@ function munkireport_autoload($classname)
 function url($url = '', $fullurl = false, $queryArray = [])
 {
     $s = $fullurl ? conf('webhost') : '';
-    $s .= conf('subdirectory').($url && INDEX_PAGE ? INDEX_PAGE.'/' : INDEX_PAGE) . ltrim($url, '/');
+    $index_page = conf('index_page');
+    $s .= conf('subdirectory').($url && $index_page ? $index_page.'/' : $index_page) . ltrim($url, '/');
     if($queryArray){
-        $s .= (INDEX_PAGE ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
+        $s .= ($index_page ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
     }
     return $s;
 }
@@ -179,7 +188,6 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
     if (! preg_match('#^https?://#i', $uri)) {
         $uri = url($uri);
     }
-
     switch ($method) {
         case 'refresh':
             header("Refresh:0;url=".$uri);
@@ -240,6 +248,44 @@ function get_guid()
         mt_rand(0, 65535),
         mt_rand(0, 65535)
     );
+}
+
+/**
+ * Convert an array of values to a key => value array
+ * [a, b] is converted to [a => b]
+ *
+ * @return array assoc array
+ * @author
+ **/
+function arrayToAssoc($array)
+{
+    if(count($array) % 2){
+      throw new \Exception("Cannot convert array: array is of uneven length", 1);
+    }
+    $result = [];
+    while (count($array)) {
+        list($key, $value) = array_splice($array, 0, 2);
+        $result[$key] = $value;
+    }
+    return $result;
+}
+
+/**
+ * Convert a key => value array to an array of values
+ * [a => b] is converted to [a, b]
+ *
+ * @return array array
+ * @author
+ **/
+function assocToArray($array)
+{
+    $result = [];
+    foreach($array as $k => $v)
+    {
+      $result[] = $k;
+      $result[] = $v;
+    }
+    return $result;
 }
 
 /**
@@ -391,4 +437,16 @@ function getMrModuleObj()
     }
 
     return $moduleObj;
+}
+
+// Create a singleton dashboard
+function getDashboard()
+{
+    static $dashboardObj;
+
+    if( ! $dashboardObj){
+      $dashboardObj = new Dashboard(conf('dashboard'));
+    }
+
+    return $dashboardObj;
 }

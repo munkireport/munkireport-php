@@ -8,19 +8,15 @@ use \Exception;
 
 class AuthAD extends AbstractAuth
 {
-    private $config, $schema, $groups, $login, $auth_status;
+    private $config, $schema, $groups, $login, $authStatus;
 
     public function __construct($config)
     {
         $this->config = $config;
         // Schema support
-        if (isset($this->config['schema'])){
-            $schemaName = 'Adldap\\Schemas\\'.$this->config['schema'];
-            $this->schema = new $schemaName;
-            unset($this->config['schema']);
-        } else {
-            $this->schema = new ActiveDirectorySchema;
-        }
+        $schemaName = 'Adldap\\Schemas\\'.$this->config['schema'];
+        $this->schema = new $schemaName;
+        $this->config['schema'] = $schemaName;
         $this->groups = [];
     }
 
@@ -32,9 +28,7 @@ class AuthAD extends AbstractAuth
 
             $adldap->addProvider(
                 $this->stripMunkireportItemsFromConfig($this->config),
-                $name = 'default',
-                null,
-                $this->schema
+                $name = 'default'
             );
 
             try {
@@ -68,6 +62,8 @@ class AuthAD extends AbstractAuth
                     return false;
 
                 }
+                
+
 
             } catch (Exception $e) {
                 error('An error occurred while contacting AD', 'error_contacting_AD');
@@ -84,7 +80,7 @@ class AuthAD extends AbstractAuth
 
     private function bindAsAdmin()
     {
-         return isset($this->config['admin_username']) && isset($this->config['admin_password']);
+         return $this->config['username'] && $this->config['password'];
     }
 
     private function recursiveGroupSearch()
@@ -99,7 +95,7 @@ class AuthAD extends AbstractAuth
 
     public function getAuthStatus()
     {
-        return $this->auth_status;
+        return $this->authStatus;
     }
 
     public function getUser()
