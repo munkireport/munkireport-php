@@ -94,7 +94,7 @@
 
 								<li class="<?=$item->class?>">
 									<a href="<?=$item->url?>">
-										<span class="pull-right"><?=$item->hotkey?></span>
+										<span class="pull-right"><?=strtoupper($item->hotkey)?></span>
 										<span class="dropdown-link-text "><?=$item->display_name?></span>
 									</a>
 								</li>
