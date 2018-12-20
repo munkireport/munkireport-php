@@ -59,7 +59,7 @@ class show extends Controller
     {
 
         $data = array(
-            'widget' => new Widgets(),
+            'widget' => new Widgets(conf('widget')),
         );
 
         if ($report = $this->modules->getReport($module, $name)) {
