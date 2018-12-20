@@ -93,7 +93,10 @@
 							<?php foreach($dashboard->getDropdownData('show/dashboard', $page) as $item): ?>
 
 								<li class="<?=$item->class?>">
-								<a href="<?=$item->url?>"><?=$item->display_name?></a>
+									<a href="<?=$item->url?>">
+										<span class="pull-right"><?=strtoupper($item->hotkey)?></span>
+										<span class="dropdown-link-text "><?=$item->display_name?></span>
+									</a>
 								</li>
 
 							<?php endforeach; ?>

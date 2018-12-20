@@ -279,7 +279,9 @@
     "no": "No",
     "no_clients": "No Clients",
     "no_data": "No Data",
+    "no_errors": "No Errors",
     "no_errors_or_warnings": "No Errors or Warnings",
+    "no_warnings": "No Warnings",
     "notification": {
         "all_levels": "All levels",
         "business_unit": "Business Unit",

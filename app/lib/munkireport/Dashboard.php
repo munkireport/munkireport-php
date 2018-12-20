@@ -110,7 +110,7 @@ class Dashboard
           $data = ['status_code' => 404];
           $view = 'error/client_error';
       }
-      $data['widget'] = new Widgets();
+      $data['widget'] = new Widgets(conf('widget'));
       $obj = new View();
       $obj->view($view, $data);
 
