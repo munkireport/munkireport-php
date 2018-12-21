@@ -1,4 +1,4 @@
-### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...HEAD) (Unreleased)
+### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...v4.0.1) (December 21, 2018)
 
 FIXES
 - `APPS_TO_TRACK` now working again due to an upgrade to the `inventory` module.
