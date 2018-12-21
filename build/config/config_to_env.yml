@@ -18,7 +18,6 @@ vnc_link: VNC_LINK
 ssh_link: SSH_LINK
 curl_cmd: CURL_CMD
 mwa2_link: MWA2_LINK
-custom_folder: CUSTOM_FOLDER
 custom_css: CUSTOM_CSS
 custom_js: CUSTOM_JS
 show_help: SHOW_HELP

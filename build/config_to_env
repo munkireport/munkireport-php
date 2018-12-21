@@ -31,6 +31,7 @@ $obsolete_items = [
   'module_path',
   'routes',
   'mysql_create_tbl_opts',
+  'custom_folder',
 ];
 
 function loadConfig($config_path, $what = 'conf')

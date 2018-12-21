@@ -296,17 +296,6 @@ return [
 
     /*
     |===============================================
-    | Custom folder
-    |===============================================
-    |
-    | Absolute path to folder with custom items.
-    | This folder will be searched for widgets in views/widgets
-    |
-    */
-    'custom_folder' => env('CUSTOM_FOLDER', ''),
-
-    /*
-    |===============================================
     | Custom css and js
     |===============================================
     |
