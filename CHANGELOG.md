@@ -1,3 +1,5 @@
+### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...HEAD) (Unreleased)
+
 ### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...v4.0.1) (December 21, 2018)
 
 FIXES
