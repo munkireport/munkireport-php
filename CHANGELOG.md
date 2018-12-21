@@ -1,5 +1,14 @@
 ### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...HEAD) (Unreleased)
 
+FIXES
+- `APPS_TO_TRACK` now working again due to an upgrade to the `inventory` module.
+- Added `.env.example` to the `.zip` and `tar.gz` downloads.
+CHANGES
+- Added support for local widgets.
+- Removed `custom_folder` as a method to load custom widgets. As a replacement, use `local/views/widgets`. Or override `WIDGET_SEARCH_PATHS` with your own paths.
+- Hotkeys are displayed in the dashboard dropdown if more than one dashboard is configured
+- There are 2 new widgets added to the `munkireport` module that show the top 10 error and warning messages.
+
 ### [4.0.0](https://github.com/munkireport/munkireport-php/compare/v3.3.1...v4.0.0) (December 18, 2018)
 
 IMPORTANT CHANGES
