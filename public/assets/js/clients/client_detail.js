@@ -176,7 +176,7 @@ $(document).on('appReady', function(e, lang) {
 		
 		var username=$('nav i.fa-user')[0].nextSibling.nodeValue.trim();
 		// Remote control links
-		$.getJSON( appUrl + '/clients/get_links', function( links ) {
+		$.getJSON( appUrl + '/clients/get_links/' + serialNumber, function( links ) {
 			$.each(links, function(prop, val){
 				$('#client_links').append('<li><a href="'+(val.replace(/%s/, machineData.remote_ip).replace(/%remote_ip/, machineData.remote_ip).replace(/%u/, username).replace(/%network_ip_v4/, machineData.ipv4ip).replace(/%network_ip_v6/, machineData.ipv6ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a></li>');
 			});

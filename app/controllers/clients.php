@@ -72,18 +72,29 @@ class clients extends Controller
     /**
      * Retrieve links from config
      *
-     * @author
+     * @author AvB
      **/
-    public function get_links()
+    public function get_links($serial_number = '')
     {
         $out = array();
         if (conf('vnc_link')) {
-            $out['vnc'] = conf('vnc_link');
+            $out['VNC'] = conf('vnc_link');
         }
         if (conf('ssh_link')) {
-            $out['ssh'] = conf('ssh_link');
+            $out['SSH'] = conf('ssh_link');
         }
-
+        
+        // If TeamViewer module is enabled, add TV remote control buttons
+        if (in_array("teamviewer", conf('modules'))) {
+            $queryobj = new Reportdata_model();
+            $sql = "SELECT clientid FROM teamviewer WHERE serial_number = '$serial_number'";
+            $teamviewer_client_ids = $queryobj->query($sql);
+            foreach ($teamviewer_client_ids as $tv_id){
+                $client_id = $tv_id->clientid;
+                $out['TeamViewer '.$client_id] = conf('teamviewer_link').$client_id;
+            }
+        }
+        
         $obj = new View();
         $obj->view('json', array('msg' => $out));
     }
