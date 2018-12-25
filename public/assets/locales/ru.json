@@ -89,9 +89,6 @@
 		},
 		"username": "Имя пользователя"
 	},
-	"memory": {
-		"memory": "Память"
-	},
 	"name": "Имя",
 	"nav": {
 		"listings": {
@@ -134,6 +131,7 @@
 	},
 	"pending": "В ожидании",
 	"path": "Путь",
+	"physical_memory": "Память",
 	"serial": "Серийный номер",
 	"unavailable": "Недоступно",
 	"unauthorized": "У Вас нет прав",
