@@ -4,14 +4,18 @@ return [
   'sp' => [
     'NameIDFormat' => env('AUTH_SAML_SP_NAME_ID_FORMAT', 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'),
     'entityId' => env('AUTH_SAML_SP_ENTITY_ID', ''),
+    'x509cert' => env('AUTH_SAML_SP_X509CERT', ''),
+    'privateKey' => env('AUTH_SAML_SP_PRIVATEKEY', ''),
   ],
   'idp' => [
     'entityId' => env('AUTH_SAML_IDP_ENTITY_ID', 'https://app.onelogin.com/saml/metadata/xxxx'),
     'singleSignOnService' => [
       'url' => env('AUTH_SAML_IDP_SSO_URL', 'https://yourorg.onelogin.com/trust/saml2/http-post/sso/xxxx'),
+      'binding' => env('AUTH_SAML_IDP_SSO_BINDING', ''),
     ],
     'singleLogoutService' => [
       'url' => env('AUTH_SAML_IDP_SLO_URL', 'https://yourorg.onelogin.com/trust/saml2/http-redirect/slo/xxxx'),
+      'binding' => env('AUTH_SAML_IDP_SLO_BINDING', ''),
     ],
     'x509cert' => env('AUTH_SAML_IDP_X509CERT'),
   ],
