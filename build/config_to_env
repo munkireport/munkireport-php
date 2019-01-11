@@ -148,9 +148,10 @@ function filterObsoleteItems(&$config, $obsolete_items)
   return true;
 }
 
-function trimNewlines($string)
+function fixBackslashesAndNewlines($data)
 {
-  return str_replace(array("\n", "\r"), '', $string);
+  $data = str_replace('\\', '\\\\', $data);
+  return str_replace(["\n", "\r"], '', $data);
 }
 
 // Fix saml array
@@ -266,10 +267,10 @@ function convert($key, $value, $conversion){
           return $out;
         }
         else {
-          return sprintf("%s=\"%s\"\n", $conversion[$key], implode(', ', trimNewlines($value)));
+          return sprintf("%s=\"%s\"\n", $conversion[$key], implode(', ', fixBackslashesAndNewlines($value)));
         }
       default:
-        return sprintf("%s=\"%s\"\n", $conversion[$key], trimNewlines($value));
+        return sprintf("%s=\"%s\"\n", $conversion[$key], fixBackslashesAndNewlines($value));
     }
   }
   else {
