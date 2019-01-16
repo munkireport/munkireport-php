@@ -151,5 +151,10 @@ usb_internal: USB_INTERNAL
 caching_show_itemized: CACHING_SHOW_ITEMIZED
 disk_thresholds:
   danger: DISK_REPORT_THRESHOLD_DANGER
-  warning: DISK_REPORT_THRESHOLD_WARNING 
+  warning: DISK_REPORT_THRESHOLD_WARNING
 apps_to_track: APPS_TO_TRACK
+local_admin_threshold: LOCALADMIN_THRESHOLD
+appusage_ignorelist: APPUSAGE_IGNORELIST
+caching_show_legacy: CACHING_SHOW_ITEMIZED
+fonts_system: FONTS_SYSTEM
+keep_previous_displays: DISPLAYS_INFO_KEEP_PREVIOUS
