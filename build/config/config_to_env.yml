@@ -46,6 +46,7 @@ groups:
   admin_users: GROUPS_ADMIN_USERS
 roles:
   admin: ROLES_ADMIN
+  manager: ROLES_MANAGER
 authorization:
   delete_machine: AUTHORIZATION_DELETE_MACHINE
   global: AUTHORIZATION_GLOBAL
