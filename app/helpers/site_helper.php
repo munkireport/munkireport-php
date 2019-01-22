@@ -89,9 +89,11 @@ function getdbh()
                         PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
                       ];
                       // Check if ssl options
-                      foreach(['key', 'cert', 'ca', 'capath', 'cipher'] as $ssl_opt){
-                        if($conn['ssl_'. $ssl_opt]){
-                          $conn['options'][constant('PDO::MYSQL_ATTR_SSL_'.$ssl_opt)] = $conn['ssl_'. $ssl_opt];
+                      if($conn['ssl_enabled']){
+                        foreach(['key', 'cert', 'ca', 'capath', 'cipher'] as $ssl_opt){
+                          if($conn['ssl_'. $ssl_opt]){
+                            $conn['options'][constant('PDO::MYSQL_ATTR_SSL_'.$ssl_opt)] = $conn['ssl_'. $ssl_opt];
+                          }
                         }
                       }
                     }
