@@ -129,9 +129,11 @@ function convertIPranges(&$conf, $path)
 
 function convertConnectionOptions(&$conf)
 {
-    if(array_key_exists('options', $conf['connection'])){
-        $conf['connection']['options'] = assocToArray($conf['connection']['options']);
-        return true;
+    if(array_key_exists('connection', $conf)){
+        if(array_key_exists('options', $conf['connection'])){
+            $conf['connection']['options'] = assocToArray($conf['connection']['options']);
+            return true;
+        }
     }
     return false;
 }
