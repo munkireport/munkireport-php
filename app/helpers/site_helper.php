@@ -92,7 +92,7 @@ function getdbh()
                       if($conn['ssl_enabled']){
                         foreach(['key', 'cert', 'ca', 'capath', 'cipher'] as $ssl_opt){
                           if($conn['ssl_'. $ssl_opt]){
-                            $conn['options'][constant('PDO::MYSQL_ATTR_SSL_'.$ssl_opt)] = $conn['ssl_'. $ssl_opt];
+                            $conn['options'][constant('PDO::MYSQL_ATTR_SSL_'.strtoupper($ssl_opt))] = $conn['ssl_'. $ssl_opt];
                           }
                         }
                       }
