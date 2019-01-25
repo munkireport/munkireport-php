@@ -44,21 +44,25 @@ class Engine extends KISS_Engine
 class Controller extends KISS_Controller
 {
     protected $capsule;
-    
+
     protected function connectDB()
     {
         if(! $this->capsule){
             $this->capsule = new Capsule;
-            
+
             if( ! $connection = conf('connection')){
-                die('Connection not configured in config.php');
+                die('Database connection not configured');
+            }
+
+            if(has_mysql_db($connection)){
+              add_mysql_opts($connection);
             }
 
             $this->capsule->addConnection($connection);
             $this->capsule->setAsGlobal();
             $this->capsule->bootEloquent();
         }
-        
+
         return $this->capsule;
     }
 
