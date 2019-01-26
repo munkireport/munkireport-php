@@ -85,9 +85,7 @@ function getdbh()
                 case 'mysql':
                     $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
                     if( empty($conn['options'])){
-                      $conn['options'] = [
-                        PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
-                      ];
+                      add_mysql_opts($conn);
                     }
                     break;
 
@@ -113,6 +111,37 @@ function getdbh()
         }
     }
     return $GLOBALS['dbh'];
+}
+
+function has_sqlite_db($connection)
+{
+  return find_driver($connection, 'sqlite');
+}
+
+function has_mysql_db($connection)
+{
+  return find_driver($connection, 'mysql');
+}
+
+function find_driver($connection, $driver)
+{
+  if( isset($connection['driver']) && $connection['driver'] == $driver){
+    return true;
+  }
+  return false;
+}
+
+function add_mysql_opts(&$conn){
+  $conn['options'] = [
+    PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
+  ];
+  if($conn['ssl_enabled']){
+    foreach(['key', 'cert', 'ca', 'capath', 'cipher'] as $ssl_opt){
+      if($conn['ssl_'. $ssl_opt]){
+        $conn['options'][constant('PDO::MYSQL_ATTR_SSL_'.strtoupper($ssl_opt))] = $conn['ssl_'. $ssl_opt];
+      }
+    }
+  }
 }
 
 //===============================================
