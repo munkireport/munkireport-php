@@ -35,18 +35,15 @@ class Install extends Controller
 
         switch ($format) {
             case 'config':
-                $str = implode("','", $modules);
-                echo "\$conf['modules'] =['$str'];\n";
-                break;
-            case 'json':
-                break;
             case 'env':
                 $str = implode(', ', $modules);
-                echo "MODULES='$str'";
+                echo "MODULES=\"$str\"";
                 break;
             case 'autopkg':
                 $obj = new View();
                 $obj->view('install/modules_autopkg', array('modules' => $modules));
+                break;
+            case 'json':
                 break;
             default:
                 echo implode("\n", $modules);
