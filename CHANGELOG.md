@@ -1,4 +1,4 @@
-### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...HEAD) (Unreleased)
+### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...v4.0.2) (February 08, 2019)
 
 FIXES
 - Updated config_to_env conversion script
