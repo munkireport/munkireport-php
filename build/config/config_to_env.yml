@@ -46,6 +46,7 @@ groups:
   admin_users: GROUPS_ADMIN_USERS
 roles:
   admin: ROLES_ADMIN
+  manager: ROLES_MANAGER
 authorization:
   delete_machine: AUTHORIZATION_DELETE_MACHINE
   global: AUTHORIZATION_GLOBAL
@@ -60,11 +61,21 @@ auth:
   auth_local:
     search_paths: AUTH_LOCAL_SEARCH_PATHS
   auth_AD:
+    schema: AUTH_AD_SCHEMA
+    account_prefix: AUTH_AD_ACCOUNT_PREFIX
     account_suffix: AUTH_AD_ACCOUNT_SUFFIX
+    username: AUTH_AD_USERNAME
+    password: AUTH_AD_PASSWORD
     base_dn: AUTH_AD_BASE_DN
+    hosts: AUTH_AD_HOSTS
     domain_controllers: AUTH_AD_HOSTS
     hosts: AUTH_AD_HOSTS
-    schema: AUTH_AD_SCHEMA
+    port: AUTH_AD_PORT
+    follow_referrals: AUTH_AD_FOLLOW_REFERRALS
+    use_ssl: AUTH_AD_USE_SSL
+    use_tls: AUTH_AD_USE_TLS
+    version: AUTH_AD_VERSION
+    timeout: AUTH_AD_TIMEOUT
     mr_allowed_users: AUTH_AD_ALLOWED_USERS
     mr_allowed_groups: AUTH_AD_ALLOWED_GROUPS
     mr_recursive_groupsearch: AUTH_AD_RECURSIVE_GROUPSEARCH
@@ -151,5 +162,10 @@ usb_internal: USB_INTERNAL
 caching_show_itemized: CACHING_SHOW_ITEMIZED
 disk_thresholds:
   danger: DISK_REPORT_THRESHOLD_DANGER
-  warning: DISK_REPORT_THRESHOLD_WARNING 
+  warning: DISK_REPORT_THRESHOLD_WARNING
 apps_to_track: APPS_TO_TRACK
+local_admin_threshold: LOCALADMIN_THRESHOLD
+appusage_ignorelist: APPUSAGE_IGNORELIST
+caching_show_legacy: CACHING_SHOW_ITEMIZED
+fonts_system: FONTS_SYSTEM
+keep_previous_displays: DISPLAYS_INFO_KEEP_PREVIOUS

@@ -1,4 +1,16 @@
-### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...HEAD) (Unreleased)
+### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...HEAD) (Unreleased)
+
+FIXES
+- Updated config_to_env conversion script
+- Added manager role
+
+NEW FEATURES
+- Docker builds PHP v7.3
+- Added SSL options (to address #1217)
+- Added mdm_status module
+
+
+### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...v4.0.1) (December 21, 2018)
 
 FIXES
 - `APPS_TO_TRACK` now working again due to an upgrade to the `inventory` module.

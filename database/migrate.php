@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../app/helpers/env_helper.php';
+require_once __DIR__ . '/../app/helpers/site_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Illuminate\Filesystem\Filesystem;
@@ -24,18 +25,8 @@ function colorize($string){
     return str_replace(array_keys($colorTable), array_values($colorTable), $string);
 }
 
-function has_sqlite_db()
+function ensure_sqlite_db_exists($connection)
 {
-  $connection = conf('connection');
-  if( isset($connection['driver']) && $connection['driver'] == 'sqlite'){
-    return true;
-  }
-  return false;
-}
-
-function ensure_sqlite_db_exists()
-{
-  $connection = conf('connection');
   touch($connection['database']);
 }
 
@@ -45,14 +36,19 @@ initConfig();
 configAppendFile(APP_ROOT . 'app/config/app.php');
 configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
 
-if(has_sqlite_db()){
-  ensure_sqlite_db_exists();
+$connection = conf('connection');
+
+if(has_sqlite_db($connection)){
+  ensure_sqlite_db_exists($connection);
 }
 
+if(has_mysql_db($connection)){
+  add_mysql_opts($connection);
+}
 
 try {
   $capsule = new Capsule();
-  $capsule->addConnection(conf('connection'));
+  $capsule->addConnection($connection);
   $capsule->setAsGlobal();
   $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
   if (!$repository->repositoryExists()) {

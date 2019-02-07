@@ -1,6 +1,6 @@
 <?php
 
-use \Dotenv\Dotenv, \Dotenv\Exception\InvalidPathException;
+use \Dotenv\Dotenv, \Dotenv\Exception\InvalidPathException, \Dotenv\Exception\InvalidFileException;
 
 /**
  * Init Dotenv
@@ -12,10 +12,12 @@ function initDotEnv()
 {
   try {
       $envfile = defined('MUNKIREPORT_SETTINGS') ? MUNKIREPORT_SETTINGS : '.env';
-      $dotenv = new Dotenv(APP_ROOT, $envfile);
+      $dotenv = Dotenv::create(APP_ROOT, $envfile);
       $dotenv->load();
   } catch (InvalidPathException $e) {
       // .env is missing, but not really an issue since configuration is specified here anyway.
+  } catch (InvalidFileException $e) {
+      die($e->getMessage());
   }
 
 }

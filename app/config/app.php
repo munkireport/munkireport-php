@@ -194,7 +194,8 @@ return [
     |
     */
     'roles' => [
-        'admin' => env('ROLES_ADMIN', ['*'])
+        'admin' => env('ROLES_ADMIN', ['*']),
+        'manager' => env('ROLES_MANAGER', []),
     ],
 
     /*

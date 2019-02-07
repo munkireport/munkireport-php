@@ -2,3 +2,4 @@
 app/db
 vendor
 config.php
+local

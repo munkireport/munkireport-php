@@ -1,17 +1,16 @@
-FROM php:7.2-apache
+FROM php:7.3-apache
 
 ENV APP_DIR /var/munkireport
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y libldap2-dev \
     libcurl4-openssl-dev \
+    libzip-dev \
+    unzip \
     zlib1g-dev \
-    libmcrypt-dev \
     libxml2-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-RUN pecl install mcrypt-1.0.1 && docker-php-ext-enable mcrypt
 
 RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
     docker-php-ext-install -j$(nproc) curl pdo_mysql soap ldap zip
@@ -44,8 +43,6 @@ WORKDIR $APP_DIR
 
 RUN composer install --no-dev && \
     composer dumpautoload -o
-
-COPY docker/docker_config.php config.php
 
 RUN mkdir -p app/db && \
     touch app/db/db.sqlite && \
