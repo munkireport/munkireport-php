@@ -90,7 +90,7 @@
         "munkireport/user_sessions": "^1.0",
         "munkireport/wifi": "^1.0",
         "symfony/yaml": "^3.4",
-        "adldap2/adldap2": "^9.1",
+        "adldap2/adldap2": "^10",
         "onelogin/php-saml": "^3.0"
     },
     "autoload": {
