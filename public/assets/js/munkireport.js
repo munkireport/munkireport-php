@@ -102,9 +102,15 @@ $( document ).ready(function() {
         // Client listing
         mr.setHotKey('c', appUrl + '/show/listing/reportdata/clients');
 
-        // search
+        // Search
         $(document).bind('keydown', '/', function(){
             $('input[type="search"]').focus();
+            return false;
+        });
+
+        // Filter popup
+        $(document).bind('keydown', 'f', function(){
+            document.getElementById("filter-popup").click();
             return false;
         });
 
