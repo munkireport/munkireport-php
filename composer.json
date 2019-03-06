@@ -91,7 +91,8 @@
         "munkireport/wifi": "^1.0",
         "symfony/yaml": "^3.4",
         "adldap2/adldap2": "^10",
-        "onelogin/php-saml": "^3.0"
+        "onelogin/php-saml": "^3.0",
+        "monolog/monolog": "^1.24"
     },
     "autoload": {
         "psr-4": {
