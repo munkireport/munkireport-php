@@ -5,6 +5,8 @@ namespace munkireport\lib;
 use Adldap\Adldap;
 use Adldap\Schemas\ActiveDirectory as ActiveDirectorySchema;
 use \Exception;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class AuthAD extends AbstractAuth
 {
@@ -24,6 +26,13 @@ class AuthAD extends AbstractAuth
     {
         $this->login = $login;
         if ($login && $password) {
+          
+            if (conf('debug'))
+            {
+                $logger = new Logger('AUTH_AD');
+                $logger->pushHandler(new StreamHandler(APP_ROOT.'/storage/logs/auth.log', Logger::INFO));
+                Adldap::setLogger($logger);
+            }
             $adldap = new adLDAP;
 
             $adldap->addProvider(
