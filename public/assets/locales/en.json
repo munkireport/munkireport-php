@@ -234,7 +234,6 @@
             "title": "Uptime"
         }
     },
-    "memory": "Memory",
     "model": "Model",
     "mouse": "Mouse",
     "munki": {
@@ -318,6 +317,7 @@
         "soap": "SOAP Extension",
         "version": "Version"
     },
+    "physical_memory": "Memory",
     "pkg_failed_to_install": "__pkg__ failed to install: __reason__",
     "pkg_failed_to_install_plural": "__count__ packages failed to install",
     "ratio": "Ratio",

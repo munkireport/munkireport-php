@@ -232,11 +232,6 @@
   "manifest": {
     "name": "Manifest Naam"
   },
-  "memory": {
-    "memory": "Geheugen",
-    "usage": "Geheugengebruik",
-    "pressure": "Geheugendruk"
-  },
   "model": "Model",
   "munki": {
     "error": "Munki fout: __error__",
@@ -331,6 +326,7 @@
   "report": {
     "generate": "Generate Report"
   },
+  "physical_memory": "Geheugen",
   "printer": {
     "default_set": "Default Aan",
     "driver_version": "Driver Versie",
