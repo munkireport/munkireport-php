@@ -4,6 +4,8 @@ return [
   'sp' => [
     'NameIDFormat' => env('AUTH_SAML_SP_NAME_ID_FORMAT', 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'),
     'entityId' => env('AUTH_SAML_SP_ENTITY_ID', ''),
+    'x509cert' => env('AUTH_SAML_SP_X509_CERT', ''),
+    'privateKey' => env('AUTH_SAML_SP_PRIVATE_KEY', ''),
   ],
   'idp' => [
     'entityId' => env('AUTH_SAML_IDP_ENTITY_ID', 'https://app.onelogin.com/saml/metadata/xxxx'),
