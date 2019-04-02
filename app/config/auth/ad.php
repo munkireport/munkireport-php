@@ -2,10 +2,10 @@
 
 return [
   'schema'                   => env('AUTH_AD_SCHEMA', 'ActiveDirectory'),
-  'account_prefix'           => env('AUTH_AD_ACCOUNT_PREFIX', NULL),
-  'account_suffix'           => env('AUTH_AD_ACCOUNT_SUFFIX', NULL),
-  'username'                 => env('AUTH_AD_USERNAME', NULL),
-  'password'                 => env('AUTH_AD_PASSWORD', NULL),
+  'account_prefix'           => env('AUTH_AD_ACCOUNT_PREFIX', null),
+  'account_suffix'           => env('AUTH_AD_ACCOUNT_SUFFIX', null),
+  'username'                 => env('AUTH_AD_USERNAME', null),
+  'password'                 => env('AUTH_AD_PASSWORD', null),
   'base_dn'                  => env('AUTH_AD_BASE_DN', 'dc=mydomain,dc=local'),
   'hosts'                    => env('AUTH_AD_HOSTS', []),
   'port'                     => env('AUTH_AD_PORT', 389),

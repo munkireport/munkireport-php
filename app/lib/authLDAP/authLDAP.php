@@ -77,7 +77,7 @@ class Auth_ldap
      **/
     public function getConf($value='')
     {
-        return isset($this->conf[$value]) ? $this->conf[$value] : FALSE;
+        return isset($this->conf[$value]) ? $this->conf[$value] : false;
     }
 
     /**
