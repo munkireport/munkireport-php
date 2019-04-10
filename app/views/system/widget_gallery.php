@@ -3,6 +3,9 @@ $moduleManager = getMrModuleObj();
 $widget_List = $moduleManager->getWidgets();
 $widget_count = count($widget_List)?>
 
+<script>
+  var loadAllModuleLocales = True
+</script>
 <div class="container">
 	<div class="row">
         <h3 class="col-lg-12" style="margin-top: 0px;margin-bottom: 0px;"><span  data-i18n="widget.gallery"></span> <span id="total-count" class='label label-primary'><?php echo $widget_count; ?></span></h3>
