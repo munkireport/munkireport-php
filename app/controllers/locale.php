@@ -30,10 +30,10 @@ class Locale extends Controller
      *
      * @param string $lang Locale definition, defaults to 'en'
      */
-    public function get($lang = 'en', $loadAll = False)
+    public function get($lang = 'en', $load = 'enabled_modules_only')
     {
         // Check if we should load all modules' locales
-        if($loadAll){
+        if($load == 'all_modules'){
             $this->modules = getMrModuleObj()->loadInfo(True);
         }
         
