@@ -35,6 +35,7 @@ Most variables are exposed for configuration via environment:
 
 Example:
 
+```
 docker run -d --name="munkireport" \
   -e "SITENAME=I ❤️ MunkiReport" \
   -e "MODULES=applications, ard, bluetooth, certificate, disk_report, displays_info, extensions, filevault_status, fonts, ibridge, installhistory, inventory, localadmin, managedinstalls, munkireport, network, power, printer, profile, security, usb, user_sessions, warranty" \
