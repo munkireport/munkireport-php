@@ -309,20 +309,6 @@ class Modules
         // Generate list for widget gallery
         foreach( $out as $module => $widgets){
             foreach($widgets as $id => $info){
-                // Check if widget is enabled
-                if (in_array($info['view'], $widget_array)){
-                    $widget_enabled = '<span class="label label-success" data-i18n="yes"></span>';
-                } else {
-                    $widget_enabled = '<span class="label label-danger" data-i18n="no"></span>';
-                }
-                
-                // Check if widget's module is active
-                if (in_array($module, conf('modules'))){
-                    $module_active = '<span class="label label-success" data-i18n="yes"></span>';
-                } else {
-                    $module_active = '<span class="label label-danger" data-i18n="no"></span>';
-                }
-                
                 // Found a widget, add it to widgetList
                 $this->widgetList[$id] = (object) array(
                     'widget_file' => str_replace(array(APP_ROOT,"//"),array('','/'),$this->getPath($module, '/views/')),
@@ -330,8 +316,8 @@ class Modules
                     'path' => $this->getPath($module, '/views/'),
                     'module' => $module,
                     'vars' => $vars,
-                    'enabled' => $widget_enabled,
-                    'active' => $module_active,
+                    'enabled' => in_array($info['view'], $widget_array),
+                    'active' => in_array($module, conf('modules')),
                     'icon' => $info['icon'],
                 );
             }
