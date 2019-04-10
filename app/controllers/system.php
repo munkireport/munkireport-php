@@ -132,7 +132,6 @@ class system extends Controller
                 $view = 'system/status';
                 break;
             case 'widget_gallery':
-                $data['widget'] = new Widgets();
                 $view = 'system/widget_gallery';
                 break;
             case 'database':
