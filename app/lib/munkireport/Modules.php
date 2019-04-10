@@ -155,16 +155,21 @@ class Modules
             $skipInactiveModules = $this->skipInactiveModules;
         }
 
-        if($skipInactiveModules){
-            $allowedModules = array_merge($this->allowedModules, conf('modules', []));
-        }else{
-            $allowedModules = []; // No need to set this.
-        }
-
-        $this->collectModuleInfo($this->moduleSearchPaths, $skipInactiveModules, $allowedModules);
+        $this->collectModuleInfo(
+            $this->moduleSearchPaths,
+            $skipInactiveModules,
+            $this->getAllowedModules($skipInactiveModules));
 
         return $this;
 
+    }
+    
+    public function getAllowedModules($skipInactiveModules)
+    {
+        if($skipInactiveModules){
+            return array_merge($this->allowedModules, conf('modules', []));
+        }
+        return [];
     }
 
     // Return info about $about
@@ -297,6 +302,8 @@ class Modules
                 $out[$module] = $moduleInfo['widgets'];
             }
         }
+        
+        $active_modules = $this->getAllowedModules($skipInactiveModules = true);
            
         // Generate list for widget gallery
         foreach( $out as $module => $widgets){
@@ -308,7 +315,7 @@ class Modules
                     'path' => $this->getPath($module, '/views/'),
                     'module' => $module,
                     'vars' => $vars,
-                    'active' => in_array($module, conf('modules')),
+                    'active' => in_array($module, $active_modules),
                     'icon' => $info['icon'],
                 );
             }
