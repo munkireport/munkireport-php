@@ -18,36 +18,33 @@
 	<div class="row">
         <div class="col-lg-12" id="<?php echo substr($row->name, 0, -7); ?>_gallery">
             <h2>&nbsp;<i class="fa <?php echo $row->icon; ?>"></i>&nbsp;<?php echo substr($row->name, 0, -7); ?></h2>
+        </div> <!-- /col-lg-12 -->
 
-            <?php $this->view($row->name, $row->vars, $row->path); ?>
+        <?php $this->view($row->name, $row->vars, $row->path); ?>
 
-            <div class="col-md-4">
-                <table class="table table-striped">
-                    <tr>
-                        <th data-i18n="widget.module_active"></th>
-                        <td>
-                          <?php if($row->active): ?>
-                            <span class="label label-success" data-i18n="yes"></span>
-                          <?php else: ?>
-                            <span class="label label-danger" data-i18n="no"></span>
-                          <?php endif ?>
-                      </td>
-                    </tr>
-                    <tr>
-                        <th data-i18n="widget.file_name"></th>
-                        <td><?php echo $row->name; ?>.php</td>
-                    </tr>
-                    <tr>
-                        <th data-i18n="widget.path"></th>
-                        <td><?php echo $row->widget_file; ?></td>
-                    </tr>
-                    <tr>
-                        <th data-i18n="widget.module"></th>
-                        <td><?php echo $row->module; ?></td>
-                    </tr>
-                </table>
-            </div> <!-- /col-md-3 -->
-        </div> <!-- /col-md-6 -->
+        <div class="col-md-4">
+            <table class="table table-striped">
+                <tr>
+                    <th data-i18n="widget.module"></th>
+                    <td>
+                      <?php echo $row->module; ?>
+                      <?php if($row->active): ?>
+                        <span class="label label-success pull-right" data-i18n="active"></span>
+                      <?php else: ?>
+                        <span class="label label-danger pull-right" data-i18n="inactive"></span>
+                      <?php endif ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th data-i18n="widget.file_name"></th>
+                    <td><?php echo $row->name; ?>.php</td>
+                </tr>
+                <tr>
+                    <th data-i18n="widget.path"></th>
+                    <td><?php echo $row->widget_file; ?></td>
+                </tr>
+            </table>
+        </div> <!-- /col-md-3 -->
 	</div> <!-- /row -->
 
 	<?php endforeach?>
