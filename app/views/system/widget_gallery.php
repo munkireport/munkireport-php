@@ -23,7 +23,13 @@ $widget_count = count($widget_List)?>
                 <table class="table table-striped" width="440" style="margin-bottom: 0px;">
                     <tr>
                         <th data-i18n="enabled"></th>
-                        <td style="padding-top: 5px;"><?php echo $row->enabled; ?></td>
+                        <td style="padding-top: 5px;">
+				<?php if($row->enabled): ?>
+				<span class="label label-success" data-i18n="yes"></span>
+				<?php else: ?>
+				<span class="label label-danger" data-i18n="no"></span>
+				<?php endif ?>
+			</td>
                     </tr>
                     <tr>
                         <th data-i18n="widget.file_name"></th>
@@ -39,7 +45,13 @@ $widget_count = count($widget_List)?>
                     </tr>
                     <tr>
                         <th data-i18n="widget.module_active"></th>
-                        <td style="padding-top: 5px;"><?php echo $row->active; ?></td>
+                        <td style="padding-top: 5px;">
+				<?php if($row->active): ?>
+				<span class="label label-success" data-i18n="yes"></span>
+				<?php else: ?>
+				<span class="label label-danger" data-i18n="no"></span>
+				<?php endif ?>
+			</td>
                     </tr>
                 </table>
             </div> <!-- /col-md-3 -->
