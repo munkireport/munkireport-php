@@ -282,6 +282,54 @@ class Modules
 
         return $out;
     }
+    
+    /**
+     * Returns all widgets for widget gallery
+     *
+     * @author tuxudo
+     */
+    public function getWidgets()
+    {
+        // Get array of all enabled widgets
+        $widget_array = [];
+        foreach(conf('dashboard_layout') as $widgetRow){
+            foreach($widgetRow as $singleWidget){
+                array_push($widget_array, $singleWidget."_widget");
+            }
+        }
+        
+        // Get list of all the modules that contain a widget
+        $out = array();
+        foreach ($this->moduleList as $module => $moduleInfo) {
+            if(array_key_exists('widgets', $moduleInfo)){
+                $out[$module] = $moduleInfo['widgets'];
+            }
+        }
+           
+        // Generate list for widget gallery
+        foreach( $out as $module => $widgets){
+            foreach($widgets as $id => $info){
+                // Found a widget, add it to widgetList
+                $this->widgetList[$id] = (object) array(
+                    'widget_file' => str_replace(array(APP_ROOT,"//"),array('','/'),$this->getPath($module, '/views/')),
+                    'name' => $info['view'],
+                    'path' => $this->getPath($module, '/views/'),
+                    'module' => $module,
+                    'vars' => $vars,
+                    'enabled' => in_array($info['view'], $widget_array),
+                    'active' => in_array($module, conf('modules')),
+                    'icon' => $info['icon'],
+                );
+            }
+        }
+        
+        // Sort the widgets by widget name
+        usort($this->widgetList, array($this, function($a, $b)
+        {
+            return strcmp($a->name, $b->name);
+        }));
+        return $this->widgetList;
+    }
 
     public function getModuleLocales($lang='en')
     {
@@ -294,7 +342,6 @@ class Modules
         }
         return '{'.implode(",\n", $localeList).'}';
     }
-
 
     private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
     {
