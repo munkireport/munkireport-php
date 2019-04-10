@@ -4,6 +4,7 @@ namespace munkireport\controller;
 use \Controller, \View;
 use munkireport\lib\Database;
 use munkireport\lib\Widgets;
+use munkireport\lib\Modules;
 
 class system extends Controller
 {
@@ -132,6 +133,8 @@ class system extends Controller
                 $view = 'system/status';
                 break;
             case 'widget_gallery':
+                $moduleManager = new Modules;
+                $data['widgetList'] = $moduleManager->loadInfo(true)->getWidgets();
                 $view = 'system/widget_gallery';
                 break;
             case 'database':

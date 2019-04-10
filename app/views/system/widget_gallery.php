@@ -1,17 +1,19 @@
-<?php $this->view('partials/head');
-$moduleManager = new munkireport\lib\Modules;
-$widget_List = $moduleManager->loadInfo(true)->getWidgets();
-$widget_count = count($widget_List)?>
+<?php $this->view('partials/head'); ?>
 
 <script>
   var loadAllModuleLocales = true
 </script>
 <div class="container">
 	<div class="row">
-        <h3 class="col-lg-12" style="margin-top: 0px;margin-bottom: 0px;"><span  data-i18n="widget.gallery"></span> <span id="total-count" class='label label-primary'><?php echo $widget_count; ?></span></h3>
+        <h3 class="col-lg-12" style="margin-top: 0px;margin-bottom: 0px;">
+          <span  data-i18n="widget.gallery"></span>
+          <span id="total-count" class='label label-primary'>
+            <?php echo count($widgetList); ?>
+          </span>
+        </h3>
     </div>
 
-    <?php foreach($widget_List AS $row):?>
+    <?php foreach($widgetList AS $row):?>
 
 	<div class="row">
         <div class="col-lg-12" id="<?php echo substr($row->name, 0, -7); ?>_gallery">
