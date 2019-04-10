@@ -289,15 +289,7 @@ class Modules
      * @author tuxudo
      */
     public function getWidgets()
-    {
-        // Get array of all enabled widgets
-        $widget_array = [];
-        foreach(conf('dashboard_layout') as $widgetRow){
-            foreach($widgetRow as $singleWidget){
-                array_push($widget_array, $singleWidget."_widget");
-            }
-        }
-        
+    {        
         // Get list of all the modules that contain a widget
         $out = array();
         foreach ($this->moduleList as $module => $moduleInfo) {
@@ -316,7 +308,6 @@ class Modules
                     'path' => $this->getPath($module, '/views/'),
                     'module' => $module,
                     'vars' => $vars,
-                    'enabled' => in_array($info['view'], $widget_array),
                     'active' => in_array($module, conf('modules')),
                     'icon' => $info['icon'],
                 );
