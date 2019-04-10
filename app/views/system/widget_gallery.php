@@ -20,16 +20,16 @@ $widget_count = count($widget_List)?>
             <?php $this->view($row->name, $row->vars, $row->path); ?>
 
             <div class="col-md-4">
-                <table class="table table-striped" width="440" style="margin-bottom: 0px;">
+                <table class="table table-striped">
                     <tr>
-                        <th data-i18n="enabled"></th>
-                        <td style="padding-top: 5px;">
-				<?php if($row->enabled): ?>
-				<span class="label label-success" data-i18n="yes"></span>
-				<?php else: ?>
-				<span class="label label-danger" data-i18n="no"></span>
-				<?php endif ?>
-			</td>
+                        <th data-i18n="widget.module_active"></th>
+                        <td>
+                          <?php if($row->active): ?>
+                            <span class="label label-success" data-i18n="yes"></span>
+                          <?php else: ?>
+                            <span class="label label-danger" data-i18n="no"></span>
+                          <?php endif ?>
+                      </td>
                     </tr>
                     <tr>
                         <th data-i18n="widget.file_name"></th>
@@ -42,16 +42,6 @@ $widget_count = count($widget_List)?>
                     <tr>
                         <th data-i18n="widget.module"></th>
                         <td><?php echo $row->module; ?></td>
-                    </tr>
-                    <tr>
-                        <th data-i18n="widget.module_active"></th>
-                        <td style="padding-top: 5px;">
-				<?php if($row->active): ?>
-				<span class="label label-success" data-i18n="yes"></span>
-				<?php else: ?>
-				<span class="label label-danger" data-i18n="no"></span>
-				<?php endif ?>
-			</td>
                     </tr>
                 </table>
             </div> <!-- /col-md-3 -->
