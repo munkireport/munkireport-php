@@ -324,7 +324,10 @@ class Modules
         }
         
         // Sort the widgets by widget name
-        usort($this->widgetList, array($this, "sort_widgets"));
+        usort($this->widgetList, array($this, function($a, $b)
+        {
+            return strcmp($a->name, $b->name);
+        }));
         return $this->widgetList;
     }
 
@@ -338,12 +341,6 @@ class Modules
             }
         }
         return '{'.implode(",\n", $localeList).'}';
-    }
-
-    // Sort widgets
-    private function sort_widgets($a, $b)
-    {
-        return strcmp($a->name, $b->name);
     }
 
     private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
