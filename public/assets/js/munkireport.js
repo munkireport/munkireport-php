@@ -59,26 +59,16 @@ $( document ).ready(function() {
        getAsync: false,
        resStore: {}
    });
-
-   // Detect Widget Gallery
-   try {
-       var url_string = location.search;
-   } catch(err) {
-       var url_string = "/";
-   }
-
-   // Check if we should load all models' locales
-   if (url_string.includes("widget_gallery")){
-       var local_get = '/True';
-   } else {
-       var local_get = '';
-   }
     
    var lang = $.i18n.lng();
 
    // Load locales
+   var localeUrl = '/locale/get/' + lang
+   if(typeof loadAllModuleLocales !== 'undefined'){
+	var localeUrl = localeUrl + '/all_modules'
+   }
    $.when(
-       $.getJSON( appUrl + '/locale/get/' + lang + local_get)
+       $.getJSON( appUrl + localeUrl)
    )
     .fail(function(){
         alert('failed to load locales, please check for syntax errors');
