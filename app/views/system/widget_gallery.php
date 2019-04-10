@@ -1,10 +1,10 @@
 <?php $this->view('partials/head');
-$moduleManager = getMrModuleObj();
-$widget_List = $moduleManager->getWidgets();
+$moduleManager = new munkireport\lib\Modules;
+$widget_List = $moduleManager->loadInfo(true)->getWidgets();
 $widget_count = count($widget_List)?>
 
 <script>
-  var loadAllModuleLocales = True
+  var loadAllModuleLocales = true
 </script>
 <div class="container">
 	<div class="row">
