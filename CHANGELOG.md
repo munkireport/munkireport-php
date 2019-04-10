@@ -1,8 +1,19 @@
 ### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...HEAD) (Unreleased)
 
 FIXES
+- Change 'memory' localization name (#1210) @tuxudo
+- Error handling for deleting machines.
+- Added Time Machine errors back to client summary (#1211) @tuxudo
+- Localize Delete button on business unit management (#1141) @tuxudo
+- Added additional OneLogin supported parameters (#1214)
+- Update SAML (#1244)
 
 NEW FEATURES
+- 'f' hotkey for filter modal (#1150) @tuxudo
+- Added logging for adldap2
+- Added AirPlay to vendors (#1234) @tuxudo
+- Make showing help link default to true (#1228) @WardsParadox
+- Add Widget Gallery (#1140) @tuxudo
 
 CLIENT CHANGES
 
