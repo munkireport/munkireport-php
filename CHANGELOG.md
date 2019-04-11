@@ -1,4 +1,4 @@
-### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...HEAD) (Unreleased)
+### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...v4.1.0) (April 11, 2019)
 
 FIXES
 - Change 'memory' localization name (#1210) @tuxudo
