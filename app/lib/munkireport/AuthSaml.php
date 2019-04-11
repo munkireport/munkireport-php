@@ -33,21 +33,30 @@ class AuthSaml extends AbstractAuth
         ];
         $this->forceAuthn = $this->config['disable_sso'];
         
-        if( ! $this->certificatesInConfig()){
-            $this->loadCertificatesFromFiles();
+        if( ! $this->certificateInConfig('sp', 'x509cert')){
+            $this->loadCertificateFromFile('sp', 'x509cert', 'sp.crt');
         }
+        
+        if( ! $this->certificateInConfig('sp', 'privateKey')){
+            $this->loadCertificateFromFile('sp', 'privateKey', 'sp.key');
+        }
+
+        if( ! $this->certificateInConfig('idp', 'x509cert')){
+            $this->loadCertificateFromFile('idp', 'x509cert', 'idp.crt');
+        }
+
     }
     
-    private function certificatesInConfig()
+    private function certificateInConfig($provider, $cert)
     {
-        return ! empty($this->config['idp']['x509cert']);
+        return ! empty($this->config[$provider][$cert]);
     }
     
-    private function loadCertificatesFromFiles()
+    private function loadCertificateFromFile($provider, $cert, $filename)
     {
         $certdir = $this->mr_config['cert_directory'];
-        if($this->filesystem->exists($certdir . 'idp.crt')){
-            $this->config['idp']['x509cert'] = $this->filesystem->get($certdir . 'idp.crt');
+        if($this->filesystem->exists($certdir . $filename)){
+            $this->config[$provider][$cert] = $this->filesystem->get($certdir . $filename);
         }
     }
 

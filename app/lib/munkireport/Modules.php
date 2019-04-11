@@ -155,16 +155,21 @@ class Modules
             $skipInactiveModules = $this->skipInactiveModules;
         }
 
-        if($skipInactiveModules){
-            $allowedModules = array_merge($this->allowedModules, conf('modules', []));
-        }else{
-            $allowedModules = []; // No need to set this.
-        }
-
-        $this->collectModuleInfo($this->moduleSearchPaths, $skipInactiveModules, $allowedModules);
+        $this->collectModuleInfo(
+            $this->moduleSearchPaths,
+            $skipInactiveModules,
+            $this->getAllowedModules($skipInactiveModules));
 
         return $this;
 
+    }
+    
+    public function getAllowedModules($skipInactiveModules)
+    {
+        if($skipInactiveModules){
+            return array_merge($this->allowedModules, conf('modules', []));
+        }
+        return [];
     }
 
     // Return info about $about
@@ -282,6 +287,47 @@ class Modules
 
         return $out;
     }
+    
+    /**
+     * Returns all widgets for widget gallery
+     *
+     * @author tuxudo
+     */
+    public function getWidgets()
+    {        
+        // Get list of all the modules that contain a widget
+        $out = array();
+        foreach ($this->moduleList as $module => $moduleInfo) {
+            if(array_key_exists('widgets', $moduleInfo)){
+                $out[$module] = $moduleInfo['widgets'];
+            }
+        }
+        
+        $active_modules = $this->getAllowedModules($skipInactiveModules = true);
+           
+        // Generate list for widget gallery
+        foreach( $out as $module => $widgets){
+            foreach($widgets as $id => $info){
+                // Found a widget, add it to widgetList
+                $this->widgetList[$id] = (object) array(
+                    'widget_file' => str_replace(array(APP_ROOT,"//"),array('','/'),$this->getPath($module, '/views/')),
+                    'name' => $info['view'],
+                    'path' => $this->getPath($module, '/views/'),
+                    'module' => $module,
+                    'vars' => $vars,
+                    'active' => in_array($module, $active_modules),
+                    'icon' => $info['icon'],
+                );
+            }
+        }
+        
+        // Sort the widgets by widget name
+        usort($this->widgetList, array($this, function($a, $b)
+        {
+            return strcmp($a->name, $b->name);
+        }));
+        return $this->widgetList;
+    }
 
     public function getModuleLocales($lang='en')
     {
@@ -294,7 +340,6 @@ class Modules
         }
         return '{'.implode(",\n", $localeList).'}';
     }
-
 
     private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
     {

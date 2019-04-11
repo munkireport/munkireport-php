@@ -1,4 +1,34 @@
-### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...HEAD) (Unreleased)
+### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...HEAD) (Unreleased)
+
+FIXES
+- Change 'memory' localization name (#1210) @tuxudo
+- Error handling for deleting machines.
+- Added Time Machine errors back to client summary (#1211) @tuxudo
+- Localize Delete button on business unit management (#1141) @tuxudo
+- Added additional OneLogin supported parameters (#1214)
+- Update SAML (#1244)
+
+NEW FEATURES
+- 'f' hotkey for filter modal (#1150) @tuxudo
+- Added logging for adldap2
+- Added AirPlay to vendors (#1234) @tuxudo
+- Make showing help link default to true (#1228) @WardsParadox
+- Add Widget Gallery (#1140) @tuxudo
+
+MODULE UPDATES
+- machine (v1.1 => v1.2)
+- disk_report (v1.2 => v1.3)
+- displays_info (v1.3 => v1.3.3)
+- fan_temps (v1.1 => v1.3)
+- ibridge (v1.2 => v1.4)
+- munki_facts (v1.2 => v1.3)
+- munkireportinfo (v1.1 => v1.2)
+- profile (v1.1 => v1.2)
+- softwareupdate (v1.1 => v1.2)
+- supported_os (v1.3 => v1.5)
+- timemachine (v1.2 => v1.3)
+
+### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...v4.0.2) (February 08, 2019)
 
 FIXES
 - Updated config_to_env conversion script

@@ -177,7 +177,7 @@
 				<?php endif?>
 
 				<li>
-					<a href="#" class="filter-popup">
+					<a href="#" id="filter-popup" class="filter-popup">
 						<i class="fa fa-filter"></i>
 					</a>
 				</li>

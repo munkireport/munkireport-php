@@ -25,6 +25,12 @@ $(document).on('appReady', function(e, lang) {
         url: appUrl + '/system/show/database'
     });
 
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'widget.gallery',
+        url: appUrl + '/system/show/widget_gallery'
+    });
+
     // Add list link
     $('list-link').each(function( index ){
         var url = appUrl + $(this).data('url');
@@ -53,12 +59,16 @@ $( document ).ready(function() {
        getAsync: false,
        resStore: {}
    });
-
+    
    var lang = $.i18n.lng();
 
    // Load locales
+   var localeUrl = '/locale/get/' + lang
+   if(typeof loadAllModuleLocales !== 'undefined'){
+	var localeUrl = localeUrl + '/all_modules'
+   }
    $.when(
-       $.getJSON( appUrl + '/locale/get/'+lang )
+       $.getJSON( appUrl + localeUrl)
    )
     .fail(function(){
         alert('failed to load locales, please check for syntax errors');
@@ -102,9 +112,15 @@ $( document ).ready(function() {
         // Client listing
         mr.setHotKey('c', appUrl + '/show/listing/reportdata/clients');
 
-        // search
+        // Search
         $(document).bind('keydown', '/', function(){
             $('input[type="search"]').focus();
+            return false;
+        });
+
+        // Filter popup
+        $(document).bind('keydown', 'f', function(){
+            document.getElementById("filter-popup").click();
             return false;
         });
 

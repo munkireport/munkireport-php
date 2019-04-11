@@ -55,7 +55,7 @@ function load_conf()
 	{
 		$conf['auth']['auth_config'] = $auth_config;
 	}
-
+    
 }
 
 /**

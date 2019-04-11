@@ -21,7 +21,7 @@ return [
     | FALSE in a production environment
     */
     'debug' => env('DEBUG', false),
-    
+
     /*
     |===============================================
     | Timezone
@@ -46,7 +46,7 @@ return [
     |
     */
     'temperature_unit' => env('TEMPERATURE_UNIT', 'C'),
-    
+
     /*
     |===============================================
     | Encryption key
@@ -77,7 +77,7 @@ return [
     |
     */
     'webhost' => env(
-        'WEBHOST', 
+        'WEBHOST',
         function(){
             if(PHP_SAPI == 'cli') {
               return '';
@@ -129,7 +129,7 @@ return [
     |
     */
     'subdirectory' => env(
-        'SUBDIRECTORY', 
+        'SUBDIRECTORY',
         function (){
             return substr(
                 $_SERVER['PHP_SELF'],
@@ -149,7 +149,7 @@ return [
     |    in the 'Listings' menu.
     */
     'hide_inactive_modules' => env('HIDE_INACTIVE_MODULES', true),
-    
+
     /*
     |===============================================
     | Module Search Paths
@@ -238,8 +238,8 @@ return [
     | want the links, set either to an empty string, eg:
     | $conf['vnc_link'] = "";
     |
-    | If you want to authenticate with SSH using the currently logged in user 
-    | replace the username in the SSH config with %u: 
+    | If you want to authenticate with SSH using the currently logged in user
+    | replace the username in the SSH config with %u:
     | $conf['ssh_link'] = "ssh://%u@%s";
     */
     'vnc_link' => env('VNC_LINK', "vnc://%s:5900"),
@@ -313,10 +313,10 @@ return [
     | Show help
     |===============================================
     |
-    | Add a help button to the navigation bar, defaults to false
+    | Add a help button to the navigation bar, defaults to true
     |
     */
-    'show_help' => env('SHOW_HELP', false),
+    'show_help' => env('SHOW_HELP', true),
 
     /*
     |===============================================
