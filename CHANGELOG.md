@@ -15,7 +15,18 @@ NEW FEATURES
 - Make showing help link default to true (#1228) @WardsParadox
 - Add Widget Gallery (#1140) @tuxudo
 
-CLIENT CHANGES
+MODULE UPDATES
+- machine (v1.1 => v1.2)
+- disk_report (v1.2 => v1.3)
+- displays_info (v1.3 => v1.3.3)
+- fan_temps (v1.1 => v1.3)
+- ibridge (v1.2 => v1.4)
+- munki_facts (v1.2 => v1.3)
+- munkireportinfo (v1.1 => v1.2)
+- profile (v1.1 => v1.2)
+- softwareupdate (v1.1 => v1.2)
+- supported_os (v1.3 => v1.5)
+- timemachine (v1.2 => v1.3)
 
 ### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...v4.0.2) (February 08, 2019)
 
