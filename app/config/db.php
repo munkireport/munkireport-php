@@ -6,6 +6,9 @@ switch ($driver) {
     return [
         'driver'    => 'sqlite',
         'database'  => env('CONNECTION_DATABASE', APP_ROOT . 'app/db/db.sqlite'),
+        'username' => '',
+        'password' => '',
+        'options' => env('CONNECTION_OPTIONS', []),
     ];
     break;
   case 'mysql':
@@ -20,6 +23,13 @@ switch ($driver) {
       'collation' => env('CONNECTION_COLLATION', 'utf8mb4_unicode_ci'),
       'strict' => env('CONNECTION_STRICT', true),
       'engine' => env('CONNECTION_ENGINE', 'InnoDB'),
+      'ssl_enabled' => env('CONNECTION_SSL_ENABLED', false),
+      'ssl_key' => env('CONNECTION_SSL_KEY'),
+      'ssl_cert' => env('CONNECTION_SSL_CERT'),
+      'ssl_ca' => env('CONNECTION_SSL_CA'),
+      'ssl_capath' => env('CONNECTION_SSL_CAPATH'),
+      'ssl_cipher' => env('CONNECTION_SSL_CIPHER'),
+      'options' => env('CONNECTION_OPTIONS', []),
     ];
   default:
       throw new \Exception(sprintf("Unknown driver: %s", $driver), 1);

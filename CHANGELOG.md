@@ -1,4 +1,76 @@
-### [3.3.2](https://github.com/munkireport/munkireport-php/compare/v3.3.1...HEAD) (Unreleased)
+### [4.1.1](https://github.com/munkireport/munkireport-php/compare/v4.1.0...HEAD) (Unreleased)
+
+### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...v4.1.0) (April 11, 2019)
+
+FIXES
+- Change 'memory' localization name (#1210) @tuxudo
+- Error handling for deleting machines.
+- Added Time Machine errors back to client summary (#1211) @tuxudo
+- Localize Delete button on business unit management (#1141) @tuxudo
+- Added additional OneLogin supported parameters (#1214)
+- Update SAML (#1244)
+
+NEW FEATURES
+- 'f' hotkey for filter modal (#1150) @tuxudo
+- Added logging for adldap2
+- Added AirPlay to vendors (#1234) @tuxudo
+- Make showing help link default to true (#1228) @WardsParadox
+- Add Widget Gallery (#1140) @tuxudo
+
+MODULE UPDATES
+- machine (v1.1 => v1.2)
+- disk_report (v1.2 => v1.3)
+- displays_info (v1.3 => v1.3.3)
+- fan_temps (v1.1 => v1.3)
+- ibridge (v1.2 => v1.4)
+- munki_facts (v1.2 => v1.3)
+- munkireportinfo (v1.1 => v1.2)
+- profile (v1.1 => v1.2)
+- softwareupdate (v1.1 => v1.2)
+- supported_os (v1.3 => v1.5)
+- timemachine (v1.2 => v1.3)
+
+### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...v4.0.2) (February 08, 2019)
+
+FIXES
+- Updated config_to_env conversion script
+- Added manager role
+
+NEW FEATURES
+- Docker builds PHP v7.3
+- Added SSL options (to address #1217)
+- Added mdm_status module
+
+
+### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...v4.0.1) (December 21, 2018)
+
+FIXES
+- `APPS_TO_TRACK` now working again due to an upgrade to the `inventory` module.
+- Added `.env.example` to the `.zip` and `tar.gz` downloads.
+CHANGES
+- Added support for local widgets.
+- Removed `custom_folder` as a method to load custom widgets. As a replacement, use `local/views/widgets`. Or override `WIDGET_SEARCH_PATHS` with your own paths.
+- Hotkeys are displayed in the dashboard dropdown if more than one dashboard is configured
+- There are 2 new widgets added to the `munkireport` module that show the top 10 error and warning messages.
+
+### [4.0.0](https://github.com/munkireport/munkireport-php/compare/v3.3.1...v4.0.0) (December 18, 2018)
+
+IMPORTANT CHANGES
+
+- This release changes the entire configuration system to `.env`. This means that `config.php` and `config_default.php` are no longer in use.
+- There is a new directory called `local` that is used for user accounts, dashboards, certificates and module specific yaml files.
+
+Please read https://github.com/munkireport/munkireport-php/wiki/How-to-Upgrade-Versions#version-3x---4x for more information
+
+FIXES
+- Fixing the Listing title (#1194) @joncrain
+- Removing unnecessary data (#1195) @joncrain
+- Including preset curl options by default (#1197) @joncrain
+- Added local users config info to .env.example and README.md (#1204) @fridomac
+
+OTHER CHANGES
+- SAML attribute mapping for user and groups
+- The `adldap2/adldap2` and `onelogin/php-saml` libraries are updated to the latest version and included in the default installation.
 
 ### [3.3.1](https://github.com/munkireport/munkireport-php/compare/v3.3.0...v3.3.1) (November 27, 2018)
 

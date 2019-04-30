@@ -1,21 +1,28 @@
 <?php
 
 namespace munkireport\lib;
-use \OneLogin_Saml2_Auth, \OneLogin_Saml2_Settings, \OneLogin_Saml2_Error;
+use \OneLogin\Saml2\Auth as OneLogin_Saml2_Auth;
+use \OneLogin\Saml2\Settings as OneLogin_Saml2_Settings;
+use \OneLogin\Saml2\Error as OneLogin_Saml2_Error;
 use \Exception, \View;
+use \Illuminate\Filesystem\Filesystem;
 
 class AuthSaml extends AbstractAuth
 
 {
-    private $config, $error, $authController, $groups, $login, $forceAuthn;
+    private $config, $mr_config, $error, $authController, $groups, $login, $forceAuthn, $filesystem;
 
     public function __construct($config, $authHandler)
     {
         $this->authController = $authHandler;
+        
+        $this->filesystem = new Filesystem;
 
-        // TODO Check config
         $this->config = $config;
-        if( ! isset($this->config['sp']['entityId'])){
+        $this->mr_config = $this->config['munkireport'];
+        unset($this->config['munkireport']);
+        
+        if( empty($this->config['sp']['entityId'])){
             $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
         }
         $this->config['sp']['assertionConsumerService'] = [
@@ -24,7 +31,33 @@ class AuthSaml extends AbstractAuth
         $this->config['sp']['singleLogoutService'] = [
             'url' => url('auth/saml/sls', true)
         ];
-        $this->forceAuthn = isset($this->config['disable_sso']) ? $this->config['disable_sso'] : false;
+        $this->forceAuthn = $this->config['disable_sso'];
+        
+        if( ! $this->certificateInConfig('sp', 'x509cert')){
+            $this->loadCertificateFromFile('sp', 'x509cert', 'sp.crt');
+        }
+        
+        if( ! $this->certificateInConfig('sp', 'privateKey')){
+            $this->loadCertificateFromFile('sp', 'privateKey', 'sp.key');
+        }
+
+        if( ! $this->certificateInConfig('idp', 'x509cert')){
+            $this->loadCertificateFromFile('idp', 'x509cert', 'idp.crt');
+        }
+
+    }
+    
+    private function certificateInConfig($provider, $cert)
+    {
+        return ! empty($this->config[$provider][$cert]);
+    }
+    
+    private function loadCertificateFromFile($provider, $cert, $filename)
+    {
+        $certdir = $this->mr_config['cert_directory'];
+        if($this->filesystem->exists($certdir . $filename)){
+            $this->config[$provider][$cert] = $this->filesystem->get($certdir . $filename);
+        }
     }
 
     public function handle($endpoint)
@@ -116,7 +149,7 @@ class AuthSaml extends AbstractAuth
 
         $attrs = $auth->getAttributes();
         $auth_data = $this->mapSamlAttrs($attrs);
-        if ($this->authorizeUserAndGroups($this->config, $auth_data)) {
+        if ($this->authorizeUserAndGroups($this->mr_config, $auth_data)) {
             $this->login = $auth_data['user'];
             $this->groups = $auth_data['groups'];
             $this->authController->storeAuthData($this);
@@ -136,7 +169,7 @@ class AuthSaml extends AbstractAuth
     private function slo()
     {
         // Check if SSO is disabled, if yes, destroy session and move on
-        if(isset($this->config['disable_sso']) && $this->config['disable_sso'] === true){
+        if($this->config['disable_sso']){
             session_destroy();
             $obj = new View();
             $obj->view('auth/logout', ['loginurl' => url()]);
@@ -199,29 +232,20 @@ class AuthSaml extends AbstractAuth
     {
         $out = [
             'auth' => 'saml',
+            'user' => '',
             'groups' => [],
         ];
-
-        if(isset($this->config['attr_mapping'])){
-            $attr_mapping = $this->config['attr_mapping'];
+        
+        $userAttribute = $this->config['attr_mapping']['user'];
+        $groupAttributes = $this->config['attr_mapping']['groups'];
+        
+        if(isset($attrs[$userAttribute])){
+            $out['user'] = $attrs[$userAttribute][0];
         }
-        else{
-            $attr_mapping = [
-                'memberOf' => 'groups',
-                'User.email' => 'user',
-            ];
-        }
-        foreach($attr_mapping as $key => $mappedKey)
-        {
-            if(isset($attrs[$key]))
-            {
-                if($mappedKey == 'groups')
-                {
-                    $out['groups'] = array_merge( $out['groups'], $attrs[$key]);
-                }
-                else{
-                    $out[$mappedKey] = $attrs[$key][0];
-                }
+        
+        foreach ($groupAttributes as $groupAttribute) {
+            if(isset($attrs[$groupAttribute])){
+                $out['groups'] = array_merge( $out['groups'], $attrs[$groupAttribute]);
             }
         }
 

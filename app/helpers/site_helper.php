@@ -1,9 +1,9 @@
 <?php
 
-use munkireport\models\Machine_group, munkireport\lib\Modules;
+use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '3.4.0.3618';
+$GLOBALS['version'] = '4.1.1.3746';
 
 // Return version without commit count
 function get_version()
@@ -74,6 +74,9 @@ function getdbh()
     if (! isset($GLOBALS['dbh'])) {
         try {
             $conn = conf('connection');
+            if($conn['options']){
+                $conn['options'] = arrayToAssoc($conn['options']);
+            }
             switch ($conn['driver']) {
                 case 'sqlite':
                     $dsn = "sqlite:{$conn['database']}";
@@ -81,6 +84,9 @@ function getdbh()
 
                 case 'mysql':
                     $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
+                    if( empty($conn['options'])){
+                      add_mysql_opts($conn);
+                    }
                     break;
 
                 default:
@@ -88,9 +94,9 @@ function getdbh()
             }
             $GLOBALS['dbh'] = new PDO(
                 $dsn,
-                isset($conn['username']) ? $conn['username'] : '',
-                isset($conn['password']) ? $conn['password'] : '',
-                isset($conn['options']) ? $conn['options'] : []
+                $conn['username'],
+                $conn['password'],
+                $conn['options']
             );
         } catch (PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());
@@ -105,6 +111,37 @@ function getdbh()
         }
     }
     return $GLOBALS['dbh'];
+}
+
+function has_sqlite_db($connection)
+{
+  return find_driver($connection, 'sqlite');
+}
+
+function has_mysql_db($connection)
+{
+  return find_driver($connection, 'mysql');
+}
+
+function find_driver($connection, $driver)
+{
+  if( isset($connection['driver']) && $connection['driver'] == $driver){
+    return true;
+  }
+  return false;
+}
+
+function add_mysql_opts(&$conn){
+  $conn['options'] = [
+    PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
+  ];
+  if($conn['ssl_enabled']){
+    foreach(['key', 'cert', 'ca', 'capath', 'cipher'] as $ssl_opt){
+      if($conn['ssl_'. $ssl_opt]){
+        $conn['options'][constant('PDO::MYSQL_ATTR_SSL_'.strtoupper($ssl_opt))] = $conn['ssl_'. $ssl_opt];
+      }
+    }
+  }
 }
 
 //===============================================
@@ -240,6 +277,44 @@ function get_guid()
         mt_rand(0, 65535),
         mt_rand(0, 65535)
     );
+}
+
+/**
+ * Convert an array of values to a key => value array
+ * [a, b] is converted to [a => b]
+ *
+ * @return array assoc array
+ * @author
+ **/
+function arrayToAssoc($array)
+{
+    if(count($array) % 2){
+      throw new \Exception("Cannot convert array: array is of uneven length", 1);
+    }
+    $result = [];
+    while (count($array)) {
+        list($key, $value) = array_splice($array, 0, 2);
+        $result[$key] = $value;
+    }
+    return $result;
+}
+
+/**
+ * Convert a key => value array to an array of values
+ * [a => b] is converted to [a, b]
+ *
+ * @return array array
+ * @author
+ **/
+function assocToArray($array)
+{
+    $result = [];
+    foreach($array as $k => $v)
+    {
+      $result[] = $k;
+      $result[] = $v;
+    }
+    return $result;
 }
 
 /**
@@ -391,4 +466,16 @@ function getMrModuleObj()
     }
 
     return $moduleObj;
+}
+
+// Create a singleton dashboard
+function getDashboard()
+{
+    static $dashboardObj;
+
+    if( ! $dashboardObj){
+      $dashboardObj = new Dashboard(conf('dashboard'));
+    }
+
+    return $dashboardObj;
 }

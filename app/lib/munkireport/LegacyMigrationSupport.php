@@ -12,7 +12,11 @@ trait LegacyMigrationSupport
             $this->capsule = new Capsule;
 
             if( ! $connection = conf('connection')){
-                die('Connection not configured in config.php');
+                die('Database connection not configured');
+            }
+
+            if(has_mysql_db($connection)){
+              add_mysql_opts($connection);
             }
 
             $this->capsule->addConnection($connection);

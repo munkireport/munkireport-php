@@ -10,12 +10,10 @@ cache:
     - vendor
 install:
   - composer install --no-dev
-  - composer require adldap2/adldap2 --update-no-dev
-  - composer require onelogin/php-saml --update-no-dev
 
 script:
-  - tar cfz "${HOME}/munkireport-php-${TRAVIS_TAG}.tar.gz" *
-  - zip -r "${HOME}/munkireport-php-${TRAVIS_TAG}.zip" *
+  - tar cfz "${HOME}/munkireport-php-${TRAVIS_TAG}.tar.gz" * .env.example
+  - zip -r "${HOME}/munkireport-php-${TRAVIS_TAG}.zip" * .env.example
 
 before_deploy:
   - git config --local user.name "munkireport-php"

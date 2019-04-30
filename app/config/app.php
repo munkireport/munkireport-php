@@ -21,7 +21,7 @@ return [
     | FALSE in a production environment
     */
     'debug' => env('DEBUG', false),
-    
+
     /*
     |===============================================
     | Timezone
@@ -46,7 +46,7 @@ return [
     |
     */
     'temperature_unit' => env('TEMPERATURE_UNIT', 'C'),
-    
+
     /*
     |===============================================
     | Encryption key
@@ -59,6 +59,16 @@ return [
 
     /*
     |===============================================
+    | Local directory
+    |===============================================
+    |
+    | Path to the local directory where settings, users and certificates are stored
+    |
+    */
+    'local' => env('LOCAL_DIRECTORY_PATH', APP_ROOT . 'local/'),
+
+    /*
+    |===============================================
     | HTTP host
     |===============================================
     |
@@ -67,7 +77,7 @@ return [
     |
     */
     'webhost' => env(
-        'WEBHOST', 
+        'WEBHOST',
         function(){
             if(PHP_SAPI == 'cli') {
               return '';
@@ -119,7 +129,7 @@ return [
     |
     */
     'subdirectory' => env(
-        'SUBDIRECTORY', 
+        'SUBDIRECTORY',
         function (){
             return substr(
                 $_SERVER['PHP_SELF'],
@@ -139,7 +149,7 @@ return [
     |    in the 'Listings' menu.
     */
     'hide_inactive_modules' => env('HIDE_INACTIVE_MODULES', true),
-    
+
     /*
     |===============================================
     | Module Search Paths
@@ -184,7 +194,8 @@ return [
     |
     */
     'roles' => [
-        'admin' => env('ROLES_ADMIN', ['*'])
+        'admin' => env('ROLES_ADMIN', ['*']),
+        'manager' => env('ROLES_MANAGER', []),
     ],
 
     /*
@@ -227,8 +238,8 @@ return [
     | want the links, set either to an empty string, eg:
     | $conf['vnc_link'] = "";
     |
-    | If you want to authenticate with SSH using the currently logged in user 
-    | replace the username in the SSH config with %u: 
+    | If you want to authenticate with SSH using the currently logged in user
+    | replace the username in the SSH config with %u:
     | $conf['ssh_link'] = "ssh://%u@%s";
     */
     'vnc_link' => env('VNC_LINK', "vnc://%s:5900"),
@@ -286,17 +297,6 @@ return [
 
     /*
     |===============================================
-    | Custom folder
-    |===============================================
-    |
-    | Absolute path to folder with custom items.
-    | This folder will be searched for widgets in views/widgets
-    |
-    */
-    'custom_folder' => env('CUSTOM_FOLDER', ''),
-
-    /*
-    |===============================================
     | Custom css and js
     |===============================================
     |
@@ -310,19 +310,25 @@ return [
 
     /*
     |===============================================
-    | Custom Help URL
+    | Show help
     |===============================================
     |
-    | If you want to have a help URL provided, define the 
-    | help_url as a blank string ('') to redirect to the 
-    | MunkiReport-PHP's GitHub Wiki page (in a new tab).
+    | Add a help button to the navigation bar, defaults to true
+    |
+    */
+    'show_help' => env('SHOW_HELP', true),
+
+    /*
+    |===============================================
+    | Custom Help URL
+    |===============================================
     |
     | If you want to override the default help url
     | (MunkiReport's GitHub Wiki), you can specify which URL
     | to redirect to (in a new tab).
     |
     */
-    'help_url' => env('HELP_URL', ''),
+    'help_url' => env('HELP_URL', 'https://github.com/munkireport/munkireport-php/wiki'),
 
     /*
     |===============================================

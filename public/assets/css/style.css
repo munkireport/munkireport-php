@@ -191,3 +191,9 @@ svg .nv-label text
     max-height: calc(100vh - 212px);
     overflow-y: auto;
 }
+
+.dropdown-link-text {
+    display: inline-block;
+    margin-right: 20px;
+}
+

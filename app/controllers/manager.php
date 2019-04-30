@@ -2,7 +2,7 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View, \Machine_model;
+use \Controller, \View, \Machine_model, \Exception;
 
 class manager extends Controller
 {
@@ -94,7 +94,7 @@ class manager extends Controller
                 $status['rowcount'] = $cnt;
             } catch (Exception $e) {
                 $status['status'] = 'error';
-                $status['message'] = $e->getMessage();
+                $status['message'] = sprintf('Delete failed for table %s: %s', $table, $e->getMessage());
             }
         }
 

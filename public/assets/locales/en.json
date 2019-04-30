@@ -39,13 +39,13 @@
     },
     "all": "All",
     "auth": {
-        "addtoconfig": "Add this line to config.php:",
         "back_to_site": "Back to site",
         "captcha": {
             "empty": "Please fill out captcha",
             "invalid": "Invalid captcha response"
         },
-        "create_user_file": "Create a file called \"__name__.yml\" to your users directory an add the following line:",
+        "create_local_user": "Create Local User Account",
+        "download_account": "Download User Account",
         "empty_not_allowed": "Empty values are not allowed",
         "error_contacting_AD": "An error ocurred while contacting AD",
         "gen_other": "Generate another",
@@ -60,6 +60,7 @@
         "password": "Password",
         "secure": "You're using a secure connection",
         "signin": "Sign in",
+        "unavailable": "Configuration failure: No authentication method configured in AUTH_METHODS.",
         "wrong_user_or_pass": "Wrong username or password"
     },
     "backup": {
@@ -233,7 +234,6 @@
             "title": "Uptime"
         }
     },
-    "memory": "Memory",
     "model": "Model",
     "mouse": "Mouse",
     "munki": {
@@ -265,6 +265,7 @@
         "main": {
             "admin": "Admin",
             "dashboard": "Dashboard",
+            "dashboard_plural": "Dashboards",
             "listings": "Listings",
             "reports": "Reports"
         },
@@ -277,7 +278,9 @@
     "no": "No",
     "no_clients": "No Clients",
     "no_data": "No Data",
+    "no_errors": "No Errors",
     "no_errors_or_warnings": "No Errors or Warnings",
+    "no_warnings": "No Warnings",
     "notification": {
         "all_levels": "All levels",
         "business_unit": "Business Unit",
@@ -314,6 +317,7 @@
         "soap": "SOAP Extension",
         "version": "Version"
     },
+    "physical_memory": "Memory",
     "pkg_failed_to_install": "__pkg__ failed to install: __reason__",
     "pkg_failed_to_install_plural": "__count__ packages failed to install",
     "ratio": "Ratio",
@@ -366,6 +370,12 @@
     "warning": "Warning",
     "warning_plural": "Warnings",
     "widget": {
+        "config_name": "Config Entry",
+        "file_name": "Filename",
+        "gallery": "Widget Gallery",
+        "module": "Module",
+        "module_active": "Module Active",
+        "path": "Path",
         "unknown": {
             "alert": "This widget cannot be found",
             "title": "Unknown widget"

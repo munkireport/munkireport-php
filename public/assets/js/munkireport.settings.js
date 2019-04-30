@@ -47,6 +47,13 @@ var mr = {
             var globalPrefs = mr.state('global') || {};
             return globalPrefs[key];
         },
+        
+        setHotKey: function(key, url){
+          $(document).bind('keydown', key, function(){
+              window.location = url;
+              return true;
+          });
+        },
 
         // Integer or integer string OS Version to semantic OS version
         integerToVersion: function(osvers)
@@ -289,7 +296,8 @@ var mr = {
             "2247": "Bush",
             "34a4": "Medion",
             "1ab3": "Fujitsu",
-            "2db2": "Kramer Electronics"
+            "2db2": "Kramer Electronics",
+            "6161706c": "AirPlay"
         }
 
     };

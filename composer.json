@@ -24,7 +24,7 @@
         "rodneyrehm/plist": "^2.0",
         "doctrine/dbal": "~2.5",
         "defuse/php-encryption": "^2.1",
-        "vlucas/phpdotenv": "^2.4",
+        "vlucas/phpdotenv": "^3.1",
         "wikimedia/composer-merge-plugin": "^1.4",
         "munkireport/ard": "^1.0",
         "munkireport/reportdata": "^1.0",
@@ -64,6 +64,7 @@
         "munkireport/location": "^1.0",
         "munkireport/managedinstalls": "^1.0",
         "munkireport/mbbr_status": "^1.0",
+        "munkireport/mdm_status": "^1.6",
         "munkireport/munki_facts": "^1.0",
         "munkireport/munkiinfo": "^1.0",
         "munkireport/munkireportinfo": "^1.0",
@@ -88,11 +89,10 @@
         "munkireport/usb": "^1.0",
         "munkireport/user_sessions": "^1.0",
         "munkireport/wifi": "^1.0",
-        "symfony/yaml": "^3.4"
-    },
-    "suggest": {
-        "onelogin/php-saml": "^2.12 Required for SAML authentication",
-        "adldap2/adldap2": "^8.0 Required for AD authentication"
+        "symfony/yaml": "^3.4",
+        "adldap2/adldap2": "^10",
+        "onelogin/php-saml": "^3.0",
+        "monolog/monolog": "^1.24"
     },
     "autoload": {
         "psr-4": {

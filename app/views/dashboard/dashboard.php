@@ -6,9 +6,9 @@
 
 	<div class="row">
 
-		<?php foreach($row as $item):?>
+		<?php foreach($row as $item => $data):?>
 
-		<?php $widget->view($this, $item); ?>
+		<?php $widget->view($this, $item, $data); ?>
 
 		<?php endforeach?>
 

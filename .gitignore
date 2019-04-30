@@ -17,6 +17,9 @@ composer.lock
 .env
 composer.local.*
 
-users/*.yml
-dashboards/*.yml
+local/users/*.yml
+local/dashboards/*.yml
+local/certs/*.crt
+local/certs/*.key
+local/module_configs/*.yml
 

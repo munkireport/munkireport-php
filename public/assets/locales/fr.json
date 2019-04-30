@@ -227,7 +227,6 @@
             "title": "Temps de fonctionnement"
         }
     },
-    "memory": "Mémoire",
     "model": "Modèle",
     "mouse": " Souris",
     "munki": {
@@ -306,6 +305,7 @@
         "soap": "Extension SOAP",
         "version": "Version"
     },
+    "physical_memory": "Mémoire",
     "pkg_failed_to_install": "L'installation de __pkg__ a échouée : __reason__",
     "pkg_failed_to_install_plural": "L'installation de __count__ paquet(s) échouée",
     "ratio": "Ratio",

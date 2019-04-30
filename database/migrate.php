@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../app/helpers/env_helper.php';
+require_once __DIR__ . '/../app/helpers/site_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Illuminate\Filesystem\Filesystem;
@@ -24,54 +25,30 @@ function colorize($string){
     return str_replace(array_keys($colorTable), array_values($colorTable), $string);
 }
 
-function load_conf()
+function ensure_sqlite_db_exists($connection)
 {
-	$conf = array();
-
-	$GLOBALS['conf'] =& $conf;
-
-	// Load default configuration
-	require_once(APP_ROOT . "config_default.php");
-
-	if ((include_once APP_ROOT . "config.php") !== 1)
-	{
-		die(APP_ROOT. "config.php is missing!\n
-	Unfortunately, Munkireport does not work without it\n");
-	}
-}
-
-function conf($cf_item, $default = '')
-{
-	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
-}
-
-function has_sqlite_db()
-{
-  $connection = conf('connection');
-  if( isset($connection['driver']) && $connection['driver'] == 'sqlite'){
-    return true;
-  }
-  return false;
-}
-
-function ensure_sqlite_db_exists()
-{
-  $connection = conf('connection');
   touch($connection['database']);
 }
 
 require_once APP_ROOT . 'app/helpers/config_helper.php';
 initDotEnv();
-load_conf();
+initConfig();
+configAppendFile(APP_ROOT . 'app/config/app.php');
+configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
 
-if(has_sqlite_db()){
-  ensure_sqlite_db_exists();
+$connection = conf('connection');
+
+if(has_sqlite_db($connection)){
+  ensure_sqlite_db_exists($connection);
 }
 
+if(has_mysql_db($connection)){
+  add_mysql_opts($connection);
+}
 
 try {
   $capsule = new Capsule();
-  $capsule->addConnection(conf('connection'));
+  $capsule->addConnection($connection);
   $capsule->setAsGlobal();
   $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
   if (!$repository->repositoryExists()) {

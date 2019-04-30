@@ -1,0 +1,297 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Yaml\Yaml;
+
+define("KISS", 1);
+define("APP_ROOT", dirname(__DIR__));
+require_once __DIR__ . '/../app/helpers/env_helper.php';
+require_once __DIR__ . '/../app/helpers/site_helper.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../app/helpers/config_helper.php';
+
+initDotEnv();
+
+array_shift($argv);
+
+$app_root = dirname(__DIR__);
+$env_path = $app_root . '/.env';
+$user_path = $app_root . '/local/users/';
+$dashboard_path = $app_root . '/local/dashboards/';
+$network_path = $app_root . '/local/module_configs/ipv4routers.yml';
+$ip_ranges_path = $app_root . '/local/module_configs/ip_ranges.yml';
+
+$config_path = $app_root . '/config.php';
+$conversion_file = $app_root . '/build/config/config_to_env.yml';
+$obsolete_items = [
+  'system_path',
+  'application_path',
+  'view_path',
+  'controller_path',
+  'module_path',
+  'routes',
+  'mysql_create_tbl_opts',
+  'custom_folder',
+];
+
+function loadConfig($config_path, $what = 'conf')
+{
+    if ((include $config_path) !== 1)
+    {
+        die("$config_path is missing!\n");
+    }
+    if(isset(${$what})){
+      return ${$what};
+    }
+    return [];
+}
+
+function logit($txt)
+{
+    echo $txt . "\n";
+}
+
+function warn()
+{
+    echo "MIGRATION SCRIPT TO MIGRATE MUNKIREPORT TO MUNKIREPORT VERSION 4\n\n";
+    echo "This script will generate the necessary configuration files based on the contents of `config.php`\n";
+    echo "Are you sure you want to do this?  Type 'yes' to continue: ";
+    $handle = fopen ("php://stdin","r");
+    $line = fgets($handle);
+    if(trim($line) != 'yes'){
+        echo "ABORTING!\n";
+        exit;
+    }
+    fclose($handle);
+    echo "\n";
+    echo "Thank you, continuing...\n";
+}
+
+function writeFile($path, $data)
+{
+    logit("Writing $path");
+    file_put_contents($path, $data);
+}
+
+function convertDashboard(&$conf, $path)
+{
+    if(file_exists($path)){
+      logit("Skipping dashboard: $path already exists");
+      return false;
+    }
+
+    if(array_key_exists('dashboard_layout', $conf)){
+        $conf['dashboard_layout'] = array_map (
+            function($row){
+              $out = [];
+              foreach($row as $key => $value){
+                $out[$value] = [];
+              }
+              return $out;
+            },
+            $conf['dashboard_layout']
+        );
+        $conf['dashboard_layout']['display_name'] = 'Dashboard';
+        $conf['dashboard_layout']['hotkey'] = 'd';
+        writeFile($path, Yaml::dump($conf['dashboard_layout']));
+        unset($conf['dashboard_layout']);
+    }
+    return true;
+}
+
+function convertNetworks(&$conf, $path)
+{
+  if(file_exists($path)){
+    logit("Skipping networks: $path already exists");
+    return false;
+  }
+
+  if(isset($conf['ipv4routers']))
+  {
+    writeFile($path, Yaml::dump($conf['ipv4routers']));
+  }
+  unset($conf['ipv4routers']);
+}
+
+function convertIPranges(&$conf, $path)
+{
+  if(file_exists($path)){
+    logit("Skipping ipranges: $path already exists");
+    return false;
+  }
+
+  if(isset($conf['ip_ranges']))
+  {
+    writeFile($path, Yaml::dump($conf['ip_ranges']));
+  }
+  unset($conf['ip_ranges']);
+}
+
+function convertConnectionOptions(&$conf)
+{
+    if(array_key_exists('connection', $conf)){
+        if(array_key_exists('options', $conf['connection'])){
+            $conf['connection']['options'] = assocToArray($conf['connection']['options']);
+            return true;
+        }
+    }
+    return false;
+}
+
+
+function filterObsoleteItems(&$config, $obsolete_items)
+{
+  foreach ($obsolete_items as $item) {
+    if(array_key_exists($item, $config))
+    {
+      unset($config[$item]);
+    }
+  }
+  return true;
+}
+
+function fixBackslashesAndNewlines($data)
+{
+  $data = str_replace('\\', '\\\\', $data);
+  return str_replace(["\n", "\r"], '', $data);
+}
+
+// Fix saml array
+function samlFix(&$conf)
+{
+    if(isset($conf['auth']['auth_saml']['attr_mapping']))
+    {
+      $user = ''; $groups = [];
+      foreach ($conf['auth']['auth_saml']['attr_mapping'] as $val => $key)
+      {
+        if($key == 'groups')
+        {
+          $groups[] = $val;
+        }
+        if($key == 'user')
+        {
+          $user = $val;
+        }
+        unset($conf['auth']['auth_saml']['attr_mapping'][$val]);
+      }
+      $conf['auth']['auth_saml']['attr_mapping']['user'] = $user;
+      $conf['auth']['auth_saml']['attr_mapping']['groups'] = $groups;
+      return true;
+    }
+}
+
+function detectAuthMethods(&$conf, $auth_conf)
+{
+  $conf['auth_methods'] = [];
+  if(! empty($auth_conf)){
+    $conf['auth_methods'][] = 'LOCAL';
+  }
+  if (! isset($conf['auth'])) {
+    return false;
+  }
+  $conversion = [
+    'auth_noauth' => 'NOAUTH',
+    'auth_saml' => 'SAML',
+    'auth_ldap' => 'LDAP',
+    'auth_AD' => 'AD',
+    'network' => 'NETWORK'
+  ];
+  foreach($conversion as $key => $val){
+    if(array_key_exists($key, $conf['auth']))
+    {
+      $conf['auth_methods'][] = $val;
+    }
+  }
+  // Remove auth_noath as it has no options
+  unset($conf['auth']['auth_noauth']);
+
+  return true;
+}
+
+function convertUsers($auth_config, $user_path)
+{
+  foreach ($auth_config as $user => $hash) {
+      $full_path = fullPath($user_path, $user);
+      if (userExists($full_path)) {
+          logit("User already exists: $user");
+      }
+      else {
+        logit("Creating user: $user");
+        createUser($full_path, $hash);
+      }
+  };
+
+}
+
+function fullPath($user_path, $user)
+{
+    return $user_path . $user . '.yml';
+}
+
+function userExists($full_path)
+{
+    return file_exists($full_path);
+}
+
+function createUser($full_path, $hash)
+{
+    $data = "password_hash: $hash\n";
+    file_put_contents($full_path, $data);
+}
+
+function convertPrefsToDotEnv($config, $conversion_file, $dotenv_path)
+{
+  if(file_exists($dotenv_path))
+  {
+    logit("Skipping .env: file exists");
+    return false;
+  }
+  $conversion = Yaml::parseFile($conversion_file);
+  $out = '';
+  foreach ($config as $key => $value) {
+      $out .= convert($key, $value, $conversion);
+  };
+  writeFile($dotenv_path, $out);
+
+}
+
+function convert($key, $value, $conversion){
+  if(array_key_exists($key, $conversion)){
+    switch (gettype($value)) {
+      case 'boolean':
+        return sprintf("%s=\"%s\"\n", $conversion[$key], $value ? 'TRUE' : 'FALSE');
+      case 'array':
+        if (is_array($conversion[$key])) {
+          $out = '';
+          foreach($value as $skey => $sval){
+            $out .= convert($skey, $sval, $conversion[$key]);
+          }
+          return $out;
+        }
+        else {
+          return sprintf("%s=\"%s\"\n", $conversion[$key], implode(', ', fixBackslashesAndNewlines($value)));
+        }
+      default:
+        return sprintf("%s=\"%s\"\n", $conversion[$key], fixBackslashesAndNewlines($value));
+    }
+  }
+  else {
+    echo "### CONFIG ITEM NOT FOUND: $key ###\n";
+  }
+}
+
+warn();
+logit("Loading $config_path");
+$config = loadConfig($config_path);
+$auth_config = loadConfig($config_path, 'auth_config');
+logit("Analyzing...");
+samlFix($config);
+filterObsoleteItems($config, $obsolete_items);
+convertConnectionOptions($config);
+detectAuthMethods($config, $auth_config);
+convertDashboard($config, $dashboard_path . 'default.yml');
+convertNetworks($config, $network_path);
+convertIPranges($config, $ip_ranges_path);
+convertPrefsToDotEnv($config, $conversion_file, $env_path);
+convertUsers($auth_config, $user_path);
+logit("Done");
