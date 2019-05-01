@@ -1,5 +1,16 @@
 ### [4.1.1](https://github.com/munkireport/munkireport-php/compare/v4.1.0...HEAD) (Unreleased)
 
+FIXES
+- Fix Widget Gallery uninitialized variables
+- Fix Sophos module uninitialized variables
+- Fix Caching module uninitialized variables
+
+MODULE UPDATES
+- caching (v1.1 => v1.2)
+- fan_temps (v1.3 => V1.4)
+- munkireportinfo (v1.2 => v1.3)
+- sophos (v1.1 => v1.2)
+
 ### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...v4.1.0) (April 11, 2019)
 
 FIXES
