@@ -17,7 +17,7 @@
 
 	<div class="row">
         <div class="col-lg-12" id="<?php echo substr($row->name, 0, -7); ?>_gallery">
-            <h2>&nbsp;<i class="fa <?php echo $row->icon; ?>"></i>&nbsp;<?php echo substr($row->name, 0, -7); ?></h2>
+            <h2><?php echo substr($row->name, 0, -7); ?></h2>
         </div> <!-- /col-lg-12 -->
 
         <?php $this->view($row->name, $row->vars, $row->path); ?>

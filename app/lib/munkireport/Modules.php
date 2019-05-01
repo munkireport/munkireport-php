@@ -314,18 +314,16 @@ class Modules
                     'name' => $info['view'],
                     'path' => $this->getPath($module, '/views/'),
                     'module' => $module,
-                    'vars' => $vars,
+                    'vars' => '',
                     'active' => in_array($module, $active_modules),
-                    'icon' => $info['icon'],
                 );
             }
         }
         
         // Sort the widgets by widget name
-        usort($this->widgetList, array($this, function($a, $b)
-        {
+        usort($this->widgetList, function($a, $b){
             return strcmp($a->name, $b->name);
-        }));
+        });
         return $this->widgetList;
     }
 
