@@ -1,4 +1,4 @@
-### [4.1.1](https://github.com/munkireport/munkireport-php/compare/v4.1.0...HEAD) (Unreleased)
+### [4.1.1](https://github.com/munkireport/munkireport-php/compare/v4.1.0...v4.1.1) (May 01, 2019)
 
 FIXES
 - Fix Widget Gallery uninitialized variables
