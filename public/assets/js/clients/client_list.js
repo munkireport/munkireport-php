@@ -101,11 +101,11 @@ $(document).on('appReady', function(e, lang) {
 		  $(outer).find('select').addClass('form-control input-sm');
 
 		},
-        drawCallback: function( oSettings ) {
+		drawCallback: function( oSettings ) {
 			$('#total-count').html(oSettings.fnRecordsTotal());
 
 			// If the edit button is active, show the remove machine buttons
-			if($('a.buttons-edit.btn-danger').length > 0){
+			if($('button.buttons-edit.btn-danger').length > 0){
 				$('div.machine').addClass('edit btn-group');
 			}
 
