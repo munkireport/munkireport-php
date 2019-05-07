@@ -1,3 +1,5 @@
+### [4.1.3](https://github.com/munkireport/munkireport-php/compare/v4.1.2...HEAD) (Unreleased)
+
 ### [4.1.2](https://github.com/munkireport/munkireport-php/compare/v4.1.1...v4.1.2) (May 07, 2019)
 
 Small update to fix the deleting of client machines.
