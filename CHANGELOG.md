@@ -1,5 +1,18 @@
 ### [4.1.2](https://github.com/munkireport/munkireport-php/compare/v4.1.1...HEAD) (Unreleased)
 
+Small update to fix the deleting of client machines.
+
+FIXES
+- Fix deleting of machines
+
+MODUlE UPDATES
+- managedinstalls (v1.1 => v1.2)
+
+DEPENDENCY UPDATES
+- nesbot/carbon (1.36.2 => 1.37.1)
+- adldap2/adldap2 (v10.0.8 => v10.0.10)
+
+
 ### [4.1.1](https://github.com/munkireport/munkireport-php/compare/v4.1.0...v4.1.1) (May 01, 2019)
 
 FIXES
