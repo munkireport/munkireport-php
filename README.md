@@ -59,10 +59,10 @@ Contributing
 If you want to contribute to munkireport2, please 
 
 * read about [Localizing](docs/localize.md) in the docs folder
+* check the [modules overview](https://github.com/munkireport/munkireport-php/wiki/Module-Overview) for info about installing and creating modules
 * fork the [wip branch of repository](https://github.com/munkireport/munkireport-php/tree/wip)
 * create a feature branch
 * send a pull request with your changes.
-
 
 External projects
 ---
