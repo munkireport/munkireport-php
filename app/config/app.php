@@ -313,7 +313,7 @@ return [
     | Show help
     |===============================================
     |
-    | Add a help button to the navigation bar, defaults to false
+    | Add a help button to the navigation bar, defaults to true
     |
     */
     'show_help' => env('SHOW_HELP', true),

@@ -1,4 +1,62 @@
-### [4.0.3](https://github.com/munkireport/munkireport-php/compare/v4.0.2...HEAD) (Unreleased)
+### [4.1.3](https://github.com/munkireport/munkireport-php/compare/v4.1.2...HEAD) (Unreleased)
+
+### [4.1.2](https://github.com/munkireport/munkireport-php/compare/v4.1.1...v4.1.2) (May 07, 2019)
+
+Small update to fix the deleting of client machines.
+
+FIXES
+- Fix deleting of machines
+
+MODUlE UPDATES
+- managedinstalls (v1.1 => v1.2)
+
+DEPENDENCY UPDATES
+- nesbot/carbon (1.36.2 => 1.37.1)
+- adldap2/adldap2 (v10.0.8 => v10.0.10)
+
+
+### [4.1.1](https://github.com/munkireport/munkireport-php/compare/v4.1.0...v4.1.1) (May 01, 2019)
+
+FIXES
+- Fix Widget Gallery uninitialized variables
+- Fix Sophos module uninitialized variables
+- Fix Caching module uninitialized variables
+
+MODULE UPDATES
+- caching (v1.1 => v1.2)
+- fan_temps (v1.3 => V1.4)
+- munkireportinfo (v1.2 => v1.3)
+- sophos (v1.1 => v1.2)
+
+### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...v4.1.0) (April 11, 2019)
+
+FIXES
+- Change 'memory' localization name (#1210) @tuxudo
+- Error handling for deleting machines.
+- Added Time Machine errors back to client summary (#1211) @tuxudo
+- Localize Delete button on business unit management (#1141) @tuxudo
+- Added additional OneLogin supported parameters (#1214)
+- Update SAML (#1244)
+
+NEW FEATURES
+- 'f' hotkey for filter modal (#1150) @tuxudo
+- Added logging for adldap2
+- Added AirPlay to vendors (#1234) @tuxudo
+- Make showing help link default to true (#1228) @WardsParadox
+- Add Widget Gallery (#1140) @tuxudo
+
+MODULE UPDATES
+- machine (v1.1 => v1.2)
+- disk_report (v1.2 => v1.3)
+- displays_info (v1.3 => v1.3.3)
+- fan_temps (v1.1 => v1.3)
+- ibridge (v1.2 => v1.4)
+- munki_facts (v1.2 => v1.3)
+- munkireportinfo (v1.1 => v1.2)
+- profile (v1.1 => v1.2)
+- softwareupdate (v1.1 => v1.2)
+- supported_os (v1.3 => v1.5)
+- timemachine (v1.2 => v1.3)
 
 ### [4.0.2](https://github.com/munkireport/munkireport-php/compare/v4.0.1...v4.0.2) (February 08, 2019)
 

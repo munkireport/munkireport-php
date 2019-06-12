@@ -764,7 +764,7 @@
 								.append($('<a>')
 									.addClass('btn btn-xs btn-default')
 									.click(remove_dialog)
-									.text('delete'))))
+									.text(i18n.t('delete')))))
 			}
 
 

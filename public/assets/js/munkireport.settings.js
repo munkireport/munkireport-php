@@ -296,7 +296,8 @@ var mr = {
             "2247": "Bush",
             "34a4": "Medion",
             "1ab3": "Fujitsu",
-            "2db2": "Kramer Electronics"
+            "2db2": "Kramer Electronics",
+            "6161706c": "AirPlay"
         }
 
     };

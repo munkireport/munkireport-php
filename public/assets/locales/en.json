@@ -234,7 +234,6 @@
             "title": "Uptime"
         }
     },
-    "memory": "Memory",
     "model": "Model",
     "mouse": "Mouse",
     "munki": {
@@ -318,6 +317,7 @@
         "soap": "SOAP Extension",
         "version": "Version"
     },
+    "physical_memory": "Memory",
     "pkg_failed_to_install": "__pkg__ failed to install: __reason__",
     "pkg_failed_to_install_plural": "__count__ packages failed to install",
     "ratio": "Ratio",
@@ -370,6 +370,12 @@
     "warning": "Warning",
     "warning_plural": "Warnings",
     "widget": {
+        "config_name": "Config Entry",
+        "file_name": "Filename",
+        "gallery": "Widget Gallery",
+        "module": "Module",
+        "module_active": "Module Active",
+        "path": "Path",
         "unknown": {
             "alert": "This widget cannot be found",
             "title": "Unknown widget"
