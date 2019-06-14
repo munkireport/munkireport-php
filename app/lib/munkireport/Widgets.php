@@ -19,20 +19,28 @@ class Widgets
         $this->conf = $conf;
 
         $this->fileSystem = new Filesystem;
-        
+
         $this->addUnknownWidget();
-        
+
+        $this->addSpacerWidget();
+
         $this->addModuleWidgets();
 
         $this->addLocalWidgets($this->conf['search_paths']);
         // echo '<pre>';print_r($this->widgetList);
     }
-    
+
     private function addUnknownWidget()
     {
         $this->addWidget('unknown_widget', conf('view_path') . 'widgets/unknown_widget.php');
     }
-    
+
+    private function addSpacerWidget()
+    {
+        $this->addWidget('spacer', conf('view_path') . 'widgets/spacer_widget.php');
+    }
+
+
     private function addModuleWidgets()
     {
       $moduleManager = getMrModuleObj();
@@ -43,7 +51,7 @@ class Widgets
           }
       }
     }
-    
+
     private function addLocalWidgets($search_paths)
     {
         foreach($search_paths as $path)
@@ -61,7 +69,7 @@ class Widgets
         if (isset($data['widget'])) {
             $widgetName = $data['widget'];
         }
-        
+
         if(isset($this->widgetList[$widgetName]))
         {
             $widget = $this->widgetList[$widgetName];
@@ -81,7 +89,7 @@ class Widgets
         $widget = $this->get($widgetName, $data);
         $viewObj->view($widget->file, $widget->vars, $widget->path);
     }
-    
+
     private function fileNameToName($file)
     {
         return str_replace('_widget', '', $this->fileSystem->name($file));
@@ -94,7 +102,7 @@ class Widgets
             $this->addWidget($this->fileNameToName($file), $file);
         }
     }
-    
+
     private function addWidget($name, $file)
     {
           $this->widgetList[$name] = (object) [
