@@ -7,7 +7,7 @@ Small update to fix the deleting of client machines.
 FIXES
 - Fix deleting of machines
 
-MODUlE UPDATES
+MODULE UPDATES
 - managedinstalls (v1.1 => v1.2)
 
 DEPENDENCY UPDATES
