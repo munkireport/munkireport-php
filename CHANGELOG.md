@@ -1,5 +1,29 @@
 ### [4.1.3](https://github.com/munkireport/munkireport-php/compare/v4.1.2...HEAD) (Unreleased)
 
+Small update with some improvement in the modules. The event module now allows for filtering events in the messages pane (see: https://github.com/munkireport/event/blob/master/README.md#configuration-file) Thanks to MDOYVR 2019 Hack Night! MatX: you rock!
+
+supported_os gained reporting on macOS 10.15 aka Catalina.
+
+MODULE UPDATES
+- reportdata (v1.4 => v1.5)
+- event (v1.1 => v1.2)
+- detectx (v1.5 => v1.6)
+- localadmin (v1.1 => v1.2)
+- softwareupdate (v1.2 => v1.2.1)
+- supported_os (v1.5 => v1.7)
+
+DEPENDENCY UPDATES
+- league/flysystem (1.0.51 => 1.0.53)
+- vlucas/phpdotenv (v3.3.3 => v3.4.0)
+- symfony/translation (v3.4.27 => v3.4.28)
+- nesbot/carbon (1.37.1 => 1.38.4)
+- adldap2/adldap2 (v10.0.10 => v10.0.11)
+- symfony/debug (v3.4.27 => v3.4.28)
+- symfony/console (v3.4.27 => v3.4.28)
+- symfony/finder (v3.4.27 => v3.4.28)
+- doctrine/lexer (v1.0.1 => 1.0.2)
+
+
 ### [4.1.2](https://github.com/munkireport/munkireport-php/compare/v4.1.1...v4.1.2) (May 07, 2019)
 
 Small update to fix the deleting of client machines.
