@@ -1,3 +1,5 @@
+### [4.2.0](https://github.com/munkireport/munkireport-php/compare/v4.1.3...HEAD) (Unreleased)
+
 ### [4.1.3](https://github.com/munkireport/munkireport-php/compare/v4.1.2...v4.1.3) (June 22, 2019)
 
 Small update with some improvement in the modules. The event module now allows for filtering events in the messages pane (see: https://github.com/munkireport/event/blob/master/README.md#configuration-file) Thanks to MDOYVR 2019 Hack Night! MatX: you rock!
