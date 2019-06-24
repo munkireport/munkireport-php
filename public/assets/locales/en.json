@@ -234,6 +234,7 @@
             "title": "Uptime"
         }
     },
+    "message": "Message",
     "model": "Model",
     "mouse": "Mouse",
     "munki": {
