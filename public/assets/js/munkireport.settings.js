@@ -73,10 +73,25 @@ var mr = {
         },
 
         listingFormatter: {
-          timestampToMoment: function($cellDefinition){
-              var checkin = parseInt($cellDefinition.html());
+          formatters: [],
+          numFormatters: 0,
+          setFormatters: function(formatters){
+            this.formatters = formatters
+            this.numFormatters = formatters.length
+          },
+          format: function(row){
+            if (this.numFormatters) {
+              for (var i = 0; i < this.numFormatters; i++) {
+                colFormatter = this.formatters[i]
+                this[colFormatter.formatter](colFormatter.column, row)
+              }
+            }
+          },
+          timestampToMoment: function(colNumber, row){
+              var cell = $('td:eq('+colNumber+')', row)
+              var checkin = parseInt(cell.text());
               var date = new Date(checkin * 1000);
-              $cellDefinition.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+              cell.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
           }
         },
 
