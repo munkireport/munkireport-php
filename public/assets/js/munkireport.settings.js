@@ -72,6 +72,14 @@ var mr = {
             return osvers
         },
 
+        listingFormatter: {
+          timestampToMoment: function($cellDefinition){
+              var checkin = parseInt($cellDefinition.html());
+              var date = new Date(checkin * 1000);
+              $cellDefinition.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+          }
+        },
+
         // Get client detail link
         getClientDetailLink: function(name, sn, hash)
         {
