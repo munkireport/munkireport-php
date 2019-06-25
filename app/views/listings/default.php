@@ -21,6 +21,9 @@
                     <?php if(isset($header['i18n_header'])):?>
                       data-i18n="<?=$header['i18n_header']?>" 
                     <?php endif?>
+                    <?php if(isset($header['i18n-options'])):?>
+                      data-i18n-options='<?=$header['i18n-options']?>' 
+                    <?php endif?>
                     <?php if(isset($header['formatter'])):?>
                       data-formatter="<?=$header['formatter']?>" 
                     <?php endif?>
