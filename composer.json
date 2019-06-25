@@ -29,7 +29,7 @@
         "munkireport/ard": "^1.0",
         "munkireport/reportdata": "^1.0",
         "munkireport/machine": "^1.0",
-        "munkireport/event": "^1.0",
+        "munkireport/event": "^2.0",
         "munkireport/disk_report": "^1.0",
         "munkireport/munkireport": "^1.0",
         "munkireport/warranty": "^1.0",
