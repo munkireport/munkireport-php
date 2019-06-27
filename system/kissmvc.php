@@ -382,27 +382,27 @@ class Module_controller extends Controller
     // Module, override in child object
     protected $module_path;
 
-    public function get_script($name = '')
+    public function get_script($filename = '')
     {
         // Check if script dir exists
         if (is_readable($this->module_path . '/scripts/')) {
         // Get scriptnames in module scripts dir (just to be safe)
             $scripts = array_diff(scandir($this->module_path . '/scripts/'), array('..', '.'));
         } else {
-            $scripts = array();
+            $files = [];
         }
 
-        $script_path = $this->module_path . '/scripts/' . basename($name);
+        $file_path = $dir_path . basename($filename);
 
-        if (! in_array($name, $scripts) or ! is_readable($script_path)) {
+        if (! in_array($filename, $files) or ! is_readable($file_path)) {
         // Signal to curl that the load failed
             header("HTTP/1.0 404 Not Found");
-            printf('Script %s is not available', $name);
+            printf('File %s is not available', $filename);
             return;
         }
 
         // Dump the file
-        header("Content-Type: text/plain");
-        echo file_get_contents($script_path);
+        header("Content-Type: application/javascript");
+        echo file_get_contents($file_path);
     }
 }
