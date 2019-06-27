@@ -50,6 +50,11 @@
 </script>
 <?php endif?>
 
+<?php if(isset($js_link)):?>
+  <script src="<?=url($js_link)?>"></script>
+<?php endif?>
+
+
 <script type="text/javascript">
 
     $(document).on('appUpdate', function(e){
