@@ -384,10 +384,21 @@ class Module_controller extends Controller
 
     public function get_script($filename = '')
     {
-        // Check if script dir exists
-        if (is_readable($this->module_path . '/scripts/')) {
-        // Get scriptnames in module scripts dir (just to be safe)
-            $scripts = array_diff(scandir($this->module_path . '/scripts/'), array('..', '.'));
+      $this->dumpModuleFile($filename, 'scripts', 'text/plain');
+    }
+    
+    public function js($filename = '')
+    {
+        $this->dumpModuleFile($filename . '.js', 'js', 'application/javascript');
+    }
+    
+    private function dumpModuleFile($filename, $directory, $content_type)
+    {
+        // Check if dir exists
+        $dir_path = $this->module_path . '/' . $directory . '/';
+        if (is_readable($dir_path)) {
+        // Get filenames in module dir (just to be safe)
+            $files = array_diff(scandir($dir_path), ['..', '.']);
         } else {
             $files = [];
         }
