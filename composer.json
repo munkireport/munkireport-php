@@ -42,7 +42,7 @@
         "munkireport/comment": "^1.0",
         "munkireport/crashplan": "^1.0",
         "munkireport/deploystudio": "^1.0",
-        "munkireport/detectx": "^1.0",
+        "munkireport/detectx": "^2.0",
         "munkireport/devtools": "^1.0",
         "munkireport/directory_service": "^1.0",
         "munkireport/displays_info": "^1.0",
