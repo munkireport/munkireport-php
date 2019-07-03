@@ -34,7 +34,7 @@
         "munkireport/munkireport": "^1.0",
         "munkireport/warranty": "^1.0",
         "munkireport/applications": "^1.0",
-        "munkireport/appusage": "^1.0",
+        "munkireport/appusage": "^2.0",
         "munkireport/backup2go": "^1.0",
         "munkireport/bluetooth": "^1.0",
         "munkireport/caching": "^1.0",
