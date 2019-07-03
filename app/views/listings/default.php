@@ -86,7 +86,12 @@
             columnDefs: columnDefs,
             ajax: {
                 url: appUrl + '/datatables/data',
-                type: "POST"
+                type: "POST",
+                data: function(d){
+                  <?php if(isset($not_null_column)):?>
+                     d.mrColNotEmpty = "<?=$not_null_column?>";
+                  <?php endif?>
+                }
             },
             dom: mr.dt.buttonDom,
             buttons: mr.dt.buttons,
