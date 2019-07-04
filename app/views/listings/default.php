@@ -27,6 +27,9 @@
                     <?php if(isset($header['formatter'])):?>
                       data-formatter="<?=$header['formatter']?>" 
                     <?php endif?>
+                    <?php if(isset($header['tab_link'])):?>
+                      data-tab-link="<?=$header['tab_link']?>" 
+                    <?php endif?>
                     <?php if(isset($header['filter'])):?>
                       data-filter="<?=$header['filter']?>" 
                     <?php endif?>

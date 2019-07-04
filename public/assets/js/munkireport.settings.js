@@ -85,12 +85,26 @@ var mr = {
         },
 
         listingFormatter: {
-          formatters: [],
-          numFormatters: 0,
-          setFormatters: function(formatters){
-            this.formatters = formatters
-            this.numFormatters = formatters.length
-          },
+            formatters: [],
+            numFormatters: 0,
+            tabLinks: [],
+            setFormatters: function(formatters){
+                this.formatters = formatters
+                this.numFormatters = formatters.length
+                this.tablink = this.initTabLinks()
+            },
+            initTabLinks: function(){
+                var headers = $('th[data-colname]');
+                for (var i = 0; i < headers.length; i++) {
+                    var head = $(headers[i])
+                    this.tabLinks.push(
+                        head.data('tab-link') ? '#tab_'+head.data('tab-link') : ''
+                    )
+                }
+            },
+            getTabLink: function(col){
+                return this.tabLinks[col]
+            },
             format: function(row){
                 if (this.numFormatters) {
                     for (var i = 0; i < this.numFormatters; i++) {
@@ -106,10 +120,12 @@ var mr = {
             },
             clientDetail: function(col, row){
                 // Update name in first column to link
-                var name=$('td:eq('+col+')', row).text() || "No Name";
+                var cell=$('td:eq('+col+')', row);
+                var name=cell.text() || "No Name";
                 var sn=$('td:eq('+(col+1)+')', row).text();
-                var link = mr.getClientDetailLink(name, sn);
-                $('td:eq('+col+')', row).html(link);
+                cell.html(
+                    mr.getClientDetailLink(name, sn, this.getTabLink(col))
+                );
             },
             timestampToMoment: function(col, row){
                 var cell = $('td:eq('+col+')', row)
@@ -309,51 +325,5 @@ var mr = {
             });
 
             $itemsli.detach().appendTo($menu);
-        },
-
-        // Lookup table for display vendors
-        display_vendors : {
-            "610": "Apple",
-            "10ac": "Dell",
-            "5c23": "Wacom",
-            "4d10": "Sharp",
-            "1e6d": "LG",
-            "38a3": "NEC",
-            "4c49": "SMART Technologies",
-            "9d1": "BenQ",
-            "4dd9": "Sony",
-            "472": "Acer",
-            "22f0": "HP",
-            "34ac": "Mitsubishi",
-            "5a63": "ViewSonic",
-            "4c2d": "Samsung",
-            "593a": "Vizio",
-            "d82": "CompuLab",
-            "3023": "LaCie",
-            "3698": "Matrox",
-            "4ca3": "Epson",
-            "170e": "Extron",
-            "e11": "Compaq",
-            "24d3": "ASK Proxima",
-            "410c": "Philips",
-            "15c3": "Eizo",
-            "26cd": "iiyama",
-            "7fff": "Haier",
-            "3e8d": "Optoma",
-            "5262": "Toshiba",
-            "34a9": "Panasonic",
-            "5e3": "Flanders Scientific",
-            "30ae": "Lenovo",
-            "469": "Asus",
-            "4249": "Insignia",
-            "41d2": "Planar",
-            "5c85": "Westinghouse",
-            "c87": "Christie",
-            "2247": "Bush",
-            "34a4": "Medion",
-            "1ab3": "Fujitsu",
-            "2db2": "Kramer Electronics",
-            "6161706c": "AirPlay"
         }
-
     };
