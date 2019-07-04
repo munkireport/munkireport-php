@@ -72,6 +72,18 @@ var mr = {
             return osvers
         },
 
+        listingFilter: {
+            filter: function(d, filters){
+                for (var i = 0; i < filters.length; i++) {
+                    var filterObj = filters[i];
+                    if (typeof window[filterObj.filter] === "function"){
+                        // Use filter from Global Space
+                        window[filterObj.filter](filterObj.column, d);
+                    }
+                }
+            }
+        },
+
         listingFormatter: {
           formatters: [],
           numFormatters: 0,
@@ -79,32 +91,41 @@ var mr = {
             this.formatters = formatters
             this.numFormatters = formatters.length
           },
-          format: function(row){
-            if (this.numFormatters) {
-              for (var i = 0; i < this.numFormatters; i++) {
-                colFormatter = this.formatters[i]
-                if(this[colFormatter.formatter]){
-                  this[colFormatter.formatter](colFormatter.column, row);
-                }else if (typeof window[colFormatter.formatter] === "function"){
-                  // Use formatter from Global Space
-                  window[colFormatter.formatter](colFormatter.column, row);
+            format: function(row){
+                if (this.numFormatters) {
+                    for (var i = 0; i < this.numFormatters; i++) {
+                        colFormatter = this.formatters[i]
+                        if(this[colFormatter.formatter]){
+                            this[colFormatter.formatter](colFormatter.column, row);
+                        }else if (typeof window[colFormatter.formatter] === "function"){
+                            // Use formatter from Global Space
+                            window[colFormatter.formatter](colFormatter.column, row);
+                        }
+                    }
                 }
-              }
+            },
+            clientDetail: function(col, row){
+                // Update name in first column to link
+                var name=$('td:eq('+col+')', row).text() || "No Name";
+                var sn=$('td:eq('+(col+1)+')', row).text();
+                var link = mr.getClientDetailLink(name, sn);
+                $('td:eq('+col+')', row).html(link);
+            },
+            timestampToMoment: function(col, row){
+                var cell = $('td:eq('+col+')', row)
+                var checkin = parseInt(cell.text());
+                var date = new Date(checkin * 1000);
+                cell.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+            },
+            fileSize: function(col, row){
+                var cell = $('td:eq('+col+')', row)
+                var fs=cell.text();
+                cell.addClass('text-right').text(fileSize(fs, 0));
+            },
+            upperCase: function(col, row){
+                var cell = $('td:eq('+col+')', row)
+                cell.addClass('text-uppercase')
             }
-          },
-          clientDetail: function(col, row){
-              // Update name in first column to link
-              var name=$('td:eq('+col+')', row).text() || "No Name";
-              var sn=$('td:eq('+(col+1)+')', row).text();
-              var link = mr.getClientDetailLink(name, sn);
-              $('td:eq('+col+')', row).html(link);
-          },
-          timestampToMoment: function(col, row){
-              var cell = $('td:eq('+col+')', row)
-              var checkin = parseInt(cell.text());
-              var date = new Date(checkin * 1000);
-              cell.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
-          }
         },
 
         // Get client detail link

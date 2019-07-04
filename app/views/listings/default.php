@@ -27,6 +27,9 @@
                     <?php if(isset($header['formatter'])):?>
                       data-formatter="<?=$header['formatter']?>" 
                     <?php endif?>
+                    <?php if(isset($header['filter'])):?>
+                      data-filter="<?=$header['filter']?>" 
+                    <?php endif?>
                     <?php if(isset($header['hide'])):?>
                       class="hidden" 
                     <?php endif?>
@@ -66,6 +69,7 @@
     $(document).on('appReady', function(e, lang) {
         var columnDefs = [],
             columnFormatters = [],
+            columnFilters = [],
             col = 0; // Column counter
         $('.table th').map(function(){
             columnDefs.push({
@@ -77,6 +81,12 @@
               columnFormatters.push({
                 column: col, 
                 formatter: $(this).data('formatter')
+              })
+            }
+            if($(this).data('filter')){
+              columnFilters.push({
+                column: col, 
+                filter: $(this).data('filter')
               })
             }
             col++;
@@ -91,6 +101,7 @@
                   <?php if(isset($not_null_column)):?>
                      d.mrColNotEmpty = "<?=$not_null_column?>";
                   <?php endif?>
+                  mr.listingFilter.filter(d, columnFilters);
                 }
             },
             dom: mr.dt.buttonDom,
