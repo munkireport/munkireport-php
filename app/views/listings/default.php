@@ -15,8 +15,11 @@
                 <?php foreach($table as $header):?>
                   <?php $colCounter++?>
                   <th 
-                    <?php if(isset($header['column'])):?>
+                  <?php if(isset($header['column'])):?>
                       data-colname="<?=$header['column']?>" 
+                    <?php endif?>
+                    <?php if(isset($header['sort'])):?>
+                      data-sort="<?=$header['sort']?>" 
                     <?php endif?>
                     <?php if(isset($header['i18n_header'])):?>
                       data-i18n="<?=$header['i18n_header']?>" 
@@ -71,6 +74,7 @@
 
     $(document).on('appReady', function(e, lang) {
         var columnDefs = [],
+            mySort = [],
             columnFormatters = [],
             columnFilters = [],
             col = 0; // Column counter
@@ -92,6 +96,9 @@
                 filter: $(this).data('filter')
               })
             }
+            if($(this).data('sort')){
+              mySort.push([col, $(this).data('sort')])
+            }
             col++;
         });
         mr.listingFormatter.setFormatters(columnFormatters);
@@ -107,6 +114,7 @@
                   mr.listingFilter.filter(d, columnFilters);
                 }
             },
+            order: mySort,
             dom: mr.dt.buttonDom,
             buttons: mr.dt.buttons,
             createdRow: function( nRow, aData, iDataIndex ) {
