@@ -133,6 +133,13 @@ var mr = {
                 var date = new Date(checkin * 1000);
                 cell.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
             },
+            binaryYesNo: function(col, row){
+                var cell = $('td:eq('+col+')', row),
+                    value = cell.text()
+                value = value == '1' ? i18n.t('yes') :
+                    (value === '0' ? i18n.t('no') : '')
+	        	cell.text(value)
+            },
             fileSize: function(col, row){
                 var cell = $('td:eq('+col+')', row)
                 var fs=cell.text();
