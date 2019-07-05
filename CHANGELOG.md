@@ -1,5 +1,35 @@
 ### [4.2.0](https://github.com/munkireport/munkireport-php/compare/v4.1.3...HEAD) (Unreleased)
 
+This release contains a couple of internal improvements to make developer life easier.
+
+CHANGES
+- Developers can now use `module_processor.php` to process the client data. See for example https://github.com/munkireport/munkireport/blob/master/munkireport_processor.php
+- Support for Eloquent Models. See for example https://github.com/munkireport/munkireport/blob/master/munkireport_model.php For more info see https://laravel.com/docs/5.8/eloquent
+- Support for new listing format See https://github.com/munkireport/munkireport-php/wiki/Module-listings
+
+MODULE UPDATES
+- munkireport/ard (v1.1 => v2.0)
+- munkireport/munkireport (v1.4 => v2.0)
+- munkireport/detectx (v1.6 => v2.0)
+- munkireport/displays_info (v1.3.3 => v2.0)
+- munkireport/localadmin (v1.2 => v2.0)
+- munkireport/machine (v1.2 => v1.3)
+- munkireport/event (v1.2 => v2.1)
+- munkireport/disk_report (v1.3 => v2.1)
+- munkireport/appusage (v1.1 => v2.1)
+- munkireport/inventory (v1.3 => v2.2)
+
+DEPENDENCY UPDATES
+- symfony/yaml (v3.4.28 => v3.4.29)
+- symfony/translation (v3.4.28 => v3.4.29)
+- nesbot/carbon (1.38.4 => 1.39.0)
+- ralouphie/getallheaders (2.0.5 => 3.0.3)
+- guzzlehttp/psr7 (1.5.2 => 1.6.1)
+- symfony/debug (v3.4.28 => v3.4.29)
+- symfony/console (v3.4.28 => v3.4.29)
+- symfony/finder (v3.4.28 => v3.4.29)
+
+
 ### [4.1.3](https://github.com/munkireport/munkireport-php/compare/v4.1.2...v4.1.3) (June 22, 2019)
 
 Small update with some improvement in the modules. The event module now allows for filtering events in the messages pane (see: https://github.com/munkireport/event/blob/master/README.md#configuration-file) Thanks to MDOYVR 2019 Hack Night! MatX: you rock!
