@@ -26,7 +26,7 @@ class MRQueryBuilder extends QueryBuilder{
           $table, 
           $table.'.'.$key, 
           '=', 
-          $this->from.'.'.$key,
+          $this->from.'.'.$key
       );
       if ($groups = get_filtered_groups()) {
           $this->whereIn('machine_group', $groups);
