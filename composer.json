@@ -31,7 +31,7 @@
         "munkireport/machine": "^1.0",
         "munkireport/event": "^2.0",
         "munkireport/disk_report": "^2.0",
-        "munkireport/munkireport": "^1.0",
+        "munkireport/munkireport": "^2.0",
         "munkireport/warranty": "^1.0",
         "munkireport/applications": "^1.0",
         "munkireport/appusage": "^2.0",
