@@ -11,11 +11,11 @@ class CLASSNAME extends Migration
         $capsule::schema()->create('MODULE', function (Blueprint $table) {
             $table->increments('id');
             $table->string('serial_number')->unique();
-            $table->string('example_string');
-            $table->integer('example_integer');
+            $table->string('item1');
+            $table->integer('item2');
 
-            $table->index('example_string');
-            $table->index('example_integer');
+            $table->index('item1');
+            $table->index('item2');
         });
     }
     

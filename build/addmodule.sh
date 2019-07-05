@@ -26,11 +26,13 @@ cat "${DIR}/templates/module_script.sh" | sed "s/MODULE/${MODULE}/g" > "${SCRIPT
 # Copy php templates
 cat "${DIR}/templates/controller.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/${MODULE}_controller.php"
 cat "${DIR}/templates/model.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/${MODULE}_model.php"
+cat "${DIR}/templates/processor.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/${MODULE}_processor.php"
 
 # Copy views
 cat "${DIR}/templates/listing.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_listing.php"
 cat "${DIR}/templates/report.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_report.php"
 cat "${DIR}/templates/widget.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_widget.php"
+cat "${DIR}/templates/client_tab.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_tab.php"
 
 # Copy locale template
 cat "${DIR}/templates/en.json" | sed "s/MODULE/${MODULE}/g" > "${LOCALE_DIR}en.json"
