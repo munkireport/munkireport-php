@@ -79,7 +79,16 @@ var mr = {
                     if (typeof window[filterObj.filter] === "function"){
                         // Use filter from Global Space
                         window[filterObj.filter](filterObj.column, d);
+                    }else if(this[filterObj.filter]){
+                        this[filterObj.filter](filterObj.column, d);
                     }
+                }
+            },
+            osFilter: function(col, d){
+                // OS version
+                if(d.search.value.match(/^\d+\.\d+(\.(\d+)?)?$/)){
+                    var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
+                    d.search.value = search;
                 }
             }
         },
@@ -148,6 +157,15 @@ var mr = {
             upperCase: function(col, row){
                 var cell = $('td:eq('+col+')', row)
                 cell.addClass('text-uppercase')
+            },
+            osVersion: function(col, row){
+                // Format OS Version
+                var cell = $('td:eq('+col+')', row),
+	        	    osvers = cell.text();
+	        	if( osvers > 0 && osvers.indexOf(".") == -1){
+	        	     osvers = osvers.match(/.{2}/g).map(function(x){return +x}).join('.')
+	        	}
+	        	cell.text(osvers)
             }
         },
 
