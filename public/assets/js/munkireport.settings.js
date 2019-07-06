@@ -149,6 +149,13 @@ var mr = {
                     (value === '0' ? i18n.t('no') : '')
 	        	cell.text(value)
             },
+            binaryEnabledDisabled: function(col, row){
+                var cell = $('td:eq('+col+')', row),
+                    value = cell.text()
+                value = value == '1' ? '<span class="label label-success">'+i18n.t('enabled')+'</span>' :
+                    (value === '0' ? '<span class="label label-danger">'+i18n.t('disabled')+'</span>' : '')
+	        	cell.html(value)
+            },
             fileSize: function(col, row){
                 var cell = $('td:eq('+col+')', row)
                 var fs=cell.text();
