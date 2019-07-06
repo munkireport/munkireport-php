@@ -68,7 +68,7 @@
         "munkireport/munki_facts": "^1.0",
         "munkireport/munkiinfo": "^1.0",
         "munkireport/munkireportinfo": "^1.0",
-        "munkireport/network": "^1.0",
+        "munkireport/network": "^2.0",
         "munkireport/network_shares": "^1.0",
         "munkireport/power": "^1.0",
         "munkireport/printer": "^1.0",
