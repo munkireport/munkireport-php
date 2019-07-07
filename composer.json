@@ -62,7 +62,7 @@
         "munkireport/inventory": "^2.0",
         "munkireport/localadmin": "^2.0",
         "munkireport/location": "^1.0",
-        "munkireport/managedinstalls": "^1.0",
+        "munkireport/managedinstalls": "^2.0",
         "munkireport/mbbr_status": "^1.0",
         "munkireport/mdm_status": "^1.6",
         "munkireport/munki_facts": "^1.0",
