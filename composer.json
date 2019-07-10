@@ -27,7 +27,7 @@
         "vlucas/phpdotenv": "^3.1",
         "wikimedia/composer-merge-plugin": "^1.4",
         "munkireport/ard": "^2.0",
-        "munkireport/reportdata": "^1.0",
+        "munkireport/reportdata": "^2.0",
         "munkireport/machine": "^1.0",
         "munkireport/event": "^2.0",
         "munkireport/disk_report": "^2.0",
