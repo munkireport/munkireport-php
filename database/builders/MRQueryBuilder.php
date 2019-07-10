@@ -21,13 +21,14 @@ class MRQueryBuilder extends QueryBuilder{
   {
       $key = 'serial_number';
       $table = 'reportdata';
-      // echo '<pre>';dd($this->from);
-      $this->join(
-          $table, 
-          $table.'.'.$key, 
-          '=', 
-          $this->from.'.'.$key
-      );
+      if($this->from != $table){
+          $this->join(
+              $table, 
+              $table.'.'.$key, 
+              '=', 
+              $this->from.'.'.$key
+          );
+      }
       if ($groups = get_filtered_groups()) {
           $this->whereIn('machine_group', $groups);
       }
