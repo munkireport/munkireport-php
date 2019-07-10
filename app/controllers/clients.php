@@ -3,7 +3,7 @@
 namespace munkireport\controller;
 
 use \Controller, \View;
-use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model, \Network_model;
+use \Machine_model;
 
 
 
@@ -39,7 +39,7 @@ class clients extends Controller
         $obj = new View();
 
         if (authorized_for_serial($serial_number)) {
-            $machine = new Machine_model;
+            $machine = new \Model;
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uid, r.uptime, r.reg_timestamp, r.timestamp, g.value AS machine_group,

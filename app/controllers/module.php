@@ -66,6 +66,10 @@ class Module extends Controller
         if (! preg_match('#^[A-Za-z_][A-Za-z0-9_-]*$#', $this->action) or ! method_exists($this->module_obj, $this->action)) {
             $this->requestNotFound('Invalid method name: '.$this->action);
         }
+
+        // Connect to database
+        $this->module_obj->connectDBWhenAuthorized();
+
         call_user_func_array(array( $this->module_obj, $this->action ), $this->params);
     }
 

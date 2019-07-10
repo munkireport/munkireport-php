@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '4.2.3.3813';
+$GLOBALS['version'] = '4.2.3.3819';
 
 // Return version without commit count
 function get_version()
@@ -342,9 +342,12 @@ function authorized_for_serial($serial_number)
 function get_machine_group($serial_number = '')
 {
     if (! isset($GLOBALS['machine_groups'][$serial_number])) {
-        $reportdata = new Reportdata_model;
-        if ($reportdata->retrieveOne('serial_number=?', $serial_number)) {
-            $GLOBALS['machine_groups'][$serial_number] = $reportdata->machine_group;
+        
+        $machine_group = Reportdata_model::select('machine_group')
+            ->where('serial_number')
+            ->first();
+        if ($machine_group) {
+            $GLOBALS['machine_groups'][$serial_number] = $machine_group;
         } else {
             $GLOBALS['machine_groups'][$serial_number] = 0;
         }
