@@ -2,7 +2,7 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View, \Machine_model, \Exception;
+use \Controller, \View, \Model, \Exception;
 
 class manager extends Controller
 {
@@ -40,7 +40,7 @@ class manager extends Controller
             $status['status'] = 'unauthorized';
         } else {
             // Delete machine entry from all tables
-            $machine = new Machine_model();
+            $machine = new Model;
 
             // List tables (unfortunately this is not db-agnostic)
             switch ($machine->get_driver()) {
