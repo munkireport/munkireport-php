@@ -98,10 +98,11 @@ class clients extends Controller
 
         $obj = new View();
 
-        $machine = new Machine_model($sn);
+        $machine = Machine_model::where('serial_number', $sn)
+            ->first();
 
         // Check if machine exists/is allowed for this user to view
-        if (! $machine->id) {
+        if (! $machine) {
             $obj->view("client/client_dont_exist", $data);
         } else {
             $obj->view("client/client_detail", $data);
