@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '4.3.0.3830';
+$GLOBALS['version'] = '4.3.0.3831';
 
 // Return version without commit count
 function get_version()
@@ -129,6 +129,15 @@ function find_driver($connection, $driver)
     return true;
   }
   return false;
+}
+
+function dumpQuery($queryobj){
+    dd(
+        vsprintf(
+            str_replace(['?'], ['\'%s\''], $queryobj->toSql()),
+            $queryobj->getBindings()
+        )
+    );
 }
 
 function add_mysql_opts(&$conn){
@@ -433,8 +442,18 @@ function get_filtered_groups()
  **/
 function store_event($serial, $module = '', $type = '', $msg = 'no_message', $data = '')
 {
-    $evtobj = new Event_model($serial, $module);
-    $evtobj->store($type, $msg, $data);
+    Event_model::updateOrCreate(
+        [
+            'serial_number' => $serial,
+            'module' => $module,
+        ],
+        [
+            'type' => $type,
+            'msg' => $msg,
+            'data' => $data,
+            'timestamp' => time(),
+        ]
+    );
 }
 
 /**
@@ -445,8 +464,16 @@ function store_event($serial, $module = '', $type = '', $msg = 'no_message', $da
  **/
 function delete_event($serial, $module = '')
 {
-    $evtobj = new Event_model();
-    $evtobj->reset($serial, $module);
+    if (! authorized_for_serial($serial_number)) {
+        return false;
+    }
+
+    $where[] = ['serial_number', $serial_number];
+    if ($module) {
+        $where[] = ['module', $module];
+    }
+
+    return Event_model::where($where)->delete();
 }
 
 // Truncate string
