@@ -1,14 +1,21 @@
 ### [4.3.0](https://github.com/munkireport/munkireport-php/compare/v4.2.2...HEAD) (Unreleased)
 
-This update changes the way some of database queries are handled.
+This update changes the way some of the database queries are handled. Speed improvements for installhistory and inventory by chunking inserts.
 
 MODULE UPDATES
-  - reportdata (v1.5 => v2.1)
-  - event (v2.1 => v2.2)
+  - event (v2.1 => v3.0)
+  - warranty (v1.2 => v2.0)
+  - comment (v1.1 => v2.0)
+  - gsx (v1.2 => v2.0)
+  - installhistory (v1.1 => v2.0)
+  - inventory (v2.2 => v3.0)
+  - reportdata (v1.5 => v2.2)
+  - machine (v1.3 => v2.1)
   - detectx (v2.0 => v2.1)
-  - inventory (v2.2 => v2.4)
   - managedinstalls (v1.2 => v2.1)
-  - network (v1.4 => v2.1) 
+  - network (v1.4 => v2.1)
+  - tag (v1.1 => v2.1)
+
 
   DEPENDENCY UPDATES
   - onelogin/php-saml (3.1.1 => 3.2.1)
