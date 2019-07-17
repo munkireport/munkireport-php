@@ -1,3 +1,5 @@
+### [3.0.0RC3](https://github.com/munkireport/munkireport-php/compare/v4.3.0RC2...HEAD) (Unreleased)
+
 ### [4.3.0RC2](https://github.com/munkireport/munkireport-php/compare/v4.2.2...v4.3.0RC2) (July 17, 2019)
 
 This update changes the way some of the database queries are handled. Speed improvements for installhistory and inventory by chunking inserts.
