@@ -105,6 +105,21 @@ class Controller extends KISS_Controller
         // There is no matching rule, you're authorized!
         return true;
     }
+
+    /**
+     * Connect to database when authorized
+     *
+     * Create a database connection when user is authorized
+     *
+     * @return type
+     * @throws conditon
+     **/
+    protected function connectDBWhenAuthorized()
+    {
+        if($this->authorized()){
+            $this->connectDB();
+        }
+    }
 }
 
 //===============================================================

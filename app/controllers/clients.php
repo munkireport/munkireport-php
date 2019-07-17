@@ -3,7 +3,7 @@
 namespace munkireport\controller;
 
 use \Controller, \View;
-use \Machine_model, \Reportdata_model, \Disk_report_model, \Warranty_model, \Localadmin_model, \Security_model, \Network_model;
+use \Machine_model;
 
 
 
@@ -39,13 +39,7 @@ class clients extends Controller
         $obj = new View();
 
         if (authorized_for_serial($serial_number)) {
-            $machine = new Machine_model;
-            new Reportdata_model;
-            new Disk_report_model;
-            new Warranty_model;
-            new Localadmin_model;
-            new Security_model;
-	    new Network_model;
+            $machine = new \Model;
 
             $sql = "SELECT m.*, r.console_user, r.long_username, r.remote_ip,
                         r.uid, r.uptime, r.reg_timestamp, r.timestamp, g.value AS machine_group,
@@ -104,10 +98,11 @@ class clients extends Controller
 
         $obj = new View();
 
-        $machine = new Machine_model($sn);
+        $machine = Machine_model::where('serial_number', $sn)
+            ->first();
 
         // Check if machine exists/is allowed for this user to view
-        if (! $machine->id) {
+        if (! $machine) {
             $obj->view("client/client_dont_exist", $data);
         } else {
             $obj->view("client/client_detail", $data);

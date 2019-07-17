@@ -138,8 +138,8 @@ class admin extends Controller
                 $out['success'] = $bu->deleteWhere("property='machine_group' AND value=?", $groupid);
             }
             // Reset group in report_data
-            $rep = new Reportdata_model;
-            $rep->reset_group($groupid);
+            Reportdata_model::where('machine_group', $groupid)
+                ->update(['machine_group' => 0]);
         }
 
         $obj = new View();
@@ -325,17 +325,20 @@ class admin extends Controller
         foreach ($mg->all($groupid) as $arr) {
             $out[$arr['groupid']] = $arr;
         }
-        $reportdata = new Reportdata_model;
 
         // Get registered machine groups
-        $reportdata = new Reportdata_model;
-        foreach ($reportdata->get_groups(true) as $obj) {
-            if (! isset($out[$obj->machine_group])) {
-                $out[$obj->machine_group] = array(
-                    'groupid' => $obj->machine_group,
-                    'name' => 'Group '.$obj->machine_group);
+        $result = Reportdata_model::selectRaw('machine_group, COUNT(*) AS cnt')
+            ->groupBy('machine_group')
+            ->get()
+            ->toArray();
+        foreach ($result as $obj) {
+            if (! isset($out[$obj['machine_group']])) {
+                $out[$obj['machine_group']] = [
+                    'groupid' => $obj['machine_group'],
+                    'name' => 'Group '.$obj['machine_group'],
+                ];
             }
-            $out[$obj->machine_group]['cnt'] = $obj->cnt;
+            $out[$obj['machine_group']]['cnt'] = $obj['cnt'];
         }
 
         $obj = new View();

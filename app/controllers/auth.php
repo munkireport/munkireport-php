@@ -19,6 +19,8 @@ class Auth extends Controller
             redirect('error/client_error/426'); // Switch protocol
         }
 
+        $this->connectDB();
+
         $this->authHandler = new AuthHandler;
     }
 

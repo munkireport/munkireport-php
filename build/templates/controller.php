@@ -14,11 +14,6 @@ class MODULE_controller extends Module_controller
     {
         // Store module path
         $this->module_path = dirname(__FILE__);
-
-        if ($this->authorized()) {
-            $this->connectDB();
-        }
-
     }
 	
     /**

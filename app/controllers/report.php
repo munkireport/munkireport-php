@@ -75,10 +75,9 @@ class report extends Controller
 
         // Try to register client and lookup hashes in db
         try {
-            // Register check and group in reportdata
-            $report = new Reportdata_model($_POST['serial']);
-            $report->machine_group = $this->group;
-            $report->register()->save();
+            // Register check and group in reportdata   
+            $this->connectDB(); 
+            $this->_register($_POST['serial']);
 
             //$req_items = unserialize($_POST['items']); //Todo: check if array
             $unserializer = new Unserializer($_POST['items']);
@@ -211,8 +210,8 @@ class report extends Controller
         }
 
         // Register check in reportdata
-        $report = new Reportdata_model($_POST['serial']);
-        $report->register()->save();
+        $this->connectDB(); 
+        $this->_register($_POST['serial']);
 
         // Clean POST data
         $data['module'] = isset($_POST['module']) ? $_POST['module'] : 'generic';
@@ -334,5 +333,19 @@ class report extends Controller
            // Remove alert from array
            unset($GLOBALS['alerts'][$type]);
         }
+    }
+
+    private function _register($serial_number)
+    {
+        $mylist = [
+            'machine_group' => $this->group,
+            'remote_ip' => getRemoteAddress(),
+            'timestamp' => time(),
+        ];
+
+        $model = Reportdata_model::updateOrCreate(
+            ['serial_number' => $serial_number],
+            $mylist
+        );
     }
 }

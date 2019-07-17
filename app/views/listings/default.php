@@ -78,6 +78,11 @@
             columnFormatters = [],
             columnFilters = [],
             col = 0; // Column counter
+        
+        <?php if(isset($js_init)):?>
+        <?=$js_init?>;
+        <?php endif?>
+
         $('.table th').map(function(){
             columnDefs.push({
               name: $(this).data('colname'), 
