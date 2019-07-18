@@ -1,3 +1,5 @@
+### [4.3.3](https://github.com/munkireport/munkireport-php/compare/v4.3.2...HEAD) (Unreleased)
+
 ### [4.3.2](https://github.com/munkireport/munkireport-php/compare/v4.3.1...v4.3.2) (July 18, 2019)
 
 Fix for reportdata and managedinstalls not logging events
