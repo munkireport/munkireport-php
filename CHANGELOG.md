@@ -1,5 +1,12 @@
 ### [4.3.2](https://github.com/munkireport/munkireport-php/compare/v4.3.1...HEAD) (Unreleased)
 
+Fix for reportdata and managedinstalls not logging events
+
+MODULE UPDATES
+  - munkireport/reportdata (v2.2 => v2.3)
+  - munkireport/managedinstalls (v2.1 => v2.2)
+
+
 ### [4.3.1](https://github.com/munkireport/munkireport-php/compare/v4.3.1...v4.3.1) (July 18, 2019)
 
 Fix for event module not showing correct data
