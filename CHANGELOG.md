@@ -1,4 +1,12 @@
-### [4.3.0](https://github.com/munkireport/munkireport-php/compare/v4.2.2...HEAD) (Unreleased)
+### [4.3.1](https://github.com/munkireport/munkireport-php/compare/v4.3.1...HEAD) (Unreleased)
+
+Fix for event module not showing correct data
+
+MODULE UPDATES
+  - event (v3.0 => v3.1)
+
+
+### [4.3.0RC2](https://github.com/munkireport/munkireport-php/compare/v4.2.2...v4.3.0RC2) (July 17, 2019)
 
 This update changes the way some of the database queries are handled. Speed improvements for installhistory and inventory by chunking inserts.
 
