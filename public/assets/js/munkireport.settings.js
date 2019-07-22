@@ -90,6 +90,13 @@ var mr = {
                     var search = d.search.value.split('.').map(function(x){return ('0'+x).slice(-2)}).join('');
                     d.search.value = search;
                 }
+            },
+            columnNameFilter: function(col, d){
+                var colData = d.columns[col];
+                if(colData.name ==  d.search.value){
+                    colData.search.value = '> 0';
+                    d.search.value = '';
+                }
             }
         },
 
