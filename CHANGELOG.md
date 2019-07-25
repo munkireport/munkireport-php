@@ -1,4 +1,4 @@
-### [4.3.3](https://github.com/munkireport/munkireport-php/compare/v4.3.2...HEAD) (Unreleased)
+### [4.3.3](https://github.com/munkireport/munkireport-php/compare/v4.3.2...v4.3.3) (July 25, 2019)
 
 Still dealing with the fallout from the 4.3.0RC2 release :-(
 
