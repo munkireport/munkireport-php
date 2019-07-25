@@ -1,5 +1,15 @@
 ### [4.3.3](https://github.com/munkireport/munkireport-php/compare/v4.3.2...HEAD) (Unreleased)
 
+Still dealing with the fallout from the 4.3.0RC2 release :-(
+
+FIXED
+- Deleting of events
+
+MODULE UPDATES
+- munkireport/munkireport (v2.2 => 3.0)
+- munkireport/network (v2.1 => v2.2)
+
+
 ### [4.3.2](https://github.com/munkireport/munkireport-php/compare/v4.3.1...v4.3.2) (July 18, 2019)
 
 Fix for reportdata and managedinstalls not logging events
