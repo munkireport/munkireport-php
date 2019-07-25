@@ -69,7 +69,6 @@ auth:
     base_dn: AUTH_AD_BASE_DN
     hosts: AUTH_AD_HOSTS
     domain_controllers: AUTH_AD_HOSTS
-    hosts: AUTH_AD_HOSTS
     port: AUTH_AD_PORT
     follow_referrals: AUTH_AD_FOLLOW_REFERRALS
     use_ssl: AUTH_AD_USE_SSL

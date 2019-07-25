@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '4.3.2.3838';
+$GLOBALS['version'] = '4.3.3.3845';
 
 // Return version without commit count
 function get_version()
@@ -459,10 +459,10 @@ function store_event($serial, $module = '', $type = '', $msg = 'no_message', $da
 /**
  * Delete event for client
  *
- * @param string $serial serial number
+ * @param string $serial_number serial number
  * @param string $module reporting module
  **/
-function delete_event($serial, $module = '')
+function delete_event($serial_number, $module = '')
 {
     if (! authorized_for_serial($serial_number)) {
         return false;
