@@ -1,3 +1,5 @@
+### [4.3.4](https://github.com/munkireport/munkireport-php/compare/v4.3.4...HEAD) (Unreleased)
+
 ### [4.3.4](https://github.com/munkireport/munkireport-php/compare/v4.3.3...v4.3.4) (July 27, 2019)
 
 A small fix concerning business units.
