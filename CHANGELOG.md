@@ -1,5 +1,10 @@
 ### [4.3.4](https://github.com/munkireport/munkireport-php/compare/v4.3.3...HEAD) (Unreleased)
 
+A small fix concerning business units.
+
+FIXED
+- Detecting correct machine_groups for non-admin users
+
 ### [4.3.3](https://github.com/munkireport/munkireport-php/compare/v4.3.2...v4.3.3) (July 25, 2019)
 
 Still dealing with the fallout from the 4.3.0RC2 release :-(
