@@ -164,7 +164,7 @@ chmod a+x "${MUNKIPATH}"{${PREFLIGHT_SCRIPT},${POSTFLIGHT_SCRIPT},${REPORT_BROKE
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"
 cd "${MUNKIPATH}preflight.d"
-${CURL[@]} "${TPL_BASE}submit.preflight" --remote-name
+"${CURL[@]}" "${TPL_BASE}submit.preflight" --remote-name
 
 if [ "${?}" != 0 ]
 then
