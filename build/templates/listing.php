@@ -12,7 +12,7 @@ $this->view('listings/default',
 		],
 		[
 			"column" => "reportdata.serial_number",
-			"i18n_header" => "displays_info.machineserial",
+			"i18n_header" => "serial",
 		],
 		[
 			"column" => "MODULE.item1",
