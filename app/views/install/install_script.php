@@ -2,9 +2,9 @@
 ?>#!/bin/bash
 
 BASEURL="<?php echo conf('webhost') . conf('subdirectory'); ?>"
-MUNKIPATH="/usr/local/munki/" # TODO read munkipath from munki config
-CACHEPATH="${MUNKIPATH}preflight.d/cache/"
-POSTFLIGHT_CACHEPATH="${MUNKIPATH}postflight.d/cache/"
+MUNKIPATH="/usr/local/munkireport/"
+CACHEPATH="${MUNKIPATH}cache/"
+POSTFLIGHT_CACHEPATH="${MUNKIPATH}cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREFLIGHT=1
 PREF_CMDS=( ) # Pref commands array
@@ -52,7 +52,7 @@ Example:
     packaged.
 
         $PROG -b ${BASEURL} \\
-              -m ~/Desktop/munkireport-$VERSION/usr/local/munki/ \\
+              -m ~/Desktop/munkireport-$VERSION/usr/local/munkireport/ \\
               -p ~/Desktop/munkireport-$VERSION/Library/Preferences/MunkiReport \\
               -n
 
@@ -102,7 +102,7 @@ while getopts b:m:p:r:c:v:i:nh flag; do
 			# Create temp directory
 			INSTALLTEMP=$(mktemp -d -t mrpkg)
 			INSTALLROOT="$INSTALLTEMP"/install_root
-			MUNKIPATH="$INSTALLROOT"/usr/local/munki/
+			MUNKIPATH="$INSTALLROOT"/usr/local/munkireport/
 			TARGET_VOLUME='$3'
 			PREFPATH="/Library/Preferences/MunkiReport"
 			PREFLIGHT=0
@@ -202,7 +202,7 @@ echo '+ Installing <?php echo $scriptname; ?>'
 # Store munkipath when building a package
 if [ $BUILDPKG = 1 ]; then
 	STOREPATH=${MUNKIPATH}
-	MUNKIPATH='$3/usr/local/munki/'
+	MUNKIPATH='$3/usr/local/munkireport/'
 	CACHEPATH="\$3${CACHEPATH}"
 	POSTFLIGHT_CACHEPATH="\$3${POSTFLIGHT_CACHEPATH}"
 fi
