@@ -5,7 +5,7 @@
 	<key>Label</key>
 	<string>com.github.munkireport.runner</string>
 	<key>Program</key>
-	<string>/usr/local/munkireport/bin/munkireport-submit</string>
+	<string>/usr/local/munkireport/munkireport-runner</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>WatchPaths</key>
