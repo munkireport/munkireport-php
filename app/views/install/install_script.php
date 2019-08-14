@@ -139,27 +139,27 @@ echo "Preparing ${MUNKIPATH}"
 mkdir -p "${MUNKIPATH}munkilib"
 
 echo "BaseURL is ${BASEURL}"
-TPL_BASE="${BASEURL}/assets/client_installer/"
+TPL_BASE="${BASEURL}/assets/client_installer/payload/"
+MUNKI_BASE="${TPL_BASE}/munki/"
 
 echo "Retrieving munkireport scripts"
 
-cd ${MUNKIPATH}
-"${CURL[@]}" "${TPL_BASE}preflight" --output "${PREFLIGHT_SCRIPT}" \
-  "${TPL_BASE}postflight" --output "${POSTFLIGHT_SCRIPT}" \
-  "${TPL_BASE}report_broken_client" --output "${REPORT_BROKEN_CLIENT_SCRIPT}" \
-    && "${CURL[@]}" "${TPL_BASE}purl" -o "${MUNKIPATH}munkilib/purl.py" \
-    && "${CURL[@]}" "${TPL_BASE}reportcommon" -o "${MUNKIPATH}munkilib/reportcommon.py" \
-	&& "${CURL[@]}" "${TPL_BASE}phpserialize" -o "${MUNKIPATH}munkilib/phpserialize.py"
+SCRIPTS=$("${CURL[@]}" "${BASEURL}index.php?/install/get_paths")
 
-if [ "${?}" != 0 ]
-then
-	echo "Failed to download all required components!"
-	rm -f "${MUNKIPATH}"{${PREFLIGHT_SCRIPT},${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}} \
-		"${MUNKIPATH}"munkilib/reportcommon.py
+for SCRIPT in $SCRIPTS; do
+	echo "${SCRIPT}"
+	"${CURL[@]}" "${TPL_BASE}${SCRIPT}" --output "${SCRIPT}" || ERR=1 && break
+done
+
+if [ $ERR = 1 ]; then
+	echo "Failed to download all required components! Cleaning up.."
+	for SCRIPT in $SCRIPTS; do 
+		rm -f "${SCRIPT}"
+	done
 	exit 1
 fi
 
-chmod a+x "${MUNKIPATH}"{${PREFLIGHT_SCRIPT},${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
+chmod a+x "${MUNKIPATH}"{${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
 
 # Create preflight.d + download scripts
 mkdir -p "${MUNKIPATH}preflight.d"
