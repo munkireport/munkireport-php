@@ -130,36 +130,36 @@ fi
 
 echo "# Preparing ${MUNKIPATH}"
 mkdir -p "${MUNKIPATH}munkilib"
-
-echo "BaseURL is ${BASEURL}"
-TPL_BASE="${BASEURL}/assets/client_installer/payload/"
-MUNKI_BASE="${TPL_BASE}/munki/"
-
-echo "# Retrieving munkireport scripts"
-
-SCRIPTS=$("${CURL[@]}" "${BASEURL}index.php?/install/get_paths")
-
-for SCRIPT in $SCRIPTS; do
-	echo "${SCRIPT}"
-	"${CURL[@]}" "${TPL_BASE}${SCRIPT}" --output "${SCRIPT}" || ERR=1
-done
-
-if [ $ERR = 1 ]; then
-	echo "Failed to download all required components! Cleaning up.."
-	for SCRIPT in $SCRIPTS; do 
-		rm -f "${SCRIPT}"
-	done
-	exit 1
-fi
-
-chmod a+x "${MUNKIPATH}"{${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
-
-# Create script directory
 mkdir -p "${MUNKIPATH}scripts"
 
 # Create preflight.d symlinks
 ln -s "${MUNKIPATH}scripts" "${MUNKIPATH}preflight.d"
 ln -s "${MUNKIPATH}scripts" "${MUNKIPATH}postflight.d"
+
+mkdir -p "${INSTALLROOT}/usr/local/munki"
+mkdir -p "${INSTALLROOT}/Library/LaunchDaemons"
+
+echo "BaseURL is ${BASEURL}"
+TPL_BASE="${BASEURL}/assets/client_installer/payload/"
+
+echo "# Retrieving munkireport scripts"
+SCRIPTS=$("${CURL[@]}" "${BASEURL}index.php?/install/get_paths")
+
+for SCRIPT in $SCRIPTS; do
+	echo "${INSTALLROOT}${SCRIPT}"
+	"${CURL[@]}" "${TPL_BASE}${SCRIPT}" --output "${INSTALLROOT}${SCRIPT}" || ERR=1
+done
+
+if [ $ERR = 1 ]; then
+	echo "Failed to download all required components! Cleaning up.."
+	for SCRIPT in $SCRIPTS; do 
+		rm -f "${INSTALLROOT}${SCRIPT}"
+	done
+	exit 1
+fi
+
+chmod a+x "${INSTALLROOT}/usr/local/munki/"{${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
+
 
 echo "Configuring munkireport"
 #### Configure Munkireport ####
