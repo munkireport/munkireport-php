@@ -133,8 +133,8 @@ mkdir -p "${MUNKIPATH}munkilib"
 mkdir -p "${MUNKIPATH}scripts"
 
 # Create preflight.d symlinks
-ln -s "${MUNKIPATH}scripts" "${MUNKIPATH}preflight.d"
-ln -s "${MUNKIPATH}scripts" "${MUNKIPATH}postflight.d"
+ln -s "scripts" "${MUNKIPATH}preflight.d"
+ln -s "scripts" "${MUNKIPATH}postflight.d"
 
 mkdir -p "${INSTALLROOT}/usr/local/munki"
 mkdir -p "${INSTALLROOT}/Library/LaunchDaemons"
