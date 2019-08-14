@@ -130,7 +130,7 @@ class Install extends Controller
         $contents = $filesystem->listContents('', true);
         foreach($contents as $fileObj){
             if($this->is_regular_file($fileObj)){
-                echo "/1" . $fileObj['path'] . "\n";
+                echo "/" . $fileObj['path'] . "\n";
             }
         }
     }
