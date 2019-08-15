@@ -1,17 +1,10 @@
 #!/usr/bin/python
 # encoding: utf-8
 
-try:
-    from munkilib import display
-    from munkilib import prefs
-    from munkilib import constants
-    from munkilib import munkihash
-except ImportError:
-    # Legacy support
-    from munkilib import munkicommon as display
-    from munkilib import munkicommon as prefs
-    from munkilib import munkicommon as constants
-    from munkilib import munkicommon as munkihash
+from munkilib import display
+from munkilib import prefs
+from munkilib import constants
+from munkilib import munkihash
 
 from munkilib.purl import Purl
 from munkilib.phpserialize import *
@@ -65,7 +58,7 @@ def display_detail(msg, *args):
     display.display_detail('Munkireport: %s' % msg, *args)
 
 def curl(url, values):
-    
+
     options = dict()
     options["url"] = url
     options["method"] = "POST"
@@ -110,13 +103,13 @@ def curl(url, values):
     if connection.error != None:
         # Gurl returned an error
         display.display_detail(
-            'Download error %s: %s', connection.error.code(), 
+            'Download error %s: %s', connection.error.code(),
             connection.error.localizedDescription())
         if connection.SSLerror:
             display_detail(
                 'SSL error detail: %s', str(connection.SSLerror))
         display_detail('Headers: %s', connection.headers)
-        raise CurlError(connection.error.code(), 
+        raise CurlError(connection.error.code(),
                         connection.error.localizedDescription())
 
     if connection.response != None and connection.status != 200:
@@ -262,10 +255,10 @@ def process(serial, items):
     if result.get('error') != '':
         display_error('Server error: %s' % result['error'])
         return -1
-        
+
     if result.get('info') != '':
         display_detail('Server info: %s' % result['info'])
-        
+
     # Retrieve hashes that need updating
     total_size = 0
     for i in items.keys():
@@ -358,7 +351,7 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
     if os.path.exists(scriptdir):
 
         from munkilib import utils
-        
+
         # Get timeout for scripts
         scriptTimeOut = 10
         if pref('scriptTimeOut'):
