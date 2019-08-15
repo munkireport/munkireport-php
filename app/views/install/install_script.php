@@ -4,8 +4,8 @@
 BASEURL="<?php echo conf('webhost') . conf('subdirectory'); ?>"
 INSTALLROOT=""
 MUNKIPATH="/usr/local/munkireport/"
-CACHEPATH="${MUNKIPATH}cache/"
-POSTFLIGHT_CACHEPATH="${MUNKIPATH}cache/"
+CACHEPATH="${MUNKIPATH}scripts/cache/"
+POSTFLIGHT_CACHEPATH="${MUNKIPATH}scripts/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREF_CMDS=( ) # Pref commands array
 TARGET_VOLUME=''
@@ -74,7 +74,7 @@ function resetreportpref {
 	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write \"\${TARGET}\"${PREFPATH} ReportItems -dict" )
 }
 
-while getopts b:m:p:r:c:v:i:nh flag; do
+while getopts b:m:p:r:c:v:i:h flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -159,6 +159,7 @@ if [ $ERR = 1 ]; then
 fi
 
 chmod a+x "${INSTALLROOT}/usr/local/munki/"{${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
+chmod a+x "${INSTALLROOT}/usr/local/munkireport/munkireport-runner"
 
 
 echo "Configuring munkireport"
@@ -234,6 +235,8 @@ if [ $ERR = 0 ]; then
         cat >>$SCRIPTDIR/postinstall <<EOF
 if [[ "\$3" == "/" ]]; then
     TARGET=""
+	/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist
+    /bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
 else
     TARGET="\$3"
 fi
