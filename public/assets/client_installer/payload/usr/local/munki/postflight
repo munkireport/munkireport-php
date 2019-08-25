@@ -5,7 +5,6 @@ import subprocess
 import sys
 
 sys.path[:0] = ['/usr/local/munki']
-import utils
 from munkilib import FoundationPlist, munkicommon
 
 TOUCH_FILE_PATH = '/Users/Shared/.com.github.munkireport.run'
