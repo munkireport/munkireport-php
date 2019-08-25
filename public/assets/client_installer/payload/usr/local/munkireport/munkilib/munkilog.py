@@ -77,7 +77,7 @@ def configure_syslog():
         log('LogToSyslog is enabled but socket connection failed.')
         return
 
-    syslog.setFormatter(logging.Formatter('munki: %(message)s'))
+    syslog.setFormatter(logging.Formatter('munkireport: %(message)s'))
     syslog.setLevel(logging.INFO)
     logger.addHandler(syslog)
 

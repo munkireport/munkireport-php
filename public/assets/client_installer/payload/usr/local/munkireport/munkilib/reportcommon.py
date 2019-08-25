@@ -43,19 +43,19 @@ def display_error(msg, *args):
     """
     Call display error msg handler
     """
-    display.display_error('Munkireport: %s' % msg, *args)
+    display.display_error('%s' % msg, *args)
 
 def display_warning(msg, *args):
     """
     Call display warning msg handler
     """
-    display.display_warning('Munkireport: %s' % msg, *args)
+    display.display_warning('%s' % msg, *args)
 
 def display_detail(msg, *args):
     """
     Call display detail msg handler
     """
-    display.display_detail('Munkireport: %s' % msg, *args)
+    display.display_detail('%s' % msg, *args)
 
 def curl(url, values):
 
