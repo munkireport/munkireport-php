@@ -213,7 +213,7 @@ fi
 if [ $BUILDPKG = 0 ]; then
 	eval "$UNINSTALLS"
 	# Remove munkireport version file
-	rm -f "${MUNKIPATH}munkireport-"*
+	rm -f "${MUNKIPATH}"munkireport-*.*.*
 fi
 
 if [ $ERR = 0 ]; then
