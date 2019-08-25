@@ -131,10 +131,11 @@ fi
 echo "# Preparing ${MUNKIPATH}"
 mkdir -p "${MUNKIPATH}munkilib"
 mkdir -p "${MUNKIPATH}scripts"
+mkdir -p "${INSTALLROOT}/Library/MunkiReport/Logs"
 
 # Create preflight.d symlinks
-ln -s "scripts" "${MUNKIPATH}preflight.d"
-ln -s "scripts" "${MUNKIPATH}postflight.d"
+rm -rf "${MUNKIPATH}preflight.d" &&  ln -s "scripts" "${MUNKIPATH}preflight.d"
+rm -rf "${MUNKIPATH}postflight.d" && ln -s "scripts" "${MUNKIPATH}postflight.d"
 
 mkdir -p "${INSTALLROOT}/usr/local/munki"
 mkdir -p "${INSTALLROOT}/Library/LaunchDaemons"
