@@ -12,6 +12,7 @@ from munkilib.phpserialize import *
 import subprocess
 import pwd
 import sys
+import hashlib
 from urllib import urlencode
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
 from Foundation import CFPreferencesAppSynchronize
@@ -245,7 +246,7 @@ def process(serial, items):
     # Get hashes for all scripts
     for key, i in items.items():
         if i.get('path'):
-            i['hash'] = munkihash.getmd5hash(i.get('path'))
+            i['hash'] = getmd5hash(i.get('path'))
 
     # Check dict
     check = {}
@@ -438,5 +439,37 @@ def sizeof_fmt(num):
         num /= 1000.0
     return "%.1f%s" % (num, 'YB')
 
+
+def gethash(filename, hash_function):
+    """
+    Calculates the hashvalue of the given file with the given hash_function.
+
+    Args:
+      filename: The file name to calculate the hash value of.
+      hash_function: The hash function object to use, which was instantiated
+          before calling this function, e.g. hashlib.md5().
+
+    Returns:
+      The hashvalue of the given file as hex string.
+    """
+    if not os.path.isfile(filename):
+        return 'NOT A FILE'
+
+    fileref = open(filename, 'rb')
+    while 1:
+        chunk = fileref.read(2**16)
+        if not chunk:
+            break
+        hash_function.update(chunk)
+    fileref.close()
+    return hash_function.hexdigest()
+
+
+def getmd5hash(filename):
+    """
+    Returns hex of MD5 checksum of a file
+    """
+    hash_function = hashlib.md5()
+    return gethash(filename, hash_function)
 
 # End of reportcommon
