@@ -2,7 +2,6 @@
 # encoding: utf-8
 '''Postflight script'''
 
-from munkilib import osutils
 from munkilib import reportcommon
 from munkilib import FoundationPlist
 import hashlib
@@ -37,7 +36,7 @@ def main():
     hardware_info['cpu_arch'] = os.uname()[4]
     hardware_info['hostname'] = os.uname()[1]
     hardware_info['os_version'] = \
-        osutils.getOsVersion(only_major_minor=False)
+        reportcommon.getOsVersion(only_major_minor=False)
     hardware_info['buildversion'] = \
         reportcommon.get_buildversion()
     serial = hardware_info.get('serial_number', 'NO_SERIAL')
@@ -45,7 +44,7 @@ def main():
 
     items = {} # item list
     report_info = {}
-    report_info['console_user'] = "%s" % osutils.getconsoleuser()
+    report_info['console_user'] = "%s" % reportcommon.getconsoleuser()
     report_info['runtype'] = runtype
     report_info['runstate'] = 'done'
     report_info['uptime'] = reportcommon.get_uptime()

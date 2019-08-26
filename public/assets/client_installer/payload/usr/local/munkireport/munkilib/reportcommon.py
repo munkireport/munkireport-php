@@ -4,16 +4,23 @@
 from . import display
 from . import prefs
 from . import constants
-from . import munkihash
 from . import FoundationPlist
-
 from munkilib.purl import Purl
 from munkilib.phpserialize import *
+
 import subprocess
 import pwd
 import sys
 import hashlib
+import platform
 from urllib import urlencode
+import re
+import time
+import os
+
+# PyLint cannot properly find names inside Cocoa libraries, so issues bogus
+# No name 'Foo' in module 'Bar' warnings. Disable them.
+# pylint: disable=E0611
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
 from Foundation import CFPreferencesAppSynchronize
 from Foundation import CFPreferencesCopyAppValue
@@ -23,9 +30,8 @@ from Foundation import kCFPreferencesAnyUser
 from Foundation import kCFPreferencesCurrentUser
 from Foundation import kCFPreferencesCurrentHost
 from Foundation import NSHTTPURLResponse
-import re
-import time
-import os
+from SystemConfiguration import SCDynamicStoreCopyConsoleUser
+# pylint: enable=E0611
 
 # our preferences "bundle_id"
 BUNDLE_ID = 'MunkiReport'
@@ -471,5 +477,28 @@ def getmd5hash(filename):
     """
     hash_function = hashlib.md5()
     return gethash(filename, hash_function)
+
+
+def getOsVersion(only_major_minor=True, as_tuple=False):
+    """Returns an OS version.
+
+    Args:
+      only_major_minor: Boolean. If True, only include major/minor versions.
+      as_tuple: Boolean. If True, return a tuple of ints, otherwise a string.
+    """
+    os_version_tuple = platform.mac_ver()[0].split('.')
+    if only_major_minor:
+        os_version_tuple = os_version_tuple[0:2]
+    if as_tuple:
+        return tuple(map(int, os_version_tuple))
+    else:
+        return '.'.join(os_version_tuple)
+
+
+def getconsoleuser():
+    """Return console user"""
+    cfuser = SCDynamicStoreCopyConsoleUser(None, None, None)
+    return cfuser[0]
+
 
 # End of reportcommon
