@@ -27,7 +27,6 @@ import warnings
 from . import munkilog
 from . import prefs
 from . import reports
-from . import munkistatus
 
 
 
@@ -44,32 +43,6 @@ def _getsteps(num_of_steps, limit):
             steps.append(int(round(current)))
         current += float(limit)/float(num_of_steps-1)
     return steps
-
-
-def display_percent_done(current, maximum):
-    """
-    Mimics the command-line progress meter seen in some
-    of Apple's tools (like softwareupdate), and tells
-    MunkiStatus to display percent done via progress bar.
-    """
-    if current >= maximum:
-        percentdone = 100
-    else:
-        percentdone = int(float(current)/float(maximum)*100)
-    if munkistatusoutput:
-        munkistatus.percent(str(percentdone))
-
-    if verbose:
-        step = _getsteps(16, maximum)
-        output = ''
-        indicator = ['\t0', '.', '.', '20', '.', '.', '40', '.', '.',
-                     '60', '.', '.', '80', '.', '.', '100\n']
-        for i in range(0, 16):
-            if current >= step[i]:
-                output += indicator[i]
-        if output:
-            sys.stdout.write('\r' + output)
-            sys.stdout.flush()
 
 
 def str_to_ascii(a_string):
@@ -111,46 +84,9 @@ def _concat_message(msg, *args):
     return msg.rstrip()
 
 
-def display_status_major(msg, *args):
-    """
-    Displays major status messages, formatting as needed
-    for verbose/non-verbose and munkistatus-style output.
-    """
-    msg = _concat_message(msg, *args)
-    munkilog.log(msg)
-    if munkistatusoutput:
-        munkistatus.message(msg)
-        munkistatus.detail('')
-        munkistatus.percent(-1)
-    if verbose:
-        if msg.endswith('.') or msg.endswith(u'…'):
-            print '%s' % msg.encode('UTF-8')
-        else:
-            print '%s...' % msg.encode('UTF-8')
-        sys.stdout.flush()
-
-
-def display_status_minor(msg, *args):
-    """
-    Displays minor status messages, formatting as needed
-    for verbose/non-verbose and munkistatus-style output.
-    """
-    msg = _concat_message(msg, *args)
-    munkilog.log(u'    ' + msg)
-    if munkistatusoutput:
-        munkistatus.detail(msg)
-    if verbose:
-        if msg.endswith('.') or msg.endswith(u'…'):
-            print '    %s' % msg.encode('UTF-8')
-        else:
-            print '    %s...' % msg.encode('UTF-8')
-        sys.stdout.flush()
-
-
 def display_info(msg, *args):
     """
     Displays info messages.
-    Not displayed in MunkiStatus.
     """
     msg = _concat_message(msg, *args)
     munkilog.log(u'    ' + msg)
@@ -162,7 +98,6 @@ def display_info(msg, *args):
 def display_detail(msg, *args):
     """
     Displays minor info messages.
-    Not displayed in MunkiStatus.
     These are usually logged only, but can be printed to
     stdout if verbose is set greater than 1
     """
@@ -234,7 +169,6 @@ def display_error(msg, *args):
 # module globals
 # pylint: disable=invalid-name
 verbose = 1
-munkistatusoutput = True
 # pylint: enable=invalid-name
 
 

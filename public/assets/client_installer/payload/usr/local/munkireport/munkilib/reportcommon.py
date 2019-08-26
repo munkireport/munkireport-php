@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # encoding: utf-8
 
-from munkilib import display
-from munkilib import prefs
-from munkilib import constants
-from munkilib import munkihash
+from . import display
+from . import prefs
+from . import constants
+from . import munkihash
+from . import FoundationPlist
 
 from munkilib.purl import Purl
 from munkilib.phpserialize import *
@@ -133,6 +134,22 @@ def curl(url, values):
                 connection.status,
                 connection.headers.get('http_result_description', 'Failed')))
 
+def get_hardware_info():
+    '''Uses system profiler to get hardware info for this machine'''
+    cmd = ['/usr/sbin/system_profiler', 'SPHardwareDataType', '-xml']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, dummy_error) = proc.communicate()
+    try:
+        plist = FoundationPlist.readPlistFromString(output)
+        # system_profiler xml is an array
+        sp_dict = plist[0]
+        items = sp_dict['_items']
+        sp_hardware_dict = items[0]
+        return sp_hardware_dict
+    except BaseException:
+        return {}
 
 def get_long_username(username):
     try:

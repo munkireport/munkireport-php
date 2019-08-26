@@ -2,7 +2,6 @@
 # encoding: utf-8
 '''Postflight script'''
 
-from munkilib import info
 from munkilib import osutils
 from munkilib import reportcommon
 from munkilib import FoundationPlist
@@ -32,7 +31,7 @@ def main():
     reportcommon.rundir(postflightscriptdir, runtype, False)
 
     # Get serial
-    hardware_info = info.get_hardware_info()
+    hardware_info = reportcommon.get_hardware_info()
     hardware_info['computer_name'] = reportcommon.get_computername()
     hardware_info['cpu'] = reportcommon.get_cpuinfo()
     hardware_info['cpu_arch'] = os.uname()[4]
