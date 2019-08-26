@@ -278,6 +278,11 @@ EOF
 		touch "${MUNKIPATH}munkireport-${VERSION}"
         defaults write ${PREFPATH} Version ${VERSIONLONG}
 
+		echo 'Loading MunkiReport LaunchDaemon'
+		/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist
+		/bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
+
+
 		echo "Installation of MunkiReport v${VERSION} complete."
 
 	fi
