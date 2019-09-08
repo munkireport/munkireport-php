@@ -279,7 +279,7 @@ EOF
         defaults write ${PREFPATH} Version ${VERSIONLONG}
 
 		echo 'Loading MunkiReport LaunchDaemon'
-		/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist
+		/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist &>/dev/null
 		/bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
 
 
