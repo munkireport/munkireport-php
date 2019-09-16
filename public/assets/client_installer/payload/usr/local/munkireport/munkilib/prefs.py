@@ -52,7 +52,6 @@ DEFAULT_PREFS = {
     'LogToSyslog': False,
     'UseClientCertificate': False,
     'UseClientCertificateCNAsClientIdentifier': False,
-    'UseNotificationCenterDays': 3,
 }
 
 
@@ -63,7 +62,7 @@ class Preferences(object):
         """Init.
 
         Args:
-            bundle_id: str, like 'ManagedInstalls'
+            bundle_id: str, like 'MunkiReport'
         """
         if bundle_id.endswith('.plist'):
             bundle_id = bundle_id[:-6]
@@ -115,43 +114,17 @@ class Preferences(object):
             return self.__getitem__(pref_name)
 
 
-class ManagedInstallsPreferences(Preferences):
-    """Preferences which are read using 'normal' OS X preferences precedence:
-        Managed Preferences (MCX or Configuration Profile)
-        ~/Library/Preferences/ByHost/ManagedInstalls.XXXX.plist
-        ~/Library/Preferences/ManagedInstalls.plist
-        /Library/Preferences/ManagedInstalls.plist
-    Preferences are written to
-        /Library/Preferences/ManagedInstalls.plist
-    Since this code is usually run as root, ~ is root's home dir"""
-    def __init__(self):
-        Preferences.__init__(self, 'ManagedInstalls', kCFPreferencesAnyUser)
-
-
-class SecureManagedInstallsPreferences(Preferences):
-    """Preferences which are read using 'normal' OS X preferences precedence:
-        Managed Preferences (MCX or Configuration Profile)
-        ~/Library/Preferences/ByHost/ManagedInstalls.XXXX.plist
-        ~/Library/Preferences/ManagedInstalls.plist
-        /Library/Preferences/ManagedInstalls.plist
-    Preferences are written to
-        ~/Library/Preferences/ByHost/ManagedInstalls.XXXX.plist
-    Since this code is usually run as root, ~ is root's home dir"""
-    def __init__(self):
-        Preferences.__init__(self, 'ManagedInstalls', kCFPreferencesCurrentUser)
-
-
 def reload_prefs():
     """Uses CFPreferencesAppSynchronize(BUNDLE_ID)
     to make sure we have the latest prefs. Call this
-    if you have modified /Library/Preferences/ManagedInstalls.plist
-    or /var/root/Library/Preferences/ManagedInstalls.plist directly"""
+    if you have modified /Library/Preferences/MunkiReport.plist
+    or /var/root/Library/Preferences/MunkiReport.plist directly"""
     CFPreferencesAppSynchronize(BUNDLE_ID)
 
 
 def set_pref(pref_name, pref_value):
     """Sets a preference, writing it to
-    /Library/Preferences/ManagedInstalls.plist.
+    /Library/Preferences/MunkiReport.plist.
     This should normally be used only for 'bookkeeping' values;
     values that control the behavior of munki may be overridden
     elsewhere (by MCX, for example)"""
@@ -168,9 +141,9 @@ def pref(pref_name):
     """Return a preference. Since this uses CFPreferencesCopyAppValue,
     Preferences can be defined several places. Precedence is:
         - MCX/configuration profile
-        - /var/root/Library/Preferences/ByHost/ManagedInstalls.XXXXXX.plist
-        - /var/root/Library/Preferences/ManagedInstalls.plist
-        - /Library/Preferences/ManagedInstalls.plist
+        - /var/root/Library/Preferences/ByHost/MunkiReport.XXXXXX.plist
+        - /var/root/Library/Preferences/MunkiReport.plist
+        - /Library/Preferences/MunkiReport.plist
         - .GlobalPreferences defined at various levels (ByHost, user, system)
         - default_prefs defined here.
     """
