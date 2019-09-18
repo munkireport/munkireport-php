@@ -1,4 +1,49 @@
-### [4.4.0](https://github.com/munkireport/munkireport-php/compare/v4.4.0...HEAD) (Unreleased)
+### [5.0.0](https://github.com/munkireport/munkireport-php/compare/v5.0.0...HEAD) (Unreleased)
+
+This release changes the way MunkiReport runs on the client. MunkiReport now has it's own launchDaemon, which means that it will no longer take up time when munki runs it's pre- and postflight scripts.
+The MunkiReport scripts have moved to `/usr/local/munkireport`
+MunkiReport log files are now found in `/Library/MunkiReport/Logs/`
+
+To take advantage of the new scripts, create a new client package and distribute to your munki clients.
+
+IMPORTANT
+MunkiReport does not run scripts in `/usr/local/munki/preflight.d`, `/usr/local/munki/postlight.d` and `/usr/local/munki/preflight_abort.d` anymore! If you depended on these locations, please consider creating your own implementation for these. Also note that MunkiReport will not clean up the legacy directories.
+
+MODULE UPDATES
+- munkireport/profile (v1.2 => v2.0)         
+- munkireport/machine (v2.1 => v2.2)         
+- munkireport/munkireport (3.0 => 3.1)         
+
+DEPENDENCY UPDATES
+- symfony/process (v4.3.4)         
+- symfony/service-contracts (v1.1.6)         
+- symfony/polyfill-php73 (v1.12.0)         
+- symfony/polyfill-mbstring (v1.11.0 => v1.12.0)
+- symfony/console (v3.4.29 => v4.3.4)         
+- symfony/translation-contracts (v1.1.6)
+- symfony/translation (v3.4.29 => v4.3.4)
+- nesbot/carbon (1.39.0 => 2.24.0)         
+- illuminate/contracts (v5.5.44 => v5.8.35)
+- doctrine/inflector (v1.2.0 => v1.3.0)         
+- illuminate/support (v5.5.44 => v5.8.35)
+- illuminate/console (v5.5.44 => v5.8.35)
+- illuminate/container (v5.5.44 => v5.8.35)
+- illuminate/database (v5.5.44 => v5.8.35)
+- symfony/finder (v3.4.29 => v4.3.4)         
+- illuminate/filesystem (v5.5.44 => v5.8.35)
+- league/flysystem (1.0.53 => 1.0.55)         
+- doctrine/event-manager (v1.0.0)         
+- doctrine/cache (v1.6.2 => v1.8.0)         
+- doctrine/dbal (v2.5.13 => v2.9.2)         
+- symfony/polyfill-ctype (v1.11.0 => v1.12.0)
+- vlucas/phpdotenv (v3.4.0 => v3.6.0)         
+- symfony/yaml (v3.4.29 => v3.4.31)         
+- symfony/polyfill-php72 (v1.12.0)         
+- symfony/var-dumper (v4.3.4)         
+- tightenco/collect (v6.0.3)         
+- adldap2/adldap2 (v10.0.11 => v10.1.0)         
+- onelogin/php-saml (3.2.1 => 3.3.0)         
+- monolog/monolog (1.24.0 => 1.25.1)
 
 ### [4.3.4](https://github.com/munkireport/munkireport-php/compare/v4.3.3...v4.3.4) (July 27, 2019)
 
