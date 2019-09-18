@@ -1,24 +1,26 @@
 #!/usr/bin/python
 # encoding: utf-8
 
-try:
-    from munkilib import display
-    from munkilib import prefs
-    from munkilib import constants
-    from munkilib import munkihash
-except ImportError:
-    # Legacy support
-    from munkilib import munkicommon as display
-    from munkilib import munkicommon as prefs
-    from munkilib import munkicommon as constants
-    from munkilib import munkicommon as munkihash
-
+from . import display
+from . import prefs
+from . import constants
+from . import FoundationPlist
 from munkilib.purl import Purl
 from munkilib.phpserialize import *
+
 import subprocess
 import pwd
 import sys
+import hashlib
+import platform
 from urllib import urlencode
+import re
+import time
+import os
+
+# PyLint cannot properly find names inside Cocoa libraries, so issues bogus
+# No name 'Foo' in module 'Bar' warnings. Disable them.
+# pylint: disable=E0611
 from Foundation import NSArray, NSDate, NSMetadataQuery, NSPredicate
 from Foundation import CFPreferencesAppSynchronize
 from Foundation import CFPreferencesCopyAppValue
@@ -28,9 +30,8 @@ from Foundation import kCFPreferencesAnyUser
 from Foundation import kCFPreferencesCurrentUser
 from Foundation import kCFPreferencesCurrentHost
 from Foundation import NSHTTPURLResponse
-import re
-import time
-import os
+from SystemConfiguration import SCDynamicStoreCopyConsoleUser
+# pylint: enable=E0611
 
 # our preferences "bundle_id"
 BUNDLE_ID = 'MunkiReport'
@@ -50,22 +51,22 @@ def display_error(msg, *args):
     """
     Call display error msg handler
     """
-    display.display_error('Munkireport: %s' % msg, *args)
+    display.display_error('%s' % msg, *args)
 
 def display_warning(msg, *args):
     """
     Call display warning msg handler
     """
-    display.display_warning('Munkireport: %s' % msg, *args)
+    display.display_warning('%s' % msg, *args)
 
 def display_detail(msg, *args):
     """
     Call display detail msg handler
     """
-    display.display_detail('Munkireport: %s' % msg, *args)
+    display.display_detail('%s' % msg, *args)
 
 def curl(url, values):
-    
+
     options = dict()
     options["url"] = url
     options["method"] = "POST"
@@ -110,13 +111,13 @@ def curl(url, values):
     if connection.error != None:
         # Gurl returned an error
         display.display_detail(
-            'Download error %s: %s', connection.error.code(), 
+            'Download error %s: %s', connection.error.code(),
             connection.error.localizedDescription())
         if connection.SSLerror:
             display_detail(
                 'SSL error detail: %s', str(connection.SSLerror))
         display_detail('Headers: %s', connection.headers)
-        raise CurlError(connection.error.code(), 
+        raise CurlError(connection.error.code(),
                         connection.error.localizedDescription())
 
     if connection.response != None and connection.status != 200:
@@ -140,6 +141,22 @@ def curl(url, values):
                 connection.status,
                 connection.headers.get('http_result_description', 'Failed')))
 
+def get_hardware_info():
+    '''Uses system profiler to get hardware info for this machine'''
+    cmd = ['/usr/sbin/system_profiler', 'SPHardwareDataType', '-xml']
+    proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    (output, dummy_error) = proc.communicate()
+    try:
+        plist = FoundationPlist.readPlistFromString(output)
+        # system_profiler xml is an array
+        sp_dict = plist[0]
+        items = sp_dict['_items']
+        sp_hardware_dict = items[0]
+        return sp_hardware_dict
+    except BaseException:
+        return {}
 
 def get_long_username(username):
     try:
@@ -235,7 +252,7 @@ def process(serial, items):
     # Get hashes for all scripts
     for key, i in items.items():
         if i.get('path'):
-            i['hash'] = munkihash.getmd5hash(i.get('path'))
+            i['hash'] = getmd5hash(i.get('path'))
 
     # Check dict
     check = {}
@@ -262,10 +279,10 @@ def process(serial, items):
     if result.get('error') != '':
         display_error('Server error: %s' % result['error'])
         return -1
-        
+
     if result.get('info') != '':
         display_detail('Server info: %s' % result['info'])
-        
+
     # Retrieve hashes that need updating
     total_size = 0
     for i in items.keys():
@@ -358,7 +375,7 @@ def rundir(scriptdir, runtype, abort=False, submitscript=''):
     if os.path.exists(scriptdir):
 
         from munkilib import utils
-        
+
         # Get timeout for scripts
         scriptTimeOut = 10
         if pref('scriptTimeOut'):
@@ -427,6 +444,61 @@ def sizeof_fmt(num):
             return "%.0f%s" % (num, unit)
         num /= 1000.0
     return "%.1f%s" % (num, 'YB')
+
+
+def gethash(filename, hash_function):
+    """
+    Calculates the hashvalue of the given file with the given hash_function.
+
+    Args:
+      filename: The file name to calculate the hash value of.
+      hash_function: The hash function object to use, which was instantiated
+          before calling this function, e.g. hashlib.md5().
+
+    Returns:
+      The hashvalue of the given file as hex string.
+    """
+    if not os.path.isfile(filename):
+        return 'NOT A FILE'
+
+    fileref = open(filename, 'rb')
+    while 1:
+        chunk = fileref.read(2**16)
+        if not chunk:
+            break
+        hash_function.update(chunk)
+    fileref.close()
+    return hash_function.hexdigest()
+
+
+def getmd5hash(filename):
+    """
+    Returns hex of MD5 checksum of a file
+    """
+    hash_function = hashlib.md5()
+    return gethash(filename, hash_function)
+
+
+def getOsVersion(only_major_minor=True, as_tuple=False):
+    """Returns an OS version.
+
+    Args:
+      only_major_minor: Boolean. If True, only include major/minor versions.
+      as_tuple: Boolean. If True, return a tuple of ints, otherwise a string.
+    """
+    os_version_tuple = platform.mac_ver()[0].split('.')
+    if only_major_minor:
+        os_version_tuple = os_version_tuple[0:2]
+    if as_tuple:
+        return tuple(map(int, os_version_tuple))
+    else:
+        return '.'.join(os_version_tuple)
+
+
+def getconsoleuser():
+    """Return console user"""
+    cfuser = SCDynamicStoreCopyConsoleUser(None, None, None)
+    return cfuser[0]
 
 
 # End of reportcommon

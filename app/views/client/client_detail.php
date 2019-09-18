@@ -92,6 +92,5 @@ $tab_list = array_merge($tab_list, conf('client_tabs', array()));
 <script src="<?php echo conf('subdirectory'); ?>assets/js/typeahead.bundle.min.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/marked.min.js"></script>
 <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.comment.js"></script>
-<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.storageplot.js"></script>
 
 <?php $this->view('partials/foot'); ?>

@@ -1,0 +1,68 @@
+#!/usr/bin/python
+
+import os
+import subprocess
+import sys
+
+sys.path[:0] = ['/usr/local/munki']
+from munkilib import FoundationPlist, munkicommon
+
+TOUCH_FILE_PATH = '/Users/Shared/.com.github.munkireport.run'
+LAUNCHD = 'com.github.munkireport.runner'
+LAUNCHD_PATH = '/Library/LaunchDaemons/{}.plist'.format(LAUNCHD)
+SUBMIT_SCRIPT = '/usr/local/munkireport/munkireport-runner'
+
+
+def check_for_errors(report):
+    """Checks if the device was offline for last Munki run."""
+    errors = report.get("Errors", [])
+    warnings = report.get("Warnings", [])
+    target_errors = ["Could not retrieve managed install primary manifest."]
+    target_warnings = [
+        "Could not download Apple SUS catalog:",
+        "\t(-1009, u'The Internet connection appears to be offline.')"
+    ]
+
+    using_sus = munkicommon.pref('InstallAppleSoftwareUpdates')
+
+    if using_sus:
+        if warnings == target_warnings and errors == target_errors:
+            return True
+    else:
+        if errors == target_errors:
+            return True
+
+    return False
+
+def write_touch_file():
+    if os.path.exists(TOUCH_FILE_PATH):
+        os.remove(TOUCH_FILE_PATH)
+
+    if not os.path.exists(TOUCH_FILE_PATH):
+        with open(TOUCH_FILE_PATH, 'a'):
+            os.utime(TOUCH_FILE_PATH, None)
+
+def ensure_launchd_loaded():
+    cmd =[
+        '/bin/launchctl',
+        'list'
+    ]
+    loaded_launchds = subprocess.check_output(cmd)
+    # load the launchd if it's not loaded and is present on disk
+    if LAUNCHD not in loaded_launchds and os.path.exists(LAUNCHD_PATH):
+        cmd = [
+            '/bin/launchctl',
+            'load',
+            LAUNCHD_PATH
+        ]
+        subprocess.check_call(cmd)
+
+def main():
+    write_touch_file()
+    ensure_launchd_loaded()
+    # If the launchd isn't present, call the submit script old school
+    if not os.path.exists(LAUNCHD_PATH):
+        subprocess.check_call(SUBMIT_SCRIPT)
+
+if __name__ == '__main__':
+    main()

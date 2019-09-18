@@ -3,6 +3,9 @@
 namespace munkireport\controller;
 
 use \Controller, \View;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Adapter\Local;
+
 
 class Install extends Controller
 {
@@ -118,5 +121,28 @@ class Install extends Controller
     {
         $obj = new View();
         $obj->view('install/install_plist');
+    }
+
+    public function get_paths()
+    {
+        $adapter = new Local(PUBLIC_ROOT.'assets/client_installer/payload/');
+        $filesystem = new Filesystem($adapter);
+        $contents = $filesystem->listContents('', true);
+        foreach($contents as $fileObj){
+            if($this->is_regular_file($fileObj)){
+                echo "/" . $fileObj['path'] . "\n";
+            }
+        }
+    }
+
+    private function is_regular_file($fileObj)
+    {
+        if($fileObj['type'] != 'file'){
+            return false;
+        }
+        if($fileObj['basename'][0] == '.'){
+            return false;
+        }
+        return true;
     }
 }

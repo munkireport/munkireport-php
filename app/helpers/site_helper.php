@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '4.3.4.3846';
+$GLOBALS['version'] = '5.0.0.3894';
 
 // Return version without commit count
 function get_version()

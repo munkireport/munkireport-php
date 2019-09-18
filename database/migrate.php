@@ -75,15 +75,17 @@ foreach($moduleMgr->getInfo() as $moduleName => $info){
     }
 }
 $error = '';
+
+$input = new \Symfony\Component\Console\Input\StringInput('');
+$outputSymfony = new \Symfony\Component\Console\Output\ConsoleOutput();
+$outputStyle = new \Illuminate\Console\OutputStyle($input, $outputSymfony);
+
 try {
-    $migrationFiles = $migrator->run($migrationDirList, ['pretend' => false]);
+    $migrationFiles = $migrator->setOutput($outputStyle)->run($migrationDirList, ['pretend' => false]);
 } catch (\Exception $exception) {
     $error = sprintf(colorize("<error>ERROR: %s</error>\n"), $exception->getMessage());
 }
 
-foreach($migrator->getNotes() as $note){
-    echo colorize($note)."\n";
-}
 if($error){
     echo $error;
 }
