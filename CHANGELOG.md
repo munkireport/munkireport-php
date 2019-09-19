@@ -1,4 +1,13 @@
-### [5.0.0](https://github.com/munkireport/munkireport-php/compare/v5.0.0...HEAD) (Unreleased)
+### [5.0.1](https://github.com/munkireport/munkireport-php/compare/v5.0.0...HEAD) (Unreleased)
+
+Small bugfix release which incorporates updated modules.
+
+MODULE_UPDATES
+  - munkireport/disk_report (v2.1 => v2.3)
+  - munkireport/certificate (v1.1 => v1.2)
+
+
+### [5.0.0](https://github.com/munkireport/munkireport-php/compare/v4.3.3...v5.0.0) (September 18, 2019)
 
 This release changes the way MunkiReport runs on the client. MunkiReport now has it's own launchDaemon, which means that it will no longer take up time when munki runs it's pre- and postflight scripts.
 The MunkiReport scripts have moved to `/usr/local/munkireport`
