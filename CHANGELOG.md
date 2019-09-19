@@ -1,4 +1,4 @@
-### [5.0.1](https://github.com/munkireport/munkireport-php/compare/v5.0.0...HEAD) (Unreleased)
+### [5.0.1](https://github.com/munkireport/munkireport-php/compare/v5.0.0...v5.0.1) (September 19, 2019)
 
 Small bugfix release which incorporates updated modules.
 
