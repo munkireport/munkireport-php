@@ -140,8 +140,14 @@ rm -rf "${MUNKIPATH}postflight.d" && ln -s "scripts" "${MUNKIPATH}postflight.d"
 mkdir -p "${INSTALLROOT}/usr/local/munki"
 mkdir -p "${INSTALLROOT}/Library/LaunchDaemons"
 
+#Normalize BASEURL so it has a trailing slash.
+if [[ ${BASEURL: -1} != "/" ]]
+then
+    BASEURL="${BASEURL}/"
+fi
+
 echo "BaseURL is ${BASEURL}"
-TPL_BASE="${BASEURL}/assets/client_installer/payload/"
+TPL_BASE="${BASEURL}assets/client_installer/payload"
 
 echo "# Retrieving munkireport scripts"
 SCRIPTS=$("${CURL[@]}" "${BASEURL}index.php?/install/get_paths")
