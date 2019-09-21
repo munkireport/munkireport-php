@@ -241,6 +241,18 @@ class Modules
         }
     }
 
+    // Add client widget info
+    public function addWidgets(&$widgetArray)
+    {
+        foreach( $this->getInfo('detail_widgets') as $module => $detail_widgets){
+            foreach($detail_widgets as $id => $info){
+                $info['view_path'] = $this->getPath($module, '/views/');
+                $widgetArray[$id] = $info;
+            }
+        }
+    }
+    
+
     /**
      * Get data to create dropdown nav
      *
