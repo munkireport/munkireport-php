@@ -26,7 +26,10 @@ $modules->addTabs($tab_list);
 $tab_list = array_merge($tab_list, conf('client_tabs', []));
 
 // Add widgets to summary tab
-$modules->addWidgets($tab_list['summary']['view_vars']['widget_list']);
+$modules->addWidgets(
+	$tab_list['summary']['view_vars']['widget_list'],
+	conf('detail_widget_list', [])
+);
 
 
 ?>

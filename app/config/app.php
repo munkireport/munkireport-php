@@ -332,6 +332,27 @@ return [
 
     /*
     |===============================================
+    | Client detail layout
+    |===============================================
+    |
+    | If you want to override the default help url
+    | (MunkiReport's GitHub Wiki), you can specify which URL
+    | to redirect to (in a new tab).
+    |
+    */
+    'detail_widget_list' => env('CLIENT_DETAIL_WIDGETS', [
+        'machine_info_1',
+        'machine_info_2',
+        'comment_detail',
+        'hardware_detail',
+        'software_detail',
+        'storage_detail',
+        '*'
+    ]),
+
+
+    /*
+    |===============================================
     | Client passphrases
     |===============================================
     |
