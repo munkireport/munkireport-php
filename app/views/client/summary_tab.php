@@ -7,7 +7,7 @@
 </div><!-- /row -->
 <div class="row">
 
-    <?endif?>
+    <?php endif ?>
         <!-- <?php echo $widget_id ?> -->
         <?php $this->view($data['view'], isset($data['view_vars'])?$data['view_vars']:array(), isset($data['view_path'])?$data['view_path']:conf('view_path'));?>
     
