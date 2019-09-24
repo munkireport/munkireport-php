@@ -74,8 +74,6 @@
         "munkireport/security": "^1.0",
         "munkireport/sentinelone": "^1.0",
         "munkireport/sentinelonequarantine": "^1.0",
-        "munkireport/servermetrics": "^1.0",
-        "munkireport/service": "^1.0",
         "munkireport/smart_stats": "^1.0",
         "munkireport/softwareupdate": "^1.0",
         "munkireport/sophos": "^1.0",

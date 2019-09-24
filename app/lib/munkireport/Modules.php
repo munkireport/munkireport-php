@@ -241,6 +241,35 @@ class Modules
         }
     }
 
+    // Add client widget info
+    public function addWidgets(&$widgetArray, $detailWidgetList = [])
+    {
+        $tempList = [];
+        foreach( $this->getInfo('detail_widgets') as $module => $detail_widgets){
+            foreach($detail_widgets as $id => $info){
+                $info['view_path'] = $this->getPath($module, '/views/');
+                $tempList[$id] = $info;
+            }
+        }
+        // Order widgets according to $detailWidgetList
+        if($detailWidgetList){
+            foreach($detailWidgetList as $widgetId){
+                if(isset($tempList[$widgetId])){
+                    $widgetArray[$widgetId] = $tempList[$widgetId];
+                    unset($tempList[$widgetId]);
+                }
+            }
+            // If last widget is not * remove rest of the widgets
+            if($widgetId != '*'){
+                $tempList = [];
+            }
+        }
+        foreach($tempList as $id => $info){
+            $widgetArray[$id] = $info;
+        }
+    }
+    
+
     /**
      * Get data to create dropdown nav
      *
