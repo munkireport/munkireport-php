@@ -1,4 +1,38 @@
-### [5.0.2](https://github.com/munkireport/munkireport-php/compare/v5.0.1...HEAD) (Unreleased)
+### [5.1.0](https://github.com/munkireport/munkireport-php/compare/v5.0.1...HEAD) (Unreleased)
+
+Some bugfixes and a change on how the client summary tab is rendered. Removed legacy modules.
+
+NEW FEATURES
+- Customizable client summary tab https://github.com/munkireport/munkireport-php/wiki/Client-Summary-Tab
+
+FIXES
+- Fix issue with extra slashes in URL. Some web servers can't handle the double slash and fail. (#1275) @poundbangbash
+- Fix munkireport-runner: Add long_username and uid
+
+MODULE UPDATES
+  - Removed munkireport/service (v1.1)
+  - Removed munkireport/servermetrics (v1.1)
+  - munkireport/ard (v2.0 => 2.1)         
+  - munkireport/machine (v2.2 => v2.3)         
+  - munkireport/disk_report (v2.3 => v2.4)         
+  - munkireport/warranty (v2.0 => v2.1)         
+  - munkireport/appusage (v2.1 => v2.2)
+  - munkireport/bluetooth (v1.1 => v1.2)         
+  - munkireport/caching (v1.2 => v1.3)
+  - munkireport/comment (v2.0 => v2.1)         
+  - munkireport/crashplan (v1.2 => v1.4)         
+  - munkireport/detectx (v2.1 => v2.2)         
+  - munkireport/fan_temps (V1.4 => v1.5)         
+  - munkireport/localadmin (v2.0 => v2.1)         
+  - munkireport/network (v2.2 => v2.3)         
+  - munkireport/security (v1.3 => v1.4)         
+  - munkireport/timemachine (v1.3 => v1.4)         
+  - munkireport/user_sessions (v1.2 => v1.3)
+
+DEPENDENCY UPDATES
+  - adldap2/adldap2 (v10.1.0 => v10.1.1)         
+
+
 
 ### [5.0.1](https://github.com/munkireport/munkireport-php/compare/v5.0.0...v5.0.1) (September 19, 2019)
 
