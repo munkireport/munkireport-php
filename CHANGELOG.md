@@ -1,4 +1,4 @@
-### [5.1.0](https://github.com/munkireport/munkireport-php/compare/v5.0.1...HEAD) (Unreleased)
+### [5.1.0](https://github.com/munkireport/munkireport-php/compare/v5.0.1...v5.1.0) (September 24, 2019)
 
 Some bugfixes and a change on how the client summary tab is rendered. Removed legacy modules.
 
