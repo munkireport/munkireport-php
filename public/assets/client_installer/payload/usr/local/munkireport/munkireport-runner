@@ -11,6 +11,8 @@ import os
 def main():
     '''Main'''
 
+    reportcommon.display_detail("## Starting MunkiReport run")
+
     # set runtype
     runtype = 'auto'
 
@@ -61,6 +63,8 @@ def main():
     touchfile = '/Users/Shared/.com.github.munkireport.run'
     if os.path.exists(touchfile):
         os.remove(touchfile)
+    
+    reportcommon.display_detail("## Finished run")
 
 if __name__ == '__main__':
     main()
