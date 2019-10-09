@@ -96,7 +96,11 @@ class Auth extends Controller
             }
         }
 
-        $data = array('login' => $login, 'url' => url("auth/login/$return"));
+        $data = [
+            // Prevent XSS
+            'login' => htmlspecialchars($login, ENT_QUOTES, 'UTF-8'),
+            'url' => url("auth/login/$return")
+        ];
 
         $obj = new View();
         $obj->view('auth/login', $data);
