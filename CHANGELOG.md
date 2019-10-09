@@ -1,4 +1,4 @@
-### [5.1.1](https://github.com/munkireport/munkireport-php/compare/v5.1.0...HEAD) (Unreleased)
+### [5.1.1](https://github.com/munkireport/munkireport-php/compare/v5.1.0...v5.1.1) (October 09, 2019)
 
 Notable changes: XSS patch, Catalina support for Storage report (@rickheil)
 filevault status rewrite (@tuxudo), mdm_status detail widget (@poundbangbash)
