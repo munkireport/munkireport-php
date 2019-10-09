@@ -1,5 +1,31 @@
 ### [5.1.1](https://github.com/munkireport/munkireport-php/compare/v5.1.0...HEAD) (Unreleased)
 
+Notable changes: XSS patch, Catalina support for Storage report (@rickheil)
+filevault status rewrite (@tuxudo), mdm_status detail widget (@poundbangbash)
+
+FIXES
+- Prevent Cross Site Scripting attack (XSS) on login form
+
+MODULE UPDATES
+  - munkireport/disk_report (v2.4 => v2.7)
+  - munkireport/filevault_status (v1.1 => V1.2)
+  - munkireport/localadmin (v2.1 => v2.2)
+  - munkireport/mdm_status (v1.6 => v1.7)
+  - munkireport/network (v2.3 => v2.4)
+
+  DEPENDENCY UPDATES
+  - symfony/yaml (v3.4.31 => v3.4.32)
+  - symfony/var-dumper (v4.3.4 => v4.3.5)
+  - tightenco/collect (v6.0.3 => v6.2.0)
+  - symfony/service-contracts (v1.1.6 => v1.1.7)
+  - symfony/console (v4.3.4 => v4.3.5)
+  - symfony/process (v4.3.4 => v4.3.5)
+  - symfony/translation-contracts (v1.1.6 => v1.1.7)
+  - symfony/translation (v4.3.4 => v4.3.5)
+  - nesbot/carbon (2.24.0 => 2.25.1)
+  - symfony/finder (v4.3.4 => v4.3.5)
+
+
 ### [5.1.0](https://github.com/munkireport/munkireport-php/compare/v5.0.1...v5.1.0) (September 24, 2019)
 
 Some bugfixes and a change on how the client summary tab is rendered. Removed legacy modules.
