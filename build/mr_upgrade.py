@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+
+
 """Script for updating MunkiReport"""
 import os
 import datetime
@@ -60,14 +62,6 @@ class MunkiReportInstall(object):
 
 
     @property
-    def install_type(self):
-        """Return zip or git install type"""
-        if os.path.exists(self._install_path + '.git'):
-            return 'git'
-        return 'zip'
-
-
-    @property
     def env_vars(self):
         """Return env vars"""
         env_file_path = self._install_path + '.env'
@@ -113,18 +107,13 @@ class MunkiReportInstall(object):
             )
 
 
-    def backup_files(self, install_path, install_type):
-        """Create file backup of install."""
-        if install_type == 'git':
-            final_dir = BACKUP_DIR + "munkireport" + NOW.strftime("%Y%m%d%H%M")
-            log.info(f"Backing up files to '{final_dir}'...")
-            os.mkdir(final_dir)
-            copy_tree(install_path, final_dir)
-        elif install_type == 'zip':
-            final_dir = BACKUP_DIR + "munkireport" + NOW.strftime("%Y%m%d%H%M")
-            os.mkdir(final_dir)
-            copy_tree(install_path, final_dir)
-
+    def backup_files(self, install_path):
+    """Create file backup of install."""    
+        final_dir = BACKUP_DIR + "munkireport" + NOW.strftime("%Y%m%d%H%M")
+        log.info(f"Backing up files to '{final_dir}'...")
+        os.mkdir(final_dir)
+        copy_tree(install_path, final_dir)
+       
 
 def github_release_info():
     """Return MR API data"""
@@ -138,7 +127,6 @@ def main(info, no_backup, backup_dir, install_path, upgrade, upgrade_version):
     """Main script"""
     munkireport = MunkiReportInstall(install_path)
     install_path = install_path or munkireport.install_path
-    install_type = munkireport.install_type
     build_version = munkireport.build_version
     release_info = github_release_info()
 
@@ -150,7 +138,6 @@ def main(info, no_backup, backup_dir, install_path, upgrade, upgrade_version):
         log.info(f"Current version: {build_version}")
         log.info(f"GitHub version:  {release_info['tag_name'].strip('v')}")
         log.info(f"Install path:    {install_path}")
-        log.info(f"Install type:    {install_type}")
         log.info(f"Database type:   {munkireport.database_type}")
         return
 
@@ -165,50 +152,25 @@ def main(info, no_backup, backup_dir, install_path, upgrade, upgrade_version):
         munkireport.backup_database(install_path)
 
         # backup files
-        munkireport.backup_files(install_path, install_type)
+        munkireport.backup_files(install_path)
 
         # Update
-        if munkireport.install_type == 'git':
-            try:
-                # do git pull
-                log.info("Starting git pull...")
-                process = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE)
-                output = process.communicate()[0]
-                log.info("Git pull complete.")
+        try:
+            # do git pull
+            log.info("Starting git pull...")
+            process = subprocess.Popen(["git", "pull"], stdout=subprocess.PIPE)
+            output = process.communicate()[0]
+            log.info("Git pull complete.")
 
-                log.info("Running composer...")
-                os.chdir(munkireport.install_path)
-                process = subprocess.Popen(["/usr/local/bin/composer", "update", "--no-dev"],
-                                           stdout=subprocess.PIPE)
-                output = process.communicate()[0]
-                log.info("Composer complete.")
-                os.chdir(munkireport.install_path + "/build/")
-            except:
-                log.error("Git failed to complete.")
-
-        elif munkireport.install_type == 'zip':
-            # download new munkireport
-            if (LooseVersion(munkireport.build_version) >
-                    LooseVersion(release_info['tag_name'].strip('v'))):
-                log.info("Local version is newer than the latest master release.")
-            elif LooseVersion(munkireport.build_version) < LooseVersion("4.0.0"):
-                log.info("Local version is older than 4.0.0")
-            else:
-                log.info("Downloading the latest release")
-                extracted_location = "/tmp/extracted"
-                filedata = urllib2.urlopen(release_info['tarball_url'])
-                datatowrite = filedata.read()
-                with open('/tmp/munkireport_latest.tar.gz', 'wb') as mr_download:
-                    mr_download.write(datatowrite)
-                # remove the old directory
-                shutil.rmtree(extracted_location)
-                try:
-                    os.makedirs(extracted_location)
-                except:
-                    log.info("Directory already exists")
-                tar = tarfile.open("/tmp/munkireport_latest.tar.gz")
-                tar.extractall(extracted_location)
-                tar.close()
+            log.info("Running composer...")
+            os.chdir(munkireport.install_path)
+            process = subprocess.Popen(["/usr/local/bin/composer", "update", "--no-dev"],
+                                        stdout=subprocess.PIPE)
+            output = process.communicate()[0]
+            log.info("Composer complete.")
+            os.chdir(munkireport.install_path + "/build/")
+        except:
+            log.error("Git failed to complete.")
 
         # Run Migrations
         log.info("Running migrations...")
