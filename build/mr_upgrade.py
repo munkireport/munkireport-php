@@ -140,11 +140,16 @@ if __name__ == "__main__":
         default=False
     )
     parser.add_argument(
-        "--version",
-        help="Version of MunkiReport to upgrade to.",
-        default="latest",
+        '-v', '--verbose', action='store_true', default=False, help='Enable verbose logging.'
     )
     args = parser.parse_args()
+
+    if args.verbose:
+        coloredlogs.install(
+            fmt="[%(asctime)s] - [%(levelname)-8s] - %(message)s",
+            level="DEBUG",
+            logger=log,
+        )
 
     install_path = args.install_path
     current_version = get_current_version(install_path)
