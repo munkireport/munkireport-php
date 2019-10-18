@@ -1,5 +1,7 @@
 ### [5.1.2](https://github.com/munkireport/munkireport-php/compare/v5.1.1...HEAD) (Unreleased)
 
+Increase default script timeout to 30 seconds
+
 ### [5.1.1](https://github.com/munkireport/munkireport-php/compare/v5.1.0...v5.1.1) (October 09, 2019)
 
 Notable changes: XSS patch, Catalina support for Storage report (@rickheil)
