@@ -1,3 +1,5 @@
+### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...HEAD) (Unreleased)
+
 ### [5.1.2](https://github.com/munkireport/munkireport-php/compare/v5.1.1...v5.1.2) (October 19, 2019)
 
 Increase default script timeout to 30 seconds
