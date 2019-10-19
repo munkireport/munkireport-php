@@ -2,6 +2,14 @@
 
 Increase default script timeout to 30 seconds
 
+ MODULE UPDATES
+ - munkireport/security (v1.4 => V1.5)
+ 
+ DEPENDENCY UPDATES
+ - nesbot/carbon (2.25.1 => 2.25.2)
+ - league/flysystem (1.0.55 => 1.0.57)
+ - tightenco/collect (v6.2.0 => v6.3.0
+
 ### [5.1.1](https://github.com/munkireport/munkireport-php/compare/v5.1.0...v5.1.1) (October 09, 2019)
 
 Notable changes: XSS patch, Catalina support for Storage report (@rickheil)
