@@ -27,6 +27,21 @@ coloredlogs.install(
 load_dotenv()
 
 
+def run_command(args):
+    """Run a given command."""
+    log.debug(f"Running command '{' '.join(args)}'...'")
+    try:
+        subprocess.run(args, capture_output=True, check=True)
+    except subprocess.CalledProcessError as e:
+        log.error(
+            f"Command '{' '.join(args)}' failed with the following output: '{e.stderr.decode('utf8')}'. Exiting..."
+        )
+        return False
+
+    log.debug(f"Command '{' '.join(args)}' completed successfully.")
+    return True
+
+
 def get_current_version(install_path):
     """Return current build version"""
     helper = install_path + "app/helpers/site_helper.php"
@@ -76,14 +91,10 @@ def backup_database(database_type, backup_dir, install_path, current_time):
         backup_file = os.path.join(backup_dir, database + "-" + current_time + ".bak")
         cmd = f"/usr/local/opt/mysql-client/bin/mysqldump --user={username} --password={password} -h {host} {database} > {backup_file}"
         log.info("Backing up database to '{}'...".format(backup_file))
-        try:
-            proc = subprocess.run(
-                cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, shell=True
-            )
-            log.info("Backup completed successfully.")
-        except subprocess.CalledProcessError as e:
-            log.error(f"mysqldump failed with error: '{e}'.")
+        if not run_command(cmd):
             return False
+
+        log.info("Backup completed successfully.")
 
     elif database_type == "sqlite":
         try:
@@ -231,17 +242,8 @@ if __name__ == "__main__":
                     exit(1)
 
             # attempt git pull for update
-            try:
-                log.info("Starting Git pull...")
-                proc = subprocess.run(
-                    ["git", "pull", "origin", "master"],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.PIPE,
-                )
-            except subprocess.CalledProcessError as e:
-                log.error(
-                    f"Git pull failed with the following output: '{' '.join(e)}'. Exiting..."
-                )
+            log.info("Starting Git pull...")
+            if not run_command(["git", "pull", "origin", "master"]):
                 exit(1)
 
             log.info("Git pull complete.")
@@ -250,49 +252,24 @@ if __name__ == "__main__":
             log.info(f"Switching to commit for version {desired_version}...")
             commit = versions[desired_version]
             log.debug(f"Commit for version {desired_version} is {commit}.")
-            try:
-                proc = subprocess.run(
-                    ["git", "checkout", commit],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.PIPE,
-                )
-            except subprocess.CalledProcessError as e:
-                log.error(
-                    f"Git checkout failed with the following output: '{' '.join(e)}'. Exiting..."
-                )
+
+            if not run_command(["git", "checkout", commit]):
                 exit(1)
 
-            os.chdir(install_path)
+            log.info("Git checkout complete.")
 
             # run composer
+            os.chdir(install_path)
             log.info("Running composer...")
-            cmd = ["/usr/local/bin/composer", "update", "--no-dev"]
-            log.debug(f"Running command {' '.join(cmd)}...")
-            try:
-                proc = subprocess.run(
-                    cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE
-                )
-            except subprocess.CalledProcessError as e:
-                log.error(
-                    f"Composer failed with the following output: '{' '.join(e)}'. Exiting..."
-                )
+            if not run_command(["/usr/local/bin/composer", "update", "--no-dev"]):
                 exit(1)
 
             log.info("Composer complete.")
-            os.chdir(f"{install_path}/build/")
 
             # Run Migrations
+            os.chdir(f"{install_path}/build/")
             log.info("Running migrations...")
-            cmd = ["/usr/bin/php", f"{install_path}database/migrate.php"]
-            log.debug(f"Running command: '{' '.join(cmd)}'")
-            try:
-                proc = subprocess.run(
-                    cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE
-                )
-            except subprocess.CalledProcessError as e:
-                log.error(
-                    f"Migrations failed. Error output: '{' '.join(e)}'. Exiting..."
-                )
+            if not run_command(["/usr/bin/php", f"{install_path}database/migrate.php"]):
                 exit(1)
 
             log.info("Migrations complete.")
