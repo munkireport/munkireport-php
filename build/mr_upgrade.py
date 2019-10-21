@@ -254,7 +254,7 @@ if __name__ == "__main__":
 
             # attempt git pull for update
             log.info("Starting Git pull...")
-            if not run_command(["git", "pull", "origin", "master"]):
+            if not run_command(["git", "fetch", "origin", "master"]):
                 exit()
 
             log.info("Git pull complete.")
