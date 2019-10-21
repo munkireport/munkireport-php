@@ -264,7 +264,7 @@ if __name__ == "__main__":
             commit = versions[desired_version]
             log.debug(f"Commit for version {desired_version} is {commit}.")
 
-            if not run_command(["git", "checkout", commit]):
+            if not run_command(["git", "checkout", f"v{desired_version}"]):
                 exit()
 
             log.info("Git checkout complete.")
