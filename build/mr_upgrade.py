@@ -57,7 +57,6 @@ def get_current_version(install_path):
             return None
 
         return version
-
     return None
 
 
@@ -137,6 +136,7 @@ def backup_files(backup_dir, install_path, current_time):
 def get_versions():
     """Return MR versions"""
     mr_api = "https://api.github.com/repos/munkireport/munkireport-php/releases"
+    log.debug(f"Querying '{mr_api}' for latest release...")
     versions = {}
     try:
         with urllib.request.urlopen(mr_api) as response:
@@ -144,6 +144,7 @@ def get_versions():
 
         for version in data:
             versions[version["tag_name"].strip("v")] = version["target_commitish"]
+        log.debug(f"Found versions: {versions}.")
 
     except:
         log.error("Errors encountered when grabbing latest version.")
@@ -226,9 +227,13 @@ if __name__ == "__main__":
             log.info("No version upgrade available.")
 
         else:
+            if desired_version not in versions.keys():
+                log.error(f"Version '{desired_version}' was not found. Exiting...")
+                exit()
+
             log.info(f"Installing version {desired_version}...")
             if not set_maintenance_mode(install_path, "enabled"):
-                exit(1)
+                exit()
 
             current_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
 
@@ -237,16 +242,16 @@ if __name__ == "__main__":
                 if not backup_database(
                     database_type, args.backup_dir, install_path, current_time
                 ):
-                    exit(1)
+                    exit()
 
                 # backup files
                 if not backup_files(args.backup_dir, install_path, current_time):
-                    exit(1)
+                    exit()
 
             # attempt git pull for update
             log.info("Starting Git pull...")
             if not run_command(["git", "pull", "origin", "master"]):
-                exit(1)
+                exit()
 
             log.info("Git pull complete.")
 
@@ -256,7 +261,7 @@ if __name__ == "__main__":
             log.debug(f"Commit for version {desired_version} is {commit}.")
 
             if not run_command(["git", "checkout", commit]):
-                exit(1)
+                exit()
 
             log.info("Git checkout complete.")
 
@@ -264,15 +269,15 @@ if __name__ == "__main__":
             os.chdir(install_path)
             log.info("Running composer...")
             if not run_command(["/usr/local/bin/composer", "update", "--no-dev"]):
-                exit(1)
+                exit()
 
             log.info("Composer complete.")
 
-            # Run Migrations
+            # run migrations
             os.chdir(f"{install_path}/build/")
             log.info("Running migrations...")
             if not run_command(["/usr/bin/php", f"{install_path}database/migrate.php"]):
-                exit(1)
+                exit()
 
             log.info("Migrations complete.")
 
