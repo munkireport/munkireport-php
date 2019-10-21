@@ -248,6 +248,8 @@ if __name__ == "__main__":
                 if not backup_files(args.backup_dir, install_path, current_time):
                     exit()
 
+            run_command(["git", "stash", "save", "mr_upgrade.py"])
+
             # attempt git pull for update
             log.info("Starting Git pull...")
             if not run_command(["git", "pull", "origin", "master"]):
@@ -280,6 +282,8 @@ if __name__ == "__main__":
                 exit()
 
             log.info("Migrations complete.")
+
+            run_command(["git", "checkout", "mr_upgrade", "mr_upgrade.py"])
 
             # disable maintenance mode
             set_maintenance_mode(install_path, "disabled")
