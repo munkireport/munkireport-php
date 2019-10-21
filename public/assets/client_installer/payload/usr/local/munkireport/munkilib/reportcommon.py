@@ -73,6 +73,7 @@ def curl(url, values):
     options["content_type"] = "application/x-www-form-urlencoded"
     options["body"] = urlencode(values)
     options["logging_function"] = display_detail
+    options["connection_timeout"] = 60
     if pref('UseMunkiAdditionalHttpHeaders'):
         custom_headers = prefs.pref(
                             constants.ADDITIONAL_HTTP_HEADERS_KEY)
