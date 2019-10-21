@@ -189,6 +189,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--version", type=str, default="latest", help="Version to upgrade to."
     )
+    parser.add_argument("--no-composer", action="store_true", default=False)
+    parser.add_argument("--no-migrations", action="store_true", default=False)
     args = parser.parse_args()
 
     if args.verbose:
@@ -267,21 +269,25 @@ if __name__ == "__main__":
 
             log.info("Git checkout complete.")
 
-            # run composer
-            os.chdir(install_path)
-            log.info("Running composer...")
-            if not run_command(["/usr/local/bin/composer", "update", "--no-dev"]):
-                exit()
+            if not args.no_composer:
+                # run composer
+                os.chdir(install_path)
+                log.info("Running composer...")
+                if not run_command(["/usr/local/bin/composer", "update", "--no-dev"]):
+                    exit()
 
-            log.info("Composer complete.")
+                log.info("Composer complete.")
 
-            # run migrations
-            os.chdir(f"{install_path}/build/")
-            log.info("Running migrations...")
-            if not run_command(["/usr/bin/php", f"{install_path}database/migrate.php"]):
-                exit()
+            if not args.no_migrations:
+                # run migrations
+                os.chdir(f"{install_path}/build/")
+                log.info("Running migrations...")
+                if not run_command(
+                    ["/usr/bin/php", f"{install_path}database/migrate.php"]
+                ):
+                    exit()
 
-            log.info("Migrations complete.")
+                log.info("Migrations complete.")
 
             run_command(["git", "checkout", "mr_upgrade", "mr_upgrade.py"])
 
