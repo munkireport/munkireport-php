@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-"""Script for updating MunkiReport"""
+"""
+Script for upgrading MunkiReport.
+"""
 
 import argparse
 import datetime
-from dotenv import load_dotenv
-from distutils.dir_util import copy_tree
-import coloredlogs
 import json
 import logging
 import operator
@@ -15,7 +14,10 @@ import re
 import shutil
 import subprocess
 import urllib.request
+from distutils.dir_util import copy_tree
 
+import coloredlogs
+from dotenv import load_dotenv
 
 # log output to console
 log = logging.getLogger()
@@ -277,4 +279,3 @@ if __name__ == "__main__":
             # disable maintenance mode
             set_maintenance_mode(install_path, "disabled")
             log.info("Upgrade complete.")
-
