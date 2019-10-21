@@ -91,8 +91,8 @@ def backup_database(database_type, backup_dir, install_path, current_time):
                 install_path + "app/db/db.sqlite",
                 backup_dir + "db" + current_time + ".sqlite.bak",
             )
-        except:
-            log.error("Errors encountered when backing up database.")
+        except OSError as e:
+            log.error(f"The following error encountered when backing up database: {e}.")
             return False
 
     return True
