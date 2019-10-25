@@ -29,11 +29,11 @@ coloredlogs.install(
 load_dotenv()
 
 
-def run_command(args):
+def run_command(args, shell=False):
     """Run a given command."""
     log.debug(f"Running command '{' '.join(args)}'...'")
     try:
-        subprocess.run(args, capture_output=True, check=True)
+        subprocess.run(args, capture_output=True, check=True, shell=shell)
     except subprocess.CalledProcessError as e:
         log.error(
             f"Command '{' '.join(args)}' failed with the following output: '{e.stderr.decode('utf8')}'. Exiting..."
@@ -107,6 +107,53 @@ def backup_database(database_type, backup_dir, install_path, current_time):
             log.error(f"The following error encountered when backing up database: {e}.")
             return False
 
+    return True
+
+
+def restore_database(database_type, backup_file, install_path):
+    """Restore a MunkiReport database from a backup."""
+    log.info(f"Restoring database from backup file '{backup_file}'...")
+
+    if not os.path.isfile(backup_file):
+        log.error(f"Backup file '{backup_file}' does not exist!'")
+        return False
+
+    database = os.getenv("CONNECTION_DATABASE")
+
+    if database_type == "mysql":
+        username = os.getenv("CONNECTION_USERNAME")
+        password = os.getenv("CONNECTION_PASSWORD")
+        host = os.getenv("CONNECTION_HOST")
+        cmd = [
+            "/usr/local/opt/mysql-client/bin/mysql",
+            "-u",
+            username,
+            "-p",
+            password,
+            "-h",
+            host,
+            "-p",
+            database,
+            "<",
+            backup_file,
+        ]
+        log.debug(f"Restoring database '{database}' from '{backup_file}'...'")
+        if not run_command(cmd, shell=True):
+            return False
+
+    elif database_type == "sqlite":
+        db_path = os.path.join(install_path, "app/db/db.sqlite")
+        cmd = ["mv", db_path, db_path + ".old"]
+        log.debug(f"Renaming current database from '{db_path}' to '{db_path}.old'...")
+        if not run_command(cmd):
+            return False
+
+        log.debug(f"Rename successful. Restoring database from '{backup_file}'...")
+        cmd = ["sqlite3", database, "<", backup_file]
+        if not run_command(cmd, shell=True):
+            return False
+
+    log.info("Database restoration completed successfully.")
     return True
 
 
