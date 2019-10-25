@@ -22,14 +22,14 @@ from dotenv import load_dotenv
 # log output to console
 log = logging.getLogger()
 coloredlogs.install(
-    fmt="[%(asctime)s] - [%(levelname)-8s] - %(message)s", level="INFO", logger=log
+    fmt="[%(asctime)s] [%(levelname)-8s] %(message)s", level="INFO", logger=log
 )
 
 # load environment variables
 load_dotenv()
 
 
-def run_command(args, shell=False):
+def run_command(args: list, shell=False) -> bool:
     """Run a given command."""
     log.debug(f"Running command '{' '.join(args)}'...'")
     try:
@@ -44,7 +44,7 @@ def run_command(args, shell=False):
     return True
 
 
-def get_current_version(install_path):
+def get_current_version(install_path: str) -> str:
     """Return current build version"""
     helper = install_path + "app/helpers/site_helper.php"
     if os.path.exists(helper):
@@ -60,12 +60,12 @@ def get_current_version(install_path):
     return None
 
 
-def database_type():
+def get_database_type() -> str:
     """Return the database type."""
     return os.getenv("CONNECTION_DRIVER") or "sqlite"
 
 
-def set_maintenance_mode(install_path, value):
+def set_maintenance_mode(install_path: str, value: str) -> None:
     """Set maintenance mode to enabled or disabled."""
     log.debug(f"Setting maintenance mode to '{value}'...")
     maintenance_file = install_path + "storage/framework/down"
@@ -82,15 +82,25 @@ def set_maintenance_mode(install_path, value):
             log.error(f"Could not remove '{maintenance_file}'.")
 
 
-def backup_database(database_type, backup_dir, install_path, current_time):
+def backup_database(backup_dir: str, install_path: str, current_time: str) -> bool:
     """Backup a MunkiReport database."""
+    database_type = get_database_type()
+
     if database_type == "mysql":
-        username = os.getenv("CONNECTION_USERNAME")
-        password = os.getenv("CONNECTION_PASSWORD")
         database = os.getenv("CONNECTION_DATABASE")
-        host = os.getenv("CONNECTION_HOST")
         backup_file = os.path.join(backup_dir, database + "-" + current_time + ".bak")
-        cmd = f"/usr/local/opt/mysql-client/bin/mysqldump --user={username} --password={password} -h {host} {database} > {backup_file}"
+        cmd = [
+            "/usr/local/opt/mysql-client/bin/mysqldump",
+            "-u",
+            os.getenv("CONNECTION_USERNAME"),
+            "-p",
+            os.getenv("CONNECTION_PASSWORD"),
+            "-h",
+            os.getenv("CONNECTION_HOST"),
+            os.getenv("CONNECTION_DATABASE"),
+            ">",
+            backup_file,
+        ]
         log.info("Backing up database to '{}'...".format(backup_file))
         if not run_command(cmd):
             return False
@@ -110,28 +120,26 @@ def backup_database(database_type, backup_dir, install_path, current_time):
     return True
 
 
-def restore_database(database_type, backup_file, install_path):
+def restore_database(backup_file: str, install_path: str) -> bool:
     """Restore a MunkiReport database from a backup."""
-    log.info(f"Restoring database from backup file '{backup_file}'...")
+    database_type = get_database_type()
 
     if not os.path.isfile(backup_file):
         log.error(f"Backup file '{backup_file}' does not exist!'")
         return False
 
+    log.info(f"Restoring database from backup file '{backup_file}'...")
     database = os.getenv("CONNECTION_DATABASE")
 
     if database_type == "mysql":
-        username = os.getenv("CONNECTION_USERNAME")
-        password = os.getenv("CONNECTION_PASSWORD")
-        host = os.getenv("CONNECTION_HOST")
         cmd = [
             "/usr/local/opt/mysql-client/bin/mysql",
             "-u",
-            username,
+            os.getenv("CONNECTION_USERNAME"),
             "-p",
-            password,
+            os.getenv("CONNECTION_PASSWORD"),
             "-h",
-            host,
+            os.getenv("CONNECTION_HOST"),
             "-p",
             database,
             "<",
@@ -142,12 +150,17 @@ def restore_database(database_type, backup_file, install_path):
             return False
 
     elif database_type == "sqlite":
+        # move the old database file to db.sqlite.old
         db_path = os.path.join(install_path, "app/db/db.sqlite")
-        cmd = ["mv", db_path, db_path + ".old"]
+
         log.debug(f"Renaming current database from '{db_path}' to '{db_path}.old'...")
-        if not run_command(cmd):
+        try:
+            shutil.move(db_path, db_path + ".old")
+        except OSError as e:
+            log.error(f"The following error encountered when backing up database: {e}.")
             return False
 
+        # import from the backup
         log.debug(f"Rename successful. Restoring database from '{backup_file}'...")
         cmd = ["sqlite3", database, "<", backup_file]
         if not run_command(cmd, shell=True):
@@ -157,7 +170,7 @@ def restore_database(database_type, backup_file, install_path):
     return True
 
 
-def backup_files(backup_dir, install_path, current_time):
+def backup_files(backup_dir: str, install_path: str, current_time: str) -> bool:
     """Create file backup of install."""
     backup_dir = os.path.join(backup_dir, "munkireport", current_time)
     log.info(f"Backing up files to '{backup_dir}'...")
@@ -180,7 +193,7 @@ def backup_files(backup_dir, install_path, current_time):
     return True
 
 
-def get_versions():
+def get_versions() -> dict:
     """Return MR versions"""
     mr_api = "https://api.github.com/repos/munkireport/munkireport-php/releases"
     log.debug(f"Querying '{mr_api}' for latest release...")
@@ -210,22 +223,26 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--no-backup",
-        help="Do not take any backups before upgrading.",
         action="store_true",
         default=False,
+        help="Do not take any backups before upgrading.",
     )
-    parser.add_argument("--backup-dir", help="Directory to back up to.", default="/tmp")
+    parser.add_argument(
+        "--backup-dir", type=str, help="Directory to back up to.", default="/tmp"
+    )
     parser.add_argument(
         "--install-path",
-        help="Install path for MunkiReport.",
+        type=str,
         default=os.path.dirname(os.path.realpath(__file__)).strip("build"),
+        help="Install path for MunkiReport.",
     )
     parser.add_argument(
         "--upgrade",
-        help="Attempt to upgrade MunkiReport.",
         action="store_true",
         default=False,
+        help="Attempt to upgrade MunkiReport.",
     )
+    parser.add_argument("--restore", type=str, help="Restore database from backup.")
     parser.add_argument(
         "-v",
         "--verbose",
@@ -236,8 +253,18 @@ if __name__ == "__main__":
     parser.add_argument(
         "--version", type=str, default="latest", help="Version to upgrade to."
     )
-    parser.add_argument("--no-composer", action="store_true", default=False)
-    parser.add_argument("--no-migrations", action="store_true", default=False)
+    parser.add_argument(
+        "--no-composer",
+        action="store_true",
+        default=False,
+        help="Don't run composer after upgrade.",
+    )
+    parser.add_argument(
+        "--no-migrations",
+        action="store_true",
+        default=False,
+        help="Don't run migrations after upgrade.",
+    )
     args = parser.parse_args()
 
     if args.verbose:
@@ -255,7 +282,7 @@ if __name__ == "__main__":
     if args.version == "latest":
         desired_version = latest_version
 
-    database_type = database_type()
+    database_type = get_database_type()
 
     if not current_version:
         log.error(
@@ -288,9 +315,7 @@ if __name__ == "__main__":
 
             if not args.no_backup:
                 # backup database
-                if not backup_database(
-                    database_type, args.backup_dir, install_path, current_time
-                ):
+                if not backup_database(args.backup_dir, install_path, current_time):
                     exit()
 
                 # backup files
@@ -341,3 +366,8 @@ if __name__ == "__main__":
             # disable maintenance mode
             set_maintenance_mode(install_path, "disabled")
             log.info("Upgrade complete.")
+
+    elif args.restore:
+        restore = restore_database(args.restore, install_path)
+        if not restore:
+            exit(1)
