@@ -111,7 +111,7 @@ def backup_database(backup_dir: str, install_path: str, current_time: str) -> bo
 
     elif database_type == "sqlite":
         backup_file = backup_dir + "/db_" + current_time + ".sqlite.bak"
-        log.info(f"Backing up database to {backup_file}...")
+        log.info(f"Backing up database to '{backup_file}'...")
         conn = sqlite3.connect(install_path + "app/db/db.sqlite")
         try:
             with open(backup_file, "w") as f:
