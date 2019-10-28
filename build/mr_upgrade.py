@@ -12,6 +12,7 @@ import operator
 import os
 import re
 import shutil
+import sqlite3
 import subprocess
 import urllib.request
 from distutils.dir_util import copy_tree
@@ -29,11 +30,13 @@ coloredlogs.install(
 load_dotenv()
 
 
-def run_command(args: list, shell=False, suppress_output=False) -> bool:
+def run_command(args: list, suppress_output: bool = False) -> bool:
     """Run a given command."""
-    log.debug(f"Running command '{' '.join(args)}'...'")
+    log.debug(
+        f"Running command '{' '.join(args)}', suppress_output={suppress_output}...'"
+    )
     try:
-        subprocess.run(args, capture_output=True, check=True, shell=shell)
+        subprocess.run(args, capture_output=True, check=True)
     except subprocess.CalledProcessError as e:
         if not suppress_output:
             log.error(
@@ -95,22 +98,24 @@ def backup_database(backup_dir: str, install_path: str, current_time: str) -> bo
             f"--user={os.getenv('CONNECTION_USERNAME')}",
             f"--password={os.getenv('CONNECTION_PASSWORD')}",
             f"--host={os.getenv('CONNECTION_HOST')}",
+            "--databases",
             os.getenv("CONNECTION_DATABASE"),
-            ">",
-            backup_file,
+            f"--result-file={backup_file}",
+            "--skip-comments",
         ]
         log.info("Backing up database to '{}'...".format(backup_file))
-        if not run_command(cmd, shell=True):
+        if not run_command(cmd):
             return False
 
         log.info("Backup completed successfully.")
 
     elif database_type == "sqlite":
+        conn = sqlite3.connect(install_path + "app/db/db.sqlite")
         try:
-            shutil.copyfile(
-                install_path + "app/db/db.sqlite",
-                backup_dir + "db" + current_time + ".sqlite.bak",
-            )
+            with open(backup_dir + "/db_" + current_time + ".sqlite.bak", "w") as f:
+                for line in conn.iterdump():
+                    f.write("%s\n" % line)
+
         except OSError as e:
             log.error(f"The following error encountered when backing up database: {e}.")
             return False
@@ -135,12 +140,11 @@ def restore_database(backup_file: str, install_path: str) -> bool:
             f"--user={os.getenv('CONNECTION_USERNAME')}",
             f"--password={os.getenv('CONNECTION_PASSWORD')}",
             f"--host={os.getenv('CONNECTION_HOST')}",
-            database,
-            "<",
-            backup_file,
+            f"--database={database}",
+            f"--execute=source {backup_file}",
         ]
         log.debug(f"Restoring database '{database}' from '{backup_file}'...'")
-        if not run_command(cmd, shell=True):
+        if not run_command(cmd):
             return False
 
     elif database_type == "sqlite":
@@ -156,9 +160,19 @@ def restore_database(backup_file: str, install_path: str) -> bool:
 
         # import from the backup
         log.debug(f"Rename successful. Restoring database from '{backup_file}'...")
-        cmd = ["sqlite3", database, "<", backup_file]
-        if not run_command(cmd, shell=True):
+        try:
+            conn = sqlite3.connect(db_path)
+            c = conn.cursor()
+        except:
+            log.error(f"Unable to instantiate sqlite cursor with database {db_path}.")
             return False
+
+        try:
+            with open(backup_file, "r") as bf:
+                for line in bf:
+                    c.execute(line)
+        except:
+            log.error(f"Errors encountered when reading backup file.")
 
     log.info("Database restoration completed successfully.")
     return True
