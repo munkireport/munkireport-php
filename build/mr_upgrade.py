@@ -140,7 +140,6 @@ def restore_database(backup_file: str, install_path: str) -> bool:
             os.getenv("CONNECTION_PASSWORD"),
             "-h",
             os.getenv("CONNECTION_HOST"),
-            "-p",
             database,
             "<",
             backup_file,
@@ -308,6 +307,8 @@ if __name__ == "__main__":
                 exit()
 
             log.info(f"Installing version {desired_version}...")
+
+            # enable maintenance mode
             if not set_maintenance_mode(install_path, "enabled"):
                 exit()
 
@@ -322,6 +323,8 @@ if __name__ == "__main__":
                 if not backup_files(args.backup_dir, install_path, current_time):
                     exit()
 
+            # if we go back to an old enough version, mr_upgrade wont exist so we wont
+            # be able to run an upgrade due to local changes, so stash the upgrade script.
             run_command(["git", "stash", "save", "mr_upgrade.py"])
 
             # attempt git pull for update
@@ -329,7 +332,7 @@ if __name__ == "__main__":
             if not run_command(["git", "fetch", "origin", "master"]):
                 exit()
 
-            log.info("Git pull complete.")
+            log.info("Git fetch complete.")
 
             # switch to the specific commit for the version
             log.info(f"Switching to commit for version {desired_version}...")
@@ -361,6 +364,7 @@ if __name__ == "__main__":
 
                 log.info("Migrations complete.")
 
+            # pull the latest version of the mr_upgrade script
             run_command(["git", "checkout", "mr_upgrade", "mr_upgrade.py"])
 
             # disable maintenance mode
