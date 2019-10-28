@@ -110,9 +110,11 @@ def backup_database(backup_dir: str, install_path: str, current_time: str) -> bo
         log.info("Backup completed successfully.")
 
     elif database_type == "sqlite":
+        backup_file = backup_dir + "/db_" + current_time + ".sqlite.bak"
+        log.info(f"Backing up database to {backup_file}...")
         conn = sqlite3.connect(install_path + "app/db/db.sqlite")
         try:
-            with open(backup_dir + "/db_" + current_time + ".sqlite.bak", "w") as f:
+            with open(backup_file, "w") as f:
                 for line in conn.iterdump():
                     f.write("%s\n" % line)
 
