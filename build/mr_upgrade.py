@@ -92,18 +92,15 @@ def backup_database(backup_dir: str, install_path: str, current_time: str) -> bo
         backup_file = os.path.join(backup_dir, database + "-" + current_time + ".bak")
         cmd = [
             "/usr/local/opt/mysql-client/bin/mysqldump",
-            "-u",
-            os.getenv("CONNECTION_USERNAME"),
-            "-p",
-            os.getenv("CONNECTION_PASSWORD"),
-            "-h",
-            os.getenv("CONNECTION_HOST"),
+            f"--user={os.getenv('CONNECTION_USERNAME')}",
+            f"--password={os.getenv('CONNECTION_PASSWORD')}",
+            f"--host={os.getenv('CONNECTION_HOST')}",
             os.getenv("CONNECTION_DATABASE"),
             ">",
             backup_file,
         ]
         log.info("Backing up database to '{}'...".format(backup_file))
-        if not run_command(cmd):
+        if not run_command(cmd, shell=True):
             return False
 
         log.info("Backup completed successfully.")
@@ -135,12 +132,9 @@ def restore_database(backup_file: str, install_path: str) -> bool:
     if database_type == "mysql":
         cmd = [
             "/usr/local/opt/mysql-client/bin/mysql",
-            "-u",
-            os.getenv("CONNECTION_USERNAME"),
-            "-p",
-            os.getenv("CONNECTION_PASSWORD"),
-            "-h",
-            os.getenv("CONNECTION_HOST"),
+            f"--user={os.getenv('CONNECTION_USERNAME')}",
+            f"--password={os.getenv('CONNECTION_PASSWORD')}",
+            f"--host={os.getenv('CONNECTION_HOST')}",
             database,
             "<",
             backup_file,
