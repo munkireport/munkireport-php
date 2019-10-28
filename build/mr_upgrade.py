@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-"""Script for updating MunkiReport"""
+"""
+Script for upgrading MunkiReport.
+"""
 
 import argparse
 import datetime
-from dotenv import load_dotenv
-from distutils.dir_util import copy_tree
-import coloredlogs
 import json
 import logging
 import operator
@@ -15,39 +14,58 @@ import re
 import shutil
 import subprocess
 import urllib.request
+from distutils.dir_util import copy_tree
 
+import coloredlogs
+from dotenv import load_dotenv
 
 # log output to console
 log = logging.getLogger()
 coloredlogs.install(
-    fmt="[%(asctime)s] - [%(levelname)-8s] - %(message)s", level="INFO", logger=log
+    fmt="[%(asctime)s] [%(levelname)-8s] %(message)s", level="INFO", logger=log
 )
 
 # load environment variables
 load_dotenv()
 
 
-def get_current_version(install_path):
+def run_command(args: list, shell=False) -> bool:
+    """Run a given command."""
+    log.debug(f"Running command '{' '.join(args)}'...'")
+    try:
+        subprocess.run(args, capture_output=True, check=True, shell=shell)
+    except subprocess.CalledProcessError as e:
+        log.error(
+            f"Command '{' '.join(args)}' failed with the following output: '{e.stderr.decode('utf8')}'. Exiting..."
+        )
+        return False
+
+    log.debug(f"Command '{' '.join(args)}' completed successfully.")
+    return True
+
+
+def get_current_version(install_path: str) -> str:
     """Return current build version"""
     helper = install_path + "app/helpers/site_helper.php"
     if os.path.exists(helper):
         try:
-            version = re.findall(r"(?<=GLOBALS\['version'\])?[0-9].*(?=';)", open(helper).read())[0]
+            version = re.findall(
+                r"(?<=GLOBALS\['version'\])?[0-9].*(?=';)", open(helper).read()
+            )[0]
         except:
             log.error(f"Error encountered when parsing '{helper}'.")
             return None
 
         return version
-        
     return None
 
 
-def database_type():
+def get_database_type() -> str:
     """Return the database type."""
     return os.getenv("CONNECTION_DRIVER") or "sqlite"
 
 
-def set_maintenance_mode(install_path, value):
+def set_maintenance_mode(install_path: str, value: str) -> None:
     """Set maintenance mode to enabled or disabled."""
     log.debug(f"Setting maintenance mode to '{value}'...")
     maintenance_file = install_path + "storage/framework/down"
@@ -64,22 +82,30 @@ def set_maintenance_mode(install_path, value):
             log.error(f"Could not remove '{maintenance_file}'.")
 
 
-def backup_database(database_type, backup_dir, install_path, current_time):
+def backup_database(backup_dir: str, install_path: str, current_time: str) -> bool:
     """Backup a MunkiReport database."""
+    database_type = get_database_type()
+
     if database_type == "mysql":
-        username = os.getenv("CONNECTION_USERNAME")
-        password = os.getenv("CONNECTION_PASSWORD")
         database = os.getenv("CONNECTION_DATABASE")
-        host = os.getenv("CONNECTION_HOST")
         backup_file = os.path.join(backup_dir, database + "-" + current_time + ".bak")
-        cmd = f"/usr/local/opt/mysql-client/bin/mysqldump --user={username} --password={password} -h {host} {database} > {backup_file}"
+        cmd = [
+            "/usr/local/opt/mysql-client/bin/mysqldump",
+            "-u",
+            os.getenv("CONNECTION_USERNAME"),
+            "-p",
+            os.getenv("CONNECTION_PASSWORD"),
+            "-h",
+            os.getenv("CONNECTION_HOST"),
+            os.getenv("CONNECTION_DATABASE"),
+            ">",
+            backup_file,
+        ]
         log.info("Backing up database to '{}'...".format(backup_file))
-        try:
-            proc = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, shell=True)
-            log.info("Backup completed successfully.")
-        except subprocess.CalledProcessError as e:
-            log.error(f"mysqldump failed with error: '{e}'.")
+        if not run_command(cmd):
             return False
+
+        log.info("Backup completed successfully.")
 
     elif database_type == "sqlite":
         try:
@@ -87,14 +113,63 @@ def backup_database(database_type, backup_dir, install_path, current_time):
                 install_path + "app/db/db.sqlite",
                 backup_dir + "db" + current_time + ".sqlite.bak",
             )
-        except:
-            log.error("Errors encountered when backing up database.")
+        except OSError as e:
+            log.error(f"The following error encountered when backing up database: {e}.")
             return False
-    
+
     return True
 
 
-def backup_files(backup_dir, install_path, current_time):
+def restore_database(backup_file: str, install_path: str) -> bool:
+    """Restore a MunkiReport database from a backup."""
+    database_type = get_database_type()
+
+    if not os.path.isfile(backup_file):
+        log.error(f"Backup file '{backup_file}' does not exist!'")
+        return False
+
+    log.info(f"Restoring database from backup file '{backup_file}'...")
+    database = os.getenv("CONNECTION_DATABASE")
+
+    if database_type == "mysql":
+        cmd = [
+            "/usr/local/opt/mysql-client/bin/mysql",
+            "-u",
+            os.getenv("CONNECTION_USERNAME"),
+            "-p",
+            os.getenv("CONNECTION_PASSWORD"),
+            "-h",
+            os.getenv("CONNECTION_HOST"),
+            database,
+            "<",
+            backup_file,
+        ]
+        log.debug(f"Restoring database '{database}' from '{backup_file}'...'")
+        if not run_command(cmd, shell=True):
+            return False
+
+    elif database_type == "sqlite":
+        # move the old database file to db.sqlite.old
+        db_path = os.path.join(install_path, "app/db/db.sqlite")
+
+        log.debug(f"Renaming current database from '{db_path}' to '{db_path}.old'...")
+        try:
+            shutil.move(db_path, db_path + ".old")
+        except OSError as e:
+            log.error(f"The following error encountered when backing up database: {e}.")
+            return False
+
+        # import from the backup
+        log.debug(f"Rename successful. Restoring database from '{backup_file}'...")
+        cmd = ["sqlite3", database, "<", backup_file]
+        if not run_command(cmd, shell=True):
+            return False
+
+    log.info("Database restoration completed successfully.")
+    return True
+
+
+def backup_files(backup_dir: str, install_path: str, current_time: str) -> bool:
     """Create file backup of install."""
     backup_dir = os.path.join(backup_dir, "munkireport", current_time)
     log.info(f"Backing up files to '{backup_dir}'...")
@@ -109,26 +184,30 @@ def backup_files(backup_dir, install_path, current_time):
     try:
         copy_tree(install_path, backup_dir)
     except:
-        log.error(f"Errors encountered when running copy_tree({install_path}, {backup_dir}).")
+        log.error(
+            f"Errors encountered when running copy_tree({install_path}, {backup_dir})."
+        )
         return False
-    
+
     return True
 
 
-def get_versions():
+def get_versions() -> dict:
     """Return MR versions"""
     mr_api = "https://api.github.com/repos/munkireport/munkireport-php/releases"
+    log.debug(f"Querying '{mr_api}' for latest release...")
     versions = {}
     try:
         with urllib.request.urlopen(mr_api) as response:
             data = json.loads(response.read())
-        
+
         for version in data:
             versions[version["tag_name"].strip("v")] = version["target_commitish"]
-        
+        log.debug(f"Found versions: {versions}.")
+
     except:
         log.error("Errors encountered when grabbing latest version.")
-    
+
     return versions
 
 
@@ -142,25 +221,48 @@ if __name__ == "__main__":
         help="Print info on the MunkiReport install.",
     )
     parser.add_argument(
-        "--no-backup", help="Do not take any backups before upgrading.", 
+        "--no-backup",
         action="store_true",
-        default=False
+        default=False,
+        help="Do not take any backups before upgrading.",
     )
-    parser.add_argument("--backup-dir", help="Directory to back up to.", default="/tmp")
+    parser.add_argument(
+        "--backup-dir", type=str, help="Directory to back up to.", default="/tmp"
+    )
     parser.add_argument(
         "--install-path",
-        help="Install path for MunkiReport.",
+        type=str,
         default=os.path.dirname(os.path.realpath(__file__)).strip("build"),
+        help="Install path for MunkiReport.",
     )
     parser.add_argument(
-        "--upgrade", help="Attempt to upgrade MunkiReport.", action='store_true', 
-        default=False
+        "--upgrade",
+        action="store_true",
+        default=False,
+        help="Attempt to upgrade MunkiReport.",
+    )
+    parser.add_argument("--restore", type=str, help="Restore database from backup.")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        default=False,
+        help="Enable verbose logging.",
     )
     parser.add_argument(
-        '-v', '--verbose', action='store_true', default=False, help='Enable verbose logging.'
+        "--version", type=str, default="latest", help="Version to upgrade to."
     )
     parser.add_argument(
-        '--version', type=str, default='latest', help='Version to upgrade to.'
+        "--no-composer",
+        action="store_true",
+        default=False,
+        help="Don't run composer after upgrade.",
+    )
+    parser.add_argument(
+        "--no-migrations",
+        action="store_true",
+        default=False,
+        help="Don't run migrations after upgrade.",
     )
     args = parser.parse_args()
 
@@ -176,10 +278,10 @@ if __name__ == "__main__":
     desired_version = args.version
     versions = get_versions()
     latest_version = max(versions.items(), key=operator.itemgetter(0))[0]
-    if args.version == 'latest':
+    if args.version == "latest":
         desired_version = latest_version
-    
-    database_type = database_type()
+
+    database_type = get_database_type()
 
     if not current_version:
         log.error(
@@ -196,32 +298,39 @@ if __name__ == "__main__":
         exit()
 
     if args.upgrade:
-        if current_version >= latest_version and args.version == 'latest':
+        if current_version >= latest_version and args.version == "latest":
             log.info("No version upgrade available.")
 
         else:
+            if desired_version not in versions.keys():
+                log.error(f"Version '{desired_version}' was not found. Exiting...")
+                exit()
+
             log.info(f"Installing version {desired_version}...")
+
+            # enable maintenance mode
             if not set_maintenance_mode(install_path, "enabled"):
-                exit(1)
-            
+                exit()
+
             current_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
-            
+
             if not args.no_backup:
                 # backup database
-                if not backup_database(database_type, args.backup_dir, install_path, current_time):
-                    exit(1)
+                if not backup_database(args.backup_dir, install_path, current_time):
+                    exit()
 
                 # backup files
                 if not backup_files(args.backup_dir, install_path, current_time):
-                    exit(1)
+                    exit()
 
-            # attempt git fetch for update
-            try:
-                log.info("Starting Git fetch...")
-                proc = subprocess.run(["git", "fetch", "origin", "master"], stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-            except subprocess.CalledProcessError as e:
-                log.error(f"Git fetch failed with the following output: '{' '.join(e)}'. Exiting...")
-                exit(1)
+            # if we go back to an old enough version, mr_upgrade wont exist so we wont
+            # be able to run an upgrade due to local changes, so stash the upgrade script.
+            run_command(["git", "stash", "save", "mr_upgrade.py"])
+
+            # attempt git pull for update
+            log.info("Starting Git pull...")
+            if not run_command(["git", "fetch", "origin", "master"]):
+                exit()
 
             log.info("Git fetch complete.")
 
@@ -229,39 +338,40 @@ if __name__ == "__main__":
             log.info(f"Switching to commit for version {desired_version}...")
             commit = versions[desired_version]
             log.debug(f"Commit for version {desired_version} is {commit}.")
-            try:
-                proc = subprocess.run(["git", "checkout", commit], stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-            except subprocess.CalledProcessError as e:
-                log.error(f"Git checkout failed with the following output: '{' '.join(e)}'. Exiting...")
-                exit(1)
 
-            os.chdir(install_path)
+            if not run_command(["git", "checkout", commit]):
+                exit()
 
-            # run composer
-            log.info("Running composer...")
-            cmd = ["/usr/local/bin/composer", "update", "--no-dev"]
-            log.debug(f"Running command {' '.join(cmd)}...")
-            try:
-                proc = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-            except subprocess.CalledProcessError as e:
-                log.error(f"Composer failed with the following output: '{' '.join(e)}'. Exiting...")
-                exit(1)
+            log.info("Git checkout complete.")
 
-            log.info("Composer complete.")
-            os.chdir(f"{install_path}/build/")
+            if not args.no_composer:
+                # run composer
+                os.chdir(install_path)
+                log.info("Running composer...")
+                if not run_command(["/usr/local/bin/composer", "update", "--no-dev"]):
+                    exit()
 
-            # Run Migrations
-            log.info("Running migrations...")
-            cmd = ["/usr/bin/php", f"{install_path}database/migrate.php"]
-            log.debug(f"Running command: '{' '.join(cmd)}'")
-            try:
-                proc = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
-            except subprocess.CalledProcessError as e:
-                log.error(f"Migrations failed. Error output: '{' '.join(e)}'. Exiting...")
-                exit(1)
+                log.info("Composer complete.")
 
-            log.info("Migrations complete.")
+            if not args.no_migrations:
+                # run migrations
+                os.chdir(f"{install_path}/build/")
+                log.info("Running migrations...")
+                if not run_command(
+                    ["/usr/bin/php", f"{install_path}database/migrate.php"]
+                ):
+                    exit()
+
+                log.info("Migrations complete.")
+
+            # pull the latest version of the mr_upgrade script
+            run_command(["git", "checkout", "master", "mr_upgrade.py"])
 
             # disable maintenance mode
             set_maintenance_mode(install_path, "disabled")
             log.info("Upgrade complete.")
+
+    elif args.restore:
+        restore = restore_database(args.restore, install_path)
+        if not restore:
+            exit(1)
