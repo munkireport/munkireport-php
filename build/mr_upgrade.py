@@ -29,15 +29,16 @@ coloredlogs.install(
 load_dotenv()
 
 
-def run_command(args: list, shell=False) -> bool:
+def run_command(args: list, shell=False, suppress_output=False) -> bool:
     """Run a given command."""
     log.debug(f"Running command '{' '.join(args)}'...'")
     try:
         subprocess.run(args, capture_output=True, check=True, shell=shell)
     except subprocess.CalledProcessError as e:
-        log.error(
-            f"Command '{' '.join(args)}' failed with the following output: '{e.stderr.decode('utf8')}'. Exiting..."
-        )
+        if not suppress_output:
+            log.error(
+                f"Command '{' '.join(args)}' failed with the following output: '{e.stderr.decode('utf8')}'. Exiting..."
+            )
         return False
 
     log.debug(f"Command '{' '.join(args)}' completed successfully.")
@@ -327,8 +328,8 @@ if __name__ == "__main__":
             # be able to run an upgrade due to local changes, so stash the upgrade script.
             run_command(["git", "stash", "save", "mr_upgrade.py"])
 
-            # attempt git pull for update
-            log.info("Starting Git pull...")
+            # attempt git fetch for update
+            log.info("Starting Git fetch...")
             if not run_command(["git", "fetch", "origin", "master"]):
                 exit()
 
@@ -339,8 +340,18 @@ if __name__ == "__main__":
             commit = versions[desired_version]
             log.debug(f"Commit for version {desired_version} is {commit}.")
 
-            if not run_command(["git", "checkout", commit]):
-                exit()
+            # try to checkout to the specific version (v5.1.0, for example),
+            # which makes it wasier to see the version you are currently
+            # running when doing a git branch
+            if not run_command(
+                ["git", "checkout", f"v{desired_version}"], suppress_output=True
+            ):
+                if not run_command(["git", "checkout", commit]):
+                    exit()
+                else:
+                    log.info(
+                        f"No tag was found for version {desired_version}, so commit was checked out instead of version tag."
+                    )
 
             log.info("Git checkout complete.")
 
