@@ -110,9 +110,22 @@ def backup_database(backup_dir: str, install_path: str, current_time: str) -> bo
         log.info("Backup completed successfully.")
 
     elif database_type == "sqlite":
+        database_path = os.getenv("CONNECTION_DATABASE")
+
+        # ensure that the database path is defined and exists
+        if database_path:
+            if not os.path.isfile(database_path):
+                log.error(f"Could not find sqlite database at path '{database_path}'.")
+                return False
+        else:
+            log.error(f"'CONNECTION_DATABASE' is undefined in your environment.")
+            return False
+
+        # backup the database to the backup directory with the current time
         backup_file = backup_dir + "/db_" + current_time + ".sqlite.bak"
         log.info(f"Backing up database to '{backup_file}'...")
-        conn = sqlite3.connect(install_path + "app/db/db.sqlite")
+
+        conn = sqlite3.connect(database_path)
         try:
             with open(backup_file, "w") as f:
                 for line in conn.iterdump():
@@ -150,12 +163,23 @@ def restore_database(backup_file: str, install_path: str) -> bool:
             return False
 
     elif database_type == "sqlite":
-        # move the old database file to db.sqlite.old
-        db_path = os.path.join(install_path, "app/db/db.sqlite")
+        database_path = os.getenv("CONNECTION_DATABASE")
 
-        log.debug(f"Renaming current database from '{db_path}' to '{db_path}.old'...")
+        # ensure that the database path is defined and exists
+        if database_path:
+            if not os.path.isfile(database_path):
+                log.error(f"Could not find sqlite database at path '{database_path}'.")
+                return False
+        else:
+            log.error(f"'CONNECTION_DATABASE' is undefined in your environment.")
+            return False
+
+        # move the old database file to db.sqlite.old
+        log.debug(
+            f"Renaming current database from '{database_path}' to '{database_path}.old'..."
+        )
         try:
-            shutil.move(db_path, db_path + ".old")
+            shutil.move(database_path, database_path + ".old")
         except OSError as e:
             log.error(f"The following error encountered when backing up database: {e}.")
             return False
@@ -163,10 +187,12 @@ def restore_database(backup_file: str, install_path: str) -> bool:
         # import from the backup
         log.debug(f"Rename successful. Restoring database from '{backup_file}'...")
         try:
-            conn = sqlite3.connect(db_path)
+            conn = sqlite3.connect(database_path)
             c = conn.cursor()
         except:
-            log.error(f"Unable to instantiate sqlite cursor with database {db_path}.")
+            log.error(
+                f"Unable to instantiate sqlite cursor with database {database_path}."
+            )
             return False
 
         try:
@@ -174,7 +200,8 @@ def restore_database(backup_file: str, install_path: str) -> bool:
                 for line in bf:
                     c.execute(line)
         except:
-            log.error(f"Errors encountered when reading backup file.")
+            log.error("Errors encountered when reading backup file.")
+            return False
 
     log.info("Database restoration completed successfully.")
     return True
