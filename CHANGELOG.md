@@ -1,4 +1,4 @@
-### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...HEAD) (Unreleased)
+### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...v5.1.3) (November 12, 2019)
 
 FEATURES
   - Added an upgrade script (@lcsees)
