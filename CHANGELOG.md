@@ -1,4 +1,41 @@
-### [5.1.2](https://github.com/munkireport/munkireport-php/compare/v5.1.1...HEAD) (Unreleased)
+### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...HEAD) (Unreleased)
+
+FEATURES
+  - Added an upgrade script (@lcsees)
+  - Added a docker compose example (@b-reich)
+
+FIXES
+  - MySQL port is now correctly used in admin panel
+  - Server timeout is now 60 seconds for slow servers
+  - Filter scripts for @ sign (Synology issue)
+  - LaunchDaemon changed to use KeepAlive instead of WatchPaths - should prevent the runner from starting twice
+  
+MODULE UPDATES
+  - munkireport/crashplan (v1.4 => V1.5)
+  - munkireport/managedinstalls (v2.2 => V2.3)
+
+DEPENDENCY UPDATES  
+  - guzzlehttp/guzzle (6.3.3 => 6.4.1)
+  - doctrine/event-manager (v1.0.0 => 1.1.0)
+  - doctrine/cache (v1.8.0 => 1.9.0)
+  - doctrine/dbal (v2.9.2 => v2.10.0)
+  - symfony/yaml (v3.4.32 => v3.4.33)
+  - symfony/var-dumper (v4.3.5 => v4.3.6)
+  - tightenco/collect (v6.3.0 => v6.4.1)
+  - psr/log (1.1.0 => 1.1.2)
+  - adldap2/adldap2 (v10.1.1 => v10.2.0)
+  - robrichards/xmlseclibs (3.0.3 => 3.0.4)
+  - onelogin/php-saml (3.3.0 => 3.3.1)
+  - symfony/service-contracts (v1.1.7 => v1.1.8)
+  - symfony/console (v4.3.5 => v4.3.6)
+  - symfony/process (v4.3.5 => v4.3.6)
+  - doctrine/inflector (v1.3.0 => 1.3.1)
+  - symfony/translation (v4.3.5 => v4.3.6)
+  - nesbot/carbon (2.25.2 => 2.26.0)
+  - symfony/finder (v4.3.5 => v4.3.6)
+  - phpoption/phpoption (1.5.0 => 1.5.2)
+
+### [5.1.2](https://github.com/munkireport/munkireport-php/compare/v5.1.1...v5.1.2) (October 19, 2019)
 
 Increase default script timeout to 30 seconds
 

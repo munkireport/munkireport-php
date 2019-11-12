@@ -1,0 +1,40 @@
+version: '3'
+services:
+  munkireport:
+    image: munkireport/munkireport-php:latest
+    restart: always
+    environment:
+      - MODULES=applications, directory_service, disk_report, displays_info, extensions, filevault_status, omebrew, homebrew_info, ibridge, installhistory, inventory, localadmin, managedinstalls, mdm_status, munkiinfo, munkireport, munkireportinfo, network, power, printer, profile, security, softwareupdate, sophos, supported_os, timemachine, usage_stats, user_sessions, warranty, wifi
+      - SITENAME=Munkireport
+      - CONNECTION_DRIVER=mysql
+      - CONNECTION_HOST=db
+      - CONNECTION_PORT=3306
+      - CONNECTION_DATABASE=munkireport
+      - CONNECTION_USERNAME=munkireport
+      - CONNECTION_PASSWORD=
+      - AUTH_METHODS=LOCAL
+      - PUID=1000
+      - PGID=1000
+      - CLIENT_PASSPHRASES=
+      - WEBHOST=https://munkireport-sda.domain.com
+      - TZ=Europe/Berlin
+    depends_on:
+      - db
+    ports:
+      - 80:80
+    volumes:
+      - ./munkireport-db/:/var/munkireport/app/db
+      - ./user//:/var/munkireport/local/users
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=munkireport
+      - MYSQL_USER=munkireport
+      - MYSQL_PASSWORD=
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - ./db/:/var/lib/mysql
