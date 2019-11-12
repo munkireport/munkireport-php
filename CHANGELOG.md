@@ -5,7 +5,10 @@ FEATURES
   - Added a docker compose example (@b-reich)
 
 FIXES
-  - LaunchDaemon changed to use KeepAlive instead of WatchPaths - should prevent the runner from starting twice 
+  - MySQL port is now correctly used in admin panel
+  - Server timeout is now 60 seconds for slow servers
+  - Filter scripts for @ sign (Synology issue)
+  - LaunchDaemon changed to use KeepAlive instead of WatchPaths - should prevent the runner from starting twice
   
 MODULE UPDATES
   - munkireport/crashplan (v1.4 => V1.5)
