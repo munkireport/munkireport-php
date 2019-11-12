@@ -47,6 +47,7 @@ from Foundation import NSData
 from Foundation import NSPropertyListSerialization
 from Foundation import NSPropertyListMutableContainers
 from Foundation import NSPropertyListXMLFormat_v1_0
+
 # pylint: enable=E0611
 
 # Disable PyLint complaining about 'invalid' camelCase names
@@ -55,15 +56,21 @@ from Foundation import NSPropertyListXMLFormat_v1_0
 
 class FoundationPlistException(Exception):
     """Basic exception for plist errors"""
+
     pass
+
 
 class NSPropertyListSerializationException(FoundationPlistException):
     """Read/parse error for plists"""
+
     pass
+
 
 class NSPropertyListWriteException(FoundationPlistException):
     """Write error for plists"""
+
     pass
+
 
 def readPlist(filepath):
     """
@@ -71,13 +78,16 @@ def readPlist(filepath):
     (which is usually a dictionary).
     """
     plistData = NSData.dataWithContentsOfFile_(filepath)
-    dataObject, dummy_plistFormat, error = (
-        NSPropertyListSerialization.
-        propertyListFromData_mutabilityOption_format_errorDescription_(
-            plistData, NSPropertyListMutableContainers, None, None))
+    (
+        dataObject,
+        dummy_plistFormat,
+        error,
+    ) = NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
+        plistData, NSPropertyListMutableContainers, None, None
+    )
     if dataObject is None:
         if error:
-            error = error.encode('ascii', 'ignore')
+            error = error.encode("ascii", "ignore")
         else:
             error = "Unknown error"
         errmsg = "%s in file %s" % (error, filepath)
@@ -87,18 +97,21 @@ def readPlist(filepath):
 
 
 def readPlistFromString(data):
-    '''Read a plist data from a string. Return the root object.'''
+    """Read a plist data from a string. Return the root object."""
     try:
         plistData = buffer(data)
     except TypeError, err:
         raise NSPropertyListSerializationException(err)
-    dataObject, dummy_plistFormat, error = (
-        NSPropertyListSerialization.
-        propertyListFromData_mutabilityOption_format_errorDescription_(
-            plistData, NSPropertyListMutableContainers, None, None))
+    (
+        dataObject,
+        dummy_plistFormat,
+        error,
+    ) = NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
+        plistData, NSPropertyListMutableContainers, None, None
+    )
     if dataObject is None:
         if error:
-            error = error.encode('ascii', 'ignore')
+            error = error.encode("ascii", "ignore")
         else:
             error = "Unknown error"
         raise NSPropertyListSerializationException(error)
@@ -107,16 +120,18 @@ def readPlistFromString(data):
 
 
 def writePlist(dataObject, filepath):
-    '''
+    """
     Write 'rootObject' as a plist to filepath.
-    '''
-    plistData, error = (
-        NSPropertyListSerialization.
-        dataFromPropertyList_format_errorDescription_(
-            dataObject, NSPropertyListXMLFormat_v1_0, None))
+    """
+    (
+        plistData,
+        error,
+    ) = NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
+        dataObject, NSPropertyListXMLFormat_v1_0, None
+    )
     if plistData is None:
         if error:
-            error = error.encode('ascii', 'ignore')
+            error = error.encode("ascii", "ignore")
         else:
             error = "Unknown error"
         raise NSPropertyListSerializationException(error)
@@ -125,18 +140,21 @@ def writePlist(dataObject, filepath):
             return
         else:
             raise NSPropertyListWriteException(
-                "Failed to write plist data to %s" % filepath)
+                "Failed to write plist data to %s" % filepath
+            )
 
 
 def writePlistToString(rootObject):
-    '''Return 'rootObject' as a plist-formatted string.'''
-    plistData, error = (
-        NSPropertyListSerialization.
-        dataFromPropertyList_format_errorDescription_(
-            rootObject, NSPropertyListXMLFormat_v1_0, None))
+    """Return 'rootObject' as a plist-formatted string."""
+    (
+        plistData,
+        error,
+    ) = NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
+        rootObject, NSPropertyListXMLFormat_v1_0, None
+    )
     if plistData is None:
         if error:
-            error = error.encode('ascii', 'ignore')
+            error = error.encode("ascii", "ignore")
         else:
             error = "Unknown error"
         raise NSPropertyListSerializationException(error)
@@ -144,5 +162,5 @@ def writePlistToString(rootObject):
         return str(plistData)
 
 
-if __name__ == '__main__':
-    print 'This is a library of support tools for the Munki Suite.'
+if __name__ == "__main__":
+    print "This is a library of support tools for the Munki Suite."

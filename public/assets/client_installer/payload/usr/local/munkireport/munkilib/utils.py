@@ -31,8 +31,9 @@ import stat
 
 
 class Memoize(dict):
-    '''Class to cache the return values of an expensive function.
-    This version supports only functions with non-keyword arguments'''
+    """Class to cache the return values of an expensive function.
+    This version supports only functions with non-keyword arguments"""
+
     def __init__(self, func):
         self.func = func
 
@@ -68,6 +69,7 @@ class InsecureFilePermissionsError(VerifyFilePermissionsError):
 # so disable PyLint warnings about invalid function names
 # pylint: disable=C0103
 
+
 def verifyFileOnlyWritableByMunkiAndRoot(file_path):
     """
     Check the permissions on a given file path; fail if owner or group
@@ -85,27 +87,27 @@ def verifyFileOnlyWritableByMunkiAndRoot(file_path):
         file_stat = os.stat(file_path)
     except OSError, err:
         raise VerifyFilePermissionsError(
-            '%s does not exist. \n %s' % (file_path, str(err)))
+            "%s does not exist. \n %s" % (file_path, str(err))
+        )
 
     try:
-        admin_gid = grp.getgrnam('admin').gr_gid
-        wheel_gid = grp.getgrnam('wheel').gr_gid
+        admin_gid = grp.getgrnam("admin").gr_gid
+        wheel_gid = grp.getgrnam("wheel").gr_gid
         user_gid = os.getegid()
         # verify the munki process uid matches the file owner uid.
         if os.geteuid() != file_stat.st_uid:
-            raise InsecureFilePermissionsError(
-                'owner does not match munki process!')
+            raise InsecureFilePermissionsError("owner does not match munki process!")
         # verify the munki process gid matches the file owner gid, or the file
         # owner gid is wheel or admin gid.
         elif file_stat.st_gid not in [admin_gid, wheel_gid, user_gid]:
-            raise InsecureFilePermissionsError(
-                'group does not match munki process!')
+            raise InsecureFilePermissionsError("group does not match munki process!")
         # verify other users cannot write to the file.
         elif file_stat.st_mode & stat.S_IWOTH != 0:
-            raise InsecureFilePermissionsError('world writable!')
+            raise InsecureFilePermissionsError("world writable!")
     except InsecureFilePermissionsError, err:
         raise InsecureFilePermissionsError(
-            '%s is not secure! %s' % (file_path, err.args[0]))
+            "%s is not secure! %s" % (file_path, err.args[0])
+        )
 
 
 def runExternalScript(script, allow_insecure=False, script_args=()):
@@ -122,14 +124,16 @@ def runExternalScript(script, allow_insecure=False, script_args=()):
       RunExternalScriptError: there was an error running the script.
     """
     if not os.path.exists(script):
-        raise ScriptNotFoundError('script does not exist: %s' % script)
+        raise ScriptNotFoundError("script does not exist: %s" % script)
 
     if not allow_insecure:
         try:
             verifyFileOnlyWritableByMunkiAndRoot(script)
         except VerifyFilePermissionsError, err:
-            msg = ('Skipping execution due to failed file permissions '
-                   'verification: %s\n%s' % (script, str(err)))
+            msg = (
+                "Skipping execution due to failed file permissions "
+                "verification: %s\n%s" % (script, str(err))
+            )
             raise RunExternalScriptError(msg)
 
     if os.access(script, os.X_OK):
@@ -138,36 +142,48 @@ def runExternalScript(script, allow_insecure=False, script_args=()):
             cmd.extend(script_args)
         proc = None
         try:
-            proc = subprocess.Popen(cmd, shell=False,
-                                    stdin=subprocess.PIPE,
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+            proc = subprocess.Popen(
+                cmd,
+                shell=False,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
         except (OSError, IOError), err:
             raise RunExternalScriptError(
-                'Error %s when attempting to run %s' % (unicode(err), script))
+                "Error %s when attempting to run %s" % (unicode(err), script)
+            )
         if proc:
             (stdout, stderr) = proc.communicate()
-            return proc.returncode, stdout.decode('UTF-8', 'replace'), \
-                                    stderr.decode('UTF-8', 'replace')
+            return (
+                proc.returncode,
+                stdout.decode("UTF-8", "replace"),
+                stderr.decode("UTF-8", "replace"),
+            )
     else:
-        raise RunExternalScriptError('%s not executable' % script)
+        raise RunExternalScriptError("%s not executable" % script)
 
 
 def getPIDforProcessName(processname):
-    '''Returns a process ID for processname'''
-    cmd = ['/bin/ps', '-eo', 'pid=,command=']
+    """Returns a process ID for processname"""
+    cmd = ["/bin/ps", "-eo", "pid=,command="]
     try:
-        proc = subprocess.Popen(cmd, shell=False, bufsize=-1,
-                                stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
+        proc = subprocess.Popen(
+            cmd,
+            shell=False,
+            bufsize=-1,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
     except OSError:
         return 0
 
     while True:
-        line = proc.stdout.readline().decode('UTF-8')
+        line = proc.stdout.readline().decode("UTF-8")
         if not line and (proc.poll() != None):
             break
-        line = line.rstrip('\n')
+        line = line.rstrip("\n")
         if line:
             try:
                 (pid, process) = line.split(None, 1)
@@ -186,22 +202,22 @@ def getFirstPlist(textString):
     more text-style plists.
     Returns a tuple - the first plist (if any) and the remaining
     string after the plist"""
-    plist_header = '<?xml version'
-    plist_footer = '</plist>'
+    plist_header = "<?xml version"
+    plist_footer = "</plist>"
     plist_start_index = textString.find(plist_header)
     if plist_start_index == -1:
         # not found
         return ("", textString)
     plist_end_index = textString.find(
-        plist_footer, plist_start_index + len(plist_header))
+        plist_footer, plist_start_index + len(plist_header)
+    )
     if plist_end_index == -1:
         # not found
         return ("", textString)
     # adjust end value
     plist_end_index = plist_end_index + len(plist_footer)
-    return (textString[plist_start_index:plist_end_index],
-            textString[plist_end_index:])
+    return (textString[plist_start_index:plist_end_index], textString[plist_end_index:])
 
 
-if __name__ == '__main__':
-    print 'This is a library of support tools for the Munki Suite.'
+if __name__ == "__main__":
+    print "This is a library of support tools for the Munki Suite."

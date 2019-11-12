@@ -30,7 +30,7 @@ import time
 from . import prefs
 
 
-def log(msg, logname=''):
+def log(msg, logname=""):
     """Generic logging function."""
     if len(msg) > 1000:
         # See http://bugs.python.org/issue11907 and RFC-3164
@@ -43,16 +43,16 @@ def log(msg, logname=''):
         logging.info(msg)  # noop unless configure_syslog() is called first.
 
     # date/time format string
-    formatstr = '%b %d %Y %H:%M:%S %z'
+    formatstr = "%b %d %Y %H:%M:%S %z"
     if not logname:
         # use our regular logfile
-        logpath = prefs.pref('LogFile')
+        logpath = prefs.pref("LogFile")
     else:
-        logpath = os.path.join(os.path.dirname(prefs.pref('LogFile')), logname)
+        logpath = os.path.join(os.path.dirname(prefs.pref("LogFile")), logname)
     try:
-        fileobj = open(logpath, mode='a', buffering=1)
+        fileobj = open(logpath, mode="a", buffering=1)
         try:
-            print >> fileobj, time.strftime(formatstr), msg.encode('UTF-8')
+            print >> fileobj, time.strftime(formatstr), msg.encode("UTF-8")
         except (OSError, IOError):
             pass
         fileobj.close()
@@ -72,46 +72,46 @@ def configure_syslog():
     # then /var/run/syslog stops listening.  If we fail to catch this then
     # Munki completely errors.
     try:
-        syslog = logging.handlers.SysLogHandler('/var/run/syslog')
+        syslog = logging.handlers.SysLogHandler("/var/run/syslog")
     except BaseException:
-        log('LogToSyslog is enabled but socket connection failed.')
+        log("LogToSyslog is enabled but socket connection failed.")
         return
 
-    syslog.setFormatter(logging.Formatter('munkireport: %(message)s'))
+    syslog.setFormatter(logging.Formatter("munkireport: %(message)s"))
     syslog.setLevel(logging.INFO)
     logger.addHandler(syslog)
 
 
-def rotatelog(logname=''):
+def rotatelog(logname=""):
     """Rotate a log"""
     if not logname:
         # use our regular logfile
-        logpath = prefs.pref('LogFile')
+        logpath = prefs.pref("LogFile")
     else:
-        logpath = os.path.join(os.path.dirname(prefs.pref('LogFile')), logname)
+        logpath = os.path.join(os.path.dirname(prefs.pref("LogFile")), logname)
     if os.path.exists(logpath):
         for i in range(3, -1, -1):
             try:
-                os.unlink(logpath + '.' + str(i + 1))
+                os.unlink(logpath + "." + str(i + 1))
             except (OSError, IOError):
                 pass
             try:
-                os.rename(logpath + '.' + str(i), logpath + '.' + str(i + 1))
+                os.rename(logpath + "." + str(i), logpath + "." + str(i + 1))
             except (OSError, IOError):
                 pass
         try:
-            os.rename(logpath, logpath + '.0')
+            os.rename(logpath, logpath + ".0")
         except (OSError, IOError):
             pass
 
 
 def rotate_main_log():
     """Rotate our main log"""
-    main_log = prefs.pref('LogFile')
+    main_log = prefs.pref("LogFile")
     if os.path.exists(main_log):
         if os.path.getsize(main_log) > 1000000:
             rotatelog(main_log)
 
 
-if __name__ == '__main__':
-    print 'This is a library of support tools for the Munki Suite.'
+if __name__ == "__main__":
+    print "This is a library of support tools for the Munki Suite."

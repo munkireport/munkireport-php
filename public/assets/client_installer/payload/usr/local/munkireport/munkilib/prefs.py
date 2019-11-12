@@ -34,6 +34,7 @@ from Foundation import kCFPreferencesAnyUser
 from Foundation import kCFPreferencesAnyHost
 from Foundation import kCFPreferencesCurrentUser
 from Foundation import kCFPreferencesCurrentHost
+
 # pylint: enable=E0611
 
 from .constants import BUNDLE_ID
@@ -43,15 +44,15 @@ from .constants import BUNDLE_ID
 #####################################################
 
 DEFAULT_PREFS = {
-    'AdditionalHttpHeaders': None,
-    'ClientCertificatePath': None,
-    'FollowHTTPRedirects': 'none',
-    'IgnoreSystemProxies': False,
-    'LogFile': '/Library/MunkiReport/Logs/MunkiReport.log',
-    'LoggingLevel': 1,
-    'LogToSyslog': False,
-    'UseClientCertificate': False,
-    'UseClientCertificateCNAsClientIdentifier': False,
+    "AdditionalHttpHeaders": None,
+    "ClientCertificatePath": None,
+    "FollowHTTPRedirects": "none",
+    "IgnoreSystemProxies": False,
+    "LogFile": "/Library/MunkiReport/Logs/MunkiReport.log",
+    "LoggingLevel": 1,
+    "LogToSyslog": False,
+    "UseClientCertificate": False,
+    "UseClientCertificateCNAsClientIdentifier": False,
 }
 
 
@@ -64,7 +65,7 @@ class Preferences(object):
         Args:
             bundle_id: str, like 'MunkiReport'
         """
-        if bundle_id.endswith('.plist'):
+        if bundle_id.endswith(".plist"):
             bundle_id = bundle_id[:-6]
         self.bundle_id = bundle_id
         self.user = user
@@ -74,7 +75,8 @@ class Preferences(object):
         will fail to iterate all available keys for the preferences domain
         since OS X reads from multiple 'levels' and composites them."""
         keys = CFPreferencesCopyKeyList(
-            self.bundle_id, self.user, kCFPreferencesCurrentHost)
+            self.bundle_id, self.user, kCFPreferencesCurrentHost
+        )
         if keys is not None:
             for i in keys:
                 yield i
@@ -94,8 +96,8 @@ class Preferences(object):
         preference actually gets written at the 'ByHost' level due to the use
         of kCFPreferencesCurrentHost"""
         CFPreferencesSetValue(
-            pref_name, pref_value, self.bundle_id, self.user,
-            kCFPreferencesCurrentHost)
+            pref_name, pref_value, self.bundle_id, self.user, kCFPreferencesCurrentHost
+        )
         CFPreferencesAppSynchronize(self.bundle_id)
 
     def __delitem__(self, pref_name):
@@ -104,7 +106,7 @@ class Preferences(object):
 
     def __repr__(self):
         """Return a text representation of the class"""
-        return '<%s %s>' % (self.__class__.__name__, self.bundle_id)
+        return "<%s %s>" % (self.__class__.__name__, self.bundle_id)
 
     def get(self, pref_name, default=None):
         """Return a preference or the default value"""
@@ -130,8 +132,12 @@ def set_pref(pref_name, pref_value):
     elsewhere (by MCX, for example)"""
     try:
         CFPreferencesSetValue(
-            pref_name, pref_value, BUNDLE_ID,
-            kCFPreferencesAnyUser, kCFPreferencesCurrentHost)
+            pref_name,
+            pref_value,
+            BUNDLE_ID,
+            kCFPreferencesAnyUser,
+            kCFPreferencesCurrentHost,
+        )
         CFPreferencesAppSynchronize(BUNDLE_ID)
     except BaseException:
         pass
@@ -161,5 +167,5 @@ def pref(pref_name):
     return pref_value
 
 
-if __name__ == '__main__':
-    print 'This is a library of support tools for the Munki Suite.'
+if __name__ == "__main__":
+    print "This is a library of support tools for the Munki Suite."
