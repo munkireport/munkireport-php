@@ -17,13 +17,12 @@
 #
 # Adaptation of purl.py by Michael Lynn
 # https://gist.github.com/pudquick/a73d0ce7cd8730c97491
-"""
-purl.py
+"""purl.py.
 
 Created by Greg Neagle on 2013-11-21.
 Modified by Arjen van Bochoven on 2015-09-23
 
-curl replacement using NSURLConnection and friends 
+curl replacement using NSURLConnection and friends
 """
 
 # builtin super doesn't work with Cocoa classes in recent PyObjC releases.
@@ -109,8 +108,8 @@ ssl_error_codes = {
 
 
 class Purl(NSObject):
-    """A class for getting content from a URL
-       using NSURLConnection and friends"""
+    """A class for getting content from a URL using NSURLConnection and
+    friends."""
 
     # since we inherit from NSObject, PyLint issues a few bogus warnings
     # pylint: disable=W0232,E1002
@@ -120,7 +119,7 @@ class Purl(NSObject):
     # pylint: disable=E1101,W0201
 
     def initWithOptions_(self, options):
-        """Set up our Purl object"""
+        """Set up our Purl object."""
         self = super(Purl, self).init()
         if not self:
             return
@@ -150,7 +149,7 @@ class Purl(NSObject):
         return self
 
     def start(self):
-        """Start the connection"""
+        """Start the connection."""
         url = NSURL.URLWithString_(self.url)
         request = NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval_(
             url, NSURLRequestReloadIgnoringLocalCacheData, self.connection_timeout
@@ -173,14 +172,17 @@ class Purl(NSObject):
         )
 
     def cancel(self):
-        """Cancel the connection"""
+        """Cancel the connection."""
         if self.connection:
             self.connection.cancel()
             self.done = True
 
     def isDone(self):
-        """Check if the connection request is complete. As a side effect,
-        allow the delegates to work my letting the run loop run for a bit"""
+        """Check if the connection request is complete.
+
+        As a side effect, allow the delegates to work my letting the run
+        loop run for a bit
+        """
         if self.done:
             return self.done
         # let the delegates do their thing
@@ -190,12 +192,12 @@ class Purl(NSObject):
         return self.done
 
     def get_response_data(self):
-        """Return response data"""
+        """Return response data."""
         return self.response_data
 
     def connection_didFailWithError_(self, connection, error):
-        """NSURLConnection delegate method
-        Sent when a connection fails to load its request successfully."""
+        """NSURLConnection delegate method Sent when a connection fails to load
+        its request successfully."""
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
@@ -216,8 +218,8 @@ class Purl(NSObject):
         self.done = True
 
     def connectionDidFinishLoading_(self, connection):
-        """NSURLConnectionDataDelegat delegate method
-        Sent when a connection has finished loading successfully."""
+        """NSURLConnectionDataDelegat delegate method Sent when a connection
+        has finished loading successfully."""
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
@@ -225,9 +227,9 @@ class Purl(NSObject):
         self.done = True
 
     def connection_didReceiveResponse_(self, connection, response):
-        """NSURLConnectionDataDelegate delegate method
-        Sent when the connection has received sufficient data to construct the
-        URL response for its request."""
+        """NSURLConnectionDataDelegate delegate method Sent when the connection
+        has received sufficient data to construct the URL response for its
+        request."""
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
@@ -242,9 +244,9 @@ class Purl(NSObject):
     def connection_willSendRequest_redirectResponse_(
         self, connection, request, response
     ):
-        """NSURLConnectionDataDelegate delegate method
-        Sent when the connection determines that it must change URLs in order to
-        continue loading a request."""
+        """NSURLConnectionDataDelegate delegate method Sent when the connection
+        determines that it must change URLs in order to continue loading a
+        request."""
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
@@ -271,10 +273,11 @@ class Purl(NSObject):
     def connection_willSendRequestForAuthenticationChallenge_(
         self, connection, challenge
     ):
-        """NSURLConnection delegate method
-        Tells the delegate that the connection will send a request for an
-        authentication challenge.
-        New in 10.7."""
+        """NSURLConnection delegate method Tells the delegate that the
+        connection will send a request for an authentication challenge.
+
+        New in 10.7.
+        """
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
@@ -323,10 +326,12 @@ class Purl(NSObject):
     def connection_canAuthenticateAgainstProtectionSpace_(
         self, connection, protectionSpace
     ):
-        """NSURLConnection delegate method
-        Sent to determine whether the delegate is able to respond to a
-        protection space’s form of authentication.
-        Deprecated in 10.10"""
+        """NSURLConnection delegate method Sent to determine whether the
+        delegate is able to respond to a protection space’s form of
+        authentication.
+
+        Deprecated in 10.10
+        """
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
@@ -359,10 +364,11 @@ class Purl(NSObject):
         return False
 
     def connection_didReceiveAuthenticationChallenge_(self, connection, challenge):
-        """NSURLConnection delegate method
-        Sent when a connection must authenticate a challenge in order to
-        download its request.
-        Deprecated in 10.10"""
+        """NSURLConnection delegate method Sent when a connection must
+        authenticate a challenge in order to download its request.
+
+        Deprecated in 10.10
+        """
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
@@ -409,8 +415,8 @@ class Purl(NSObject):
             )
 
     def connection_didReceiveData_(self, connection, data):
-        """NSURLConnectionDataDelegate method
-        Sent as a connection loads data incrementally"""
+        """NSURLConnectionDataDelegate method Sent as a connection loads data
+        incrementally."""
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613

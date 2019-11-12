@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-display.py
+"""display.py.
 
 Created by Greg Neagle on 2016-12-13.
 
@@ -30,9 +29,7 @@ from . import reports
 
 
 def _getsteps(num_of_steps, limit):
-    """
-    Helper function for display_percent_done
-    """
+    """Helper function for display_percent_done."""
     steps = []
     current = 0.0
     for i in range(0, num_of_steps):
@@ -59,7 +56,7 @@ def str_to_ascii(a_string):
 
 
 def _to_unicode(obj, encoding="UTF-8"):
-    """Coerces basestring obj to unicode"""
+    """Coerces basestring obj to unicode."""
     if isinstance(obj, basestring):
         if not isinstance(obj, unicode):
             obj = unicode(obj, encoding)
@@ -67,8 +64,8 @@ def _to_unicode(obj, encoding="UTF-8"):
 
 
 def _concat_message(msg, *args):
-    """Concatenates a string with any additional arguments,
-    making sure everything is unicode"""
+    """Concatenates a string with any additional arguments, making sure
+    everything is unicode."""
     # coerce msg to unicode if it's not already
     msg = _to_unicode(msg)
     if args:
@@ -84,9 +81,7 @@ def _concat_message(msg, *args):
 
 
 def display_info(msg, *args):
-    """
-    Displays info messages.
-    """
+    """Displays info messages."""
     msg = _concat_message(msg, *args)
     munkilog.log(u"    " + msg)
     if verbose > 0:
@@ -95,10 +90,10 @@ def display_info(msg, *args):
 
 
 def display_detail(msg, *args):
-    """
-    Displays minor info messages.
-    These are usually logged only, but can be printed to
-    stdout if verbose is set greater than 1
+    """Displays minor info messages.
+
+    These are usually logged only, but can be printed to stdout if
+    verbose is set greater than 1
     """
     msg = _concat_message(msg, *args)
     if verbose > 1:
@@ -109,9 +104,7 @@ def display_detail(msg, *args):
 
 
 def display_debug1(msg, *args):
-    """
-    Displays debug messages, formatting as needed.
-    """
+    """Displays debug messages, formatting as needed."""
     msg = _concat_message(msg, *args)
     if verbose > 2:
         print "    %s" % msg.encode("UTF-8")
@@ -121,9 +114,7 @@ def display_debug1(msg, *args):
 
 
 def display_debug2(msg, *args):
-    """
-    Displays debug messages, formatting as needed.
-    """
+    """Displays debug messages, formatting as needed."""
     msg = _concat_message(msg, *args)
     if verbose > 3:
         print "    %s" % msg.encode("UTF-8")
@@ -132,9 +123,7 @@ def display_debug2(msg, *args):
 
 
 def display_warning(msg, *args):
-    """
-    Prints warning msgs to stderr and the log
-    """
+    """Prints warning msgs to stderr and the log."""
     msg = _concat_message(msg, *args)
     warning = "WARNING: %s" % msg
     if verbose > 0:
@@ -149,9 +138,7 @@ def display_warning(msg, *args):
 
 
 def display_error(msg, *args):
-    """
-    Prints msg to stderr and the log
-    """
+    """Prints msg to stderr and the log."""
     msg = _concat_message(msg, *args)
     errmsg = "ERROR: %s" % msg
     if verbose > 0:

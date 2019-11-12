@@ -110,9 +110,7 @@ def print_php_class(cls, lvl=0):
 
 
 def unserialize(s):
-    """
-    Unserialize python struct from php serialization format
-    """
+    """Unserialize python struct from php serialization format."""
     if not isinstance(s, basestring) or s == "":
         raise ValueError("Unserialize argument must be non-empty string")
 
@@ -134,9 +132,7 @@ def unserialize(s):
 
 
 def serialize(struct, typecast=None):
-    """
-    Serialize python struct into php serialization format
-    """
+    """Serialize python struct into php serialization format."""
     if typecast:
         struct = typecast(struct)
 

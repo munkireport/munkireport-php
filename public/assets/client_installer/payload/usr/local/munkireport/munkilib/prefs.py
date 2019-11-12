@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-prefs.py
+"""prefs.py.
 
 Created by Greg Neagle on 2016-12-13.
 
@@ -71,9 +70,9 @@ class Preferences(object):
         self.user = user
 
     def __iter__(self):
-        """Iterator for keys in the specific 'level' of preferences; this
-        will fail to iterate all available keys for the preferences domain
-        since OS X reads from multiple 'levels' and composites them."""
+        """Iterator for keys in the specific 'level' of preferences; this will
+        fail to iterate all available keys for the preferences domain since OS
+        X reads from multiple 'levels' and composites them."""
         keys = CFPreferencesCopyKeyList(
             self.bundle_id, self.user, kCFPreferencesCurrentHost
         )
@@ -83,33 +82,39 @@ class Preferences(object):
 
     def __contains__(self, pref_name):
         """Since this uses CFPreferencesCopyAppValue, it will find a preference
-        regardless of the 'level' at which it is stored"""
+        regardless of the 'level' at which it is stored."""
         pref_value = CFPreferencesCopyAppValue(pref_name, self.bundle_id)
         return pref_value is not None
 
     def __getitem__(self, pref_name):
-        """Get a preference value. Normal OS X preference search path applies"""
+        """Get a preference value.
+
+        Normal OS X preference search path applies
+        """
         return CFPreferencesCopyAppValue(pref_name, self.bundle_id)
 
     def __setitem__(self, pref_name, pref_value):
-        """Sets a preference. if the user is kCFPreferencesCurrentUser, the
-        preference actually gets written at the 'ByHost' level due to the use
-        of kCFPreferencesCurrentHost"""
+        """Sets a preference.
+
+        if the user is kCFPreferencesCurrentUser, the preference
+        actually gets written at the 'ByHost' level due to the use of
+        kCFPreferencesCurrentHost
+        """
         CFPreferencesSetValue(
             pref_name, pref_value, self.bundle_id, self.user, kCFPreferencesCurrentHost
         )
         CFPreferencesAppSynchronize(self.bundle_id)
 
     def __delitem__(self, pref_name):
-        """Delete a preference"""
+        """Delete a preference."""
         self.__setitem__(pref_name, None)
 
     def __repr__(self):
-        """Return a text representation of the class"""
+        """Return a text representation of the class."""
         return "<%s %s>" % (self.__class__.__name__, self.bundle_id)
 
     def get(self, pref_name, default=None):
-        """Return a preference or the default value"""
+        """Return a preference or the default value."""
         if not pref_name in self:
             return default
         else:
@@ -117,19 +122,23 @@ class Preferences(object):
 
 
 def reload_prefs():
-    """Uses CFPreferencesAppSynchronize(BUNDLE_ID)
-    to make sure we have the latest prefs. Call this
-    if you have modified /Library/Preferences/MunkiReport.plist
-    or /var/root/Library/Preferences/MunkiReport.plist directly"""
+    """Uses CFPreferencesAppSynchronize(BUNDLE_ID) to make sure we have the
+    latest prefs.
+
+    Call this if you have modified
+    /Library/Preferences/MunkiReport.plist or
+    /var/root/Library/Preferences/MunkiReport.plist directly
+    """
     CFPreferencesAppSynchronize(BUNDLE_ID)
 
 
 def set_pref(pref_name, pref_value):
-    """Sets a preference, writing it to
-    /Library/Preferences/MunkiReport.plist.
-    This should normally be used only for 'bookkeeping' values;
-    values that control the behavior of munki may be overridden
-    elsewhere (by MCX, for example)"""
+    """Sets a preference, writing it to.
+
+    /Library/Preferences/MunkiReport.plist. This should normally be used
+    only for 'bookkeeping' values; values that control the behavior of
+    munki may be overridden elsewhere (by MCX, for example)
+    """
     try:
         CFPreferencesSetValue(
             pref_name,
@@ -146,12 +155,13 @@ def set_pref(pref_name, pref_value):
 def pref(pref_name):
     """Return a preference. Since this uses CFPreferencesCopyAppValue,
     Preferences can be defined several places. Precedence is:
-        - MCX/configuration profile
-        - /var/root/Library/Preferences/ByHost/MunkiReport.XXXXXX.plist
-        - /var/root/Library/Preferences/MunkiReport.plist
-        - /Library/Preferences/MunkiReport.plist
-        - .GlobalPreferences defined at various levels (ByHost, user, system)
-        - default_prefs defined here.
+
+    - MCX/configuration profile
+    - /var/root/Library/Preferences/ByHost/MunkiReport.XXXXXX.plist
+    - /var/root/Library/Preferences/MunkiReport.plist
+    - /Library/Preferences/MunkiReport.plist
+    - .GlobalPreferences defined at various levels (ByHost, user, system)
+    - default_prefs defined here.
     """
     pref_value = CFPreferencesCopyAppValue(pref_name, BUNDLE_ID)
     if pref_value is None:

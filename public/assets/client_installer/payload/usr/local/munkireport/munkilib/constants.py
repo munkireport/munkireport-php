@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-constants.py
+"""constants.py.
 
 Created by Greg Neagle on 2016-12-14.
 

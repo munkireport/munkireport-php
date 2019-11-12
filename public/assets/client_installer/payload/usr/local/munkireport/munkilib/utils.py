@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-utils
+"""utils.
 
 Created by Justin McWilliams on 2010-10-26.
 
@@ -32,7 +31,9 @@ import stat
 
 class Memoize(dict):
     """Class to cache the return values of an expensive function.
-    This version supports only functions with non-keyword arguments"""
+
+    This version supports only functions with non-keyword arguments
+    """
 
     def __init__(self, func):
         self.func = func
@@ -71,9 +72,8 @@ class InsecureFilePermissionsError(VerifyFilePermissionsError):
 
 
 def verifyFileOnlyWritableByMunkiAndRoot(file_path):
-    """
-    Check the permissions on a given file path; fail if owner or group
-    does not match the munki process (default: root/admin) or the group is not
+    """Check the permissions on a given file path; fail if owner or group does
+    not match the munki process (default: root/admin) or the group is not
     'wheel', or if other users are able to write to the file. This prevents
     escalated execution of arbitrary code.
 
@@ -165,7 +165,7 @@ def runExternalScript(script, allow_insecure=False, script_args=()):
 
 
 def getPIDforProcessName(processname):
-    """Returns a process ID for processname"""
+    """Returns a process ID for processname."""
     cmd = ["/bin/ps", "-eo", "pid=,command="]
     try:
         proc = subprocess.Popen(
@@ -198,10 +198,12 @@ def getPIDforProcessName(processname):
 
 
 def getFirstPlist(textString):
-    """Gets the next plist from a text string that may contain one or
-    more text-style plists.
+    """Gets the next plist from a text string that may contain one or more
+    text-style plists.
+
     Returns a tuple - the first plist (if any) and the remaining
-    string after the plist"""
+    string after the plist
+    """
     plist_header = "<?xml version"
     plist_footer = "</plist>"
     plist_start_index = textString.find(plist_header)

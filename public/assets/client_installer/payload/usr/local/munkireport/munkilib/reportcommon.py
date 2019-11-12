@@ -45,30 +45,22 @@ class CurlError(Exception):
 
 
 def set_verbosity(level):
-    """
-    Set verbosity level
-    """
+    """Set verbosity level."""
     display.verbose = int(level)
 
 
 def display_error(msg, *args):
-    """
-    Call display error msg handler
-    """
+    """Call display error msg handler."""
     display.display_error("%s" % msg, *args)
 
 
 def display_warning(msg, *args):
-    """
-    Call display warning msg handler
-    """
+    """Call display warning msg handler."""
     display.display_warning("%s" % msg, *args)
 
 
 def display_detail(msg, *args):
-    """
-    Call display detail msg handler
-    """
+    """Call display detail msg handler."""
     display.display_detail("%s" % msg, *args)
 
 
@@ -158,7 +150,7 @@ def curl(url, values):
 
 
 def get_hardware_info():
-    """Uses system profiler to get hardware info for this machine"""
+    """Uses system profiler to get hardware info for this machine."""
     cmd = ["/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
     proc = subprocess.Popen(
         cmd,
@@ -258,7 +250,7 @@ def get_uptime():
 
 
 def set_pref(pref_name, pref_value):
-    """Sets a preference, See prefs.py for details"""
+    """Sets a preference, See prefs.py for details."""
     CFPreferencesSetValue(
         pref_name,
         pref_value,
@@ -282,15 +274,17 @@ def set_pref(pref_name, pref_value):
 
 
 def pref(pref_name):
-    """Return a preference. See prefs.py for details
+    """Return a preference.
+
+    See prefs.py for details
     """
     pref_value = CFPreferencesCopyAppValue(pref_name, BUNDLE_ID)
     return pref_value
 
 
 def process(serial, items):
-    """Process receives a list of items, checks if they need updating
-    and updates them if necessary"""
+    """Process receives a list of items, checks if they need updating and
+    updates them if necessary."""
 
     # Sanitize serial
     serial = "".join([c for c in serial if c.isalnum()])
@@ -431,12 +425,9 @@ def runExternalScriptWithTimeout(
 
 
 def rundir(scriptdir, runtype, abort=False, submitscript=""):
-    """
-    Run scripts in directory scriptdir
-    runtype is passed to the script
-    if abort is True, a non-zero exit status will abort munki
-    submitscript is put at the end of the scriptlist
-    """
+    """Run scripts in directory scriptdir runtype is passed to the script if
+    abort is True, a non-zero exit status will abort munki submitscript is put
+    at the end of the scriptlist."""
     if os.path.exists(scriptdir):
 
         from munkilib import utils
@@ -513,8 +504,7 @@ def sizeof_fmt(num):
 
 
 def gethash(filename, hash_function):
-    """
-    Calculates the hashvalue of the given file with the given hash_function.
+    """Calculates the hashvalue of the given file with the given hash_function.
 
     Args:
       filename: The file name to calculate the hash value of.
@@ -538,9 +528,7 @@ def gethash(filename, hash_function):
 
 
 def getmd5hash(filename):
-    """
-    Returns hex of MD5 checksum of a file
-    """
+    """Returns hex of MD5 checksum of a file."""
     hash_function = hashlib.md5()
     return gethash(filename, hash_function)
 
@@ -562,7 +550,7 @@ def getOsVersion(only_major_minor=True, as_tuple=False):
 
 
 def getconsoleuser():
-    """Return console user"""
+    """Return console user."""
     cfuser = SCDynamicStoreCopyConsoleUser(None, None, None)
     return cfuser[0]
 

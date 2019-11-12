@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-munkilog.py
+"""munkilog.py.
 
 Created by Greg Neagle on 2016-12-14.
 
@@ -83,7 +82,7 @@ def configure_syslog():
 
 
 def rotatelog(logname=""):
-    """Rotate a log"""
+    """Rotate a log."""
     if not logname:
         # use our regular logfile
         logpath = prefs.pref("LogFile")
@@ -106,7 +105,7 @@ def rotatelog(logname=""):
 
 
 def rotate_main_log():
-    """Rotate our main log"""
+    """Rotate our main log."""
     main_log = prefs.pref("LogFile")
     if os.path.exists(main_log):
         if os.path.getsize(main_log) > 1000000:

@@ -55,27 +55,27 @@ from Foundation import NSPropertyListXMLFormat_v1_0
 
 
 class FoundationPlistException(Exception):
-    """Basic exception for plist errors"""
+    """Basic exception for plist errors."""
 
     pass
 
 
 class NSPropertyListSerializationException(FoundationPlistException):
-    """Read/parse error for plists"""
+    """Read/parse error for plists."""
 
     pass
 
 
 class NSPropertyListWriteException(FoundationPlistException):
-    """Write error for plists"""
+    """Write error for plists."""
 
     pass
 
 
 def readPlist(filepath):
-    """
-    Read a .plist file from filepath.  Return the unpacked root object
-    (which is usually a dictionary).
+    """Read a .plist file from filepath.
+
+    Return the unpacked root object (which is usually a dictionary).
     """
     plistData = NSData.dataWithContentsOfFile_(filepath)
     (
@@ -97,7 +97,10 @@ def readPlist(filepath):
 
 
 def readPlistFromString(data):
-    """Read a plist data from a string. Return the root object."""
+    """Read a plist data from a string.
+
+    Return the root object.
+    """
     try:
         plistData = buffer(data)
     except TypeError, err:
@@ -120,9 +123,7 @@ def readPlistFromString(data):
 
 
 def writePlist(dataObject, filepath):
-    """
-    Write 'rootObject' as a plist to filepath.
-    """
+    """Write 'rootObject' as a plist to filepath."""
     (
         plistData,
         error,

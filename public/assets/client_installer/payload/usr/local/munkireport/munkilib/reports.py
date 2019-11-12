@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-reports.py
+"""reports.py.
 
 Created by Greg Neagle on 2016-12-14.
 
@@ -42,7 +41,9 @@ from . import FoundationPlist
 def format_time(timestamp=None):
     """Return timestamp as an ISO 8601 formatted string, in the current
     timezone.
-    If timestamp isn't given the current time is used."""
+
+    If timestamp isn't given the current time is used.
+    """
     if timestamp is None:
         return str(NSDate.new())
     else:
@@ -50,7 +51,7 @@ def format_time(timestamp=None):
 
 
 def printreportitem(label, value, indent=0):
-    """Prints a report item in an 'attractive' way"""
+    """Prints a report item in an 'attractive' way."""
     indentspace = "    "
     if type(value) == type(None):
         print indentspace * indent, "%s: !NONE!" % label
@@ -71,13 +72,13 @@ def printreportitem(label, value, indent=0):
 
 
 def printreport(reportdict):
-    """Prints the report dictionary in a pretty(?) way"""
+    """Prints the report dictionary in a pretty(?) way."""
     for key in reportdict.keys():
         printreportitem(key, reportdict[key])
 
 
 def savereport():
-    """Save our report"""
+    """Save our report."""
     FoundationPlist.writePlist(
         report,
         os.path.join(prefs.pref("ManagedInstallDir"), "ManagedInstallReport.plist"),
@@ -85,7 +86,7 @@ def savereport():
 
 
 def readreport():
-    """Read report data from file"""
+    """Read report data from file."""
     global report
     reportfile = os.path.join(
         prefs.pref("ManagedInstallDir"), "ManagedInstallReport.plist"
@@ -98,7 +99,10 @@ def readreport():
 
 def _warn(msg):
     """We can't use display module functions here because that would require
-    circular imports. So a partial reimplementation."""
+    circular imports.
+
+    So a partial reimplementation.
+    """
     warning = "WARNING: %s" % msg
     print >> sys.stderr, warning.encode("UTF-8")
     munkilog.log(warning)
@@ -107,7 +111,7 @@ def _warn(msg):
 
 
 def archive_report():
-    """Archive a report"""
+    """Archive a report."""
     reportfile = os.path.join(
         prefs.pref("ManagedInstallDir"), "ManagedInstallReport.plist"
     )
