@@ -147,6 +147,9 @@ class report extends Controller
         }
 
         $moduleMgr = new Modules;
+        
+        // Sort modules alphabetically
+        ksort($arr);
 
         foreach ($arr as $name => $val) {
 
