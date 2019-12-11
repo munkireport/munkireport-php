@@ -39,10 +39,6 @@ abstract class KISS_Engine
 
     public function __construct($routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
     {
-        if ($_POST and get_magic_quotes_gpc()) {
-            $this->stripslashesDeep($_POST);
-        }
-
         $this->controller = $default_controller;
         $this->controller=$default_controller;
         $this->action=$default_action;
@@ -228,15 +224,6 @@ abstract class KISS_Engine
     {
         header("HTTP/1.0 404 Not Found");
         die('<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>'.$msg.'<p>The requested URL was not found on this server.</p><p>Please go <a href="javascript: history.back( 1 )">back</a> and try again.</p><hr /><p>Powered By: <a href="http://kissmvc.com">KISSMVC</a></p></body></html>');
-    }
-
-    // Recursively strip slashes
-    public function stripslashesDeep($value)
-    {
-        $value = is_array($value) ?
-        array_map(array($this, 'stripslashesDeep'), $value) :
-        stripslashes($value);
-        return $value;
     }
 }
 
