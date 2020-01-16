@@ -39,7 +39,7 @@ BUNDLE_ID = 'MunkiReport'
 class CurlError(Exception):
     def __init__(self, status, message):
         display_error(message)
-        exit(0)
+        finish_run()
 
 def set_verbosity(level):
     """
@@ -64,6 +64,16 @@ def display_detail(msg, *args):
     Call display detail msg handler
     """
     display.display_detail('%s' % msg, *args)
+
+def finish_run():
+    remove_run_file()    
+    display_detail("## Finished run")
+    exit(0)
+
+def remove_run_file():
+    touchfile = '/Users/Shared/.com.github.munkireport.run'
+    if os.path.exists(touchfile):
+        os.remove(touchfile)
 
 def curl(url, values):
 

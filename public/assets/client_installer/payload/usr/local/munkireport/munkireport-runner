@@ -59,12 +59,7 @@ def main():
         items[key] = {'path':val}
 
     reportcommon.process(serial, items)
-
-    touchfile = '/Users/Shared/.com.github.munkireport.run'
-    if os.path.exists(touchfile):
-        os.remove(touchfile)
-    
-    reportcommon.display_detail("## Finished run")
+    reportcommon.finish_run()
 
 if __name__ == '__main__':
     main()
