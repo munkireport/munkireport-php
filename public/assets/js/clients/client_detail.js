@@ -328,10 +328,6 @@ $(document).on('appReady', function(e, lang) {
 	// ------------------------------------ End Hotkeys
 
 
-	// ------------------------------------ Refresh machine description
-
-	$('.mr-refresh-desc').attr('href', appUrl + '/module/warranty/recheck_warranty/' + serialNumber);
-
 	// ------------------------------------ Tags
 	var currentTags = {}
 		tagsRetrieved = false;
