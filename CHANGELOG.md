@@ -1,3 +1,5 @@
+### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...HEAD) (Unreleased)
+
 ### [5.1.4](https://github.com/munkireport/munkireport-php/compare/v5.1.3...v5.1.4) (January 20, 2020)
 
 This is a bug fix release. Most notable change: the model lookup now happens in the machine module and not in the warranty module anymore.
