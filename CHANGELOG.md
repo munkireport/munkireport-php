@@ -1,5 +1,45 @@
 ### [5.1.4](https://github.com/munkireport/munkireport-php/compare/v5.1.3...HEAD) (Unreleased)
 
+This is a bug fix release. Most notable change: the model lookup now happens in the machine module and not in the warranty module anymore.
+
+FIXES
+- Remove deprecated get_magic_quotes_gps()
+- XSS fix in debug mode
+- Clean exit when server is unavailable
+
+MODULE UPDATES
+- munkireport/machine (v2.3 => v2.5)
+- munkireport/warranty (v2.1 => v2.2)
+- munkireport/fan_temps (v1.5 => V1.6)
+
+DEPENDENCY UPDATES
+- guzzlehttp/guzzle (6.4.1 => 6.5.2)
+- symfony/process (v4.3.7 => v4.4.2)
+- symfony/polyfill-php73 (v1.12.0 => v1.13.1)
+- symfony/polyfill-mbstring (v1.12.0 => v1.13.1)
+- symfony/console (v4.3.7 => v4.4.2)
+- symfony/translation (v4.3.7 => v4.4.2)
+- nesbot/carbon (2.26.0 => 2.28.0)
+- illuminate/contracts (v5.8.35 => v5.8.36)
+- illuminate/support (v5.8.35 => v5.8.36)
+- illuminate/console (v5.8.35 => v5.8.36)
+- illuminate/container (v5.8.35 => v5.8.36)
+- illuminate/database (v5.8.35 => v5.8.36)
+- symfony/finder (v4.3.7 => v4.4.2)
+- illuminate/filesystem (v5.8.35 => v5.8.36)
+- league/flysystem (1.0.57 => 1.0.63)
+- symfony/polyfill-ctype (v1.12.0 => v1.13.1)
+- symfony/yaml (v3.4.34 => v3.4.36)
+- symfony/polyfill-php72 (v1.12.0 => v1.13.1)
+- symfony/var-dumper (v4.3.7 => v4.4.2)
+- tightenco/collect (v6.4.1 => v6.11.0)
+- adldap2/adldap2 (v10.2.0 => v10.2.2)
+- onelogin/php-saml (3.3.1 => 3.4.1)
+- monolog/monolog (1.25.1 => 1.25.3)
+- doctrine/cache (1.9.0 => 1.10.0)
+- phpoption/phpoption (1.5.2 => 1.7.2)
+
+
 ### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...v5.1.3) (November 12, 2019)
 
 FEATURES
