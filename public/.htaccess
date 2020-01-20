@@ -1,4 +1,7 @@
-RewriteEngine On
+# Make sure we can download .py scripts
+RemoveHandler cgi-script .py
 
+# Rewrite paths
+RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php?/$1 [L]
