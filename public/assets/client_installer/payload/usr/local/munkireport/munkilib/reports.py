@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-reports.py
+"""reports.py.
 
 Created by Greg Neagle on 2016-12-14.
 
@@ -31,6 +30,7 @@ import time
 # No name 'Foo' in module 'Bar' warnings. Disable them.
 # pylint: disable=E0611
 from Foundation import NSDate
+
 # pylint: enable=E0611
 
 from . import munkilog
@@ -41,7 +41,9 @@ from . import FoundationPlist
 def format_time(timestamp=None):
     """Return timestamp as an ISO 8601 formatted string, in the current
     timezone.
-    If timestamp isn't given the current time is used."""
+
+    If timestamp isn't given the current time is used.
+    """
     if timestamp is None:
         return str(NSDate.new())
     else:
@@ -49,44 +51,46 @@ def format_time(timestamp=None):
 
 
 def printreportitem(label, value, indent=0):
-    """Prints a report item in an 'attractive' way"""
-    indentspace = '    '
+    """Prints a report item in an 'attractive' way."""
+    indentspace = "    "
     if type(value) == type(None):
-        print indentspace*indent, '%s: !NONE!' % label
-    elif type(value) == list or type(value).__name__ == 'NSCFArray':
+        print indentspace * indent, "%s: !NONE!" % label
+    elif type(value) == list or type(value).__name__ == "NSCFArray":
         if label:
-            print indentspace*indent, '%s:' % label
+            print indentspace * indent, "%s:" % label
         index = 0
         for item in value:
             index += 1
-            printreportitem(index, item, indent+1)
-    elif type(value) == dict or type(value).__name__ == 'NSCFDictionary':
+            printreportitem(index, item, indent + 1)
+    elif type(value) == dict or type(value).__name__ == "NSCFDictionary":
         if label:
-            print indentspace*indent, '%s:' % label
+            print indentspace * indent, "%s:" % label
         for subkey in value.keys():
-            printreportitem(subkey, value[subkey], indent+1)
+            printreportitem(subkey, value[subkey], indent + 1)
     else:
-        print indentspace*indent, '%s: %s' % (label, value)
+        print indentspace * indent, "%s: %s" % (label, value)
 
 
 def printreport(reportdict):
-    """Prints the report dictionary in a pretty(?) way"""
+    """Prints the report dictionary in a pretty(?) way."""
     for key in reportdict.keys():
         printreportitem(key, reportdict[key])
 
 
 def savereport():
-    """Save our report"""
+    """Save our report."""
     FoundationPlist.writePlist(
-        report, os.path.join(
-            prefs.pref('ManagedInstallDir'), 'ManagedInstallReport.plist'))
+        report,
+        os.path.join(prefs.pref("ManagedInstallDir"), "ManagedInstallReport.plist"),
+    )
 
 
 def readreport():
-    """Read report data from file"""
+    """Read report data from file."""
     global report
     reportfile = os.path.join(
-        prefs.pref('ManagedInstallDir'), 'ManagedInstallReport.plist')
+        prefs.pref("ManagedInstallDir"), "ManagedInstallReport.plist"
+    )
     try:
         report = FoundationPlist.readPlist(reportfile)
     except FoundationPlist.NSPropertyListSerializationException:
@@ -95,42 +99,52 @@ def readreport():
 
 def _warn(msg):
     """We can't use display module functions here because that would require
-    circular imports. So a partial reimplementation."""
-    warning = 'WARNING: %s' % msg
-    print >> sys.stderr, warning.encode('UTF-8')
+    circular imports.
+
+    So a partial reimplementation.
+    """
+    warning = "WARNING: %s" % msg
+    print >> sys.stderr, warning.encode("UTF-8")
     munkilog.log(warning)
     # append this warning to our warnings log
-    munkilog.log(warning, 'warnings.log')
+    munkilog.log(warning, "warnings.log")
 
 
 def archive_report():
-    """Archive a report"""
+    """Archive a report."""
     reportfile = os.path.join(
-        prefs.pref('ManagedInstallDir'), 'ManagedInstallReport.plist')
+        prefs.pref("ManagedInstallDir"), "ManagedInstallReport.plist"
+    )
     if os.path.exists(reportfile):
         modtime = os.stat(reportfile).st_mtime
-        formatstr = '%Y-%m-%d-%H%M%S'
-        archivename = ('ManagedInstallReport-%s.plist'
-                       % time.strftime(formatstr, time.localtime(modtime)))
-        archivepath = os.path.join(prefs.pref('ManagedInstallDir'), 'Archives')
+        formatstr = "%Y-%m-%d-%H%M%S"
+        archivename = "ManagedInstallReport-%s.plist" % time.strftime(
+            formatstr, time.localtime(modtime)
+        )
+        archivepath = os.path.join(prefs.pref("ManagedInstallDir"), "Archives")
         if not os.path.exists(archivepath):
             try:
                 os.mkdir(archivepath)
             except (OSError, IOError):
-                _warn('Could not create report archive path.')
+                _warn("Could not create report archive path.")
         try:
             os.rename(reportfile, os.path.join(archivepath, archivename))
         except (OSError, IOError):
-            _warn('Could not archive report.')
+            _warn("Could not archive report.")
         # now keep number of archived reports to 100 or fewer
-        proc = subprocess.Popen(['/bin/ls', '-t1', archivepath],
-                                bufsize=1, stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            ["/bin/ls", "-t1", archivepath],
+            bufsize=1,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
         (output, dummy_err) = proc.communicate()
         if output:
-            archiveitems = [item
-                            for item in str(output).splitlines()
-                            if item.startswith('ManagedInstallReport-')]
+            archiveitems = [
+                item
+                for item in str(output).splitlines()
+                if item.startswith("ManagedInstallReport-")
+            ]
             if len(archiveitems) > 100:
                 for item in archiveitems[100:]:
                     itempath = os.path.join(archivepath, item)
@@ -138,7 +152,7 @@ def archive_report():
                         try:
                             os.unlink(itempath)
                         except (OSError, IOError):
-                            _warn('Could not remove archive item %s' % item)
+                            _warn("Could not remove archive item %s" % item)
 
 
 # module globals
@@ -147,5 +161,5 @@ report = {}
 # pylint: enable=invalid-name
 
 
-if __name__ == '__main__':
-    print 'This is a library of support tools for the Munki Suite.'
+if __name__ == "__main__":
+    print "This is a library of support tools for the Munki Suite."
