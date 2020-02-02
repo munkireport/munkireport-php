@@ -107,7 +107,7 @@
     "installed_third_party_software": "Geïnstalleerde Software van Derden",
     "install_date": "Installatie datum",
     "no_install_history": "Geen installatie historie",
-    "panel_title": "Client activity in the last month",
+    "panel_title": "Actieve machines in de laatste __number__ dagen",
     "process_name": "Procesnaam",
     "total": "Total Clients"
   },
