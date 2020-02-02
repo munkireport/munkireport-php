@@ -1,4 +1,28 @@
-### [5.1.4](https://github.com/munkireport/munkireport-php/compare/v5.1.3...HEAD) (Unreleased)
+### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...HEAD) (Unreleased)
+
+Mostly module updates, and a small fix for apache servers.
+Security module now reports on Secure Boot and External Boot thanks to @poundbangbash Note that this change needs a database migration.
+
+MODULE UPDATES
+  - munkireport/reportdata (v2.3 => v2.4)
+  - munkireport/location (v1.1 => V1.2)
+  - munkireport/mdm_status (v1.7 => v1.9)
+  - munkireport/security (V1.5 => v1.6)
+  - munkireport/supported_os (v1.7 => V1.8)
+  - munkireport/user_sessions (v1.3 => V1.4)
+
+DEPENDENCY UPDATES
+  - symfony/yaml (v3.4.36 => v3.4.37)
+  - symfony/var-dumper (v4.4.2 => v4.4.4)
+  - tightenco/collect (v6.11.0 => v6.13.0)
+  - symfony/console (v4.4.2 => v4.4.4)
+  - symfony/process (v4.4.2 => v4.4.4)
+  - symfony/translation (v4.4.2 => v4.4.4)
+  - nesbot/carbon (2.28.0 => 2.29.1)
+  - symfony/finder (v4.4.2 => v4.4.4)
+
+
+### [5.1.4](https://github.com/munkireport/munkireport-php/compare/v5.1.3...v5.1.4) (January 20, 2020)
 
 This is a bug fix release. Most notable change: the model lookup now happens in the machine module and not in the warranty module anymore.
 
