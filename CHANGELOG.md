@@ -1,4 +1,4 @@
-### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...HEAD) (Unreleased)
+### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...v5.1.5) (February 02, 2020)
 
 Mostly module updates, and a small fix for apache servers.
 Security module now reports on Secure Boot and External Boot thanks to @poundbangbash Note that this change needs a database migration.
