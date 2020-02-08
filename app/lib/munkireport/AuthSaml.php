@@ -249,6 +249,9 @@ class AuthSaml extends AbstractAuth
             }
         }
 
+        // Make group names compliant
+        $this->_dirify($out['groups']);
+
         // Check if we have a user
         if( $this->debug() && ! $out['user'] )
         {
@@ -257,6 +260,14 @@ class AuthSaml extends AbstractAuth
         }
 
         return $out;
+    }
+
+    // Replace comma with _
+    private function _dirify(Array $array)
+    {
+        array_walk($array, function(&$value, $key){
+            $value = str_replace(',', '_', $value);
+        });
     }
 
     private function debug()
