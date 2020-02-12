@@ -263,7 +263,7 @@ class AuthSaml extends AbstractAuth
     }
 
     // Replace comma with _
-    private function _dirify(Array $array)
+    private function _dirify(Array &$array)
     {
         array_walk($array, function(&$value, $key){
             $value = str_replace(',', '_', $value);
