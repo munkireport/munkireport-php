@@ -92,7 +92,6 @@ DEPENDENCY UPDATES
 - doctrine/cache (1.9.0 => 1.10.0)
 - phpoption/phpoption (1.5.2 => 1.7.2)
 
-
 ### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...v5.1.3) (November 12, 2019)
 
 FEATURES
