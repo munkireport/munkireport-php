@@ -1,4 +1,33 @@
-### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...HEAD) (Unreleased)
+### [5.2.0](https://github.com/munkireport/munkireport-php/compare/v5.1.5...HEAD) (Unreleased)
+
+Some module updates and fixes. Inventory now has single app widget support: see https://github.com/munkireport/inventory/blob/master/README.md#single-app-widget
+There's a fix for SAML groups that have comma's in the name.
+
+FEATURES
+- Hide the empty blank "Group 0" machine group (#1130)
+
+MODULE UPDATES
+- munkireport/inventory (v3.0 => v3.1)
+- munkireport/crashplan (V1.5 => V1.6)        
+- munkireport/findmymac (v1.2 => v1.3)        
+- munkireport/mdm_status (v1.9 => v1.11)
+- munkireport/power (v1.0 => v1.1)
+
+DEPENDENCY UPDATES
+- symfony/translation-contracts (v1.1.7 => v2.0.1)
+- symfony/polyfill-mbstring (v1.13.1 => v1.14.0)
+- nesbot/carbon (2.29.1 => 2.30.0)        
+- symfony/polyfill-php73 (v1.13.1 => v1.14.0)   
+- symfony/service-contracts (v1.1.8 => v2.0.1)
+- league/flysystem (1.0.63 => 1.0.64)
+- doctrine/dbal (v2.9.3 => v2.10.1)
+- symfony/polyfill-ctype (v1.13.1 => v1.14.0)   
+- vlucas/phpdotenv (v3.6.0 => v4.1.0)
+- symfony/var-dumper (v4.4.4 => v5.0.4)
+- tightenco/collect (v6.13.0 => v6.15.0)
+
+
+### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...v5.1.5) (February 02, 2020)
 
 Mostly module updates, and a small fix for apache servers.
 Security module now reports on Secure Boot and External Boot thanks to @poundbangbash Note that this change needs a database migration.

@@ -12,7 +12,7 @@ function initDotEnv()
 {
   try {
       $envfile = defined('MUNKIREPORT_SETTINGS') ? MUNKIREPORT_SETTINGS : '.env';
-      $dotenv = Dotenv::create(APP_ROOT, $envfile);
+      $dotenv = Dotenv::createMutable(APP_ROOT, $envfile);
       $dotenv->load();
   } catch (InvalidPathException $e) {
       // .env is missing, but not really an issue since configuration is specified here anyway.
