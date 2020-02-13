@@ -3,7 +3,7 @@
 ### [5.2.0](https://github.com/munkireport/munkireport-php/compare/v5.1.5...v5.2.0) (February 13, 2020)
 
 Some module updates and fixes. Inventory now has single app widget support: see https://github.com/munkireport/inventory/blob/master/README.md#single-app-widget
-There's a fix for SAML groups that have comma's in the name.
+There's a fix for SAML groups that have commas in the name.
 
 FEATURES
 - Hide the empty blank "Group 0" machine group (#1130)
