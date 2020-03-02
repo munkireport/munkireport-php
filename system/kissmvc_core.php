@@ -292,7 +292,11 @@ abstract class KISS_View
         if (! @include($view_path.$file.'.php')) {
             echo '<!-- Could not open '.$view_path.$file.'.php -->';
         }
+    }
 
+    public function viewWidget($file, $vars){
+        $obj = new View();
+        $obj->view($file, $vars);
     }
 
     public function fetch($vars = '')
