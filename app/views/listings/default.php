@@ -87,7 +87,8 @@
             columnDefs.push({
               name: $(this).data('colname'), 
               targets: col,
-              visible: ! $(this).data('hide')
+              visible: ! $(this).data('hide'),
+              render: $.fn.dataTable.render.text()
             });
             if($(this).data('formatter')){
               columnFormatters.push({
