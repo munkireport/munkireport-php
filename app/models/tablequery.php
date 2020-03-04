@@ -22,7 +22,7 @@ class Tablequery
 
     private function sanitize_column_name($string)
     {
-        return preg_replace("/[^a-zA-Z._]/", '', $string);
+        return preg_replace("/[^a-zA-Z0-9._]/", '', $string);
     }
 
     // ------------------------------------------------------------------------
