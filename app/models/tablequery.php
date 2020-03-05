@@ -157,7 +157,7 @@ class Tablequery
         $sLimit = sprintf(
             ' LIMIT %d,%d',
             filter_var($cfg['start'], FILTER_SANITIZE_NUMBER_INT),
-            filter_var($cfg['length'], FILTER_SANITIZE_NUMBER_INT),
+            filter_var($cfg['length'], FILTER_SANITIZE_NUMBER_INT)
         );
 
         // Show all
