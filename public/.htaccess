@@ -1,3 +1,5 @@
+RemoveHandler cgi-script .pl .py .cgi
+
 RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-f
