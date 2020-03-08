@@ -68,7 +68,7 @@ $(document).on('appUpdate', function(e, lang) {
         }
         
         if(showCounter){
-            $('#'+widgetId+' .counter').html(data.length);
+            $('#'+widgetId+' .counter').text(data.length);
         }
 	});
 });	
