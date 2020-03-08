@@ -28,6 +28,13 @@ $(document).on('appUpdate', function(e, lang) {
     var i18nEmptyResult = "<?php echo isset($i18n_empty_result)?$i18n_empty_result:''?>"
     var badgeType = "<?php echo isset($badge)?$badge:'default'?>"
     var urlType = "<?php echo isset($url_type)?$url_type:'listing'?>"
+    var generateListgroupItem = function(url, content, badge){
+        return $('<a>')
+            .addClass("list-group-item")
+            .attr('href', appUrl + url)
+            .text(content)
+            .append(badge)
+    }
 
 	$.getJSON( appUrl + apiUrl, function( data ) {
 		
@@ -36,18 +43,18 @@ $(document).on('appUpdate', function(e, lang) {
 		if(data.length){
 			$.each(data, function(i,d){
                 if(badgeType == 'reg_timestamp'){
-                    var badge = '<span class="pull-right">'+moment(d.reg_timestamp* 1000).fromNow()+'</span>';
+                    var badge = '<span class="pull-right">'+moment(d.reg_timestamp * 1000).fromNow()+'</span>';
                 }else{
                     var badge = '<span class="badge pull-right">'+d.count+'</span>';
                 }
                 if( ! d[searchKey]){
-					box.append('<a class="list-group-item">'+i18n.t('empty')+badge+'</a>')
+					box.append('<span class="list-group-item">'+i18n.t('empty')+badge+'</span>')
 				}
                 else{
                     if(urlType == 'client_detail'){
-                        box.append('<a href="'+appUrl+'/clients/detail/'+d.serial_number+'" class="list-group-item">'+d[searchKey]+badge+'</a>')
+                        box.append(generateListgroupItem('/clients/detail/'+d.serial_number, d[searchKey], badge));
                     }else{
-                        box.append('<a href="'+appUrl+listingLink+'#'+d[searchKey]+'" class="list-group-item">'+d[searchKey]+badge+'</a>')
+                        box.append(generateListgroupItem(listingLink+'#'+d[searchKey], d[searchKey], badge));
                     }
                 }
 			});
