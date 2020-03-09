@@ -1,4 +1,4 @@
-### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...HEAD) (Unreleased)
+### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...v5.3.0) (March 09, 2020)
 
 This release contains some major security fixes. Please upgrade to this version as soon as possible.
 To help mitigate the vulnerabilities, all modules got a security update.
