@@ -1,4 +1,91 @@
-### [5.2.1](https://github.com/munkireport/munkireport-php/compare/v5.2.0...HEAD) (Unreleased)
+### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...HEAD) (Unreleased)
+
+This release contains some major security fixes. Please upgrade to this version as soon as possible.
+To help mitigate the vulnerabilities, all modules got a security update.
+Special thanks to Edouard Schweisguth from Datadog who wrote the security report and helped us resolve these issues.
+Also thanks @joncrain, @tuxudo, @poundbangbash and @rickheil for helping out. 
+
+SECURITY UPDATES
+- [XSS vulnerability](https://github.com/munkireport/munkireport-php/wiki/20200309-XSS-vulnerability)
+- [Authenticated Comment XSS](https://github.com/munkireport/munkireport-php/wiki/20200309-Authenticated-Comment-XSS)
+- [Authenticated SQL injection](https://github.com/munkireport/munkireport-php/wiki/20200309-Authenticated-SQL-injection)
+
+FIXES
+- Harden datatables
+- Harden sessions
+- Harden handling of reports
+- Updating applications to latest version (#1319)
+- Add removehandler to .htaccess
+
+FEATURES
+- New widget template for developers
+
+MODULE UPDATES
+  - munkireport/reportdata (v2.4 => v2.6)
+  - munkireport/event (v3.1 => v3.2)
+  - munkireport/warranty (v2.2 => v2.3)
+  - munkireport/applications (v1.1 => v2.2)
+  - munkireport/backup2go (v1.1 => v1.2)
+  - munkireport/bluetooth (v1.2 => v1.3)
+  - munkireport/caching (v1.3 => v1.4)
+  - munkireport/certificate (v1.2 => v1.3)
+  - munkireport/comment (v2.1 => v2.2)
+  - munkireport/crashplan (V1.6 => v1.7)
+  - munkireport/deploystudio (v1.2 => v1.3)
+  - munkireport/devtools (v1.1 => v1.2)
+  - munkireport/directory_service (v1.1 => v1.2)
+  - munkireport/extensions (v1.1 => v1.2)
+  - munkireport/fan_temps (V1.6 => v1.7)
+  - munkireport/filevault_status (V1.2 => v1.3)
+  - munkireport/findmymac (v1.3 => v1.4)
+  - munkireport/firmware_escrow (v1.1 => v1.2)
+  - munkireport/fonts (v1.1 => v1.2)
+  - munkireport/gpu (v1.1 => v1.2)
+  - munkireport/gsx (v2.0 => v2.1)
+  - munkireport/homebrew (v1.1 => v1.2)
+  - munkireport/homebrew_info (v1.1 => v1.2)
+  - munkireport/ibridge (v1.4 => v1.5)
+  - munkireport/location (V1.2 => v1.3)
+  - munkireport/mbbr_status (v1.1 => v1.2)
+  - munkireport/mdm_status (v1.11 => v1.12)
+  - munkireport/munki_facts (v1.3 => v1.4)
+  - munkireport/munkiinfo (v1.1 => v1.2)
+  - munkireport/munkireportinfo (v1.3 => v1.4)
+  - munkireport/network_shares (v1.1 => v1.2)
+  - munkireport/power (v1.1 => v1.2)
+  - munkireport/printer (v1.1 => v1.2)
+  - munkireport/sccm_status (v1.1 => v1.2)
+  - munkireport/security (v1.6 => v1.7)
+  - munkireport/sentinelone (v1.1 => v1.2)
+  - munkireport/sentinelonequarantine (v1.1 => v1.2)
+  - munkireport/smart_stats (v1.1 => v1.2)
+  - munkireport/softwareupdate (v1.2.1 => v1.3)
+  - munkireport/sophos (v1.2 => v1.3)
+  - munkireport/supported_os (V1.8 => v1.9)
+  - munkireport/tag (v2.1 => v2.2)
+  - munkireport/timemachine (v1.4 => v1.5)
+  - munkireport/usage_stats (v1.1 => v1.2)
+  - munkireport/usb (V1.2 => v1.4)
+  - munkireport/user_sessions (V1.4 => v1.5)
+  - munkireport/wifi (v1.1 => v1.2)
+  - munkireport/machine (v2.5 => v3.0)
+
+DEPENDENCY UPDATES
+  - league/flysystem (1.0.64 => 1.0.65)
+  - doctrine/dbal (v2.9.3 => v2.10.1)
+  - vlucas/phpdotenv (v4.1.0 => v4.1.1)
+  - symfony/yaml (v3.4.37 => v3.4.38)
+  - symfony/var-dumper (v4.4.4 => v5.0.5)
+  - tightenco/collect (v6.15.0 => v7.0.5)
+  - adldap2/adldap2 (v10.2.2 => v10.2.3)
+  - symfony/service-contracts (v1.1.8 => v2.0.1)
+  - symfony/console (v4.4.4 => v4.4.5)
+  - symfony/process (v4.4.4 => v4.4.5)
+  - symfony/translation-contracts (v1.1.7 => v2.0.1)
+  - symfony/translation (v4.4.4 => v4.4.5)
+  - nesbot/carbon (2.30.0 => 2.31.0)
+  - symfony/finder (v4.4.4 => v4.4.5)
+
 
 ### [5.2.0](https://github.com/munkireport/munkireport-php/compare/v5.1.5...v5.2.0) (February 13, 2020)
 
