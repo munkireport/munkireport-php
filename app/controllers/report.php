@@ -267,15 +267,16 @@ class report extends Controller
             return False;
         }
 
-           // Load model
-        $class = new $classname($_POST['serial']);
-
-        if (! method_exists($class, 'process')) {
-            $this->msg("No process method in: $classname");
-            return False;
-        }
-
         try {
+
+           // Load model
+            $class = new $classname($_POST['serial']);
+
+            if (! method_exists($class, 'process')) {
+                $this->msg("No process method in: $classname");
+                return False;
+            }
+
             $class->process($data);
             return True;
         } catch (Exception $e) {
