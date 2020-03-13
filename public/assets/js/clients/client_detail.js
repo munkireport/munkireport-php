@@ -45,7 +45,7 @@ $(document).on('appReady', function(e, lang) {
 
 		},
         drawCallback: function( oSettings ) {
-			$('#total-count').html(oSettings.fnRecordsTotal());
+			$('#total-count').text(oSettings.fnRecordsTotal());
 
 		},
 		language: {
@@ -82,11 +82,11 @@ $(document).on('appReady', function(e, lang) {
 
 		// Set properties based on id
 		$.each(machineData, function(prop, val){
-			$('.mr-'+prop).html(val);
+			$('.mr-'+prop).text(val);
 		});
 
 		// Convert computer_model to link to everymac.com TODO: make this optional/configurable
-		var mmodel = $('.mr-machine_model').html();
+		var mmodel = $('.mr-machine_model').text();
 		$('.mr-machine_model').html('<a target="_blank" href="https://www.everymac.com/ultimate-mac-lookup/?search_keywords='+mmodel+'">'+mmodel+'</a>');
 
 		// Set computer name value and title
@@ -101,16 +101,16 @@ $(document).on('appReady', function(e, lang) {
 		$('title').text(machineData.computer_name + ' | ' + title)
 
 		// Format OS Version
-		$('.mr-os_version').html(mr.integerToVersion(machineData.os_version));
+		$('.mr-os_version').text(mr.integerToVersion(machineData.os_version));
 
 
 		// Format filesizes
-		$('.mr-TotalSize').html(fileSize(machineData.totalsize, 1));
-		$('.mr-UsedSize').html(fileSize(machineData.totalsize - machineData.freespace, 1));
-		$('.mr-freespace').html(fileSize(machineData.freespace, 1));
+		$('.mr-TotalSize').text(fileSize(machineData.totalsize, 1));
+		$('.mr-UsedSize').text(fileSize(machineData.totalsize - machineData.freespace, 1));
+		$('.mr-freespace').text(fileSize(machineData.freespace, 1));
 
 		// Smart status
-		$('.mr-smartstatus').html(machineData.smartstatus);
+		$('.mr-smartstatus').text(machineData.smartstatus);
 		if(machineData.smartstatus == 'Failing'){
 			$('.mr-smartstatus').addClass('label label-danger');
 		}
@@ -141,14 +141,14 @@ $(document).on('appReady', function(e, lang) {
 		}
 
 
-		$('.mr-warranty_status').addClass(cls).html(msg);
+		$('.mr-warranty_status').addClass(cls).text(msg);
 
 		// Uptime
 		if(machineData.uptime > 0){
 			var uptime = moment((machineData.timestamp - machineData.uptime) * 1000);
 			$('.mr-uptime').html('<time title="'+i18n.t('boot_time')+': '+uptime.format('LLLL')+'">'+uptime.fromNow(true)+'</time>');
 		}else{
-			$('.mr-uptime').html(i18n.t('unavailable'));
+			$('.mr-uptime').text(i18n.t('unavailable'));
 		}
 
 		// Registration date
