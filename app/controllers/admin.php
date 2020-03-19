@@ -10,13 +10,9 @@ class admin extends Controller
 {
     public function __construct()
     {
-        if (! $this->authorized()) {
-            jsonError('Authenticate first', 403);
-        }
-
-        if (! $this->authorized('global')) {
-            jsonError('You need to be admin', 403);
-        }
+        // Check authorization
+        $this->authorized() || jsonError('Authenticate first', 403);
+        $this->authorized('global') || jsonError('You need to be admin', 403);
         
         // Connect to database
         $this->connectDB();

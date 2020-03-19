@@ -8,17 +8,12 @@ class manager extends Controller
 {
     public function __construct()
     {
-        if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
-        }
-
-        if (! $this->authorized('delete_machine')) {
-            die('You need to be manager or admin');
-        }
+        // Check authorization
+        $this->authorized() || jsonError('Authenticate first', 403);
+        $this->authorized('delete_machine') || jsonError('You need to be manager or admin', 403);
 
         // Connect to database
         $this->connectDB();
-
     }
 
 

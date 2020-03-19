@@ -9,13 +9,11 @@ class datatables extends Controller
 {
     public function __construct()
     {
-        if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
-        }
+        // Check authorization
+        $this->authorized() || jsonError('Authenticate first', 403);
 
         // Connect to database
         $this->connectDB();
-
     }
 
     public function data()

@@ -12,14 +12,10 @@ class Database extends Controller
 {
     public function __construct()
     {
-        if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
-        }
-
-        if (! $this->authorized('global')) {
-            die('You need to be admin');
-        }
-        
+        // Check authorization
+        $this->authorized() || jsonError('Authenticate first', 403);
+        $this->authorized('global') || jsonError('You need to be admin', 403);
+                
         $this->connectDB();
     }
     
