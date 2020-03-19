@@ -174,7 +174,10 @@ $(document).on('appReady', function(e, lang) {
 				$(this).tooltip().css('cursor', 'pointer');
 		});
 		
-		var username=$('nav i.fa-user')[0].nextSibling.nodeValue.trim();
+		var username = 'admin';
+		if($('nav i.fa-user')[0]){
+			username=$('nav i.fa-user')[0].nextSibling.nodeValue.trim();
+		}
 		// Remote control links
 		$.getJSON( appUrl + '/clients/get_links', function( links ) {
 			$.each(links, function(prop, val){
