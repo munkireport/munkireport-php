@@ -53,6 +53,9 @@ $(document).on('appUpdate', function(e, lang) {
                     label = o.label;
                 }
 
+                // Set default class to btn-info
+                o.class = o.class ? o.class : 'btn-info';
+
 				body.append(
                     $('<a>')
                         .attr('href', appUrl+listingLink+'/#'+encodeURIComponent(o.search_component))

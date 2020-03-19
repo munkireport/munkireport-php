@@ -11,11 +11,11 @@ class admin extends Controller
     public function __construct()
     {
         if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
+            jsonError('Authenticate first', 403);
         }
 
         if (! $this->authorized('global')) {
-            die('You need to be admin');
+            jsonError('You need to be admin', 403);
         }
         
         // Connect to database
