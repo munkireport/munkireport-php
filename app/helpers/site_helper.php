@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.3.1.3999';
+$GLOBALS['version'] = '5.3.1.4003';
 
 // Return version without commit count
 function get_version()
@@ -509,4 +509,45 @@ function getDashboard()
     }
 
     return $dashboardObj;
+}
+
+// Generate csrf token and store in session
+function getCSRF()
+{
+    return $_SESSION['csrf_token'];
+}
+
+
+/**
+ * Generate a more truly "random" alpha-numeric string.
+ *
+ * @param  int  $length
+ * @return string
+ */
+function random($length = 16)
+{
+    $string = '';
+
+    while (($len = strlen($string)) < $length) {
+        $size = $length - $len;
+
+        $bytes = random_bytes($size);
+
+        $string .= substr(str_replace(['/', '+', '='], '', base64_encode($bytes)), 0, $size);
+    }
+
+    return $string;
+}
+
+function jsonError($msg = '', $status_code = 400, $exit = true)
+{
+    jsonView(['error' => $msg], $status_code, $exit);
+}
+
+
+function jsonView($msg = '', $status_code = 200, $exit = false)
+{
+    $obj = new View();
+    $obj->view('json', ['msg' => $msg, 'status_code' => $status_code]);
+    if ($exit) exit;
 }

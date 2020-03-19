@@ -80,6 +80,10 @@ class Auth extends Controller
 
         // Check if pre-authentication is successful
         if (! $pre_auth_failed && $this->authHandler->login($login, $password)) {
+
+            // Set CSRF token for this session
+            $_SESSION['csrf_token'] = random(40);
+            
             if($_SESSION['initialized']){
                 redirect($return);
             }else{

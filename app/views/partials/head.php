@@ -5,6 +5,7 @@
 	<meta name=apple-mobile-web-app-capable content=yes>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="csrf-token" content="<?php echo getCSRF();?>">
 
 	<title><?php echo conf('sitename'); ?></title>
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/<?php echo sess_get('theme', 'Default')?>/bootstrap.min.css" id="bootstrap-stylesheet" />
@@ -43,6 +44,15 @@
 	</script>
 
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
+
+	<script>
+		// Include csrf in all requests
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+	</script>
 
 <?php
 	if (isset($scripts))

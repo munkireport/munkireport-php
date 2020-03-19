@@ -89,6 +89,11 @@ class Controller extends KISS_Controller
             return false;
         }
 
+        // Check if POST and check CSRF
+        if(in_array($_SERVER['REQUEST_METHOD'], ['POST', 'DELETE'])){
+            $this->verifyCSRF();
+        }
+
         // Check for a specific authorization item
         if ($what) {
             foreach (conf('authorization', array()) as $item => $roles) {
@@ -106,6 +111,18 @@ class Controller extends KISS_Controller
 
         // There is no matching rule, you're authorized!
         return true;
+    }
+
+    private function verifyCSRF()
+    {
+        $session_token = sess_get('csrf_token');
+
+        $sent_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+
+        if( hash_equals($session_token, $sent_token)) return;
+
+        // Exit with error page todo: use a json response
+        jsonView($msg = ['error' => 'CSRF Token Mismatch'], $status_code = 403, $exit = true);
     }
 
     /**
