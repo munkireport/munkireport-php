@@ -83,7 +83,7 @@ class Auth extends Controller
 
             // Set CSRF token for this session
             $_SESSION['csrf_token'] = random(40);
-            
+
             if($_SESSION['initialized']){
                 redirect($return);
             }else{
@@ -117,8 +117,7 @@ class Auth extends Controller
         $props = $this->authHandler->setSessionProps();
         // Show current session info
         if ($show) {
-            $obj = new View();
-            $obj->view('json', array('msg' => $props));
+            jsonView($props);
         }
     }
 
