@@ -72,6 +72,10 @@ var mr = {
             return osvers
         },
 
+        label: function(text, type){
+            return $('<span>').addClass('label + label-'+type).text(text);
+        },
+
         listingFilter: {
             filter: function(d, filters){
                 for (var i = 0; i < filters.length; i++) {
@@ -159,8 +163,8 @@ var mr = {
             binaryEnabledDisabled: function(col, row){
                 var cell = $('td:eq('+col+')', row),
                     value = cell.text()
-                value = value == '1' ? '<span class="label label-success">'+i18n.t('enabled')+'</span>' :
-                    (value === '0' ? '<span class="label label-danger">'+i18n.t('disabled')+'</span>' : '')
+                value = value == '1' ? mr.label(i18n.t('enabled'), 'success') :
+                    (value === '0' ? mr.label(i18n.t('disabled'), 'danger') : '')
 	        	cell.html(value)
             },
             fileSize: function(col, row){
