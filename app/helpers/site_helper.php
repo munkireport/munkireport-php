@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.3.1.4007';
+$GLOBALS['version'] = '5.3.1.4008';
 
 // Return version without commit count
 function get_version()
@@ -547,7 +547,14 @@ function jsonError($msg = '', $status_code = 400, $exit = true)
 
 function jsonView($msg = '', $status_code = 200, $exit = false)
 {
+
+    // Check for error, adjust status code if necessary
+    if(is_array($msg) && isset($msg['error']) && $status_code == 200){
+        $status_code = 400;
+    }
+
     $obj = new View();
     $obj->view('json', ['msg' => $msg, 'status_code' => $status_code]);
+    
     if ($exit) exit;
 }

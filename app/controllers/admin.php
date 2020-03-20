@@ -111,8 +111,7 @@ class admin extends Controller
             $out['error'] = 'Groupid is missing';
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     //===============================================================
@@ -138,8 +137,7 @@ class admin extends Controller
                 ->update(['machine_group' => 0]);
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     //===============================================================
@@ -263,8 +261,7 @@ class admin extends Controller
             $out['error'] = 'Unitid missing';
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     //===============================================================
@@ -284,8 +281,7 @@ class admin extends Controller
             $out['success'] = $bu->deleteWhere('unitid=?', $unitid);
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     //===============================================================

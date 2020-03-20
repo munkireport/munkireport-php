@@ -62,8 +62,7 @@ class system extends Controller
         // Do a read
         // Get tables
         // Get size
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     //===============================================================

@@ -43,8 +43,7 @@ class unit extends Controller
             $out = $unit->all($_SESSION['business_unit']);
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     /**
@@ -88,8 +87,7 @@ class unit extends Controller
             return strcasecmp($a['name'], $b['name']);
         });
         
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     /**
@@ -152,8 +150,7 @@ class unit extends Controller
             $out[$filter] = $_SESSION['filter'][$filter];
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
 
