@@ -8,7 +8,6 @@ if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO
 
 // Remove X-Powered-By beader
 header_remove("X-Powered-By");
-header_remove("Server");
 
 /**
  * Fatal error, show message and die
