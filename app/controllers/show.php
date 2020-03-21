@@ -57,23 +57,34 @@ class show extends Controller
 
     public function report($module = '', $name = '')
     {
+        $report = $this->modules->getReport($module, $name);
 
-        $data = array(
-            'widget' => new Widgets(conf('widget')),
-        );
-
-        if ($report = $this->modules->getReport($module, $name)) {
-            $data['page'] = 'clients';
-            $viewpath = $report->view_path;
-            $view = $report->view;
-        } else {
+        if ( ! $report){
             $data = array('status_code' => 404);
             $view = 'error/client_error';
-            $viewpath = conf('view_path');
-        }
-
-        $obj = new View();
-        $obj->view($view, $data, $viewpath);
+            $obj = new View();
+            $obj->view(
+                'error/client_error', 
+                ['status_code' => 404]
+            );
+        }elseif ($report->type == 'php') {
+            $obj = new View();
+            $obj->view(
+                $report->view, 
+                [
+                    'page' => 'clients',
+                    'widget' => new Widgets(conf('widget')),
+                ], 
+                $report->view_path
+            );
+        }elseif ($report->type == 'yaml') {
+            $db = new Dashboard([
+                'search_paths' => [$report->view_path],
+                'template' => env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
+                'default_layout' => [],           
+            ]);
+            $db->render($report->view);    
+        }       
     }
 
     public function custom($which = 'default')

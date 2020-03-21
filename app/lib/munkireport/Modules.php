@@ -217,9 +217,18 @@ class Modules
             return (object) [
                 'view_path' => $this->getPath($module, '/views/'),
                 'view' => $this->moduleList[$module]['reports'][$name]['view'],
+                'type' => $this->getType(
+                    $this->getPath($module, '/views/'),
+                    $this->moduleList[$module]['reports'][$name]['view'],
+                ),
             ];
         }
         return False;
+    }
+
+    private function getType($path, $view) 
+    {
+        return is_readable( $path . $view . '.yml') ? 'yaml' : 'php';
     }
 
     public function getPath($module, $append = '')
