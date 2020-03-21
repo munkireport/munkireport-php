@@ -60,7 +60,9 @@
 <?php endif?>
 
 <?php if(isset($js_link)):?>
-  <script src="<?=url($js_link)?>"></script>
+  <?php foreach(is_array($js_link) ? $js_link : [$js_link] as $link):?>
+  <script src="<?=url($link)?>"></script>
+  <?php endforeach?>
 <?php endif?>
 
 
