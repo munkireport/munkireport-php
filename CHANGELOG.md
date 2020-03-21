@@ -1,4 +1,4 @@
-### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.3.0...HEAD) 
+### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.3.0...v5.3.1) 
 
 This release fixes two minor security issues found by Datadog: a Cross Site Request Forgery (CSRF) vulnerability and a fix for PHP and Apache version information leakage in the Docker container. The PHP version display in the header is fixed for everyone, the server version display you need to fix in your own server if you care about it.
 
@@ -34,7 +34,7 @@ DEPENDENCY UPDATES
   - tightenco/collect (v7.0.5 => v7.2.0)
 
 
-### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...HEAD)
+### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...v5.3.1)
 
 This release contains some major security fixes. Please upgrade to this version as soon as possible.
 To help mitigate the vulnerabilities, all modules got a security update.
