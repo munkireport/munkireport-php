@@ -1,7 +1,37 @@
-### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.2.0...HEAD) 
+### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.3.0...HEAD) 
 
 This release fixes two minor security issues found by Datadog: a Cross Site Request Forgery (CSRF) vulnerability and a fix for PHP and Apache version information leakage in the Docker container. The PHP version display in the header is fixed for everyone, the server version display you need to fix in your own server if you care about it.
 
+FIXES
+- Add CSRF protection for POST requests
+- Remove X-Powered-By PHP header
+- Simplify Apache Server header in Docker (no version display)
+
+CHANGES
+- Mover markerclusterer.js to location widget
+- Cleanup js files
+- Remove authLDAP from library
+
+FEATURES
+- Add button widget template
+
+MODULE UPDATES
+  - munkireport/findmymac (v1.4 => v1.5)
+  - munkireport/location (v1.3 => v1.5)
+  - munkireport/mdm_status (v1.12 => v1.16)
+  - munkireport/power (v1.2 => v1.3)
+  - munkireport/security (v1.7 => v1.8)
+  - munkireport/timemachine (v1.5 => v1.7)
+  - munkireport/usb (v1.4 => v1.6)
+
+DEPENDENCY UPDATES
+  - symfony/service-contracts (v1.1.8 => v2.0.1)
+  - symfony/translation-contracts (v1.1.7 => v2.0.1)
+  - league/flysystem (1.0.65 => 1.0.66)
+  - doctrine/dbal (v2.9.3 => v2.10.1)
+  - vlucas/phpdotenv (v4.1.1 => v4.1.2)
+  - symfony/var-dumper (v4.4.5 => v5.0.5)
+  - tightenco/collect (v7.0.5 => v7.2.0)
 
 
 ### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...HEAD)
