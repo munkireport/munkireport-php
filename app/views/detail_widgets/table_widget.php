@@ -1,7 +1,12 @@
-<div class="col-lg-4">
-    <h4 
-        <?=$i18n_title ? "data-i18n=\"$i18n_title\"" : ''?>
-        <?=$class ? "class=\"$class\"" : ''?>
+<div 
+    class="col-lg-4" 
+    <?=isset($id) ? "id=\"$id\"" : ''?>
+>
+    <h4>
+        <?=isset($icon) ? "<i class=\"fa fa-$icon\"></i>" : ''?>
+        <span
+        <?=isset($i18n_title) ? "data-i18n=\"$i18n_title\"" : ''?>
+        <?=isset($class) ? "class=\"$class\"" : ''?>
     ></h4>
     <table>
         <?php foreach($table as $row):?>
@@ -20,3 +25,9 @@
         <?php endforeach?>
     </table>
 </div>
+
+<?php if(isset($js_link)):?>
+  <?php foreach(is_array($js_link) ? $js_link : [$js_link] as $link):?>
+  <script src="<?=url($link)?>"></script>
+  <?php endforeach?>
+<?php endif?>
