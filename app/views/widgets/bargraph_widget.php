@@ -33,12 +33,22 @@ $(document).on('appReady', function(e, lang) {
     var badgeType = "<?php echo isset($badge)?$badge:'default'?>"
     var urlType = "<?php echo isset($url_type)?$url_type:'listing'?>"
 
+    <?php 
+        $graph_margins = ['top' => 20, 'right' => 10, 'bottom' => 20, 'left' => 70];
+
+        if(isset($margin) && is_array($margin)){
+            $graph_margins = array_merge($graph_margins, $margin);
+        }
+        
+        if( ! isset($margin) || ! is_string($margin)){
+            $margin = json_encode($graph_margins);
+        }
+    ?>
+
 	var conf = {
 		url: appUrl + apiUrl, // Url for json
         widget: widgetId, // Widget id
-        <?php if(isset($margin)):?>
         margin: <?=$margin?>,
-        <?php endif?>
         <?php if(isset($search_component)):?>
 		elementClickCallback: function(e){
 			var label = e.data.label;
