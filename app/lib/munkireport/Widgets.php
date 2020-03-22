@@ -2,6 +2,7 @@
 
 namespace munkireport\lib;
 use Illuminate\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
 /**
 * Widgets class
@@ -71,15 +72,34 @@ class Widgets
         {
           $widget = $this->widgetList['unknown_widget'];
           $widget->vars = ['widgetName' => $widgetName];
-
         }
+
         return $widget;
     }
 
     public function view($viewObj, $widgetName, $data = [])
     {
         $widget = $this->get($widgetName, $data);
-        $viewObj->view($widget->file, $widget->vars, $widget->path);
+        if ($this->getType($widget->path, $widget->file) == 'yaml') {
+            try {
+                $data = array_merge($data ?? [], Yaml::parseFile($widget->path . $widget->file . '.yml'));
+            } catch (\Throwable $th) {
+                $data = [
+                    'type' => 'error',
+                    'title' => 'YAML error',
+                    'msg' => $th->getMessage()
+                ];
+            }
+            $viewObj->viewWidget($data);
+
+        }else{
+            $viewObj->view($widget->file, $widget->vars, $widget->path);
+        }
+    }
+
+    private function getType($path, $view) 
+    {
+        return is_readable( $path . $view . '.yml') ? 'yaml' : 'php';
     }
     
     private function fileNameToName($file)
