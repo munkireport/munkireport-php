@@ -1,4 +1,6 @@
 <?php
+
+use Symfony\Component\Yaml\Yaml;
 /*****************************************************************
 Copyright ( c ) 2008-2009 {kissmvc.php version 0.7}
 Eric Koh <erickoh75@gmail.com> http://kissmvc.com
@@ -302,6 +304,24 @@ abstract class KISS_View
         }
         $obj = new View();
         $obj->view($file, $vars);
+    }
+
+    public function viewDetailWidget($data){
+
+        $view = $data['view'];
+        $view_path = $data['view_path'] ?? conf('view_path');
+        $view_vars = $data['view_vars'] ?? [];
+
+        // Check if Yaml
+        if(is_readable($view_path . $view . '.yml')){
+            $view_vars = Yaml::parseFile($view_path . $view . '.yml');
+            $view = 'detail_widgets/' . $view_vars['type'] . '_widget';
+            $view_path = conf('view_path');
+        }
+
+        $obj = new View();
+        $obj->view($view, $view_vars, $view_path);
+
     }
 
     public function fetch($vars = '')
