@@ -5,6 +5,7 @@ namespace munkireport\controller;
 use \Controller, \View;
 use munkireport\lib\Widgets;
 use munkireport\lib\Dashboard;
+use munkireport\lib\Listing;
 
 class show extends Controller
 {
@@ -40,19 +41,8 @@ class show extends Controller
 
     public function listing($module = '', $name = '')
     {
-        if ($listing = $this->modules->getListing($module, $name)) {
-            $data['page'] = 'clients';
-            $data['scripts'] = array("clients/client_list.js");
-            $viewpath = $listing->view_path;
-            $view = $listing->view;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-            $viewpath = conf('view_path');
-        }
-
-        $obj = new View();
-        $obj->view($view, $data, $viewpath);
+        $listing = new Listing($this->modules->getListing($module, $name));
+        $listing->render();
     }
 
     public function report($module = '', $name = '')
@@ -60,14 +50,10 @@ class show extends Controller
         $report = $this->modules->getReport($module, $name);
 
         if ( ! $report){
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-            $obj = new View();
-            $obj->view(
-                'error/client_error', 
-                ['status_code' => 404]
-            );
-        }elseif ($report->type == 'php') {
+            $this->_pageNotFound();
+        }
+        
+        if ($report->type == 'php') {
             $obj = new View();
             $obj->view(
                 $report->view, 
@@ -89,17 +75,26 @@ class show extends Controller
 
     public function custom($which = 'default')
     {
-        if ($which) {
-            $data['args'] = func_get_args();
-            $view = $which;
-            $viewpath = APP_ROOT . 'custom/views/';
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-            $viewpath = conf('view_path');
+        if ( ! $which){
+            $this->_pageNotFound();
+        }else{
+            $this->_render($which, func_get_args(), APP_ROOT . 'custom/views/');
         }
+    }
 
+    private function _render($view, $data, $viewpath)
+    {
         $obj = new View();
         $obj->view($view, $data, $viewpath);
+    }
+
+    private function _pageNotFound()
+    {
+        $data = array('status_code' => 404);
+        $view = 'error/client_error';
+        $viewpath = conf('view_path');
+        $obj = new View();
+        $obj->view($view, $data, $viewpath);
+        exit;
     }
 }
