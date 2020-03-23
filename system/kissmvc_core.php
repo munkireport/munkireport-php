@@ -73,7 +73,7 @@ abstract class KISS_Engine
         }
 
             //Route request to correct controller/action
-        $controllerClass = 'munkireport\\controller\\' . $this->controller;
+        $controllerClass = 'munkireport\\controller\\' . ucfirst($this->controller);
         if ( ! class_exists($controllerClass, true)) {
             $this->requestNotFound('Controller class not found: '.$controllerClass);
         }
