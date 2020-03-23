@@ -117,7 +117,10 @@ $(document).on('appReady', function(e, lang) {
 			.addClass('fa fa-comment'))
 
 	// If comments on this page, get comment data
-	$('div.comment')
+	$('#comment-widget table')
+		.replaceWith('<div class="comment" data-section="client"></div>')
+
+	$('#comment-widget div.comment')
 		.empty()
 		.append(function(){
 			var me = $(this),
