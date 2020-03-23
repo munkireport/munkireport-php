@@ -7,7 +7,7 @@ use munkireport\lib\Widgets;
 use munkireport\lib\Dashboard;
 use munkireport\lib\Listing;
 
-class show extends Controller
+class Show extends Controller
 {
     private $modules;
     public function __construct()

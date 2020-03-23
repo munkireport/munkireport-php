@@ -5,7 +5,7 @@ namespace munkireport\controller;
 use \Controller, \View, \Exception;
 use munkireport\models\Tablequery;
 
-class datatables extends Controller
+class Datatables extends Controller
 {
     public function __construct()
     {

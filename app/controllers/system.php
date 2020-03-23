@@ -6,7 +6,7 @@ use munkireport\lib\Database;
 use munkireport\lib\Widgets;
 use munkireport\lib\Modules;
 
-class system extends Controller
+class System extends Controller
 {
     public function __construct()
     {

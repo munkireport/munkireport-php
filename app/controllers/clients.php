@@ -7,7 +7,7 @@ use \Machine_model;
 
 
 
-class clients extends Controller
+class Clients extends Controller
 {
     public function __construct()
     {

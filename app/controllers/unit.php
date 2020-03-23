@@ -6,7 +6,7 @@ use \Controller, \View;
 use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
 
-class unit extends Controller
+class Unit extends Controller
 {
     public function __construct()
     {

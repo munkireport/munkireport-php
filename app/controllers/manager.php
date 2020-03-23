@@ -4,7 +4,7 @@ namespace munkireport\controller;
 
 use \Controller, \View, \Model, \Exception;
 
-class manager extends Controller
+class Manager extends Controller
 {
     public function __construct()
     {
