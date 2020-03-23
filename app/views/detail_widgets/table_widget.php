@@ -5,9 +5,10 @@
     <h4>
         <?=isset($icon) ? "<i class=\"fa fa-$icon\"></i>" : ''?>
         <span
-        <?=isset($i18n_title) ? "data-i18n=\"$i18n_title\"" : ''?>
-        <?=isset($class) ? "class=\"$class\"" : ''?>
-    ></h4>
+            <?=isset($i18n_title) ? "data-i18n=\"$i18n_title\"" : ''?>
+            <?=isset($class) ? "class=\"$class\"" : ''?>
+        ></span>
+    </h4>
     <table>
         <?php foreach($table as $row):?>
         <tr>
