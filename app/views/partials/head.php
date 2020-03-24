@@ -180,6 +180,13 @@
 							<?php endif; ?>
 
 						<?php endforeach; ?>
+						<?php foreach($modules->getDropdownData('admin_pages', 'module', $page) as $item): ?>
+
+							<li class="<?=$item->class?>">
+								<a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
+							</li>
+
+						<?php endforeach; ?>
 
 					</ul>
 
