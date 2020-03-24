@@ -221,7 +221,7 @@ class Modules
                 'view' => $this->moduleList[$module]['reports'][$name]['view'],
                 'type' => $this->getType(
                     $this->getPath($module, '/views/'),
-                    $this->moduleList[$module]['reports'][$name]['view'],
+                    $this->moduleList[$module]['reports'][$name]['view']
                 ),
             ];
         }
