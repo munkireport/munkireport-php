@@ -70,7 +70,6 @@
 					<?php endif?>
 
 			            </fieldset>
-			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
 					</form>
 				</div>
 			</div>
