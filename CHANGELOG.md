@@ -1,5 +1,22 @@
 ### [5.3.2](https://github.com/munkireport/munkireport-php/compare/v5.3.1...HEAD) (Unreleased)
 
+Some small fixes for regressions introduced by the latest releases. Futher YAMLfcation of views and configurations.
+
+FIXES
+- Admin->Show System Status->Database now shows data
+- Comment html filter does not screw up the tags anymore
+- Fix casing of several classes so Composer does not bark at us
+
+CHANGES
+- Don't show MunkiReport version anymore on the login page (a little more secure)
+
+FEATURES
+- This makes @tuxudo happy: module admin page support
+
+MODULE UPDATES
+
+
+
 ### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.3.0...v5.3.1) 
 
 This release fixes two minor security issues found by Datadog: a Cross Site Request Forgery (CSRF) vulnerability and a fix for PHP and Apache version information leakage in the Docker container. The PHP version display in the header is fixed for everyone, the server version display you need to fix in your own server if you care about it.

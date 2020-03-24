@@ -57,6 +57,7 @@
         "munkireport/ibridge": "^1.0",
         "munkireport/installhistory": "^2.0",
         "munkireport/inventory": "^3.0",
+        "munkireport/laps": "^1.4",
         "munkireport/localadmin": "^2.0",
         "munkireport/location": "^1.0",
         "munkireport/managedinstalls": "^2.0",
