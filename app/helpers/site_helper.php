@@ -549,7 +549,7 @@ function jsonView($msg = '', $status_code = 200, $exit = false)
 {
 
     // Check for error, adjust status code if necessary
-    if(is_array($msg) && isset($msg['error']) && $status_code == 200){
+    if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200){
         $status_code = 400;
     }
 
