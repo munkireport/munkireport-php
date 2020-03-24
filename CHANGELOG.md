@@ -2,6 +2,8 @@
 
 Some small fixes for regressions introduced by the latest releases. Futher YAMLfcation of views and configurations.
 
+Note: MR changed a couple of filenames to Uppercase - people on CaSE iNsensiTive filesystems should check if everything is ok after upgrading.
+
 FIXES
 - Admin->Show System Status->Database now shows data
 - Comment html filter does not screw up the tags anymore
@@ -12,9 +14,18 @@ CHANGES
 
 FEATURES
 - This makes @tuxudo happy: module admin page support
+- Add laps module to built-in modules
 
 MODULE UPDATES
+- munkireport/machine (v3.0 => v4.0)
+- munkireport/laps (v1.4)
+- munkireport/comment (v2.2 => v3.1)
 
+DEPENDENCY UPDATES
+- nesbot/carbon (2.31.0 => 2.32.0)
+- psr/log (1.1.2 => 1.1.3)
+- tightenco/collect (v7.2.0 => v7.2.2)
+- phpoption/phpoption (1.7.2 => 1.7.3)
 
 
 ### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.3.0...v5.3.1) 
@@ -69,7 +80,7 @@ FIXES
 - Harden datatables
 - Harden sessions
 - Harden handling of reports
-- Updating applications to latest version (#1319)
+- applications to latest version (#1319)
 - Add removehandler to .htaccess
 
 FEATURES
