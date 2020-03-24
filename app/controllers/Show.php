@@ -6,7 +6,7 @@ use \Controller, \View;
 use munkireport\lib\Widgets;
 use munkireport\lib\Dashboard;
 
-class show extends Controller
+class Show extends Controller
 {
     private $modules;
     public function __construct()
