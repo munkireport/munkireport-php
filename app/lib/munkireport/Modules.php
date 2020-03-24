@@ -2,6 +2,8 @@
 
 namespace munkireport\lib;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
 * Modules class
 *
@@ -393,7 +395,17 @@ class Modules
                 }
 
                 // Find provides.php
-                if (is_file($basePath.$module.'/provides.php') && ! isset($this->moduleList[$module]))
+                if (is_file($basePath.$module.'/provides.yml') && ! isset($this->moduleList[$module]))
+                {
+                    // Load YAML data
+                    try {
+                        $this->moduleList[$module] = Yaml::parseFile($basePath.$module.'/provides.yml');
+                        $this->moduleList[$module]['path'] = $basePath.$module.'/';
+                    } catch (\Throwable $th) {
+                        error($th->getMessage());
+                    }
+                }
+                elseif (is_file($basePath.$module.'/provides.php') && ! isset($this->moduleList[$module]))
                 {
                     $this->moduleList[$module] = require $basePath.$module.'/provides.php';
                     $this->moduleList[$module]['path'] = $basePath.$module.'/';
