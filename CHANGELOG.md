@@ -1,5 +1,18 @@
 ### [5.3.3](https://github.com/munkireport/munkireport-php/compare/v5.3.2...HEAD) (Unreleased)
 
+Fix a trailing comma that was tripping up PHP versions below 7.3
+
+FIXES
+- Trailing comma in Modules.php
+- Apple hardware icon in detail view
+
+MODULE UPDATES
+- munkireport/machine (v4.0 => v5.0)
+
+DEPENDENCY UPDATES
+- tightenco/collect (v7.2.2 => v7.3.0)
+
+
 ### [5.3.2](https://github.com/munkireport/munkireport-php/compare/v5.3.1...v5.3.2) (March 24, 2020)
 
 Some small fixes for regressions introduced by the latest releases. Futher YAMLfcation of views and configurations.
