@@ -1,4 +1,6 @@
-### [5.3.2](https://github.com/munkireport/munkireport-php/compare/v5.3.1...HEAD) (Unreleased)
+### [5.3.3](https://github.com/munkireport/munkireport-php/compare/v5.3.2...HEAD) (Unreleased)
+
+### [5.3.2](https://github.com/munkireport/munkireport-php/compare/v5.3.1...v5.3.2) (March 24, 2020)
 
 Some small fixes for regressions introduced by the latest releases. Futher YAMLfcation of views and configurations.
 
