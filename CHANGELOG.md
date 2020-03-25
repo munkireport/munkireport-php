@@ -1,3 +1,5 @@
+### [5.3.4](https://github.com/munkireport/munkireport-php/compare/v5.3.3...HEAD) (Unreleased)
+
 ### [5.3.3](https://github.com/munkireport/munkireport-php/compare/v5.3.2...v5.3.3) (March 25, 2020)
 
 Fix a trailing comma that was tripping up PHP versions below 7.3
