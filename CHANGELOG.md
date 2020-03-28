@@ -1,5 +1,22 @@
 ### [5.3.4](https://github.com/munkireport/munkireport-php/compare/v5.3.3...HEAD) (Unreleased)
 
+Small update to make the widget gallery work with the new YAML widgets.
+
+FIXES
+- Widget gallery YAML widgets
+
+MODULE UPDATES
+  - munkireport/supported_os (v1.9 => v1.10)       
+
+DEPENDENCY UPDATES
+  - symfony/console (v4.4.5 => v4.4.6)
+  - symfony/process (v4.4.5 => v4.4.6)
+  - symfony/translation (v4.4.5 => v4.4.6)
+  - symfony/finder (v4.4.5 => v4.4.6)
+  - vlucas/phpdotenv (v4.1.2 => v4.1.3)
+  - symfony/var-dumper (v5.0.5 => v5.0.6)
+
+
 ### [5.3.3](https://github.com/munkireport/munkireport-php/compare/v5.3.2...v5.3.3) (March 25, 2020)
 
 Fix a trailing comma that was tripping up PHP versions below 7.3
