@@ -1,3 +1,5 @@
+### [5.3.5](https://github.com/munkireport/munkireport-php/compare/v5.3.4...HEAD) (Unreleased)
+
 ### [5.3.4](https://github.com/munkireport/munkireport-php/compare/v5.3.3...v5.3.4) (March 28, 2020)
 
 Small update to make the widget gallery work with the new YAML widgets.
