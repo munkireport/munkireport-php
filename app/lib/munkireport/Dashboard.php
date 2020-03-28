@@ -10,7 +10,7 @@ class Dashboard
 {
     private $config, $dashboards = [], $loaded = false, $filesystem;
     
-    public function __construct($config)
+    public function __construct($config, $loadAll = true)
     {
         $this->config = $config;
         $this->dashboards['default'] = [
@@ -19,8 +19,11 @@ class Dashboard
           'display_name' => 'Dashboard',
           'hotkey' => 'd',
         ];
-        $this->fileSystem = new Filesystem;
-        $this->loadAll();
+
+        if($loadAll){
+            $this->fileSystem = new Filesystem;
+            $this->loadAll();    
+        }
     }
 
     private function dashboardExists($dashboard)
