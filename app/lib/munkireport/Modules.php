@@ -351,7 +351,8 @@ class Modules
                 // Found a widget, add it to widgetList
                 $this->widgetList[$id] = (object) array(
                     'widget_file' => str_replace(array(APP_ROOT,"//"),array('','/'),$this->getPath($module, '/views/')),
-                    'name' => $info['view'],
+                    'name' => $id,
+                    'view' => $info['view'],
                     'path' => $this->getPath($module, '/views/'),
                     'type' => $this->getType(
                         $this->getPath($module, '/views/'),

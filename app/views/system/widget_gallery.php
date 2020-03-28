@@ -20,8 +20,8 @@
 
 	<div class="row">
 
-      <div class="col-lg-12" id="<?php echo substr($data['widget_obj']->name, 0, -7); ?>_gallery">
-          <h2><?php echo substr($data['widget_obj']->name, 0, -7); ?></h2>
+      <div class="col-lg-12" id="<?=$data['widget_obj']->name?>_gallery">
+          <h2><?=$data['widget_obj']->name?></h2>
       </div> <!-- /col-lg-12 -->
 
 			<?php if(array_key_exists('widget', $data)):?>
@@ -50,9 +50,9 @@
                 <tr>
                     <th data-i18n="widget.file_name"></th>
                     <?php if($data['widget_obj']->type == 'yaml'):?>
-                    <td><?php echo $data['widget_obj']->name; ?>.yml</td>
+                    <td><?php echo $data['widget_obj']->view; ?>.yml</td>
                     <?php else:?>
-                    <td><?php echo $data['widget_obj']->name; ?>.php</td>
+                    <td><?php echo $data['widget_obj']->view; ?>.php</td>
                     <?php endif?>
                 </tr>
                 <tr>
