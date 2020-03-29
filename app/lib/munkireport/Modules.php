@@ -294,6 +294,9 @@ class Modules
         $out = [];
         foreach( $this->getInfo($kind) as $module => $kindArray){
             foreach($kindArray as $itemName => $itemData){
+                if(isset($itemData['hide_from_menu']) && $itemData['hide_from_menu']){
+                    continue;
+                }
                 $i18n = isset($itemData['i18n']) ? $itemData['i18n'] : 'nav.' . $kind . '.' . $itemName;
                 $out[] = (object) [
                   'url' => url($baseUrl.'/'.$module.'/'.$itemName),
@@ -307,27 +310,6 @@ class Modules
         return $out;
     }
 
-
-    //  Get listings info
-    public function getListingDropdownData($page)
-    {
-        $out = [];
-        foreach( $this->getInfo('listings') as $module => $listings){
-            foreach($listings as $listingInfo){
-                $name = str_replace('_listing', '', $listingInfo['view']);
-                $i18n = isset($listingInfo['i18n']) ? $listingInfo['i18n'] : 'nav.listings.' . $name;
-                $out[] = (object) [
-                  'url' => url('show/listing/'.$module.'/'.$name),
-                  'name' => $name,
-                  'class' => substr_compare( $page, $name, -strlen( $name ) ) === 0 ? 'active' : '',
-                  'i18n' => $i18n,
-                ];
-            }
-        }
-
-        return $out;
-    }
-    
     /**
      * Returns all widgets for widget gallery
      *
