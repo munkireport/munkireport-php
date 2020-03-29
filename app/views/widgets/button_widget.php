@@ -63,6 +63,7 @@ $(document).on('appUpdate', function(e, lang) {
                     $('<a>')
                         .attr('href', appUrl+listingLink+'/#'+encodeURIComponent(o.search_component))
                         .addClass("btn " + o.class)
+                        .toggleClass("disabled", count == 0)
                         .addClass(function(){ return count ? '' : 'disabled'})
                         .append(
                             $('<span>')
