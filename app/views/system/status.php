@@ -98,7 +98,6 @@ $(document).on('appReady', function(e, lang) {
         var list = {
             'php.version': phpVersion,
             'php.dom': data.dom ? data.dom['DOM/XML'] : false || false,
-            'php.soap': data.soap ? data.soap['Soap Client'] : false || false,
             'php.allow_url_fopen': coreVars['allow_url_fopen'] || false,
             'php.pdo': data.PDO ? data.PDO['PDO support'] : false || false,
             'php.pdodrivers': data.PDO ? data.PDO['PDO drivers'] : false || false
