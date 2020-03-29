@@ -18,7 +18,7 @@ class Listing
     public function render()
     {
         if( ! $this->listingData){
-            _renderPageNotFound();
+            $this->_renderPageNotFound();
         }
 
         if( $this->_getType($this->listingData) == 'yaml'){
