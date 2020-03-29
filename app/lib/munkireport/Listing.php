@@ -13,37 +13,36 @@ class Listing
     {
         $this->listingData = $listingData;
         $this->template = 'listings/default';
+        return $this;
     }
 
-    public function render()
+    public function render($data = [])
     {
         if( ! $this->listingData){
             $this->_renderPageNotFound();
         }
 
-        if( $this->_getType($this->listingData) == 'yaml'){
-            $this->_renderYAML($this->listingData);
-        }else{
-            $this->_renderPHP($this->listingData);
-        }
-    }
-
-    private function _renderPHP($listingData)
-    {
         $data = [
             'page' => 'clients',
             'scripts' => ["clients/client_list.js"],
-        ];
-    
+        ] + $data;
+
+        if( $this->_getType($this->listingData) == 'yaml'){
+            $this->_renderYAML($this->listingData, $data);
+        }else{
+            $this->_renderPHP($this->listingData, $data);
+        }
+    }
+
+    private function _renderPHP($listingData, $data)
+    {    
         $obj = new View();
         $obj->view($listingData->view, $data, $listingData->view_path);
     }
 
-    private function _renderYAML($listingData)
+    private function _renderYAML($listingData, $data)
     {
-        $data = Yaml::parseFile($this->_getPath($listingData, 'yml'));
-        $data['page'] = 'clients';
-        $data['scripts'] = array("clients/client_list.js");
+        $data = $data + Yaml::parseFile($this->_getPath($listingData, 'yml'));
         $obj = new View();
         $obj->view($this->template, $data);
     }
