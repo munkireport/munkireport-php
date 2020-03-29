@@ -9,7 +9,9 @@
             <?=isset($class) ? "class=\"$class\"" : ''?>
         ></span>
     </h4>
-    <table>
+    <table
+        <?=isset($table_id) ? "id=\"$table_id\"" : ''?>
+    >
         <?php foreach($table as $row):?>
         <tr>
             <th data-i18n="<?=$row['i18n_header']?>"></th>

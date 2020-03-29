@@ -32,6 +32,7 @@ $(document).on('appUpdate', function(e, lang) {
 		body.empty();
         
         var buttons = JSON.parse('<?php echo json_encode($buttons)?>');
+        var total_count = 0;
 		
 		// Calculate entries
 		if(data.length){
@@ -40,6 +41,8 @@ $(document).on('appUpdate', function(e, lang) {
 			$.each(buttons, function(i, o){
 
                 var count = data.find(x => x.label === o.label).count || 0;
+
+                total_count = total_count + count;
 
                 // Hide when count is zero
                 if( o.hide_when_zero && count == 0){
@@ -71,7 +74,7 @@ $(document).on('appUpdate', function(e, lang) {
                 ).append(' ')
 			});
         }
-        else{
+        if(total_count == 0){
             if (i18nEmptyResult){
                 body.append(i18n.t(i18nEmptyResult));
             }else{
