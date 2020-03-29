@@ -39,8 +39,8 @@ $(document).on('appUpdate', function(e, lang) {
 			
 			// render
 			$.each(buttons, function(i, o){
-
-                var count = data.find(x => x.label === o.label).count || 0;
+                var button = data.find(x => x.label === o.label);
+                var count = button ? button.count : 0;
 
                 total_count = total_count + count;
 
