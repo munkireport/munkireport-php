@@ -15,7 +15,7 @@ class Auth extends Controller
 
     public function __construct()
     {
-        if (conf('auth_secure') && empty($_SERVER['HTTPS'])) {
+        if (conf('auth_secure') && ! SslRequest()) {
             redirect('error/client_error/426'); // Switch protocol
         }
 
@@ -83,6 +83,16 @@ class Auth extends Controller
 
             // Set CSRF token for this session
             $_SESSION['csrf_token'] = random(40);
+
+            // Add token to cookie
+            setcookie("CSRF-TOKEN",$_SESSION['csrf_token'],
+                [
+                    'expires' => time()+60,
+                    'path' => conf('subdirectory'),
+                    'secure' => SslRequest(),
+                    'httponly' => false,
+                ]
+            );
 
             if($_SESSION['initialized']){
                 redirect($return);
