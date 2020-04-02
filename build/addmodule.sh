@@ -16,7 +16,7 @@ mkdir "${VIEW_DIR}" || exit 1
 mkdir "${LOCALE_DIR}" || exit 1
 
 # Copy provides.php
-cat "${DIR}/templates/provides.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/provides.php"
+cat "${DIR}/templates/provides.yml" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/provides.yml"
 
 # Copy install scripts from template
 cat "${DIR}/templates/install.sh" | sed "s/MODULE/${MODULE}/g" > "${SCRIPT_DIR}install.sh"
@@ -29,9 +29,9 @@ cat "${DIR}/templates/model.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/
 cat "${DIR}/templates/processor.php" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/${MODULE}_processor.php"
 
 # Copy views
-cat "${DIR}/templates/listing.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_listing.php"
-cat "${DIR}/templates/report.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_report.php"
-cat "${DIR}/templates/widget.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_widget.php"
+cat "${DIR}/templates/listing.yml" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_listing.yml"
+cat "${DIR}/templates/report.yml" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_report.yml"
+cat "${DIR}/templates/widget.yml" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_widget.yml"
 cat "${DIR}/templates/client_tab.php" | sed "s/MODULE/${MODULE}/g" > "${VIEW_DIR}${MODULE}_tab.php"
 
 # Copy locale template
