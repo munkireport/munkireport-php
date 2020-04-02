@@ -1,5 +1,33 @@
 ### [5.3.5](https://github.com/munkireport/munkireport-php/compare/v5.3.4...HEAD) (Unreleased)
 
+Another small update that restores the API access via CSRF token set in a cookie. Please check https://github.com/munkireport/munkireport-php/wiki/API for more information about that. Also a couple of module updates that makes MunkiReport less reliant on a munki install (thanks @tuxudo)
+
+FIXES
+- Add CSRF cookie for API scripts
+
+UPDATES
+- Remove SOAP Check (#1326)
+- Better YAML widget support
+
+MODULE UPDATES
+- munkireport/disk_report (v2.7 => 3.0)
+- munkireport/displays_info (v2.0 => v2.2)
+- munkireport/filevault_status (v1.3 => v1.4)
+- munkireport/inventory (v3.1 => v4.1)
+- munkireport/munkireportinfo (v1.4 => v1.5)
+- munkireport/sophos (v1.3 => v1.4)
+
+DEPENDENCY UPDATES
+- symfony/console (v4.4.6 => v4.4.7)
+- symfony/process (v4.4.6 => v4.4.7)
+- symfony/translation (v4.4.6 => v4.4.7)
+- nesbot/carbon (2.32.1 => 2.32.2)
+- symfony/finder (v4.4.6 => v4.4.7)
+- symfony/yaml (v3.4.38 => v3.4.39)
+- symfony/var-dumper (v5.0.6 => v5.0.7)
+- tightenco/collect (v7.3.0 => v7.4.0)
+
+
 ### [5.3.4](https://github.com/munkireport/munkireport-php/compare/v5.3.3...v5.3.4) (March 28, 2020)
 
 Small update to make the widget gallery work with the new YAML widgets.
