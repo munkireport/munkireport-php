@@ -85,13 +85,14 @@ class Auth extends Controller
             $_SESSION['csrf_token'] = random(40);
 
             // Add token to cookie
-            setcookie("CSRF-TOKEN",$_SESSION['csrf_token'],
-                [
-                    'expires' => time()+60,
-                    'path' => conf('subdirectory'),
-                    'secure' => SslRequest(),
-                    'httponly' => false,
-                ]
+            setcookie (
+                "CSRF-TOKEN", // name
+                $_SESSION['csrf_token'], //value
+                time()+60, // expires
+                conf('subdirectory'), // path
+                "", // domain
+                SslRequest(), // secure
+                false // httponly
             );
 
             if($_SESSION['initialized']){
