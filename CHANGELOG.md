@@ -1,3 +1,5 @@
+### [5.3.6](https://github.com/munkireport/munkireport-php/compare/v5.3.5...HEAD) (Unreleased)
+
 ### [5.3.5](https://github.com/munkireport/munkireport-php/compare/v5.3.4...v5.3.5) (April 02, 2020)
 
 Another small update that restores the API access via CSRF token set in a cookie. Please check https://github.com/munkireport/munkireport-php/wiki/API for more information about that. Also a couple of module updates that makes MunkiReport less reliant on a munki install (thanks @tuxudo)
