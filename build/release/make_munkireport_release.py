@@ -247,7 +247,7 @@ def main():
     set_version('%s.%s' % (clean_version(next_version), get_commit_count() + 1))
 
     # increment changelog
-    new_changelog = "### [{0}](https://github.com/{1}/{2}/compare/v{3}...HEAD) (Unreleased)\n\n".format(
+    new_changelog = "### [{0}](https://github.com/{1}/{2}/compare/v{3}...wip) (Unreleased)\n\n".format(
         next_version,
         publish_user,
         publish_repo,
