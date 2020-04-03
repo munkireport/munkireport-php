@@ -367,6 +367,8 @@ if __name__ == "__main__":
             log.info("Starting Git fetch...")
             if not run_command(["git", "fetch", "origin", "master"]):
                 exit()
+            if not run_command(["git", "fetch", "--all", "--tags"]):
+                exit()
 
             log.info("Git fetch complete.")
 
@@ -409,9 +411,6 @@ if __name__ == "__main__":
                     exit()
 
                 log.info("Migrations complete.")
-
-            # pull the latest version of the mr_upgrade script
-            run_command(["git", "checkout", "master", "mr_upgrade.py"])
 
             # disable maintenance mode
             set_maintenance_mode(install_path, "disabled")
