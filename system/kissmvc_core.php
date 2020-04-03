@@ -1,4 +1,6 @@
 <?php
+
+use Symfony\Component\Yaml\Yaml;
 /*****************************************************************
 Copyright ( c ) 2008-2009 {kissmvc.php version 0.7}
 Eric Koh <erickoh75@gmail.com> http://kissmvc.com
@@ -39,10 +41,6 @@ abstract class KISS_Engine
 
     public function __construct($routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
     {
-        if ($_POST and get_magic_quotes_gpc()) {
-            $this->stripslashesDeep($_POST);
-        }
-
         $this->controller = $default_controller;
         $this->controller=$default_controller;
         $this->action=$default_action;
@@ -75,7 +73,7 @@ abstract class KISS_Engine
         }
 
             //Route request to correct controller/action
-        $controllerClass = 'munkireport\\controller\\' . $this->controller;
+        $controllerClass = 'munkireport\\controller\\' . ucfirst($this->controller);
         if ( ! class_exists($controllerClass, true)) {
             $this->requestNotFound('Controller class not found: '.$controllerClass);
         }
@@ -229,15 +227,6 @@ abstract class KISS_Engine
         header("HTTP/1.0 404 Not Found");
         die('<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>'.$msg.'<p>The requested URL was not found on this server.</p><p>Please go <a href="javascript: history.back( 1 )">back</a> and try again.</p><hr /><p>Powered By: <a href="http://kissmvc.com">KISSMVC</a></p></body></html>');
     }
-
-    // Recursively strip slashes
-    public function stripslashesDeep($value)
-    {
-        $value = is_array($value) ?
-        array_map(array($this, 'stripslashesDeep'), $value) :
-        stripslashes($value);
-        return $value;
-    }
 }
 
 //===============================================================
@@ -305,6 +294,33 @@ abstract class KISS_View
         if (! @include($view_path.$file.'.php')) {
             echo '<!-- Could not open '.$view_path.$file.'.php -->';
         }
+    }
+
+    public function viewWidget($vars){
+        if(isset($vars['type'])){
+            $file = 'widgets/'.$vars['type'].'_widget';
+        }else{
+            $file = 'widgets/unknown_widget';
+        }
+        $obj = new View();
+        $obj->view($file, $vars);
+    }
+
+    public function viewDetailWidget($data){
+
+        $view = $data['view'];
+        $view_path = $data['view_path'] ?? conf('view_path');
+        $view_vars = $data['view_vars'] ?? [];
+
+        // Check if Yaml
+        if(is_readable($view_path . $view . '.yml')){
+            $view_vars = Yaml::parseFile($view_path . $view . '.yml');
+            $view = 'detail_widgets/' . $view_vars['type'] . '_widget';
+            $view_path = conf('view_path');
+        }
+
+        $obj = new View();
+        $obj->view($view, $view_vars, $view_path);
 
     }
 

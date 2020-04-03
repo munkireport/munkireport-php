@@ -13,7 +13,7 @@
 # Requires an OAuth token with push access to the repo. Currently the GitHub
 # Releases API is in a 'preview' status, and this script does very little error
 # handling.
-'''See docstring for main() function'''
+"""See docstring for main() function."""
 
 import json
 import optparse
@@ -31,7 +31,7 @@ from shutil import rmtree
 from time import strftime
 
 class GitHubAPIError(BaseException):
-    '''Base error for GitHub API interactions'''
+    """Base error for GitHub API interactions."""
     pass
 
 
@@ -111,17 +111,16 @@ def run_command(cmd):
     subprocess.check_call(cmd)
 
 def main():
-    """Builds and pushes a new munkireport-php release from an existing Git clone
-of munkireport-php.
+    """Builds and pushes a new munkireport-php release from an existing Git
+    clone of munkireport-php.
 
-Requirements:
+    Requirements:
 
-API token:
-You'll need an API OAuth token with push access to the repo. You can create a
-Personal Access Token in your user's Account Settings:
-https://github.com/settings/applications
-
-"""
+    API token:
+    You'll need an API OAuth token with push access to the repo. You can create a
+    Personal Access Token in your user's Account Settings:
+    https://github.com/settings/applications
+    """
     usage = __doc__
     parser = optparse.OptionParser(usage=usage)
     parser.add_option('-t', '--token',
@@ -248,7 +247,7 @@ https://github.com/settings/applications
     set_version('%s.%s' % (clean_version(next_version), get_commit_count() + 1))
 
     # increment changelog
-    new_changelog = "### [{0}](https://github.com/{1}/{2}/compare/v{3}...HEAD) (Unreleased)\n\n".format(
+    new_changelog = "### [{0}](https://github.com/{1}/{2}/compare/v{3}...wip) (Unreleased)\n\n".format(
         next_version,
         publish_user,
         publish_repo,

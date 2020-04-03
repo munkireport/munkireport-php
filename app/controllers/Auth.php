@@ -15,7 +15,7 @@ class Auth extends Controller
 
     public function __construct()
     {
-        if (conf('auth_secure') && empty($_SERVER['HTTPS'])) {
+        if (conf('auth_secure') && ! SslRequest()) {
             redirect('error/client_error/426'); // Switch protocol
         }
 
@@ -80,6 +80,21 @@ class Auth extends Controller
 
         // Check if pre-authentication is successful
         if (! $pre_auth_failed && $this->authHandler->login($login, $password)) {
+
+            // Set CSRF token for this session
+            $_SESSION['csrf_token'] = random(40);
+
+            // Add token to cookie
+            setcookie (
+                "CSRF-TOKEN", // name
+                $_SESSION['csrf_token'], //value
+                time()+60, // expires
+                conf('subdirectory'), // path
+                "", // domain
+                SslRequest(), // secure
+                false // httponly
+            );
+
             if($_SESSION['initialized']){
                 redirect($return);
             }else{
@@ -113,8 +128,7 @@ class Auth extends Controller
         $props = $this->authHandler->setSessionProps();
         // Show current session info
         if ($show) {
-            $obj = new View();
-            $obj->view('json', array('msg' => $props));
+            jsonView($props);
         }
     }
 

@@ -20,6 +20,11 @@ class Tablequery
         return preg_replace("/[^$chars]/", '', $string);
     }
 
+    private function sanitize_column_name($string)
+    {
+        return preg_replace("/[^a-zA-Z0-9._]/", '', $string);
+    }
+
     // ------------------------------------------------------------------------
 
     /**
@@ -54,7 +59,8 @@ class Tablequery
 
         $formatted_columns = $columns = $search_cols = array();
         foreach ($cfg['columns'] as $pos => $column) {
-            $tbl_col_array = explode('.', $column['name']);
+            $column_name = $this->sanitize_column_name($column['name']);
+            $tbl_col_array = explode('.', $column_name);
             if (count($tbl_col_array) == 2) {
             // Store table name
                 $tables[$tbl_col_array[0]] = 1;
@@ -65,9 +71,9 @@ class Tablequery
                     $tbl_col_array[1]
                 );
             } else {
-                $formatted_columns[$pos] = sprintf('`%s`', $column['name']);
+                $formatted_columns[$pos] = sprintf('`%s`', $column_name);
             }
-            $columns[$pos] = $column['name'];
+            $columns[$pos] = $column_name;
 
             // Check if search in column
             if (isset($column['search']['value']) && $column['search']['value']) {
@@ -91,12 +97,12 @@ class Tablequery
         // Where not empty
         $where = '';
         if ($cfg['mrColNotEmpty']) {
-            $where = sprintf('WHERE %s IS NOT NULL', $cfg['mrColNotEmpty']);
+            $where = sprintf('WHERE %s IS NOT NULL', $this->sanitize_column_name($cfg['mrColNotEmpty']));
         }
 
         // Where not empty or blank
         if ($cfg['mrColNotEmptyBlank']) {
-            $where = sprintf("WHERE %s != ''", $cfg['mrColNotEmptyBlank']);
+            $where = sprintf("WHERE %s != ''", $this->sanitize_column_name($cfg['mrColNotEmptyBlank']));
         }
 
         $bindings = array();
@@ -150,8 +156,8 @@ class Tablequery
         // Paging
         $sLimit = sprintf(
             ' LIMIT %d,%d',
-            $cfg['start'],
-            $cfg['length']
+            filter_var($cfg['start'], FILTER_SANITIZE_NUMBER_INT),
+            filter_var($cfg['length'], FILTER_SANITIZE_NUMBER_INT)
         );
 
         // Show all

@@ -1,4 +1,4 @@
-FROM php:7.3-apache
+FROM php:7.4-apache
 
 ENV APP_DIR /var/munkireport
 
@@ -52,6 +52,10 @@ RUN php database/migrate.php
 
 RUN rm -rf /var/www/html && \
     ln -s /var/munkireport/public /var/www/html
+
+RUN sed -i 's/ServerTokens OS/ServerTokens Prod/' /etc/apache2/conf-available/security.conf
+
+RUN sed -i 's/ServerSignature On/ServerSignature Off/' /etc/apache2/conf-available/security.conf
 
 RUN a2enmod rewrite
 

@@ -5,8 +5,9 @@ use \Controller, \View;
 use munkireport\lib\Database;
 use munkireport\lib\Widgets;
 use munkireport\lib\Modules;
+use munkireport\lib\Dashboard;
 
-class system extends Controller
+class System extends Controller
 {
     public function __construct()
     {
@@ -62,8 +63,7 @@ class system extends Controller
         // Do a read
         // Get tables
         // Get size
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     //===============================================================
@@ -133,10 +133,22 @@ class system extends Controller
                 $view = 'system/status';
                 break;
             case 'widget_gallery':
-                $moduleManager = new Modules;
-                $data['widgetList'] = $moduleManager->loadInfo(true)->getWidgets();
-                $view = 'system/widget_gallery';
-                break;
+                $moduleManager = getMrModuleObj();
+                $layoutList = [];
+                foreach($moduleManager->loadInfo(true)->getWidgets() as $widget){
+                    $widgetName = str_replace('_widget', '', $widget->name);
+                    $layoutList[$widgetName] = [
+                        'widget_obj' => $widget,
+                    ];
+                }
+                $gallery = [
+                    'search_paths' => [],
+                    'template' => 'system/widget_gallery',
+                    'default_layout' => $layoutList,
+                ];
+                $db = new Dashboard($gallery, false);
+                $db->render('default');
+                return;
             case 'database':
                 $data['page'] = 'clients';
                 $data['scripts'] = array("clients/client_list.js");

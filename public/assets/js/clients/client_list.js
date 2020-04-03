@@ -102,7 +102,7 @@ $(document).on('appReady', function(e, lang) {
 
 		},
 		drawCallback: function( oSettings ) {
-			$('#total-count').html(oSettings.fnRecordsTotal());
+			$('#total-count').text(oSettings.fnRecordsTotal());
 
 			// If the edit button is active, show the remove machine buttons
 			if($('button.buttons-edit.btn-danger').length > 0){

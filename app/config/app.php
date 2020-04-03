@@ -82,7 +82,7 @@ return [
             if(PHP_SAPI == 'cli') {
               return '';
             }
-            return (empty($_SERVER['HTTPS']) ? 'http' : 'https') . '://'.$_SERVER[ 'HTTP_HOST' ];
+            return (SslRequest() ? 'https' : 'http') . '://'.$_SERVER[ 'HTTP_HOST' ];
         },
         'string'
     ),

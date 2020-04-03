@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-"""
-Script for upgrading MunkiReport.
-"""
+"""Script for upgrading MunkiReport."""
 
 import argparse
 import datetime
@@ -49,7 +47,7 @@ def run_command(args: list, suppress_output: bool = False) -> bool:
 
 
 def get_current_version(install_path: str) -> str:
-    """Return current build version"""
+    """Return current build version."""
     helper = install_path + "app/helpers/site_helper.php"
     if os.path.exists(helper):
         try:
@@ -231,7 +229,7 @@ def backup_files(backup_dir: str, install_path: str, current_time: str) -> bool:
 
 
 def get_versions() -> dict:
-    """Return MR versions"""
+    """Return MR versions."""
     mr_api = "https://api.github.com/repos/munkireport/munkireport-php/releases"
     log.debug(f"Querying '{mr_api}' for latest release...")
     versions = {}

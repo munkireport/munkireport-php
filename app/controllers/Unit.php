@@ -6,7 +6,7 @@ use \Controller, \View;
 use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
 
-class unit extends Controller
+class Unit extends Controller
 {
     public function __construct()
     {
@@ -43,8 +43,7 @@ class unit extends Controller
             $out = $unit->all($_SESSION['business_unit']);
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     /**
@@ -62,10 +61,14 @@ class unit extends Controller
             foreach ($_SESSION['machine_groups'] as $group) {
                 if ($mg_data = $mg->all($group)) {
                     $out[] = $mg->all($group);
-                } else // Not in Machine_group table
+                } else if ($group != 0 && count($_SESSION['machine_groups']) != 0) // Not in Machine_group table
                 {
                     $out[] = array(
                     'name' => 'Group '.$group,
+                    'groupid' => $group);
+                } else {
+                    $out[] = array(
+                    'name' => 'Unassigned',
                     'groupid' => $group);
                 }
             }
@@ -84,8 +87,7 @@ class unit extends Controller
             return strcasecmp($a['name'], $b['name']);
         });
         
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     /**
@@ -148,8 +150,7 @@ class unit extends Controller
             $out[$filter] = $_SESSION['filter'][$filter];
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
 

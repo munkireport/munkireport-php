@@ -7,7 +7,7 @@ use \Machine_model;
 
 
 
-class clients extends Controller
+class Clients extends Controller
 {
     public function __construct()
     {
@@ -36,8 +36,6 @@ class clients extends Controller
      **/
     public function get_data($serial_number = '')
     {
-        $obj = new View();
-
         if (authorized_for_serial($serial_number)) {
             $machine = new \Model;
 
@@ -57,9 +55,9 @@ class clients extends Controller
                 WHERE m.serial_number = ?
                 ";
 
-            $obj->view('json', array('msg' => $machine->query($sql, $serial_number)));
+            jsonView($machine->query($sql, $serial_number));
         } else {
-            $obj->view('json', array('msg' => array()));
+            jsonError('Not authorized for serial number', 403, false);
         }
     }
 
@@ -78,8 +76,7 @@ class clients extends Controller
             $out['ssh'] = conf('ssh_link');
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        jsonView($out);
     }
 
     // ------------------------------------------------------------------------

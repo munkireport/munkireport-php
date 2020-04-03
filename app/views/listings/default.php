@@ -60,7 +60,9 @@
 <?php endif?>
 
 <?php if(isset($js_link)):?>
-  <script src="<?=url($js_link)?>"></script>
+  <?php foreach(is_array($js_link) ? $js_link : [$js_link] as $link):?>
+  <script src="<?=url($link)?>"></script>
+  <?php endforeach?>
 <?php endif?>
 
 
@@ -87,7 +89,8 @@
             columnDefs.push({
               name: $(this).data('colname'), 
               targets: col,
-              visible: ! $(this).data('hide')
+              visible: ! $(this).data('hide'),
+              render: $.fn.dataTable.render.text()
             });
             if($(this).data('formatter')){
               columnFormatters.push({

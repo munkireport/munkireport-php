@@ -143,6 +143,10 @@ class Install extends Controller
         if($fileObj['basename'][0] == '.'){
             return false;
         }
+        // Don't accept @ in path - Synology I'm looking at you
+        if(strpos($fileObj['path'], '@') !== false){
+            return false;
+        }
         return true;
     }
 }

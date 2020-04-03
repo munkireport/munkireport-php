@@ -1,10 +1,18 @@
 <?php
 
-// Pass on https forward to $_SERVER['HTTPS']
+// Pass on https forward to $_SERVER['HTTPS'] todo: check if from trusted proxy
 if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
 {
 	$_SERVER['HTTPS'] = 'on';
 }
+
+// Check if Request is secure
+function SslRequest(){
+	return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+}
+
+// Remove X-Powered-By beader
+header_remove("X-Powered-By");
 
 /**
  * Fatal error, show message and die

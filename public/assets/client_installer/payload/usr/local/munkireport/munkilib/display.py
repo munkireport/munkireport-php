@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-display.py
+"""display.py.
 
 Created by Greg Neagle on 2016-12-13.
 
@@ -29,19 +28,16 @@ from . import prefs
 from . import reports
 
 
-
 def _getsteps(num_of_steps, limit):
-    """
-    Helper function for display_percent_done
-    """
+    """Helper function for display_percent_done."""
     steps = []
     current = 0.0
     for i in range(0, num_of_steps):
-        if i == num_of_steps-1:
+        if i == num_of_steps - 1:
             steps.append(int(round(limit)))
         else:
             steps.append(int(round(current)))
-        current += float(limit)/float(num_of_steps-1)
+        current += float(limit) / float(num_of_steps - 1)
     return steps
 
 
@@ -54,13 +50,13 @@ def str_to_ascii(a_string):
       str, ascii form, no >7bit chars
     """
     try:
-        return unicode(a_string).encode('ascii', 'ignore')
+        return unicode(a_string).encode("ascii", "ignore")
     except UnicodeDecodeError:
-        return a_string.decode('ascii', 'ignore')
+        return a_string.decode("ascii", "ignore")
 
 
-def _to_unicode(obj, encoding='UTF-8'):
-    """Coerces basestring obj to unicode"""
+def _to_unicode(obj, encoding="UTF-8"):
+    """Coerces basestring obj to unicode."""
     if isinstance(obj, basestring):
         if not isinstance(obj, unicode):
             obj = unicode(obj, encoding)
@@ -68,8 +64,8 @@ def _to_unicode(obj, encoding='UTF-8'):
 
 
 def _concat_message(msg, *args):
-    """Concatenates a string with any additional arguments,
-    making sure everything is unicode"""
+    """Concatenates a string with any additional arguments, making sure
+    everything is unicode."""
     # coerce msg to unicode if it's not already
     msg = _to_unicode(msg)
     if args:
@@ -79,91 +75,81 @@ def _concat_message(msg, *args):
             msg = msg % tuple(args)
         except TypeError, dummy_err:
             warnings.warn(
-                'String format does not match concat args: %s'
-                % (str(sys.exc_info())))
+                "String format does not match concat args: %s" % (str(sys.exc_info()))
+            )
     return msg.rstrip()
 
 
 def display_info(msg, *args):
-    """
-    Displays info messages.
-    """
+    """Displays info messages."""
     msg = _concat_message(msg, *args)
-    munkilog.log(u'    ' + msg)
+    munkilog.log(u"    " + msg)
     if verbose > 0:
-        print '    %s' % msg.encode('UTF-8')
+        print "    %s" % msg.encode("UTF-8")
         sys.stdout.flush()
 
 
 def display_detail(msg, *args):
-    """
-    Displays minor info messages.
-    These are usually logged only, but can be printed to
-    stdout if verbose is set greater than 1
+    """Displays minor info messages.
+
+    These are usually logged only, but can be printed to stdout if
+    verbose is set greater than 1
     """
     msg = _concat_message(msg, *args)
     if verbose > 1:
-        print '    %s' % msg.encode('UTF-8')
+        print "    %s" % msg.encode("UTF-8")
         sys.stdout.flush()
-    if prefs.pref('LoggingLevel') > 0:
-        munkilog.log(u'    ' + msg)
+    if prefs.pref("LoggingLevel") > 0:
+        munkilog.log(u"    " + msg)
 
 
 def display_debug1(msg, *args):
-    """
-    Displays debug messages, formatting as needed.
-    """
+    """Displays debug messages, formatting as needed."""
     msg = _concat_message(msg, *args)
     if verbose > 2:
-        print '    %s' % msg.encode('UTF-8')
+        print "    %s" % msg.encode("UTF-8")
         sys.stdout.flush()
-    if prefs.pref('LoggingLevel') > 1:
-        munkilog.log('DEBUG1: %s' % msg)
+    if prefs.pref("LoggingLevel") > 1:
+        munkilog.log("DEBUG1: %s" % msg)
 
 
 def display_debug2(msg, *args):
-    """
-    Displays debug messages, formatting as needed.
-    """
+    """Displays debug messages, formatting as needed."""
     msg = _concat_message(msg, *args)
     if verbose > 3:
-        print '    %s' % msg.encode('UTF-8')
-    if prefs.pref('LoggingLevel') > 2:
-        munkilog.log('DEBUG2: %s' % msg)
+        print "    %s" % msg.encode("UTF-8")
+    if prefs.pref("LoggingLevel") > 2:
+        munkilog.log("DEBUG2: %s" % msg)
 
 
 def display_warning(msg, *args):
-    """
-    Prints warning msgs to stderr and the log
-    """
+    """Prints warning msgs to stderr and the log."""
     msg = _concat_message(msg, *args)
-    warning = 'WARNING: %s' % msg
+    warning = "WARNING: %s" % msg
     if verbose > 0:
-        print >> sys.stderr, warning.encode('UTF-8')
+        print >> sys.stderr, warning.encode("UTF-8")
     munkilog.log(warning)
     # append this warning to our warnings log
-    munkilog.log(warning, 'warnings.log')
+    munkilog.log(warning, "warnings.log")
     # collect the warning for later reporting
-    if 'Warnings' not in reports.report:
-        reports.report['Warnings'] = []
-    reports.report['Warnings'].append('%s' % msg)
+    if "Warnings" not in reports.report:
+        reports.report["Warnings"] = []
+    reports.report["Warnings"].append("%s" % msg)
 
 
 def display_error(msg, *args):
-    """
-    Prints msg to stderr and the log
-    """
+    """Prints msg to stderr and the log."""
     msg = _concat_message(msg, *args)
-    errmsg = 'ERROR: %s' % msg
+    errmsg = "ERROR: %s" % msg
     if verbose > 0:
-        print >> sys.stderr, errmsg.encode('UTF-8')
+        print >> sys.stderr, errmsg.encode("UTF-8")
     munkilog.log(errmsg)
     # append this error to our errors log
-    munkilog.log(errmsg, 'errors.log')
+    munkilog.log(errmsg, "errors.log")
     # collect the errors for later reporting
-    if 'Errors' not in reports.report:
-        reports.report['Errors'] = []
-    reports.report['Errors'].append('%s' % msg)
+    if "Errors" not in reports.report:
+        reports.report["Errors"] = []
+    reports.report["Errors"].append("%s" % msg)
 
 
 # module globals
@@ -172,5 +158,5 @@ verbose = 1
 # pylint: enable=invalid-name
 
 
-if __name__ == '__main__':
-    print 'This is a library of support tools for the Munki Suite.'
+if __name__ == "__main__":
+    print "This is a library of support tools for the Munki Suite."

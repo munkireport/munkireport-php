@@ -17,7 +17,7 @@
 
 								<?php echo conf('sitename'); ?>
 
-								<?php if( empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off" ): ?>
+								<?php if( SslRequest() === false ): ?>
 
 									<a href="<?php echo secure_url(); ?>"><i data-i18n="[title]auth.insecure" title="Insecure connection, switch to secure" class="text-danger fa fa-unlock-alt pull-right"></i></a>
 
@@ -70,7 +70,6 @@
 					<?php endif?>
 
 			            </fieldset>
-			            <p class="text-right text-muted"><small>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></small></p>
 					</form>
 				</div>
 			</div>

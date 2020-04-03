@@ -6,7 +6,7 @@ use \Controller, \Reportdata_model, \Messages_model, \Exception;
 use munkireport\lib\Unserializer, munkireport\lib\Modules;
 use munkireport\models\Hash;
 
-class report extends Controller
+class Report extends Controller
 {
 
     public $group = 0;
@@ -44,6 +44,16 @@ class report extends Controller
                 $this->error('passphrase "'.$_POST['passphrase'].'" not accepted');
             }
         }
+
+        // Validate Serialnumber
+        if (! isset($_POST['serial']) || ! trim($_POST['serial'])) {
+            $this->error("Serial is missing or empty");
+        }
+
+        if ($_POST['serial'] !== filter_var($_POST['serial'], FILTER_SANITIZE_STRING))
+        {
+            $this->error("Serial contains illegal characters");
+        }
     }
 
     /**
@@ -57,16 +67,7 @@ class report extends Controller
      **/
     public function hash_check()
     {
-        // Check if we have a serial and data
-        if (! isset($_POST['serial'])) {
-            $this->error("Serial is missing");
-        }
-
-        if (! trim($_POST['serial'])) {
-            $this->error("Serial is empty");
-        }
-
-
+        // Check if we have data
         if (! isset($_POST['items'])) {
             $this->error("Items are missing");
         }
@@ -139,8 +140,13 @@ class report extends Controller
             $this->error("No items in POST");
         }
 
-        $unserializer = new Unserializer($_POST['items']);
-        $arr = $unserializer->unserialize();
+        try{
+            $unserializer = new Unserializer($_POST['items']);
+            $arr = $unserializer->unserialize();
+        }
+        catch (Exception $e){
+            $this->error("Could not unserialize items");
+        }
 
         if (! is_array($arr)) {
             $this->error("Could not parse items, not a proper serialized file");
@@ -172,24 +178,24 @@ class report extends Controller
             // Try to load processor
             if ($moduleMgr->getModuleProcessorPath($module, $processor_path))
             {
-                if ($this->runProcessor($module, $processor_path, $_POST['serial'], $val['data']))
+                if ($this->_runProcessor($module, $processor_path, $_POST['serial'], $val['data']))
                 {
-                    $this->updateHash($_POST['serial'], $module, $val['hash']);
+                    $this->_updateHash($_POST['serial'], $module, $val['hash']);
                 }
             }
             // Otherwise run model->processor()
             elseif ($moduleMgr->getModuleModelPath($module, $model_path))
             {
-                if ($this->runModel($module, $model_path, $_POST['serial'], $val['data']))
+                if ($this->_runModel($module, $model_path, $_POST['serial'], $val['data']))
                 {
-                    $this->updateHash($_POST['serial'], $module, $val['hash']);
+                    $this->_updateHash($_POST['serial'], $module, $val['hash']);
                 }
             }
             else
             {
                 $this->msg("No processor found for: $module");
             }
-            $this->collectAlerts();
+            $this->_collectAlerts();
         }
     }
 
@@ -204,11 +210,6 @@ class report extends Controller
      **/
     public function broken_client()
     {
-        // At least, we need a serial number
-        if (! isset($_POST['serial'])) {
-            $this->msg("Serial is missing", true);
-        }
-
         // Register check in reportdata
         $this->connectDB(); 
         $this->_register($_POST['serial']);
@@ -252,7 +253,7 @@ class report extends Controller
         exit();
     }
     
-    private function runModel($module, $model_path, $serial_number, $data)
+    private function _runModel($module, $model_path, $serial_number, $data)
     {
         require_once($model_path);
 
@@ -266,15 +267,16 @@ class report extends Controller
             return False;
         }
 
-           // Load model
-        $class = new $classname($_POST['serial']);
-
-        if (! method_exists($class, 'process')) {
-            $this->msg("No process method in: $classname");
-            return False;
-        }
-
         try {
+
+           // Load model
+            $class = new $classname($_POST['serial']);
+
+            if (! method_exists($class, 'process')) {
+                $this->msg("No process method in: $classname");
+                return False;
+            }
+
             $class->process($data);
             return True;
         } catch (Exception $e) {
@@ -284,7 +286,7 @@ class report extends Controller
         }
     }
     
-    private function runProcessor($module, $processor_path, $serial_number, $data)
+    private function _runProcessor($module, $processor_path, $serial_number, $data)
     {
         require_once($processor_path);
 
@@ -315,7 +317,7 @@ class report extends Controller
         }
     }
     
-    private function updateHash($serial_number, $module, $hashValue)
+    private function _updateHash($serial_number, $module, $hashValue)
     {
         $hash = new Hash($serial_number, $module);
         $hash->hash = $hashValue;
@@ -323,7 +325,7 @@ class report extends Controller
         $hash->save();
     }
     
-    private function collectAlerts()
+    private function _collectAlerts()
     {
         // Handle alerts
         foreach ($GLOBALS['alerts'] as $type => $list) {

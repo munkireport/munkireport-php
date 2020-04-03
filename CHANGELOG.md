@@ -1,3 +1,353 @@
+### [5.3.5](https://github.com/munkireport/munkireport-php/compare/v5.3.4...HEAD) (Unreleased)
+
+Another small update that restores the API access via CSRF token set in a cookie. Please check https://github.com/munkireport/munkireport-php/wiki/API for more information about that. Also a couple of module updates that makes MunkiReport less reliant on a munki install (thanks @tuxudo)
+
+FIXES
+- Add CSRF cookie for API scripts
+
+UPDATES
+- Remove SOAP Check (#1326)
+- Better YAML widget support
+
+MODULE UPDATES
+- munkireport/disk_report (v2.7 => 3.0)
+- munkireport/displays_info (v2.0 => v2.2)
+- munkireport/filevault_status (v1.3 => v1.4)
+- munkireport/inventory (v3.1 => v4.1)
+- munkireport/munkireportinfo (v1.4 => v1.5)
+- munkireport/sophos (v1.3 => v1.4)
+
+DEPENDENCY UPDATES
+- symfony/console (v4.4.6 => v4.4.7)
+- symfony/process (v4.4.6 => v4.4.7)
+- symfony/translation (v4.4.6 => v4.4.7)
+- nesbot/carbon (2.32.1 => 2.32.2)
+- symfony/finder (v4.4.6 => v4.4.7)
+- symfony/yaml (v3.4.38 => v3.4.39)
+- symfony/var-dumper (v5.0.6 => v5.0.7)
+- tightenco/collect (v7.3.0 => v7.4.0)
+
+
+### [5.3.4](https://github.com/munkireport/munkireport-php/compare/v5.3.3...v5.3.4) (March 28, 2020)
+
+Small update to make the widget gallery work with the new YAML widgets.
+
+FIXES
+- Widget gallery YAML widgets
+
+MODULE UPDATES
+  - munkireport/supported_os (v1.9 => v1.10)       
+
+DEPENDENCY UPDATES
+  - symfony/console (v4.4.5 => v4.4.6)
+  - symfony/process (v4.4.5 => v4.4.6)
+  - symfony/translation (v4.4.5 => v4.4.6)
+  - symfony/finder (v4.4.5 => v4.4.6)
+  - vlucas/phpdotenv (v4.1.2 => v4.1.3)
+  - symfony/var-dumper (v5.0.5 => v5.0.6)
+
+
+### [5.3.3](https://github.com/munkireport/munkireport-php/compare/v5.3.2...v5.3.3) (March 25, 2020)
+
+Fix a trailing comma that was tripping up PHP versions below 7.3
+
+FIXES
+- Trailing comma in Modules.php
+- Apple hardware icon in detail view
+
+MODULE UPDATES
+- munkireport/machine (v4.0 => v5.0)
+
+DEPENDENCY UPDATES
+- tightenco/collect (v7.2.2 => v7.3.0)
+
+
+### [5.3.2](https://github.com/munkireport/munkireport-php/compare/v5.3.1...v5.3.2) (March 24, 2020)
+
+Some small fixes for regressions introduced by the latest releases. Futher YAMLfcation of views and configurations.
+
+Note: MR changed a couple of filenames to Uppercase - people on CaSE iNsensiTive filesystems should check if everything is ok after upgrading.
+
+FIXES
+- Admin->Show System Status->Database now shows data
+- Comment html filter does not screw up the tags anymore
+- Fix casing of several classes so Composer does not bark at us
+
+CHANGES
+- Don't show MunkiReport version anymore on the login page (a little more secure)
+
+FEATURES
+- This makes @tuxudo happy: module admin page support
+- Add laps module to built-in modules
+
+MODULE UPDATES
+- munkireport/machine (v3.0 => v4.0)
+- munkireport/laps (v1.4)
+- munkireport/comment (v2.2 => v3.1)
+
+DEPENDENCY UPDATES
+- nesbot/carbon (2.31.0 => 2.32.0)
+- psr/log (1.1.2 => 1.1.3)
+- tightenco/collect (v7.2.0 => v7.2.2)
+- phpoption/phpoption (1.7.2 => 1.7.3)
+
+
+### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.3.0...v5.3.1) 
+
+This release fixes two minor security issues found by Datadog: a Cross Site Request Forgery (CSRF) vulnerability and a fix for PHP and Apache version information leakage in the Docker container. The PHP version display in the header is fixed for everyone, the server version display you need to fix in your own server if you care about it.
+
+FIXES
+- Add CSRF protection for POST requests
+- Remove X-Powered-By PHP header
+- Simplify Apache Server header in Docker (no version display)
+
+CHANGES
+- Mover markerclusterer.js to location widget
+- Cleanup js files
+- Remove authLDAP from library
+
+FEATURES
+- Add button widget template
+
+MODULE UPDATES
+  - munkireport/findmymac (v1.4 => v1.5)
+  - munkireport/location (v1.3 => v1.5)
+  - munkireport/mdm_status (v1.12 => v1.16)
+  - munkireport/power (v1.2 => v1.3)
+  - munkireport/security (v1.7 => v1.8)
+  - munkireport/timemachine (v1.5 => v1.7)
+  - munkireport/usb (v1.4 => v1.6)
+
+DEPENDENCY UPDATES
+  - symfony/service-contracts (v1.1.8 => v2.0.1)
+  - symfony/translation-contracts (v1.1.7 => v2.0.1)
+  - league/flysystem (1.0.65 => 1.0.66)
+  - doctrine/dbal (v2.9.3 => v2.10.1)
+  - vlucas/phpdotenv (v4.1.1 => v4.1.2)
+  - symfony/var-dumper (v4.4.5 => v5.0.5)
+  - tightenco/collect (v7.0.5 => v7.2.0)
+
+
+### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...v5.3.1)
+
+This release contains some major security fixes. Please upgrade to this version as soon as possible.
+To help mitigate the vulnerabilities, all modules got a security update.
+Special thanks to Edouard Schweisguth from Datadog who wrote the security report and helped us resolve these issues.
+Also thanks @joncrain, @tuxudo, @poundbangbash and @rickheil for helping out. 
+
+SECURITY UPDATES
+- [XSS vulnerability](https://github.com/munkireport/munkireport-php/wiki/20200309-XSS-vulnerability)
+- [Authenticated Comment XSS](https://github.com/munkireport/munkireport-php/wiki/20200309-Authenticated-Comment-XSS)
+- [Authenticated SQL injection](https://github.com/munkireport/munkireport-php/wiki/20200309-Authenticated-SQL-injection)
+
+FIXES
+- Harden datatables
+- Harden sessions
+- Harden handling of reports
+- applications to latest version (#1319)
+- Add removehandler to .htaccess
+
+FEATURES
+- New widget template for developers
+
+MODULE UPDATES
+  - munkireport/reportdata (v2.4 => v2.6)
+  - munkireport/event (v3.1 => v3.2)
+  - munkireport/warranty (v2.2 => v2.3)
+  - munkireport/applications (v1.1 => v2.2)
+  - munkireport/backup2go (v1.1 => v1.2)
+  - munkireport/bluetooth (v1.2 => v1.3)
+  - munkireport/caching (v1.3 => v1.4)
+  - munkireport/certificate (v1.2 => v1.3)
+  - munkireport/comment (v2.1 => v2.2)
+  - munkireport/crashplan (V1.6 => v1.7)
+  - munkireport/deploystudio (v1.2 => v1.3)
+  - munkireport/devtools (v1.1 => v1.2)
+  - munkireport/directory_service (v1.1 => v1.2)
+  - munkireport/extensions (v1.1 => v1.2)
+  - munkireport/fan_temps (V1.6 => v1.7)
+  - munkireport/filevault_status (V1.2 => v1.3)
+  - munkireport/findmymac (v1.3 => v1.4)
+  - munkireport/firmware_escrow (v1.1 => v1.2)
+  - munkireport/fonts (v1.1 => v1.2)
+  - munkireport/gpu (v1.1 => v1.2)
+  - munkireport/gsx (v2.0 => v2.1)
+  - munkireport/homebrew (v1.1 => v1.2)
+  - munkireport/homebrew_info (v1.1 => v1.2)
+  - munkireport/ibridge (v1.4 => v1.5)
+  - munkireport/location (V1.2 => v1.3)
+  - munkireport/mbbr_status (v1.1 => v1.2)
+  - munkireport/mdm_status (v1.11 => v1.12)
+  - munkireport/munki_facts (v1.3 => v1.4)
+  - munkireport/munkiinfo (v1.1 => v1.2)
+  - munkireport/munkireportinfo (v1.3 => v1.4)
+  - munkireport/network_shares (v1.1 => v1.2)
+  - munkireport/power (v1.1 => v1.2)
+  - munkireport/printer (v1.1 => v1.2)
+  - munkireport/sccm_status (v1.1 => v1.2)
+  - munkireport/security (v1.6 => v1.7)
+  - munkireport/sentinelone (v1.1 => v1.2)
+  - munkireport/sentinelonequarantine (v1.1 => v1.2)
+  - munkireport/smart_stats (v1.1 => v1.2)
+  - munkireport/softwareupdate (v1.2.1 => v1.3)
+  - munkireport/sophos (v1.2 => v1.3)
+  - munkireport/supported_os (V1.8 => v1.9)
+  - munkireport/tag (v2.1 => v2.2)
+  - munkireport/timemachine (v1.4 => v1.5)
+  - munkireport/usage_stats (v1.1 => v1.2)
+  - munkireport/usb (V1.2 => v1.4)
+  - munkireport/user_sessions (V1.4 => v1.5)
+  - munkireport/wifi (v1.1 => v1.2)
+  - munkireport/machine (v2.5 => v3.0)
+
+DEPENDENCY UPDATES
+  - league/flysystem (1.0.64 => 1.0.65)
+  - doctrine/dbal (v2.9.3 => v2.10.1)
+  - vlucas/phpdotenv (v4.1.0 => v4.1.1)
+  - symfony/yaml (v3.4.37 => v3.4.38)
+  - symfony/var-dumper (v4.4.4 => v5.0.5)
+  - tightenco/collect (v6.15.0 => v7.0.5)
+  - adldap2/adldap2 (v10.2.2 => v10.2.3)
+  - symfony/service-contracts (v1.1.8 => v2.0.1)
+  - symfony/console (v4.4.4 => v4.4.5)
+  - symfony/process (v4.4.4 => v4.4.5)
+  - symfony/translation-contracts (v1.1.7 => v2.0.1)
+  - symfony/translation (v4.4.4 => v4.4.5)
+  - nesbot/carbon (2.30.0 => 2.31.0)
+  - symfony/finder (v4.4.4 => v4.4.5)
+
+
+### [5.2.0](https://github.com/munkireport/munkireport-php/compare/v5.1.5...v5.2.0) (February 13, 2020)
+
+Some module updates and fixes. Inventory now has single app widget support: see https://github.com/munkireport/inventory/blob/master/README.md#single-app-widget
+There's a fix for SAML groups that have commas in the name.
+
+FEATURES
+- Hide the empty blank "Group 0" machine group (#1130)
+
+MODULE UPDATES
+- munkireport/inventory (v3.0 => v3.1)
+- munkireport/crashplan (V1.5 => V1.6)        
+- munkireport/findmymac (v1.2 => v1.3)        
+- munkireport/mdm_status (v1.9 => v1.11)
+- munkireport/power (v1.0 => v1.1)
+
+DEPENDENCY UPDATES
+- symfony/translation-contracts (v1.1.7 => v2.0.1)
+- symfony/polyfill-mbstring (v1.13.1 => v1.14.0)
+- nesbot/carbon (2.29.1 => 2.30.0)        
+- symfony/polyfill-php73 (v1.13.1 => v1.14.0)   
+- symfony/service-contracts (v1.1.8 => v2.0.1)
+- league/flysystem (1.0.63 => 1.0.64)
+- doctrine/dbal (v2.9.3 => v2.10.1)
+- symfony/polyfill-ctype (v1.13.1 => v1.14.0)   
+- vlucas/phpdotenv (v3.6.0 => v4.1.0)
+- symfony/var-dumper (v4.4.4 => v5.0.4)
+- tightenco/collect (v6.13.0 => v6.15.0)
+
+
+### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...v5.1.5) (February 02, 2020)
+
+Mostly module updates, and a small fix for apache servers.
+Security module now reports on Secure Boot and External Boot thanks to @poundbangbash Note that this change needs a database migration.
+
+MODULE UPDATES
+  - munkireport/reportdata (v2.3 => v2.4)
+  - munkireport/location (v1.1 => V1.2)
+  - munkireport/mdm_status (v1.7 => v1.9)
+  - munkireport/security (V1.5 => v1.6)
+  - munkireport/supported_os (v1.7 => V1.8)
+  - munkireport/user_sessions (v1.3 => V1.4)
+
+DEPENDENCY UPDATES
+  - symfony/yaml (v3.4.36 => v3.4.37)
+  - symfony/var-dumper (v4.4.2 => v4.4.4)
+  - tightenco/collect (v6.11.0 => v6.13.0)
+  - symfony/console (v4.4.2 => v4.4.4)
+  - symfony/process (v4.4.2 => v4.4.4)
+  - symfony/translation (v4.4.2 => v4.4.4)
+  - nesbot/carbon (2.28.0 => 2.29.1)
+  - symfony/finder (v4.4.2 => v4.4.4)
+
+
+### [5.1.4](https://github.com/munkireport/munkireport-php/compare/v5.1.3...v5.1.4) (January 20, 2020)
+
+This is a bug fix release. Most notable change: the model lookup now happens in the machine module and not in the warranty module anymore.
+
+FIXES
+- Remove deprecated get_magic_quotes_gps()
+- XSS fix in debug mode
+- Clean exit when server is unavailable
+
+MODULE UPDATES
+- munkireport/machine (v2.3 => v2.5)
+- munkireport/warranty (v2.1 => v2.2)
+- munkireport/fan_temps (v1.5 => V1.6)
+
+DEPENDENCY UPDATES
+- guzzlehttp/guzzle (6.4.1 => 6.5.2)
+- symfony/process (v4.3.7 => v4.4.2)
+- symfony/polyfill-php73 (v1.12.0 => v1.13.1)
+- symfony/polyfill-mbstring (v1.12.0 => v1.13.1)
+- symfony/console (v4.3.7 => v4.4.2)
+- symfony/translation (v4.3.7 => v4.4.2)
+- nesbot/carbon (2.26.0 => 2.28.0)
+- illuminate/contracts (v5.8.35 => v5.8.36)
+- illuminate/support (v5.8.35 => v5.8.36)
+- illuminate/console (v5.8.35 => v5.8.36)
+- illuminate/container (v5.8.35 => v5.8.36)
+- illuminate/database (v5.8.35 => v5.8.36)
+- symfony/finder (v4.3.7 => v4.4.2)
+- illuminate/filesystem (v5.8.35 => v5.8.36)
+- league/flysystem (1.0.57 => 1.0.63)
+- symfony/polyfill-ctype (v1.12.0 => v1.13.1)
+- symfony/yaml (v3.4.34 => v3.4.36)
+- symfony/polyfill-php72 (v1.12.0 => v1.13.1)
+- symfony/var-dumper (v4.3.7 => v4.4.2)
+- tightenco/collect (v6.4.1 => v6.11.0)
+- adldap2/adldap2 (v10.2.0 => v10.2.2)
+- onelogin/php-saml (3.3.1 => 3.4.1)
+- monolog/monolog (1.25.1 => 1.25.3)
+- doctrine/cache (1.9.0 => 1.10.0)
+- phpoption/phpoption (1.5.2 => 1.7.2)
+
+### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...v5.1.3) (November 12, 2019)
+
+FEATURES
+  - Added an upgrade script (@lcsees)
+  - Added a docker compose example (@b-reich)
+
+FIXES
+  - MySQL port is now correctly used in admin panel
+  - Server timeout is now 60 seconds for slow servers
+  - Filter scripts for @ sign (Synology issue)
+  - LaunchDaemon changed to use KeepAlive instead of WatchPaths - should prevent the runner from starting twice
+  
+MODULE UPDATES
+  - munkireport/crashplan (v1.4 => V1.5)
+  - munkireport/managedinstalls (v2.2 => V2.3)
+
+DEPENDENCY UPDATES  
+  - guzzlehttp/guzzle (6.3.3 => 6.4.1)
+  - doctrine/event-manager (v1.0.0 => 1.1.0)
+  - doctrine/cache (v1.8.0 => 1.9.0)
+  - doctrine/dbal (v2.9.2 => v2.10.0)
+  - symfony/yaml (v3.4.32 => v3.4.33)
+  - symfony/var-dumper (v4.3.5 => v4.3.6)
+  - tightenco/collect (v6.3.0 => v6.4.1)
+  - psr/log (1.1.0 => 1.1.2)
+  - adldap2/adldap2 (v10.1.1 => v10.2.0)
+  - robrichards/xmlseclibs (3.0.3 => 3.0.4)
+  - onelogin/php-saml (3.3.0 => 3.3.1)
+  - symfony/service-contracts (v1.1.7 => v1.1.8)
+  - symfony/console (v4.3.5 => v4.3.6)
+  - symfony/process (v4.3.5 => v4.3.6)
+  - doctrine/inflector (v1.3.0 => 1.3.1)
+  - symfony/translation (v4.3.5 => v4.3.6)
+  - nesbot/carbon (2.25.2 => 2.26.0)
+  - symfony/finder (v4.3.5 => v4.3.6)
+  - phpoption/phpoption (1.5.0 => 1.5.2)
+
 ### [5.1.2](https://github.com/munkireport/munkireport-php/compare/v5.1.1...v5.1.2) (October 19, 2019)
 
 Increase default script timeout to 30 seconds

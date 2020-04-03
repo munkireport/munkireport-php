@@ -8,9 +8,13 @@
 	<string>/usr/local/munkireport/munkireport-runner</string>
 	<key>RunAtLoad</key>
 	<true/>
-	<key>WatchPaths</key>
-	<array>
-		<string>/Users/Shared/.com.github.munkireport.run</string>
-	</array>
+	<key>KeepAlive</key>
+	<dict>
+		<key>PathState</key>
+		<dict>
+			<key>/Users/Shared/.com.github.munkireport.run</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>

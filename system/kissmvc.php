@@ -79,12 +79,19 @@ class Controller extends KISS_Controller
             ini_set('session.use_cookies', 1);
             ini_set('session.use_only_cookies', 1);
             ini_set('session.cookie_path', conf('subdirectory'));
+            ini_set('session.cookie_httponly', true);
+            ini_set('session.cookie_samesite', "Strict");
             session_start();
         }
 
         // Check if we have a valid user
         if (! isset($_SESSION['role'])) {
             return false;
+        }
+
+        // Check if POST and check CSRF
+        if(in_array($_SERVER['REQUEST_METHOD'], ['POST', 'DELETE'])){
+            $this->verifyCSRF();
         }
 
         // Check for a specific authorization item
@@ -104,6 +111,18 @@ class Controller extends KISS_Controller
 
         // There is no matching rule, you're authorized!
         return true;
+    }
+
+    private function verifyCSRF()
+    {
+        $session_token = sess_get('csrf_token');
+
+        $sent_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+
+        if( hash_equals($session_token, $sent_token)) return;
+
+        // Exit with error page todo: use a json response
+        jsonView($msg = ['error' => 'CSRF Token Mismatch'], $status_code = 403, $exit = true);
     }
 
     /**
