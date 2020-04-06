@@ -38,6 +38,7 @@
         "unassigned_groups": "Unassigned Groups"
     },
     "all": "All",
+    "archive": "Archive",
     "auth": {
         "back_to_site": "Back to site",
         "captcha": {
