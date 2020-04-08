@@ -44,7 +44,7 @@
 				action: checked ? 'remove' : 'add'
 			}
 
-		$.post(appUrl + '/unit/set_filter', settings, function(){
+		$.post(appUrl + '/filter/set_filter', settings, function(){
 			// Update all
 			$(document).trigger('appReady', [i18n.lng()]);
 		})
