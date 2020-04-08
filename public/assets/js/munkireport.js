@@ -218,11 +218,25 @@ var showFilterModal = function(e){
 				action: checked ? 'remove' : 'add'
 			}
 
-		$.post(appUrl + '/unit/set_filter', settings, function(){
+		$.post(appUrl + '/filter/set_filter', settings, function(){
 			// Update all
 			$(document).trigger('appUpdate');
 		})
-	};
+    };
+    
+    var updateArchived = function() {
+		var checked = this.checked,
+			settings = {
+				filter: 'archived',
+				value: 'yes',
+				action: checked ? 'remove' : 'add'
+			}
+
+		$.post(appUrl + '/filter/set_filter', settings, function(){
+			// Update all
+			$(document).trigger('appUpdate');
+		})
+    }
 
     var updateAll = function() {
 
@@ -233,7 +247,7 @@ var showFilterModal = function(e){
                 action: checked ? 'clear' : 'add_all'
             }
 
-        $.post(appUrl + '/unit/set_filter', settings, function(){
+        $.post(appUrl + '/filter/set_filter', settings, function(){
 			// Update all
             $('#myModal .modal-body input[type=checkbox]').prop('checked', checked);
 			$(document).trigger('appUpdate');
@@ -255,7 +269,17 @@ var showFilterModal = function(e){
 				.addClass('fa fa-filter'))
 			.append(' ' + i18n.t("filter.title"));
 		$('#myModal .modal-body')
-			.empty()
+            .empty()
+            .append($('<div class="checkbox">')
+                .append($('<label>')
+                    .append($('<input type="checkbox">')
+                        .change(updateArchived)
+                        .prop('checked', function(){
+                            return false;
+                        }))
+                    .append(i18n.t('filter.show_archived'))
+                )
+            )
 			.append($('<b>')
 				.text(i18n.t("business_unit.machine_groups")));
 

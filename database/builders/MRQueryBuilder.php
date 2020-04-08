@@ -14,6 +14,7 @@ class MRQueryBuilder extends QueryBuilder{
   public function filter()
   {
       $this->filterMachineGroup();
+      $this->filterArchived();
       return $this;
   }
 
@@ -32,6 +33,13 @@ class MRQueryBuilder extends QueryBuilder{
       if ($groups = get_filtered_groups()) {
           $this->whereIn('machine_group', $groups);
       }
+  }
+
+  private function filterArchived()
+  {
+    if( is_archived_filter_on()) {
+        $this->where('reportdata.status', 0);
+    }
   }
 
   public function insertChunked(array $values, int $chunkSize = 0)

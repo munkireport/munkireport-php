@@ -178,6 +178,7 @@
     "failed": "Failed",
     "failing": "Failing!",
     "filter": {
+        "show_archived": "Show archived",
         "title": "Set filters"
     },
     "free_disk_space": "Free Disk Space",

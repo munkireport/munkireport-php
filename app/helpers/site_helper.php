@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.3.6.4079';
+$GLOBALS['version'] = '5.3.6.4081';
 
 // Return version without commit count
 function get_version()
@@ -393,14 +393,18 @@ function id_in_machine_group($id)
  **/
 function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
 {
-
+    $sql = '';
     // Get filtered groups
     if ($groups = get_filtered_groups()) {
-        return sprintf(' %s %s.machine_group IN (%s) ', $prefix, $reportdata, implode(', ', $groups));
-    } else // No filter
-    {
-        return '';
+        $sql = sprintf(' %s %s.machine_group IN (%s) ', $prefix, $reportdata, implode(', ', $groups));
+        $prefix = 'AND';
     }
+
+    if(is_archived_filter_on()){
+        $sql .= sprintf(' %s %s.status = 0 ', $prefix, $reportdata);
+    }
+
+    return $sql;
 }
 
 /**
@@ -429,6 +433,10 @@ function get_filtered_groups()
     return $out;
 }
 
+function is_archived_filter_on(){
+    return isset($_SESSION['filter']['archived']) && 
+                $_SESSION['filter']['archived'];
+}
 /**
  * Store event for client
  *
