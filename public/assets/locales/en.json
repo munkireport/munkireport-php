@@ -231,6 +231,10 @@
             "title": "Client Registration Over Time"
         },
         "rom_version": "ROM Version",
+        "status": {
+            "in_use": "In use",
+            "archived": "Archived"
+        },
         "uptime": {
             "title": "Uptime"
         }

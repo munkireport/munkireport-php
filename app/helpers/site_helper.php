@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.3.6.4055';
+$GLOBALS['version'] = '5.3.6.4079';
 
 // Return version without commit count
 function get_version()
@@ -356,11 +356,7 @@ function get_machine_group($serial_number = '')
             ->where('serial_number', $serial_number)
             ->pluck('machine_group')
             ->first();
-        if ($machine_group) {
-            $GLOBALS['machine_groups'][$serial_number] = $machine_group;
-        } else {
-            $GLOBALS['machine_groups'][$serial_number] = 0;
-        }
+        $GLOBALS['machine_groups'][$serial_number] = $machine_group;
     }
 
     return $GLOBALS['machine_groups'][$serial_number];
