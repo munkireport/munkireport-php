@@ -249,7 +249,7 @@ var showFilterModal = function(e){
 
         $.post(appUrl + '/filter/set_filter', settings, function(){
 			// Update all
-            $('#myModal .modal-body input[type=checkbox]').prop('checked', checked);
+            $('#myModal .mgroups input[type=checkbox]').prop('checked', checked);
 			$(document).trigger('appUpdate');
 		})
     };
@@ -270,7 +270,7 @@ var showFilterModal = function(e){
 			.append(' ' + i18n.t("filter.title"));
 		$('#myModal .modal-body')
             .empty()
-            .append($('<div class="checkbox">')
+            .append($('<div class="checkbox machine_groups">')
                 .append($('<label>')
                     .append($('<input type="checkbox">')
                         .change(updateArchived)
@@ -292,8 +292,7 @@ var showFilterModal = function(e){
 
         // Add check/uncheck all
         $('#myModal .modal-body')
-            .append($('<div>')
-                .addClass('checkbox')
+            .append($('<div class="checkbox">')
                 .append($('<label>')
                     .append($('<input>')
                         .change(updateAll)
@@ -305,8 +304,7 @@ var showFilterModal = function(e){
 			if(obj.groupid !== undefined){
                 mgList.push(obj.groupid);
 				$('#myModal .modal-body')
-					.append($('<div>')
-						.addClass('checkbox')
+                    .append($('<div class="checkbox mgroups">')
 						.append($('<label>')
 							.append($('<input>')
 								.data(obj)
