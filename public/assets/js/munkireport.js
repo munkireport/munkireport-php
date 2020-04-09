@@ -256,11 +256,15 @@ var showFilterModal = function(e){
 
 	// Get all business units and machine_groups
 	var defer = $.when(
-		$.getJSON(appUrl + '/unit/get_machine_groups')
-		);
+		$.getJSON(appUrl + '/unit/get_machine_groups'),
+		$.getJSON(appUrl + '/filter/get_filter')
+    );
 
 	// Render when all requests are successful
-	defer.done(function(mg_data){
+	defer.done(function(mg_data, filter_data){
+
+        var mg_data = mg_data[0],
+            filter_data = filter_data[0]
 
 		// Set texts
 		$('#myModal .modal-title')
@@ -275,7 +279,7 @@ var showFilterModal = function(e){
                     .append($('<input type="checkbox">')
                         .change(updateArchived)
                         .prop('checked', function(){
-                            return false;
+                            return filter_data['archived'].length == 0;
                         }))
                     .append(i18n.t('filter.show_archived'))
                 )

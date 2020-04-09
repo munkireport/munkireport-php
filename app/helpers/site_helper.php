@@ -3,7 +3,7 @@
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.3.6.4082';
+$GLOBALS['version'] = '5.3.6.4083';
 
 // Return version without commit count
 function get_version()
@@ -433,8 +433,9 @@ function get_filtered_groups()
     return $out;
 }
 
+// Return if session filter is not set or archived filter is not empty
 function is_archived_filter_on(){
-    return isset($_SESSION['filter']['archived']) && 
+    return ! isset($_SESSION['filter']['archived']) || 
                 $_SESSION['filter']['archived'];
 }
 /**

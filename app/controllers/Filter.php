@@ -7,11 +7,18 @@ use munkireport\models\Machine_group;
 
 class Filter extends Controller
 {
+    private $registered_filters;
+
     public function __construct()
     {
         if (! $this->authorized()) {
             redirect('auth/login');
         }
+
+        $this->registered_filters = [
+            'machine_group' => [],
+            'archived' => ['yes'],
+        ];
     }
 
         /**
@@ -84,8 +91,12 @@ class Filter extends Controller
     public function get_filter($filter = 'all')
     {
         if($filter == 'all'){
-            jsonView($_SESSION['filter']);
+            jsonView($this->_render_filter());
         }
     }
 
+    private function _render_filter()
+    {
+        return array_merge($this->registered_filters, $_SESSION['filter'] ?? []);
+    }
 }
