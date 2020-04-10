@@ -39,7 +39,7 @@ class Clients extends Controller
         if (authorized_for_serial($serial_number)) {
             $machine = new \Model;
 
-            $sql = "SELECT m.computer_name, r.remote_ip, n.ipv4ip, n.ipv6ip
+            $sql = "SELECT m.computer_name, r.remote_ip, r.status, n.ipv4ip, n.ipv6ip
                 FROM machine m
                 LEFT JOIN network n ON (m.serial_number = n.serial_number)
                 LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)

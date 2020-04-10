@@ -104,8 +104,22 @@ $(document).on('appReady', function(e, lang) {
 		// Remote control links
 		$.getJSON( appUrl + '/clients/get_links', function( links ) {
 			$.each(links, function(prop, val){
-				$('#client_links').append('<li><a href="'+(val.replace(/%s/, machineData.remote_ip).replace(/%remote_ip/, machineData.remote_ip).replace(/%u/, username).replace(/%network_ip_v4/, machineData.ipv4ip).replace(/%network_ip_v6/, machineData.ipv6ip))+'">'+i18n.t('remote_control')+' ('+prop+')</a></li>');
+				$('#client_links').append($('<li>')
+					.append($('<a>')
+						.attr('href', (
+							val.replace(/%s/, machineData.remote_ip)
+							.replace(/%remote_ip/, machineData.remote_ip)
+							.replace(/%u/, username)
+							.replace(/%network_ip_v4/, machineData.ipv4ip)
+							.replace(/%network_ip_v6/, machineData.ipv6ip)))
+						.text(i18n.t('remote_control')+' ('+prop+')'))
+				)
 			});
+		});
+
+			// get archive status, set archive status
+		$('#archive_button').click(function(){
+			alert(machineData.status)
 		});
 	});
 
@@ -142,7 +156,6 @@ $(document).on('appReady', function(e, lang) {
 		$(prevTab).find('a').click();
 		return true;
 	});
-
 
 	// ------------------------------------ End Hotkeys
 
