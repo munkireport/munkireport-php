@@ -68,12 +68,14 @@ $modules->addWidgets(
 
 				<input type="text" class="form-control mr-computer_name_input" readonly>
 
+				<?php if($_SESSION['role'] == 'admin'): ?>
 				<div class="input-group-btn">
 					<button type="button" id="archive_button" class="btn btn-default">
-						<span data-i18n="archive" class="hidden-sm hidden-xs"></span>
+						<span class="hidden-sm hidden-xs"></span>
 						<i class="fa fa-archive"></i>
 					</button>
 				</div><!-- /btn-group -->
+				<?php endif?>
 
 				<div class="input-group-btn">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
