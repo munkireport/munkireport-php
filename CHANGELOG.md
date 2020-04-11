@@ -1,6 +1,6 @@
 ### [5.3.6](https://github.com/munkireport/munkireport-php/compare/v5.3.5...HEAD) (Unreleased)
 
-### [5.3.5](https://github.com/munkireport/munkireport-php/compare/v5.3.4...v5.3.5) (April 02, 2020)
+### [5.3.5](https://github.com/munkireport/munkireport-php/compare/v5.3.4...v5.3.5) (April 02, 2020) 🥠
 
 Another small update that restores the API access via CSRF token set in a cookie. Please check https://github.com/munkireport/munkireport-php/wiki/API for more information about that. Also a couple of module updates that makes MunkiReport less reliant on a munki install (thanks @tuxudo)
 
@@ -30,7 +30,7 @@ DEPENDENCY UPDATES
 - tightenco/collect (v7.3.0 => v7.4.0)
 
 
-### [5.3.4](https://github.com/munkireport/munkireport-php/compare/v5.3.3...v5.3.4) (March 28, 2020)
+### [5.3.4](https://github.com/munkireport/munkireport-php/compare/v5.3.3...v5.3.4) (March 28, 2020) 🖼️
 
 Small update to make the widget gallery work with the new YAML widgets.
 
@@ -49,7 +49,7 @@ DEPENDENCY UPDATES
   - symfony/var-dumper (v5.0.5 => v5.0.6)
 
 
-### [5.3.3](https://github.com/munkireport/munkireport-php/compare/v5.3.2...v5.3.3) (March 25, 2020)
+### [5.3.3](https://github.com/munkireport/munkireport-php/compare/v5.3.2...v5.3.3) (March 25, 2020) 🧱
 
 Fix a trailing comma that was tripping up PHP versions below 7.3
 
@@ -64,7 +64,7 @@ DEPENDENCY UPDATES
 - tightenco/collect (v7.2.2 => v7.3.0)
 
 
-### [5.3.2](https://github.com/munkireport/munkireport-php/compare/v5.3.1...v5.3.2) (March 24, 2020)
+### [5.3.2](https://github.com/munkireport/munkireport-php/compare/v5.3.1...v5.3.2) (March 24, 2020) 🦠
 
 Some small fixes for regressions introduced by the latest releases. Futher YAMLfcation of views and configurations.
 
@@ -94,7 +94,7 @@ DEPENDENCY UPDATES
 - phpoption/phpoption (1.7.2 => 1.7.3)
 
 
-### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.3.0...v5.3.1) 
+### [5.3.1](https://github.com/munkireport/munkireport-php/compare/v5.3.0...v5.3.1) 🌭
 
 This release fixes two minor security issues found by Datadog: a Cross Site Request Forgery (CSRF) vulnerability and a fix for PHP and Apache version information leakage in the Docker container. The PHP version display in the header is fixed for everyone, the server version display you need to fix in your own server if you care about it.
 
@@ -130,7 +130,7 @@ DEPENDENCY UPDATES
   - tightenco/collect (v7.0.5 => v7.2.0)
 
 
-### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...v5.3.1)
+### [5.3.0](https://github.com/munkireport/munkireport-php/compare/v5.2.0...v5.3.0) 🐶
 
 This release contains some major security fixes. Please upgrade to this version as soon as possible.
 To help mitigate the vulnerabilities, all modules got a security update.
@@ -219,7 +219,7 @@ DEPENDENCY UPDATES
   - symfony/finder (v4.4.4 => v4.4.5)
 
 
-### [5.2.0](https://github.com/munkireport/munkireport-php/compare/v5.1.5...v5.2.0) (February 13, 2020)
+### [5.2.0](https://github.com/munkireport/munkireport-php/compare/v5.1.5...v5.2.0) (February 13, 2020) 💘
 
 Some module updates and fixes. Inventory now has single app widget support: see https://github.com/munkireport/inventory/blob/master/README.md#single-app-widget
 There's a fix for SAML groups that have commas in the name.
@@ -248,7 +248,7 @@ DEPENDENCY UPDATES
 - tightenco/collect (v6.13.0 => v6.15.0)
 
 
-### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...v5.1.5) (February 02, 2020)
+### [5.1.5](https://github.com/munkireport/munkireport-php/compare/v5.1.4...v5.1.5) (February 02, 2020) 👢
 
 Mostly module updates, and a small fix for apache servers.
 Security module now reports on Secure Boot and External Boot thanks to @poundbangbash Note that this change needs a database migration.
@@ -272,7 +272,7 @@ DEPENDENCY UPDATES
   - symfony/finder (v4.4.2 => v4.4.4)
 
 
-### [5.1.4](https://github.com/munkireport/munkireport-php/compare/v5.1.3...v5.1.4) (January 20, 2020)
+### [5.1.4](https://github.com/munkireport/munkireport-php/compare/v5.1.3...v5.1.4) (January 20, 2020) 🥞
 
 This is a bug fix release. Most notable change: the model lookup now happens in the machine module and not in the warranty module anymore.
 
@@ -313,7 +313,7 @@ DEPENDENCY UPDATES
 - doctrine/cache (1.9.0 => 1.10.0)
 - phpoption/phpoption (1.5.2 => 1.7.2)
 
-### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...v5.1.3) (November 12, 2019)
+### [5.1.3](https://github.com/munkireport/munkireport-php/compare/v5.1.2...v5.1.3) (November 12, 2019) 🦃
 
 FEATURES
   - Added an upgrade script (@lcsees)
@@ -362,7 +362,7 @@ Increase default script timeout to 30 seconds
  - league/flysystem (1.0.55 => 1.0.57)
  - tightenco/collect (v6.2.0 => v6.3.0
 
-### [5.1.1](https://github.com/munkireport/munkireport-php/compare/v5.1.0...v5.1.1) (October 09, 2019)
+### [5.1.1](https://github.com/munkireport/munkireport-php/compare/v5.1.0...v5.1.1) (October 09, 2019) 👹
 
 Notable changes: XSS patch, Catalina support for Storage report (@rickheil)
 filevault status rewrite (@tuxudo), mdm_status detail widget (@poundbangbash)
@@ -390,7 +390,7 @@ MODULE UPDATES
   - symfony/finder (v4.3.4 => v4.3.5)
 
 
-### [5.1.0](https://github.com/munkireport/munkireport-php/compare/v5.0.1...v5.1.0) (September 24, 2019)
+### [5.1.0](https://github.com/munkireport/munkireport-php/compare/v5.0.1...v5.1.0) (September 24, 2019) 🐷
 
 Some bugfixes and a change on how the client summary tab is rendered. Removed legacy modules.
 
@@ -435,7 +435,7 @@ MODULE_UPDATES
   - munkireport/certificate (v1.1 => v1.2)
 
 
-### [5.0.0](https://github.com/munkireport/munkireport-php/compare/v4.3.3...v5.0.0) (September 18, 2019)
+### [5.0.0](https://github.com/munkireport/munkireport-php/compare/v4.3.3...v5.0.0) (September 18, 2019) 🍂
 
 This release changes the way MunkiReport runs on the client. MunkiReport now has it's own launchDaemon, which means that it will no longer take up time when munki runs it's pre- and postflight scripts.
 The MunkiReport scripts have moved to `/usr/local/munkireport`
@@ -609,7 +609,7 @@ DEPENDENCY UPDATES
 - doctrine/lexer (v1.0.1 => 1.0.2)
 
 
-### [4.1.2](https://github.com/munkireport/munkireport-php/compare/v4.1.1...v4.1.2) (May 07, 2019)
+### [4.1.2](https://github.com/munkireport/munkireport-php/compare/v4.1.1...v4.1.2) (May 07, 2019) 🌵
 
 Small update to fix the deleting of client machines.
 
@@ -637,7 +637,7 @@ MODULE UPDATES
 - munkireportinfo (v1.2 => v1.3)
 - sophos (v1.1 => v1.2)
 
-### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...v4.1.0) (April 11, 2019)
+### [4.1.0](https://github.com/munkireport/munkireport-php/compare/v4.0.2...v4.1.0) (April 11, 2019) 💡
 
 FIXES
 - Change 'memory' localization name (#1210) @tuxudo
@@ -679,7 +679,7 @@ NEW FEATURES
 - Added mdm_status module
 
 
-### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...v4.0.1) (December 21, 2018)
+### [4.0.1](https://github.com/munkireport/munkireport-php/compare/v4.0.0...v4.0.1) (December 21, 2018) 🎁
 
 FIXES
 - `APPS_TO_TRACK` now working again due to an upgrade to the `inventory` module.
@@ -731,7 +731,7 @@ NEW FEATURES
 - Modules are split off into separate repos
 - Added composer-merge plugin (allows for local composer.json file)
 
-### [3.2.6](https://github.com/munkireport/munkireport-php/compare/v3.2.5...v3.2.6) (November 08, 2018)
+### [3.2.6](https://github.com/munkireport/munkireport-php/compare/v3.2.5...v3.2.6) (November 08, 2018) ❤️
 
 FIXES
 - detectx I ❤️ u
@@ -958,7 +958,7 @@ NEW FEATURES
 - Invisible CAPTCHA (you need to generate new keys if you were using the previous version)
 - Schema class to help with migrations
 
-### [2.14.3](https://github.com/munkireport/munkireport-php/compare/v2.13.2...v2.14.3) (May 19, 2017)
+### [2.14.3](https://github.com/munkireport/munkireport-php/compare/v2.13.2...v2.14.3) (May 19, 2017) 🐝
 
 FIXES
 - Blank client detail page on php < v5.5
