@@ -117,10 +117,34 @@ $(document).on('appReady', function(e, lang) {
 			});
 		});
 
-			// get archive status, set archive status
-		$('#archive_button').click(function(){
-			alert(machineData.status)
-		});
+		// get archive status
+		var getArchiveStatus = function(){
+			return $
+		}
+		//set archive status
+		var setArchiveStatus = function(status){
+			if(status == 1){
+				$('#archive_button span').text(i18n.t('unarchive'));
+			}else{
+				$('#archive_button span').text(i18n.t('archive'));
+			}
+		}
+
+		setArchiveStatus(machineData.status);
+
+		$('#archive_button').data('status', machineData.status)
+			.click(function(){
+				var status = $('#archive_button').data('status') == 1 ? 0 : 1;
+				var settings = { status: status}
+				$.post(appUrl + '/admin/update_status/' + serialNumber, settings, function(){
+					// Change button text
+					setArchiveStatus(status);
+					// store new status
+					$('#archive_button').data('status', status)
+					// Update all
+					$(document).trigger('appUpdate');
+				})
+			});
 	});
 
 
