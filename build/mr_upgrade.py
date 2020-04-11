@@ -2,21 +2,27 @@
 
 """Script for upgrading MunkiReport."""
 
-import argparse
-import datetime
-import json
-import logging
-import operator
-import os
-import re
-import shutil
-import sqlite3
-import subprocess
-import urllib.request
-from distutils.dir_util import copy_tree
+try:
+    import argparse
+    import datetime
+    import json
+    import logging
+    import operator
+    import os
+    import re
+    import shutil
+    import sqlite3
+    import subprocess
+    import sys
+    import urllib.request
+    from distutils.dir_util import copy_tree
 
-import coloredlogs
-from dotenv import load_dotenv
+    import coloredlogs
+    from dotenv import load_dotenv
+
+except ImportError as e:
+    print(f"{e}. Did you run `pip3 install -r requirements.txt`?")
+    sys.exit(1)
 
 # log output to console
 log = logging.getLogger()
