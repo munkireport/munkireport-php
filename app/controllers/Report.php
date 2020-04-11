@@ -343,6 +343,7 @@ class Report extends Controller
             'machine_group' => $this->group,
             'remote_ip' => getRemoteAddress(),
             'timestamp' => time(),
+            'status' => 0, // Reset status
         ];
 
         $model = Reportdata_model::updateOrCreate(
