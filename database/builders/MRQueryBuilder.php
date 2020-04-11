@@ -11,10 +11,12 @@ class MRQueryBuilder extends QueryBuilder{
     $this->where($this->from.'.serial_number', $serial_number);
   }
 
-  public function filter()
+  public function filter($what = '')
   {
       $this->filterMachineGroup();
-      $this->filterArchived();
+      if($what != 'groupOnly'){
+        $this->filterArchived();
+      }
       return $this;
   }
 
