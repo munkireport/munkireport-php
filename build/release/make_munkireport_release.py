@@ -141,7 +141,8 @@ def main():
                       help=("Alternate org/user and repo to use for "
                             "the release, useful for testing. Defaults to "
                             "'munkireport/munkireport-php'."))
-
+    parser.add_option('--release-icon', default='',
+                    help=("Add optional release emoji."))
     opts = parser.parse_args()[0]
     if not opts.next_version:
         sys.exit("Option --next-version is required!")
@@ -152,6 +153,7 @@ def main():
         print "Running in 'dry-run' mode.."
     publish_user, publish_repo = opts.user_repo.split('/')
     token = opts.token
+    release_icon = opts.release_icon
 
     # ensure our OAuth token works before we go any further
     api_call('/users/%s' % publish_user, token)
@@ -200,6 +202,7 @@ def main():
         changelog = fdesc.read()
     release_date = strftime('(%B %d, %Y)')
     new_changelog = re.sub(r'### \[.+\]', '### [%s]' % current_version, changelog, 1)
+    new_changelog = re.sub(r'(\(Unreleased\))', r'\1 %s' % release_icon, new_changelog)
     new_changelog = re.sub(r'\(Unreleased\)', release_date, new_changelog)
     new_changelog = re.sub('...HEAD', '...v%s' % current_version, new_changelog)
     with open(changelog_path, 'w') as fdesc:
