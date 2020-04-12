@@ -136,7 +136,7 @@ $(document).on('appReady', function(e, lang) {
 			.click(function(){
 				var status = $('#archive_button').data('status') == 1 ? 0 : 1;
 				var settings = { status: status}
-				$.post(appUrl + '/admin/update_status/' + serialNumber, settings, function(){
+				$.post(appUrl + '/manager/update_status/' + serialNumber, settings, function(){
 					// Change button text
 					setArchiveStatus(status);
 					// store new status

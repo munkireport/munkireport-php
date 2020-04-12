@@ -27,21 +27,6 @@ class Admin extends Controller
         echo 'Admin';
     }
 
-    public function update_status($serial_number = '')
-    {
-        if (! isset($_POST['status'])) {
-            jsonError('No status found');
-        }
-        $changes = Reportdata_model::where('serial_number', $serial_number)
-                ->update(
-                    [
-                        'status' => intval($_POST['status']),
-                    ]
-                );
-        jsonView(['updated' => intval($_POST['status'])]);
-    }
-
-
     /**
      * Retrieve business units information
      *

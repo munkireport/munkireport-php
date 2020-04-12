@@ -2,7 +2,7 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View, \Model, \Exception;
+use \Controller, \View, \Model, \Exception, \Reportdata_model;
 
 class Manager extends Controller
 {
@@ -117,5 +117,31 @@ class Manager extends Controller
         }
         
         return true;
+    }
+
+    public function update_status($serial_number = '')
+    {
+        if (! isset($_POST['status'])) {
+            jsonError('No status found');
+        }
+        $changes = Reportdata_model::where('serial_number', $serial_number)
+                ->update(
+                    [
+                        'status' => intval($_POST['status']),
+                    ]
+                );
+        jsonView(['updated' => intval($_POST['status'])]);
+    }
+
+    public function bulk_update_status()
+    {
+        if($days = intval(post('days'))){
+            jsonError('No days sent');
+        }
+        $expire_timestamp = time() - ($days * 24 * 60 * 60);
+        $changes = Reportdata_model::where('timestamp', '<', $expire_timestamp)
+                ->where('status', 0)
+                ->update(['status' => 1]);
+        jsonView(['updated' => $changes]);
     }
 }
