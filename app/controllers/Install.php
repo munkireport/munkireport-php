@@ -147,6 +147,11 @@ class Install extends Controller
         if(strpos($fileObj['path'], '@') !== false){
             return false;
         }
+        // Skip .AppleDouble directories
+        if(strpos($fileObj['path'], '.AppleDouble') !== false){
+            return false;
+        }
+
         return true;
     }
 }
