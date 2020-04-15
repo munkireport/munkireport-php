@@ -117,8 +117,7 @@ class Auth extends Controller
             'url' => url("auth/login/$return")
         ];
 
-        $obj = new View();
-        $obj->view('auth/login', $data);
+        view('auth/login', $data);
     }
 
     public function set_session_props($show = false)
@@ -134,14 +133,12 @@ class Auth extends Controller
 
     public function unauthorized($value='')
     {
-        $obj = new View();
-        $obj->view('auth/unauthorized', ['why' => $value]);
+        view('auth/unauthorized', ['why' => $value]);
     }
 
     public function unavailable()
     {
-        $obj = new View();
-        $obj->view('auth/unavailable');
+        view('auth/unavailable');
     }
 
     public function logout()
@@ -162,7 +159,6 @@ class Auth extends Controller
 
     public function create_local_user()
     {
-        $obj = new View();
 
         $password = isset($_POST['password']) ? $_POST['password'] : '';
         $data['login'] = isset($_POST['login']) ? $_POST['login'] : '';
@@ -175,10 +171,10 @@ class Auth extends Controller
             $auth_config = new AuthLocal(conf('auth')['auth_local']);
             $t_hasher = $auth_config->load_phpass();
             $data['password_hash'] = $t_hasher->HashPassword($password);
-            $obj->view('auth/user', $data);
+            view('auth/user', $data);
         }
         else {
-          $obj->view('auth/create_local_user', $data);
+          view('auth/create_local_user', $data);
         }
     }
 

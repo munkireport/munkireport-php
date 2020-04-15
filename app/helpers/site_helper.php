@@ -1,9 +1,10 @@
 <?php
 
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
+use munkireport\lib\User;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.3.6.4096';
+$GLOBALS['version'] = '5.3.6.4099';
 
 // Return version without commit count
 function get_version()
@@ -339,7 +340,8 @@ function authorized_for_serial($serial_number)
         return true;
     }
 
-    return id_in_machine_group(get_machine_group($serial_number));
+    $user = new User;
+    return $user->canAccessMachineGroup(get_machine_group($serial_number));
 }
 
 /**
@@ -360,27 +362,6 @@ function get_machine_group($serial_number = '')
     }
 
     return $GLOBALS['machine_groups'][$serial_number];
-}
-
-/**
- * Check if machine is member of machine_groups of current user
- * if admin, return TRUE
- * otherwise return FALSE
- *
- * @return void
- * @author
- **/
-function id_in_machine_group($id)
-{
-    if ($_SESSION['role'] == 'admin') {
-        return true;
-    }
-
-    if (isset($_SESSION['machine_groups'])) {
-        return in_array($id, $_SESSION['machine_groups']);
-    }
-
-    return false;
 }
 
 /**
@@ -558,8 +539,13 @@ function jsonView($msg = '', $status_code = 200, $exit = false)
         $status_code = 400;
     }
 
-    $obj = new View();
-    $obj->view('json', ['msg' => $msg, 'status_code' => $status_code]);
+    view('json', ['msg' => $msg, 'status_code' => $status_code]);
     
     if ($exit) exit;
+}
+
+function view($file = '', $vars = '', $view_path = '')
+{
+    $obj = new View();
+    $obj->view($file, $vars, $view_path);
 }

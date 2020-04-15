@@ -101,8 +101,7 @@ class Unit extends Controller
             $view = 'error/client_error';
         }
 
-        $obj = new View();
-        $obj->view($view, $data);
+        view($view, $data);
     }
 
     public function reports($which = 'default')
@@ -115,7 +114,6 @@ class Unit extends Controller
             $view = 'error/client_error';
         }
 
-        $obj = new View();
-        $obj->view($view, $data);
+        view($view, $data);
     }
 }

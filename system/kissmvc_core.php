@@ -302,8 +302,7 @@ abstract class KISS_View
         }else{
             $file = 'widgets/unknown_widget';
         }
-        $obj = new View();
-        $obj->view($file, $vars);
+        view($file, $vars);
     }
 
     public function viewDetailWidget($data){
@@ -319,8 +318,7 @@ abstract class KISS_View
             $view_path = conf('view_path');
         }
 
-        $obj = new View();
-        $obj->view($view, $view_vars, $view_path);
+        view($view, $view_vars, $view_path);
 
     }
 

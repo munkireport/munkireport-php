@@ -40,14 +40,12 @@ class Database extends Controller
 //            }
 
 
-            $obj = new View();
-            $obj->view('json', array('msg' => Array(
+            view('json', array('msg' => Array(
                 'files_pending' => $migrationFilenames,
                 'notes' => $migrator->getNotes())
             ));
         } catch (\Exception $e) {
-            $obj = new View();
-            $obj->view('json', array('msg' => Array(
+            view('json', array('msg' => Array(
                 'error' => $e->getMessage(),
                 'error_trace' => $e->getTrace()
             )));
@@ -68,7 +66,6 @@ class Database extends Controller
             $dirs = [APP_ROOT . 'database/migrations'];
             $this->appendModuleMigrations($dirs);
 
-            $obj = new View();
             
             $input = new \Symfony\Component\Console\Input\StringInput('');
             $outputSymfony = new \Symfony\Component\Console\Output\BufferedOutput();
@@ -77,14 +74,14 @@ class Database extends Controller
             try {
                 $migrationFiles = $migrator->setOutput($outputStyle)->run($dirs, ['pretend' => false]);
 
-                $obj->view('json', [
+                view('json', [
                     'msg' => [
                         'files' => $migrationFiles,
                         'notes' => explode(PHP_EOL, $outputSymfony->fetch()),
                     ]
                 ]);
             } catch (\PDOException $exception) {
-                $obj->view('json', [
+                view('json', [
                     'msg' => [
                         'error' => $exception->getMessage(),
                         'notes' => explode(PHP_EOL, $outputSymfony->fetch()),
@@ -92,8 +89,7 @@ class Database extends Controller
                 ]);
             }
         } catch (\Exception $e) {
-            $obj = new View();
-            $obj->view('json', [
+            view('json', [
                     'error' => $e->getMessage(),
                     'error_trace' => $e->getTrace()
             ]);

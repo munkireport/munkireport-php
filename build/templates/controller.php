@@ -23,10 +23,9 @@ class MODULE_controller extends Module_controller
      **/
     public function get_data($serial_number = '')
     {
-        $obj = new View();
 
         if (! $this->authorized()) {
-            $obj->view('json', array('msg' => 'Not authorized'));
+            view('json', array('msg' => 'Not authorized'));
         }
         $columns = [
             'item1',
@@ -40,12 +39,11 @@ class MODULE_controller extends Module_controller
             ->first()
             ->toArray();
 
-        $obj->view('json', array('msg' => $out));
+        view('json', array('msg' => $out));
     }
 
     public function get_list()
     {
-        $obj = new View();
         $out = MODULE_model::selectRaw('item1, count(*) AS count')
             ->filter()
             ->groupBy('item1')
@@ -53,7 +51,7 @@ class MODULE_controller extends Module_controller
             ->get()
             ->toArray();
 
-        $obj->view('json', array('msg' => $out));
+        view('json', array('msg' => $out));
 }
 
 } // END class MODULE_controller

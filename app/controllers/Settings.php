@@ -10,8 +10,7 @@ class Settings extends Controller
     public function __construct()
     {
         if (! $this->authorized()) {
-            $obj = new View();
-            $obj->view('json', array('msg' => 'Not authorized'));
+            view('json', array('msg' => 'Not authorized'));
 
             die();
         }
@@ -37,13 +36,11 @@ class Settings extends Controller
             }
             else
             {
-                $obj = new View();
-                $obj->view('json', array('msg' => sprintf('Error: theme %s unknown', $_POST['set'])));
+                view('json', array('msg' => sprintf('Error: theme %s unknown', $_POST['set'])));
             }
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => sess_get('theme', conf('default_theme'))));
+        view('json', array('msg' => sess_get('theme', conf('default_theme'))));
     }
 
 }

@@ -25,9 +25,8 @@ class Engine extends KISS_Engine
         // Don't show a detailed message when not in debug mode
         conf('debug') && $data['msg'] = $msg;
 
-        $obj = new View();
 
-        $obj->view('error/client_error', $data);
+        view('error/client_error', $data);
 
         exit;
     }

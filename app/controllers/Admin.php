@@ -294,9 +294,8 @@ class Admin extends Controller
      **/
     public function get_bu_data($unitid = "")
     {
-        $obj = new View();
         $bu = new Business_unit;
-        $obj->view('json', array('msg' => $bu->all($unitid)));
+        view('json', array('msg' => $bu->all($unitid)));
     }
 
     //===============================================================
@@ -332,8 +331,7 @@ class Admin extends Controller
             $out[$obj['machine_group']]['cnt'] = $obj['cnt'];
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => array_values($out)));
+        view('json', array('msg' => array_values($out)));
     }
 
     //===============================================================
@@ -355,7 +353,6 @@ class Admin extends Controller
             $view = 'error/client_error';
         }
 
-        $obj = new View();
-        $obj->view($view, $data);
+        view($view, $data);
     }
 }

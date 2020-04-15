@@ -17,8 +17,7 @@ class Error extends Controller
     public function client_error($status_code = 404)
     {
         $data = array('status_code' => $status_code);
-        $obj = new View();
 
-        $obj->view('error/client_error', $data);
+        view('error/client_error', $data);
     }
 }

@@ -93,8 +93,7 @@ class Manager extends Controller
             }
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $status));
+        view('json', array('msg' => $status));
     }
     
     private function isTableNameOk($name)

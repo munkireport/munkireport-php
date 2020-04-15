@@ -109,8 +109,7 @@ class System extends Controller
             }
         }
         //echo '<pre>';print_r($phpinfo);return;
-        $obj = new View();
-        $obj->view('json', array('msg' => $phpinfo));
+        view('json', array('msg' => $phpinfo));
     }
     //===============================================================
     //===============================================================
@@ -160,7 +159,6 @@ class System extends Controller
                 $view = 'error/client_error';
         }
 
-        $obj = new View();
-        $obj->view($view, $data);
+        view($view, $data);
     }
 }

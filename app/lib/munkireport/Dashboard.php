@@ -114,8 +114,7 @@ class Dashboard
           $view = 'error/client_error';
       }
       $data['widget'] = new Widgets(conf('widget'));
-      $obj = new View();
-      $obj->view($view, $data);
+      view($view, $data);
 
     }
 }

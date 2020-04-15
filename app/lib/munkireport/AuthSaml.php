@@ -171,8 +171,7 @@ class AuthSaml extends AbstractAuth
         // Check if SSO is disabled, if yes, destroy session and move on
         if($this->config['disable_sso']){
             session_destroy();
-            $obj = new View();
-            $obj->view('auth/logout', ['loginurl' => url()]);
+            view('auth/logout', ['loginurl' => url()]);
             return;
         }
 
@@ -211,16 +210,14 @@ class AuthSaml extends AbstractAuth
             $auth->processSLO(false, $requestID);
             $errors = $auth->getErrors();
             if (empty($errors)) {
-                $obj = new View();
-                $obj->view('auth/logout', ['loginurl' => url()]);
+                view('auth/logout', ['loginurl' => url()]);
             } else {
                 echo '<p>' . implode(', ', $errors) . '</p>';
             }
         } catch (OneLogin_Saml2_Error $e) {
             if(isset($this->config['disable_sso_sls_verify']) && $this->config['disable_sso_sls_verify'] === true && strpos($e->getMessage(),'Only supported HTTP_REDIRECT Binding') !== false ){
                 session_destroy();
-                $obj = new View();
-                $obj->view('auth/logout', ['loginurl' => url()]);
+                view('auth/logout', ['loginurl' => url()]);
                 return;
             }
             echo 'An error occurred during logout';

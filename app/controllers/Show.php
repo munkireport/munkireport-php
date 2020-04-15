@@ -54,8 +54,7 @@ class Show extends Controller
         }
         
         if ($report->type == 'php') {
-            $obj = new View();
-            $obj->view(
+            view(
                 $report->view, 
                 [
                     'page' => 'clients',
@@ -84,8 +83,7 @@ class Show extends Controller
 
     private function _render($view, $data, $viewpath)
     {
-        $obj = new View();
-        $obj->view($view, $data, $viewpath);
+        view($view, $data, $viewpath);
     }
 
     private function _pageNotFound()
@@ -93,8 +91,7 @@ class Show extends Controller
         $data = array('status_code' => 404);
         $view = 'error/client_error';
         $viewpath = conf('view_path');
-        $obj = new View();
-        $obj->view($view, $data, $viewpath);
+        view($view, $data, $viewpath);
         exit;
     }
 }

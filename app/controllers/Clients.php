@@ -25,8 +25,7 @@ class Clients extends Controller
 
         $data['page'] = 'clients';
 
-        $obj = new View();
-        $obj->view('client/client_list', $data);
+        view('client/client_list', $data);
     }
 
     /**
@@ -84,16 +83,15 @@ class Clients extends Controller
         $data = array('serial_number' => $sn);
         $data['scripts'] = array("clients/client_detail.js");
 
-        $obj = new View();
 
         $machine = Machine_model::where('serial_number', $sn)
             ->first();
 
         // Check if machine exists/is allowed for this user to view
         if (! $machine) {
-            $obj->view("client/client_dont_exist", $data);
+            view("client/client_dont_exist", $data);
         } else {
-            $obj->view("client/client_detail", $data);
+            view("client/client_detail", $data);
         }
     }
 
@@ -110,7 +108,6 @@ class Clients extends Controller
     {
         $data['page'] = 'clients';
         // TODO: Check if view exists
-        $obj = new View();
-        $obj->view('client/'.$view, $data);
+        view('client/'.$view, $data);
     }
 }
