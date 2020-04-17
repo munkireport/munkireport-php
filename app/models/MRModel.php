@@ -16,4 +16,13 @@ class MRModel extends Eloquent
              $connection->getPostProcessor()
     );
   }
+
+  public function toLabelCount()
+  {
+      $out = [];
+      foreach($this->toArray() as $label => $value){
+          $out[] = ['label' => $label, 'count' => $value];
+      }
+      return $out;
+  }
 }
