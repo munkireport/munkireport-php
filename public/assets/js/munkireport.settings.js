@@ -167,6 +167,13 @@ var mr = {
                     (value === '0' ? mr.label(i18n.t('disabled'), 'danger') : '')
 	        	cell.html(value)
             },
+            binaryOnOff: function(col, row){
+                var cell = $('td:eq('+col+')', row),
+                    value = cell.text()
+                value = value == '1' ? i18n.t('on') :
+                    (value === '0' ? i18n.t('off') : '')
+	        	cell.text(value)
+            },
             fileSize: function(col, row){
                 var cell = $('td:eq('+col+')', row)
                 var fs=cell.text();
