@@ -59,9 +59,16 @@ $(document).on('appUpdate', function(e, lang) {
                 // Set default class to btn-info
                 o.class = o.class ? o.class : 'btn-info';
 
+                // Search component
+                if( o.search_component ){
+                    searchComponent = '/#'+encodeURIComponent(o.search_component);
+                }else{
+                    searchComponent = '';
+                }
+
 				body.append(
                     $('<a>')
-                        .attr('href', appUrl+listingLink+'/#'+encodeURIComponent(o.search_component))
+                        .attr('href', appUrl+listingLink+searchComponent)
                         .addClass("btn " + o.class)
                         .toggleClass("disabled", count == 0)
                         .addClass(function(){ return count ? '' : 'disabled'})
