@@ -32,7 +32,7 @@
         "munkireport/applications": "^2.0",
         "munkireport/appusage": "^2.0",
         "munkireport/backup2go": "^1.0",
-        "munkireport/bluetooth": "^1.0",
+        "munkireport/bluetooth": "^2.0",
         "munkireport/caching": "^1.0",
         "munkireport/certificate": "^1.0",
         "munkireport/comment": "^3.0",
