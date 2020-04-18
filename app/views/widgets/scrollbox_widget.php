@@ -45,7 +45,7 @@ $(document).on('appUpdate', function(e, lang) {
                 if(badgeType == 'reg_timestamp'){
                     var badge = '<span class="pull-right">'+moment(d.reg_timestamp * 1000).fromNow()+'</span>';
                 }else if(badgeType == 'percent'){
-                    var badge = '<span class="badge pull-right">'+d.percent+' %</span>';
+                    var badge = '<span class="badge pull-right">'+d.percent+'%</span>';
                 }else{
                     var badge = '<span class="badge pull-right">'+d.count+'</span>';
                 }
