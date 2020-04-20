@@ -42,7 +42,7 @@ class Clients extends Controller
                 FROM machine m
                 LEFT JOIN network n ON (m.serial_number = n.serial_number)
                 LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
-                WHERE m.serial_number = ? AND ipv4ip IS NOT NULL
+                WHERE m.serial_number = ? ORDER BY ipv4ip DESC LIMIT 1
                 ";
 
             jsonView($machine->query($sql, $serial_number));
