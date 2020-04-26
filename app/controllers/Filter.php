@@ -18,6 +18,7 @@ class Filter extends Controller
         $this->registered_filters = [
             'machine_group' => [],
             'archived' => ['yes'],
+            'archived_only' => ['no'],
         ];
     }
 
@@ -45,7 +46,8 @@ class Filter extends Controller
                 break;
             case 'archived':
                 break;
-    
+            case 'archived_only':
+                break;
             default:
                 jsonError('Unknown filter: '.$filter);
         }

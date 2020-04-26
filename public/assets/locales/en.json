@@ -178,6 +178,7 @@
     "failed": "Failed",
     "failing": "Failing!",
     "filter": {
+        "only_show_archived": "Only show archived",
         "show_archived": "Show archived",
         "title": "Set filters"
     },

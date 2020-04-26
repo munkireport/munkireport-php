@@ -233,10 +233,41 @@ var showFilterModal = function(e){
 			}
 
 		$.post(appUrl + '/filter/set_filter', settings, function(){
+            // Update all
+            enableDisableArchivedOnly();
+
+			$(document).trigger('appUpdate');
+		})
+    }
+
+    var updateArchivedOnly = function() {
+		var checked = this.checked,
+			settings = {
+				filter: 'archived_only',
+				value: 'yes',
+				action: checked ? 'add' : 'remove'
+			}
+
+		$.post(appUrl + '/filter/set_filter', settings, function(){
 			// Update all
 			$(document).trigger('appUpdate');
 		})
     }
+
+    // Enable or disable depending on state of archived
+    var enableDisableArchivedOnly = function(){
+        if($('#archived').prop('checked'))
+        {
+            // enable checkbox
+            $('#archived_only input').prop('disabled', false)
+            $('#archived_only').removeClass("text-muted");
+
+        }else{
+            $('#archived_only input').prop('disabled', true);
+            $('#archived_only').addClass("text-muted");
+        }
+    }
+
 
     var updateAll = function() {
 
@@ -264,38 +295,41 @@ var showFilterModal = function(e){
 	defer.done(function(mg_data, filter_data){
 
         var mg_data = mg_data[0],
-            filter_data = filter_data[0]
+            filter_data = filter_data[0],
+            modal_title = $('#myModal .modal-title'),
+            modal_body = $('#myModal .modal-body');
 
-		// Set texts
-		$('#myModal .modal-title')
-			.empty()
-			.append($('<i>')
-				.addClass('fa fa-filter'))
-			.append(' ' + i18n.t("filter.title"));
-		$('#myModal .modal-body')
-            .empty()
-            .append($('<div class="checkbox machine_groups">')
+		// Set title
+		modal_title.empty();
+		modal_title.append($('<i class="fa fa-filter">'))
+                    .append(' ' + i18n.t("filter.title"));
+
+        // empty body
+        modal_body.empty()
+
+        // Add archive filters
+        modal_body.append($('<div class="checkbox machine_groups">')
                 .append($('<label>')
-                    .append($('<input type="checkbox">')
+                    .append($('<input id="archived" type="checkbox">')
                         .change(updateArchived)
                         .prop('checked', function(){
                             return filter_data['archived'].length == 0;
                         }))
                     .append(i18n.t('filter.show_archived'))
                 )
-            )
-			.append($('<b>')
-				.text(i18n.t("business_unit.machine_groups")));
-
-		$('#myModal button.ok').text(i18n.t("dialog.close"));
-
-		// Set ok button
-		$('#myModal button.ok')
-			.off()
-			.click(function(){$('#myModal').modal('hide')});
+                .append($('<label id="archived_only" style="margin-left: 10px">')
+                    .append($('<input type="checkbox">')
+                        .change(updateArchivedOnly)
+                        .prop('checked', function(){
+                            return filter_data['archived_only'].length > 0;
+                        }))
+                    .append(i18n.t('filter.only_show_archived'))
+                )
+            );
 
         // Add check/uncheck all
-        $('#myModal .modal-body')
+        modal_body.append($('<b>')
+                    .text(i18n.t("business_unit.machine_groups")))
             .append($('<div class="checkbox">')
                 .append($('<label>')
                     .append($('<input>')
@@ -307,7 +341,7 @@ var showFilterModal = function(e){
 		$.each(mg_data, function(index, obj){
 			if(obj.groupid !== undefined){
                 mgList.push(obj.groupid);
-				$('#myModal .modal-body')
+				modal_body
                     .append($('<div class="checkbox mgroups">')
 						.append($('<label>')
 							.append($('<input>')
@@ -320,6 +354,13 @@ var showFilterModal = function(e){
 							.append(obj.name || 'No Name')))
 			}
 		});
+
+        $('#myModal button.ok').text(i18n.t("dialog.close"));
+
+		// Set ok button
+		$('#myModal button.ok')
+			.off()
+            .click(function(){$('#myModal').modal('hide')});
 
 		// Show modal
 		$('#myModal').modal('show');
