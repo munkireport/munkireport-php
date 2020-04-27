@@ -79,7 +79,7 @@ class Controller extends KISS_Controller
             ini_set('session.use_only_cookies', 1);
             ini_set('session.cookie_path', conf('subdirectory'));
             ini_set('session.cookie_httponly', true);
-            ini_set('session.cookie_samesite', "Strict");
+            ini_set('session.cookie_samesite', "Lax");
             session_start();
         }
 
