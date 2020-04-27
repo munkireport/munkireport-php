@@ -4,7 +4,7 @@ use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\D
 use munkireport\lib\User;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.3.6.4109';
+$GLOBALS['version'] = '5.3.6.4110';
 
 // Return version without commit count
 function get_version()
@@ -382,9 +382,9 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
     }
 
     if(is_archived_filter_on()){
-        $sql .= sprintf(' %s %s.status = 0 ', $prefix, $reportdata);
+        $sql .= sprintf(' %s %s.archive_status = 0 ', $prefix, $reportdata);
     }elseif( is_archived_only_filter_on() ){
-        $sql .= sprintf(' %s %s.status != 0 ', $prefix, $reportdata);
+        $sql .= sprintf(' %s %s.archive_status != 0 ', $prefix, $reportdata);
     }
 
     return $sql;

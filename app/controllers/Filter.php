@@ -18,7 +18,7 @@ class Filter extends Controller
         $this->registered_filters = [
             'machine_group' => [],
             'archived' => ['yes'],
-            'archived_only' => ['no'],
+            'archived_only' => [],
         ];
     }
 

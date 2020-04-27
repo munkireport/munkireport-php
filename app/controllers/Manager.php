@@ -126,7 +126,7 @@ class Manager extends Controller
         $changes = Reportdata_model::where('serial_number', $serial_number)
                 ->update(
                     [
-                        'status' => intval($_POST['status']),
+                        'archive_status' => intval($_POST['status']),
                     ]
                 );
         jsonView(['updated' => intval($_POST['status'])]);
@@ -139,8 +139,8 @@ class Manager extends Controller
         }
         $expire_timestamp = time() - ($days * 24 * 60 * 60);
         $changes = Reportdata_model::where('timestamp', '<', $expire_timestamp)
-                ->where('status', 0)
-                ->update(['status' => 1]);
+                ->where('archive_status', 0)
+                ->update(['archive_status' => 1]);
         jsonView(['updated' => $changes]);
     }
 }

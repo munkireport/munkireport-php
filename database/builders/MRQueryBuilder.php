@@ -40,9 +40,9 @@ class MRQueryBuilder extends QueryBuilder{
   private function filterArchived()
   {
     if( is_archived_filter_on()) {
-        $this->where('reportdata.status', 0);
+        $this->where('reportdata.archive_status', 0);
     }elseif( is_archived_only_filter_on() ){
-        $this->where('reportdata.status', '!=', 0);
+        $this->where('reportdata.archive_status', '!=', 0);
     }
   }
 
