@@ -362,6 +362,9 @@ var showFilterModal = function(e){
 			.off()
             .click(function(){$('#myModal').modal('hide')});
 
+        // Enable/disable archivedOnly depending on state of #archived
+        enableDisableArchivedOnly();
+
 		// Show modal
 		$('#myModal').modal('show');
 
