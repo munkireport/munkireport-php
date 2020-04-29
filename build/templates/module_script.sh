@@ -8,15 +8,6 @@ CACHEDIR="$CWD/cache/"
 OUTPUT_FILE="${CACHEDIR}MODULE.txt"
 SEPARATOR=' = '
 
-# Skip manual check
-if [ "$1" = 'manualcheck' ]; then
-	echo 'Manual check: skipping'
-	exit 0
-fi
-
-# Create cache dir if it does not exist
-mkdir -p "${CACHEDIR}"
-
 # Business logic goes here
 
 # Output data here
