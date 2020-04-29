@@ -126,4 +126,12 @@ date_default_timezone_set( conf('timezone') );
 // Start the controller
 //===============================================
 $uri_protocol = conf('uriProtocol');
-new Engine($conf['routes'],'show','index',$conf['uri_protocol']);
+try {
+	new Engine($conf['routes'],'show','index',$conf['uri_protocol']);
+} catch (\Throwable $th) {
+	if (conf('debug')) {
+		dd($th);
+	}else{
+		jsonError("Something failed, turn on DEBUG for more information.");
+	}
+}
