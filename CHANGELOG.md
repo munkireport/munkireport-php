@@ -1,3 +1,5 @@
+### [5.4.1](https://github.com/munkireport/munkireport-php/compare/v5.4.0...wip) (Unreleased)
+
 ### [5.4.0](https://github.com/munkireport/munkireport-php/compare/v5.3.5...v5.4.0) (April 29, 2020) 🧹
 
 This release adds the ability to archive a machine. Two filter options have been added: 'Show archived' and 'Only show archived' to control which machines are shown.
