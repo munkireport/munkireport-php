@@ -1,4 +1,49 @@
-### [5.3.6](https://github.com/munkireport/munkireport-php/compare/v5.3.5...HEAD) (Unreleased)
+### [5.4.0](https://github.com/munkireport/munkireport-php/compare/v5.3.5...HEAD) (Unreleased)
+
+This release adds the ability to archive a machine. Two filter options have been added: 'Show archived' and 'Only show archived' to control which machines are shown.
+The bluetooth module got a serious overhaul from @tuxudo. If you run migrations, it will wipe your current bluetooth data to make room for a slew of BT goodness. You will need to push out a new client installer package to make use of the new features.
+
+FIXES
+- SAML authentication
+- Updating the mr upgrade script (#1329)
+
+
+MODULE UPDATES
+- munkireport/bluetooth (v1.3 => v2.0)
+- munkireport/crashplan (v1.7 => v2.0)
+- munkireport/localadmin (v2.2 => v3.0)
+- munkireport/network (v2.4 => v3.0)
+- munkireport/security (v1.8 => v2.0)
+- munkireport/tag (v2.2 => v3.0)
+- munkireport/warranty (v2.3 => v3.0)
+- munkireport/reportdata (v2.6 => v3.2)
+- munkireport/machine (v5.0 => v6.2)
+- munkireport/disk_report (3.0 => v3.2)
+- munkireport/certificate (v1.3 => V1.4)
+- munkireport/comment (v3.1 => v3.2)
+- munkireport/fonts (v1.2 => v1.3)
+- munkireport/gpu (v1.2 => v1.3)
+- munkireport/inventory (v4.1 => v4.2)
+- munkireport/managedinstalls (V2.3 => v2.4)
+- munkireport/power (v1.3 => v1.4)
+- munkireport/timemachine (v1.7 => v2.1)
+- munkireport/user_sessions (v1.5 => v1.6)
+
+DEPENDENCY UPDATES
+- symfony/yaml (v3.4.39 => v3.4.40)
+- symfony/var-dumper (v5.0.7 => v5.0.8)
+- tightenco/collect (v7.4.0 => v7.9.2)
+- robrichards/xmlseclibs (3.0.4 => 3.1.0)
+- guzzlehttp/guzzle (6.5.2 => 6.5.3)
+- symfony/console (v4.4.7 => v4.4.8)
+- symfony/process (v4.4.7 => v4.4.8)
+- symfony/translation (v4.4.7 => v4.4.8)
+- nesbot/carbon (2.32.2 => 2.33.0)
+- symfony/finder (v4.4.7 => v4.4.8)
+- league/flysystem (1.0.66 => 1.0.67)
+- doctrine/dbal (v2.10.1 => 2.10.2)
+- vlucas/phpdotenv (v4.1.3 => v4.1.4)
+
 
 ### [5.3.5](https://github.com/munkireport/munkireport-php/compare/v5.3.4...v5.3.5) (April 02, 2020) 🥠
 
