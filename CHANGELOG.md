@@ -1,4 +1,4 @@
-### [5.4.0](https://github.com/munkireport/munkireport-php/compare/v5.3.5...HEAD) (Unreleased)
+### [5.4.0](https://github.com/munkireport/munkireport-php/compare/v5.3.5...v5.4.0) (April 29, 2020) 🧹
 
 This release adds the ability to archive a machine. Two filter options have been added: 'Show archived' and 'Only show archived' to control which machines are shown.
 The bluetooth module got a serious overhaul from @tuxudo. If you run migrations, it will wipe your current bluetooth data to make room for a slew of BT goodness. You will need to push out a new client installer package to make use of the new features.
