@@ -130,7 +130,7 @@ fi
 
 echo "# Preparing ${MUNKIPATH}"
 mkdir -p "${MUNKIPATH}munkilib"
-mkdir -p "${MUNKIPATH}scripts"
+mkdir -p "${MUNKIPATH}scripts/cache"
 mkdir -p "${INSTALLROOT}/Library/MunkiReport/Logs"
 
 # Create preflight.d symlinks
