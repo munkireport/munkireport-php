@@ -150,8 +150,12 @@ var mr = {
             timestampToMoment: function(col, row){
                 var cell = $('td:eq('+col+')', row)
                 var checkin = parseInt(cell.text());
-                var date = new Date(checkin * 1000);
-                cell.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+                if (checkin > 0){
+                    var date = new Date(checkin * 1000);
+                    cell.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+                } else {
+                    cell.text("")
+                }
             },
             binaryYesNo: function(col, row){
                 var cell = $('td:eq('+col+')', row),
