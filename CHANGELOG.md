@@ -1,3 +1,5 @@
+### [5.4.2](https://github.com/munkireport/munkireport-php/compare/v5.4.1...wip) (Unreleased)
+
 ### [5.4.1](https://github.com/munkireport/munkireport-php/compare/v5.4.0...wip) (April 30, 2020) 🧽
 
 Small bugfix release to remedy some issues. Also the deploystudio and gsx modules got removed from the core modules.
