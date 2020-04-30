@@ -3,8 +3,6 @@
 - Update CHANGELOG.md
 - Record changes to client scripts (so people can determine if they have to build a new client package)
 - push to GH
-- merge wip into master
-- push to GH
 - run release script
 
 ```

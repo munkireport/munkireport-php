@@ -7,9 +7,6 @@
 # uploading the actual built package, and incrementing the version number for
 # the next version to be released.
 #
-# This skips the bootstrap installation script at 'Scripts/install.sh', because
-# this step would require root.
-#
 # Requires an OAuth token with push access to the repo. Currently the GitHub
 # Releases API is in a 'preview' status, and this script does very little error
 # handling.
@@ -265,6 +262,9 @@ def main():
          'Bumping to v%s for development.' % next_version])
     if not opts.dry_run:
         run_command(['git', 'push', 'origin', branch])
+        run_command(['git', 'checkout', 'master'])
+        run_command(['git', 'merge', tag_name])
+        run_command(['git', 'push', 'origin', 'master'])
     else:
         print ("Ended dry-run mode. Final state of the munkireport-php repo can be "
                "found at: %s" % munkireport_root)
