@@ -134,7 +134,7 @@ class Manager extends Controller
 
     public function bulk_update_status()
     {
-        if($days = intval(post('days'))){
+        if( ! $days = intval(post('days'))){
             jsonError('No days sent');
         }
         $expire_timestamp = time() - ($days * 24 * 60 * 60);
