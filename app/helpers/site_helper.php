@@ -245,7 +245,7 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
  **/
 function post($what = '', $alt = '')
 {
-    if (isset($_POST[$what])) {
+    if (array_key_exists($what, $_POST)) {
         return $_POST[$what];
     }
 
