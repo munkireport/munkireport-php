@@ -1,5 +1,15 @@
 ### [5.4.1](https://github.com/munkireport/munkireport-php/compare/v5.4.0...wip) (Unreleased)
 
+Small bugfix release to remedy some issues. Also the deploystudio and gsx modules got removed from the core modules.
+
+FIXES
+- Auto unarchive machines when they report back in
+- /manager/bulk_update_status accepts days > 0
+
+MODULE UPDATES
+- munkireport/gsx removed
+- munkireport/deploystudio removed
+
 ### [5.4.0](https://github.com/munkireport/munkireport-php/compare/v5.3.5...v5.4.0) (April 29, 2020) 🧹
 
 This release adds the ability to archive a machine. Two filter options have been added: 'Show archived' and 'Only show archived' to control which machines are shown.
