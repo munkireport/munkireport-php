@@ -114,7 +114,8 @@ def backup_database(backup_dir: str, install_path: str, current_time: str) -> bo
         log.info("Backup completed successfully.")
 
     elif database_type == "sqlite":
-        database_path = os.getenv("CONNECTION_DATABASE")
+        default_db_path = install_path + "app/db/db.sqlite"
+        database_path = os.getenv("CONNECTION_DATABASE") or default_db_path
 
         # ensure that the database path is defined and exists
         if database_path:
