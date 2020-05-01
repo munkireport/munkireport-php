@@ -28,9 +28,14 @@ class User
         return $this->_getRole() == 'manager';
     }
 
+    public function isArchiver()
+    {
+        return $this->_getRole() == 'archiver';
+    }
+
     public function canArchive()
     {
-        return $this->isAdmin() || $this->isManager();
+        return $this->isAdmin() || $this->isManager() || $this->isArchiver();
     }
 
     public function canAccessMachineGroup($id)
