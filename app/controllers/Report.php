@@ -92,8 +92,11 @@ class Report extends Controller
             }
 
             // Get stored hashes from db
-            $hash = new Hash();
-            $hashes = $hash->all($_POST['serial']);
+            $hashes = Hash::select('name', 'hash')
+                ->where('serial_number', post('serial'))
+                ->get()
+                ->pluck('hash', 'name')
+                ->toArray();
 
             // Compare sent hashes with stored hashes
             foreach ($req_items as $name => $val) {
@@ -319,10 +322,18 @@ class Report extends Controller
     
     private function _updateHash($serial_number, $module, $hashValue)
     {
-        $hash = new Hash($serial_number, $module);
-        $hash->hash = $hashValue;
-        $hash->timestamp = time();
-        $hash->save();
+        Hash::updateOrCreate(
+            [
+                'serial_number' => $serial_number, 
+                'name' => $module,
+            ],
+            [
+                'name' => $module, 
+                'hash' => $hashValue,
+                'timestamp' => time(),
+            ]
+        );
+
     }
     
     private function _collectAlerts()
