@@ -5,6 +5,7 @@ namespace munkireport\controller;
 use \Controller, \View, \Reportdata_model;
 use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
+use munkireport\lib\BusinessUnit;
 
 class Admin extends Controller
 {
@@ -25,22 +26,6 @@ class Admin extends Controller
     public function index()
     {
         echo 'Admin';
-    }
-
-    /**
-     * Retrieve business units information
-     *
-     * @return void
-     * @author
-     **/
-    public function get_business_units()
-    {
-        $business_unit = new Business_unit;
-        $machine_group = new Machine_group;
-        $out = array();
-        foreach ($business_unit->select() as $unit) {
-            $out[$unit->unitid][$unit->property] = $unit->value;
-        }
     }
 
     //===============================================================
@@ -149,118 +134,8 @@ class Admin extends Controller
      **/
     public function save_business_unit()
     {
-        $out = array();
-
-        if (! $_POST) {
-            $out['error'] = 'No data';
-        } elseif (isset($_POST['unitid'])) {
-            $business_unit = new Business_unit;
-
-            // Translate groups to single entries
-            $translate = array(
-                'keys' => 'key',
-                'machine_groups' => 'machine_group',
-                'users' => 'user',
-                'managers' => 'manager');
-
-            $unitid = $_POST['unitid'];
-
-            // Check if new unit
-            if ($unitid == 'new') {
-                $unitid = $business_unit->get_max_unitid() + 1;
-            }
-
-            $out['unitid'] = $unitid;
-
-            // Check if there are changed items
-            if (isset($_POST['iteminfo'])) {
-                $groups = array();
-
-                // If sent a '#', no items are in the iteminfo array
-                // proceed with empty groups array
-                if (! in_array('#', $_POST['iteminfo'])) {
-                // Loop through iteminfo
-                    foreach ($_POST['iteminfo'] as $entry) {
-                    // No key, create new
-                        if ($entry['key'] === '') {
-                            $mg = new Machine_group;
-                            $newgroup = $mg->get_max_groupid() + 1;
-
-                            // Store name
-                            $mg->merge(array(
-                                'id' => '',
-                                'groupid' => $newgroup,
-                                'property' => 'name',
-                                'value' => $entry['name']));
-                            $mg->save();
-
-                            // Store GUID key
-                            $mg->merge(array(
-                                'id' => '',
-                                'groupid' => $newgroup,
-                                'property' => 'key',
-                                'value' => get_guid()));
-                            $mg->save();
-
-                            $groups[] = $newgroup;
-                        } else {
-                            // Add key to list
-                            $groups[] = intval($entry['key']);
-                        }
-                    }
-                }
-
-                // Set new machine_groups to list
-                $_POST['machine_groups'] = $groups;
-                unset($_POST['iteminfo']);
-            }
-            foreach ($_POST as $property => $val) {
-            // Skip unitid
-                if ($property == 'unitid') {
-                    continue;
-                }
-
-                if (is_scalar($val)) {
-                    $business_unit->id = '';
-                    $business_unit->retrieveOne('unitid=? AND property=?', array($unitid, $property));
-                    $business_unit->unitid = $unitid;
-                    $business_unit->property = $property;
-                    $business_unit->value = $val;
-                    $business_unit->save();
-                    $out[$property] = $val;
-                } else //array data (machine_groups, users)
-                {
-                    // Check if this is a valid property
-                    if (! isset($translate[$property])) {
-                        $out['error'][] = 'Illegal property: '.$property;
-                        continue;
-                    }
-
-                    // Translate property to db entry
-                    $name =  $translate[$property];
-
-                    $business_unit->deleteWhere('unitid=? AND property=?', array($unitid, $name));
-
-                    foreach ($val as $entry) {
-                    // Empty array placeholder
-                        if ($entry === '#') {
-                            $out[$property] = array();
-                            continue;
-                        }
-                        $business_unit->id = '';
-                        $business_unit->unitid = $unitid;
-                        $business_unit->property = $name;
-                        $business_unit->value = is_numeric($entry) ? 0 + $entry : $entry;
-                        $business_unit->save();
-                        $out[$property][] = is_numeric($entry) ? 0 + $entry : $entry;
-                    }
-                }
-            }
-        } else {
-            $out['error'] = 'Unitid missing';
-        }
-
-        jsonView($out);
+        $unit = new BusinessUnit();
+        jsonView($unit->saveUnit($_POST));
     }
 
     //===============================================================
@@ -294,8 +169,44 @@ class Admin extends Controller
      **/
     public function get_bu_data($unitid = "")
     {
-        $bu = new Business_unit;
-        view('json', array('msg' => $bu->all($unitid)));
+        $out = [];
+        $units = Business_unit::get()
+                    ->toArray();
+        // jsonView($units);
+
+        // // var_dump($units);
+        // exit();
+
+        foreach ($units as $obj) {
+        // Initialize
+            $obj = (object) $obj;
+            if (! isset($out[$obj->unitid])) {
+                $out[$obj->unitid] = array('users' => array(), 'managers' => array(), 'machine_groups' => array());
+            }
+            $out = ['users' => [], 'managers' => [], 'machine_groups' => []];
+            switch ($obj->property) {
+                case 'user':
+                    $out[$obj->unitid]['users'][] = $obj->value;
+                    break;
+                case 'manager':
+                    $out[$obj->unitid]['managers'][] = $obj->value;
+                    break;
+                case 'machine_group':
+                    $out[$obj->unitid]['machine_groups'][] = intval($obj->value);
+                    break;
+                default:
+                    $out[$obj->unitid][$obj->property] = $obj->value;
+            }
+
+            $out[$obj->unitid]['unitid'] = $obj->unitid;
+        }
+
+        // if ($unitid && $out) {
+        //     return $out[$unitid];
+        // } else {
+        //     return array_values($out);
+        // }
+        jsonView(array_values($out));
     }
 
     //===============================================================
