@@ -14,6 +14,4 @@ class Hash extends Eloquent
         'hash',
         'timestamp',
     ];
-
-    public $timestamps = false;
 }
