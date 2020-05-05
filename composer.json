@@ -55,7 +55,6 @@
         "munkireport/installhistory": "^2.0",
         "munkireport/inventory": "^4.0",
         "munkireport/laps": "^1.4",
-        "munkireport/localadmin": "^3.0",
         "munkireport/location": "^1.0",
         "munkireport/managedinstalls": "^2.0",
         "munkireport/mbbr_status": "^1.0",
