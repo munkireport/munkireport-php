@@ -619,20 +619,34 @@
 			},
 			remove = function(){
 				var unitid = $(this).data().unitid;
-				var url = appUrl + '/admin/remove_business_unit/' + unitid;
-				$.getJSON(url, function(data){
-					if(data.success == true)
-					{
-						// Dismiss modal
-						$('#myModal').modal('hide');
-						// Update listing
-						$('.unitid-' + unitid).remove();
+				var url = appUrl + '/admin/remove_business_unit';
+				$.post(url, { id: unitid })
+					.done(function( data ) {
+						if(data.success > 0)
+						{
+							// Dismiss modal
+							$('#myModal').modal('hide');
+							// Update listing
+							$('.unitid-' + unitid).remove();
 
-						// Update machine_groups
-						renderMachineGroups();
+							// Update machine_groups
+							renderMachineGroups();
 
-					}
-				});
+						}
+					});
+				// $.getJSON(url, function(data){
+				// 	if(data.success > 0)
+				// 	{
+				// 		// Dismiss modal
+				// 		$('#myModal').modal('hide');
+				// 		// Update listing
+				// 		$('.unitid-' + unitid).remove();
+
+				// 		// Update machine_groups
+				// 		renderMachineGroups();
+
+				// 	}
+				// });
 			},
 			renderMachineGroups = function(){
 
