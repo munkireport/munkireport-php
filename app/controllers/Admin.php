@@ -58,12 +58,9 @@ class Admin extends Controller
 
                 // Update business unit membership
                 if ($property == 'business_unit') {
-                    $bu = new Business_unit;
-                    $bu->retrieveOne("property='machine_group' AND value=?", $_POST['groupid']);
-                    $bu->unitid = $val;
-                    $bu->property = 'machine_group';
-                    $bu->value = $_POST['groupid'];
-                    $bu->save();
+                    Business_unit::where('property', 'machine_group')
+                        ->where('value', $_POST['groupid'])
+                        ->update(['unitid' => $val]);
                     $out['business_unit'] = intval($val);
                     continue;
                 }
@@ -107,14 +104,15 @@ class Admin extends Controller
      **/
     public function remove_machine_group($groupid = '')
     {
-        $out = array();
+        $out = [];
 
         if ($groupid !== '') {
             $mg = new Machine_group;
             if ($out['success'] = $mg->deleteWhere('groupid=?', $groupid)) {
-            // Delete from business unit
-                $bu = new Business_unit;
-                $out['success'] = $bu->deleteWhere("property='machine_group' AND value=?", $groupid);
+                // Delete from business unit
+                $out['successs'] = Business_unit::where('property', 'machine_group')
+                    ->where('value', $groupid)
+                    ->delete();
             }
             // Reset group in report_data
             Reportdata_model::where('machine_group', $groupid)
@@ -146,16 +144,9 @@ class Admin extends Controller
      * @return void
      * @author
      **/
-    public function remove_business_unit($unitid = '')
+    public function remove_business_unit()
     {
-        $out = array();
-
-        if ($unitid !== '') {
-            $bu = new Business_unit;
-            $out['success'] = $bu->deleteWhere('unitid=?', $unitid);
-        }
-
-        jsonView($out);
+        jsonView(['success' => Business_unit::where('unitid', post('id'))->delete()]);
     }
 
     //===============================================================
@@ -167,23 +158,17 @@ class Admin extends Controller
      * @return void
      * @author
      **/
-    public function get_bu_data($unitid = "")
+    public function get_bu_data()
     {
         $out = [];
         $units = Business_unit::get()
                     ->toArray();
-        // jsonView($units);
-
-        // // var_dump($units);
-        // exit();
-
         foreach ($units as $obj) {
         // Initialize
             $obj = (object) $obj;
             if (! isset($out[$obj->unitid])) {
-                $out[$obj->unitid] = array('users' => array(), 'managers' => array(), 'machine_groups' => array());
+                $out[$obj->unitid] = ['users' => [], 'managers' => [], 'machine_groups' => []];
             }
-            $out = ['users' => [], 'managers' => [], 'machine_groups' => []];
             switch ($obj->property) {
                 case 'user':
                     $out[$obj->unitid]['users'][] = $obj->value;
@@ -201,11 +186,6 @@ class Admin extends Controller
             $out[$obj->unitid]['unitid'] = $obj->unitid;
         }
 
-        // if ($unitid && $out) {
-        //     return $out[$unitid];
-        // } else {
-        //     return array_values($out);
-        // }
         jsonView(array_values($out));
     }
 
@@ -219,7 +199,7 @@ class Admin extends Controller
      **/
     public function get_mg_data($groupid = "")
     {
-        $out = array();
+        $out = [];
 
         // Get created Machine Groups
         $mg = new Machine_group;
@@ -242,7 +222,7 @@ class Admin extends Controller
             $out[$obj['machine_group']]['cnt'] = $obj['cnt'];
         }
 
-        view('json', array('msg' => array_values($out)));
+        jsonView(array_values($out));
     }
 
     //===============================================================
