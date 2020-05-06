@@ -3,6 +3,8 @@
 namespace munkireport\lib;
 
 use munkireport\models\Business_unit as BuModel;
+use munkireport\models\Machine_group;
+
 
 class BusinessUnit
 {
@@ -34,6 +36,7 @@ class BusinessUnit
         $this->_updateUnitSettings($post_array, $out);
         $this->_updateUnitGroups($post_array, $out);
 
+        return $out;
     }
 
     private function _updateMachineGroups(&$post_array)
@@ -59,7 +62,7 @@ class BusinessUnit
 
     private function _createMachineGroup($entry)
     {
-        $mg = new \Machine_group;
+        $mg = new Machine_group;
         $newgroup = $mg->get_max_groupid() + 1;
 
         // Store name
@@ -85,7 +88,7 @@ class BusinessUnit
     {
         foreach ($post_array as $property => $val) {
             if (is_scalar($val)) {
-                $flight = BuModel::updateOrCreate(
+                BuModel::updateOrCreate(
                     ['unitid' => $out['unitid'], 'property' => $property],
                     ['value' => $val]
                 );
@@ -130,7 +133,6 @@ class BusinessUnit
                     continue;
                 }
                 $business_unit = new BuModel;
-                $business_unit->id = '';
                 $business_unit->unitid = $out['unitid'];
                 $business_unit->property = $name;
                 $business_unit->value = is_numeric($entry) ? 0 + $entry : $entry;
