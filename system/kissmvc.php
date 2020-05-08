@@ -446,7 +446,7 @@ class Module_controller extends Controller
         }
 
         // Dump the file
-        header("Content-Type: application/javascript");
+        header("Content-Type: $content_type");
         echo file_get_contents($file_path);
     }
 }

@@ -3,7 +3,6 @@
 namespace munkireport\controller;
 
 use \Controller, \View;
-use munkireport\models\Machine_group;
 
 class Filter extends Controller
 {
