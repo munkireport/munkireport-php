@@ -4,7 +4,8 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5"
+        "squizlabs/php_codesniffer": "^2.5",
+        "fzaninotto/faker": "^1.9"
     },
     "config": {
         "optimize-autoloader": true
