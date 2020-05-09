@@ -6,7 +6,7 @@ use munkireport\models\MRModel as Eloquent;
 
 class Cache extends Eloquent
 {
-    protected $table = 'hash';
+    protected $table = 'cache';
 
     protected $fillable = [
         'module',
