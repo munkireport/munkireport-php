@@ -1,4 +1,22 @@
 <?php
+
+// Parse options
+$options = getopt('', [
+    "records:",     // Required value
+    "help",
+]);
+
+if(isset($options['help'])){
+    echo "Usage: ".$argv[0]." [options]
+
+    --records=<int>         Number of records you want to create
+    --help                  Show this help
+
+";
+    exit;
+}
+$records = intval($options['records'] ?? 10);
+
 require_once __DIR__ . '/../app/helpers/env_helper.php';
 require_once __DIR__ . '/../app/helpers/site_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -49,14 +67,6 @@ try {
 
     $faker = Faker\Factory::create();
     $factory = new MrFactory($faker);
-
-    $moduleMgr = new ModuleMgr;
-    $moduleMgr->loadinfo(true);
-    $moduleName = 'reportdata';
-    // $factory->load($moduleMgr->getPath($moduleName, "/${moduleName}_model.php"));
-    $factory->load($moduleMgr->getPath($moduleName, "/${moduleName}_factory.php"));
-
-
     $moduleMgr = new ModuleMgr;
     $moduleMgr->loadinfo(true);
 
@@ -72,7 +82,7 @@ try {
     }
 
     // Create ReportData first
-    $reportData = $factory->of(Reportdata_model::class)->times(100);
+    $reportData = $factory->of(Reportdata_model::class)->times($records);
     deleteFromArray($factory_models, 'Reportdata_model');
 
     // Process all other modules
