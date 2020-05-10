@@ -161,6 +161,7 @@ class Admin extends Controller
                 'keys' => 'key',
                 'machine_groups' => 'machine_group',
                 'users' => 'user',
+                'archivers' => 'archiver',
                 'managers' => 'manager');
 
             $unitid = $_POST['unitid'];
