@@ -103,6 +103,7 @@ class Manager extends Controller
             'migrations',
             'business_unit',
             'machine_group',
+            'cache',
         ];
 
         // Check if old table
