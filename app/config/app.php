@@ -181,6 +181,7 @@ return [
     |
     */
     'authorization' => [
+        'archive' => env('AUTHORIZATION_ARCHIVE', ['admin', 'manager', 'archiver']),
         'delete_machine' => env('AUTHORIZATION_DELETE_MACHINE', ['admin', 'manager']),
         'global' => env('AUTHORIZATION_GLOBAL', ['admin']),
     ],
