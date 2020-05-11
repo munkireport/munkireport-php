@@ -5,6 +5,7 @@ At the moment there are 4 roles defined:
 
 * Admin 
 * Manager
+* Archiver
 * User
 * Nobody
 
@@ -13,11 +14,12 @@ At the moment there are 4 roles defined:
 When Business Units are **not** configured, the following authorizations apply.
 A user that does not have an admin-role or manager-role gets the role of **user**.
 
-Role    | View         | Delete Machine 
-------- | ------------ | -------------- 
-admin   | All machines | Yes            
-manager | All machines | Yes       
-user    | All machines | No             
+Role    | View         | Delete Machine | Archive Machine 
+------- | ------------ | -------------- | -------------- 
+admin   | All machines | Yes            | Yes            
+manager | All machines | Yes            | Yes       
+archiver| All machines | No             | Yes
+user    | All machines | No             | No             
 
 
 ## Business Units
@@ -25,12 +27,13 @@ user    | All machines | No
 When Business Units are enabled, the roles change a little bit.
 A user that does not have an admin role and is not found an a business unit gets the role of **nobody**.
 
-Role    | View         | Delete Machine | Edit Business Units
-------- | ------------ | -------------- | -------------------
-admin   | All machines | Yes            | Yes
-manager | BU only      | BU only        | No
-user    | BU only      | No             | No
-nobody  | No machines  | No             | No
+Role    | View         | Delete Machine | Archive Machine | Edit Business Units
+------- | ------------ | -------------- | --------------  | -------------------
+admin   | All machines | Yes            | Yes             | Yes
+manager | BU only      | BU only        | Yes             | No
+archiver| BU only      | No             | Yes             | No
+user    | BU only      | No             | No              | No
+nobody  | No machines  | No             | No              | No
 
 
 ## Add role to a user

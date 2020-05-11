@@ -68,7 +68,7 @@ $modules->addWidgets(
 
 				<input type="text" class="form-control mr-computer_name_input" readonly>
 
-				<?php if($_SESSION['role'] == 'admin'): ?>
+				<?php if(authorized('archive')): ?>
 				<div class="input-group-btn">
 					<button type="button" id="archive_button" class="btn btn-default">
 						<span class="hidden-sm hidden-xs"></span>

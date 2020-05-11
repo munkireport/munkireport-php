@@ -37,7 +37,7 @@
 		var edit = function(){
 
 			var fields = {name:'', 'address':'', link: ''},
-				dataTemplate = {unitid:'new', users:['#'], managers:['#'], machine_groups:['#'], iteminfo:[]};
+				dataTemplate = {unitid:'new', users:['#'], archivers:['#'], managers:['#'], machine_groups:['#'], iteminfo:[]};
 
 			// Clone unit data
 			var data = $.extend(true, {}, $(this).closest('.unit').data() || dataTemplate);
@@ -556,6 +556,9 @@
 				if( ! data.managers.length){
 					data.managers = ['#'];
 				}
+				if( ! data.archivers.length){
+					data.archivers = ['#'];
+				}
 				if( ! data.users.length){
 					data.users = ['#'];
 				}
@@ -690,6 +693,7 @@
 					groupname = '',
 					users = ''
 					managers = '',
+					archivers = '',
           link = '';
 
 				if(data.users)
@@ -698,6 +702,17 @@
 						.addClass('list-group');
 					$.each(data.users, function(index, val){
 						users.append($('<li>')
+							.addClass('list-group-item')
+							.text(val))
+					});
+
+				}
+				if(data.archivers)
+				{
+					archivers = $('<ul>')
+						.addClass('list-group');
+					$.each(data.archivers, function(index, val){
+						archivers.append($('<li>')
 							.addClass('list-group-item')
 							.text(val))
 					});
@@ -747,7 +762,7 @@
 								.addClass('col-lg-12')
 								.append(link))
 							.append($('<div>')
-								.addClass('col-md-4')
+								.addClass('col-md-3')
 								.append($('<h4>')
 									.text('Machine Groups ')
 									.addClass('alert alert-info')
@@ -756,7 +771,7 @@
 									.append($('<div>')
 										.addClass('list-group machine-groups')))
 							.append($('<div>')
-								.addClass('col-md-4')
+								.addClass('col-md-3')
 								.append($('<h4>')
 									.text('Managers ')
 									.addClass('alert alert-info')
@@ -765,7 +780,16 @@
 											.click(editUsers)))
 									.append(managers))
 							.append($('<div>')
-								.addClass('col-md-4')
+								.addClass('col-md-3')
+								.append($('<h4>')
+									.text('Archivers ')
+									.addClass('alert alert-info')
+										.append(editButton.clone()
+											.attr('data-type', 'archivers')
+											.click(editUsers)))
+									.append(archivers))
+							.append($('<div>')
+								.addClass('col-md-3')
 								.append($('<h4>')
 									.text('Users ')
 									.addClass('alert alert-info')

@@ -152,7 +152,6 @@ class AuthHandler
 
         // Check if Business Units are enabled in the config file
         $bu_enabled = conf('enable_business_units', false);
-
         // Check if user is global admin
         if ($_SESSION['auth'] == 'noauth' or $_SESSION['role'] == 'admin') {
             unset($_SESSION['business_unit']);
@@ -166,15 +165,22 @@ class AuthHandler
             $_SESSION['business_unit'] = 0;
 
             // Lookup user in business units
-            $bu = new Business_unit;
-            if ($bu->retrieveOne("property IN ('manager', 'user') AND value=?", $_SESSION['user'])) {
+            $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
+                ->where('value', $_SESSION['user'])
+                ->first();
+
+            if ($bu) {
                 $_SESSION['role'] = $bu->property; // manager, user
                 $_SESSION['role_why'] = $_SESSION['user'].' found in Business Unit '. $bu->unitid;
                 $_SESSION['business_unit'] = $bu->unitid;
             } else {
                 // Lookup groups in Business Units
                 foreach ($_SESSION['groups'] as $group) {
-                    if ($bu->retrieveOne("property IN ('manager', 'user') AND value=?", '@' . $group)) {
+                    $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
+                        ->where('value', '@' . $group)
+                        ->first();
+    
+                    if ($bu) {
                         $_SESSION['role'] = $bu->property; // manager, user
                         $_SESSION['role_why'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
                         $_SESSION['business_unit'] = $bu->unitid;
@@ -199,7 +205,22 @@ class AuthHandler
                 $_SESSION['machine_groups'] = array_unique(array_merge($machine_groups, $mg->get_group_ids()));
             } else {
                 // Only get machine_groups for business unit
-                $_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
+                // $_SESSION['machine_groups'] = $bu->get_machine_groups($bu->unitid);
+                $_SESSION['machine_groups'] = Business_unit::where('unitid', $bu->unitid)
+                                                ->where('property', 'machine_group')
+                                                ->get()
+                                                ->pluck('value')
+                                                ->toArray();
+
+                //     public function get_machine_groups($id)
+//     {
+//         $out = array();
+//         foreach ($this->retrieveMany('unitid=? AND property=?', array($id, 'machine_group')) as $obj) {
+//             $out[] = intval($obj->value);
+//         }
+//         return $out;
+//     }
+
             }
             $_SESSION['initialized'] = true;
         } catch (\Exception $e) {
