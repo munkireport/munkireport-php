@@ -2,7 +2,8 @@
 
 // Parse options
 $options = getopt('', [
-    "records:",     // Required value
+    "records:",
+    "locale:",
     "help",
 ]);
 
@@ -10,12 +11,14 @@ if(isset($options['help'])){
     echo "Usage: ".$argv[0]." [options]
 
     --records=<int>         Number of records you want to create
+    --locale=<locale>       Locale, defaults to en_US
     --help                  Show this help
 
 ";
     exit;
 }
 $records = intval($options['records'] ?? 10);
+$locale = $options['locale'] ?? 'en_US';
 
 require_once __DIR__ . '/../app/helpers/env_helper.php';
 require_once __DIR__ . '/../app/helpers/site_helper.php';
@@ -65,7 +68,7 @@ try {
   
     print("Creating fake database records...\n");
 
-    $faker = Faker\Factory::create();
+    $faker = Faker\Factory::create($locale);
     $factory = new MrFactory($faker);
     $moduleMgr = new ModuleMgr;
     $moduleMgr->loadinfo(true);
