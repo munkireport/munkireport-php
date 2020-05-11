@@ -20,6 +20,25 @@ if(isset($options['help'])){
 $records = intval($options['records'] ?? 10);
 $locale = $options['locale'] ?? 'en_US';
 
+// Global class to store variables that can be accessed in all factories
+class FakerDataStore
+{
+    private static $list = [];
+    private static $caller = [];
+
+    public static function add($property, $value)
+    {
+        self::$list[$property][] = $value;
+    }
+
+    public static function get($who, $property)
+    {
+        $count = self::$caller[$who] ?? 0;
+        self::$caller[$who] = $count + 1;
+        return self::$list[$property][$count];
+    }
+}
+
 require_once __DIR__ . '/../app/helpers/env_helper.php';
 require_once __DIR__ . '/../app/helpers/site_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
