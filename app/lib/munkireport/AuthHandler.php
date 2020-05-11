@@ -152,7 +152,6 @@ class AuthHandler
 
         // Check if Business Units are enabled in the config file
         $bu_enabled = conf('enable_business_units', false);
-
         // Check if user is global admin
         if ($_SESSION['auth'] == 'noauth' or $_SESSION['role'] == 'admin') {
             unset($_SESSION['business_unit']);
@@ -166,7 +165,7 @@ class AuthHandler
             $_SESSION['business_unit'] = 0;
 
             // Lookup user in business units
-            $bu = Business_unit::whereIn('property', ['manager', 'user'])
+            $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
                 ->where('value', $_SESSION['user'])
                 ->first();
 
@@ -177,7 +176,7 @@ class AuthHandler
             } else {
                 // Lookup groups in Business Units
                 foreach ($_SESSION['groups'] as $group) {
-                    $bu = Business_unit::whereIn('property', ['manager', 'user'])
+                    $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
                         ->where('value', '@' . $group)
                         ->first();
     
@@ -210,6 +209,7 @@ class AuthHandler
                 $_SESSION['machine_groups'] = Business_unit::where('unitid', $bu->unitid)
                                                 ->where('property', 'machine_group')
                                                 ->get()
+                                                ->pluck('value')
                                                 ->toArray();
 
                 //     public function get_machine_groups($id)
