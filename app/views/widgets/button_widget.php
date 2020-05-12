@@ -69,6 +69,7 @@ $(document).on('appUpdate', function(e, lang) {
 				body.append(
                     $('<a>')
                         .attr('href', appUrl+listingLink+searchComponent)
+                        .css('min-width', '70px')
                         .addClass("btn " + o.class)
                         .toggleClass("disabled", count == 0)
                         .addClass(function(){ return count ? '' : 'disabled'})
