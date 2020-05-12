@@ -46,6 +46,7 @@ class Install extends Controller
                 view('install/modules_autopkg', array('modules' => $modules));
                 break;
             case 'json':
+                jsonView($modules);
                 break;
             default:
                 echo implode("\n", $modules);
