@@ -50,8 +50,14 @@ stages:
           
     - script: php ./database/migrate.php
     
-    - script: php ./database/faker.php
-          
+    - script: php ./database/faker.php --records=500
+
+    - script: php ./database/faker.php --locale=nl_NL --records=500
+
+    - script: php ./database/faker.php --locale=es_ES --records=500
+
+    - script: php ./database/faker.php --locale=de_DE --records=500
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
