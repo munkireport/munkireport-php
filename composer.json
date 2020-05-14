@@ -47,6 +47,7 @@
         "munkireport/filevault_escrow": "^1.0",
         "munkireport/filevault_status": "^1.0",
         "munkireport/findmymac": "^1.0",
+        "munkireport/firewall": "^1.0",
         "munkireport/firmware_escrow": "^1.0",
         "munkireport/fonts": "^1.0",
         "munkireport/gpu": "^1.0",
