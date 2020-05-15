@@ -279,7 +279,7 @@ class Report extends Controller
                 $this->msg("No process method in: $classname");
                 return False;
             }
-
+            $this->connectDB();
             $class->process($data);
             return True;
         } catch (Exception $e) {
