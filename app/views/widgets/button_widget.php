@@ -32,7 +32,7 @@ $(document).on('appUpdate', function(e, lang) {
 		body.empty();
         
         var buttons = JSON.parse('<?php echo json_encode($buttons)?>');
-        var total_count = 0;
+        var buttons_rendered = 0;
 		
 		// Calculate entries
 		if(data.length){
@@ -42,16 +42,16 @@ $(document).on('appUpdate', function(e, lang) {
                 var button = data.find(x => x.label === o.label);
                 var count = button ? button.count : 0;
 
-                total_count = total_count + count;
-
                 // Hide when count is zero
                 if( o.hide_when_zero && count == 0){
                     return;
                 }
 
+                buttons_rendered = buttons_rendered + 1;
+
                 // Use localized label
                 if( o.i18n_label){
-                    label = i18n.t(o.i18n_label);
+                    label = i18n.t(o.i18n_label, { count: +count });
                 }else{
                     label = o.label;
                 }
@@ -83,7 +83,7 @@ $(document).on('appUpdate', function(e, lang) {
                 ).append(' ')
 			});
         }
-        if(total_count == 0){
+        if(buttons_rendered == 0){
             if (i18nEmptyResult){
                 body.append(i18n.t(i18nEmptyResult));
             }else{
