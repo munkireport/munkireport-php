@@ -31,6 +31,9 @@ $(document).on('appReady', function(e, lang) {
         url: appUrl + '/system/show/widget_gallery'
     });
 
+    // Sort admin menu, after other items are added
+    mr.sortMenu('ul.admin');
+
     // Add list link
     $('list-link').each(function( index ){
         var url = appUrl + $(this).data('url');
