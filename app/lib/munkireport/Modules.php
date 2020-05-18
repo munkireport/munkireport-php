@@ -36,6 +36,8 @@ class Modules
         if(is_array(conf('module_search_paths'))){
             $moduleSearchPaths = conf('module_search_paths');
         }
+        // And then local modules
+        $moduleSearchPaths[] = conf('local') . 'modules';
         // And then built-in modules
         $moduleSearchPaths[] = conf('module_path');
         
