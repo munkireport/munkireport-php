@@ -158,7 +158,7 @@ return [
     | Filesystem paths to search for modules
     |    replaces the implicit 'custom' module path
     */
-    'module_search_paths' => env('MODULE_SEARCH_PATHS', [env('LOCAL_DIRECTORY_PATH', APP_ROOT . 'local/') . 'modules']),
+    'module_search_paths' => env('MODULE_SEARCH_PATHS', []),
 
     /*
     |===============================================
