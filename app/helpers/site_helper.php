@@ -371,7 +371,11 @@ function verifyCSRF()
 {
     $session_token = sess_get('csrf_token');
 
-    $sent_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+    if(isset($_REQUEST['_token'])){
+        $sent_token = $_REQUEST['_token'];
+    }else{
+        $sent_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+    }
 
     if( hash_equals($session_token, $sent_token)) return;
 
