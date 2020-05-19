@@ -26,7 +26,7 @@ $(document).on('appUpdate', function(e, lang) {
     var searchKey = "<?=$search_key?>"
     var listingLink = "<?=$listing_link?>"
     var i18nEmptyResult = "<?php echo isset($i18n_empty_result)?$i18n_empty_result:''?>"
-    var badgeType = "<?php echo isset($badge)?$badge:'default'?>"
+    var badgeType = "<?php echo isset($badge)?$badge:'none'?>"
     var urlType = "<?php echo isset($url_type)?$url_type:'listing'?>"
     var generateListgroupItem = function(url, content, badge){
         return $('<a>')
@@ -46,8 +46,12 @@ $(document).on('appUpdate', function(e, lang) {
                     var badge = '<span class="pull-right">'+moment(d.reg_timestamp * 1000).fromNow()+'</span>';
                 }else if(badgeType == 'percent'){
                     var badge = '<span class="badge pull-right">'+d.percent+'%</span>';
-                }else{
+                }else if(badgeType == 'count'){
                     var badge = '<span class="badge pull-right">'+d.count+'</span>';
+                }else if(badgeType == 'none'){
+                    var badge = '';
+                }else{
+                    var badge = '<span class="badge pull-right">'+d[badgeType]+'</span>';
                 }
                 if( ! d[searchKey]){
 					box.append('<span class="list-group-item">'+i18n.t('empty')+badge+'</span>')
