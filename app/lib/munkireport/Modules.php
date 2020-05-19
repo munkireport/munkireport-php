@@ -37,7 +37,7 @@ class Modules
             $moduleSearchPaths = conf('module_search_paths');
         }
         // And then local modules
-        $moduleSearchPaths[] = conf('local') . '/modules';
+        $moduleSearchPaths[] = conf('local') . 'modules/';
         // And then built-in modules
         $moduleSearchPaths[] = conf('module_path');
         
