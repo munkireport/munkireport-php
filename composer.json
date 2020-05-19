@@ -83,7 +83,7 @@
         "munkireport/usb": "^1.0",
         "munkireport/user_sessions": "^1.0",
         "munkireport/users": "^1.3",
-        "munkireport/warranty": "^3.0",
+        "munkireport/warranty": "^4.0",
         "munkireport/wifi": "^1.0",
         "symfony/yaml": "^3.4",
         "adldap2/adldap2": "^10",
