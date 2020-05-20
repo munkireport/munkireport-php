@@ -185,11 +185,12 @@ class Module_marketplace extends Controller
                         WHERE module = '".$repo_module."';";
                     $result = $sql_obj->query($sql);
 
-                    $composer_modules[$i]["module"] = explode("/",$repo_module)[1];
+                    $name_array = explode("/",$repo_module);
+
+                    $composer_modules[$i]["module"] = $name_array[1];
                     $composer_modules[$i]["maintainer"] = $result[0]->maintainer;
                     $composer_modules[$i]["url"] = $result[0]->url;
                     $composer_modules[$i]["installed_version"] = "";
-                    $composer_modules[$i]["core"] = 0;
                     $composer_modules[$i]["module_location"] = "";
                     $composer_modules[$i]["custom_override"] = "";
                     $composer_modules[$i]["latest_version"] = $result[0]->version;
@@ -198,6 +199,13 @@ class Module_marketplace extends Controller
                     $composer_modules[$i]["date_downloaded"] = "";
                     $composer_modules[$i]["installed"] = 0;
                     $composer_modules[$i]["enabled"] = "";
+
+                    // Check if core module
+                    if ($name_array[0] == "munkireport"){
+                        $composer_modules[$i]["core"] = 1;
+                    } else {
+                        $composer_modules[$i]["core"] = 0;
+                    }
 
                     $i++;
                 }
