@@ -24,7 +24,6 @@ class ModuleMarketplace extends Migration
             $table->index('maintainer');
             $table->index('core');
             $table->index('packagist');
-            $table->index('update_available');
         });
     }
     
