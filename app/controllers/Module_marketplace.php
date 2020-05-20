@@ -62,7 +62,6 @@ class Module_marketplace extends Controller
                 $composer_modules[$i]["module"] = $name_array[1];
                 $composer_modules[$i]["maintainer"] = $name_array[0];
                 $composer_modules[$i]["url"] = str_replace(".git","",$pkg['source']['url']);
-                $composer_modules[$i]["date_downloaded"] = strtotime($pkg['time']);
                 $composer_modules[$i]["installed"] = 1;
                 
                 // Check if the version string has a 'v' in it, if not append it
@@ -81,7 +80,7 @@ class Module_marketplace extends Controller
 
                 // Check if in all modules
                 if (array_key_exists($name_array[1], $all_modules)){
-                    $composer_modules[$i]["module_location"] = $all_modules[$name_array[1]];
+                    $composer_modules[$i]["module_location"] = str_replace("//","/",$all_modules[$name_array[1]]);
                     
                     if(strpos($all_modules[$name_array[1]], 'vendor/'.$name_array[0]) === false){
                         $composer_modules[$i]["custom_override"] = 1;
@@ -102,6 +101,13 @@ class Module_marketplace extends Controller
                     $composer_modules[$i]["enabled"] = 0;
                 }
 
+                // Get timestamp of module's model file
+                if(file_exists($location."/".$module."_model.php")){
+                    $composer_modules[$i]["date_downloaded"] = filemtime ($location."/".$module."_model.php");
+                } else {
+                    $composer_modules[$i]["date_downloaded"] = "";
+                }
+                
                 // Get data from database of matching module
                 $sql_obj = new Model;
                 $sql = "SELECT * FROM modules
@@ -111,8 +117,8 @@ class Module_marketplace extends Controller
                 // Check if we have a result
                 if($result[0]->module){
 
-                    $installed_version = preg_replace("/[^0-9.\/]/", '', $composer_modules[$i]["installed_version"]);
-                    $latest_version = preg_replace("/[^0-9.\/]/", '', $result[0]->version);
+                    $installed_version = preg_replace("/[^0-9.]/", '', $composer_modules[$i]["installed_version"]);
+                    $latest_version = preg_replace("/[^0-9.]/", '', $result[0]->version);
 
                     // Check versions for updates
                     if ($latest_version > $installed_version){
@@ -139,15 +145,18 @@ class Module_marketplace extends Controller
                 $composer_modules[$i]["url"] = "";
                 $composer_modules[$i]["installed_version"] = "";
                 $composer_modules[$i]["core"] = 0;
-                $composer_modules[$i]["module_location"] = $location;
+                $composer_modules[$i]["module_location"] = str_replace("//","/",$location);
                 $composer_modules[$i]["custom_override"] = 1;
                 $composer_modules[$i]["latest_version"] = "";
                 $composer_modules[$i]["update_available"] = "";
                 $composer_modules[$i]["date_updated"] = "";
+                $composer_modules[$i]["installed"] = 1;
 
                 // Get timestamp of custom module's model file
                 if(file_exists($location."/".$module."_model.php")){
                     $composer_modules[$i]["date_downloaded"] = filemtime ($location."/".$module."_model.php");
+                } else {
+                    $composer_modules[$i]["date_downloaded"] = "";
                 }
 
                 // Check if enabled
