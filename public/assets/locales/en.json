@@ -243,7 +243,8 @@
     },
     "message": "Message",
     "model": "Model",
-    "module": "Module","module_marketplace": {
+    "module": "Module",
+    "module_marketplace": {
         "admin_pages": "Admin Pages",
         "client_tabs": "Client Tabs",
         "core": "Core Module",
