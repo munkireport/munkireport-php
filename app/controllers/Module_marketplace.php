@@ -4,8 +4,9 @@ namespace munkireport\controller;
 
 use \Controller, \View, \Model;
 use munkireport\models\Module_marketplace_model;
-use Symfony\Component\Yaml\Yaml;
 use munkireport\models\Cache;
+use munkireport\lib\Request;
+use Symfony\Component\Yaml\Yaml;
 
 class Module_marketplace extends Controller
 {
@@ -13,6 +14,11 @@ class Module_marketplace extends Controller
 
     public function __construct()
     {
+        // Check authorization
+        $this->authorized() || jsonError('Authenticate first', 403);
+        $this->authorized('global') || jsonError('You need to be admin', 403);
+
+        // Create object
         $this->moduleMarketplace = getMrModuleObj();
 
         // Connect to database
@@ -305,13 +311,11 @@ class Module_marketplace extends Controller
         $all_modules = array_unique(array_merge(explode(",",$core_modules), explode(",",$third_party_modules)));
 
         foreach ( $all_modules as $module){
+
             // Get JSON from Packagist for module
-            ini_set("allow_url_fopen", 1);
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_URL, 'https://repo.packagist.org/p/'.$module.'.json');
-            $json_result = curl_exec($ch);
+            $web_request = new Request();
+            $options = ['http_errors' => false];
+            $json_result = $web_request->get('https://repo.packagist.org/p/'.$module.'.json', $options);
 
             // Check if we got results
             if (strpos($json_result, '"packages":{"'.$module.'":') === false ){
@@ -365,12 +369,9 @@ class Module_marketplace extends Controller
     public function update_module_repos()
     {
         // Get JSON from munkireport-php's GitHub
-        ini_set("allow_url_fopen", 1);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, 'https://raw.githubusercontent.com/munkireport/munkireport-php/master/build/module_repos.yml');
-        $yaml_result = curl_exec($ch);
+        $web_request = new Request();
+        $options = ['http_errors' => false];
+        $yaml_result = $web_request->get('https://raw.githubusercontent.com/munkireport/munkireport-php/master/build/module_repos.yml', $options);
 
         // Check if we got results
         if (strpos($yaml_result, 'core_modules: munkireport/') === false ){
@@ -383,12 +384,8 @@ class Module_marketplace extends Controller
         $third_party_modules = explode(",", preg_replace("/[^A-Za-z0-9-_,\/]/", '', $yaml_data['third_party_modules']));
 
         // Get JSON from tuxudo's GitHub to merge in
-        ini_set("allow_url_fopen", 1);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, 'https://raw.githubusercontent.com/tuxudo/munkireport-php/master/build/module_repos.yml');
-        $yaml_result_tux = curl_exec($ch);
+        $web_request = new Request();
+        $yaml_result_tux = $web_request->get('https://raw.githubusercontent.com/tuxudo/munkireport-php/master/build/module_repos.yml', $options);
 
         // Check if we got results
         if (strpos($yaml_result, 'core_modules: munkireport/') !== false ){
