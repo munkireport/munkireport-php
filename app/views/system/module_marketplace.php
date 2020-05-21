@@ -142,6 +142,8 @@
         $.getJSON(appUrl + '/module_marketplace/refresh_module_info', function (processdata) {
             if (processdata == "status:good"){
                 $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_refreshed"));
+            } else if (processdata.startsWith("status:bad-")){
+                $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_error"));
             }
         });
     });
