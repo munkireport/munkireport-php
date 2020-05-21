@@ -34,7 +34,7 @@ class Module_marketplace extends Controller
      *
      * @author tuxudo
      **/
-    public function get_composer_lock()
+    public function get_module_data()
     {
         // Use composer.local.lock over composer.lock file
         if(file_exists(__DIR__ . '../../../composer.local.lock')){
@@ -53,8 +53,8 @@ class Module_marketplace extends Controller
         // Process each package
         foreach ($composer_pkgs as $pkg) {
             // Process each munkireport or munkireport module package
-            if (strpos($pkg['description'], 'module for munkireport') !== false || substr( $pkg['name'], 0, 12 ) === "munkireport/"){
-                
+            if (strpos(strtolower($pkg['description']), 'module for munkireport') !== false || substr( $pkg['name'], 0, 12 ) === "munkireport/"){
+
                 $name_array = explode("/",$pkg['name']);
 
                 array_push($composer_modules_name, $name_array[1]);
