@@ -9,6 +9,7 @@
                     <tr>
                         <th data-i18n="module" data-colname='module'></th>
                         <th data-i18n="enabled" data-colname='enabled'></th>
+                        <th data-i18n="installed" data-colname='installed'></th>
                         <th data-i18n="module_marketplace.installed_version" data-colname='installed_version'></th>
                         <th data-i18n="module_marketplace.latest_version" data-colname='latest_version'></th>
                         <th data-i18n="module_marketplace.update_available" data-colname='update_available'></th>
@@ -56,6 +57,7 @@
                         columns: [ // What colums to put the data into
                             { "data" : "module"},
                             { "data" : "enabled"},
+                            { "data" : "installed"},
                             { "data" : "installed_version"},
                             { "data" : "latest_version"},
                             { "data" : "update_available"},
@@ -74,8 +76,14 @@
 
                             // View button
                             var colvar=$('td:eq(0)', nRow).html();
-                            var maintainer=$('td:eq(3)', nRow).html();                            
-                            $('td:eq(0)', nRow).html('<div class="machine"><a onclick="viewModule(\''+colvar+'\')" class="btn btn-default btn-xs">'+colvar+'</a></div>')
+                            var installed=$('td:eq(2)', nRow).html();
+                            var latest_version=$('td:eq(4)', nRow).html();
+                            var maintainer=$('td:eq(6)', nRow).html();
+                            if(installed == 1 ){
+                                $('td:eq(0)', nRow).html('<div class="machine"><a onclick="viewModule(\''+colvar+'\')" class="btn btn-default btn-xs">'+colvar+'</a></div>')
+                            } else if(installed == 0) {
+                                $('td:eq(0)', nRow).html('<div class="machine"><a onclick="getInstall(\''+maintainer+'/'+colvar+':'+latest_version.replace("v", "^")+'\')" class="btn btn-default btn-xs">'+colvar+'</a></div>')
+                            }
 
                             // Format enabled
                             var colvar=$('td:eq(1)', nRow).html();
@@ -83,30 +91,28 @@
                             (colvar === '0' ? i18n.t('no') : '')
                             $('td:eq(1)', nRow).text(colvar)
 
+                            // Format installed
+                            installed = installed == '1' ? i18n.t('yes') :
+                            (installed === '0' ? i18n.t('no') : '')
+                            $('td:eq(2)', nRow).text(installed)
+
                             // Format update_available
-                            var colvar=$('td:eq(4)', nRow).html();
+                            var colvar=$('td:eq(5)', nRow).html();
                             colvar = colvar == '1' ? mr.label(i18n.t('yes'), 'success') :
                             (colvar === '0' ? i18n.t('no') : '')
-                            $('td:eq(4)', nRow).html(colvar)
+                            $('td:eq(5)', nRow).html(colvar)
 
                             // Format custom_override
-                            var colvar=$('td:eq(6)', nRow).html();
-                            colvar = colvar == '1' ? i18n.t('yes') :
-                            (colvar === '0' ? i18n.t('no') : '')
-                            $('td:eq(6)', nRow).text(colvar)
-
-                            // Format core
                             var colvar=$('td:eq(7)', nRow).html();
                             colvar = colvar == '1' ? i18n.t('yes') :
                             (colvar === '0' ? i18n.t('no') : '')
                             $('td:eq(7)', nRow).text(colvar)
 
-                            // Format time
-                            var colvar = parseInt($('td:eq(8)', nRow).html());
-                            if (colvar){
-                                var date = new Date(colvar * 1000);
-                                $('td:eq(8)', nRow).html('<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span>');
-                            }
+                            // Format core
+                            var colvar=$('td:eq(8)', nRow).html();
+                            colvar = colvar == '1' ? i18n.t('yes') :
+                            (colvar === '0' ? i18n.t('no') : '')
+                            $('td:eq(8)', nRow).text(colvar)
 
                             // Format time
                             var colvar = parseInt($('td:eq(9)', nRow).html());
@@ -115,10 +121,17 @@
                                 $('td:eq(9)', nRow).html('<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span>');
                             }
 
-                            // Format repo link
-                            var colvar = $('td:eq(11)', nRow).html();
+                            // Format time
+                            var colvar = parseInt($('td:eq(10)', nRow).html());
                             if (colvar){
-                                $('td:eq(11)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
+                                var date = new Date(colvar * 1000);
+                                $('td:eq(10)', nRow).html('<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span>');
+                            }
+
+                            // Format repo link
+                            var colvar = $('td:eq(12)', nRow).html();
+                            if (colvar){
+                                $('td:eq(12)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
                             }
                         }
                     });
@@ -131,7 +144,7 @@
         });
 	});
 
-    // 
+    // Refresh cached module data
     $('#module_marketplace_refresh').click(function (e) {
 
         // Disable the button
@@ -197,6 +210,39 @@
 
             $('#myModal').modal('show');
         });
+    }
+
+    // Get install string and display in modal
+    function getInstall(module){
+        // Create large modal
+        $('#myModal .modal-dialog').addClass('modal-md');
+        $('#myModal .modal-title')
+            .empty()
+            .append(i18n.t('module_marketplace.module_overview')+" - <br>"+i18n.t('module_marketplace.install_command'))
+        $('#myModal .modal-body') 
+            .css('padding-top','0px')
+            .empty()
+            .append($('<div>')
+                .append($('<h5>')
+                    .append(i18n.t('module_marketplace.install_info'))
+                    .append('<br><br><br>'))
+                .append($('<code>')
+                    .append("COMPOSER=composer.local.json composer require "+module))
+                .append($('<br><br><code>')
+                    .append("composer update --no-dev"))
+                    .append('<br><br>'))
+                .append($('<h5>')
+                    .append(i18n.t('module_marketplace.install_more_info')+" ")
+                    .append($('<a target="_blank" href="https://github.com/munkireport/munkireport-php/wiki/Module-Overview#adding-custom-modules">MunkiReport Wiki</a>')));
+
+        $('#myModal button.ok').text(i18n.t("dialog.close"));
+
+        // Set ok button
+        $('#myModal button.ok')
+            .off()
+            .click(function(){$('#myModal').modal('hide')});
+
+        $('#myModal').modal('show');
     }
 
     // Function to sort tables
