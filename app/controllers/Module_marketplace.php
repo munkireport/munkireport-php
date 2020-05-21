@@ -267,8 +267,7 @@ class Module_marketplace extends Controller
 
             // Check if we got results
             if (strpos($json_result, '"packages":{"'.$module.'":') === false ){
-                print_r("Unable to get Packagist JSON for module ".$module."!");
-                return false;
+                jsonView('status:bad-'.$module);
             }
 
             // Extract the latest version
