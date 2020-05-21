@@ -181,8 +181,8 @@
                 rows = rows + '<tr><th>'+i18n.t('module_marketplace.'+i)+'</th><td>'+d+'</td></tr>';
             });
    
-            // Create large modal
-            $('#myModal .modal-dialog').addClass('modal-sm');
+            // Create small modal
+            $('#myModal .modal-dialog').removeClass('modal-lg').addClass('modal-sm');
             $('#myModal .modal-title')
                 .empty()
                 .append(i18n.t('module_marketplace.module_overview')+" - <br>"+module)
@@ -215,7 +215,7 @@
     // Get install string and display in modal
     function getInstall(module){
         // Create large modal
-        $('#myModal .modal-dialog').addClass('modal-lg');
+        $('#myModal .modal-dialog').removeClass('modal-sm').addClass('modal-lg');
         $('#myModal .modal-title')
             .empty()
             .append(i18n.t('module')+" "+i18n.t('module_marketplace.install_command'))
