@@ -1,34 +1,34 @@
 <?php $this->view('partials/head'); ?>
 
 <div class="container">
-  <div class="row">
-  	<div class="col-lg-12">
-	<h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span>  <span id="module_marketplace_refresh"></span>  <span id="module_marketplace_message"></span></h3>
-		  <table class="table table-striped table-condensed table-bordered" id="marketplace-table">
-		    <thead>
-		      <tr>
-		        <th data-i18n="module" data-colname='module'></th>
-		        <th data-i18n="enabled" data-colname='enabled'></th>
-		        <th data-i18n="module_marketplace.installed_version" data-colname='installed_version'></th>
-		        <th data-i18n="module_marketplace.latest_version" data-colname='latest_version'></th>
-		        <th data-i18n="module_marketplace.update_available" data-colname='update_available'></th>
-		        <th data-i18n="module_marketplace.maintainer" data-colname='maintainer'></th>
-		      	<th data-i18n="module_marketplace.custom_override" data-colname='custom_override'></th>
-		      	<th data-i18n="module_marketplace.core" data-colname='core'></th>
-		        <th data-i18n="module_marketplace.date_downloaded" data-colname='date_downloaded'></th>
-		        <th data-i18n="module_marketplace.date_updated" data-colname='date_updated'></th>
-		        <th data-i18n="module_marketplace.module_location" data-colname='module_location'></th>
-		        <th data-i18n="module_marketplace.url" data-colname='url'></th>
-		      </tr>
-		    </thead>
-		    <tbody>
-		        <tr>
-                    <td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
-		        </tr>
-		    </tbody>
-		  </table>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span>  <span id="module_marketplace_refresh"></span>  <span id="module_marketplace_message"></span></h3>
+            <table class="table table-striped table-condensed table-bordered" id="marketplace-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="module" data-colname='module'></th>
+                        <th data-i18n="enabled" data-colname='enabled'></th>
+                        <th data-i18n="module_marketplace.installed_version" data-colname='installed_version'></th>
+                        <th data-i18n="module_marketplace.latest_version" data-colname='latest_version'></th>
+                        <th data-i18n="module_marketplace.update_available" data-colname='update_available'></th>
+                        <th data-i18n="module_marketplace.maintainer" data-colname='maintainer'></th>
+                        <th data-i18n="module_marketplace.custom_override" data-colname='custom_override'></th>
+                        <th data-i18n="module_marketplace.core" data-colname='core'></th>
+                        <th data-i18n="module_marketplace.date_downloaded" data-colname='date_downloaded'></th>
+                        <th data-i18n="module_marketplace.date_updated" data-colname='date_updated'></th>
+                        <th data-i18n="module_marketplace.module_location" data-colname='module_location'></th>
+                        <th data-i18n="module_marketplace.url" data-colname='url'></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
@@ -46,7 +46,7 @@
 
         $.ajax({
             type: "GET",
-            url: appUrl + '/module_marketplace/get_composer_lock', // API page to get JSON from
+            url: appUrl + '/module_marketplace/get_module_data', // API page to get JSON from
             dataType: 'json',
             success: function (obj, textstatus) {
                     var row_count = 0;
