@@ -117,13 +117,12 @@
                             $('td:eq(8)', nRow).text(colvar)
 
                             // Get monthly downloads
+                            $('td:eq(9)', nRow).text(""); // Blank out the row
                             if (maintainer && maintainer !== ""){
                                 // Get the latest monthly download stats from Packagist
                                 $.getJSON('https://packagist.org/packages/' + maintainer + '/' + module + '.json', function(data, status){
                                     $('td:eq(9)', nRow).text(data['package']['downloads']['monthly'])
                                 });
-                            } else {
-                                $('td:eq(9)', nRow).text("");
                             }
 
                             // Format time

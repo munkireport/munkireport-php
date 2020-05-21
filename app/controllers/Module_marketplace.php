@@ -315,7 +315,7 @@ class Module_marketplace extends Controller
             // Get JSON from Packagist for module
             $web_request = new Request();
             $options = ['http_errors' => false];
-            $json_result = $web_request->get('https://repo.packagist.org/p/'.$module.'.json', $options);
+            $json_result = (string) $web_request->get('https://repo.packagist.org/p/'.$module.'.json', $options);
 
             // Check if we got results
             if (strpos($json_result, '"packages":{"'.$module.'":') === false ){
@@ -371,7 +371,7 @@ class Module_marketplace extends Controller
         // Get JSON from munkireport-php's GitHub
         $web_request = new Request();
         $options = ['http_errors' => false];
-        $yaml_result = $web_request->get('https://raw.githubusercontent.com/munkireport/munkireport-php/master/build/module_repos.yml', $options);
+        $yaml_result = (string) $web_request->get('https://raw.githubusercontent.com/munkireport/munkireport-php/master/build/module_repos.yml', $options);
 
         // Check if we got results
         if (strpos($yaml_result, 'core_modules: munkireport/') === false ){
@@ -385,7 +385,7 @@ class Module_marketplace extends Controller
 
         // Get JSON from tuxudo's GitHub to merge in
         $web_request = new Request();
-        $yaml_result_tux = $web_request->get('https://raw.githubusercontent.com/tuxudo/munkireport-php/master/build/module_repos.yml', $options);
+        $yaml_result_tux = (string) $web_request->get('https://raw.githubusercontent.com/tuxudo/munkireport-php/master/build/module_repos.yml', $options);
 
         // Check if we got results
         if (strpos($yaml_result, 'core_modules: munkireport/') !== false ){
