@@ -43,7 +43,7 @@ class Module_marketplace extends Controller
             $composer_pkgs = json_decode(file_get_contents(__DIR__ . '../../../composer.lock'), true)['packages'];
         }
 
-        $all_modules = $this->moduleMarketplace->getModuleList();
+        $all_modules = $this->moduleMarketplace->getModuleList(false);        
         $enabled_modules = conf('modules', array());
         $composer_modules = [];
         $composer_modules_full = [];
@@ -124,7 +124,7 @@ class Module_marketplace extends Controller
                     $latest_version = preg_replace("/[^0-9.]/", '', $result[0]->version);
 
                     // Check versions for updates
-                    if ($latest_version > $installed_version){
+                    if (version_compare($latest_version, $installed_version, '>')){
                         $composer_modules[$i]["update_available"] = 1;
                     } else {
                         $composer_modules[$i]["update_available"] = 0;
