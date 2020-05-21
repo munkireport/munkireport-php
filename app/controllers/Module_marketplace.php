@@ -149,6 +149,7 @@ class Module_marketplace extends Controller
             if (!in_array($module, $composer_modules_name)){
                 $composer_modules[$i]["module"] = $module;
                 $composer_modules[$i]["maintainer"] = "";
+                $composer_modules[$i]["module_full"] = "";
                 $composer_modules[$i]["url"] = "";
                 $composer_modules[$i]["installed_version"] = "";
                 $composer_modules[$i]["core"] = 0;

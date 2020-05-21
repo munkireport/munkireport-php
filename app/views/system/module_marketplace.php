@@ -16,6 +16,7 @@
                         <th data-i18n="module_marketplace.maintainer" data-colname='maintainer'></th>
                         <th data-i18n="module_marketplace.custom_override" data-colname='custom_override'></th>
                         <th data-i18n="module_marketplace.core" data-colname='core'></th>
+                        <th data-i18n="module_marketplace.monthly_downloads" data-colname='module_full'></th>
                         <th data-i18n="module_marketplace.date_downloaded" data-colname='date_downloaded'></th>
                         <th data-i18n="module_marketplace.date_updated" data-colname='date_updated'></th>
                         <th data-i18n="module_marketplace.module_location" data-colname='module_location'></th>
@@ -24,7 +25,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td data-i18n="listing.loading" colspan="12" class="dataTables_empty"></td>
+                        <td data-i18n="listing.loading" colspan="13" class="dataTables_empty"></td>
                     </tr>
                 </tbody>
             </table>
@@ -64,6 +65,7 @@
                             { "data" : "maintainer"},
                             { "data" : "custom_override"},
                             { "data" : "core"},
+                            { "data" : "core"},
                             { "data" : "date_downloaded"},
                             { "data" : "date_updated"},
                             { "data" : "module_location"},
@@ -75,14 +77,14 @@
                             row_count = parseInt(row_count) + 1;
 
                             // View button
-                            var colvar=$('td:eq(0)', nRow).html();
+                            var module=$('td:eq(0)', nRow).html();
                             var installed=$('td:eq(2)', nRow).html();
                             var latest_version=$('td:eq(4)', nRow).html();
                             var maintainer=$('td:eq(6)', nRow).html();
                             if(installed == 1 ){
-                                $('td:eq(0)', nRow).html('<div class="machine"><a onclick="viewModule(\''+colvar+'\')" class="btn btn-default btn-xs">'+colvar+'</a></div>')
+                                $('td:eq(0)', nRow).html('<div class="machine"><a onclick="viewModule(\''+module+'\')" class="btn btn-default btn-xs">'+module+'</a></div>')
                             } else if(installed == 0) {
-                                $('td:eq(0)', nRow).html('<div class="machine"><a onclick="getInstall(\''+maintainer+'/'+colvar+':'+latest_version.replace("v", "^")+'\')" class="btn btn-default btn-xs">'+colvar+'</a></div>')
+                                $('td:eq(0)', nRow).html('<div class="machine"><a onclick="getInstall(\''+maintainer+'/'+module+':'+latest_version.replace("v", "^")+'\')" class="btn btn-default btn-xs">'+module+'</a></div>')
                             }
 
                             // Format enabled
@@ -114,11 +116,13 @@
                             (colvar === '0' ? i18n.t('no') : '')
                             $('td:eq(8)', nRow).text(colvar)
 
-                            // Format time
-                            var colvar = parseInt($('td:eq(9)', nRow).html());
-                            if (colvar){
-                                var date = new Date(colvar * 1000);
-                                $('td:eq(9)', nRow).html('<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span>');
+                            // Get monthly downloads
+                            var colvar = $('td:eq(9)', nRow).html();
+                            if (maintainer && maintainer !== ""){
+                                // Get the latest monthly download stats from Packagist
+                                $.getJSON('https://packagist.org/packages/' + maintainer + '/' + module + '.json', function(data, status){
+                                    $('td:eq(9)', nRow).text(data['package']['downloads']['monthly'])
+                                });
                             }
 
                             // Format time
@@ -128,11 +132,19 @@
                                 $('td:eq(10)', nRow).html('<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span>');
                             }
 
-                            // Format repo link
-                            var colvar = $('td:eq(12)', nRow).html();
+                            // Format time
+                            var colvar = parseInt($('td:eq(11)', nRow).html());
                             if (colvar){
-                                $('td:eq(12)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
+                                var date = new Date(colvar * 1000);
+                                $('td:eq(11)', nRow).html('<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span>');
                             }
+
+                            // Format repo link
+                            var colvar = $('td:eq(13)', nRow).html();
+                            if (colvar){
+                                $('td:eq(13)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
+                            }
+
                         }
                     });
 
