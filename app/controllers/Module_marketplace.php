@@ -43,7 +43,7 @@ class Module_marketplace extends Controller
             $composer_pkgs = json_decode(file_get_contents(__DIR__ . '../../../composer.lock'), true)['packages'];
         }
 
-        $all_modules = $this->moduleMarketplace->getModuleList(true);        
+        $all_modules = $this->moduleMarketplace->getModuleList(true);
         $enabled_modules = conf('modules', array());
         $composer_modules = [];
         $composer_modules_full = [];
@@ -60,6 +60,7 @@ class Module_marketplace extends Controller
                 array_push($composer_modules_name, $name_array[1]);
                 array_push($composer_modules_full, $pkg['name']);
                 $composer_modules[$i]["module"] = $name_array[1];
+                $composer_modules[$i]["module_full"] = $pkg['name'];
                 $composer_modules[$i]["maintainer"] = $name_array[0];
                 $composer_modules[$i]["url"] = str_replace(".git","",$pkg['source']['url']);
                 $composer_modules[$i]["installed"] = 1;
@@ -144,7 +145,6 @@ class Module_marketplace extends Controller
 
         // Process non-composer modules
         foreach ($all_modules as $module=>$location) {
-
             // Extract non-composer modules
             if (!in_array($module, $composer_modules_name)){
                 $composer_modules[$i]["module"] = $module;
@@ -204,6 +204,7 @@ class Module_marketplace extends Controller
                     $name_array = explode("/",$repo_module);
 
                     $composer_modules[$i]["module"] = $name_array[1];
+                    $composer_modules[$i]["module_full"] = $repo_module;
                     $composer_modules[$i]["maintainer"] = $result[0]->maintainer;
                     $composer_modules[$i]["url"] = $result[0]->url;
                     $composer_modules[$i]["installed_version"] = "";
@@ -231,7 +232,60 @@ class Module_marketplace extends Controller
         // Return array of composer installed modules
         jsonView($composer_modules);
     }
-    
+
+    /**
+     * Returns information on module's scripts
+     *
+     * @author tuxudo
+     **/
+    public function get_module_script_info()
+    {
+        $all_modules = $this->moduleMarketplace->getModuleList();
+        $modules = [];
+        $i = 0;
+
+        // Process each module
+        foreach ($all_modules as $path) {
+
+            $all_files = scandir($path."/scripts/");
+            $files = array_diff($all_files, array('.', '..','install.sh','uninstall.sh'));
+
+            // Process each file in scripts
+            foreach ($files as $file)
+            {
+                if (strpos(strtolower($file), '.zip') === false && substr( $file, 0, 1 ) !== "."){
+
+                    $module_name = explode("/",$path);
+                    $modules[$i]["module"] = end($module_name);
+                    $modules[$i]["path"] = $path."/scripts/".$file;
+                    $modules[$i]["script"] = $file;
+                    $modules[$i]["date_modified"] = filemtime($modules[$i]["path"]);
+                    $modules[$i]["date_modified_human"] = date("F j, Y, g:i a", $modules[$i]["date_modified"]);
+
+                    $line1 = fgets(fopen($modules[$i]["path"], 'r'));
+
+                    // Get file type
+                    if (strpos($line1, 'python') !== false ){
+                        $modules[$i]["script_type"] = "python";
+                    } else if (strpos($line1, 'bash') !== false || strpos($line1, 'sh') !== false ){
+                        $modules[$i]["script_type"] = "bash";
+                    } else if (strpos($line1, 'zsh') !== false ){
+                        $modules[$i]["script_type"] = "zsh";
+                    } else {
+                        $modules[$i]["script_type"] = end(explode("/",$line1));
+                    }
+                    $i++;
+                }
+            }
+        }
+        jsonView($modules);
+    }
+
+    /**
+     * Returns information on module's UI views
+     *
+     * @author tuxudo
+     **/
     public function get_module_info($module){
 
         // Load up the modules

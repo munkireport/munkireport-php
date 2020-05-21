@@ -215,10 +215,10 @@
     // Get install string and display in modal
     function getInstall(module){
         // Create large modal
-        $('#myModal .modal-dialog').addClass('modal-md');
+        $('#myModal .modal-dialog').addClass('modal-lg');
         $('#myModal .modal-title')
             .empty()
-            .append(i18n.t('module_marketplace.module_overview')+" - <br>"+i18n.t('module_marketplace.install_command'))
+            .append(i18n.t('module')+" "+i18n.t('module_marketplace.install_command'))
         $('#myModal .modal-body') 
             .css('padding-top','0px')
             .empty()
