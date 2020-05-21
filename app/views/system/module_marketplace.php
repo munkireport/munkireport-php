@@ -136,6 +136,7 @@
 
         // Disable the button
         $('#MMRefresh').addClass('disabled');
+        $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_updating"));
 
         // Get JSON of all serial numbers
         $.getJSON(appUrl + '/module_marketplace/refresh_module_info', function (processdata) {
