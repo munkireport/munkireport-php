@@ -107,7 +107,7 @@ class Module_marketplace extends Controller
 
                 // Get timestamp of module's model file
                 if(file_exists($composer_modules[$i]["module_location"]."/".$name_array[1]."_model.php")){
-                    $composer_modules[$i]["date_downloaded"] = filemtime ($composer_modules[$i]["module_location"]."/".$name_array[1]."_model.php");
+                    $composer_modules[$i]["date_downloaded"] = filemtime ($composer_modules[$i]["module_location"]);
                 } else {
                     $composer_modules[$i]["date_downloaded"] = "";
                 }
@@ -161,7 +161,7 @@ class Module_marketplace extends Controller
 
                 // Get timestamp of custom module's model file
                 if(file_exists($location."/".$module."_model.php")){
-                    $composer_modules[$i]["date_downloaded"] = filemtime ($location."/".$module."_model.php");
+                    $composer_modules[$i]["date_downloaded"] = filemtime ($location);
                 } else {
                     $composer_modules[$i]["date_downloaded"] = "";
                 }
@@ -250,8 +250,7 @@ class Module_marketplace extends Controller
             $files = array_diff($all_files, array('.', '..','install.sh','uninstall.sh'));
 
             // Process each file in scripts directory
-            foreach ($files as $file)
-            {
+            foreach ($files as $file) {
                 if (strpos(strtolower($file), '.zip') === false && substr( $file, 0, 1 ) !== "."){
 
                     $module_name = explode("/",$path);
@@ -270,6 +269,8 @@ class Module_marketplace extends Controller
                 }
             }
         }
+
+        // Return JSON of script details
         jsonView($modules);
     }
 
