@@ -95,15 +95,18 @@ class Module_marketplace extends Controller
                 }
 
                 // Check if enabled
-                if (in_array($name_array[0], $enabled_modules)){
+                if (in_array($name_array[1], $enabled_modules)){
+                    $composer_modules[$i]["enabled"] = 1;
+                } else if ($name_array[1] == "comment" || $name_array[1] == "event" || $name_array[1] == "machine" || $name_array[1] == "tag" || $name_array[1] == "reportdata"){
+                    // Override for system modules
                     $composer_modules[$i]["enabled"] = 1;
                 } else {
                     $composer_modules[$i]["enabled"] = 0;
                 }
 
                 // Get timestamp of module's model file
-                if(file_exists($location."/".$module."_model.php")){
-                    $composer_modules[$i]["date_downloaded"] = filemtime ($location."/".$module."_model.php");
+                if(file_exists($composer_modules[$i]["module_location"]."/".$name_array[1]."_model.php")){
+                    $composer_modules[$i]["date_downloaded"] = filemtime ($composer_modules[$i]["module_location"]."/".$name_array[1]."_model.php");
                 } else {
                     $composer_modules[$i]["date_downloaded"] = "";
                 }
@@ -115,7 +118,7 @@ class Module_marketplace extends Controller
                 $result = $sql_obj->query($sql);
                 
                 // Check if we have a result
-                if($result[0]->module){
+                if($result && $result[0] && $result[0]->module){
 
                     $installed_version = preg_replace("/[^0-9.]/", '', $composer_modules[$i]["installed_version"]);
                     $latest_version = preg_replace("/[^0-9.]/", '', $result[0]->version);
@@ -129,6 +132,10 @@ class Module_marketplace extends Controller
 
                     $composer_modules[$i]["latest_version"] = $result[0]->version;
                     $composer_modules[$i]["date_updated"] = (int) ($result[0]->date_updated);
+                } else {
+                    $composer_modules[$i]["latest_version"] = "";
+                    $composer_modules[$i]["date_updated"] = "";
+                    $composer_modules[$i]["update_available"] = "";
                 }
 
                 $i++;
@@ -354,7 +361,7 @@ class Module_marketplace extends Controller
                 'module' => 'module_marketplace', 
                 'property' => 'core_modules',
             ],[
-                'value' => implode($core_modules,","),
+                'value' => implode(",",$core_modules),
                 'timestamp' => time(),
             ]
         );
@@ -363,7 +370,7 @@ class Module_marketplace extends Controller
                 'module' => 'module_marketplace', 
                 'property' => 'third_party_modules',
             ],[
-                'value' => implode($third_party_modules,","),
+                'value' => implode(",",$third_party_modules),
                 'timestamp' => time(),
             ]
         );
