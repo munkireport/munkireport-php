@@ -197,8 +197,7 @@ class Module_marketplace extends Controller
 
                     // Get data from database of matching module
                     $sql_obj = new Model;
-                    $sql = "SELECT * FROM modules
-                        WHERE module = '".$repo_module."';";
+                    $sql = "SELECT * FROM modules WHERE module = '".$repo_module."';";
                     $result = $sql_obj->query($sql);
 
                     $name_array = explode("/",$repo_module);
@@ -234,7 +233,7 @@ class Module_marketplace extends Controller
     }
 
     /**
-     * Returns information on module's scripts
+     * Returns information on modules' scripts
      *
      * @author tuxudo
      **/
@@ -250,7 +249,7 @@ class Module_marketplace extends Controller
             $all_files = scandir($path."/scripts/");
             $files = array_diff($all_files, array('.', '..','install.sh','uninstall.sh'));
 
-            // Process each file in scripts
+            // Process each file in scripts directory
             foreach ($files as $file)
             {
                 if (strpos(strtolower($file), '.zip') === false && substr( $file, 0, 1 ) !== "."){
@@ -262,18 +261,11 @@ class Module_marketplace extends Controller
                     $modules[$i]["date_modified"] = filemtime($modules[$i]["path"]);
                     $modules[$i]["date_modified_human"] = date("F j, Y, g:i a", $modules[$i]["date_modified"]);
 
+                    // Get script type
                     $line1 = fgets(fopen($modules[$i]["path"], 'r'));
+                    $file_line1 = explode("/",$line1);
+                    $modules[$i]["script_type"] = str_replace("\n","",end($file_line1));
 
-                    // Get file type
-                    if (strpos($line1, 'python') !== false ){
-                        $modules[$i]["script_type"] = "python";
-                    } else if (strpos($line1, 'bash') !== false || strpos($line1, 'sh') !== false ){
-                        $modules[$i]["script_type"] = "bash";
-                    } else if (strpos($line1, 'zsh') !== false ){
-                        $modules[$i]["script_type"] = "zsh";
-                    } else {
-                        $modules[$i]["script_type"] = end(explode("/",$line1));
-                    }
                     $i++;
                 }
             }
@@ -282,7 +274,7 @@ class Module_marketplace extends Controller
     }
 
     /**
-     * Returns information on module's UI views
+     * Returns information on a module's UI views
      *
      * @author tuxudo
      **/
@@ -382,12 +374,12 @@ class Module_marketplace extends Controller
         if (strpos($yaml_result, 'core_modules: munkireport/') === false ){
             $yaml_result = file_get_contents(__DIR__ . '../../../build/module_repos.yml');
         }
-        
+
         // Process yaml files
         $yaml_data = Yaml::parse($yaml_result);
         $core_modules = explode(",", preg_replace("/[^A-Za-z0-9-_,\/]/", '', $yaml_data['core_modules']));
         $third_party_modules = explode(",", preg_replace("/[^A-Za-z0-9-_,\/]/", '', $yaml_data['third_party_modules']));
-        
+
         // Get JSON from tuxudo's GitHub to merge in
         ini_set("allow_url_fopen", 1);
         $ch = curl_init();
@@ -400,14 +392,14 @@ class Module_marketplace extends Controller
         if (strpos($yaml_result, 'core_modules: munkireport/') !== false ){
 
             $yaml_data_tux = Yaml::parse($yaml_result_tux);
-            
+
             $core_data_tux = explode(",", preg_replace("/[^A-Za-z0-9-_,\/]/", '', $yaml_data_tux['core_modules']));
             $third_party_modules_tux = explode(",", preg_replace("/[^A-Za-z0-9-_,\/]/", '', $yaml_data_tux['third_party_modules']));
-            
+
             $core_modules = array_unique(array_merge($core_modules, $core_data_tux));
             $third_party_modules = array_unique(array_merge($third_party_modules, $third_party_modules_tux));
         }
-        
+
         // Save new cache data to the cache table
         Cache::updateOrCreate(
             [
