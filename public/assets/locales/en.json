@@ -257,6 +257,7 @@
         "listings": "Listings",
         "maintainer": "Maintainer",
         "module_data_refreshed": "Module Data Refreshed",
+        "module_data_updating": "Refreshing Module Data...",
         "module_location": "Module Location",
         "module_marketplace": "Module Marketplace",
         "module_overview": "Module Overview",
