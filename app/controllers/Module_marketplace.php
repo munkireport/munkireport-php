@@ -43,7 +43,7 @@ class Module_marketplace extends Controller
             $composer_pkgs = json_decode(file_get_contents(__DIR__ . '../../../composer.lock'), true)['packages'];
         }
 
-        $all_modules = $this->moduleMarketplace->getModuleList(false);        
+        $all_modules = $this->moduleMarketplace->getModuleList(true);        
         $enabled_modules = conf('modules', array());
         $composer_modules = [];
         $composer_modules_full = [];
