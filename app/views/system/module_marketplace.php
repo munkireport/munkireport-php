@@ -44,7 +44,7 @@
 	$(document).on('appReady', function(e, lang) {
         
         // Create refresh button
-        $('#module_marketplace_refresh').html('<button id="MMRefresh" class="btn btn-info btn-sm hidden">'+i18n.t("module_marketplace.update_module_data")+'</button>');
+        $('#module_marketplace_refresh').html('<button id="MMRefresh" class="btn btn-info btn-sm">'+i18n.t("module_marketplace.update_module_data")+'</button>');
 
         $.ajax({
             type: "GET",
