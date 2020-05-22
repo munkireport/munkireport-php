@@ -116,12 +116,25 @@
                             (colvar === '0' ? i18n.t('no') : '')
                             $('td:eq(8)', nRow).text(colvar)
 
-                            // Get monthly downloads
+                            // Get monthly downloads and live versions
                             $('td:eq(9)', nRow).text(""); // Blank out the row
                             if (maintainer && maintainer !== ""){
                                 // Get the latest monthly download stats from Packagist
                                 $.getJSON('https://packagist.org/packages/' + maintainer + '/' + module + '.json', function(data, status){
                                     $('td:eq(9)', nRow).text(data['package']['downloads']['monthly'])
+
+                                    var pkg_details = data['package']['versions']
+                                    var latest_ver = pkg_details[Object.keys(pkg_details)[1]]['version']
+                                    var installed_ver=$('td:eq(3)', nRow).html();
+
+                                    $('td:eq(4)', nRow).text(latest_ver['version'])
+                                    $('td:eq(11)', nRow).html('<span title="'+moment(latest_ver['time']).fromNow()+'">'+moment(latest_ver['time']).format('llll')+'</span>');
+
+                                    // Check if update is available
+                                    if (installed_ver != "" && latest_ver != "" && compareVersions(installed_ver, '<', latest_ver)) {
+                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
+                                        $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
+                                    }
                                 });
                             }
 
@@ -260,6 +273,32 @@
         $('#myModal').modal('show');
     }
 
+    // Function to compare versions
+    function compareVersions(v1, comparator, v2) {
+        "use strict";
+        var comparator = comparator == '=' ? '==' : comparator;
+        if(['==','===','<','<=','>','>=','!=','!=='].indexOf(comparator) == -1) {
+            throw new Error('Invalid comparator. ' + comparator);
+        }
+        var v1parts = v1.replace(/[^\d.-]/g, '').split('.'), v2parts = v2.replace(/[^\d.-]/g, '').split('.');
+        var maxLen = Math.max(v1parts.length, v2parts.length);
+        var part1, part2;
+        var cmp = 0;
+        for(var i = 0; i < maxLen && !cmp; i++) {
+            part1 = parseInt(v1parts[i], 10) || 0;
+            part2 = parseInt(v2parts[i], 10) || 0;
+            if(part1 < part2)
+                cmp = 1;
+            if(part1 > part2)
+                cmp = -1;
+        }
+        return eval('0' + comparator + cmp);
+    }
+    
+    function isFloat(n){
+        return Number(n) === n && n % 1 !== 0;
+    }
+    
     // Function to sort tables
     function sortTable(table) {
       var rows, switching, i, x, y, shouldSwitch;
