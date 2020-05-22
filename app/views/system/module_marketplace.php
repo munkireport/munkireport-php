@@ -126,12 +126,15 @@
                                     var pkg_details = data['package']['versions']
                                     var latest_ver = pkg_details[Object.keys(pkg_details)[1]]['version']
                                     var installed_ver=$('td:eq(3)', nRow).html();
+                                    var db_latest_ver=$('td:eq(4)', nRow).html();
 
                                     $('td:eq(4)', nRow).text(latest_ver['version'])
                                     $('td:eq(11)', nRow).html('<span title="'+moment(latest_ver['time']).fromNow()+'">'+moment(latest_ver['time']).format('llll')+'</span>');
 
                                     // Check if update is available
-                                    if (installed_ver != "" && latest_ver != "" && compareVersions(installed_ver, '<', latest_ver)) {
+                                    if (installed_ver != "" && latest_ver != "" && compareVersions(latest_ver, '<', db_latest_ver)) {
+                                        $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
+                                    } else if (installed_ver != "" && latest_ver != "" && compareVersions(installed_ver, '<', latest_ver)) {
                                         $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
                                         $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
                                     } else {
