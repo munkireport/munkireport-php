@@ -44,7 +44,7 @@
 	$(document).on('appReady', function(e, lang) {
         
         // Create refresh button
-        $('#module_marketplace_refresh').html('<button id="MMRefresh" class="btn btn-info btn-sm">'+i18n.t("module_marketplace.update_module_data")+'</button>');
+        $('#module_marketplace_refresh').html('<button id="MMRefresh" class="btn btn-info btn-sm hidden">'+i18n.t("module_marketplace.update_module_data")+'</button>');
 
         $.ajax({
             type: "GET",
@@ -134,6 +134,9 @@
                                     if (installed_ver != "" && latest_ver != "" && compareVersions(installed_ver, '<', latest_ver)) {
                                         $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
                                         $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
+                                    } else {
+                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
+                                        $('td:eq(5)', nRow).html(i18n.t('no'))
                                     }
                                 });
                             }
