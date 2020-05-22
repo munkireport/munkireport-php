@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span>  <span id="module_marketplace_refresh"></span>  <span id="module_marketplace_message"></span></h3>
+            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span>  <span id="module_marketplace_refresh"></span>  <span id="module_marketplace_message"></span>&nbsp;<i id="JSONProgess" class="hide fa fa-cog fa-spin" aria-hidden="true"></i></h3>
             <table class="table table-striped table-condensed table-bordered" id="marketplace-table">
                 <thead>
                     <tr>
@@ -144,7 +144,6 @@
                             if (colvar){
                                 $('td:eq(13)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
                             }
-
                         }
                     });
 
@@ -161,14 +160,18 @@
 
         // Disable the button
         $('#MMRefresh').addClass('disabled');
+        $('#JSONProgess').removeClass('hide');
+        
         $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_updating"));
 
         // Get JSON of all serial numbers
         $.getJSON(appUrl + '/module_marketplace/refresh_module_info', function (processdata) {
             if (processdata == "status:good"){
                 $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_refreshed"));
+                $('#JSONProgess').addClass('hide');
             } else if (processdata.startsWith("status:bad-")){
                 $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_error"));
+                $('#JSONProgess').addClass('hide');
             }
         });
     });
