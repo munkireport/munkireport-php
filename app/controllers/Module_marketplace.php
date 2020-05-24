@@ -327,33 +327,25 @@ class Module_marketplace extends Controller
 
             $name_array = explode("/",$module_json['name']);
 
-            $module_pkg = new Module_marketplace_model($name_array[1]);
-            $module_pkg->module = $module_json['name'];
-            $module_pkg->maintainer = $name_array[0];
-            $module_pkg->url = str_replace(".git","",$module_json['source']['url']);
-            $module_pkg->date_updated = strtotime($module_json['time']);
+            $module_pkg = [
+                'module' => $module_json['name'],
+                'maintainer' => $name_array[0],
+                'url' => str_replace(".git","",$module_json['source']['url']),
+                'date_updated' => strtotime($module_json['time']),
+                'packagist' => 1,
+                'core' => $name_array[0] == "munkireport",
+            ];
 
             // Check if the version string has a 'v' in it, if not append it
             if (substr(strtolower($module_json['version']), 0, 1) !== 'v') {
-                $module_pkg->version = "v".$module_json['version'];
+                $module_pkg['version'] = "v".$module_json['version'];
             } else {
-                $module_pkg->version = strtolower($module_json['version']);
+                $module_pkg['version'] = strtolower($module_json['version']);
             }
 
-            // Check if core module
-            if ($name_array[0] == "munkireport"){
-                $module_pkg->core = 1;
-            } else {
-                $module_pkg->core = 0;
-            }
-
-            $module_pkg->packagist = 1;
-
-            // Delete previous row containing matching module
-            $module_pkg->deleteWhere('module=?', $module_json['name']);
-
-            // Modules are like Legos! :D
-            $module_pkg->save();
+            Module_marketplace_model::updateOrCreate(
+                ['module' => $module_pkg['module']], $module_pkg
+            );
         }
 
         // Return a status
