@@ -22,6 +22,7 @@ local/dashboards/*.yml
 local/certs/*.crt
 local/certs/*.key
 local/module_configs/*.yml
+local/modules/*
 
 .php_cs.cache
 composer
