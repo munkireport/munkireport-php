@@ -153,14 +153,19 @@ echo "# Retrieving munkireport scripts"
 SCRIPTS=$("${CURL[@]}" "${BASEURL}index.php?/install/get_paths")
 
 for SCRIPT in $SCRIPTS; do
-	echo "${INSTALLROOT}${SCRIPT}"
-	"${CURL[@]}" "${TPL_BASE}${SCRIPT}" --output "${INSTALLROOT}${SCRIPT}" || ERR=1
+	COMPONENTS=(${SCRIPT//;/ })
+	SOURCE_FILE=${COMPONENTS[0]}
+	TARGET_FILE=${COMPONENTS[1]}
+	echo "${INSTALLROOT}${TARGET_FILE}"
+	"${CURL[@]}" "${TPL_BASE}${SOURCE_FILE}" --output "${INSTALLROOT}${TARGET_FILE}" || ERR=1
 done
 
 if [ $ERR = 1 ]; then
 	echo "Failed to download all required components! Cleaning up.."
-	for SCRIPT in $SCRIPTS; do 
-		rm -f "${INSTALLROOT}${SCRIPT}"
+	for SCRIPT in $SCRIPTS; do
+		COMPONENTS=(${SCRIPT//;/ })
+		TARGET_FILE=${COMPONENTS[1]}
+		rm -f "${INSTALLROOT}${TARGET_FILE}"
 	done
 	exit 1
 fi
