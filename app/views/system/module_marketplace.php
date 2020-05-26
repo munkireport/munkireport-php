@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span>  <span id="module_marketplace_refresh"></span>  <span id="module_marketplace_message"></span>&nbsp;<i id="JSONProgess" class="hide fa fa-cog fa-spin" aria-hidden="true"></i></h3>
+            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span></h3>
             <table class="table table-striped table-condensed table-bordered" id="marketplace-table">
                 <thead>
                     <tr>
@@ -43,9 +43,7 @@
 
 	$(document).on('appReady', function(e, lang) {
         
-        // Create refresh button
-        $('#module_marketplace_refresh').html('<button id="MMRefresh" class="btn btn-info btn-sm">'+i18n.t("module_marketplace.update_module_data")+'</button>');
-
+        // Get JSON and generate table
         $.ajax({
             type: "GET",
             url: appUrl + '/module_marketplace/get_module_data', // API page to get JSON from
@@ -76,15 +74,54 @@
                             // Add row count
                             row_count = parseInt(row_count) + 1;
 
-                            // View button
                             var module=$('td:eq(0)', nRow).html();
                             var installed=$('td:eq(2)', nRow).html();
-                            var latest_version=$('td:eq(4)', nRow).html();
+                            var latest_ver=$('td:eq(4)', nRow).html();
                             var maintainer=$('td:eq(6)', nRow).html();
-                            if(installed == 1 ){
+
+                            // Get monthly downloads, live versions, and uninstalled modules
+                            $('td:eq(9)', nRow).text(""); // Blank out the row
+                            if (maintainer && maintainer !== ""){
+                                // Get the package JSON from Packagist API
+                                // JSON is updated once every 12 hours
+                                $.getJSON('https://packagist.org/packages/' + maintainer + '/' + module + '.json', function(data, status){
+                                    $('td:eq(9)', nRow).text(data['package']['downloads']['monthly'])
+
+                                    var pkg_details = data['package']['versions']
+                                    var latest_ver = "0"
+                                    var installed_ver=$('td:eq(3)', nRow).html();
+
+                                    // Get latest version number
+                                    for (const pkg in pkg_details) {
+                                        compare_version = pkg_details[pkg]['version'].replace(/[^\d.-]/g, '')
+                                        if (!compare_version.includes("-") && compare_version !== '' && compareVersions(latest_ver, '<', compare_version)) {
+                                            latest_ver = compare_version
+                                            update_time = pkg_details[pkg]['time']
+                                        }
+                                    };
+
+                                    // Set last update time
+                                    $('td:eq(11)', nRow).html('<span title="'+moment(update_time).fromNow()+'">'+moment(update_time).format('llll')+'</span>');
+
+                                    // Check if update is available
+                                    if (installed_ver != "" && latest_ver != "" && compareVersions(installed_ver, '<', latest_ver)) {
+                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
+                                        $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
+                                    } else {
+                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
+                                        $('td:eq(5)', nRow).html(i18n.t('no'))
+                                    }
+
+                                    // Set modal if not installed
+                                    if(installed == "No"){
+                                        $('td:eq(0)', nRow).html('<div class="machine"><a onclick="getInstall(\''+maintainer+'/'+module+':^'+latest_ver.replace(/[^\d.-]/g, '')+'\')" class="btn btn-default btn-xs">'+module+'</a></div>')
+                                    }
+                                });
+                            }
+
+                            // View button
+                            if(installed == 1){
                                 $('td:eq(0)', nRow).html('<div class="machine"><a onclick="viewModule(\''+module+'\')" class="btn btn-default btn-xs">'+module+'</a></div>')
-                            } else if(installed == 0) {
-                                $('td:eq(0)', nRow).html('<div class="machine"><a onclick="getInstall(\''+maintainer+'/'+module+':'+latest_version.replace("v", "^")+'\')" class="btn btn-default btn-xs">'+module+'</a></div>')
                             }
 
                             // Format enabled
@@ -116,34 +153,6 @@
                             (colvar === '0' ? i18n.t('no') : '')
                             $('td:eq(8)', nRow).text(colvar)
 
-                            // Get monthly downloads and live versions
-                            $('td:eq(9)', nRow).text(""); // Blank out the row
-                            if (maintainer && maintainer !== ""){
-                                // Get the latest monthly download stats from Packagist
-                                $.getJSON('https://packagist.org/packages/' + maintainer + '/' + module + '.json', function(data, status){
-                                    $('td:eq(9)', nRow).text(data['package']['downloads']['monthly'])
-
-                                    var pkg_details = data['package']['versions']
-                                    var latest_ver = pkg_details[Object.keys(pkg_details)[1]]['version']
-                                    var installed_ver=$('td:eq(3)', nRow).html();
-                                    var db_latest_ver=$('td:eq(4)', nRow).html();
-
-                                    $('td:eq(4)', nRow).text(latest_ver['version'])
-                                    $('td:eq(11)', nRow).html('<span title="'+moment(latest_ver['time']).fromNow()+'">'+moment(latest_ver['time']).format('llll')+'</span>');
-
-                                    // Check if update is available
-                                    if (installed_ver != "" && latest_ver != "" && compareVersions(latest_ver, '<', db_latest_ver)) {
-                                        $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
-                                    } else if (installed_ver != "" && latest_ver != "" && compareVersions(installed_ver, '<', latest_ver)) {
-                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
-                                        $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
-                                    } else {
-                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
-                                        $('td:eq(5)', nRow).html(i18n.t('no'))
-                                    }
-                                });
-                            }
-
                             // Format time
                             var colvar = parseInt($('td:eq(10)', nRow).html());
                             if (colvar){
@@ -173,27 +182,6 @@
             }
         });
 	});
-
-    // Refresh cached module data
-    $('#module_marketplace_refresh').click(function (e) {
-
-        // Disable the button
-        $('#MMRefresh').addClass('disabled');
-        $('#JSONProgess').removeClass('hide');
-        
-        $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_updating"));
-
-        // Get JSON of all serial numbers
-        $.getJSON(appUrl + '/module_marketplace/refresh_module_info', function (processdata) {
-            if (processdata == "status:good"){
-                $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_refreshed"));
-                $('#JSONProgess').addClass('hide');
-            } else if (processdata.startsWith("status:bad-")){
-                $('#module_marketplace_message').text(i18n.t("module_marketplace.module_data_error"));
-                $('#JSONProgess').addClass('hide');
-            }
-        });
-    });
 
     // Get module info via API and display in modal
     function viewModule(module){
