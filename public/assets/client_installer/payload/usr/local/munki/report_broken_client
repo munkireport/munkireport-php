@@ -36,7 +36,7 @@ else
     BASEURL=$(defaults read /Library/Preferences/MunkiReport BaseUrl)
     PASSPHRASE=$(defaults read /Library/Preferences/MunkiReport Passphrase 2>/dev/null)
 fi
-SUBMITURL="${BASEURL}/report/broken_client"
+SUBMITURL="${BASEURL}/index.php?/report/broken_client"
 
 # Application paths
 CURL="/usr/bin/curl"
