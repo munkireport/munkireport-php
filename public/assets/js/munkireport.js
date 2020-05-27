@@ -31,6 +31,12 @@ $(document).on('appReady', function(e, lang) {
         url: appUrl + '/system/show/widget_gallery'
     });
 
+    addMenuItem({
+        menu: 'admin',
+        i18n: 'module_marketplace.module_marketplace',
+        url: appUrl + '/system/show/module_marketplace'
+    });
+
     // Sort admin menu, after other items are added
     mr.sortMenu('ul.admin');
 

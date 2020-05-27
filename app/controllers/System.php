@@ -154,6 +154,10 @@ class System extends Controller
                 $data['stylesheets'] = array('system/database.css');
                 $view = 'system/database';
                 break;
+            case 'module_marketplace':
+                $data['page'] = 'clients';
+                $view = 'system/module_marketplace';
+                break;
             default:
                 $data = array('status_code' => 404);
                 $view = 'error/client_error';
