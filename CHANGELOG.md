@@ -1,3 +1,5 @@
+### [5.5.1](https://github.com/munkireport/munkireport-php/compare/v5.5.0...wip) (Unreleased)
+
 ### [5.5.0](https://github.com/munkireport/munkireport-php/compare/v5.4.1...wip) (May 28, 2020) 🛍️
 
 Lots of changes: a new module marketplace to discover modules (@tuxudo and @joncrain)
