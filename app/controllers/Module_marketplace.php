@@ -19,9 +19,6 @@ class Module_marketplace extends Controller
 
         // Create object
         $this->moduleMarketplace = getMrModuleObj();
-
-        // Connect to database
-        $this->connectDB();
     }
 
     /**
@@ -183,7 +180,7 @@ class Module_marketplace extends Controller
             }
         }
 
-        $repo_modules = Module_marketplace::update_module_repos(true);
+        $repo_modules = Module_marketplace::get_module_repos();
 
         // Check if we have a result
         if($repo_modules){
@@ -280,63 +277,6 @@ class Module_marketplace extends Controller
         // Return info on single module as JSON
         jsonView($modules->getInfo()[$module]);
     }
-    
-//    /**
-//     * Gets and processes JSON from Packagist and puts it into the database
-//     *
-//     * @author tuxudo
-//     **/
-//    public function refresh_module_info()
-//    {
-//        // Update module repos
-//        Module_marketplace::update_module_repos();
-//
-//        // Generate list of all modules    
-//        $core_modules = Cache::select('value')->where('module', 'module_marketplace')->where('property', 'core_modules')->value('value');
-//        $third_party_modules = Cache::select('value')->where('module', 'module_marketplace')->where('property', 'third_party_modules')->value('value');
-//        $all_modules = array_unique(array_merge(explode(",",$core_modules), explode(",",$third_party_modules)));
-//
-//        foreach ( $all_modules as $module){
-//
-//            // Get JSON from Packagist for module
-//            $web_request = new Request();
-//            $options = ['http_errors' => false];
-//            $json_result = (string) $web_request->get('https://repo.packagist.org/p/'.$module.'.json', $options);
-//
-//            // Check if we got results
-//            if (strpos($json_result, '"packages":{"'.$module.'":') === false ){
-//                jsonView('status:bad-'.$module);
-//            }
-//
-//            // Extract the latest version
-//            $module_json = end(json_decode($json_result, true)['packages'][$module]);
-//
-//            $name_array = explode("/",$module_json['name']);
-//
-//            $module_pkg = [
-//                'module' => $module_json['name'],
-//                'maintainer' => $name_array[0],
-//                'url' => str_replace(".git","",$module_json['source']['url']),
-//                'date_updated' => strtotime($module_json['time']),
-//                'packagist' => 1,
-//                'core' => $name_array[0] == "munkireport",
-//            ];
-//
-//            // Check if the version string has a 'v' in it, if not append it
-//            if (substr(strtolower($module_json['version']), 0, 1) !== 'v') {
-//                $module_pkg['version'] = "v".$module_json['version'];
-//            } else {
-//                $module_pkg['version'] = strtolower($module_json['version']);
-//            }
-//
-//            Module_marketplace_model::updateOrCreate(
-//                ['module' => $module_pkg['module']], $module_pkg
-//            );
-//        }
-//
-//        // Return a status
-//        jsonView('status:good');
-//    }
 
     /**
      * Gets and processes YAML from GitHub that contains Packagist repos
@@ -344,7 +284,7 @@ class Module_marketplace extends Controller
      *
      * @author tuxudo
      **/
-    public function update_module_repos($return = false)
+    public function get_module_repos()
     {
         // Get JSON from munkireport-php's GitHub
         $web_request = new Request();
@@ -377,29 +317,7 @@ class Module_marketplace extends Controller
             $third_party_modules = array_unique(array_merge($third_party_modules, $third_party_modules_tux));
         }
 
-//        // Save new cache data to the cache table
-//        Cache::updateOrCreate(
-//            [
-//                'module' => 'module_marketplace', 
-//                'property' => 'core_modules',
-//            ],[
-//                'value' => implode(",",$core_modules),
-//                'timestamp' => time(),
-//            ]
-//        );
-//        Cache::updateOrCreate(
-//            [
-//                'module' => 'module_marketplace', 
-//                'property' => 'third_party_modules',
-//            ],[
-//                'value' => implode(",",$third_party_modules),
-//                'timestamp' => time(),
-//            ]
-//        );
-        
         // Return list of module repos if true
-        if ($return){
-            return array_unique(array_merge($core_modules, $third_party_modules));
-        }
+        return array_unique(array_merge($core_modules, $third_party_modules));
     }
 }

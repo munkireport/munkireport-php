@@ -104,7 +104,6 @@ class Manager extends Controller
             'business_unit',
             'machine_group',
             'cache',
-            'modules',
         ];
 
         // Check if old table
