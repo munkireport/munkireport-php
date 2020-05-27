@@ -3,7 +3,7 @@
 namespace munkireport\controller;
 
 use \Controller, \View, \Exception;
-use munkireport\models\Tablequery;
+use munkireport\lib\Tablequery;
 
 class Datatables extends Controller
 {

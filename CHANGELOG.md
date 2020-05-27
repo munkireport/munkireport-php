@@ -1,3 +1,65 @@
+### [5.5.0](https://github.com/munkireport/munkireport-php/compare/v5.4.1...wip) (May 28, 2020) 🛍️
+
+Lots of changes: a new module marketplace to discover modules (@tuxudo and @joncrain)
+The `localadmin` module is retired in favour of the more versatile `users` module.
+A new module is added: `firewall`.
+
+FEATURES
+
+- Archiver role (@poundbangbash)
+- Module Marketplace (@tuxudo)
+- Added spacer_widget with customizable size (#1258)
+- Added faker to insert demo data
+- Local module directory (#1347)
+- Create enable_module.sh (#1351)
+
+FIXES
+
+- Update Docker Module Name (#1348)
+- Update install scripts (#1354)
+- Fix broken base URL (#1355)
+
+MODULE UPDATES
+
+- munkireport/localadmin removed
+- munkireport/supported_os (v1.10 => v2.0)
+- munkireport/reportdata (v3.2 => v3.4)
+- munkireport/machine (v6.2 => v6.5)
+- munkireport/event (v3.2 => v3.4)
+- munkireport/disk_report (v3.2 => v3.4)
+- munkireport/munkireport (3.1 => v3.2)
+- munkireport/applications (v2.2 => v2.3)
+- munkireport/bluetooth (v2.0 => v2.3)
+- munkireport/fan_temps (v1.7 => v1.8)
+- munkireport/laps (v1.4 => v1.7)
+- munkireport/managedinstalls (v2.4 => v2.5)
+- munkireport/munkiinfo (v1.2 => v1.3)
+- munkireport/printer (v1.2 => v1.3)
+- munkireport/security (v2.0 => v2.1)
+- munkireport/smart_stats (v1.2 => v1.5)
+- munkireport/warranty (v3.0 => v4.3)
+- munkireport/wifi (v1.2 => v1.3)
+- munkireport/users (v1.3)
+- munkireport/firewall (v1.3)
+
+DEPENDENCY UPDATES
+
+- symfony/polyfill-php72 (v1.15.0 => v1.17.0)
+- symfony/polyfill-mbstring (v1.15.0 => v1.17.0)
+- symfony/polyfill-intl-idn (v1.15.0 => v1.17.0)
+- guzzlehttp/guzzle (6.5.3 => 6.5.4)
+- league/flysystem (1.0.67 => 1.0.69)
+- symfony/polyfill-ctype (v1.15.0 => v1.17.0)
+- vlucas/phpdotenv (v4.1.4 => v4.1.6)
+- tightenco/collect (v7.9.2 => v7.12.0)
+- adldap2/adldap2 (v10.2.3 => v10.3.0)
+- monolog/monolog (1.25.3 => 1.25.4)
+- doctrine/cache (1.10.0 => 1.10.1)
+- doctrine/inflector (1.3.1 => 1.4.2)
+- nesbot/carbon (2.33.0 => 2.34.2)
+- symfony/polyfill-php73 (v1.15.0 => v1.17.0)
+
+
 ### [5.4.1](https://github.com/munkireport/munkireport-php/compare/v5.4.0...wip) (April 30, 2020) 🧽
 
 Small bugfix release to remedy some issues. Also the deploystudio and gsx modules got removed from the core modules.

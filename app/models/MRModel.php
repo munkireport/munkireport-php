@@ -25,4 +25,7 @@ class MRModel extends Eloquent
       }
       return $out;
   }
+
+  public $timestamps = false;
+
 }

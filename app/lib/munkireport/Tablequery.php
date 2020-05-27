@@ -1,6 +1,6 @@
 <?php
 
-namespace munkireport\models;
+namespace munkireport\lib;
 
 use \PDO;
 

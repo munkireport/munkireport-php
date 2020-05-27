@@ -4,7 +4,8 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5"
+        "squizlabs/php_codesniffer": "^2.5",
+        "fzaninotto/faker": "^1.9"
     },
     "config": {
         "optimize-autoloader": true
@@ -46,6 +47,7 @@
         "munkireport/filevault_escrow": "^1.0",
         "munkireport/filevault_status": "^1.0",
         "munkireport/findmymac": "^1.0",
+        "munkireport/firewall": "^1.0",
         "munkireport/firmware_escrow": "^1.0",
         "munkireport/fonts": "^1.0",
         "munkireport/gpu": "^1.0",
@@ -55,7 +57,6 @@
         "munkireport/installhistory": "^2.0",
         "munkireport/inventory": "^4.0",
         "munkireport/laps": "^1.4",
-        "munkireport/localadmin": "^3.0",
         "munkireport/location": "^1.0",
         "munkireport/managedinstalls": "^2.0",
         "munkireport/mbbr_status": "^1.0",
@@ -75,13 +76,14 @@
         "munkireport/smart_stats": "^1.0",
         "munkireport/softwareupdate": "^1.0",
         "munkireport/sophos": "^1.0",
-        "munkireport/supported_os": "^1.0",
+        "munkireport/supported_os": "^2.0",
         "munkireport/tag": "^3.0",
         "munkireport/timemachine": "^2.0",
         "munkireport/usage_stats": "^1.0",
         "munkireport/usb": "^1.0",
         "munkireport/user_sessions": "^1.0",
-        "munkireport/warranty": "^3.0",
+        "munkireport/users": "^1.3",
+        "munkireport/warranty": "^4.0",
         "munkireport/wifi": "^1.0",
         "symfony/yaml": "^3.4",
         "adldap2/adldap2": "^10",

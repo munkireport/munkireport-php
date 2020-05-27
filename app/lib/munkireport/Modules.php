@@ -36,6 +36,8 @@ class Modules
         if(is_array(conf('module_search_paths'))){
             $moduleSearchPaths = conf('module_search_paths');
         }
+        // And then local modules
+        $moduleSearchPaths[] = conf('local') . 'modules/';
         // And then built-in modules
         $moduleSearchPaths[] = conf('module_path');
         
@@ -122,14 +124,14 @@ class Modules
      * Retrieve list of all available modules
      *
      */
-    public function getModuleList()
+    public function getModuleList($all_modules = false)
     {
         $modules = [];
         foreach ($this->moduleSearchPaths as $path)
         {
             foreach (scandir($path) as $module)
             {
-                if (is_file($path.$module.'/scripts/install.sh')) {
+                if (($all_modules && is_file($path.$module.'/'.$module.'_model.php')) || is_file($path.$module.'/scripts/install.sh')) {
                     // Don't overwrite custom modules
                     if( ! isset($modules[$module]))
                     {

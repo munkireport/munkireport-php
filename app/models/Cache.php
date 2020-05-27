@@ -4,14 +4,14 @@ namespace munkireport\models;
 
 use munkireport\models\MRModel as Eloquent;
 
-class Hash extends Eloquent
+class Cache extends Eloquent
 {
-    protected $table = 'hash';
+    protected $table = 'cache';
 
     protected $fillable = [
-        'serial_number',
-        'name',
-        'hash',
+        'module',
+        'property',
+        'value',
         'timestamp',
     ];
 }

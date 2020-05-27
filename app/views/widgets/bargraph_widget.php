@@ -34,7 +34,7 @@ $(document).on('appReady', function(e, lang) {
     var urlType = "<?php echo isset($url_type)?$url_type:'listing'?>"
 
     <?php 
-        $graph_margins = ['top' => 20, 'right' => 10, 'bottom' => 20, 'left' => 70];
+        $graph_margins = ['top' => 0, 'right' => 0, 'bottom' => 20, 'left' => 70];
 
         if(isset($margin) && is_array($margin)){
             $graph_margins = array_merge($graph_margins, $margin);

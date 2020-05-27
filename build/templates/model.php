@@ -11,7 +11,4 @@ class MODULE_model extends Eloquent
       'item1',
       'item2',
     ];
-
-    public $timestamps = false;
-
 }

@@ -157,6 +157,15 @@ var mr = {
                     cell.text("")
                 }
             },
+            dateToMoment: function(col, row){
+                var cell = $('td:eq('+col+')', row)
+                var date = cell.text();
+                if (date){
+                    cell.html('<span title="'+date+'">'+moment(date).fromNow()+'</span>');
+                } else {
+                    cell.text("")
+                }
+            },
             binaryYesNo: function(col, row){
                 var cell = $('td:eq('+col+')', row),
                     value = cell.text()

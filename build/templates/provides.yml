@@ -1,5 +1,5 @@
 client_tabs:
-    MODULE-tab:
+    MODULE:
         view: MODULE_tab
         i18n: MODULE.title
 listings:

@@ -46,6 +46,7 @@ class Install extends Controller
                 view('install/modules_autopkg', array('modules' => $modules));
                 break;
             case 'json':
+                jsonView($modules);
                 break;
             default:
                 echo implode("\n", $modules);
@@ -127,9 +128,20 @@ class Install extends Controller
         $contents = $filesystem->listContents('', true);
         foreach($contents as $fileObj){
             if($this->is_regular_file($fileObj)){
-                echo "/" . $fileObj['path'] . "\n";
+                echo "/" . $fileObj['path'] . ";/" . $this->get_target_path($fileObj) . "\n";
             }
         }
+    }
+
+    private function get_target_path(&$fileObj)
+    {
+        if($fileObj['filename'] == 'postflight'){
+            return $fileObj['dirname'] . '/' . conf('postflight_script');
+        }
+        if($fileObj['filename'] == 'report_broken_client'){
+            return $fileObj['dirname'] . '/' . conf('report_broken_client_script');
+        }
+        return $fileObj['path'];
     }
 
     private function is_regular_file($fileObj)
