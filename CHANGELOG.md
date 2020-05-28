@@ -1,3 +1,22 @@
+### [5.5.1](https://github.com/munkireport/munkireport-php/compare/v5.5.0...wip) (May 28, 2020) 
+
+Quick bugfix release with two module updates.
+
+FIXES
+
+- Module Marketplace
+
+MODULE UPDATES
+
+  - munkireport/ard (2.1 => v3.1)
+  - munkireport/munkireportinfo (v1.5 => v1.6)
+
+DEPENDENCY UPDATES
+
+  - symfony/service-contracts (v2.0.1 => v2.1.2)
+  - symfony/translation-contracts (v2.0.1 => v2.1.2)
+
+
 ### [5.5.0](https://github.com/munkireport/munkireport-php/compare/v5.4.1...wip) (May 28, 2020) 🛍️
 
 Lots of changes: a new module marketplace to discover modules (@tuxudo and @joncrain)
@@ -79,7 +98,7 @@ The bluetooth module got a serious overhaul from @tuxudo. If you run migrations,
 
 FIXES
 - SAML authentication
-- Updating the mr upgrade script (#1329)
+- the mr upgrade script (#1329)
 
 
 MODULE UPDATES

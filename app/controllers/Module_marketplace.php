@@ -3,7 +3,6 @@
 namespace munkireport\controller;
 
 use \Controller, \View, \Model;
-//use munkireport\models\Cache;
 use munkireport\lib\Request;
 use Symfony\Component\Yaml\Yaml;
 
@@ -66,7 +65,10 @@ class Module_marketplace extends Controller
                 $composer_modules[$i]["maintainer"] = $name_array[0];
                 $composer_modules[$i]["url"] = str_replace(".git","",$pkg['source']['url']);
                 $composer_modules[$i]["installed"] = 1;
-                
+                $composer_modules[$i]["latest_version"] = "";
+                $composer_modules[$i]["date_updated"] = "";
+                $composer_modules[$i]["update_available"] = "";
+
                 // Check if the version string has a 'v' in it, if not append it
                 if (substr(strtolower($pkg['version']), 0, 1) !== 'v') {
                     $composer_modules[$i]["installed_version"] = "v".$pkg['version'];
@@ -112,33 +114,6 @@ class Module_marketplace extends Controller
                     $composer_modules[$i]["date_downloaded"] = filemtime ($composer_modules[$i]["module_location"]);
                 } else {
                     $composer_modules[$i]["date_downloaded"] = "";
-                }
-                
-                // Get data from database of matching module
-                $sql_obj = new Model;
-                $sql = "SELECT * FROM modules
-                        WHERE module = '".$pkg['name']."';";
-                $result = $sql_obj->query($sql);
-                
-                // Check if we have a result
-                if($result && $result[0] && $result[0]->module){
-
-                    $installed_version = preg_replace("/[^0-9.]/", '', $composer_modules[$i]["installed_version"]);
-                    $latest_version = preg_replace("/[^0-9.]/", '', $result[0]->version);
-
-                    // Check versions for updates
-                    if (version_compare($latest_version, $installed_version, '>')){
-                        $composer_modules[$i]["update_available"] = 1;
-                    } else {
-                        $composer_modules[$i]["update_available"] = 0;
-                    }
-
-                    $composer_modules[$i]["latest_version"] = $result[0]->version;
-                    $composer_modules[$i]["date_updated"] = (int) ($result[0]->date_updated);
-                } else {
-                    $composer_modules[$i]["latest_version"] = "";
-                    $composer_modules[$i]["date_updated"] = "";
-                    $composer_modules[$i]["update_available"] = "";
                 }
 
                 $i++;
