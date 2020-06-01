@@ -42,11 +42,16 @@ Mailing lists
 
 For questions about using MunkiReport or setting up MunkiReport, you can use:
 
-http://groups.google.com/group/munkireport
+https://groups.google.com/group/munkireport
 
 For developers who want to contribute to the project:
 
-http://groups.google.com/group/munkireport-dev
+https://groups.google.com/group/munkireport-dev
+
+For security related issues, please use the private mailinglist:
+
+https://groups.google.com/group/munkireport-security
+
 
 Contributing
 ---
