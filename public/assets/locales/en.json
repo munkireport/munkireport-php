@@ -382,7 +382,7 @@
         "status": "MunkiReport System Status",
         "system": "System",
         "database": {
-            "menu_link": "Database"
+            "menu_link": "Upgrade Database"
         }
     },
     "systemstatus": {
