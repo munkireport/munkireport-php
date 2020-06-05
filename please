@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+use Illuminate\Console\Application;
+use Illuminate\Container\Container;
+use Illuminate\Events\Dispatcher;
+
+use App\Console\Commands\Module;
+
+require_once __DIR__.'/vendor/autoload.php';
+
+$container = new Container;
+$dispatcher = new Dispatcher;
+$version = "5.8"; // Laravel version
+
+$app = new Application($container, $dispatcher, $version);
+
+$app->setCatchExceptions(true);
+
+$app->add(new Module);
+
+$app->run();
