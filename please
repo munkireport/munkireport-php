@@ -5,9 +5,18 @@ use Illuminate\Console\Application;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 
-use App\Console\Commands\Module;
-
+require_once __DIR__ . '/app/helpers/env_helper.php';
+require_once __DIR__ . '/app/helpers/site_helper.php';
 require_once __DIR__.'/vendor/autoload.php';
+
+define('PUBLIC_ROOT', dirname(__FILE__) . '/public' );
+define('APP_ROOT', dirname(__FILE__) . '/' );
+
+require_once APP_ROOT . 'app/helpers/config_helper.php';
+initDotEnv();
+initConfig();
+configAppendFile(APP_ROOT . 'app/config/app.php');
+configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
 
 $container = new Container;
 $dispatcher = new Dispatcher;
@@ -17,6 +26,6 @@ $app = new Application($container, $dispatcher, $version);
 
 $app->setCatchExceptions(true);
 
-$app->add(new Module);
+$app->add(new App\Console\Commands\Module);
 
 $app->run();
