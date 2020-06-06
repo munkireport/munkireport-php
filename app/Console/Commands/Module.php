@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use munkireport\lib\Modules as ModuleManager;
 
 class Module extends Command
 {
@@ -20,6 +21,9 @@ class Module extends Command
      */
     protected $description = 'Create module';
 
+    /** @var instance $module_manager Instance of Module Manager */
+    protected $module_manager = null;
+
     /**
      * Create a new command instance.
      *
@@ -28,6 +32,8 @@ class Module extends Command
     public function __construct()
     {
         parent::__construct();
+
+        $this->module_manager = new ModuleManager;
     }
 
     /**
@@ -57,6 +63,8 @@ class Module extends Command
             'text',
         ];
         $this->comment('Creating a module is cool!');
+
+        $path = $this->choice("Where do you want to generate the module?", $this->module_manager->getModuleSearchPaths());        
         $name = $this->ask('What is the name of the module?', 'my_cool_module');
         $number_of_fields = intval($this->ask('How many database fields do you need? (apart from id and serial_number)', 3));
         $field_number = 0;
@@ -86,10 +94,15 @@ class Module extends Command
         $this->table($headers, $this->_toTable($table));
 
         if ( ! $this->confirm('Do you wish to continue?')) {
-           $this->error("Oh bummer!");
+           $this->error("Well that's too bad!");
            die();
         }
 
+    }
+
+    private function _createMigration($table, $path)
+    {
+        # code...
     }
 
     private function _toTable($table)
