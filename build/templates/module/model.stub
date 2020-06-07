@@ -1,0 +1,14 @@
+<?php
+
+use munkireport\models\MRModel as Eloquent;
+
+class CLASS_model extends Eloquent
+{
+    protected $table = 'MODULE';
+
+    protected $fillable = [
+      'serial_number',
+      'item1',
+      'item2',
+    ];
+}
