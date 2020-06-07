@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use munkireport\lib\Modules as ModuleManager;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class ModuleCommand extends Command
 {
@@ -62,46 +63,139 @@ class ModuleCommand extends Command
         $this->comment('Creating a module is cool!');
 
         $modulePath = $this->askInstallPath();        
-        $moduleName = $this->askModuleName( $default = 'my_cool_module' );
+        $moduleFullName = $this->askModuleName( $default = 'I ❤️ MunkiReport' );
+        $moduleName = Str::slug($moduleFullName, '_');
+        $moduleClassName = ucfirst($moduleName);
         $this->files->deleteDirectory($modulePath.$moduleName);
         $moduleInstallPath = $this->validateInstall($modulePath, $moduleName);
-        // $numberOfFields = $this->askNumberOfFields( $default = 3 );
-        // $moduleTable = $this->askFieldDetails($numberOfFields, $moduleName);
+        $numberOfFields = $this->askNumberOfFields( $default = 3 );
+        $moduleTable = $this->askFieldDetails($numberOfFields, $moduleName);
 
-        // if($this->choice("Do you need to store more than one row per machine?", ["yes", "no"], 1) == "yes"){
-        //     $moduleTable['serial_number']['index'] = 'yes';
-        // }
+        if($this->choice("Do you need to store more than one row per machine?", ["yes", "no"], 1) == "yes"){
+            $moduleTable['serial_number']['index'] = 'yes';
+        }
 
-        // $headers = ["Column", "Type", "Indexed", "English"];
-        // $this->table($headers, $this->_toTable($moduleTable));
+        $headers = ["Column", "Type", "Indexed", "English"];
+        $this->table($headers, $this->_toTable($moduleTable));
 
         // if ( ! $this->confirm('Do you wish to continue?')) {
         //    throw new RuntimeException("Well that's too bad!");
-        // }
+        // }        
+        $search = [
+            'MODULE' => $moduleName,
+            'CLASS' => ucfirst($moduleName),
+            'LISTING' => $this->tableToListingFields($moduleName, $moduleTable),
+        ];
+        $this->createBase($moduleInstallPath, $moduleName, $search);
+        $this->createScripts($moduleInstallPath, $moduleName, $search);
+        $this->createViews($moduleInstallPath, $moduleName, $search);
+        $this->createLocales($moduleInstallPath, $moduleFullName, $moduleTable);
+        $this->createMigrations($moduleInstallPath, $moduleName, $moduleTable);
 
-        $this->files->makeDirectory($moduleInstallPath);
-        $this->files->makeDirectory($moduleInstallPath.'scripts/');
-        $this->files->makeDirectory($moduleInstallPath.'views/');
-        $this->files->makeDirectory($moduleInstallPath.'locales/');
-        $this->files->makeDirectory($moduleInstallPath.'migrations/');
-        
-        
+    }
+
+    private function tableToLocales($moduleTable)
+    {
+        $out = [];
+        foreach ($moduleTable as $field) {
+            if( ! isset($field['en']) || $field['column'] == 'serial_number'){
+                continue;
+            }
+            $out[$field['column']] = $field['en'];
+        }
+        return $out;
+    }
+
+    private function createMigrations($moduleInstallPath, $module, $moduleTable)
+    {
+        $this->call('make:migration', [
+            'path' => $moduleInstallPath,
+            '--field' => $this->tableToMigrationFields($moduleTable)
+        ]);
+    }
+    
+    private function tableToMigrationFields($moduleTable)
+    {
+        $out = [];
+        foreach ($moduleTable as $field) {
+            $out[] = implode(',', [
+                $field['column'],
+                $field['type'],
+                $field['index'] ?? '',
+            ]);
+        }
+        return $out;
+    }
+
+    private function tableToListingFields($module, $moduleTable)
+    {
+        $out = '';
+        foreach ($moduleTable as $field) {
+            if( ! isset($field['i18n']) || $field['column'] == 'serial_number'){
+                continue;
+            }
+            $out .= "    -   column: ".$module.".".$field['column']."\n";
+            $out .= "        i18n_header: ".$field['i18n']."\n";
+            if( $field['type'] == 'boolean'){
+                $out .= "        formatter: binaryYesNo\n";
+            }
+        }
+        return $out;
+    }
+
+    private function createLocales($moduleInstallPath, $moduleFullName, $moduleTable)
+    {
+        $localesdir = $moduleInstallPath.'locales/';
+        $this->files->makeDirectory($localesdir);
         $this->saveStub(
-            $moduleInstallPath.'provides.yml',
-            $this->populateStub(
-                $this->getStub('provides'),
-                ['MODULE'],
-                [$moduleName]
+            $localesdir.'en.json',
+            json_encode(
+                [
+                    'column' => $this->tableToLocales($moduleTable),
+                    'listing' => [
+                        'title' => $moduleFullName,
+                    ],
+                    'report' => [
+                        'title' => $moduleFullName,
+                    ],
+                    'title' => $moduleFullName,
+                    'widget' => [
+                        'title' => $moduleFullName . ' Widget',
+                    ]
+                ],
+                JSON_PRETTY_PRINT
             )
         );
-        $this->getStub('provides');
-        //cat "${DIR}/templates/provides.yml" | sed "s/MODULE/${MODULE}/g" > "${MODULE_PATH}/provides.yml"
+    }
 
+    private function createViews($moduleInstallPath, $module, $search)
+    {
+        $viewsdir = $moduleInstallPath.'views/';
+        $this->files->makeDirectory($viewsdir);
+        $this->loadReplaceAndSaveStub('listing', $viewsdir.$module.'_listing.yml', $search);
+        $this->loadReplaceAndSaveStub('report', $viewsdir.$module.'_report.yml', $search);
+        $this->loadReplaceAndSaveStub('widget', $viewsdir.$module.'_widget.yml', $search);
+        $this->loadReplaceAndSaveStub('client_tab', $viewsdir.$module.'_tab.php', $search);
+    }
 
-        // $this->call('email:send', [
-        //     'user' => 1, '--queue' => 'default'
-        // ]);
+    private function createBase($moduleInstallPath, $module, $search)
+    {
+        $this->files->makeDirectory($moduleInstallPath);
+        $this->loadReplaceAndSaveStub('provides', $moduleInstallPath.'provides.yml', $search);
+        $this->loadReplaceAndSaveStub('controller', $moduleInstallPath.$module.'_controller.php', $search);
+        $this->loadReplaceAndSaveStub('model', $moduleInstallPath.$module.'_model.php', $search);
+        $this->loadReplaceAndSaveStub('processor', $moduleInstallPath.$module.'_processor.php', $search);
+        $this->loadReplaceAndSaveStub('factory', $moduleInstallPath.$module.'_factory.php', $search);
+        $this->loadReplaceAndSaveStub('composer', $moduleInstallPath.'composer.json', $search);
+    }
 
+    private function createScripts($moduleInstallPath, $module, $search)
+    {
+        $scriptsdir = $moduleInstallPath.'scripts/';
+        $this->files->makeDirectory($scriptsdir);
+        $this->loadReplaceAndSaveStub('install', $scriptsdir.'install.sh', $search);
+        $this->loadReplaceAndSaveStub('uninstall', $scriptsdir.'uninstall.sh', $search);
+        $this->loadReplaceAndSaveStub('module_script', $scriptsdir.$module.'.sh', $search);
     }
 
     private function loadReplaceAndSaveStub($stub, $target, $search = [])
@@ -110,8 +204,7 @@ class ModuleCommand extends Command
             $target,
             $this->populateStub(
                 $this->getStub($stub),
-                array_keys($search),
-                array_values($search)
+                $search
             )
         );
     }
@@ -168,15 +261,15 @@ class ModuleCommand extends Command
         ];
         $field_number = 0;
         while($number_of_fields > $field_number++){
-            $field_name = $this->ask("What is the name of field $field_number?", "field$field_number");
+            $field_locale = $this->ask("What is the (short) English description of field $field_number?", "Field $field_number");
+            $field_name = $this->ask("What is the name of field $field_number?", Str::slug($field_locale, '_'));
             $field_type = $this->choice("What is the type of field $field_number?", $field_types, 0);
             $field_index = $this->choice("Create index for field $field_number?", ['yes', 'no'], 0);
-            $field_locale = $this->ask("What is the english description of field $field_number?", "Field $field_number");
             $table[$field_name] = [
                 'column' => $field_name,
                 'type' => $field_type,
                 'index' => $field_index,
-                'i18n' => "$name.$field_name",
+                'i18n' => "$name.column.$field_name",
                 'en' => $field_locale,
             ];
             $this->table(
