@@ -3,7 +3,7 @@ table:
     -   column: machine.computer_name
         i18n_header: listing.computername
         formatter: clientDetail
-        tab_link: MODULE-tab
+        tab_link: MODULE
     -   column: reportdata.serial_number
         i18n_header: serial
 LISTING
