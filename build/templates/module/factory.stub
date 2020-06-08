@@ -1,5 +1,8 @@
 <?php
 
+// Database seeder
+// Please visit https://github.com/fzaninotto/Faker for more options
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(CLASS_model::class, function (Faker\Generator $faker) {
 

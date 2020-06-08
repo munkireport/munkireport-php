@@ -7,6 +7,7 @@ use munkireport\lib\Modules as ModuleManager;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Symfony\Component\Yaml\Yaml;
 
 class ModuleCommand extends Command
 {
@@ -18,7 +19,9 @@ class ModuleCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:module';
+    protected $signature = 'make:module
+                            {--o|overwrite : Overwrite module if exists}
+    ';
 
     /**
      * The console command description.
@@ -48,6 +51,26 @@ class ModuleCommand extends Command
      */
     protected $fieldTypes = null;
 
+    /** 
+     * Module name
+     * 
+     * @var array
+     */
+    protected $moduleName = null;
+
+    /** 
+     * Module install path
+     * 
+     * @var array
+     */
+    protected $moduleInstallPath = null;
+
+    /** 
+     * Module table data
+     * 
+     * @var array
+     */
+    protected $moduleTable = null;
 
     /**
      * Create a new command instance.
@@ -60,7 +83,7 @@ class ModuleCommand extends Command
         $this->module_manager = new ModuleManager;
         $this->files = new Filesystem;
         $this->fieldTypes = [
-            'string' => ['faker' => 'word'],
+            'string' => ['faker' => 'word()'],
             'integer' => ['faker' => 'randomNumber($nbDigits = 4, $strict = false)'],
             'bigInteger' => ['faker' => 'randomNumber($nbDigits = 8, $strict = false)'],
             'boolean' => ['faker' => 'boolean()'],
@@ -79,41 +102,100 @@ class ModuleCommand extends Command
 
         $modulePath = $this->askInstallPath();        
         $moduleFullName = $this->askModuleName( $default = 'I ❤️ MunkiReport' );
-        $moduleName = Str::slug($moduleFullName, '_');
-        $moduleClassName = ucfirst($moduleName);
-        $this->files->deleteDirectory($modulePath.$moduleName);
-        $moduleInstallPath = $this->validateInstall($modulePath, $moduleName);
+        $this->moduleName = Str::slug($moduleFullName, '_');
+        if($this->option('overwrite')){
+            $this->comment('Overwriting previous module');
+            $this->files->deleteDirectory($modulePath.$this->moduleName);
+        }
+        $this->moduleInstallPath = $this->validateInstall($modulePath, $this->moduleName);
         $numberOfFields = $this->askNumberOfFields( $default = 3 );
-        $moduleTable = $this->askFieldDetails($numberOfFields, $moduleName);
+        $this->moduleTable = $this->askFieldDetails($numberOfFields, $this->moduleName);
 
         if($this->choice("Do you need to store more than one row per machine?", ["yes", "no"], 1) == "yes"){
-            $moduleTable['serial_number']['index'] = 'yes';
+            $this->moduleTable['serial_number']['index'] = 'yes';
         }
 
         $headers = ["Column", "Type", "Indexed", "English"];
-        $this->table($headers, $this->_toTable($moduleTable));
+        $this->table($headers, $this->_toTable($this->moduleTable));
 
         // if ( ! $this->confirm('Do you wish to continue?')) {
         //    throw new RuntimeException("Well that's too bad!");
         // }        
-        $search = [
-            'MODULE' => $moduleName,
-            'CLASS' => ucfirst($moduleName),
-            'LISTING' => $this->tableToListingFields($moduleName, $moduleTable),
-            'FAKER' => $this->tableToFaker($moduleTable),
-        ];
-        $this->createBase($moduleInstallPath, $moduleName, $search, $moduleTable);
-        $this->createScripts($moduleInstallPath, $moduleName, $search);
-        $this->createViews($moduleInstallPath, $moduleName, $search, $moduleTable);
-        $this->createLocales($moduleInstallPath, $moduleFullName, $moduleTable);
-        $this->createMigrations($moduleInstallPath, $moduleName, $moduleTable);
-
+        $search = $this->getSearchAndReplace();
+        $this->createBase($search);
+        $this->createScripts($search);
+        $this->createViews($search);
+        $this->createLocales($moduleFullName);
+        $this->createMigrations();
     }
 
-    private function tableToFaker($moduleTable)
+    private function getSearchAndReplace()
+    {
+        return [
+            'MODULE' => $this->moduleName,
+            'CLASS' => ucfirst($this->moduleName),
+            'LISTING' => $this->tableToListingFields(),
+            'FAKER' => $this->tableToFaker(),
+        ];
+    }
+
+    private function getWidgets()
+    {
+        $widgets = [];
+        foreach($this->moduleTable as $field)
+        {
+            if(! isset($field['widget']) || $field['widget'] == 'no'){
+                continue;
+            }
+            $name = $this->getWidgetName($field['column']);
+            $widgets[$name] = ['view' => $name . '_widget'];
+        }
+        return ['widgets' => $widgets];
+    }
+
+    private function createProvidesYaml()
+    {
+        $provides = $this->getProvidesBase();
+        
+        $this->yamlWrite(
+            $this->moduleInstallPath.'provides.yml',
+            array_merge($this->getProvidesBase(), $this->getWidgets())
+        );
+    }
+
+    private function getProvidesBase()
+    {
+        return [
+            'client_tabs' => [
+                $this->moduleName => [
+                    'view' => $this->moduleName.'_tab',
+                    'i18n' => $this->moduleName.'.title',
+                ],
+            ],
+            'listings' =>[
+                $this->moduleName => [        
+                    'view' => $this->moduleName.'_listing',
+                    'i18n' => $this->moduleName.'.listing.title',
+                ],
+            ],
+            'reports' =>[
+                $this->moduleName => [        
+                    'view' => $this->moduleName.'_report',
+                    'i18n' => $this->moduleName.'.report.title',
+                ],
+            ],
+        ];
+    }
+
+    private function yamlWrite($path, $data)
+    {
+        $this->saveStub($path, Yaml::dump($data, 3));
+    }
+
+    private function tableToFaker()
     {
         $out = '';
-        foreach ($moduleTable as $field) {
+        foreach ($this->moduleTable as $field) {
             if( ! isset($field['i18n']) || $field['column'] == 'serial_number'){
                 continue;
             }
@@ -132,10 +214,10 @@ class ModuleCommand extends Command
         return array_keys($this->fieldTypes);
     }
 
-    private function tableToLocales($moduleTable)
+    private function tableToLocales()
     {
         $out = [];
-        foreach ($moduleTable as $field) {
+        foreach ($this->moduleTable as $field) {
             if( ! isset($field['en']) || $field['column'] == 'serial_number'){
                 continue;
             }
@@ -144,18 +226,31 @@ class ModuleCommand extends Command
         return $out;
     }
 
-    private function createMigrations($moduleInstallPath, $module, $moduleTable)
+    private function tableToWidgets()
+    {
+        $out = [];
+        foreach ($this->moduleTable as $field) {
+            if( ! isset($field['en']) || $field['column'] == 'serial_number'){
+                continue;
+            }
+            $key = $field['column'].'_title';
+            $out[$key] = $field['en'] . ' Widget';
+        }
+        return $out;
+    }
+
+    private function createMigrations()
     {
         $this->call('make:migration', [
-            'path' => $moduleInstallPath,
-            '--field' => $this->tableToMigrationFields($moduleTable)
+            'path' => $this->moduleInstallPath,
+            '--field' => $this->tableToMigrationFields($this->moduleTable)
         ]);
     }
     
-    private function tableToMigrationFields($moduleTable)
+    private function tableToMigrationFields()
     {
         $out = [];
-        foreach ($moduleTable as $field) {
+        foreach ($this->moduleTable as $field) {
             $out[] = implode(',', [
                 $field['column'],
                 $field['type'],
@@ -165,14 +260,14 @@ class ModuleCommand extends Command
         return $out;
     }
 
-    private function tableToListingFields($module, $moduleTable)
+    private function tableToListingFields()
     {
         $out = '';
-        foreach ($moduleTable as $field) {
+        foreach ($this->moduleTable as $field) {
             if( ! isset($field['i18n']) || $field['column'] == 'serial_number'){
                 continue;
             }
-            $out .= "    -   column: ".$module.".".$field['column']."\n";
+            $out .= "    -   column: ".$this->moduleName.".".$field['column']."\n";
             $out .= "        i18n_header: ".$field['i18n']."\n";
             if( $field['type'] == 'boolean'){
                 $out .= "        formatter: binaryYesNo\n";
@@ -181,15 +276,15 @@ class ModuleCommand extends Command
         return $out;
     }
 
-    private function createLocales($moduleInstallPath, $moduleFullName, $moduleTable)
+    private function createLocales($moduleFullName)
     {
-        $localesdir = $moduleInstallPath.'locales/';
+        $localesdir = $this->moduleInstallPath.'locales/';
         $this->files->makeDirectory($localesdir);
         $this->saveStub(
             $localesdir.'en.json',
             json_encode(
                 [
-                    'column' => $this->tableToLocales($moduleTable),
+                    'column' => $this->tableToLocales($this->moduleTable),
                     'listing' => [
                         'title' => $moduleFullName,
                     ],
@@ -197,50 +292,77 @@ class ModuleCommand extends Command
                         'title' => $moduleFullName,
                     ],
                     'title' => $moduleFullName,
-                    'widget' => [
-                        'title' => $moduleFullName . ' Widget',
-                    ]
+                    'widget' => $this->tableToWidgets($this->moduleTable),
                 ],
                 JSON_PRETTY_PRINT
             )
         );
     }
 
-    private function createViews($moduleInstallPath, $module, $search, $moduleTable)
+    private function createViews($search)
     {
-        $viewsdir = $moduleInstallPath.'views/';
+        $viewsdir = $this->moduleInstallPath.'views/';
         $this->files->makeDirectory($viewsdir);
-        $this->loadReplaceAndSaveStub('listing', $viewsdir.$module.'_listing.yml', $search);
-        $this->loadReplaceAndSaveStub('report', $viewsdir.$module.'_report.yml', $search);
-        $this->loadReplaceAndSaveStub('client_tab', $viewsdir.$module.'_tab.php', $search);
-        foreach($moduleTable as $field){
-            if( ! isset($field['i18n']) || $field['column'] == 'serial_number'){
+        $this->loadReplaceAndSaveStub('listing', $viewsdir.$this->moduleName.'_listing.yml', $search);
+        $this->loadReplaceAndSaveStub('client_tab', $viewsdir.$this->moduleName.'_tab.php', $search);
+        $this->createWidgets($viewsdir, $search);
+        $this->createReportYaml($viewsdir);
+    }
+
+    private function createWidgets($viewsdir, $search)
+    {
+        foreach($this->moduleTable as $field)
+        {
+            if(! isset($field['widget']) || $field['widget'] == 'no'){
                 continue;
             }
+
             $search['COLUMN'] = $field['column'];
-            $this->loadReplaceAndSaveStub('widget', $viewsdir.$module.'_'.$field['column'].'_widget.yml', $search);
+            $this->loadReplaceAndSaveStub(
+                $field['widget'].'widget',
+                $viewsdir.$this->getWidgetName($field['column']).'_widget.yml',
+                $search
+            );
         }
 
     }
 
-    private function createBase($moduleInstallPath, $module, $search)
+    private function createReportYaml($viewsdir)
     {
-        $this->files->makeDirectory($moduleInstallPath);
-        $this->loadReplaceAndSaveStub('provides', $moduleInstallPath.'provides.yml', $search);
-        $this->loadReplaceAndSaveStub('controller', $moduleInstallPath.$module.'_controller.php', $search);
-        $this->loadReplaceAndSaveStub('model', $moduleInstallPath.$module.'_model.php', $search);
-        $this->loadReplaceAndSaveStub('processor', $moduleInstallPath.$module.'_processor.php', $search);
-        $this->loadReplaceAndSaveStub('composer', $moduleInstallPath.'composer.json', $search);
-        $this->loadReplaceAndSaveStub('factory', $moduleInstallPath.$module.'_factory.php', $search);
+        $widgets = $this->getWidgets();
+        array_walk($widgets['widgets'], function(&$value, $key){
+            $value = [];
+        });
+        
+        $this->yamlWrite(
+            $viewsdir.$this->moduleName.'_report.yml',
+            ['row1' => $widgets['widgets']]
+        );
     }
 
-    private function createScripts($moduleInstallPath, $module, $search)
+    private function getWidgetName($column)
     {
-        $scriptsdir = $moduleInstallPath.'scripts/';
+        return $this->moduleName.'_'.$column;
+    }
+
+    private function createBase($search)
+    {
+        $this->files->makeDirectory($this->moduleInstallPath);
+        $this->loadReplaceAndSaveStub('composer', $this->moduleInstallPath.'composer.json', $search);
+        $this->loadReplaceAndSaveStub('controller', $this->moduleInstallPath.$this->moduleName.'_controller.php', $search);
+        $this->loadReplaceAndSaveStub('model', $this->moduleInstallPath.$this->moduleName.'_model.php', $search);
+        $this->loadReplaceAndSaveStub('processor', $this->moduleInstallPath.$this->moduleName.'_processor.php', $search);
+        $this->loadReplaceAndSaveStub('factory', $this->moduleInstallPath.$this->moduleName.'_factory.php', $search);
+        $this->createProvidesYaml();
+    }
+
+    private function createScripts($search)
+    {
+        $scriptsdir = $this->moduleInstallPath.'scripts/';
         $this->files->makeDirectory($scriptsdir);
         $this->loadReplaceAndSaveStub('install', $scriptsdir.'install.sh', $search);
         $this->loadReplaceAndSaveStub('uninstall', $scriptsdir.'uninstall.sh', $search);
-        $this->loadReplaceAndSaveStub('module_script', $scriptsdir.$module.'.sh', $search);
+        $this->loadReplaceAndSaveStub('module_script', $scriptsdir.$this->moduleName.'.sh', $search);
     }
 
     private function loadReplaceAndSaveStub($stub, $target, $search = [])
@@ -304,12 +426,14 @@ class ModuleCommand extends Command
             $field_name = $this->ask("What is the name of field $field_number?", Str::slug($field_locale, '_'));
             $field_type = $this->choice("What is the type of field $field_number?", $field_types, 0);
             $field_index = $this->choice("Create index for field $field_number?", ['yes', 'no'], 0);
+            $field_widget = $this->choice("Create widget for field $field_number?", ['scrollbox', 'bargraph', 'no'], 0);
             $table[$field_name] = [
                 'column' => $field_name,
                 'type' => $field_type,
                 'index' => $field_index,
                 'i18n' => "$name.column.$field_name",
                 'en' => $field_locale,
+                'widget' => $field_widget,
             ];
             $this->table(
                 array_keys( $table[$field_name] ),
