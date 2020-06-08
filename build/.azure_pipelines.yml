@@ -67,7 +67,13 @@ stages:
 
     - script: php ./database/faker.php --locale=de_DE --records=500
     
-    - script: echo "RewriteEngine on\nRewriteCond %{HTTP_HOST} munkireport\.azurewebsites\.net [NC]\nRewriteCond %{REQUEST_URI} ^/$\nRewriteRule ^(.*)$ /public/$1 [L]" > .htaccess
+    - script: echo "RewriteEngine on" >> .htaccess
+    
+    - script: echo "RewriteCond %{HTTP_HOST} munkireport\.azurewebsites\.net [NC]" >> .htaccess
+    
+    - script: echo "RewriteCond %{REQUEST_URI} ^/$" >> .htaccess
+    
+    - script: echo "RewriteRule ^(.*)$ /public/$1 [L]" >> .htaccess
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
