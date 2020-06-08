@@ -41,6 +41,14 @@ class ModuleCommand extends Command
      */
     protected $files = null;
 
+    /** 
+     * Array holding field types
+     * 
+     * @var array
+     */
+    protected $fieldTypes = null;
+
+
     /**
      * Create a new command instance.
      *
@@ -51,6 +59,13 @@ class ModuleCommand extends Command
         parent::__construct();
         $this->module_manager = new ModuleManager;
         $this->files = new Filesystem;
+        $this->fieldTypes = [
+            'string' => ['faker' => 'word'],
+            'integer' => ['faker' => 'randomNumber($nbDigits = 4, $strict = false)'],
+            'bigInteger' => ['faker' => 'randomNumber($nbDigits = 8, $strict = false)'],
+            'boolean' => ['faker' => 'boolean()'],
+            'text' => ['fake' => 'text($maxNbChars = 200)'],
+        ];
     }
 
     /**
@@ -85,13 +100,36 @@ class ModuleCommand extends Command
             'MODULE' => $moduleName,
             'CLASS' => ucfirst($moduleName),
             'LISTING' => $this->tableToListingFields($moduleName, $moduleTable),
+            'FAKER' => $this->tableToFaker($moduleTable),
         ];
-        $this->createBase($moduleInstallPath, $moduleName, $search);
+        $this->createBase($moduleInstallPath, $moduleName, $search, $moduleTable);
         $this->createScripts($moduleInstallPath, $moduleName, $search);
-        $this->createViews($moduleInstallPath, $moduleName, $search);
+        $this->createViews($moduleInstallPath, $moduleName, $search, $moduleTable);
         $this->createLocales($moduleInstallPath, $moduleFullName, $moduleTable);
         $this->createMigrations($moduleInstallPath, $moduleName, $moduleTable);
 
+    }
+
+    private function tableToFaker($moduleTable)
+    {
+        $out = '';
+        foreach ($moduleTable as $field) {
+            if( ! isset($field['i18n']) || $field['column'] == 'serial_number'){
+                continue;
+            }
+            $out .= $this->getFakerString($field);            
+        }
+        return substr($out, 0, -1);
+    }
+
+    private function getFakerString($field)
+    {
+        return "        '".$field['column']."' => \$faker->".$this->fieldTypes[$field['type']]['faker'].",\n";
+    }
+
+    private function getFieldTypes()
+    {
+        return array_keys($this->fieldTypes);
     }
 
     private function tableToLocales($moduleTable)
@@ -168,14 +206,21 @@ class ModuleCommand extends Command
         );
     }
 
-    private function createViews($moduleInstallPath, $module, $search)
+    private function createViews($moduleInstallPath, $module, $search, $moduleTable)
     {
         $viewsdir = $moduleInstallPath.'views/';
         $this->files->makeDirectory($viewsdir);
         $this->loadReplaceAndSaveStub('listing', $viewsdir.$module.'_listing.yml', $search);
         $this->loadReplaceAndSaveStub('report', $viewsdir.$module.'_report.yml', $search);
-        $this->loadReplaceAndSaveStub('widget', $viewsdir.$module.'_widget.yml', $search);
         $this->loadReplaceAndSaveStub('client_tab', $viewsdir.$module.'_tab.php', $search);
+        foreach($moduleTable as $field){
+            if( ! isset($field['i18n']) || $field['column'] == 'serial_number'){
+                continue;
+            }
+            $search['COLUMN'] = $field['column'];
+            $this->loadReplaceAndSaveStub('widget', $viewsdir.$module.'_'.$field['column'].'_widget.yml', $search);
+        }
+
     }
 
     private function createBase($moduleInstallPath, $module, $search)
@@ -185,8 +230,8 @@ class ModuleCommand extends Command
         $this->loadReplaceAndSaveStub('controller', $moduleInstallPath.$module.'_controller.php', $search);
         $this->loadReplaceAndSaveStub('model', $moduleInstallPath.$module.'_model.php', $search);
         $this->loadReplaceAndSaveStub('processor', $moduleInstallPath.$module.'_processor.php', $search);
-        $this->loadReplaceAndSaveStub('factory', $moduleInstallPath.$module.'_factory.php', $search);
         $this->loadReplaceAndSaveStub('composer', $moduleInstallPath.'composer.json', $search);
+        $this->loadReplaceAndSaveStub('factory', $moduleInstallPath.$module.'_factory.php', $search);
     }
 
     private function createScripts($moduleInstallPath, $module, $search)
@@ -252,13 +297,7 @@ class ModuleCommand extends Command
                 'i18n' => 'reportdata.serial_number',
             ],
         ];
-        $field_types = [
-            'string',
-            'integer',
-            'bigInteger',
-            'boolean',
-            'text',
-        ];
+        $field_types = $this->getFieldTypes();
         $field_number = 0;
         while($number_of_fields > $field_number++){
             $field_locale = $this->ask("What is the (short) English description of field $field_number?", "Field $field_number");
