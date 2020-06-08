@@ -136,7 +136,20 @@ class ModuleCommand extends Command
             'CLASS' => ucfirst($this->moduleName),
             'LISTING' => $this->tableToListingFields(),
             'FAKER' => $this->tableToFaker(),
+            'FILLABLE' => $this->getFillable(),
         ];
+    }
+
+    private function getFillable()
+    {
+        $fillable = '';
+        foreach ($this->moduleTable as $field) {
+            if( $field['column'] == 'id' || $field['column'] == 'serial_number'){
+                continue;
+            }
+            $fillable .= "      '" . $field['column'] . "',\n";
+        }
+        return $fillable;
     }
 
     private function getWidgets()
@@ -359,10 +372,30 @@ class ModuleCommand extends Command
     private function createScripts($search)
     {
         $scriptsdir = $this->moduleInstallPath.'scripts/';
+        $this->createModuleScriptSearch($search);
         $this->files->makeDirectory($scriptsdir);
         $this->loadReplaceAndSaveStub('install', $scriptsdir.'install.sh', $search);
         $this->loadReplaceAndSaveStub('uninstall', $scriptsdir.'uninstall.sh', $search);
         $this->loadReplaceAndSaveStub('module_script', $scriptsdir.$this->moduleName.'.sh', $search);
+    }
+
+    private function createModuleScriptSearch(&$search)
+    {
+        $logic = "# Replace 'echo' in the following lines with the data collection commands for your module.\n";
+        $dataoutput = '';
+        $count = 0;
+        foreach ($this->moduleTable as $field) {
+            if( ! isset($field['i18n']) || $field['column'] == 'serial_number'){
+                continue;
+            }
+            $fieldName = $field['column'];
+            $uppercaseField = strtoupper($fieldName);
+            $logic .= "$uppercaseField=\$(echo)\n";
+            $redirect = $count++ ? '>' : '';
+            $dataoutput .= "echo \"$fieldName\${SEPARATOR}\${".$uppercaseField."}\" >$redirect \${OUTPUT_FILE}\n";
+        }
+        $search['LOGIC'] = $logic;
+        $search['DATAOUTPUT'] = $dataoutput;
     }
 
     private function loadReplaceAndSaveStub($stub, $target, $search = [])
