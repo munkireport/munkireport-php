@@ -133,7 +133,9 @@ class MigrationCommand extends Command
                 continue;
             }
             $columns .= $this->renderColumnDefinition($name, $type);
-            $indexes .= $this->renderIndexDefinition($name);
+            if($indexed == 'yes'){
+                $indexes .= $this->renderIndexDefinition($name);
+            }
         }
         // If serial_number is not defined, assume it needs to be unique
         if(! $serial_number_found ){
