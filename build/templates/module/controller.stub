@@ -30,12 +30,13 @@ class CLASS_controller extends Module_controller
         );
     }
 
-    public function get_list()
+    public function get_list($column = '')
     {
         jsonView(
-            CLASS_model::selectRaw('item1, count(*) AS count')
+            CLASS_model::select($column . 'AS label')
+                ->selectRaw('count(*) AS count')
                 ->filter()
-                ->groupBy('item1')
+                ->groupBy($column)
                 ->orderBy('count', 'desc')
                 ->get()
                 ->toArray()
