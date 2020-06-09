@@ -115,18 +115,24 @@ class ModuleCommand extends Command
             $this->moduleTable['serial_number']['index'] = 'yes';
         }
 
+        $this->info('Proposed database layout:');
         $headers = ["Column", "Type", "Indexed", "English"];
         $this->table($headers, $this->_toTable($this->moduleTable));
 
-        // if ( ! $this->confirm('Do you wish to continue?')) {
-        //    throw new RuntimeException("Well that's too bad!");
-        // }        
+        if ( ! $this->confirm('Do you wish to continue?', 'yes')) {
+           throw new RuntimeException("Better next time!");
+        }
+
         $search = $this->getSearchAndReplace();
         $this->createBase($search);
         $this->createScripts($search);
         $this->createViews($search);
         $this->createLocales($moduleFullName);
         $this->createMigrations();
+
+        $this->comment("Your module is ready! It's available here:\n");
+        $this->comment($this->moduleInstallPath);
+
     }
 
     private function getSearchAndReplace()
@@ -256,7 +262,8 @@ class ModuleCommand extends Command
     {
         $this->call('make:migration', [
             'path' => $this->moduleInstallPath,
-            '--field' => $this->tableToMigrationFields($this->moduleTable)
+            '--field' => $this->tableToMigrationFields($this->moduleTable),
+            '--quiet' => true,
         ]);
     }
     
