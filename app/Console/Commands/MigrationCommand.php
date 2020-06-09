@@ -80,7 +80,9 @@ class MigrationCommand extends Command
                 ]
             )
         );
-        $this->info("Created migration at ${migrations_dir}${filename}");
+        if( ! $this->option('quiet') ){
+            $this->info("Created migration at ${migrations_dir}${filename}");
+        }
     }
 
     public function validateMigrationName($migrations_dir, $migration_name, $module)
