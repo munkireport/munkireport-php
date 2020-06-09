@@ -26,6 +26,7 @@ $app = new Application($container, $dispatcher, $version);
 
 $app->setCatchExceptions(true);
 
+$app->add(new App\Console\Commands\MigrateCommand);
 $app->add(new App\Console\Commands\ModuleCommand);
 $app->add(new App\Console\Commands\MigrationCommand);
 
