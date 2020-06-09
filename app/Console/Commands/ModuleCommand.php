@@ -459,7 +459,7 @@ class ModuleCommand extends Command
             $field_name = $this->ask("What is the name of field $field_number?", Str::slug($field_locale, '_'));
             $field_type = $this->choice("What is the type of field $field_number?", $field_types, 0);
             $field_index = $this->choice("Create index for field $field_number?", ['yes', 'no'], 0);
-            $field_widget = $this->choice("Create widget for field $field_number?", ['scrollbox', 'bargraph', 'no'], 0);
+            $field_widget = $this->askWidget($field_type, $field_number);
             $table[$field_name] = [
                 'column' => $field_name,
                 'type' => $field_type,
@@ -476,9 +476,20 @@ class ModuleCommand extends Command
         return $table;
     }
 
-    private function _createMigration($table, $path)
+    private function askWidget($widgetType, $field_number)
     {
-        # code...
+        switch($widgetType)
+        {
+            case 'boolean':
+                $choice = ['button', 'no'];
+                break;
+            case 'string':
+                $choice = ['scrollbox', 'bargraph', 'no'];
+                break;
+            default:
+                return 'no';
+        }
+        return $this->choice("Create widget for field $field_number?", $choice, 0);
     }
 
     private function _toTable($table)

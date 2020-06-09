@@ -1,0 +1,13 @@
+type: button
+widget_id: MODULE-COLUMN-button-widget
+api_url: /module/MODULE/get_list/COLUMN
+i18n_title: MODULE.widget.COLUMN_title
+icon: fa-laptop
+listing_link: /show/listing/MODULE/MODULE
+buttons:
+  - label: "0"
+    i18n_label: off
+    class: btn-danger
+  - label: "1"
+    i18n_label: on
+    class: btn-success
