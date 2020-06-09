@@ -253,7 +253,7 @@ class ModuleCommand extends Command
                 continue;
             }
             $key = $field['column'].'_title';
-            $out[$key] = $field['en'] . ' Widget';
+            $out[$key] = $field['en'];
         }
         return $out;
     }
