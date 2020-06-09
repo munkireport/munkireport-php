@@ -92,6 +92,7 @@
         "illuminate/events": "^5.8"
     },
     "autoload": {
+        "classmap": ["app/Console/Commands/FakerDataStore.php"],
         "psr-4": {
             "munkireport\\models\\": "app/models/",
             "munkireport\\processors\\": "app/processors/",
