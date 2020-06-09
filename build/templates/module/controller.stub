@@ -22,7 +22,8 @@ class CLASS_controller extends Module_controller
     public function get_data($serial_number = '')
     {
         jsonView(
-            CLASS_model::whereSerialNumber($serial_number)
+            CLASS_model::select('MODULE.*')
+            ->whereSerialNumber($serial_number)
             ->filter()
             ->limit(1)
             ->first()

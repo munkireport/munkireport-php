@@ -6,6 +6,8 @@ class CLASS_model extends Eloquent
 {
     protected $table = 'MODULE';
 
+    protected $hidden = ['id', 'serial_number'];
+
     protected $fillable = [
       'serial_number',
 FILLABLE
