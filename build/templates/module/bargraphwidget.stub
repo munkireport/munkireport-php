@@ -1,0 +1,7 @@
+type: bargraph
+widget_id: MODULE-COLUMN-bargraph-widget
+api_url: /module/MODULE/get_list/COLUMN
+i18n_title: MODULE.widget.COLUMN_title
+icon: fa-laptop
+listing_link: /show/listing/MODULE/MODULE
+margin: {left: 150}

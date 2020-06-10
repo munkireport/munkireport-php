@@ -2,13 +2,14 @@
 
 use munkireport\models\MRModel as Eloquent;
 
-class MODULE_model extends Eloquent
+class CLASS_model extends Eloquent
 {
     protected $table = 'MODULE';
 
+    protected $hidden = ['id', 'serial_number'];
+
     protected $fillable = [
       'serial_number',
-      'item1',
-      'item2',
+FILLABLE
     ];
 }

@@ -8,20 +8,17 @@ class CLASSNAME extends Migration
     public function up()
     {
         $capsule = new Capsule();
-        $capsule::schema()->create('MODULE', function (Blueprint $table) {
+        $capsule::schema()->create('TABLENAME', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial_number')->unique();
-            $table->string('item1');
-            $table->integer('item2');
-
-            $table->index('item1');
-            $table->index('item2');
+            $table->string('serial_number');
+//COLUMNS
+//INDEXES
         });
     }
     
     public function down()
     {
         $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('MODULE');
+        $capsule::schema()->dropIfExists('TABLENAME');
     }
 }

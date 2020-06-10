@@ -1,0 +1,17 @@
+<div id="MODULE-tab"></div>
+<h2 data-i18n="MODULE.title"></h2>
+
+<table id="MODULE-tab-table"></table>
+
+<script>
+$(document).on('appReady', function(){
+    $.getJSON(appUrl + '/module/MODULE/get_data/' + serialNumber, function(data){
+        var table = $('#MODULE-tab-table');
+        $.each(data, function(key,val){
+            var th = $('<th>').text(i18n.t('MODULE.column.' + key));
+            var td = $('<td>').text(val);
+            table.append($('<tr>').append(th, td));
+        });
+    });
+});
+</script>

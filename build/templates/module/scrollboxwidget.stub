@@ -1,0 +1,8 @@
+type: scrollbox
+widget_id: MODULE-COLUMN-scrollbox-widget
+api_url: /module/MODULE/get_list/COLUMN
+i18n_title: MODULE.widget.COLUMN_title
+icon: fa-laptop
+listing_link: /show/listing/MODULE/MODULE
+search_key: label
+badge: count

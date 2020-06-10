@@ -2,7 +2,7 @@
 
 use munkireport\processors\Processor;
 
-class MODULE_processor extends Processor
+class CLASS_processor extends Processor
 {
     public function run($data)
     {
@@ -17,7 +17,7 @@ class MODULE_processor extends Processor
             }
 		} //end foreach explode lines
 
-        MODULE_model::updateOrCreate(
+        CLASS_model::updateOrCreate(
             ['serial_number' => $this->serial_number], $modelData
         );
         
