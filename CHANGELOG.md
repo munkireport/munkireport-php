@@ -1,4 +1,42 @@
-### [5.5.2](https://github.com/munkireport/munkireport-php/compare/v5.5.1...wip) (Unreleased)
+### [5.6.0](https://github.com/munkireport/munkireport-php/compare/v5.5.1...wip) (Unreleased)
+
+MDOYVR 2020 Release
+
+This release brings the `please` command that replaces the following scripts:
+
+  - `./build/addmigration` is now `./please make:migration`
+  - `./build/addmodule.sh` is now `./please make:module`
+  - `php ./database/migrate.php` is now `./please migrate`
+  - `php ./database/faker.php` is now `./please db:seed`
+
+For more information about the `please` command, run `please help`
+
+Minimum version of PHP is now 7.2.5
+
+MODULE UPDATES
+
+  - munkireport/filevault_status (v1.4 => v1.5)
+  - munkireport/location (v1.5 => v1.6)
+  - munkireport/network_shares (v1.2 => v1.3)
+  - munkireport/supported_os (v2.0 => v2.1)
+  - munkireport/users (v1.3 => v1.4)
+  - munkireport/warranty (v4.3 => v4.4)
+
+DEPENDENCY UPDATES
+
+  - phpoption/phpoption (1.7.3 => 1.7.4)
+  - vlucas/phpdotenv (v4.1.6 => v4.1.7)
+  - symfony/yaml (v3.4.40 => v3.4.41)
+  - symfony/polyfill-php80 (v1.17.0)
+  - symfony/var-dumper (v5.0.8 => v5.1.0)
+  - symfony/console (v4.4.8 => v4.4.9)
+  - symfony/process (v4.4.8 => v4.4.9)
+  - doctrine/inflector (1.4.2 => 1.4.3)
+  - symfony/translation (v4.4.8 => v4.4.9)
+  - nesbot/carbon (2.34.2 => 2.35.0)
+  - symfony/finder (v4.4.8 => v4.4.9)
+  - illuminate/events (v5.8.36)
+
 
 ### [5.5.1](https://github.com/munkireport/munkireport-php/compare/v5.5.0...wip) (May 28, 2020) 
 
