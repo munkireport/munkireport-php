@@ -1,7 +1,0 @@
-type: scrollbox
-widget_id: MODULE-widget
-api_url: /module/MODULE/get_list
-i18n_title: MODULE.widget.title
-icon: fa-laptop
-listing_link: /show/listing/MODULE/MODULE
-search_key: item1

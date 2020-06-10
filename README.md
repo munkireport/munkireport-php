@@ -31,7 +31,7 @@ System Requirements
 ### Serverside:
 
 * A webserver (runs fine with Apache, IIS and nginx)
-* php version 7.0 or higher with pdo-sqlite3 and libxml
+* php version 7.2.5 or higher with pdo-sqlite3 and libxml
 
 ### Clientside
 
@@ -42,11 +42,16 @@ Mailing lists
 
 For questions about using MunkiReport or setting up MunkiReport, you can use:
 
-http://groups.google.com/group/munkireport
+https://groups.google.com/group/munkireport
 
 For developers who want to contribute to the project:
 
-http://groups.google.com/group/munkireport-dev
+https://groups.google.com/group/munkireport-dev
+
+For security related issues, please use the private mailinglist:
+
+https://groups.google.com/group/munkireport-security
+
 
 Contributing
 ---

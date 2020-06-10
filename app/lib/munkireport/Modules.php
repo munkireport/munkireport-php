@@ -49,6 +49,16 @@ class Modules
     }
 
     /**
+     * Retrieve moduleSearchPaths
+     *
+     * @return return array
+     */
+    public function getModuleSearchPaths()
+    {
+        return $this->moduleSearchPaths;
+    }
+
+    /**
      * Retrieve moduleModelPath
      *
      *

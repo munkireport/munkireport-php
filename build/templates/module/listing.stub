@@ -1,0 +1,9 @@
+i18n_title: MODULE.listing.title
+table:
+    -   column: machine.computer_name
+        i18n_header: listing.computername
+        formatter: clientDetail
+        tab_link: MODULE
+    -   column: reportdata.serial_number
+        i18n_header: serial
+LISTING
