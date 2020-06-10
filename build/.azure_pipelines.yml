@@ -57,15 +57,15 @@ stages:
 
     - script: chmod -R 777 ./app/db/
           
-    - script: php ./database/migrate.php
+    - script: php ./please migrate
     
-    - script: php ./database/faker.php --records=500
+    - script: php ./please db:seed --records=500
 
-    - script: php ./database/faker.php --locale=nl_NL --records=500
+    - script: php ./please db:seed --locale=nl_NL --records=500
 
-    - script: php ./database/faker.php --locale=es_ES --records=500
+    - script: php ./please db:seed --locale=es_ES --records=500
 
-    - script: php ./database/faker.php --locale=de_DE --records=500
+    - script: php ./please db:seed --locale=de_DE --records=500
     
     - script: echo "RewriteEngine on" >> .htaccess
     
