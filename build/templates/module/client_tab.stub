@@ -10,7 +10,7 @@ $(document).on('appReady', function(){
         $.each(data, function(key,val){
             var th = $('<th>').text(i18n.t('MODULE.column.' + key));
             var td = $('<td>').text(val);
-            table.append($('<tr>').append(th));
+            table.append($('<tr>').append(th, td));
         });
     });
 });
