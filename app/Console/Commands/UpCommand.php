@@ -19,7 +19,7 @@ class UpCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Bring the application out of maintenance mode';
+    protected $description = 'Bring MunkiReport out of maintenance mode';
 
     /**
      * Execute the console command.
@@ -30,14 +30,14 @@ class UpCommand extends Command
     {
         try {
             if (! file_exists(storage_path('framework/down'))) {
-                $this->comment('Application is already up.');
+                $this->comment('MunkiReport is already up.');
 
                 return true;
             }
 
             unlink(storage_path('framework/down'));
 
-            $this->info('Application is now live.');
+            $this->info('MunkiReport is now live.');
         } catch (Exception $e) {
             $this->error('Failed to disable maintenance mode.');
 
