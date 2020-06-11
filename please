@@ -33,5 +33,8 @@ $app->add(new App\Console\Commands\MigrateCommand);
 $app->add(new App\Console\Commands\ModuleCommand);
 $app->add(new App\Console\Commands\MigrationCommand);
 $app->add(new App\Console\Commands\SeedCommand);
+$app->add(new App\Console\Commands\UpCommand);
+$app->add(new App\Console\Commands\DownCommand);
+
 
 $app->run();

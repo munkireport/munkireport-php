@@ -468,6 +468,9 @@ return [
     // Path to modules directory, with trailing slash
     'module_path' => APP_ROOT . "/vendor/munkireport/",
 
+    // Path to storage directory
+    'storage_path' => env('STORAGE_PATH', APP_ROOT . "/storage/"),
+
     // Routes
     'routes' => [
         'module(/.*)?' => "module/load$1",
