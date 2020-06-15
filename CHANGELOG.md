@@ -1,3 +1,22 @@
+### [5.6.1](https://github.com/munkireport/munkireport-php/compare/v5.6.0...wip) (June 15, 2020) 
+
+Small release to fix an issue with the Docker container
+
+FIXES
+  - Docker file now runs ./please migrate
+
+FEATURES
+  - You can now use ./please down and ./please up to enter or exit maintenance mode
+
+DEPENDENCY UPDATES
+  - symfony/console (v4.4.9 => v4.4.10)
+  - symfony/process (v4.4.9 => v4.4.10)
+  - symfony/translation (v4.4.9 => v4.4.10)
+  - symfony/finder (v4.4.9 => v4.4.10)
+  - symfony/yaml (v3.4.41 => v3.4.42)
+  - symfony/var-dumper (v5.1.0 => v5.1.2)
+
+
 ### [5.6.0](https://github.com/munkireport/munkireport-php/compare/v5.5.1...wip) (June 10, 2020) 🙏
 
 MDOYVR 2020 Release

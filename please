@@ -23,7 +23,7 @@ configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
 
 $container = new Container;
 $dispatcher = new Dispatcher;
-$version = "5.8"; // Laravel version
+$version = "MunkiReport"; // Laravel version
 
 $app = new Application($container, $dispatcher, $version);
 
@@ -33,5 +33,7 @@ $app->add(new App\Console\Commands\MigrateCommand);
 $app->add(new App\Console\Commands\ModuleCommand);
 $app->add(new App\Console\Commands\MigrationCommand);
 $app->add(new App\Console\Commands\SeedCommand);
+$app->add(new App\Console\Commands\UpCommand);
+$app->add(new App\Console\Commands\DownCommand);
 
 $app->run();

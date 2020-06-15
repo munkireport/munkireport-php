@@ -45,10 +45,9 @@ RUN composer install --no-dev && \
     composer dumpautoload -o
 
 RUN mkdir -p app/db && \
-    touch app/db/db.sqlite && \
     chmod -R 777 app/db
 
-RUN php database/migrate.php
+RUN php please migrate
 
 RUN rm -rf /var/www/html && \
     ln -s /var/munkireport/public /var/www/html

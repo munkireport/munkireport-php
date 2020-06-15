@@ -4,7 +4,7 @@ use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\D
 use munkireport\lib\User;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.6.0.4200';
+$GLOBALS['version'] = '5.6.1.4210';
 
 // Return version without commit count
 function get_version()
@@ -483,6 +483,11 @@ function is_archived_filter_on(){
 function is_archived_only_filter_on(){
     return isset($_SESSION['filter']['archived_only']) &&
                 $_SESSION['filter']['archived_only'];
+}
+
+function storage_path($append = "")
+{
+    return conf('storage_path') . $append;
 }
 
 
