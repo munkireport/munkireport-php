@@ -1,4 +1,6 @@
-### [5.6.1](https://github.com/munkireport/munkireport-php/compare/v5.6.0...wip) (Unreleased)
+### [5.6.2](https://github.com/munkireport/munkireport-php/compare/v5.6.1...wip) (Unreleased)
+
+### [5.6.1](https://github.com/munkireport/munkireport-php/compare/v5.6.0...wip) (June 15, 2020) 
 
 Small release to fix an issue with the Docker container
 
