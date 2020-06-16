@@ -100,11 +100,13 @@ class BusinessUnit
     private function _updateUnitGroups(&$post_array, &$out)
     {
         // Translate groups to single entries
-        $translate = array(
+        $translate = [
             'keys' => 'key',
             'machine_groups' => 'machine_group',
             'users' => 'user',
-            'managers' => 'manager');
+            'managers' => 'manager',
+            'archivers' => 'archiver',
+        ];
         
 
         foreach ($post_array as $property => $val) {

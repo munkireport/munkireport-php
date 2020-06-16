@@ -176,6 +176,9 @@ class Admin extends Controller
                 case 'manager':
                     $out[$obj->unitid]['managers'][] = $obj->value;
                     break;
+                case 'archiver':
+                    $out[$obj->unitid]['archivers'][] = $obj->value;
+                    break;
                 case 'machine_group':
                     $out[$obj->unitid]['machine_groups'][] = intval($obj->value);
                     break;
