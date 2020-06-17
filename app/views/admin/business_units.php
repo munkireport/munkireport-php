@@ -694,7 +694,7 @@
 					users = ''
 					managers = '',
 					archivers = '',
-          link = '';
+					link = '';
 
 				if(data.users)
 				{
@@ -729,12 +729,12 @@
 					});
 				}
 
-        if(data.link){
-          link = $('<a>')
-                    .attr('href', data.link)
-                    .attr('target', '_blank')
-                    .text(i18n.t('admin.bu.more_info'));
-        }
+				if(data.link){
+				link = $('<a>')
+							.attr('href', data.link)
+							.attr('target', '_blank')
+							.text(i18n.t('admin.bu.more_info'));
+				}
 
 				var editButton = $('<button>')
 										.addClass('btn btn-default btn-xs pull-right')

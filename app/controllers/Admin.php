@@ -58,9 +58,15 @@ class Admin extends Controller
 
                 // Update business unit membership
                 if ($property == 'business_unit') {
-                    Business_unit::where('property', 'machine_group')
-                        ->where('value', $_POST['groupid'])
-                        ->update(['unitid' => $val]);
+                    Business_unit::updateOrCreate(
+                        [
+                            'property' => 'machine_group',
+                            'value' => $_POST['groupid'],
+                        ],
+                        [
+                            'unitid' => $val,
+                        ]
+                    );
                     $out['business_unit'] = intval($val);
                     continue;
                 }
@@ -167,7 +173,12 @@ class Admin extends Controller
         // Initialize
             $obj = (object) $obj;
             if (! isset($out[$obj->unitid])) {
-                $out[$obj->unitid] = ['users' => [], 'managers' => [], 'machine_groups' => []];
+                $out[$obj->unitid] = [
+                    'users' => [],
+                    'managers' => [],
+                    'archivers' => [],
+                    'machine_groups' => [],
+                ];
             }
             switch ($obj->property) {
                 case 'user':
@@ -175,6 +186,9 @@ class Admin extends Controller
                     break;
                 case 'manager':
                     $out[$obj->unitid]['managers'][] = $obj->value;
+                    break;
+                case 'archiver':
+                    $out[$obj->unitid]['archivers'][] = $obj->value;
                     break;
                 case 'machine_group':
                     $out[$obj->unitid]['machine_groups'][] = intval($obj->value);
