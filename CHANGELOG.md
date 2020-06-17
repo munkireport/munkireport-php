@@ -1,4 +1,4 @@
-### [5.6.2](https://github.com/munkireport/munkireport-php/compare/v5.6.1...wip) (Unreleased)
+### [5.6.2](https://github.com/munkireport/munkireport-php/compare/v5.6.1...wip) (June 17, 2020) 
 
 Another bugfix release
 
