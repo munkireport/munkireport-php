@@ -58,9 +58,15 @@ class Admin extends Controller
 
                 // Update business unit membership
                 if ($property == 'business_unit') {
-                    Business_unit::where('property', 'machine_group')
-                        ->where('value', $_POST['groupid'])
-                        ->update(['unitid' => $val]);
+                    Business_unit::updateOrCreate(
+                        [
+                            'property' => 'machine_group',
+                            'value' => $_POST['groupid'],
+                        ],
+                        [
+                            'unitid' => $val,
+                        ]
+                    );
                     $out['business_unit'] = intval($val);
                     continue;
                 }
