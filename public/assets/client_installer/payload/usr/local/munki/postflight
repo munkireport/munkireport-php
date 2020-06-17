@@ -4,35 +4,10 @@ import os
 import subprocess
 import sys
 
-sys.path[:0] = ['/usr/local/munki']
-from munkilib import FoundationPlist, munkicommon
-
 TOUCH_FILE_PATH = '/Users/Shared/.com.github.munkireport.run'
 LAUNCHD = 'com.github.munkireport.runner'
 LAUNCHD_PATH = '/Library/LaunchDaemons/{}.plist'.format(LAUNCHD)
 SUBMIT_SCRIPT = '/usr/local/munkireport/munkireport-runner'
-
-
-def check_for_errors(report):
-    """Checks if the device was offline for last Munki run."""
-    errors = report.get("Errors", [])
-    warnings = report.get("Warnings", [])
-    target_errors = ["Could not retrieve managed install primary manifest."]
-    target_warnings = [
-        "Could not download Apple SUS catalog:",
-        "\t(-1009, u'The Internet connection appears to be offline.')"
-    ]
-
-    using_sus = munkicommon.pref('InstallAppleSoftwareUpdates')
-
-    if using_sus:
-        if warnings == target_warnings and errors == target_errors:
-            return True
-    else:
-        if errors == target_errors:
-            return True
-
-    return False
 
 def write_touch_file():
     if os.path.exists(TOUCH_FILE_PATH):
