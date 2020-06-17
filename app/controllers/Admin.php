@@ -173,7 +173,12 @@ class Admin extends Controller
         // Initialize
             $obj = (object) $obj;
             if (! isset($out[$obj->unitid])) {
-                $out[$obj->unitid] = ['users' => [], 'managers' => [], 'machine_groups' => []];
+                $out[$obj->unitid] = [
+                    'users' => [],
+                    'managers' => [],
+                    'archivers' => [],
+                    'machine_groups' => [],
+                ];
             }
             switch ($obj->property) {
                 case 'user':
