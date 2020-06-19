@@ -1,7 +1,8 @@
 <?php
 namespace munkireport\controller;
 
-use \Controller, \View;
+use MR\Kiss\Controller;
+use MR\Kiss\View;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
