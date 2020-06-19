@@ -2,7 +2,7 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View;
+use MR\Kiss\Controller;
 use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
 

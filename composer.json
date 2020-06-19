@@ -109,7 +109,8 @@
             "munkireport\\controller\\": "app/controllers",
             "munkireport\\lib\\": "app/lib/munkireport",
             "Tests\\": "tests/",
-            "App\\": "app/"
+            "App\\": "app/",
+            "MR\\": "mr/"
         }
     },
     "autoload-dev": {
