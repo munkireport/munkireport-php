@@ -18,6 +18,6 @@ class Error extends Controller
     {
         $data = array('status_code' => $status_code);
 
-        view('error/client_error', $data);
+        mr_view('error/client_error', $data);
     }
 }

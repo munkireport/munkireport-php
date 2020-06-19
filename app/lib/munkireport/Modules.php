@@ -312,7 +312,7 @@ class Modules
                 }
                 $i18n = isset($itemData['i18n']) ? $itemData['i18n'] : 'nav.' . $kind . '.' . $itemName;
                 $out[] = (object) [
-                  'url' => url($baseUrl.'/'.$module.'/'.$itemName),
+                  'url' => mr_url($baseUrl.'/'.$module.'/'.$itemName),
                   'name' => $itemName,
                   'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
                   'i18n' => $i18n,

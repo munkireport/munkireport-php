@@ -89,7 +89,7 @@ class Dashboard
         $out = [];
         foreach( $this->dashboards as $path => $data){
             $out[] = (object) [
-              'url' => url($baseUrl.'/'.$data['name']),
+              'url' => mr_url($baseUrl.'/'.$data['name']),
               'name' => $data['name'],
               'display_name' => $data['display_name'],
               'hotkey' => $data['hotkey'],
@@ -114,7 +114,7 @@ class Dashboard
           $view = 'error/client_error';
       }
       $data['widget'] = new Widgets(conf('widget'));
-      view($view, $data);
+      mr_view($view, $data);
 
     }
 }

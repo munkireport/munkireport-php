@@ -43,6 +43,6 @@ class AuthWhitelist {
         }
 
         // otherwise send it to the local servers 403 page
-        redirect('error/client_error/403');
+        mr_redirect('error/client_error/403');
     }
 }

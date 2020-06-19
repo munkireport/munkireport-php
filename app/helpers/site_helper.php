@@ -172,7 +172,7 @@ function munkireport_autoload($classname)
     }
 }
 
-function url($url = '', $fullurl = false, $queryArray = [])
+function mr_url($url = '', $fullurl = false, $queryArray = [])
 {
     $s = $fullurl ? conf('webhost') : '';
     $index_page = conf('index_page');
@@ -205,9 +205,9 @@ function getRemoteAddress()
  * @return string secure url
  * @author
  **/
-function secure_url($url = '')
+function mr_secure_url($url = '')
 {
-    $parse_url = parse_url(url($url, true));
+    $parse_url = parse_url(mr_url($url, true));
     $parse_url['scheme'] = 'https';
 
     return
@@ -222,10 +222,10 @@ function secure_url($url = '')
         ;
 }
 
-function redirect($uri = '', $method = 'location', $http_response_code = 302)
+function mr_redirect($uri = '', $method = 'location', $http_response_code = 302)
 {
     if (! preg_match('#^https?://#i', $uri)) {
-        $uri = url($uri);
+        $uri = mr_url($uri);
     }
     switch ($method) {
         case 'refresh':
@@ -485,7 +485,7 @@ function is_archived_only_filter_on(){
                 $_SESSION['filter']['archived_only'];
 }
 
-function storage_path($append = "")
+function mr_storage_path($append = "")
 {
     return conf('storage_path') . $append;
 }
@@ -611,12 +611,12 @@ function jsonView($msg = '', $status_code = 200, $exit = false)
         $status_code = 400;
     }
 
-    view('json', ['msg' => $msg, 'status_code' => $status_code]);
+    mr_view('json', ['msg' => $msg, 'status_code' => $status_code]);
     
     if ($exit) exit;
 }
 
-function view($file = '', $vars = '', $view_path = '')
+function mr_view($file = '', $vars = '', $view_path = '')
 {
     $obj = new View();
     $obj->view($file, $vars, $view_path);

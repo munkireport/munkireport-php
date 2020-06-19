@@ -39,6 +39,6 @@
 
 <?php if(isset($js_link)):?>
   <?php foreach(is_array($js_link) ? $js_link : [$js_link] as $link):?>
-  <script src="<?=url($link)?>"></script>
+  <script src="<?=mr_url($link)?>"></script>
   <?php endforeach?>
 <?php endif?>

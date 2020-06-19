@@ -112,7 +112,7 @@ class AuthHandler
         // Check if we are in a session
         if (! isset($_SESSION['auth'])) {
             $msg = array('error' => 'unauthorized');
-            view('json', array('msg' => $msg));
+            mr_view('json', array('msg' => $msg));
             return;
         }
 

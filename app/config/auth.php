@@ -10,8 +10,8 @@ return [
   | Request API keys from https://www.google.com/recaptcha
   |
   */
-  'recaptchaloginpublickey'  => env('RECAPTCHA_LOGIN_PUBLIC_KEY', ''),
-  'recaptchaloginprivatekey' => env('RECAPTCHA_LOGIN_PRIVATE_KEY', ''),
+  'recaptchaloginpublickey'  => mr_env('RECAPTCHA_LOGIN_PUBLIC_KEY', ''),
+  'recaptchaloginprivatekey' => mr_env('RECAPTCHA_LOGIN_PRIVATE_KEY', ''),
   
   /*
   |===============================================
@@ -22,6 +22,6 @@ return [
   | This is useful for sites that serve MR both via http and https
   |
   */
-  'auth_secure' => env('AUTH_SECURE', false),
+  'auth_secure' => mr_env('AUTH_SECURE', false),
 
 ];

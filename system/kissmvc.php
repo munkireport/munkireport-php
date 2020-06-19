@@ -26,7 +26,7 @@ class Engine extends KISS_Engine
         conf('debug') && $data['msg'] = $msg;
 
 
-        view('error/client_error', $data);
+        mr_view('error/client_error', $data);
 
         exit;
     }

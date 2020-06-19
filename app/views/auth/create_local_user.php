@@ -28,7 +28,7 @@
                   <div class="col-lg-10 col-lg-offset-3">
                     <button type="submit" class="btn btn-primary" data-i18n="auth.download_account">
                     </button>
-                    <a href="<?php echo url(); ?>" class="btn btn-default" data-i18n="auth.back_to_site">
+                    <a href="<?php echo mr_url(); ?>" class="btn btn-default" data-i18n="auth.back_to_site">
                     </a>
                   </div>
                 </div>

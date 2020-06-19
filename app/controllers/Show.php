@@ -13,12 +13,12 @@ class Show extends Controller
     public function __construct()
     {
         if (! $this->authorized()) {
-            redirect('auth/login');
+            mr_redirect('auth/login');
         }
 
         // Check for maintenance mode
         if(file_exists(APP_ROOT . 'storage/framework/down')) {
-            redirect('error/client_error/503');
+            mr_redirect('error/client_error/503');
         }
 
         $this->modules = $modules = getMrModuleObj()->loadInfo();
@@ -26,14 +26,14 @@ class Show extends Controller
 
     public function index()
     {
-        redirect('show/dashboard/default');
+        mr_redirect('show/dashboard/default');
     }
 
     public function dashboard($which = '')
     {
         if($which == '')
         {
-            redirect('show/dashboard/default');
+            mr_redirect('show/dashboard/default');
         }
         $db = new Dashboard(conf('dashboard'));
         $db->render($which);
@@ -54,7 +54,7 @@ class Show extends Controller
         }
         
         if ($report->type == 'php') {
-            view(
+            mr_view(
                 $report->view, 
                 [
                     'page' => 'clients',
@@ -65,7 +65,7 @@ class Show extends Controller
         }elseif ($report->type == 'yaml') {
             $db = new Dashboard([
                 'search_paths' => [$report->view_path],
-                'template' => env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
+                'template' => mr_env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
                 'default_layout' => [],           
             ]);
             $db->render($report->view);    
@@ -83,7 +83,7 @@ class Show extends Controller
 
     private function _render($view, $data, $viewpath)
     {
-        view($view, $data, $viewpath);
+        mr_view($view, $data, $viewpath);
     }
 
     private function _pageNotFound()
@@ -91,7 +91,7 @@ class Show extends Controller
         $data = array('status_code' => 404);
         $view = 'error/client_error';
         $viewpath = conf('view_path');
-        view($view, $data, $viewpath);
+        mr_view($view, $data, $viewpath);
         exit;
     }
 }

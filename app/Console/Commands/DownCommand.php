@@ -34,13 +34,13 @@ class DownCommand extends Command
     public function handle()
     {
         try {
-            if (file_exists(storage_path('framework/down'))) {
+            if (file_exists(mr_storage_path('framework/down'))) {
                 $this->comment('Application is already down.');
 
                 return true;
             }
 
-            file_put_contents(storage_path('framework/down'),
+            file_put_contents(mr_storage_path('framework/down'),
                               json_encode($this->getDownFilePayload(),
                               JSON_PRETTY_PRINT));
 
