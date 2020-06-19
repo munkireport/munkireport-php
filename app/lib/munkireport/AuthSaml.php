@@ -23,13 +23,13 @@ class AuthSaml extends AbstractAuth
         unset($this->config['munkireport']);
         
         if( empty($this->config['sp']['entityId'])){
-            $this->config['sp']['entityId'] = url('auth/saml/metadata', true);
+            $this->config['sp']['entityId'] = mr_url('auth/saml/metadata', true);
         }
         $this->config['sp']['assertionConsumerService'] = [
-            'url' => url('auth/saml/acs', true)
+            'url' => mr_url('auth/saml/acs', true)
         ];
         $this->config['sp']['singleLogoutService'] = [
-            'url' => url('auth/saml/sls', true)
+            'url' => mr_url('auth/saml/sls', true)
         ];
         $this->forceAuthn = $this->config['disable_sso'];
         
@@ -157,10 +157,10 @@ class AuthSaml extends AbstractAuth
 
             //var_dump($_SESSION);
             // Go to dashboard
-            redirect('show/dashboard');
+            mr_redirect('show/dashboard');
         }
         else{
-            redirect('auth/unauthorized');
+            mr_redirect('auth/unauthorized');
         }
 
     }
@@ -171,13 +171,13 @@ class AuthSaml extends AbstractAuth
         // Check if SSO is disabled, if yes, destroy session and move on
         if($this->config['disable_sso']){
             session_destroy();
-            view('auth/logout', ['loginurl' => url()]);
+            mr_view('auth/logout', ['loginurl' => mr_url()]);
             return;
         }
 
         $auth = new OneLogin_Saml2_Auth($this->config);
 
-        $returnTo = url('auth/saml/sls');
+        $returnTo = mr_url('auth/saml/sls');
         $parameters = array();
         $nameId = null;
         $sessionIndex = null;
@@ -210,14 +210,14 @@ class AuthSaml extends AbstractAuth
             $auth->processSLO(false, $requestID);
             $errors = $auth->getErrors();
             if (empty($errors)) {
-                view('auth/logout', ['loginurl' => url()]);
+                mr_view('auth/logout', ['loginurl' => mr_url()]);
             } else {
                 echo '<p>' . implode(', ', $errors) . '</p>';
             }
         } catch (OneLogin_Saml2_Error $e) {
             if(isset($this->config['disable_sso_sls_verify']) && $this->config['disable_sso_sls_verify'] === true && strpos($e->getMessage(),'Only supported HTTP_REDIRECT Binding') !== false ){
                 session_destroy();
-                view('auth/logout', ['loginurl' => url()]);
+                mr_view('auth/logout', ['loginurl' => mr_url()]);
                 return;
             }
             echo 'An error occurred during logout';
@@ -274,7 +274,7 @@ class AuthSaml extends AbstractAuth
 
     public function login($login, $password)
     {
-        redirect('auth/saml/sso');
+        mr_redirect('auth/saml/sso');
     }
 
     public function getAuthMechanism()

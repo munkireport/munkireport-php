@@ -89,6 +89,9 @@ class Manager extends Controller
         } catch (Exception $e) {
             jsonError(sprintf('Delete failed for table %s: %s', $table, $e->getMessage()));
         }
+
+        // TODO: jsonView() and jsonError() must call mr_view
+        // mr_view('json', array('msg' => $status));
     }
     
     private function isTableNameOk($name)

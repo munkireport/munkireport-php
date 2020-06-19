@@ -31,22 +31,22 @@ class ConfigTest extends TestCase
     }
 
     public function testGetEnvDefault() {
-        $v = env('STRINGVALUE', 'NOPE');
+        $v = mr_env('STRINGVALUE', 'NOPE');
         $this->assertEquals($v, 'STRING');
     }
 
     public function testGetEnvBool() {
-        $v = env('BOOLVALUE', false);
+        $v = mr_env('BOOLVALUE', false);
         $this->assertEquals(true, $v);
     }
 
     public function testGetEnvInt() {
-        $v = env('INTVALUE', 1);
+        $v = mr_env('INTVALUE', 1);
         $this->assertEquals(1234, $v);
     }
 
     public function testGetEnvArray() {
-        $v = env('ARRAYVALUE', ['ONE','TWO']);
+        $v = mr_env('ARRAYVALUE', ['ONE','TWO']);
         $this->assertEquals(4, count($v));
     }
 

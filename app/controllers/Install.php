@@ -43,7 +43,7 @@ class Install extends Controller
                 echo "MODULES=\"$str\"";
                 break;
             case 'autopkg':
-                view('install/modules_autopkg', array('modules' => $modules));
+                mr_view('install/modules_autopkg', array('modules' => $modules));
                 break;
             case 'json':
                 jsonView($modules);
@@ -93,7 +93,7 @@ class Install extends Controller
 
         // Buffer script
         ob_start();
-        view('install/install_script', $data);
+        mr_view('install/install_script', $data);
         $content = ob_get_clean();
 
         // Get etag header
@@ -118,7 +118,7 @@ class Install extends Controller
 
     public function plist()
     {
-        view('install/install_plist');
+        mr_view('install/install_plist');
     }
 
     public function get_paths()

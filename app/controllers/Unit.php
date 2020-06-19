@@ -11,7 +11,7 @@ class Unit extends Controller
     public function __construct()
     {
         if (! $this->authorized()) {
-            redirect('auth/login');
+            mr_redirect('auth/login');
         }
     }
 
@@ -101,7 +101,7 @@ class Unit extends Controller
             $view = 'error/client_error';
         }
 
-        view($view, $data);
+        mr_view($view, $data);
     }
 
     public function reports($which = 'default')
@@ -114,6 +114,6 @@ class Unit extends Controller
             $view = 'error/client_error';
         }
 
-        view($view, $data);
+        mr_view($view, $data);
     }
 }

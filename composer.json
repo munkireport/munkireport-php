@@ -4,26 +4,28 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5"
+        "squizlabs/php_codesniffer": "^2.5",
+        "facade/ignition": "^2.0",
+        "fzaninotto/faker": "^1.9.1",
+        "mockery/mockery": "^1.3.1",
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "config": {
         "optimize-autoloader": true
     },
     "require": {
         "php": ">=7.3",
+        "fideloper/proxy": "^4.2",
+        "fruitcake/laravel-cors": "^1.0",
         "ext-dom": "*",
-        "wikimedia/composer-merge-plugin": "dev-master",
-        "guzzlehttp/guzzle": "~6.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "laravel/framework": "^7.0",
+        "laravel/tinker": "^2.0",
         "hautelook/phpass": "^1.1",
-        "illuminate/console": "~7.0",
-        "illuminate/database": "^7.0",
-        "illuminate/filesystem": "~7.0",
-        "illuminate/events": "~7.0",
-        "league/flysystem": "~1.0",
         "rodneyrehm/plist": "^2.0",
-        "doctrine/dbal": "~2.5",
         "defuse/php-encryption": "^2.1",
-        "vlucas/phpdotenv": "^4.0",
+        "wikimedia/composer-merge-plugin": "dev-master",
         "munkireport/ard": "^3.0",
         "munkireport/reportdata": "^3.0",
         "munkireport/machine": "^6.0",
@@ -85,14 +87,21 @@
         "munkireport/users": "^1.3",
         "munkireport/warranty": "^4.0",
         "munkireport/wifi": "^1.0",
-        "symfony/yaml": "^3.4",
         "adldap2/adldap2": "^10",
-        "onelogin/php-saml": "^3.0",
-        "monolog/monolog": "^1.24",
-        "fakerphp/faker": "^1.13"
+        "onelogin/php-saml": "^3.0"
     },
     "autoload": {
-        "classmap": ["app/Console/Commands/FakerDataStore.php"],
+        "classmap": [
+            "app/Console/Commands/FakerDataStore.php",
+            "database/seeds",
+            "database/factories"
+        ],
+        "files": [
+            "app/helpers/config_helper.php",
+            "app/helpers/env_helper.php",
+            "app/helpers/site_helper.php",
+            "app/helpers/test_helper.php"
+        ],
         "psr-4": {
             "munkireport\\models\\": "app/models/",
             "munkireport\\processors\\": "app/processors/",
@@ -103,11 +112,31 @@
             "App\\": "app/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "extra": {
+        "laravel": {
+            "dont-discover": []
+        },
         "merge-plugin": {
             "include": [
                 "composer.local.json"
             ]
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
     }
 }

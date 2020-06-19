@@ -10,7 +10,7 @@ return [
     | Will appear in the title bar of your browser and as heading on each webpage
     |
     */
-    'sitename' => env('SITENAME', 'MunkiReport'),
+    'sitename' => mr_env('SITENAME', 'MunkiReport'),
 
     /*
     |===============================================
@@ -20,7 +20,7 @@ return [
     | If set to TRUE, will deliver debugging messages in the page. Set to
     | FALSE in a production environment
     */
-    'debug' => env('DEBUG', false),
+    'debug' => mr_env('DEBUG', false),
 
     /*
     |===============================================
@@ -30,7 +30,7 @@ return [
     | See http://www.php.net/manual/en/timezones.php for valid values
     |
     */
-    'timezone' => env('APP_TIMEZONE', @date_default_timezone_get()),
+    'timezone' => mr_env('APP_TIMEZONE', @date_default_timezone_get()),
 
     /*
     |===============================================
@@ -45,7 +45,7 @@ return [
     | By default temperature units are displayed in Celsius °C.
     |
     */
-    'temperature_unit' => env('TEMPERATURE_UNIT', 'C'),
+    'temperature_unit' => mr_env('TEMPERATURE_UNIT', 'C'),
 
     /*
     |===============================================
@@ -55,7 +55,7 @@ return [
     | Used by several modules to encrypt sensitive data before it enters the database
     |
     */
-    'encryption_key' => env('ENCRYPTION_KEY'),
+    'encryption_key' => mr_env('ENCRYPTION_KEY'),
 
     /*
     |===============================================
@@ -65,7 +65,7 @@ return [
     | Path to the local directory where settings, users and certificates are stored
     |
     */
-    'local' => env('LOCAL_DIRECTORY_PATH', APP_ROOT . 'local/'),
+    'local' => mr_env('LOCAL_DIRECTORY_PATH', APP_ROOT . 'local/'),
 
     /*
     |===============================================
@@ -76,7 +76,7 @@ return [
     | determined. no trailing slash
     |
     */
-    'webhost' => env(
+    'webhost' => mr_env(
         'WEBHOST',
         function(){
             if(PHP_SAPI == 'cli') {
@@ -98,7 +98,7 @@ return [
     | figure out how to rewrite urls in the server of your choice.
     |
     */
-    'index_page' => env('INDEX_PAGE', 'index.php?'),
+    'index_page' => mr_env('INDEX_PAGE', 'index.php?'),
 
     /*
     |===============================================
@@ -110,7 +110,7 @@ return [
     | defaults to AUTO
     |
     */
-    'uri_protocol' => env('URI_PROTOCOL', 'AUTO'),
+    'uri_protocol' => mr_env('URI_PROTOCOL', 'AUTO'),
 
     /*
     |===============================================
@@ -128,7 +128,7 @@ return [
     | config.php
     |
     */
-    'subdirectory' => env(
+    'subdirectory' => mr_env(
         'SUBDIRECTORY',
         function (){
             return substr(
@@ -148,7 +148,7 @@ return [
     | When false, all modules will be shown in the interface like
     |    in the 'Listings' menu.
     */
-    'hide_inactive_modules' => env('HIDE_INACTIVE_MODULES', true),
+    'hide_inactive_modules' => mr_env('HIDE_INACTIVE_MODULES', true),
 
     /*
     |===============================================
@@ -158,7 +158,7 @@ return [
     | Filesystem paths to search for modules
     |    replaces the implicit 'custom' module path
     */
-    'module_search_paths' => env('MODULE_SEARCH_PATHS', []),
+    'module_search_paths' => mr_env('MODULE_SEARCH_PATHS', []),
 
     /*
     |===============================================
@@ -168,7 +168,7 @@ return [
     | Sets the default theme for new logins/users.
     |
     */
-    'default_theme' => env('DEFAULT_THEME', 'Default'),
+    'default_theme' => mr_env('DEFAULT_THEME', 'Default'),
 
     /*
     |===============================================
@@ -181,9 +181,9 @@ return [
     |
     */
     'authorization' => [
-        'archive' => env('AUTHORIZATION_ARCHIVE', ['admin', 'manager', 'archiver']),
-        'delete_machine' => env('AUTHORIZATION_DELETE_MACHINE', ['admin', 'manager']),
-        'global' => env('AUTHORIZATION_GLOBAL', ['admin']),
+        'archive' => mr_env('AUTHORIZATION_ARCHIVE', ['admin', 'manager', 'archiver']),
+        'delete_machine' => mr_env('AUTHORIZATION_DELETE_MACHINE', ['admin', 'manager']),
+        'global' => mr_env('AUTHORIZATION_GLOBAL', ['admin']),
     ],
 
     /*
@@ -195,9 +195,9 @@ return [
     |
     */
     'roles' => [
-        'admin' => env('ROLES_ADMIN', ['*']),
-        'manager' => env('ROLES_MANAGER', []),
-        'archiver' => env('ROLES_ARCHIVER', []),
+        'admin' => mr_env('ROLES_ADMIN', ['*']),
+        'manager' => mr_env('ROLES_MANAGER', []),
+        'archiver' => mr_env('ROLES_ARCHIVER', []),
     ],
 
     /*
@@ -209,7 +209,7 @@ return [
     |
     */
     'groups' => [
-        'admin_users' => env('GROUPS_ADMIN_USERS', [])
+        'admin_users' => mr_env('GROUPS_ADMIN_USERS', [])
     ],
 
     /*
@@ -221,7 +221,7 @@ return [
     | For more information, see docs/business_units.md
     |
     */
-    'enable_business_units' => env('ENABLE_BUSINESS_UNITS', false),
+    'enable_business_units' => mr_env('ENABLE_BUSINESS_UNITS', false),
 
     /*
     |===============================================
@@ -244,8 +244,8 @@ return [
     | replace the username in the SSH config with %u:
     | $conf['ssh_link'] = "ssh://%u@%s";
     */
-    'vnc_link' => env('VNC_LINK', "vnc://%s:5900"),
-    'ssh_link' => env('SSH_LINK', "ssh://adminuser@%s"),
+    'vnc_link' => mr_env('VNC_LINK', "vnc://%s:5900"),
+    'ssh_link' => mr_env('SSH_LINK', "ssh://adminuser@%s"),
 
 
     /*
@@ -260,7 +260,7 @@ return [
     | checked.
     |
     */
-    'curl_cmd' => env('CURL_CMD',  [
+    'curl_cmd' => mr_env('CURL_CMD',  [
         "/usr/bin/curl",
         "--fail",
         "--silent",
@@ -279,7 +279,7 @@ return [
     | To learn more about MWA2 visit: https://github.com/munki/mwa2
     |
     */
-    'mwa2_link' => env('MWA2_LINK'),
+    'mwa2_link' => mr_env('MWA2_LINK'),
 
     /*
     |===============================================
@@ -295,7 +295,7 @@ return [
     | Machine and Reportdata
     |
     */
-    'modules' => env('MODULES', ['munkireport', 'managedinstalls', 'disk_report']),
+    'modules' => mr_env('MODULES', ['munkireport', 'managedinstalls', 'disk_report']),
 
     /*
     |===============================================
@@ -307,8 +307,8 @@ return [
     | in the header (css) and footer (js)
     |
     */
-    'custom_css' => env('CUSTOM_CSS', ''),
-    'custom_js' => env('CUSTOM_JS', ''),
+    'custom_css' => mr_env('CUSTOM_CSS', ''),
+    'custom_js' => mr_env('CUSTOM_JS', ''),
 
     /*
     |===============================================
@@ -318,7 +318,7 @@ return [
     | Add a help button to the navigation bar, defaults to true
     |
     */
-    'show_help' => env('SHOW_HELP', true),
+    'show_help' => mr_env('SHOW_HELP', true),
 
     /*
     |===============================================
@@ -330,7 +330,7 @@ return [
     | to redirect to (in a new tab).
     |
     */
-    'help_url' => env('HELP_URL', 'https://github.com/munkireport/munkireport-php/wiki'),
+    'help_url' => mr_env('HELP_URL', 'https://github.com/munkireport/munkireport-php/wiki'),
 
     /*
     |===============================================
@@ -342,7 +342,7 @@ return [
     | to redirect to (in a new tab).
     |
     */
-    'detail_widget_list' => env('CLIENT_DETAIL_WIDGETS', [
+    'detail_widget_list' => mr_env('CLIENT_DETAIL_WIDGETS', [
         'machine_info_1',
         'machine_info_2',
         'comment_detail',
@@ -368,7 +368,7 @@ return [
     |
     |
     */
-    'client_passphrases' => env('CLIENT_PASSPHRASES', []),
+    'client_passphrases' => mr_env('CLIENT_PASSPHRASES', []),
 
     /*
     |===============================================
@@ -378,9 +378,9 @@ return [
     | Override these if you want to provide your own custom scripts that
     | call the munkireport scripts
     */
-    'preflight_script' => env('PREFLIGHT_SCRIPT', 'preflight'),
-    'postflight_script' => env('POSTFLIGHT_SCRIPT', 'postflight'),
-    'report_broken_client_script' => env('REPORT_BROKEN_CLIENT_SCRIPT', 'report_broken_client'),
+    'preflight_script' => mr_env('PREFLIGHT_SCRIPT', 'preflight'),
+    'postflight_script' => mr_env('POSTFLIGHT_SCRIPT', 'postflight'),
+    'report_broken_client_script' => mr_env('REPORT_BROKEN_CLIENT_SCRIPT', 'report_broken_client'),
 
     /*
     |===============================================
@@ -400,10 +400,10 @@ return [
     |
     */
     'proxy' => [
-        'server' => env('PROXY_SERVER', ''),
-        'username' => env('PROXY_USERNAME', ''),
-        'password' => env('PROXY_PASSWORD', ''),
-        'port' => env('PROXY_PORT', 0),
+        'server' => mr_env('PROXY_SERVER', ''),
+        'username' => mr_env('PROXY_USERNAME', ''),
+        'password' => mr_env('PROXY_PASSWORD', ''),
+        'port' => mr_env('PROXY_PORT', 0),
     ],
 
     /*
@@ -419,7 +419,7 @@ return [
     | Valid options are 'curl', 'stream' or 'auto' (default)
     | For CA Bundle options see http://docs.guzzlephp.org/en/stable/request-options.html#verify
     */
-    'guzzle_handler' => env('GUZZLE_HANDLER', 'auto'),
+    'guzzle_handler' => mr_env('GUZZLE_HANDLER', 'auto'),
 
     /*
     |===============================================
@@ -431,7 +431,7 @@ return [
     | Timeout in seconds
     |
     */
-    'request_timeout' => env('REQUEST_TIMEOUT', 5),
+    'request_timeout' => mr_env('REQUEST_TIMEOUT', 5),
 
     /*
     |===============================================
@@ -441,7 +441,7 @@ return [
     | URL to retrieve icon from Apple
     |
     */
-    'apple_hardware_icon_url' => env('APPLE_HARDWARE_ICON_URL', 'https://km.support.apple.com/kb/securedImage.jsp?configcode=%s&amp;size=240x240'),
+    'apple_hardware_icon_url' => mr_env('APPLE_HARDWARE_ICON_URL', 'https://km.support.apple.com/kb/securedImage.jsp?configcode=%s&amp;size=240x240'),
 
 
     /*
@@ -469,7 +469,7 @@ return [
     'module_path' => APP_ROOT . "/vendor/munkireport/",
 
     // Path to storage directory
-    'storage_path' => env('STORAGE_PATH', APP_ROOT . "/storage/"),
+    'storage_path' => mr_env('STORAGE_PATH', APP_ROOT . "/storage/"),
 
     // Routes
     'routes' => [

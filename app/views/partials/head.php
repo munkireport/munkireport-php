@@ -36,7 +36,7 @@
 
 	<script>
 		var baseUrl = "<?php echo conf('subdirectory'); ?>",
-			appUrl = "<?php echo rtrim(url(), '/'); ?>",
+			appUrl = "<?php echo rtrim(mr_url(), '/'); ?>",
 			default_theme = "<?php echo conf('default_theme'); ?>",
 			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
@@ -78,7 +78,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php echo url(''); ?>"><?php echo conf('sitename'); ?></a>
+			<a class="navbar-brand" href="<?php echo mr_url(''); ?>"><?php echo conf('sitename'); ?></a>
 		</div>
 		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav">
@@ -86,7 +86,7 @@
 				
 				<?php if($dashboard->getCount() === 1):?>
 				<li <?php echo $page==''?'class="active"':''; ?>>
-					<a href="<?php echo url(); ?>">
+					<a href="<?php echo mr_url(); ?>">
 						<i class="fa fa-th-large"></i>
 						<span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
 					</a>
@@ -175,7 +175,7 @@
 							<?php $page_url = $url.strtok($list_url, '.'); ?>
 
 							<li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-								<a href="<?php echo url($url.strtok($list_url, '.')); ?>" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+								<a href="<?php echo mr_url($url.strtok($list_url, '.')); ?>" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
 							</li>
 
 							<?php endif; ?>
@@ -236,7 +236,7 @@
 
 								<?php $lang = strtok($list_url, '.'); ?>
 
-								<li><a href="<?php echo url($page, false, ['setLng' => $lang]); ?>" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
+								<li><a href="<?php echo mr_url($page, false, ['setLng' => $lang]); ?>" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
 
 								<?php endif; ?>
 
@@ -254,7 +254,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="<?php echo url('auth/logout'); ?>">
+							<a href="<?php echo mr_url('auth/logout'); ?>">
 								<i class="fa fa-power-off"></i>
 								<span data-i18n="nav.user.logout"></span>
 							</a>

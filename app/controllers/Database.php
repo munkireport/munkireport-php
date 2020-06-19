@@ -40,12 +40,12 @@ class Database extends Controller
 //            }
 
 
-            view('json', array('msg' => Array(
+            mr_view('json', array('msg' => Array(
                 'files_pending' => $migrationFilenames,
                 'notes' => $migrator->getNotes())
             ));
         } catch (\Exception $e) {
-            view('json', array('msg' => Array(
+            mr_view('json', array('msg' => Array(
                 'error' => $e->getMessage(),
                 'error_trace' => $e->getTrace()
             )));
@@ -74,14 +74,14 @@ class Database extends Controller
             try {
                 $migrationFiles = $migrator->setOutput($outputStyle)->run($dirs, ['pretend' => false]);
 
-                view('json', [
+                mr_view('json', [
                     'msg' => [
                         'files' => $migrationFiles,
                         'notes' => explode(PHP_EOL, $outputSymfony->fetch()),
                     ]
                 ]);
             } catch (\PDOException $exception) {
-                view('json', [
+                mr_view('json', [
                     'msg' => [
                         'error' => $exception->getMessage(),
                         'notes' => explode(PHP_EOL, $outputSymfony->fetch()),
@@ -89,7 +89,7 @@ class Database extends Controller
                 ]);
             }
         } catch (\Exception $e) {
-            view('json', [
+            mr_view('json', [
                     'error' => $e->getMessage(),
                     'error_trace' => $e->getTrace()
             ]);

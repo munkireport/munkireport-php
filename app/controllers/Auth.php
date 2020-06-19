@@ -16,7 +16,7 @@ class Auth extends Controller
     public function __construct()
     {
         if (conf('auth_secure') && ! SslRequest()) {
-            redirect('error/client_error/426'); // Switch protocol
+            mr_redirect('error/client_error/426'); // Switch protocol
         }
 
         $this->connectDB();
@@ -28,7 +28,7 @@ class Auth extends Controller
 
     public function index()
     {
-        redirect('auth/login');
+        mr_redirect('auth/login');
     }
 
     public function login($return = '')
@@ -39,12 +39,12 @@ class Auth extends Controller
         }
 
         if ($this->authorized()) {
-            redirect($return);
+            mr_redirect($return);
         }
 
         // If no valid mechanisms found, redirect to account generator
         if (! $this->authHandler->authConfigured()) {
-            redirect('auth/unavailable');
+            mr_redirect('auth/unavailable');
         }
 
         $auth_verified = false;
@@ -96,9 +96,9 @@ class Auth extends Controller
             );
 
             if($_SESSION['initialized']){
-                redirect($return);
+                mr_redirect($return);
             }else{
-                redirect('/system/show/database');
+                mr_redirect('/system/show/database');
             }
         }
 
@@ -114,10 +114,10 @@ class Auth extends Controller
         $data = [
             // Prevent XSS
             'login' => htmlspecialchars($login, ENT_QUOTES, 'UTF-8'),
-            'url' => url("auth/login/$return")
+            'url' => mr_url("auth/login/$return")
         ];
 
-        view('auth/login', $data);
+        mr_view('auth/login', $data);
     }
 
     public function set_session_props($show = false)
@@ -133,12 +133,12 @@ class Auth extends Controller
 
     public function unauthorized($value='')
     {
-        view('auth/unauthorized', ['why' => $value]);
+        mr_view('auth/unauthorized', ['why' => $value]);
     }
 
     public function unavailable()
     {
-        view('auth/unavailable');
+        mr_view('auth/unavailable');
     }
 
     public function logout()
@@ -148,12 +148,12 @@ class Auth extends Controller
 
         // Check if saml
         if(isset($_SESSION['auth']) && $_SESSION['auth'] == 'saml'){
-            redirect('auth/saml/slo');
+            mr_redirect('auth/saml/slo');
         }
         else{
             // Destroy session;
             session_destroy();
-            redirect('');
+            mr_redirect('');
         }
     }
 
@@ -171,17 +171,17 @@ class Auth extends Controller
             $auth_config = new AuthLocal(conf('auth')['auth_local']);
             $t_hasher = $auth_config->load_phpass();
             $data['password_hash'] = $t_hasher->HashPassword($password);
-            view('auth/user', $data);
+            mr_view('auth/user', $data);
         }
         else {
-          view('auth/create_local_user', $data);
+          mr_view('auth/create_local_user', $data);
         }
     }
 
     public function generate()
     {
       // Legacy function
-      redirect('auth/create_local_user');
+      mr_redirect('auth/create_local_user');
     }
 
 
