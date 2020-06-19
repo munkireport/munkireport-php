@@ -29,13 +29,13 @@ class UpCommand extends Command
     public function handle()
     {
         try {
-            if (! file_exists(storage_path('framework/down'))) {
+            if (! file_exists(mr_storage_path('framework/down'))) {
                 $this->comment('MunkiReport is already up.');
 
                 return true;
             }
 
-            unlink(storage_path('framework/down'));
+            unlink(mr_storage_path('framework/down'));
 
             $this->info('MunkiReport is now live.');
         } catch (Exception $e) {

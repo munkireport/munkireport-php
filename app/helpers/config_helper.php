@@ -25,7 +25,7 @@ function initDotEnv()
 function loadAuthConfig()
 {
     $auth_config = [];
-    foreach (env('AUTH_METHODS', []) as $auth_method) {
+    foreach (mr_env('AUTH_METHODS', []) as $auth_method) {
         switch (strtoupper($auth_method)) {
             case 'NOAUTH':
                 $auth_config['auth_noauth'] = require APP_ROOT . 'app/config/auth/noauth.php';
@@ -91,7 +91,11 @@ function configAppendFile($configPath, $namespace = '')
  **/
 function conf($cf_item, $default = '')
 {
-	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
+    if (isset($GLOBALS['conf'])) {
+        return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
+    } else {
+        return $default;
+    }
 }
 
 function local_conf($item)

@@ -36,20 +36,20 @@ class Listing
 
     private function _renderPHP($listingData, $data)
     {    
-        view($listingData->view, $data, $listingData->view_path);
+        mr_view($listingData->view, $data, $listingData->view_path);
     }
 
     private function _renderYAML($listingData, $data)
     {
         $data = $data + Yaml::parseFile($this->_getPath($listingData, 'yml'));
-        view($this->template, $data);
+        mr_view($this->template, $data);
     }
 
     private function _renderPageNotFound()
     {
         $data = ['status_code' => 404];
         $view = 'error/client_error';
-        view($view, $data);
+        mr_view($view, $data);
         exit;
     }
 

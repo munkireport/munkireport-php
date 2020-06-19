@@ -11,7 +11,7 @@ class Filter extends Controller
     public function __construct()
     {
         if (! $this->authorized()) {
-            redirect('auth/login');
+            mr_redirect('auth/login');
         }
 
         $this->registered_filters = [

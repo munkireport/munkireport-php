@@ -109,7 +109,7 @@ class System extends Controller
             }
         }
         //echo '<pre>';print_r($phpinfo);return;
-        view('json', array('msg' => $phpinfo));
+        mr_view('json', array('msg' => $phpinfo));
     }
     //===============================================================
     //===============================================================
@@ -163,6 +163,6 @@ class System extends Controller
                 $view = 'error/client_error';
         }
 
-        view($view, $data);
+        mr_view($view, $data);
     }
 }

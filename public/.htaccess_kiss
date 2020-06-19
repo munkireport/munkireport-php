@@ -1,0 +1,6 @@
+RemoveHandler cgi-script .pl .py .cgi
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?/$1 [L]

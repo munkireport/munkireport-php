@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'search_paths' => env('DASHBOARD_SEARCH_PATHS', [local_conf('dashboards')]),
-    'template' => env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
+    'search_paths' => mr_env('DASHBOARD_SEARCH_PATHS', [local_conf('dashboards')]),
+    'template' => mr_env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
     'default_layout' => [
         [
           'client' => [], 

@@ -258,6 +258,6 @@ class Admin extends Controller
             $view = 'error/client_error';
         }
 
-        view($view, $data);
+        mr_view($view, $data);
     }
 }

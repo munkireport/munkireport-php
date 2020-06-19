@@ -12,7 +12,7 @@ class Clients extends Controller
     public function __construct()
     {
         if (! $this->authorized()) {
-            redirect('auth/login');
+            mr_redirect('auth/login');
         }
 
         // Connect to database
@@ -25,7 +25,7 @@ class Clients extends Controller
 
         $data['page'] = 'clients';
 
-        view('client/client_list', $data);
+        mr_view('client/client_list', $data);
     }
 
     /**
@@ -89,9 +89,9 @@ class Clients extends Controller
 
         // Check if machine exists/is allowed for this user to view
         if (! $machine) {
-            view("client/client_dont_exist", $data);
+            mr_view("client/client_dont_exist", $data);
         } else {
-            view("client/client_detail", $data);
+            mr_view("client/client_detail", $data);
         }
     }
 
@@ -108,6 +108,6 @@ class Clients extends Controller
     {
         $data['page'] = 'clients';
         // TODO: Check if view exists
-        view('client/'.$view, $data);
+        mr_view('client/'.$view, $data);
     }
 }
