@@ -2,7 +2,8 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View;
+use MR\Kiss\Controller;
+use MR\Kiss\View;
 use munkireport\lib\Recaptcha;
 use munkireport\lib\AuthHandler;
 use munkireport\lib\AuthSaml;

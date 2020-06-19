@@ -1,7 +1,9 @@
 <?php
 namespace munkireport\controller;
 
-use \Controller, \View;
+use MR\Kiss\Controller;
+use MR\Kiss\View;
+
 use munkireport\lib\Database;
 use munkireport\lib\Widgets;
 use munkireport\lib\Modules;

@@ -2,6 +2,7 @@
 
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 use munkireport\lib\User;
+use MR\Kiss\View;
 
 // Munkireport version (last number is number of commits)
 $GLOBALS['version'] = '5.8.0.4284';
