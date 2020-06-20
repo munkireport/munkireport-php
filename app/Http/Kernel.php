@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use MR\Kiss\Application;
+use MR\Kiss\Routing\Router;
 
 class Kernel extends HttpKernel
 {
@@ -14,6 +16,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        \App\Http\Middleware\RemoveIndexPhp::class,
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class,
@@ -64,4 +67,19 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+//    /**
+//     * Create a new HTTP kernel instance for custom MunkiReport KISS Application/Router.
+//     *
+//     * @param  \Illuminate\Contracts\Foundation\Application  $app
+//     * @param  \Illuminate\Routing\Router  $router
+//     * @return void
+//     */
+//    public function __construct(Application $app, Router $router)
+//    {
+//        $this->app = $app;
+//        $this->router = $router;
+//
+//        $this->syncMiddlewareToRouter();
+//    }
 }
