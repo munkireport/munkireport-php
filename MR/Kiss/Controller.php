@@ -1,7 +1,7 @@
 <?php
 namespace MR\Kiss;
 use MR\Kiss\Core\Controller as KISS_Controller;
-
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 //===============================================================
 // Controller
@@ -51,7 +51,7 @@ class Controller extends KISS_Controller
      * @return type
      * @throws conditon
      **/
-    protected function connectDBWhenAuthorized()
+    public function connectDBWhenAuthorized()
     {
         if($this->authorized()){
             $this->connectDB();

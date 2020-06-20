@@ -13,4 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', )
+Route::redirect('/', '/show/dashboard/default');
+
+Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
+Route::get('/show/listing/{listing}/{action}', 'ShowController@listing');
+Route::get('/show/report/{report}/{action}', 'ShowController@report');
+Route::get('/datatables/data', 'DatatablesController@data');
+
+
+Route::get('/settings/theme', 'SettingsController@theme');
+
+Route::get('/locale/get/{lang?}', 'LocaleController@get');
+
+Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
+
