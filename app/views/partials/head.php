@@ -5,7 +5,8 @@
 	<meta name=apple-mobile-web-app-capable content=yes>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="csrf-token" content="<?php echo getCSRF();?>">
+<!--	<meta name="csrf-token" content="--><?php //echo getCSRF();?><!--">-->
+    <meta name="csrf-token" content="<?php echo csrf_token(); ?>">
 
 	<title><?php echo conf('sitename'); ?></title>
 	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/<?php echo sess_get('theme', 'Default')?>/bootstrap.min.css" id="bootstrap-stylesheet" />

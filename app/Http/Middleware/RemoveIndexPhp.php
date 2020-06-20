@@ -7,7 +7,10 @@ use Closure;
 class RemoveIndexPhp
 {
     /**
-     * Handle an incoming request.
+     * Remove the index.php? section from the URL if the module is a legacy module.
+     *
+     * Initially i just did a 301 redirect to the non index.php? URL, but this blows away the POST data from
+     * datatable generation in Tablequery.php.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -22,7 +25,10 @@ class RemoveIndexPhp
 //            $url = substr($request->fullUrl(), $strPosition + strlen($searchFor));
 //            print_r($url);
 //            die();
-            return redirect($_SERVER['QUERY_STRING'], 301);
+
+            $pi = $request->getPathInfo();
+            print_r($pi);
+            //return redirect($_SERVER['QUERY_STRING'], 301);
         }
 
         return $next($request);

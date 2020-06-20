@@ -22,6 +22,7 @@ class Module extends Controller
 
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\ModuleController");
         $this->moduleManager = getMrModuleObj();
     }
 
