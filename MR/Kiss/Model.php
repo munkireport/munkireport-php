@@ -78,7 +78,7 @@ class Model extends KISS_Model
      **/
     public function get_driver()
     {
-        return $this->getdbh()->getAttribute(PDO::ATTR_DRIVER_NAME);
+        return $this->getdbh()->getAttribute(\PDO::ATTR_DRIVER_NAME);
     }
 
     /**
@@ -108,7 +108,7 @@ class Model extends KISS_Model
         $stmt = $this->prepare($sql);
         $this->execute($stmt, $bindings);
         $arr=array();
-        while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+        while ($rs = $stmt->fetch(\PDO::FETCH_OBJ)) {
             $arr[] = $rs;
         }
         return $arr;
@@ -224,7 +224,7 @@ class Model extends KISS_Model
         }
         $stmt = $dbh->prepare($sql);
         $stmt->execute($bindings);
-        if ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+        if ($rs = $stmt->fetch(\PDO::FETCH_OBJ)) {
             return $rs->count;
         }
         return 0;

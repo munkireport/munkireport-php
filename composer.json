@@ -91,7 +91,8 @@
         "adldap2/adldap2": "^10",
         "onelogin/php-saml": "^3.0",
         "illuminate/database": "^7.16",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-pdo": "*"
     },
     "autoload": {
         "classmap": [

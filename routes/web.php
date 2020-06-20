@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/show/dashboard/default');
 
 Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
-Route::get('/show/listing/{listing}/{action}', 'ShowController@listing');
+Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
 Route::get('/show/report/{report}/{action}', 'ShowController@report');
 Route::get('/datatables/data', 'DatatablesController@data');
 
