@@ -1,21 +1,25 @@
 <?php
 
-namespace munkireport\controller;
+namespace App\Http\Controllers;
 
-use MR\Kiss\Controller;
-use MR\Kiss\View;
-
-use munkireport\lib\Widgets;
+use Illuminate\Http\Request;
 use munkireport\lib\Dashboard;
 use munkireport\lib\Listing;
+use munkireport\lib\Widgets;
 
-class Show extends Controller
+/**
+ * Class ShowController
+ *
+ * Replaces MunkiReport Show.php Controller.
+ *
+ * @package App\Http\Controllers
+ * @see \munkireport\controller\Show
+ */
+class ShowController extends Controller
 {
     private $modules;
     public function __construct()
     {
-        throw new \Exception("Deprecated by Laravel App\Http\Controllers\ShowController");
-
         if (! $this->authorized()) {
             mr_redirect('auth/login');
         }
@@ -56,24 +60,24 @@ class Show extends Controller
         if ( ! $report){
             $this->_pageNotFound();
         }
-        
+
         if ($report->type == 'php') {
             mr_view(
-                $report->view, 
+                $report->view,
                 [
                     'page' => 'clients',
                     'widget' => new Widgets(conf('widget')),
-                ], 
+                ],
                 $report->view_path
             );
         }elseif ($report->type == 'yaml') {
             $db = new Dashboard([
                 'search_paths' => [$report->view_path],
                 'template' => mr_env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
-                'default_layout' => [],           
+                'default_layout' => [],
             ]);
-            $db->render($report->view);    
-        }       
+            $db->render($report->view);
+        }
     }
 
     public function custom($which = 'default')

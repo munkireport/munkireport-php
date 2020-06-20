@@ -4,7 +4,7 @@ namespace munkireport\lib;
 
 use Symfony\Component\Yaml\Yaml;
 use Illuminate\Filesystem\Filesystem;
-use \View;
+use MR\Kiss\View;
 
 class Dashboard
 {

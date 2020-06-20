@@ -65,7 +65,7 @@
 
 <body>
 
-	<?php if( isset($_SESSION['user'])):?>
+	<?php /* if( isset($_SESSION['user'])): */ ?>
 	<?php $modules = getMrModuleObj()->loadInfo(); ?>
 	<?php $dashboard = getDashboard()->loadAll();?>
 	
@@ -282,4 +282,4 @@
 
 
 
-	<?php endif; ?>
+	<?php /* endif; */ ?>

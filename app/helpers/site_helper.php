@@ -452,6 +452,11 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
 /**
  * Get filtered groups
  *
+ * Laravel Conversion Notes:
+ *
+ * These $_SESSION global variables won't necessarily be populated in the same way, and should not be accessed directly
+ * through the $_SESSION superglobal anyway - mosen.
+ *
  * @return void
  * @author
  **/
