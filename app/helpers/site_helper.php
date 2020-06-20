@@ -173,6 +173,21 @@ function munkireport_autoload($classname)
     }
 }
 
+/**
+ * Previous url() implementation for MunkiReport which generated index.php?/path which Laravel router complains about
+ * quite a lot without custom middleware.
+ */
+//function mr_url($url = '', $fullurl = false, $queryArray = [])
+//{
+//    $s = $fullurl ? conf('webhost') : '';
+//    $index_page = conf('index_page');
+//    $s .= conf('subdirectory').($url && $index_page ? $index_page.'/' : $index_page) . ltrim($url, '/');
+//    if($queryArray){
+//        $s .= ($index_page ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
+//    }
+//    return $s;
+//}
+
 function mr_url($url = '', $fullurl = false, $queryArray = [])
 {
     $s = $fullurl ? conf('webhost') : '';
@@ -181,7 +196,12 @@ function mr_url($url = '', $fullurl = false, $queryArray = [])
     if($queryArray){
         $s .= ($index_page ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
     }
-    return $s;
+
+    // There isn't a way to tell Laravel not to generate a fully qualified URL.
+    $l_url = url($url, $queryArray);
+
+    //return $s;
+    return $l_url;
 }
 
 /**

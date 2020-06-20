@@ -16,7 +16,7 @@ class DatatablesController extends Controller
         // $this->connectDB();
     }
 
-    public function data()
+    public function data(Request $request)
     {
         // Sanitize the GET variables here.
         $cfg = array(
@@ -33,6 +33,25 @@ class DatatablesController extends Controller
         //echo '<pre>';print_r($_GET);return;
 
         $searchcols = array();
+
+        $post = $request->only([
+            'draw',
+            'search',
+            'columns',
+            'start',
+            'length',
+            'order',
+            'where',
+            'mrColNotEmpty',
+            'mrColNotEmptyBlank',
+        ]);
+
+        $search = $request->input('search');
+        $cfg['search'] = $search['value'];
+
+        $cfg['columns'] = $request->input('columns');
+        $cfg['start'] = $request->input('start');
+
 
         // Process $_POST array
         foreach ($_POST as $k => $v) {

@@ -18,12 +18,15 @@ Route::redirect('/', '/show/dashboard/default');
 Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
 Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
 Route::get('/show/report/{report}/{action}', 'ShowController@report');
-Route::get('/datatables/data', 'DatatablesController@data');
+Route::post('/datatables/data', 'DatatablesController@data');
 
 
-Route::get('/settings/theme', 'SettingsController@theme');
+Route::any('/settings/theme', 'SettingsController@theme');
 
 Route::get('/locale/get/{lang?}', 'LocaleController@get');
+
+Route::get('/filter/get_filter', 'FilterController@get_filter');
+Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
 
 Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
 
