@@ -92,7 +92,8 @@
         "onelogin/php-saml": "^3.0",
         "illuminate/database": "^7.16",
         "ext-json": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "laravel/ui": "^2.0"
     },
     "autoload": {
         "classmap": [
