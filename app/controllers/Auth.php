@@ -2,6 +2,7 @@
 
 namespace munkireport\controller;
 
+use Illuminate\Support\Str;
 use MR\Kiss\Controller;
 use MR\Kiss\View;
 use munkireport\lib\Recaptcha;
@@ -16,7 +17,7 @@ class Auth extends Controller
 
     public function __construct()
     {
-        if (conf('auth_secure') && ! SslRequest()) {
+        if (conf('auth_secure') && ! request()->secure()) {
             mr_redirect('error/client_error/426'); // Switch protocol
         }
 
@@ -83,7 +84,7 @@ class Auth extends Controller
         if (! $pre_auth_failed && $this->authHandler->login($login, $password)) {
 
             // Set CSRF token for this session
-            $_SESSION['csrf_token'] = random(40);
+            $_SESSION['csrf_token'] = Str::random(40);
 
             // Add token to cookie
             setcookie (
@@ -92,7 +93,7 @@ class Auth extends Controller
                 time()+60, // expires
                 conf('subdirectory'), // path
                 "", // domain
-                SslRequest(), // secure
+                request()->secure(), // secure
                 false // httponly
             );
 
