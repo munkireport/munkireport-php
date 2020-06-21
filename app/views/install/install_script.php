@@ -162,7 +162,7 @@ echo "BaseURL is ${BASEURL}"
 TPL_BASE="${BASEURL}assets/client_installer/payload"
 
 echo "# Retrieving munkireport scripts"
-SCRIPTS=$("${CURL[@]}" "${BASEURL}index.php?/install/get_paths")
+SCRIPTS=$("${CURL[@]}" "<?php echo url('/install/get_paths'); ?>")
 
 for SCRIPT in $SCRIPTS; do
 	COMPONENTS=(${SCRIPT//;/ })

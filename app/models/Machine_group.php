@@ -77,7 +77,7 @@ class Machine_group extends \Model
         $out = array();
         $where = $groupid !== '' ? 'groupid=?' : '';
 
-        foreach ($this->select('groupid, property, value', $where, $groupid, PDO::FETCH_OBJ) as $obj) {
+        foreach ($this->select('groupid, property, value', $where, $groupid, \PDO::FETCH_OBJ) as $obj) {
             switch ($obj->property) {
                 case 'key':
                     $out[$obj->groupid]['keys'][] = $obj->value;

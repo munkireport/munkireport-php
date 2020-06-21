@@ -162,7 +162,7 @@ abstract class Model
         $stmt = $this->prepare($sql);
         $stmt->bindValue(1, ( int )$pkvalue);
         $this->execute($stmt);
-        $rs = $stmt->fetch(PDO::FETCH_ASSOC);
+        $rs = $stmt->fetch(\PDO::FETCH_ASSOC);
         if ($rs) {
             foreach ($rs as $key => $val) {
                 if (array_key_exists($key, $this->rs)) {
@@ -242,7 +242,7 @@ abstract class Model
         $sql .= ' LIMIT 1';
         $stmt = $this->prepare($sql);
         $this->execute($stmt, $bindings);
-        $rs = $stmt->fetch(PDO::FETCH_ASSOC);
+        $rs = $stmt->fetch(\PDO::FETCH_ASSOC);
         if (!$rs) {
             return false;
         }
@@ -268,7 +268,7 @@ abstract class Model
         $this->execute($stmt, $bindings);
         $arr=array();
         $class=get_class($this);
-        while ($rs = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($rs = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $myclass = new $class();
             foreach ($rs as $key => $val) {
                 if (array_key_exists($key, $myclass->rs)) {
@@ -280,7 +280,7 @@ abstract class Model
         return $arr;
     }
 
-    public function select($selectwhat = '*', $wherewhat = '', $bindings = '', $pdoFetch_mode = PDO::FETCH_ASSOC)
+    public function select($selectwhat = '*', $wherewhat = '', $bindings = '', $pdoFetch_mode = \PDO::FETCH_ASSOC)
     {
         $dbh = $this->getdbh();
         if (is_scalar($bindings)) {
