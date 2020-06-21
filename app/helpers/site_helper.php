@@ -94,18 +94,18 @@ function getdbh()
                 default:
                     throw new \Exception("Unknown driver in config", 1);
             }
-            $GLOBALS['dbh'] = new PDO(
+            $GLOBALS['dbh'] = new \PDO(
                 $dsn,
                 $conn['username'],
                 $conn['password'],
                 $conn['options']
             );
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             fatal('Connection failed: '.$e->getMessage());
         }
 
         // Set error mode
-        $GLOBALS['dbh']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $GLOBALS['dbh']->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
         // Store database name in config array
         if (preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result)) {
@@ -144,7 +144,7 @@ function dumpQuery($queryobj){
 
 function add_mysql_opts(&$conn){
   $conn['options'] = [
-    PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
+    \PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
   ];
   if($conn['ssl_enabled']){
     foreach(['key', 'cert', 'ca', 'capath', 'cipher'] as $ssl_opt){
