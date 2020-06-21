@@ -19,7 +19,10 @@ Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
 Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
 Route::get('/show/report/{report}/{action}', 'ShowController@report');
 Route::post('/datatables/data', 'DatatablesController@data');
+Route::get('/install', 'InstallController@index');
+Route::get('/install/get_paths', 'InstallController@get_paths');
 
+Route::post('/report/hash_check', 'ReportController@hash_check');
 
 Route::any('/settings/theme', 'SettingsController@theme');
 

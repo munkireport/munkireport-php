@@ -109,6 +109,13 @@ MunkiReport configuration is stored in [app/config](../../app/config), and the L
 Config variables are *similar*, but not the same. So special care has to be taken to provide aliases for the
 older values.
 
+Old Vs New Values
+
+| Old Value           | New Value     | Old Default      | New Default              |
+| :------------------ | :------------ | :--------------- | :----------------------- |
+| CONNECTION_DRIVER   | DB_CONNECTION | 
+| CONNECTION_DATABASE | DB_DATABASE   | app/db/db.sqlite | database/database.sqlite |
+
 
 ## TODO ##
 
