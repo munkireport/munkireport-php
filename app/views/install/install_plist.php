@@ -32,7 +32,7 @@
 	<key>preinstall_script</key>
 	<string>#!/bin/bash 
 /bin/bash -c "$(curl -s --max-time 10 <?php echo
-  (SslRequest() ? 'https://' : 'http://')
+  (request()->secure() ? 'https://' : 'http://')
     . $_SERVER['HTTP_HOST']
     . conf('subdirectory'); ?>index.php?/install)"</string>
 	<key>minimum_os_version</key>

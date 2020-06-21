@@ -12,9 +12,7 @@ class ClientsController extends Controller
 
     public function __construct()
     {
-        if (! $this->authorized()) {
-            mr_redirect('auth/login');
-        }
+        $this->middleware('auth');
 
         // Connect to database
         $this->connectDB();

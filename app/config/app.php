@@ -10,7 +10,7 @@ return [
     | Will appear in the title bar of your browser and as heading on each webpage
     |
     */
-    'sitename' => mr_env('SITENAME', 'MunkiReport'),
+    'sitename' => env('SITENAME', 'MunkiReport'),
 
     /*
     |===============================================
@@ -45,7 +45,7 @@ return [
     | By default temperature units are displayed in Celsius °C.
     |
     */
-    'temperature_unit' => mr_env('TEMPERATURE_UNIT', 'C'),
+    'temperature_unit' => env('TEMPERATURE_UNIT', 'C'),
 
     /*
     |===============================================
@@ -55,7 +55,7 @@ return [
     | Used by several modules to encrypt sensitive data before it enters the database
     |
     */
-    'encryption_key' => mr_env('ENCRYPTION_KEY'),
+    'encryption_key' => env('ENCRYPTION_KEY'),
 
     /*
     |===============================================
@@ -65,7 +65,7 @@ return [
     | Path to the local directory where settings, users and certificates are stored
     |
     */
-    'local' => mr_env('LOCAL_DIRECTORY_PATH', APP_ROOT . 'local/'),
+    'local' => env('LOCAL_DIRECTORY_PATH', APP_ROOT . 'local/'),
 
     /*
     |===============================================
@@ -98,7 +98,7 @@ return [
     | figure out how to rewrite urls in the server of your choice.
     |
     */
-    'index_page' => mr_env('INDEX_PAGE', 'index.php?'),
+    'index_page' => env('INDEX_PAGE', 'index.php?'),
 
     /*
     |===============================================
@@ -110,7 +110,7 @@ return [
     | defaults to AUTO
     |
     */
-    'uri_protocol' => mr_env('URI_PROTOCOL', 'AUTO'),
+    'uri_protocol' => env('URI_PROTOCOL', 'AUTO'),
 
     /*
     |===============================================
@@ -168,7 +168,7 @@ return [
     | Sets the default theme for new logins/users.
     |
     */
-    'default_theme' => mr_env('DEFAULT_THEME', 'Default'),
+    'default_theme' => env('DEFAULT_THEME', 'Default'),
 
     /*
     |===============================================
@@ -244,8 +244,8 @@ return [
     | replace the username in the SSH config with %u:
     | $conf['ssh_link'] = "ssh://%u@%s";
     */
-    'vnc_link' => mr_env('VNC_LINK', "vnc://%s:5900"),
-    'ssh_link' => mr_env('SSH_LINK', "ssh://adminuser@%s"),
+    'vnc_link' => env('VNC_LINK', "vnc://%s:5900"),
+    'ssh_link' => env('SSH_LINK', "ssh://adminuser@%s"),
 
 
     /*
@@ -307,8 +307,8 @@ return [
     | in the header (css) and footer (js)
     |
     */
-    'custom_css' => mr_env('CUSTOM_CSS', ''),
-    'custom_js' => mr_env('CUSTOM_JS', ''),
+    'custom_css' => env('CUSTOM_CSS', ''),
+    'custom_js' => env('CUSTOM_JS', ''),
 
     /*
     |===============================================
@@ -330,7 +330,7 @@ return [
     | to redirect to (in a new tab).
     |
     */
-    'help_url' => mr_env('HELP_URL', 'https://github.com/munkireport/munkireport-php/wiki'),
+    'help_url' => env('HELP_URL', 'https://github.com/munkireport/munkireport-php/wiki'),
 
     /*
     |===============================================
@@ -378,9 +378,9 @@ return [
     | Override these if you want to provide your own custom scripts that
     | call the munkireport scripts
     */
-    'preflight_script' => mr_env('PREFLIGHT_SCRIPT', 'preflight'),
-    'postflight_script' => mr_env('POSTFLIGHT_SCRIPT', 'postflight'),
-    'report_broken_client_script' => mr_env('REPORT_BROKEN_CLIENT_SCRIPT', 'report_broken_client'),
+    'preflight_script' => env('PREFLIGHT_SCRIPT', 'preflight'),
+    'postflight_script' => env('POSTFLIGHT_SCRIPT', 'postflight'),
+    'report_broken_client_script' => env('REPORT_BROKEN_CLIENT_SCRIPT', 'report_broken_client'),
 
     /*
     |===============================================
@@ -400,10 +400,10 @@ return [
     |
     */
     'proxy' => [
-        'server' => mr_env('PROXY_SERVER', ''),
-        'username' => mr_env('PROXY_USERNAME', ''),
-        'password' => mr_env('PROXY_PASSWORD', ''),
-        'port' => mr_env('PROXY_PORT', 0),
+        'server' => env('PROXY_SERVER', ''),
+        'username' => env('PROXY_USERNAME', ''),
+        'password' => env('PROXY_PASSWORD', ''),
+        'port' => env('PROXY_PORT', 0),
     ],
 
     /*
@@ -419,7 +419,7 @@ return [
     | Valid options are 'curl', 'stream' or 'auto' (default)
     | For CA Bundle options see http://docs.guzzlephp.org/en/stable/request-options.html#verify
     */
-    'guzzle_handler' => mr_env('GUZZLE_HANDLER', 'auto'),
+    'guzzle_handler' => env('GUZZLE_HANDLER', 'auto'),
 
     /*
     |===============================================
@@ -441,7 +441,7 @@ return [
     | URL to retrieve icon from Apple
     |
     */
-    'apple_hardware_icon_url' => mr_env('APPLE_HARDWARE_ICON_URL', 'https://km.support.apple.com/kb/securedImage.jsp?configcode=%s&amp;size=240x240'),
+    'apple_hardware_icon_url' => env('APPLE_HARDWARE_ICON_URL', 'https://km.support.apple.com/kb/securedImage.jsp?configcode=%s&amp;size=240x240'),
 
 
     /*
@@ -469,7 +469,7 @@ return [
     'module_path' => APP_ROOT . "/vendor/munkireport/",
 
     // Path to storage directory
-    'storage_path' => mr_env('STORAGE_PATH', APP_ROOT . "/storage/"),
+    'storage_path' => env('STORAGE_PATH', APP_ROOT . "/storage/"),
 
     // Routes
     'routes' => [

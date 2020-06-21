@@ -156,7 +156,7 @@ class AdminController extends Controller
      **/
     public function remove_business_unit()
     {
-        jsonView(['success' => Business_unit::where('unitid', post('id'))->delete()]);
+        jsonView(['success' => Business_unit::where('unitid', request('id', ''))->delete()]);
     }
 
     //===============================================================

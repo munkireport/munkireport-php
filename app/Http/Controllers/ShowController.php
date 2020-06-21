@@ -36,14 +36,14 @@ class ShowController extends Controller
 
     public function index()
     {
-        mr_redirect('show/dashboard/default');
+        return redirect('/show/dashboard/default');
     }
 
     public function dashboard($which = '')
     {
         if($which == '')
         {
-            mr_redirect('show/dashboard/default');
+            return redirect('/show/dashboard/default');
         }
         $db = new Dashboard(conf('dashboard'));
         $db->render($which);
@@ -75,7 +75,7 @@ class ShowController extends Controller
         }elseif ($report->type == 'yaml') {
             $db = new Dashboard([
                 'search_paths' => [$report->view_path],
-                'template' => mr_env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
+                'template' => env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
                 'default_layout' => [],
             ]);
             $db->render($report->view);

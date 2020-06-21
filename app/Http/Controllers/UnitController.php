@@ -10,9 +10,7 @@ class UnitController extends Controller
 {
     public function __construct()
     {
-        if (! $this->authorized()) {
-            mr_redirect('auth/login');
-        }
+        $this->middleware('auth');
     }
 
     public function index()

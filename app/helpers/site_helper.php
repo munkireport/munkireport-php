@@ -133,15 +133,6 @@ function find_driver($connection, $driver)
   return false;
 }
 
-function dumpQuery($queryobj){
-    dd(
-        vsprintf(
-            str_replace(['?'], ['\'%s\''], $queryobj->toSql()),
-            $queryobj->getBindings()
-        )
-    );
-}
-
 function add_mysql_opts(&$conn){
   $conn['options'] = [
     \PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
@@ -153,24 +144,6 @@ function add_mysql_opts(&$conn){
       }
     }
   }
-}
-
-//===============================================
-// Autoloading for Business Classes
-//===============================================
-// module classes end with _model
-function munkireport_autoload($classname)
-{
-    // Switch to lowercase filename for models
-    $lowercaseClassname = strtolower($classname);
-
-    if (substr($lowercaseClassname, -6) == '_model') {
-        $module = substr($lowercaseClassname, 0, -6);
-        if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
-            throw new Exception("Cannot load model: ".$classname, 1);
-        }
-        require_once($model);
-    }
 }
 
 /**
@@ -243,35 +216,20 @@ function mr_secure_url($url = '')
         ;
 }
 
-function mr_redirect($uri = '', $method = 'location', $http_response_code = 302)
-{
-    if (! preg_match('#^https?://#i', $uri)) {
-        $uri = mr_url($uri);
-    }
-    switch ($method) {
-        case 'refresh':
-            header("Refresh:0;url=".$uri);
-            break;
-        default:
-            header("Location: ".$uri, true, $http_response_code);
-            break;
-    }
-    exit;
-}
-
 /**
  * Get $_POST variable without error
  *
  * @return string post value
  **/
-function post($what = '', $alt = '')
-{
-    if (array_key_exists($what, $_POST)) {
-        return $_POST[$what];
-    }
-
-    return $alt;
-}
+// Use request($key, $default) helper
+//function post($what = '', $alt = '')
+//{
+//    if (array_key_exists($what, $_POST)) {
+//        return $_POST[$what];
+//    }
+//
+//    return $alt;
+//}
 
 /**
  * Lookup group id for passphrase
@@ -287,27 +245,6 @@ function passphrase_to_group($passphrase)
     }
 
     return 0;
-}
-
-/**
- * Generate GUID
- *
- * @return string guid
- * @author
- **/
-function get_guid()
-{
-    return sprintf(
-        '%04X%04X-%04X-%04X-%04X-%04X%04X%04X',
-        mt_rand(0, 65535),
-        mt_rand(0, 65535),
-        mt_rand(0, 65535),
-        mt_rand(16384, 20479),
-        mt_rand(32768, 49151),
-        mt_rand(0, 65535),
-        mt_rand(0, 65535),
-        mt_rand(0, 65535)
-    );
 }
 
 /**
@@ -364,10 +301,7 @@ function authorized($what)
         return false;
     }
 
-    // Check if POST and check CSRF
-    if($_SERVER['REQUEST_METHOD'] !== 'GET') {
-        verifyCSRF();
-    }
+    // Laravel does CSRF Verification
 
     // Check for a specific authorization item
     if ($what) {
@@ -387,24 +321,6 @@ function authorized($what)
     // There is no matching rule, you're authorized!
     return true;
 }
-
-function verifyCSRF()
-{
-    $session_token = sess_get('csrf_token');
-
-    if(isset($_REQUEST['_token'])){
-        $sent_token = $_REQUEST['_token'];
-    }else{
-        $sent_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
-    }
-
-    if( hash_equals($session_token, $sent_token)) return;
-
-    // Exit with error page todo: use a json response
-    jsonView($msg = ['error' => 'CSRF Token Mismatch'], $status_code = 403, $exit = true);
-}
-
-
 
 /**
  * Check if current user may access data for serial number
@@ -602,27 +518,6 @@ function getCSRF()
     return $_SESSION['csrf_token'];
 }
 
-
-/**
- * Generate a more truly "random" alpha-numeric string.
- *
- * @param  int  $length
- * @return string
- */
-function random($length = 16)
-{
-    $string = '';
-
-    while (($len = strlen($string)) < $length) {
-        $size = $length - $len;
-
-        $bytes = random_bytes($size);
-
-        $string .= substr(str_replace(['/', '+', '='], '', base64_encode($bytes)), 0, $size);
-    }
-
-    return $string;
-}
 
 function jsonError($msg = '', $status_code = 400, $exit = true)
 {
