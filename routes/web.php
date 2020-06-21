@@ -33,3 +33,7 @@ Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
 
 Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
