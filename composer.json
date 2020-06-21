@@ -120,7 +120,7 @@
             "munkireport\\lib\\": "app/lib/munkireport",
             "Tests\\": "tests/",
             "App\\": "app/",
-            "MR\\": "mr/"
+            "MR\\": "MR/"
         }
     },
     "autoload-dev": {
