@@ -20,47 +20,19 @@ class DatatablesController extends Controller
     {
         // Sanitize the GET variables here.
         $cfg = array(
-            'columns' => array(),
-            'order' => array(),
-            'start' => 0, // Start
-            'length' => -1, // Length
-            'draw' => 0, // Identifier, just return
-            'search' => '', // Search query
-            'where' => '', // Optional where clause
-            'mrColNotEmpty' => '', // Munkireport non empty column name
-            'mrColNotEmptyBlank' => '' // Munkireport non empty column name
+            'columns' => $request->input('columns', Array()),
+            'order' => $request->input('order', Array()),
+            'start' => $request->input('start', 0), // Start
+            'length' => $request->input('length', -1), // Length
+            'draw' => $request->input('draw', 0), // Identifier, just return
+            'search' => $request->input('search.value', ''), // Search query
+            'where' => $request->input('where', ''), // Optional where clause
+            'mrColNotEmpty' => $request->input('mrColNotEmpty', ''), // Munkireport non empty column name
+            'mrColNotEmptyBlank' => $request->input('mrColNotEmptyBlank', '') // Munkireport non empty column name
         );
         //echo '<pre>';print_r($_GET);return;
 
         $searchcols = array();
-
-        $post = $request->only([
-            'draw',
-            'search',
-            'columns',
-            'start',
-            'length',
-            'order',
-            'where',
-            'mrColNotEmpty',
-            'mrColNotEmptyBlank',
-        ]);
-
-        $search = $request->input('search');
-        $cfg['search'] = $search['value'];
-
-        $cfg['columns'] = $request->input('columns');
-        $cfg['start'] = $request->input('start');
-
-
-        // Process $_POST array
-        foreach ($_POST as $k => $v) {
-            if ($k == 'search') {
-                $cfg['search'] = $v['value'];
-            } elseif (isset($cfg[$k])) {
-                $cfg[$k] = $v;
-            }
-        }// endforeach
 
         // Add columns to config
         $cfg['search_cols'] = $searchcols;

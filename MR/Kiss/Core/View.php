@@ -7,6 +7,8 @@ namespace MR\Kiss\Core;
 // View
 // For plain .php templates
 //===============================================================
+use Symfony\Component\Yaml\Yaml;
+
 abstract class View
 {
     protected $file='';
