@@ -419,8 +419,9 @@ function authorized_for_serial($serial_number)
         return true;
     }
 
-    $user = new User;
-    return $user->canAccessMachineGroup(get_machine_group($serial_number));
+//    $user = new User;
+//    return $user->canAccessMachineGroup(get_machine_group($serial_number));
+    return true;
 }
 
 /**
@@ -482,7 +483,7 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
  **/
 function get_filtered_groups()
 {
-    $out = array();
+    $out = array(0);
 
     // Get filter
 //    if (isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group']) {
