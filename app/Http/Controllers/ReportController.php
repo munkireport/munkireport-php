@@ -79,7 +79,7 @@ class ReportController extends Controller
         // Try to register client and lookup hashes in db
         try {
             // Register check and group in reportdata
-            //$this->connectDB();
+            // $this->connectDB();
             $this->_register($_POST['serial']);
 
             //$req_items = unserialize($_POST['items']); //Todo: check if array
