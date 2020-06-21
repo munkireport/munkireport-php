@@ -28,6 +28,7 @@ Route::get('/clients/get_links', 'ClientsController@get_links');
 Route::post('/datatables/data', 'DatatablesController@data');
 
 Route::get('/install', 'InstallController@index');
+Route::get('/install/dump_modules/{format}', 'InstallController@dump_modules');
 Route::get('/install/get_paths', 'InstallController@get_paths');
 
 Route::get('/locale/get/{lang?}', 'LocaleController@get');

@@ -69,7 +69,7 @@ class Show extends Controller
         }elseif ($report->type == 'yaml') {
             $db = new Dashboard([
                 'search_paths' => [$report->view_path],
-                'template' => mr_env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
+                'template' => env('DASHBOARD_TEMPLATE', 'dashboard/dashboard'),
                 'default_layout' => [],           
             ]);
             $db->render($report->view);    

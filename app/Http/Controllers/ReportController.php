@@ -98,7 +98,7 @@ class ReportController extends Controller
 
             // Get stored hashes from db
             $hashes = MunkiReportHash::select('name', 'hash')
-                ->where('serial_number', post('serial'))
+                ->where('serial_number', request('serial', ''))
                 ->get()
                 ->pluck('hash', 'name')
                 ->toArray();

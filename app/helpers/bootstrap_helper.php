@@ -36,12 +36,7 @@ function fatal($msg)
  **/
 function sess_get($sess_item, $default = '')
 {
-    if (! isset($_SESSION))
-    {
-        return $default;
-    }
-
-    return array_key_exists($sess_item, $_SESSION) ? $_SESSION[$sess_item] : $default;
+    return request()->session()->get($sess_item, $default);
 }
 
 /**
@@ -52,12 +47,5 @@ function sess_get($sess_item, $default = '')
  **/
 function sess_set($sess_item, $value)
 {
-    if (! isset($_SESSION))
-    {
-        return false;
-    }
-
-    $_SESSION[$sess_item] = $value;
-
-    return true;
+    request()->session()->put($sess_item, $value);
 }

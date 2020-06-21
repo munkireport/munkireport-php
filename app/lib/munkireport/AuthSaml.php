@@ -157,10 +157,10 @@ class AuthSaml extends AbstractAuth
 
             //var_dump($_SESSION);
             // Go to dashboard
-            mr_redirect('show/dashboard');
+            redirect('/show/dashboard');
         }
         else{
-            mr_redirect('auth/unauthorized');
+            redirect('/auth/unauthorized');
         }
 
     }
@@ -274,7 +274,7 @@ class AuthSaml extends AbstractAuth
 
     public function login($login, $password)
     {
-        mr_redirect('auth/saml/sso');
+        redirect('/auth/saml/sso');
     }
 
     public function getAuthMechanism()

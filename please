@@ -13,7 +13,8 @@ require_once __DIR__.'/vendor/autoload.php';
 define('PUBLIC_ROOT', dirname(__FILE__) . '/public' );
 define('APP_ROOT', dirname(__FILE__) . '/' );
 
-spl_autoload_register('munkireport_autoload');
+// all of this functionality has been ported to composer ClassLoader
+//spl_autoload_register('munkireport_autoload');
 
 require_once APP_ROOT . 'app/helpers/config_helper.php';
 initDotEnv();

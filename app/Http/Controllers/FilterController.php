@@ -10,9 +10,7 @@ class FilterController extends Controller
 
     public function __construct()
     {
-        if (! $this->authorized()) {
-            mr_redirect('auth/login');
-        }
+        $this->middleware('auth');
 
         $this->registered_filters = [
             'machine_group' => [],
