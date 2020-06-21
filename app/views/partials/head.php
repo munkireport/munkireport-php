@@ -160,7 +160,7 @@
 
 				</li>
 
-				<?php if($_SESSION['role'] == 'admin'):?>
+				<?php if(true): /* always be admin for now */ ?>
 				<?php $url = 'admin/show/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
