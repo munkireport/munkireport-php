@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\Modules;
 use munkireport\lib\Unserializer;
 use \Reportdata_model, \Messages_model, \Exception;
@@ -10,6 +12,7 @@ use munkireport\models\Hash as MunkiReportHash;
 
 class ReportController extends Controller
 {
+    use ConnectDbTrait;
 
     public $group = 0;
 

@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/show/dashboard/default');
 
+Route::get('/clients/detail/{sn?}', 'ClientsController@detail');
+Route::get('/clients/get_data/{serial_number?}', 'ClientsController@get_data');
+Route::get('/clients/get_links', 'ClientsController@get_links');
+
 Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
 Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
 Route::get('/show/report/{report}/{action}', 'ShowController@report');
@@ -23,6 +27,7 @@ Route::get('/install', 'InstallController@index');
 Route::get('/install/get_paths', 'InstallController@get_paths');
 
 Route::post('/report/hash_check', 'ReportController@hash_check');
+Route::post('/report/check_in', 'ReportController@check_in');
 
 Route::any('/settings/theme', 'SettingsController@theme');
 
