@@ -15,7 +15,7 @@
 						<fieldset>
 							<legend>
 
-								<?php echo conf('sitename'); ?>
+								<?php echo config('app.name'); ?>
 
 								<?php if( request()->secure() === false ): ?>
 

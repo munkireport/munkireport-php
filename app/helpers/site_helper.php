@@ -271,41 +271,37 @@ function assocToArray($array)
     return $result;
 }
 
+/**
+ * Check if a user is authorized.
+ *
+ *
+ *
+ * @param string $what The action or item that the user should be authorized to perform. can be optional.
+ * @return bool
+ */
 function authorized($what)
 {
-    if (! isset($_SESSION)) {
-        ini_set('session.use_cookies', 1);
-        ini_set('session.use_only_cookies', 1);
-        ini_set('session.cookie_path', conf('subdirectory'));
-        ini_set('session.cookie_httponly', true);
-        ini_set('session.cookie_samesite', "Lax");
-        session_start();
-    }
-
-    // Check if we have a valid user
-    if (! isset($_SESSION['role'])) {
-        return false;
-    }
+    return Auth::check();
 
     // Laravel does CSRF Verification
 
     // Check for a specific authorization item
-    if ($what) {
-        foreach (conf('authorization', array()) as $item => $roles) {
-            if ($what === $item) {
-                // Check if there is a matching role
-                if (in_array($_SESSION['role'], $roles)) {
-                    return true;
-                }
-
-                // Role not found: unauthorized!
-                return false;
-            }
-        }
-    }
+//    if ($what) {
+//        foreach (conf('authorization', array()) as $item => $roles) {
+//            if ($what === $item) {
+//                // Check if there is a matching role
+//                if (in_array($_SESSION['role'], $roles)) {
+//                    return true;
+//                }
+//
+//                // Role not found: unauthorized!
+//                return false;
+//            }
+//        }
+//    }
 
     // There is no matching rule, you're authorized!
-    return true;
+//    return true;
 }
 
 /**
