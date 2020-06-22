@@ -94,7 +94,12 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "laravel/ui": "^2.0",
-        "doctrine/dbal": "^2.10"
+        "doctrine/dbal": "^2.10",
+        "aacotroneo/laravel-saml2": "^2.1",
+        "laravel/socialite": "^4.4",
+        "adldap2/adldap2-laravel": "^6.1",
+        "anhskohbo/no-captcha": "^3.2",
+        "orkhanahmadov/laravel-ip-middleware": "^1.4"
     },
     "autoload": {
         "classmap": [
