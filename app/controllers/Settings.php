@@ -10,6 +10,8 @@ class Settings extends Controller
 {
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\SettingsController");
+
         if (! $this->authorized()) {
             mr_view('json', array('msg' => 'Not authorized'));
 
