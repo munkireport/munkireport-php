@@ -18,6 +18,8 @@ class Request extends \Illuminate\Http\Request
      * Patched for MunkiReport:
      * - If URI is "/" then this may be a case where index.php has been stripped, and the Query string contains the
      *   actual controller/action/param routes.
+     * - PHP will add underscores to periods in the query string, to avoid this you need to use
+     *   $_SERVER["QUERY_STRING"]
      *
      * @param  \Symfony\Component\HttpFoundation\Request  $request
      * @return \Illuminate\Http\Request
@@ -28,11 +30,10 @@ class Request extends \Illuminate\Http\Request
         if ($uri === "/") {
             $query = $request->query->all();
             $server = $request->server->all();
-
-            $queryKeys = array_keys($query);
-            if (count($queryKeys) > 0 && $queryKeys[0][0] === "/") {
+            $queryString = $server['QUERY_STRING'];
+            if ($queryString[0] === "/") {
                 // This will probably be a MunkiReport style index.php?/path URI
-                $server['REQUEST_URI'] = $queryKeys[0];
+                $server['REQUEST_URI'] = $queryString;
                 $server['QUERY_STRING'] = "";
                 $query = [];
             }
