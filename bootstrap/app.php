@@ -8,8 +8,6 @@ define('APP_ROOT', dirname(__FILE__) . '/../' );
 initConfig();
 configAppendFile(APP_ROOT . 'app/config/app.php');
 configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
-configAppendFile(APP_ROOT . 'app/config/auth.php');
-loadAuthConfig();
 // echo '<pre>';print_r($GLOBALS['conf']);exit;
 
 /*
