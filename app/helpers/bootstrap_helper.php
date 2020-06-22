@@ -15,19 +15,6 @@ function SslRequest(){
     return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
 }
 
-
-/**
- * Fatal error, show message and die
- *
- * @author AvB
- **/
-function fatal($msg)
-{
-    include(APP_ROOT . 'public/assets/html/fatal_error.html');
-    exit(1);
-}
-
-
 /**
  * Get session item
  * @param string session item
