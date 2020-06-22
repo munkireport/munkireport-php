@@ -5,7 +5,6 @@
 	<meta name=apple-mobile-web-app-capable content=yes>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--	<meta name="csrf-token" content="--><?php //echo getCSRF();?><!--">-->
     <meta name="csrf-token" content="<?php echo csrf_token(); ?>">
 
 	<title><?php echo conf('sitename'); ?></title>
@@ -204,6 +203,19 @@
 			</ul><!-- nav navbar-nav -->
 
 			<ul class="nav navbar-nav navbar-right">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user"></i>
+                    </a>
+                    <?php
+                        $user = Auth::user();
+                    ?>
+                    <ul class="dropdown-menu profile">
+                        <li><a href="#">Logged in as <?php echo $user['name']; ?></a></li>
+                        <li><a href="<?php echo url('/logout'); ?>">Sign out</a></li>
+                    </ul>
+                </li>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">

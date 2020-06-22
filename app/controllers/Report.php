@@ -19,6 +19,8 @@ class Report extends Controller
      **/
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\ReportController");
+
         // Flag we're on report authorization
         $GLOBALS['auth'] = 'report';
 

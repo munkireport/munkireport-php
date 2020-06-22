@@ -10,6 +10,8 @@ class Unit extends Controller
 {
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\UnitController");
+
         if (! $this->authorized()) {
             mr_redirect('auth/login');
         }

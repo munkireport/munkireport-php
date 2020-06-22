@@ -1,7 +1,8 @@
 <?php
-namespace munkireport\controller;
 
-use MR\Kiss\Controller;
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 use MR\Kiss\View;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\Migrations\Migrator;
@@ -9,19 +10,19 @@ use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use munkireport\lib\Modules as ModuleMgr;
 
-class Database extends Controller
+
+class DatabaseController extends Controller
 {
     public function __construct()
     {
-        throw new \Exception("Deprecated by Laravel App\Http\Controllers\DatabaseController");
-
+        $this->middleware('auth');
         // Check authorization
-        $this->authorized() || jsonError('Authenticate first', 403);
-        $this->authorized('global') || jsonError('You need to be admin', 403);
-                
+//        $this->authorized() || jsonError('Authenticate first', 403);
+//        $this->authorized('global') || jsonError('You need to be admin', 403);
+
         $this->connectDB();
     }
-    
+
     public function migrationsPending()
     {
         $repository = new DatabaseMigrationRepository($this->capsule->getDatabaseManager(), 'migrations');
@@ -69,7 +70,7 @@ class Database extends Controller
             $dirs = [APP_ROOT . 'database/migrations'];
             $this->appendModuleMigrations($dirs);
 
-            
+
             $input = new \Symfony\Component\Console\Input\StringInput('');
             $outputSymfony = new \Symfony\Component\Console\Output\BufferedOutput();
             $outputStyle = new \Illuminate\Console\OutputStyle($input, $outputSymfony);
@@ -93,12 +94,12 @@ class Database extends Controller
             }
         } catch (\Exception $e) {
             mr_view('json', [
-                    'error' => $e->getMessage(),
-                    'error_trace' => $e->getTrace()
+                'error' => $e->getMessage(),
+                'error_trace' => $e->getTrace()
             ]);
         }
     }
-    
+
     public function appendModuleMigrations(&$migrationDirList)
     {
         $moduleMgr = new ModuleMgr;

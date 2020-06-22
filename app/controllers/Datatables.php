@@ -9,6 +9,8 @@ class Datatables extends Controller
 {
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\DatatablesController");
+
         // Check authorization
         $this->authorized() || jsonError('Authenticate first', 403);
 
