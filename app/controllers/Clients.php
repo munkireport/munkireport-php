@@ -12,6 +12,8 @@ class Clients extends Controller
 {
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\ClientsController");
+
         if (! $this->authorized()) {
             mr_redirect('auth/login');
         }

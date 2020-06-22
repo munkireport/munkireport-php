@@ -14,6 +14,8 @@ class Install extends Controller
 
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\InstallController");
+
         $this->moduleManager = getMrModuleObj();
     }
 

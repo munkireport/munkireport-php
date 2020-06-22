@@ -13,6 +13,8 @@ class System extends Controller
 {
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\SystemController");
+
         if (! $this->authorized()) {
             die('Authenticate first.'); // Todo: return json?
         }

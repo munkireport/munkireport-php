@@ -13,6 +13,7 @@ class Locale extends Controller
 
     public function __construct()
     {
+        throw new \Exception("Deprecated by Laravel App\Http\Controllers\LocaleController");
         // if (! $this->authorized()) {
         //     header('Content-Type: application/json;charset=utf-8');
         //     echo '{"error": "Not Authorized"}';
