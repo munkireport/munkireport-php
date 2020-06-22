@@ -54,38 +54,41 @@ function error($msg, $i18n = '')
 // Database
 //===============================================
 
+/**
+ * For Laravel 7, this function no longer handles the PDOException by displaying an error message but passes it back
+ * up into the App/Exception/Handler for reporting.
+ *
+ * @return PDO
+ * @throws \PDOException
+ */
 function getdbh()
 {
     if (! isset($GLOBALS['dbh'])) {
-        try {
-            $conn = conf('connection');
-            if($conn['options']){
-                $conn['options'] = arrayToAssoc($conn['options']);
-            }
-            switch ($conn['driver']) {
-                case 'sqlite':
-                    $dsn = "sqlite:{$conn['database']}";
-                    break;
-
-                case 'mysql':
-                    $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
-                    if( empty($conn['options'])){
-                      add_mysql_opts($conn);
-                    }
-                    break;
-
-                default:
-                    throw new \Exception("Unknown driver in config", 1);
-            }
-            $GLOBALS['dbh'] = new \PDO(
-                $dsn,
-                $conn['username'],
-                $conn['password'],
-                $conn['options']
-            );
-        } catch (\PDOException $e) {
-            fatal('Connection failed: '.$e->getMessage());
+        $conn = conf('connection');
+        if($conn['options']){
+            $conn['options'] = arrayToAssoc($conn['options']);
         }
+        switch ($conn['driver']) {
+            case 'sqlite':
+                $dsn = "sqlite:{$conn['database']}";
+                break;
+
+            case 'mysql':
+                $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
+                if( empty($conn['options'])){
+                  add_mysql_opts($conn);
+                }
+                break;
+
+            default:
+                throw new \Exception("Unknown driver in config", 1);
+        }
+        $GLOBALS['dbh'] = new \PDO(
+            $dsn,
+            $conn['username'],
+            $conn['password'],
+            $conn['options']
+        );
 
         // Set error mode
         $GLOBALS['dbh']->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

@@ -19,12 +19,10 @@ class ConfigTest extends TestCase
         // Mock configuration load
         global $conf;
         require_once __DIR__ . '/../../app/helpers/config_helper.php';
-        initDotEnv();
+        // initDotEnv();
         initConfig();
         configAppendFile(APP_ROOT . 'app/config/app.php');
         configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
-        configAppendFile(APP_ROOT . 'app/config/auth.php');
-        loadAuthConfig();
 
         //include_once APP_ROOT . "config.php";
         $this->conf = $GLOBALS['conf'];

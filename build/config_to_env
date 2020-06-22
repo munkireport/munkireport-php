@@ -10,7 +10,7 @@ require_once __DIR__ . '/../app/helpers/site_helper.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../app/helpers/config_helper.php';
 
-initDotEnv();
+// initDotEnv();
 
 array_shift($argv);
 
