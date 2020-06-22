@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use munkireport\lib\Request;
 use munkireport\controller\Module_marketplace;
 use Symfony\Component\Yaml\Yaml;
 
