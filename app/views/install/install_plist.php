@@ -31,10 +31,7 @@
 	</array>
 	<key>preinstall_script</key>
 	<string>#!/bin/bash 
-/bin/bash -c "$(curl -s --max-time 10 <?php echo
-  (request()->secure() ? 'https://' : 'http://')
-    . $_SERVER['HTTP_HOST']
-    . conf('subdirectory'); ?>index.php?/install)"</string>
+/bin/bash -c "$(curl -s --max-time 10 <?php echo url('/install'); ?>)"</string>
 	<key>minimum_os_version</key>
 	<string>10.9.0</string>
 	<key>unattended_install</key>
