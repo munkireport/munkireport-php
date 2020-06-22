@@ -13,23 +13,6 @@ function get_version()
     return preg_replace('/(.*)\.\d+$/', '$1', $GLOBALS['version']);
 }
 
-//===============================================
-// Uncaught Exception Handling
-//===============================================s
-function uncaught_exception_handler($e)
-{
-    // Dump out remaining buffered text
-    if (ob_get_level()) {
-        ob_end_clean();
-    }
-
-  // Get error message
-    error('Uncaught Exception: '.$e->getMessage());
-
-  // Write footer
-    die(View::doFetch(conf('view_path').'partials/foot.php'));
-}
-
 function custom_error($msg = '')
 {
     $vars['msg']=$msg;

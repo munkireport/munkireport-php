@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+/**
+ * Route group reserved for pure Laravel API middleware based API's
+ */
+Route::group(['prefix' => 'v6', 'namespace' => 'Api'], function () {
+
+});
