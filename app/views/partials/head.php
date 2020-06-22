@@ -7,44 +7,44 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo csrf_token(); ?>">
 
-	<title><?php echo conf('sitename'); ?></title>
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/<?php echo sess_get('theme', 'Default')?>/bootstrap.min.css" id="bootstrap-stylesheet" />
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/nvd3/nv.d3.min.css" />
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/themes/<?php echo sess_get('theme', 'Default')?>/nvd3.override.css" id="nvd3-override-stylesheet" />
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/style.css" />
-	<link rel="stylesheet" media="screen" href="<?php echo conf('subdirectory'); ?>assets/css/datatables.min.css" />
-	<link href="<?php echo conf('subdirectory'); ?>assets/css/font-awesome.min.css" rel="stylesheet">
-  <!--favicons-->
-	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo conf('subdirectory'); ?>assets/images/favicons/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="<?php echo conf('subdirectory'); ?>assets/images/favicons/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="<?php echo conf('subdirectory'); ?>assets/images/favicons/favicon-16x16.png" sizes="16x16">
-	<link rel="manifest" href="<?php echo conf('subdirectory'); ?>assets/images/favicons/manifest.json">
-	<link rel="mask-icon" href="<?php echo conf('subdirectory'); ?>assets/images/favicons/safari-pinned-tab.svg" color="#5d5858">
-	<link rel="shortcut icon" href="<?php echo conf('subdirectory'); ?>assets/images/favicons/favicon.ico">
-	<meta name="msapplication-config" content="<?php echo conf('subdirectory'); ?>assets/images/favicons/browserconfig.xml">
+	<title><?php echo config('app.name'); ?></title>
+	<link rel="stylesheet" href="<?php echo asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css'); ?>" id="bootstrap-stylesheet" />
+	<link rel="stylesheet" href="<?php echo asset('assets/nvd3/nv.d3.min.css'); ?>" />
+	<link rel="stylesheet" href="<?php echo asset('assets/themes/' . sess_get('theme', 'Default') . '/nvd3.override.css'); ?>" id="nvd3-override-stylesheet" />
+	<link rel="stylesheet" href="<?php echo asset('assets/css/style.css'); ?>" />
+	<link rel="stylesheet" media="screen" href="<?php echo asset('assets/css/datatables.min.css'); ?>" />
+	<link href="<?php echo asset('assets/css/font-awesome.min.css'); ?>" rel="stylesheet">
+    <!--favicons-->
+	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo asset('assets/images/favicons/apple-touch-icon.png'); ?>">
+	<link rel="icon" type="image/png" href="<?php echo asset('assets/images/favicons/favicon-32x32.png'); ?>" sizes="32x32">
+	<link rel="icon" type="image/png" href="<?php echo asset('assets/images/favicons/favicon-16x16.png'); ?>" sizes="16x16">
+	<link rel="manifest" href="<?php echo asset('assets/images/favicons/manifest.json'); ?>">
+	<link rel="mask-icon" href="<?php echo asset('assets/images/favicons/safari-pinned-tab.svg'); ?>" color="#5d5858">
+	<link rel="shortcut icon" href="<?php echo asset('assets/images/favicons/favicon.ico'); ?>">
+	<meta name="msapplication-config" content="<?php echo asset('assets/images/favicons/browserconfig.xml'); ?>">
 	<meta name="theme-color" content="#5d5858">
-  <!--end of favicons-->
-	<?php if(conf('custom_css')): ?>
-	<link rel="stylesheet" href="<?php echo conf('custom_css'); ?>" />
+    <!--end of favicons-->
+	<?php if(config('munkireport.custom_css')): ?>
+	<link rel="stylesheet" href="<?php echo config('munkireport.custom_css'); ?>" />
 	<?php endif; ?>
 
 	<?php if(isset($stylesheets)):?>
 	<?php foreach($stylesheets as $stylesheet):?>
-	<link rel="stylesheet" href="<?php echo conf('subdirectory'); ?>assets/css/<?php echo $stylesheet; ?>" />
+	<link rel="stylesheet" href="<?php echo asset('assets/css/' . $stylesheet); ?>" />
 	<?php endforeach?>
 	<?php endif?>
 
 	<script>
 		var baseUrl = "<?php echo conf('subdirectory'); ?>",
-			appUrl = "<?php echo rtrim(mr_url(), '/'); ?>",
-			default_theme = "<?php echo conf('default_theme'); ?>",
-			businessUnitsEnabled = <?php echo conf('enable_business_units') ? 'true' : 'false'; ?>;
+			appUrl = "<?php echo url('/'); ?>",
+			default_theme = "<?php echo config('munkireport.default_theme'); ?>",
+			businessUnitsEnabled = <?php echo config('munkireport.enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
 			isArchiver = <?php echo $_SESSION['role'] == 'archiver' ? 'true' : 'false'; ?>;
 	</script>
 
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
+	<script src="<?php echo asset('assets/js/jquery.js'); ?>"></script>
 
 	<script>
 		// Include csrf in all requests
@@ -58,7 +58,7 @@
 <?php
 	if (isset($scripts))
 		foreach($scripts as $script): ?>
-	<script src="<?php echo conf('subdirectory'); ?>assets/js/<?php echo $script; ?>" type="text/javascript"></script>
+	<script src="<?php echo asset('assets/js/' . $script); ?>" type="text/javascript"></script>
 <?php endforeach; ?>
 
 </head>
@@ -78,15 +78,15 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php echo mr_url(''); ?>"><?php echo conf('sitename'); ?></a>
+			<a class="navbar-brand" href="<?php echo url(''); ?>"><?php echo config('app.name'); ?></a>
 		</div>
 		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav">
-				<?php $page = $GLOBALS[ 'engine' ]->get_uri_string(); ?>
+				<?php $page = url()->current(); ?>
 				
 				<?php if($dashboard->getCount() === 1):?>
 				<li <?php echo $page==''?'class="active"':''; ?>>
-					<a href="<?php echo mr_url(); ?>">
+					<a href="<?php echo url(); ?>">
 						<i class="fa fa-th-large"></i>
 						<span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
 					</a>
@@ -159,6 +159,7 @@
 
 				</li>
 
+                <!-- TODO: Admin Check -->
 				<?php if(true): /* always be admin for now */ ?>
 				<?php $url = 'admin/show/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
@@ -203,20 +204,6 @@
 			</ul><!-- nav navbar-nav -->
 
 			<ul class="nav navbar-nav navbar-right">
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user"></i>
-                    </a>
-                    <?php
-                        $user = Auth::user();
-                    ?>
-                    <ul class="dropdown-menu profile">
-                        <li><a href="#">Logged in as <?php echo $user['name']; ?></a></li>
-                        <li><a href="<?php echo url('/logout'); ?>">Sign out</a></li>
-                    </ul>
-                </li>
-
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-wrench"></i>
@@ -258,16 +245,16 @@
 						</ul>
 				</li>
 
-				<?php if( ! array_key_exists('auth_noauth', conf('auth'))): // Hide logout button if auth_noauth?>
+                <!-- TODO: check for noauth auth mechanism -->
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="fa fa-user"></i> <?php echo $_SESSION['user']; ?>
+						<i class="fa fa-user"></i> <?php echo \Auth::user()['email']; ?>
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="<?php echo mr_url('auth/logout'); ?>">
+							<a href="<?php echo url('/logout'); ?>">
 								<i class="fa fa-power-off"></i>
 								<span data-i18n="nav.user.logout"></span>
 							</a>
@@ -275,12 +262,10 @@
 					</ul>
 				</li>
 
-				<?php endif; ?>
-
-				<?php if(conf('show_help')):?>
+				<?php if(config('munkireport.show_help')):?>
 				
 				<li>
-						<a href="<?php echo conf('help_url');?>" target="_blank">
+						<a href="<?php echo config('munkireport.help_url');?>" target="_blank">
 								<i class="fa fa-question"></i>
 						</a>
 				</li>
