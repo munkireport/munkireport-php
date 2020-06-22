@@ -1,7 +1,7 @@
 <?php header("Content-Type: text/plain");
 ?>#!/bin/bash
 
-BASEURL="<?php echo conf('webhost') . conf('subdirectory'); ?>"
+BASEURL="<?php echo url('/'); ?>"
 INSTALLROOT=""
 MUNKIPATH="/usr/local/munkireport/"
 CACHEPATH="${MUNKIPATH}scripts/cache/"
@@ -9,10 +9,9 @@ POSTFLIGHT_CACHEPATH="${MUNKIPATH}scripts/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREF_CMDS=( ) # Pref commands array
 TARGET_VOLUME=''
-CURL=("<?php echo implode('" "', conf('curl_cmd'))?>")
-POSTFLIGHT_SCRIPT="<?php echo conf('postflight_script'); ?>"
-REPORT_BROKEN_CLIENT_SCRIPT="<?php echo conf('report_broken_client_script'); ?>"
-SETBASEURL=1
+CURL=("<?php echo implode('" "', config('munkireport.curl_cmd'))?>")
+POSTFLIGHT_SCRIPT="<?php echo config('munkireport.postflight_script'); ?>"
+REPORT_BROKEN_CLIENT_SCRIPT="<?php echo config('munkireport.report_broken_client_script'); ?>"
 # Exit status
 ERR=0
 
