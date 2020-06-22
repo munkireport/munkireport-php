@@ -4,6 +4,13 @@ namespace munkireport\models;
 
 use \PDO;
 
+/**
+ * Class Machine_group
+ *
+ * To be replaced by MR\MachineGroup
+ *
+ * @package munkireport\models
+ */
 class Machine_group extends \Model
 {
     
