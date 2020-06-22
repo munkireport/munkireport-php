@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('CONNECTION_DRIVER', 'mysql'),
+    'default' => env('CONNECTION_DRIVER', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
