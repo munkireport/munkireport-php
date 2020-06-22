@@ -109,10 +109,10 @@ $modules->addWidgets(
 	</div> <!-- /row -->
 </div>  <!-- /container -->
 
-<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-markdown.js"></script>
-<script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap-tagsinput.min.js"></script>
-<script src="<?php echo conf('subdirectory'); ?>assets/js/typeahead.bundle.min.js"></script>
-<script src="<?php echo conf('subdirectory'); ?>assets/js/marked.min.js"></script>
-<script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.comment.js"></script>
+<script src="<?php echo asset('assets/js/bootstrap-markdown.js'); ?>"></script>
+<script src="<?php echo asset('assets/js/bootstrap-tagsinput.min.js'); ?>"></script>
+<script src="<?php echo asset('assets/js/typeahead.bundle.min.js'); ?>"></script>
+<script src="<?php echo asset('assets/js/marked.min.js'); ?>"></script>
+<script src="<?php echo asset('assets/js/munkireport.comment.js'); ?>"></script>
 
 <?php $this->view('partials/foot'); ?>

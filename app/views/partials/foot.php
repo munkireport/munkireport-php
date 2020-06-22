@@ -1,4 +1,4 @@
-<?php if( isset($_SESSION['user'])):?>
+<?php if(Auth::check()):?>
 
   <div class="container">
 
@@ -56,18 +56,18 @@
   </script>
 
 
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/bootstrap.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/datatables.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/moment.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/d3/d3.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/nv.d3.min.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.hotkeys/jquery.hotkeys.js"></script>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.settings.js"></script>
+  <script src="<?php echo asset('assets/js/bootstrap.min.js'); ?>"></script>
+  <script src="<?php echo asset('assets/js/datatables.min.js'); ?>"></script>
+  <script src="<?php echo asset('assets/js/moment.min.js'); ?>"></script>
+  <script src="<?php echo asset('assets/js/i18next.min.js'); ?>"></script>
+  <script src="<?php echo asset('assets/js/d3/d3.min.js'); ?>"></script>
+  <script src="<?php echo asset('assets/js/nv.d3.min.js'); ?>"></script>
+  <script src="<?php echo asset('assets/js/jquery.hotkeys/jquery.hotkeys.js'); ?>"></script>
+  <script src="<?php echo asset('assets/js/munkireport.settings.js'); ?>"></script>
 
   <script>
     // Inject debug value from php
-    mr.debug = <?php echo conf('debug') ? 'true' : 'false'; ?>;
+    mr.debug = <?php echo config('app.debug') ? 'true' : 'false'; ?>;
     <?php $dashboard = getDashboard()->loadAll();?>
     <?php foreach($dashboard->getDropdownData('show/dashboard', $page) as $item): ?>
       <?php if($item->hotkey):?>
@@ -79,11 +79,11 @@
   </script>
   
 
-  <?php if(conf('custom_js')): ?> 
-  <script src="<?php echo conf('custom_js'); ?>"></script>
+  <?php if(config('munkireport.custom_js')): ?>
+  <script src="<?php echo config('munkireport.custom_js'); ?>"></script>
   <?php endif; ?>
 
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/munkireport.js"></script>
+  <script src="<?php echo asset('assets/js/munkireport.js'); ?>"></script>
   
   <?php if(isset($recaptcha) && conf('recaptchaloginpublickey')):?>
       <script src='https://www.google.com/recaptcha/api.js' async defer></script>
