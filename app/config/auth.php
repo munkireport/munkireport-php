@@ -10,8 +10,8 @@ return [
   | Request API keys from https://www.google.com/recaptcha
   |
   */
-  'recaptchaloginpublickey'  => mr_env('RECAPTCHA_LOGIN_PUBLIC_KEY', ''),
-  'recaptchaloginprivatekey' => mr_env('RECAPTCHA_LOGIN_PRIVATE_KEY', ''),
+  'recaptchaloginpublickey'  => env('RECAPTCHA_LOGIN_PUBLIC_KEY', ''),
+  'recaptchaloginprivatekey' => env('RECAPTCHA_LOGIN_PRIVATE_KEY', ''),
   
   /*
   |===============================================

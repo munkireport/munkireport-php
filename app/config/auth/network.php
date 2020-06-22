@@ -17,6 +17,8 @@ return [
 |
 */
 
+// Handled in Laravel 7 by orkhanahmadov/laravel-ip-middleware
+
 /*
 | AUTH_NETWORK_WHITELIST_IP4="xxx.xxx.xxx.xxx, xxx.xxx.xxx.xxx"
 | AUTH_NETWORK_REDIRECT_UNAUTHORIZED="http://fqdn/403.html"
