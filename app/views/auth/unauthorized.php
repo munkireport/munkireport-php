@@ -8,7 +8,7 @@
 						<fieldset>
 							<legend>
 
-								<?php echo conf('sitename'); ?>
+								<?php echo config('app.name'); ?>
 
 							</legend>
 

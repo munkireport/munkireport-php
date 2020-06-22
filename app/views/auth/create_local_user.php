@@ -45,13 +45,13 @@
       </div>
     </div>
   </div>
-  <script src="<?php echo conf('subdirectory'); ?>assets/js/i18next.min.js"></script>
+  <script src="<?php echo asset('assets/js/i18next.min.js'); ?>"></script>
   <script>
     $.i18n.init({
       useLocalStorage: false,
       debug: true,
       useDataAttrOptions: true,
-      resGetPath: "<?php echo conf('subdirectory'); ?>assets/locales/__lng__.json",
+      resGetPath: "<?php echo asset('assets/locales/__lng__.json'); ?>",
       fallbackLng: 'en'
     }, function() {
       $('div.container').i18n();
