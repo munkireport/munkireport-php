@@ -40,6 +40,6 @@ class SettingsController extends Controller
             }
         }
 
-        mr_view('json', array('msg' => sess_get('theme', conf('default_theme'))));
+        mr_view('json', array('msg' => sess_get('theme', config('munkireport.default_theme'))));
     }
 }

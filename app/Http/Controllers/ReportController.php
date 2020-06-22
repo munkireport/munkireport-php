@@ -36,7 +36,7 @@ class ReportController extends Controller
             $this->group = passphrase_to_group($_POST['passphrase']);
         }
 
-        if ($auth_list = conf('client_passphrases')) {
+        if ($auth_list = config('munkireport.client_passphrases')) {
             if (! is_array($auth_list)) {
                 $this->error("conf['client_passphrases'] should be an array");
             }
