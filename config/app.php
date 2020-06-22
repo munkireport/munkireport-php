@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'MunkiReport'),
+    // 'name' => env('APP_NAME', 'MunkiReport'),  // Laravel 7
+    'name' => env('SITENAME', 'MunkiReport'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +40,8 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+//    'debug' => (bool) env('APP_DEBUG', false),  // Laravel 7
+    'debug' => (bool) env('DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,8 +54,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
-
+//    'url' => env('APP_URL', 'http://localhost'),  // Laravel 7
+    'url' => env('WEBHOST', 'http://localhost'),
     'asset_url' => env('ASSET_URL', null),
 
     /*
@@ -67,8 +69,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
-
+//    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', @date_default_timezone_get()),
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -119,7 +121,8 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+//    'key' => env('APP_KEY'),  // Laravel 7
+    'key' => env('APP_KEY', env('ENCRYPTION_KEY')),
 
     'cipher' => 'AES-256-CBC',
 
@@ -166,6 +169,9 @@ return [
          * Package Service Providers...
          */
         MR\Kiss\Providers\KissEngineProvider::class,
+        Adldap\Laravel\AdldapServiceProvider::class,
+        Adldap\Laravel\AdldapAuthServiceProvider::class,
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +233,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        // 3rd party package providers
+        'Adldap' => Adldap\Laravel\Facades\Adldap::class,
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
     ],
 
 ];
