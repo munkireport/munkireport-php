@@ -112,5 +112,8 @@ The first reason is to reduce the amount of work to get back to a stable state.
 The second reason is that modern web application design doesn't really use View templating engines anyway,
 so the work would be lost eventually.
 
+The KISSMVC views have been moved to [resources/views/kissmvc](../../resources/views/kissmvc) to align with
+the Laravel directory structure.
 
+They are still KISS views, not converted to Blade.
 
