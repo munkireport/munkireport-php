@@ -139,7 +139,7 @@ return [
 //    'application_path' => APP_ROOT.'/app/',
 
     // Path to view directory, with trailing slash
-    'view_path' => APP_ROOT.'/app/views/',
+    'view_path' => APP_ROOT.'/resources/views/kissmvc/',
 
     // Path to controller directory, with trailing slash
     'controller_path' => APP_ROOT.'/app/controllers/',
