@@ -168,6 +168,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Aacotroneo\Saml2\Saml2ServiceProvider::class,
         MR\Kiss\Providers\KissEngineProvider::class,
         Adldap\Laravel\AdldapServiceProvider::class,
         Adldap\Laravel\AdldapAuthServiceProvider::class,
