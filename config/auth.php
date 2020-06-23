@@ -71,6 +71,12 @@ return [
             'model' => App\User::class,
         ],
 
+        // For LDAP or Active Directory Auth
+//        'users' => [
+//            'driver' => 'ldap',
+//            'model' => App\User::class,
+//        ]
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
