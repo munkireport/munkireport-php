@@ -46,9 +46,9 @@
         appUrl = "{{ url('/') }}",
         default_theme = "{{ config('munkireport.default_theme') }}",
         businessUnitsEnabled = {{ config('munkireport.enable_business_units') ? 'true' : 'false' }};
-      isAdmin = {{ auth('admin') ? 'true' : 'false' }};
-      isManager = {{ auth('manager') ? 'true' : 'false' }};
-      isArchiver = {{ auth('archiver') ? 'true' : 'false' }};
+      isAdmin = true;
+      isManager = true;
+      isArchiver = true;
     </script>
 
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
@@ -179,16 +179,16 @@
                         <?php $page_url = $url.strtok($list_url, '.'); ?>
 
                         <li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-                            <a href="<?php echo mr_url($url.strtok($list_url, '.')); ?>" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+                            <a href="{{ mr_url($url.strtok($list_url, '.')) }}" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
                         </li>
 
                         @endif
 
-                        <?php endforeach; ?>
+                        @endforeach
                         @foreach($modules->getDropdownData('admin_pages', 'module', $page) as $item)
 
-                        <li class="<?=$item->class?>">
-                            <a href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
+                        <li class="{{ $item->class }}">
+                            <a href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
                         </li>
 
                         @endforeach
@@ -239,7 +239,7 @@
 
                         <?php $lang = strtok($list_url, '.'); ?>
 
-                        <li><a href="<?php echo mr_url($page, false, ['setLng' => $lang]); ?>" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
+                        <li><a href="{{ mr_url($page, false, ['setLng' => $lang]) }}" data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a></li>
 
                         @endif
 
@@ -283,3 +283,111 @@
 @endauth
 
 @yield('content')
+
+<!-- original foot partial -->
+
+@auth
+
+<div class="container">
+
+    <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
+
+        <i>MunkiReport <span data-i18n="version">Version</span> {{ $GLOBALS['version'] }}</i>
+
+    </div>
+
+</div>
+
+@endauth
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button data-i18n="dialog.cancel" type="button" class="btn btn-default" data-dismiss="modal"></button>
+                <button type="button" class="btn btn-primary ok"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach($GLOBALS['alerts'] AS $type => $list)
+
+<div class="mr-alert alert alert-dismissable alert-<?php echo $type; ?>">
+
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+    <ul>
+
+        @foreach($list AS $msg)
+        <li>{{ $msg }}</li>
+        @endforeach
+
+    </ul>
+
+</div>
+
+@endforeach
+
+<script>
+  $('.mr-alert').prependTo('body>div.container:first');
+</script>
+
+
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/js/moment.min.js') }}"></script>
+<script src="{{ asset('assets/js/i18next.min.js') }}"></script>
+<script src="{{ asset('assets/js/d3/d3.min.js') }}"></script>
+<script src="{{ asset('assets/js/nv.d3.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.hotkeys/jquery.hotkeys.js') }}"></script>
+<script src="{{ asset('assets/js/munkireport.settings.js') }}"></script>
+
+<script>
+  // Inject debug value from php
+  mr.debug = {{ config('app.debug') ? 'true' : 'false' }};
+  <?php $dashboard = getDashboard()->loadAll();?>
+  @foreach($dashboard->getDropdownData('show/dashboard', $page) as $item)
+  @if($item->hotkey)
+
+    mr.setHotKey('{{ $item->hotkey }}', appUrl + '/show/dashboard/{{ $item->name }}');
+    @endif
+    @endforeach
+</script>
+
+
+@if(config('munkireport.custom_js'))
+<script src="{{ config('munkireport.custom_js') }}"></script>
+@endif
+
+<script src="{{ asset('assets/js/munkireport.js') }}"></script>
+
+@if(isset($recaptcha) && conf('recaptchaloginpublickey'))
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<script>
+  function onSubmit(token) {
+    document.getElementById("login-form").submit();
+  }
+</script>
+@endif
+
+<script>
+  $(document).on('appUpdate', function(){
+    //$.getJSON( appUrl + '/module/notification/runCheck', function( data ) {
+    // Maybe add some counter to only run every 10 mins.
+    // CHeck if the data contains errors
+    // Check if there are desktop notifications
+    //});
+  });
+</script>
+
+</body>
+</html>
