@@ -4,6 +4,13 @@ namespace munkireport\models;
 
 use munkireport\models\MRModel as Eloquent;
 
+/**
+ * Class Business_unit
+ *
+ * To be replaced by MR\BusinessUnit
+ *
+ * @package munkireport\models
+ */
 class Business_unit extends Eloquent
 {
     protected $table = 'business_unit';

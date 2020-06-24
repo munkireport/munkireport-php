@@ -19,34 +19,32 @@ class ConfigTest extends TestCase
         // Mock configuration load
         global $conf;
         require_once __DIR__ . '/../../app/helpers/config_helper.php';
-        initDotEnv();
+        // initDotEnv();
         initConfig();
         configAppendFile(APP_ROOT . 'app/config/app.php');
         configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
-        configAppendFile(APP_ROOT . 'app/config/auth.php');
-        loadAuthConfig();
 
         //include_once APP_ROOT . "config.php";
         $this->conf = $GLOBALS['conf'];
     }
 
     public function testGetEnvDefault() {
-        $v = env('STRINGVALUE', 'NOPE');
+        $v = mr_env('STRINGVALUE', 'NOPE');
         $this->assertEquals($v, 'STRING');
     }
 
     public function testGetEnvBool() {
-        $v = env('BOOLVALUE', false);
+        $v = mr_env('BOOLVALUE', false);
         $this->assertEquals(true, $v);
     }
 
     public function testGetEnvInt() {
-        $v = env('INTVALUE', 1);
+        $v = mr_env('INTVALUE', 1);
         $this->assertEquals(1234, $v);
     }
 
     public function testGetEnvArray() {
-        $v = env('ARRAYVALUE', ['ONE','TWO']);
+        $v = mr_env('ARRAYVALUE', ['ONE','TWO']);
         $this->assertEquals(4, count($v));
     }
 

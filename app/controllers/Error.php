@@ -2,7 +2,8 @@
 
 namespace munkireport\controller;
 
-use \Controller, \View;
+use MR\Kiss\Controller;
+use MR\Kiss\View;
 
 class Error extends Controller
 {
@@ -18,6 +19,6 @@ class Error extends Controller
     {
         $data = array('status_code' => $status_code);
 
-        view('error/client_error', $data);
+        mr_view('error/client_error', $data);
     }
 }
