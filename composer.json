@@ -99,7 +99,9 @@
         "laravel/socialite": "^4.4",
         "adldap2/adldap2-laravel": "^6.1",
         "anhskohbo/no-captcha": "^3.2",
-        "orkhanahmadov/laravel-ip-middleware": "^1.4"
+        "orkhanahmadov/laravel-ip-middleware": "^1.4",
+        "socialiteproviders/apple": "^3.0",
+        "socialiteproviders/okta": "^1.1"
     },
     "autoload": {
         "classmap": [
