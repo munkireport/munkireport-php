@@ -173,7 +173,6 @@ return [
         Adldap\Laravel\AdldapServiceProvider::class,
         Adldap\Laravel\AdldapAuthServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
-        \SocialiteProviders\Manager\ServiceProvider::class,
 
         /*
          * Application Service Providers...
