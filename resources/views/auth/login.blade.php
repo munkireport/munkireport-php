@@ -65,6 +65,8 @@
                             </div>
                         </div>
                     </form>
+
+                    <a class="btn btn-primary" href="{{ route('saml2_login', 'azuread') }}">Sign in with SAML</a>
                 </div>
             </div>
         </div>

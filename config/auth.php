@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Authentication Methods
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the behaviour of the MunkiReport Multi-Auth Guard to
+    | support multiple different authentication methods.
+    |
+    | The currently supported methods are LOCAL, SAML, NOAUTH, and AD which can
+    | be combined by separating them with commas.
+    */
+    'methods' => env('AUTH_METHODS', 'LOCAL'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Defaults
     |--------------------------------------------------------------------------
     |
