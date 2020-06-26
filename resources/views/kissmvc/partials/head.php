@@ -254,10 +254,14 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="<?php echo url('/logout'); ?>">
+                            <form id="logoutForm" action="<?php echo route('logout'); ?>" method="POST" style="display: none;">
+                                <?php echo csrf_field(); ?>
+                            </form>
+							<a href="javascript:document.getElementById('logoutForm').submit()">
 								<i class="fa fa-power-off"></i>
 								<span data-i18n="nav.user.logout"></span>
 							</a>
+                            </form>
 						</li>
 					</ul>
 				</li>
