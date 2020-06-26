@@ -2,7 +2,7 @@
 
 // If you choose to use ENV vars to define these values, give this IdP its own env var names
 // so you can define different values for each IdP, all starting with 'SAML2_'.$this_idp_env_id
-$this_idp_env_id = 'TEST';
+$this_idp_env_id = 'azuread';
 
 //This is variable is for simplesaml example only.
 // For real IdP, you must set the url values in the 'idp' config to conform to the IdP's real urls.

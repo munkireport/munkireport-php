@@ -21,6 +21,14 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            // Add `source` to indicate SSO IdP that created the user record, if any
+            $table->string('source')->nullable();
+
+            // More IdP SSO Assertion/UserInfo Stuff
+            // which can be used to personalise the profile menu
+            $table->string('display_name')->nullable();
+
         });
     }
 
