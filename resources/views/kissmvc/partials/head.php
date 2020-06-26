@@ -86,7 +86,7 @@
 				
 				<?php if($dashboard->getCount() === 1):?>
 				<li <?php echo $page==''?'class="active"':''; ?>>
-					<a href="<?php echo url(); ?>">
+					<a href="<?php echo url('/'); ?>">
 						<i class="fa fa-th-large"></i>
 						<span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
 					</a>
