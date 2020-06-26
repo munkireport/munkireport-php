@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 
 
-class MigrationCommand extends Command
+class LegacyMigrationCommand extends Command
 {
     use StubTrait;
 
