@@ -127,7 +127,7 @@ return [
                 |
                 */
 
-                'account_suffix' => env('LDAP_ACCOUNT_SUFFIX', ''),
+                'account_suffix' => env('LDAP_ACCOUNT_SUFFIX', env('AUTH_AD_ACCOUNT_SUFFIX', '')),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -143,7 +143,7 @@ return [
                 |
                 */
 
-                'hosts' => explode(' ', env('LDAP_HOSTS', 'corp-dc1.corp.acme.org corp-dc2.corp.acme.org')),
+                'hosts' => env('AUTH_AD_HOSTS', explode(' ', env('LDAP_HOSTS', 'corp-dc1.corp.acme.org corp-dc2.corp.acme.org'))),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -183,7 +183,7 @@ return [
                 |
                 */
 
-                'base_dn' => env('LDAP_BASE_DN', 'dc=corp,dc=acme,dc=org'),
+                'base_dn' => env('LDAP_BASE_DN', env('AUTH_AD_BASE_DN', 'dc=corp,dc=acme,dc=org')),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -229,11 +229,23 @@ return [
                 | One of these options are definitely recommended if you
                 | have the ability to connect to your server securely.
                 |
+                | MunkiReport NOTE: Microsoft will be requiring SSL/TLS or Signed LDAP in the
+                | near future. So this will be compulsory.
                 */
 
                 'use_ssl' => env('LDAP_USE_SSL', false),
                 'use_tls' => env('LDAP_USE_TLS', false),
 
+                /*
+                |--------------------------------------------------------------------------
+                | Custom Options
+                |--------------------------------------------------------------------------
+                |
+                */
+                'custom_options' => [
+//                    LDAP_OPT_X_TLS_CACERTDIR => storage_path('app/ca_trust'),
+//                    LDAP_OPT_X_TLS_CACERTFILE => storage_path('app/ca_trust/win-ca-der.cer'),
+                ],
             ],
 
         ],
