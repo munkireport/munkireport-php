@@ -1,24 +1,33 @@
 <?php
+/**
+ * This file provides a template configuration for SAML2 Login.
+ * You need to customise the settings to fit your provider. If you find a file in this examples directory with the
+ * name of the provider, it will have some more information and maybe some defaults that have already been customised
+ * for you.
+ */
 
-// If you choose to use ENV vars to define these values, give this IdP its own env var names
-// so you can define different values for each IdP, all starting with 'SAML2_'.$this_idp_env_id
-$this_idp_env_id = 'TEST';
+// This will be the unique short name expected in all the .env / environment variables
+// Eg. if this is called 'TEMPLATE', then we expect settings to look like: SAML2_TEMPLATE_SP_ENTITYID
+$idp_env = 'TEMPLATE';
 
-//This is variable is for simplesaml example only.
-// For real IdP, you must set the url values in the 'idp' config to conform to the IdP's real urls.
-$idp_host = env('SAML2_'.$this_idp_env_id.'_IDP_HOST', 'http://localhost:8000/simplesaml');
-
-return $settings = array(
-
-    /*****
-     * One Login Settings
-     */
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | OneLogin PHP SAML Toolkit Settings
+    |--------------------------------------------------------------------------
+    |
+    | These options are passed to the OneLogin PHP SAML Toolkit, so if you need more
+    | detailed explanation of the options, be sure to visit the OneLogin Documentation at:
+    |
+    | https://github.com/onelogin/php-saml
+    |
+    */
 
     // If 'strict' is True, then the PHP Toolkit will reject unsigned
     // or unencrypted messages if it expects them signed or encrypted
     // Also will reject the messages if not strictly follow the SAML
     // standard: Destination, NameId, Conditions ... are validated too.
-    'strict' => true, //@todo: make this depend on laravel config
+    'strict' => true,
 
     // Enable debug mode (to print errors)
     'debug' => env('APP_DEBUG', false),
@@ -84,14 +93,16 @@ return $settings = array(
         // 'certFingerprint' => '',
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | OneLogin PHP SAML Toolkit - Advanced Settings
+    |--------------------------------------------------------------------------
+    |
+    | These settings usually do not require changing unless there is a specific requirement
+    | from your Identity Provider to do this.
+    |
+    */
 
-
-    /***
-     *
-     *  OneLogin advanced settings
-     *
-     *
-     */
     // Security settings
     'security' => array(
 
@@ -146,31 +157,30 @@ return $settings = array(
     // Contact information template, it is recommended to suply a technical and support contacts
     'contactPerson' => array(
         'technical' => array(
-            'givenName' => 'name',
-            'emailAddress' => 'no@reply.com'
+            'givenName' => '',
+            'emailAddress' => ''
         ),
         'support' => array(
-            'givenName' => 'Support',
-            'emailAddress' => 'no@reply.com'
+            'givenName' => '',
+            'emailAddress' => ''
         ),
     ),
 
     // Organization information template, the info in en_US lang is recomended, add more if required
     'organization' => array(
         'en-US' => array(
-            'name' => 'Name',
-            'displayname' => 'Display Name',
-            'url' => 'http://url'
+            'name' => '',
+            'displayname' => '',
+            'url' => ''
         ),
     ),
 
-/* Interoperable SAML 2.0 Web Browser SSO Profile [saml2int]   http://saml2int.org/profile/current
+    /* Interoperable SAML 2.0 Web Browser SSO Profile [saml2int]   http://saml2int.org/profile/current
 
-   'authnRequestsSigned' => false,    // SP SHOULD NOT sign the <samlp:AuthnRequest>,
-                                      // MUST NOT assume that the IdP validates the sign
-   'wantAssertionsSigned' => true,
-   'wantAssertionsEncrypted' => true, // MUST be enabled if SSL/HTTPs is disabled
-   'wantNameIdEncrypted' => false,
-*/
-
-);
+       'authnRequestsSigned' => false,    // SP SHOULD NOT sign the <samlp:AuthnRequest>,
+                                          // MUST NOT assume that the IdP validates the sign
+       'wantAssertionsSigned' => true,
+       'wantAssertionsEncrypted' => true, // MUST be enabled if SSL/HTTPs is disabled
+       'wantNameIdEncrypted' => false,
+    */
+];
