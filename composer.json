@@ -84,7 +84,6 @@
         "munkireport/usage_stats": "^1.0",
         "munkireport/usb": "^1.0",
         "munkireport/user_sessions": "^1.0",
-        "munkireport/users": "^1.3",
         "munkireport/warranty": "^4.0",
         "munkireport/wifi": "^1.0",
         "symfony/yaml": "^5.1",
@@ -157,5 +156,8 @@
         "post-create-project-cmd": [
             "@php please key:generate --ansi"
         ]
+    },
+    "suggest": {
+        "ext-ldap": "Needed to support Active Directory/LDAP Authentication"
     }
 }
