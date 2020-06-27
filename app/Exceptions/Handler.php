@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Adldap\Auth\BindException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,6 +38,13 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        // Log extended debugging information for failed LDAP(S) binds.
+        // I have no idea why Adldap2 doesn't even attempt this, it's critical information.
+        if ($exception instanceof BindException) {
+            $diagnosticMessage = $exception->getDetailedError()->getDiagnosticMessage();
+            Log::debug("BindException diagnostic message: ${diagnosticMessage}");
+        }
+
         parent::report($exception);
     }
 

@@ -73,6 +73,9 @@ return [
 
         // Adldap\Laravel\Validation\Rules\OnlyImported::class,
 
+        // Backwards compatibility with MunkiReport 5.6's AUTH_AD_ALLOWED_USERS / AUTH_AD_ALLOWED_GROUPS
+        App\Rules\ActiveDirectoryUserWhitelist::class,
+        App\Rules\ActiveDirectoryGroupWhitelist::class,
     ],
 
     /*
@@ -93,7 +96,7 @@ return [
 
         // Only allows users with a user principal name to authenticate.
         // Suitable when using ActiveDirectory.
-        // Adldap\Laravel\Scopes\UpnScope::class,
+        Adldap\Laravel\Scopes\UpnScope::class,
 
         // Only allows users with a uid to authenticate.
         // Suitable when using OpenLDAP.
@@ -320,7 +323,6 @@ return [
         'enabled' => env('LDAP_LOGGING', true),
 
         'events' => [
-
             \Adldap\Laravel\Events\Importing::class                 => \Adldap\Laravel\Listeners\LogImport::class,
             \Adldap\Laravel\Events\Synchronized::class              => \Adldap\Laravel\Listeners\LogSynchronized::class,
             \Adldap\Laravel\Events\Synchronizing::class             => \Adldap\Laravel\Listeners\LogSynchronizing::class,
@@ -332,7 +334,6 @@ return [
             \Adldap\Laravel\Events\DiscoveredWithCredentials::class => \Adldap\Laravel\Listeners\LogDiscovery::class,
             \Adldap\Laravel\Events\AuthenticatedWithWindows::class  => \Adldap\Laravel\Listeners\LogWindowsAuth::class,
             \Adldap\Laravel\Events\AuthenticatedModelTrashed::class => \Adldap\Laravel\Listeners\LogTrashedModel::class,
-
         ],
     ],
 
