@@ -66,7 +66,9 @@
                         </div>
                     </form>
 
+                    @if (config('auth.methods') === 'SAML')
                     <a class="btn btn-primary" href="{{ route('saml2_login', 'azuread') }}">Sign in with SAML</a>
+                    @endif
                 </div>
             </div>
         </div>

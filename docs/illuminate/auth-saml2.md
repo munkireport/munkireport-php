@@ -50,6 +50,10 @@ SAML2_azuread_IDP_x509="MIIC8DC...."
 
 # SAML 2 Identity Provider (IdP) Entity ID, but really usually referred to as "Issuer"
 SAML2_azuread_IDP_ENTITYID=""
+
+# MunkiReport adds this variable to customise the Title when users visit the login page
+# The button will read "Sign in with <displayname>"
+SAML2_azuread_IDP_DISPLAYNAME="Azure AD"
 ```
 
 ### 3. Tell your provider which URLs and Entity IDs they should expect
