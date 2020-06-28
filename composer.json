@@ -9,7 +9,8 @@
         "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "haydenpierce/class-finder": "^0.4.2"
     },
     "config": {
         "optimize-autoloader": true
@@ -100,7 +101,9 @@
         "anhskohbo/no-captcha": "^3.2",
         "orkhanahmadov/laravel-ip-middleware": "^1.4",
         "socialiteproviders/apple": "^3.0",
-        "socialiteproviders/okta": "^1.1"
+        "socialiteproviders/okta": "^1.1",
+        "nuwave/lighthouse": "^4.15",
+        "mll-lab/laravel-graphql-playground": "^2.1"
     },
     "autoload": {
         "classmap": [
