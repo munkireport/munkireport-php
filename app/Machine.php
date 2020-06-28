@@ -1,5 +1,5 @@
 <?php
-namespace MR;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use MR\Scopes\CreatedSinceScope;

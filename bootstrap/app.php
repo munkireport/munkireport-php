@@ -4,9 +4,7 @@ define('PUBLIC_ROOT', dirname(__FILE__) . '/../public/' );
 define('APP_ROOT', dirname(__FILE__) . '/../' );
 
 // Load config
-//initDotEnv();
 initConfig();
-configAppendFile(APP_ROOT . 'app/config/app.php');
 configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
 // echo '<pre>';print_r($GLOBALS['conf']);exit;
 

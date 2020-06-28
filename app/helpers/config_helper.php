@@ -34,22 +34,9 @@ function configAppendFile($configPath, $namespace = '')
 }
 
 /**
- * Get config item
- * @param string config item
- * @param string default value (optional)
- * @author AvB
- **/
-//function conf($cf_item, $default = '')
-//{
-//    if (isset($GLOBALS['conf'])) {
-//        return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
-//    } else {
-//        return $default;
-//    }
-//}
-
-/**
  * Get configuration item as if it were from the old app/config path instead of the Laravel standard config/ path.
+ *
+ * This used to refer to the $GLOBALS['conf'] variable.
  *
  * @param $cf_item
  * @param string $default
@@ -84,7 +71,18 @@ function conf($cf_item, $default = '')
         'guzzle_handler',
         'request_timeout',
         'apple_hardware_icon_url',
+        'local',
 
+        'system_path',
+        'view_path',
+        'controller_path',
+        'module_path',
+        'storage_path',
+        'routes',
+        'authorization',
+        'subdirectory',
+        'uri_protocol',
+        'index_page',
     ])) {
         return config("munkireport.{$cf_item}", $default);
     }

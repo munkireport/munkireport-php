@@ -13,12 +13,6 @@ function get_version()
     return preg_replace('/(.*)\.\d+$/', '$1', $GLOBALS['version']);
 }
 
-function custom_error($msg = '')
-{
-    $vars['msg']=$msg;
-    die(View::doFetch(APP_PATH.'errors/custom_error.php', $vars));
-}
-
 //===============================================
 // Alerts
 //===============================================s
@@ -147,6 +141,14 @@ function add_mysql_opts(&$conn){
 //    return $s;
 //}
 
+/**
+ * MunkiReport 5.6 implementation of url() converted to a wrapper around Laravel url()
+ *
+ * @param string $url
+ * @param bool $fullurl
+ * @param array $queryArray
+ * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\UrlGenerator|\Illuminate\Foundation\Application|string
+ */
 function mr_url($url = '', $fullurl = false, $queryArray = [])
 {
     $s = $fullurl ? conf('webhost') : '';
@@ -172,12 +174,9 @@ function mr_url($url = '', $fullurl = false, $queryArray = [])
  */
 function getRemoteAddress()
 {
-    if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-        return $_SERVER["HTTP_X_FORWARDED_FOR"];
-    }
-
-    return $_SERVER['REMOTE_ADDR'];
+    return request()->getClientIp();
 }
+
 /**
  * Return a secure url
  *
@@ -201,21 +200,6 @@ function mr_secure_url($url = '')
         .((isset($parse_url['fragment'])) ? '#' . $parse_url['fragment'] : '')
         ;
 }
-
-/**
- * Get $_POST variable without error
- *
- * @return string post value
- **/
-// Use request($key, $default) helper
-//function post($what = '', $alt = '')
-//{
-//    if (array_key_exists($what, $_POST)) {
-//        return $_POST[$what];
-//    }
-//
-//    return $alt;
-//}
 
 /**
  * Lookup group id for passphrase
@@ -498,10 +482,16 @@ function getDashboard()
     return $dashboardObj;
 }
 
-// Generate csrf token and store in session
+/**
+ * Backwards compatible method to get the CSRF token.
+ *
+ * Wrapper for Laravel's `csrf_token()` helper.
+ *
+ * @return string
+ */
 function getCSRF()
 {
-    return $_SESSION['csrf_token'];
+    return csrf_token();
 }
 
 
@@ -513,7 +503,6 @@ function jsonError($msg = '', $status_code = 400, $exit = true)
 
 function jsonView($msg = '', $status_code = 200, $exit = false)
 {
-
     // Check for error, adjust status code if necessary
     if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200){
         $status_code = 400;
