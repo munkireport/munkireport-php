@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Str;
 
 return [
 
@@ -51,7 +52,8 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'ldap_users',
+            'provider' => Str::contains('AD', env('AUTH_METHODS', 'LOCAL')) ? 'ldap_users' : 'users',
+//            'provider' => 'users',
         ],
 
         // Authenticate via DB, persist via session

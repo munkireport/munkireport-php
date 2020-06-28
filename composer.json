@@ -111,7 +111,6 @@
             "app/helpers/config_helper.php",
             "app/helpers/env_helper.php",
             "app/helpers/site_helper.php",
-            "app/helpers/test_helper.php",
             "shims/Module_controller.php",
             "shims/View.php",
             "shims/Model.php"
