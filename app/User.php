@@ -36,4 +36,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Retrieve business units where this user is a member (manager or normal user).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function memberOfBusinessUnits() {
+        return $this->belongsToMany('App\BusinessUnit');
+    }
+
+    /**
+     * Retrieve business units where this user is a manager of the business unit.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function managerOfBusinessUnits() {
+        return $this->memberOfBusinessUnits()->wherePivot('role', 'manager');
+    }
+
+    /**
+     * Retrieve business units where this user has a basic user role in the business
+     * unit.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function userOfBusinessUnits() {
+        return $this->memberOfBusinessUnits()->wherePivot('role', 'user');
+    }
 }

@@ -8,6 +8,7 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 scalar DateTimeTz @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTimeTz")
 
 type Query {
+    me: User @auth
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
     machines: [Machine!]! @all
@@ -25,4 +26,11 @@ type Machine {
     id: ID!
     serial_number: String!
     hostname: String!
+}
+
+type BusinessUnit {
+    id: ID!
+    unitid: Int!
+    property: String!
+    value: String!
 }
