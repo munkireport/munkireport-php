@@ -53,10 +53,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-//        'web' => [
-//            'driver' => 'session',
-//            'provider' => 'users',
-//        ],
+
+        'ldap' => [
+            'driver' => 'session',
+            'provider' => 'ldap_users',
+            // TODO: passwords should be a noop, since LDAPS controls password changes
+        ],
 
         'api' => [
             'driver' => 'token',
@@ -83,21 +85,17 @@ return [
     */
 
     'providers' => [
+        // For Local Authentication
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
 
         // For LDAP or Active Directory Auth
-//        'users' => [
-//            'driver' => 'ldap',
-//            'model' => App\User::class,
-//        ]
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'ldap_users' => [
+            'driver' => 'ldap',
+            'model' => App\User::class,
+        ]
     ],
 
     /*

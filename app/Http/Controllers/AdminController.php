@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\BusinessUnit;
 use munkireport\models\Business_unit;
@@ -15,8 +16,9 @@ class AdminController extends Controller
 
     public function __construct()
     {
-        // Check authorization
-        $this->middleware('auth');
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
 
         // Connect to database
         $this->connectDB();

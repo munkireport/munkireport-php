@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class FilterController extends Controller
 {
@@ -10,7 +11,9 @@ class FilterController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
 
         $this->registered_filters = [
             'machine_group' => [],

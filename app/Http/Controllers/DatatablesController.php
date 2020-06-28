@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use munkireport\lib\Tablequery;
 
 class DatatablesController extends Controller
@@ -11,7 +12,9 @@ class DatatablesController extends Controller
     {
         // Check authorization
 //        $this->authorized() || jsonError('Authenticate first', 403);
-        $this->middleware('auth');
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
 
         // Connect to database
         // $this->connectDB();

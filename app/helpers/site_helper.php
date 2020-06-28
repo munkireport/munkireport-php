@@ -281,7 +281,11 @@ function assocToArray($array)
  */
 function authorized($what)
 {
-    return Auth::check();
+    if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+        return Auth::check();
+    } else {
+        return true; // NOAUTH is enabled.
+    }
 
     // Laravel does CSRF Verification
 

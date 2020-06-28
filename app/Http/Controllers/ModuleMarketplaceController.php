@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use munkireport\lib\Request;
 use munkireport\controller\Module_marketplace;
 use Symfony\Component\Yaml\Yaml;
@@ -13,8 +14,11 @@ class ModuleMarketplaceController extends Controller
     public function __construct()
     {
         // Check authorization
-        $this->authorized() || jsonError('Authenticate first', 403);
-        $this->authorized('global') || jsonError('You need to be admin', 403);
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
+//        $this->authorized() || jsonError('Authenticate first', 403);
+//        $this->authorized('global') || jsonError('You need to be admin', 403);
 
         // Create object
         $this->moduleMarketplace = getMrModuleObj();

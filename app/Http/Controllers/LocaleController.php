@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LocaleController extends Controller
 {
@@ -12,6 +13,9 @@ class LocaleController extends Controller
 
     public function __construct()
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
         // if (! $this->authorized()) {
         //     header('Content-Type: application/json;charset=utf-8');
         //     echo '{"error": "Not Authorized"}';
