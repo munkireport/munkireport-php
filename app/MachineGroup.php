@@ -1,6 +1,6 @@
 <?php
 
-namespace MR;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use MR\Kiss\Contracts\LegacyMachineGroup;
@@ -20,7 +20,7 @@ class MachineGroup extends Model implements LegacyMachineGroup
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function businessUnit() {
-        return $this->belongsTo('MR\BusinessUnit');
+        return $this->belongsTo('App\BusinessUnit');
     }
 
     /**
@@ -29,7 +29,7 @@ class MachineGroup extends Model implements LegacyMachineGroup
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function reportData() {
-        return $this->hasMany('MR\ReportData', 'machine_group');
+        return $this->hasMany('App\ReportData', 'machine_group');
     }
 
     /**
@@ -40,7 +40,7 @@ class MachineGroup extends Model implements LegacyMachineGroup
      */
     public function machines() {
         return $this->hasManyThrough(
-            'MR\Machine', 'MR\ReportData',
+            'App\Machine', 'App\ReportData',
             'machine_group', 'serial_number'
         );
     }

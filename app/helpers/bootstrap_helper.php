@@ -4,14 +4,15 @@
  * Maintained here for backwards compatibility.
  */
 
-// Pass on https forward to $_SERVER['HTTPS'] todo: check if from trusted proxy
-if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-{
-    $_SERVER['HTTPS'] = 'on';
-}
-
-// Check if Request is secure
-function SslRequest(){
+/**
+ * Check if Request is secure
+ *
+ * We cannot replace this with request()->isSecure() yet, because it is called before
+ *  the Request object is constructed.
+ *
+ * @return bool
+ */
+function SslRequest() {
     return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
 }
 

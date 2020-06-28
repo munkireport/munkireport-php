@@ -3,8 +3,16 @@
 namespace MR;
 
 use Illuminate\Database\Eloquent\Model;
+use MR\Kiss\Contracts\LegacyBusinessUnit;
 
-class BusinessUnit extends Model
+/**
+ * MunkiReport Business Unit
+ *
+ * Represents an organisational team/group that has access to a collection of machines.
+ *
+ * @package MR
+ */
+class BusinessUnit extends Model implements LegacyBusinessUnit
 {
     protected $fillable = [
         'name',
@@ -49,5 +57,12 @@ class BusinessUnit extends Model
      */
     public function modules() {
         return $this->belongstoMany('MR\Module');
+    }
+
+    //// LegacyBusinessUnit
+
+    public function saveUnit($post_array)
+    {
+        // TODO: Implement saveUnit() method.
     }
 }
