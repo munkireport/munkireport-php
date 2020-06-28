@@ -270,7 +270,7 @@ return [
     |
     */
 
-    'login_fallback' => env('LDAP_LOGIN_FALLBACK', false),
+    'login_fallback' => env('LDAP_LOGIN_FALLBACK', true),
 
     /*
     |--------------------------------------------------------------------------

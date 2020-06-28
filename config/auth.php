@@ -51,14 +51,21 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'ldap_users',
         ],
 
-        'ldap' => [
-            'driver' => 'session',
-            'provider' => 'ldap_users',
-            // TODO: passwords should be a noop, since LDAPS controls password changes
-        ],
+        // Authenticate via DB, persist via session
+//        'local' => [
+//            'driver' => 'session',
+//            'provider' => 'users',
+//        ],
+
+        // Authenticate via LDAP, persist via session
+//        'ldap' => [
+//            'driver' => 'session',
+//            'provider' => 'ldap_users',
+//            // TODO: passwords should be a noop, since LDAPS controls password changes
+//        ],
 
         'api' => [
             'driver' => 'token',
