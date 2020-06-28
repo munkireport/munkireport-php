@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use munkireport\lib\Themes;
 
 class SettingsController extends Controller
 {
     public function __construct()
     {
-        if (! $this->authorized()) {
-            mr_view('json', array('msg' => 'Not authorized'));
-
-            die();
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
         }
+//        if (! $this->authorized()) {
+//            mr_view('json', array('msg' => 'Not authorized'));
+//
+//            die();
+//        }
     }
 
     //===============================================================

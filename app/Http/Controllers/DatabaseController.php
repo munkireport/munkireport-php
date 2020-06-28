@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use MR\Kiss\View;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\Migrations\Migrator;
@@ -15,7 +16,9 @@ class DatabaseController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
         // Check authorization
 //        $this->authorized() || jsonError('Authenticate first', 403);
 //        $this->authorized('global') || jsonError('You need to be admin', 403);

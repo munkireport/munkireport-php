@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+// Don't even register auth routes if we are in noauth mode
+if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+    Auth::routes();
+}
 
 Route::redirect('/', '/show/dashboard/default');
 

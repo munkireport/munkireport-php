@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ManagerController extends Controller
 {
     public function __construct()
     {
         // Check authorization
-        $this->middleware('auth');
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
 //        $this->authorized() || jsonError('Authenticate first', 403);
 //        $this->authorized('delete_machine') || jsonError('You need to be manager or admin', 403);
 

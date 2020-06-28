@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use munkireport\lib\Dashboard;
 use munkireport\lib\Database;
 
@@ -10,13 +11,16 @@ class SystemController extends Controller
 {
     public function __construct()
     {
-        if (! $this->authorized()) {
-            die('Authenticate first.'); // Todo: return json?
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
         }
-
-        if (! $this->authorized('global')) {
-            die('You need to be admin');
-        }
+//        if (! $this->authorized()) {
+//            die('Authenticate first.'); // Todo: return json?
+//        }
+//
+//        if (! $this->authorized('global')) {
+//            die('You need to be admin');
+//        }
     }
 
     //===============================================================
