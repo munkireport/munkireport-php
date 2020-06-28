@@ -66,8 +66,8 @@
                         </div>
                     </form>
 
-                    @if (config('auth.methods') === 'SAML')
-                    <a class="btn btn-primary" href="{{ route('saml2_login', 'azuread') }}">Sign in with SAML</a>
+                    @if (Str::contains(config('auth.methods'), 'SAML'))
+                    <a class="btn btn-primary" href="{{ route('saml2_login', 'default') }}">Sign in with SAML</a>
                     @endif
                 </div>
             </div>

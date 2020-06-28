@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        // 'Mr\Machine' => 'Mr\Policies\MachinePolicy',
     ];
 
     /**
@@ -26,10 +27,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Auth::extend('multi', function ($app, $name, array $config) {
-            $authMethods = explode(',', config('auth.methods'));
-            return new MultiAuthGuard(Auth::createUserProvider($config['provider']), $authMethods);
-        });
     }
 }
