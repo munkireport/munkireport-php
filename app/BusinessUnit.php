@@ -1,6 +1,6 @@
 <?php
 
-namespace MR;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use MR\Kiss\Contracts\LegacyBusinessUnit;
@@ -15,9 +15,9 @@ use MR\Kiss\Contracts\LegacyBusinessUnit;
 class BusinessUnit extends Model implements LegacyBusinessUnit
 {
     protected $fillable = [
-        'name',
-        'address',
-        'link'
+        'unitid',
+        'property',
+        'value',
     ];
 
     //// RELATIONSHIPS
@@ -28,7 +28,7 @@ class BusinessUnit extends Model implements LegacyBusinessUnit
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function members() {
-        return $this->belongsToMany('MR\User');
+        return $this->belongsToMany('App\User');
     }
 
     /**
@@ -55,12 +55,22 @@ class BusinessUnit extends Model implements LegacyBusinessUnit
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function modules() {
-        return $this->belongstoMany('MR\Module');
-    }
+//    public function modules() {
+//        return $this->belongstoMany('App\Module');
+//    }
 
     //// LegacyBusinessUnit
 
+    /**
+     * saveUnit is implemented for backwards compatibility with munkireport\lib\BusinessUnit.
+     *
+     * - Based on whether `unitid` === `new`, it will create a new business unit with max(unitid) + 1
+     * - If the post_array contains `iteminfo`, each item in the iteminfo array will be considered
+     * - items can contain new machine groups or new properties for the current business unit.
+     *
+     * @param $post_array
+     * @return mixed|void
+     */
     public function saveUnit($post_array)
     {
         // TODO: Implement saveUnit() method.

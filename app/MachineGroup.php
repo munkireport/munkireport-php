@@ -19,9 +19,9 @@ class MachineGroup extends Model implements LegacyMachineGroup
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function businessUnit() {
-        return $this->belongsTo('App\BusinessUnit');
-    }
+//    public function businessUnit() {
+//        return $this->belongsTo('App\BusinessUnit');
+//    }
 
     /**
      * Get report data for machines in this machine group.
