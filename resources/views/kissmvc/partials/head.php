@@ -247,6 +247,7 @@
 
                 <!-- TODO: check for noauth auth mechanism -->
 
+                <?php if (!Str::contains(config('auth.methods'), 'NOAUTH')): ?>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="fa fa-user"></i> <?php echo \Auth::user()['email']; ?>
@@ -265,6 +266,7 @@
 						</li>
 					</ul>
 				</li>
+                <?php endif ?>
 
 				<?php if(config('munkireport.show_help')):?>
 				

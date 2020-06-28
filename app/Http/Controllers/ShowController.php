@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use munkireport\lib\Dashboard;
 use munkireport\lib\Listing;
 use munkireport\lib\Widgets;
@@ -20,8 +21,9 @@ class ShowController extends Controller
     private $modules;
     public function __construct()
     {
-
-        $this->middleware('auth');
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
 //        if (! $this->authorized()) {
 //            mr_redirect('auth/login');
 //        }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Machine_model;
 use MR\Kiss\ConnectDbTrait;
 
@@ -12,7 +13,9 @@ class ClientsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
 
         // Connect to database
         $this->connectDB();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
 
@@ -10,7 +11,9 @@ class UnitController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+        }
     }
 
     public function index()
