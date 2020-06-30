@@ -18,7 +18,7 @@ class ArchiverController extends Controller
 //        $this->authorized('archive') || jsonError('You need to be archiver, manager or admin', 403);
 
         // Connect to database
-        $this->connectDB();
+        // $this->connectDB();
     }
 
 

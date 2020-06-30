@@ -22,7 +22,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         'Aacotroneo\Saml2\Events\Saml2LoginEvent' => [
-            Saml2LoginEventListener::class,
+            Saml2LoginEventListener::class,  // Required to create shadow users at login time
         ]
     ];
 

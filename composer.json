@@ -103,7 +103,8 @@
         "socialiteproviders/apple": "^3.0",
         "socialiteproviders/okta": "^1.1",
         "nuwave/lighthouse": "^4.15",
-        "mll-lab/laravel-graphql-playground": "^2.1"
+        "mll-lab/laravel-graphql-playground": "^2.1",
+        "composer/composer": "^1.10"
     },
     "autoload": {
         "classmap": [

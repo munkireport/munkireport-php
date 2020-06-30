@@ -9,6 +9,15 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\StreamHandler;
 use GuzzleHttp\Handler\CurlHandler;
 
+/**
+ * Request
+ *
+ * Implements a HTTP wrapper over guzzle.
+ *
+ * @deprecated Please use the Laravel HTTP Client
+ * @see https://laravel.com/docs/7.x/http-client
+ * @package munkireport\lib
+ */
 class Request
 {
     private $options;
