@@ -84,7 +84,7 @@ function conf($cf_item, $default = '')
         'uri_protocol',
         'index_page',
     ])) {
-        return config("munkireport.{$cf_item}", $default);
+        return config("_munkireport.{$cf_item}", $default);
     }
 
     if (in_array($cf_item, [
