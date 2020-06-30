@@ -34,3 +34,12 @@ type BusinessUnit {
     property: String!
     value: String!
 }
+
+
+type Application {
+    id: ID!
+    serial_number: String!
+    name: String!
+    path: String!
+}
+
