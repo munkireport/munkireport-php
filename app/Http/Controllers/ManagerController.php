@@ -17,7 +17,7 @@ class ManagerController extends Controller
 //        $this->authorized('delete_machine') || jsonError('You need to be manager or admin', 403);
 
         // Connect to database
-        $this->connectDB();
+        // $this->connectDB();
     }
 
 
@@ -39,7 +39,7 @@ class ManagerController extends Controller
             $status['status'] = 'unauthorized';
         } else {
             // Delete machine entry from all tables
-            $machine = new Model;
+            $machine = new \MR\Kiss\Model;
 
             // List tables (unfortunately this is not db-agnostic)
             switch ($machine->get_driver()) {

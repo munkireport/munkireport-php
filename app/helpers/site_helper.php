@@ -503,12 +503,20 @@ function jsonError($msg = '', $status_code = 400, $exit = true)
 
 function jsonView($msg = '', $status_code = 200, $exit = false)
 {
-    // Check for error, adjust status code if necessary
-    if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200){
-        $status_code = 400;
+    $response = response()->json(['msg' => $msg, 'status_code' => $status_code]);
+
+    if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200) {
+        $response = $response->setStatusCode(400);
     }
 
-    mr_view('json', ['msg' => $msg, 'status_code' => $status_code]);
+    $response->send();
+
+    // Check for error, adjust status code if necessary
+//    if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200){
+//        $status_code = 400;
+//    }
+//
+//    mr_view('json', ['msg' => $msg, 'status_code' => $status_code]);
     
     if ($exit) exit;
 }

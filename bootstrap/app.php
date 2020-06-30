@@ -1,7 +1,12 @@
 <?php
 // For backwards compatibility with MunkiReport KISSMVC
-define('PUBLIC_ROOT', dirname(__FILE__) . '/../public/' );
-define('APP_ROOT', dirname(__FILE__) . '/../' );
+if (!defined('PUBLIC_ROOT')) {
+    define('PUBLIC_ROOT', dirname(__FILE__) . '/../public/');
+}
+
+if (!defined('APP_ROOT')) {
+    define('APP_ROOT', dirname(__FILE__) . '/../');
+}
 
 // Load config
 initConfig();
