@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\BusinessUnit;
@@ -41,7 +43,7 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function save_machine_group()
+    public function save_machine_group(): JsonResponse
     {
         if (isset($_POST['groupid'])) {
             $machine_group = new Machine_group;
@@ -103,7 +105,7 @@ class AdminController extends Controller
             $out['error'] = 'Groupid is missing';
         }
 
-        jsonView($out);
+        return jsonView($out, 200, false, true);
     }
 
     //===============================================================
@@ -113,7 +115,7 @@ class AdminController extends Controller
      *
      * @author
      **/
-    public function remove_machine_group($groupid = '')
+    public function remove_machine_group($groupid = ''): JsonResponse
     {
         $out = [];
 
@@ -130,7 +132,7 @@ class AdminController extends Controller
                 ->update(['machine_group' => 0]);
         }
 
-        jsonView($out);
+        return jsonView($out, 200, false, true);
     }
 
     //===============================================================
@@ -141,10 +143,10 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function save_business_unit()
+    public function save_business_unit(): JsonResponse
     {
         $unit = new BusinessUnit();
-        jsonView($unit->saveUnit($_POST));
+        return jsonView($unit->saveUnit($_POST), 200, false, true);
     }
 
     //===============================================================
@@ -155,9 +157,11 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function remove_business_unit()
+    public function remove_business_unit(): JsonResponse
     {
-        jsonView(['success' => Business_unit::where('unitid', request('id', ''))->delete()]);
+        return jsonView([
+            'success' => Business_unit::where('unitid', request('id', ''))->delete()
+        ], 200, false, true);
     }
 
     //===============================================================
@@ -169,7 +173,7 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function get_bu_data()
+    public function get_bu_data(): JsonResponse
     {
         $out = [];
         $units = Business_unit::get()
@@ -205,7 +209,7 @@ class AdminController extends Controller
             $out[$obj->unitid]['unitid'] = $obj->unitid;
         }
 
-        jsonView(array_values($out));
+        return jsonView(array_values($out), 200, false, true);
     }
 
     //===============================================================
@@ -216,7 +220,7 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function get_mg_data($groupid = "")
+    public function get_mg_data($groupid = ""): JsonResponse
     {
         $out = [];
 
@@ -241,7 +245,7 @@ class AdminController extends Controller
             $out[$obj['machine_group']]['cnt'] = $obj['cnt'];
         }
 
-        jsonView(array_values($out));
+        return jsonView(array_values($out), 200, false, true);
     }
 
     //===============================================================
@@ -252,7 +256,7 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function show($which = '')
+    public function show($which = ''): Response
     {
         if ($which) {
             $data['page'] = 'clients';
