@@ -500,8 +500,14 @@ function jsonError($msg = '', $status_code = 400, $exit = true)
     jsonView(['error' => $msg], $status_code, $exit);
 }
 
-
-function jsonView($msg = '', $status_code = 200, $exit = false)
+/**
+ * @param string $msg The message body which will be encoded as JSON
+ * @param int $status_code The status code that should be sent in the response body AND header
+ * @param bool $exit If true, exit right after emitting response.
+ * @param bool $return If true, return response object rather than emitting response (For Laravel Controllers)
+ * @return \Illuminate\Http\JsonResponse|object
+ */
+function jsonView($msg = '', $status_code = 200, $exit = false, $return = false)
 {
     $response = response()->json($msg)->setStatusCode($status_code);
 
@@ -509,7 +515,7 @@ function jsonView($msg = '', $status_code = 200, $exit = false)
         $response = $response->setStatusCode(400);
     }
 
-    $response->send();
+
 
     // Check for error, adjust status code if necessary
 //    if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200){
@@ -517,8 +523,15 @@ function jsonView($msg = '', $status_code = 200, $exit = false)
 //    }
 //
 //    mr_view('json', ['msg' => $msg, 'status_code' => $status_code]);
-    
+
+    if ($return) {
+        return $response;
+    } else {
+        $response->send();
+    }
+
     if ($exit) exit;
+
 }
 
 function mr_view($file = '', $vars = '', $view_path = '')

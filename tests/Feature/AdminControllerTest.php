@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\BusinessUnit;
+use App\MachineGroup;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,8 +19,21 @@ class AdminControllerTest extends TestCase
      */
     public function testSaveMachineGroup()
     {
-        $response = $this->post('/admin/save_machine_group');
-        $response->assertStatus(200);
+        $response = $this->post('/admin/save_machine_group', [
+            'groupid' => '',
+            'name' => 'fixture machine group name',
+            'key' => '12B652B7-1028-FB9B-EA8B-27D7E6378794',
+        ], ['Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8']);
+        $response->assertOk();
+        $response->assertJsonMissing(['error' => 'Groupid is missing']);
+        $response->assertJsonPath('name', 'fixture machine group name');
+        $response->assertJsonStructure([
+            'groupid' => 1,
+            'name' => 'name',
+            'keys' => [
+                'key',
+            ],
+        ]);
     }
 
     /**
@@ -26,7 +41,7 @@ class AdminControllerTest extends TestCase
      */
     public function testRemoveMachineGroup()
     {
-        $response = $this->post('/admin/remove_machine_group');
+        $response = $this->get('/admin/remove_machine_group/2');
         $response->assertStatus(200);
     }
 
@@ -83,6 +98,21 @@ class AdminControllerTest extends TestCase
      */
     public function testGetBuData()
     {
+//        $businessUnit = factory(BusinessUnit::class)->create();
+
+        $response = $this->get('/admin/get_bu_data');
+        $response->assertOk();
+        $this->assertIsArray($response->json());
+        $response->assertJsonStructure([
+            'users',
+            'managers',
+            'archivers',
+            'machine_groups',
+            'name',
+            'unitid',
+            'address',
+            'link',
+        ]);
 
     }
 
@@ -91,6 +121,17 @@ class AdminControllerTest extends TestCase
      */
     public function testGetMgData()
     {
+        // $machineGroup = factory(MachineGroup::class)->create();
+
+        $response = $this->get('/admin/get_mg_data');
+        $response->assertOk();
+        $this->assertIsArray($response->json());
+        $response->assertJsonStructure([
+            'name',
+            'groupid',
+            'cnt',
+            'keys',
+        ]);
 
     }
 }

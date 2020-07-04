@@ -56,4 +56,5 @@ class MachineGroup extends Model implements LegacyMachineGroup
     {
         // TODO: Implement get_group_ids() method.
     }
+
 }
