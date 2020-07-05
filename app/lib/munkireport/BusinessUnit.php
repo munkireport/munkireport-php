@@ -111,7 +111,7 @@ class BusinessUnit
 
         foreach ($post_array as $property => $val) {
 
-            if (is_scalar($val)) {
+            if (! is_array($val)) {
                 continue;
             }
 
