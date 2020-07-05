@@ -107,13 +107,14 @@ one to maintain backwards compatibility on.
 
 For this conversion we will keep using MR\Kiss\View to avoid a full rewrite of all the views.
 
-The first reason is to reduce the amount of work to get back to a stable state.
+There is no huge benefit to the project to rush into Blade views right now.
 
-The second reason is that modern web application design doesn't really use View templating engines anyway,
-so the work would be lost eventually.
+A forwards/backwards compatible View Engine has been registered with Laravel so that whenever the `view()` helper function
+tries to render a `.php` file, it actually constructs an instance of MR\Kiss\View underneath. The main difference
+being that the Laravel captures the output buffer and returns it rather than piping it straight to stdout.
 
-The KISSMVC views have been moved to [resources/views/kissmvc](../../resources/views/kissmvc) to align with
-the Laravel directory structure.
+The main motivation for this is that stdout isn't testable by the PHPUnit HTTP Client, but the Response type is.
 
-They are still KISS views, not converted to Blade.
+KISSMVC View templates live in the same directory structure as blade templates.
+
 

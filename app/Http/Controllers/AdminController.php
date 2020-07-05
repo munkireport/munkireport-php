@@ -256,7 +256,7 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function show($which = ''): Response
+    public function show($which = '')
     {
         if ($which) {
             $data['page'] = 'clients';
@@ -267,6 +267,6 @@ class AdminController extends Controller
             $view = 'error/client_error';
         }
 
-        mr_view($view, $data);
+        return view('admin.business_units', $data);
     }
 }

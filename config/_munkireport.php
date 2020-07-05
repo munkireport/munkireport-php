@@ -61,13 +61,13 @@ return [
     'default_theme' => env('DEFAULT_THEME', 'Default'),
 
     /*
-|===============================================
-| Roles
-|===============================================
-|
-| Add users or groups to the appropriate roles array.
-|
-*/
+    |===============================================
+    | Roles
+    |===============================================
+    |
+    | Add users or groups to the appropriate roles array.
+    |
+    */
     'roles' => [
         'admin' => mr_env('ROLES_ADMIN', ['*']),
         'manager' => mr_env('ROLES_MANAGER', []),
@@ -333,10 +333,10 @@ return [
 //    'application_path' => APP_ROOT.'/app/',
 
     // Path to view directory, with trailing slash
-    'view_path' => APP_ROOT.'/resources/views/kissmvc/',
+    'view_path' => resource_path('views/'),
 
     // Path to controller directory, with trailing slash
-    'controller_path' => APP_ROOT.'/app/controllers/',
+    'controller_path' => app_path('controllers/'),
 
     // Path to modules directory, with trailing slash
     'module_path' => APP_ROOT . "/vendor/munkireport/",
