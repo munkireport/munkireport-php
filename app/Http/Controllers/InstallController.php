@@ -136,10 +136,10 @@ class InstallController extends Controller
     private function get_target_path(&$fileObj)
     {
         if($fileObj['filename'] == 'postflight'){
-            return $fileObj['dirname'] . '/' . config('munkireport.postflight_script');
+            return $fileObj['dirname'] . '/' . config('_munkireport.postflight_script');
         }
         if($fileObj['filename'] == 'report_broken_client'){
-            return $fileObj['dirname'] . '/' . config('munkireport.report_broken_client_script');
+            return $fileObj['dirname'] . '/' . config('_munkireport.report_broken_client_script');
         }
         return $fileObj['path'];
     }

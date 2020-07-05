@@ -79,8 +79,8 @@
   </script>
   
 
-  <?php if(config('munkireport.custom_js')): ?>
-  <script src="<?php echo config('munkireport.custom_js'); ?>"></script>
+  <?php if(config('_munkireport.custom_js')): ?>
+  <script src="<?php echo config('_munkireport.custom_js'); ?>"></script>
   <?php endif; ?>
 
   <script src="<?php echo asset('assets/js/munkireport.js'); ?>"></script>

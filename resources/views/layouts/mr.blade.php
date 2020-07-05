@@ -21,8 +21,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link rel="stylesheet" media="screen" href="{{ asset('assets/css/datatables.min.css') }}" />
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
-    @if (config('munkireport.custom_css'))
-    <link rel="stylesheet" href="{{ config('munkireport.custom_css') }}" />
+    @if (config('_munkireport.custom_css'))
+    <link rel="stylesheet" href="{{ config('_munkireport.custom_css') }}" />
     @endif
 
     <!-- Favicons -->
@@ -44,8 +44,8 @@
     <script>
       var baseUrl = "{{ conf('subdirectory') }}",
         appUrl = "{{ url('/') }}",
-        default_theme = "{{ config('munkireport.default_theme') }}",
-        businessUnitsEnabled = {{ config('munkireport.enable_business_units') ? 'true' : 'false' }};
+        default_theme = "{{ config('_munkireport.default_theme') }}",
+        businessUnitsEnabled = {{ config('_munkireport.enable_business_units') ? 'true' : 'false' }};
       isAdmin = true;
       isManager = true;
       isArchiver = true;
@@ -265,10 +265,10 @@
                     </ul>
                 </li>
 
-                @if(config('munkireport.show_help'))
+                @if(config('_munkireport.show_help'))
 
                 <li>
-                    <a href="{{ config('munkireport.help_url') }}" target="_blank">
+                    <a href="{{ config('_munkireport.help_url') }}" target="_blank">
                         <i class="fa fa-question"></i>
                     </a>
                 </li>
@@ -364,8 +364,8 @@
 </script>
 
 
-@if(config('munkireport.custom_js'))
-<script src="{{ config('munkireport.custom_js') }}"></script>
+@if(config('_munkireport.custom_js'))
+<script src="{{ config('_munkireport.custom_js') }}"></script>
 @endif
 
 <script src="{{ asset('assets/js/munkireport.js') }}"></script>
