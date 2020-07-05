@@ -61,11 +61,11 @@ class ClientsController extends Controller
     public function get_links()
     {
         $out = array();
-        if (config('munkireport.vnc_link')) {
-            $out['vnc'] = config('munkireport.vnc_link');
+        if (config('_munkireport.vnc_link')) {
+            $out['vnc'] = config('_munkireport.vnc_link');
         }
-        if (config('munkireport.ssh_link')) {
-            $out['ssh'] = config('munkireport.ssh_link');
+        if (config('_munkireport.ssh_link')) {
+            $out['ssh'] = config('_munkireport.ssh_link');
         }
 
         jsonView($out);

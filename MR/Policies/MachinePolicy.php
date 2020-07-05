@@ -30,7 +30,7 @@ class MachinePolicy
     public function view(User $user, Machine $machine)
     {
         // user must be admin or manager
-        if (!config('munkireport.enable_business_units', false)) return true;
+        if (!config('_munkireport.enable_business_units', false)) return true;
         if ($user->is_admin) return true;
 
         // TODO: BU

@@ -10,7 +10,7 @@ This document tries to answer the question: How would I do (MunkiReport function
 Not like for like - view() will return a Blade template instance instead of a KISSMVC View instance.
 
 * **old**: `get_version()` - Gets the MunkiReport version
-* **new**: *Suggested* `config('munkireport.version')` or similar to retrieve version from config/munkireport.php
+* **new**: *Suggested* `config('_munkireport.version')` or similar to retrieve version from config/munkireport.php
 
 * **old**: `uncaught_exception_handler()` - Used to be the exception handler for uncaught exceptions.
 * **new**: Laravel automatically handles uncaught exceptions
