@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\ClientsController;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
 class ClientsControllerTest extends TestCase
 {
+    use RefreshDatabase;
 
     public function testGet_links()
     {
