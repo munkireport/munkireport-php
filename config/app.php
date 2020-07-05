@@ -13,8 +13,7 @@ return [
     |
     */
 
-    // 'name' => env('APP_NAME', 'MunkiReport'),  // Laravel 7
-    'name' => env('SITENAME', 'MunkiReport'),
+    'name' => env('APP_NAME', env('SITENAME', 'MunkiReport')),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,8 +39,7 @@ return [
     |
     */
 
-//    'debug' => (bool) env('APP_DEBUG', false),  // Laravel 7
-    'debug' => (bool) env('DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', env('DEBUG', false)),
 
     /*
     |--------------------------------------------------------------------------
@@ -121,7 +119,6 @@ return [
     |
     */
 
-//    'key' => env('APP_KEY'),  // Laravel 7
     'key' => env('APP_KEY', env('ENCRYPTION_KEY')),
 
     'cipher' => 'AES-256-CBC',
