@@ -43,11 +43,11 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function save_machine_group(): JsonResponse
+    public function save_machine_group(Request $request): JsonResponse
     {
-        if (isset($_POST['groupid'])) {
+        if ($request->has('groupid')) {
             $machine_group = new Machine_group;
-            $groupid = $_POST['groupid'];
+            $groupid = $request->input('groupid');
 
             // Empty groupid: create new
             if ($groupid === '') {
@@ -56,19 +56,19 @@ class AdminController extends Controller
             }
 
             $out['groupid'] = intval($groupid);
-
-            foreach ($_POST as $property => $val) {
+            $props = $request->all(['business_unit', 'groupid', 'key', 'name']);
+            foreach ($props as $property => $val) {
                 // Skip groupid
                 if ($property == 'groupid') {
                     continue;
                 }
 
                 // Update business unit membership
-                if ($property == 'business_unit') {
+                if ($property == 'business_unit' && !empty($val)) {
                     Business_unit::updateOrCreate(
                         [
                             'property' => 'machine_group',
-                            'value' => $_POST['groupid'],
+                            'value' => $groupid,
                         ],
                         [
                             'unitid' => $val,
@@ -143,10 +143,11 @@ class AdminController extends Controller
      * @return void
      * @author
      **/
-    public function save_business_unit(): JsonResponse
+    public function save_business_unit(Request $request): JsonResponse
     {
         $unit = new BusinessUnit();
-        return jsonView($unit->saveUnit($_POST), 200, false, true);
+        return jsonView($unit->saveUnit($request->all(['unitid', 'name', 'address', 'link'])),
+            200, false, true);
     }
 
     //===============================================================
@@ -253,7 +254,6 @@ class AdminController extends Controller
     /**
      * undocumented function
      *
-     * @return void
      * @author
      **/
     public function show($which = '')

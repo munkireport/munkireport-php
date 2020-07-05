@@ -2,12 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\BusinessUnit;
 use App\MachineGroup;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use munkireport\lib\BusinessUnit;
 use Tests\TestCase;
 
 class AdminControllerTest extends TestCase
@@ -38,9 +36,9 @@ class AdminControllerTest extends TestCase
             'groupid' => '',
             'name' => 'fixture machine group name',
             'key' => '12B652B7-1028-FB9B-EA8B-27D7E6378794',
-        ], ['Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8']);
+        ]);
         $response->assertJsonMissing(['error' => 'Groupid is missing']);
-        $response->assertJsonPath('name', 'fixture machine group name');
+        $response->assertJsonPath('groupid', 0);
         $response->assertOk();
         $response->assertJsonStructure([
             'groupid' => 1,
@@ -80,7 +78,17 @@ class AdminControllerTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJsonPath('status_code', 200);
+            ->assertJsonStructure([
+                'unitid',
+                'name',
+                'address',
+                'link',
+            ])
+            ->assertJsonFragment([
+                'name' => 'testSaveBusinessUnit',
+                'address' => 'testSaveBusinessUnitAddr',
+                'link' => 'http://test.save.business.unit.example.com',
+            ]);
     }
 
     /**
@@ -88,8 +96,15 @@ class AdminControllerTest extends TestCase
      */
     public function testRemoveBusinessUnit()
     {
+        $bu = new BusinessUnit();
+        $result = $bu->saveUnit([
+            'unitid' => 'new',
+            'name' => 'testDeleteBusinessUnit',
+            'address' => 'testDeleteBusinessUnitAddr',
+        ]);
+
         $response = $this->actingAs($this->user)
-            ->post('/admin/save_business_unit', [
+            ->post('/admin/remove_business_unit', [
                 'unitid' => 'new',
                 'users[]' => '#',
                 'archivers[]' => '#',
@@ -112,20 +127,31 @@ class AdminControllerTest extends TestCase
     {
 //        $businessUnit = factory(BusinessUnit::class)->create();
 
+        $bu = new BusinessUnit();
+        $result = $bu->saveUnit([
+            'unitid' => 'new',
+            'name' => 'testDeleteBusinessUnit',
+            'address' => 'testDeleteBusinessUnitAddr',
+        ]);
+
         $response = $this->actingAs($this->user)->get('/admin/get_bu_data');
         $response->assertOk();
         $this->assertIsArray($response->json());
         $response->assertJsonStructure([
-            'users',
-            'managers',
-            'archivers',
-            'machine_groups',
-            'name',
-            'unitid',
-            'address',
-            'link',
+            0 => [
+                'users',
+                'managers',
+                'archivers',
+                'machine_groups',
+                'name',
+                'unitid',
+                'address',
+                'link',
+            ]
         ]);
 
+        $this->assertEquals('testDeleteBusinessUnit', $response->jsonGet('0.name'));
+        $this->assertEquals('testDeleteBusinessUnitAddr', $response->jsonGet('0.address'));
     }
 
     /**
