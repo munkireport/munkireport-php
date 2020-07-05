@@ -260,7 +260,7 @@ class ModuleCommand extends Command
 
     private function createMigrations()
     {
-        $this->call('make:migration', [
+        $this->call('make:mr_migration', [
             'path' => $this->moduleInstallPath,
             '--field' => $this->tableToMigrationFields($this->moduleTable),
             '--quiet' => true,

@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 
 
-class LegacyMigrationCommand extends Command
+class MunkiReportMakeMigrationCommand extends Command
 {
     use StubTrait;
 
@@ -15,7 +15,7 @@ class LegacyMigrationCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:migration
+    protected $signature = 'make:mr_migration
                             {path : The path to the module}
                             {name=init : Name of the migration}
                             {--t|table= : Table name (if not set, name of the module)}
