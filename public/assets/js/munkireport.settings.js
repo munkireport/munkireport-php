@@ -357,7 +357,7 @@ var mr = {
         loadTheme: function() {
             // Get global state
             var theme = mr.getPref('theme') || default_theme;
-            var theme_dir = baseUrl + 'assets/themes/' + theme + '/';
+            var theme_dir = appUrl + '/assets/themes/' + theme + '/';
             var theme_file = theme_dir + 'bootstrap.min.css';
             $('#bootstrap-stylesheet').attr('href', theme_dir + 'bootstrap.min.css');
             $('#nvd3-override-stylesheet').attr('href', theme_dir + 'nvd3.override.css');
