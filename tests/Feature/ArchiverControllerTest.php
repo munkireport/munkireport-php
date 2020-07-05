@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
 
 class ArchiverControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      *
      */
