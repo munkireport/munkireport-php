@@ -13,7 +13,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\MigrateCommand::class,
+        Commands\ModuleCommand::class,
+        Commands\MunkiReportMakeMigrationCommand::class,
+        Commands\SeedCommand::class,
     ];
 
     /**
@@ -34,8 +37,6 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(glob(__DIR__.'/Commands/*Command.php'));
-
         require base_path('routes/console.php');
     }
 }
