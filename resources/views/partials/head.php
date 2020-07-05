@@ -24,8 +24,8 @@
 	<meta name="msapplication-config" content="<?php echo asset('assets/images/favicons/browserconfig.xml'); ?>">
 	<meta name="theme-color" content="#5d5858">
     <!--end of favicons-->
-	<?php if(config('munkireport.custom_css')): ?>
-	<link rel="stylesheet" href="<?php echo config('munkireport.custom_css'); ?>" />
+	<?php if(config('_munkireport.custom_css')): ?>
+	<link rel="stylesheet" href="<?php echo config('_munkireport.custom_css'); ?>" />
 	<?php endif; ?>
 
 	<?php if(isset($stylesheets)):?>
@@ -37,8 +37,8 @@
 	<script>
 		var baseUrl = "<?php echo conf('subdirectory'); ?>",
 			appUrl = "<?php echo url('/'); ?>",
-			default_theme = "<?php echo config('munkireport.default_theme'); ?>",
-			businessUnitsEnabled = <?php echo config('munkireport.enable_business_units') ? 'true' : 'false'; ?>;
+			default_theme = "<?php echo config('_munkireport.default_theme'); ?>",
+			businessUnitsEnabled = <?php echo config('_munkireport.enable_business_units') ? 'true' : 'false'; ?>;
 			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
 			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
 			isArchiver = <?php echo $_SESSION['role'] == 'archiver' ? 'true' : 'false'; ?>;
@@ -268,10 +268,10 @@
 				</li>
                 <?php endif ?>
 
-				<?php if(config('munkireport.show_help')):?>
+				<?php if(config('_munkireport.show_help')):?>
 				
 				<li>
-						<a href="<?php echo config('munkireport.help_url');?>" target="_blank">
+						<a href="<?php echo config('_munkireport.help_url');?>" target="_blank">
 								<i class="fa fa-question"></i>
 						</a>
 				</li>

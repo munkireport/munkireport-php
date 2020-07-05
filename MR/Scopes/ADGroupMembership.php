@@ -21,7 +21,7 @@ class ADGroupMembership implements ScopeInterface
      */
     public function apply(Builder $builder)
     {
-        $ADGroup = config('munkireport.ad_login_group', null);
+        $ADGroup = config('_munkireport.ad_login_group', null);
 
         if ($ADGroup) {
             $builder->whereMemberOf($ADGroup);

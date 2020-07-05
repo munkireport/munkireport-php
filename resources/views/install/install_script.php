@@ -9,9 +9,9 @@ POSTFLIGHT_CACHEPATH="${MUNKIPATH}scripts/cache/"
 PREFPATH="/Library/Preferences/MunkiReport"
 PREF_CMDS=( ) # Pref commands array
 TARGET_VOLUME=''
-CURL=("<?php echo implode('" "', config('munkireport.curl_cmd'))?>")
-POSTFLIGHT_SCRIPT="<?php echo config('munkireport.postflight_script'); ?>"
-REPORT_BROKEN_CLIENT_SCRIPT="<?php echo config('munkireport.report_broken_client_script'); ?>"
+CURL=("<?php echo implode('" "', config('_munkireport.curl_cmd'))?>")
+POSTFLIGHT_SCRIPT="<?php echo config('_munkireport.postflight_script'); ?>"
+REPORT_BROKEN_CLIENT_SCRIPT="<?php echo config('_munkireport.report_broken_client_script'); ?>"
 # Exit status
 ERR=0
 
