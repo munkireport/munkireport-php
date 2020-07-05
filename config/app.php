@@ -170,6 +170,7 @@ return [
          */
         Aacotroneo\Saml2\Saml2ServiceProvider::class,
         MR\Kiss\Providers\KissEngineProvider::class,
+        MR\Kiss\Providers\ViewServiceProvider::class,
         Adldap\Laravel\AdldapServiceProvider::class,
         Adldap\Laravel\AdldapAuthServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
