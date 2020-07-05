@@ -183,8 +183,8 @@
 				if(confirm('Are you sure?'))
 				{
 					var groupid = data.groupid;
-					var url = appUrl + '/admin/remove_machine_group/' + groupid;
-					$.getJSON(url, function(data){
+					var url = appUrl + '/admin/remove_machine_group';
+					$.post(url, {groupid: groupid}, function(data){
 						if(data.success == true)
 						{
 							// Remove from MachineGroups

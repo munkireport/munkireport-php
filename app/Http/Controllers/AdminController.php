@@ -50,7 +50,7 @@ class AdminController extends Controller
             $groupid = $request->input('groupid');
 
             // Empty groupid: create new
-            if ($groupid === '') {
+            if ($groupid === '' || is_null($groupid)) {
                 $mg = new Machine_group;
                 $groupid = $mg->get_max_groupid() + 1;
             }
@@ -78,7 +78,7 @@ class AdminController extends Controller
                     continue;
                 }
 
-                if (is_scalar($val)) {
+                if (! is_array($val)) {
                     if ($val) {
                         $machine_group->id = '';
                         $machine_group->retrieveOne('groupid=? AND property=?', array($groupid, $property));
@@ -115,9 +115,11 @@ class AdminController extends Controller
      *
      * @author
      **/
-    public function remove_machine_group($groupid = ''): JsonResponse
+    public function remove_machine_group(Request $request): JsonResponse
     {
         $out = [];
+
+        $groupid = $request->input('groupid', '');
 
         if ($groupid !== '') {
             $mg = new Machine_group;
