@@ -35,7 +35,7 @@ class AdminControllerTest extends TestCase
     {
         $response = $this->actingAs($this->user)
             ->post('/admin/save_machine_group', [
-            'groupid' => null,
+            'groupid' => '',
             'name' => 'fixture machine group name',
             'key' => '12B652B7-1028-FB9B-EA8B-27D7E6378794',
         ], ['Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8']);

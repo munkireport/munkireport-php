@@ -1,14 +1,13 @@
 <?php
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Support\Facades\Schema;
 
 class CacheInit extends Migration
 {
     public function up()
     {
-        $capsule = new Capsule();
-        $capsule::schema()->create('cache', function (Blueprint $table) {
+        Schema::create('cache', function (Blueprint $table) {
             $table->increments('id');
             $table->string('module');
             $table->string('property');
@@ -22,7 +21,6 @@ class CacheInit extends Migration
     
     public function down()
     {
-        $capsule = new Capsule();
-        $capsule::schema()->dropIfExists('cache');
+        Schema::dropIfExists('cache');
     }
 }
