@@ -37,15 +37,14 @@ class AdminControllerTest extends TestCase
             'name' => 'fixture machine group name',
             'key' => '12B652B7-1028-FB9B-EA8B-27D7E6378794',
         ]);
+        // $response->dump();
         $response->assertJsonMissing(['error' => 'Groupid is missing']);
-        $response->assertJsonPath('groupid', 0);
+        $response->assertJsonPath('groupid', 1);
         $response->assertOk();
         $response->assertJsonStructure([
-            'groupid' => 1,
-            'name' => 'name',
-            'keys' => [
-                'key',
-            ],
+            'groupid',
+            'name',
+            'keys' => [],
         ]);
     }
 
@@ -55,7 +54,9 @@ class AdminControllerTest extends TestCase
     public function testRemoveMachineGroup()
     {
         $response = $this->actingAs($this->user)
-            ->get('/admin/remove_machine_group/2');
+            ->post('/admin/remove_machine_group', [
+                'groupid' => 1
+            ]);
         $response->assertStatus(200);
     }
 
