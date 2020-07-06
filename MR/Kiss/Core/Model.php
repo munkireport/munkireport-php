@@ -108,6 +108,7 @@ abstract class Model
     /**
      * Execute statement with error handling
      *
+     * @param $stmt \PDOStatement
      * @author AvB
      **/
     public function execute(&$stmt, $params = array())
