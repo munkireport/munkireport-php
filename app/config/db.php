@@ -1,11 +1,11 @@
 <?php
 
-$driver = mr_env('CONNECTION_DRIVER', 'sqlite');
+$driver = env('CONNECTION_DRIVER', 'sqlite');
 switch ($driver) {
   case 'sqlite':
     return [
         'driver'    => 'sqlite',
-        'database'  => mr_env('CONNECTION_DATABASE', APP_ROOT . 'app/db/db.sqlite'),
+        'database'  => env('CONNECTION_DATABASE', APP_ROOT . 'app/db/db.sqlite'),
         'username' => '',
         'password' => '',
         'options' => mr_env('CONNECTION_OPTIONS', []),
