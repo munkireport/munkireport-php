@@ -48,6 +48,26 @@ class AdminControllerTest extends TestCase
         ]);
     }
 
+       /**
+     *  GET /admin/get_mg_data
+     */
+    public function testGetMgData()
+    {
+        // $machineGroup = factory(MachineGroup::class)->create();
+
+        $response = $this->actingAs($this->user)->get('/admin/get_mg_data');
+        // $response->dump();
+        $response->assertOk();
+        $this->assertIsArray($response->json());
+        $response->assertJsonStructure([
+            '*' => [
+                'name',
+                'groupid',
+                'keys',    
+            ]
+        ]);
+    }
+
     /**
      *  /admin/remove_machine_group
      */
@@ -153,25 +173,6 @@ class AdminControllerTest extends TestCase
 
         $this->assertEquals('testDeleteBusinessUnit', $response->jsonGet('0.name'));
         $this->assertEquals('testDeleteBusinessUnitAddr', $response->jsonGet('0.address'));
-    }
-
-    /**
-     *  GET /admin/get_mg_data
-     */
-    public function testGetMgData()
-    {
-        // $machineGroup = factory(MachineGroup::class)->create();
-
-        $response = $this->actingAs($this->user)->get('/admin/get_mg_data');
-        $response->assertOk();
-        $this->assertIsArray($response->json());
-        $response->assertJsonStructure([
-            'name',
-            'groupid',
-            'cnt',
-            'keys',
-        ]);
-
     }
 }
 
