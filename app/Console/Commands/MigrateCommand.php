@@ -4,23 +4,24 @@ namespace App\Console\Commands;
 
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Console\Migrations\MigrateCommand as BaseCommand;
+use Illuminate\Support\Facades\Schema;
 use munkireport\lib\Modules as ModuleMgr;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class MigrateCommand extends BaseCommand
 {
     protected $connection;
+
     /**
-     * Create a new migration command instance.
+     * Execute the console command.
      *
-     * @param  \Illuminate\Database\Migrations\Migrator  $migrator
      * @return void
      */
-    public function __construct(Migrator $migrator)
+    public function fire()
     {
-      $this->addModuleMigrationPaths($migrator);
-      $this->setUpDbConnection();
-      parent::__construct($migrator);
+        $this->addModuleMigrationPaths($this->migrator);
+        $this->setUpDbConnection();
+        parent::fire();
     }
 
     protected function addModuleMigrationPaths(Migrator $migrator)
@@ -45,10 +46,11 @@ class MigrateCommand extends BaseCommand
       if(has_mysql_db($connection)){
         add_mysql_opts($connection);
       }
-      
+
       $capsule = new Capsule();
-      $capsule->addConnection($connection);
-      $capsule->setAsGlobal();
+      $capsule->setContainer($this->getLaravel());
+      // $capsule->addConnection($connection);
+      // $capsule->setAsGlobal();
     }
 
     protected function ensure_sqlite_db_exists($connection)
