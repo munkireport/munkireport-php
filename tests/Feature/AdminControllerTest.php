@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\MachineGroup;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use munkireport\lib\BusinessUnit;

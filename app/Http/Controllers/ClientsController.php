@@ -27,7 +27,7 @@ class ClientsController extends Controller
 
         $data['page'] = 'clients';
 
-        mr_view('client/client_list', $data);
+        return view('client.client_list', $data);
     }
 
     /**
@@ -77,7 +77,7 @@ class ClientsController extends Controller
      * Detail page of a machine
      *
      * @param string serial
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
      * @author abn290
      **/
     public function detail($sn = '')
@@ -91,9 +91,9 @@ class ClientsController extends Controller
 
         // Check if machine exists/is allowed for this user to view
         if (! $machine) {
-            mr_view("client/client_dont_exist", $data);
+            return view("client.client_dont_exist", $data);
         } else {
-            mr_view("client/client_detail", $data);
+            return view("client.client_detail", $data);
         }
     }
 
@@ -103,13 +103,13 @@ class ClientsController extends Controller
      * List of machines
      *
      * @param string name of view
-     * @return void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
      * @author abn290
      **/
     public function show($view = '')
     {
         $data['page'] = 'clients';
         // TODO: Check if view exists
-        mr_view('client/'.$view, $data);
+        return view('client.'.$view, $data);
     }
 }
