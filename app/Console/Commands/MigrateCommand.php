@@ -17,11 +17,11 @@ class MigrateCommand extends BaseCommand
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $this->addModuleMigrationPaths($this->migrator);
         $this->setUpDbConnection();
-        parent::fire();
+        parent::handle();
     }
 
     protected function addModuleMigrationPaths(Migrator $migrator)
