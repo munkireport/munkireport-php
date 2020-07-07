@@ -135,9 +135,7 @@ class AdminControllerTest extends TestCase
                 'link' => 'http://test.save.business.unit.example.com',
             ]);
 
-        $response
-            ->assertStatus(200)
-            ->assertJsonPath('status_code', 200);
+        $response->assertStatus(200);
     }
 
     /**
@@ -152,13 +150,14 @@ class AdminControllerTest extends TestCase
             'unitid' => 'new',
             'name' => 'testDeleteBusinessUnit',
             'address' => 'testDeleteBusinessUnitAddr',
+            'link' => 'http://something',
         ]);
 
         $response = $this->actingAs($this->user)->get('/admin/get_bu_data');
         $response->assertOk();
         $this->assertIsArray($response->json());
         $response->assertJsonStructure([
-            0 => [
+            '*' => [
                 'users',
                 'managers',
                 'archivers',
