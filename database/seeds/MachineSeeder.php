@@ -6,9 +6,9 @@ class MachineSeeder extends Seeder
 {
     public function run()
     {
-        factory(Machine_model::class)->times(10)->create()->each(function (Machine_model $machine) {
-            factory(Reportdata_model::class)->create([
-                'serial_number' => $machine->serial_number,
+        factory(Reportdata_model::class)->times(10)->create()->each(function (Reportdata_model $reportdata) {
+            factory(Bluetooth_model::class)->create([
+                'serial_number' => $reportdata->serial_number,
             ]);
         });
     }
