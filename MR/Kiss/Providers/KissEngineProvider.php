@@ -3,7 +3,6 @@
 namespace MR\Kiss\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use MR\Kiss\Engine;
 use MR\Kiss\FakeEngine;
 
 /**
@@ -21,7 +20,11 @@ class KissEngineProvider extends ServiceProvider
      */
     public function register()
     {
-        $conf = $GLOBALS['conf'];
+        // Load config
+        initConfig();
+        configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
+        // echo '<pre>';print_r($GLOBALS['conf']);exit;
+
         $this->app['engine'] = new FakeEngine();
     }
 
