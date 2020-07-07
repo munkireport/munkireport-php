@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 use munkireport\lib\User;
 use MR\Kiss\View;
@@ -57,42 +58,44 @@ function error($msg, $i18n = '')
  */
 function getdbh()
 {
-    if (! isset($GLOBALS['dbh'])) {
-        $conn = conf('connection');
-        if($conn['options']){
-            $conn['options'] = arrayToAssoc($conn['options']);
-        }
-        switch ($conn['driver']) {
-            case 'sqlite':
-                $dsn = "sqlite:{$conn['database']}";
-                break;
+    return DB::connection()->getPdo();
 
-            case 'mysql':
-                $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
-                if( empty($conn['options'])){
-                  add_mysql_opts($conn);
-                }
-                break;
-
-            default:
-                throw new \Exception("Unknown driver in config", 1);
-        }
-        $GLOBALS['dbh'] = new \PDO(
-            $dsn,
-            $conn['username'],
-            $conn['password'],
-            $conn['options']
-        );
-
-        // Set error mode
-        $GLOBALS['dbh']->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-        // Store database name in config array
-        if (preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result)) {
-            $GLOBALS['conf']['dbname'] = $result[1];
-        }
-    }
-    return $GLOBALS['dbh'];
+//    if (! isset($GLOBALS['dbh'])) {
+//        $conn = conf('connection');
+//        if($conn['options']){
+//            $conn['options'] = arrayToAssoc($conn['options']);
+//        }
+//        switch ($conn['driver']) {
+//            case 'sqlite':
+//                $dsn = "sqlite:{$conn['database']}";
+//                break;
+//
+//            case 'mysql':
+//                $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
+//                if( empty($conn['options'])){
+//                  add_mysql_opts($conn);
+//                }
+//                break;
+//
+//            default:
+//                throw new \Exception("Unknown driver in config", 1);
+//        }
+//        $GLOBALS['dbh'] = new \PDO(
+//            $dsn,
+//            $conn['username'],
+//            $conn['password'],
+//            $conn['options']
+//        );
+//
+//        // Set error mode
+//        $GLOBALS['dbh']->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+//
+//        // Store database name in config array
+//        if (preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result)) {
+//            $GLOBALS['conf']['dbname'] = $result[1];
+//        }
+//    }
+//    return $GLOBALS['dbh'];
 }
 
 function has_sqlite_db($connection)
