@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Console\Migrations\MigrateCommand as BaseCommand;
-use Illuminate\Support\Facades\Schema;
 use munkireport\lib\Modules as ModuleMgr;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -15,13 +14,14 @@ class MigrateCommand extends BaseCommand
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
-    public function fire()
+    public function handle()
     {
+        $this->info("Using MunkiReport Version of Migrate");
         $this->addModuleMigrationPaths($this->migrator);
         $this->setUpDbConnection();
-        parent::fire();
+        return parent::handle();
     }
 
     protected function addModuleMigrationPaths(Migrator $migrator)
@@ -47,10 +47,13 @@ class MigrateCommand extends BaseCommand
         add_mysql_opts($connection);
       }
 
-      $capsule = new Capsule();
-      $capsule->setContainer($this->getLaravel());
-      // $capsule->addConnection($connection);
-      // $capsule->setAsGlobal();
+      $default = config("database.default"); // This becomes overridden by capsule
+      $capsule = new Capsule($this->getLaravel());
+
+      // Capsule doesnt know about database.default indirection, it just looks for a connection named database.default
+      $connections = app('config')['database.connections'];
+      $capsule->addConnection($connections[$default]);
+      $capsule->setAsGlobal();
     }
 
     protected function ensure_sqlite_db_exists($connection)
