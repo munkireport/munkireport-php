@@ -90,7 +90,6 @@
         "symfony/yaml": "^5.1",
         "adldap2/adldap2": "^10",
         "onelogin/php-saml": "^3.0",
-        "illuminate/database": "^7.16",
         "ext-json": "*",
         "ext-pdo": "*",
         "laravel/ui": "^2.0",
@@ -119,7 +118,8 @@
             "app/helpers/site_helper.php",
             "shims/Module_controller.php",
             "shims/View.php",
-            "shims/Model.php"
+            "shims/Model.php",
+            "shims/Capsule.php"
         ],
         "psr-4": {
             "munkireport\\models\\": "app/models/",
