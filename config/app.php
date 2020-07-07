@@ -182,6 +182,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ModuleGraphQLSchemaProvider::class,
+        App\Providers\ModuleServiceProvider::class,
     ],
 
     /*
@@ -237,6 +238,9 @@ return [
         // 3rd party package providers
         'Adldap' => Adldap\Laravel\Facades\Adldap::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+
+        // 1st party facades
+//        'Modules' => App\Facades\Modules::class,
     ],
 
 ];

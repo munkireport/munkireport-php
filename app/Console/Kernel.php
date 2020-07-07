@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\MigrateCommand::class,
         Commands\ModuleCommand::class,
         Commands\MunkiReportMakeMigrationCommand::class,
-        Commands\SeedCommand::class,
+//        Commands\SeedCommand::class,
     ];
 
     /**
