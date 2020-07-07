@@ -19,7 +19,7 @@ class MigrateCommand extends BaseCommand
     public function handle()
     {
         $this->info("Using MunkiReport Version of Migrate");
-        $this->addModuleMigrationPaths($this->migrator);
+//        $this->addModuleMigrationPaths($this->migrator);
         return parent::handle();
     }
 

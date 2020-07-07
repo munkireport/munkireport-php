@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientsController;
 use App\Machine;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Machine_model;
 use Tests\TestCase;
 
 class ClientsControllerTest extends TestCase
@@ -30,15 +31,14 @@ class ClientsControllerTest extends TestCase
     {
         $response = $this->actingAs($this->user)
             ->get('/clients/get_links');
+        $response->assertHeader('Content-Type', 'application/json');
         $response->assertOk()
                  ->assertJsonStructure(['vnc', 'ssh']);
     }
 
     public function testGet_data()
     {
-        $this->markTestIncomplete();
-
-        $machine = factory(Machine::class)->create();
+        $machine = factory(Machine_model::class)->create();
         $response = $this->actingAs($this->user)
             ->get("/clients/get_data/${machine['serial_number']}");
     }
