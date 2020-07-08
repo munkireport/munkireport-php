@@ -8,11 +8,6 @@ if (!defined('APP_ROOT')) {
     define('APP_ROOT', dirname(__FILE__) . '/../');
 }
 
-// Load config
-initConfig();
-configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
-// echo '<pre>';print_r($GLOBALS['conf']);exit;
-
 /*
 |--------------------------------------------------------------------------
 | Create The Application
