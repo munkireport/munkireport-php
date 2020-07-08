@@ -78,7 +78,7 @@ class Machine extends Model
      */
     public function machineGroups() {
         return $this->hasManyThrough(
-            'MR\MachineGroup', 'MR\ReportData',
+            'App\MachineGroup', 'MR\ReportData',
             'serial_number', 'id', 'serial_number'
         );
     }
