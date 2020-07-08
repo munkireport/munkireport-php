@@ -26,7 +26,7 @@ return [
     'blacklist' => [
     ],
 
-    'whitelist' => mr_env('FIREWALL_ALLOW_IP4', mr_env('AUTH_NETWORK_WHITELIST_IP4',[])),
+    'whitelist' => mr_env('FIREWALL_ALLOW_IP4',[]),
 
     /*
      * Response action for blocked responses
