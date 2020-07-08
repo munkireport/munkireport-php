@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\DB;
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
-use munkireport\lib\User;
 use MR\Kiss\View;
 
 // Munkireport version (last number is number of commits)

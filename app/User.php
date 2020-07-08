@@ -5,8 +5,9 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use MR\Kiss\Contracts\LegacyUser;
 
-class User extends Authenticatable
+class User extends Authenticatable implements LegacyUser
 {
     use Notifiable;
 
@@ -63,5 +64,61 @@ class User extends Authenticatable
      */
     public function userOfBusinessUnits() {
         return $this->memberOfBusinessUnits()->wherePivot('role', 'user');
+    }
+
+    //// LegacyUser Interface for MunkiReport
+
+    /**
+     * @todo
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @todo
+     * @return bool
+     */
+    public function isManager(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @todo
+     * @return bool
+     */
+    public function isArchiver(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @todo
+     * @return bool
+     */
+    public function canArchive(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @todo
+     * @return bool
+     */
+    public function canAccessMachineGroup($id): bool
+    {
+        return true;
+    }
+
+    /**
+     * @todo
+     * @return array
+     */
+    public function machineGroups(): array
+    {
+        return [];
     }
 }
