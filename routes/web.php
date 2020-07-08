@@ -44,12 +44,6 @@ Route::post('/datatables/data', 'DatatablesController@data');
 Route::get('/filter/get_filter', 'FilterController@get_filter');
 Route::post('/filter/set_filter', 'FilterController@set_filter');
 
-Route::get('/install', 'InstallController@index');
-Route::get('/install/dump_modules/{format}', 'InstallController@dump_modules');
-Route::get('/install/get_paths', 'InstallController@get_paths');
-Route::get('/install/modules', 'InstallController@modules');
-Route::get('/install/plist', 'InstallController@plist');
-
 Route::get('/locale/get/{lang?}', 'LocaleController@get');
 Route::get('/locale/get/{lang}/{load}', 'LocaleController@get');
 
@@ -59,10 +53,6 @@ Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->wh
 
 Route::get('/module_marketplace/get_module_data', 'ModuleMarketplaceController@get_module_data');
 Route::get('/module_marketplace/get_module_info', 'ModuleMarketplaceController@get_module_info');
-
-Route::post('/report/broken_client', 'ReportController@broken_client');
-Route::post('/report/check_in', 'ReportController@check_in');
-Route::post('/report/hash_check', 'ReportController@hash_check');
 
 Route::any('/settings/theme', 'SettingsController@theme');
 

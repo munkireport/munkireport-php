@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapOpenRoutes();
     }
 
     /**
@@ -76,5 +76,19 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Define the "checkin" routes for the application.
+     *
+     * These routes don't use normal authentication middleware.
+     *
+     * @return void
+     */
+    protected function mapOpenRoutes()
+    {
+        Route::middleware('open')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/open.php'));
     }
 }
