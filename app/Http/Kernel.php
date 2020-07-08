@@ -33,7 +33,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            'ip_whitelist:ip-whitelist',
+            'firewall-only-allowed',
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -43,13 +43,13 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'ip_whitelist:ip-whitelist',
+            'firewall-only-allowed',
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
         'saml' => [
-            'ip_whitelist:ip-whitelist',
+            'firewall-only-allowed',
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -78,7 +78,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'ip_whitelist' => \Orkhanahmadov\LaravelIpMiddleware\WhitelistMiddleware::class,
-        'ip_blacklist' => \Orkhanahmadov\LaravelIpMiddleware\BlacklistMiddleware::class,
+        'firewall-only-allowed' => \PragmaRX\Firewall\Middleware\FirewallWhitelist::class,
+        'firewall-block-denied' => \PragmaRX\Firewall\Middleware\FirewallBlacklist::class,
+        'firewall-block-attacks' => \PragmaRX\Firewall\Middleware\BlockAttacks::class,    
     ];
 }
