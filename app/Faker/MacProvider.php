@@ -60,7 +60,7 @@ class MacProvider extends FakerBase
         $this->populateModelIdentifiers();
     }
 
-    public function modelName(): string
+    public function macModelName(): string
     {
         return Arr::random([
             'Mac Pro',
@@ -69,7 +69,7 @@ class MacProvider extends FakerBase
         ]);
     }
 
-    public function modelId(): string
+    public function macModelIdentifier(): string
     {
         return Arr::random($this->modelIdentifiers);
     }
