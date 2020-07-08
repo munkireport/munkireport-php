@@ -29,6 +29,7 @@ return [
          * make sure to return spec-compliant responses in case an error is thrown.
          */
         'middleware' => [
+            'firewall-only-allowed',
             \Nuwave\Lighthouse\Support\Http\Middleware\AcceptJson::class,
 
             // Logs in a user if they are authenticated. In contrast to Laravel's 'auth'
@@ -55,7 +56,7 @@ return [
     |
     */
 
-    'guard' => null,
+    'guard' => 'api',
 
     /*
     |--------------------------------------------------------------------------
