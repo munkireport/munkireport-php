@@ -1,3 +1,11 @@
+### [6.0.0](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (Unreleased)
+
+Network authentication is now firewall
+
+FIREWALL_ENABLED=TRUE
+FIREWALL_ALLOW_IP4="0.0.0.0, 127.0.0.0/23"
+FIREWALL_REDIRECT_DENIED="https://google.com"
+
 ### [5.6.6](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (Unreleased)
 
 ### [5.6.5](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (March 27, 2021) 🍖
