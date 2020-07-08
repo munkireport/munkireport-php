@@ -13,8 +13,20 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            // These must be called first
             UserSeeder::class,
             MachineSeeder::class,
+            ReportDataSeeder::class,
+
+            // Modules
+            BluetoothSeeder::class,
+            DiskReportSeeder::class,
+            EventSeeder::class,
+            ManagedInstallsSeeder::class,
+//            FirewallSeeder::class,
+//            MunkiReportInfoSeeder::class,
+//            MunkiReportSeeder::class,
+            WarrantySeeder::class,
         ]);
 
     }
