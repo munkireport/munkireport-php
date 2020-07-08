@@ -238,6 +238,7 @@ return [
         'Adldap' => Adldap\Laravel\Facades\Adldap::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
 
+
         // 1st party facades
 //        'Modules' => App\Facades\Modules::class,
     ],
