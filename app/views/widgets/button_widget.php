@@ -39,7 +39,7 @@ $(document).on('appUpdate', function(e, lang) {
 			
 			// render
 			$.each(buttons, function(i, o){
-                var button = data.find(x => String(x.label) === String(o.label));
+                var button = data.find(x => x.label == o.label);
                 var count = button ? button.count : 0;
 
                 // Hide when count is zero
