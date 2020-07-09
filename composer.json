@@ -103,9 +103,7 @@
         "nuwave/lighthouse": "^4.15",
         "mll-lab/laravel-graphql-playground": "^2.1",
         "composer/composer": "^1.10",
-        "pragmarx/firewall": "^2.3",
-        "laravel/passport": "^9.3",
-        "joselfonseca/lighthouse-graphql-passport-auth": "^4.1"
+        "pragmarx/firewall": "^2.3"
     },
     "autoload": {
         "classmap": [
