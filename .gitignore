@@ -31,3 +31,5 @@ storage/framework/down
 node_modules
 
 .phpunit.result.cache
+storage/oauth-private.key
+storage/oauth-public.key
