@@ -103,7 +103,8 @@
         "nuwave/lighthouse": "^4.15",
         "mll-lab/laravel-graphql-playground": "^2.1",
         "composer/composer": "^1.10",
-        "pragmarx/firewall": "^2.3"
+        "pragmarx/firewall": "^2.3",
+        "laravel/sanctum": "^2.4"
     },
     "autoload": {
         "classmap": [
