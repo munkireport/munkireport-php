@@ -31,7 +31,9 @@ class ModuleMarketplaceController extends Controller
      **/
     public function index()
     {
-        echo "You've loaded the module marketplace!";
+        $data['page'] = 'clients';
+        $view = 'system/module_marketplace';
+        return mr_view($view, $data);
     }
 
     /**

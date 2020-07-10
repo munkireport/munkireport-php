@@ -66,6 +66,11 @@ Route::get('/system/show/{which?}', 'SystemController@show');
 Route::get('/system/DataBaseInfo', 'SystemController@DataBaseInfo');
 Route::get('/system/phpInfo', 'SystemController@phpInfo');
 
+Route::get('/system/status', 'SystemController@status');
+Route::get('/system/database', 'SystemController@database');
+Route::get('/system/widgets', 'SystemController@widgets');
+Route::get('/module_marketplace', 'ModuleMarketplaceController@index');
+
 Route::get('/unit/get_data', 'UnitController@get_data');
 Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
 Route::get('/unit/listing/{which?}', 'UnitController@listing');
