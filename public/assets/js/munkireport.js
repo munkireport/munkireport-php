@@ -16,25 +16,25 @@ $(document).on('appReady', function(e, lang) {
     addMenuItem({
         menu: 'admin',
         i18n: 'systemstatus.menu_link',
-        url: appUrl + '/system/show/status'
+        url: appUrl + '/system/status'
     });
 
     addMenuItem({
         menu: 'admin',
         i18n: 'system.database.menu_link',
-        url: appUrl + '/system/show/database'
+        url: appUrl + '/system/database'
     });
 
     addMenuItem({
         menu: 'admin',
         i18n: 'widget.gallery',
-        url: appUrl + '/system/show/widget_gallery'
+        url: appUrl + '/system/widgets'
     });
 
     addMenuItem({
         menu: 'admin',
         i18n: 'module_marketplace.module_marketplace',
-        url: appUrl + '/system/show/module_marketplace'
+        url: appUrl + '/module_marketplace'
     });
 
     // Sort admin menu, after other items are added

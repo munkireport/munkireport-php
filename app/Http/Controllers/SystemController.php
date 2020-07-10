@@ -103,51 +103,47 @@ class SystemController extends Controller
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
-     * @author
-     **/
-    public function show($which = '')
+     * Display the Widget Gallery
+     */
+    public function widgets()
     {
-        switch ($which) {
-            case 'status':
-                $data['page'] = 'clients';
-                $data['scripts'] = array("clients/client_list.js");
-                $view = 'system/status';
-                break;
-            case 'widget_gallery':
-                $moduleManager = getMrModuleObj();
-                $layoutList = [];
-                foreach($moduleManager->loadInfo(true)->getWidgets() as $widget){
-                    $widgetName = str_replace('_widget', '', $widget->name);
-                    $layoutList[$widgetName] = [
-                        'widget_obj' => $widget,
-                    ];
-                }
-                $gallery = [
-                    'search_paths' => [],
-                    'template' => 'system/widget_gallery',
-                    'default_layout' => $layoutList,
-                ];
-                $db = new Dashboard($gallery, false);
-                $db->render('default');
-                return;
-            case 'database':
-                $data['page'] = 'clients';
-                $data['scripts'] = array("clients/client_list.js");
-                $data['stylesheets'] = array('system/database.css');
-                $view = 'system/database';
-                break;
-            case 'module_marketplace':
-                $data['page'] = 'clients';
-                $view = 'system/module_marketplace';
-                break;
-            default:
-                $data = array('status_code' => 404);
-                $view = 'error/client_error';
+        $moduleManager = getMrModuleObj();
+        $layoutList = [];
+        foreach($moduleManager->loadInfo(true)->getWidgets() as $widget){
+            $widgetName = str_replace('_widget', '', $widget->name);
+            $layoutList[$widgetName] = [
+                'widget_obj' => $widget,
+            ];
         }
+        $gallery = [
+            'search_paths' => [],
+            'template' => 'system/widget_gallery',
+            'default_layout' => $layoutList,
+        ];
+        $db = new Dashboard($gallery, false);
+        $db->render('default');
+    }
 
-        mr_view($view, $data);
+    /**
+     * Display system settings and health information.
+     */
+    public function status()
+    {
+        $data['page'] = 'clients';
+        $data['scripts'] = array("clients/client_list.js");
+        $view = 'system/status';
+        return mr_view($view, $data);
+    }
+
+    /**
+     * Display database tools
+     */
+    public function database()
+    {
+        $data['page'] = 'clients';
+        $data['scripts'] = array("clients/client_list.js");
+        $data['stylesheets'] = array('system/database.css');
+        $view = 'system/database';
+        return mr_view($view, $data);
     }
 }
