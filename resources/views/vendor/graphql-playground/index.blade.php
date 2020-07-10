@@ -25,7 +25,13 @@
         const root = document.getElementById('root');
 
         GraphQLPlayground.init(root, {
-            endpoint: "{{url(config('graphql-playground.endpoint'))}}"
+            endpoint: "{{url(config('graphql-playground.endpoint'))}}",
+            settings: {
+              'request.credentials': 'same-origin',
+            },
+            headers: {
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
         })
     })
 </script>
