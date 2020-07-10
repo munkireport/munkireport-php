@@ -56,19 +56,6 @@ return [
 //            'provider' => 'users',
         ],
 
-        // Authenticate via DB, persist via session
-//        'local' => [
-//            'driver' => 'session',
-//            'provider' => 'users',
-//        ],
-
-        // Authenticate via LDAP, persist via session
-//        'ldap' => [
-//            'driver' => 'session',
-//            'provider' => 'ldap_users',
-//            // TODO: passwords should be a noop, since LDAPS controls password changes
-//        ],
-
         'api' => [
             'driver' => 'token',
             'provider' => 'users',

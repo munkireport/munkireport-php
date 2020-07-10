@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 
 // Don't even register auth routes if we are in noauth mode
 if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-    Auth::routes();
+    Auth::routes(['register' => false]);
 }
 
 Route::redirect('/', '/show/dashboard/default');
