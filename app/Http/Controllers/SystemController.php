@@ -7,6 +7,14 @@ use Illuminate\Support\Str;
 use munkireport\lib\Dashboard;
 use munkireport\lib\Database;
 
+/**
+ * Class SystemController
+ *
+ * The System Controller contains all System Administration related functionality and should
+ * only be accessible by users with the `admin` role.
+ *
+ * @package App\Http\Controllers
+ */
 class SystemController extends Controller
 {
     public function __construct()
@@ -14,13 +22,6 @@ class SystemController extends Controller
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
         }
-//        if (! $this->authorized()) {
-//            die('Authenticate first.'); // Todo: return json?
-//        }
-//
-//        if (! $this->authorized('global')) {
-//            die('You need to be admin');
-//        }
     }
 
     //===============================================================
@@ -69,20 +70,6 @@ class SystemController extends Controller
         jsonView($out);
     }
 
-    //===============================================================
-
-    /**
-     * Authentication and Authorization
-     *
-     * Get Authentication and Authorization data
-     *
-     */
-    public function AuthenticationAndAuthorization()
-    {
-        # code...
-    }
-    //===============================================================
-
     /**
      * php information
      *
@@ -114,11 +101,6 @@ class SystemController extends Controller
         //echo '<pre>';print_r($phpinfo);return;
         mr_view('json', array('msg' => $phpinfo));
     }
-    //===============================================================
-    //===============================================================
-    //===============================================================
-
-    //===============================================================
 
     /**
      * undocumented function
