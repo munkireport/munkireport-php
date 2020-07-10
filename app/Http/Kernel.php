@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use MR\Kiss\Application;
 use MR\Kiss\Routing\Router;
 
@@ -44,6 +45,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             'firewall-only-allowed',
+            EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
