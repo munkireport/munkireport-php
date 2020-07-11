@@ -22,5 +22,6 @@ Route::get('/user', function (Request $request) {
  * Route group reserved for pure Laravel API middleware based API's
  */
 Route::group(['prefix' => 'v6', 'namespace' => 'Api'], function () {
-
+    Route::get('/phpinfo', 'SystemInformationController@phpinfo');
+    Route::get('/database/health', 'SystemInformationController@databaseHealth');
 });

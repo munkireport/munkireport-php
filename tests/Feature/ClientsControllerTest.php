@@ -43,19 +43,6 @@ class ClientsControllerTest extends TestCase
             ->get("/clients/get_data/${machine['serial_number']}");
     }
 
-    public function testShow()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testIndex()
-    {
-        $response = $this->actingAs($this->user)
-            ->get("/clients");
-        $response->assertSuccessful()
-                 ->assertDontSeeText("Could not open");
-    }
-
     public function testDetail()
     {
         $response = $this->actingAs($this->user)
