@@ -24,14 +24,6 @@ class ShowController extends Controller
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
         }
-//        if (! $this->authorized()) {
-//            mr_redirect('auth/login');
-//        }
-//
-//        // Check for maintenance mode
-//        if(file_exists(APP_ROOT . 'storage/framework/down')) {
-//            mr_redirect('error/client_error/503');
-//        }
 
         $this->modules = $modules = getMrModuleObj()->loadInfo();
     }
