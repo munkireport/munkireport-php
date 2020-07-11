@@ -13,11 +13,6 @@ class SettingsController extends Controller
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
         }
-//        if (! $this->authorized()) {
-//            mr_view('json', array('msg' => 'Not authorized'));
-//
-//            die();
-//        }
     }
 
     //===============================================================

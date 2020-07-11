@@ -16,16 +16,6 @@ class UnitController extends Controller
         }
     }
 
-    public function index()
-    {
-        $data = array('session' => $_SESSION);
-
-        echo 'BU dashboard<pre>';
-
-        print_r($_SESSION);
-        return;
-    }
-
     /**
      * Get unit data for current user
      *
@@ -89,32 +79,5 @@ class UnitController extends Controller
         });
 
         jsonView($out);
-    }
-
-    public function listing($which = '')
-    {
-        if ($which) {
-            $data['page'] = 'clients';
-            $data['scripts'] = array("clients/client_list.js");
-            $view = 'listing/'.$which;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-        }
-
-        mr_view($view, $data);
-    }
-
-    public function reports($which = 'default')
-    {
-        if ($which) {
-            $data['page'] = 'clients';
-            $view = 'report/'.$which;
-        } else {
-            $data = array('status_code' => 404);
-            $view = 'error/client_error';
-        }
-
-        mr_view($view, $data);
     }
 }
