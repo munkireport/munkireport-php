@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ManagerController extends Controller
@@ -13,11 +14,12 @@ class ManagerController extends Controller
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
         }
-//        $this->authorized() || jsonError('Authenticate first', 403);
-//        $this->authorized('delete_machine') || jsonError('You need to be manager or admin', 403);
 
-        // Connect to database
-        // $this->connectDB();
+        if (Auth::user()->role !== 'admin' || Auth::user()->role !== 'manager') {
+            // Not authorised to delete machines
+        }
+
+
     }
 
 
