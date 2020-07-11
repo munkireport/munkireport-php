@@ -22,14 +22,6 @@ class ClientsController extends Controller
 
     }
 
-    public function index()
-    {
-
-        $data['page'] = 'clients';
-
-        return view('client.client_list', $data);
-    }
-
     /**
      * Get some data for serial_number
      *
@@ -95,21 +87,5 @@ class ClientsController extends Controller
         } else {
             return view("client.client_detail", $data);
         }
-    }
-
-    // ------------------------------------------------------------------------
-
-    /**
-     * List of machines
-     *
-     * @param string name of view
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
-     * @author abn290
-     **/
-    public function show($view = '')
-    {
-        $data['page'] = 'clients';
-        // TODO: Check if view exists
-        return view('client.'.$view, $data);
     }
 }
