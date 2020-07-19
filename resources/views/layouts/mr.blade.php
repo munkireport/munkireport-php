@@ -73,8 +73,10 @@
 <body>
 
 @auth
-<?php $modules = getMrModuleObj()->loadInfo(); ?>
-<?php $dashboard = getDashboard()->loadAll();?>
+@php
+$modules = getMrModuleObj()->loadInfo();
+$dashboard = getDashboard()->loadAll();
+@endphp
 
 <header class="navbar navbar-default navbar-static-top bs-docs-nav" role="banner">
     <div class="container">
@@ -89,7 +91,9 @@
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
-                <?php $page = url()->current(); ?>
+                @php
+                $page = url()->current();
+                @endphp
 
                 @if($dashboard->getCount() === 1)
                 <li {{ Route::is('/') ? 'class="active"' : "" }}>
@@ -354,13 +358,15 @@
 <script>
   // Inject debug value from php
   mr.debug = {{ config('app.debug') ? 'true' : 'false' }};
-  <?php $dashboard = getDashboard()->loadAll();?>
-  @foreach($dashboard->getDropdownData('show/dashboard', $page) as $item)
-  @if($item->hotkey)
+  @php
+  $dashboard = getDashboard()->loadAll();
+  @endphp
 
+  @foreach($dashboard->getDropdownData('show/dashboard', url()->current()) as $item)
+  @if($item->hotkey)
     mr.setHotKey('{{ $item->hotkey }}', appUrl + '/show/dashboard/{{ $item->name }}');
-    @endif
-    @endforeach
+  @endif
+  @endforeach
 </script>
 
 
