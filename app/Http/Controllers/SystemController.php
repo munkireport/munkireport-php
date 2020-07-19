@@ -99,7 +99,8 @@ class SystemController extends Controller
             }
         }
         //echo '<pre>';print_r($phpinfo);return;
-        mr_view('json', array('msg' => $phpinfo));
+
+        return response()->json($phpinfo);
     }
 
     /**
@@ -131,8 +132,7 @@ class SystemController extends Controller
     {
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
-        $view = 'system/status';
-        return mr_view($view, $data);
+        return view('system.status', $data);
     }
 
     /**
@@ -143,7 +143,6 @@ class SystemController extends Controller
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
         $data['stylesheets'] = array('system/database.css');
-        $view = 'system/database';
-        return mr_view($view, $data);
+        return view('system.database', $data);
     }
 }
