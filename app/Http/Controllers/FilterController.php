@@ -28,14 +28,15 @@ class FilterController extends Controller
      * Currently only for machine_groups, but could contain
      * other filters (date, model, etc.)
      *
-     **/
-    public function set_filter()
+     * @param Request $request
+     */
+    public function set_filter(Request $request)
     {
         $out = [];
 
-        $filter = $_POST['filter'] ?? '';
-        $action = $_POST['action'] ?? '';
-        $value = $_POST['value'] ?? '';
+        $filter = $request->post('filter', '');
+        $action = $request->post('action', '');
+        $value = $request->post('value', '');
 
         switch ($filter) {
             case 'machine_group':

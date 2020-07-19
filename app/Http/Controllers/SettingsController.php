@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use munkireport\lib\Themes;
@@ -21,24 +22,26 @@ class SettingsController extends Controller
      * Set
      *
      * Set/Get theme value in $_SESSION
-     *
+     * @param Request $request
      */
-    public function theme()
+    public function theme(Request $request): JsonResponse
     {
-        if(isset($_POST['set']))
+        if ($request->has('set'))
         {
             // Check if valid theme
             $themeObj = new Themes();
-            if(in_array($_POST['set'], $themeObj->get_list()))
+            if(in_array($request->input('set'), $themeObj->get_list()))
             {
-                sess_set('theme', $_POST['set']);
+                $request->session()->put('theme', $request->input('set'));
             }
             else
             {
-                mr_view('json', array('msg' => sprintf('Error: theme %s unknown', $_POST['set'])));
+                return response()
+                    ->json(sprintf('Error: theme %s unknown', $request->input('set')));
             }
         }
 
-        mr_view('json', array('msg' => sess_get('theme', config('_munkireport.default_theme'))));
+        return response()
+            ->json($request->session()->get('theme', config('_munkireport.default_theme')));
     }
 }

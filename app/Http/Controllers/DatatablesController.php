@@ -15,9 +15,6 @@ class DatatablesController extends Controller
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
         }
-
-        // Connect to database
-        // $this->connectDB();
     }
 
     public function data(Request $request)
@@ -57,7 +54,7 @@ class DatatablesController extends Controller
                     print_r($obj->fetch($cfg));
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo json_encode(
                 array(
                     'error' => $e->getMessage(),
