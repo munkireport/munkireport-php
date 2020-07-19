@@ -57,7 +57,7 @@ class ModuleServiceProvider extends ServiceProvider
         // Decorate Migrator with Module Paths
         $this->app->extend(Migrator::class, function (Migrator $service, $app) use ($moduleInfo) {
             foreach ($moduleInfo as $moduleName => $info) {
-                if ($app->getModuleMigrationPath($moduleName, $migrationPath)) {
+                if (app(Modules::class)->getModuleMigrationPath($moduleName, $migrationPath)) {
                     $service->path($migrationPath);
                 }
             }
