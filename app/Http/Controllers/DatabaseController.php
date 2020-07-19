@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use MR\Kiss\View;
 use Illuminate\Filesystem\Filesystem;
@@ -18,10 +19,8 @@ class DatabaseController extends Controller
     {
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
+            Gate::authorize('global');
         }
-        // Check authorization
-//        $this->authorized() || jsonError('Authenticate first', 403);
-//        $this->authorized('global') || jsonError('You need to be admin', 403);
 
         $this->connectDB();
     }
