@@ -114,7 +114,7 @@ return [
                 |
                 */
 
-                'account_prefix' => env('LDAP_ACCOUNT_PREFIX', ''),
+                'account_prefix' => env('LDAP_ACCOUNT_PREFIX', env('AUTH_AD_ACCOUNT_PREFIX', '')),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -154,7 +154,7 @@ return [
                 |
                 */
 
-                'port' => env('LDAP_PORT', 389),
+                'port' => env('LDAP_PORT', env('AUTH_AD_PORT', 389)),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -167,7 +167,7 @@ return [
                 |
                 */
 
-                'timeout' => env('LDAP_TIMEOUT', 5),
+                'timeout' => env('LDAP_TIMEOUT', env('AUTH_AD_TIMEOUT', 5)),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -198,8 +198,8 @@ return [
                 |
                 */
 
-                'username' => env('LDAP_USERNAME', 'username'),
-                'password' => env('LDAP_PASSWORD', 'secret'),
+                'username' => env('LDAP_USERNAME', env('AUTH_AD_USERNAME', 'username')),
+                'password' => env('LDAP_PASSWORD', env('AUTH_AD_PASSWORD', 'secret')),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -233,8 +233,8 @@ return [
                 | near future. So this will be compulsory.
                 */
 
-                'use_ssl' => env('LDAP_USE_SSL', false),
-                'use_tls' => env('LDAP_USE_TLS', false),
+                'use_ssl' => env('LDAP_USE_SSL', env('AUTH_AD_USE_SSL', false)),
+                'use_tls' => env('LDAP_USE_TLS', env('AUTH_AD_USE_TLS', false)),
 
                 /*
                 |--------------------------------------------------------------------------

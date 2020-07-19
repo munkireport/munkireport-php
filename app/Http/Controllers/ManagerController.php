@@ -18,8 +18,6 @@ class ManagerController extends Controller
         if (Auth::user()->role !== 'admin' || Auth::user()->role !== 'manager') {
             // Not authorised to delete machines
         }
-
-
     }
 
 

@@ -28,7 +28,7 @@ class ClientsController extends Controller
      *
      * @author AvB
      **/
-    public function get_data($serial_number = '')
+    public function get_data($serial_number = ''): JsonResponse
     {
         if (authorized_for_serial($serial_number)) {
             $machine = new \Model;
@@ -40,9 +40,11 @@ class ClientsController extends Controller
                 WHERE m.serial_number = ? ORDER BY ipv4ip DESC LIMIT 1
                 ";
 
-            jsonView($machine->query($sql, $serial_number));
+            return response()->json($machine->query($sql, $serial_number));
         } else {
-            jsonError('Not authorized for serial number', 403, false);
+            return response()
+                    ->setStatusCode(403)
+                    ->json(['error' => 'Not authorized for serial number']);
         }
     }
 
@@ -61,7 +63,7 @@ class ClientsController extends Controller
             $out['ssh'] = config('_munkireport.ssh_link');
         }
 
-        return jsonView($out, 200, false, true);
+        return response()->json($out);
     }
 
     // ------------------------------------------------------------------------

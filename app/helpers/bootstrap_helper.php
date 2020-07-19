@@ -26,14 +26,3 @@ function sess_get($sess_item, $default = '')
 {
     return request()->session()->get($sess_item, $default);
 }
-
-/**
- * Set session item
- * @param string session item
- * @param string value
- * @author AvB
- **/
-function sess_set($sess_item, $value)
-{
-    request()->session()->put($sess_item, $value);
-}
