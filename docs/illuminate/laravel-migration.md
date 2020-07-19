@@ -103,6 +103,8 @@ globals based model which really really does not gel with the framework.
 As Laravel will use Middleware to intercept and decide about authorized requests, this is going to be the hardest
 one to maintain backwards compatibility on.
 
+For simplicity we have created Gates which match exactly the style of authz done in the controller authorized() method.
+
 ### Views ###
 
 For this conversion we will keep using MR\Kiss\View to avoid a full rewrite of all the views.

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\BusinessUnit;
@@ -20,11 +21,11 @@ class AdminController extends Controller
     {
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
+            Gate::authorize('global');
         }
 
         // Connect to database
         $this->connectDB();
-
     }
 
     /**
@@ -138,7 +139,7 @@ class AdminController extends Controller
     public function save_business_unit(Request $request): JsonResponse
     {
         $unit = new BusinessUnit();
-        return jsonView($unit->saveUnit($request->all(['unitid', 'name', 'address', 'link'])),
+        return jsonView($unit->saveUnit($request->all(['unitid', 'name', 'address', 'link', 'iteminfo'])),
             200, false, true);
     }
 
@@ -202,7 +203,7 @@ class AdminController extends Controller
             $out[$obj->unitid]['unitid'] = $obj->unitid;
         }
 
-        return jsonView(array_values($out), 200, false, true);
+        return response()->json(array_values($out));
     }
 
     //===============================================================
@@ -238,7 +239,7 @@ class AdminController extends Controller
             $out[$obj['machine_group']]['cnt'] = $obj['cnt'];
         }
 
-        return jsonView(array_values($out), 200, false, true);
+        return response()->json(array_values($out));
     }
 
     //===============================================================
