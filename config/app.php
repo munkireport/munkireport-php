@@ -182,6 +182,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ModuleGraphQLSchemaProvider::class,
         App\Providers\ModuleServiceProvider::class,
+        App\Providers\DashboardServiceProvider::class,
     ],
 
     /*

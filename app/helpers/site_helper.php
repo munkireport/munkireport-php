@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 use MR\Kiss\View;
 
@@ -28,6 +29,7 @@ $GLOBALS['alerts'] = array();
 function alert($msg, $type = "info")
 {
     $GLOBALS['alerts'][$type][] = $msg;
+    request()->session()->flash($type, $msg);
 }
 
 /**
@@ -58,43 +60,6 @@ function error($msg, $i18n = '')
 function getdbh()
 {
     return DB::connection()->getPdo();
-
-//    if (! isset($GLOBALS['dbh'])) {
-//        $conn = conf('connection');
-//        if($conn['options']){
-//            $conn['options'] = arrayToAssoc($conn['options']);
-//        }
-//        switch ($conn['driver']) {
-//            case 'sqlite':
-//                $dsn = "sqlite:{$conn['database']}";
-//                break;
-//
-//            case 'mysql':
-//                $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
-//                if( empty($conn['options'])){
-//                  add_mysql_opts($conn);
-//                }
-//                break;
-//
-//            default:
-//                throw new \Exception("Unknown driver in config", 1);
-//        }
-//        $GLOBALS['dbh'] = new \PDO(
-//            $dsn,
-//            $conn['username'],
-//            $conn['password'],
-//            $conn['options']
-//        );
-//
-//        // Set error mode
-//        $GLOBALS['dbh']->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-//
-//        // Store database name in config array
-//        if (preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result)) {
-//            $GLOBALS['conf']['dbname'] = $result[1];
-//        }
-//    }
-//    return $GLOBALS['dbh'];
 }
 
 function has_sqlite_db($connection)
@@ -400,12 +365,6 @@ function is_archived_only_filter_on(){
                 $_SESSION['filter']['archived_only'];
 }
 
-function mr_storage_path($append = "")
-{
-    return conf('storage_path') . $append;
-}
-
-
 /**
  * Store event for client
  *
@@ -450,38 +409,40 @@ function delete_event($serial_number, $module = '')
     return Event_model::where($where)->delete();
 }
 
-// Truncate string
+/**
+ * Truncate a string to a maximum length
+ *
+ * @deprecated replaced by Str::limit
+ * @param $string
+ * @param int $limit
+ * @param string $pad
+ * @return string
+ */
 function truncate_string($string, $limit = 100, $pad = "...")
 {
-    if (strlen($string) <= $limit) {
-        return $string;
-    }
-
-    return substr($string, 0, $limit - strlen($pad)) . $pad;
+    return Str::limit($string, $limit, $pad);
 }
 
-// Create a singleton moduleObj
+/**
+ * Backwards compatible wrapper to retrieve Modules singleton from the DI container.
+ *
+ * @deprecated Use Laravel Dependency Injection if possible
+ * @return munkireport\lib\Modules
+ */
 function getMrModuleObj()
 {
-    static $moduleObj;
-
-    if( ! $moduleObj){
-      $moduleObj = new Modules;
-    }
-
-    return $moduleObj;
+    return app(Modules::class);
 }
 
-// Create a singleton dashboard
+/**
+ * Backwards compatible wrapper to retrieve Dashboard singleton from the DI container.
+ *
+ * @deprecated Use Laravel Dependency Injection if possible
+ * @return munkireport\lib\Dashboard
+ */
 function getDashboard()
 {
-    static $dashboardObj;
-
-    if( ! $dashboardObj){
-      $dashboardObj = new Dashboard(conf('dashboard'));
-    }
-
-    return $dashboardObj;
+    return app(Dashboard::class);
 }
 
 /**
