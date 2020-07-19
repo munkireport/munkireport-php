@@ -112,5 +112,5 @@ function local_conf($item)
 
 function module_conf($item)
 {
-  return local_conf('module_configs/' .$item);
+    return local_conf('module_configs/' .$item);
 }

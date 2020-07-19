@@ -94,21 +94,6 @@ function add_mysql_opts(&$conn){
 }
 
 /**
- * Previous url() implementation for MunkiReport which generated index.php?/path which Laravel router complains about
- * quite a lot without custom middleware.
- */
-//function mr_url($url = '', $fullurl = false, $queryArray = [])
-//{
-//    $s = $fullurl ? conf('webhost') : '';
-//    $index_page = conf('index_page');
-//    $s .= conf('subdirectory').($url && $index_page ? $index_page.'/' : $index_page) . ltrim($url, '/');
-//    if($queryArray){
-//        $s .= ($index_page ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
-//    }
-//    return $s;
-//}
-
-/**
  * MunkiReport 5.6 implementation of url() converted to a wrapper around Laravel url()
  *
  * @param string $url
@@ -355,14 +340,14 @@ function get_filtered_groups()
 }
 
 // Return if session filter is not set or archived filter is not empty
-function is_archived_filter_on(){
-    return ! isset($_SESSION['filter']['archived']) || 
-                $_SESSION['filter']['archived'];
+function is_archived_filter_on() {
+    return !request()->session()->has('filter.archived') ||
+        request()->session()->get('filter.archived');
 }
 
-function is_archived_only_filter_on(){
-    return isset($_SESSION['filter']['archived_only']) &&
-                $_SESSION['filter']['archived_only'];
+function is_archived_only_filter_on() {
+    return request()->session()->has('filter.archived_only') &&
+            request()->session()->get('filter.archived_only');
 }
 
 /**
@@ -497,6 +482,16 @@ function jsonView($msg = '', $status_code = 200, $exit = false, $return = false)
 
 }
 
+/**
+ * Render and emit a KISSMVC style View.
+ *
+ * @depreacted You should try to use the Laravel view() helper instead, which still uses KISSMVC view for any file not ending in
+ * .blade.php
+ *
+ * @param string $file
+ * @param string $vars
+ * @param string $view_path
+ */
 function mr_view($file = '', $vars = '', $view_path = '')
 {
     $obj = new View();
