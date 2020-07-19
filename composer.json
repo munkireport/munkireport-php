@@ -104,7 +104,8 @@
         "mll-lab/laravel-graphql-playground": "^2.1",
         "composer/composer": "^1.10",
         "pragmarx/firewall": "^2.3",
-        "laravel/sanctum": "^2.4"
+        "laravel/sanctum": "^2.4",
+        "xkerman/restricted-unserialize": "^1.1"
     },
     "autoload": {
         "classmap": [
