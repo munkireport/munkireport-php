@@ -9,6 +9,9 @@ use munkireport\lib\Modules;
 use munkireport\lib\Unserializer;
 use \Reportdata_model, \Messages_model, \Exception;
 use munkireport\models\Hash as MunkiReportHash;
+use function xKerman\Restricted\unserialize;
+use xKerman\Restricted\UnserializeFailedException;
+
 
 class ReportController extends Controller
 {
