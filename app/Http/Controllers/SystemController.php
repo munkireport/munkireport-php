@@ -67,7 +67,7 @@ class SystemController extends Controller
         // Do a read
         // Get tables
         // Get size
-        jsonView($out);
+        return response()->json($out);
     }
 
     /**

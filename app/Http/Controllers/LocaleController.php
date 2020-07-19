@@ -16,11 +16,6 @@ class LocaleController extends Controller
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
         }
-        // if (! $this->authorized()) {
-        //     header('Content-Type: application/json;charset=utf-8');
-        //     echo '{"error": "Not Authorized"}';
-        //     exit;
-        // }
 
         $this->modules = getMrModuleObj()->loadInfo();
     }
