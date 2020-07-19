@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Machine_model;
@@ -50,7 +51,7 @@ class ClientsController extends Controller
      *
      * @author
      **/
-    public function get_links()
+    public function get_links(): JsonResponse
     {
         $out = array();
         if (config('_munkireport.vnc_link')) {
@@ -60,7 +61,7 @@ class ClientsController extends Controller
             $out['ssh'] = config('_munkireport.ssh_link');
         }
 
-        jsonView($out);
+        return jsonView($out, 200, false, true);
     }
 
     // ------------------------------------------------------------------------
