@@ -127,7 +127,6 @@
             "munkireport\\models\\": "app/models/",
             "munkireport\\processors\\": "app/processors/",
             "munkireport\\builders\\": "database/builders/",
-            "munkireport\\controller\\": "app/controllers",
             "munkireport\\lib\\": "app/lib/munkireport",
             "Tests\\": "tests/",
             "App\\": "app/",
