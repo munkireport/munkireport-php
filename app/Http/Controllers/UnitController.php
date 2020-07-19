@@ -34,7 +34,7 @@ class UnitController extends Controller
             $out = $unit->all($_SESSION['business_unit']);
         }
 
-        jsonView($out);
+        return jsonView($out, 200, false, true);
     }
 
     /**
@@ -78,6 +78,6 @@ class UnitController extends Controller
             return strcasecmp($a['name'], $b['name']);
         });
 
-        jsonView($out);
+        return jsonView($out, 200, false, true);
     }
 }

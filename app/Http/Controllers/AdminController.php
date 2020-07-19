@@ -27,16 +27,6 @@ class AdminController extends Controller
 
     }
 
-
-    //===============================================================
-
-    public function index()
-    {
-        echo 'Admin';
-    }
-
-    //===============================================================
-
     /**
      * Save Machine Group
      *
