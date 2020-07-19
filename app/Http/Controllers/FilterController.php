@@ -91,15 +91,15 @@ class FilterController extends Controller
      * Get filters
      *
      **/
-    public function get_filter($filter = 'all')
+    public function get_filter(Request $request, $filter = 'all')
     {
         if($filter == 'all'){
-            jsonView($this->_render_filter());
+            jsonView($this->_render_filter($request));
         }
     }
 
-    private function _render_filter()
+    private function _render_filter(Request $request)
     {
-        return array_merge($this->registered_filters, $_SESSION['filter'] ?? []);
+        return array_merge($this->registered_filters, $request->session()->get('filter', []));
     }
 }

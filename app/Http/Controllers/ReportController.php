@@ -70,10 +70,10 @@ class ReportController extends Controller
      *
      * @author AvB
      **/
-    public function hash_check()
+    public function hash_check(Request $request)
     {
         // Check if we have data
-        if (! isset($_POST['items'])) {
+        if (!$request->has('items')) {
             $this->error("Items are missing");
         }
 
@@ -82,17 +82,16 @@ class ReportController extends Controller
         // Try to register client and lookup hashes in db
         try {
             // Register check and group in reportdata
-            // $this->connectDB();
-            $this->_register($_POST['serial']);
+            $this->_register($request->post('serial'));
 
             //$req_items = unserialize($_POST['items']); //Todo: check if array
-            $unserializer = new Unserializer($_POST['items']);
+            $unserializer = new Unserializer($request->post('items'));
             $req_items = $unserializer->unserialize();
 
             // Reset messages for this client
             if (isset($req_items['msg'])) {
                 $msg_obj = new Messages_model();
-                $msg_obj->reset($_POST['serial']);
+                $msg_obj->reset($request->post('serial'));
                 unset($req_items['msg']);
             }
 
@@ -219,8 +218,7 @@ class ReportController extends Controller
     public function broken_client()
     {
         // Register check in reportdata
-        $this->connectDB();
-        $this->_register($_POST['serial']);
+        $this->_register($request->post('serial'));
 
         // Clean POST data
         $data['module'] = isset($_POST['module']) ? $_POST['module'] : 'generic';
@@ -229,7 +227,7 @@ class ReportController extends Controller
         $data['timestamp'] = time();
 
         // Store event
-        store_event($_POST['serial'], $data['module'], $data['type'], $data['msg']);
+        store_event($request->post('serial'), $data['module'], $data['type'], $data['msg']);
 
         echo "Recorded this message: ".$data['msg']."\n";
     }
@@ -278,7 +276,7 @@ class ReportController extends Controller
         try {
 
             // Load model
-            $class = new $classname($_POST['serial']);
+            $class = new $classname($request->post('serial'));
 
             if (! method_exists($class, 'process')) {
                 $this->msg("No process method in: $classname");
