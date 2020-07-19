@@ -27,5 +27,38 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::define('archive', function ($user) {
+            foreach (config('_munkireport.authorization', []) as $item => $roles) {
+                if ($item === 'archive') {
+                    return in_array($user->role, $roles);
+                }
+            }
+
+            // Role not found: unauthorized!
+            return false;
+        });
+
+        Gate::define('delete_machine', function ($user) {
+            foreach (config('_munkireport.authorization', []) as $item => $roles) {
+                if ($item === 'delete_machine') {
+                    return in_array($user->role, $roles);
+                }
+            }
+
+            // Role not found: unauthorized!
+            return false;
+        });
+
+        Gate::define('global', function ($user) {
+            foreach (config('_munkireport.authorization', []) as $item => $roles) {
+                if ($item === 'global') {
+                    return in_array($user->role, $roles);
+                }
+            }
+
+            // Role not found: unauthorized!
+            return false;
+        });
     }
 }

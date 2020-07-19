@@ -112,6 +112,16 @@ class AdminControllerTest extends TestCase
     }
 
     /**
+     * POST same as above, except the new machine group detail will be:
+     * iteminfo[0][key]: ""
+     * iteminfo[1][name]: "Machine Group Name"
+     */
+    public function testSaveBusinessUnitMachineGroup()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
      *  POST /admin/remove_business_unit
      */
     public function testRemoveBusinessUnit()

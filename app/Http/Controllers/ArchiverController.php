@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use \Reportdata_model;
 
@@ -13,23 +14,9 @@ class ArchiverController extends Controller
         // Check authorization
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
+            Gate::authorize('archive');
         }
-//        $this->authorized() || jsonError('Authenticate first', 403);
-//        $this->authorized('archive') || jsonError('You need to be archiver, manager or admin', 403);
-
-        // Connect to database
-        // $this->connectDB();
     }
-
-
-    //===============================================================
-
-    public function index()
-    {
-        echo 'Archiver';
-    }
-
-    //===============================================================
 
     public function update_status($serial_number = '')
     {

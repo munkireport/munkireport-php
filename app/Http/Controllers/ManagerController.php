@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class ManagerController extends Controller
@@ -15,9 +16,7 @@ class ManagerController extends Controller
             $this->middleware('auth');
         }
 
-        if (Auth::user()->role !== 'admin' || Auth::user()->role !== 'manager') {
-            // Not authorised to delete machines
-        }
+        Gate::authorize('delete_machine');
     }
 
 

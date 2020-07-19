@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use munkireport\lib\Request;
 use munkireport\controller\Module_marketplace;
@@ -16,9 +17,8 @@ class ModuleMarketplaceController extends Controller
         // Check authorization
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
+            Gate::authorize('global');
         }
-//        $this->authorized() || jsonError('Authenticate first', 403);
-//        $this->authorized('global') || jsonError('You need to be admin', 403);
 
         // Create object
         $this->moduleMarketplace = getMrModuleObj();
