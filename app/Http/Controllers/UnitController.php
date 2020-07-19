@@ -19,19 +19,21 @@ class UnitController extends Controller
     /**
      * Get unit data for current user
      *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|object
      * @author
-     **/
-    public function get_data()
+     */
+    public function get_data(Request $request)
     {
         $out = array();
 
         // Initiate session
         $this->authorized();
 
-        if (isset($_SESSION['business_unit'])) {
+        if ($request->session()->has('business_unit')) {
             // Get data for this unit
             $unit = new Business_unit;
-            $out = $unit->all($_SESSION['business_unit']);
+            $out = $unit->all($request->session()->get('business_unit'));
         }
 
         return jsonView($out, 200, false, true);
@@ -42,17 +44,17 @@ class UnitController extends Controller
      *
      * @author
      **/
-    public function get_machine_groups()
+    public function get_machine_groups(Request $request)
     {
         $out = array();
 
-        if (isset($_SESSION['machine_groups'])) {
+        if ($request->session()->has('machine_groups')) {
             // Get data for this unit
             $mg = new Machine_group;
-            foreach ($_SESSION['machine_groups'] as $group) {
+            foreach ($request->session()->get('machine_groups', []) as $group) {
                 if ($mg_data = $mg->all($group)) {
                     $out[] = $mg->all($group);
-                } else if ($group != 0 && count($_SESSION['machine_groups']) != 0) // Not in Machine_group table
+                } else if ($group != 0 && count($request->session()->get('machine_groups', [])) != 0) // Not in Machine_group table
                 {
                     $out[] = array(
                         'name' => 'Group '.$group,
