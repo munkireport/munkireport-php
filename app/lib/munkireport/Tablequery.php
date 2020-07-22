@@ -25,6 +25,11 @@ class Tablequery
         return preg_replace("/[^a-zA-Z0-9._]/", '', $string);
     }
 
+    private function sanitize_sort_order($string)
+    {
+        return preg_replace("/[^a-zA-Z]/", '', $string);
+    }
+
     // ------------------------------------------------------------------------
 
     /**
@@ -169,9 +174,12 @@ class Tablequery
         $sOrder = "";
         if (count($cfg['order'])) {
             $sOrder = "ORDER BY  ";
-            $order_arr = array();
+            $order_arr = [];
             foreach ($cfg['order'] as $order_entry) {
-                $order_arr[] = sprintf('%s %s', $formatted_columns[$order_entry['column']], $order_entry['dir']);
+                $order_arr[] = sprintf('%s %s', 
+                    $this->sanitize_column_name($formatted_columns[$order_entry['column']]),
+                    $this->sanitize_sort_order($order_entry['dir'])
+                );
             }
             $sOrder = "ORDER BY  ".implode(',', $order_arr);
         }

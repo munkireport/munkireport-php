@@ -34,7 +34,7 @@ class CLASS_controller extends Module_controller
     public function get_list($column = '')
     {
         jsonView(
-            CLASS_model::select($column . ' AS label')
+            CLASS_model::select("MODULE.$column AS label")
                 ->selectRaw('count(*) AS count')
                 ->filter()
                 ->groupBy($column)
