@@ -36,7 +36,7 @@
         "munkireport/bluetooth": "^2.0",
         "munkireport/caching": "^1.0",
         "munkireport/certificate": "^1.0",
-        "munkireport/comment": "^3.0",
+        "munkireport/comment": "^4.0",
         "munkireport/crashplan": "^2.0",
         "munkireport/detectx": "^2.0",
         "munkireport/devtools": "^1.0",
