@@ -87,7 +87,7 @@ class ModuleCommand extends Command
             'integer' => ['faker' => 'randomNumber($nbDigits = 4, $strict = false)'],
             'bigInteger' => ['faker' => 'randomNumber($nbDigits = 8, $strict = false)'],
             'boolean' => ['faker' => 'boolean()'],
-            'text' => ['fake' => 'text($maxNbChars = 200)'],
+            'text' => ['faker' => 'text($maxNbChars = 200)'],
         ];
     }
 
