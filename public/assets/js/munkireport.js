@@ -383,30 +383,28 @@ var showFilterModal = function(e){
 // Delete machine ajax call
 function delete_machine(obj)
 {
-	var row = obj.parents('tr');
-	$.getJSON( obj.attr('href'), function( data ) {
-
-		data.status = data.status || 'unknown';
-
-		if(data.status == 'success')
-		{
-			// Animate slide up
-			row.find('td')
-			.animate({'padding-top': '0px', 'padding-bottom': '0px'}, {duration: 100})
-			.wrapInner('<div style="display: block;" />')
-			.parent()
-			.find('td > div')
-			.slideUp(600,function(){
-				// After hide animation is done, redraw table
-                var oTable = $('.table').DataTable();
-                oTable.ajax.reload();
-			});
-		}
-	  	else
-	  	{
-	  		alert(i18n.t('admin.delete_failed') + i18n.t(data.status) + ': '+data.message);
-	  	}
-	});
+    var row = obj.parents('tr');
+    $.ajax({
+        url: obj.attr('href'),
+        method: 'DELETE',
+        dataType: 'json'
+    })
+    .success(function(data) {
+        // Animate slide up
+        row.find('td')
+        .animate({'padding-top': '0px', 'padding-bottom': '0px'}, {duration: 100})
+        .wrapInner('<div style="display: block;" />')
+        .parent()
+        .find('td > div')
+        .slideUp(600,function(){
+            // After hide animation is done, redraw table
+            var oTable = $('.table').DataTable();
+            oTable.ajax.reload();
+        });
+    })
+    .fail(function(data){
+        alert(i18n.t('admin.delete_failed') + i18n.t('error') + ': '+data.responseJSON['error']);
+    });
 }
 
 // Set/retrieve state data in localStorage

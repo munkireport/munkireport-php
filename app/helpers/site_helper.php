@@ -344,7 +344,7 @@ function authorized($what)
     }
 
     // Check if POST and check CSRF
-    if(in_array($_SERVER['REQUEST_METHOD'], ['POST', 'DELETE'])){
+    if($_SERVER['REQUEST_METHOD'] !== 'GET') {
         verifyCSRF();
     }
 
