@@ -1,5 +1,63 @@
 ### [5.6.3](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (Unreleased)
 
+Security release
+
+This release patches a couple of issues found by the Datadog security team. The issues concern actions taken by authenticated users and vary from XSS vulnerabilities to SQL injection. Please update to the latest version of MunkiReport as soon as possible.
+
+Again special thanks to Edouard Schweisguth from Datadog who wrote the security report and helped us resolve these issues.
+
+SECURITY UPDATES
+- [XSS Filter Bypass On Comments](https://github.com/munkireport/munkireport-php/wiki/20200722--XSS-Filter-Bypass-On-Comments)
+- [CSRF Bypass On Endpoints With No Body Parameters](https://github.com/munkireport/munkireport-php/wiki/20200722-CSRF-Bypass-On-Endpoints-With-No-Body-Parameters)
+- [munki_facts XSS](https://github.com/munkireport/munkireport-php/wiki/20200722-munki_facts-XSS)
+- [Reflected XSS In Managedinstalls Module](https://github.com/munkireport/munkireport-php/wiki/20200722-Reflected-XSS-In-Managedinstalls-Module)
+- [SQL Injection In Datatables Order By In Post Body](https://github.com/munkireport/munkireport-php/wiki/20200722-SQL-Injection-In-Datatables-Order-By-In-Post-Body)
+- [SQL Injection In Reportdata Ip In 'req' GET Parameter](https://github.com/munkireport/munkireport-php/wiki/20200722-SQL-Injection-In-Reportdata-Ip-In-'req'-GET-Parameter)
+- [SQL Injection in softwareupdate module](https://github.com/munkireport/munkireport-php/wiki/20200722-SQL-Injection-in-softwareupdate-module)
+
+FIXES
+- Harden tablequery
+- Simplify postflight script
+- Make:module text field crash
+
+
+MODULE UPDATES
+  - munkireport/reportdata (v3.4 => v3.5)
+  - munkireport/machine (v6.5 => v6.6)
+  - munkireport/disk_report (v3.4 => v3.7)
+  - munkireport/caching (v1.4 => v1.5)
+  - munkireport/certificate (V1.4 => v1.5)
+  - munkireport/comment (v3.2 => v4.0)
+  - munkireport/devtools (v1.2 => v1.3)
+  - munkireport/filevault_status (v1.5 => v1.6)
+  - munkireport/homebrew (v1.2 => v1.3)
+  - munkireport/homebrew_info (v1.2 => v1.3)
+  - munkireport/managedinstalls (v2.5 => v2.6)
+  - munkireport/munki_facts (v1.4 => v1.5)
+  - munkireport/munkireportinfo (v1.6 => v1.7)
+  - munkireport/network (v3.0 => v3.1)
+  - munkireport/printer (v1.3 => v1.4)
+  - munkireport/softwareupdate (v1.3 => v1.6)
+  - munkireport/users (v1.4 => V1.7)
+
+DEPENDENCY UPDATES
+  - erusev/parsedown (1.7.4)
+  - symfony/polyfill-php72 (v1.17.0 => v1.18.0)
+  - symfony/polyfill-php70 (v1.18.0)
+  - symfony/polyfill-intl-normalizer (v1.18.0)
+  - symfony/polyfill-intl-idn (v1.17.0 => v1.18.0)
+  - symfony/translation-contracts (v2.1.2 => v2.1.3)
+  - symfony/polyfill-mbstring (v1.17.0 => v1.18.0)
+  - symfony/polyfill-php80 (v1.17.0 => v1.18.0)
+  - nesbot/carbon (2.35.0 => 2.36.1)
+  - symfony/polyfill-php73 (v1.17.0 => v1.18.0)
+  - symfony/service-contracts (v2.1.2 => v2.1.3)
+  - symfony/polyfill-ctype (v1.17.0 => v1.18.0)
+  - phpoption/phpoption (1.7.4 => 1.7.5)
+  - vlucas/phpdotenv (v4.1.7 => v4.1.8)
+  - tightenco/collect (v7.12.0 => v7.19.1)
+  - doctrine/cache (1.10.1 => 1.10.2)
+
 ### [5.6.2](https://github.com/munkireport/munkireport-php/compare/v5.6.1...wip) (June 17, 2020) 
 
 Another bugfix release
