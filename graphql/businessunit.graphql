@@ -1,0 +1,14 @@
+#type LegacyBusinessUnit {
+#    id: ID!
+#    unitid: Int!
+#    property: String!
+#    value: String!
+#}
+
+type BusinessUnit {
+    id: ID!
+    name: String!
+    address: String!
+    link: String!
+}
+

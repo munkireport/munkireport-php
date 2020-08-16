@@ -22,7 +22,7 @@ class SystemController extends Controller
     {
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
-            Gate::authorize('global');
+//            Gate::authorize('global');
         }
     }
 

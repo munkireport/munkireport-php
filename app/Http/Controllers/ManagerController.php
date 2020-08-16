@@ -16,7 +16,7 @@ class ManagerController extends Controller
             $this->middleware('auth');
         }
 
-        Gate::authorize('delete_machine');
+//        Gate::authorize('delete_machine');
     }
 
 
