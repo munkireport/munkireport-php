@@ -29,6 +29,7 @@ Route::post('/admin/remove_business_unit', 'AdminController@remove_business_unit
 Route::post('/admin/save_machine_group', 'AdminController@save_machine_group');
 Route::post('/admin/remove_machine_group', 'AdminController@remove_machine_group');
 Route::get('/admin/show/{which}', 'AdminController@show');
+Route::get('/business_units/{id?}', 'BusinessUnitsController@index');
 
 Route::post('/archiver/update_status/{serial_number?}', 'ArchiverController@update_status');
 Route::post('/archiver/bulk_update_status', 'ArchiverController@bulk_update_status');

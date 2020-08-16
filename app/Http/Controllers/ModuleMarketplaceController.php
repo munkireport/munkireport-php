@@ -17,7 +17,7 @@ class ModuleMarketplaceController extends Controller
         // Check authorization
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
-            Gate::authorize('global');
+//            Gate::authorize('global');
         }
 
         // Create object

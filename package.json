@@ -20,9 +20,16 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "apollo-cache-inmemory": "^1.6.6",
+        "apollo-client": "^2.6.10",
+        "apollo-link": "^1.2.14",
+        "apollo-link-http": "^1.5.17",
         "bootstrap": "^4.5.0",
+        "graphql": "^15.3.0",
+        "graphql-tag": "^2.11.0",
         "jquery": "^1.12.4",
         "popper.js": "^1.16.1",
-        "vue": "^2.6.11"
+        "vue": "^2.6.11",
+        "vue-apollo": "^3.0.4"
     }
 }

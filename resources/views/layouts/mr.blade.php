@@ -97,7 +97,7 @@ $dashboard = getDashboard()->loadAll();
 
                 @if($dashboard->getCount() === 1)
                 <li {{ Route::is('/') ? 'class="active"' : "" }}>
-                    <a href="<?php echo url(); ?>">
+                    <a href="{{ url('/') }}">
                         <i class="fa fa-th-large"></i>
                         <span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
                     </a>
@@ -168,7 +168,7 @@ $dashboard = getDashboard()->loadAll();
                 </li>
 
                 <!-- TODO: Admin Check -->
-                @if(true) {* always be admin for now *}
+                @if(true)
                 <li class="dropdown {{ Route::is('/admin/show') ? " active" : "" }}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-list-alt"></i>
@@ -177,13 +177,13 @@ $dashboard = getDashboard()->loadAll();
                     </a>
                     <ul class="admin dropdown-menu">
 
-                        @foreach(scandir(conf('view_path').'admin') as $list_url)
+                        @foreach(scandir(conf('view_path') . 'admin') as $list_url)
 
-                        @if( strpos($list_url, 'php'))
-                        <?php $page_url = $url.strtok($list_url, '.'); ?>
+                        @if(strpos($list_url, 'php'))
+                        <?php $page_url = strtok($list_url, '.'); ?>
 
-                        <li<?php echo strpos($page, $page_url)===0?' class="active"':''; ?>>
-                            <a href="{{ mr_url($url.strtok($list_url, '.')) }}" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+                        <li class="{{ Route::is($page_url) ? " active" : "" }}">
+                            <a href="{{ url($page_url) }}" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
                         </li>
 
                         @endif

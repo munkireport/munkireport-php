@@ -12,6 +12,13 @@ type Query {
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
     machines: [Machine!]! @all
+
+    machineGroups: [MachineGroup!]! @all
+    businessUnits: [BusinessUnit!]! @all
+}
+
+type Mutation {
+    createBusinessUnit(name: String!): BusinessUnit! @create
 }
 
 type User {
@@ -28,12 +35,9 @@ type Machine {
     hostname: String!
 }
 
-type BusinessUnit {
-    id: ID!
-    unitid: Int!
-    property: String!
-    value: String!
-}
+
+
+
 
 
 type Application {
@@ -43,3 +47,5 @@ type Application {
     path: String!
 }
 
+#import machinegroup.graphql
+#import businessunit.graphql
