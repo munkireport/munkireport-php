@@ -14,7 +14,7 @@ class ArchiverController extends Controller
         // Check authorization
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
-            Gate::authorize('archive');
+//            Gate::authorize('archive');
         }
     }
 
