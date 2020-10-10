@@ -19,7 +19,10 @@ class BusinessUnit extends Model
      * Retrieve a list of members of this business unit (managers and users).
      */
     public function members(): BelongsToMany {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\User',
+            'business_unit_users',
+            'business_unit_id',
+            'user_id');
     }
 
     /**
@@ -42,14 +45,4 @@ class BusinessUnit extends Model
     public function users(): BelongsToMany {
         return $this->members()->wherePivot('role', 'user');
     }
-
-    /**
-     * Retrieve the list of modules assigned to this business unit.
-     * If there are none, we should treat this as all modules being enabled.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-//    public function modules() {
-//        return $this->belongstoMany('Mr\Module');
-//    }
 }
