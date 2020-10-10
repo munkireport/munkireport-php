@@ -189,10 +189,6 @@
 							</li>
 
 						<?php endforeach; ?>
-
-            <li>
-              <a href="<?php echo url('/business_units'); ?>">Business Units</a>
-            </li>
 					</ul>
 
 				</li>
