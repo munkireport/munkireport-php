@@ -111,6 +111,7 @@ The configuration variables will change names, similar to how AD/LDAP changed. S
 | AUTH_SAML_IDP_SSO_URL         | SAML2_DEFAULT_IDP_SSO_URL                                     |
 | AUTH_SAML_IDP_SLO_URL         | SAML2_DEFAULT_IDP_SL_URL                                      |
 | AUTH_SAML_IDP_X509CERT        | SAML2_DEFAULT_IDP_x509                                        |
+| AUTH_SAML_GROUP_ATTR          | **(unchanged)** AUTH_SAML_GROUP_ATTR                          |
 | (N/A)                         | SAML2_DEFAULT_IDP_DISPLAYNAME (login button caption)          |
 
 There are far more options than this. If you are interested, please refer to the saml2 configuration file(s) located

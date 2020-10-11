@@ -56,4 +56,3 @@ This is something that can be overcome with the Policy object in Laravel.
 There is almost no cross-compatibility of auth configuration from MunkiReport to Laravel, which means
 there has to be a reasonable upgrade path.
 
-

@@ -51,6 +51,18 @@ class Saml2LoginEventListener
 
         $idpName = $event->getSaml2Idp();
         Log::info("${userData['id']} logged in via SAML2 IdP `${idpName}`");
+
+        $groupAttr = env('AUTH_SAML_GROUP_ATTR', 'memberOf');
+        $groups = [];
+        if (!in_array($groupAttr, $userData['attributes'])) {
+            Log::warning("AUTH_SAML_GROUP_ATTR=${groupAttr} does not exist in the assertion, user will be logged in without any groups");
+        } else {
+            $groups = $userData['attributes'][$groupAttr];
+        }
+
+        session()->put('groups', $groups);
+        Log::info("Logged in with groups: " . implode(",", $groups));
+
         Auth::login($user);
     }
 }
