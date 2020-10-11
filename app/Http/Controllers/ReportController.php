@@ -166,13 +166,13 @@ class ReportController extends Controller
 
         foreach ($arr as $name => $val) {
 
-            alert("starting: $name");
+            $this->_info("starting: $name");
 
             // All models are lowercase
             $name = strtolower($name);
 
             if (preg_match('/[^\da-z_]/', $name)) {
-                $this->msg("Model has an illegal name: $name");
+                $this->_info("Model has an illegal name: $name");
                 continue;
             }
 
@@ -203,7 +203,7 @@ class ReportController extends Controller
             }
             else
             {
-                $this->msg("No processor found for: $module");
+                $this->_info("No processor found for: $module");
             }
             $this->_collectAlerts();
         }
@@ -262,6 +262,16 @@ class ReportController extends Controller
         exit();
     }
 
+    private function _info($msg)
+    {
+        $GLOBALS['alerts']['info'][] = $msg;
+    }
+
+    private function _warning($msg)
+    {
+        $GLOBALS['alerts']['warning'][] = $msg;
+    }
+
     private function _runModel($module, $model_path, $serial_number, $data)
     {
         require_once($model_path);
@@ -272,7 +282,7 @@ class ReportController extends Controller
         $classname = '\\'.ucfirst($name);
 
         if (! class_exists($classname, false)) {
-            $this->msg("Class not found: $classname");
+            $this->_warning("Class not found: $classname");
             return False;
         }
 
@@ -282,15 +292,15 @@ class ReportController extends Controller
             $class = new $classname($request->post('serial'));
 
             if (! method_exists($class, 'process')) {
-                $this->msg("No process method in: $classname");
+                $this->_warning("No process method in: $classname");
                 return False;
             }
             $this->connectDB();
             $class->process($data);
             return True;
         } catch (Exception $e) {
-            $this->msg("An error occurred while processing: $classname");
-            $this->msg("Error: " . $e->getMessage());
+            $this->_warning("An error occurred while processing: $classname");
+            $this->_warning("Error: " . $e->getMessage());
             return False;
         }
     }
@@ -305,7 +315,7 @@ class ReportController extends Controller
         $classname = '\\'.ucfirst($name);
 
         if (! class_exists($classname, false)) {
-            $this->msg("Class not found: $classname");
+            $this->_warning("Class not found: $classname");
             return;
         }
         try {
@@ -313,15 +323,15 @@ class ReportController extends Controller
             $class = new $classname($module, $serial_number);
 
             if (! method_exists($class, 'run')) {
-                $this->msg("No run method in: $classname");
+                $this->_warning("No run method in: $classname");
                 return;
             }
             $this->connectDB();
             $class->run($data);
             return True;
         } catch (Exception $e) {
-            $this->msg("An error occurred while processing: $classname");
-            $this->msg("Error: " . $e->getMessage());
+            $this->_warning("An error occurred while processing: $classname");
+            $this->_warning("Error: " . $e->getMessage());
             return False;
         }
     }
