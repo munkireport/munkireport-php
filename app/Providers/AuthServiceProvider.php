@@ -15,8 +15,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
-        // 'Mr\Machine' => 'Mr\Policies\MachinePolicy',
+        // These policies implement the Authorization behaviour specified in the wiki article about access to delete/view
+        'App\Machine' => 'App\Policies\MachinePolicy',
+        'App\BusinessUnit' => 'App\Policies\BusinessUnitPolicy',
     ];
 
     /**
