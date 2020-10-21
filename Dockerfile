@@ -35,10 +35,11 @@ COPY --from=composer:2.2.6 /usr/bin/composer /usr/local/bin/composer
 RUN composer install --no-dev && \
     composer dumpautoload -o
 
-RUN mkdir -p app/db && \
-    chmod -R 777 app/db
+RUN mkdir -p app/db
 
 RUN php please migrate
+
+RUN chown -R www-data app/db
 
 RUN rm -rf /var/www/html && \
     ln -s /var/munkireport/public /var/www/html
