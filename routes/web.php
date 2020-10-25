@@ -22,17 +22,41 @@ if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
 
 Route::redirect('/', '/show/dashboard/default');
 
-Route::get('/admin/get_bu_data', 'AdminController@get_bu_data');
-Route::get('/admin/get_mg_data', 'AdminController@get_mg_data');
-Route::post('/admin/save_business_unit', 'AdminController@save_business_unit');
-Route::post('/admin/remove_business_unit', 'AdminController@remove_business_unit');
-Route::post('/admin/save_machine_group', 'AdminController@save_machine_group');
-Route::post('/admin/remove_machine_group', 'AdminController@remove_machine_group');
-Route::get('/admin/show/{which}', 'AdminController@show');
-Route::get('/business_units/{id?}', 'BusinessUnitsController@index');
+Route::middleware(['can:global'])->group(function () {
+    Route::get('/admin/get_bu_data', 'AdminController@get_bu_data');
+    Route::get('/admin/get_mg_data', 'AdminController@get_mg_data');
+    Route::post('/admin/save_business_unit', 'AdminController@save_business_unit');
+    Route::post('/admin/remove_business_unit', 'AdminController@remove_business_unit');
+    Route::post('/admin/save_machine_group', 'AdminController@save_machine_group');
+    Route::post('/admin/remove_machine_group', 'AdminController@remove_machine_group');
+    Route::get('/admin/show/{which}', 'AdminController@show');
 
-Route::post('/archiver/update_status/{serial_number?}', 'ArchiverController@update_status');
-Route::post('/archiver/bulk_update_status', 'ArchiverController@bulk_update_status');
+    Route::get('/system/show/{which?}', 'SystemController@show');
+    Route::get('/system/DataBaseInfo', 'SystemController@DataBaseInfo');
+    Route::get('/system/phpInfo', 'SystemController@phpInfo');
+    Route::get('/system/status', 'SystemController@status');
+    Route::get('/system/database', 'SystemController@database');
+    Route::get('/system/widgets', 'SystemController@widgets');
+    
+    Route::get('/business_units/{id?}', 'BusinessUnitsController@index');
+    Route::get('/unit/get_data', 'UnitController@get_data');
+    Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
+    Route::get('/unit/listing/{which?}', 'UnitController@listing');
+    Route::get('/unit/reports/{which?}', 'UnitController@listing');
+
+    Route::get('/module_marketplace', 'ModuleMarketplaceController@index');
+    Route::get('/module_marketplace/get_module_data', 'ModuleMarketplaceController@get_module_data');
+    Route::get('/module_marketplace/get_module_info', 'ModuleMarketplaceController@get_module_info');
+});
+
+Route::middleware(['can:archive'])->group(function () {
+    Route::post('/archiver/update_status/{serial_number?}', 'ArchiverController@update_status');
+    Route::post('/archiver/bulk_update_status', 'ArchiverController@bulk_update_status');
+});
+
+Route::middleware(['can:delete_machine'])->group(function () {
+    Route::get('/manager/delete_machine/{serial_number?}', 'ManagerController@post');
+});
 
 Route::get('/clients', 'ClientsController@index');
 Route::get('/clients/detail/{sn?}', 'ClientsController@detail');
@@ -48,12 +72,7 @@ Route::post('/filter/set_filter', 'FilterController@set_filter');
 Route::get('/locale/get/{lang?}', 'LocaleController@get');
 Route::get('/locale/get/{lang}/{load}', 'LocaleController@get');
 
-Route::get('/manager/delete_machine/{serial_number?}', 'ManagerController@post');
-
 Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
-
-Route::get('/module_marketplace/get_module_data', 'ModuleMarketplaceController@get_module_data');
-Route::get('/module_marketplace/get_module_info', 'ModuleMarketplaceController@get_module_info');
 
 Route::any('/settings/theme', 'SettingsController@theme');
 
@@ -62,17 +81,3 @@ Route::get('/show/custom/{which?}', 'ShowController@custom');
 Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
 Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
 Route::get('/show/report/{report}/{action}', 'ShowController@report');
-
-Route::get('/system/show/{which?}', 'SystemController@show');
-Route::get('/system/DataBaseInfo', 'SystemController@DataBaseInfo');
-Route::get('/system/phpInfo', 'SystemController@phpInfo');
-
-Route::get('/system/status', 'SystemController@status');
-Route::get('/system/database', 'SystemController@database');
-Route::get('/system/widgets', 'SystemController@widgets');
-Route::get('/module_marketplace', 'ModuleMarketplaceController@index');
-
-Route::get('/unit/get_data', 'UnitController@get_data');
-Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
-Route::get('/unit/listing/{which?}', 'UnitController@listing');
-Route::get('/unit/reports/{which?}', 'UnitController@listing');
