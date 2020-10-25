@@ -324,12 +324,14 @@ function get_filtered_groups()
     $out = array(0);
 
     // Get filter
-//    if (isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group']) {
-//        $filter = $_SESSION['filter']['machine_group'];
-//        $out = array_diff($_SESSION['machine_groups'], $filter);
-//    } else {
-//        $out = $_SESSION['machine_groups'];
-//    }
+    if(session()->has('filter.machine_group')){
+        $out = array_diff(
+            session()->get('machine_groups', []),
+            session()->get('filter.machine_group')
+        );
+    }else{
+        $out = session()->get('machine_groups', []);
+    }
 
     // If out is empty, signal no groups
     if (! $out) {
