@@ -71,6 +71,7 @@ Route::get('/locale/get/{lang?}', 'LocaleController@get');
 Route::get('/locale/get/{lang}/{load}', 'LocaleController@get');
 
 Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
+Route::post('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
 
 Route::any('/settings/theme', 'SettingsController@theme');
 
