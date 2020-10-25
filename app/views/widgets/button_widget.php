@@ -22,6 +22,7 @@ $(document).on('appUpdate', function(e, lang) {
     var apiUrl = "<?=$api_url?>";
     var widgetId = "<?=$widget_id?>";
     var listingLink = "<?=$listing_link?>";
+    var allowZero = "<?=$allow_zero?>";
     var i18nEmptyResult = "<?php echo isset($i18n_empty_result)?$i18n_empty_result:''?>"
 
 	var body = $('#' + widgetId + ' div.panel-body');
@@ -83,7 +84,7 @@ $(document).on('appUpdate', function(e, lang) {
                 ).append(' ')
 			});
         }
-        if(buttons_rendered == 0){
+        if(buttons_rendered == 0 && ! allowZero){
             if (i18nEmptyResult){
                 body.append(i18n.t(i18nEmptyResult));
             }else{
