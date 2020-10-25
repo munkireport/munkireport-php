@@ -31,12 +31,12 @@ class LoginRoleDecider
     protected function isMember(string $userPrincipal, array $groups, string $role, array $members): array {
         foreach ($members as $userOrGroupName) {
             if (strpos($userOrGroupName, '@') === 0) { // It's a group
-                if (in_array(substr($member, 1), $groups)) {
-                    return [true, "member of ${member}"];
+                if (in_array(substr($userOrGroupName, 1), $groups)) {
+                    return [true, "member of ${userOrGroupName}"];
                 }
             } else {
                 if ($userOrGroupName == $userPrincipal) {
-                    return [true, "${member} in ${role} role array"];
+                    return [true, "${userOrGroupName} in ${role} role array"];
                 }
             }
         }
