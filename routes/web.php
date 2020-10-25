@@ -53,9 +53,6 @@ Route::middleware(['can:archive'])->group(function () {
 
 Route::middleware(['can:delete_machine'])->group(function () {
     Route::get('/manager/delete_machine/{serial_number?}', 'ManagerController@post');
-    Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
-    Route::get('/unit/listing/{which?}', 'UnitController@listing');
-    Route::get('/unit/reports/{which?}', 'UnitController@listing');
 });
 
 Route::get('/clients', 'ClientsController@index');
@@ -68,6 +65,7 @@ Route::post('/datatables/data', 'DatatablesController@data');
 
 Route::get('/filter/get_filter', 'FilterController@get_filter');
 Route::post('/filter/set_filter', 'FilterController@set_filter');
+Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
 
 Route::get('/locale/get/{lang?}', 'LocaleController@get');
 Route::get('/locale/get/{lang}/{load}', 'LocaleController@get');
