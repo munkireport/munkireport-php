@@ -139,7 +139,9 @@ class AdminController extends Controller
     public function save_business_unit(Request $request): JsonResponse
     {
         $unit = new BusinessUnit();
-        return jsonView($unit->saveUnit($request->all(['unitid', 'name', 'address', 'link', 'iteminfo'])),
+        return jsonView($unit->saveUnit($request->all([
+            'unitid', 'name', 'address', 'link', 'iteminfo', 'managers', 'archivers', 'users'
+            ])),
             200, false, true);
     }
 
