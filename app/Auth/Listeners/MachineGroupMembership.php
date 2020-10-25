@@ -40,7 +40,7 @@ class MachineGroupMembership
             $reportedMachineGroups = $reportedMachineGroups ? $reportedMachineGroups : [0];
             $machineGroups = array_unique(array_merge($reportedMachineGroups, $mg->get_group_ids()));
         }
-        Log::info('found machinegroup memberships: ' . implode(', ', $machineGroups));
+        Log::info('found machinegroup memberships: ', $machineGroups);
         session()->put('machine_groups', $machineGroups);
     }
 }
