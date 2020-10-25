@@ -39,9 +39,9 @@
 			appUrl = "<?php echo url('/'); ?>",
 			default_theme = "<?php echo config('_munkireport.default_theme'); ?>",
 			businessUnitsEnabled = <?php echo config('_munkireport.enable_business_units') ? 'true' : 'false'; ?>;
-			isAdmin = <?php echo $_SESSION['role'] == 'admin' ? 'true' : 'false'; ?>;
-			isManager = <?php echo $_SESSION['role'] == 'manager' ? 'true' : 'false'; ?>;
-			isArchiver = <?php echo $_SESSION['role'] == 'archiver' ? 'true' : 'false'; ?>;
+			isAdmin = <?php echo \Auth::user()['role'] == 'admin' ? 'true' : 'false'; ?>;
+			isManager = <?php echo \Auth::user()['role'] == 'manager' ? 'true' : 'false'; ?>;
+			isArchiver = <?php echo \Auth::user()['role'] == 'archiver' ? 'true' : 'false'; ?>;
 	</script>
 
 	<script src="<?php echo asset('assets/js/jquery.js'); ?>"></script>
@@ -159,8 +159,7 @@
 
 				</li>
 
-                <!-- TODO: Admin Check -->
-				<?php if(true): /* always be admin for now */ ?>
+				<?php if(\Auth::user()['role'] == 'admin'): ?>
 				<?php $url = 'admin/show/'; ?>
 				<li class="dropdown<?php echo strpos($page, $url)===0?' active':''; ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
