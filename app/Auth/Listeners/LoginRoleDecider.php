@@ -129,7 +129,8 @@ class LoginRoleDecider
             }
         }
 
-        session()->put('role', $setRole);
+        $user->role = $setRole;
+        $user->update();
         Log::info("${userName} is member of ${setRole}, because ${roleWhy}.");
 
     }
