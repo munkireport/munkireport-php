@@ -49,6 +49,51 @@ class LoginRoleDecider
         return [false, "not a member of ${role}"];
     }
 
+    /**
+     * Calculate whether authenticated user with userPrincipal name is part of a business unit.
+     *
+     * @param string $userPrincipal The user principal, such as the email address of the user logging in.
+     * @param array $groups The list of groups that was given to us from the authentication provider.
+     * @return array [bool, array] corresponding to isMember (true/false), and business unit data.
+     */
+    private function belongsToBusinessUnit(string $userPrincipal, array $groups)
+    {
+        $businessUnitData = [
+            'role' => 'nobody',
+            'roleWhy' => 'Default role for Business Units',
+            'businessUnitId' => 0,
+        ];
+        $foundInBusinessUnit = false;
+        
+        $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
+            ->where('value', $userPrincipal)
+            ->first();
+        
+        if ($bu) {
+            $businessUnitData['role'] = $bu->property; // manager, user
+            $businessUnitData['roleWhy'] = $userPrincipal.' found in Business Unit '. $bu->unitid;
+            $businessUnitData['businessUnitId'] = $bu->unitid;
+            $foundInBusinessUnit = true;
+        } else {
+            // Lookup groups in Business Units
+            foreach ($groups as $group) {
+                $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
+                    ->where('value', '@' . $group)
+                    ->first();
+
+                if ($bu) {
+                    $businessUnitData['role'] = $bu->property; // manager, user
+                    $businessUnitData['roleWhy'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
+                    $businessUnitData['businessUnitId'] = $bu->unitid;
+                    $foundInBusinessUnit = true;
+                    break;
+                }
+            }
+        }
+
+        return [$foundInBusinessUnit, $businessUnitData];
+    }
+
     public function handle(Login $event) {
         Log::info('evaluating role memberships');
 
@@ -74,47 +119,17 @@ class LoginRoleDecider
             }
         }
 
+        // Check if Business Units are enabled in the config file
+        if ($setRole != 'admin' && config('_munkireport.enable_business_units', false)) {
+            list($isMember, $businessUnitData) = $this->belongsToBusinessUnit($userName, $groups);
+            if ($isMember) {
+                $setRole = $businessUnitData['role'];
+                $roleWhy = $businessUnitData['roleWhy'];
+                session()->put('business_unit', $businessUnitData['businessUnitId']);
+            }
+        }
+
         Log::info("${userName} is member of ${setRole}, because ${roleWhy}.");
 
-        // Check if Business Units are enabled in the config file
-        $bu_enabled = config('_munkireport.enable_business_units', false);
-
-        // Check if user is global admin
-//        if ($_SESSION['auth'] == 'noauth' or $_SESSION['role'] == 'admin') {
-//            unset($_SESSION['business_unit']);
-//        } elseif (! $bu_enabled) {
-//            // Regular user w/o business units enabled
-//            unset($_SESSION['business_unit']);
-//        } elseif ($bu_enabled) {
-//            // Authorized user, not in business unit
-//            $_SESSION['role'] = 'nobody';
-//            $_SESSION['role_why'] = 'Default role for Business Units';
-//            $_SESSION['business_unit'] = 0;
-//
-//            // Lookup user in business units
-//            $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
-//                ->where('value', $_SESSION['user'])
-//                ->first();
-//
-//            if ($bu) {
-//                $_SESSION['role'] = $bu->property; // manager, user
-//                $_SESSION['role_why'] = $_SESSION['user'].' found in Business Unit '. $bu->unitid;
-//                $_SESSION['business_unit'] = $bu->unitid;
-//            } else {
-//                // Lookup groups in Business Units
-//                foreach ($_SESSION['groups'] as $group) {
-//                    $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
-//                        ->where('value', '@' . $group)
-//                        ->first();
-//
-//                    if ($bu) {
-//                        $_SESSION['role'] = $bu->property; // manager, user
-//                        $_SESSION['role_why'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
-//                        $_SESSION['business_unit'] = $bu->unitid;
-//                        break;
-//                    }
-//                }
-//            }
-//        }
     }
 }
