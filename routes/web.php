@@ -40,9 +40,6 @@ Route::middleware(['can:global'])->group(function () {
     
     Route::get('/business_units/{id?}', 'BusinessUnitsController@index');
     Route::get('/unit/get_data', 'UnitController@get_data');
-    Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
-    Route::get('/unit/listing/{which?}', 'UnitController@listing');
-    Route::get('/unit/reports/{which?}', 'UnitController@listing');
 
     Route::get('/module_marketplace', 'ModuleMarketplaceController@index');
     Route::get('/module_marketplace/get_module_data', 'ModuleMarketplaceController@get_module_data');
@@ -56,6 +53,9 @@ Route::middleware(['can:archive'])->group(function () {
 
 Route::middleware(['can:delete_machine'])->group(function () {
     Route::get('/manager/delete_machine/{serial_number?}', 'ManagerController@post');
+    Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
+    Route::get('/unit/listing/{which?}', 'UnitController@listing');
+    Route::get('/unit/reports/{which?}', 'UnitController@listing');
 });
 
 Route::get('/clients', 'ClientsController@index');
