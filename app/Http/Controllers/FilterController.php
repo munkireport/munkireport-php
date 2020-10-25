@@ -53,36 +53,31 @@ class FilterController extends Controller
                 jsonError('Unknown filter: '.$filter);
         }
 
+        // Find value in session
+        $sessionFilter = session()->get("filter.${filter}", []);
+        $key = array_search($value, $sessionFilter);
 
-        if (! isset($out['error'])) {
-            // Create filter if it does not exist
-            if (! isset($_SESSION['filter'][$filter])) {
-                $_SESSION['filter'][$filter] = [];
-            }
-
-            // Find value in filter
-            $key = array_search($value, $_SESSION['filter'][$filter]);
-
-            // If key in filter: remove
-            if ($key !== false) {
-                array_splice($_SESSION['filter'][$filter], $key, 1);
-            }
-
-            switch ($action) {
-                case 'add': // add to filter
-                    $_SESSION['filter'][$filter][] = $value;
-                    break;
-                case 'add_all': // add to filter
-                    $_SESSION['filter'][$filter] = $value;
-                    break;
-                case 'clear': // clear filter
-                    $_SESSION['filter'][$filter] = [];
-                    break;
-            }
-
-            // Return current filter array
-            $out[$filter] = $_SESSION['filter'][$filter];
+        // If key in filter: remove
+        if ($key !== false) {
+            array_splice($sessionFilter, $key, 1);
         }
+
+        switch ($action) {
+            case 'add': // add to filter
+                $sessionFilter[] = $value;
+                break;
+            case 'add_all': // add to filter
+                $sessionFilter = $value;
+                break;
+            case 'clear': // clear filter
+                $sessionFilter = [];
+                break;
+        }
+
+        session()->put("filter.${filter}", $sessionFilter);
+
+        // Return current filter array
+        $out[$filter] = $sessionFilter;
 
         jsonView($out);
     }
