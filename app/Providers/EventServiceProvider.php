@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Aacotroneo\Saml2\Events\Saml2LoginEvent;
 use App\Auth\Listeners\LoginRoleDecider;
+use App\Auth\Listeners\MachineGroupMembership;
 use App\Auth\Listeners\Saml2LoginEventListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,6 +29,7 @@ class EventServiceProvider extends ServiceProvider
         'Illuminate\Auth\Events\Login' => [
             LoginRoleDecider::class,  // based on LDAPLoginEventListener or Saml2LoginEventListener decides which roles
                                       // should apply.
+            MachineGroupMembership::class,  // decides which machinegroup memberships should apply.
         ],
     ];
 
