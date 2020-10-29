@@ -33,7 +33,7 @@ class ModuleServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Modules::class, function ($app) {
             $modules = new Modules;
-            $modules->loadInfo(true);
+            $modules->loadInfo(false);
             return $modules;
         });
 
