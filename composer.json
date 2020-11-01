@@ -26,7 +26,6 @@
         "hautelook/phpass": "^1.1",
         "rodneyrehm/plist": "^2.0",
         "defuse/php-encryption": "^2.1",
-        "wikimedia/composer-merge-plugin": "dev-master",
         "munkireport/ard": "^3.0",
         "munkireport/reportdata": "^3.0",
         "munkireport/machine": "^6.0",
@@ -138,11 +137,6 @@
     "extra": {
         "laravel": {
             "dont-discover": []
-        },
-        "merge-plugin": {
-            "include": [
-                "composer.local.json"
-            ]
         }
     },
     "scripts": {
