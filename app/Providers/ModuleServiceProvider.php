@@ -37,11 +37,12 @@ class ModuleServiceProvider extends ServiceProvider
             return $modules;
         });
 
-        $moduleInfo = app(Modules::class)->getInfo();
+        $moduleInstance = app(Modules::class);
 
         // Decorate Eloquent Factory with module paths
-        $this->app->extend(EloquentFactory::class, function (EloquentFactory $service, $app) use ($moduleInfo) {
-
+        $this->app->extend(EloquentFactory::class, function (EloquentFactory $service, $app) use ($moduleInstance) {
+            $moduleInstance->loadInfo(true);
+            $moduleInfo = $moduleInstance->getInfo();
 
             foreach($moduleInfo as $moduleName => $info) {
                 $factorypath = app(Modules::class)->getPath($moduleName, "/${moduleName}_factory.php");
@@ -55,7 +56,10 @@ class ModuleServiceProvider extends ServiceProvider
         });
 
         // Decorate Migrator with Module Paths
-        $this->app->extend(Migrator::class, function (Migrator $service, $app) use ($moduleInfo) {
+        $this->app->extend(Migrator::class, function (Migrator $service, $app) use ($moduleInstance) {
+            // Load all modules
+            $moduleInstance->loadInfo(true);
+            $moduleInfo = $moduleInstance->getInfo();
             foreach ($moduleInfo as $moduleName => $info) {
                 if (app(Modules::class)->getModuleMigrationPath($moduleName, $migrationPath)) {
                     $service->path($migrationPath);
