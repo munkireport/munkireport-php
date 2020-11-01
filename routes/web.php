@@ -37,6 +37,8 @@ Route::middleware(['can:global'])->group(function () {
     Route::get('/system/status', 'SystemController@status');
     Route::get('/system/database', 'SystemController@database');
     Route::get('/system/widgets', 'SystemController@widgets');
+
+    Route::get('/database/migrate', 'DatabaseController@migrate');
     
     Route::get('/business_units/{id?}', 'BusinessUnitsController@index');
     Route::get('/unit/get_data', 'UnitController@get_data');
