@@ -44,6 +44,10 @@ RUN php please migrate --force
 
 RUN chown -R www-data app/db
 
+ENV LARAVEL_LOG = /var/munkireport/storage/logs/laravel.log
+
+RUN touch $LARAVEL_LOG && chmod a+w $LARAVEL_LOG
+
 RUN rm -rf /var/www/html && \
     ln -s /var/munkireport/public /var/www/html
 
