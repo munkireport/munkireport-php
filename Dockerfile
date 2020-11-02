@@ -39,11 +39,9 @@ RUN mkdir -p app/db
 
 RUN php please migrate
 
-RUN chown -R www-data app/db
+RUN chown -R www-data app/db storage
 
-ENV LARAVEL_LOG = /var/munkireport/storage/logs/laravel.log
-
-RUN touch $LARAVEL_LOG && chmod a+w $LARAVEL_LOG
+RUN cp .env.example .env && php please key:generate
 
 RUN rm -rf /var/www/html && \
     ln -s /var/munkireport/public /var/www/html
