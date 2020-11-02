@@ -1,14 +1,7 @@
 <?php
-
-// Legacy function name
-function getenv_default($key, $default = null, $typehint = null)
-{
-    env($key, $default, $typehint);
-}
-
 // Get a value from $_ENV with fallback to default
 // typehint parameter processes env var as the suggested type.
-function env($key, $default = null, $typehint = null) {
+function mr_env($key, $default = null, $typehint = null) {
     if ( getenv($key) !== false ) {
         $v = getenv($key);
         if ( $typehint === null && $default !== null) {

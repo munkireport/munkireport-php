@@ -1,38 +1,17 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
-use munkireport\lib\User;
+use MR\Kiss\View;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.6.4.4225';
+$GLOBALS['version'] = '6.0.0.4224';
 
 // Return version without commit count
 function get_version()
 {
     return preg_replace('/(.*)\.\d+$/', '$1', $GLOBALS['version']);
-}
-
-//===============================================
-// Uncaught Exception Handling
-//===============================================s
-function uncaught_exception_handler($e)
-{
-    // Dump out remaining buffered text
-    if (ob_get_level()) {
-        ob_end_clean();
-    }
-
-  // Get error message
-    error('Uncaught Exception: '.$e->getMessage());
-
-  // Write footer
-    die(View::doFetch(conf('view_path').'partials/foot.php'));
-}
-
-function custom_error($msg = '')
-{
-    $vars['msg']=$msg;
-    die(View::doFetch(APP_PATH.'errors/custom_error.php', $vars));
 }
 
 //===============================================
@@ -50,6 +29,7 @@ $GLOBALS['alerts'] = array();
 function alert($msg, $type = "info")
 {
     $GLOBALS['alerts'][$type][] = $msg;
+    request()->session()->flash($type, $msg);
 }
 
 /**
@@ -70,48 +50,16 @@ function error($msg, $i18n = '')
 // Database
 //===============================================
 
+/**
+ * For Laravel 7, this function no longer handles the PDOException by displaying an error message but passes it back
+ * up into the App/Exception/Handler for reporting.
+ *
+ * @return PDO
+ * @throws \PDOException
+ */
 function getdbh()
 {
-    if (! isset($GLOBALS['dbh'])) {
-        try {
-            $conn = conf('connection');
-            if($conn['options']){
-                $conn['options'] = arrayToAssoc($conn['options']);
-            }
-            switch ($conn['driver']) {
-                case 'sqlite':
-                    $dsn = "sqlite:{$conn['database']}";
-                    break;
-
-                case 'mysql':
-                    $dsn = "mysql:host={$conn['host']};port={$conn['port']};dbname={$conn['database']}";
-                    if( empty($conn['options'])){
-                      add_mysql_opts($conn);
-                    }
-                    break;
-
-                default:
-                    throw new \Exception("Unknown driver in config", 1);
-            }
-            $GLOBALS['dbh'] = new PDO(
-                $dsn,
-                $conn['username'],
-                $conn['password'],
-                $conn['options']
-            );
-        } catch (PDOException $e) {
-            fatal('Connection failed: '.$e->getMessage());
-        }
-
-        // Set error mode
-        $GLOBALS['dbh']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        // Store database name in config array
-        if (preg_match('/.*dbname=([^;]+)/', conf('pdo_dsn'), $result)) {
-            $GLOBALS['conf']['dbname'] = $result[1];
-        }
-    }
-    return $GLOBALS['dbh'];
+    return DB::connection()->getPdo();
 }
 
 function has_sqlite_db($connection)
@@ -132,18 +80,9 @@ function find_driver($connection, $driver)
   return false;
 }
 
-function dumpQuery($queryobj){
-    dd(
-        vsprintf(
-            str_replace(['?'], ['\'%s\''], $queryobj->toSql()),
-            $queryobj->getBindings()
-        )
-    );
-}
-
 function add_mysql_opts(&$conn){
   $conn['options'] = [
-    PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
+    \PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
   ];
   if($conn['ssl_enabled']){
     foreach(['key', 'cert', 'ca', 'capath', 'cipher'] as $ssl_opt){
@@ -154,25 +93,15 @@ function add_mysql_opts(&$conn){
   }
 }
 
-//===============================================
-// Autoloading for Business Classes
-//===============================================
-// module classes end with _model
-function munkireport_autoload($classname)
-{
-    // Switch to lowercase filename for models
-    $lowercaseClassname = strtolower($classname);
-
-    if (substr($lowercaseClassname, -6) == '_model') {
-        $module = substr($lowercaseClassname, 0, -6);
-        if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
-            throw new Exception("Cannot load model: ".$classname, 1);
-        }
-        require_once($model);
-    }
-}
-
-function url($url = '', $fullurl = false, $queryArray = [])
+/**
+ * MunkiReport 5.6 implementation of url() converted to a wrapper around Laravel url()
+ *
+ * @param string $url
+ * @param bool $fullurl
+ * @param array $queryArray
+ * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\UrlGenerator|\Illuminate\Foundation\Application|string
+ */
+function mr_url($url = '', $fullurl = false, $queryArray = [])
 {
     $s = $fullurl ? conf('webhost') : '';
     $index_page = conf('index_page');
@@ -180,7 +109,12 @@ function url($url = '', $fullurl = false, $queryArray = [])
     if($queryArray){
         $s .= ($index_page ? '&amp;' : '?') .http_build_query($queryArray, '', '&amp;');
     }
-    return $s;
+
+    // There isn't a way to tell Laravel not to generate a fully qualified URL.
+    $l_url = url($url, $queryArray);
+
+    //return $s;
+    return $l_url;
 }
 
 /**
@@ -192,12 +126,9 @@ function url($url = '', $fullurl = false, $queryArray = [])
  */
 function getRemoteAddress()
 {
-    if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-        return $_SERVER["HTTP_X_FORWARDED_FOR"];
-    }
-
-    return $_SERVER['REMOTE_ADDR'];
+    return request()->getClientIp();
 }
+
 /**
  * Return a secure url
  *
@@ -205,9 +136,9 @@ function getRemoteAddress()
  * @return string secure url
  * @author
  **/
-function secure_url($url = '')
+function mr_secure_url($url = '')
 {
-    $parse_url = parse_url(url($url, true));
+    $parse_url = parse_url(mr_url($url, true));
     $parse_url['scheme'] = 'https';
 
     return
@@ -220,36 +151,6 @@ function secure_url($url = '')
         .((isset($parse_url['query'])) ? '?' . $parse_url['query'] : '')
         .((isset($parse_url['fragment'])) ? '#' . $parse_url['fragment'] : '')
         ;
-}
-
-function redirect($uri = '', $method = 'location', $http_response_code = 302)
-{
-    if (! preg_match('#^https?://#i', $uri)) {
-        $uri = url($uri);
-    }
-    switch ($method) {
-        case 'refresh':
-            header("Refresh:0;url=".$uri);
-            break;
-        default:
-            header("Location: ".$uri, true, $http_response_code);
-            break;
-    }
-    exit;
-}
-
-/**
- * Get $_POST variable without error
- *
- * @return string post value
- **/
-function post($what = '', $alt = '')
-{
-    if (array_key_exists($what, $_POST)) {
-        return $_POST[$what];
-    }
-
-    return $alt;
 }
 
 /**
@@ -266,27 +167,6 @@ function passphrase_to_group($passphrase)
     }
 
     return 0;
-}
-
-/**
- * Generate GUID
- *
- * @return string guid
- * @author
- **/
-function get_guid()
-{
-    return sprintf(
-        '%04X%04X-%04X-%04X-%04X-%04X%04X%04X',
-        mt_rand(0, 65535),
-        mt_rand(0, 65535),
-        mt_rand(0, 65535),
-        mt_rand(16384, 20479),
-        mt_rand(32768, 49151),
-        mt_rand(0, 65535),
-        mt_rand(0, 65535),
-        mt_rand(0, 65535)
-    );
 }
 
 /**
@@ -327,63 +207,42 @@ function assocToArray($array)
     return $result;
 }
 
+/**
+ * Check if a user is authorized.
+ *
+ *
+ *
+ * @param string $what The action or item that the user should be authorized to perform. can be optional.
+ * @return bool
+ */
 function authorized($what)
 {
-    if (! isset($_SESSION)) {
-        ini_set('session.use_cookies', 1);
-        ini_set('session.use_only_cookies', 1);
-        ini_set('session.cookie_path', conf('subdirectory'));
-        ini_set('session.cookie_httponly', true);
-        ini_set('session.cookie_samesite', "Lax");
-        session_start();
+    if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+        return Auth::check();
+    } else {
+        return true; // NOAUTH is enabled.
     }
 
-    // Check if we have a valid user
-    if (! isset($_SESSION['role'])) {
-        return false;
-    }
-
-    // Check if POST and check CSRF
-    if($_SERVER['REQUEST_METHOD'] !== 'GET') {
-        verifyCSRF();
-    }
+    // Laravel does CSRF Verification
 
     // Check for a specific authorization item
-    if ($what) {
-        foreach (conf('authorization', array()) as $item => $roles) {
-            if ($what === $item) {
-                // Check if there is a matching role
-                if (in_array($_SESSION['role'], $roles)) {
-                    return true;
-                }
-
-                // Role not found: unauthorized!
-                return false;
-            }
-        }
-    }
+//    if ($what) {
+//        foreach (conf('authorization', array()) as $item => $roles) {
+//            if ($what === $item) {
+//                // Check if there is a matching role
+//                if (in_array($_SESSION['role'], $roles)) {
+//                    return true;
+//                }
+//
+//                // Role not found: unauthorized!
+//                return false;
+//            }
+//        }
+//    }
 
     // There is no matching rule, you're authorized!
-    return true;
+//    return true;
 }
-
-function verifyCSRF()
-{
-    $session_token = sess_get('csrf_token');
-
-    if(isset($_REQUEST['_token'])){
-        $sent_token = $_REQUEST['_token'];
-    }else{
-        $sent_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
-    }
-
-    if( hash_equals($session_token, $sent_token)) return;
-
-    // Exit with error page todo: use a json response
-    jsonView($msg = ['error' => 'CSRF Token Mismatch'], $status_code = 403, $exit = true);
-}
-
-
 
 /**
  * Check if current user may access data for serial number
@@ -398,8 +257,9 @@ function authorized_for_serial($serial_number)
         return true;
     }
 
-    $user = new User;
-    return $user->canAccessMachineGroup(get_machine_group($serial_number));
+//    $user = new User;
+//    return $user->canAccessMachineGroup(get_machine_group($serial_number));
+    return true;
 }
 
 /**
@@ -451,19 +311,26 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
 /**
  * Get filtered groups
  *
+ * Laravel Conversion Notes:
+ *
+ * These $_SESSION global variables won't necessarily be populated in the same way, and should not be accessed directly
+ * through the $_SESSION superglobal anyway - mosen.
+ *
  * @return void
  * @author
  **/
 function get_filtered_groups()
 {
-    $out = array();
+    $out = array(0);
 
     // Get filter
-    if (isset($_SESSION['filter']['machine_group']) && $_SESSION['filter']['machine_group']) {
-        $filter = $_SESSION['filter']['machine_group'];
-        $out = array_diff($_SESSION['machine_groups'], $filter);
-    } else {
-        $out = $_SESSION['machine_groups'];
+    if(session()->has('filter.machine_group')){
+        $out = array_diff(
+            session()->get('machine_groups', []),
+            session()->get('filter.machine_group')
+        );
+    }else{
+        $out = session()->get('machine_groups', []);
     }
 
     // If out is empty, signal no groups
@@ -475,21 +342,15 @@ function get_filtered_groups()
 }
 
 // Return if session filter is not set or archived filter is not empty
-function is_archived_filter_on(){
-    return ! isset($_SESSION['filter']['archived']) || 
-                $_SESSION['filter']['archived'];
+function is_archived_filter_on() {
+    return !request()->session()->has('filter.archived') ||
+        request()->session()->get('filter.archived');
 }
 
-function is_archived_only_filter_on(){
-    return isset($_SESSION['filter']['archived_only']) &&
-                $_SESSION['filter']['archived_only'];
+function is_archived_only_filter_on() {
+    return request()->session()->has('filter.archived_only') &&
+            request()->session()->get('filter.archived_only');
 }
-
-function storage_path($append = "")
-{
-    return conf('storage_path') . $append;
-}
-
 
 /**
  * Store event for client
@@ -535,88 +396,105 @@ function delete_event($serial_number, $module = '')
     return Event_model::where($where)->delete();
 }
 
-// Truncate string
-function truncate_string($string, $limit = 100, $pad = "...")
-{
-    if (strlen($string) <= $limit) {
-        return $string;
-    }
-
-    return substr($string, 0, $limit - strlen($pad)) . $pad;
-}
-
-// Create a singleton moduleObj
-function getMrModuleObj()
-{
-    static $moduleObj;
-
-    if( ! $moduleObj){
-      $moduleObj = new Modules;
-    }
-
-    return $moduleObj;
-}
-
-// Create a singleton dashboard
-function getDashboard()
-{
-    static $dashboardObj;
-
-    if( ! $dashboardObj){
-      $dashboardObj = new Dashboard(conf('dashboard'));
-    }
-
-    return $dashboardObj;
-}
-
-// Generate csrf token and store in session
-function getCSRF()
-{
-    return $_SESSION['csrf_token'];
-}
-
-
 /**
- * Generate a more truly "random" alpha-numeric string.
+ * Truncate a string to a maximum length
  *
- * @param  int  $length
+ * @deprecated replaced by Str::limit
+ * @param $string
+ * @param int $limit
+ * @param string $pad
  * @return string
  */
-function random($length = 16)
+function truncate_string($string, $limit = 100, $pad = "...")
 {
-    $string = '';
-
-    while (($len = strlen($string)) < $length) {
-        $size = $length - $len;
-
-        $bytes = random_bytes($size);
-
-        $string .= substr(str_replace(['/', '+', '='], '', base64_encode($bytes)), 0, $size);
-    }
-
-    return $string;
+    return Str::limit($string, $limit, $pad);
 }
+
+/**
+ * Backwards compatible wrapper to retrieve Modules singleton from the DI container.
+ *
+ * @deprecated Use Laravel Dependency Injection if possible
+ * @return munkireport\lib\Modules
+ */
+function getMrModuleObj()
+{
+    return app(Modules::class);
+}
+
+/**
+ * Backwards compatible wrapper to retrieve Dashboard singleton from the DI container.
+ *
+ * @deprecated Use Laravel Dependency Injection if possible
+ * @return munkireport\lib\Dashboard
+ */
+function getDashboard()
+{
+    return app(Dashboard::class);
+}
+
+/**
+ * Backwards compatible method to get the CSRF token.
+ *
+ * Wrapper for Laravel's `csrf_token()` helper.
+ *
+ * @return string
+ */
+function getCSRF()
+{
+    return csrf_token();
+}
+
 
 function jsonError($msg = '', $status_code = 400, $exit = true)
 {
     jsonView(['error' => $msg], $status_code, $exit);
 }
 
-
-function jsonView($msg = '', $status_code = 200, $exit = false)
+/**
+ * @param string $msg The message body which will be encoded as JSON
+ * @param int $status_code The status code that should be sent in the response body AND header
+ * @param bool $exit If true, exit right after emitting response.
+ * @param bool $return If true, return response object rather than emitting response (For Laravel Controllers)
+ * @return \Illuminate\Http\JsonResponse|object
+ */
+function jsonView($msg = '', $status_code = 200, $exit = false, $return = false)
 {
+    $response = response()->json($msg)->setStatusCode($status_code);
 
-    // Check for error, adjust status code if necessary
-    if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200){
-        $status_code = 400;
+    if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200) {
+        $response = $response->setStatusCode(400);
     }
 
-    view('json', ['msg' => $msg, 'status_code' => $status_code]);
-    
+
+
+    // Check for error, adjust status code if necessary
+//    if(is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200){
+//        $status_code = 400;
+//    }
+//
+//    mr_view('json', ['msg' => $msg, 'status_code' => $status_code]);
+
+    if ($return) {
+        return $response;
+    } else {
+        $response->send();
+    }
+
     if ($exit) exit;
+
 }
 
-function view($file = '', $vars = '', $view_path = '')
+/**
+ * Render and emit a KISSMVC style View.
+ *
+ * @depreacted You should try to use the Laravel view() helper instead, which still uses KISSMVC view for any file not ending in
+ * .blade.php
+ *
+ * @param string $file
+ * @param string $vars
+ * @param string $view_path
+ */
+function mr_view($file = '', $vars = '', $view_path = '')
 {
     $obj = new View();
     $obj->view($file, $vars, $view_path);

@@ -23,7 +23,13 @@ local/certs/*.crt
 local/certs/*.key
 local/module_configs/*.yml
 local/modules/*
+local/views/widgets/*
 
 .php_cs.cache
 composer
 storage/framework/down
+node_modules
+
+.phpunit.result.cache
+storage/oauth-private.key
+storage/oauth-public.key

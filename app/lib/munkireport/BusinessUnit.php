@@ -4,7 +4,7 @@ namespace munkireport\lib;
 
 use munkireport\models\Business_unit as BuModel;
 use munkireport\models\Machine_group;
-
+use Illuminate\Support\Str;
 
 class BusinessUnit
 {
@@ -78,7 +78,7 @@ class BusinessUnit
             'id' => '',
             'groupid' => $newgroup,
             'property' => 'key',
-            'value' => get_guid()));
+            'value' => (string)Str::uuid()));
         $mg->save();
 
         return $newgroup;
@@ -111,7 +111,7 @@ class BusinessUnit
 
         foreach ($post_array as $property => $val) {
 
-            if (is_scalar($val)) {
+            if (! is_array($val)) {
                 continue;
             }
 

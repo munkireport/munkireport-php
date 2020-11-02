@@ -4,6 +4,13 @@ namespace munkireport\models;
 
 use munkireport\models\MRModel as Eloquent;
 
+/**
+ * Class Hash
+ *
+ * To be replaced by MR\Hash
+ *
+ * @package munkireport\models
+ */
 class Hash extends Eloquent
 {
     protected $table = 'hash';

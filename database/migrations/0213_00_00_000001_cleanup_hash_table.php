@@ -6,6 +6,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class CleanupHashTable extends Migration {
 
@@ -16,7 +18,6 @@ class CleanupHashTable extends Migration {
 
     public function up() {
         $legacyVersion = $this->getLegacyModelSchemaVersion('hash');
-        $capsule = new Capsule();
 
         if ($legacyVersion !== null && $legacyVersion < static::$legacySchemaVersion) {
             $rename_list = array(
@@ -33,7 +34,7 @@ class CleanupHashTable extends Migration {
             );
 
             foreach ($rename_list as $from => $to) {
-                $capsule::table('hash')
+                DB::table('hash')
                     ->where('name', '=', $from)
                     ->update(Array('name' => $to));
             }
