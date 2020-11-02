@@ -6,7 +6,7 @@ use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\D
 use MR\Kiss\View;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '6.0.0.4224';
+$GLOBALS['version'] = '6.0.0.4384';
 
 // Return version without commit count
 function get_version()
