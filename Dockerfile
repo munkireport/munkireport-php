@@ -21,6 +21,7 @@ RUN arch="$(dpkg --print-architecture)" && args="--with-libdir=lib/x86_64-linux-
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
+
 ENV SITENAME MunkiReport
 ENV MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
 ENV INDEX_PAGE ""
