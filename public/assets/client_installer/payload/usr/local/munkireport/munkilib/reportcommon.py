@@ -550,7 +550,19 @@ def getOsVersion(only_major_minor=True, as_tuple=False):
       only_major_minor: Boolean. If True, only include major/minor versions.
       as_tuple: Boolean. If True, return a tuple of ints, otherwise a string.
     """
-    os_version_tuple = platform.mac_ver()[0].split(".")
+    os.environ["SYSTEM_VERSION_COMPAT"] = '0'
+    cmd = ["/usr/bin/sw_vers -productVersion"]
+    proc = subprocess.Popen(
+        cmd,
+        shell=True,
+        bufsize=-1,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    (output, unused_error) = proc.communicate()
+    output = output.strip()
+    os_version_tuple = output.split(".")
     if only_major_minor:
         os_version_tuple = os_version_tuple[0:2]
     if as_tuple:
