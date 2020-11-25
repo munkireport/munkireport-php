@@ -23,7 +23,6 @@
         "doctrine/dbal": "~2.5",
         "defuse/php-encryption": "^2.1",
         "vlucas/phpdotenv": "^4.0",
-        "wikimedia/composer-merge-plugin": "dev-master",
         "munkireport/ard": "^3.0",
         "munkireport/reportdata": "^3.0",
         "munkireport/machine": "^6.0",
