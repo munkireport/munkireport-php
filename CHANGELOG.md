@@ -1,4 +1,54 @@
-### [5.6.3](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (July 22, 2020) 
+### [5.6.4](https://github.com/munkireport/munkireport-php/compare/v5.6.3...wip) (Unreleased)
+
+Mostly Big Sur adjustments.
+
+MODULE UPDATES
+  - munkireport/backup2go (v1.2 => v1.3)
+  - munkireport/caching (v1.5 => v1.6)
+  - munkireport/filevault_status (v1.6 => v1.7)
+  - munkireport/machine (v6.6 => v6.8)
+  - munkireport/network (v3.1 => v3.2)
+  - munkireport/security (v2.1 => v2.2)
+  - munkireport/sophos (v1.4 => v1.5)
+  - munkireport/supported_os (v2.1 => v2.3)
+  - munkireport/users (V1.7 => v1.8)
+  - munkireport/warranty (v4.4 => v4.5)
+
+DEPENDENCY UPDATES
+  - Removing wikimedia/composer-merge-plugin
+  - Removing symfony/polyfill-php70
+  - symfony/polyfill-php80 (v1.18.0 => v1.20.0)
+  - symfony/polyfill-mbstring (v1.18.0 => v1.20.0)
+  - symfony/var-dumper (v5.1.2 => v5.1.8)
+  - tightenco/collect (v7.19.1 => v8.15.0)
+  - adldap2/adldap2 (v10.3.0 => v10.3.1)
+  - paragonie/random_compat (v9.99.99 => v9.99.100)
+  - doctrine/event-manager (1.1.0 => 1.1.1)
+  - doctrine/dbal (2.10.2 => 2.12.1)
+  - Installing fzaninotto/faker (v1.9.1)
+  - symfony/polyfill-php72 (v1.18.0 => v1.20.0)
+  - symfony/polyfill-intl-normalizer (v1.18.0 => v1.20.0)
+  - symfony/polyfill-intl-idn (v1.18.0 => v1.20.0)
+  - guzzlehttp/psr7 (1.6.1 => 1.7.0)
+  - guzzlehttp/promises (v1.3.1 => 1.4.0)
+  - symfony/process (v4.4.10 => v4.4.16)
+  - symfony/service-contracts (v2.1.3 => v2.2.0)
+  - symfony/polyfill-php73 (v1.18.0 => v1.20.0)
+  - symfony/console (v4.4.10 => v4.4.16)
+  - symfony/translation-contracts (v2.1.3 => v2.3.0)
+  - symfony/translation (v4.4.10 => v4.4.16)
+  - nesbot/carbon (2.36.1 => 2.41.5)
+  - symfony/finder (v4.4.10 => v4.4.16)
+  - Installing league/mime-type-detection (1.5.1)
+  - league/flysystem (1.0.69 => 1.1.3)
+  - monolog/monolog (1.25.4 => 1.25.5)
+  - robrichards/xmlseclibs (3.1.0 => 3.1.1)
+  - rodneyrehm/plist (v2.0.1 => v2.0.2)
+  - Installing squizlabs/php_codesniffer (2.9.2)
+  - symfony/polyfill-ctype (v1.18.0 => v1.20.0)
+  - symfony/yaml (v3.4.42 => v3.4.46)
+
+### [5.6.3](https://github.com/munkireport/munkireport-php/compare/v5.6.2...v5.6.3) (July 22, 2020) 
 
 Security release
 
@@ -58,7 +108,7 @@ DEPENDENCY UPDATES
   - tightenco/collect (v7.12.0 => v7.19.1)
   - doctrine/cache (1.10.1 => 1.10.2)
 
-### [5.6.2](https://github.com/munkireport/munkireport-php/compare/v5.6.1...wip) (June 17, 2020) 
+### [5.6.2](https://github.com/munkireport/munkireport-php/compare/v5.6.1...v5.6.2) (June 17, 2020) 
 
 Another bugfix release
 
@@ -68,7 +118,7 @@ FIXES
 DEPENDENCY UPDATES
   - guzzlehttp/guzzle (6.5.4 => 6.5.5)
 
-### [5.6.1](https://github.com/munkireport/munkireport-php/compare/v5.6.0...wip) (June 15, 2020) 
+### [5.6.1](https://github.com/munkireport/munkireport-php/compare/v5.6.0...v5.6.1) (June 15, 2020) 
 
 Small release to fix an issue with the Docker container
 
@@ -87,7 +137,7 @@ DEPENDENCY UPDATES
   - symfony/var-dumper (v5.1.0 => v5.1.2)
 
 
-### [5.6.0](https://github.com/munkireport/munkireport-php/compare/v5.5.1...wip) (June 10, 2020) 🙏
+### [5.6.0](https://github.com/munkireport/munkireport-php/compare/v5.5.1...v5.6.0) (June 10, 2020) 🙏
 
 MDOYVR 2020 Release
 
@@ -127,7 +177,7 @@ DEPENDENCY UPDATES
   - illuminate/events (v5.8.36)
 
 
-### [5.5.1](https://github.com/munkireport/munkireport-php/compare/v5.5.0...wip) (May 28, 2020) 
+### [5.5.1](https://github.com/munkireport/munkireport-php/compare/v5.5.0...v5.5.1) (May 28, 2020) 
 
 Quick bugfix release with two module updates.
 
@@ -146,7 +196,7 @@ DEPENDENCY UPDATES
   - symfony/translation-contracts (v2.0.1 => v2.1.2)
 
 
-### [5.5.0](https://github.com/munkireport/munkireport-php/compare/v5.4.1...wip) (May 28, 2020) 🛍️
+### [5.5.0](https://github.com/munkireport/munkireport-php/compare/v5.4.1...v5.5.0) (May 28, 2020) 🛍️
 
 Lots of changes: a new module marketplace to discover modules (@tuxudo and @joncrain)
 The `localadmin` module is retired in favour of the more versatile `users` module.
@@ -208,7 +258,7 @@ DEPENDENCY UPDATES
 - symfony/polyfill-php73 (v1.15.0 => v1.17.0)
 
 
-### [5.4.1](https://github.com/munkireport/munkireport-php/compare/v5.4.0...wip) (April 30, 2020) 🧽
+### [5.4.1](https://github.com/munkireport/munkireport-php/compare/v5.4.0...v5.4.1) (April 30, 2020) 🧽
 
 Small bugfix release to remedy some issues. Also the deploystudio and gsx modules got removed from the core modules.
 
