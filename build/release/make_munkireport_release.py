@@ -159,7 +159,7 @@ def main():
     munkireport_root = tempfile.mkdtemp('', 'mr_release_')
     changelog_path = os.path.join(munkireport_root, 'CHANGELOG.md')
 
-    # clone Git master
+    # clone Git main
     run_command(
         ['git', 'clone', #'--depth',  '1',
          'https://github.com/%s/%s' % (publish_user, publish_repo),
@@ -262,9 +262,9 @@ def main():
          'Bumping to v%s for development.' % next_version])
     if not opts.dry_run:
         run_command(['git', 'push', 'origin', branch])
-        run_command(['git', 'checkout', 'master'])
+        run_command(['git', 'checkout', 'main'])
         run_command(['git', 'merge', tag_name])
-        run_command(['git', 'push', 'origin', 'master'])
+        run_command(['git', 'push', 'origin', 'main'])
     else:
         print ("Ended dry-run mode. Final state of the munkireport-php repo can be "
                "found at: %s" % munkireport_root)
