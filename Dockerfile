@@ -29,7 +29,7 @@ COPY . $APP_DIR
 
 WORKDIR $APP_DIR
 
-RUN cp "php/upload.ini "$PHP_INI_DIR/conf.d/"
+RUN cp "php/upload.ini" "$PHP_INI_DIR/conf.d/"
 
 RUN ./build/setup_composer.sh
 
