@@ -1,5 +1,7 @@
 FROM php:7.4-apache
 
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
 ENV APP_DIR /var/munkireport
 
 RUN apt-get update && \
@@ -26,6 +28,8 @@ ENV AUTH_METHODS NOAUTH
 COPY . $APP_DIR
 
 WORKDIR $APP_DIR
+
+RUN cp "php/upload.ini" "$PHP_INI_DIR/conf.d/"
 
 RUN ./build/setup_composer.sh
 
