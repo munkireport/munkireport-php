@@ -2,9 +2,11 @@ name: MunkiReport PHP
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches:
+      - wip
   pull_request:
-    branches: [ $default-branch ]
+    branches:
+      - wip
 
 jobs:
   build:
