@@ -40,6 +40,7 @@
             <link rel="stylesheet" href="{{ asset('assets/css/' . $stylesheet) }}" />
         @endforeach
     @endisset
+    @stack('stylesheets')
 
     <script>
       var baseUrl = "{{ conf('subdirectory') }}",
@@ -68,6 +69,7 @@
         @endforeach
     @endisset
 
+    @stack('head_scripts')
 </head>
 
 <body>
@@ -256,7 +258,7 @@ $dashboard = getDashboard()->loadAll();
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user"></i> {{ \Auth::user()['email'] }}
+                        <i class="fa fa-user"></i> {{ Auth::user()['email'] }}
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
@@ -395,5 +397,6 @@ $dashboard = getDashboard()->loadAll();
   });
 </script>
 
+@stack('scripts')
 </body>
 </html>
