@@ -1,5 +1,7 @@
 <?php
+
 namespace munkireport\lib;
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 trait LegacyMigrationSupport
@@ -8,20 +10,16 @@ trait LegacyMigrationSupport
 
     protected function connectDB()
     {
-        if(!$this->capsule){
+        if (!$this->capsule) {
+            // Capsule is now shimmed via shims/Capsule.php to return the schema builder instance already instantiated
+            // by Laravel, so most method calls don't do anything.
             $this->capsule = new Capsule;
+//            $defaultConnectionName = config('database.default');
+//            $connection = config("database.connections.${defaultConnectionName}");
+//            $this->capsule->addConnection($connection);
 
-            if( ! $connection = conf('connection')){
-                die('Database connection not configured');
-            }
-
-            if(has_mysql_db($connection)){
-              add_mysql_opts($connection);
-            }
-
-            $this->capsule->addConnection($connection);
-            $this->capsule->setAsGlobal();
-            $this->capsule->bootEloquent();
+//            $this->capsule->setAsGlobal();
+//            $this->capsule->bootEloquent();
         }
 
         return $this->capsule;
@@ -35,9 +33,13 @@ trait LegacyMigrationSupport
      * @return integer The current version of the legacy table, or null if no such migration exists (model is either
      *  older than v2 migrations or newer than v3)
      */
-    function getLegacyModelSchemaVersion($tableName) {
+    function getLegacyModelSchemaVersion($tableName)
+    {
         $capsule = $this->connectDB();
-        if (!$capsule::schema()->hasTable('migration')) return null;
+
+        if (!$capsule::schema()->hasTable('migration')) {
+            return null;
+        }
 
         $currentVersion = $capsule::table('migration')
             ->where('table_name', '=', $tableName)
@@ -50,21 +52,24 @@ trait LegacyMigrationSupport
         }
     }
 
-    function setLegacyModelSchemaVersion($tableName, $version) {
+    function setLegacyModelSchemaVersion($tableName, $version)
+    {
         $capsule = $this->connectDB();
         $capsule::table('migration')
             ->where('table_name', $tableName)
             ->update(['version' => $version]);
     }
 
-    function markLegacyMigrationRan() {
+    function markLegacyMigrationRan()
+    {
         $capsule = $this->connectDB();
         $capsule::table('migration')
             ->where('table_name', static::$legacyTableName)
             ->update(['version' => static::$legacySchemaVersion]);
     }
 
-    function markLegacyRollbackRan() {
+    function markLegacyRollbackRan()
+    {
         $capsule = $this->connectDB();
         $capsule::table('migration')
             ->where('table_name', static::$legacyTableName)

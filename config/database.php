@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('CONNECTION_DRIVER', 'sqlite'),
+    'default' => env('DB_CONNECTION', env('CONNECTION_DRIVER', 'mysql')),
 
     /*
     |--------------------------------------------------------------------------
@@ -47,50 +47,59 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('CONNECTION_HOST', env('DB_HOST', '127.0.0.1')),
-            'port' => env('CONNECTION_PORT', env('DB_PORT', '3306')),
-            'database' => env('CONNECTION_DATABASE', env('DB_DATABASE', 'munkireport')),
-            'username' => env('CONNECTION_USERNAME', env('DB_USERNAME', 'munkireport')),
-            'password' => env('CONNECTION_PASSWORD', env('DB_PASSWORD', '')),
+            'host' => env('DB_HOST', env('CONNECTION_HOST', '127.0.0.1')),
+            'port' => env('DB_PORT', env('CONNECTION_PORT', '3306')),
+            'database' => env('DB_DATABASE', env('CONNECTION_DATABASE', 'munkireport')),
+            'username' => env('DB_USERNAME', env('CONNECTION_USERNAME', 'munkireport')),
+            'password' => env('DB_PASSWORD', env('CONNECTION_PASSWORD', '')),
             'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+            'charset' => env('CONNECTION_CHARSET', 'utf8mb4'),
+            'collation' => env('CONNECTION_COLLATION', 'utf8mb4_unicode_ci'),
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
-            'engine' => null,
+            'engine' => env('CONNECTION_ENGINE'),
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                // PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                // From site_helper.php:add_mysql_opts. This was always run if mysql was selected
+                // \PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation']),
+                // PDO::ATTR_EMULATE_PREPARES => true,
+                PDO::MYSQL_ATTR_SSL_KEY => env('CONNECTION_SSL_KEY'),
+                PDO::MYSQL_ATTR_SSL_CERT => env('CONNECTION_SSL_CERT'),
+                PDO::MYSQL_ATTR_SSL_CA => env('CONNECTION_SSL_CA'),
+                PDO::MYSQL_ATTR_SSL_CAPATH => env('CONNECTION_SSL_CAPATH'),
+                PDO::MYSQL_ATTR_SSL_CIPHER => env('CONNECTION_SSL_CIPHER'),
             ]) : [],
         ],
 
-        'pgsql' => [
-            'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('CONNECTION_HOST', '127.0.0.1'),
-            'port' => env('CONNECTION_PORT', '5432'),
-            'database' => env('CONNECTION_DATABASE', 'munkireport'),
-            'username' => env('CONNECTION_USERNAME', 'munkireport'),
-            'password' => env('CONNECTION_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'schema' => 'public',
-            'sslmode' => 'prefer',
-        ],
-
-        'sqlsrv' => [
-            'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-            'host' => env('CONNECTION_HOST', 'localhost'),
-            'port' => env('CONNECTION_PORT', '1433'),
-            'database' => env('CONNECTION_DATABASE', 'munkireport'),
-            'username' => env('CONNECTION_USERNAME', 'munkireport'),
-            'password' => env('CONNECTION_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-        ],
+        // Not supported by MunkiReport
+//        'pgsql' => [
+//            'driver' => 'pgsql',
+//            'url' => env('DATABASE_URL'),
+//            'host' => env('DB_HOST', env('CONNECTION_HOST', '127.0.0.1')),
+//            'port' => env('DB_PORT', env('CONNECTION_PORT', '5432')),
+//            'database' => env('DB_DATABASE', env('CONNECTION_DATABASE', 'munkireport')),
+//            'username' => env('DB_USERNAME', env('CONNECTION_USERNAME', 'munkireport')),
+//            'password' => env('DB_PASSWORD', env('CONNECTION_PASSWORD', '')),
+//            'charset' => 'utf8',
+//            'prefix' => '',
+//            'prefix_indexes' => true,
+//            'schema' => 'public',
+//            'sslmode' => 'prefer',
+//        ],
+//
+//        'sqlsrv' => [
+//            'driver' => 'sqlsrv',
+//            'url' => env('DATABASE_URL'),
+//            'host' => env('DB_HOST', env('CONNECTION_HOST', 'localhost')),
+//            'port' => env('DB_PORT', env('CONNECTION_PORT', '1433')),
+//            'database' => env('DB_DATABASE', env('CONNECTION_DATABASE', 'munkireport')),
+//            'username' => env('DB_USERNAME', env('CONNECTION_USERNAME', 'munkireport')),
+//            'password' => env('DB_PASSWORD', env('CONNECTION_PASSWORD', '')),
+//            'charset' => 'utf8',
+//            'prefix' => '',
+//            'prefix_indexes' => true,
+//        ],
 
     ],
 
