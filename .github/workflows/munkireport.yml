@@ -59,7 +59,7 @@ jobs:
           tools: composer:v2, phpunit
       - uses: actions/checkout@v2
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+        run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v2
