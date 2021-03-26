@@ -42,7 +42,7 @@ jobs:
       mariadb:
         image: mariadb:10.5
         env:
-          MYSQL_RANDOM_ROOT_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: munkireport
           MYSQL_DATABASE: munkireport
           MYSQL_USER: munkireport
           MYSQL_PASSWORD: munkireport
@@ -58,8 +58,8 @@ jobs:
           coverage: xdebug
           tools: composer:v2, phpunit
       - uses: actions/checkout@v2
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+#      - name: Copy .env
+#        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v2
@@ -91,6 +91,6 @@ jobs:
           CONNECTION_DRIVER: mysql
           DB_HOST: localhost
           DB_PORT: ${{ job.services.mariadb.ports[3306] }}
-          DB_USERNAME: munkireport
+          DB_USERNAME: root
           DB_PASSWORD: munkireport
 
