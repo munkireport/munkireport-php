@@ -88,9 +88,13 @@ jobs:
       - name: Run Database Migrations
         run: php please migrate
         env:
+          # old-style
           CONNECTION_DRIVER: mysql
+          # new-style
+          DB_CONNECTION: mysql
           DB_HOST: localhost
           DB_PORT: ${{ job.services.mariadb.ports[3306] }}
           DB_USERNAME: root
           DB_PASSWORD: munkireport
+          DB_DATABASE: munkireport
 
