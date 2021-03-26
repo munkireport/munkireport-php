@@ -2,12 +2,26 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\AuthorizationTestCase;
+use Machine_model;
 
-class ArchiverControllerTest extends TestCase
+class ArchiverControllerTest extends AuthorizationTestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+    }
+
+    protected function tearDown(): void
+    {
+
+        parent::tearDown();
+    }
 
     /**
      *
@@ -37,22 +51,46 @@ class ArchiverControllerTest extends TestCase
 
     public function testAdminCanArchiveMachine()
     {
-
+        $machine = factory(Machine_model::class)->create();
+        $response = $this->actingAs($this->adminUser)
+                         ->post("/archiver/update_status/${machine['serial_number']}", [
+                             'status' => 1,
+                         ]);
+        $response->assertStatus(200);
+        $response->assertJson(['updated' => 1]);
     }
 
     public function testManagerCanArchiveMachine()
     {
-
+        $machine = factory(Machine_model::class)->create();
+        $response = $this->actingAs($this->managerUser)
+            ->post("/archiver/update_status/${machine['serial_number']}", [
+                'status' => 1,
+            ]);
+        $response->assertStatus(200);
+        $response->assertJson(['updated' => 1]);
     }
 
     public function testArchiverCanArchiveMachine()
     {
-
+        $machine = factory(Machine_model::class)->create();
+        $response = $this->actingAs($this->archiverUser)
+            ->post("/archiver/update_status/${machine['serial_number']}", [
+                'status' => 1,
+            ]);
+        $response->assertStatus(200);
+        $response->assertJson(['updated' => 1]);
     }
 
     public function testUserCannotArchiveMachine()
     {
-
+        $machine = factory(Machine_model::class)->create();
+        $response = $this->actingAs($this->user)
+            ->post("/archiver/update_status/${machine['serial_number']}", [
+                'status' => 1,
+            ]);
+        $response->assertStatus(200);
+        $response->assertJson(['updated' => 1]);
     }
 
     // Business Units Configured: TRUE

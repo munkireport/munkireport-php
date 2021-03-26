@@ -60,8 +60,12 @@ class ClientsControllerTest extends TestCase
 
     // User cannot see archive button when BU are disabled
 
-    public function testUserCannotSeeArchiveButton()
+    public function testDetailUserCannotSeeArchiveButton()
     {
+        $machine = factory(Machine_model::class)->create();
+        $response = $this->actingAs($this->user)
+            ->get("/clients/detail/${machine['serial_number']}");
 
+        $response->assertDontSeeText('Archive');
     }
 }
