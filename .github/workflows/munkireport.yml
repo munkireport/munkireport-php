@@ -47,7 +47,7 @@ jobs:
           MYSQL_USER: munkireport
           MYSQL_PASSWORD: munkireport
         ports:
-          - 3306:3306
+          - 3306/tcp
 
 
     steps:
@@ -89,8 +89,8 @@ jobs:
         run: php please migrate
         env:
           CONNECTION_DRIVER: mysql
-          DB_HOST: mariadb
-          DB_PORT: 3306
+          DB_HOST: localhost
+          DB_PORT: ${{ job.services.mariadb.ports[3306] }}
           DB_USERNAME: munkireport
           DB_PASSWORD: munkireport
 
