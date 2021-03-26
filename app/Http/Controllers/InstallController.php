@@ -114,6 +114,9 @@ class InstallController extends Controller
         // new content modified, so output content
         echo $content;
         exit;
+
+//        $contents = view('install.install')->with($data);
+//        return response($contents)->header('Content-Type', 'text/plain;charset=UTF-8');
     }
 
     public function plist()
