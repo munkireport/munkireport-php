@@ -14,11 +14,17 @@ class ClientsControllerTest extends TestCase
     use RefreshDatabase;
 
     protected $user;
+    protected $adminUser;
+    protected $managerUser;
+    protected $archiverUser;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->user = factory(User::class)->create();
+        $this->adminUser = factory(User::class, [
+            "" => "",
+        ])->create();
     }
 
     protected function tearDown(): void
@@ -49,5 +55,13 @@ class ClientsControllerTest extends TestCase
             ->get("/clients/detail/nonexistentserial");
 
         $response->assertSeeText('errors.client_nonexistent');
+    }
+
+
+    // User cannot see archive button when BU are disabled
+
+    public function testUserCannotSeeArchiveButton()
+    {
+
     }
 }

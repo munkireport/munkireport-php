@@ -32,4 +32,30 @@ class ArchiverControllerTest extends TestCase
     {
         $this->markTestIncomplete();
     }
+
+    // Business Units Configured: FALSE
+
+    public function testAdminCanArchiveMachine()
+    {
+
+    }
+
+    public function testManagerCanArchiveMachine()
+    {
+
+    }
+
+    public function testArchiverCanArchiveMachine()
+    {
+
+    }
+
+    public function testUserCannotArchiveMachine()
+    {
+
+    }
+
+    // Business Units Configured: TRUE
+
+
 }

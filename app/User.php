@@ -69,12 +69,16 @@ class User extends Authenticatable implements LegacyUser
     //// LegacyUser Interface for MunkiReport
 
     /**
-     * @todo
+     * Returns whether this user is an Administrator or not (for backwards compatibility).
+     *
+     * The role of a user is decided at login time by the LoginRoleDecider Auth Listener and then saved to
+     * the database.
+     *
      * @return bool
      */
     public function isAdmin(): bool
     {
-        return true;
+        return $this->role === 'admin';
     }
 
     /**
@@ -83,7 +87,7 @@ class User extends Authenticatable implements LegacyUser
      */
     public function isManager(): bool
     {
-        return true;
+        return $this->role === 'manager';
     }
 
     /**
@@ -92,16 +96,20 @@ class User extends Authenticatable implements LegacyUser
      */
     public function isArchiver(): bool
     {
-        return true;
+        return $this->role === 'archiver';
     }
 
     /**
-     * @todo
+     * Returns whether this user can archive machines or not (for backwards compatibility).
+     *
+     * Regardless of whether Business Units are disabled/enabled:
+     * - admins, managers, and archivers may archive, but regular users may not.
+     *
      * @return bool
      */
     public function canArchive(): bool
     {
-        return true;
+        return in_array($this->role, ['admin', 'manager', 'archiver']);
     }
 
     /**
@@ -110,7 +118,11 @@ class User extends Authenticatable implements LegacyUser
      */
     public function canAccessMachineGroup($id): bool
     {
-        return true;
+        if ($this->role === 'admin') return true; // Admins always have access to everything
+
+        // TODO: BU membership test
+
+        return false;
     }
 
     /**
