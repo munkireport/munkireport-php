@@ -94,7 +94,8 @@ class FakeCapsuleManager
      */
     public static function schema($connection = null)
     {
-        return app(\Illuminate\Database\Schema\Builder::class);
+        return app('db')->getSchemaBuilder();
+        // return app(\Illuminate\Database\Schema\Builder::class);
 //        return static::$instance->connection($connection)->getSchemaBuilder();
     }
 
