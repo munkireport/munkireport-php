@@ -16,8 +16,8 @@ class CreateBusinessUnitUsers extends Migration
         Schema::create('business_unit_users', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('business_unit_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('business_unit_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('role'); // , ['admin', 'manager', 'user', 'archiver', 'nobody']
             $table->timestamps();
 

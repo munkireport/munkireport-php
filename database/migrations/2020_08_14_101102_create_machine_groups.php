@@ -15,7 +15,7 @@ class CreateMachineGroups extends Migration
     {
         Schema::create('machine_groups', function (Blueprint $table) {
             $table->id();
-            $table->integer('business_unit_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('business_unit_id')->nullable();
             $table->string('name')->unique();
             $table->uuid('key')->unique();
             $table->timestamps();
