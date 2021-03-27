@@ -1,3 +1,60 @@
+### [5.6.6](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (Unreleased)
+
+### [5.6.5](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (March 27, 2021) 🍖
+
+Another maintenance release, updating dependencies and re-adding the composer-merge plugin.
+
+MODULE UPDATES
+- munkireport/applications (v2.3 => v2.6)
+- munkireport/bluetooth (v2.3 => v2.4)
+- munkireport/devtools (v1.3 => v1.5)
+- munkireport/gpu (v1.3 => v1.4)
+- munkireport/machine (v6.8 => v6.9)
+- munkireport/power (v1.4 => v1.6)
+- munkireport/softwareupdate (v1.6 => v1.7)
+- munkireport/sophos (v1.5 => v1.6)
+- munkireport/users (v1.8 => v1.9)
+
+DEPENDENCY UPDATES
+- Added wikimedia/composer-merge-plugin
+- symfony/polyfill-php80 (v1.20.0 => v1.22.1)
+- symfony/polyfill-mbstring (v1.20.0 => v1.22.1)
+- symfony/var-dumper (v5.1.8 => v5.2.5)
+- tightenco/collect (v8.15.0 => v8.19.0)
+- psr/container (1.0.0 => 1.1.1)
+- illuminate/contracts (v5.8.36 => v7.30.4)
+- adldap2/adldap2 (v10.3.1 => v10.3.2)
+- Added fakerphp/faker (v1.13.0)
+- symfony/polyfill-php72 (v1.20.0 => v1.22.1)
+- symfony/polyfill-intl-normalizer (v1.20.0 => v1.22.1)
+- symfony/polyfill-intl-idn (v1.20.0 => v1.22.1)
+- guzzlehttp/psr7 (1.7.0 => 1.8.1)
+- guzzlehttp/promises (1.4.0 => 1.4.1)
+- symfony/process (v4.4.16 => v5.2.4)
+- Added symfony/polyfill-intl-grapheme (v1.22.1)
+- symfony/polyfill-ctype (v1.20.0 => v1.22.1)
+- Added symfony/string (v5.2.4)
+- symfony/polyfill-php73 (v1.20.0 => v1.22.1)
+- symfony/console (v4.4.16 => v5.2.5)
+- Added voku/portable-ascii (1.5.6)
+- symfony/translation (v4.4.16 => v4.4.20)
+- nesbot/carbon (2.41.5 => 2.46.0)
+- doctrine/inflector (1.4.3 => 2.0.3)
+- illuminate/support (v5.8.36 => v7.30.4)
+- illuminate/console (v5.8.36 => v7.30.4)
+- illuminate/container (v5.8.36 => v7.30.4)
+- illuminate/database (v5.8.36 => v7.30.4)
+- illuminate/events (v5.8.36 => v7.30.4)
+- symfony/finder (v4.4.16 => v5.2.4)
+- illuminate/filesystem (v5.8.36 => v7.30.4)
+- league/mime-type-detection (1.5.1 => 1.7.0)
+- monolog/monolog (1.25.5 => 1.26.0)
+- onelogin/php-saml (3.4.1 => 3.6.1)
+- Added squizlabs/php_codesniffer (2.9.2)
+- symfony/yaml (v3.4.46 => v3.4.47)
+- vlucas/phpdotenv (v4.1.8 => v4.2.0)
+
+
 ### [5.8.0](https://github.com/munkireport/munkireport-php/compare/v5.8.0...5.x) (June 20, 2023) 🐝
 
 MDOYVR 2023 Release: MunkiReport is now Python 3 based
