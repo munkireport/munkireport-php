@@ -4,8 +4,7 @@
     "type": "project",
     "license": "MIT",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.5",
-        "fzaninotto/faker": "^1.9"
+        "squizlabs/php_codesniffer": "^2.5"
     },
     "config": {
         "optimize-autoloader": true
@@ -16,10 +15,10 @@
         "wikimedia/composer-merge-plugin": "dev-master",
         "guzzlehttp/guzzle": "~6.0",
         "hautelook/phpass": "^1.1",
-        "illuminate/console": "~8.0",
-        "illuminate/database": "^8.0",
-        "illuminate/filesystem": "~8.0",
-        "illuminate/events": "~8.0",
+        "illuminate/console": "~7.0",
+        "illuminate/database": "^7.0",
+        "illuminate/filesystem": "~7.0",
+        "illuminate/events": "~7.0",
         "league/flysystem": "~1.0",
         "rodneyrehm/plist": "^2.0",
         "doctrine/dbal": "~2.5",
@@ -89,7 +88,8 @@
         "symfony/yaml": "^3.4",
         "adldap2/adldap2": "^10",
         "onelogin/php-saml": "^3.0",
-        "monolog/monolog": "^1.24"
+        "monolog/monolog": "^1.24",
+        "fakerphp/faker": "^1.13"
     },
     "autoload": {
         "classmap": ["app/Console/Commands/FakerDataStore.php"],
