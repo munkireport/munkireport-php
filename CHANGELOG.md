@@ -1,3 +1,5 @@
+### [5.6.6](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (Unreleased)
+
 ### [5.6.5](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (March 27, 2021) 🍖
 
 Another maintenance release, updating dependencies and re-adding the composer-merge plugin.
