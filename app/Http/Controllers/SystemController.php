@@ -18,13 +18,7 @@ use munkireport\lib\Database;
  */
 class SystemController extends Controller
 {
-    public function __construct()
-    {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-//            Gate::authorize('global');
-        }
-    }
+    // NOTE: do not put Gate:: methods into the constructor, they will run before the gates are fully defined.
 
     //===============================================================
 
@@ -36,6 +30,12 @@ class SystemController extends Controller
      */
     public function DataBaseInfo()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $out = array(
             'db.driver' => '',
             'db.connectable' => false,
@@ -80,6 +80,12 @@ class SystemController extends Controller
      */
     public function phpInfo()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         ob_start();
         phpinfo(11);
         $raw = ob_get_clean();
@@ -110,6 +116,12 @@ class SystemController extends Controller
      */
     public function widgets()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $moduleManager = getMrModuleObj();
         $layoutList = [];
         foreach($moduleManager->loadInfo(true)->getWidgets() as $widget){
@@ -132,6 +144,12 @@ class SystemController extends Controller
      */
     public function status()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
         return view('system.status', $data);
@@ -142,6 +160,11 @@ class SystemController extends Controller
      */
     public function database()
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
         $data['stylesheets'] = array('system/database.css');
