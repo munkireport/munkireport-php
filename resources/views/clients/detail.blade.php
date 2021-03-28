@@ -48,14 +48,14 @@
 
                 <input type="text" class="form-control mr-computer_name_input" readonly>
 
-                <?php if(authorized('archive')): ?>
+                @if (Gate::allows('archive'))
                 <div class="input-group-btn">
                     <button type="button" id="archive_button" class="btn btn-default">
                         <span class="hidden-sm hidden-xs"></span>
                         <i class="fa fa-archive"></i>
                     </button>
                 </div><!-- /btn-group -->
-                <?php endif?>
+                @endif
 
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

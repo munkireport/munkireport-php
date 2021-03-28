@@ -170,7 +170,7 @@ $dashboard = getDashboard()->loadAll();
                 </li>
 
                 <!-- TODO: Admin Check -->
-                @if(true)
+                @if (Gate::allows('global'))
                 <li class="dropdown {{ Route::is('/admin/show') ? " active" : "" }}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-list-alt"></i>
