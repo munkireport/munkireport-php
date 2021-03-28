@@ -210,38 +210,41 @@ function assocToArray($array)
 /**
  * Check if a user is authorized.
  *
+ * @param ?string $what The authorization name to check for, which is a key present in the config
+ *                     _munkireport.authorization. Usually delete_machine, global, or archive.
  *
- *
- * @param string $what The action or item that the user should be authorized to perform. can be optional.
  * @return bool
  */
-function authorized($what)
+function authorized(?string $what = null)
 {
-    if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-        return Auth::check();
-    } else {
+    if (Str::contains(config('auth.methods'), 'NOAUTH')) {
         return true; // NOAUTH is enabled.
+
     }
 
-    // Laravel does CSRF Verification
+    if (!Auth::check()) {
+        return false; // User is not logged in at all
+    }
 
-    // Check for a specific authorization item
-//    if ($what) {
-//        foreach (conf('authorization', array()) as $item => $roles) {
-//            if ($what === $item) {
-//                // Check if there is a matching role
-//                if (in_array($_SESSION['role'], $roles)) {
-//                    return true;
-//                }
-//
-//                // Role not found: unauthorized!
-//                return false;
-//            }
-//        }
-//    }
+    // Laravel does CSRF Verification, so that no longer applies.
 
-    // There is no matching rule, you're authorized!
-//    return true;
+    if ($what !== null) {
+        switch ($what) {
+            case 'global':
+                return Gate::allows('global');
+            case 'delete_machine':
+                return Gate::allows('delete_machine');
+            case 'archive':
+                return Gate::allows('archive');
+            case '': // some modules are silly and pass through an empty string when they mean null
+                return true;
+            default:
+                Log::warning('attempted to check authorization for action: ' . $what . ', which does not exist as a Gate');
+                return false;
+        }
+    } else {
+        return true;
+    }
 }
 
 /**
@@ -250,12 +253,14 @@ function authorized($what)
  * @return boolean TRUE if authorized
  * @author
  **/
-function authorized_for_serial($serial_number)
+function authorized_for_serial(string $serial_number)
 {
     // Make sure the reporting script is authorized
     if (isset($GLOBALS['auth']) && $GLOBALS['auth'] == 'report') {
         return true;
     }
+
+    // TODO: needs new BU membership check
 
 //    $user = new User;
 //    return $user->canAccessMachineGroup(get_machine_group($serial_number));
