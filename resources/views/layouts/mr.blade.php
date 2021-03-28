@@ -169,7 +169,6 @@ $dashboard = getDashboard()->loadAll();
 
                 </li>
 
-                <!-- TODO: Admin Check -->
                 @if (Gate::allows('global'))
                 <li class="dropdown {{ Route::is('/admin/show') ? " active" : "" }}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -254,8 +253,7 @@ $dashboard = getDashboard()->loadAll();
                     </ul>
                 </li>
 
-                <!-- TODO: check for noauth auth mechanism -->
-
+                @if (!Str::contains(config('auth.methods'), 'NOAUTH'))
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user"></i> {{ Auth::user()['email'] }}
@@ -263,6 +261,11 @@ $dashboard = getDashboard()->loadAll();
                     </a>
                     <ul class="dropdown-menu">
                         <li>
+                            <i class="fa fa-group"></i>
+                            Business Unit: {{ Session::get('business_unit', 'N/A') }}
+                        </li>
+                        <li>
+                            <!-- TODO: this must be a form POST -->
                             <a href="{{ url('/logout') }}">
                                 <i class="fa fa-power-off"></i>
                                 <span data-i18n="nav.user.logout"></span>
@@ -270,6 +273,7 @@ $dashboard = getDashboard()->loadAll();
                         </li>
                     </ul>
                 </li>
+                @endif
 
                 @if(config('_munkireport.show_help'))
 

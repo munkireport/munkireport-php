@@ -243,8 +243,6 @@
 						</ul>
 				</li>
 
-                <!-- TODO: check for noauth auth mechanism -->
-
                 <?php if (!Str::contains(config('auth.methods'), 'NOAUTH')): ?>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -252,6 +250,18 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-tag"></i>
+                                Role <?php echo \Auth::user()['role']; ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-group"></i>
+                                Business Unit: <?php echo Session::get('business_unit', 'N/A'); ?>
+                            </a>
+                        </li>
 						<li>
                             <form id="logoutForm" action="<?php echo route('logout'); ?>" method="POST" style="display: none;">
                                 <?php echo csrf_field(); ?>

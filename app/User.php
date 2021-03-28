@@ -7,6 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use MR\Kiss\Contracts\LegacyUser;
 
+use MR\BusinessUnit as LegacyBusinessUnit;
+use MR\MachineGroup as LegacyMachineGroup;
+
+use munkireport\models\Machine_group;
+
 class User extends Authenticatable implements LegacyUser
 {
     use Notifiable;
@@ -113,16 +118,16 @@ class User extends Authenticatable implements LegacyUser
     }
 
     /**
-     * @todo
+     * Backwards compatible function to check whether this User has access to a specific machine_group
+     * by ID.
+     *
      * @return bool
      */
     public function canAccessMachineGroup($id): bool
     {
         if ($this->role === 'admin') return true; // Admins always have access to everything
 
-        // TODO: BU membership test
-
-        return false;
+        return in_array($id, $this->machineGroups());
     }
 
     /**
