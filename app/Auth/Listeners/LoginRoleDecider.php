@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
 use munkireport\models\Business_unit;
+use MR\BusinessUnit as LegacyBusinessUnit;
+use MR\MachineGroup as LegacyMachineGroup;
 
 /**
  * LoginRoleDecider listens for successful logins and then decides, using the same rules that AuthHandler::setSessionProps
@@ -64,10 +66,9 @@ class LoginRoleDecider
             'businessUnitId' => 0,
         ];
         $foundInBusinessUnit = false;
-        
-        $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
-            ->where('value', $userPrincipal)
-            ->first();
+
+        $businessUnitMemberships = LegacyBusinessUnit::members()->where('value', $userPrincipal);
+        $bu = $businessUnitMemberships->first();
         
         if ($bu) {
             $businessUnitData['role'] = $bu->property; // manager, user
@@ -76,18 +77,23 @@ class LoginRoleDecider
             $foundInBusinessUnit = true;
         } else {
             // Lookup groups in Business Units
-            foreach ($groups as $group) {
-                $bu = Business_unit::whereIn('property', ['manager', 'archiver', 'user'])
-                    ->where('value', '@' . $group)
-                    ->first();
+            $fnPrefix = function($name) {
+                return "@".$name;
+            };
 
-                if ($bu) {
-                    $businessUnitData['role'] = $bu->property; // manager, user
-                    $businessUnitData['roleWhy'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
-                    $businessUnitData['businessUnitId'] = $bu->unitid;
-                    $foundInBusinessUnit = true;
-                    break;
-                }
+            $groupsPrefixed = array_map($fnPrefix, $groups);
+            $bu = LegacyBusinessUnit::members()
+                ->whereIn('value', $groupsPrefixed)
+                ->first();
+
+            // Multiple BU membership is not possible in LegacyBusinessUnit, but the precedence is undefined, I think - mosen.
+            // TODO: Establish precedence rule
+
+            if ($bu) {
+                $businessUnitData['role'] = $bu->property; // manager, user
+                $businessUnitData['roleWhy'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
+                $businessUnitData['businessUnitId'] = $bu->unitid;
+                $foundInBusinessUnit = true;
             }
         }
 

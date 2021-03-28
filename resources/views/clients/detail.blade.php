@@ -79,7 +79,10 @@
                 @foreach($tab_list as $name => $data)
 
                 <div class="tab-pane @isset($data['class']) active @endisset" id="{{ $name }}">
-                    <?php mr_view($data['view'], isset($data['view_vars']) ? $data['view_vars'] : array(), isset($data['view_path'])?$data['view_path']:conf('view_path'));?>
+                    <?php mr_view(
+                        $data['view'],
+                        isset($data['view_vars']) ? $data['view_vars'] : array(),
+                        isset($data['view_path']) ? $data['view_path'] : conf('view_path')); ?>
                 </div>
 
                 @endforeach

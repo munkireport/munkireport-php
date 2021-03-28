@@ -26,6 +26,7 @@ class BusinessUnit extends Model
     const PROP_LINK = 'link';
     const PROP_USER = 'user';
     const PROP_MANAGER = 'manager';
+    const PROP_ARCHIVER = 'archiver';
     const PROP_MACHINE_GROUP = 'machine_group';
 
     protected $table = 'business_unit';
@@ -49,7 +50,7 @@ class BusinessUnit extends Model
      * @param null|string $link More information link.
      * @return array
      */
-    public static function createWithParameters($id, $name, $address = null, $link = null) {
+    public static function createWithParameters(int $id, string $name, ?string $address = null, ?string $link = null) {
         $nameRow = BusinessUnit::create(
             ['property' => BusinessUnit::PROP_NAME, 'value' => $name, 'unitid' => $id]);
 
@@ -73,6 +74,34 @@ class BusinessUnit extends Model
         return $result;
     }
 
+    /**
+     * Determine whether the given User/Group(s) are a member of any Legacy Style Business Units.
+     *
+     * @param string $userPrincipal The user name/principal which has been added to business unit(s)
+     * @param array $groupNames A list of group names which will have been added with the '@' prefix.
+     * @return array An array of Business Unit ID's which the supplied user or groups are a member of
+     */
+    public static function memberships(string $userPrincipal, array $groupNames): array {
+        $value = [];
+        $userMemberships = self::members()
+            ->where('value', $userPrincipal);
+
+        foreach ($userMemberships as $membership) {
+            $value += $membership->unitid;
+        }
+
+        $prefixGroup = function($name) { return "@".$name; };
+        $groupsPrefixed = array_map($prefixGroup, $groupNames);
+        $groupMemberships = self::members()
+            ->whereIn('value', $groupsPrefixed);
+
+        foreach ($groupMemberships as $membership) {
+            $value += $membership->unitid;
+        }
+
+        return $value;
+    }
+
     //// RELATIONSHIPS
 
     public function businessUnitable() {
@@ -87,8 +116,12 @@ class BusinessUnit extends Model
      * @param Builder $query
      * @return Builder The amended query
      */
-    public function scopeMembers(Builder $query) {
-        return $query->whereIn('property', [BusinessUnit::PROP_MANAGER, BusinessUnit::PROP_USER]);
+    public function scopeMembers(Builder $query): Builder {
+        return $query->whereIn('property', [
+            BusinessUnit::PROP_MANAGER,
+            BusinessUnit::PROP_USER,
+            BusinessUnit::PROP_ARCHIVER,
+        ]);
     }
 
     /**
@@ -98,7 +131,7 @@ class BusinessUnit extends Model
      * @param int $unitId Business Unit Identifier
      * @return Builder The amended query
      */
-    public function scopeBusinessUnit(Builder $query, $unitId) {
+    public function scopeBusinessUnit(Builder $query, int $unitId): Builder {
         return $query->where('unitid', '=', $unitId);
     }
 
