@@ -64,8 +64,9 @@ Compare the features of MunkiReport Local and Laravel Local Authentication:
 
 * Unfortunately there is no support for `.yml` defined users in Laravel, although we could offer a migration tool later
 on if this becomes a huge concern.
-
-
+* Generating users from `/auth/create_local_user` will not be supported, you will have
+  to use `please create:user` *OR* Register with a valid e-mail address.
+  
 ### (Deprecated) NETWORK Authentication ###
 
 There is no such thing as "NETWORK" authentication in this release. It has been deprecated and will be replaced

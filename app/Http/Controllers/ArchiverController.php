@@ -9,17 +9,14 @@ use \Reportdata_model;
 
 class ArchiverController extends Controller
 {
-    public function __construct()
+    public function update_status($serial_number = '')
     {
         // Check authorization
         if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
             $this->middleware('auth');
-//            Gate::authorize('archive');
+            Gate::authorize('archive');
         }
-    }
 
-    public function update_status($serial_number = '')
-    {
         if (! isset($_POST['status'])) {
             jsonError('No status found');
         }
@@ -34,6 +31,12 @@ class ArchiverController extends Controller
 
     public function bulk_update_status()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('archive');
+        }
+
         if( ! $days = intval(post('days'))){
             jsonError('No days sent');
         }

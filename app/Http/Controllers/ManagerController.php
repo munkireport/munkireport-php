@@ -31,6 +31,9 @@ class ManagerController extends Controller
 
     public function delete_machine($serial_number = '')
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            Gate::authorize('delete_machine');
+        }
 
         $status = array('status' => 'undefined', 'rowcount' => 0);
 

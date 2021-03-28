@@ -19,11 +19,6 @@ class AdminController extends Controller
 
     public function __construct()
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-//            Gate::authorize('global');
-        }
-
         // Connect to database
         $this->connectDB();
     }
@@ -36,6 +31,11 @@ class AdminController extends Controller
      **/
     public function save_machine_group(Request $request): JsonResponse
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         if ($request->has('groupid')) {
             $machine_group = new Machine_group;
             $groupid = $request->input('groupid');
@@ -108,6 +108,11 @@ class AdminController extends Controller
      **/
     public function remove_machine_group(Request $request): JsonResponse
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $out = [];
 
         $groupid = $request->input('groupid', '');
@@ -138,6 +143,11 @@ class AdminController extends Controller
      **/
     public function save_business_unit(Request $request): JsonResponse
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $unit = new BusinessUnit();
         return jsonView($unit->saveUnit($request->all([
             'unitid', 'name', 'address', 'link', 'iteminfo', 'managers', 'archivers', 'users'
@@ -155,6 +165,12 @@ class AdminController extends Controller
      **/
     public function remove_business_unit(): JsonResponse
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
+
         return jsonView([
             'success' => Business_unit::where('unitid', request('id', ''))->delete()
         ], 200, false, true);
@@ -171,6 +187,11 @@ class AdminController extends Controller
      **/
     public function get_bu_data(): JsonResponse
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $out = [];
         $units = Business_unit::get()
             ->toArray();
@@ -218,6 +239,11 @@ class AdminController extends Controller
      **/
     public function get_mg_data($groupid = ""): JsonResponse
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $out = [];
 
         // Get created Machine Groups
@@ -253,6 +279,11 @@ class AdminController extends Controller
      **/
     public function show($which = '')
     {
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         if ($which) {
             $data['page'] = 'clients';
             $data['scripts'] = array("clients/client_list.js");

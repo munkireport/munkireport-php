@@ -14,12 +14,6 @@ class ModuleMarketplaceController extends Controller
 
     public function __construct()
     {
-        // Check authorization
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-//            Gate::authorize('global');
-        }
-
         // Create object
         $this->moduleMarketplace = getMrModuleObj();
     }
@@ -31,6 +25,12 @@ class ModuleMarketplaceController extends Controller
      **/
     public function index()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $data['page'] = 'clients';
         $view = 'system/module_marketplace';
         return mr_view($view, $data);
@@ -43,6 +43,12 @@ class ModuleMarketplaceController extends Controller
      **/
     public function get_module_data()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         // Use composer.local.lock over composer.lock file
         if(file_exists(__DIR__ . '../../../composer.local.lock')){
             $composer_pkgs = json_decode(file_get_contents(base_path('/composer.local.lock')), true)['packages'];
@@ -210,6 +216,12 @@ class ModuleMarketplaceController extends Controller
      **/
     public function get_module_script_info()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         $all_modules = $this->moduleMarketplace->getModuleList();
         $modules = [];
         $i = 0;
@@ -252,6 +264,12 @@ class ModuleMarketplaceController extends Controller
      **/
     public function get_module_info($module){
 
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         // Load up the modules
         $modules = $this->moduleMarketplace->loadInfo(true);
 
@@ -267,6 +285,12 @@ class ModuleMarketplaceController extends Controller
      **/
     public function get_module_repos()
     {
+        // Check authorization
+        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
+            $this->middleware('auth');
+            Gate::authorize('global');
+        }
+
         // Get JSON from munkireport-php's GitHub
         $web_request = new \munkireport\lib\Request();
         $options = ['http_errors' => false];

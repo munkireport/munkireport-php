@@ -6,6 +6,8 @@ use App\Auth\MultiAuthGuard;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,37 +31,66 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('archive', function ($user) {
-            foreach (config('_munkireport.authorization', []) as $item => $roles) {
-                if ($item === 'archive') {
-                    return in_array($user->role, $roles);
-                }
+        $noauth = Str::contains(config('auth.methods'), 'NOAUTH');
+
+        Gate::define('archive', function ($user) use ($noauth) {
+            if ($noauth) return true;
+
+            $authorizations = config('_munkireport.authorization', []);
+            // No archive authorizations defined: it would not be possible to pass this gate.
+            if (!isset($authorizations['archive'])) {
+                Log::debug('archive gate always rejects access: no archive authorizations are defined in the configuration file');
+                return false;
             }
 
-            // Role not found: unauthorized!
-            return false;
+            $archivers = $authorizations['archive'];
+            if (in_array($user->role, $archivers)) {
+                Log::debug('archive gate accepted user: ' . $user->email . ', has role');
+                return true;
+            } else {
+                Log::debug('archive gate rejected user: ' . $user->email . ', not in any role(s) that have archive');
+                return false;
+            }
         });
 
-        Gate::define('delete_machine', function ($user) {
-            foreach (config('_munkireport.authorization', []) as $item => $roles) {
-                if ($item === 'delete_machine') {
-                    return in_array($user->role, $roles);
-                }
+        Gate::define('delete_machine', function ($user) use ($noauth) {
+            if ($noauth) return true;
+
+            $authorizations = config('_munkireport.authorization', []);
+            // No archive authorizations defined: it would not be possible to pass this gate.
+            if (!isset($authorizations['delete_machine'])) {
+                Log::debug('delete_machine gate always rejects access: no delete_machine authorizations are defined in the configuration file');
+                return false;
             }
 
-            // Role not found: unauthorized!
-            return false;
+            $machineDeleters = $authorizations['delete_machine'];
+            if (in_array($user->role, $machineDeleters)) {
+                Log::debug('delete_machine gate accepted user: ' . $user->email . ', has role');
+                return true;
+            } else {
+                Log::debug('delete_machine gate rejected user: ' . $user->email . ', not in any role(s) that have delete_machine');
+                return false;
+            }
         });
 
-        Gate::define('global', function ($user) {
-            foreach (config('_munkireport.authorization', []) as $item => $roles) {
-                if ($item === 'global') {
-                    return in_array($user->role, $roles);
-                }
+        Gate::define('global', function ($user) use ($noauth) {
+            if ($noauth) return true;
+
+            $authorizations = config('_munkireport.authorization', []);
+            // No archive authorizations defined: it would not be possible to pass this gate.
+            if (!isset($authorizations['global'])) {
+                Log::debug('archive gate always rejects access: no global admin authorizations are defined in the configuration file');
+                return false;
             }
 
-            // Role not found: unauthorized!
-            return false;
+            $globalAdmins = $authorizations['global'];
+            if (in_array($user->role, $globalAdmins)) {
+                Log::debug('global admin gate accepted user: ' . $user->email . ', has role');
+                return true;
+            } else {
+                Log::debug('global admin gate rejected user: ' . $user->email . ', not in any role(s) that have archive');
+                return false;
+            }
         });
     }
 }
