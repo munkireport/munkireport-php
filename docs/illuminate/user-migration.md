@@ -42,8 +42,23 @@ Compare the features of MunkiReport Local and Laravel Local Authentication:
 #### New Stuff ####
 
 * **Sign up page** Allows you to have a registration mechanism where people apply for a login themselves.
+  E-mail verification obviously only works if you configure an SMTP server.
 * **Password reset** If you have e-mail configured, allows you to provide password resets for users which are logged
   in using LOCAL authentication.
+* **Local DB user creation from the CLI**, for example:
+
+      php please user:create
+  
+      Name?:
+      > admin
+      
+      Email address?:
+      > admin@localhost
+      
+      Password?:
+      >
+      
+      User saved
 
 #### Removed ####
 
