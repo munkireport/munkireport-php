@@ -29,7 +29,14 @@ class ReportController extends Controller
     {
         // Flag we're on report authorization
         $GLOBALS['auth'] = 'report';
+    }
 
+    /**
+     * Some of the code originally in __construct() prevented the route:list command from working on the CLI.
+     * This initialisation code has been moved here.
+     */
+    public function init()
+    {
         // Check for maintenance mode
         if(file_exists(APP_ROOT . 'storage/framework/down')) {
             $this->error("MunkiReport is in maintenance mode, try again later.");
@@ -75,6 +82,8 @@ class ReportController extends Controller
      **/
     public function hash_check(Request $request)
     {
+        $this->init();
+
         // Check if we have data
         if (!$request->has('items')) {
             $this->error("Items are missing");
@@ -146,6 +155,8 @@ class ReportController extends Controller
      **/
     public function check_in()
     {
+        $this->init();
+
         if (! isset($_POST['items'])) {
             $this->error("No items in POST");
         }
@@ -220,6 +231,8 @@ class ReportController extends Controller
      **/
     public function broken_client()
     {
+        $this->init();
+
         // Register check in reportdata
         $this->_register($request->post('serial'));
 

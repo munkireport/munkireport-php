@@ -71,7 +71,7 @@ jobs:
             ${{ runner.os }}-php-
 #      - run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-progress --prefer-dist
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate key
         run: php please key:generate
       - name: Directory Permissions
@@ -85,12 +85,15 @@ jobs:
 #          DB_CONNECTION: sqlite
 #          DB_DATABASE: database/database.sqlite
 #        run: vendor/bin/phpunit
-      - name: Run Database Migrations
+      - name: Run Database Migrations (MariaDB)
         run: php please migrate
         env:
-          # old-style
+          # old-style (v5)
           CONNECTION_DRIVER: mysql
-          # new-style
+          CONNECTION_HOST: localhost
+          CONNECTION_PORT: ${{ job.services.mariadb.ports[3306] }}
+          CONNECTION_DATABASE: munkireport
+          # new-style (v6)
           DB_CONNECTION: mysql
           DB_HOST: localhost
           DB_PORT: ${{ job.services.mariadb.ports[3306] }}

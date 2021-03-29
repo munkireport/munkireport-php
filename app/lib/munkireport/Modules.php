@@ -412,4 +412,9 @@ class Modules
             }
         }
     }
+
+    public function add(string $moduleName, array $metadata) {
+        $this->moduleList[$moduleName] = $metadata;
+
+    }
 }
