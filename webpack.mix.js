@@ -16,3 +16,4 @@ mix.js('resources/js/app.js', 'public/js')
 
 mix.js('resources/js/business-units.js', 'public/js');
 mix.js('resources/js/profile.js', 'public/js');
+mix.js('resources/js/users.js', 'public/js');

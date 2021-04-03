@@ -46,6 +46,8 @@ Route::middleware(['can:global'])->group(function () {
     Route::get('/module_marketplace', 'ModuleMarketplaceController@index');
     Route::get('/module_marketplace/get_module_data', 'ModuleMarketplaceController@get_module_data');
     Route::get('/module_marketplace/get_module_info', 'ModuleMarketplaceController@get_module_info');
+
+    Route::get('/admin/users', 'UsersController@index');
 });
 
 Route::middleware(['can:archive'])->group(function () {

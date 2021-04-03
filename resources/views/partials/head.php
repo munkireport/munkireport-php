@@ -168,6 +168,9 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="admin dropdown-menu">
+                        <li>
+                            <a href="/admin/users" data-i18n="user.users"></a>
+                        </li>
 
 						<?php foreach(scandir(conf('view_path').'admin') as $list_url): ?>
 
