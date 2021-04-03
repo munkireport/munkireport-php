@@ -177,6 +177,9 @@ $dashboard = getDashboard()->loadAll();
                         <b class="caret"></b>
                     </a>
                     <ul class="admin dropdown-menu">
+                        <li class="{{ Route::is(action('UsersController@index')) ? " active" : "" }}">
+                            <a href="{{ action('UsersController@index') }}" data-i18n="user.users"></a>
+                        </li>
 
                         @foreach(scandir(conf('view_path') . 'admin') as $list_url)
 
@@ -184,7 +187,7 @@ $dashboard = getDashboard()->loadAll();
                         <?php $page_url = strtok($list_url, '.'); ?>
 
                         <li class="{{ Route::is($page_url) ? " active" : "" }}">
-                            <a href="{{ url($page_url) }}" data-i18n="nav.admin.<?php echo $name = strtok($list_url, '.'); ?>"></a>
+                            <a href="{{ url($page_url) }}" data-i18n="nav.admin.{{ strtok($list_url, '.') }}"></a>
                         </li>
 
                         @endif
