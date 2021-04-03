@@ -437,4 +437,18 @@ return [
         'delete_machine' => mr_env('AUTHORIZATION_DELETE_MACHINE', ['admin', 'manager']),
         'global' => mr_env('AUTHORIZATION_GLOBAL', ['admin']),
     ],
+
+    /*
+    |===============================================
+    | Notifications
+    |===============================================
+    |
+    | This setting allows you to forward any of the events which
+    | traditionally go to the `event` table in the database (which turn up on the event widget),
+    | to one or more Notification channels, such as E-mail, Slack, Teams etc.
+    |
+    */
+    'notifications' => [
+        'forward_events' => true,
+    ],
 ];

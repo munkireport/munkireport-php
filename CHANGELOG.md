@@ -6,6 +6,11 @@ FIREWALL_ENABLED=TRUE
 FIREWALL_ALLOW_IP4="0.0.0.0, 127.0.0.0/23"
 FIREWALL_REDIRECT_DENIED="https://google.com"
 
+Local authentication now uses the database.
+
+Events may be forwarded to Notification channels, such as Slack and Teams, using the config
+setting `notification.forward_events` (default true).
+
 ### [5.6.6](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (Unreleased)
 
 ### [5.6.5](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (March 27, 2021) 🍖

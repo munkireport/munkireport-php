@@ -102,7 +102,8 @@
         "composer/composer": "^1.10",
         "pragmarx/firewall": "^2.3",
         "laravel/sanctum": "^2.4",
-        "xkerman/restricted-unserialize": "^1.1"
+        "xkerman/restricted-unserialize": "^1.1",
+        "laravel/slack-notification-channel": "^2.3"
     },
     "autoload": {
         "classmap": [
