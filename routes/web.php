@@ -82,3 +82,6 @@ Route::get('/show/custom/{which?}', 'ShowController@custom');
 Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
 Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
 Route::get('/show/report/{report}/{action}', 'ShowController@report');
+
+Route::get('/profile', 'ProfileController@index');
+Route::get('/api/v6/me', ['uses' => 'MeController@show', 'as' => 'me.show']);

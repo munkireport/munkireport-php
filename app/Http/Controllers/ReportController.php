@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Notifications\BrokenClient;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\Modules;
 use munkireport\lib\Unserializer;
@@ -229,21 +232,28 @@ class ReportController extends Controller
      *
      * @author AvB
      **/
-    public function broken_client()
+    public function broken_client(Request $request)
     {
         $this->init();
 
         // Register check in reportdata
         $this->_register($request->post('serial'));
 
-        // Clean POST data
-        $data['module'] = isset($_POST['module']) ? $_POST['module'] : 'generic';
-        $data['type'] = isset($_POST['type']) ? $_POST['type'] : 'danger';
-        $data['msg'] = isset($_POST['msg']) ? $_POST['msg'] : 'Unknown';
-        $data['timestamp'] = time();
-
         // Store event
-        store_event($request->post('serial'), $data['module'], $data['type'], $data['msg']);
+        store_event(
+            $request->post('serial'),
+            $request->post('module', 'generic'),
+            $request->post('type', 'danger'),
+            $request->post('msg', 'Unknown'),
+            '', false);
+
+        Notification::send(User::all(), new BrokenClient(
+            $request->post('msg', 'Unknown'),
+            $request->post('module', 'generic'),
+            $request->post('type', 'danger'),
+            $request->post('serial'),
+            $request->post('name'))
+        );
 
         echo "Recorded this message: ".$data['msg']."\n";
     }

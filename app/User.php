@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use MR\Kiss\Contracts\LegacyUser;
@@ -12,7 +14,7 @@ use MR\MachineGroup as LegacyMachineGroup;
 
 use munkireport\models\Machine_group;
 
-class User extends Authenticatable implements LegacyUser
+class User extends Authenticatable implements LegacyUser, HasLocalePreference
 {
     use Notifiable;
 
@@ -137,5 +139,42 @@ class User extends Authenticatable implements LegacyUser
     public function machineGroups(): array
     {
         return [];
+    }
+
+    /**
+     * Retrieve a list of contact methods associated with this User.
+     *
+     * @return HasMany
+     */
+    public function contactMethods(): HasMany
+    {
+        return $this->hasMany('App\UserContactMethod', 'user_id', 'id');
+    }
+
+    /**
+     * Retrieve a list of contact methods associated with this User for a specific channel type.
+     *
+     * The channel name corresponds to the Laravel notifications channel name.
+     *
+     * @param string $channel A channel name corresponding to the Laravel notifications channel name, eg. `mail`.
+     * @return HasMany
+     */
+    public function contactMethodsForChannel(string $channel): HasMany
+    {
+        return $this->hasMany('App\UserContactMethod', 'user_id', 'id')
+            ->where('channel', $channel);
+    }
+
+    /**
+     * Get the user's preferred locale.
+     *
+     * Implemented for `Illuminate\Contracts\Translation\HasLocalePreference` to send notifications in the
+     * user's language if possible.
+     *
+     * @return string
+     */
+    public function preferredLocale(): string
+    {
+        return $this->locale;
     }
 }

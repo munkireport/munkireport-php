@@ -1,6 +1,10 @@
 <?php
 
+use App\Notifications\GeneralEvent;
+use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
 use MR\Kiss\View;
@@ -360,13 +364,24 @@ function is_archived_only_filter_on() {
 /**
  * Store event for client
  *
- * @param string $serial serial number
- * @param string $module reporting module
- * @param string $type info, error
- * @param string $msg long message
- **/
-function store_event($serial, $module = '', $type = '', $msg = 'no_message', $data = '')
+ * @param string $serial Serial number of the machine reporting in.
+ * @param string $module The module which raised the event (in some cases the database table - in KISS MVC).
+ * @param string $type The category or severity of the event.
+ * @param string $msg A plaintext message explaining the event, or a magic string indicating a value in a locale to display
+ *                    a localized version of that event message.
+ * @param string $data A JSON serialized dictionary of additional data to store with the event that may provide more
+ *                     context.
+ * @param bool $raise_notification If event forwarding is turned on, a notification will be raised for every event, but
+ *                                 in specific circumstances you don't want a notification raised. set to false if you
+ *                                 *REALLY* do not want a notification raised here.
+ */
+function store_event(string $serial, string $module = '', string $type = '', string $msg = 'no_message',
+    string $data = '', $raise_notification = true)
 {
+    if (config('_munkireport.notifications.forward_events', true) && $raise_notification) {
+        Log::debug('forwarding munkireport events to notification channel(s) because notifications.forward_events = true');
+        Notification::send(User::all(), new GeneralEvent($serial, $module, $type, $msg, $data));
+    }
     Event_model::updateOrCreate(
         [
             'serial_number' => $serial,

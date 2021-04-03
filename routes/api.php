@@ -27,4 +27,6 @@ Route::group(['prefix' => 'v6', 'namespace' => 'Api'], function () {
 
     Route::apiResource('business_units', 'BusinessUnitsController');
     Route::apiResource('machine_groups', 'MachineGroupsController');
+    Route::apiResource('users', 'UsersController');
+    Route::apiResource('users.contact_methods', 'UsersContactMethodsController');
 });
