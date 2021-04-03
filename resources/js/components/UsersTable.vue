@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="table table-hover">
+    <table class="munkireport table table-hover">
       <thead>
         <tr>
           <th>ID</th>
@@ -38,5 +38,7 @@ export default {
 </script>
 
 <style scoped>
-
+.munkireport.table {
+  cursor: pointer;
+}
 </style>

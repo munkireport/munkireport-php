@@ -6,8 +6,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-12">
-        <users-table :items="users"></users-table>
+      <div class="col-md-4">
+        <users-list :items="users" @selected="fetchUser"></users-list>
+      </div>
+      <div class="col-md-8">
+        <user-form :data="selectedUser"></user-form>
       </div>
     </div>
   </div>
@@ -15,17 +18,20 @@
 
 <script>
 
-import UsersTable from '../components/UsersTable';
+import UsersList from '../components/UsersList';
+import UserForm from '../components/UserForm';
 
 export default {
   name: "Users",
   components: {
-    'users-table': UsersTable,
+    'users-list': UsersList,
+    'user-form': UserForm,
   },
 
   data() {
     return {
       users: [],
+      selectedUser: null,
     }
   },
 
@@ -40,6 +46,21 @@ export default {
         .catch((e) => {
           this.error = e.message;
         });
+  },
+
+  methods: {
+    fetchUser: (userId) => {
+      return fetch("/api/v6/users/" + userId)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            this.selectedUser = data.data;
+          })
+          .catch((e) => {
+            this.error = e.message;
+          });
+    }
   }
 }
 </script>
