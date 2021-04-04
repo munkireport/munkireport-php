@@ -27,40 +27,21 @@ class DatatablesController extends Controller
             'length' => $request->input('length', -1), // Length
             'draw' => $request->input('draw', 0), // Identifier, just return
             'search' => $request->input('search.value', ''), // Search query
+            'search_cols' => [],
             'where' => $request->input('where', ''), // Optional where clause
             'mrColNotEmpty' => $request->input('mrColNotEmpty', ''), // Munkireport non empty column name
             'mrColNotEmptyBlank' => $request->input('mrColNotEmptyBlank', '') // Munkireport non empty column name
         );
-        //echo '<pre>';print_r($_GET);return;
-
-        $searchcols = array();
-
-        // Add columns to config
-        $cfg['search_cols'] = $searchcols;
-
-        //echo '<pre>';print_r($cfg);
 
         try {
             // Get model
             $obj = new Tablequery($cfg);
-            //echo '<pre>';print_r($obj->fetch($cfg));
-            echo json_encode($obj->fetch($cfg));
-
-            // Check for older php versions
-            if (function_exists('json_last_error')) {
-                // If there is an encoding error, show it
-                if (json_last_error() != JSON_ERROR_NONE) {
-                    echo json_last_error_msg();
-                    print_r($obj->fetch($cfg));
-                }
-            }
+            return response()->json($obj->fetch($cfg));            
         } catch (\Exception $e) {
-            echo json_encode(
-                array(
+            return response()->json([
                     'error' => $e->getMessage(),
                     'draw' => intval($cfg['draw'])
-                )
-            );
+            ]);
         }
     }
 }
