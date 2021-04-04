@@ -54,6 +54,17 @@
 
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
 
+    <!-- VueJS 2.x -->
+    @env(['local', 'development'])
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    @endenv
+    @env(['production'])
+    <!-- production version, optimized for size and speed -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    @endenv
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
     <script>
       // Include csrf in all requests
       $.ajaxSetup({
