@@ -30,7 +30,7 @@ class Request extends \Illuminate\Http\Request
         if ($uri === "/") {
             $query = $request->query->all();
             $server = $request->server->all();
-            $queryString = $server['QUERY_STRING'];
+            $queryString = $request->server->get('QUERY_STRING');
             if ($queryString && $queryString[0] === "/") {
                 // This will probably be a MunkiReport style index.php?/path URI
                 $server['REQUEST_URI'] = $queryString;
