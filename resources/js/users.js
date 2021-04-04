@@ -1,6 +1,4 @@
 require('./bootstrap');
-
-window.Vue = require('vue');
 import * as uiv from 'uiv';
 
 Vue.use(uiv);
