@@ -48,7 +48,7 @@
 
                 <input type="text" class="form-control mr-computer_name_input" readonly>
 
-                @if (Gate::allows('archive'))
+                @if (Auth::user()->can('archive', $reportData))
                 <div class="input-group-btn">
                     <button type="button" id="archive_button" class="btn btn-default">
                         <span class="hidden-sm hidden-xs"></span>

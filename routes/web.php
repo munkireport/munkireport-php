@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/v6/me', ['uses' => 'MeController@show', 'as' => 'me.show']);
 });
 
-Route::middleware(['auth', 'can:archive'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::post('/archiver/update_status/{serial_number?}', 'ArchiverController@update_status');
     Route::post('/archiver/bulk_update_status', 'ArchiverController@bulk_update_status');
 });

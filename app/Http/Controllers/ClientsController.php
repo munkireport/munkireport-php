@@ -83,6 +83,9 @@ class ClientsController extends Controller
         if (! $machine) {
             return view("client.client_dont_exist", $data);
         } else {
+            $reportData = \Reportdata_model::where('serial_number', $sn)
+                ->first();
+            $data['reportData'] = $reportData;
 
             // Tab list, each item should contain:
             //	'view' => path/to/tab
