@@ -104,7 +104,8 @@
         "laravel/sanctum": "^2.4",
         "xkerman/restricted-unserialize": "^1.1",
         "laravel/slack-notification-channel": "^2.3",
-        "laravel-notification-channels/microsoft-teams": "^1.1"
+        "laravel-notification-channels/microsoft-teams": "^1.1",
+        "wikimedia/composer-merge-plugin": "^2.0"
     },
     "autoload": {
         "classmap": [
@@ -140,6 +141,11 @@
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "merge-plugin": {
+            "include": [
+                "composer.local.json"
+            ]
         }
     },
     "scripts": {
