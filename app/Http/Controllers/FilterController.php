@@ -11,8 +11,6 @@ class FilterController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
-
         $this->registered_filters = [
             'machine_group' => [],
             'archived' => ['yes'],

@@ -21,8 +21,6 @@ class ShowController extends Controller
     private $modules;
     public function __construct()
     {
-        $this->middleware('auth');
-
         $this->modules = $modules = getMrModuleObj()->loadInfo();
     }
 

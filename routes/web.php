@@ -15,12 +15,41 @@ use Illuminate\Support\Str;
 |
 */
 
-// Don't even register auth routes if we are in noauth mode
-if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-    Auth::routes(['register' => false]);
-}
+// Users cannot self-register
+Auth::routes(['register' => false]);
 
 Route::redirect('/', '/show/dashboard/default');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/clients', 'ClientsController@index');
+    Route::get('/clients/detail/{sn?}', 'ClientsController@detail');
+    Route::get('/clients/get_data/{serial_number?}', 'ClientsController@get_data');
+    Route::get('/clients/get_links', 'ClientsController@get_links');
+    Route::get('/clients/show/{which?}', 'ClientsController@show');
+
+    Route::post('/datatables/data', 'DatatablesController@data');
+
+    Route::get('/filter/get_filter', 'FilterController@get_filter');
+    Route::post('/filter/set_filter', 'FilterController@set_filter');
+    Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
+
+    Route::get('/locale/get/{lang?}', 'LocaleController@get');
+    Route::get('/locale/get/{lang}/{load}', 'LocaleController@get');
+
+    Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
+    Route::post('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
+
+    Route::any('/settings/theme', 'SettingsController@theme');
+
+    Route::get('/show', 'ShowController@index');
+    Route::get('/show/custom/{which?}', 'ShowController@custom');
+    Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
+    Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
+    Route::get('/show/report/{report}/{action}', 'ShowController@report');
+
+    Route::get('/profile', 'ProfileController@index');
+    Route::get('/api/v6/me', ['uses' => 'MeController@show', 'as' => 'me.show']);
+});
 
 Route::middleware(['can:global'])->group(function () {
     Route::get('/admin/get_bu_data', 'AdminController@get_bu_data');
@@ -59,31 +88,4 @@ Route::middleware(['can:delete_machine'])->group(function () {
     Route::get('/manager/delete_machine/{serial_number?}', 'ManagerController@post');
 });
 
-Route::get('/clients', 'ClientsController@index');
-Route::get('/clients/detail/{sn?}', 'ClientsController@detail');
-Route::get('/clients/get_data/{serial_number?}', 'ClientsController@get_data');
-Route::get('/clients/get_links', 'ClientsController@get_links');
-Route::get('/clients/show/{which?}', 'ClientsController@show');
 
-Route::post('/datatables/data', 'DatatablesController@data');
-
-Route::get('/filter/get_filter', 'FilterController@get_filter');
-Route::post('/filter/set_filter', 'FilterController@set_filter');
-Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
-
-Route::get('/locale/get/{lang?}', 'LocaleController@get');
-Route::get('/locale/get/{lang}/{load}', 'LocaleController@get');
-
-Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
-Route::post('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
-
-Route::any('/settings/theme', 'SettingsController@theme');
-
-Route::get('/show', 'ShowController@index');
-Route::get('/show/custom/{which?}', 'ShowController@custom');
-Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
-Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
-Route::get('/show/report/{report}/{action}', 'ShowController@report');
-
-Route::get('/profile', 'ProfileController@index');
-Route::get('/api/v6/me', ['uses' => 'MeController@show', 'as' => 'me.show']);

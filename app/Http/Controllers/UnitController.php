@@ -9,11 +9,6 @@ use munkireport\models\Machine_group;
 
 class UnitController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Get unit data for current user
      *
