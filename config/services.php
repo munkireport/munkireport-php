@@ -30,4 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'slack' => [
+        'webhook_url' => env('SLACK_WEBHOOK_URL'),
+    ],
+
+    'teams' => [
+        'webhook_url' => env('TEAMS_WEBHOOK_URL'),
+    ],
 ];
