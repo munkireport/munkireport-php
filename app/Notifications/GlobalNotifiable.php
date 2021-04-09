@@ -32,11 +32,11 @@ class GlobalNotifiable implements HasLocalePreference
 
     public function routeNotificationForSlack(Notification $notification)
     {
-        return config('_munkireport.notifications.slack.webhook_url');
+        return config('services.slack.webhook_url');
     }
 
     public function routeNotificationForMicrosoftTeams(Notification $notification)
     {
-        return config('_munkireport.notifications.teams.webhook_url');
+        return config('services.teams.webhook_url');
     }
 }

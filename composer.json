@@ -103,7 +103,8 @@
         "pragmarx/firewall": "^2.3",
         "laravel/sanctum": "^2.4",
         "xkerman/restricted-unserialize": "^1.1",
-        "laravel/slack-notification-channel": "^2.3"
+        "laravel/slack-notification-channel": "^2.3",
+        "laravel-notification-channels/microsoft-teams": "^1.1"
     },
     "autoload": {
         "classmap": [

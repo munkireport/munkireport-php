@@ -447,11 +447,11 @@ return [
     | traditionally go to the `event` table in the database (which turn up on the event widget),
     | to one or more Notification channels, such as E-mail, Slack, Teams etc.
     |
+    | Webhook URL's / Secrets are configured in services.php
     */
     'notifications' => [
         'forward_events' => true,
         'slack' => [
-            'webhook_url' => env('SLACK_WEBHOOK_URL', ''),
             'from' => env('SLACK_FROM', 'MunkiReport'),
             'to' => env('SLACK_TO', ''),
         ]

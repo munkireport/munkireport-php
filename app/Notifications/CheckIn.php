@@ -8,6 +8,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\MicrosoftTeams\MicrosoftTeamsChannel;
+use NotificationChannels\MicrosoftTeams\MicrosoftTeamsMessage;
 
 /**
  * The check-in notification is fired every single time a client checks in.
@@ -39,7 +41,7 @@ class CheckIn extends Notification
      */
     public function via($notifiable)
     {
-        return ['slack'];
+        return ['slack', MicrosoftTeamsChannel::class];
     }
 
     /**
@@ -54,5 +56,22 @@ class CheckIn extends Notification
             ->from(config('_munkireport.notifications.slack.from', 'MunkiReport'), ':ghost:')
             ->to(config('_munkireport.notifications.slack.to', ''))
             ->content(__('messages.listing.checkin') . ' ' . $this->serialNumber);
+    }
+
+    /**
+     * Get the Microsoft Teams representation of the notification.
+     *
+     * @param $notifiable
+     * @return MicrosoftTeamsMessage
+     * @throws \NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification
+     */
+    public function toMicrosoftTeams($notifiable): MicrosoftTeamsMessage
+    {
+        return MicrosoftTeamsMessage::create()
+            ->to(config('services.teams.webhook_url'))
+            ->type('success')
+            ->title('Client Check-In')
+            ->content('Machine Serial ' . $this->serialNumber)
+            ->button('View Details', url('/clients/detail', ['serial_number' => $this->serialNumber]));
     }
 }
