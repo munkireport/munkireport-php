@@ -14,3 +14,31 @@ use Illuminate\Support\Str;
 | routes.
 |
 */
+
+Route::middleware(['auth', 'can:global'])->group(function () {
+    Route::get('/admin/get_bu_data', 'AdminController@get_bu_data');
+    Route::get('/admin/get_mg_data', 'AdminController@get_mg_data');
+    Route::post('/admin/save_business_unit', 'AdminController@save_business_unit');
+    Route::post('/admin/remove_business_unit', 'AdminController@remove_business_unit');
+    Route::post('/admin/save_machine_group', 'AdminController@save_machine_group');
+    Route::post('/admin/remove_machine_group', 'AdminController@remove_machine_group');
+    Route::get('/admin/show/{which}', 'AdminController@show');
+
+    Route::get('/system/show/{which?}', 'SystemController@show');
+    Route::get('/system/DataBaseInfo', 'SystemController@DataBaseInfo');
+    Route::get('/system/phpInfo', 'SystemController@phpInfo');
+    Route::get('/system/status', 'SystemController@status');
+    Route::get('/system/database', 'SystemController@database');
+    Route::get('/system/widgets', 'SystemController@widgets');
+
+    Route::get('/database/migrate', 'DatabaseController@migrate');
+
+    Route::get('/business_units/{id?}', 'BusinessUnitsController@index');
+    Route::get('/unit/get_data', 'UnitController@get_data');
+
+    Route::get('/module_marketplace', 'ModuleMarketplaceController@index');
+    Route::get('/module_marketplace/get_module_data', 'ModuleMarketplaceController@get_module_data');
+    Route::get('/module_marketplace/get_module_info', 'ModuleMarketplaceController@get_module_info');
+
+    Route::get('/admin/users', 'UsersController@index');
+});
