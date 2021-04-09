@@ -31,10 +31,10 @@ class AdminController extends Controller
      **/
     public function save_machine_group(Request $request): JsonResponse
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+
+        $this->middleware('auth');
+        Gate::authorize('global');
+
 
         if ($request->has('groupid')) {
             $machine_group = new Machine_group;
@@ -108,10 +108,8 @@ class AdminController extends Controller
      **/
     public function remove_machine_group(Request $request): JsonResponse
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         $out = [];
 
@@ -143,10 +141,8 @@ class AdminController extends Controller
      **/
     public function save_business_unit(Request $request): JsonResponse
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         $unit = new BusinessUnit();
         return jsonView($unit->saveUnit($request->all([
@@ -165,10 +161,8 @@ class AdminController extends Controller
      **/
     public function remove_business_unit(): JsonResponse
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
 
         return jsonView([
@@ -187,10 +181,8 @@ class AdminController extends Controller
      **/
     public function get_bu_data(): JsonResponse
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         $out = [];
         $units = Business_unit::get()
@@ -239,10 +231,8 @@ class AdminController extends Controller
      **/
     public function get_mg_data($groupid = ""): JsonResponse
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         $out = [];
 
@@ -279,10 +269,8 @@ class AdminController extends Controller
      **/
     public function show($which = '')
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         if ($which) {
             $data['page'] = 'clients';

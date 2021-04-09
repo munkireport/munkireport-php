@@ -31,11 +31,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $noauth = Str::contains(config('auth.methods'), 'NOAUTH');
-
         Gate::define('archive', function ($user) use ($noauth) {
-            if ($noauth) return true;
-
             $authorizations = config('_munkireport.authorization', []);
             // No archive authorizations defined: it would not be possible to pass this gate.
             if (!isset($authorizations['archive'])) {
@@ -54,8 +50,6 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('delete_machine', function ($user) use ($noauth) {
-            if ($noauth) return true;
-
             $authorizations = config('_munkireport.authorization', []);
             // No archive authorizations defined: it would not be possible to pass this gate.
             if (!isset($authorizations['delete_machine'])) {
@@ -74,8 +68,6 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('global', function ($user) use ($noauth) {
-            if ($noauth) return true;
-
             $authorizations = config('_munkireport.authorization', []);
             // No archive authorizations defined: it would not be possible to pass this gate.
             if (!isset($authorizations['global'])) {

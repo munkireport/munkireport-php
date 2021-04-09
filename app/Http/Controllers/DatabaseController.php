@@ -10,10 +10,8 @@ class DatabaseController extends Controller
 {
     public function migrate()
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         try {
             Artisan::call('migrate', ["--force" => true]);     

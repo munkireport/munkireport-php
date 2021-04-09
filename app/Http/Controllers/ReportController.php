@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 
 use App\Notifications\BrokenClient;
+use App\Notifications\CheckIn;
+use App\Notifications\GlobalNotifiable;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\Modules;
@@ -161,8 +164,13 @@ class ReportController extends Controller
         $this->init();
 
         if (! isset($_POST['items'])) {
+            Log::warning("No items in POST");
             $this->error("No items in POST");
         }
+
+        // $global = new GlobalNotifiable();
+        // Way too noisy - used for debugging notifications
+        // $global->notify(new CheckIn($_POST['serial']));
 
         try{
             $unserializer = new Unserializer($_POST['items']);

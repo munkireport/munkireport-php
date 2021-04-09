@@ -27,11 +27,11 @@ export default {
   color: white;
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
 }
 .lds-spinner div {
-  transform-origin: 40px 40px;
+  transform-origin: 20px 20px;
   animation: lds-spinner 1.2s linear infinite;
 }
 .lds-spinner div:after {
@@ -39,10 +39,10 @@ export default {
   display: block;
   position: absolute;
   top: 3px;
-  left: 37px;
-  width: 6px;
-  height: 18px;
-  border-radius: 20%;
+  left: 18px;
+  width: 3px;
+  height: 9px;
+  border-radius: 10%;
   background: rgb(85, 85, 85); /* bootstrap dark gray */
 }
 .lds-spinner div:nth-child(1) {

@@ -5,6 +5,7 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 
@@ -56,9 +57,9 @@ class GeneralEvent extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via(Notifiable $notifiable): array
+    public function via($notifiable): array
     {
-        return ['database'];
+        return ['database', 'slack'];
     }
 
     /**
@@ -67,7 +68,7 @@ class GeneralEvent extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray(Notifiable $notifiable): array
+    public function toArray($notifiable): array
     {
         return [
             'serial' => $this->serial,
@@ -76,5 +77,19 @@ class GeneralEvent extends Notification
             'msg' => $this->msg,
             'data' => $this->data,
         ];
+    }
+
+    /**
+     * Get the slack representation of the notification.
+     *
+     * @param Notifiable $notifiable
+     * @return SlackMessage
+     */
+    public function toSlack($notifiable): SlackMessage
+    {
+        return (new SlackMessage)
+            ->from(config('_munkireport.notifications.slack.from', 'MunkiReport'), ':ghost:')
+            ->to(config('_munkireport.notifications.slack.to', ''))
+            ->content(__('messages.event') . ": {$this->msg}");
     }
 }

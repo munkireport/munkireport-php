@@ -13,7 +13,7 @@ use Illuminate\Contracts\Auth\UserProvider;
 class MultiAuthGuard implements StatefulGuard
 {
     public static $supportedMethods = [
-        "LOCAL", "NOAUTH", "SAML", "AD"
+        "LOCAL", "SAML", "AD"
     ];
 
     protected $provider;
@@ -35,10 +35,6 @@ class MultiAuthGuard implements StatefulGuard
      */
     public function check()
     {
-        if (in_array('NOAUTH', $this->authMethods)) {
-            return true;
-        }
-
         return false;
     }
 
@@ -47,10 +43,6 @@ class MultiAuthGuard implements StatefulGuard
      */
     public function guest()
     {
-        if (in_array('NOAUTH', $this->authMethods)) {
-            return false;
-        }
-
         return true;
     }
 
@@ -59,9 +51,7 @@ class MultiAuthGuard implements StatefulGuard
      */
     public function user()
     {
-        if (in_array('NOAUTH', $this->authMethods)) {
-            return new User(['name' => 'unauthenticated']);
-        }
+
     }
 
     /**

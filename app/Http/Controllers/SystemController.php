@@ -30,11 +30,8 @@ class SystemController extends Controller
      */
     public function DataBaseInfo()
     {
-        // Check authorization
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         $out = array(
             'db.driver' => '',
@@ -80,11 +77,8 @@ class SystemController extends Controller
      */
     public function phpInfo()
     {
-        // Check authorization
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         ob_start();
         phpinfo(11);
@@ -116,11 +110,8 @@ class SystemController extends Controller
      */
     public function widgets()
     {
-        // Check authorization
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         $moduleManager = getMrModuleObj();
         $layoutList = [];
@@ -144,11 +135,8 @@ class SystemController extends Controller
      */
     public function status()
     {
-        // Check authorization
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
@@ -160,10 +148,8 @@ class SystemController extends Controller
      */
     public function database()
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-            Gate::authorize('global');
-        }
+        $this->middleware('auth');
+        Gate::authorize('global');
 
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");

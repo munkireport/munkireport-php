@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 
@@ -50,5 +51,19 @@ class NewClient extends Notification
         return [
             //
         ];
+    }
+
+    /**
+     * Get the slack representation of the notification.
+     *
+     * @param Notifiable $notifiable
+     * @return SlackMessage
+     */
+    public function toSlack(Notifiable $notifiable): SlackMessage
+    {
+        return (new SlackMessage)
+            ->from(config('_munkireport.notifications.slack.from', 'MunkiReport'), ':ghost:')
+            ->to(config('_munkireport.notifications.slack.to', ''))
+            ->content(__('new_client'));
     }
 }
