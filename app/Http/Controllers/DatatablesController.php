@@ -8,11 +8,6 @@ use munkireport\lib\Tablequery;
 
 class DatatablesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function data(Request $request)
     {
         // Sanitize the GET variables here.

@@ -9,13 +9,6 @@ use munkireport\lib\Themes;
 
 class SettingsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    //===============================================================
-
     /**
      * Set
      *

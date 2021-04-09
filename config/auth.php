@@ -52,8 +52,8 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
+            // You must use `ldap_users` if AUTH_METHODS is an ldap type to have local user fallback.
             'provider' => Str::contains('AD', env('AUTH_METHODS', 'LOCAL')) ? 'ldap_users' : 'users',
-//            'provider' => 'users',
         ],
 
         'api' => [
