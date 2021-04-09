@@ -450,5 +450,10 @@ return [
     */
     'notifications' => [
         'forward_events' => true,
+        'slack' => [
+            'webhook_url' => env('SLACK_WEBHOOK_URL', ''),
+            'from' => env('SLACK_FROM', 'MunkiReport'),
+            'to' => env('SLACK_TO', ''),
+        ]
     ],
 ];

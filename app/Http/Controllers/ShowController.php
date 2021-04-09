@@ -21,9 +21,7 @@ class ShowController extends Controller
     private $modules;
     public function __construct()
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-        }
+        $this->middleware('auth');
 
         $this->modules = $modules = getMrModuleObj()->loadInfo();
     }

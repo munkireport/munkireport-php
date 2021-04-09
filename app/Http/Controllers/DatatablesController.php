@@ -10,11 +10,7 @@ class DatatablesController extends Controller
 {
     public function __construct()
     {
-        // Check authorization
-//        $this->authorized() || jsonError('Authenticate first', 403);
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-        }
+        $this->middleware('auth');
     }
 
     public function data(Request $request)

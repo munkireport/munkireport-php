@@ -221,11 +221,6 @@ function assocToArray($array)
  */
 function authorized(?string $what = null)
 {
-    if (Str::contains(config('auth.methods'), 'NOAUTH')) {
-        return true; // NOAUTH is enabled.
-
-    }
-
     if (!Auth::check()) {
         return false; // User is not logged in at all
     }

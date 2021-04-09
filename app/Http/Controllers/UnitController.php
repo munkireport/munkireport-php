@@ -11,9 +11,7 @@ class UnitController extends Controller
 {
     public function __construct()
     {
-        if (!Str::contains(config('auth.methods'), 'NOAUTH')) {
-            $this->middleware('auth');
-        }
+        $this->middleware('auth');
     }
 
     /**
