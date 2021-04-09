@@ -11,25 +11,21 @@ class ArchiverController extends Controller
 {
     public function update_status($serial_number = '')
     {
-        $this->middleware('auth');
-        Gate::authorize('archive');
+        $reportData = Reportdata_model::where('serial_number', $serial_number)->firstOrFail();
+        $this->authorize('archive', $reportData);
 
         if (! isset($_POST['status'])) {
             jsonError('No status found');
         }
-        $changes = Reportdata_model::where('serial_number', $serial_number)
-            ->update(
-                [
-                    'archive_status' => intval($_POST['status']),
-                ]
-            );
+        $reportData->update([
+            'archive_status' => intval($_POST['status']),
+        ]);
         jsonView(['updated' => intval($_POST['status'])]);
     }
 
     public function bulk_update_status()
     {
-        $this->middleware('auth');
-        Gate::authorize('archive');
+        $this->authorize('archive_bulk', \Reportdata_model::class);
 
         if( ! $days = intval(post('days'))){
             jsonError('No days sent');
