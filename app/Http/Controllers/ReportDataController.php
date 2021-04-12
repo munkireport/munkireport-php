@@ -38,8 +38,8 @@ class ReportDataController extends Controller
             ->groupBy('machine_group')
             ->get()
             ->toArray();
-        $obj = new View();
-        $obj->view('json', array('msg' => $result));
+
+        return response()->json($result);
     }
 
     /**
@@ -48,10 +48,7 @@ class ReportDataController extends Controller
      **/
     public function get_inactive_days()
     {
-        $obj = new View();
-        $obj->view('json', [
-            'msg' => ['inactive_days' => config('reportdata.days_inactive')]
-        ]);
+        return response()->json(['inactive_days' => config('reportdata.days_inactive')]);
     }
     
     /**
@@ -79,8 +76,8 @@ class ReportDataController extends Controller
                 COUNT(CASE WHEN timestamp < $three_month_ago THEN 1 END) AS inactive_three_month")
             ->filter()
             ->first();
-        $obj = new View();
-        $obj->view('json', ['msg' => $reportdata]);
+
+        return response()->json($reportdata);
     }
     
     /**
@@ -96,8 +93,7 @@ class ReportDataController extends Controller
             ->filter()
             ->first();
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $reportdata));
+        return response()->json($reportdata);
     }
 
     /**
@@ -175,8 +171,7 @@ class ReportDataController extends Controller
             $out[$type][0] = 0;
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => array('dates' => $dates, 'types' => $out)));
+        return response()->json(array('dates' => $dates, 'types' => $out));
     }
 
     /**
@@ -237,7 +232,6 @@ class ReportDataController extends Controller
             }
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        return response()->json($out);
     }
 } // END class Reportdata_controller

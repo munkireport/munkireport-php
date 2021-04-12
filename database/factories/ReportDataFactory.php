@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(\munkireport\models\Reportdata_model::class, function (Faker\Generator $faker) {
+$factory->define(\App\ReportData::class, function (Faker\Generator $faker) {
 
     $machines = [
         ['JYVX', 'Macmini', 'Macmini8,1', 'Mac mini (2018)'],

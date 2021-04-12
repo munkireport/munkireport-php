@@ -26,16 +26,15 @@ class MachineController extends Controller
             ->orderBy('count', 'desc')
             ->get()
             ->toArray();
-    
-        $obj = new View();
-        $obj->view('json', ['msg' => $machine]);
+
+        return response()->json($machine);
     }
 
     /**
      * Get model statistics
      *
      **/
-    public function get_model_stats($summary="")
+    public function get_model_stats(string $summary = "")
     {
         $machine = Machine::selectRaw('count(*) AS count, machine_desc AS label')
             ->filter()
@@ -88,16 +87,13 @@ class MachineController extends Controller
                 $out[] = array('label' => $key, 'count' => $count);
             }
         }
-        $obj = new View();
-        $obj->view('json', ['msg' => $out]);
+
+        return response()->json($out);
     }
 
 
     /**
      * Get machine data for a particular machine
-     *
-     * @return void
-     * @author
      **/
     public function report($serial_number = '')
     {
@@ -110,9 +106,6 @@ class MachineController extends Controller
 
     /**
      * Return new clients
-     *
-     * @return void
-     * @author
      **/
     public function new_clients()
     {
@@ -124,8 +117,7 @@ class MachineController extends Controller
             ->get()
             ->toArray();
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        return response()->json($out);
     }
 
     /**
@@ -186,8 +178,7 @@ class MachineController extends Controller
                 }
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        return response()->json($out);
     }
 
     /**
@@ -208,8 +199,7 @@ class MachineController extends Controller
             $out[] = array('label' => $obj['machine_name'], 'count' => intval($obj['count']));
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        return response()->json($out);
     }
 
     /**
@@ -219,10 +209,7 @@ class MachineController extends Controller
      **/
     public function os()
     {
-        $obj = new View();
-        $obj->view('json', [
-            'msg' => $this->_trait_stats('os_version')
-        ]);
+        return response()->json($this->_trait_stats('os_version'));
     }
     /**
      * Return json array with os build breakdown
@@ -231,10 +218,7 @@ class MachineController extends Controller
      **/
     public function osbuild()
     {
-        $obj = new View();
-        $obj->view('json', [
-            'msg' => $this->_trait_stats('buildversion')
-        ]);
+        return response()->json($this->_trait_stats('buildversion'));
     }
 
     private function _trait_stats($what = 'os_version'){
@@ -259,7 +243,7 @@ class MachineController extends Controller
      **/
     public function model_lookup($serial_number)
     {
-        require_once(__DIR__ . '/helpers/model_lookup_helper.php');
+        require_once(__DIR__ . '/../../helpers/model_lookup_helper.php');
         $out = ['error' => '', 'model' => ''];
         try {
             $machine = Machine::select()
@@ -272,10 +256,7 @@ class MachineController extends Controller
             // Record does not exist
             $out['error'] = 'lookup_failed';
         }
-        $obj = new View();
-        $obj->view('json', [
-            'msg' => $out
-        ]);
 
+        return response()->json($out);
     }
 } // END class Machine_controller
