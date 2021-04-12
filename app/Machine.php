@@ -57,6 +57,17 @@ class Machine extends MRModel
     }
 
     /**
+     * Get network information stored by the network module.
+     *
+     * Unfortunately, Machine requires this to work, because ClientsController.php:get_data() needs to join on
+     * network.
+     */
+    public function network()
+    {
+        return $this->hasOne('App\Network', 'serial_number', 'serial_number');
+    }
+
+    /**
      * Get a list of machine groups this machine is part of through the
      * `report_data` table.
      *

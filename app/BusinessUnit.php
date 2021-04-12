@@ -5,6 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * V2 BusinessUnit (Not in Use).
+ *
+ * @see \MR\BusinessUnit
+ * @package App
+ */
 class BusinessUnit extends Model
 {
     protected $fillable = [

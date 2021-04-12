@@ -5,6 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * V2 MachineGroup (Not In Use)
+ *
+ * @see \MR\MachineGroup
+ * @package App
+ */
 class MachineGroup extends Model
 {
     protected $fillable = [

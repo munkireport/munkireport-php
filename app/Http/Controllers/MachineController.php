@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Machine;
+use Illuminate\Http\JsonResponse;
 use MR\Kiss\View;
 
 /**
@@ -17,7 +18,7 @@ class MachineController extends Controller
      *
      *
      **/
-    public function get_duplicate_computernames()
+    public function get_duplicate_computernames(): JsonResponse
     {
         $machine = Machine::selectRaw('computer_name, COUNT(*) AS count')
             ->filter()
@@ -34,7 +35,7 @@ class MachineController extends Controller
      * Get model statistics
      *
      **/
-    public function get_model_stats(string $summary = "")
+    public function get_model_stats(string $summary = ""): JsonResponse
     {
         $machine = Machine::selectRaw('count(*) AS count, machine_desc AS label')
             ->filter()
@@ -107,7 +108,7 @@ class MachineController extends Controller
     /**
      * Return new clients
      **/
-    public function new_clients()
+    public function new_clients(): JsonResponse
     {
         $lastweek = time() - 60 * 60 * 24 * 7;
         $out = Machine::query()->select('machine.serial_number', 'computer_name', 'reg_timestamp')
@@ -126,7 +127,7 @@ class MachineController extends Controller
      * @param string $format Format output. Possible values: flotr, none
      * @author AvB
      **/
-    public function get_memory_stats($format = 'none')
+    public function get_memory_stats(string $format = 'none'): JsonResponse
     {
         $out = array();
 
@@ -186,7 +187,7 @@ class MachineController extends Controller
      *
      * @author AvB
      **/
-    public function hw()
+    public function hw(): JsonResponse
     {
         $out = [];
         $machine = Machine::selectRaw('machine_name, count(1) as count')
@@ -207,7 +208,7 @@ class MachineController extends Controller
      *
      * @author AvB
      **/
-    public function os()
+    public function os(): JsonResponse
     {
         return response()->json($this->_trait_stats('os_version'));
     }
@@ -216,12 +217,12 @@ class MachineController extends Controller
      *
      * @author AkB
      **/
-    public function osbuild()
+    public function osbuild(): JsonResponse
     {
         return response()->json($this->_trait_stats('buildversion'));
     }
 
-    private function _trait_stats($what = 'os_version'){
+    private function _trait_stats($what = 'os_version'): array {
         $out = [];
         $machine = Machine::selectRaw("count(1) as count, $what")
             ->filter()
@@ -241,7 +242,7 @@ class MachineController extends Controller
      * Run machine lookup at Apple
      *
      **/
-    public function model_lookup($serial_number)
+    public function model_lookup(string $serial_number): JsonResponse
     {
         require_once(__DIR__ . '/../../helpers/model_lookup_helper.php');
         $out = ['error' => '', 'model' => ''];

@@ -59,4 +59,16 @@ class ReportData extends MRModel
     public function scopeNotArchived(Builder $query): Builder {
         return $query->where('archive_status', 0);
     }
+
+    /**
+     * Scope this query so that only reportdata records associated with the given array of machine group ID's are
+     * returned.
+     *
+     * @param Builder $query
+     * @param array $machineGroupIds
+     * @return Builder
+     */
+    public function scopeMachineGroupIds(Builder $query, array $machineGroupIds): Builder {
+        return $query->whereIn('machine_group', $machineGroupIds);
+    }
 }

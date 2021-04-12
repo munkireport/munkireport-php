@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ReportData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
@@ -25,7 +26,7 @@ class ArchiverController extends Controller
 
     public function bulk_update_status()
     {
-        $this->authorize('archive_bulk', \Reportdata_model::class);
+        $this->authorize('archive_bulk', ReportData::class);
 
         if( ! $days = intval(post('days'))){
             jsonError('No days sent');

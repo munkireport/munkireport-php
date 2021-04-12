@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
 
         // Archiving policy when using the Legacy \Reportdata_model class.
         'Reportdata_model' => 'App\Policies\ReportDataModelPolicy',
+        'App\ReportData' => 'App\Policies\ReportDataModelPolicy',
     ];
 
     /**
