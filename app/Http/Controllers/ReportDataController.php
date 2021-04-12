@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use DateTime;
 use MR\Kiss\View;
-use munkireport\models\Reportdata_model;
+use App\ReportData;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -17,15 +17,11 @@ class ReportDataController extends Controller
     // TODO: Apply CORS at middleware/route layer
     // header('Access-Control-Allow-Origin: *');
 
-    public function index()
-    {
-        echo "You've loaded the Reportdata module!";
-    }
 
-    public function report($serial_number)
+    public function report(string $serial_number)
     {
         jsonView(
-            Reportdata_model::where('serial_number', $serial_number)
+            ReportData::where('serial_number', $serial_number)
                 ->filter('groupOnly')
                 ->first()
         );
@@ -38,7 +34,7 @@ class ReportDataController extends Controller
      **/
     public function get_groups()
     {
-        $result = Reportdata_model::selectRaw('machine_group, COUNT(*) AS cnt')
+        $result = ReportData::selectRaw('machine_group, COUNT(*) AS cnt')
             ->groupBy('machine_group')
             ->get()
             ->toArray();
@@ -49,9 +45,6 @@ class ReportDataController extends Controller
     /**
      * Get inactive days from config
      *
-     * Undocumented function long description
-     *
-     * @param Type $var Description
      **/
     public function get_inactive_days()
     {
@@ -75,7 +68,7 @@ class ReportDataController extends Controller
         $month_ago = $now - 3600 * 24 * 30;
         $three_month_ago = $now - 3600 * 24 * 90;
         $custom_ago = $now - 3600 * 24 * $inactive_days;
-        $reportdata = Reportdata_model::selectRaw("COUNT(1) as total,
+        $reportdata = ReportData::selectRaw("COUNT(1) as total,
                 COUNT(CASE WHEN timestamp > $hour_ago THEN 1 END) AS lasthour,
                 COUNT(CASE WHEN timestamp > $today THEN 1 END) AS today,
                 COUNT(CASE WHEN timestamp > $week_ago THEN 1 END) AS lastweek,
@@ -96,7 +89,7 @@ class ReportDataController extends Controller
      **/
     public function getUptimeStats()
     {
-        $reportdata = Reportdata_model::selectRaw('SUM(CASE WHEN uptime <= 86400 THEN 1 END) AS oneday,
+        $reportdata = ReportData::selectRaw('SUM(CASE WHEN uptime <= 86400 THEN 1 END) AS oneday,
                 SUM(CASE WHEN uptime BETWEEN 86400 AND 604800 THEN 1 END) AS oneweek,
                 SUM(CASE WHEN uptime >= 604800 THEN 1 END) AS oneweekplus')
             ->where('uptime', '>', 0)
@@ -155,7 +148,7 @@ class ReportDataController extends Controller
             // Check if this is the first run
             if( ! $dates){
                 // Subtract 16 days and format to last day of the month
-                $lastDayOfTheMonthBefore = $d->sub(new DateInterval('P16D'))->format( 'Y-m-t' );
+                $lastDayOfTheMonthBefore = $d->sub(new \DateInterval('P16D'))->format( 'Y-m-t' );
                 array_push($dates, $lastDayOfTheMonthBefore);
             }
             
@@ -224,7 +217,7 @@ class ReportDataController extends Controller
 				FROM reportdata "
                 .get_machine_group_filter();
 
-        $reportdata = Reportdata_model::selectRaw(implode(', ', $sel_arr))
+        $reportdata = ReportData::selectRaw(implode(', ', $sel_arr))
             ->filter()
             ->first();
         // Create Out array

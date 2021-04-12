@@ -28,9 +28,9 @@ class MachineGroup extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-//    public function reportData() {
-//        return $this->hasMany('Mr\ReportData', 'machine_group');
-//    }
+    public function reportData() {
+        return $this->hasMany('App\ReportData', 'machine_group');
+    }
 
     /**
      * Get a list of machines associated with this machine group through
@@ -38,10 +38,10 @@ class MachineGroup extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-//    public function machines() {
-//        return $this->hasManyThrough(
-//            'Mr\Machine', 'Mr\ReportData',
-//            'machine_group', 'serial_number'
-//        );
-//    }
+    public function machines() {
+        return $this->hasManyThrough(
+            'App\Machine', 'App\ReportData',
+            'machine_group', 'serial_number'
+        );
+    }
 }

@@ -20,7 +20,7 @@ class SerialNumberModel extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function reportData() {
-        return $this->belongsTo('MR\ReportData', 'serial_number', 'serial_number');
+        return $this->belongsTo('App\ReportData', 'serial_number', 'serial_number');
     }
 
     /**
@@ -29,7 +29,7 @@ class SerialNumberModel extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function machine() {
-        return $this->belongsTo('MR\Machine', 'serial_number', 'serial_number');
+        return $this->belongsTo('App\Machine', 'serial_number', 'serial_number');
     }
 
     /**

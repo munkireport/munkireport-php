@@ -13,6 +13,6 @@ class Event extends Model
      * Retrieve the machine instance associated with this event.
      */
     public function machine() {
-        return $this->belongsTo('MR\Machine', 'serial_number', 'serial_number');
+        return $this->belongsTo('App\Machine', 'serial_number', 'serial_number');
     }
 }

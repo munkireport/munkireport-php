@@ -1,5 +1,5 @@
 i18n_title: machine.hardware_report
-js_link: module/machine/js/machine
+js_link: assets/js/machine/machine.js
 table:
   - column: machine.computer_name
     i18n_header: listing.computername

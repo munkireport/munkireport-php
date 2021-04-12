@@ -70,7 +70,7 @@ class MachineGroup extends Model
      */
     public function reportData()
     {
-        return $this->hasMany('Mr\ReportData', 'machine_group', 'groupid');
+        return $this->hasMany('App\ReportData', 'machine_group', 'groupid');
     }
 
     /**
@@ -80,7 +80,7 @@ class MachineGroup extends Model
      */
     public function machines()
     {
-        return $this->hasManyThrough('Mr\ReportData', 'App\Machine');
+        return $this->hasManyThrough('App\ReportData', 'App\Machine');
     }
 
     /**
