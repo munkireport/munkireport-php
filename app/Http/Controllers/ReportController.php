@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Notifications\BrokenClient;
 use App\Notifications\CheckIn;
 use App\Notifications\GlobalNotifiable;
+use App\ReportData;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Notification;
 use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\Modules;
 use munkireport\lib\Unserializer;
-use munkireport\models\Reportdata_model, \Messages_model, \Exception;
+use \Messages_model, \Exception;
 use munkireport\models\Hash as MunkiReportHash;
 use function xKerman\Restricted\unserialize;
 use xKerman\Restricted\UnserializeFailedException;
@@ -404,7 +405,7 @@ class ReportController extends Controller
             'archive_status' => 0, // Reset status
         ];
 
-        $model = Reportdata_model::updateOrCreate(
+        $model = ReportData::updateOrCreate(
             ['serial_number' => $serial_number],
             $mylist
         );

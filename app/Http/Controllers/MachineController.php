@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Machine;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
 use MR\Kiss\View;
 
 /**
@@ -110,7 +111,7 @@ class MachineController extends Controller
      **/
     public function new_clients(): JsonResponse
     {
-        $lastweek = time() - 60 * 60 * 24 * 7;
+        $lastweek = Carbon::now()->subWeek()->unix();
         $out = Machine::query()->select('machine.serial_number', 'computer_name', 'reg_timestamp')
             ->where('reg_timestamp', '>', $lastweek)
             ->filter()

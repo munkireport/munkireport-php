@@ -2,13 +2,12 @@
 
 namespace App\Policies;
 
+use App\ReportData;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use MR\BusinessUnit;
-use Munkireport\ReportData\ReportData;
 
 class ReportDataModelPolicy
 {
@@ -44,9 +43,9 @@ class ReportDataModelPolicy
      *   above.
      *
      * @param User $user
-     * @param Reportdata_model $reportData
+     * @param ReportData $reportData
      */
-    public function archive(User $user, \Reportdata_model $reportData) {
+    public function archive(User $user, ReportData $reportData) {
         if (empty($user->role)) return Response::deny('A user without any roles cannot perform the `archive` action.');
         $authorizedRoles = config('_munkireport.authorization.archive', []);
 
