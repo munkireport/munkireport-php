@@ -1,5 +1,5 @@
 <?php
-namespace Mr\Scopes;
+namespace App\Scopes;
 
 /**
  * This is a pseudo global scope to retrieve objects that have been updated since a number of days, hours etc.

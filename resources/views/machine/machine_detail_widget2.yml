@@ -1,7 +1,7 @@
 type: table
 class: machine-computer_name
 js_link: 
-  - module/machine/js/machine_detail
+  - assets/js/machine/machine_detail.js
   - module/tag/js/tag_detail
 table:
     - i18n_header: last_seen

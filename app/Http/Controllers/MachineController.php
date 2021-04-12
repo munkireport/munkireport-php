@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Machine;
 use MR\Kiss\View;
-use munkireport\models\Machine_model;
 
 /**
  * Machine module class
@@ -13,23 +13,13 @@ use munkireport\models\Machine_model;
 class MachineController extends Controller
 {
     /**
-     * Default method
-     *
-     * @author AvB
-     **/
-    public function index()
-    {
-        echo "You've loaded the hardware module!";
-    }
-
-    /**
      * Get duplicate computernames
      *
      *
      **/
     public function get_duplicate_computernames()
     {
-        $machine = Machine_model::selectRaw('computer_name, COUNT(*) AS count')
+        $machine = Machine::selectRaw('computer_name, COUNT(*) AS count')
             ->filter()
             ->groupBy('computer_name')
             ->having('count', '>', 1)
@@ -47,7 +37,7 @@ class MachineController extends Controller
      **/
     public function get_model_stats($summary="")
     {
-        $machine = Machine_model::selectRaw('count(*) AS count, machine_desc AS label')
+        $machine = Machine::selectRaw('count(*) AS count, machine_desc AS label')
             ->filter()
             ->groupBy('machine_desc')
             ->orderBy('count', 'desc')
@@ -112,7 +102,7 @@ class MachineController extends Controller
     public function report($serial_number = '')
     {
         jsonView(
-            Machine_model::where('machine.serial_number', $serial_number)
+            Machine::where('machine.serial_number', $serial_number)
                 ->filter('groupOnly')
                 ->first()
         );
@@ -127,7 +117,7 @@ class MachineController extends Controller
     public function new_clients()
     {
         $lastweek = time() - 60 * 60 * 24 * 7;
-        $out = Machine_model::select('machine.serial_number', 'computer_name', 'reg_timestamp')
+        $out = Machine::query()->select('machine.serial_number', 'computer_name', 'reg_timestamp')
             ->where('reg_timestamp', '>', $lastweek)
             ->filter()
             ->orderBy('reg_timestamp', 'desc')
@@ -150,7 +140,7 @@ class MachineController extends Controller
 
         // Legacy loop to do sort in php
         $tmp = array();
-        $machine = Machine_model::selectRaw('physical_memory, count(1) as count')
+        $machine = Machine::selectRaw('physical_memory, count(1) as count')
             ->filter()
             ->groupBy('physical_memory')
             ->orderBy('physical_memory', 'desc')
@@ -208,7 +198,7 @@ class MachineController extends Controller
     public function hw()
     {
         $out = [];
-        $machine = Machine_model::selectRaw('machine_name, count(1) as count')
+        $machine = Machine::selectRaw('machine_name, count(1) as count')
             ->filter()
             ->groupBy('machine_name')
             ->orderBy('count', 'desc')
@@ -249,7 +239,7 @@ class MachineController extends Controller
 
     private function _trait_stats($what = 'os_version'){
         $out = [];
-        $machine = Machine_model::selectRaw("count(1) as count, $what")
+        $machine = Machine::selectRaw("count(1) as count, $what")
             ->filter()
             ->groupBy($what)
             ->orderBy($what, 'desc')
@@ -272,7 +262,7 @@ class MachineController extends Controller
         require_once(__DIR__ . '/helpers/model_lookup_helper.php');
         $out = ['error' => '', 'model' => ''];
         try {
-            $machine = Machine_model::select()
+            $machine = Machine::select()
                 ->where('serial_number', $serial_number)
                 ->firstOrFail();
             $machine->machine_desc = machine_model_lookup($serial_number);
