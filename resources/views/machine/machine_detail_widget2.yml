@@ -1,0 +1,16 @@
+type: table
+class: machine-computer_name
+js_link: 
+  - module/machine/js/machine_detail
+  - module/tag/js/tag_detail
+table:
+    - i18n_header: last_seen
+      class: reportdata-check-in_date
+    - i18n_header: uptime
+      class: machine-uptime
+    - i18n_header: business_unit.machine_group
+      class: machine-machine_group
+    - i18n_header: reg_date
+      class: reportdata-reg_date
+    - i18n_header: status
+      class: reportdata-archive_status

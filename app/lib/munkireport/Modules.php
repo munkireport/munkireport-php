@@ -52,7 +52,7 @@ class Modules
     /**
      * Retrieve moduleSearchPaths
      *
-     * @return return array
+     * @return array
      */
     public function getModuleSearchPaths()
     {

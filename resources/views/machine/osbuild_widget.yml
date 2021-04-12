@@ -1,0 +1,7 @@
+type: bargraph
+widget_id: osbuild-widget
+api_url: /module/machine/osbuild
+i18n_title: machine.osbuild.title
+icon: fa-apple
+listing_link: /show/listing/reportdata/clients
+search_component: e.data.label

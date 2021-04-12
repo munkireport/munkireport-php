@@ -1,0 +1,17 @@
+type: table
+i18n_title: hardware.hardware
+table:
+    - i18n_header: serial
+      class: machine-serial_number
+    - i18n_header: cpu.cpu
+      class: machine-cpu
+    - i18n_header: cpu.type
+      class: machine-number_processors 
+      append: <span data-i18n="cpu.core"></span>
+    - i18n_header: physical_memory
+      class: machine-physical_memory
+      append: " GB"
+    - i18n_header: hardware.uuid
+      class: machine-platform_UUID
+    - i18n_header: model
+      class: machine-machine_model

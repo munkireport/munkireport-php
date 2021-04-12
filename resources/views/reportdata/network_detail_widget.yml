@@ -1,0 +1,8 @@
+type: table
+i18n_title: network.network
+icon: fa-sitemap
+table:
+    - i18n_header: network.remote_ip
+      class: reportdata-remote_ip
+    - i18n_header: network.hostname
+      class: machine-hostname

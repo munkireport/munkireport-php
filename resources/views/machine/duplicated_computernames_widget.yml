@@ -1,0 +1,8 @@
+type: scrollbox
+widget_id: duplicated-computernames-widget
+api_url: /module/machine/get_duplicate_computernames
+i18n_title: machine.duplicate_computernames.title
+icon: fa-bug
+listing_link: /show/listing/reportdata/clients
+search_key: computer_name
+i18n_empty_result: machine.duplicate_computernames.notfound
