@@ -60,22 +60,24 @@ class ReportDataController extends Controller
     public function get_lastseen_stats()
     {
         $inactive_days = config('reportdata.days_inactive');
-        $now = time();
-        $hour_ago = $now - 3600;
-        $today = strtotime('today');
-        $week_ago = $now - 3600 * 24 * 7;
-        $month_ago = $now - 3600 * 24 * 30;
-        $three_month_ago = $now - 3600 * 24 * 90;
-        $custom_ago = $now - 3600 * 24 * $inactive_days;
-        $reportdata = ReportData::selectRaw("COUNT(1) as total,
-                COUNT(CASE WHEN timestamp > $hour_ago THEN 1 END) AS lasthour,
-                COUNT(CASE WHEN timestamp > $today THEN 1 END) AS today,
-                COUNT(CASE WHEN timestamp > $week_ago THEN 1 END) AS lastweek,
-                COUNT(CASE WHEN timestamp > $month_ago THEN 1 END) AS lastmonth,
-                COUNT(CASE WHEN timestamp BETWEEN $month_ago AND $week_ago THEN 1 END) AS inactive_week,
-                COUNT(CASE WHEN timestamp > $custom_ago THEN 1 END) AS lastcustom,
-                COUNT(CASE WHEN timestamp BETWEEN $three_month_ago AND $month_ago THEN 1 END) AS inactive_month,
-                COUNT(CASE WHEN timestamp < $three_month_ago THEN 1 END) AS inactive_three_month")
+
+        $hour_ago = Carbon::now()->subHour();
+        $today = Carbon::now()->startOfDay();
+        $week_ago = Carbon::now()->subWeek();
+        $month_ago = Carbon::now()->subMonth();
+        $three_month_ago = Carbon::now()->subMonths(3);
+        $custom_ago = Carbon::now()->subDays($inactive_days);
+
+        $reportdata = ReportData::query()
+            ->selectRaw("COUNT(1) as total,
+                COUNT(CASE WHEN timestamp > {$hour_ago->unix()} THEN 1 END) AS lasthour,
+                COUNT(CASE WHEN timestamp > {$today->unix()} THEN 1 END) AS today,
+                COUNT(CASE WHEN timestamp > {$week_ago->unix()} THEN 1 END) AS lastweek,
+                COUNT(CASE WHEN timestamp > {$month_ago->unix()} THEN 1 END) AS lastmonth,
+                COUNT(CASE WHEN timestamp BETWEEN {$month_ago->unix()} AND {$week_ago->unix()} THEN 1 END) AS inactive_week,
+                COUNT(CASE WHEN timestamp > {$custom_ago->unix()} THEN 1 END) AS lastcustom,
+                COUNT(CASE WHEN timestamp BETWEEN {$three_month_ago->unix()} AND {$month_ago->unix()} THEN 1 END) AS inactive_month,
+                COUNT(CASE WHEN timestamp < {$three_month_ago->unix()} THEN 1 END) AS inactive_three_month")
             ->filter()
             ->first();
 
@@ -88,7 +90,8 @@ class ReportDataController extends Controller
      **/
     public function getUptimeStats()
     {
-        $reportdata = ReportData::selectRaw('SUM(CASE WHEN uptime <= 86400 THEN 1 END) AS oneday,
+        $reportdata = ReportData::query()
+            ->selectRaw('SUM(CASE WHEN uptime <= 86400 THEN 1 END) AS oneday,
                 SUM(CASE WHEN uptime BETWEEN 86400 AND 604800 THEN 1 END) AS oneweek,
                 SUM(CASE WHEN uptime >= 604800 THEN 1 END) AS oneweekplus')
             ->where('uptime', '>', 0)
@@ -96,6 +99,42 @@ class ReportDataController extends Controller
             ->first();
 
         return response()->json($reportdata);
+    }
+
+    public function new_clients2()
+    {
+        $groups = get_filtered_groups();
+        $monthlyRegistrationHistogram = DB::table('reportdata')
+            ->select('machine_name AS type')
+            ->selectRaw('COUNT(*) as cnt')
+            ->selectRaw("DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date")
+            ->leftJoin('machine', 'reportdata.serial_number', '=', 'machine.serial_number')
+            ->whereIn('machine_group', $groups)
+            ->groupBy('date', 'machine_name')
+            ->orderBy('date');
+
+        if (is_archived_filter_on()) {
+            $monthlyRegistrationHistogram = $monthlyRegistrationHistogram->where('reportdata.archive_status', '=', 0);
+        } else if (is_archived_only_filter_on()) {
+            $monthlyRegistrationHistogram = $monthlyRegistrationHistogram->where('reportdata.archive_status', '<>', 0);
+        }
+
+        $monthlyRegistrationHistogram = $monthlyRegistrationHistogram->get();
+        $series = [];
+
+        foreach ($monthlyRegistrationHistogram as $dataPoint) {
+            if (!isset($series[$dataPoint->date])) {
+                $series[$dataPoint->date] = [];
+            }
+
+            if (!isset($series[$dataPoint->date][$dataPoint->type])) {
+                $series[$dataPoint->date][$dataPoint->type] = $dataPoint->cnt;
+            } else {
+                $series[$dataPoint->date][$dataPoint->type] += $dataPoint->cnt;
+            }
+        }
+
+        return $series;
     }
 
     /**
@@ -107,26 +146,7 @@ class ReportDataController extends Controller
         $db = new \Model();
 
         $where = get_machine_group_filter('WHERE', 'r');
-//        $groups = get_filtered_groups();
-
-//        $monthlyRegistrationHistogram = DB::table('reportdata')
-//            ->selectRaw('COUNT(*) as cnt')
-//            ->selectRaw("DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date")
-//            ->leftJoin('machine', 'reportdata.serial_number', '=', 'machine.serial_number')
-//            ->whereIn('machine_group', $groups)
-//            ->groupBy('date', 'machine_name')
-//            ->orderBy('date')
-//            ->get();
-//
-//        $dates2 = array();
-//        $out2 = array();
-//
-//        foreach ($monthlyRegistrationHistogram as $event2) {
-//            $d = new Carbon( $event2->date );
-//            $lastDayOfTheMonth = $d->endOfMonth();
-//        }
-
-        $driver = config('database.connections')[config('database.default')]['driver'];
+        $driver = config('database.connections', [])[config('database.default')]['driver'];
         switch ($driver) {
             case 'sqlite':
                 $sql = "SELECT strftime('%Y-%m', DATE(reg_timestamp, 'unixepoch')) AS date,

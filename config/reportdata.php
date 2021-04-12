@@ -12,5 +12,5 @@ return [
 	|
 	*/
 	'days_inactive' => env('REPORTDATA_DAYS_INACTIVE', 30),
-  'ip_config_path' => env('REPORTDATA_IP_CONFIG_PATH', module_conf('ip_ranges.yml')),
+    'ip_config_path' => env('REPORTDATA_IP_CONFIG_PATH', module_conf('ip_ranges.yml')),
 ];

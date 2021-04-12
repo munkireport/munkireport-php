@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/module/reportdata/get_lastseen_stats', 'ReportDataController@get_lastseen_stats');
     Route::get('/module/reportdata/getUptimeStats', 'ReportDataController@getUptimeStats');
     Route::get('/module/reportdata/new_clients', 'ReportDataController@new_clients');
+    Route::get('/module/reportdata/new_clients2', 'ReportDataController@new_clients2');
     Route::get('/module/reportdata/ip', 'ReportDataController@ip');
     // Ditto for Machine
     Route::get('/module/machine/get_duplicate_computernames', 'MachineController@get_duplicate_computernames');
