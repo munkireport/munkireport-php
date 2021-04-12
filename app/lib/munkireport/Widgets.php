@@ -25,10 +25,13 @@ class Widgets
 
         $this->addSpacerWidget();
 
+        $this->addCoreWidgets();
+
         $this->addModuleWidgets();
 
         $this->addLocalWidgets($this->conf['search_paths']);
         // echo '<pre>';print_r($this->widgetList);
+
     }
 
     private function addUnknownWidget()
@@ -41,6 +44,23 @@ class Widgets
         $this->addWidget('spacer', conf('view_path') . 'widgets/spacer_widget.php');
     }
 
+    private function addCoreWidgets()
+    {
+        $this->addWidget('client', conf('view_path') . 'reportdata/client_widget.php');
+        $this->addWidget('registered_clients', conf('view_path') . 'reportdata/registered_clients_widget.php');
+        $this->addWidget('uptime', conf('view_path') . 'reportdata/uptime_widget.php');
+
+        $this->addWidget('duplicated_computernames', conf('view_path') . 'machine/duplicated_computernames_widget.yml');
+        $this->addWidget('hardware_basemodel', conf('view_path') . 'machine/hardware_basemodel_widget.yml');
+        $this->addWidget('hardware_model', conf('view_path') . 'machine/hardware_model_widget.yml');
+        $this->addWidget('hardware_type', conf('view_path') . 'machine/hardware_type_widget.yml');
+        $this->addWidget('installed_memory', conf('view_path') . 'machine/installed_memory_widget.yml');
+        $this->addWidget('memory', conf('view_path') . 'machine/memory_widget.yml');
+        $this->addWidget('new_clients', conf('view_path') . 'machine/new_clients_widget.yml');
+        $this->addWidget('os', conf('view_path') . 'machine/os_widget.yml');
+        $this->addWidget('osbuild', conf('view_path') . 'machine/osbuild_widget.yml');
+
+    }
 
     private function addModuleWidgets()
     {

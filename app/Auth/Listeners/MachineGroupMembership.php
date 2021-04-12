@@ -3,7 +3,8 @@
 
 namespace App\Auth\Listeners;
 
-use App\User, \Reportdata_model;
+use App\User;
+use munkireport\models\Reportdata_model;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
 use munkireport\models\Business_unit;

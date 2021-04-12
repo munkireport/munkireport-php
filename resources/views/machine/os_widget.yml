@@ -1,0 +1,8 @@
+type: bargraph
+widget_id: os-widget
+api_url: /module/machine/os
+i18n_title: machine.os.title
+icon: fa-apple
+listing_link: /show/listing/reportdata/clients
+label_modifier: mr.integerToVersion(label)
+search_component: mr.integerToVersion(e.data.label)

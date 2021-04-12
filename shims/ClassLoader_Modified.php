@@ -321,12 +321,11 @@ class ClassLoader
         // Backwards Compatibility for MunkiReport Custom Autoloader (munkreport_autoload)
         if (strlen($class) > 6 && stripos($class, '_model', -6) !== false) {
             $module = substr(strtolower($class), 0, -6);
-            if( ! getMrModuleObj()->getmoduleModelPath($module, $model)){
-                return null;
-            } else {
+            if(getMrModuleObj()->getmoduleModelPath($module, $model)) {
                 require_once($model);
                 return true;
             }
+            // Behaviour falls back to normal autoloader if the _model.php was not found inside a module.
         }
 
         if ($file = $this->findFile($class)) {

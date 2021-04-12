@@ -28,8 +28,6 @@
         "rodneyrehm/plist": "^2.0",
         "defuse/php-encryption": "^2.1",
         "munkireport/ard": "^3.0",
-        "munkireport/reportdata": "^3.0",
-        "munkireport/machine": "^6.0",
         "munkireport/event": "^3.0",
         "munkireport/disk_report": "^3.0",
         "munkireport/munkireport": "^3.0",

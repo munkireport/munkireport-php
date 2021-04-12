@@ -1,0 +1,17 @@
+type: button
+widget_id: installed-memory-widget
+api_url: /module/machine/get_memory_stats/button
+i18n_title: warranty.installed_memory_title
+listing_link: /show/listing/machine/hardware
+icon: fa-tasks
+buttons:
+  - label: < 4GB
+    search_component: memory < 4GB 
+    class: btn-danger  
+  - label: 4GB + 
+    search_component: 4GB memory 7GB 
+    class: btn-warning
+  - label: 8GB + 
+    search_component: memory > 7GB 
+    class: btn-success
+

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Machine_model;
 use MR\Kiss\ConnectDbTrait;
+use munkireport\models\Reportdata_model;
 
 class ClientsController extends Controller
 {
@@ -23,7 +24,7 @@ class ClientsController extends Controller
      *
      * @author AvB
      **/
-    public function get_data($serial_number = ''): JsonResponse
+    public function get_data(string $serial_number = ''): JsonResponse
     {
         if (authorized_for_serial($serial_number)) {
             $machine = new \Model;
@@ -67,10 +68,9 @@ class ClientsController extends Controller
      * Detail page of a machine
      *
      * @param string serial
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View
      * @author abn290
      **/
-    public function detail($sn = '')
+    public function detail(string $sn = '')
     {
         $data = array('serial_number' => $sn);
         $data['scripts'] = array("clients/client_detail.js");
@@ -83,7 +83,7 @@ class ClientsController extends Controller
         if (! $machine) {
             return view("client.client_dont_exist", $data);
         } else {
-            $reportData = \Reportdata_model::where('serial_number', $sn)
+            $reportData = Reportdata_model::where('serial_number', $sn)
                 ->first();
             $data['reportData'] = $reportData;
 

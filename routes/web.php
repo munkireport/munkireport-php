@@ -36,6 +36,27 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/locale/get/{lang?}', 'LocaleController@get');
     Route::get('/locale/get/{lang}/{load}', 'LocaleController@get');
 
+
+    // Redirect old ReportData module routes back to the Core Controller
+    Route::get('/module/reportdata/report/{serial_number}', 'ReportDataController@report');
+    Route::get('/module/reportdata/get_groups', 'ReportDataController@get_groups');
+    Route::get('/module/reportdata/get_inactive_days', 'ReportDataController@get_inactive_days');
+    Route::get('/module/reportdata/get_lastseen_stats', 'ReportDataController@get_lastseen_stats');
+    Route::get('/module/reportdata/getUptimeStats', 'ReportDataController@getUptimeStats');
+    Route::get('/module/reportdata/new_clients', 'ReportDataController@new_clients');
+    Route::get('/module/reportdata/ip', 'ReportDataController@ip');
+    // Ditto for Machine
+    Route::get('/module/machine/get_duplicate_computernames', 'MachineController@get_duplicate_computernames');
+    Route::get('/module/machine/get_model_stats/{summary?}', 'MachineController@get_model_stats');
+    Route::get('/module/machine/report/{serial_number?}', 'MachineController@report');
+    Route::get('/module/machine/new_clients', 'MachineController@new_clients');
+    Route::get('/module/machine/get_memory_stats/{format?}', 'MachineController@get_memory_stats');
+    Route::get('/module/machine/hw', 'MachineController@hw');
+    Route::get('/module/machine/os', 'MachineController@os');
+    Route::get('/module/machine/osbuild', 'MachineController@osbuild');
+    Route::get('/module/machine/model_lookup/{serial_number}', 'MachineController@model_lookup');
+
+
     Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
     Route::post('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
 

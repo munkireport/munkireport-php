@@ -1,0 +1,14 @@
+type: table
+i18n_title: software.software
+table:
+    - i18n_header: os.version
+      prepend: macOS
+      class: machine-os_version
+    - i18n_header: buildversion
+      class: machine-buildversion
+    - i18n_header: cpu.arch
+      class: machine-cpu_arch
+    - i18n_header: software.smc_version
+      class: machine-SMC_version_system
+    - i18n_header: software.boot_rom_version
+      class: machine-boot_rom_version
