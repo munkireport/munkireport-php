@@ -55,6 +55,9 @@ class Modules
      *
      * This is a temporary workaround for the fact that listings and processors can't be discovered inside
      * the core package. When theres another registration mechanism, this can be removed.
+     *
+     * Widgets have been omitted because addModuleWidgets() always assumes views are in the same path as the module.
+     * There is a function called addCoreWidgets() which adds them separately.
      */
     protected function addCoreModules()
     {
@@ -65,11 +68,11 @@ class Modules
             'listings' => array(
                 'clients' => array('view' => 'clients_listing', 'i18n' => 'client.clients'),
             ),
-            'widgets' => array(
-                'client' => array('view' => 'client_widget'),
-                'registered_clients' => array('view' => 'registered_clients_widget'),
-                'uptime' => array('view' => 'uptime_widget'),
-            ),
+//            'widgets' => array(
+//                'client' => array('view' => 'client_widget'),
+//                'registered_clients' => array('view' => 'registered_clients_widget'),
+//                'uptime' => array('view' => 'uptime_widget'),
+//            ),
             'reports' => array(
                 'clients' => array('view' => 'clients', 'i18n' => 'client.report'),
             ),
@@ -87,17 +90,17 @@ class Modules
             'listings' => [
                 'hardware' => ['view' => 'hardware_listing', 'i18n' => 'machine.hardware'],
             ],
-            'widgets' => [
-                'duplicated_computernames' => ['view' => 'duplicated_computernames_widget'],
-                'hardware_basemodel' => ['view' => 'hardware_basemodel_widget'],
-                'hardware_model' => ['view' => 'hardware_model_widget'],
-                'hardware_type' => ['view' => 'hardware_type_widget'],
-                'installed_memory' => ['view' => 'installed_memory_widget'],
-                'memory' => ['view' => 'memory_widget'],
-                'new_clients' => ['view' => 'new_clients_widget'],
-                'os' => ['view' => 'os_widget'],
-                'osbuild' => ['view' => 'osbuild_widget'],
-            ],
+//            'widgets' => [
+//                'duplicated_computernames' => ['view' => 'duplicated_computernames_widget'],
+//                'hardware_basemodel' => ['view' => 'hardware_basemodel_widget'],
+//                'hardware_model' => ['view' => 'hardware_model_widget'],
+//                'hardware_type' => ['view' => 'hardware_type_widget'],
+//                'installed_memory' => ['view' => 'installed_memory_widget'],
+//                'memory' => ['view' => 'memory_widget'],
+//                'new_clients' => ['view' => 'new_clients_widget'],
+//                'os' => ['view' => 'os_widget'],
+//                'osbuild' => ['view' => 'osbuild_widget'],
+//            ],
             'reports' => [
                 'hardware' => ['view' => 'hardware', 'i18n' => 'machine.hardware_report'],
             ],

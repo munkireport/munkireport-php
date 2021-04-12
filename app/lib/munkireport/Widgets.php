@@ -46,9 +46,9 @@ class Widgets
 
     private function addCoreWidgets()
     {
-        $this->addWidget('client', conf('view_path') . 'reportdata/client_widget.php');
-        $this->addWidget('registered_clients', conf('view_path') . 'reportdata/registered_clients_widget.php');
-        $this->addWidget('uptime', conf('view_path') . 'reportdata/uptime_widget.php');
+        $this->addWidget('client', resource_path('views') . '/reportdata/client_widget.php');
+        $this->addWidget('registered_clients', resource_path('views') . '/reportdata/registered_clients_widget.php');
+        $this->addWidget('uptime', resource_path('views') . '/reportdata/uptime_widget.php');
 
         $this->addWidget('duplicated_computernames', conf('view_path') . 'machine/duplicated_computernames_widget.yml');
         $this->addWidget('hardware_basemodel', conf('view_path') . 'machine/hardware_basemodel_widget.yml');
