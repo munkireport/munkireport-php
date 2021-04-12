@@ -21,7 +21,7 @@ class ShowController extends Controller
     private $modules;
     public function __construct()
     {
-        $this->modules = $modules = getMrModuleObj()->loadInfo();
+        $this->modules = getMrModuleObj()->loadInfo();
     }
 
     public function index()

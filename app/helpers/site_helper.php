@@ -275,8 +275,7 @@ function authorized_for_serial(string $serial_number)
 function get_machine_group($serial_number = '')
 {
     if (! isset($GLOBALS['machine_groups'][$serial_number])) {
-        
-        $machine_group = Reportdata_model::select('machine_group')
+        $machine_group = \App\ReportData::select('machine_group')
             ->where('serial_number', $serial_number)
             ->pluck('machine_group')
             ->first();

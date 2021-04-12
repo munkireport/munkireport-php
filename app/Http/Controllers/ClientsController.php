@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Machine;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -27,16 +28,19 @@ class ClientsController extends Controller
     public function get_data(string $serial_number = ''): JsonResponse
     {
         if (authorized_for_serial($serial_number)) {
-            $machine = new \Model;
+            $machine = Machine::with('reportdata', 'network')
+                ->where('serial_number', $serial_number)
+                // ->orderBy('network.ipv4ip', 'DESC')
+                ->firstOrFail();
 
-            $sql = "SELECT m.computer_name, r.remote_ip, r.archive_status as status, n.ipv4ip, n.ipv6ip
-                FROM machine m
-                LEFT JOIN network n ON (m.serial_number = n.serial_number)
-                LEFT JOIN reportdata r ON (m.serial_number = r.serial_number)
-                WHERE m.serial_number = ? ORDER BY ipv4ip DESC LIMIT 1
-                ";
-
-            return response()->json($machine->query($sql, $serial_number));
+            $out = [
+                'computer_name' => $machine->computer_name,
+                'remote_ip' => $machine->reportData->remote_ip,
+                'status' => $machine->reportData->archive_status,
+                'ipv4ip' => $machine->network ? $machine->network->ipv4ip : null,
+                'ipv6ip' => $machine->network ? $machine->network->ipv6ip : null,
+            ];
+            return response()->json($out);
         } else {
             return response()
                     ->setStatusCode(403)

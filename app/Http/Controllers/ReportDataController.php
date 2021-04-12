@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use MR\Kiss\View;
 use App\ReportData;
 use Symfony\Component\Yaml\Yaml;
@@ -105,25 +107,44 @@ class ReportDataController extends Controller
         $db = new \Model();
 
         $where = get_machine_group_filter('WHERE', 'r');
+//        $groups = get_filtered_groups();
 
-        switch (conf('connection')['driver']) {
+//        $monthlyRegistrationHistogram = DB::table('reportdata')
+//            ->selectRaw('COUNT(*) as cnt')
+//            ->selectRaw("DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date")
+//            ->leftJoin('machine', 'reportdata.serial_number', '=', 'machine.serial_number')
+//            ->whereIn('machine_group', $groups)
+//            ->groupBy('date', 'machine_name')
+//            ->orderBy('date')
+//            ->get();
+//
+//        $dates2 = array();
+//        $out2 = array();
+//
+//        foreach ($monthlyRegistrationHistogram as $event2) {
+//            $d = new Carbon( $event2->date );
+//            $lastDayOfTheMonth = $d->endOfMonth();
+//        }
+
+        $driver = config('database.connections')[config('database.default')]['driver'];
+        switch ($driver) {
             case 'sqlite':
                 $sql = "SELECT strftime('%Y-%m', DATE(reg_timestamp, 'unixepoch')) AS date,
 						COUNT(*) AS cnt,
 						machine_name AS type
 						FROM reportdata r
-						LEFT JOIN machine m 
+						LEFT JOIN machine m
 							ON (r.serial_number = m.serial_number)
 						$where
 						GROUP BY date, machine_name
 						ORDER BY date";
                 break;
             case 'mysql':
-                $sql = "SELECT DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date, 
+                $sql = "SELECT DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date,
 						COUNT(*) AS cnt,
 						machine_name AS type
 						FROM reportdata r
-						LEFT JOIN machine m 
+						LEFT JOIN machine m
 							ON (r.serial_number = m.serial_number)
                         $where
 						GROUP BY date, machine_name
@@ -135,19 +156,19 @@ class ReportDataController extends Controller
 
         $dates = array();
         $out = array();
-        
+
         foreach ($db->query($sql) as $event) {
             // Store date
             $d = new DateTime( $event->date );
             $lastDayOfTheMonth = $d->format( 'Y-m-t' );
-            
+
             // Check if this is the first run
             if( ! $dates){
                 // Subtract 16 days and format to last day of the month
                 $lastDayOfTheMonthBefore = $d->sub(new \DateInterval('P16D'))->format( 'Y-m-t' );
                 array_push($dates, $lastDayOfTheMonthBefore);
             }
-            
+
             $pos = array_search($lastDayOfTheMonth, $dates);
             if ($pos === false) {
                 array_push($dates, $lastDayOfTheMonth);
@@ -156,15 +177,15 @@ class ReportDataController extends Controller
 
             $out[$event->type][$pos] = intval($event->cnt);
         }
-        
+
         // Sort machine types
         ksort($out);
-        
+
         // Replace last date with current date
         if(array_pop($dates)){
             array_push($dates, date('Y-m-d'));
         }
-        
+
         // Prepend all types with 0
         foreach($out as $type => $data)
         {

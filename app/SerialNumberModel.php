@@ -1,5 +1,5 @@
 <?php
-namespace MR;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
  * with a `serial_number` column that can be directly related back to
  * a machine or reportdata entry.
  *
- * It exists to add scopes and relationships that are generic to most models.
+ * It exists to add scopes and relationships that are generic to most models without having to write them.
  *
- * @package Mr
+ * @package App
  */
 class SerialNumberModel extends Model
 {

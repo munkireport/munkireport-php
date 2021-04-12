@@ -25,9 +25,6 @@ class AdminController extends Controller
 
     /**
      * Save Machine Group
-     *
-     * @return void
-     * @author
      **/
     public function save_machine_group(Request $request): JsonResponse
     {
