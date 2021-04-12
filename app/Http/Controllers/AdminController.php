@@ -11,7 +11,7 @@ use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\BusinessUnit;
 use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
-use Reportdata_model;
+use munkireport\models\Reportdata_model;
 
 class AdminController extends Controller
 {

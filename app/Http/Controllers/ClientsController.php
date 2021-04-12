@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Machine_model;
+use munkireport\models\Machine_model;
 use MR\Kiss\ConnectDbTrait;
 use munkireport\models\Reportdata_model;
 
