@@ -3,7 +3,7 @@
 $this->view('listings/default',
 [
 	"i18n_title" => 'client.report',
-	"js_link" => "module/reportdata/js/reportdata",
+	"js_link" => "/assets/js/reportdata/reportdata.js",
 	"table" => [
 		[
 			"column" => "machine.computer_name",

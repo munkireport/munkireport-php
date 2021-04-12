@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use \Reportdata_model;
+use munkireport\models\Reportdata_model;
 
 class ArchiverController extends Controller
 {
