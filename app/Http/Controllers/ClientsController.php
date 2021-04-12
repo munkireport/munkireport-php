@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Machine;
+use App\ReportData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use munkireport\models\Machine_model;
 use MR\Kiss\ConnectDbTrait;
-use munkireport\models\Reportdata_model;
 
 class ClientsController extends Controller
 {
@@ -87,7 +87,7 @@ class ClientsController extends Controller
         if (! $machine) {
             return view("client.client_dont_exist", $data);
         } else {
-            $reportData = Reportdata_model::where('serial_number', $sn)
+            $reportData = ReportData::where('serial_number', $sn)
                 ->first();
             $data['reportData'] = $reportData;
 

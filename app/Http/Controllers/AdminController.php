@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ReportData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,7 +12,7 @@ use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\BusinessUnit;
 use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
-use munkireport\models\Reportdata_model;
+
 
 class AdminController extends Controller
 {
@@ -24,12 +25,19 @@ class AdminController extends Controller
     }
 
     /**
-     * Save Machine Group
-     **/
+     * Save/Update a Machine Group
+     *
+     * Example Request Body:
+     * - form-encoded
+     * groupid=0&name=Group+0f&key=&business_unit=1
+     *
+     * If `groupid` is empty or null, create a new machine group.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function save_machine_group(Request $request): JsonResponse
     {
-
-        $this->middleware('auth');
         Gate::authorize('global');
 
 
@@ -96,16 +104,17 @@ class AdminController extends Controller
         return jsonView($out, 200, false, true);
     }
 
-    //===============================================================
-
     /**
-     * Remove machine group
+     * Remove a Machine Group
      *
-     * @author
-     **/
+     * Request is form encoded and contains only the `groupid` field.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
     public function remove_machine_group(Request $request): JsonResponse
     {
-        $this->middleware('auth');
         Gate::authorize('global');
 
         $out = [];
@@ -121,7 +130,7 @@ class AdminController extends Controller
                     ->delete();
             }
             // Reset group in report_data
-            Reportdata_model::where('machine_group', $groupid)
+            ReportData::where('machine_group', $groupid)
                 ->update(['machine_group' => 0]);
         }
 
@@ -138,7 +147,6 @@ class AdminController extends Controller
      **/
     public function save_business_unit(Request $request): JsonResponse
     {
-        $this->middleware('auth');
         Gate::authorize('global');
 
         $unit = new BusinessUnit();
@@ -158,7 +166,6 @@ class AdminController extends Controller
      **/
     public function remove_business_unit(): JsonResponse
     {
-        $this->middleware('auth');
         Gate::authorize('global');
 
 
@@ -178,7 +185,6 @@ class AdminController extends Controller
      **/
     public function get_bu_data(): JsonResponse
     {
-        $this->middleware('auth');
         Gate::authorize('global');
 
         $out = [];
@@ -222,13 +228,9 @@ class AdminController extends Controller
 
     /**
      * Return Machinegroup data for groupid or all groups if groupid is empty
-     *
-     * @return void
-     * @author
      **/
-    public function get_mg_data($groupid = ""): JsonResponse
+    public function get_mg_data(string $groupid = ""): JsonResponse
     {
-        $this->middleware('auth');
         Gate::authorize('global');
 
         $out = [];
@@ -240,7 +242,7 @@ class AdminController extends Controller
         }
 
         // Get registered machine groups
-        $result = Reportdata_model::selectRaw('machine_group, COUNT(*) AS cnt')
+        $result = ReportData::selectRaw('machine_group, COUNT(*) AS cnt')
             ->groupBy('machine_group')
             ->get()
             ->toArray();
@@ -259,14 +261,8 @@ class AdminController extends Controller
 
     //===============================================================
 
-    /**
-     * undocumented function
-     *
-     * @author
-     **/
     public function show($which = '')
     {
-        $this->middleware('auth');
         Gate::authorize('global');
 
         if ($which) {
