@@ -7,6 +7,6 @@ class ReportDataSeeder extends Seeder
 {
     public function run()
     {
-
+        factory(App\ReportData::class, 50)->create();
     }
 }

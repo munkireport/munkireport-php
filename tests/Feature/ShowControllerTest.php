@@ -28,7 +28,7 @@ class ShowControllerTest extends TestCase
     
     public function testReport()
     {
-
+        $this->markTestIncomplete();
     }
 
     public function testDashboardRedirect()
@@ -47,7 +47,7 @@ class ShowControllerTest extends TestCase
 
     public function testCustom()
     {
-
+        $this->markTestIncomplete();
     }
 
     public function testIndex()

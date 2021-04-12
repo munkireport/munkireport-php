@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Machine;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AuthorizationTestCase;
@@ -51,7 +52,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testAdminCanArchiveMachine()
     {
-        $machine = factory(Machine_model::class)->create();
+        $machine = factory(Machine::class)->create();
         $response = $this->actingAs($this->adminUser)
                          ->post("/archiver/update_status/${machine['serial_number']}", [
                              'status' => 1,
@@ -62,7 +63,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testManagerCanArchiveMachine()
     {
-        $machine = factory(Machine_model::class)->create();
+        $machine = factory(Machine::class)->create();
         $response = $this->actingAs($this->managerUser)
             ->post("/archiver/update_status/${machine['serial_number']}", [
                 'status' => 1,
@@ -73,7 +74,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testArchiverCanArchiveMachine()
     {
-        $machine = factory(Machine_model::class)->create();
+        $machine = factory(Machine::class)->create();
         $response = $this->actingAs($this->archiverUser)
             ->post("/archiver/update_status/${machine['serial_number']}", [
                 'status' => 1,
@@ -84,7 +85,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testUserCannotArchiveMachine()
     {
-        $machine = factory(Machine_model::class)->create();
+        $machine = factory(Machine::class)->create();
         $response = $this->actingAs($this->user)
             ->post("/archiver/update_status/${machine['serial_number']}", [
                 'status' => 1,

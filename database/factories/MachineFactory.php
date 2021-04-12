@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(\munkireport\models\Machine_model::class, function (Faker\Generator $faker) {
+$factory->define(\App\Machine::class, function (Faker\Generator $faker) {
 
     $oses = [
         ['101206', '16G29'],
