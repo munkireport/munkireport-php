@@ -1,9 +1,10 @@
 <?php
+namespace munkireport\processors;
 
+use App\Machine;
 use CFPropertyList\CFPropertyList;
-use munkireport\processors\Processor;
 
-class Machine_processor extends Processor
+class MachineProcessor extends Processor
 {
     /**
      * Process data sent by postflight
@@ -52,11 +53,11 @@ class Machine_processor extends Processor
 
         // Retrieve machine record (if existing)
         try {
-            $machine = Machine_model::select()
+            $machine = Machine::select()
                 ->where('serial_number', $this->serial_number)
                 ->firstOrFail();
         } catch (\Throwable $th) {
-            $machine = new Machine_model();
+            $machine = new Machine();
         }
 
         // Check if we need to retrieve model from Apple
