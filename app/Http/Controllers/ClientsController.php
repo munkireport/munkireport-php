@@ -30,7 +30,7 @@ class ClientsController extends Controller
         if (authorized_for_serial($serial_number)) {
             $machine = Machine::with('reportdata', 'network')
                 ->where('serial_number', $serial_number)
-                // ->orderBy('network.ipv4ip', 'DESC')
+                ->orderBy('network.ipv4ip', 'DESC')
                 ->firstOrFail();
 
             $out = [

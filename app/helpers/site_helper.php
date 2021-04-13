@@ -318,11 +318,8 @@ function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
  *
  * These $_SESSION global variables won't necessarily be populated in the same way, and should not be accessed directly
  * through the $_SESSION superglobal anyway - mosen.
- *
- * @return void
- * @author
  **/
-function get_filtered_groups()
+function get_filtered_groups(): array
 {
     $out = array(0);
 

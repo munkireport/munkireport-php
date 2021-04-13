@@ -104,11 +104,16 @@ class ReportDataController extends Controller
     public function new_clients2()
     {
         $groups = get_filtered_groups();
+        $mysqlDateExpression = "DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date";
+        $sqliteDateExpression = "strftime('%Y-%m', DATE(reg_timestamp, 'unixepoch')) AS date";
+
         $monthlyRegistrationHistogram = DB::table('reportdata')
             ->select('machine_name AS type')
             ->selectRaw('COUNT(*) as cnt')
-            ->selectRaw("DATE_FORMAT(DATE(FROM_UNIXTIME(reg_timestamp)), '%Y-%m') AS date")
-            ->leftJoin('machine', 'reportdata.serial_number', '=', 'machine.serial_number')
+            ->selectRaw($mysqlDateExpression)
+            ->leftJoin(
+                'machine',
+                'reportdata.serial_number', '=', 'machine.serial_number')
             ->whereIn('machine_group', $groups)
             ->groupBy('date', 'machine_name')
             ->orderBy('date');
@@ -134,7 +139,41 @@ class ReportDataController extends Controller
             }
         }
 
-        return $series;
+        // Produce 'dates' output array with one date per array index (last day of the month) and
+        // 'types' output array with one machine type as a key, and an array of indices referring to the date in the
+        // first variable, with the value being the count of machine registrations on that date.
+        // yeah. this is insane.
+        $dates = array_keys($series);
+
+        $types = [];
+        for ($i = 0; $i < count($dates); $i++) {
+            foreach ($series[$dates[$i]] as $type => $count) {
+                if (!isset($types[$type])) {
+                    $types[$type] = [
+                        $i => $count,
+                    ];
+                } else {
+                    $types[$type][$i] = $count;
+                }
+            }
+
+        }
+
+        // 1. Expected output is the last day of the month
+        // 2. If the first element, prepend the last day of the previous month with a fixed value of zero.
+        // 3. If its the last element, then it should be moved to the current date instead of the last date of the previous
+        // month.
+        $adjustedDates = [];
+        foreach ($dates as $date) {
+            $d = new Carbon($date);
+            if ($dates[count($dates) - 1] === $date) {
+                $adjustedDates[] = Carbon::now()->format('Y-m-d');
+            } else {
+                $adjustedDates[] = $d->endOfMonth()->format('Y-m-d');
+            }
+        }
+
+        return ['dates' => $adjustedDates, 'types' => $types];
     }
 
     /**

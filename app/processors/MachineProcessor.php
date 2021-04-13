@@ -62,7 +62,7 @@ class MachineProcessor extends Processor
 
         // Check if we need to retrieve model from Apple
         if ($this->should_run_model_description_lookup($machine)){
-            require_once(__DIR__ . '/helpers/model_lookup_helper.php');
+            require_once(__DIR__ . '/../helpers/model_lookup_helper.php');
             $mylist['machine_desc'] = machine_model_lookup($this->serial_number);
         } 
 

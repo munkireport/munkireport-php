@@ -9,23 +9,6 @@ use Illuminate\Support\Str;
 
 class ManagerController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-
-//        Gate::authorize('delete_machine');
-    }
-
-
-    //===============================================================
-
-    public function index()
-    {
-        echo 'Manager';
-    }
-
-    //===============================================================
-
     public function delete_machine(string $serial_number = '')
     {
         Gate::authorize('delete_machine');
