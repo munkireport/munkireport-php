@@ -32,6 +32,33 @@ class LocaleController extends Controller
             $this->modules = getMrModuleObj()->loadInfo(True);
         }
 
+//        $locales = [
+//            'messages' => [],
+//            'fallback_main' => [],
+//            'fallback_module' => [],
+//            'lang_main' => [],
+//            'lang_module' => [],
+//        ];
+//
+//        if ($lang === $this->fallBackLang) {
+//            $locales['messages']['info'] = "requested language is fallback language";
+//        } elseif (!preg_match($this->langFilter, $lang)) {
+//            $locales['messages']['error'] = "requested language is not valid: {$lang}";
+//        } else {
+//            if (is_file(public_path("/assets/locales/{$lang}.json"))) {
+//                $locales['lang_main'] = json_decode(file_get_contents(public_path("/assets/locales/{$lang}.json")));
+//            } else {
+//                $locales['messages']['error'] = "Could not load main locale for: {$lang}";
+//            }
+//            $locales['lang_module'] = json_decode($this->modules->getModuleLocales($lang));
+//        }
+//
+//        $fallbackMainLocale = file_get_contents(public_path('/assets/locales/' . $this->fallBackLang . '.json'));
+//        $locales['fallback_main'] = json_decode($fallbackMainLocale);
+//        $locales['fallback_module'] = json_decode($this->modules->getModuleLocales($this->fallBackLang));
+//
+//        return response()->json($locales);
+
         $locales = array(
             'messages' => '{}',
             'fallback_main' => '{}',

@@ -18,10 +18,6 @@ use munkireport\lib\Database;
  */
 class SystemController extends Controller
 {
-    // NOTE: do not put Gate:: methods into the constructor, they will run before the gates are fully defined.
-
-    //===============================================================
-
     /**
      * DataBase
      *

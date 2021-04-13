@@ -180,6 +180,32 @@ class AdminController extends Controller
     /**
      * Return BU data for unitid or all units if unitid is empty
      *
+     * Response is a JSON Array with elements in this format:
+     *
+     * {
+     *   "0": {
+     *       "users": [
+     *           "user"
+     *       ],
+     *       "managers": [
+     *           "@managers_group",
+     *           "manager",
+     *           "admin@localhost"
+     *       ],
+     *       "archivers": [
+     *           "@archivers_group",
+     *           "archiver"
+     *       ],
+     *       "machine_groups": [
+     *           0,
+     *           1,
+     *           0
+     *       ],
+     *       "name": "IT Department",
+     *       "unitid": 1
+     *   }
+     *
+     *
      * @return void
      * @author
      **/
@@ -227,7 +253,20 @@ class AdminController extends Controller
     //===============================================================
 
     /**
-     * Return Machinegroup data for groupid or all groups if groupid is empty
+     * Return Machinegroup data for groupid or all groups if groupid is empty.
+     *
+     * Example response (no groupid) Array containing elements like:
+     * {
+     *  ...
+     *   "1": {
+     *     "keys": [
+     *       "1448859D-1EA0-DD43-7C9C-605238328F3E"
+     *     ],
+     *     "groupid": 1,
+     *     "name": "Example Machine Group"
+     *     }
+     *   }
+     * }
      **/
     public function get_mg_data(string $groupid = ""): JsonResponse
     {

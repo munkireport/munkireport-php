@@ -34,22 +34,22 @@ class AdminControllerTest extends AuthorizationTestCase
         ]);
     }
 
-       /**
+    /**
      *  GET /admin/get_mg_data
      */
     public function testGetMgData()
     {
         // $machineGroup = factory(MachineGroup::class)->create();
-
-        $response = $this->actingAs($this->adminUser)->get('/admin/get_mg_data');
-        // $response->dump();
+        $response = $this->actingAs($this->adminUser)
+                         ->get('/admin/get_mg_data');
         $response->assertOk();
         $this->assertIsArray($response->json());
         $response->assertJsonStructure([
             '*' => [
                 'name',
                 'groupid',
-                'keys',    
+                'keys',
+                'cnt',
             ]
         ]);
     }
