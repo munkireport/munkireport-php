@@ -16,15 +16,24 @@ use munkireport\lib\Modules;
 use munkireport\lib\Unserializer;
 use \Messages_model, \Exception;
 use munkireport\models\Hash as MunkiReportHash;
-use function xKerman\Restricted\unserialize;
-use xKerman\Restricted\UnserializeFailedException;
-
 
 class ReportController extends Controller
 {
     use ConnectDbTrait;
 
     public $group = 0;
+
+    /**
+     * Core Processors.
+     *
+     * TODO: find a better place for registering these, maybe as a Service Container tagged service.
+     *
+     * @var string[]
+     */
+    public static $processors = [
+        'reportdata' => \munkireport\processors\ReportDataProcessor::class,
+        'machine' => \munkireport\processors\MachineProcessor::class,
+    ];
 
     /**
      * Constructor: test if authentication is needed
@@ -41,38 +50,23 @@ class ReportController extends Controller
     /**
      * Some of the code originally in __construct() prevented the route:list command from working on the CLI.
      * This initialisation code has been moved here.
+     *
+     * NOTE: The Illuminate/Testing framework does not populate superglobals like $_GET and $_POST, so using them here
+     * makes them incompatible with testing.
      */
-    public function init()
+    public function init(Request $request)
     {
         // Check for maintenance mode
         if(file_exists(APP_ROOT . 'storage/framework/down')) {
             $this->error("MunkiReport is in maintenance mode, try again later.");
         }
 
-        if (isset($_POST['passphrase'])) {
-            $this->group = passphrase_to_group($_POST['passphrase']);
-        }
-
-        if ($auth_list = config('_munkireport.client_passphrases')) {
-            if (! is_array($auth_list)) {
-                $this->error("conf['client_passphrases'] should be an array");
-            }
-
-            if (! isset($_POST['passphrase'])) {
-                $this->error("passphrase is required but missing");
-            }
-
-            if (! in_array($_POST['passphrase'], $auth_list)) {
-                $this->error('passphrase "'.$_POST['passphrase'].'" not accepted');
-            }
-        }
-
         // Validate Serialnumber
-        if (! isset($_POST['serial']) || ! trim($_POST['serial'])) {
+        if (!$request->has('serial') || !trim($request->get('serial'))) {
             $this->error("Serial is missing or empty");
         }
 
-        if ($_POST['serial'] !== filter_var($_POST['serial'], FILTER_SANITIZE_STRING))
+        if ($request->get('serial') !== filter_var($request->get('serial'), FILTER_SANITIZE_STRING))
         {
             $this->error("Serial contains illegal characters");
         }
@@ -89,11 +83,11 @@ class ReportController extends Controller
      **/
     public function hash_check(Request $request)
     {
-        $this->init();
+        $this->init($request);
 
         // Check if we have data
         if (!$request->has('items')) {
-            $this->error("Items are missing");
+            return response(serialize(array('error' => 'Items are missing')));
         }
 
         $itemarr = ['error' => '', 'danger' => '', 'warning' => '', 'info' => ''];
@@ -139,7 +133,7 @@ class ReportController extends Controller
                 }
             }
         } catch (Exception $e) {
-            $this->error('hash_check: '.$e->getMessage());
+            return response(serialize(array('error' => 'hash_check: ' . $e->getMessage())));
         }
 
         // Handle errors
@@ -150,7 +144,7 @@ class ReportController extends Controller
         }
 
         // Return list of changed hashes
-        echo serialize($itemarr);
+        return response(serialize($itemarr));
     }
 
     /**
@@ -158,15 +152,24 @@ class ReportController extends Controller
      *
      * Clients check in client data using $_POST
      *
+     * The client will send a form encoded request with three keys:
+     *
+     * - serial: The serial number for the report we are submitting.
+     * - passphrase: "None" or a specific passphrase if assigned to a Machine Group.
+     * - items: A php serialize()'d string of all report data.
+     *
+     * v6.x NOTE: superglobals such as $_POST and $_GET are not compatible with the Illuminate\Testing framework
+     *            and have been rewritten to use the Request type.
+     *
      * @author AvB
      **/
-    public function check_in()
+    public function check_in(Request $request)
     {
-        $this->init();
+        $this->init($request);
 
-        if (! isset($_POST['items'])) {
+        if (!$request->has('items')) {
             Log::warning("No items in POST");
-            $this->error("No items in POST");
+            return response(serialize(array('error' => 'No items in POST')));
         }
 
         // $global = new GlobalNotifiable();
@@ -174,15 +177,15 @@ class ReportController extends Controller
         // $global->notify(new CheckIn($_POST['serial']));
 
         try{
-            $unserializer = new Unserializer($_POST['items']);
+            $unserializer = new Unserializer($request->get('items'));
             $arr = $unserializer->unserialize();
         }
         catch (Exception $e){
-            $this->error("Could not unserialize items");
+            return response(serialize(array('error' => 'Could not unserialize items')));
         }
 
         if (! is_array($arr)) {
-            $this->error("Could not parse items, not a proper serialized file");
+            return response(serialize(array('error' => 'Could not parse items, not a proper serialized file')));
         }
 
         $moduleMgr = new Modules;
@@ -208,20 +211,23 @@ class ReportController extends Controller
                 $name = $module . '_model';
             }
 
+            if ($this->_runCoreProcessor($module, $request->post('serial'), $val['data'])) {
+                $this->_updateHash($request->post('serial'), $module, $val['hash']);
+            }
             // Try to load processor
-            if ($moduleMgr->getModuleProcessorPath($module, $processor_path))
+            elseif ($moduleMgr->getModuleProcessorPath($module, $processor_path))
             {
-                if ($this->_runProcessor($module, $processor_path, $_POST['serial'], $val['data']))
+                if ($this->_runProcessor($module, $processor_path, $request->post('serial'), $val['data']))
                 {
-                    $this->_updateHash($_POST['serial'], $module, $val['hash']);
+                    $this->_updateHash($request->post('serial'), $module, $val['hash']);
                 }
             }
             // Otherwise run model->processor()
             elseif ($moduleMgr->getModuleModelPath($module, $model_path))
             {
-                if ($this->_runModel($module, $model_path, $_POST['serial'], $val['data']))
+                if ($this->_runModel($module, $model_path, $request->post('serial'), $val['data']))
                 {
-                    $this->_updateHash($_POST['serial'], $module, $val['hash']);
+                    $this->_updateHash($request->post('serial'), $module, $val['hash']);
                 }
             }
             else
@@ -230,6 +236,8 @@ class ReportController extends Controller
             }
             $this->_collectAlerts();
         }
+
+        return response(null);
     }
 
     /**
@@ -243,7 +251,7 @@ class ReportController extends Controller
      **/
     public function broken_client(Request $request)
     {
-        $this->init();
+        $this->init($request);
 
         // Register check in reportdata
         $this->_register($request->post('serial'));
@@ -321,7 +329,7 @@ class ReportController extends Controller
         try {
 
             // Load model
-            $class = new $classname($request->post('serial'));
+            $class = new $classname($serial_number);
 
             if (! method_exists($class, 'process')) {
                 $this->_warning("No process method in: $classname");
@@ -333,6 +341,31 @@ class ReportController extends Controller
         } catch (Exception $e) {
             $this->_warning("An error occurred while processing: $classname");
             $this->_warning("Error: " . $e->getMessage());
+            return False;
+        }
+    }
+
+    private function _runCoreProcessor($module, $serial_number, $data): bool
+    {
+        if (array_key_exists($module, static::$processors)) {
+            try {
+                // Load model
+                $classname = static::$processors[$module];
+                $class = new $classname($module, $serial_number);
+
+                if (! method_exists($class, 'run')) {
+                    $this->_warning("No run method in: $classname");
+                    return False;
+                }
+                $this->connectDB();
+                $class->run($data);
+                return True;
+            } catch (Exception $e) {
+                $this->_warning("An error occurred while processing: $classname");
+                $this->_warning("Error: " . $e->getMessage());
+                return False;
+            }
+        } else {
             return False;
         }
     }

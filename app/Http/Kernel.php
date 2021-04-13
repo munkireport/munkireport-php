@@ -82,6 +82,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'firewall-only-allowed' => \PragmaRX\Firewall\Middleware\FirewallWhitelist::class,
         'firewall-block-denied' => \PragmaRX\Firewall\Middleware\FirewallBlacklist::class,
-        'firewall-block-attacks' => \PragmaRX\Firewall\Middleware\BlockAttacks::class,    
+        'firewall-block-attacks' => \PragmaRX\Firewall\Middleware\BlockAttacks::class,
+        'client.passphrase' => \App\Http\Middleware\ClientPassphrase::class,
     ];
 }

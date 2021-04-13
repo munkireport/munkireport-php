@@ -1,9 +1,10 @@
 <?php
+namespace munkireport\processors;
 
+use App\ReportData;
 use CFPropertyList\CFPropertyList;
-use munkireport\processors\Processor;
 
-class Reportdata_processor extends Processor
+class ReportDataProcessor extends Processor
 {
     /**
      * Process data sent by postflight
@@ -17,7 +18,7 @@ class Reportdata_processor extends Processor
         $parser->parse($plist, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();
 
-        $model = Reportdata_model::firstOrNew(['serial_number' => $this->serial_number]);
+        $model = ReportData::firstOrNew(['serial_number' => $this->serial_number]);
 
             // Check if reg_timestamp is set to determine this is a new client
         if ($model->reg_timestamp){
@@ -45,7 +46,7 @@ class Reportdata_processor extends Processor
             unset($mylist['uid']);
         }
 
-        $model->fill($mylist);
+        $model->update($mylist);
         $model->save();    
         
         if ($new_client) {
