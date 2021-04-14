@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use MR\Kiss\View;
@@ -68,18 +69,16 @@ class ReportDataController extends Controller
         $three_month_ago = Carbon::now()->subMonths(3);
         $custom_ago = Carbon::now()->subDays($inactive_days);
 
-        $reportdata = ReportData::query()
-            ->selectRaw("COUNT(1) as total,
-                COUNT(CASE WHEN timestamp > {$hour_ago->unix()} THEN 1 END) AS lasthour,
-                COUNT(CASE WHEN timestamp > {$today->unix()} THEN 1 END) AS today,
-                COUNT(CASE WHEN timestamp > {$week_ago->unix()} THEN 1 END) AS lastweek,
-                COUNT(CASE WHEN timestamp > {$month_ago->unix()} THEN 1 END) AS lastmonth,
-                COUNT(CASE WHEN timestamp BETWEEN {$month_ago->unix()} AND {$week_ago->unix()} THEN 1 END) AS inactive_week,
-                COUNT(CASE WHEN timestamp > {$custom_ago->unix()} THEN 1 END) AS lastcustom,
-                COUNT(CASE WHEN timestamp BETWEEN {$three_month_ago->unix()} AND {$month_ago->unix()} THEN 1 END) AS inactive_month,
-                COUNT(CASE WHEN timestamp < {$three_month_ago->unix()} THEN 1 END) AS inactive_three_month")
-            ->filter()
-            ->first();
+        $reportdata = ReportData::histogramByCase([
+            "lasthour" => "COUNT(CASE WHEN timestamp > {$hour_ago->unix()} THEN 1 END)",
+            "today" => "COUNT(CASE WHEN timestamp > {$today->unix()} THEN 1 END)",
+            "lastweek" => "COUNT(CASE WHEN timestamp > {$week_ago->unix()} THEN 1 END)",
+            "lastmonth" => "COUNT(CASE WHEN timestamp > {$month_ago->unix()} THEN 1 END)",
+            "inactive_week" => "COUNT(CASE WHEN timestamp BETWEEN {$month_ago->unix()} AND {$week_ago->unix()} THEN 1 END)",
+            "lastcustom" => "COUNT(CASE WHEN timestamp > {$custom_ago->unix()} THEN 1 END)",
+            "inactive_month" => "COUNT(CASE WHEN timestamp BETWEEN {$three_month_ago->unix()} AND {$month_ago->unix()} THEN 1 END)",
+            "inactive_three_month" => "COUNT(CASE WHEN timestamp < {$three_month_ago->unix()} THEN 1 END)",
+        ])->filter()->first();
 
         return response()->json($reportdata);
     }
@@ -90,13 +89,11 @@ class ReportDataController extends Controller
      **/
     public function getUptimeStats()
     {
-        $reportdata = ReportData::query()
-            ->selectRaw('SUM(CASE WHEN uptime <= 86400 THEN 1 END) AS oneday,
-                SUM(CASE WHEN uptime BETWEEN 86400 AND 604800 THEN 1 END) AS oneweek,
-                SUM(CASE WHEN uptime >= 604800 THEN 1 END) AS oneweekplus')
-            ->where('uptime', '>', 0)
-            ->filter()
-            ->first();
+        $reportdata = ReportData::histogramByCase([
+            "oneday" => "SUM(CASE WHEN uptime <= 86400 THEN 1 END)",
+            "oneweek" => "SUM(CASE WHEN uptime BETWEEN 86400 AND 604800 THEN 1 END)",
+            "oneweekplus" => "SUM(CASE WHEN uptime >= 604800 THEN 1 END)",
+        ])->where('uptime', '>', 0)->filter()->first();
 
         return response()->json($reportdata);
     }
@@ -259,10 +256,9 @@ class ReportDataController extends Controller
      * defined in conf('ip_ranges')
      * or passed with GET request
      *
-     * @return void
      * @author AvB
      **/
-    public function ip()
+    public function ip(): JsonResponse
     {
         
         try {

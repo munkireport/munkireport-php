@@ -123,7 +123,9 @@ class MachineController extends Controller
     }
 
     /**
-     * Return json array with memory configuration breakdown
+     * Return json array with memory configuration breakdown.
+     *
+     *
      *
      * @param string $format Format output. Possible values: flotr, none
      * @author AvB
@@ -132,52 +134,36 @@ class MachineController extends Controller
     {
         $out = array();
 
-        // Legacy loop to do sort in php
-        $tmp = array();
-        $machine = Machine::selectRaw('physical_memory, count(1) as count')
-            ->filter()
-            ->groupBy('physical_memory')
-            ->orderBy('physical_memory', 'desc')
-            ->get()
-            ->toArray();
-        
-        foreach ($machine as $obj) {
-        // Take care of mixed entries (string or int)
-            if (isset($tmp[$obj['physical_memory']])) {
-                $tmp[$obj['physical_memory']] += $obj['count'];
-            } else {
-                $tmp[$obj['physical_memory']] = $obj['count'];
+        if ($format === 'none' || $format === 'flotr' || $format === '') {
+            $physicalMemoryHistogram = Machine::histogram('physical_memory')
+                ->filter()
+                ->orderBy('physical_memory', 'desc')
+                ->get();
+
+            $cnt = 0;
+            foreach ($physicalMemoryHistogram as $item) {
+                if ($format === 'flotr') {
+                    $out[] = ["label" => $item->physical_memory . " GB", "data" => [
+                        [$item->count, $cnt++]
+                    ]];
+                } else {
+                    $out[] = ["label" => $item->physical_memory, "count" => $item->count];
+                }
             }
-        }
 
-        switch ($format) {
-            case 'flotr':
-                krsort($tmp);
+        } elseif ($format === 'button') {
+            $physicalMemoryHistogram = Machine::histogramByCase([
+                'lessthanfourgb' => 'COUNT(CASE WHEN physical_memory < 4 THEN 1 END)',
+                'fourgbplus' => 'COUNT(CASE WHEN physical_memory BETWEEN 4 AND 8 THEN 1 END)',
+                'eightgbplus' => 'COUNT(CASE WHEN physical_memory >= 8 THEN 1 END)',
+            ])->first();
 
-                $cnt = 0;
-                foreach ($tmp as $mem => $memcnt) {
-                    $out[] = array('label' => $mem . ' GB', 'data' => array(array(intval($memcnt), $cnt++)));
-                }
-                break;
-            
-            case 'button':
-                $labels = ['< 4GB' => 0, '4GB +' => 0, '8GB +' => 0];
-                foreach ($tmp as $mem => $memcnt) {
-                    $memcnt = intval($memcnt);
-                    if( $mem < 4 ){ $labels['< 4GB'] += $memcnt;}
-                    if( $mem < 8 && $mem <= 4 ){ $labels['4GB +'] += $memcnt;}
-                    if( $mem >= 8 ){ $labels['8GB +'] += $memcnt;}
-                }
+            $labels = ['< 4GB' => $physicalMemoryHistogram->lessthanfourgb, '4GB +' => $physicalMemoryHistogram->fourgbplus,
+                '8GB +' => $physicalMemoryHistogram->eightgbplus];
 
-                foreach ($labels as $label => $count) {
-                    $out[] = ['label' => $label, 'count' => $count]; 
-                }
-                break;
-
-            default:
-                foreach ($tmp as $mem => $memcnt) {
-                    $out[] = array('label' => $mem, 'count' => intval($memcnt));
-                }
+            foreach ($labels as $label => $count) {
+                $out[] = ['label' => $label, 'count' => $count];
+            }
         }
 
         return response()->json($out);

@@ -49,6 +49,7 @@ class ReportData extends MRModel
     // use UpdatedSinceScope;
     // use NotUpdatedForScope;
     // use UpdatedBetweenScope;
+    use ProvidesHistogram;
 
     /**
      * Scope this query so that only non-archived reportdata is returned.

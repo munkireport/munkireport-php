@@ -3,6 +3,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use MR\Scopes\CreatedSinceScope;
 use munkireport\models\MRModel;
 
@@ -83,6 +84,7 @@ class Machine extends MRModel
     //// SCOPES
     // Cannot use this while timestamps are disabled.
     // use CreatedSinceScope;
+    use ProvidesHistogram;
 
     /**
      * Query scope for machines which have a duplicate computer name.
