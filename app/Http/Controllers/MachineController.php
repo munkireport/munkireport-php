@@ -99,11 +99,11 @@ class MachineController extends Controller
      **/
     public function report($serial_number = '')
     {
-        jsonView(
-            Machine::where('machine.serial_number', $serial_number)
-                ->filter('groupOnly')
-                ->first()
-        );
+        $machine = Machine::where('machine.serial_number', $serial_number)
+            ->filter('groupOnly')
+            ->firstOrFail();
+
+        return response()->json($machine);
     }
 
     /**

@@ -41,7 +41,7 @@ class ClientsControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/clients/detail/nonexistentserial");
 
-        $response->assertSeeText('errors.client_nonexistent');
+        $response->assertSeeText('Error');
     }
 
 
