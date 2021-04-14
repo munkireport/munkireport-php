@@ -181,7 +181,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ModuleGraphQLSchemaProvider::class,
-        App\Providers\ModuleServiceProvider::class,
+        App\Providers\ModulesServiceProvider::class,
         App\Providers\DashboardServiceProvider::class,
     ],
 

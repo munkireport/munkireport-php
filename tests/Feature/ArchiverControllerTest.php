@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Machine;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\AuthorizationTestCase;
 use Machine_model;
 
@@ -29,23 +30,25 @@ class ArchiverControllerTest extends AuthorizationTestCase
      */
     public function testUpdate_status()
     {
-        $this->markTestIncomplete();
-//        $response = $this->post('/archiver/update_status/012345', [
-//            'status' => '',
-//        ]);
+        $reportData = factory(\App\ReportData::class)->create();
+        $response = $this->actingAs($this->adminUser)->post(
+            '/archiver/update_status/' . $reportData->serial_number,
+            ['status' => '1']);
+        $response->assertOk();
+
     }
 
-    public function bulk_update_status()
+    public function test_bulk_update_status()
     {
-        $this->markTestIncomplete();
-//        $response = $this->post('/archiver/update_status/012345', [
-//            'days' => 30,
-//        ]);
-    }
-
-    public function testIndex()
-    {
-        $this->markTestIncomplete();
+        $daysTooOld = new \DateInterval("P4D");
+        $reportData = factory(\App\ReportData::class)->create([
+            'timestamp' => Carbon::now()->subtract($daysTooOld)->unix(),
+            'archive_status' => 0,
+        ]);
+        $response = $this->actingAs($this->adminUser)
+                         ->post('/archiver/bulk_update_status', ['days' => 1]);
+        $response->assertOk();
+        $this->assertEquals(1, $reportData->archive_status);
     }
 
     // Business Units Configured: FALSE

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Processors;
 use Illuminate\Support\ServiceProvider;
+use munkireport\processors\MachineProcessor;
+use munkireport\processors\ReportDataProcessor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(\Illuminate\Database\Migrations\Migrator::class, function ($app) {
             return $app['migrator'];
         });
+
+        $this->app->singleton(Processors::class, function ($app) {
+            return new Processors();
+        });
     }
 
     /**
@@ -26,5 +33,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+
+        $this->callAfterResolving(Processors::Class, function (Processors $processors) {
+            $processors->process('reportdata', ReportDataProcessor::class);
+            $processors->process('machine', MachineProcessor::class);
+        });
     }
 }
