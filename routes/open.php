@@ -20,6 +20,6 @@ Route::get('/install/modules', 'InstallController@modules');
 
 Route::middleware(['client.passphrase'])->group(function () {
     Route::post('/report/broken_client', 'ReportController@broken_client');
-    Route::post('/report/check_in', 'ReportController@check_in');
+    Route::post('/report/check_in', 'ReportsController@check_in');
     Route::post('/report/hash_check', 'ReportController@hash_check');
 });

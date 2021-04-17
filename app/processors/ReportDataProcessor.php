@@ -3,8 +3,9 @@ namespace munkireport\processors;
 
 use App\ReportData;
 use CFPropertyList\CFPropertyList;
+use App\Contracts\Processor as ProcessorContact;
 
-class ReportDataProcessor extends Processor
+class ReportDataProcessor extends Processor implements ProcessorContact
 {
     /**
      * Process data sent by postflight
@@ -12,10 +13,10 @@ class ReportDataProcessor extends Processor
      * @param string data
      * @author abn290
      **/
-    public function run($plist)
+    public function run(string $data): void
     {
         $parser = new CFPropertyList();
-        $parser->parse($plist, CFPropertyList::FORMAT_XML);
+        $parser->parse($data, CFPropertyList::FORMAT_XML);
         $mylist = $parser->toArray();
 
         $model = ReportData::firstOrNew(['serial_number' => $this->serial_number]);

@@ -336,8 +336,8 @@ def process(serial, items, ForceUpload=False):
     # Get prefs
     baseurl = pref("BaseUrl") or prefs.pref("SoftwareRepoURL") + "/report/"
 
-    hashurl = baseurl + "index.php?/report/hash_check"
-    checkurl = baseurl + "index.php?/report/check_in"
+    hashurl = baseurl + "report/hash_check"
+    checkurl = baseurl + "report/check_in"
 
     # Get passphrase
     passphrase = pref("Passphrase")
