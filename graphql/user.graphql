@@ -1,0 +1,15 @@
+
+type User {
+    id: ID!
+    objectguid: String
+    name: String!
+    email: String!
+    email_verified_at: Int
+    role: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    source: String
+    display_name: String
+    locale: String
+}
+

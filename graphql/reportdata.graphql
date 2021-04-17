@@ -1,0 +1,15 @@
+
+
+type ReportData {
+    id: ID!
+    serial_number: String!
+    console_user: String
+    long_username: String
+    remote_ip: String
+    uptime: Int
+    machine_group: Int
+    reg_timestamp: Int
+    timestamp: Int
+    uid: Int
+    archive_status: Int
+}

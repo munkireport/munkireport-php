@@ -1,0 +1,23 @@
+type Machine {
+    id: ID!
+    serial_number: String!
+    hostname: String!
+    machine_model: String
+    machine_desc: String
+    img_url: String
+    cpu: String
+    current_processor_speed: String
+    cpu_arch: String
+    os_version: Int
+    physical_memory: Int
+    platform_UUID: String
+    number_processors: Int
+    SMC_version_system: String
+    boot_rom_version: String
+    bus_speed: String
+    computer_name: String
+    l2_cache: String
+    machine_name: String
+    packages: String
+    buildversion: String
+}

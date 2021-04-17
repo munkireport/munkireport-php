@@ -11,41 +11,16 @@ type Query {
     me: User @auth
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
-    machines: [Machine!]! @all
-
-    machineGroups: [MachineGroup!]! @all
-    businessUnits: [BusinessUnit!]! @all
-}
-
-type Mutation {
-    createBusinessUnit(name: String!): BusinessUnit! @create
-}
-
-type User {
-    id: ID!
-    name: String!
-    email: String!
-    created_at: DateTime!
-    updated_at: DateTime!
-}
-
-type Machine {
-    id: ID!
-    serial_number: String!
-    hostname: String!
-}
-
-
-
-
-
-
-type Application {
-    id: ID!
-    serial_number: String!
-    name: String!
-    path: String!
+    machines: [Machine!]! @paginate(defaultCount: 50)
+    machine(id: ID @eq): Machine @find
+    reportData: [ReportData!]! @paginate(defaultCount: 50)
+    reportDatum(id: ID @eq): ReportData @find
+    businessUnits: [BusinessUnit!]! @paginate(defaultCount: 50)
+    machineGroups: [MachineGroup!]! @paginate(defaultCount: 50)
 }
 
 #import machinegroup.graphql
 #import businessunit.graphql
+#import user.graphql
+#import reportdata.graphql
+#import machine.graphql

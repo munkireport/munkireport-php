@@ -8,7 +8,9 @@ use munkireport\lib\Modules as ModuleMgr;
 class ModuleGraphQLSchemaProvider extends ServiceProvider
 {
     /**
-     * Bootstrap services.
+     * The GraphQL library, Lighthouse, cannot autoload schema files out of multiple directories unless you
+     * hook into certain events. This service provider looks for GraphQL schema definitions in each module directory
+     * when Lighthouse attempts to resolve a list of Schemas.
      *
      * @return void
      */
