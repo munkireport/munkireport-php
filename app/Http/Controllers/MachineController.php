@@ -29,6 +29,10 @@ class MachineController extends Controller
             ->get()
             ->toArray();
 
+//        $duplicates = Machine::histogram('computer_name')
+//            ->having('count', '>', 1)
+//            ->orderBy('count', 'desc');
+
         return response()->json($machine);
     }
 
