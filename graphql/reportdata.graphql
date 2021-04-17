@@ -12,4 +12,6 @@ type ReportData {
     timestamp: Int
     uid: Int
     archive_status: Int
+
+    machine: Machine
 }

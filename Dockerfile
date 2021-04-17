@@ -1,16 +1,15 @@
+FROM node:lts as frontend
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+RUN npm install && npm run production
+
 FROM php:8.2-apache
-
-ENV APP_DIR /var/munkireport
-
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y libldap2-dev \
-    libcurl4-openssl-dev \
-    libzip-dev \
-    unzip \
-    zlib1g-dev \
-    libxml2-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+MAINTAINER MunkiReport PHP Team <munkireport@noreply.users.github.com>
+LABEL architecture="x86_64" \
+	  io.k8s.display-name="MunkiReport" \
+	  io.k8s.description="" \
+	  License="MIT" \
+	  version="v6.0.0-alpha"
 
 RUN arch="$(dpkg --print-architecture)" && args="--with-libdir=lib/x86_64-linux-gnu/" && \
     case "$arch" in \
@@ -28,7 +27,7 @@ ENV INDEX_PAGE ""
 ENV AUTH_METHODS NOAUTH
 
 COPY . $APP_DIR
-
+COPY --from=frontend /usr/src/app/public/* $APACHE_DOCUMENT_ROOT/
 WORKDIR $APP_DIR
 
 COPY --from=composer:2.2.6 /usr/bin/composer /usr/local/bin/composer

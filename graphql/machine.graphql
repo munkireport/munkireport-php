@@ -20,4 +20,6 @@ type Machine {
     machine_name: String
     packages: String
     buildversion: String
+
+    reportData: ReportData
 }
