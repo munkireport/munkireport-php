@@ -25,12 +25,11 @@ class ClientsController extends Controller
      *
      * @author AvB
      **/
-    public function get_data(string $serial_number = ''): JsonResponse
+    public function get_data(string $serial_number): JsonResponse
     {
         if (authorized_for_serial($serial_number)) {
             $machine = Machine::with('reportdata', 'network')
                 ->where('serial_number', $serial_number)
-                ->orderBy('network.ipv4ip', 'DESC')
                 ->firstOrFail();
 
             $out = [
