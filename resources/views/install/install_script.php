@@ -1,7 +1,7 @@
 <?php header("Content-Type: text/plain");
 ?>#!/bin/bash
 
-BASEURL="<?php echo url('/'); ?>"
+BASEURL="<?php echo url('/'); ?>/"
 INSTALLROOT=""
 MUNKIPATH="/usr/local/munkireport/"
 CACHEPATH="${MUNKIPATH}scripts/cache/"

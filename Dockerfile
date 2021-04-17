@@ -1,3 +1,8 @@
+FROM node:lts as frontend
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+RUN npm install && npm run production
+
 FROM php:7.4-apache
 MAINTAINER MunkiReport PHP Team <munkireport@noreply.users.github.com>
 LABEL architecture="x86_64" \
@@ -36,6 +41,7 @@ RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
     docker-php-ext-install -j$(nproc) curl pdo_mysql soap ldap zip opcache
 
 COPY . $APP_DIR
+COPY --from=frontend /usr/src/app/public/* $APACHE_DOCUMENT_ROOT/
 WORKDIR $APP_DIR
 RUN chown -R www-data:www-data $APP_DIR
 
@@ -56,8 +62,7 @@ RUN composer install --no-dev && \
     composer dumpautoload -o
 
 RUN mkdir -p app/db && \
-	touch app/db/db.sqlite && \
-	chown -R www-data app/db storage
+	touch app/db/db.sqlite
 
 RUN cp .env.example .env
 

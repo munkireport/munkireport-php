@@ -57,10 +57,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/module/machine/osbuild', 'MachineController@osbuild');
     Route::get('/module/machine/model_lookup/{serial_number}', 'MachineController@model_lookup');
 
-
-    Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
-    Route::post('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
-
     Route::any('/settings/theme', 'SettingsController@theme');
 
     Route::get('/show', 'ShowController@index');
@@ -71,6 +67,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile', 'ProfileController@index');
 });
+
+// NOTE: These cannot be completely behind auth because the get_script() action needs to be accessible without authentication.
+Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
+Route::post('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/archiver/update_status/{serial_number}', 'ArchiverController@update_status');

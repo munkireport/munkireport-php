@@ -1,14 +1,18 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+# V2 Business Unit (Not in use currently)
 type BusinessUnit {
     id: ID!
-    unitid: Int!
-    property: String!
-    value: String!
-}
+    name: String!
+    address: String
+    link: String
+    created_at: DateTime!
+    updated_at: DateTime!
 
-#type BusinessUnit {
-#    id: ID!
-#    name: String!
-#    address: String!
-#    link: String!
-#}
+    members: [User!]!
+    managers: [User!]!
+    archivers: [User!]!
+    users: [User!]!
+}
 
