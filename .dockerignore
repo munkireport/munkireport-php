@@ -3,3 +3,5 @@ app/db
 vendor
 config.php
 local
+# local overrides should never apply to container builds
+composer.local.json
