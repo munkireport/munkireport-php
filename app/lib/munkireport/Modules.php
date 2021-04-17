@@ -312,7 +312,7 @@ class Modules
         // Temporary workaround which allows core modules to reside in the laravel app path, but still allows
         // mr_view to `include()` the view files.
         if (isset($this->moduleList[$module]['core']) && $this->moduleList[$module]['core'] === true) {
-            return resource_path('views') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
+            return resource_path('views') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $append;
         }
 
         if( isset( $this->moduleList[$module]['path'])){

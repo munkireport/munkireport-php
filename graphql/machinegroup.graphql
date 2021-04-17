@@ -1,14 +1,14 @@
-#type LegacyMachineGroup {
-#    id: ID!
-#    groupid: Int!
-#    property: String!
-#    value: String!
-#}
-
 type MachineGroup {
     id: ID!
-    name: String!
-    key: String!
-    created_at: DateTime!
-    updated_at: DateTime!
+    groupid: Int!
+    property: String!
+    value: String!
 }
+
+#type MachineGroup {
+#    id: ID!
+#    name: String!
+#    key: String!
+#    created_at: DateTime!
+#    updated_at: DateTime!
+#}
