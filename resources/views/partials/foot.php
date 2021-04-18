@@ -1,13 +1,9 @@
 <?php if(Auth::check()):?>
 
-  <div class="container">
-
+  <div class="container-fluid">
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
-
       <i>MunkiReport <span data-i18n="version">Version</span> <?php echo $GLOBALS['version']; ?></i>
-
     </div>
-
   </div>
   
 <?php endif?>
@@ -57,9 +53,10 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/datatables.min.js"></script>
     <!--    <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>-->
 <?php else: ?>
+    <script src="<?php echo asset('assets/js/popper.min.js'); ?>"></script>
     <script src="<?php echo asset('assets/js/bootstrap.min.js'); ?>"></script>
     <script src="<?php echo asset('assets/js/datatables.min.js'); ?>"></script>
-    <script src="<?php echo asset('assets/js/datatables.bootstrap4.min.js'); ?>"></script>
+    <script src="<?php echo asset('assets/js/dataTables.bootstrap4.js'); ?>"></script>
     <script src="<?php echo asset('assets/js/jszip.min.js'); ?>"></script>
     <script src="<?php echo asset('assets/js/buttons.bootstrap4.min.js'); ?>"></script>
 <?php endif ?>
@@ -104,15 +101,6 @@
           }
       </script>
     <?php endif?>
-
-    <script>
-      // Include csrf in all requests
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-    </script>
     <script>
     $(document).on('appUpdate', function(){
       //$.getJSON( appUrl + '/module/notification/runCheck', function( data ) {

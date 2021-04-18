@@ -8,7 +8,7 @@
 	<meta name=apple-mobile-web-app-capable content=yes>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
 
-    <title><?php echo config('app.name'); ?></title>
+    <title><?php echo config('app.name', 'MunkiReport'); ?></title>
 
     <!-- Styles -->
     <?php if (config('frontend.css.use_cdn', false)): ?>
@@ -32,6 +32,14 @@
     <?php else: ?>
         <script src="<?php echo asset('assets/js/jquery.min.js'); ?>"></script>
     <?php endif ?>
+    <script>
+      // Include csrf in all requests
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+    </script>
 
     <!-- Favicons -->
 	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo asset('assets/images/favicons/apple-touch-icon.png'); ?>">
