@@ -5,6 +5,7 @@
     "/public/js/profile.js": "/public/js/profile.js",
     "/public/js/users.js": "/public/js/users.js",
     "/public/assets/js/jquery.min.js": "/public/assets/js/jquery.min.js",
+    "/public/assets/js/popper.min.js": "/public/assets/js/popper.min.js",
     "/public/assets/js/bootstrap.min.js": "/public/assets/js/bootstrap.min.js",
     "/public/assets/themes/Default/bootstrap.min.css": "/public/assets/themes/Default/bootstrap.min.css",
     "/public/assets/js/bootstrap-markdown.js": "/public/assets/js/bootstrap-markdown.js",

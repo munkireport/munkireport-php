@@ -17,6 +17,8 @@ const mix = require('laravel-mix');
 
 mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/assets/js/jquery.min.js');
 
+mix.copy('node_modules/popper.js/dist/umd/popper.min.js', 'public/assets/js/popper.min.js');
+
 mix.copy('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/assets/js/bootstrap.min.js');
 mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css', 'public/assets/themes/Default/bootstrap.min.css');
 

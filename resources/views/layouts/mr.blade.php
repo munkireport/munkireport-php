@@ -3,8 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <meta name=apple-mobile-web-app-capable content=yes>
@@ -12,19 +10,36 @@
 
     <title>{{ config('app.name', 'MunkiReport') }}</title>
 
-    <!-- Scripts -->
-
     <!-- Styles -->
-    <!-- Temporary for Bootstrap 4.6 upgrade: Disable normal styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    @if (config('frontend.css.use_cdn', false))
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/datatables.min.css"/>
+    @else
+        <!-- bootstrap.min.js is loaded locally using the `Default` theme -->
+        <link rel="stylesheet" href="{{ asset('assets/css/datatables.bootstrap4.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/buttons.bootstrap4.min.css') }}" />
+    @endif
 
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/nvd3/nv.d3.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/nvd3.override.css') }}" id="nvd3-override-stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
 
-    {{--    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />--}}
-{{--    <link rel="stylesheet" href="{{ asset('assets/nvd3/nv.d3.min.css') }}" />--}}
-{{--    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/nvd3.override.css') }}" id="nvd3-override-stylesheet" />--}}
-{{--    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />--}}
-{{--    <link rel="stylesheet" media="screen" href="{{ asset('assets/css/datatables.min.css') }}" />--}}
-    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <!-- Head scripts -->
+    @if (config('frontend.javascript.use_cdn', false))
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    @else
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    @endif
+    <script>
+      // Include csrf in all requests
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+    </script>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">
@@ -58,9 +73,6 @@
       isManager = true;
       isArchiver = true;
     </script>
-
-    <!-- temporarily using CDN while testing, do not use the slim version -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 
     <!-- VueJS 2.x -->
     @env(['local', 'development'])
@@ -114,13 +126,10 @@ $page = url()->current();
                     </a>
                     <div class="dashboard dropdown-menu" aria-labelledby="dashboardsMenuLink">
                     @foreach($dashboard->getDropdownData('show/dashboard', $page) as $item)
-{{--                        <li class="{{ $item->class }}">--}}
-                        <a class="dropdown-item" href="{{ $item->url }}">
+                        <a class="dropdown-item {{ $item->class }}" href="{{ $item->url }}">
                             <span class="pull-right">{{ strtoupper($item->hotkey) }}</span>
                             <span class="dropdown-link-text ">{{ $item->display_name }}</span>
                         </a>
-{{--                        </li>--}}
-
                     @endforeach
                     </div>
                 </li>
@@ -128,16 +137,13 @@ $page = url()->current();
 
                 <li class="nav-item dropdown {{ Route::is('/show/reports') ? " active" : "" }}">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="reportsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-th-large"></i>
+                        <i class="fa fa-bar-chart-o"></i>
                         <span data-i18n="nav.main.reports"></span>
                         <b class="caret"></b>
                     </a>
                     <div class="report dropdown-menu" aria-labelledby="dashboardsMenuLink">
                     @foreach($modules->getDropdownData('reports', 'show/report', $page) as $item)
-{{--                        <li class="{{ $item->class }}">--}}
-                        <a class="dropdown-item" href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
-{{--                        </li>--}}
-
+                        <a class="dropdown-item {{ $item->class }}" href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
                     @endforeach
                     </div>
                 </li>
@@ -150,9 +156,7 @@ $page = url()->current();
                     </a>
                     <div class="listing dropdown-menu" aria-labelledby="listingMenuLink">
                     @foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item)
-{{--                        <li class="{{ $item->class }}">--}}
-                            <a class="dropdown-item" href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
-{{--                        </li>--}}
+                        <a class="dropdown-item {{ $item->class }}" href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
                     @endforeach
                     </div>
                 </li>
@@ -168,15 +172,11 @@ $page = url()->current();
                         @foreach(scandir(conf('view_path') . 'admin') as $list_url)
                             @if(strpos($list_url, 'php'))
                             @php $page_url = strtok($list_url, '.'); @endphp
-    {{--                        <li class="{{ Route::is($page_url) ? " active" : "" }}">--}}
-                                <a class="dropdown-item" href="{{ url($page_url) }}" data-i18n="nav.admin.{{ strtok($list_url, '.') }}"></a>
-    {{--                        </li>--}}
+                                <a class="dropdown-item {{ Route::is($page_url) ? " active" : "" }}" href="{{ url($page_url) }}" data-i18n="nav.admin.{{ strtok($list_url, '.') }}"></a>
                             @endif
                         @endforeach
                         @foreach($modules->getDropdownData('admin_pages', 'module', $page) as $item)
-{{--                        <li class="{{ $item->class }}">--}}
-                            <a class="dropdown-item" href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
-{{--                        </li>--}}
+                            <a class="dropdown-item {{ $item->class }}" href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
                         @endforeach
                     </div>
                 </li>
@@ -242,8 +242,7 @@ $page = url()->current();
                 </li>
                 @endif
             </div><!-- div navbar-nav ml-auto (right aligned) -->
-        </div>
-
+        </div><!-- navbar-collapse -->
 </nav>
 @endauth
 
@@ -302,26 +301,32 @@ $page = url()->current();
 
 @endforeach
 
-<script>
-  $('.mr-alert').prependTo('body>div.container:first');
-</script>
+@if (config('frontend.javascript.use_cdn', false))
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/datatables.min.js"></script>
+    <!--    <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>-->
+@else
+    <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ asset('assets/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/js/buttons.bootstrap4.min.js') }}"></script>
+@endif
 
-<!-- Temporary during Bootstrap 4.6 update -->
-<!--    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-<!--    <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>-->
-
-{{--<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>--}}
-<script src="{{ asset('assets/js/datatables.min.js') }}"></script>
-<script src="{{ asset('assets/js/moment.min.js') }}"></script>
-<!-- i18next, v1.10.2 -->
+<!-- i18next, v1.10.2. Newest does not work -->
 <script src="{{ asset('assets/js/i18next.min.js') }}"></script>
+<script src="{{ asset('assets/js/moment.min.js') }}"></script>
 <script src="{{ asset('assets/js/d3/d3.min.js') }}"></script>
 <script src="{{ asset('assets/js/nv.d3.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.hotkeys/jquery.hotkeys.js') }}"></script>
 <script src="{{ asset('assets/js/munkireport.settings.js') }}"></script>
 
+<!-- inline scripts -->
+<script>
+  $('.mr-alert').prependTo('body>div.container:first');
+</script>
 <script>
   // Inject debug value from php
   mr.debug = {{ config('app.debug') ? 'true' : 'false' }};
@@ -352,14 +357,7 @@ $page = url()->current();
 </script>
 @endif
 
-<script>
-  // Include csrf in all requests
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-</script>
+
 <script>
   $(document).on('appUpdate', function(){
     //$.getJSON( appUrl + '/module/notification/runCheck', function( data ) {
