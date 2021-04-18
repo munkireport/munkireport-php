@@ -230,10 +230,13 @@
 
                 <div class="dropdown-menu" aria-labelledby="userMenuLink">
                     <!-- TODO: this must be a form POST -->
-                    <a class="dropdown-item" href="{{ url('/logout') }}">
+                    <form action="<?php echo route('logout'); ?>" method="POST">
+                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>" />
+                    <button class="dropdown-item" type="submit">
                         <i class="fa fa-power-off"></i>
                         <span data-i18n="nav.user.logout"></span>
-                    </a>
+                    </button>
+                    </form>
                 </div>
             </li>
 
