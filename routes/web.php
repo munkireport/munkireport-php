@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
     Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
     Route::get('/show/report/{report}/{action}', 'ShowController@report');
+    Route::get('/show/kiss_layout', 'ShowController@kiss_layout');
 
     Route::get('/profile', 'ProfileController@index');
 });

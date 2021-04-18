@@ -1,24 +1,14 @@
 <div class="col-sm-12">
-
-	<div class="panel panel-default">
-
-		<div class="panel-heading">
-
-			<h3 class="panel-title"><i class="fa fa-clock-o"></i>
-			    <span data-i18n="machine.registered.title"></span>
-			    <list-link data-url="/show/listing/munkireport/munki"></list-link>
-			</h3>
-
-		</div>
-
-		<div class="panel-body">
-
+	<div class="card">
+        <div class="card-header">
+            <i class="fa fa-clock-o"></i>
+            <span data-i18n="machine.registered.title"></span>
+            <a href="/show/listing/munkireport/munki" class="pull-right"><i class="fa fa-list"></i></a>
+        </div>
+		<div class="card-body">
 			<svg id="chart1" style="width: 100%; height: 400px"></svg>
-
 		</div>
-
-	</div><!-- /panel -->
-
+	</div>
 </div><!-- /col-lg-4 -->
 
 <script>

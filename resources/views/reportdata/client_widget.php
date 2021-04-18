@@ -1,19 +1,21 @@
 <div class="col-lg-4 col-md-6">
-	<div class="panel panel-default" id="client-widget">
-		<div class="panel-heading">
-			<h3 class="panel-title"><i class="fa fa-group"></i>
-				<span data-i18n="client.activity"></span>
-				<list-link data-url="/show/listing/reportdata/clients"></list-link>
-			</h3>
-		</div>
-		<div class="panel-body">
-			<svg id="test1" class="center-block" style="width:258px; height: 258px"></svg>
-			<div class="text-muted text-center">
-				<span data-i18n="client.total"></span>: <span class="total-clients"></span> <span class="total-change"></span>
-				|
-				<span data-i18n="client.hour"></span>: <span class="hour-clients"></span> <span class="lasthour-change"></span>
-			</div>
-		</div>
+	<div class="card" id="client-widget">
+        <div class="card-header">
+            <i class="fa fa-group"></i>
+            <span data-i18n="client.activity"></span>
+            <a href="/show/listing/reportdata/clients" class="pull-right"><i class="fa fa-list"></i></a>
+        </div>
+        <div class="card-body d-flex flex-column justify-content-center">
+            <div class="d-flex justify-content-center">
+                <svg id="test1" class="center-block" style="width:258px; height: 258px"></svg>
+            </div>
+            <div class="text-muted text-center">
+                <span data-i18n="client.total"></span>: <span class="total-clients"></span> <span class="total-change"></span>
+                |
+                <span data-i18n="client.hour"></span>: <span class="hour-clients"></span> <span class="lasthour-change"></span>
+            </div>
+
+        </div>
 	</div>
 </div>
 
@@ -23,7 +25,7 @@ $(document).on('appReady', function() {
 	
 	// Add tooltip
 	$.getJSON( appUrl + '/module/reportdata/get_inactive_days', function( data ) {
-		$('#client-widget>div.panel-heading')
+		$('#client-widget>div.card-header')
 			.attr('title', (i18n.t('client.panel_title', {number: data.inactive_days})))
 			.tooltip();
 	});
@@ -35,14 +37,7 @@ $(document).on('appReady', function() {
 		{ key: active, y: 0 },
 		{ key: inactive, y: 100 }
 	];
-	var arcRadius1 = [
-		{ inner: .75, outer: 0.9 },
-		{ inner: .78, outer: 0.87 }
-	];
-	var colors = ["green", "gray"];
 	var chart;
-	var height = 300;
-	var width = 258;
 	nv.addGraph(function () {
 		chart = nv.models.pieChart()
 			.x(function (d) { return d.key })

@@ -1,20 +1,19 @@
-<div class="col-lg-4">
+<div class="col">
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col">
             <img id="apple_hardware_icon" class="img-responsive">
         </div>
-        <div class="col-xs-6" style="font-size: 1.4em; overflow: hidden">
-            <span class="label label-info">macOS <span class="machine-os_version"></span></span><br>
-            <span class="label label-info"><span class="machine-physical_memory"></span> GB</span><br>
-            <span class="label label-info"><span class="machine-serial_number"></span></span><br>
-            <span class="label label-info"><span class="reportdata-remote_ip"></span></span><br>
+        <div class="col">
+            <span>macOS <span class="machine-os_version"></span></span><br>
+            <span><span class="machine-physical_memory"></span> GB</span><br>
+            <span><span class="machine-serial_number"></span></span><br>
+            <span><span class="reportdata-remote_ip"></span></span><br>
         </div>
     </div>
     <span class="machine-machine_desc"></span> <a class="machine-refresh-desc" href=""><i class="fa fa-refresh"></i></a>
 </div>
 
 <script>
-
     var apple_hardware_icon_url = "<?=conf('apple_hardware_icon_url')?>";
     $('#apple_hardware_icon')
         .attr('src', apple_hardware_icon_url.replace('%s&amp;', serialNumber.substring(8) + '&' ))

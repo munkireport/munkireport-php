@@ -170,16 +170,16 @@ var updateHash = function(e){
         conf.name = conf.name || 'no_name';
         conf.i18n = conf.i18n || '';
         conf.url = conf.url || appUrl + '/show/' + conf.menu + '/' + conf.name;
-        $('ul.dropdown-menu.' + conf.menu)
-            .append($('<li>')
-                .append($('<a>')
+        $('.dropdown-menu.' + conf.menu)
+            .append($('<a>')
                     .attr('href', conf.url)
+              .addClass('dropdown-item')
                     .text(function(){
                         if(conf.i18n){
                             return i18n.t(conf.i18n);
                         }
                         return conf.name;
-                    })));
+                    }));
     },
 	addTab = function(conf){
 

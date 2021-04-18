@@ -1,14 +1,14 @@
 <?php $this->view('partials/head'); ?>
 
     <div class="container">
-        <div class="row">
+        <div class="row pt-4">
             <div id="mr-migrations" class="col-lg-12 loading">
                 <h1>Upgrade Database</h1>
                 <h3>Click the update button to begin database upgrade.</h3>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row pt-4">
             <div class="col-lg-12">
                 <button id="db-upgrade" class="btn btn-primary">
                     <span id="db-upgrade-label" data-i18n="database.update">Update</span>
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row pt-4">
             <div id="database-upgrade-log" class="col-lg-12">
                 <table class="table table-console">
                     <thead>

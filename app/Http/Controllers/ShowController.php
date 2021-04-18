@@ -94,4 +94,10 @@ class ShowController extends Controller
         mr_view($view, $data, $viewpath);
         exit;
     }
+
+    public function kiss_layout()
+    {
+        mr_view('empty', []);
+        exit;
+    }
 }

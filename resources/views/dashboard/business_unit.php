@@ -4,11 +4,11 @@
 
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title bu-title"></h3>
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title bu-title"></h3>
 				</div>
-				<form class="panel-body form-horizontal">
+				<form class="card-body form-horizontal">
 					<div class="machine-groups">
 						<h4 data-i18n="business_unit.machine_groups"></h4>
 					</div>

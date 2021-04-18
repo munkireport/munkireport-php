@@ -1,8 +1,8 @@
 @extends('layouts.mr')
 
 @section('content')
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row pt-4">
             <div class="col-lg-12">
                 <div id="page">
                     <business-units></business-units>

@@ -5,16 +5,16 @@
 </script>
 
 <div class="container">
-
-    <div class="row">
-        <h3 class="col-lg-12" style="margin-top: 0px;margin-bottom: 0px;">
-          <span  data-i18n="widget.gallery"></span>
-          <span id="total-count" class='label label-primary'>
-            <?php echo count($dashboard_layout); ?>
-          </span>
-        </h3>
+    <div class="row pt-4">
+        <div class="col">
+            <h3 class="display-4">
+                <span data-i18n="widget.gallery"></span>
+                <span id="total-count" class="badge badge-light">
+                    <?php echo count($dashboard_layout); ?>
+                </span>
+            </h3>
+        </div>
     </div>
-    
 
 	<?php foreach($dashboard_layout AS $item => $data):?>
 

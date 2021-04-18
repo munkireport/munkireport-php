@@ -1,19 +1,18 @@
 <div class="col-lg-4 col-md-6">
-    <div class="panel panel-default" id="<?=$widget_id?>">
+    <div class="card" id="<?=$widget_id?>">
         <div 
-            class="panel-heading" 
+            class="card-header"
             <?php if(isset($i18n_tooltip)):?> 
             data-i18n="[title]<?=$i18n_tooltip?>"
             <?php endif?>
             data-container="body">
-            <h3 class="panel-title"><i class="fa <?=$icon?>"></i>
+                <i class="fa <?=$icon?>"></i>
                 <span data-i18n="<?=$i18n_title?>"></span>
                 <span class="counter badge"></span>
-                <list-link data-url="<?=$listing_link?>"></list-link>
-            </h3>
+                <a href="<?=$listing_link?>" class="pull-right"><i class="fa fa-list"></i></a>
         </div>
-		<div class="panel-body text-center"></div>
-    </div><!-- /panel -->
+		<div class="card-body text-center"></div>
+    </div>
 </div><!-- /col -->
 
 <script>
@@ -24,7 +23,7 @@ $(document).on('appUpdate', function(e, lang) {
     var listingLink = "<?=$listing_link?>";
     var i18nEmptyResult = "<?php echo isset($i18n_empty_result)?$i18n_empty_result:''?>"
 
-	var body = $('#' + widgetId + ' div.panel-body');
+	var body = $('#' + widgetId + ' div.card-body');
 	
 	$.getJSON( appUrl + apiUrl, function( data ) {
 		
