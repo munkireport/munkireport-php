@@ -1,32 +1,25 @@
 <?php $this->view('partials/head'); ?>
 
-<div class="container">
-
-  <div class="row">
-
-
+<div class="container-fluid">
+  <div class="row pt-4">
 	<h3 class="col-lg-12" id="bu_title" data-i18n="admin.bu_overview"></h3>
-
 
 	<div id="bu_units"></div>
 	<div data-i18n="listing.loading" id="loading"></div>
 
     <div class="col-lg-12">
     	<div id="machine-groups">
-    		<div class="panel panel-default">
-    			<div class="panel-heading">
-    				<h3 class="name panel-title">
-    					<span data-i18n="admin.unassigned_groups"></span>
-    					<button class="btn btn-default btn-xs pull-right add-group"><i class="fa fa-plus"></i></button>
-    				</h3>
-    			</div>
+    		<div class="card">
+                <h3 class="name card-title">
+                    <span data-i18n="admin.unassigned_groups"></span>
+                    <button type="button" class="btn btn-secondary-outline btn-sm pull-right add-group"><i class="fa fa-plus"></i></button>
+                </h3>
     			<div class="list-group unassigned"></div>
     		</div>
     	</div>
     </div>
   </div> <!-- /row -->
 </div>  <!-- /container -->
-
 
 <script>
 
@@ -304,7 +297,8 @@
 							.text('Machine Key')
 							.append(' ')
 							.append($('<button>')
-								.addClass('btn btn-default btn-xs' + generate)
+							    .attr('type', 'button')
+								.addClass('btn btn-secondary-outline btn-sm' + generate)
 								.click(function(e){
 									e.preventDefault();
                   // Only generate if button is not hidden (triggers also on label)
@@ -398,7 +392,7 @@
 								.text(item.name)
 								.append(' ')
 								.append($('<button>')
-									.addClass('btn btn-default btn-xs')
+									.addClass('btn btn-secondary-outline btn-sm')
 									.click(function(){removeItem(item)})
 									.append($('<i>')
 										.addClass('fa fa-times'))))
@@ -440,7 +434,7 @@
 							.append($('<span>')
 								.addClass('input-group-btn')
 								.append($('<button>')
-									.addClass('btn btn-default')
+									.addClass('btn btn-secondary-outline btn-sm')
 									.click(addItem)
 								.text('+')))));
 
@@ -476,7 +470,8 @@
 								.text(name)
 								.append(' ')
 								.append($('<button>')
-									.addClass('btn btn-default btn-xs')
+                                    .attr('type', 'button')
+									.addClass('btn btn-secondary-outline btn-sm')
 									.click(function(){removeUser(name)})
 									.append($('<i>')
 										.addClass('fa fa-times'))))
@@ -522,7 +517,8 @@
 							.append($('<span>')
 								.addClass('input-group-btn')
 								.append($('<button>')
-									.addClass('btn btn-default')
+                                    .attr('type', 'button')
+									.addClass('btn btn-secondary-outline')
 									.click(addUser)
 								.text('+')))));
 
@@ -737,7 +733,7 @@
 				}
 
 				var editButton = $('<button>')
-										.addClass('btn btn-default btn-xs pull-right')
+										.addClass('btn btn-secondary-outline btn-sm pull-right')
 										.attr('title', 'edit')
 										.append($('<i>')
 											.addClass('fa fa-edit'));
@@ -745,16 +741,16 @@
 				$(this)
 					.empty()
 					.append($('<div>')
-						.addClass('panel panel-default')
+						.addClass('card')
 						.append($('<div>')
-							.addClass('panel-heading')
+							.addClass('card-header')
 							.append($('<h3>')
-								.addClass('name panel-title')
+								.addClass('name card-title')
 								.text(data.name)
 								.append(editButton.clone()
 										.click(edit))))
 						.append($('<div>')
-							.addClass('panel-body row')
+							.addClass('card-body row')
               .append($('<div>')
 								.addClass('col-lg-12')
 								.text(data.address))
@@ -798,9 +794,10 @@
 											.click(editUsers)))
 									.append(users)))
 							.append($('<div>')
-								.addClass('panel-footer')
+								.addClass('card-footer')
 								.append($('<a>')
-									.addClass('btn btn-xs btn-default')
+                                    .attr('role', 'button')
+									.addClass('btn btn-sm btn-secondary-outline')
 									.click(remove_dialog)
 									.text(i18n.t('delete')))))
 			}
@@ -859,7 +856,8 @@
 			$('#bu_title')
 				.append(' ')
 				.append($('<a>')
-					.addClass("btn btn-default btn-xs")
+					.addClass("btn btn-secondary-outline btn-sm")
+                    .attr('role', 'button')
 					.click(edit)
 					.append($('<i>')
 						.addClass('fa fa-plus')))

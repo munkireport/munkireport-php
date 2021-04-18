@@ -1,10 +1,10 @@
 <?php $this->view('partials/head'); ?>
 
-<div class="container">
+<div class="container-fluid">
 
 	<?php foreach($dashboard_layout AS $row):?>
 
-	<div class="row">
+	<div class="row pt-4">
 
 		<?php foreach($row as $item => $data):?>
 

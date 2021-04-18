@@ -13,9 +13,9 @@
 
     <div class="col-lg-12">
     	<div id="machine-groups">
-    		<div class="panel panel-default">
-    			<div class="panel-heading">
-    				<h3 class="name panel-title">
+    		<div class="card">
+    			<div class="cad-header">
+    				<h3 class="name card-title">
     					<span data-i18n="admin.unassigned_groups"></span>
     					<button class="btn btn-default btn-xs pull-right add-group"><i class="fa fa-plus"></i></button>
     				</h3>
@@ -745,7 +745,7 @@
 				$(this)
 					.empty()
 					.append($('<div>')
-						.addClass('panel panel-default')
+						.addClass('card')
 						.append($('<div>')
 							.addClass('panel-heading')
 							.append($('<h3>')

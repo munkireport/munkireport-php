@@ -212,8 +212,8 @@ var mr = {
         {
         	hash = (typeof hash === "undefined") ? "" : hash;
         	return '<div class="machine">\
-            		<a class="btn btn-default btn-xs" href="'+appUrl+'/clients/detail/'+sn+hash+'">'+name+'</a>\
-            		<a href="'+appUrl+'/manager/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
+            		<a class="btn btn-outline-secondary btn-block btn-sm" href="'+appUrl+'/clients/detail/'+sn+hash+'">'+name+'</a>\
+            		<a class="btn btn-sm btn-danger" href="'+appUrl+'/manager/delete_machine/'+sn+'">\
             		<i class="fa fa-times"></i></a></div>';
         },
 

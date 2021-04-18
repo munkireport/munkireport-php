@@ -7,15 +7,15 @@
 
   	<div class="col-xs-4 col-xs-offset-4">
 
-	  <div class="panel panel-danger">
+	  <div class="card panel-danger">
 
-		<div class="panel-heading">
+		<div class="card-header">
 
-			<h3 class="panel-title"><i class="fa fa-exclamation-sign"></i> <span data-i18n="errors.title">Error</span></h3>
+			<h3 class="card-title"><i class="fa fa-exclamation-sign"></i> <span data-i18n="errors.title">Error</span></h3>
 		
 		</div>
 
-		<div class="panel-body">
+		<div class="card-body">
 
 
 			<p>

@@ -18,77 +18,64 @@
   var serialNumber = @json($serial_number);
 </script>
 
-<div class="container">
-    <div class="row">
-
-        <div class="col-lg-12">
-
+<div class="container-fluid">
+    <div class="row pt-4">
+        <div class="col">
             <div class="input-group">
-
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span data-i18n="show" class="hidden-sm hidden-xs"></span>
-                        <i class="fa fa-list fa-fw"></i>
-                    </button>
-                    <ul class="dropdown-menu client-tabs" role="tablist">
-                        @foreach($tab_list as $name => $data)
-
-                        <li>
-                            <a href="#{{ $name }}" data-toggle="tab"><span data-i18n="{{ $data['i18n'] }}"></span>
+                <div class="input-group-prepend">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="showTabMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span data-i18n="show" class="hidden-sm hidden-xs"></span>
+                            <i class="fa fa-list fa-fw"></i>
+                        </button>
+                        <div class="dropdown-menu client-tabs" role="tablist" aria-labelledby="showTabMenuButton">
+                            @foreach($tab_list as $name => $data)
+                                <a class="dropdown-item" href="#{{ $name }}" data-toggle="tab"><span data-i18n="{{ $data['i18n'] }}"></span>
                                 @isset($data['badge'])
-                                    <span id="{{ $data['badge'] }}" class="badge">0</span>
+                                    <span id="{{ $data['badge'] }}" class="badge badge-secondary">0</span>
                                 @endisset
-                            </a>
-                        </li>
-
-                        @endforeach
-
-                    </ul>
-                </div><!-- /btn-group -->
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
 
                 <input type="text" class="form-control mr-computer_name_input" readonly>
 
-                @if (Auth::user()->can('archive', $reportData))
-                <div class="input-group-btn">
-                    <button type="button" id="archive_button" class="btn btn-default">
+                <div class="input-group-append">
+                    @if (Auth::user()->can('archive', $reportData))
+                    <button id="archive_button" class="btn btn-outline-secondary" type="button">
                         <span class="hidden-sm hidden-xs"></span>
                         <i class="fa fa-archive"></i>
                     </button>
-                </div><!-- /btn-group -->
-                @endif
+                    @endif
 
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span data-i18n="remote_control" class="hidden-sm hidden-xs"></span>
-                        <i class="fa fa-binoculars fa-fw"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="tablist" id="client_links">
-                    </ul>
-                </div><!-- /btn-group -->
-
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="showRemoteAccessMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span data-i18n="remote_control" class="hidden-sm hidden-xs"></span>
+                            <i class="fa fa-binoculars fa-fw"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" role="tablist" id="client_links" aria-labelledby="showRemoteAccessMenuButton">
+                            <a class="dropdown-item" href="#">nothing available</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div><!-- /col -->
-
     </div><!-- /row -->
-    <div class="row">
-        <div class="col-lg-12">
-
+    <div class="row pt-4">
+        <div class="col">
             <div class="tab-content">
-
                 @foreach($tab_list as $name => $data)
-
                 <div class="tab-pane @isset($data['class']) active @endisset" id="{{ $name }}">
                     <?php mr_view(
                         $data['view'],
                         isset($data['view_vars']) ? $data['view_vars'] : array(),
                         isset($data['view_path']) ? $data['view_path'] : conf('view_path')); ?>
                 </div>
-
                 @endforeach
-
             </div>
-        </div> <!-- /span 12 -->
+        </div>
     </div> <!-- /row -->
 </div>  <!-- /container -->
 

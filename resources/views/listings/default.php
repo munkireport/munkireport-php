@@ -1,14 +1,11 @@
 <?php $this->view('partials/head'); ?>
 
-<div class="container">
+<div class="container-fluid">
+  <div class="row pt-4">
+      <div class="col">
+          <h3><span data-i18n="<?=$i18n_title?>"></span> <span id="total-count" class='badge badge-primary'>…</span></h3>
 
-  <div class="row">
-
-      <div class="col-lg-12">
-        
-          <h3><span data-i18n="<?=$i18n_title?>"></span> <span id="total-count" class='label label-primary'>…</span></h3>
-
-          <table class="table table-striped table-condensed table-bordered">
+          <table class="table table-striped table-sm table-bordered">
             <thead>
               <tr>
                 <?php $colCounter = 0?>
@@ -53,12 +50,14 @@
   </div> <!-- /row -->
 </div>  <!-- /container -->
 
+<!-- $js -->
 <?php if(isset($js)):?>
 <script type="text/javascript">
 <?=$js?>
 </script>
 <?php endif?>
 
+<!-- $js_link -->
 <?php if(isset($js_link)):?>
   <?php foreach(is_array($js_link) ? $js_link : [$js_link] as $link):?>
   <script src="<?=mr_url($link)?>"></script>

@@ -1,9 +1,9 @@
 <?php $this->view('partials/head'); ?>
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span> <span id='new_mr_version'></span></h3>
+<div class="container-fluid">
+    <div class="row pt-4">
+        <div class="col">
+            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span></h3>
             <table class="table table-striped table-condensed table-bordered" id="marketplace-table">
                 <thead>
                     <tr>
@@ -330,7 +330,7 @@
             throw new Error('Invalid comparator. ' + comparator);
         }
         var v1parts = v1.replace('b', '.0.0.').replace(/[^\d.-]/g, '').split('.'), v2parts = v2.replace('b', '.0.0.').replace(/[^\d.-]/g, '').split('.');
-        
+
         if (v1parts.length == 4){
             v1parts.push("999999");
         } else if (v1parts.length == 3){
