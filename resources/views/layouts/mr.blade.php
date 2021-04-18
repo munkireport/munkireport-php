@@ -226,11 +226,13 @@ $page = url()->current();
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="userMenuLink">
-                        <!-- TODO: this must be a form POST -->
-                        <a class="dropdown-item" href="{{ url('/logout') }}">
+                        <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item">
                             <i class="fa fa-power-off"></i>
                             <span data-i18n="nav.user.logout"></span>
-                        </a>
+                        </button>
+                        </form>
                     </div>
                 </li>
 
