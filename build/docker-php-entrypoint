@@ -1,7 +1,12 @@
 #!/bin/sh
 set -e
 
-php please key:generate
+if [[ -z "${APP_KEY}" ]]; then
+  php please key:generate
+else
+  echo "APP_KEY supplied. Not generating an APP_KEY."
+fi
+
 php please migrate --force
 
 # first arg is `-f` or `--some-option`

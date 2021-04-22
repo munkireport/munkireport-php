@@ -7,6 +7,8 @@ use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
+use Laravel\Sanctum\HasApiTokens;
 use MR\Kiss\Contracts\LegacyUser;
 
 use MR\BusinessUnit as LegacyBusinessUnit;
@@ -16,7 +18,7 @@ use munkireport\models\Machine_group;
 
 class User extends Authenticatable implements LegacyUser, HasLocalePreference
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
