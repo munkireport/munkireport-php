@@ -311,7 +311,8 @@
             "reports": "Reports"
         },
         "user": {
-            "logout": "Sign Off"
+            "logout": "Sign Off",
+            "tokens": "My API Tokens"
         }
     },
     "new_client": "New Client",

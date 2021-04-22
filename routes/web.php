@@ -66,7 +66,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/show/report/{report}/{action}', 'ShowController@report');
     Route::get('/show/kiss_layout', 'ShowController@kiss_layout');
 
-    Route::get('/profile', 'ProfileController@index');
+    Route::get('/me', 'MeController@index');
+    Route::get('/me/tokens', 'MeController@tokens');
 });
 
 // NOTE: These cannot be completely behind auth because the get_script() action needs to be accessible without authentication.

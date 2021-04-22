@@ -226,6 +226,9 @@ $page = url()->current();
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="userMenuLink">
+                        <a class="dropdown-item" href="{{ url('/me/tokens') }}" data-i18n="nav.user.tokens">My API Tokens</a>
+                        <div class="dropdown-divider"></div>
+
                         <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item">
@@ -233,6 +236,7 @@ $page = url()->current();
                             <span data-i18n="nav.user.logout"></span>
                         </button>
                         </form>
+
                     </div>
                 </li>
 
@@ -254,14 +258,10 @@ $page = url()->current();
 
 @auth
 
-<div class="container">
-
+<div class="container-fluid">
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
-
         <i>MunkiReport <span data-i18n="version">Version</span> {{ $GLOBALS['version'] }}</i>
-
     </div>
-
 </div>
 
 @endauth

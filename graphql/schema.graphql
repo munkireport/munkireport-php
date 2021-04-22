@@ -8,6 +8,10 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 scalar DateTimeTz @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTimeTz")
 
 type Query {
+    me: User @auth
+}
+
+extend type Query @guard {
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
     machines: [Machine!]! @paginate(defaultCount: 50)
