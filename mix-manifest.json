@@ -1,10 +1,6 @@
 {
     "/public/js/app.js": "/public/js/app.js",
     "/public/css/app.css": "/public/css/app.css",
-    "/public/js/business-units.js": "/public/js/business-units.js",
-    "/public/js/dashboards.js": "/public/js/dashboards.js",
-    "/public/js/profile.js": "/public/js/profile.js",
-    "/public/js/users.js": "/public/js/users.js",
     "/public/assets/js/jquery.min.js": "/public/assets/js/jquery.min.js",
     "/public/assets/js/popper.min.js": "/public/assets/js/popper.min.js",
     "/public/assets/js/bootstrap.min.js": "/public/assets/js/bootstrap.min.js",
@@ -22,5 +18,6 @@
     "/public/assets/js/jszip.min.js": "/public/assets/js/jszip.min.js",
     "/public/assets/css/buttons.bootstrap4.min.css": "/public/assets/css/buttons.bootstrap4.min.css",
     "/public/assets/js/buttons.bootstrap4.min.js": "/public/assets/js/buttons.bootstrap4.min.js",
-    "/public/assets/js/typeahead.bundle.min.js": "/public/assets/js/typeahead.bundle.min.js"
+    "/public/assets/js/typeahead.bundle.min.js": "/public/assets/js/typeahead.bundle.min.js",
+    "/public/js/all.js": "/public/js/all.js"
 }

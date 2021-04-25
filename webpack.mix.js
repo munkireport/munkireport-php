@@ -14,11 +14,8 @@ const mix = require('laravel-mix');
 // The mix.copy statements below reflect what you would have to do to update these dependencies manually.
 // (Which is what happened in the past).
 // Eventually they should be transpiled with webpack into a single vendors.js
-
 mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/assets/js/jquery.min.js');
-
 mix.copy('node_modules/popper.js/dist/umd/popper.min.js', 'public/assets/js/popper.min.js');
-
 mix.copy('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/assets/js/bootstrap.min.js');
 mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css', 'public/assets/themes/Default/bootstrap.min.css');
 
@@ -30,9 +27,7 @@ mix.copy('node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css', 'publi
 
 mix.copy('node_modules/marked/marked.min.js', 'public/assets/js/marked.min.js');
 
-
 mix.copy('node_modules/moment/min/moment.min.js', 'public/assets/js/moment.min.js');
-// TODO: Locales?
 
 mix.copy('node_modules/nvd3/build/nv.d3.min.css', 'public/assets/nvd3/nv.d3.min.css');
 mix.copy('node_modules/nvd3/build/nv.d3.min.js', 'public/assets/js/nv.d3.min.js');
@@ -48,14 +43,30 @@ mix.copy('node_modules/jszip/dist/jszip.min.js', 'public/assets/js/jszip.min.js'
 mix.copy('node_modules/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css', 'public/assets/css/buttons.bootstrap4.min.css');
 mix.copy('node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js', 'public/assets/js/buttons.bootstrap4.min.js');
 
-
 // munkireport originally used the typeahead.bundle.min file
 mix.copy('node_modules/typeahead.js/dist/typeahead.bundle.min.js', 'public/assets/js/typeahead.bundle.min.js');
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+// Mix ALL MunkiReport 5.x dependencies to reduce number of individual connections
+mix.scripts([
+  'node_modules/jquery/dist/jquery.min.js',
+  'node_modules/popper.js/dist/umd/popper.min.js',
+  'node_modules/bootstrap/dist/js/bootstrap.min.js',
+  'node_modules/bootstrap-markdown/js/bootstrap-markdown.js',
+  'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
+  'node_modules/marked/marked.min.js',
+  'node_modules/moment/min/moment.min.js',
+  'node_modules/nvd3/build/nv.d3.min.js',
+  'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js',
+  'node_modules/jszip/dist/jszip.min.js',
+  'node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js',
+  'node_modules/typeahead.js/dist/typeahead.bundle.min.js',
+], 'public/js/all.js');
 
-mix.js('resources/js/business-units.js', 'public/js');
-mix.js('resources/js/profile.js', 'public/js');
-mix.js('resources/js/users.js', 'public/js');
-mix.js('resources/js/dashboards.js', 'public/js');
+
+mix.js('resources/js/app.js', 'public/js')
+  .sass('resources/sass/app.scss', 'public/css');
+
+// mix.js('resources/js/business-units.js', 'public/js');
+// mix.js('resources/js/profile.js', 'public/js');
+// mix.js('resources/js/users.js', 'public/js');
+
