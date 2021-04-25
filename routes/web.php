@@ -68,6 +68,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/me', 'MeController@index');
     Route::get('/me/tokens', 'MeController@tokens');
+
+
+    if (config('_munkireport.alpha_features.dashboards', false)) {
+        Route::get('/dashboards', 'DashboardsController@index');
+    }
 });
 
 // NOTE: These cannot be completely behind auth because the get_script() action needs to be accessible without authentication.

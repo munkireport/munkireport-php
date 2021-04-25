@@ -456,4 +456,17 @@ return [
             'to' => env('SLACK_TO', ''),
         ]
     ],
+
+    /*
+    |===============================================
+    | Alpha Features
+    |===============================================
+    |
+    | These feature flags allow you to test individual alpha
+    | features but are turned off by default to protect you from instability.
+    */
+    'alpha_features' => [
+        // Enable the Alpha Vue Dashboards
+        'dashboards' => env('ALPHA_FEATURE_DASHBOARDS', False)
+    ]
 ];
