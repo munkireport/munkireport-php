@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,36 +10,11 @@
 
     <title>{{ config('app.name', 'MunkiReport') }}</title>
 
-    <!-- Styles -->
-    @if (config('frontend.css.use_cdn', false))
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/datatables.min.css"/>
-    @else
-        <!-- bootstrap.min.js is loaded locally using the `Default` theme -->
-        <link rel="stylesheet" href="{{ asset('assets/css/datatables.bootstrap4.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/buttons.bootstrap4.min.css') }}" />
-    @endif
-
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/nvd3/nv.d3.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
-    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/nvd3.override.css') }}" id="nvd3-override-stylesheet" />
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+
 
     <!-- Head scripts -->
-    @if (config('frontend.javascript.use_cdn', false))
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-    @else
-        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    @endif
-    <script>
-      // Include csrf in all requests
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-    </script>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">
@@ -64,27 +39,11 @@
     @endisset
     @stack('stylesheets')
 
-    <script>
-      var baseUrl = "{{ conf('subdirectory') }}",
-        appUrl = "{{ url('/') }}",
-        default_theme = "{{ config('_munkireport.default_theme') }}",
-        businessUnitsEnabled = {{ config('_munkireport.enable_business_units') ? 'true' : 'false' }};
-      isAdmin = true;
-      isManager = true;
-      isArchiver = true;
-    </script>
-
-    @isset($scripts)
-        @foreach ($scripts as $script)
-            <script src="{{ asset('assets/js/' . $script) }}" type="text/javascript"></script>
-        @endforeach
-    @endisset
 
     @stack('head_scripts')
 </head>
 
-<body class="mr-blade-layout" style="padding-top: 56px;">
-
+<body class="mr-spa-layout" style="padding-top: 56px;">
 @auth
 @php
 $modules = getMrModuleObj()->loadInfo();
@@ -246,118 +205,16 @@ $page = url()->current();
 <!-- original foot partial -->
 
 @auth
-
 <div class="container-fluid">
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
         <i>MunkiReport <span data-i18n="version">Version</span> {{ $GLOBALS['version'] }}</i>
     </div>
 </div>
-
 @endauth
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button data-i18n="dialog.cancel" type="button" class="btn btn-default" data-dismiss="modal"></button>
-                <button type="button" class="btn btn-primary ok"></button>
-            </div>
-        </div>
-    </div>
-</div>
 
-@foreach($GLOBALS['alerts'] AS $type => $list)
-
-<div class="mr-alert alert alert-dismissable alert-<?php echo $type; ?>">
-
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-
-    <ul>
-
-        @foreach($list AS $msg)
-        <li>{{ $msg }}</li>
-        @endforeach
-
-    </ul>
-
-</div>
-
-@endforeach
-
-@if (config('frontend.javascript.use_cdn', false))
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/datatables.min.js"></script>
-    <!--    <script src="https://unpkg.com/i18next/dist/umd/i18next.min.js"></script>-->
-@else
-    <script src="{{ asset('assets/js/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/dataTables.bootstrap4.js') }}"></script>
-    <script src="{{ asset('assets/js/jszip.min.js') }}"></script>
-    <script src="{{ asset('assets/js/buttons.bootstrap4.min.js') }}"></script>
-@endif
-
-<!-- i18next, v1.10.2. Newest does not work -->
-<script src="{{ asset('assets/js/i18next.min.js') }}"></script>
-<script src="{{ asset('assets/js/moment.min.js') }}"></script>
-<script src="{{ asset('assets/js/d3/d3.min.js') }}"></script>
-<script src="{{ asset('assets/js/nv.d3.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.hotkeys/jquery.hotkeys.js') }}"></script>
-<script src="{{ asset('assets/js/munkireport.settings.js') }}"></script>
-
-<!-- inline scripts -->
-<script>
-  $('.mr-alert').prependTo('body>div.container:first');
-</script>
-<script>
-  // Inject debug value from php
-  mr.debug = {{ config('app.debug') ? 'true' : 'false' }};
-  @php
-  $dashboard = getDashboard()->loadAll();
-  @endphp
-
-  @foreach($dashboard->getDropdownData('show/dashboard', url()->current()) as $item)
-  @if($item->hotkey)
-    mr.setHotKey('{{ $item->hotkey }}', appUrl + '/show/dashboard/{{ $item->name }}');
-  @endif
-  @endforeach
-</script>
-
-<!-- munkireport.custom_js -->
-@if(config('_munkireport.custom_js'))
-<script src="{{ config('_munkireport.custom_js') }}"></script>
-@endif
-
-<script src="{{ asset('assets/js/munkireport.js') }}"></script>
-
-@if(isset($recaptcha) && conf('recaptchaloginpublickey'))
-<script src='https://www.google.com/recaptcha/api.js' async defer></script>
-<script>
-  function onSubmit(token) {
-    document.getElementById("login-form").submit();
-  }
-</script>
-@endif
-
-
-<script>
-  $(document).on('appUpdate', function(){
-    //$.getJSON( appUrl + '/module/notification/runCheck', function( data ) {
-    // Maybe add some counter to only run every 10 mins.
-    // CHeck if the data contains errors
-    // Check if there are desktop notifications
-    //});
-  });
-</script>
+{{--<script src="{{ asset('assets/js/munkireport.settings.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/js/munkireport.js') }}"></script>--}}
 
 @stack('scripts')
 </body>
