@@ -37,6 +37,7 @@
         "uiv": "^1.2.4",
         "vue": "^2.6.11",
         "vue-grid-layout": "^2.3.12",
+        "vue-router": "^3.5.1",
         "whatwg-fetch": "^3.6.2"
     }
 }

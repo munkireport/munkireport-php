@@ -2,6 +2,7 @@
     "/public/js/app.js": "/public/js/app.js",
     "/public/css/app.css": "/public/css/app.css",
     "/public/js/business-units.js": "/public/js/business-units.js",
+    "/public/js/dashboards.js": "/public/js/dashboards.js",
     "/public/js/profile.js": "/public/js/profile.js",
     "/public/js/users.js": "/public/js/users.js",
     "/public/assets/js/jquery.min.js": "/public/assets/js/jquery.min.js",
