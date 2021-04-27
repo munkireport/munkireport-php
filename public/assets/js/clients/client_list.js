@@ -68,9 +68,9 @@ $(document).on('appReady', function(e, lang) {
 				)
 			
 			// Register for processing event
-			$('#total-count').after(' <i class="fa fa-refresh fa fa-spin hide"></i>')
+			$('#total-count').after(' <i class="fa fa-refresh fa fa-spin invisible"></i>')
 			$(this).on( 'processing.dt', function ( e, settings, processing ) {
-		        $('i.fa-refresh').toggleClass('hide', ! processing)
+		        $('i.fa-refresh').toggleClass('invisible', ! processing)
 		    } )
 
 		  // Customize search box (add clear search field button)

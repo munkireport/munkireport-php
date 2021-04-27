@@ -1,6 +1,8 @@
 {
     "/public/js/app.js": "/public/js/app.js",
     "/public/css/app.css": "/public/css/app.css",
+    "/public/js/manifest.js": "/public/js/manifest.js",
+    "/public/js/vendor.js": "/public/js/vendor.js",
     "/public/assets/js/jquery.min.js": "/public/assets/js/jquery.min.js",
     "/public/assets/js/popper.min.js": "/public/assets/js/popper.min.js",
     "/public/assets/js/bootstrap.min.js": "/public/assets/js/bootstrap.min.js",
