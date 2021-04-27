@@ -389,7 +389,7 @@ function delete_machine(obj)
         method: 'DELETE',
         dataType: 'json'
     })
-    .success(function(data) {
+    .done(function(data) {
         // Animate slide up
         row.find('td')
         .animate({'padding-top': '0px', 'padding-bottom': '0px'}, {duration: 100})

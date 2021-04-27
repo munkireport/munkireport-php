@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/me', 'MeController@index');
     Route::get('/me/tokens', 'MeController@tokens');
 
+    Route::delete('/manager/delete_machine/{serial_number}', 'ManagerController@delete_machine');
 
     if (config('_munkireport.alpha_features.dashboards', false)) {
         Route::get('/dashboards', 'DashboardsController@index');
