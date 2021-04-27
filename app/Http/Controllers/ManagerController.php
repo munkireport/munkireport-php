@@ -18,6 +18,7 @@ class ManagerController extends Controller
         // Delete machine entry from all tables
         $machine = new \MR\Kiss\Model;
 
+        // TODO: This is pretty terrible and easily solved using a CASCADE DELETE constraint
         // List tables (unfortunately this is not db-agnostic)
         switch ($machine->get_driver()) {
             case 'sqlite':
