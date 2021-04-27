@@ -39,7 +39,9 @@ class ClientsController extends Controller
                 'ipv4ip' => $machine->network ? $machine->network->ipv4ip : null,
                 'ipv6ip' => $machine->network ? $machine->network->ipv6ip : null,
             ];
-            return response()->json($out);
+            // The response is wrapped in an array to keep backwards compatibility with older javascript.
+            // Newer front end code should not use /clients/get_data
+            return response()->json([$out]);
         } else {
             return response()
                     ->setStatusCode(403)

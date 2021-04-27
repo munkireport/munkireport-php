@@ -78,7 +78,9 @@ $(document).on('appReady', function(e, lang) {
 	// Get client data
 	$.getJSON( appUrl + '/clients/get_data/' + serialNumber, function( data ) {
 
-		machineData = data[0];
+		// MunkiReport 5.6.5 returned an array because it returned the query output for a particular query.
+		// This should not be necessary.
+		var machineData = data[0];
 
 		// Set computer name value and title
 		$('.mr-computer_name_input')
@@ -103,16 +105,19 @@ $(document).on('appReady', function(e, lang) {
 
 		// Remote control links
 		$.getJSON( appUrl + '/clients/get_links', function( links ) {
+			$('#client_links').empty();
+
 			$.each(links, function(prop, val){
-				$('#client_links').append($('<li>')
+				$('#client_links')
 					.append($('<a>')
+						.addClass('dropdown-item')
 						.attr('href', (
 							val.replace(/%s/, machineData.remote_ip)
 							.replace(/%remote_ip/, machineData.remote_ip)
 							.replace(/%u/, username)
 							.replace(/%network_ip_v4/, machineData.ipv4ip)
 							.replace(/%network_ip_v6/, machineData.ipv6ip)))
-						.text(i18n.t('remote_control')+' ('+prop+')'))
+						.text(i18n.t('remote_control')+' ('+prop+')')
 				)
 			});
 		});
