@@ -3,7 +3,7 @@
 		<div class="card-header" data-container="body">
 			<i class="fa fa-power-off"></i>
             <span data-i18n="machine.uptime.title"></span>
-            <a href="/show/listing/reportdata/clients" class="pull-right"><i class="fa fa-list"></i></a>
+            <a href="/show/listing/reportdata/clients" class="pull-right text-reset"><i class="fa fa-list"></i></a>
 		</div>
 		<div class="card-body text-center">
 			<a tag="oneweekplus" class="btn btn-danger disabled">

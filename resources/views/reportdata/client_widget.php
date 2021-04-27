@@ -3,7 +3,7 @@
         <div class="card-header">
             <i class="fa fa-group"></i>
             <span data-i18n="client.activity"></span>
-            <a href="/show/listing/reportdata/clients" class="pull-right"><i class="fa fa-list"></i></a>
+            <a href="/show/listing/reportdata/clients" class="pull-right text-reset"><i class="fa fa-list"></i></a>
         </div>
         <div class="card-body d-flex flex-column justify-content-center">
             <div class="d-flex justify-content-center">

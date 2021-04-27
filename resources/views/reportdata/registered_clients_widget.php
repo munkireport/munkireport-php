@@ -3,7 +3,7 @@
         <div class="card-header">
             <i class="fa fa-clock-o"></i>
             <span data-i18n="machine.registered.title"></span>
-            <a href="/show/listing/munkireport/munki" class="pull-right"><i class="fa fa-list"></i></a>
+            <a href="/show/listing/munkireport/munki" class="pull-right text-reset"><i class="fa fa-list"></i></a>
         </div>
 		<div class="card-body">
 			<svg id="chart1" style="width: 100%; height: 400px"></svg>
