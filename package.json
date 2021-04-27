@@ -30,6 +30,7 @@
         "datatables.net-buttons-bs4": "^1.7.0",
         "graphql": "^14.2.1",
         "i18next": "^20.2.1",
+        "i18next-fetch-backend": "^3.0.0",
         "jquery": "^3.6.0",
         "jquery.hotkeys": "^0.1.0",
         "jszip": "^3.6.0",

@@ -9,7 +9,7 @@
             <i class="fa <?=$icon?>"></i>
             <span data-i18n="<?=$i18n_title?>"></span>
             <span class="counter badge"></span>
-            <a href="<?=$listing_link?>" class="pull-right"><i class="fa fa-list"></i></a>
+            <a href="<?=$listing_link?>" class="pull-right text-reset"><i class="fa fa-list"></i></a>
         </div>
         <div class="scroll-box">
             <ul class="list-group"></ul>

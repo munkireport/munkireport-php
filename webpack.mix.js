@@ -64,6 +64,7 @@ mix.scripts([
 
 
 mix.js('resources/js/app.js', 'public/js')
+  .extract(['jquery', 'popper.js', 'bootstrap', 'lodash', 'i18next', 'axios', 'vue', 'vue-router', 'vue-i18next', 'vue-grid-layout'])
   .sass('resources/sass/app.scss', 'public/css');
 
 // mix.js('resources/js/business-units.js', 'public/js');

@@ -7,12 +7,13 @@
 @endpush
 
 @push('scripts')
-    <script type="text/javascript" src="{{ asset('/js/vendor.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/app.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/manifest.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/vendor.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/js/app.js') }}"></script>
 @endpush
 
 @section('content')
-    <div class="container-fluid" id="app">
-        <router-view></router-view>
+    <div id="app">
+        <App/>
     </div>
 @endsection
