@@ -378,7 +378,7 @@ class Modules
         return '{'.implode(",\n", $localeList).'}';
     }
 
-    private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
+    private function collectModuleInfo($modulePaths, $skipInactiveModules, $allowedModules)
     {
         foreach ($modulePaths as $basePath)
         {
