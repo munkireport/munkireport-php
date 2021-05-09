@@ -30,6 +30,9 @@ function loadAuthConfig()
             case 'NOAUTH':
                 $auth_config['auth_noauth'] = require APP_ROOT . 'app/config/auth/noauth.php';
                 break;
+            case 'ENV':
+                $auth_config['auth_env'] = require APP_ROOT . 'app/config/auth/env.php';
+                break;
             case 'SAML':
                 $auth_config['auth_saml'] = require APP_ROOT . 'app/config/auth/saml.php';
                 break;
