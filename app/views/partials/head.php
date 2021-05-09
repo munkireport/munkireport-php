@@ -245,7 +245,7 @@
 						</ul>
 				</li>
 
-				<?php if( ! array_key_exists('auth_noauth', conf('auth'))): // Hide logout button if auth_noauth?>
+				<?php if( ! array_key_exists('auth_noauth', conf('auth'))): // Hide user menu if auth_noauth?>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -253,12 +253,14 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
+					<?php if( ! array_key_exists('auth_env', conf('auth'))): // Hide logout menu item if auth_env?>
 						<li>
 							<a href="<?php echo url('auth/logout'); ?>">
 								<i class="fa fa-power-off"></i>
 								<span data-i18n="nav.user.logout"></span>
 							</a>
 						</li>
+					<?php endif; ?>
 					</ul>
 				</li>
 
