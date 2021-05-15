@@ -212,13 +212,11 @@ var updateHash = function(e){
 		$('.client-tabs [href=#'+id+']').parent().remove();
 	}
 
-var showFilterModal = function(e){
-
+var showFilterModal = function(e) {
 	e.preventDefault();
 
-    var mgList = [];
-
-	var updateGroup = function(){
+	var mgList = [];
+	var updateGroup = function() {
 
 		var checked = this.checked,
 			settings = {
@@ -227,72 +225,71 @@ var showFilterModal = function(e){
 				action: checked ? 'remove' : 'add'
 			}
 
-		$.post(appUrl + '/filter/set_filter', settings, function(){
-			// Update all
-			$(document).trigger('appUpdate');
-		})
-    };
+      $.post(appUrl + '/filter/set_filter', settings, function() {
+        // Update all
+        $(document).trigger('appUpdate');
+      })
+	};
     
-    var updateArchived = function() {
-		var checked = this.checked,
-			settings = {
-				filter: 'archived',
-				value: 'yes',
-				action: checked ? 'remove' : 'add'
-			}
+  var updateArchived = function() {
+    var checked = this.checked,
+      settings = {
+        filter: 'archived',
+        value: 'yes',
+        action: checked ? 'remove' : 'add'
+      }
 
-		$.post(appUrl + '/filter/set_filter', settings, function(){
-            // Update all
-            enableDisableArchivedOnly();
+    $.post(appUrl + '/filter/set_filter', settings, function() {
+      // Update all
+      enableDisableArchivedOnly();
 
-			$(document).trigger('appUpdate');
-		})
-    }
+      $(document).trigger('appUpdate');
+    })
+  }
 
-    var updateArchivedOnly = function() {
-		var checked = this.checked,
-			settings = {
-				filter: 'archived_only',
-				value: 'yes',
-				action: checked ? 'add' : 'remove'
-			}
+  var updateArchivedOnly = function() {
+    var checked = this.checked,
+      settings = {
+        filter: 'archived_only',
+        value: 'yes',
+        action: checked ? 'add' : 'remove'
+      }
 
-		$.post(appUrl + '/filter/set_filter', settings, function(){
-			// Update all
-			$(document).trigger('appUpdate');
-		})
-    }
+    $.post(appUrl + '/filter/set_filter', settings, function(){
+      // Update all
+      $(document).trigger('appUpdate');
+    })
+  }
 
-    // Enable or disable depending on state of archived
-    var enableDisableArchivedOnly = function(){
-        if($('#archived').prop('checked'))
-        {
-            // enable checkbox
-            $('#archived_only input').prop('disabled', false)
-            $('#archived_only').removeClass("text-muted");
+  // Enable or disable depending on state of archived
+  var enableDisableArchivedOnly = function(){
+      if($('#archived').prop('checked'))
+      {
+          // enable checkbox
+          $('#archived_only input').prop('disabled', false)
+          $('#archived_only').removeClass("text-muted");
 
-        }else{
-            $('#archived_only input').prop('disabled', true);
-            $('#archived_only').addClass("text-muted");
-        }
-    }
+      }else{
+          $('#archived_only input').prop('disabled', true);
+          $('#archived_only').addClass("text-muted");
+      }
+  }
 
 
-    var updateAll = function() {
+  var updateAll = function() {
+      var checked = this.checked,
+          settings = {
+              filter: 'machine_group',
+              value: mgList,
+              action: checked ? 'clear' : 'add_all'
+          }
 
-        var checked = this.checked,
-            settings = {
-                filter: 'machine_group',
-                value: mgList,
-                action: checked ? 'clear' : 'add_all'
-            }
-
-        $.post(appUrl + '/filter/set_filter', settings, function(){
-			// Update all
-            $('#myModal .mgroups input[type=checkbox]').prop('checked', checked);
-			$(document).trigger('appUpdate');
-		})
-    };
+      $.post(appUrl + '/filter/set_filter', settings, function(){
+        // Update all
+        $('#myModal input.mgroups[type=checkbox]').prop('checked', checked);
+        $(document).trigger('appUpdate');
+      })
+  };
 
 	// Get all business units and machine_groups
 	var defer = $.when(
@@ -311,60 +308,72 @@ var showFilterModal = function(e){
 		// Set title
 		modal_title.empty();
 		modal_title.append($('<i class="fa fa-filter">'))
-                    .append(' ' + i18n.t("filter.title"));
+               .append(' ' + i18n.t("filter.title"));
 
-        // empty body
-        modal_body.empty()
+    // empty body
+    modal_body.empty()
+    var container = $('<div class="container">').appendTo(modal_body);
+    var form = $('<form>').appendTo(container);
+    var archive_row = $('<div class="row">').appendTo(form);
+    var archive_col = $('<div class="col-sm">').appendTo(archive_row);
 
-        // Add archive filters
-        modal_body.append($('<div class="checkbox machine_groups">')
-                .append($('<label>')
-                    .append($('<input id="archived" type="checkbox">')
-                        .change(updateArchived)
-                        .prop('checked', function(){
-                            return filter_data['archived'].length == 0;
-                        }))
-                    .append(i18n.t('filter.show_archived'))
-                )
-                .append($('<label id="archived_only" style="margin-left: 10px">')
-                    .append($('<input type="checkbox">')
-                        .change(updateArchivedOnly)
-                        .prop('checked', function(){
-                            return filter_data['archived_only'].length > 0;
-                        }))
-                    .append(i18n.t('filter.only_show_archived'))
-                )
-            );
+    // Add archive filters
+    var mg_archive = $('<div class="form-check form-check-inline machine_groups">').appendTo(archive_col);
+    $('<input class="form-check-input" id="archived" type="checkbox">')
+      .change(updateArchived)
+      .prop('checked', function () {
+          return filter_data['archived'].length == 0;
+      })
+      .appendTo(mg_archive);
+    $('<label class="form-check-label" for="archived">')
+      .append(i18n.t('filter.show_archived')).appendTo(mg_archive);
 
-        // Add check/uncheck all
-        modal_body.append($('<b>')
-                    .text(i18n.t("business_unit.machine_groups")))
-            .append($('<div class="checkbox">')
-                .append($('<label>')
-                    .append($('<input>')
-                        .change(updateAll)
-                        .attr('type', 'checkbox'))
-                    .append('Check/uncheck all')))
+    var mg_archiveonly = $('<div class="form-check form-check-inline machine_groups">').appendTo(archive_col);
+    $('<input class="form-check-input" id="archived_only_checkbox" type="checkbox">')
+      .change(updateArchivedOnly)
+      .prop('checked', function () {
+        return filter_data['archived_only'].length > 0;
+      })
+      .appendTo(mg_archiveonly);
+    $('<label id="archived_only" class="form-check-label" for="archived_only_checkbox">')
+      .append(i18n.t('filter.only_show_archived')).appendTo(mg_archiveonly);
+
+
+    var mg_row = $('<div class="row">').appendTo(form);
+    var mg_col = $('<div class="col-sm">').appendTo(mg_row);
+
+    $('<h5 class="mt-2">').text(i18n.t("business_unit.machine_groups")).appendTo(mg_col);
+
+    // Add check/uncheck all
+    var mg_checkall = $('<div class="form-check">').appendTo(mg_col);
+    $('<input class="form-check-input" id="machine_group_toggle_all" type="checkbox">')
+      .change(updateAll)
+      .appendTo(mg_checkall);
+    $('<label class="form-check-label" for="machine_group_toggle_all">')
+      .text('Check/uncheck all').appendTo(mg_checkall);
 
 		// Add machine groups
 		$.each(mg_data, function(index, obj){
 			if(obj.groupid !== undefined){
-                mgList.push(obj.groupid);
-				modal_body
-                    .append($('<div class="checkbox mgroups">')
-						.append($('<label>')
-							.append($('<input>')
-								.data(obj)
-								.prop('checked', function(){
-									return obj.checked;
-								})
-								.change(updateGroup)
-								.attr('type', 'checkbox'))
-							.append(obj.name || 'No Name')))
+			  mgList.push(obj.groupid);
+
+			  var chk = $('<div class="form-check">').appendTo(mg_col);
+			  $('<input class="form-check-input mgroups" type="checkbox">')
+          .data(obj)
+          .attr('id', 'mg' + index)
+          .prop('checked', function(){
+            return obj.checked;
+          })
+          .change(updateGroup)
+          .appendTo(chk);
+
+        $('<label class="form-check-label">')
+          .text(obj.name || 'No Name')
+          .appendTo(chk);
 			}
 		});
 
-        $('#myModal button.ok').text(i18n.t("dialog.close"));
+		$('#myModal button.ok').text(i18n.t("dialog.close"));
 
 		// Set ok button
 		$('#myModal button.ok')
