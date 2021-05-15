@@ -2,19 +2,28 @@
 
 <div class="container-fluid">
   <div class="row pt-4">
-	<h3 class="col-lg-12" id="bu_title" data-i18n="admin.bu_overview"></h3>
-
-	<div id="bu_units"></div>
-	<div data-i18n="listing.loading" id="loading"></div>
-
-    <div class="col-lg-12">
+      <div class="col-sm">
+	    <h3 class="col-lg-12" id="bu_title" data-i18n="admin.bu_overview"></h3>
+      </div>
+  </div>
+  <div class="pt-4">
+	<div id="bu_units">
+        <div data-i18n="listing.loading" id="loading"></div>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col-sm">
     	<div id="machine-groups">
     		<div class="card">
-                <h3 class="name card-title">
-                    <span data-i18n="admin.unassigned_groups"></span>
-                    <button type="button" class="btn btn-secondary-outline btn-sm pull-right add-group"><i class="fa fa-plus"></i></button>
-                </h3>
-    			<div class="list-group unassigned"></div>
+                <div class="card-header">
+                    <h3 class="name card-title">
+                        <span data-i18n="admin.unassigned_groups"></span>
+                        <button type="button" class="btn btn-outline-secondary btn-sm pull-right add-group"><i class="fa fa-plus"></i></button>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group unassigned"></div>
+                </div>
     		</div>
     	</div>
     </div>
@@ -27,7 +36,7 @@
 
 		var machineGroups = [];
 
-		var edit = function(){
+		var edit = function() {
 
 			var fields = {name:'', 'address':'', link: ''},
 				dataTemplate = {unitid:'new', users:['#'], archivers:['#'], managers:['#'], machine_groups:['#'], iteminfo:[]};
@@ -45,22 +54,14 @@
 				.empty()
 				.append($('<form>')
 					.submit(save)
-					.append($('<input>')
-						.attr('type', 'submit')
-						.addClass('invisible'))
-					.append($('<div>')
-						.addClass('form-group')
-						.append($('<label>')
-							.attr('for', 'modalInputName')
+					.append($('<input type="submit" class="invisible">'))
+					.append($('<div class="form-group">')
+						.append($('<label for="modalInputName">')
 							.text(i18n.t("admin.edit_bu.name")))
-						.append($('<input>')
-							.addClass('form-control')
-							.attr('id', 'modalInputName')
-							.attr('name', 'name')
+						.append($('<input class="form-control" id="modalInputName" name="name">')
 							.val(fields.name))
-						.append($('<input>')
-							.attr('type', 'submit')
-							.addClass('hide')))
+						.append($('<input type="submit" class="hide">')
+                        ))
 					.append($('<div>')
 						.addClass('form-group')
 						.append($('<label>')
@@ -298,7 +299,7 @@
 							.append(' ')
 							.append($('<button>')
 							    .attr('type', 'button')
-								.addClass('btn btn-secondary-outline btn-sm' + generate)
+								.addClass('btn btn-outline-secondary btn-sm' + generate)
 								.click(function(e){
 									e.preventDefault();
                   // Only generate if button is not hidden (triggers also on label)
@@ -392,7 +393,7 @@
 								.text(item.name)
 								.append(' ')
 								.append($('<button>')
-									.addClass('btn btn-secondary-outline btn-sm')
+									.addClass('btn btn-outline-secondary btn-sm')
 									.click(function(){removeItem(item)})
 									.append($('<i>')
 										.addClass('fa fa-times'))))
@@ -434,7 +435,7 @@
 							.append($('<span>')
 								.addClass('input-group-btn')
 								.append($('<button>')
-									.addClass('btn btn-secondary-outline btn-sm')
+									.addClass('btn btn-outline-secondary btn-sm')
 									.click(addItem)
 								.text('+')))));
 
@@ -469,12 +470,10 @@
 							.append($('<li>')
 								.text(name)
 								.append(' ')
-								.append($('<button>')
-                                    .attr('type', 'button')
-									.addClass('btn btn-secondary-outline btn-sm')
+								.append($('<button type="button" class="btn btn-outline-secondary btn-sm">')
 									.click(function(){removeUser(name)})
-									.append($('<i>')
-										.addClass('fa fa-times'))))
+									.append($('<i class="fa fa-times">')
+                            )))
 
 					});
 
@@ -518,7 +517,7 @@
 								.addClass('input-group-btn')
 								.append($('<button>')
                                     .attr('type', 'button')
-									.addClass('btn btn-secondary-outline')
+									.addClass('btn btn-outline-secondary')
 									.click(addUser)
 								.text('+')))));
 
@@ -576,8 +575,8 @@
 						if( ! $('.unitid-' + data.unitid).length)
 						{
 							$('#bu_units')
-								.append($('<div>')
-									.addClass('col-lg-12 unit unitid-' + data.unitid));
+								.append($('<div class="row unit">')
+									.addClass('unitid-' + data.unitid));
 						}
 
 						// Update unit
@@ -673,14 +672,13 @@
 						var addTo = $('.unassigned');
 					}
 
-					addTo.append($('<a>')
-						.attr('href', '#')
-						.addClass('list-group-item machine-group-' + mg.groupid)
+					addTo.append($('<a href="#" class="list-group-item">')
+						.addClass('machine-group-' + mg.groupid)
 						.data(mg)
 						.click(editMachinegroup)
 						.text(mg.name + ' ')
 						.append($('<span>')
-								.addClass('badge')
+								.addClass('badge badge-secondary')
 								.text(mg.cnt || 0)));
 				});
 			},
@@ -694,8 +692,7 @@
 
 				if(data.users)
 				{
-					users = $('<ul>')
-						.addClass('list-group');
+					users = $('<ul class="list-group">');
 					$.each(data.users, function(index, val){
 						users.append($('<li>')
 							.addClass('list-group-item')
@@ -705,8 +702,7 @@
 				}
 				if(data.archivers)
 				{
-					archivers = $('<ul>')
-						.addClass('list-group');
+					archivers = $('<ul class="list-group">');
 					$.each(data.archivers, function(index, val){
 						archivers.append($('<li>')
 							.addClass('list-group-item')
@@ -716,8 +712,7 @@
 				}
 				if(data.managers)
 				{
-					managers = $('<ul>')
-						.addClass('list-group');
+					managers = $('<ul class="list-group">');
 					$.each(data.managers, function(index, val){
 						managers.append($('<li>')
 							.addClass('list-group-item')
@@ -732,60 +727,43 @@
 							.text(i18n.t('admin.bu.more_info'));
 				}
 
-				var editButton = $('<button>')
-										.addClass('btn btn-secondary-outline btn-sm pull-right')
-										.attr('title', 'edit')
-										.append($('<i>')
-											.addClass('fa fa-edit'));
+				var editButton = $('<button class="btn btn-outline-secondary btn-sm pull-right" title="edit"><i class="fa fa-edit"></i></button>');
 
 				$(this)
 					.empty()
-					.append($('<div>')
-						.addClass('card')
-						.append($('<div>')
-							.addClass('card-header')
-							.append($('<h3>')
-								.addClass('name card-title')
+					.append($('<div class="card">')
+						.append($('<div class="card-header">')
+							.append($('<h3 class="name card-title">')
 								.text(data.name)
 								.append(editButton.clone()
 										.click(edit))))
-						.append($('<div>')
-							.addClass('card-body row')
-              .append($('<div>')
-								.addClass('col-lg-12')
+						.append($('<div class="card-body row">')
+                        .append($('<div class="col-lg-12">')
 								.text(data.address))
-              .append($('<div>')
-								.addClass('col-lg-12')
+                        .append($('<div class="col-lg-12">')
 								.append(link))
-							.append($('<div>')
-								.addClass('col-md-3')
-								.append($('<h4>')
+							.append($('<div class="col-md-3">')
+								.append($('<h4 class="alert alert-info">')
 									.text('Machine Groups ')
-									.addClass('alert alert-info')
 										.append(editButton.clone()
 											.click(editItems)))
-									.append($('<div>')
-										.addClass('list-group machine-groups')))
-							.append($('<div>')
-								.addClass('col-md-3')
-								.append($('<h4>')
+									.append($('<div class="list-group machine-groups">')
+										))
+							.append($('<div class="col-md-3">')
+								.append($('<h4 class="alert alert-info">')
 									.text('Managers ')
-									.addClass('alert alert-info')
 										.append(editButton.clone()
 											.attr('data-type', 'managers')
 											.click(editUsers)))
 									.append(managers))
-							.append($('<div>')
-								.addClass('col-md-3')
-								.append($('<h4>')
+							.append($('<div class="col-md-3">')
+								.append($('<h4 class="alert alert-info">')
 									.text('Archivers ')
-									.addClass('alert alert-info')
 										.append(editButton.clone()
 											.attr('data-type', 'archivers')
 											.click(editUsers)))
 									.append(archivers))
-							.append($('<div>')
-								.addClass('col-md-3')
+							.append($('<div class="col-md-3">')
 								.append($('<h4>')
 									.text('Users ')
 									.addClass('alert alert-info')
@@ -793,11 +771,8 @@
 											.attr('data-type', 'users')
 											.click(editUsers)))
 									.append(users)))
-							.append($('<div>')
-								.addClass('card-footer')
-								.append($('<a>')
-                                    .attr('role', 'button')
-									.addClass('btn btn-sm btn-secondary-outline')
+							.append($('<div class="card-footer">')
+								.append($('<a class="btn btn-sm btn-outline-secondary" role="button">')
 									.click(remove_dialog)
 									.text(i18n.t('delete')))))
 			}
@@ -833,13 +808,15 @@
 			// Create business units
 			if(businessUnitsEnabled)
 			{
-				$.each(bu_data[0], function(index, value){
-					$('#bu_units')
-						.append($('<div>')
-							.data(value)
-							.addClass('col-lg-12 unit unitid-' + value.unitid)
-							.each(render)
-						);
+				$.each(bu_data[0], function(index, value) {
+                  var row = $('<div class="row unit">')
+                    .appendTo('#bu_units')
+                    .data(value)
+                    .addClass('unitid-' + value.unitid);
+
+                  var col = $('<div class="col-sm">')
+                    .appendTo(row)
+                    .each(render);
 				});
 			}
 
@@ -856,7 +833,7 @@
 			$('#bu_title')
 				.append(' ')
 				.append($('<a>')
-					.addClass("btn btn-secondary-outline btn-sm")
+					.addClass("btn btn-outline-secondary btn-sm")
                     .attr('role', 'button')
 					.click(edit)
 					.append($('<i>')
