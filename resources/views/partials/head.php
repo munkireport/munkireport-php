@@ -184,15 +184,14 @@
                 </div>
             </li>
             <?php endif?>
-        </div><!-- div navbar-nav mr-auto (left aligned) -->
-
-        <div class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a href="#" id="filter-popup" class="nav-link filter-popup">
                     <i class="fa fa-filter"></i>
                 </a>
             </li>
+        </div><!-- div navbar-nav mr-auto (left aligned) -->
 
+        <div class="navbar-nav ml-auto">
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" id="themeMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-wrench"></i>
