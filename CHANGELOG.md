@@ -1,3 +1,5 @@
+### [6.0.0](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.1...wip) (Unreleased)
+
 ### [6.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (May 21, 2021) 
 
 *** COMPLETE REWRITE BETA VERSION - FOR TESTING ONLY ***
