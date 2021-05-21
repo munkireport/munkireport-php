@@ -1,4 +1,4 @@
-### [6.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (Unreleased)
+### [6.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (May 21, 2021) 
 
 *** COMPLETE REWRITE BETA VERSION - FOR TESTING ONLY ***
 
@@ -20,7 +20,7 @@ Local authentication now uses the database.
 Events may be forwarded to Notification channels, such as Slack and Teams, using the config
 setting `notification.forward_events` (default true).
 
-### [5.6.6](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (Unreleased)
+### [5.6.6](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (May 21, 2021) 
 
 ### [5.6.5](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (March 27, 2021) 🍖
 
