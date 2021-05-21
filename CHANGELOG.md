@@ -1,4 +1,13 @@
-### [6.0.0](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (Unreleased)
+### [6.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (Unreleased)
+
+*** COMPLETE REWRITE BETA VERSION - FOR TESTING ONLY ***
+
+This is the first beta release of the new version of MunkiReport. Please use for testing only, don't use in production!
+
+Documentation will follow, some initial docs can be found here:
+https://github.com/munkireport/munkireport-php/tree/wip/docs/illuminate
+
+Some changes:
 
 Network authentication is now firewall
 
