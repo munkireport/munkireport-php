@@ -5,6 +5,7 @@ from . import display
 from . import prefs
 from . import constants
 from . import FoundationPlist
+from . import munkilog
 from munkilib.purl import Purl
 from munkilib.phpserialize import *
 
@@ -35,7 +36,8 @@ from SystemConfiguration import SCDynamicStoreCopyConsoleUser
 # pylint: enable=E0611
 
 # our preferences "bundle_id"
-BUNDLE_ID = "MunkiReport"
+# BUNDLE_ID = "MunkiReport"
+BUNDLE_ID = constants.BUNDLE_ID
 
 
 class CurlError(Exception):
@@ -67,6 +69,10 @@ def display_detail(msg, *args):
 def finish_run():
     remove_run_file()    
     display_detail("## Finished run")
+
+    # Rotate main log if needed
+    munkilog.rotate_main_log()
+
     exit(0)
 
 def remove_run_file():
@@ -82,9 +88,19 @@ def curl(url, values):
     options["content_type"] = "application/x-www-form-urlencoded"
     options["body"] = urlencode(values)
     options["logging_function"] = display_detail
+
+    # Get connection timeout
     options["connection_timeout"] = 60
+    if pref("scriptTimeOut"):
+        options["connection_timeout"] = int(pref("HttpConnectionTimeout"))
+
+    # Get follow_redirects
+    options["follow_redirects"] = False
+    if pref("FollowHTTPRedirects"):
+        options["follow_redirects"] = int(pref("FollowHTTPRedirects"))
+
     if pref("UseMunkiAdditionalHttpHeaders"):
-        custom_headers = prefs.pref(constants.ADDITIONAL_HTTP_HEADERS_KEY)
+        custom_headers = prefs.pref(constants.MUNKI_ADDITIONAL_HTTP_HEADERS_KEY)
         if custom_headers:
             options["additional_headers"] = dict()
             for header in custom_headers:
@@ -98,6 +114,23 @@ def curl(url, values):
                 -1,
                 "UseMunkiAdditionalHttpHeaders defined, "
                 "but not found in Munki preferences",
+            )
+
+    if pref("UseAdditionalHttpHeaders"):
+        custom_headers = prefs.pref(constants.ADDITIONAL_HTTP_HEADERS_KEY)
+        if custom_headers:
+            options["additional_headers"] = dict()
+            for header in custom_headers:
+                m = re.search(r"^(?P<header_name>.*?): (?P<header_value>.*?)$", header)
+                if m:
+                    options["additional_headers"][m.group("header_name")] = m.group(
+                        "header_value"
+                    )
+        else:
+            raise CurlError(
+                -1,
+                "UseAdditionalHttpHeaders defined, "
+                "but not found in MunkiReport preferences",
             )
 
     # Build Purl with initial settings
@@ -292,7 +325,7 @@ def pref(pref_name):
     return pref_value
 
 
-def process(serial, items):
+def process(serial, items, ForceUpload=False):
     """Process receives a list of items, checks if they need updating and
     updates them if necessary."""
 
@@ -302,8 +335,8 @@ def process(serial, items):
     # Get prefs
     baseurl = pref("BaseUrl") or prefs.pref("SoftwareRepoURL") + "/report/"
 
-    hashurl = baseurl + "report/hash_check"
-    checkurl = baseurl + "report/check_in"
+    hashurl = baseurl + "index.php?/report/hash_check"
+    checkurl = baseurl + "index.php?/report/check_in"
 
     # Get passphrase
     passphrase = pref("Passphrase")
@@ -340,6 +373,17 @@ def process(serial, items):
     if result.get("info") != "":
         display_detail("Server info: %s" % result["info"])
 
+
+    # Override any module that are force updated
+    if ForceUpload == "FORCE_UPLOAD_ALL":
+        for i in items.keys():
+            display_detail("Forcing update for all modules!")
+            result[i] = 1
+    elif ForceUpload:
+        for i in ForceUpload.split(' '):
+            display_detail("Forcing update for %s!" % (i))
+            result[i] = 1
+
     # Retrieve hashes that need updating
     total_size = 0
     for i in items.keys():
@@ -370,9 +414,7 @@ def process(serial, items):
         display_detail("No changes")
 
 
-def runExternalScriptWithTimeout(
-    script, allow_insecure=False, script_args=(), timeout=30
-):
+def runExternalScriptWithTimeout(script, allow_insecure=False, script_args=(), timeout=30):
     """Run a script (e.g. preflight/postflight) and return its exit status.
 
     Args:
@@ -434,19 +476,13 @@ def runExternalScriptWithTimeout(
         raise utils.RunExternalScriptError("%s not executable" % script)
 
 
-def rundir(scriptdir, runtype, abort=False, submitscript=""):
+def rundir(scriptdir, runtype, abort=False, submitscript="", timeout=30):
     """Run scripts in directory scriptdir runtype is passed to the script if
     abort is True, a non-zero exit status will abort munki submitscript is put
     at the end of the scriptlist."""
     if os.path.exists(scriptdir):
 
         from munkilib import utils
-
-        # Get timeout for scripts
-        scriptTimeOut = 30
-        if pref("scriptTimeOut"):
-            scriptTimeOut = int(pref("scriptTimeOut"))
-            display_detail("# Set custom script timeout to %s seconds" % scriptTimeOut)
 
         # Directory containing the scripts
         parentdir = os.path.basename(scriptdir)
@@ -486,7 +522,7 @@ def rundir(scriptdir, runtype, abort=False, submitscript=""):
                     scriptpath,
                     allow_insecure=False,
                     script_args=[runtype],
-                    timeout=scriptTimeOut,
+                    timeout=timeout,
                 )
                 if stdout:
                     display_detail(stdout)

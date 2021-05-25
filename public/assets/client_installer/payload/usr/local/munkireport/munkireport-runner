@@ -4,25 +4,137 @@
 
 from munkilib import reportcommon
 from munkilib import FoundationPlist
+from munkilib import prefs
+from munkilib import osutils
+from munkilib import munkilog
+from munkilib import keychain
+
 import hashlib
 import sys
 import os
+import optparse
 
 def main():
     '''Main'''
 
-    reportcommon.display_detail("## Starting MunkiReport run")
+    parser = optparse.OptionParser()
+    parser.set_usage('Usage: %prog [options]')
+    parser.add_option('--version', '-v', action='store_true',
+                      help='Print the version of the munki tools and exit.')
+    parser.add_option('--show-config', action='store_true',
+                      help='Print the current configuration and exit.')
 
-    # set runtype
+    # Run options
+    run_options = optparse.OptionGroup(parser, 'Run Options', '')
+    
+    run_options.add_option('--quiet', '-q', action='store_true',
+                      help='Runs Munkireport in quiet mode.')
+    run_options.add_option('--scriptsonly', '-s', action='store_true',
+                      help='Runs the MunkiReport postflight scripts only.')
+    run_options.add_option('--uploadonly', '-u', action='store_true',
+                      help='Skips running the MunkiReport scripts and only uploads the cache files to the server.')
+    run_options.add_option('--timeout', '-t', dest="timeout",
+                      help='Override script timeout, in seconds.')
+    parser.add_option_group(run_options)
+
+    # Module options
+    module_options = optparse.OptionGroup(parser, 'Module Options', '')
+    module_options.add_option('--forceall', '-a', action='store_true',
+                      help='Forces all the cache files to upload to the server. This option is generally not needed, be careful when using it.')
+    module_options.add_option('--force', '-f', dest="force_modules",
+                      help='Forces the specified module\'s cache file to upload to the server.')
+    parser.add_option_group(module_options)
+
+    options, dummy_arguments = parser.parse_args()
+  
+    if options.version:
+        print reportcommon.pref('Version')
+        exit(0)
+
+    # Check to see if we're root
+    if os.geteuid() != 0:
+        reportcommon.display_error('You must run this as root!')
+        exit(0)
+
+    # Print MunkiReport's current config
+    if options.show_config:
+        prefs.print_config()
+        print '\nModules enabled:'
+        print reportcommon.pref('ReportItems') 
+        exit(0)
+
+    # Set verbosity of MunkiReport
+    if options.quiet:
+        reportcommon.set_verbosity(0)
+    else:
+        reportcommon.set_verbosity(3) # 3 is the default
+
+    # Check to see if another instance of this script is running
+    myname = os.path.basename(sys.argv[0])
+    other_managedsoftwareupdate_pid = osutils.pythonScriptRunning(myname)
+    if other_managedsoftwareupdate_pid:
+        # Another instance of this script is running, so we should quit
+        munkilog.log('*' * 60)
+        munkilog.log('%s launched as pid %s' % (myname, os.getpid()))
+        munkilog.log('Another instance of %s is running as pid %s.'
+                     % (myname, other_managedsoftwareupdate_pid))
+        munkilog.log('pid %s exiting.' % os.getpid())
+        munkilog.log('*' * 60)
+        reportcommon.display_error('Another instance of %s is running. Exiting.' % myname)
+        osutils.cleanUpTmpDir()
+        exit(0)
+
+    if prefs.pref('LogToSyslog'):
+        munkilog.configure_syslog()
+
+    # Check if we are to force upload module cache file(s)
+    if options.forceall:
+        force_upload = "FORCE_UPLOAD_ALL"
+    elif options.force_modules:
+        force_upload = options.force_modules
+    else:
+        force_upload = False
+
+    # Initialize our MunkiReport keychain if we are using custom certs or CAs
+    if (prefs.pref('UseClientCertificate')):
+        keychain.MunkiKeychain()
+
+    # Set runtype
     runtype = 'auto'
 
-    reportcommon.set_verbosity(3)
+    # Reset our errors and warnings files
+    munkilog.reset_errors()
+    munkilog.reset_warnings()
 
-    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
+    # Main MunkiReport runner block vvv
+    reportcommon.display_detail("## Starting MunkiReport run")
 
-    # Try to run postflight.d
-    postflightscriptdir = os.path.join(scriptdir, "scripts")
-    reportcommon.rundir(postflightscriptdir, runtype, False)
+    # Try to run postflight.d if not skipping scripts
+    if options.uploadonly:
+        reportcommon.display_detail("# Skipping the execution of MunkiReport scripts")
+    else:
+
+        # Get timeout for scripts
+        scriptTimeOut = 30 # Set default timeout in seconds
+        if options.timeout and options.timeout.isdigit(): # If override set and is a number
+            if int(options.timeout) <= 10: # If override is greater than or equal to 10
+                reportcommon.display_warning("# Timeout override must be intger greater than 10!")
+                reportcommon.display_warning("# Using default custom script timeout of %s seconds" % scriptTimeOut)
+            else: # If not, complain and use default timeout
+                scriptTimeOut = int(options.timeout)
+                reportcommon.display_detail("# Overriding custom script timeout to %s seconds" % scriptTimeOut)
+        elif options.timeout and not options.timeout.isdigit(): # If override set and not number, complain and use default timeout
+            reportcommon.display_warning("# Timeout override must be intger greater than 10!")
+            reportcommon.display_warning("# Using default custom script timeout of %s seconds" % scriptTimeOut)
+        elif reportcommon.pref("scriptTimeOut"): # If timeout not overriden, use what is set in pref file
+            if reportcommon.pref("scriptTimeOut") != scriptTimeOut: # If pref timeout is not default timeout, state that we are using custom time from pref
+                scriptTimeOut = int(reportcommon.pref("scriptTimeOut"))
+                reportcommon.display_detail("# Set custom script timeout to %s seconds" % scriptTimeOut)
+
+        # Run through the scripts by calling the rundir() function in reportcommon
+        scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
+        postflightscriptdir = os.path.join(scriptdir, "scripts")
+        reportcommon.rundir(postflightscriptdir, runtype, False, '', scriptTimeOut)
 
     # Get serial
     hardware_info = reportcommon.get_hardware_info()
@@ -51,14 +163,19 @@ def main():
         {'hash':hashlib.md5(report_info_plist).hexdigest(), \
             'data':report_info_plist}}
 
-    # Read config file /Library/Preferences/Munkireport.plist
-    config_items = reportcommon.pref('ReportItems') or {}
+    # Upload cache files to server if not scriptsonly
+    if options.scriptsonly:
+        reportcommon.display_detail("# Skipping uploading cache files to MunkiReport server")
+    else:
+        # Read config file /Library/Preferences/Munkireport.plist
+        config_items = reportcommon.pref('ReportItems') or {}
 
-    for key, val in config_items.items():
-        reportcommon.display_detail("Requesting %s" % key)
-        items[key] = {'path':val}
+        for key, val in config_items.items():
+            reportcommon.display_detail("Requesting %s" % key)
+            items[key] = {'path':val}
 
-    reportcommon.process(serial, items)
+        reportcommon.process(serial, items, force_upload)
+
     reportcommon.finish_run()
 
 if __name__ == '__main__':

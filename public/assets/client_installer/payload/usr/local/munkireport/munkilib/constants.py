@@ -13,7 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""constants.py.
+"""
+constants.py.
 
 Created by Greg Neagle on 2016-12-14.
 
@@ -32,16 +33,19 @@ EXIT_STATUS_SERVER_UNAVAILABLE = 150
 EXIT_STATUS_INVALID_PARAMETERS = 200
 EXIT_STATUS_ROOT_REQUIRED = 201
 
-BUNDLE_ID = "MunkiReport"
+BUNDLE_ID = 'MunkiReport'
+MUNKI_BUNDLE_ID = 'ManagedInstalls'
 # the following two items are not used internally by Munki
 # any longer, but remain for backwards compatibility with
 # pre and postflight script that might access these files directly
-MANAGED_INSTALLS_PLIST_PATH = "/Library/Preferences/" + BUNDLE_ID + ".plist"
-SECURE_MANAGED_INSTALLS_PLIST_PATH = (
-    "/private/var/root/Library/Preferences/" + BUNDLE_ID + ".plist"
-)
+MANAGED_INSTALLS_PLIST_PATH = '/Library/Preferences/' + BUNDLE_ID + '.plist'
+SECURE_MANAGED_INSTALLS_PLIST_PATH = '/private/var/root/Library/Preferences/' + BUNDLE_ID + '.plist'
 
-ADDITIONAL_HTTP_HEADERS_KEY = "AdditionalHttpHeaders"
+MUNKI_MANAGED_INSTALLS_PLIST_PATH = '/Library/Preferences/' + MUNKI_BUNDLE_ID + '.plist'
+MUNKI_SECURE_MANAGED_INSTALLS_PLIST_PATH = '/private/var/root/Library/Preferences/' + MUNKI_BUNDLE_ID + '.plist'
 
-if __name__ == "__main__":
-    print "This is a library of support tools for the Munki Suite."
+ADDITIONAL_HTTP_HEADERS_KEY = 'AdditionalHttpHeaders'
+MUNKI_ADDITIONAL_HTTP_HEADERS_KEY = 'AdditionalHttpHeaders'
+
+if __name__ == '__main__':
+    print 'This is a library of support tools for the Munki Suite.'

@@ -33,7 +33,7 @@
 	<string>#!/bin/bash 
 /bin/bash -c "$(curl -s --max-time 10 <?php echo url('/install'); ?>)"</string>
 	<key>minimum_os_version</key>
-	<string>10.4.0</string>
+	<string>10.9.0</string>
 	<key>unattended_install</key>
 	<true/> 
 	<key>uninstallable</key>
@@ -49,7 +49,8 @@ rm -rf /usr/local/munki/preflight \
   /usr/local/munki/report_broken_client \
   /usr/local/munki/munkilib/reportcommon.py* \
   /usr/local/munki/munkireport-* \
-  /Library/Preferences/MunkiReport.plist
+  /Library/Preferences/MunkiReport.plist\
+  /private/etc/paths.d/munkireport
 exit 0</string>
 	<key>version</key>
 	<string><?php echo $version; ?></string>

@@ -112,7 +112,7 @@ while getopts b:m:p:r:c:v:i:h flag; do
 	esac
 done
 
-# build additional HTTP headers
+# Build additional HTTP headers
 if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders 2>/dev/null)" = "1" ]; then
 	BUNDLE_ID='ManagedInstalls'
 	MANAGED_INSTALLS_PLIST_PATHS=("${TARGET_VOLUME}/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "${TARGET_VOLUME}/Library/Preferences/${BUNDLE_ID}.plist")
@@ -139,8 +139,9 @@ rm -rf "${MUNKIPATH}postflight.d" && ln -s "scripts" "${MUNKIPATH}postflight.d"
 
 mkdir -p "${INSTALLROOT}/usr/local/munki"
 mkdir -p "${INSTALLROOT}/Library/LaunchDaemons"
+mkdir -p "${INSTALLROOT}/private/etc/paths.d"
 
-#Normalize BASEURL so it has a trailing slash.
+# Normalize BASEURL so it has a trailing slash.
 if [[ ${BASEURL: -1} != "/" ]]
 then
     BASEURL="${BASEURL}/"
@@ -173,6 +174,8 @@ fi
 chmod a+x "${INSTALLROOT}/usr/local/munki/"{${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
 chmod a+x "${INSTALLROOT}/usr/local/munkireport/munkireport-runner"
 
+chown root:wheel "${INSTALLROOT}/private/etc/paths.d/munkireport"
+chmod 644 "${INSTALLROOT}/private/etc/paths.d/munkireport"
 
 echo "Configuring munkireport"
 #### Configure Munkireport ####
