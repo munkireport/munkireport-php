@@ -1,0 +1,40 @@
+#!/usr/bin/python
+
+import subprocess
+import os
+import sys
+import json
+sys.path.insert(0, '/usr/local/munki')
+sys.path.insert(0, '/usr/local/munkireport')
+from Foundation import CFPreferencesCopyAppValue
+from munkilib import FoundationPlist
+
+def get_pref_value(key, domain):
+    value = CFPreferencesCopyAppValue(key, domain)
+    if(value is not None):
+        return value
+    elif(value is not None and len(value) == 0):
+        return ""
+    else:
+        return ""
+
+def main():
+    """Main"""
+    # Create cache dir if it does not exist
+    cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(cachedir):
+        os.makedirs(cachedir)
+
+    data = {}
+
+    # Business logic goes here
+    # Add things to data dictionary
+    LOGIC
+
+    # Write memory results to cache
+    output_file = os.path.join(cachedir, 'MODULE.json')
+    with open(output_file, 'w') as fp:
+        json.dump(data, fp, indent=4, sort_keys=True)
+
+if __name__ == "__main__":
+    main()
