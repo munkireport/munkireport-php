@@ -467,6 +467,8 @@ return [
     */
     'alpha_features' => [
         // Enable the Alpha Vue Dashboards
-        'dashboards' => env('ALPHA_FEATURE_DASHBOARDS', False)
+        'dashboards' => env('ALPHA_FEATURE_DASHBOARDS', False),
+        // Enable the Global Search via Scout+TNTSearch
+        'search' => env('ALPHA_FEATURE_SEARCH', False),
     ]
 ];

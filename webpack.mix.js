@@ -46,7 +46,11 @@ mix.copy('node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js',
 // munkireport originally used the typeahead.bundle.min file
 mix.copy('node_modules/typeahead.js/dist/typeahead.bundle.min.js', 'public/assets/js/typeahead.bundle.min.js');
 
+// Added for v6 - Bootstrap 4 Autocomplete for Search Bar
+mix.copy('node_modules/bootstrap-4-autocomplete/dist/bootstrap-4-autocomplete.min.js', 'public/js/bootstrap-4-autocomplete.min.js');
+
 // Mix ALL MunkiReport 5.x dependencies to reduce number of individual connections
+// This should replace everything above, but needs some testing.
 mix.scripts([
   'node_modules/jquery/dist/jquery.min.js',
   'node_modules/popper.js/dist/umd/popper.min.js',
@@ -63,10 +67,14 @@ mix.scripts([
 ], 'public/js/all.js');
 
 
+// For routes which are completely Single-Page App (Completely controlled by VueJS)
 mix.js('resources/js/app.js', 'public/js')
   .extract(['jquery', 'popper.js', 'bootstrap', 'lodash', 'i18next', 'axios', 'vue', 'vue-router', 'vue-i18next', 'vue-grid-layout'])
   .sass('resources/sass/app.scss', 'public/css')
   .vue();
+
+// For routes which still have jQuery, but want to use Vue components
+mix.js('resources/js/mixed-app.js', 'public/js');
 
 // mix.js('resources/js/business-units.js', 'public/js');
 // mix.js('resources/js/profile.js', 'public/js');
