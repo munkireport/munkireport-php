@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 if [[ -z "${APP_KEY}" ]]; then
@@ -8,6 +8,7 @@ else
 fi
 
 php please migrate --force
+php please db:seed
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
