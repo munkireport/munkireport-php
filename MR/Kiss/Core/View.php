@@ -85,7 +85,37 @@ abstract class View
 
     }
 
-    public function fetch($vars = '')
+    /**
+     * Capture the output buffer from a view render instead of outputting it.
+     *
+     * NOTE: Be careful when the rendered `.php` file includes headers because the whole
+     * request may fail if the headers are rendered after some other content.
+     *
+     * @param string $file The file name, relative to the view path.
+     * @param array|null $vars The variables to substitute into the view.
+     * @param string $view_path The base path of all template file names given.
+     * @return string
+     */
+    public function viewFetch(string $file, array $vars = null, string $view_path = ''): string
+    {
+        //Bluebus addition
+        if(empty($view_path)){
+            $view_path = conf('view_path');
+        }
+
+        if (is_array($vars)) {
+            $this->vars=array_merge($this->vars, $vars);
+        }
+        extract($this->vars);
+
+        ob_start();
+        if (! @include($view_path.$file.'.php')) {
+            echo '<!-- Could not open '.$view_path.$file.'.php -->';
+        }
+        return ob_get_clean();
+    }
+
+    public function fetch($vars = ''): string
     {
         if (is_array($vars)) {
             $this->vars=array_merge($this->vars, $vars);

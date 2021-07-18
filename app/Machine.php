@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use MR\Scopes\CreatedSinceScope;
 use munkireport\models\MRModel;
+use Laravel\Scout\Searchable;
 
 class Machine extends MRModel
 {
     use HasFactory;
+
+    use Searchable;
 
     protected $table = 'machine';
 

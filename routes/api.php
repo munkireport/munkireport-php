@@ -35,4 +35,6 @@ Route::group(['prefix' => 'v6', 'namespace' => 'Api', 'middleware' => 'auth:sanc
     Route::apiResource('machine_groups', 'MachineGroupsController');
     Route::apiResource('users', 'UsersController');
     Route::apiResource('users.contact_methods', 'UsersContactMethodsController');
+
+    Route::get('/search/{model}/{query}', 'SearchController@searchModel')->where('query', '.*');
 });
