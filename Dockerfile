@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 RUN npm install && npm run production
 
 FROM php:7.4-apache
-MAINTAINER MunkiReport PHP Team <munkireport@noreply.users.github.com>
+LABEL maintainer="MunkiReport PHP Team <munkireport@noreply.users.github.com>"
 LABEL architecture="x86_64" \
 	  io.k8s.display-name="MunkiReport" \
 	  io.k8s.description="" \
