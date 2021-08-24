@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [[ -z "${APP_KEY}" ]]; then
+if [ -z "${APP_KEY}" ]; then
   php please key:generate
 else
   echo "APP_KEY supplied. Not generating an APP_KEY."
