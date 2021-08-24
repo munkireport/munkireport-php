@@ -85,6 +85,7 @@ class ManagerController extends Controller
             'business_unit',
             'machine_group',
             'cache',
+            'password_resets',
         ];
 
         // Check if old table
