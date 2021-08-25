@@ -54,7 +54,7 @@ Munkireport will **not** set the passphrase on the client through the install sc
 - `CONNECTION_PASSWORD`: The database connection password.
 - `INDEX_PAGE`: The page appended to the app root, default is `index.php?`.
 - `URI_PROTOCOL`: Which server variable to use for the correct request path. Defaults to `Auto`.
-- `WEBHOST`: The URL to the server hosting the application, including the schema eg. `https://munkireport.local`.
+- `APP_URL`: The URL to the server hosting the application, including the schema eg. `https://munkireport.local`.
 - `SUBDIRECTORY`: If your application is installed underneath a subdirectory, define this, eg. `/munkireport`.
 - `SITENAME`: The site name which will appear in the title bar of your browser, Default: `MunkiReport`.
 - `AUTH_METHODS`: A comma separated list of supported Authentication methods. Any combination of:

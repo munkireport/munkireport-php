@@ -8,7 +8,7 @@ index_page: INDEX_PAGE
 uri_protocol: URI_PROTOCOL
 sitename: SITENAME
 encryption_key: ENCRYPTION_KEY
-webhost: WEBHOST
+webhost: APP_URL
 subdirectory: SUBDIRECTORY
 hide_inactive_modules: HIDE_INACTIVE_MODULES
 module_search_paths: MODULE_SEARCH_PATHS
