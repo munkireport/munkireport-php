@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use URL, Config, Str;
 use App\Processors;
 use Illuminate\Support\ServiceProvider;
 use munkireport\processors\MachineProcessor;
@@ -32,7 +33,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        URL::forceRootUrl(Config::get('app.url'));    
+        if (Str::contains(Config::get('app.url'), 'https://')) {
+            URL::forceScheme('https');
+        }
 
         $this->callAfterResolving(Processors::Class, function (Processors $processors) {
             $processors->process('reportdata', ReportDataProcessor::class);
