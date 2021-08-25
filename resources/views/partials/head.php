@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/datatables.min.css"/>
     <?php else: ?>
         <!-- bootstrap.min.js is loaded locally using the `Default` theme -->
-        <link rel="stylesheet" href="<?php echo asset('assets/css/datatables.bootstrap4.min.css'); ?>" />
+        <link rel="stylesheet" href="<?php echo asset('assets/css/dataTables.bootstrap4.min.css'); ?>" />
         <link rel="stylesheet" href="<?php echo asset('assets/css/buttons.bootstrap4.min.css'); ?>" />
     <?php endif ?>
 
