@@ -359,7 +359,7 @@ return [
 |
 */
     'webhost' => mr_env(
-        'WEBHOST',
+        'APP_URL',
         function(){
             if(PHP_SAPI == 'cli') {
                 return '';
