@@ -19,6 +19,12 @@ return $settings = array(
     // standard: Destination, NameId, Conditions ... are validated too.
     'strict' => true, //@todo: make this depend on laravel config
 
+    // Set baseurl if different from APP_URL for instance when running in 
+    // a docker container (port is also part of the baseurl). SAML is
+    // pretty strict about urls, so make sure it matches. If not set it
+    // will default to APP_URL
+    'baseurl' => env('SAML2_BASEURL', null),
+
     // Enable debug mode (to print errors)
     'debug' => env('APP_DEBUG', false),
 
