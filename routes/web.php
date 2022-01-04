@@ -33,9 +33,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/filter/set_filter', 'FilterController@set_filter');
     Route::get('/unit/get_machine_groups', 'UnitController@get_machine_groups');
 
-    Route::get('/locale/get/{lang?}', 'LocaleController@get');
-    Route::get('/locale/get/{lang}/{load}', 'LocaleController@get');
-
+    Route::get('/locale/get/{lang?}', 'LocaleController@get'); // For older (mr 5.x i18next)
+    Route::get('/locale/get/{lang}/{load}', 'LocaleController@get'); // For older (mr 5.x i18next)
+    Route::get('/locales/{lng}/{ns}.json', 'LocalesController@get'); // For newest i18Next
+    Route::get('/locales', 'LocalesController@index');
 
     // Redirect old ReportData module routes back to the Core Controller
     Route::get('/module/reportdata/report/{serial_number}', 'ReportDataController@report');
@@ -74,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
     if (config('_munkireport.alpha_features.dashboards', false)) {
         Route::get('/dashboards', 'DashboardsController@index');
     }
+
+    Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
 });
 
 // NOTE: These cannot be completely behind auth because the get_script() action needs to be accessible without authentication.

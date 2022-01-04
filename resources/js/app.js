@@ -13,20 +13,20 @@ const VueI18Next = require('@panter/vue-i18next').default;
 const VueRouter = require('vue-router').default;
 const routes = require('./routes').default;
 
+const I18nOptions = {
+  debug: true, // mr.debug
+  fallbackLng: 'en',
+  ns: ['translation', 'event'],
+  backend: {
+    loadPath: '/locales/{{lng}}/{{ns}}.json',
+    allowMultiLoading: false,
+  }
+};
+
+
 i18next
   .use(Fetch)
-  .init({
-    debug: true, // mr.debug
-    fallbackLng: 'en',
-    backend: {
-        loadPath: '/locale/get/{{lng}}',
-        allowMultiLoading: false,
-        parse: function(data) {
-            console.log(data.messages);
-            return data.fallback_main;
-        }
-    }
-});
+  .init(I18nOptions);
 
 
 const i18n = new VueI18Next(i18next);
