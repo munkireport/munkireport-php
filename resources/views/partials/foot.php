@@ -72,6 +72,9 @@
     <script src="<?php echo asset('assets/js/jquery.hotkeys/jquery.hotkeys.js'); ?>"></script>
     <script src="<?php echo asset('assets/js/munkireport.settings.js'); ?>"></script>
 
+    <!-- v6 -->
+
+
     <!-- inline scripts -->
     <script>
       $('.mr-alert').prependTo('body>div.container:first');

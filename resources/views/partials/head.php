@@ -29,8 +29,10 @@
     <!-- Head scripts -->
     <?php if (config('frontend.javascript.use_cdn', false)): ?>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
     <?php else: ?>
         <script src="<?php echo asset('assets/js/jquery.min.js'); ?>"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
     <?php endif ?>
     <script>
       // Include csrf in all requests
@@ -192,6 +194,18 @@
         </div><!-- div navbar-nav mr-auto (left aligned) -->
 
         <div class="navbar-nav ml-auto">
+            <?php if (config('_munkireport.alpha_features.search', false)): ?>
+            <form class="form-inline my-2 my-lg-0">
+                <li class="dropdown" data-reference="parent">
+                    <div class="search-results dropdown-menu">
+                        <a class="dropdown-item" href="#">No results</a>
+                    </div>
+                </li>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <?php endif ?>
+
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" id="themeMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-wrench"></i>
