@@ -6,74 +6,42 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >
-  This template sets up an ECS Task and Service for MunkiReport-PHP.
-  If you don't have an existing VPC or subnets, they will be created.
-  Warning: This will incur cost even on the free tier. I have attempted to create
-  the smallest possible configuration for minimal cost.
+  This template creates a `munkireport-php` task and service on an existing ECS cluster to run the docker container
+  image specified.
+
+  This *DOES* incur charges. Ensure you have billing alarms set up.
 Parameters:
-  EcsCluster:
+  ECSCluster:
     Type: String
     Default: "sandbox"
-    Description: The (short name or arn of) an ECS cluster to deploy MunkiReport PHP into. Must have the FARGATE_SPOT provider
-  EcsServiceSubnets:
+    Description: The (short name, or arn of) an ECS cluster to deploy MunkiReport PHP into.
+  ECSServiceSubnets:
     Type: "List<AWS::EC2::Subnet::Id>"
-    Description: The VPC subnets where the MunkiReport ECS network interfaces will be present/listening
-  ServiceSecurityGroup:
-    Type: AWS::EC2::SecurityGroup::Id
-    Description: The security group that should be applied to the MunkiReport ECS public IP
+    Description: The subnet(s) where the ECS container will have an interface (ENI).
+  ServiceSecurityGroups:
+    Type: "List<AWS::EC2::SecurityGroup::Id>"
+    Description: The security group(s) that should be applied to the ECS container's interface.
   ContainerImage:
     Type: String
-    Default: "youraccount.ecr.region.amazonaws.com/munkireport/munkireport-php:latest"
-#    Default: "docker.io/munkireport/munkireport-php:latest"
-    Description: The container image to use, to run MunkiReport PHP
+    Default: "docker.io/munkireport/munkireport-php:latest"
+    Description: The container image to use, to run MunkiReport PHP. You can specify an ECR private registry if you have a custom build.
+#  CreateLoadBalancer:
+#    Type: String
+#    Default: "no"
+#    AllowedValues:
+#      - "no"
+#      - "yes"
+#    Description: >
+#      Create an Application Load Balancer for the MunkiReport-PHP service. This incurs extra cost (per-request), but allows
+#      for more secure configurations and easier handling of certificates.
 Resources:
-
-  # Initially i was very confused about the difference between the ECS execution and task role.
-  # Execution seems to be policy granted to the ECS machinery before the container launches
-  # Task role seems to be the role that some software running in the container can use.
-  MunkiReportExecutionRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Join
-        - '-'
-        - - "MunkiReportECSExecutionRole"
-          - !Ref AWS::Region
-      Description: >
-        Allow MunkiReport-PHP running under ECS to access its parameters and put logs.
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - "ecs-tasks.amazonaws.com"
-            Action:
-              - "sts:AssumeRole"
-
-  MunkiReportTaskRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Join
-        - '-'
-        - - "MunkiReportECSTaskRole"
-          - !Ref AWS::Region
-      Description: >
-        Allow MunkiReport-PHP running under ECS to access its parameters and put logs.
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - "ecs-tasks.amazonaws.com"
-            Action:
-              - "sts:AssumeRole"
-
   # subset of: AmazonECSTaskExecutionRolePolicy
   MunkiReportTaskManagedPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      Description: Allows the ECS task to Put CloudWatch Logs, Pull from ECR, and Access its SSM Parameter store.
+      Description: >
+        This policy is similar but more restrictive than AmazonECSTaskExecutionRolePolicy (same actions, fewer resources).
+        Additionally, it allows ECS to access SSM Parameter Store.
       ManagedPolicyName: !Join
         - '-'
         - - "MunkiReportECSTaskExecutionRolePolicy"
@@ -143,6 +111,26 @@ Resources:
             Resource:
               - "*"
 
+  MunkiReportExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join
+        - '-'
+        - - "MunkiReportECSExecutionRole"
+          - !Ref AWS::Region
+      Description: >
+        Allow MunkiReport-PHP running under ECS to access its parameters and put logs.
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - "ecs-tasks.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - !Ref MunkiReportTaskManagedPolicy
 
   MunkiReportLogsGroup:
     Type: AWS::Logs::LogGroup
@@ -195,13 +183,12 @@ Resources:
   MunkiReportECSService:
     Type: AWS::ECS::Service
     Properties:
-      Cluster: !Ref EcsCluster
+      Cluster: !Ref ECSCluster
       ServiceName: munkireport-php
       DesiredCount: 1
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
-          SecurityGroups:
-            - !Ref ServiceSecurityGroup
-          Subnets: !Ref EcsServiceSubnets
+          SecurityGroups: !Ref ServiceSecurityGroups
+          Subnets: !Ref ECSServiceSubnets
       TaskDefinition: !Ref MunkiReportECSTaskDefinition
