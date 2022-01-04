@@ -180,6 +180,18 @@ $page = url()->current();
 
             <!-- navbar-right -->
             <div class="navbar-nav ml-auto">
+                @if(config('_munkireport.alpha_features.search', false))
+                <form class="form-inline my-2 my-lg-0">
+                    <li class="dropdown" data-reference="parent">
+                        <div class="search-results dropdown-menu">
+                            <a class="dropdown-item" href="#">No results</a>
+                        </div>
+                    </li>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <?php endif ?>
+
                 <li class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="themeMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-wrench"></i>
