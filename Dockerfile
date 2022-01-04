@@ -45,7 +45,7 @@ COPY --from=frontend /usr/src/app/public/* $APACHE_DOCUMENT_ROOT/
 WORKDIR $APP_DIR
 RUN chown -R www-data:www-data $APP_DIR
 
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 RUN sed -i 's/ServerTokens OS/ServerTokens Prod/' /etc/apache2/conf-available/security.conf
 RUN sed -i 's/ServerSignature On/ServerSignature Off/' /etc/apache2/conf-available/security.conf
@@ -73,4 +73,4 @@ VOLUME /var/munkireport/storage
 # Legacy path for sqlite3 database only.
 VOLUME /var/munkireport/app/db
 
-EXPOSE 80
+EXPOSE 8080

@@ -17,7 +17,7 @@
                :h="item.h"
                :i="item.i"
                :key="item.i">
-      <DiskReportWidget />
+      <component :is="item.widget" />
     </grid-item>
   </grid-layout>
 </template>
@@ -26,20 +26,30 @@
 import VueGridLayout from 'vue-grid-layout';
 import ThresholdWidget from '../components/widgets/ThresholdWidget';
 import DiskReportWidget from '../components/widgets/DiskReportWidget';
+import ScrollBoxWidget from '../components/widgets/ScrollBoxWidget';
+import EventsWidget from '../components/widgets/EventsWidget';
+
+const layout = [
+  {"x":0,"y":0,"w":4,"h":5,"i":"0","widget":"widget-disk-report"},
+  {"x":4,"y":0,"w":8,"h":10,"i":"1","widget":"widget-event-messages"},
+];
 
 export default {
   name: "dashboard",
   components: {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem,
-    DiskReportWidget,
+    'widget-disk-report': DiskReportWidget,
     ThresholdWidget,
+    ScrollBoxWidget,
+    'widget-event-messages': EventsWidget,
   },
   data() {
     return {
-      layout: [
-        {"x":0,"y":0,"w":4,"h":5,"i":"0"},
-        {"x":4,"y":0,"w":4,"h":5,"i":"1"},
+      layout,
+      // layout: [
+      //   {"x":0,"y":0,"w":4,"h":5,"i":"0"},
+      //   {"x":4,"y":0,"w":8,"h":10,"i":"1"},
         // {"x":2,"y":0,"w":2,"h":4,"i":"1"},
         // {"x":4,"y":0,"w":2,"h":5,"i":"2"},
         // {"x":6,"y":0,"w":2,"h":3,"i":"3"},
@@ -59,7 +69,7 @@ export default {
         // {"x":10,"y":4,"w":2,"h":2,"i":"17"},
         // {"x":0,"y":9,"w":2,"h":3,"i":"18"},
         // {"x":2,"y":6,"w":2,"h":2,"i":"19"}
-      ]
+      // ]
     };
   },
   mounted() {

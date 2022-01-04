@@ -1,0 +1,194 @@
+# Deploy via Console or using:
+# aws cloudformation create-stack --stack-name munkireport-php \
+#  --template-body file:///munkireport-ecs-fargate-sqlite-stack.yaml \
+#  --parameters <> \
+#  --capabilities CAPABILITY_NAMED_IAM
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  This template creates a `munkireport-php` task and service on an existing ECS cluster to run the docker container
+  image specified.
+
+  This *DOES* incur charges. Ensure you have billing alarms set up.
+Parameters:
+  ECSCluster:
+    Type: String
+    Default: "sandbox"
+    Description: The (short name, or arn of) an ECS cluster to deploy MunkiReport PHP into.
+  ECSServiceSubnets:
+    Type: "List<AWS::EC2::Subnet::Id>"
+    Description: The subnet(s) where the ECS container will have an interface (ENI).
+  ServiceSecurityGroups:
+    Type: "List<AWS::EC2::SecurityGroup::Id>"
+    Description: The security group(s) that should be applied to the ECS container's interface.
+  ContainerImage:
+    Type: String
+    Default: "docker.io/munkireport/munkireport-php:latest"
+    Description: The container image to use, to run MunkiReport PHP. You can specify an ECR private registry if you have a custom build.
+#  CreateLoadBalancer:
+#    Type: String
+#    Default: "no"
+#    AllowedValues:
+#      - "no"
+#      - "yes"
+#    Description: >
+#      Create an Application Load Balancer for the MunkiReport-PHP service. This incurs extra cost (per-request), but allows
+#      for more secure configurations and easier handling of certificates.
+Resources:
+  # subset of: AmazonECSTaskExecutionRolePolicy
+  MunkiReportTaskManagedPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: >
+        This policy is similar but more restrictive than AmazonECSTaskExecutionRolePolicy (same actions, fewer resources).
+        Additionally, it allows ECS to access SSM Parameter Store.
+      ManagedPolicyName: !Join
+        - '-'
+        - - "MunkiReportECSTaskExecutionRolePolicy"
+          - !Ref AWS::Region
+      Roles:
+        - !Ref MunkiReportExecutionRole
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "logs:PutLogEvents"
+            Resource: !Join
+              - ':'
+              - - 'arn'
+                - !Ref AWS::Partition
+                - 'logs'
+                - !Ref AWS::Region
+                - !Ref AWS::AccountId
+                - 'log-group'
+                - '/ecs/munkireport-php'
+                - 'log-stream'
+                - '*'
+          - Effect: Allow
+            Action:
+              - "logs:CreateLogStream"
+            Resource: !Join
+              - ':'
+              - - 'arn'
+                - !Ref AWS::Partition
+                - 'logs'
+                - !Ref AWS::Region
+                - !Ref AWS::AccountId
+                - 'log-group'
+                - '/ecs/munkireport-php'
+                - '*'
+          - Effect: Allow
+            Action:
+              - "ssm:DescribeParameters"
+            Resource: "*"
+          - Effect: Allow
+            Action:
+              - "ssm:GetParameters"
+            Resource:
+              - !Join
+                - ':'
+                - - 'arn'
+                  - !Ref AWS::Partition
+                  - 'logs'
+                  - !Ref AWS::Region
+                  - !Ref AWS::AccountId
+                  - 'parameter'
+                  - '/munkireport/*'
+          - Effect: Allow
+            Action:
+              - "kms:Decrypt"
+            Resource:
+              - "*"
+            Condition:
+              StringLike:
+                "kms:RequestAlias": "alias/aws/ssm"
+          - Effect: Allow
+            Action:
+              - "ecr:BatchCheckLayerAvailability"
+              - "ecr:BatchGetImage"
+              - "ecr:GetDownloadUrlForLayer"
+              - "ecr:GetAuthorizationToken"
+            Resource:
+              - "*"
+
+  MunkiReportExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join
+        - '-'
+        - - "MunkiReportECSExecutionRole"
+          - !Ref AWS::Region
+      Description: >
+        Allow MunkiReport-PHP running under ECS to access its parameters and put logs.
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - "ecs-tasks.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - !Ref MunkiReportTaskManagedPolicy
+
+  MunkiReportLogsGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /ecs/munkireport-php
+      RetentionInDays: 3
+
+  MunkiReportECSTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      ContainerDefinitions:
+        - Name: munkireport-php
+          Image: !Ref ContainerImage
+          PortMappings:
+            - ContainerPort: 8080
+              Protocol: TCP
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref MunkiReportLogsGroup
+              awslogs-stream-prefix: munkireport-php
+              awslogs-region: !Ref AWS::Region
+          Secrets:
+            - Name: DB_USERNAME
+              ValueFrom: !Join
+                - ':'
+                - - 'arn'
+                  - !Ref AWS::Partition
+                  - 'ssm'
+                  - !Ref AWS::Region
+                  - !Ref AWS::AccountId
+                  - 'parameter/munkireport/db-username'
+            - Name: DB_PASSWORD
+              ValueFrom: !Join
+                - ':'
+                - - 'arn'
+                  - !Ref AWS::Partition
+                  - 'ssm'
+                  - !Ref AWS::Region
+                  - !Ref AWS::AccountId
+                  - 'parameter/munkireport/db-password'
+      Cpu: 256  # .25, the smallest possible vCPU
+      Memory: 512  # 512MB, the smallest possible Memory
+      NetworkMode: awsvpc
+      ExecutionRoleArn: !Ref MunkiReportExecutionRole
+      Family: munkireport-php
+      RequiresCompatibilities:
+        - FARGATE
+
+  MunkiReportECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref ECSCluster
+      ServiceName: munkireport-php
+      DesiredCount: 1
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups: !Ref ServiceSecurityGroups
+          Subnets: !Ref ECSServiceSubnets
+      TaskDefinition: !Ref MunkiReportECSTaskDefinition
