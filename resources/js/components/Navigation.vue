@@ -7,10 +7,10 @@
 
     <div class="collapse navbar-collapse bs-navbar-collapse" id="navbarSupportedContent">
       <div class="navbar-nav mr-auto">
-        <li class="nav-item dropdown" :class="{ 'active': false }">
+        <li v-if="dashboards.length > 0" class="nav-item dropdown" :class="{ 'active': false }">
           <a class="nav-link dropdown-toggle" href="#" role="button" id="dashboardsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-th-large"></i>
-            <span>{{ $t("nav.main.dashboard_plural") }}</span>
+            <span v-wait-for-t>{{ $t("nav.main.dashboard_plural") }}</span>
             <b class="caret"></b>
           </a>
           <div class="dashboard dropdown-menu" aria-labelledby="dashboardsMenuLink">
@@ -20,11 +20,17 @@
             </a>
           </div>
         </li>
+        <li v-else class="nav-item" :class="{ 'active': true }">
+          <a class="nav-link" href="#">
+            <i class="fa fa-th-large"></i>
+            <span v-wait-for-t>{{ $t("nav.main.dashboard") }}</span>
+          </a>
+        </li>
 
         <li class="nav-item dropdown" :class="{ 'active': false }">
           <a class="nav-link dropdown-toggle" href="#" role="button" id="reportsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-bar-chart-o"></i>
-            <span>{{ $t("nav.main.reports") }}</span>
+            <span v-wait-for-t>{{ $t("nav.main.reports") }}</span>
             <b class="caret"></b>
           </a>
           <div class="report dropdown-menu" aria-labelledby="dashboardsMenuLink">
@@ -35,7 +41,7 @@
         <li class="nav-item dropdown" :class="{ 'active': false }">
           <a class="nav-link dropdown-toggle" href="#" role="button" id="listingMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-list-alt"></i>
-            <span>{{ $t("nav.main.listings") }}</span>
+            <span v-wait-for-t>{{ $t("nav.main.listings") }}</span>
             <b class="caret"></b>
           </a>
           <div class="listing dropdown-menu" aria-labelledby="listingMenuLink">
@@ -47,7 +53,7 @@
         <li class="nav-item dropdown" :class="{ 'active': false }">
         <a class="nav-link dropdown-toggle" href="#" role="button" id="adminMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-list-alt"></i>
-          <span>{{ $t("nav.main.admin") }}</span>
+          <span v-wait-for-t>{{ $t("nav.main.admin") }}</span>
           <b class="caret"></b>
         </a>
         <div class="admin dropdown-menu" aria-labelledby="adminMenuLink">
@@ -79,7 +85,7 @@
             <i class="fa fa-globe"></i>
           </a>
           <div class="locale dropdown-menu" aria-labelledby="localeMenuLink">
-            <a v-for="locale in locales" class="dropdown-item" :href="computedLocaleUrl" :data-i18n="'nav.lang.' + locale" v-text="locale"></a>
+            <a v-for="locale in locales" class="dropdown-item" @click="changeLanguage(locale)">{{ $t('nav.lang.' + locale) }}</a>
           </div>
         </li>
 
@@ -113,6 +119,8 @@
 </template>
 
 <script>
+import _ from 'whatwg-fetch';
+
 export default {
   name: "Navigation",
   data() {
@@ -131,6 +139,22 @@ export default {
       email: "example@example.com",
       helpUrl: "",
     }
+  },
+  methods: {
+    changeLanguage(lang) {
+      this.$i18n.i18next.changeLanguage(lang);
+    }
+  },
+  mounted() {
+    fetch('/locales')
+        .then((res) => res.json())
+        .then((data) => {
+      this.locales = data;
+    })
+    .catch((e) => {
+      console.error(e);
+      // TODO: display alert banner
+    });
   }
 }
 </script>
