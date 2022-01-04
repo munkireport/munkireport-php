@@ -61,6 +61,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'osquery' => [
+            'driver' => 'nodekey',
+            'provider' => 'nodes',
+        ],
     ],
 
     /*
@@ -91,6 +96,11 @@ return [
         'ldap_users' => [
             'driver' => 'ldap',
             'model' => App\User::class,
+        ],
+
+        'nodes' => [
+            'driver' => 'eloquent',
+            'model' => Munkireport\Osquery\Node::class,
         ]
     ],
 

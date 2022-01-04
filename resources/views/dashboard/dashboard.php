@@ -5,21 +5,15 @@
 	<?php foreach($dashboard_layout AS $row):?>
 
 	<div class="row pt-4">
-
-		<?php foreach($row as $item => $data):?>
-
-			<?php if(is_array($data['widget']) && array_key_exists('widget', $data)):?>
-
-				<?php $widget->view($this, $data['widget'], $data); ?>
-
-			<?php else:?>
-
-				<?php $widget->view($this, $item, $data); ?>
-
-			<?php endif?>
-
-		<?php endforeach?>
-
+        <?php
+        foreach ($row as $item => $data) {
+            if(array_key_exists('widget', $data)) {
+                $widget->view($this, $data['widget'], $data);
+            } else {
+                $widget->view($this, $item, $data);
+            }
+        }
+        ?>
 	</div> <!-- /row -->
 
 	<?php endforeach?>

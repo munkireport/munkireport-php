@@ -17,6 +17,7 @@
 
 <script>
 export default {
+  name: "ThresholdWidget",
   props: {
     tooltip: String,
     icon: String,
@@ -24,8 +25,7 @@ export default {
     listingUrl: String,
     thresholds: Array,
     values: Array,
-  },
-  name: "ThresholdWidget"
+  }
 }
 </script>
 
