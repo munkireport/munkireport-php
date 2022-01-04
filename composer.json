@@ -106,7 +106,8 @@
         "laravel-notification-channels/microsoft-teams": "^1.1",
         "wikimedia/composer-merge-plugin": "^2.0",
         "laravel/scout": "8.6",
-        "teamtnt/laravel-scout-tntsearch-driver": "^11.3"
+        "teamtnt/laravel-scout-tntsearch-driver": "^11.3",
+        "laravel/legacy-factories": "^1.1"
     },
     "autoload": {
         "classmap": [
