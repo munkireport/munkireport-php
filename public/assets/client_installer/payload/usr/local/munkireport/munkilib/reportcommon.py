@@ -562,7 +562,7 @@ def getOsVersion(only_major_minor=True, as_tuple=False):
     )
     (output, unused_error) = proc.communicate()
     output = output.strip()
-    os_version_tuple = output.split(".")
+    os_version_tuple = output.decode("utf8").split(".")
     if only_major_minor:
         os_version_tuple = os_version_tuple[0:2]
     if as_tuple:
