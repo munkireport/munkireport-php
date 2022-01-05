@@ -34,7 +34,7 @@ EXIT_STATUS_SERVER_UNAVAILABLE = 150
 EXIT_STATUS_INVALID_PARAMETERS = 200
 EXIT_STATUS_ROOT_REQUIRED = 201
 
-BUNDLE_ID = 'ManagedInstalls'
+BUNDLE_ID = 'MunkiReport'
 # the following two items are not used internally by Munki
 # any longer, but remain for backwards compatibility with
 # pre and postflight script that might access these files directly

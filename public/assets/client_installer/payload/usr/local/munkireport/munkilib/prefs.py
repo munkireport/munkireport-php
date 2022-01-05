@@ -101,7 +101,7 @@ class Preferences(object):
         """Init.
 
         Args:
-            bundle_id: str, like 'ManagedInstalls'
+            bundle_id: str, like 'MunkiReport'
         """
         if bundle_id.endswith('.plist'):
             bundle_id = bundle_id[:-6]
