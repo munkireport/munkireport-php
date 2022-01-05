@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/munkireport/python3
 # encoding: utf-8
 
 from . import display
@@ -13,7 +13,7 @@ import pwd
 import sys
 import hashlib
 import platform
-from urllib import urlencode
+from urllib.parse import urlencode
 import re
 import time
 import os
@@ -114,7 +114,7 @@ def curl(url, values):
         # safely kill the connection then re-raise
         connection.cancel()
         raise
-    except Exception, err:  # too general, I know
+    except Exception as err:  # too general, I know
         # Let us out! ... Safely! Unexpectedly quit dialogs are annoying...
         connection.cancel()
         # Re-raise the error as a GurlError
@@ -269,7 +269,7 @@ def set_pref(pref_name, pref_value):
         kCFPreferencesCurrentHost,
     )
     CFPreferencesAppSynchronize(BUNDLE_ID)
-    print "set pref"
+    print("set pref")
     try:
         CFPreferencesSetValue(
             pref_name,
@@ -309,13 +309,13 @@ def process(serial, items):
     passphrase = pref("Passphrase")
 
     # Get hashes for all scripts
-    for key, i in items.items():
+    for key, i in list(items.items()):
         if i.get("path"):
             i["hash"] = getmd5hash(i.get("path"))
 
     # Check dict
     check = {}
-    for key, i in items.items():
+    for key, i in list(items.items()):
         if i.get("hash"):
             check[key] = {"hash": i.get("hash")}
 
@@ -327,7 +327,7 @@ def process(serial, items):
     # Decode response
     try:
         result = unserialize(server_data)
-    except Exception, e:
+    except Exception as e:
         display_error("Could not unserialize server data: %s" % str(e))
         display_error("Request: %s" % str(values))
         display_error("Response: %s" % str(server_data))
@@ -342,7 +342,7 @@ def process(serial, items):
 
     # Retrieve hashes that need updating
     total_size = 0
-    for i in items.keys():
+    for i in list(items.keys()):
         if i in result:
             if items[i].get("path"):
                 try:
@@ -393,7 +393,7 @@ def runExternalScriptWithTimeout(
     if not allow_insecure:
         try:
             utils.verifyFileOnlyWritableByMunkiAndRoot(script)
-        except utils.VerifyFilePermissionsError, e:
+        except utils.VerifyFilePermissionsError as e:
             msg = (
                 "Skipping execution due to failed file permissions "
                 "verification: %s\n%s" % (script, str(e))
@@ -424,7 +424,7 @@ def runExternalScriptWithTimeout(
         else:
             try:
                 proc.kill()
-            except OSError, e:
+            except OSError as e:
                 if e.errno != 3:
                     raise
             raise utils.RunExternalScriptError("%s timed out" % script)
@@ -463,7 +463,7 @@ def rundir(scriptdir, runtype, abort=False, submitscript=""):
             try:
                 sub = files.pop(files.index(submitscript))
                 files.append(sub)
-            except Exception, e:
+            except Exception as e:
                 display_error("%s not found in %s" % (submitscript, parentdir))
 
         for script in files:
@@ -501,7 +501,7 @@ def rundir(scriptdir, runtype, abort=False, submitscript=""):
 
             except utils.ScriptNotFoundError:
                 pass  # Script has disappeared - pass.
-            except Exception, e:
+            except Exception as e:
                 display_warning("%s: %s" % (script, str(e)))
 
 

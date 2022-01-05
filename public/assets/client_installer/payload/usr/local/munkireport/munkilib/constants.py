@@ -44,4 +44,4 @@ SECURE_MANAGED_INSTALLS_PLIST_PATH = (
 ADDITIONAL_HTTP_HEADERS_KEY = "AdditionalHttpHeaders"
 
 if __name__ == "__main__":
-    print "This is a library of support tools for the Munki Suite."
+    print("This is a library of support tools for the Munki Suite.")

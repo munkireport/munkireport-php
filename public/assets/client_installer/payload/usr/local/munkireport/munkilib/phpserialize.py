@@ -40,7 +40,7 @@ class PHP_Class(object):
         self._properties[prop.name] = prop
 
     def __iter__(self):
-        return iter(self._properties.values())
+        return iter(list(self._properties.values()))
 
     def __len__(self):
         return len(self._properties)
@@ -76,7 +76,7 @@ def print_php_class(cls, lvl=0):
         raise ValueError(type(cls))
 
     def _print(s, l=None):
-        print string.ljust("", l or lvl, "\t") + s
+        print(string.ljust("", l or lvl, "\t") + s)
 
     def print_list(lst):
         for item in lst:
@@ -111,22 +111,22 @@ def print_php_class(cls, lvl=0):
 
 def unserialize(s):
     """Unserialize python struct from php serialization format."""
-    if not isinstance(s, basestring) or s == "":
+    if not isinstance(s, str) or s == "":
         raise ValueError("Unserialize argument must be non-empty string")
 
     try:
         return Unserializator(s).unserialize()
-    except _PhpUnserializationError, e:
+    except _PhpUnserializationError as e:
         char = len(str(s)) - len(e.rest)
         delta = 50
         try:
-            sample = u"...%s --> %s <-- %s..." % (
+            sample = "...%s --> %s <-- %s..." % (
                 s[(char > delta and char - delta or 0) : char],
                 s[char],
                 s[char + 1 : char + delta],
             )
-            message = u"%s in %s" % (e.message, sample)
-        except Exception, e:
+            message = "%s in %s" % (e.message, sample)
+        except Exception as e:
             raise
         raise PhpUnserializationError(message)
 
@@ -154,20 +154,20 @@ def serialize(struct, typecast=None):
         return "b:%d;" % int(struct)
 
     # i:<integer>;
-    if struct_type is int or struct_type is long:
+    if struct_type is int or struct_type is int:
         return "i:%d;" % struct
 
     # s:<string_length>:"<string>";
     if struct_type is str:
         return 's:%d:"%s";' % (len(struct), struct)
 
-    if struct_type is unicode:
+    if struct_type is str:
         return serialize(struct.encode("utf-8"), typecast)
 
     # a:<hash_length>:{<key><value><key2><value2>...<keyN><valueN>}
     if struct_type is dict:
         core = "".join(
-            [serialize(k, typecast) + serialize(v, typecast) for k, v in struct.items()]
+            [serialize(k, typecast) + serialize(v, typecast) for k, v in list(struct.items())]
         )
         return "a:%d:{%s}" % (len(struct), core)
 
@@ -265,7 +265,7 @@ class Unserializator(object):
             php_class = PHP_Class(object_name)
             members = self.parse_hash_core(object_length)
             if members:
-                for php_name, value in members.items():
+                for php_name, value in list(members.items()):
                     php_class.set_item(php_name, value)
             return php_class
 
@@ -282,6 +282,6 @@ class Unserializator(object):
             if is_array and k != i:
                 is_array = False
         if is_array:
-            result = result.values()
+            result = list(result.values())
         self.await("}")
         return result

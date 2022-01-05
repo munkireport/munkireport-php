@@ -85,7 +85,7 @@ def verifyFileOnlyWritableByMunkiAndRoot(file_path):
     """
     try:
         file_stat = os.stat(file_path)
-    except OSError, err:
+    except OSError as err:
         raise VerifyFilePermissionsError(
             "%s does not exist. \n %s" % (file_path, str(err))
         )
@@ -104,7 +104,7 @@ def verifyFileOnlyWritableByMunkiAndRoot(file_path):
         # verify other users cannot write to the file.
         elif file_stat.st_mode & stat.S_IWOTH != 0:
             raise InsecureFilePermissionsError("world writable!")
-    except InsecureFilePermissionsError, err:
+    except InsecureFilePermissionsError as err:
         raise InsecureFilePermissionsError(
             "%s is not secure! %s" % (file_path, err.args[0])
         )
@@ -129,7 +129,7 @@ def runExternalScript(script, allow_insecure=False, script_args=()):
     if not allow_insecure:
         try:
             verifyFileOnlyWritableByMunkiAndRoot(script)
-        except VerifyFilePermissionsError, err:
+        except VerifyFilePermissionsError as err:
             msg = (
                 "Skipping execution due to failed file permissions "
                 "verification: %s\n%s" % (script, str(err))
@@ -149,9 +149,9 @@ def runExternalScript(script, allow_insecure=False, script_args=()):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
             )
-        except (OSError, IOError), err:
+        except (OSError, IOError) as err:
             raise RunExternalScriptError(
-                "Error %s when attempting to run %s" % (unicode(err), script)
+                "Error %s when attempting to run %s" % (str(err), script)
             )
         if proc:
             (stdout, stderr) = proc.communicate()
@@ -222,4 +222,4 @@ def getFirstPlist(textString):
 
 
 if __name__ == "__main__":
-    print "This is a library of support tools for the Munki Suite."
+    print("This is a library of support tools for the Munki Suite.")
