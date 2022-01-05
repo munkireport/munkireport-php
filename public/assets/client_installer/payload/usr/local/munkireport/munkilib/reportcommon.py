@@ -187,7 +187,7 @@ def get_long_username(username):
         long_name = pwd.getpwnam(username)[4]
     except:
         long_name = ""
-    return long_name.decode("utf-8")
+    return long_name
 
 
 def get_uid(username):
@@ -254,7 +254,7 @@ def get_uptime():
         stderr=subprocess.PIPE,
     )
     (output, unused_error) = proc.communicate()
-    sec = int(re.sub(".*sec = (\d+),.*", "\\1", output))
+    sec = int(re.sub(".*sec = (\d+),.*", "\\1", output.decode('utf8')))
     up = int(time.time() - sec)
     return up if up > 0 else -1
 
