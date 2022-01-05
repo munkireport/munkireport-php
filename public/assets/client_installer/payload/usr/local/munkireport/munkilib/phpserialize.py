@@ -198,7 +198,7 @@ class Unserializator(object):
         self._position = 0
         self._str = s
 
-    def await(self, symbol, n=1):
+    def await_sym(self, symbol, n=1):
         # result = self.take(len(symbol))
         result = self._str[self._position : self._position + n]
         self._position += n
@@ -231,10 +231,10 @@ class Unserializator(object):
         t = self.take()
 
         if t == "N":
-            self.await(";")
+            self.await_sym(";")
             return None
 
-        self.await(":")
+        self.await_sym(":")
 
         if t == "i":
             return self.take_while_not(";", int)
@@ -247,9 +247,9 @@ class Unserializator(object):
 
         if t == "s":
             size = self.take_while_not(":", int)
-            self.await('"')
+            self.await_sym('"')
             result = self.take(size)
-            self.await('";', 2)
+            self.await_sym('";', 2)
             return result
 
         if t == "a":
@@ -258,9 +258,9 @@ class Unserializator(object):
 
         if t == "O":
             object_name_size = self.take_while_not(":", int)
-            self.await('"')
+            self.await_sym('"')
             object_name = self.take(object_name_size)
-            self.await('":', 2)
+            self.await_sym('":', 2)
             object_length = self.take_while_not(":", int)
             php_class = PHP_Class(object_name)
             members = self.parse_hash_core(object_length)
@@ -273,7 +273,7 @@ class Unserializator(object):
 
     def parse_hash_core(self, size):
         result = {}
-        self.await("{")
+        self.await_sym("{")
         is_array = True
         for i in range(size):
             k = self.unserialize()
@@ -283,5 +283,5 @@ class Unserializator(object):
                 is_array = False
         if is_array:
             result = list(result.values())
-        self.await("}")
+        self.await_sym("}")
         return result
