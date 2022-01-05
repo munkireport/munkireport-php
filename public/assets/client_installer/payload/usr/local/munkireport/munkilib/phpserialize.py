@@ -170,6 +170,10 @@ def serialize(struct, typecast=None):
     if struct_type is six.text_type:
         return serialize(struct.encode("utf-8"), typecast)
 
+    # Assume python 3 byte encoded string
+    if struct_type is bytes:
+        return serialize(struct.decode("utf-8"), typecast)
+
     # a:<hash_length>:{<key><value><key2><value2>...<keyN><valueN>}
     if struct_type is dict:
         core = b"".join(
