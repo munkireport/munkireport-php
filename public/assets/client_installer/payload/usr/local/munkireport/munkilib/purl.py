@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/munkireport/python3
 # encoding: utf-8
 #
 # Copyright 2009-2014 Greg Neagle.
@@ -54,56 +54,56 @@ info["NSAppTransportSecurity"] = {"NSAllowsArbitraryLoads": True}
 
 
 ssl_error_codes = {
-    -9800: u"SSL protocol error",
-    -9801: u"Cipher Suite negotiation failure",
-    -9802: u"Fatal alert",
-    -9803: u"I/O would block (not fatal)",
-    -9804: u"Attempt to restore an unknown session",
-    -9805: u"Connection closed gracefully",
-    -9806: u"Connection closed via error",
-    -9807: u"Invalid certificate chain",
-    -9808: u"Bad certificate format",
-    -9809: u"Underlying cryptographic error",
-    -9810: u"Internal error",
-    -9811: u"Module attach failure",
-    -9812: u"Valid cert chain, untrusted root",
-    -9813: u"Cert chain not verified by root",
-    -9814: u"Chain had an expired cert",
-    -9815: u"Chain had a cert not yet valid",
-    -9816: u"Server closed session with no notification",
-    -9817: u"Insufficient buffer provided",
-    -9818: u"Bad SSLCipherSuite",
-    -9819: u"Unexpected message received",
-    -9820: u"Bad MAC",
-    -9821: u"Decryption failed",
-    -9822: u"Record overflow",
-    -9823: u"Decompression failure",
-    -9824: u"Handshake failure",
-    -9825: u"Misc. bad certificate",
-    -9826: u"Bad unsupported cert format",
-    -9827: u"Certificate revoked",
-    -9828: u"Certificate expired",
-    -9829: u"Unknown certificate",
-    -9830: u"Illegal parameter",
-    -9831: u"Unknown Cert Authority",
-    -9832: u"Access denied",
-    -9833: u"Decoding error",
-    -9834: u"Decryption error",
-    -9835: u"Export restriction",
-    -9836: u"Bad protocol version",
-    -9837: u"Insufficient security",
-    -9838: u"Internal error",
-    -9839: u"User canceled",
-    -9840: u"No renegotiation allowed",
-    -9841: u"Peer cert is valid, or was ignored if verification disabled",
-    -9842: u"Server has requested a client cert",
-    -9843: u"Peer host name mismatch",
-    -9844: u"Peer dropped connection before responding",
-    -9845: u"Decryption failure",
-    -9846: u"Bad MAC",
-    -9847: u"Record overflow",
-    -9848: u"Configuration error",
-    -9849: u"Unexpected (skipped) record in DTLS",
+    -9800: "SSL protocol error",
+    -9801: "Cipher Suite negotiation failure",
+    -9802: "Fatal alert",
+    -9803: "I/O would block (not fatal)",
+    -9804: "Attempt to restore an unknown session",
+    -9805: "Connection closed gracefully",
+    -9806: "Connection closed via error",
+    -9807: "Invalid certificate chain",
+    -9808: "Bad certificate format",
+    -9809: "Underlying cryptographic error",
+    -9810: "Internal error",
+    -9811: "Module attach failure",
+    -9812: "Valid cert chain, untrusted root",
+    -9813: "Cert chain not verified by root",
+    -9814: "Chain had an expired cert",
+    -9815: "Chain had a cert not yet valid",
+    -9816: "Server closed session with no notification",
+    -9817: "Insufficient buffer provided",
+    -9818: "Bad SSLCipherSuite",
+    -9819: "Unexpected message received",
+    -9820: "Bad MAC",
+    -9821: "Decryption failed",
+    -9822: "Record overflow",
+    -9823: "Decompression failure",
+    -9824: "Handshake failure",
+    -9825: "Misc. bad certificate",
+    -9826: "Bad unsupported cert format",
+    -9827: "Certificate revoked",
+    -9828: "Certificate expired",
+    -9829: "Unknown certificate",
+    -9830: "Illegal parameter",
+    -9831: "Unknown Cert Authority",
+    -9832: "Access denied",
+    -9833: "Decoding error",
+    -9834: "Decryption error",
+    -9835: "Export restriction",
+    -9836: "Bad protocol version",
+    -9837: "Insufficient security",
+    -9838: "Internal error",
+    -9839: "User canceled",
+    -9840: "No renegotiation allowed",
+    -9841: "Peer cert is valid, or was ignored if verification disabled",
+    -9842: "Server has requested a client cert",
+    -9843: "Peer host name mismatch",
+    -9844: "Peer dropped connection before responding",
+    -9845: "Decryption failure",
+    -9846: "Bad MAC",
+    -9847: "Record overflow",
+    -9848: "Configuration error",
+    -9849: "Unexpected (skipped) record in DTLS",
 }
 
 
@@ -155,12 +155,12 @@ class Purl(NSObject):
             url, NSURLRequestReloadIgnoringLocalCacheData, self.connection_timeout
         )
         if self.additional_headers:
-            for header, value in self.additional_headers.items():
+            for header, value in list(self.additional_headers.items()):
                 request.setValue_forHTTPHeaderField_(value, header)
         request.setHTTPMethod_(self.method)
 
         if self.method == "POST":
-            body_unicode = unicode(self.body)
+            body_unicode = str(self.body)
             body_data = NSData.dataWithBytes_length_(
                 NSString.stringWithString_(body_unicode).UTF8String(),
                 len(body_unicode.encode("utf-8")),
@@ -236,7 +236,7 @@ class Purl(NSObject):
 
         self.response = response
 
-        if response.className() == u"NSHTTPURLResponse":
+        if response.className() == "NSHTTPURLResponse":
             # Headers and status code only available for HTTP/S transfers
             self.status = response.statusCode()
             self.headers = dict(response.allHeaderFields())

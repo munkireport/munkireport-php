@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/munkireport/python3
 
 import os
 import subprocess
