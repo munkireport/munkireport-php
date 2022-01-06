@@ -112,9 +112,7 @@
     },
     "autoload": {
         "classmap": [
-            "app/Console/Commands/FakerDataStore.php",
-            "database/seeds",
-            "database/factories"
+            "app/Console/Commands/FakerDataStore.php"
         ],
         "files": [
             "app/helpers/bootstrap_helper.php",
@@ -131,6 +129,8 @@
             "munkireport\\processors\\": "app/processors/",
             "munkireport\\builders\\": "database/builders/",
             "munkireport\\lib\\": "app/lib/munkireport",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
             "Tests\\": "tests/",
             "App\\": "app/",
             "MR\\": "MR/"

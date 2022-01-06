@@ -13,7 +13,7 @@ class UsersControllerTest extends TestCase
 
     public function testIndex()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->get('/api/v6/users');
         $response->assertStatus(200);
@@ -25,7 +25,7 @@ class UsersControllerTest extends TestCase
 
     public function testStore()
     {
-        $user = factory(User::class)->make();
+        $user =  User::factory()->make();
         $response = $this->postJson('/api/v6/users', ["data" => $user->toArray()]);
         $response->assertStatus(201);
         $response->assertJsonStructure(["data"]);
@@ -34,7 +34,7 @@ class UsersControllerTest extends TestCase
 
     public function testUpdate()
     {
-        $user = factory(User::class, ["email" => "testupdate@test.abc"])->create();
+        $user = User::factory()->create(["email" => "testupdate@test.abc"]);
         $user->email = "testupdate@test.def";
 
         $response = $this->putJson("/api/v6/users/{$user->id}", ["data" => $user->toArray()]);
@@ -45,7 +45,7 @@ class UsersControllerTest extends TestCase
 
     public function testGet()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $response = $this->get("/api/v6/users/{$user->id}");
         $response->assertStatus(200);
         $response->assertJsonStructure(["data"]);
@@ -53,7 +53,7 @@ class UsersControllerTest extends TestCase
 
     public function testDestroy()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $response = $this->delete("/api/v6/users/{$user->id}");
         $response->assertStatus(204);
     }

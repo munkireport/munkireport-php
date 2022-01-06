@@ -17,7 +17,7 @@ class MachineGroupsControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->machineGroup = factory(MachineGroup::class)->create();
+        $this->machineGroup = MachineGroup::factory()->create();
     }
 
     protected function tearDown(): void

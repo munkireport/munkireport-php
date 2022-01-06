@@ -19,10 +19,10 @@ class MachineControllerTest extends AuthorizationTestCase
     {
         parent::setUp();
 
-        $this->reportData = factory(\App\ReportData::class)->create([
+        $this->reportData = \App\ReportData::factory()->create([
             'reg_timestamp' => time(),
         ]);
-        $this->machine = factory(\App\Machine::class)->create([
+        $this->machine = \App\Machine::factory()->create([
             'serial_number' => $this->reportData->serial_number,
         ]);
     }
