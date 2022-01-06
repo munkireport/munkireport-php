@@ -14,8 +14,8 @@ class UsersContactMethodsTest extends TestCase
 
     public function testIndex()
     {
-        $user = factory(User::class)->create();
-        $user->contactMethods()->save(factory(UserContactMethod::class)->make());
+        $user = User::factory()->create();
+        $user->contactMethods()->save(UserContactMethod::factory()->make());
 
         $response = $this->get("/api/v6/users/{$user->id}/contact_methods");
         print_r($response->json());
@@ -24,9 +24,9 @@ class UsersContactMethodsTest extends TestCase
 
     public function testStore()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $contactMethod = factory(UserContactMethod::class)->make();
+        $contactMethod = UserContactMethod::factory()->make();
         $response = $this->postJson("/api/v6/users/{$user->id}/contact_methods",
             ["data" => $contactMethod->toArray()]);
         print_r($response->json());
@@ -36,8 +36,8 @@ class UsersContactMethodsTest extends TestCase
 
     public function testGet()
     {
-        $user = factory(User::class)->create();
-        $contactMethod = factory(UserContactMethod::class)->make();
+        $user = User::factory()->create();
+        $contactMethod = UserContactMethod::factory()->make();
         $user->contactMethods()->save($contactMethod);
 
         $response = $this->get("/api/v6/users/{$user->id}/contact_methods/{$contactMethod->id}");
@@ -48,8 +48,8 @@ class UsersContactMethodsTest extends TestCase
 
     public function testUpdate()
     {
-        $user = factory(User::class)->create();
-        $contactMethod = factory(UserContactMethod::class)->make();
+        $user = User::factory()->create();
+        $contactMethod = UserContactMethod::factory()->make();
         $user->contactMethods()->save($contactMethod);
 
         $contactMethod->address = "updated_address";
@@ -64,8 +64,8 @@ class UsersContactMethodsTest extends TestCase
 
     public function testDestroy()
     {
-        $user = factory(User::class)->create();
-        $contactMethod = factory(UserContactMethod::class)->make();
+        $user = User::factory()->create();
+        $contactMethod = UserContactMethod::factory()->make();
         $user->contactMethods()->save($contactMethod);
 
         $response = $this->delete("/api/v6/users/{$user->id}/contact_methods/{$contactMethod->id}");

@@ -21,16 +21,20 @@ class AuthorizationTestCase extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->create();
-        $this->adminUser = factory(User::class, [
+
+        $this->user = User::factory()->make();
+        $this->adminUser = User::factory()->make([
+            "email" => "phpunit.admin@localhost",
             "role" => "admin",
-        ])->create();
-        $this->managerUser = factory(User::class, [
+        ]);
+        $this->managerUser = User::factory()->make([
+            "email" => "phpunit.manager@localhost",
             "role" => "manager",
-        ])->create();
-        $this->archiverUser = factory(User::class, [
+        ]);
+        $this->archiverUser = User::factory()->make([
+            "email" => "phpunit.archiver@localhost",
             "role" => "archiver",
-        ])->create();
+        ]);
     }
 
     protected function tearDown(): void

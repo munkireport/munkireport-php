@@ -19,8 +19,8 @@ class DatatablesControllerTest extends AuthorizationTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->reportdata = factory(ReportData::class)->create();
-        $this->machine = factory(Machine::class)->create(['serial_number' => $this->reportdata->serial_number]);
+        $this->reportdata = ReportData::factory()->create();
+        $this->machine = Machine::factory()->create(['serial_number' => $this->reportdata->serial_number]);
     }
 
     protected function tearDown(): void

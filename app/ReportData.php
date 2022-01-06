@@ -2,6 +2,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\NotUpdatedForScope;
 use App\Scopes\UpdatedBetweenScope;
@@ -11,6 +12,8 @@ use munkireport\models\MRModel;
 
 class ReportData extends MRModel
 {
+    use HasFactory;
+
     /**
      * @inheritDoc
      */
