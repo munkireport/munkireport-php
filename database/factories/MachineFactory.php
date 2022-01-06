@@ -20,11 +20,11 @@ class MachineFactory extends Factory
         ];
 
         // Allow standalone
-        try {
-            list($modelcode, $machine_name, $machine_model, $machine_desc) = FakerDataStore::get('machine_factory', 'machine');
-        } catch (\Throwable $th) {
+//        try {
+//            list($modelcode, $machine_name, $machine_model, $machine_desc) = FakerDataStore::get('machine_factory', 'machine');
+//        } catch (\Throwable $th) {
             list($modelcode, $machine_name, $machine_model, $machine_desc) = ['P7QM', 'MacPro', 'MacPro7,1', 'Mac Pro (2019)'];
-        }
+//        }
 
         list($os_version, $build) = $this->faker->randomElement($oses);
 

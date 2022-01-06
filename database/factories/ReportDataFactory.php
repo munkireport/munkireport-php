@@ -23,9 +23,11 @@ class ReportDataFactory extends Factory
             ['P7QM', 'MacPro', 'MacPro7,1', 'Mac Pro (2019)'],
         ];
 
-        FakerDataStore::add('machine', $this->faker->randomElement($machines));
-        list($modelcode, $machine_name, $machine_model, $machine_desc) = FakerDataStore::get('reportdata_factory', 'machine');
+//        FakerDataStore::add('machine', $this->faker->randomElement($machines));
+//        list($modelcode, $machine_name, $machine_model, $machine_desc) = FakerDataStore::get('reportdata_factory', 'machine');
 
+        $machine = $this->faker->randomElement($machines);
+        list($modelcode, $machine_name, $machine_model, $machine_desc) = $machine;
         return [
             'serial_number' => $this->faker->unique()->regexify('[A-Z0-9]{3}[CDFGHJKLMNPQRSTVWXYZ][123456789CDFGHJKLMNPQRTVWXY][A-Z0-9]{3}') .$modelcode,
             'console_user' => $this->faker->userName,
