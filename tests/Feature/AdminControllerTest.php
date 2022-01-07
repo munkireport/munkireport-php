@@ -166,8 +166,11 @@ class AdminControllerTest extends AuthorizationTestCase
             ]
         ]);
 
-        $this->assertEquals('testDeleteBusinessUnit', $response->jsonGet('0.name'));
-        $this->assertEquals('testDeleteBusinessUnitAddr', $response->jsonGet('0.address'));
+        // Laravel calls this JsonPath but its just data_get(). very misleading. So Json Path expressions wont work at all.
+        // It's more similar to https://laravel.com/docs/8.x/helpers#method-array-get
+        $response->assertJsonPath('0.name', 'testDeleteBusinessUnit');
+        $response->assertJsonPath('0.address', 'testDeleteBusinessUnitAddr');
+
     }
 }
 

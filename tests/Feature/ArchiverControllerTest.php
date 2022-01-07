@@ -68,9 +68,9 @@ class ArchiverControllerTest extends AuthorizationTestCase
     {
         $machine = Machine::factory()->create();
         $response = $this->actingAs($this->managerUser)
-            ->post("/archiver/update_status/${machine['serial_number']}", [
-                'status' => 1,
-            ]);
+                        ->post("/archiver/update_status/${machine['serial_number']}", [
+                            'status' => 1,
+                        ]);
         $response->assertStatus(200);
         $response->assertJson(['updated' => 1]);
     }
