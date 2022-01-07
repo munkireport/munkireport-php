@@ -65,7 +65,7 @@ class AuthServiceProvider extends ServiceProvider
                 Log::debug('global admin gate accepted user: ' . $user->email . ', has role');
                 return true;
             } else {
-                Log::debug('global admin gate rejected user: ' . $user->email . ', not in any role(s) that have archive');
+                Log::debug('global admin gate rejected user: ' . $user->email . ', has role `' . $user->role . '` which is not in any authorized role(s) (' . implode(', ', $globalAdmins) . ')');
                 return false;
             }
         });

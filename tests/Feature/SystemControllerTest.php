@@ -41,28 +41,33 @@ class SystemControllerTest extends AuthorizationTestCase
     public function testShowAsUser()
     {
         $response = $this->actingAs($this->user)
-            ->get('/system/show/status');
+            ->get('/system/status');
         $response->assertStatus(403);
     }
 
     public function testShowAsAdmin()
     {
         $response = $this->actingAs($this->adminUser)
-            ->get('/system/show/status');
+            ->get('/system/status');
         $response->assertOk();
     }
 
-    public function testShowNotFoundAsUser()
+    public function testRedirectShowActions()
     {
-        $response = $this->actingAs($this->user)
-            ->get('/system/show/xyzabc');
-        $response->assertStatus(403);
+        $this->markTestIncomplete('This test should make sure that anyone arriving at /system/show/<x> should be redirected');
     }
 
-    public function testShowNotFound()
-    {
-        $response = $this->actingAs($this->adminUser)
-            ->get('/system/show/xyzabc');
-        $response->assertNotFound();
-    }
+//    public function testShowNotFoundAsUser()
+//    {
+//        $response = $this->actingAs($this->user)
+//            ->get('/system/show/xyzabc');
+//        $response->assertStatus(403);
+//    }
+//
+//    public function testShowNotFound()
+//    {
+//        $response = $this->actingAs($this->adminUser)
+//            ->get('/system/show/xyzabc');
+//        $response->assertNotFound();
+//    }
 }
