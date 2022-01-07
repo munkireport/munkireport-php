@@ -2,6 +2,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use MR\Scopes\CreatedSinceScope;
@@ -9,6 +10,8 @@ use munkireport\models\MRModel;
 
 class Machine extends MRModel
 {
+    use HasFactory;
+
     protected $table = 'machine';
 
     protected $fillable = [

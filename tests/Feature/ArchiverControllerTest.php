@@ -30,7 +30,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
      */
     public function testUpdate_status()
     {
-        $reportData = factory(\App\ReportData::class)->create();
+        $reportData = \App\ReportData::factory()->create();
         $response = $this->actingAs($this->adminUser)->post(
             '/archiver/update_status/' . $reportData->serial_number,
             ['status' => '1']);
@@ -41,7 +41,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
     public function test_bulk_update_status()
     {
         $daysTooOld = new \DateInterval("P4D");
-        $reportData = factory(\App\ReportData::class)->create([
+        $reportData = \App\ReportData::factory()->create([
             'timestamp' => Carbon::now()->subtract($daysTooOld)->unix(),
             'archive_status' => 0,
         ]);
@@ -55,7 +55,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testAdminCanArchiveMachine()
     {
-        $machine = factory(Machine::class)->create();
+        $machine = Machine::factory()->create();
         $response = $this->actingAs($this->adminUser)
                          ->post("/archiver/update_status/${machine['serial_number']}", [
                              'status' => 1,
@@ -66,18 +66,18 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testManagerCanArchiveMachine()
     {
-        $machine = factory(Machine::class)->create();
+        $machine = Machine::factory()->create();
         $response = $this->actingAs($this->managerUser)
-            ->post("/archiver/update_status/${machine['serial_number']}", [
-                'status' => 1,
-            ]);
+                        ->post("/archiver/update_status/${machine['serial_number']}", [
+                            'status' => 1,
+                        ]);
         $response->assertStatus(200);
         $response->assertJson(['updated' => 1]);
     }
 
     public function testArchiverCanArchiveMachine()
     {
-        $machine = factory(Machine::class)->create();
+        $machine = Machine::factory()->create();
         $response = $this->actingAs($this->archiverUser)
             ->post("/archiver/update_status/${machine['serial_number']}", [
                 'status' => 1,
@@ -88,7 +88,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testUserCannotArchiveMachine()
     {
-        $machine = factory(Machine::class)->create();
+        $machine = Machine::factory()->create();
         $response = $this->actingAs($this->user)
             ->post("/archiver/update_status/${machine['serial_number']}", [
                 'status' => 1,

@@ -24,7 +24,8 @@ Route::middleware(['auth', 'can:global'])->group(function () {
     Route::post('/admin/remove_machine_group', 'AdminController@remove_machine_group');
     Route::get('/admin/show/{which}', 'AdminController@show');
 
-    Route::get('/system/show/{which?}', 'SystemController@show');
+    // TODO: Deprecated /system/show for /system, add redirect
+    //Route::get('/system/show/{which?}', 'SystemController@show');
     Route::get('/system/DataBaseInfo', 'SystemController@DataBaseInfo');
     Route::get('/system/phpInfo', 'SystemController@phpInfo');
     Route::get('/system/status', 'SystemController@status');
