@@ -1,10 +1,17 @@
+.github
+.idea
 .env
 app/db
-vendor
-config.php
+docs
 local
+storage/logs/*.log
+storage/*.index
+
 # local overrides should never apply to container builds
 composer.local.json
 composer.lock
+
+# Ignore dependencies, they will be fetched as part of the build process
 node_modules
+vendor
 

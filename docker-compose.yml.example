@@ -16,7 +16,7 @@ services:
       - PUID=1000
       - PGID=1000
       - CLIENT_PASSPHRASES=
-      - APP_URL=https://munkireport-sda.domain.com
+      - APP_URL=https://localhost
       - TZ=Europe/Berlin
     depends_on:
       - db

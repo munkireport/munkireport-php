@@ -10,6 +10,11 @@ fi
 php please migrate --force
 php please db:seed
 
+if [[ -z "${APP_URL}" || "${APP_URL}" == "http://localhost:8080" ]]; then
+  echo "APP_URL not set, or APP_URL set to localhost. Please fix this otherwise you may be redirected to a nonexistent host"
+fi
+
+
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- apache2-foreground "$@"

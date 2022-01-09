@@ -18,12 +18,11 @@ ENV COMPOSER_HOME /tmp
 
 ENV DB_CONNECTION sqlite
 ENV AUTH_METHODS LOCAL
-ENV APP_URL https://munkireport
+ENV APP_URL http://localhost:8080
 ENV APP_NAME MunkiReport
 ENV ENABLE_BUSINESS_UNITS FALSE
 ENV LOG_CHANNEL stderr
 ENV MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
-ENV ADMIN_PASSWORD munkireport
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
