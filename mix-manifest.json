@@ -1,8 +1,7 @@
 {
     "/public/js/app.js": "/public/js/app.js",
-    "/public/css/app.css": "/public/css/app.css",
     "/public/js/manifest.js": "/public/js/manifest.js",
-    "/public/js/mixed-app.js": "/public/js/mixed-app.js",
+    "/public/css/app.css": "/public/css/app.css",
     "/public/js/vendor.js": "/public/js/vendor.js",
     "/public/assets/js/jquery.min.js": "/public/assets/js/jquery.min.js",
     "/public/assets/js/popper.min.js": "/public/assets/js/popper.min.js",
@@ -22,6 +21,5 @@
     "/public/assets/css/buttons.bootstrap4.min.css": "/public/assets/css/buttons.bootstrap4.min.css",
     "/public/assets/js/buttons.bootstrap4.min.js": "/public/assets/js/buttons.bootstrap4.min.js",
     "/public/assets/js/typeahead.bundle.min.js": "/public/assets/js/typeahead.bundle.min.js",
-    "/public/js/bootstrap-4-autocomplete.min.js": "/public/js/bootstrap-4-autocomplete.min.js",
     "/public/js/all.js": "/public/js/all.js"
 }

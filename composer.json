@@ -17,7 +17,9 @@
         "nunomaduro/larastan": "^1.0"
     },
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     },
     "require": {
         "php": ">=7.3",
@@ -157,6 +159,9 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php please package:discover --ansi",
             "MR\\Kiss\\ComposerScripts::postAutoloadDump"
+        ],
+        "post-update-cmd": [
+            "@php please vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
