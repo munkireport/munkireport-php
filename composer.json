@@ -113,9 +113,7 @@
         "laravel/legacy-factories": "^1.1"
     },
     "autoload": {
-        "classmap": [
-            "app/Console/Commands/FakerDataStore.php"
-        ],
+        "classmap": [],
         "files": [
             "app/helpers/bootstrap_helper.php",
             "app/helpers/config_helper.php",
