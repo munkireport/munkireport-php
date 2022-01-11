@@ -326,7 +326,7 @@ def process(serial, items):
 
     # Decode response
     try:
-        result = unserialize(server_data)
+        result = unserialize(server_data.decode('utf8'))
     except Exception as e:
         display_error("Could not unserialize server data: %s" % str(e))
         display_error("Request: %s" % str(values))
