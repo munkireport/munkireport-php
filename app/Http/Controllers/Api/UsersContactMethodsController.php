@@ -43,6 +43,6 @@ class UsersContactMethodsController extends Controller
     public function destroy(int $userId, UserContactMethod $contactMethod)
     {
         $contactMethod->delete();
-        return abort(204);
+        return response(null, 204);
     }
 }

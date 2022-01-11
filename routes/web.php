@@ -76,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboards', 'DashboardsController@index');
     }
 
-    Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
+    //Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
 });
 
 // NOTE: These cannot be completely behind auth because the get_script() action needs to be accessible without authentication.
