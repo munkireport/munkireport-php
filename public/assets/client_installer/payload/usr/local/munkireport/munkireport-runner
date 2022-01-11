@@ -1,6 +1,6 @@
 #!/usr/local/munkireport/python3
 # encoding: utf-8
-'''Postflight script'''
+"""Postflight script"""
 
 from munkilib import reportcommon
 from munkilib import FoundationPlist
@@ -8,8 +8,9 @@ import hashlib
 import sys
 import os
 
+
 def main():
-    '''Main'''
+    """Main"""
 
     reportcommon.display_detail("## Starting MunkiReport run")
 
@@ -60,6 +61,7 @@ def main():
 
     reportcommon.process(serial, items)
     reportcommon.finish_run()
+
 
 if __name__ == '__main__':
     main()
