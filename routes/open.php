@@ -17,9 +17,3 @@ Route::get('/install', 'InstallController@index');
 Route::get('/install/dump_modules/{format}', 'InstallController@dump_modules');
 Route::get('/install/get_paths', 'InstallController@get_paths');
 Route::get('/install/modules', 'InstallController@modules');
-
-Route::middleware(['client.passphrase'])->group(function () {
-    Route::post('/report/broken_client', 'ReportController@broken_client');
-    Route::post('/report/check_in', 'ReportController@check_in');
-    Route::post('/report/hash_check', 'ReportController@hash_check');
-});

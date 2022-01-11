@@ -42,6 +42,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        $this->mapClientRoutes();
+
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
@@ -96,9 +98,7 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "checkin" routes for the application.
-     *
-     * These routes don't use normal authentication middleware.
+     * Define the unauthenticated routes for the application.
      *
      * @return void
      */
@@ -107,5 +107,20 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('open')
             ->namespace($this->namespace)
             ->group(base_path('routes/open.php'));
+    }
+
+
+    /**
+     * Define the client inventory reporting/submission routes.
+     *
+     * These routes use AuthN methods supported by clients.
+     *
+     * @return void
+     */
+    protected function mapClientRoutes()
+    {
+        Route::middleware('client.passphrase')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/client.php'));
     }
 }

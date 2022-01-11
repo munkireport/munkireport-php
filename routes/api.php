@@ -30,6 +30,7 @@ Route::group(['prefix' => 'v6', 'namespace' => 'Api', 'middleware' => 'auth'], f
 });
 
 Route::group(['prefix' => 'v6', 'namespace' => 'Api', 'middleware' => 'auth:sanctum'], function () {
+    Route::apiResource('modules', 'ModulesController');
     Route::apiResource('business_units', 'BusinessUnitsController');
     Route::apiResource('machine_groups', 'MachineGroupsController');
     Route::apiResource('users', 'UsersController');

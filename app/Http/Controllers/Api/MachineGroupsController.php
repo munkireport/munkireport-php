@@ -50,6 +50,6 @@ class MachineGroupsController extends Controller
     public function destroy(MachineGroup $machineGroup)
     {
         $machineGroup->delete();
-        return abort(204);
+        return response(null, 204);
     }
 }
