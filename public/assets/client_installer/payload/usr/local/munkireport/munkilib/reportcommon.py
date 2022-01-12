@@ -329,16 +329,16 @@ def process(serial, items):
         result = unserialize(server_data.decode('utf8'))
     except Exception as e:
         display_error("Could not unserialize server data: %s" % str(e))
-        display_error("Request: %s" % str(values))
-        display_error("Response: %s" % str(server_data))
+        display_error("Request: ", str(values))
+        display_error("Response: ", str(server_data))
         return -1
 
     if result.get("error") != "":
-        display_error("Server error: %s" % result["error"])
+        display_error("Server error: ", result["error"])
         return -1
 
     if result.get("info") != "":
-        display_detail("Server info: %s" % result["info"])
+        display_detail("Server info: ", result['info'])
 
     # Retrieve hashes that need updating
     total_size = 0

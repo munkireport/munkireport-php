@@ -185,10 +185,7 @@ chmod a+x "${INSTALLROOT}/usr/local/munkireport/munkireport-runner"
 # Delete existing symlink
 [[ -L "${MRPHP_PYTHON}" ]] && /bin/rm "${MRPHP_PYTHON}"
 
-if [[ -L "${ORG_PYTHON}" ]]; then
-    echo "Using Python 3.x installation at ${ORG_PYTHON}"
-    /bin/ln -s "${ORG_PYTHON}" "${MRPHP_PYTHON}"
-elif [[ -L "${MACADMINS_PYTHON}" ]]; then
+if [[ -L "${MACADMINS_PYTHON}" ]]; then
     echo "Using Python 3.x installation at ${MACADMINS_PYTHON}"
     /bin/ln -s "${MACADMINS_PYTHON}" "${MRPHP_PYTHON}"
 elif [[ -L "${MUNKI_MUNKI_PYTHON}" ]]; then
@@ -197,6 +194,9 @@ elif [[ -L "${MUNKI_MUNKI_PYTHON}" ]]; then
 elif [[ -L "${MUNKI_PYTHON}" ]]; then
     echo "Using Python 3.x installation at ${MUNKI_PYTHON}"
     /bin/ln -s "${MUNKI_PYTHON}" "${MRPHP_PYTHON}"
+elif [[ -L "${ORG_PYTHON}" ]]; then
+    echo "Using Python 3.x installation at ${ORG_PYTHON}, If you do not have PyObjC installed, you will need to install it."
+    /bin/ln -s "${ORG_PYTHON}" "${MRPHP_PYTHON}"
 else
     echo "Using Python 3.x installation at ${SYSTEM_PYTHON}, It is recommended to distribute MacAdmins python or python.org packages"
     /bin/ln -s "${SYSTEM_PYTHON}" "${MRPHP_PYTHON}"
