@@ -2,6 +2,8 @@
 
 namespace munkireport\lib;
 
+use Illuminate\Support\Facades\Log;
+
 /**
  * Replacement for unserialize
  *
@@ -18,6 +20,7 @@ class Unserializer
     {
         $this->position = 0;
         $this->str = $s;
+        Log::warning("The munkireport Unserializer will be deprecated. Please refactor as soon as possible to use xkerman/restricted-unserialize");
     }
 
     public function await($symbol, $n = 1)

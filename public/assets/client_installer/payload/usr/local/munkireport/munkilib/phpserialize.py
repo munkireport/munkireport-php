@@ -158,11 +158,15 @@ def serialize(struct, typecast=None):
         return "i:%d;" % struct
 
     # s:<string_length>:"<string>";
-    if struct_type is str:
-        return 's:%d:"%s";' % (len(struct), struct)
+    # NOTE: This will return an incorrect length in Python 3 if the string contains Unicode characters
+    # because len(str(bytes)) isnt the same as len(bytes).
+    # if struct_type is str:
+    #     return 's:%d:"%s";' % (len(struct), struct)
 
+    # Serializing string types recursively wont work because the length will change before/after utf-8 encoding
     if struct_type is str:
-        return serialize(struct.encode("utf-8"), typecast)
+        return 's:%d:"%s";' % (len(struct.encode("utf-8")), struct)
+        #return serialize(struct.encode("utf-8"), typecast)
 
     # Assume python 3 byte encoded string
     if struct_type is bytes:
