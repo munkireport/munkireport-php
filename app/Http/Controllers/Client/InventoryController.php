@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use munkireport\lib\Unserializer;
 
-class ReportsController extends Controller
+class InventoryController extends Controller
 {
     /**
      * Process MunkiReport Checkins using the \App\Reports class.
