@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.21",
-        "laravel-mix": "^6.0.6",
+        "laravel-mix": "^6.0.39",
         "lodash": "^4.17.19",
         "resolve-url-loader": "^3.1.4",
         "sass": "^1.48.0",
@@ -30,7 +30,7 @@
         "d3": "^3.5.17",
         "datatables.net-bs4": "^1.11.3",
         "datatables.net-buttons-bs4": "^1.7.1",
-        "graphql": "^16.2.0",
+        "graphql": "^15.0.0",
         "i18next": "^20.6.1",
         "i18next-fetch-backend": "^3.0.0",
         "jquery": "^3.6.0",
