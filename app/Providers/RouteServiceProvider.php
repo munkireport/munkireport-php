@@ -17,6 +17,13 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'App\Http\Controllers';
 
     /**
+     * This namespace is used for routes that are serving endpoints to the report runner client.
+     *
+     * @var string
+     */
+    protected $clientNamespace = 'App\Http\Controllers\Client';
+
+    /**
      * The path to the "home" route for your application.
      *
      * @var string
@@ -120,7 +127,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapClientRoutes()
     {
         Route::middleware('client.passphrase')
-            ->namespace($this->namespace)
+            ->namespace($this->clientNamespace)
             ->group(base_path('routes/client.php'));
     }
 }
