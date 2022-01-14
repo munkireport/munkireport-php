@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use MR\Kiss\ConnectDbTrait;
 use munkireport\lib\Modules;
-use munkireport\lib\Unserializer;
 use \Messages_model, \Exception;
 use munkireport\models\Hash as MunkiReportHash;
+use function xKerman\Restricted\unserialize;
+use xKerman\Restricted\UnserializeFailedException;
+
 
 class ReportController extends Controller
 {
@@ -99,9 +101,13 @@ class ReportController extends Controller
             // Register check and group in reportdata
             $this->_register($request->post('serial'));
 
-            //$req_items = unserialize($_POST['items']); //Todo: check if array
-            $unserializer = new Unserializer($request->post('items'));
-            $req_items = $unserializer->unserialize();
+            try{
+                $req_items = unserialize($request->get('items'));
+            }
+            catch (Exception $e){
+                Log::error($e);
+                return response(serialize(array('error' => 'Could not unserialize items')));
+            }
 
             // Reset messages for this client
             if (isset($req_items['msg'])) {
@@ -178,21 +184,11 @@ class ReportController extends Controller
         // Way too noisy - used for debugging notifications
         // $global->notify(new CheckIn($_POST['serial']));
 
-        Storage::disk('local')->put('failure.txt', $request->get('items'));
-        $use_xkerman_unserializer = true;
-        // xdebug_break();
         try{
-            if ($use_xkerman_unserializer) {
-                $arr = unserialize($request->get('items'));
-            } else {
-                $unserializer = new Unserializer($request->get('items'));
-                $arr = $unserializer->unserialize();
-            }
-
+            $arr = unserialize($request->get('items'));
         }
         catch (Exception $e){
             Log::error($e);
-
             return response(serialize(array('error' => 'Could not unserialize items')));
         }
 
