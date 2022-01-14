@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use munkireport\lib\Unserializer;
+use Illuminate\Support\Facades\Log;
+use function xKerman\Restricted\unserialize;
+use xKerman\Restricted\UnserializeFailedException;
 
 class InventoryController extends Controller
 {
@@ -26,10 +28,10 @@ class InventoryController extends Controller
 
         $reports = app(\App\Reports::class);
         try{
-            $unserializer = new Unserializer($validatedData['items']);
-            $arr = $unserializer->unserialize();
+            $arr = unserialize($request->get('items'));
         }
-        catch (\Exception $e){
+        catch (Exception $e){
+            Log::error($e);
             return response(serialize(array('error' => 'Could not unserialize items')));
         }
 
