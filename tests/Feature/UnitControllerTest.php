@@ -33,6 +33,14 @@ class UnitControllerTest extends TestCase
 
         $response->assertOk()
             ->assertHeader('Content-Type', 'application/json');
+        $response->assertJson([
+            '*' => [
+                'name',
+                'groupid',
+                'keys' => '*',
+                'checked'
+            ]
+        ])
     }
 
     public function testGet_data()

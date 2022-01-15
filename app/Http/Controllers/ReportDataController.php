@@ -21,6 +21,11 @@ class ReportDataController extends Controller
     // header('Access-Control-Allow-Origin: *');
 
 
+    /**
+     * The `report` action retrieves a detailed list of attibutes on the ReportData model.
+     *
+     * It is used in the client detail view.
+     */
     public function report(string $serial_number)
     {
         jsonView(
@@ -98,6 +103,11 @@ class ReportDataController extends Controller
         return response()->json($reportdata);
     }
 
+    /**
+     * This is an unpublished attempt to convert new_clients() from SQL to Query Builder.
+     *
+     * @return array
+     */
     public function new_clients2()
     {
         $groups = get_filtered_groups();

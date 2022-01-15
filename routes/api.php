@@ -25,8 +25,8 @@ Route::group(['prefix' => 'v6', 'namespace' => 'Api', 'middleware' => 'auth'], f
     Route::post('/me/tokens', 'MeController@createToken');
     Route::get('/me/tokens', 'MeController@listTokens');
 
-    Route::get('/phpinfo', 'SystemInformationController@phpinfo');
-    Route::get('/database/health', 'SystemInformationController@databaseHealth');
+    Route::get('/system/php', 'SystemInformationController@php');
+    Route::get('/system/database', 'SystemInformationController@database');
 });
 
 Route::group(['prefix' => 'v6', 'namespace' => 'Api', 'middleware' => 'auth:sanctum'], function () {
