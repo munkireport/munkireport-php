@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use munkireport\lib\Dashboard;
 use munkireport\lib\Database;
+use munkireport\lib\Modules;
 
 /**
  * Class SystemController
@@ -62,6 +63,7 @@ class SystemController extends Controller
         // Do a read
         // Get tables
         // Get size
+
         return response()->json($out);
     }
 
@@ -109,7 +111,7 @@ class SystemController extends Controller
         $this->middleware('auth');
         Gate::authorize('global');
 
-        $moduleManager = getMrModuleObj();
+        $moduleManager = app(Modules::class);
         $layoutList = [];
         foreach($moduleManager->loadInfo(true)->getWidgets() as $widget){
             $widgetName = str_replace('_widget', '', $widget->name);

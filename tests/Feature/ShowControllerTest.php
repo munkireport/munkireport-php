@@ -28,7 +28,10 @@ class ShowControllerTest extends TestCase
     
     public function testReport()
     {
-        $this->markTestIncomplete();
+        $this->markTestIncomplete("Cannot test text values because i18n is client side");
+        $response = $this->actingAs($this->user)
+            ->get('/show/report/reportdata/clients');
+        $response->assertSeeText("Client Registration Over Time");
     }
 
     public function testDashboardRedirect()

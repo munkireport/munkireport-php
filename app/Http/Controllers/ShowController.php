@@ -72,6 +72,12 @@ class ShowController extends Controller
         }
     }
 
+    /**
+     * Render a custom view
+     *
+     * @deprecated This should be removed, and it is not documented so impact should be low
+     * @param string $which
+     */
     public function custom($which = 'default')
     {
         if ( ! $which){
