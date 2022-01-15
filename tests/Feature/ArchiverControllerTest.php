@@ -35,7 +35,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
             '/archiver/update_status/' . $reportData->serial_number,
             ['status' => '1']);
         $response->assertOk();
-
+        $response->assertJson(['updated' => 1]);
     }
 
     public function test_bulk_update_status()

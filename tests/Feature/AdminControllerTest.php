@@ -48,8 +48,8 @@ class AdminControllerTest extends AuthorizationTestCase
             '*' => [
                 'name',
                 'groupid',
-                'keys',
-                'cnt',
+                'keys',  // not present for the default group
+                'cnt',  // not always present if zero machines
             ]
         ]);
     }
