@@ -1,5 +1,10 @@
-<?php $this->view('partials/head'); ?>
+@extends('layouts.mr')
 
+@push('stylesheets')
+    <link rel="stylesheet" href="{{ asset('assets/css/system/database.css') }}" />
+@endpush
+
+@section('content')
     <div class="container">
         <div class="row pt-4">
             <div id="mr-migrations" class="col-lg-12 loading">
@@ -38,7 +43,9 @@
         </div>
 
     </div>  <!-- /container -->
+@endsection
 
+@push('scripts')
     <script>
       $(document).on('appReady', function (e, lang) {
         var tbody = $('.table-console tbody');
@@ -115,5 +122,4 @@
         });
       });
     </script>
-<?php
-$this->view('partials/foot');
+@endpush

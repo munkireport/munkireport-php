@@ -5,6 +5,10 @@ namespace munkireport\lib;
 use Symfony\Component\Yaml\Yaml;
 use \View;
 
+/**
+ * The listing class renders a "named" listing view template (either .php or .yml) which can be in the core views path
+ * or as part of a module.
+ */
 class Listing
 {
     private $listingData, $template;

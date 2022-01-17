@@ -148,10 +148,6 @@ class SystemController extends Controller
     {
         $this->middleware('auth');
         Gate::authorize('global');
-
-        $data['page'] = 'clients';
-        $data['scripts'] = array("clients/client_list.js");
-        $data['stylesheets'] = array('system/database.css');
-        return view('system.database', $data);
+        return view('system.database');
     }
 }
