@@ -121,7 +121,8 @@ class InstallController extends Controller
 
     public function plist()
     {
-        mr_view('install/install_plist');
+        $contents = view('install.plist')->with(['version' => '6.0']);
+        return response($contents, 200, ['Content-Type' => 'text/xml;charset=UTF-8']);
     }
 
     public function get_paths()

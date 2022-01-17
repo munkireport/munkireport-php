@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use munkireport\lib\Dashboard;
 use munkireport\lib\Listing;
+use munkireport\lib\Modules;
 use munkireport\lib\Widgets;
 
 /**
@@ -21,7 +22,8 @@ class ShowController extends Controller
     private $modules;
     public function __construct()
     {
-        $this->modules = getMrModuleObj()->loadInfo();
+        $moduleManager = app(Modules::class);
+        $this->modules = $moduleManager->loadInfo();
     }
 
     public function index()
