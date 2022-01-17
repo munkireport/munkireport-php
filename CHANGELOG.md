@@ -1,6 +1,22 @@
-### [6.0.0](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.1...wip) (Unreleased)
+### [6.0.0-beta.2](https://github.com/munkireport/munkireport-php/compare/v5.6.5...wip) (Jan 15, 2022)
 
-### [6.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (May 21, 2021) 
+- Machine, ReportData, Tag, and Comment modules will be folded back into the core project to allow
+for tighter integration with the API.
+- The container image now runs unprivileged to reduce the chance of vulnerabilities in the web application
+  impacting your platform.
+- The (core) client scripts are updated to Python 3, which will use either Macadmins distribution or Munki Python3.
+- API keys functionality has been introduced via Laravel Sanctum which should provide a better way to authenticate to the API.
+- Laravel Scout introduced to prepare for the Global Search feature.
+- `NOAUTH` was removed, and is no longer a valid auth option.
+- Because the local authentication is replaced by the Laravel equivalents, user sign-up is possible for authentication.
+- YAML based local users are not available in this release.
+- Further introduction of GraphQL API to support a dynamic table query feature.
+
+DEPENDENCY UPDATES
+- Laravel 8.x
+- Bootstrap 4 (Technically Beta 1)
+
+### [6.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (May 21, 2021)
 
 *** COMPLETE REWRITE BETA VERSION - FOR TESTING ONLY ***
 
@@ -21,6 +37,8 @@ Local authentication now uses the database.
 
 Events may be forwarded to Notification channels, such as Slack and Teams, using the config
 setting `notification.forward_events` (default true).
+
+### [6.0.0](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.1...wip) (Unreleased)
 
 ### [5.6.6](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (May 21, 2021) 
 
