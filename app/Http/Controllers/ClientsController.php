@@ -82,49 +82,45 @@ class ClientsController extends Controller
 
 
         $machine = Machine_model::where('serial_number', $sn)
-            ->first();
+            ->firstOrFail();
 
-        // Check if machine exists/is allowed for this user to view
-        if (! $machine) {
-            return view("client.client_dont_exist", $data);
-        } else {
-            $reportData = ReportData::where('serial_number', $sn)
-                ->first();
-            $data['reportData'] = $reportData;
+        $reportData = ReportData::where('serial_number', $sn)
+            ->firstOrFail();
+        $data['reportData'] = $reportData;
 
-            // Tab list, each item should contain:
-            //	'view' => path/to/tab
-            // 'i18n' => i18n identifier matching a localised name
-            // Optionally:
-            // 'view_vars' => array with variables to pass to the views
-            // 'badge' => id of a badge for this tab
-            $tab_list = [
-                'summary' => [
-                    'view' => 'client/summary_tab',
-                    'view_vars' => [
-                        'widget_list' => [],
-                    ],
-                    'i18n' => 'client.tab.summary',
+        // Tab list, each item should contain:
+        //	'view' => path/to/tab
+        // 'i18n' => i18n identifier matching a localised name
+        // Optionally:
+        // 'view_vars' => array with variables to pass to the views
+        // 'badge' => id of a badge for this tab
+        $tab_list = [
+            'summary' => [
+                'view' => 'client/summary_tab',
+                'view_vars' => [
+                    'widget_list' => [],
                 ],
-            ];
+                'i18n' => 'client.tab.summary',
+            ],
+        ];
 
-            // Include module tabs
-            $modules = getMrModuleObj()->loadInfo();
-            $modules->addTabs($tab_list);
+        // Include module tabs
+        $modules = getMrModuleObj()->loadInfo();
+        $modules->addTabs($tab_list);
 
-            // Add custom tabs
-            $tab_list = array_merge($tab_list, conf('client_tabs', []));
+        // Add custom tabs
+        $tab_list = array_merge($tab_list, conf('client_tabs', []));
 
 
-            // Add widgets to summary tab
-            $modules->addWidgets(
-                $tab_list['summary']['view_vars']['widget_list'],
-                conf('detail_widget_list', [])
-            );
+        // Add widgets to summary tab
+        $modules->addWidgets(
+            $tab_list['summary']['view_vars']['widget_list'],
+            conf('detail_widget_list', [])
+        );
 
-            $data['tab_list'] = $tab_list;
+        $data['tab_list'] = $tab_list;
 
-            return view("clients.detail", $data);
-        }
+        return view("clients.detail", $data);
+
     }
 }
