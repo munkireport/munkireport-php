@@ -9,10 +9,13 @@ use App\Scopes\UpdatedBetweenScope;
 use App\Scopes\UpdatedSinceScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use munkireport\models\MRModel;
+use Laravel\Scout\Searchable;
 
 class ReportData extends MRModel
 {
     use HasFactory;
+
+    use Searchable;
 
     /**
      * @inheritDoc
