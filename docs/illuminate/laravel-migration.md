@@ -107,9 +107,7 @@ For simplicity we have created Gates which match exactly the style of authz done
 
 ### Views ###
 
-For this conversion we will keep using MR\Kiss\View to avoid a full rewrite of all the views.
-
-There is no huge benefit to the project to rush into Blade views right now.
+MR\Kiss\View is still available for complete backwards compatibility.
 
 A forwards/backwards compatible View Engine has been registered with Laravel so that whenever the `view()` helper function
 tries to render a `.php` file, it actually constructs an instance of MR\Kiss\View underneath. The main difference
@@ -117,6 +115,22 @@ being that the Laravel captures the output buffer and returns it rather than pip
 
 The main motivation for this is that stdout isn't testable by the PHPUnit HTTP Client, but the Response type is.
 
-KISSMVC View templates live in the same directory structure as blade templates.
+KISSMVC View templates live in the same directory structure as blade templates. The blade template is always preferred
+by `view()`.
+
+Module views are automatically registered under the modules own namespace by extending the ViewFinder in 
+ModuleServiceProvider. This means that `machine::viewname` will actually try the v5 view path to find
+viewname.php
+
+### Dashboards ###
+
+The dashboards class is only slightly refactored to support rendering the dashboard outside of Kiss\View using the
+Blade templating engine. This is currently only enabled in the default dashboard.
+
+### Widgets ###
+
+The widgets class is also only slightly touched to support rendering outside of Kiss\View.
+
+Some .yaml style widgets have been converted to use [Blade Dynamic Components](https://laravel.com/docs/8.x/blade#dynamic-components)
 
 

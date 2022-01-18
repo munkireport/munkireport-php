@@ -2,15 +2,47 @@
 
 namespace munkireport\lib;
 
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Yaml\Yaml;
 use Illuminate\Filesystem\Filesystem;
-use MR\Kiss\View;
 
+/**
+ * The Dashboard class acts as a registry of all available dashboards.
+ *
+ * Possible sources of dashboards are:
+ * - 'default', the built-in dashboard which gets its layout from config files
+ * - 'search_paths', paths which will be scanned for *.yml files to load as dashboards.
+ *
+ * It also generates menu items for all registered dashboards, and it provides a way to
+ * override the default template (dashboard/dashboard.php) via `DASHBOARD_TEMPLATE`.
+ */
 class Dashboard
 {
-    private $config, $dashboards = [], $loaded = false, $filesystem;
-    
-    public function __construct($config, $loadAll = true)
+    /**
+     * @var array Dashboard configuration, usually from config/dashboard.php
+     */
+    private $config;
+
+    /**
+     * @var array An associative array of dashboards, name => details
+     */
+    private $dashboards = [];
+
+    /**
+     * @var bool Indicates whether dashboards have been loaded (Dashboard listing can be eager or lazy loaded)
+     */
+    private $loaded = false;
+
+    /**
+     * @var Filesystem The filesystem object used to scan dashboard search_paths
+     */
+    private $fileSystem;
+
+    /**
+     * @param array $config Dashboard service configuration, usually from config('dashboard')
+     * @param bool $loadAll Pass true to load all dashboards from search paths up front.
+     */
+    public function __construct(array $config, bool $loadAll = true)
     {
         $this->config = $config;
         $this->dashboards['default'] = [
@@ -26,17 +58,12 @@ class Dashboard
         }
     }
 
-    private function dashboardExists($dashboard)
-    {
-        return isset($this->dashboards[$dashboard]);
-    }
-    
-    private function getDashboardLayout($dashboard)
-    {
-        return $this->dashboards[$dashboard]['dashboard_layout'];
-    }
-
-    private function addDashboard($path)
+    /**
+     * Add a dashboard at a given path.
+     *
+     * @param string $path
+     */
+    private function addDashboard(string $path): void
     {
         try {
             $filename = $this->fileSystem->name($path);
@@ -60,11 +87,17 @@ class Dashboard
                 'dashboard_layout' => $data,
             ];
         } catch (\Exception $e) {
-            // Do something
+            Log::error("Skipped invalid dashboard at: {$path}");
         }
     }
 
-    public function loadAll()
+    /**
+     * Load all available dashboards from all dashboard search paths
+     * which were defined in config `search_paths` or env `DASHBOARD_SEARCH_PATHS`.
+     *
+     * @return $this
+     */
+    public function loadAll(): Dashboard
     {
         if(! $this->loaded){
           foreach($this->config['search_paths'] as $dir)
@@ -78,13 +111,25 @@ class Dashboard
         }
         return $this;
     }
-    
-    public function getCount()
+
+    /**
+     * Get the number of dashboards available, including search path discovered dashboards.
+     *
+     * @return int
+     */
+    public function getCount(): int
     {
         return count($this->dashboards);
     }
-    
-    public function getDropdownData($baseUrl, $page)
+
+    /**
+     * Generate a list of menu item attributes for all dashboards found.
+     *
+     * @param string $baseUrl The base url to insert before the dashboard name in the link.
+     * @param string $page The current URL, used to determine which list item has the active class.
+     * @return array A list of menu items representing each dashboard.
+     */
+    public function getDropdownData(string $baseUrl, string $page): array
     {
         $out = [];
         foreach( $this->dashboards as $path => $data){
@@ -100,20 +145,25 @@ class Dashboard
         return $out;
     }
 
-    public function render($dashboard)
+    /**
+     * Render a dashboard by name (using KISSMVC view object)
+     *
+     * @param string $dashboard Dashboard name
+     */
+    public function render(string $dashboard): void
     {
       $view = $this->config['template'];
 
-      if($this->dashboardExists($dashboard))
+      if(isset($this->dashboards[$dashboard]))
       {
-          $data['dashboard_layout'] = $this->getDashboardLayout($dashboard);
+          $data['dashboard_layout'] = $this->dashboards[$dashboard]['dashboard_layout'];
       }
       else
       {
           $data = ['status_code' => 404];
           $view = 'error/client_error';
       }
-      $data['widget'] = new Widgets(conf('widget'));
+      $data['widget'] = app(Widgets::class);
       mr_view($view, $data);
 
     }

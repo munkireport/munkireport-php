@@ -4,7 +4,7 @@ namespace App\View\Components\Widget;
 
 use Illuminate\View\Component;
 
-class Bargraph extends Component
+class Scrollbox extends Component
 {
     /**
      * @var {string} Widget name/template name
@@ -31,6 +31,6 @@ class Bargraph extends Component
      */
     public function render()
     {
-        return view('components.widget.bargraph', $this->data);
+        return view('components.widget.scrollbox', $this->data);
     }
 }

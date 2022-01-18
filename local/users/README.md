@@ -1,4 +1,6 @@
-# Local users
+# Local users (Deprecated)
+
+## NOTE: As of v6 this feature is no longer available ##
 
 Users are defined by a file called `username.yml`
 This file should contain the password hash called `password_hash`

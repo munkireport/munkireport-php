@@ -326,6 +326,7 @@ class Modules
         foreach( $this->getInfo('client_tabs') as $module => $client_tabs){
             foreach($client_tabs as $id => $info){
                 $info['view_path'] = $this->getPath($module, '/views/');
+                $info['module'] = $module; // Added in v6 to hint the view namespace
                 $tabArray[$id] = $info;
             }
         }
@@ -338,6 +339,7 @@ class Modules
         foreach( $this->getInfo('detail_widgets') as $module => $detail_widgets){
             foreach($detail_widgets as $id => $info){
                 $info['view_path'] = $this->getPath($module, '/views/');
+                $info['module'] = $module; // Added in v6 to hint the view namespace
                 $tempList[$id] = $info;
             }
         }
