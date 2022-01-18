@@ -185,6 +185,7 @@ return [
         App\Providers\ModuleGraphQLSchemaProvider::class,
         App\Providers\ModulesServiceProvider::class,
         App\Providers\DashboardServiceProvider::class,
+        App\Providers\WidgetServiceProvider::class,
     ],
 
     /*

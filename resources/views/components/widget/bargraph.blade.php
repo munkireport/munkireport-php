@@ -1,15 +1,15 @@
 <div class="col-lg-6 col-md-6">
-    <div class="card" id="{{ $id }}">
+    <div class="card" id="{{ $widget_id }}">
         <div
-            class="card-header"
-            @isset($tooltip)
-            data-i18n="[title]{{ $tooltip }}"
-            @endisset
+                class="card-header"
+                @isset($i18n_tooltip)
+                data-i18n="[title]{{ $i18n_tooltip }}"
+                @endisset
         >
             <i class="fa {{ $icon }}"></i>
-            <span data-i18n="{{ $title }}"></span>
+            <span data-i18n="{{ $i18n_title }}"></span>
             <span class="counter badge"></span>
-            <a href="{{ $listingLink }}" class="pull-right text-reset"><i class="fa fa-list"></i></a>
+            <a href="{{ $listing_link }}" class="pull-right text-reset"><i class="fa fa-list"></i></a>
         </div>
         <div class="card-body">
             <svg style="width:100%"></svg>
@@ -22,12 +22,12 @@
     <script type="text/javascript">
       $(document).on('appReady', function() {
 
-        var widgetId = "{{ $id }}";
-        var apiUrl = "{{ $apiUrl }}";
-        var listingLink = "{{ $listingLink }}";
+        var widgetId = "{{ $widget_id }}";
+        var apiUrl = "{{ $api_url }}";
+        var listingLink = "{{ $listing_link }}";
         var margin = {{ Illuminate\Support\Js::from($margin) }};
-        var searchComponent = "{{ $searchComponent }}";
-        var labelModifier = "{{ $labelModifier }}";
+        var searchComponent = "{{ isset($search_component) }}";
+        var labelModifier = "{{ $label_modifier ?? '' }}";
 
         var conf = {
           url: appUrl + apiUrl, // Url for json

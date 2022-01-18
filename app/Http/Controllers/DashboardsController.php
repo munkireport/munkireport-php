@@ -15,4 +15,15 @@ class DashboardsController extends Controller
     public function index() {
         return view('dashboards.index');
     }
+
+    /**
+     * Show the default dashboard.
+     *
+     * This is currently a testbed for widget components and all other dashboards use the Dashboard class to render.
+     */
+    public function default() {
+        return view('dashboards.default', [
+            'dashboard_layout' => config('dashboard.default_layout'),
+        ]);
+    }
 }

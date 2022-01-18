@@ -7,6 +7,7 @@ use App\ReportData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use munkireport\lib\Modules;
 use munkireport\models\Machine_model;
 use MR\Kiss\ConnectDbTrait;
 
@@ -105,7 +106,7 @@ class ClientsController extends Controller
         ];
 
         // Include module tabs
-        $modules = getMrModuleObj()->loadInfo();
+        $modules = app(Modules::class)->loadInfo();
         $modules->addTabs($tab_list);
 
         // Add custom tabs

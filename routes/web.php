@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/show', 'ShowController@index');
     Route::get('/show/custom/{which?}', 'ShowController@custom');
+    Route::get('/show/dashboard/default', 'DashboardsController@default'); // Temporary override for testing Widget Components
     Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
     Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
     Route::get('/show/report/{report}/{action}', 'ShowController@report');

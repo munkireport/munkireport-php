@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Database\Migrations\Migrator;
+use Illuminate\View\ViewFinderInterface;
 use munkireport\lib\Modules;
 
 /**
@@ -68,6 +69,26 @@ class ModulesServiceProvider extends ServiceProvider
 
             return $service;
         });
+
+//        // Add each module's view path as a namespaced view, which will be discoverable by the ViewFinder service
+//        $this->app->extend('view.finder', function (ViewFinderInterface $finder, $app) use ($moduleInstance) {
+//            // Load all modules
+//            $moduleInstance->loadInfo(true);
+//            $moduleInfo = $moduleInstance->getInfo();
+//            foreach ($moduleInfo as $moduleName => $info) {
+//                $moduleViewPath = app(Modules::class)->getPath($moduleName, '/views/');
+//                $finder->addNamespace($moduleName, realpath($moduleViewPath));
+//            }
+//
+//            return $finder;
+//        });
+
+        $moduleInstance->loadInfo(true);
+        $moduleInfo = $moduleInstance->getInfo();
+        foreach ($moduleInfo as $moduleName => $info) {
+            $moduleViewPath = app(Modules::class)->getPath($moduleName, '/views/');
+            \Illuminate\Support\Facades\View::addNamespace($moduleName, realpath($moduleViewPath));
+        }
     }
 
     /**
