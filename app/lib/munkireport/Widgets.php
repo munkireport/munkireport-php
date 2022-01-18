@@ -7,13 +7,26 @@ use Symfony\Component\Yaml\Yaml;
 /**
 * Widgets class
 *
-* Retrieves widgets from custom folder, module folder and widget folder
+* Retrieves widgets from custom folder, module folder and widget folder.
+* Acts similarly to dashboard service, maintains a registry of discovered items.
 *
 */
 class Widgets
 {
+    /**
+     * @var array Widget configuration, usually from config/widget.php
+     */
+    private $conf;
 
-    private $conf, $widgetList = [], $fileSystem;
+    /**
+     * @var array A list of discovered widgets as an associative array of name => detail
+     */
+    private $widgetList = [];
+
+    /**
+     * @var Filesystem The filesystem object used to scan dashboard search_paths
+     */
+    private $fileSystem;
 
     public function __construct($conf)
     {
@@ -21,50 +34,20 @@ class Widgets
 
         $this->fileSystem = new Filesystem;
 
-        $this->addUnknownWidget();
-
-        $this->addSpacerWidget();
-
-        $this->addCoreWidgets();
-
         $this->addModuleWidgets();
+
+        foreach($this->conf['core'] as $name => $path) {
+            $this->addWidget($name, $path);
+        }
 
         $this->addLocalWidgets($this->conf['search_paths']);
         // echo '<pre>';print_r($this->widgetList);
 
     }
 
-    private function addUnknownWidget()
-    {
-        $this->addWidget('unknown_widget', conf('view_path') . 'widgets/unknown_widget.php');
-    }
-
-    private function addSpacerWidget()
-    {
-        $this->addWidget('spacer', conf('view_path') . 'widgets/spacer_widget.php');
-    }
-
-    private function addCoreWidgets()
-    {
-        $this->addWidget('client', resource_path('views') . '/reportdata/client_widget.php');
-        $this->addWidget('registered_clients', resource_path('views') . '/reportdata/registered_clients_widget.php');
-        $this->addWidget('uptime', resource_path('views') . '/reportdata/uptime_widget.php');
-
-        $this->addWidget('duplicated_computernames', conf('view_path') . 'machine/duplicated_computernames_widget.yml');
-        $this->addWidget('hardware_basemodel', conf('view_path') . 'machine/hardware_basemodel_widget.yml');
-        $this->addWidget('hardware_model', conf('view_path') . 'machine/hardware_model_widget.yml');
-        $this->addWidget('hardware_type', conf('view_path') . 'machine/hardware_type_widget.yml');
-        $this->addWidget('installed_memory', conf('view_path') . 'machine/installed_memory_widget.yml');
-        $this->addWidget('memory', conf('view_path') . 'machine/memory_widget.yml');
-        $this->addWidget('new_clients', conf('view_path') . 'machine/new_clients_widget.yml');
-        $this->addWidget('os', conf('view_path') . 'machine/os_widget.yml');
-        $this->addWidget('osbuild', conf('view_path') . 'machine/osbuild_widget.yml');
-
-    }
-
     private function addModuleWidgets()
     {
-      $moduleManager = getMrModuleObj();
+      $moduleManager = app(Modules::class);
 
       foreach( $moduleManager->getInfo('widgets') as $module => $widgets){
           foreach($widgets as $id => $info){
@@ -122,6 +105,52 @@ class Widgets
 
         }else{
             $viewObj->view($widget->file, $widget->vars, $widget->path);
+        }
+    }
+
+    /**
+     * Get the name of a Laravel Blade View Component that matches the name of the widget.
+     *
+     * If a newer style component can be found, it will be returned, otherwise you will get the x-widget.legacy component
+     * which just wraps over the Widget->view().
+     *
+     * @param string $widgetName
+     * @param array|null $data Data to merge that will be passed to the widget view.
+     * @return array ['component name', $data]
+     */
+    public function getComponent(string $widgetName, ?array $data = null): array
+    {
+        $widget = $this->get($widgetName);
+        if ($this->getType($widget->path, $widget->file) == 'yaml') {
+            try {
+                $data = array_merge($data ?? [], Yaml::parseFile($widget->path . $widget->file . '.yml'));
+
+                switch ($data['type']) {
+                    case 'bargraph':
+                        return ['widget.bargraph', $data];
+                    case 'button':
+                        return ['widget.button', $data];
+                    case 'error':
+                        return ['widget.error', $data];
+                    case 'scrollbox':
+                        return ['widget.scrollbox', $data];
+                    case 'spacer':
+                        return ['widget.spacer', $data];
+                    case 'unknown':
+                    default:
+                        return ['widget.unknown', $data];
+                }
+            } catch (\Throwable $th) {
+                $data = [
+                    'type' => 'error',
+                    'title' => 'YAML error',
+                    'msg' => $th->getMessage()
+                ];
+
+                return ['widget.unknown', $data];
+            }
+        } else {
+            return ['widget.legacy', $data];
         }
     }
 

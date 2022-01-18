@@ -4,24 +4,21 @@ namespace App\View\Components\Widget;
 
 use Illuminate\View\Component;
 
-class Bargraph extends Component
+/**
+ * The table widget is a conversion of `detail_widgets/table.php`.
+ *
+ * It is only meant for use with the detail view.
+ */
+class Table extends Component
 {
-    /**
-     * @var {string} Widget name/template name
-     */
-    public $name;
-
-    public $data;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $name, ?array $data)
+    public function __construct()
     {
-        $this->name = $name;
-        $this->data = $data;
+        //
     }
 
     /**
@@ -31,6 +28,6 @@ class Bargraph extends Component
      */
     public function render()
     {
-        return view('components.widget.bargraph', $this->data);
+        return view('components.widget.table');
     }
 }

@@ -510,3 +510,21 @@ function mr_view($file = '', $vars = '', $view_path = '')
     $obj = new View();
     $obj->view($file, $vars, $view_path);
 }
+
+
+/**
+ * Render a KISSMVC style View into the output buffer then capture it as a string.
+ *
+ * @depreacted You should try to use the Laravel view() helper instead, which still uses KISSMVC view for any file not ending in
+ * .blade.php
+ *
+ * @param string $file
+ * @param array $vars
+ * @param string $view_path
+ * @return string
+ */
+function mr_view_output(string $file = '', array $vars = [], string $view_path = ''): string
+{
+    $obj = new View();
+    return $obj->viewFetch($file, $vars, $view_path);
+}

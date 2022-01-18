@@ -11,6 +11,7 @@ for tighter integration with the API.
 - Because the local authentication is replaced by the Laravel equivalents, user sign-up is possible for authentication.
 - YAML based local users are not available in this release.
 - Further introduction of GraphQL API to support a dynamic table query feature.
+- .yaml widgets are converted to use Laravel Blade Components for the default dashboard only.
 
 DEPENDENCY UPDATES
 - Laravel 8.x

@@ -64,10 +64,19 @@
             <div class="tab-content">
                 @foreach($tab_list as $name => $data)
                 <div class="tab-pane @isset($data['class']) active @endisset" id="{{ $name }}">
-                    <?php mr_view(
+{{--                    @isset($data['module'])--}}
+{{--                        {{ "{$data['module']}::{$data['view']}" }}--}}
+{{--                        @include("{$data['module']}::{$data['view']}", $data['view_vars'] ?? [])--}}
+{{--                    @else--}}
+{{--                        @include($data['view'], $data['view_vars'] ?? [])--}}
+{{--                    @endisset--}}
+
+                    <?php
+                    mr_view(
                         $data['view'],
                         $data['view_vars'] ?? array(),
-                        $data['view_path'] ?? conf('view_path')); ?>
+                        $data['view_path'] ?? conf('view_path'));
+                    ?>
                 </div>
                 @endforeach
             </div>
