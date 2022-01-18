@@ -1,5 +1,5 @@
 <?php
-namespace Mr\Scopes;
+namespace MR\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

@@ -166,13 +166,17 @@ return [
          * Package Service Providers...
          */
         Aacotroneo\Saml2\Saml2ServiceProvider::class,
-        MR\Kiss\Providers\KissEngineProvider::class,
-        MR\Kiss\Providers\ViewServiceProvider::class,
         Adldap\Laravel\AdldapServiceProvider::class,
         Adldap\Laravel\AdldapAuthServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
+
+        /*
+         * MunkiReport v5 Compatibility Providers...
+         */
+        MR\Kiss\Providers\KissEngineProvider::class,
+        MR\Kiss\Providers\ViewServiceProvider::class,
 
         /*
          * Application Service Providers...
