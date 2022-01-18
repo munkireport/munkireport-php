@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Business Unit Model.
+ * Business Unit Model (from v5).
  *
  * Currently business units are implemented as a key - value table containing three things:
  * 

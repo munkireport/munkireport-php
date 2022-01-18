@@ -1,5 +1,5 @@
 <?php
-namespace Mr\Scopes;
+namespace MR\Scopes;
 
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
