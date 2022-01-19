@@ -3,7 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
-use \Parsedown;
+use Illuminate\Support\Facades\Auth;
+
 
 /**
  * Comment_controller class
@@ -37,7 +38,7 @@ class CommentController extends Controller
                     [
                         'text' => $text,
                         'html' => $html,
-                        'user' => $_SESSION['user'],
+                        'user' => Auth::user()->name,
                         'timestamp' => time(),
                     ]
                 );
@@ -57,22 +58,26 @@ class CommentController extends Controller
     /**
      * Retrieve data in json format
      *
-     **/
-    public function retrieve($serial_number = '', $section = '')
+     * @todo ->filter('groupOnly') is not working
+     * @param string $serial_number
+     * @param string|null $section The page or section where the comment will be displayed, eg. client (for client details)
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\View\View|void
+     */
+    public function retrieve(string $serial_number, ?string $section = null)
     {
         $out = [];
         $where[] = ['comment.serial_number', $serial_number];
         if($section){
             $where[] = ['section', $section];
             $comment = Comment::where($where)
-                ->filter('groupOnly')
+//                ->filter('groupOnly')
                 ->first();
             if ($comment) {
                 $out = $comment;
             }
         }else {
             $comment = Comment::where($where)
-                ->filter('groupOnly')
+//                ->filter('groupOnly')
                 ->get();
             if($comment){
                $out = $comment->toArray();

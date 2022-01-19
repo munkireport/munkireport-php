@@ -7,9 +7,13 @@ return [
     'core' => [
         'unknown_widget' => config('_munkireport.view_path') . 'widgets/unknown_widget.php',
         'spacer' => config('_munkireport.view_path') . 'widgets/spacer_widget.php',
+
+        // Widgets merged from reportdata
         'client' => resource_path('views') . '/reportdata/client_widget.php',
         'registered_clients' => resource_path('views') . '/reportdata/registered_clients_widget.php',
         'uptime' => resource_path('views') . '/reportdata/uptime_widget.php',
+
+        // Widgets merged from machine
         'duplicated_computernames' => conf('view_path') . 'machine/duplicated_computernames_widget.yml',
         'hardware_basemodel' => conf('view_path') . 'machine/hardware_basemodel_widget.yml',
         'hardware_model' => conf('view_path') . 'machine/hardware_model_widget.yml',
@@ -19,5 +23,13 @@ return [
         'new_clients' => conf('view_path') . 'machine/new_clients_widget.yml',
         'os' => conf('view_path') . 'machine/os_widget.yml',
         'osbuild' => conf('view_path') . 'machine/osbuild_widget.yml',
+
+        // Widgets merged from tag
+        'tag' => resource_path('views') . '/tag/tag_widget.php',
+
+        // Widgets merged from comment
+
+        // Widgets merged from event
+        'messages' => resource_path('views') . '/event/messages_widget.php',
     ]
 ];
