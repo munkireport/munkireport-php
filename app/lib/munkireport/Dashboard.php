@@ -126,10 +126,10 @@ class Dashboard
      * Generate a list of menu item attributes for all dashboards found.
      *
      * @param string $baseUrl The base url to insert before the dashboard name in the link.
-     * @param string $page The current URL, used to determine which list item has the active class.
+     * @param string|null $page The current URL, used to determine which list item has the active class.
      * @return array A list of menu items representing each dashboard.
      */
-    public function getDropdownData(string $baseUrl, string $page): array
+    public function getDropdownData(string $baseUrl, ?string $page = null): array
     {
         $out = [];
         foreach( $this->dashboards as $path => $data){

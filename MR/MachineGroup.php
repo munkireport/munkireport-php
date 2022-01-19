@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Webpatser\Uuid\Uuid;
 
+/**
+ * MachineGroup model for v5 compatibility.
+ */
 class MachineGroup extends Model
 {
     const PROP_NAME = 'name';

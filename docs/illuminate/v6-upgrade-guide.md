@@ -80,6 +80,13 @@ so a number of options have been renamed.
 
 You also have the option of configuring multiple SAML IdP's, although this scenario has not been tested.
 
+## Authorization Changes ##
+
+### Roles can now accept username or e-mail address ###
+
+Because we now expect the user principal to be an e-mail address, the roles config can accept e-mail addresses as
+well as usernames. It will still respect usernames if you have some users that are not migrated to e-mail addresses.
+
 
 ## Client Changes ##
 

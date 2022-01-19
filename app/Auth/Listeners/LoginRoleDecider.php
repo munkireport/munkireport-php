@@ -28,9 +28,10 @@ class LoginRoleDecider
      * @param array $groups The list of groups that was given to us from the authentication provider.
      * @param string $role The role name we are evaluating.
      * @param array $members The list of users and groups who are a member of the role given.
+     * @param string $email The email address of the user, provided when the user principal is not an email address.
      * @return array [bool, string] corresponding to isMember (true/false), and reason string.
      */
-    protected function isMember(string $userPrincipal, array $groups, string $role, array $members): array {
+    protected function isMember(string $userPrincipal, array $groups, string $role, array $members, string $email): array {
         foreach ($members as $userOrGroupName) {
             if (strpos($userOrGroupName, '@') === 0) { // It's a group
                 if (in_array(substr($userOrGroupName, 1), $groups)) {
@@ -39,6 +40,10 @@ class LoginRoleDecider
             } else {
                 if ($userOrGroupName == $userPrincipal) {
                     return [true, "${userOrGroupName} in ${role} role array"];
+                }
+
+                if ($userOrGroupName == $email) {
+                    return [true, "${email} in ${role} role array"];
                 }
             }
         }
@@ -111,14 +116,16 @@ class LoginRoleDecider
         $findByAttribute = $event->user->getAuthIdentifierName();
         $user = User::findOrFail($userId);
         $userName = $user->name;
+        $email = $user->email;
 
 
         $setRole = 'user';
         $roleWhy = 'Default role';
 
         $roles = config('_munkireport.roles', []);
+
         foreach ($roles as $role => $members) {
-            list($isMember, $roleWhy) = $this->isMember($userName, $groups, $role, $members);
+            list($isMember, $roleWhy) = $this->isMember($userName, $groups, $role, $members, $email);
             if ($isMember) {
                 $setRole = $role;
                 break;
