@@ -63,6 +63,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/module/tag/retrieve/{serial_number}', 'TagController@retrieve');
     Route::get('/module/tag/delete/{serial_number}/{id?}', 'TagController@delete');
     Route::get('/module/tag/all_tags/{add_count?}', 'TagController@all_tags');
+    // Ditto comment
+    Route::post('/module/comment/save', 'CommentController@save');
+    Route::get('/module/comment/retrieve/{serial_number}/{section?}', 'CommentController@retrieve');
+    // Event
+    Route::get('/module/event/get/{limit?}', 'EventController@get');
+
 
     Route::any('/settings/theme', 'SettingsController@theme');
 

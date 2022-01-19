@@ -172,6 +172,8 @@
     "event": "Event",
     "event_plural": "Events",
     "events": {
+        "event": "Event",
+        "event_plural": "Events",
         "widget_title": "Recently generated events"
     },
     "external": "External",
