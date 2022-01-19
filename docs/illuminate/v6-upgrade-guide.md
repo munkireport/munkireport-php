@@ -26,6 +26,13 @@ Providing local users via the `local/users` directory is no longer supported.
 
 ### ReCaptcha replaced by NoCaptcha ###
 
+
+### Event filter configuration via event.yml no longer available ###
+
+In version 5.x you were able to place an event.yml file in the module config directory to make the messages widget
+filter events by module or severity. This will be replaced with a user facing event filter and has been removed for now.
+
+
 ## Configuration Changes ##
 
 ### Renames ###
