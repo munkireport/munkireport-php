@@ -96,7 +96,6 @@
         "munkireport/softwareupdate": "^1.0",
         "munkireport/sophos": "^1.0",
         "munkireport/supported_os": "^2.0",
-        "munkireport/tag": "^3.0",
         "munkireport/timemachine": "^2.0",
         "munkireport/usage_stats": "^1.0",
         "munkireport/usb": "^1.0",

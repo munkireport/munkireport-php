@@ -330,6 +330,15 @@
     "systemstatus": {
         "menu_link": "Systemstatus zeigen"
     },
+    "tag": {
+        "listing": {
+            "title": "Tag Report"
+        },
+        "name": "Tag Name",
+        "widget_title": "Tags",
+        "add_tag": "Tag hinzufügen",
+        "tag": "Tag"
+    },
     "total_clients": "Gesamte Anzahl Clients",
     "trackpad": "Trackpad",
     "type": "Typ",
