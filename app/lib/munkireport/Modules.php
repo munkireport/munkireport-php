@@ -122,6 +122,14 @@ class Modules
             'core' => true,
         ];
 
+        $this->moduleList['comment'] = [
+            'detail_widgets' => [
+                    'comment_detail' => [ 'view' => 'comment_detail_widget'],
+            ],
+            'path' => realpath(__DIR__ . '../'),
+            'core' => true,
+        ];
+
     }
 
     /**
