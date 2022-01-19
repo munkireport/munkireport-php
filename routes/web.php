@@ -57,6 +57,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/module/machine/os', 'MachineController@os');
     Route::get('/module/machine/osbuild', 'MachineController@osbuild');
     Route::get('/module/machine/model_lookup/{serial_number}', 'MachineController@model_lookup');
+    // Ditto tag
+    Route::get('/module/tag/listing', 'TagController@listing');
+    Route::post('/module/tag/save', 'TagController@save');
+    Route::get('/module/tag/retrieve/{serial_number}', 'TagController@retrieve');
+    Route::get('/module/tag/delete/{serial_number}/{id?}', 'TagController@delete');
+    Route::get('/module/tag/all_tags/{add_count?}', 'TagController@all_tags');
 
     Route::any('/settings/theme', 'SettingsController@theme');
 

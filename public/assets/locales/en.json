@@ -393,6 +393,15 @@
     "systemstatus": {
         "menu_link": "Show System Status"
     },
+    "tag": {
+        "listing": {
+            "title": "Tag Report"
+        },
+        "name": "Tag Name",
+        "widget_title": "Tags",
+        "add_tag": "Add Tag",
+        "tag": "Tag"
+    },
     "text": "Text",
     "total_clients": "Total Clients",
     "trackpad": "Trackpad",

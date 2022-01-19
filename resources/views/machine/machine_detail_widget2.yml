@@ -2,7 +2,7 @@ type: table
 class: machine-computer_name
 js_link: 
   - assets/js/machine/machine_detail.js
-  - module/tag/js/tag_detail
+  - assets/js/tag/tag_detail.js
 table:
     - i18n_header: last_seen
       class: reportdata-check-in_date

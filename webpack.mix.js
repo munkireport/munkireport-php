@@ -22,8 +22,13 @@ mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css', 'public/assets/the
 mix.copy('node_modules/bootstrap-markdown/js/bootstrap-markdown.js', 'public/assets/js/bootstrap-markdown.js');
 mix.copy('node_modules/bootstrap-markdown/css/bootstrap-markdown.min.css', 'public/assets/css/bootstrap-markdown.min.css');
 
+// bootstrap-tagsinput does not work with Bootstrap 4, or even 3.
 mix.copy('node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js', 'public/assets/js/bootstrap-tagsinput.min.js');
 mix.copy('node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css', 'public/assets/css/bootstrap-tagsinput.css');
+
+mix.copy('node_modules/bootstrap4-tagsinput/tagsinput.js', 'public/assets/js/bootstrap4-tagsinput.js');
+mix.copy('node_modules/bootstrap4-tagsinput/tagsinput.css', 'public/assets/css/bootstrap4-tagsinput.css');
+
 
 mix.copy('node_modules/marked/marked.min.js', 'public/assets/js/marked.min.js');
 

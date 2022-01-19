@@ -108,6 +108,21 @@ class Modules
             'path' => realpath(__DIR__ . '../'),
             'core' => true,
         ];
+        
+        $this->moduleList['tag'] = [
+            'listings' => [
+                'tag' => ['view' => 'tag_listing', 'i18n' => 'tag.tag'],
+            ],
+            'widgets' => [
+                'tag' => ['view' => 'tag_widget'],
+            ],
+            'reports' => [
+                'tag' => ['view' => 'tag_report', 'i18n' => 'tag.listing.title'],
+            ],
+            'path' => realpath(__DIR__ . '../'),
+            'core' => true,
+        ];
+
     }
 
     /**
