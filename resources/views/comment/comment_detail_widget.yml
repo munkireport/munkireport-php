@@ -1,0 +1,4 @@
+type: table
+id: comment-widget
+icon: comment-o
+i18n_title: client.comment
