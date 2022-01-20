@@ -60,11 +60,6 @@ class ReportController extends Controller
      */
     public function init(Request $request)
     {
-        // Check for maintenance mode
-        if(file_exists(APP_ROOT . 'storage/framework/down')) {
-            $this->error("MunkiReport is in maintenance mode, try again later.");
-        }
-
         // Validate Serialnumber
         if (!$request->has('serial') || !trim($request->get('serial'))) {
             $this->error("Serial is missing or empty");

@@ -74,12 +74,12 @@ mix.scripts([
 
 // For routes which are completely Single-Page App (Completely controlled by VueJS)
 mix.js('resources/js/app.js', 'public/js')
-  .extract(['jquery', 'popper.js', 'bootstrap', 'lodash', 'i18next', 'axios', 'vue', 'vue-router', 'vue-i18next', 'vue-grid-layout'])
+  .extract()
   .sass('resources/sass/app.scss', 'public/css')
   .vue();
 
 // For routes which still have jQuery, but want to use Vue components
-mix.js('resources/js/mixed-app.js', 'public/js');
+mix.js('resources/js/mixed-app.js', 'public/js').vue();
 
 // mix.js('resources/js/business-units.js', 'public/js');
 // mix.js('resources/js/profile.js', 'public/js');

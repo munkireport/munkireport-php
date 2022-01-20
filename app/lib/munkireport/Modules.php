@@ -12,9 +12,19 @@ use Symfony\Component\Yaml\Yaml;
 */
 class Modules
 {
-
+    /**
+     * @var array The complete list of available modules with their listings, widgets, etc.
+     */
     private $moduleList = [];
+
+    /**
+     * @var array A list of paths that may be scanned for v5 modules.
+     */
     private $moduleSearchPaths = [];
+
+    /**
+     * @var string[] A list of modules that are always enabled effectively, without being declared.
+     */
     private $allowedModules = [
       'machine',
       'reportdata',
@@ -22,8 +32,11 @@ class Modules
       'event',
       'comment',
     ];
+
+    /**
+     * @var bool When generating a list of modules, whether to skip modules not explicitly enabled.
+     */
     private $skipInactiveModules = False;
-    private $widgetList;
 
     public function __construct()
     {
@@ -69,7 +82,7 @@ class Modules
             'listings' => array(
                 'clients' => array('view' => 'clients_listing', 'i18n' => 'client.clients'),
             ),
-//            'widgets' => array(
+//            'widgets' => array()
 //                'client' => array('view' => 'client_widget'),
 //                'registered_clients' => array('view' => 'registered_clients_widget'),
 //                'uptime' => array('view' => 'uptime_widget'),
@@ -157,11 +170,9 @@ class Modules
     /**
      * Retrieve moduleModelPath
      *
-     *
-     * @param type var Description
-     * @return return type
+     * @todo $modelPath should never be passed as null, but it is sometimes.
      */
-    public function getModuleModelPath($moduleName, &$modelPath)
+    public function getModuleModelPath(string $moduleName, ?string &$modelPath): bool
     {
         foreach ($this->moduleSearchPaths as $type => $path) {
             if ( file_exists($path . $moduleName . '/' . $moduleName . '_model.php')) {
@@ -175,11 +186,9 @@ class Modules
     /**
      * Retrieve moduleProcessorPath
      *
-     *
-     * @param type var Description
-     * @return return type
+     * @todo $modelPath should never be passed as null, but it is sometimes.
      */
-    public function getModuleProcessorPath($moduleName, &$modelPath)
+    public function getModuleProcessorPath(string $moduleName, ?string &$modelPath): bool
     {
         foreach ($this->moduleSearchPaths as $type => $path) {
             if ( file_exists($path . $moduleName . '/' . $moduleName . '_processor.php')) {
@@ -192,12 +201,8 @@ class Modules
 
     /**
      * Retrieve moduleControllerPath
-     *
-     *
-     * @param type var Description
-     * @return return type
      */
-    public function getmoduleControllerPath($moduleName, &$controllerPath)
+    public function getmoduleControllerPath(string $moduleName, ?string &$controllerPath): bool
     {
         foreach ($this->moduleSearchPaths as $type => $path) {
             if ( file_exists($path . $moduleName . '/' . $moduleName . '_controller.php')) {
@@ -210,12 +215,8 @@ class Modules
 
     /**
      * Retrieve moduleMigrationPath
-     *
-     *
-     * @param type var Description
-     * @return boolean
      */
-    public function getModuleMigrationPath($moduleName, &$migrationPath)
+    public function getModuleMigrationPath(string $moduleName, ?string &$migrationPath): bool
     {
         foreach ($this->moduleSearchPaths as $type => $path) {
             if (is_dir($path . $moduleName . '/migrations')) {
@@ -228,9 +229,8 @@ class Modules
 
     /**
      * Retrieve list of all available modules
-     *
      */
-    public function getModuleList($all_modules = false)
+    public function getModuleList(bool $all_modules = false): array
     {
         $modules = [];
         foreach ($this->moduleSearchPaths as $path)
@@ -255,9 +255,8 @@ class Modules
      * Load info from provides.php
      *
      * @param boolean $allModules If true, don't mind $skipInactiveModules
-     * @return none
      */
-    public function loadInfo($allModules = False)
+    public function loadInfo(bool $allModules = False): Modules
     {
         if($allModules){
             $skipInactiveModules = False;
@@ -267,14 +266,18 @@ class Modules
 
         $this->collectModuleInfo(
             $this->moduleSearchPaths,
-            $this->getAllowedModules($skipInactiveModules),
-            $skipInactiveModules);
+            $skipInactiveModules,
+            $this->getAllowedModules($skipInactiveModules));
 
         return $this;
 
     }
-    
-    public function getAllowedModules($skipInactiveModules)
+
+    /**
+     * @param bool $skipInactiveModules
+     * @return array|string|string[]
+     */
+    public function getAllowedModules(bool $skipInactiveModules)
     {
         if($skipInactiveModules){
             return array_merge($this->allowedModules, conf('modules', []));
@@ -282,8 +285,13 @@ class Modules
         return [];
     }
 
-    // Return info about $about
-    public function getInfo($about = '')
+    /**
+     * Get information about one or all modules.
+     *
+     * @param string $about
+     * @return array
+     */
+    public function getInfo(string $about = ""): array
     {
         if( ! $about){
             return $this->moduleList;
@@ -302,31 +310,38 @@ class Modules
     /**
      * Get listing info based on module and name
      *
-     * Undocumented function long description
-     *
      * @param string $module Name of module
      * @param string $name Name of listing
-     * @return Object of false
+     * @return bool|object
      */
-    public function getListing($module, $name)
+    public function getListing(string $module, string $name)
     {
         if(isset($this->moduleList[$module]['listings'])){
             if( isset($this->moduleList[$module]['listings'][$name]['view'])) {
                 return (object) [
                     'view_path' => $this->getPath($module, '/views/'),
                     'view' => $this->moduleList[$module]['listings'][$name]['view'],
+                    'module' => $module, // Added in v6 if you would like to use view namespacing.
                 ];
             }
         }
         return False;
     }
 
-    public function getReport($module, $name)
+    /**
+     * Get report info based on module and name
+     *
+     * @param string $module Name of module
+     * @param string $name Name of listing
+     * @return bool|object
+     */
+    public function getReport(string $module, string $name)
     {
         if(isset($this->moduleList[$module]['reports'][$name])){
             return (object) [
                 'view_path' => $this->getPath($module, '/views/'),
                 'view' => $this->moduleList[$module]['reports'][$name]['view'],
+                'module' => $module, // Added in v6 if you would like to use view namespacing.
                 'type' => $this->getType(
                     $this->getPath($module, '/views/'),
                     $this->moduleList[$module]['reports'][$name]['view']
@@ -336,12 +351,26 @@ class Modules
         return False;
     }
 
-    private function getType($path, $view) 
+    /**
+     * Determine whether the view/widget is yaml or php
+     *
+     * @param string $path
+     * @param string $view
+     * @return bool
+     */
+    private function getType(string $path, string $view): bool
     {
         return is_readable( $path . $view . '.yml') ? 'yaml' : 'php';
     }
 
-    public function getPath($module, $append = '')
+    /**
+     * Get the module path or a path relative to a module.
+     *
+     * @param string $module The name of the module to generate a path for.
+     * @param string $append A string to append to the path.
+     * @return false|string Returns false if the module doesnt exist.
+     */
+    public function getPath(string $module, string $append = '')
     {
         // Temporary workaround which allows core modules to reside in the laravel app path, but still allows
         // mr_view to `include()` the view files.
@@ -355,8 +384,12 @@ class Modules
         return False;
     }
 
-    // Add client tabs info
-    public function addTabs(&$tabArray)
+    /**
+     * Add detail tabs from modules to the array passed by reference
+     *
+     * @param array &$tabArray An array that should have module tabs appended.
+     */
+    public function addTabs(array &$tabArray): void
     {
         foreach( $this->getInfo('client_tabs') as $module => $client_tabs){
             foreach($client_tabs as $id => $info){
@@ -367,8 +400,13 @@ class Modules
         }
     }
 
-    // Add client widget info
-    public function addWidgets(&$widgetArray, $detailWidgetList = [])
+    /**
+     * Add widgets from modules to the array passed by reference
+     *
+     * @todo This seems unused, maybe classes are using \munkireport\lib\Widgets?
+     * @param array &$widgetArray An array that should have module widgets appended.
+     */
+    public function addWidgets(array &$widgetArray, ?array $detailWidgetList = [])
     {
         $tempList = [];
         foreach( $this->getInfo('detail_widgets') as $module => $detail_widgets){
@@ -402,10 +440,10 @@ class Modules
      *
      * @param string $kind 'reports' or 'listings'
      * @param string $baseUrl 'show/report' or 'show/listing'
-     * @param $page current page url path
+     * @param string $page current page url path
      * @return array
      */
-    public function getDropdownData($kind, $baseUrl, $page)
+    public function getDropdownData(string $kind, string $baseUrl, string $page): array
     {
         $out = [];
         foreach( $this->getInfo($kind) as $module => $kindArray){
@@ -431,7 +469,7 @@ class Modules
      *
      * @author tuxudo
      */
-    public function getWidgets()
+    public function getWidgets(): array
     {        
         // Get list of all the modules that contain a widget
         $out = array();
@@ -470,7 +508,13 @@ class Modules
         return $this->widgetList;
     }
 
-    public function getModuleLocales($lang='en')
+    /**
+     * Get a JSON encoded combined locales file for the specified language, for all modules.
+     *
+     * @param string $lang
+     * @return string JSON encoded locale strings for all modules.
+     */
+    public function getModuleLocales(string $lang='en'): string
     {
         $localeList = [];
         foreach( $this->moduleList as $module => $info){
@@ -482,7 +526,14 @@ class Modules
         return '{'.implode(",\n", $localeList).'}';
     }
 
-    private function collectModuleInfo($modulePaths, $allowedModules, $skipInactiveModules = False)
+    /**
+     * Collect information from all `provides.(php|yaml)` files in all v5 modules.
+     *
+     * @param array $modulePaths An array of module search paths, where each path contains directories representing modules.
+     * @param bool $skipInactiveModules Do not return information about modules that are not enabled.
+     * @param array $allowedModules An array of modules which are always searched even if disabled, such as core modules.
+     */
+    private function collectModuleInfo(array $modulePaths, bool $skipInactiveModules = False, array $allowedModules = []): void
     {
         foreach ($modulePaths as $basePath)
         {
@@ -517,8 +568,13 @@ class Modules
         }
     }
 
+    /**
+     * Add a module to the list of modules available.
+     *
+     * @param string $moduleName
+     * @param array $metadata
+     */
     public function add(string $moduleName, array $metadata) {
         $this->moduleList[$moduleName] = $metadata;
-
     }
 }

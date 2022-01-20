@@ -36,6 +36,9 @@ class Widgets
 
         $this->addModuleWidgets();
 
+        // This mechanism replaces Modules::addCoreModules() with 'widgets' because it caused errors resolving view
+        // paths of core modules
+        // @see \munkireport\lib\Modules::addCoreModules()
         foreach($this->conf['core'] as $name => $path) {
             $this->addWidget($name, $path);
         }
@@ -121,37 +124,51 @@ class Widgets
     public function getComponent(string $widgetName, ?array $data = null): array
     {
         $widget = $this->get($widgetName);
-        if ($this->getType($widget->path, $widget->file) == 'yaml') {
-            try {
-                $data = array_merge($data ?? [], Yaml::parseFile($widget->path . $widget->file . '.yml'));
 
-                switch ($data['type']) {
-                    case 'bargraph':
-                        return ['widget.bargraph', $data];
-                    case 'button':
-                        return ['widget.button', $data];
-                    case 'error':
-                        return ['widget.error', $data];
-                    case 'scrollbox':
-                        return ['widget.scrollbox', $data];
-                    case 'spacer':
-                        return ['widget.spacer', $data];
-                    case 'unknown':
-                    default:
-                        return ['widget.unknown', $data];
-                }
-            } catch (\Throwable $th) {
-                $data = [
-                    'type' => 'error',
-                    'title' => 'YAML error',
-                    'msg' => $th->getMessage()
-                ];
-
-                return ['widget.unknown', $data];
-            }
+        if ($widget->version == 6) {
+            return [$widget->component, $data];
         } else {
-            return ['widget.legacy', $data];
+            if ($this->getType($widget->path, $widget->file) == 'yaml') {
+                try {
+                    $data = array_merge($data ?? [], Yaml::parseFile($widget->path . $widget->file . '.yml'));
+
+                    switch ($data['type']) {
+                        case 'bargraph':
+                            return ['widget.bargraph', $data];
+                        case 'button':
+                            return ['widget.button', $data];
+                        case 'error':
+                            return ['widget.error', $data];
+                        case 'scrollbox':
+                            return ['widget.scrollbox', $data];
+                        case 'spacer':
+                            return ['widget.spacer', $data];
+                        case 'unknown':
+                        default:
+                            return ['widget.unknown', $data];
+                    }
+                } catch (\Throwable $th) {
+                    $data = [
+                        'type' => 'error',
+                        'title' => 'YAML error',
+                        'msg' => $th->getMessage()
+                    ];
+
+                    return ['widget.unknown', $data];
+                }
+            } else {
+                return ['widget.legacy', $data];
+            }
         }
+    }
+
+    public function addComponent(string $widgetName, string $component, ?array $data = null)
+    {
+        $this->widgetList[$widgetName] = (object) [
+            'vars' => '',
+            'version' => 6,
+            'component' => $component,
+        ];
     }
 
     private function getType($path, $view) 
@@ -172,12 +189,14 @@ class Widgets
         }
     }
 
-    private function addWidget($name, $file)
+    private function addWidget(string $name, string $file, int $version = 5, ?string $component = null): void
     {
           $this->widgetList[$name] = (object) [
               'file' => $this->fileSystem->name($file),
               'vars' => '',
               'path' => $this->fileSystem->dirname($file) . '/',
+              'version' => $version,
+              'component' => $component,
           ];
     }
 }

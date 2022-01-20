@@ -8,13 +8,7 @@
     <meta name=apple-mobile-web-app-capable content=yes>
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
 
-    <title>{{ config('app.name', 'MunkiReport') }}</title>
-
-    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
-
-
-    <!-- Head scripts -->
+    <title>{{ config('app.name', 'MunkiReport') }} ALPHA</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">
@@ -25,6 +19,9 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/favicons/favicon.ico') }}">
     <meta name="msapplication-config" content="{{ asset('assets/images/favicons/browserconfig.xml') }}">
     <meta name="theme-color" content="#5d5858">
+
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
 
     <!-- munkireport.custom_css -->
     @if (config('_munkireport.custom_css'))
@@ -39,7 +36,7 @@
     @endisset
     @stack('stylesheets')
 
-
+    <!-- Head scripts -->
     @stack('head_scripts')
 </head>
 
