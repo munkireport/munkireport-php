@@ -11,8 +11,13 @@ use \View;
  */
 class Listing
 {
-    private $listingData, $template;
-    
+    private $listingData;
+
+    /**
+     * @var string The template to render (usually for .yaml listings only).
+     */
+    private $template;
+
     public function __construct($listingData)
     {
         $this->listingData = $listingData;
@@ -22,31 +27,31 @@ class Listing
 
     public function render($data = [])
     {
-        if( ! $this->listingData){
+        if (!$this->listingData) {
             $this->_renderPageNotFound();
         }
 
         $data = [
-            'page' => 'clients',
-            'scripts' => ["clients/client_list.js"],
-        ] + $data;
+                'page' => 'clients',
+                'scripts' => ["clients/client_list.js"],
+            ] + $data;
 
-        if( $this->_getType($this->listingData) == 'yaml'){
-            $this->_renderYAML($this->listingData, $data);
-        }else{
-            $this->_renderPHP($this->listingData, $data);
+        if ($this->_getType($this->listingData) == 'yaml') {
+            return $this->_renderYAML($this->listingData, $data);
+        } else {
+            return $this->_renderPHP($this->listingData, $data);
         }
     }
 
     private function _renderPHP($listingData, $data)
-    {    
-        mr_view($listingData->view, $data, $listingData->view_path);
+    {
+        return mr_view_output($listingData->view, $data, $listingData->view_path);
     }
 
     private function _renderYAML($listingData, $data)
     {
         $data = $data + Yaml::parseFile($this->_getPath($listingData, 'yml'));
-        mr_view($this->template, $data);
+        return view($this->template, $data);
     }
 
     private function _renderPageNotFound()
@@ -57,9 +62,9 @@ class Listing
         exit;
     }
 
-    private function _getType($pathComponents) 
+    private function _getType($pathComponents)
     {
-        return is_readable( $this->_getPath($pathComponents, 'yml')) ? 'yaml' : 'php';
+        return is_readable($this->_getPath($pathComponents, 'yml')) ? 'yaml' : 'php';
     }
 
     private function _getPath($pathComponents, $extension)

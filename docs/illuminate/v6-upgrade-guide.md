@@ -32,6 +32,9 @@ Providing local users via the `local/users` directory is no longer supported.
 In version 5.x you were able to place an event.yml file in the module config directory to make the messages widget
 filter events by module or severity. This will be replaced with a user facing event filter and has been removed for now.
 
+### Custom views via /show/custom no longer available ###
+
+This feature was not documented anywhere and has been removed.
 
 ## Configuration Changes ##
 

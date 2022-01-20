@@ -6,12 +6,17 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-const i18next = require('i18next').default;
-const Fetch = require('i18next-fetch-backend').default;
-const VueI18Next = require('@panter/vue-i18next').default;
-const VueRouter = require('vue-router').default;
-const routes = require('./routes').default;
+
+import Vue from 'vue';
+import i18next from 'i18next';
+import Fetch from 'i18next-fetch-backend';
+import VueI18Next from '@panter/vue-i18next';
+import VueRouter from 'vue-router';
+import routes from './routes';
+
+
+Vue.use(VueI18Next);
+Vue.use(VueRouter);
 
 const I18nOptions = {
   debug: true, // mr.debug

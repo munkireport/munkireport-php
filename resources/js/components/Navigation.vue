@@ -102,7 +102,7 @@
             <form action="/auth/logout" method="POST">
               <button type="submit" class="dropdown-item">
                 <i class="fa fa-power-off"></i>
-                <span>{{ $t("nav.user.logout") }}</span>
+                <span v-wait-for-t>{{ $t("nav.user.logout") }}</span>
               </button>
             </form>
           </div>
