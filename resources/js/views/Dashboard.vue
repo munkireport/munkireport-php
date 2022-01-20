@@ -9,8 +9,10 @@
       :vertical-compact="true"
       :margin="[10, 10]"
       :use-css-transforms="true"
+      :responsive="true"
       >
     <grid-item v-for="item in layout"
+               :static="item.static"
                :x="item.x"
                :y="item.y"
                :w="item.w"
@@ -24,15 +26,12 @@
 
 <script>
 import VueGridLayout from 'vue-grid-layout';
-import ThresholdWidget from '../components/widgets/ThresholdWidget';
+import ButtonWidget from '../components/widgets/ButtonWidget';
 import DiskReportWidget from '../components/widgets/DiskReportWidget';
 import ScrollBoxWidget from '../components/widgets/ScrollBoxWidget';
 import EventsWidget from '../components/widgets/EventsWidget';
 
-const layout = [
-  {"x":0,"y":0,"w":4,"h":5,"i":"0","widget":"widget-disk-report"},
-  {"x":4,"y":0,"w":8,"h":10,"i":"1","widget":"widget-event-messages"},
-];
+import layout from '../layouts/demo';
 
 export default {
   name: "dashboard",
@@ -40,36 +39,13 @@ export default {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem,
     'widget-disk-report': DiskReportWidget,
-    ThresholdWidget,
+    ButtonWidget,
     ScrollBoxWidget,
     'widget-event-messages': EventsWidget,
   },
   data() {
     return {
       layout,
-      // layout: [
-      //   {"x":0,"y":0,"w":4,"h":5,"i":"0"},
-      //   {"x":4,"y":0,"w":8,"h":10,"i":"1"},
-        // {"x":2,"y":0,"w":2,"h":4,"i":"1"},
-        // {"x":4,"y":0,"w":2,"h":5,"i":"2"},
-        // {"x":6,"y":0,"w":2,"h":3,"i":"3"},
-        // {"x":8,"y":0,"w":2,"h":3,"i":"4"},
-        // {"x":10,"y":0,"w":2,"h":3,"i":"5"},
-        // {"x":0,"y":5,"w":2,"h":5,"i":"6"},
-        // {"x":2,"y":5,"w":2,"h":5,"i":"7"},
-        // {"x":4,"y":5,"w":2,"h":5,"i":"8"},
-        // {"x":6,"y":3,"w":2,"h":4,"i":"9"},
-        // {"x":8,"y":4,"w":2,"h":4,"i":"10"},
-        // {"x":10,"y":4,"w":2,"h":4,"i":"11"},
-        // {"x":0,"y":10,"w":2,"h":5,"i":"12"},
-        // {"x":2,"y":10,"w":2,"h":5,"i":"13"},
-        // {"x":4,"y":8,"w":2,"h":4,"i":"14"},
-        // {"x":6,"y":8,"w":2,"h":4,"i":"15"},
-        // {"x":8,"y":10,"w":2,"h":5,"i":"16"},
-        // {"x":10,"y":4,"w":2,"h":2,"i":"17"},
-        // {"x":0,"y":9,"w":2,"h":3,"i":"18"},
-        // {"x":2,"y":6,"w":2,"h":2,"i":"19"}
-      // ]
     };
   },
   mounted() {

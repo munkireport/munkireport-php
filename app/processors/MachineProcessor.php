@@ -3,9 +3,9 @@ namespace munkireport\processors;
 
 use App\Machine;
 use CFPropertyList\CFPropertyList;
-use App\Contracts\Processor as ProcessorContact;
+use App\Contracts\Processor as ProcessorContract;
 
-class MachineProcessor extends Processor implements ProcessorContact
+class MachineProcessor extends Processor implements ProcessorContract
 {
     /**
      * Process data sent by postflight
