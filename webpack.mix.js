@@ -11,6 +11,9 @@ const mix = require('laravel-mix');
  |
  */
 
+// This really shouldn't be necessary but mix-manifest.json is output in the wrong directory otherwise.
+mix.setPublicPath('public');
+
 // The mix.copy statements below reflect what you would have to do to update these dependencies manually.
 // (Which is what happened in the past).
 // Eventually they should be transpiled with webpack into a single vendors.js
@@ -54,6 +57,10 @@ mix.copy('node_modules/typeahead.js/dist/typeahead.bundle.min.js', 'public/asset
 // Added for v6 - Bootstrap 4 Autocomplete for Search Bar
 mix.copy('node_modules/bootstrap-4-autocomplete/dist/bootstrap-4-autocomplete.min.js', 'public/js/bootstrap-4-autocomplete.min.js');
 
+if (!mix.inProduction()) {
+  // Copy sourcemaps
+}
+
 // Mix ALL MunkiReport 5.x dependencies to reduce number of individual connections
 // This should replace everything above, but needs some testing.
 mix.scripts([
@@ -76,7 +83,8 @@ mix.scripts([
 mix.js('resources/js/app.js', 'public/js')
   .extract()
   .sass('resources/sass/app.scss', 'public/css')
-  .vue();
+  .vue()
+  .sourceMaps();
 
 // For routes which still have jQuery, but want to use Vue components
 mix.js('resources/js/mixed-app.js', 'public/js').vue();

@@ -1,0 +1,7 @@
+type Tag {
+    id: ID!
+    serial_number: String!
+    tag: String
+    user: String
+    timestamp: Int
+}
