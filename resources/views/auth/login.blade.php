@@ -69,6 +69,10 @@
                     @if (Str::contains(config('auth.methods'), 'SAML'))
                     <a class="btn btn-primary" href="{{ route('saml2_login', 'default') }}">Sign in with SAML</a>
                     @endif
+
+                    @if (Str::contains(config('auth.methods'), 'OIDC'))
+                        <a class="btn btn-primary" href="{{ route('oauth2_redirect', 'azure') }}">Sign in with OIDC</a>
+                    @endif
                 </div>
             </div>
         </div>

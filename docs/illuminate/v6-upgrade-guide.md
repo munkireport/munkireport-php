@@ -120,4 +120,29 @@ which we will refer to as the v6 module spec.
 The current module style still works through a compatibility layer, so no changes are needed immediately
 to make older modules work.
 
+## New Features ##
+
+### Application Logging ###
+
+All application errors are logged to the default application log, which lives in `storage/logs/laravel.log`.
+
+### API Keys ###
+
+The MunkiReport interface now provides you with a way to manage API Keys that you can use to interact with the REST API
+or GraphQL API without using your user credentials. This is the only way to interact with the API if you are signing in
+with an sso federated user.
+
+### OpenID Connect (OIDC) via Laravel Socialite ###
+
+MunkiReport-PHP now has support for OpenID Connect.
+
+At this stage, we only test with Azure AD as the identity platform, but you are welcome to try others.
+
+You can enable OIDC sign-in for Azure AD by including this environment variable in .env or the web application environment:
+
+    AUTH_METHODS="OIDC"
+
+You can still provide a fallback to local database authentication (in case Azure AD is not available) like so:
+
+    AUTH_METHODS="OIDC,LOCAL"
 
