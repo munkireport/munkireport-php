@@ -1,22 +1,39 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
-
 
 import Vue from 'vue';
 import i18next from 'i18next';
 import Fetch from 'i18next-fetch-backend';
 import VueI18Next from '@panter/vue-i18next';
 import VueRouter from 'vue-router';
+import VueApollo from 'vue-apollo';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+
 import routes from './routes';
 
+const httpLink = createHttpLink({
+  // You should use an absolute URL here
+  uri: '/graphql',
+  headers: {
+    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+  }
+});
+
+const cache = new InMemoryCache();
+
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache,
+});
 
 Vue.use(VueI18Next);
+Vue.use(VueApollo);
 Vue.use(VueRouter);
+
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient,
+});
 
 const I18nOptions = {
   debug: true, // mr.debug
@@ -28,13 +45,12 @@ const I18nOptions = {
   }
 };
 
-
 i18next
   .use(Fetch)
   .init(I18nOptions);
 
-
 const i18n = new VueI18Next(i18next);
+
 
 const router = new VueRouter({
     routes
@@ -64,4 +80,5 @@ const app = new Vue({
     el: '#app',
     router,
     i18n,
+    apolloProvider,
 });

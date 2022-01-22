@@ -1,10 +1,10 @@
 <template>
   <div class="EventsWidget h-100">
     <ScrollBoxWidget :icon="icon" :title="$t('events:event_plural')" :listing-url="listingUrl">
-      <a v-for="item in items"
+      <a v-if="events" v-for="item in events.data"
          :key="item.module + '-' + item.timestamp"
          class="list-group-item"
-         :href="'/clients/detail/' + item.serial_number + item.tab">
+         :href="'/clients/detail/' + item.serial_number + '#' + item.tab">
 
         <span class="pull-right" style="padding-left: 10px">{{ item.timestamp }}</span>
         <i :class="['text-' + item.type,'fa', 'fa-times-circle']"></i>
@@ -19,6 +19,7 @@
 
 <script>
 import 'whatwg-fetch';
+import gql from 'graphql-tag';
 import ScrollBoxWidget from './ScrollBoxWidget';
 import { fromUnixTime } from 'date-fns';
 
@@ -27,25 +28,32 @@ export default {
   components: {
     ScrollBoxWidget,
   },
+  apollo: {
+    events: gql`query {
+      events {
+        data {
+          id
+          serial_number
+          msg
+          module
+          timestamp
+          data
+          type
+
+          machine {
+            computer_name
+          }
+        }
+      }
+}`
+  },
   data() {
     return {
       title: "",
       icon: "fa-bullhorn",
       listingUrl: "/show/listing/event/event",
       error: "",
-      items: [],
     }
-  },
-  mounted() {
-    fetch('/module/event/get/50')
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.error) {
-            this.error = data.error;
-          } else {
-            this.items = data.items;
-          }
-        });
   }
 }
 </script>
