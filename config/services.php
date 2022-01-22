@@ -37,4 +37,16 @@ return [
     'teams' => [
         'webhook_url' => env('TEAMS_WEBHOOK_URL'),
     ],
+
+    /*
+     * Single Sign-On Providers (via Socialite)
+     */
+    'azure' => [
+        'client_id' => env('AZURE_CLIENT_ID'),
+        'client_secret' => env('AZURE_CLIENT_SECRET'),
+        'redirect' => env('AZURE_REDIRECT_URI'),
+        'tenant' => env('AZURE_TENANT_ID'),
+        'logout_url' => 'https://login.microsoftonline.com/'.env('AZURE_TENANT_ID').'/oauth2/v2.0/logout?post_logout_redirect_uri=',
+        'proxy' => env('HTTPS_PROXY')  // optionally
+    ]
 ];
