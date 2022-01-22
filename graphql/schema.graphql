@@ -20,6 +20,9 @@ extend type Query @guard {
     reportDatum(id: ID @eq): ReportData @find
     businessUnits: [BusinessUnit!]! @paginate(defaultCount: 50)
     machineGroups: [MachineGroup!]! @paginate(defaultCount: 50)
+    comments: [Comment]! @paginate(defaultCount: 50)
+    events: [Event]! @paginate(defaultCount: 50)
+    tags: [Tag]! @paginate(defaultCount: 50)
 }
 
 #import machinegroup.graphql
@@ -27,3 +30,6 @@ extend type Query @guard {
 #import user.graphql
 #import reportdata.graphql
 #import machine.graphql
+#import comment.graphql
+#import event.graphql
+#import tag.graphql

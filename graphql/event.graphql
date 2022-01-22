@@ -1,0 +1,13 @@
+
+type Event {
+    id: ID!
+    serial_number: String!
+    type: String
+    module: String
+    msg: String
+    data: String
+    timestamp: Int
+
+    machine: Machine
+    reportData: ReportData
+}

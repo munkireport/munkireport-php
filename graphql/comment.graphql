@@ -1,0 +1,10 @@
+
+type Comment {
+    id: ID!
+    serial_number: String!
+    section: String
+    user: String
+    text: String
+    html: String
+    timestamp: Int
+}

@@ -6,12 +6,16 @@
 
 <script>
 import 'whatwg-fetch';
+import gql from 'graphql-tag';
 import ButtonWidget from './ButtonWidget';
 
 export default {
   name: "DiskReportWidget",
   components: {
     ButtonWidget,
+  },
+  apollo: {
+
   },
   data() {
     return {
