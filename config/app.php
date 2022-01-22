@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        \SocialiteProviders\Manager\ServiceProvider::class,
         Aacotroneo\Saml2\Saml2ServiceProvider::class,
         Adldap\Laravel\AdldapServiceProvider::class,
         Adldap\Laravel\AdldapAuthServiceProvider::class,

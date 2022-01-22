@@ -31,6 +31,9 @@ class EventServiceProvider extends ServiceProvider
                                       // should apply.
             MachineGroupMembership::class,  // decides which machinegroup memberships should apply.
         ],
+        \SocialiteProviders\Manager\SocialiteWasCalled::class => [
+            \SocialiteProviders\Azure\AzureExtendSocialite::class.'@handle',
+        ],
     ];
 
     /**

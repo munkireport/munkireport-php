@@ -18,6 +18,11 @@ use Illuminate\Support\Str;
 // Users cannot self-register
 Auth::routes(['register' => false]);
 
+Route::get('/oauth2/redirect/{provider}',
+    [\App\Http\Controllers\Auth\Oauth2Controller::class, 'redirect'])->name('oauth2_redirect');
+Route::get('/oauth2/callback/{provider}',
+    [\App\Http\Controllers\Auth\Oauth2Controller::class, 'callback'])->name('oauth2_callback');
+
 Route::redirect('/', '/show/dashboard/default');
 
 Route::middleware(['auth'])->group(function () {
