@@ -6,17 +6,38 @@ use munkireport\models\Business_unit as BuModel;
 use munkireport\models\Machine_group;
 use Illuminate\Support\Str;
 
+/**
+ * BusinessUnit acts as a pseudo-repository for Business Units (v5).
+ *
+ * Because v5 Business Units are not row based models (they are more like lookup tables), this class is used
+ * to assemble/disassemble them into the model updates.
+ */
 class BusinessUnit
 {
-    public function __construct() {
-    }
-
-    public function saveUnit($post_array)
+    /**
+     * Save a Business Unit (v5)
+     *
+     * The expected array might contain the following fields (decoded from form-encoded data):
+     *
+     * * name: business unit name
+     * * groupid: associated machine group id (?)
+     * * unitid: business unit id.
+     * * address: street address.
+     * * link: url
+     * * machine_groups[]: array of machine group id as string
+     * * users[], managers[], archivers[]: array of username or @group as string
+     *
+     * @param array $post_array Business unit attributes/properties
+     * @return array The updated Business unit, or error message to display.
+     */
+    public function saveUnit(array $post_array): array
     {
         $out = [];
 
         if ( ! ($unitid = $post_array['unitid'] ?? false) ) {
-            jsonError('Unitid missing');
+            return [
+                'error' => 'Unitid missing',
+            ];
         }
 
         // Check if new unit

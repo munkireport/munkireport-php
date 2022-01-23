@@ -87,7 +87,7 @@
 
 @auth
 @php
-$modules = getMrModuleObj()->loadInfo();
+$modules = app(\munkireport\lib\Modules::class)->loadInfo();
 $dashboard = getDashboard()->loadAll();
 $page = url()->current();
 @endphp
@@ -161,7 +161,7 @@ $page = url()->current();
                         @foreach(scandir(conf('view_path') . 'admin') as $list_url)
                             @if(strpos($list_url, 'php'))
                             @php $page_url = strtok($list_url, '.'); @endphp
-                                <a class="dropdown-item {{ Route::is($page_url) ? " active" : "" }}" href="{{ url($page_url) }}" data-i18n="nav.admin.{{ strtok($list_url, '.') }}"></a>
+                                <a class="dropdown-item {{ Route::is($page_url) ? " active" : "" }}" href="{{ url('/admin/show/' . $page_url) }}" data-i18n="nav.admin.{{ strtok($list_url, '.') }}"></a>
                             @endif
                         @endforeach
                         @foreach($modules->getDropdownData('admin_pages', 'module', $page) as $item)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use munkireport\lib\Modules;
 use munkireport\lib\Request;
 use munkireport\controller\Module_marketplace;
 use Symfony\Component\Yaml\Yaml;
@@ -15,7 +16,7 @@ class ModuleMarketplaceController extends Controller
     public function __construct()
     {
         // Create object
-        $this->moduleMarketplace = getMrModuleObj();
+        $this->moduleMarketplace = app(Modules::class);
     }
 
     /**

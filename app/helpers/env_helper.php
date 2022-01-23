@@ -1,7 +1,19 @@
 <?php
-// Get a value from $_ENV with fallback to default
-// typehint parameter processes env var as the suggested type.
-function mr_env($key, $default = null, $typehint = null) {
+/**
+ * Get the value of an environment variable.
+ *
+ * This function, unlike the Laravel config() function, allows you to typehint the return value which might be casted
+ * to or converted from its string representation as an environment variable.
+ *
+ * @param string $key The environment variable to read
+ * @param mixed|Closure|null $default The default value to return if the environment variable is not found. Defaults to null.
+ *                                    You may supply a closure if required.
+ * @param mixed|null $typehint Type hint the return type to perform a cast or conversion. Valid type hints are one of
+ *                             'array','bool','boolean','int','integer'.
+ * @return array|bool|int|mixed|string|null The return value, optionally casted to the type hinted type.
+ * @deprecated Try to use Laravel's config() if possible. It does not support the typehint feature so it may not be possible.
+ */
+function mr_env(string $key, $default = null, $typehint = null) {
     if ( getenv($key) !== false ) {
         $v = getenv($key);
         if ( $typehint === null && $default !== null) {

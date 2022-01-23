@@ -19,6 +19,11 @@ return [
 
     'default' => env('LOG_CHANNEL', 'stack'),
 
+    // Deprecations log channel
+    // This is an optional Laravel feature for deprecation notices, which we will use to log MunkiReport deprecated
+    // module API calls. It is disabled by default as the volume will be huge.
+    'deprecations' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
+
     /*
     |--------------------------------------------------------------------------
     | Log Channels
@@ -40,6 +45,12 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
+
+        // Uncomment this section to force all deprecations to be always recorded.
+//        'deprecations' => [
+//            'driver' => 'single',
+//            'path' => storage_path('logs/php-deprecation-warnings.log'),
+//        ],
 
         'single' => [
             'driver' => 'single',

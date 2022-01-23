@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use munkireport\lib\Modules;
 
 class ModuleController extends Controller
 {
@@ -12,7 +13,7 @@ class ModuleController extends Controller
 
     public function __construct()
     {
-        $this->moduleManager = getMrModuleObj();
+        $this->moduleManager = app(Modules::class);
     }
 
     public function index()

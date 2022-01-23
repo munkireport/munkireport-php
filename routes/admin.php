@@ -21,7 +21,7 @@ Route::middleware(['auth', 'can:global'])->group(function () {
     Route::post('/admin/save_business_unit', 'AdminController@save_business_unit');
     Route::post('/admin/remove_business_unit', 'AdminController@remove_business_unit');
     Route::post('/admin/save_machine_group', 'AdminController@save_machine_group');
-    Route::post('/admin/remove_machine_group', 'AdminController@remove_machine_group');
+    Route::get('/admin/remove_machine_group/{groupid?}', 'AdminController@remove_machine_group');
     Route::get('/admin/show/{which}', 'AdminController@show');
 
     // TODO: Deprecated /system/show for /system, add redirect
