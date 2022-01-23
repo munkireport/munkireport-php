@@ -9,6 +9,16 @@ use Illuminate\Support\Str;
 
 class ManagerController extends Controller
 {
+    /**
+     * Delete all records of the machine by the serial number given.
+     *
+     * The way this happens is not db agnostic at all, and might be prone to error.
+     * It is recommended to use foreign key constraints with a cascade delete to avoid using this particular action.
+     *
+     * @param string $serial_number
+     * @return \Illuminate\Http\JsonResponse|void
+     * @throws \Exception
+     */
     public function delete_machine(string $serial_number = '')
     {
         Gate::authorize('delete_machine');

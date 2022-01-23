@@ -36,6 +36,10 @@ filter events by module or severity. This will be replaced with a user facing ev
 
 This feature was not documented anywhere and has been removed.
 
+### Deprecated API ###
+
+- `mr_secure_url()` or `secure_url()` is replaced by the Laravel `url()` helper.
+
 ## Configuration Changes ##
 
 ### Renames ###

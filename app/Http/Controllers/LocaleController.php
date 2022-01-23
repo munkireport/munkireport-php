@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use munkireport\lib\Modules;
 
 class LocaleController extends Controller
 {
@@ -13,7 +14,7 @@ class LocaleController extends Controller
 
     public function __construct()
     {
-        $this->modules = getMrModuleObj()->loadInfo();
+        $this->modules = app(Modules::class)->loadInfo();
     }
 
     /**
@@ -29,7 +30,7 @@ class LocaleController extends Controller
     {
         // Check if we should load all modules' locales
         if($load == 'all_modules'){
-            $this->modules = getMrModuleObj()->loadInfo(True);
+            $this->modules = app(Modules::class)->loadInfo(True);
         }
 
 //        $locales = [

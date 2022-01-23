@@ -21,7 +21,7 @@
 
                             {{ config('app.name') }}
                             @if(request()->secure() === false)
-                                <a href="{{ mr_secure_url() }}"><i data-i18n="[title]auth.insecure" title="Insecure connection, switch to secure" class="text-danger fa fa-unlock-alt pull-right"></i></a>
+                                <a href="{{ url('/', [], true) }}"><i data-i18n="[title]auth.insecure" title="Insecure connection, switch to secure" class="text-danger fa fa-unlock-alt pull-right"></i></a>
                             @else
                                 <i data-i18n="[title]auth.secure" title="You're using a secure connection" class="text-success fa fa-lock pull-right"></i>
                             @endif

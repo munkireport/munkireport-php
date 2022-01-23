@@ -22,8 +22,8 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/nvd3/nv.d3.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
-    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/nvd3.override.css') }}" id="nvd3-override-stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/themes/' . session('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/themes/' . session('theme', 'Default') . '/nvd3.override.css') }}" id="nvd3-override-stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
 
     <!-- Head scripts -->
@@ -87,7 +87,7 @@
 
 @auth
 @php
-$modules = getMrModuleObj()->loadInfo();
+$modules = app(\munkireport\lib\Modules::class)->loadInfo();
 $dashboard = getDashboard()->loadAll();
 $page = url()->current();
 @endphp
@@ -161,7 +161,7 @@ $page = url()->current();
                         @foreach(scandir(conf('view_path') . 'admin') as $list_url)
                             @if(strpos($list_url, 'php'))
                             @php $page_url = strtok($list_url, '.'); @endphp
-                                <a class="dropdown-item {{ Route::is($page_url) ? " active" : "" }}" href="{{ url($page_url) }}" data-i18n="nav.admin.{{ strtok($list_url, '.') }}"></a>
+                                <a class="dropdown-item {{ Route::is($page_url) ? " active" : "" }}" href="{{ url('/admin/show/' . $page_url) }}" data-i18n="nav.admin.{{ strtok($list_url, '.') }}"></a>
                             @endif
                         @endforeach
                         @foreach($modules->getDropdownData('admin_pages', 'module', $page) as $item)

@@ -177,8 +177,10 @@
 				if(confirm('Are you sure?'))
 				{
 					var groupid = data.groupid;
-					var url = appUrl + '/admin/remove_machine_group';
-					$.post(url, {groupid: groupid}, function(data){
+                  var url = appUrl + '/admin/remove_machine_group/' + groupid;
+                  $.getJSON(url, function(data){
+					// var url = appUrl + '/admin/remove_machine_group';
+					// $.post(url, {groupid: groupid}, function(data){
 						if(data.success == true)
 						{
 							// Remove from MachineGroups
@@ -809,14 +811,21 @@
 			if(businessUnitsEnabled)
 			{
 				$.each(bu_data[0], function(index, value) {
-                  var row = $('<div class="row unit">')
-                    .appendTo('#bu_units')
-                    .data(value)
-                    .addClass('unitid-' + value.unitid);
+                  // var row = $('<div class="row unit">')
+                  //   .appendTo('#bu_units')
+                  //   .data(value)
+                  //   .addClass('unitid-' + value.unitid);
+                  //
+                  // var col = $('<div class="col-sm">')
+                  //   .appendTo(row)
+                  //   .each(render);
 
-                  var col = $('<div class="col-sm">')
-                    .appendTo(row)
-                    .each(render);
+                  $('#bu_units')
+                    .append($('<div>')
+                      .data(value)
+                      .addClass('col-lg-12 unit unitid-' + value.unitid)
+                      .each(render)
+                    );
 				});
 			}
 

@@ -1,36 +1,55 @@
 <?php
 
+use Illuminate\Support\Facades\Log;
+
 function initConfig()
 {
+    Log::channel('deprecations')
+        ->warning('This function will be deprecated in future, please use config() in your modules.', [
+            'function' => __FUNCTION__,
+            'file' => __FILE__,
+            'line' => __LINE__,
+        ]);
     $GLOBALS['conf'] = [];
 }
 
 /**
  * Add config array to global config array
  *
- *
  * @param array $configArray
+ * @deprecated Try to use package file publishing with modules, and then access config via config('module.setting')
  */
 function configAppendArray($configArray, $namespace = '')
 {
-	if($namespace){
-    $GLOBALS['conf'] += [$namespace => $configArray];
-  }
-  else{
-    $GLOBALS['conf'] += $configArray;
-  }
+    Log::channel('deprecations')
+        ->warning('This function will be deprecated in future, please use config() in your modules.', [
+            'function' => __FUNCTION__,
+            'file' => __FILE__,
+            'line' => __LINE__,
+        ]);
+    if ($namespace) {
+        $GLOBALS['conf'] += [$namespace => $configArray];
+    } else {
+        $GLOBALS['conf'] += $configArray;
+    }
 }
 
 /**
- * Add config file to global config array
- *
+ * Add config file to global config array.
  *
  * @param array $configPath
+ * @deprecated Try to use package file publishing with modules, and then access config via config('module.setting')
  */
 function configAppendFile($configPath, $namespace = '')
 {
-	$config = require $configPath;
-	configAppendArray($config, $namespace);
+    Log::channel('deprecations')
+        ->warning('This function will be deprecated in future, please use config() in your modules.', [
+            'function' => __FUNCTION__,
+            'file' => __FILE__,
+            'line' => __LINE__,
+        ]);
+    $config = require $configPath;
+    configAppendArray($config, $namespace);
 }
 
 /**
@@ -41,6 +60,7 @@ function configAppendFile($configPath, $namespace = '')
  * @param $cf_item
  * @param string $default
  * @return mixed|string
+ * @deprecated Use config('section.name', 'default')
  */
 function conf($cf_item, $default = '')
 {
@@ -88,7 +108,8 @@ function conf($cf_item, $default = '')
     }
 
     if (in_array($cf_item, [
-        'dashboard', 'widget'
+        'dashboard',
+        'widget'
     ])) {
         return config($cf_item);
     }
@@ -104,13 +125,24 @@ function conf($cf_item, $default = '')
     }
 }
 
-
-function local_conf($item)
+/**
+ * Get a path relative to the local configuration directory, usually <munkireport installation>/local.
+ *
+ * @param string $item The path relative to the local dir
+ * @return string The absolute path to the item given.
+ */
+function local_conf(string $item): string
 {
-    return rtrim(conf('local'), '/') . '/' . $item;
+    return rtrim(config('_munkireport.local'), '/') . '/' . $item;
 }
 
-function module_conf($item)
+/**
+ * Get a path relative to the local module configuration directory.
+ *
+ * @param string $item The path relative to the local module_configs dir.
+ * @return string The absolute path to the item given.
+ */
+function module_conf(string $item): string
 {
-    return local_conf('module_configs/' .$item);
+    return local_conf('module_configs/' . $item);
 }
