@@ -22,8 +22,8 @@
 
     <link rel="stylesheet" href="<?php echo asset('assets/css/font-awesome.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo asset('assets/nvd3/nv.d3.min.css'); ?>" />
-	<link rel="stylesheet" href="<?php echo asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css'); ?>" id="bootstrap-stylesheet" />
-	<link rel="stylesheet" href="<?php echo asset('assets/themes/' . sess_get('theme', 'Default') . '/nvd3.override.css'); ?>" id="nvd3-override-stylesheet" />
+	<link rel="stylesheet" href="<?php echo asset('assets/themes/' . session('theme', 'Default') . '/bootstrap.min.css'); ?>" id="bootstrap-stylesheet" />
+	<link rel="stylesheet" href="<?php echo asset('assets/themes/' . session('theme', 'Default') . '/nvd3.override.css'); ?>" id="nvd3-override-stylesheet" />
 	<link rel="stylesheet" href="<?php echo asset('assets/css/style.css'); ?>" />
 
     <!-- Head scripts -->

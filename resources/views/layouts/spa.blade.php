@@ -21,7 +21,7 @@
     <meta name="theme-color" content="#5d5858">
 
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/themes/' . sess_get('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/themes/' . session('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
 
     <!-- munkireport.custom_css -->
     @if (config('_munkireport.custom_css'))
