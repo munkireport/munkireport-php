@@ -43,7 +43,7 @@
 <body class="mr-spa-layout" style="padding-top: 56px;">
 @auth
 @php
-$modules = getMrModuleObj()->loadInfo();
+$modules = app(\munkireport\lib\Modules::class)->loadInfo();
 $dashboard = getDashboard()->loadAll();
 $page = url()->current();
 @endphp

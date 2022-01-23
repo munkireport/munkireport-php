@@ -32,7 +32,7 @@
 <?php case '426': ?>
 				
 				<span data-i18n="errors.426">You are required to visit this site using a secure connection.</span>
-				<a data-i18n="auth.go_secure" href="<?php echo mr_secure_url(); ?>">Go to secure site</a>
+				<a data-i18n="auth.go_secure" href="<?php echo url('/', [], true); ?>">Go to secure site</a>
 					
 <?php break; ?>
 <?php case '503': ?>

@@ -29,9 +29,13 @@ class AdminController extends Controller
      *
      * Example Request Body:
      * - form-encoded
-     * groupid=0&name=Group+0f&key=&business_unit=1
+     * groupid=0&name=Group+0f&key=<generated uuid or empty>&business_unit=1
      *
      * If `groupid` is empty or null, create a new machine group.
+     * If `groupid` is not present, you will get an error, but with http status 200
+     *
+     * Response:
+     * {"groupid":2,"business_unit":1,"name":"mgnew","keys":["215C10D0-648E-6E86-841C-4B27EBA535F8"]}
      *
      * @param Request $request
      * @return JsonResponse
@@ -40,101 +44,108 @@ class AdminController extends Controller
     {
         Gate::authorize('global');
 
-
-        if ($request->has('groupid')) {
-            $machine_group = new Machine_group;
-            $groupid = $request->input('groupid');
-
-            // Empty groupid: create new
-            if ($groupid === '' || is_null($groupid)) {
-                $mg = new Machine_group;
-                $groupid = $mg->get_max_groupid() + 1;
-            }
-
-            $out['groupid'] = intval($groupid);
-            $props = $request->all(['business_unit', 'groupid', 'key', 'name']);
-            foreach ($props as $property => $val) {
-                // Skip groupid
-                if ($property == 'groupid') {
-                    continue;
-                }
-
-                // Update business unit membership
-                if ($property == 'business_unit' && !empty($val)) {
-                    Business_unit::updateOrCreate(
-                        [
-                            'property' => 'machine_group',
-                            'value' => $groupid,
-                        ],
-                        [
-                            'unitid' => $val,
-                        ]
-                    );
-                    $out['business_unit'] = intval($val);
-                    continue;
-                }
-
-                if (! is_array($val)) {
-                    if ($val) {
-                        $machine_group->id = '';
-                        $machine_group->retrieveOne('groupid=? AND property=?', array($groupid, $property));
-                        $machine_group->groupid = $groupid;
-                        $machine_group->property = $property;
-                        $machine_group->value = $val;
-                        $machine_group->save();
-                        $out[$property] = $val;
-                    } else // Delete
-                    {
-                        $machine_group->deleteWhere('groupid=? AND property=?', array($groupid, $property));
-                    }
-                } else //array data
-                {
-                    $out['error'] = 'Unknown input: ' .$property;
-                }
-            }
-            // Put key in array (for future purposes)
-            if (isset($out['key'])) {
-                $out['keys'][] = $out['key'];
-                unset($out['key']);
-            }
-        } else {
-            $out['error'] = 'Groupid is missing';
+        if (!$request->has('groupid')) {
+            return response()->json([
+                'error' => 'Groupid is missing',
+            ]);
         }
 
-        return jsonView($out, 200, false, true);
+        $machine_group = new Machine_group;
+        $groupid = $request->input('groupid');
+
+        // Empty groupid: create new
+        if ($groupid === '' || is_null($groupid)) {
+            $mg = new Machine_group;
+            $groupid = $mg->get_max_groupid() + 1;
+        }
+
+        $out['groupid'] = intval($groupid);
+        $props = $request->all(['business_unit', 'groupid', 'key', 'name']);
+        foreach ($props as $property => $val) {
+            // Skip groupid
+            if ($property == 'groupid') {
+                continue;
+            }
+
+            // Update business unit membership
+            if ($property == 'business_unit' && !empty($val)) {
+                Business_unit::updateOrCreate(
+                    [
+                        'property' => 'machine_group',
+                        'value' => $groupid,
+                    ],
+                    [
+                        'unitid' => $val,
+                    ]
+                );
+                $out['business_unit'] = intval($val);
+                continue;
+            }
+
+            if (! is_array($val)) {
+                if ($val) {
+                    $machine_group->id = '';
+                    $machine_group->retrieveOne('groupid=? AND property=?', array($groupid, $property));
+                    $machine_group->groupid = $groupid;
+                    $machine_group->property = $property;
+                    $machine_group->value = $val;
+                    $machine_group->save();
+                    $out[$property] = $val;
+                } else // Delete
+                {
+                    $machine_group->deleteWhere('groupid=? AND property=?', array($groupid, $property));
+                }
+            } else //array data
+            {
+                $out['error'] = 'Unknown input: ' .$property;
+            }
+        }
+        // Put key in array (for future purposes)
+        if (isset($out['key'])) {
+            $out['keys'][] = $out['key'];
+            unset($out['key']);
+        }
+
+        return response()->json($out);
     }
 
     /**
      * Remove a Machine Group
      *
      * Request is form encoded and contains only the `groupid` field.
+     * can also be a route parameter???
+     *
+     * Response contains:
+     * {"success":true,"successs":1}
+     *
+     * For reasons I will never know -m.
      *
      * @param Request $request
      * @return JsonResponse
      * @throws \Exception
      */
-    public function remove_machine_group(Request $request): JsonResponse
+    public function remove_machine_group(Request $request, int $groupid): JsonResponse
     {
         Gate::authorize('global');
 
         $out = [];
 
-        $groupid = $request->input('groupid', '');
+        $id = $groupid ?? $request->input('groupid', '');
 
-        if ($groupid !== '') {
+        if ($id !== '') {
             $mg = new Machine_group;
-            if ($out['success'] = $mg->deleteWhere('groupid=?', $groupid)) {
+            if ($out['success'] = $mg->deleteWhere('groupid=?', $id)) {
                 // Delete from business unit
                 $out['successs'] = Business_unit::where('property', 'machine_group')
-                    ->where('value', $groupid)
+                    ->where('value', $id)
                     ->delete();
             }
             // Reset group in report_data
-            ReportData::where('machine_group', $groupid)
+            ReportData::where('machine_group', $id)
                 ->update(['machine_group' => 0]);
         }
 
-        return jsonView($out, 200, false, true);
+        return response()->json($out);
     }
 
     //===============================================================
@@ -150,10 +161,11 @@ class AdminController extends Controller
         Gate::authorize('global');
 
         $unit = new BusinessUnit();
-        return jsonView($unit->saveUnit($request->all([
+        $out = $unit->saveUnit($request->all([
             'unitid', 'name', 'address', 'link', 'iteminfo', 'managers', 'archivers', 'users'
-            ])),
-            200, false, true);
+        ]));
+
+        return response()->json($out);
     }
 
     //===============================================================
@@ -168,10 +180,11 @@ class AdminController extends Controller
     {
         Gate::authorize('global');
 
+        $success = Business_unit::where('unitid', request('id', ''))->delete();
 
-        return jsonView([
-            'success' => Business_unit::where('unitid', request('id', ''))->delete()
-        ], 200, false, true);
+        return response()->json([
+            'success' => $success,
+        ]);
     }
 
     //===============================================================

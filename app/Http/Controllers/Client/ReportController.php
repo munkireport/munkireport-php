@@ -436,7 +436,7 @@ class ReportController extends Controller
     {
         $mylist = [
             'machine_group' => $this->group,
-            'remote_ip' => getRemoteAddress(),
+            'remote_ip' => request()->getClientIp(),
             'timestamp' => time(),
             'archive_status' => 0, // Reset status
         ];

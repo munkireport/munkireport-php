@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local;
+use munkireport\lib\Modules;
 
 
 class InstallController extends Controller
@@ -13,7 +14,7 @@ class InstallController extends Controller
 
     public function __construct()
     {
-        $this->moduleManager = getMrModuleObj();
+        $this->moduleManager = app(Modules::class);
     }
 
     /**

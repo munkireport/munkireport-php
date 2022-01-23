@@ -1,6 +1,5 @@
 <?php
-
-use munkireport\lib\Request;
+use Illuminate\Support\Facades\Http;
 
 function machine_model_lookup($serial)
 {
@@ -16,8 +15,7 @@ function machine_model_lookup($serial)
         ]
     ];
 
-    $client = new Request();
-    $result = $client->get('https://km.support.apple.com/kb/index', $options);
+    $result = Http::get('https://km.support.apple.com/kb/index', $options);
 
     if ( ! $result) {
         return 'model_lookup_failed';

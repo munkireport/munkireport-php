@@ -34,6 +34,23 @@ $obsolete_items = [
   'custom_folder',
 ];
 
+/**
+ * Convert a key => value array to an array of values
+ * [a => b] is converted to [a, b]
+ *
+ * @return array array
+ * @author
+ **/
+function assocToArray($array)
+{
+    $result = [];
+    foreach ($array as $k => $v) {
+        $result[] = $k;
+        $result[] = $v;
+    }
+    return $result;
+}
+
 function loadConfig($config_path, $what = 'conf')
 {
     if ((include $config_path) !== 1)
