@@ -2,7 +2,7 @@
 
 namespace munkireport\lib;
 
-use munkireport\models\Business_unit as BuModel;
+use compatibility\BusinessUnit as BuModel;
 use munkireport\models\Machine_group;
 use Illuminate\Support\Str;
 

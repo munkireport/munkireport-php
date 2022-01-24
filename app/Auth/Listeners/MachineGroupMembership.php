@@ -4,10 +4,10 @@
 namespace App\Auth\Listeners;
 
 use App\User;
+use Compatibility\BusinessUnit;
 use munkireport\models\Reportdata_model;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
-use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
 
 /**
@@ -23,7 +23,7 @@ class MachineGroupMembership
         if( session()->has('business_unit')){
             // Only retrieve machinegroups for this business unit
             $businessUnitId = session()->get('business_unit');
-            $machineGroups = Business_unit::where('unitid', $businessUnitId)
+            $machineGroups = BusinessUnit::where('unitid', $businessUnitId)
             ->where('property', 'machine_group')
             ->get()
             ->pluck('value')
