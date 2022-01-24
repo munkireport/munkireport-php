@@ -5,7 +5,7 @@ use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use MR\Kiss\View;
+use Compatibility\Kiss\View;
 use App\ReportData;
 use Symfony\Component\Yaml\Yaml;
 
@@ -22,17 +22,17 @@ class ReportDataController extends Controller
 
 
     /**
-     * The `report` action retrieves a detailed list of attibutes on the ReportData model.
+     * The `report` action retrieves a detailed list of attributes on the ReportData model.
      *
      * It is used in the client detail view.
      */
     public function report(string $serial_number)
     {
-        jsonView(
-            ReportData::where('serial_number', $serial_number)
-                ->filter('groupOnly')
-                ->first()
-        );
+        $result = ReportData::where('serial_number', $serial_number)
+            ->filter('groupOnly')
+            ->first();
+
+        return response()->json($result);
     }
 
     /**

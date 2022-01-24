@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use MR\MachineGroup;
+use Compatibility\MachineGroup;
 
 /**
  * Client Passphrase middleware

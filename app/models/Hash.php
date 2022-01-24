@@ -7,7 +7,7 @@ use munkireport\models\MRModel as Eloquent;
 /**
  * Class Hash
  *
- * To be replaced by MR\Hash
+ * To be replaced by App\Hash
  *
  * @package munkireport\models
  */

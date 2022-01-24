@@ -470,5 +470,7 @@ return [
         'dashboards' => env('ALPHA_FEATURE_DASHBOARDS', False),
         // Enable the Global Search via Scout+TNTSearch
         'search' => env('ALPHA_FEATURE_SEARCH', False),
+        // Enable Business Units rewrite
+        'business_units_v2' => env('ALPHA_FEATURE_BUSINESS_UNITS_V2', False),
     ]
 ];

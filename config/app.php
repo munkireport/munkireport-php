@@ -176,8 +176,8 @@ return [
         /*
          * MunkiReport v5 Compatibility Providers...
          */
-        MR\Kiss\Providers\KissEngineProvider::class,
-        MR\Kiss\Providers\ViewServiceProvider::class,
+        Compatibility\Kiss\Providers\KissEngineProvider::class,
+        Compatibility\Kiss\Providers\ViewServiceProvider::class,
 
         /*
          * Application Service Providers...

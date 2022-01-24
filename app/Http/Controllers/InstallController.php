@@ -41,16 +41,13 @@ class InstallController extends Controller
             case 'config':
             case 'env':
                 $str = implode(', ', $modules);
-                echo "MODULES=\"$str\"";
-                break;
+                return response("MODULES=\"$str\"", 200, ['Content-Type' => 'text/plain']);
             case 'autopkg':
-                mr_view('install/modules_autopkg', array('modules' => $modules));
-                break;
+                return view('install.modules_autopkg', ['modules' => $modules]);
             case 'json':
-                jsonView($modules);
-                break;
+                return response()->json($modules);
             default:
-                echo implode("\n", $modules);
+                return response(implode("\n", $modules), 200, ['Content-Type' => 'text/plain']);
         }
     }
 
@@ -66,7 +63,7 @@ class InstallController extends Controller
         $data['uninstall_scripts'] = array();
 
         // Get required modules from config
-        $use_modules = conf('modules', array());
+        $use_modules = config('_munkireport.modules', array());
 
         // Override with requested modules
         if (func_get_args()) {

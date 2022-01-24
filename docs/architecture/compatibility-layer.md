@@ -16,11 +16,11 @@ which now has its website deleted. MunkiReport made some small additions to the 
 that.
 
 The KISSMVC framework declares un-namespaced classes: `\Controller`, `\Engine`, `\Model`, `\View`.
-These were placed into the `\MR\Kiss` namespace in order to satisfy composers PSR-4 class loading 
+These were placed into the `\Compatibility\Kiss` namespace in order to satisfy composers PSR-4 class loading 
 mechanism, and to avoid collision with the laravel `View` facade as well as the laravel `View` class.
 
 But modules will still refer to the kissmvc view as `\View`, so to provide compatibility for accessing the
-un-namespaced class, several files inside `/shims` alias the `\MR\Kiss` classes back to their un-namespaced
+un-namespaced class, several files inside `/shims` alias the `\Compatibility\Kiss` classes back to their un-namespaced
 counterparts using `class_alias()`.
 
 The same approach was used to provide support for `\Model` and `\Controller`.
@@ -28,7 +28,7 @@ The same approach was used to provide support for `\Model` and `\Controller`.
 ### Laravel Controllers with KISSMVC views ###
 
 A forwards/backwards compatible View Engine has been registered with Laravel so that whenever the `view()` helper function
-tries to render a `.php` file, it actually constructs an instance of MR\Kiss\View underneath. The main difference
+tries to render a `.php` file, it actually constructs an instance of Compatibility\Kiss\View underneath. The main difference
 being that the Laravel captures the output buffer and returns it rather than piping it straight to stdout.
 
 The main motivation for this is that stdout isn't testable by the PHPUnit HTTP Client, but the Response type is.

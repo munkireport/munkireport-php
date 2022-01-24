@@ -38,6 +38,6 @@ class SerialNumberModel extends Model
      * @return mixed
      */
     public function events() {
-        return $this->hasMany('MR\Event', 'serial_number', 'serial_number');
+        return $this->hasMany('App\Event', 'serial_number', 'serial_number');
     }
 }

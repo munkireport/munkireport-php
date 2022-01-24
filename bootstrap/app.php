@@ -19,7 +19,7 @@ if (!defined('APP_ROOT')) {
 |
 */
 
-// $app = new MR\Kiss\Application(
+// $app = new Compatibility\Kiss\Application(
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use MR\Kiss\ConnectDbTrait;
+use Compatibility\Kiss\ConnectDbTrait;
 use munkireport\lib\BusinessUnit;
 use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;

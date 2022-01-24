@@ -8,8 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use munkireport\lib\Modules;
-use munkireport\models\Machine_model;
-use MR\Kiss\ConnectDbTrait;
+use Compatibility\Kiss\ConnectDbTrait;
 
 class ClientsController extends Controller
 {
@@ -82,7 +81,7 @@ class ClientsController extends Controller
         $data['scripts'] = array("clients/client_detail.js");
 
 
-        $machine = Machine_model::where('serial_number', $sn)
+        $machine = Machine::where('serial_number', $sn)
             ->firstOrFail();
 
         $reportData = ReportData::where('serial_number', $sn)

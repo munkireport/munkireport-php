@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * V2 BusinessUnit (Not in Use).
  *
- * @see \MR\BusinessUnit
+ * @see \Compatibility\BusinessUnit
  * @package App
  */
 class BusinessUnit extends Model

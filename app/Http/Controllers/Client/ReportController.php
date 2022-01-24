@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
-use MR\Kiss\ConnectDbTrait;
+use Compatibility\Kiss\ConnectDbTrait;
 use munkireport\lib\Modules;
 use \Messages_model, \Exception;
 use munkireport\models\Hash as MunkiReportHash;
