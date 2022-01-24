@@ -80,11 +80,11 @@
         @endforeach
     @endisset
 
+    <!-- Head scripts -->
     @stack('head_scripts')
 </head>
 
 <body class="mr-blade-layout" style="padding-top: 56px;">
-
 @auth
 @php
 $modules = app(\munkireport\lib\Modules::class)->loadInfo();
@@ -190,7 +190,7 @@ $page = url()->current();
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <?php endif ?>
+                @endif
 
                 <li class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="themeMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -258,13 +258,11 @@ $page = url()->current();
 <!-- original foot partial -->
 
 @auth
-
 <div class="container-fluid">
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
         <i>MunkiReport <span data-i18n="version">Version</span> {{ $GLOBALS['version'] }}</i>
     </div>
 </div>
-
 @endauth
 
 <!-- Modal -->
@@ -288,7 +286,7 @@ $page = url()->current();
 
 @foreach($GLOBALS['alerts'] AS $type => $list)
 
-<div class="mr-alert alert alert-dismissable alert-<?php echo $type; ?>">
+<div class="mr-alert alert alert-dismissable alert-{{ $type }}">
 
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 

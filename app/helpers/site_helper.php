@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\Dashboard;
-use MR\Kiss\View;
+use Compatibility\Kiss\View;
 
 // Munkireport version (last number is number of commits)
 $GLOBALS['version'] = '6.0.0.4389';
@@ -467,6 +467,8 @@ function jsonError(string $msg = '', int $status_code = 400, bool $exit = true):
  * @param bool $exit If true, exit right after emitting response.
  * @param bool $return If true, return response object rather than emitting response (For Laravel Controllers)
  * @return \Illuminate\Http\JsonResponse|object
+ * @deprecated please use response()->json() instead if possible.
+ * @todo Cannot remove this until applications, disk_report, managedinstalls, and power are updated.
  */
 function jsonView($msg = '', int $status_code = 200, bool $exit = false, bool $return = false): ?JsonResponse
 {

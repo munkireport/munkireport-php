@@ -135,7 +135,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "Tests\\": "tests/",
             "App\\": "app/",
-            "MR\\": "MR/"
+            "Compatibility\\":  "compatibility/"
         }
     },
     "autoload-dev": {
@@ -158,7 +158,7 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php please package:discover --ansi",
-            "MR\\Kiss\\ComposerScripts::postAutoloadDump"
+            "Compatibility\\Kiss\\ComposerScripts::postAutoloadDump"
         ],
         "post-update-cmd": [
             "@php please vendor:publish --tag=laravel-assets --ansi --force"

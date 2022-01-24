@@ -26,7 +26,7 @@ class ManagerController extends Controller
         $status = array('status' => 'undefined', 'rowcount' => 0);
 
         // Delete machine entry from all tables
-        $machine = new \MR\Kiss\Model;
+        $machine = new \Compatibility\Kiss\Model;
 
         // TODO: This is pretty terrible and easily solved using a CASCADE DELETE constraint
         // List tables (unfortunately this is not db-agnostic)

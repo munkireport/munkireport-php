@@ -10,10 +10,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use Laravel\Sanctum\HasApiTokens;
-use MR\Kiss\Contracts\LegacyUser;
+use Compatibility\Kiss\Contracts\LegacyUser;
 
-use MR\BusinessUnit as LegacyBusinessUnit;
-use MR\MachineGroup as LegacyMachineGroup;
+use Compatibility\BusinessUnit as LegacyBusinessUnit;
+use Compatibility\MachineGroup as LegacyMachineGroup;
 
 use munkireport\models\Machine_group;
 

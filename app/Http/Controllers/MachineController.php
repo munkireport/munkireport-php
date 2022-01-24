@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Machine;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
-use MR\Kiss\View;
+use Compatibility\Kiss\View;
 
 /**
  * Machine module class

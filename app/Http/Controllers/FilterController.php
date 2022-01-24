@@ -75,7 +75,7 @@ class FilterController extends Controller
         // Return current filter array
         $out[$filter] = $sessionFilter;
 
-        jsonView($out);
+        return response()->json($out);
     }
 
     /**
@@ -85,7 +85,7 @@ class FilterController extends Controller
     public function get_filter(Request $request, $filter = 'all')
     {
         if($filter == 'all'){
-            jsonView($this->_render_filter($request));
+            return response()->json($this->_render_filter($request));
         }
     }
 

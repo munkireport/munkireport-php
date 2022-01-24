@@ -7,7 +7,7 @@ use munkireport\models\MRModel as Eloquent;
 /**
  * Class Business_unit
  *
- * To be replaced by MR\BusinessUnit
+ * To be replaced by Compatibility\BusinessUnit
  *
  * @package munkireport\models
  */

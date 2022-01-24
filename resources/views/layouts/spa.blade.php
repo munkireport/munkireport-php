@@ -36,6 +36,12 @@
     @endisset
     @stack('stylesheets')
 
+    @isset($scripts)
+        @foreach ($scripts as $script)
+            <script src="{{ asset('assets/js/' . $script) }}" type="text/javascript"></script>
+        @endforeach
+    @endisset
+
     <!-- Head scripts -->
     @stack('head_scripts')
 </head>
@@ -126,15 +132,27 @@ $page = url()->current();
                     </div>
                 </li>
                 @endif
-            </div><!-- div navbar-nav mr-auto (left aligned) -->
 
-            <!-- navbar-right -->
-            <div class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a href="#" id="filter-popup" class="nav-link filter-popup">
                         <i class="fa fa-filter"></i>
                     </a>
                 </li>
+            </div><!-- div navbar-nav mr-auto (left aligned) -->
+
+            <!-- navbar-right -->
+            <div class="navbar-nav ml-auto">
+                @if(config('_munkireport.alpha_features.search', false))
+                <form class="form-inline my-2 my-lg-0">
+                    <li class="dropdown" data-reference="parent">
+                        <div class="search-results dropdown-menu">
+                            <a class="dropdown-item" href="#">No results</a>
+                        </div>
+                    </li>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                @endif
 
                 <li class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="themeMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -209,6 +227,7 @@ $page = url()->current();
 </div>
 @endauth
 
+<!-- mr layout scripts missing intentionally: all scripts should be part of the app bundle or vendor bundle -->
 
 {{--<script src="{{ asset('assets/js/munkireport.settings.js') }}"></script>--}}
 {{--<script src="{{ asset('assets/js/munkireport.js') }}"></script>--}}

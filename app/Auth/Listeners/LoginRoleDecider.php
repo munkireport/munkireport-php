@@ -7,8 +7,8 @@ use App\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
 use munkireport\models\Business_unit;
-use MR\BusinessUnit as LegacyBusinessUnit;
-use MR\MachineGroup as LegacyMachineGroup;
+use Compatibility\BusinessUnit as LegacyBusinessUnit;
+use Compatibility\MachineGroup as LegacyMachineGroup;
 
 /**
  * LoginRoleDecider listens for successful logins and then decides, using the same rules that AuthHandler::setSessionProps

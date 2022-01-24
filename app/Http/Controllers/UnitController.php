@@ -29,7 +29,7 @@ class UnitController extends Controller
             $out = $unit->all($request->session()->get('business_unit'));
         }
 
-        return jsonView($out, 200, false, true);
+        return response()->json($out);
     }
 
     /**
@@ -73,6 +73,6 @@ class UnitController extends Controller
             return strcasecmp($a['name'], $b['name']);
         });
 
-        return jsonView($out, 200, false, true);
+        return response()->json($out);
     }
 }
