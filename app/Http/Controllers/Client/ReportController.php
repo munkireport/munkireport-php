@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Compatibility\Kiss\ConnectDbTrait;
 use munkireport\lib\Modules;
 use \Messages_model, \Exception;
-use munkireport\models\Hash as MunkiReportHash;
+use App\Hash as MunkiReportHash;
 use function xKerman\Restricted\unserialize;
 use xKerman\Restricted\UnserializeFailedException;
 
