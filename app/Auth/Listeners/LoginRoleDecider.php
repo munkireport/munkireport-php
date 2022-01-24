@@ -6,7 +6,6 @@ namespace App\Auth\Listeners;
 use App\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
-use munkireport\models\Business_unit;
 use Compatibility\BusinessUnit as LegacyBusinessUnit;
 use Compatibility\MachineGroup as LegacyMachineGroup;
 

@@ -117,10 +117,10 @@
     "autoload": {
         "classmap": [],
         "files": [
-            "app/helpers/bootstrap_helper.php",
-            "app/helpers/config_helper.php",
-            "app/helpers/env_helper.php",
-            "app/helpers/site_helper.php",
+            "compatibility/helpers/bootstrap_helper.php",
+            "compatibility/helpers/config_helper.php",
+            "compatibility/helpers/env_helper.php",
+            "compatibility/helpers/site_helper.php",
             "shims/Module_controller.php",
             "shims/View.php",
             "shims/Model.php",
