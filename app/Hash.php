@@ -9,8 +9,9 @@ class Hash extends Model
     protected $table = 'hash';
 
     protected $fillable = [
-        'serial',
+        'serial_number',
         'name',
-        'hash'
+        'hash',
+        'timestamp',
     ];
 }

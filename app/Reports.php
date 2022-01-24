@@ -3,7 +3,7 @@ namespace App;
 
 use Illuminate\Support\Facades\Log;
 use munkireport\lib\Modules;
-use munkireport\models\Hash as MunkiReportHash;
+use App\Hash as MunkiReportHash;
 
 class Reports
 {
