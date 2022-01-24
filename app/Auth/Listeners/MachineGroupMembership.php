@@ -3,9 +3,8 @@
 
 namespace App\Auth\Listeners;
 
-use App\User;
+use App\ReportData;
 use Compatibility\BusinessUnit;
-use munkireport\models\Reportdata_model;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
 use munkireport\models\Machine_group;
@@ -33,7 +32,7 @@ class MachineGroupMembership
             // Can access all defined groups (from machine_group)
             // and used groups (from reportdata)
             $mg = new Machine_group;
-            $reportedMachineGroups = Reportdata_model::select('machine_group')
+            $reportedMachineGroups = ReportData::select('machine_group')
                 ->groupBy('machine_group')
                 ->get()
                 ->pluck('machine_group')
