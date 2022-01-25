@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
-use MR\Scopes\CreatedSinceScope;
+use App\Scopes\CreatedSinceScope;
 use munkireport\models\MRModel;
 use Laravel\Scout\Searchable;
 

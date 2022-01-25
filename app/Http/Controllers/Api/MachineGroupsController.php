@@ -27,6 +27,7 @@ class MachineGroupsController extends Controller
         $machineGroup = new MachineGroup;
         $machineGroup->fill($request->json('data'));
         $machineGroup->key = Str::uuid();
+        $machineGroup->save();
 
         return new MachineGroupResource($machineGroup);
     }

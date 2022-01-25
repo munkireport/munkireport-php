@@ -41,7 +41,7 @@ require __DIR__.'/../vendor/autoload.php';
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
-$app->alias('request', 'MR\Kiss\Http\Request');
+$app->alias('request', 'Compatibility\Kiss\Http\Request');
 /*
 |--------------------------------------------------------------------------
 | Run The Application
@@ -58,7 +58,7 @@ $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 $response = $kernel->handle(
     // $request = Illuminate\Http\Request::capture()
-    $request = MR\Kiss\Http\Request::capture()
+    $request = Compatibility\Kiss\Http\Request::capture()
 );
 
 $response->send();

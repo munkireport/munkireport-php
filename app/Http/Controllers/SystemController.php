@@ -27,9 +27,6 @@ class SystemController extends Controller
      */
     public function DataBaseInfo()
     {
-        $this->middleware('auth');
-        Gate::authorize('global');
-
         $out = array(
             'db.driver' => '',
             'db.connectable' => false,
@@ -75,9 +72,6 @@ class SystemController extends Controller
      */
     public function phpInfo()
     {
-        $this->middleware('auth');
-        Gate::authorize('global');
-
         ob_start();
         phpinfo(11);
         $raw = ob_get_clean();
@@ -108,9 +102,6 @@ class SystemController extends Controller
      */
     public function widgets()
     {
-        $this->middleware('auth');
-        Gate::authorize('global');
-
         $moduleManager = app(Modules::class);
         $layoutList = [];
         foreach($moduleManager->loadInfo(true)->getWidgets() as $widget){
@@ -133,9 +124,6 @@ class SystemController extends Controller
      */
     public function status()
     {
-        $this->middleware('auth');
-        Gate::authorize('global');
-
         $data['page'] = 'clients';
         $data['scripts'] = array("clients/client_list.js");
         return view('system.status', $data);
@@ -146,8 +134,6 @@ class SystemController extends Controller
      */
     public function database()
     {
-        $this->middleware('auth');
-        Gate::authorize('global');
         return view('system.database');
     }
 }

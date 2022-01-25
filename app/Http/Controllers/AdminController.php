@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use MR\Kiss\ConnectDbTrait;
-use munkireport\lib\BusinessUnit;
-use munkireport\models\Business_unit;
+use Compatibility\Kiss\ConnectDbTrait;
+use Compatibility\Service\BusinessUnit;
+use Compatibility\BusinessUnit as CompatibleBusinessUnit;
 use munkireport\models\Machine_group;
 
 
@@ -69,7 +69,7 @@ class AdminController extends Controller
 
             // Update business unit membership
             if ($property == 'business_unit' && !empty($val)) {
-                Business_unit::updateOrCreate(
+                CompatibleBusinessUnit::updateOrCreate(
                     [
                         'property' => 'machine_group',
                         'value' => $groupid,
@@ -180,7 +180,7 @@ class AdminController extends Controller
     {
         Gate::authorize('global');
 
-        $success = Business_unit::where('unitid', request('id', ''))->delete();
+        $success = CompatibleBusinessUnit::where('unitid', request('id', ''))->delete();
 
         return response()->json([
             'success' => $success,
@@ -227,7 +227,7 @@ class AdminController extends Controller
         Gate::authorize('global');
 
         $out = [];
-        $units = Business_unit::get()
+        $units = CompatibleBusinessUnit::get()
             ->toArray();
         foreach ($units as $obj) {
             // Initialize

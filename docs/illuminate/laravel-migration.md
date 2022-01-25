@@ -23,11 +23,11 @@ to denote that they were reliant on the KISSMVC framework we are removing.
 There is a lot of baggage in the MunkiReport repo which lives in the global \ namespace such as the KISSMVC
 classes `\View, \Model, \Controller, and \Engine`.
 
-The first thing that was done was to move all of these classes under the `MR\Kiss` namespace so that you could
+The first thing that was done was to move all of these classes under the `Compatibility\Kiss` namespace so that you could
 safely use the similarly named classes eg. `\Illuminate\View` without unexpected name clashes.
 
-To allow legacy modules to run, for the moment we alias all of those `MR\Kiss` classes back to their global
-counterparts via `class_alias()` i.e. for `MR\Kiss\View` we alias back to `\View`, so that when a module which
+To allow legacy modules to run, for the moment we alias all of those `Compatibility\Kiss` classes back to their global
+counterparts via `class_alias()` i.e. for `Compatibility\Kiss\View` we alias back to `\View`, so that when a module which
 has not been upgraded, decides to instantiate View via `new View()`, it still loads the old implementation.
 
 This is the same for Model, Controller etc.
@@ -107,10 +107,10 @@ For simplicity we have created Gates which match exactly the style of authz done
 
 ### Views ###
 
-MR\Kiss\View is still available for complete backwards compatibility.
+Compatibility\Kiss\View is still available for complete backwards compatibility.
 
 A forwards/backwards compatible View Engine has been registered with Laravel so that whenever the `view()` helper function
-tries to render a `.php` file, it actually constructs an instance of MR\Kiss\View underneath. The main difference
+tries to render a `.php` file, it actually constructs an instance of Compatibility\Kiss\View underneath. The main difference
 being that the Laravel captures the output buffer and returns it rather than piping it straight to stdout.
 
 The main motivation for this is that stdout isn't testable by the PHPUnit HTTP Client, but the Response type is.

@@ -3,7 +3,7 @@
 namespace App\View\Components\Widget;
 
 use Illuminate\View\Component;
-use MR\Kiss\View;
+use Compatibility\Kiss\View;
 use munkireport\lib\Widgets;
 
 class Legacy extends Component

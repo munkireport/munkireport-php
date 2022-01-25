@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use munkireport\lib\Tablequery;
+use Compatibility\Service\Tablequery;
 
 class DatatablesController extends Controller
 {

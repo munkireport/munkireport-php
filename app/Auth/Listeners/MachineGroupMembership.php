@@ -3,11 +3,10 @@
 
 namespace App\Auth\Listeners;
 
-use App\User;
-use munkireport\models\Reportdata_model;
+use App\ReportData;
+use Compatibility\BusinessUnit;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
-use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
 
 /**
@@ -23,7 +22,7 @@ class MachineGroupMembership
         if( session()->has('business_unit')){
             // Only retrieve machinegroups for this business unit
             $businessUnitId = session()->get('business_unit');
-            $machineGroups = Business_unit::where('unitid', $businessUnitId)
+            $machineGroups = BusinessUnit::where('unitid', $businessUnitId)
             ->where('property', 'machine_group')
             ->get()
             ->pluck('value')
@@ -33,7 +32,7 @@ class MachineGroupMembership
             // Can access all defined groups (from machine_group)
             // and used groups (from reportdata)
             $mg = new Machine_group;
-            $reportedMachineGroups = Reportdata_model::select('machine_group')
+            $reportedMachineGroups = ReportData::select('machine_group')
                 ->groupBy('machine_group')
                 ->get()
                 ->pluck('machine_group')

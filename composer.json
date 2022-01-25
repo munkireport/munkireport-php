@@ -117,25 +117,21 @@
     "autoload": {
         "classmap": [],
         "files": [
-            "app/helpers/bootstrap_helper.php",
-            "app/helpers/config_helper.php",
-            "app/helpers/env_helper.php",
-            "app/helpers/site_helper.php",
-            "shims/Module_controller.php",
-            "shims/View.php",
-            "shims/Model.php",
-            "shims/Capsule.php"
+            "compatibility/helpers/bootstrap_helper.php",
+            "compatibility/helpers/config_helper.php",
+            "compatibility/helpers/env_helper.php",
+            "compatibility/helpers/site_helper.php",
+            "compatibility/shims/v5.php",
+            "compatibility/FakeCapsuleManager.php"
         ],
         "psr-4": {
-            "munkireport\\models\\": "app/models/",
             "munkireport\\processors\\": "app/processors/",
-            "munkireport\\builders\\": "database/builders/",
             "munkireport\\lib\\": "app/lib/munkireport",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Tests\\": "tests/",
             "App\\": "app/",
-            "MR\\": "MR/"
+            "Compatibility\\":  "compatibility/"
         }
     },
     "autoload-dev": {
@@ -158,7 +154,7 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php please package:discover --ansi",
-            "MR\\Kiss\\ComposerScripts::postAutoloadDump"
+            "Compatibility\\Kiss\\ComposerScripts::postAutoloadDump"
         ],
         "post-update-cmd": [
             "@php please vendor:publish --tag=laravel-assets --ansi --force"

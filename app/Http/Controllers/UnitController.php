@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Compatibility\BusinessUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use munkireport\models\Business_unit;
 use munkireport\models\Machine_group;
 
 class UnitController extends Controller
@@ -25,11 +25,11 @@ class UnitController extends Controller
 
         if ($request->session()->has('business_unit')) {
             // Get data for this unit
-            $unit = new Business_unit;
+            $unit = new BusinessUnit;
             $out = $unit->all($request->session()->get('business_unit'));
         }
 
-        return jsonView($out, 200, false, true);
+        return response()->json($out);
     }
 
     /**
@@ -73,6 +73,6 @@ class UnitController extends Controller
             return strcasecmp($a['name'], $b['name']);
         });
 
-        return jsonView($out, 200, false, true);
+        return response()->json($out);
     }
 }

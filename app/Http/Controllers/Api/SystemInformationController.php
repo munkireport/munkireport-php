@@ -32,7 +32,15 @@ class SystemInformationController
             'client_version' => $pdo->getAttribute(\PDO::ATTR_CLIENT_VERSION),
             'driver_name' => $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME),
 //            'server_info' => $pdo->getAttribute(\PDO::ATTR_SERVER_INFO),
+//            'timeout' => $pdo->getAttribute(\PDO::ATTR_TIMEOUT),
+//            'connection_status' => $pdo->getAttribute(\PDO::ATTR_CONNECTION_STATUS),
+            'available_drivers' => \PDO::getAvailableDrivers(),
         ];
+
+        switch ($response['driver_name']) {
+            case 'mysql':
+                $response['mysql'] = [];
+        }
 
         return response()->json($response);
 

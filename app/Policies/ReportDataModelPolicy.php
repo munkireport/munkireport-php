@@ -7,7 +7,7 @@ use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Log;
-use MR\BusinessUnit;
+use Compatibility\BusinessUnit;
 
 class ReportDataModelPolicy
 {

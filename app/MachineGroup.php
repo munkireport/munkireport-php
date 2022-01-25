@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * V2 MachineGroup (Not In Use)
  *
- * @see \MR\MachineGroup
+ * @see \Compatibility\MachineGroup
  * @package App
  */
 class MachineGroup extends Model

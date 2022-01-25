@@ -15,13 +15,13 @@ class DatabaseController extends Controller
 
         try {
             Artisan::call('migrate', ["--force" => true]);     
-            
-            jsonView([
+
+            return response()->json([
                 'files' => [],
                 'notes' => explode("\n", Artisan::output()),
             ]);
         } catch (\Exception $e) {
-            jsonView([
+            return response()->json([
                 'error' => $e->getMessage(),
                 'error_trace' => $e->getTrace()
             ]);

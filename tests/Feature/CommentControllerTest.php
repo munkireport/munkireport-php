@@ -11,6 +11,9 @@ class CommentControllerTest extends AuthorizationTestCase
 {
     use RefreshDatabase;
 
+    /**
+     * @todo Failing because the machine record isnt merged with the comment record as it was in v5.
+     */
     public function testRetrieve()
     {
         $reportData = \App\ReportData::factory()->create();

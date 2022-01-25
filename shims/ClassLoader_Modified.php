@@ -1,5 +1,6 @@
 <?php
-
+// This modified classloader injects munki module loading into composer autoload by overriding the
+// loadClass() method to use the Module Manager to search for a file, before resolving PSR-4 etc classes.
 /*
  * This file is part of Composer.
  *
