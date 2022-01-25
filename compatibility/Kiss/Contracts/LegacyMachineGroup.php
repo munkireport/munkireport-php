@@ -38,7 +38,7 @@ interface LegacyMachineGroup
      * @return integer max groupid
      * @author AvB
      **/
-    public function get_max_groupid();
+    public function get_max_groupid(): int;
 
     /**
      * Select unique group ids
@@ -46,7 +46,7 @@ interface LegacyMachineGroup
      * @return array
      * @author
      **/
-    public function get_group_ids();
+    public function get_group_ids(): array;
 
     // ------------------------------------------------------------------------
 
@@ -57,5 +57,5 @@ interface LegacyMachineGroup
      * @return array
      * @author abn290
      **/
-    public function all($groupid = '');
+    public function all($groupid = ''): array;
 }

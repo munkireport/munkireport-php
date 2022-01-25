@@ -40,7 +40,7 @@ class UnitControllerTest extends TestCase
                 'keys' => '*',
                 'checked'
             ]
-        ])
+        ]);
     }
 
     public function testGet_data()

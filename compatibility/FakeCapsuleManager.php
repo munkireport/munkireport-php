@@ -1,4 +1,5 @@
 <?php
+namespace Compatibility;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -8,6 +9,9 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Traits\CapsuleManagerTrait;
 
+/**
+ * This class provides compatibility with models and migrations written to use the Laravel Eloquent Capsule Manager.
+ */
 class FakeCapsuleManager
 {
     use CapsuleManagerTrait;
@@ -203,5 +207,5 @@ class FakeCapsuleManager
     }
 }
 
-class_alias("\FakeCapsuleManager", "Illuminate\Database\Capsule\Manager");
+class_alias("\Compatibility\FakeCapsuleManager", "Illuminate\Database\Capsule\Manager");
 

@@ -121,10 +121,8 @@
             "compatibility/helpers/config_helper.php",
             "compatibility/helpers/env_helper.php",
             "compatibility/helpers/site_helper.php",
-            "shims/Module_controller.php",
-            "shims/View.php",
-            "shims/Model.php",
-            "shims/Capsule.php"
+            "compatibility/shims/v5.php",
+            "compatibility/FakeCapsuleManager.php"
         ],
         "psr-4": {
             "munkireport\\models\\": "app/models/",

@@ -105,7 +105,7 @@ class CommentController extends Controller
 
     private function ParseMarkdown($markdown)
     {
-        $parsedown = new Parsedown();
+        $parsedown = new \Parsedown();
         $parsedown->setSafeMode(true);
         return $parsedown->text($markdown);
     }
