@@ -21,6 +21,25 @@ class_alias('Compatibility\Kiss\Model', '\Model');
  */
 class_alias('Compatibility\Capsule\MRModel', 'munkireport\models\MRModel');
 
+
+/**
+ * This alias shims the Capsule style migrations so that they work with the original namespace.
+ */
+class_alias('Compatibility\Kiss\LegacyMigrationSupport', 'munkireport\lib\LegacyMigrationSupport');
+
+
+/**
+ * This alias shims the guzzle wrapper implementation that was used for the module marketplace.
+ */
+class_alias('Compatibility\Request', 'munkireport\lib\Request');
+
+
+/**
+ * This alias shims the QueryBuilder subclass of the Eloquent query builder that was used prior to the Laravel conversion.
+ * Models should use local/global scopes instead.
+ */
+class_alias('Compatibility\Capsule\MRQueryBuilder', 'munkireport\builders\MRQueryBuilder');
+
 /**
  * This class alias provided for backwards compatibility when 3rd party modules access machine via
  * \Machine_model without the namespace.
@@ -43,3 +62,7 @@ class_alias('Compatibility\Kiss\ModuleController', '\Module_controller');
 class_alias('App\ReportData', '\Reportdata_model');
 
 
+/**
+ * Alias the old, kissmvc style machine_group model in case older modules are using this.
+ */
+class_alias('Compatibility\Machine_group', '\munkireport\models\Machine_group');

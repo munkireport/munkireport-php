@@ -1,6 +1,5 @@
 <?php
-
-namespace munkireport\lib;
+namespace Compatibility;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\TransferException;

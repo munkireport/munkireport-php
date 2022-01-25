@@ -1,6 +1,5 @@
 <?php
-
-namespace munkireport\lib;
+namespace Compatibility\Service;
 
 use \PDO;
 

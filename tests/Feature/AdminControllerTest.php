@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use munkireport\lib\BusinessUnit;
+use Compatibility\Service\BusinessUnit;
 use Tests\AuthorizationTestCase;
 use Tests\TestCase;
 

@@ -54,7 +54,7 @@ class MachineGroupsControllerTest extends AuthorizationTestCase
             ],
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertJsonStructure(['data' => ['key', 'name', 'id']]);
     }
@@ -71,7 +71,7 @@ class MachineGroupsControllerTest extends AuthorizationTestCase
             ],
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $response->assertHeader('Content-Type', 'application/json');
         $response->assertJsonStructure(['data' => ['key', 'name', 'id']]);
     }

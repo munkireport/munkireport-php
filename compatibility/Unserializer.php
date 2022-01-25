@@ -1,6 +1,5 @@
 <?php
-
-namespace munkireport\lib;
+namespace Compatibility;
 
 use Illuminate\Support\Facades\Log;
 

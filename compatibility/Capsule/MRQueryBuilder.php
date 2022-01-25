@@ -1,10 +1,17 @@
 <?php
+namespace Compatibility\Capsule;
 
-namespace munkireport\builders;
-
+use Compatibility\Capsule\Contracts\MRQueryBuilder as MRQueryBuilderContract;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
-class MRQueryBuilder extends QueryBuilder{
+/**
+ * MRQueryBuilder extended the Eloquent Capsule Model to provide preset filters/where conditions on Eloquent queries.
+ *
+ * Was: munkireport\builders\MRQueryBuilder
+ *
+ * @deprecated These can now be added as "scopes" or helper methods in Laravel
+ */
+class MRQueryBuilder extends QueryBuilder implements MRQueryBuilderContract {
 
   public function whereSerialNumber($serial_number)
   {

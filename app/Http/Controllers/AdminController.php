@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Compatibility\Kiss\ConnectDbTrait;
-use munkireport\lib\BusinessUnit;
+use Compatibility\Service\BusinessUnit;
 use Compatibility\BusinessUnit as CompatibleBusinessUnit;
 use munkireport\models\Machine_group;
 
