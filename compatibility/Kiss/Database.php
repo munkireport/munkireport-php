@@ -1,7 +1,13 @@
 <?php
 
-namespace munkireport\lib;
+namespace Compatibility\Kiss;
 
+/**
+ * This database helper object was not part of KissMvc but was provided in the same
+ * era of MunkiReport, so it exists side-by-side with KissMvc compatibility classes.
+ *
+ * Originally munkireport\lib\Database.
+ */
 class Database
 {
 

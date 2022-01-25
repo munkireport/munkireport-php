@@ -8,7 +8,7 @@ use Illuminate\Database\Query\Builder;
  * VueTableScope allows you to limit queries based upon parameters passed by a vue-table-2 server table request.
  * This is the trait version of VueTableScope
  * 
- * @package Mr\Scopes
+ * @package App\Scopes
  */
 trait VueTableScopes
 {

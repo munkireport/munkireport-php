@@ -1,6 +1,5 @@
 <?php
-
-namespace munkireport\lib;
+namespace Compatibility\Service;
 
 use Compatibility\BusinessUnit as BuModel;
 use munkireport\models\Machine_group;

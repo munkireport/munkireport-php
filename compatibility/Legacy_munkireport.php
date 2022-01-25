@@ -1,6 +1,6 @@
 <?php
 
-namespace munkireport\lib;
+namespace Compatibility;
 
 /**
  * Utility for legacy munkireport
@@ -8,7 +8,7 @@ namespace munkireport\lib;
  * Converts standard ManagedInstalls plist to something
  * used in 004_munkireport_new migration and munkireport_model
  *
- *
+ * Originally munkireport\lib\Legacy_munkireport
  */
 class Legacy_munkireport
 {

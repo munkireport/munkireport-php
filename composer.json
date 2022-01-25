@@ -125,9 +125,7 @@
             "compatibility/FakeCapsuleManager.php"
         ],
         "psr-4": {
-            "munkireport\\models\\": "app/models/",
             "munkireport\\processors\\": "app/processors/",
-            "munkireport\\builders\\": "database/builders/",
             "munkireport\\lib\\": "app/lib/munkireport",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",

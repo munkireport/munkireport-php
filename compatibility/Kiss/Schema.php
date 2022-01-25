@@ -1,7 +1,15 @@
 <?php
 
-namespace munkireport\lib;
+namespace Compatibility\Kiss;
 
+/**
+ * This class was responsible for doing schema "migration" for KissMvc \Models.
+ * It did not do any db versioning, just CREATE/ALTER typically.
+ *
+ * Original class munkireport\lib\Schema
+ *
+ * @deprecated Use Laravel Schema Builder
+ */
 class Schema
 {
     private $tablename, $cmd_queue = [];

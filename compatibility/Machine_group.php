@@ -1,17 +1,20 @@
 <?php
-
-namespace munkireport\models;
+namespace Compatibility;
 
 use \PDO;
+use Compatibility\Kiss\Model;
 
 /**
  * Class Machine_group
  *
  * To be replaced by Compatibility\MachineGroup
  *
+ * Was: munkireport\models\Machine_group
+ *
  * @package munkireport\models
+ * @deprecated Will be deprecated by Compatibility\MachineGroup
  */
-class Machine_group extends \Model
+class Machine_group extends Model
 {
     
     public function __construct($groupid = '', $property = '')

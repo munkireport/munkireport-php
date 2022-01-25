@@ -1,6 +1,6 @@
 <?php
 
-namespace munkireport\lib;
+namespace Compatibility\Kiss;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 

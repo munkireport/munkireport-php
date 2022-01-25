@@ -47,10 +47,11 @@ return [
         ],
 
         // Uncomment this section to force all deprecations to be always recorded.
-//        'deprecations' => [
-//            'driver' => 'single',
+        'deprecations' => [
+            'channels' => ['null'],
+            'driver' => 'monolog',
 //            'path' => storage_path('logs/php-deprecation-warnings.log'),
-//        ],
+        ],
 
         'single' => [
             'driver' => 'single',

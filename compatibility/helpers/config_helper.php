@@ -1,15 +1,18 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 function initConfig()
 {
-    Log::channel('deprecations')
-        ->warning('This function will be deprecated in future, please use config() in your modules.', [
-            'function' => __FUNCTION__,
-            'file' => __FILE__,
-            'line' => __LINE__,
-        ]);
+    if (!App::environment('testing')) {
+        Log::channel('deprecations')
+            ->warning('This function will be deprecated in future, please use config() in your modules.', [
+                'function' => __FUNCTION__,
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]);
+    }
     $GLOBALS['conf'] = [];
 }
 
@@ -21,12 +24,15 @@ function initConfig()
  */
 function configAppendArray($configArray, $namespace = '')
 {
-    Log::channel('deprecations')
-        ->warning('This function will be deprecated in future, please use config() in your modules.', [
-            'function' => __FUNCTION__,
-            'file' => __FILE__,
-            'line' => __LINE__,
-        ]);
+    if (!App::environment('testing')) {
+        Log::channel('deprecations')
+            ->warning('This function will be deprecated in future, please use config() in your modules.', [
+                'function' => __FUNCTION__,
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]);
+    }
+
     if ($namespace) {
         $GLOBALS['conf'] += [$namespace => $configArray];
     } else {
@@ -42,12 +48,14 @@ function configAppendArray($configArray, $namespace = '')
  */
 function configAppendFile($configPath, $namespace = '')
 {
-    Log::channel('deprecations')
-        ->warning('This function will be deprecated in future, please use config() in your modules.', [
-            'function' => __FUNCTION__,
-            'file' => __FILE__,
-            'line' => __LINE__,
-        ]);
+    if (!App::environment('testing')) {
+        Log::channel('deprecations')
+            ->warning('This function will be deprecated in future, please use config() in your modules.', [
+                'function' => __FUNCTION__,
+                'file' => __FILE__,
+                'line' => __LINE__,
+            ]);
+    }
     $config = require $configPath;
     configAppendArray($config, $namespace);
 }

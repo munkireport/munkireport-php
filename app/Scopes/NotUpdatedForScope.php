@@ -7,7 +7,7 @@ namespace App\Scopes;
  *
  * NOTE: This was not implemented as a global scope object, since they cannot take parameters.
  *
- * @package Mr\Scopes
+ * @package App\Scopes
  */
 trait NotUpdatedForScope
 {
