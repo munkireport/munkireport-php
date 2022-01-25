@@ -42,7 +42,7 @@ class ClientsControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/clients/detail/nonexistentserial");
 
-        $response->assertSeeText('Error');
+        $response->assertSeeText('Page not found');
     }
 
 

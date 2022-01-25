@@ -7,7 +7,7 @@ use \PDO;
 /**
  * Class Machine_group
  *
- * To be replaced by App\MachineGroup
+ * To be replaced by Compatibility\MachineGroup
  *
  * @package munkireport\models
  */

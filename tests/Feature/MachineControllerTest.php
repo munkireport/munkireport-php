@@ -125,7 +125,7 @@ class MachineControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/module/machine/get_memory_stats");
         $response->assertOk();
-        $response->assertJson([
+        $response->assertJsonStructure([
             '*' => [
                 'label',
                 'count',
@@ -145,7 +145,7 @@ class MachineControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/module/machine/get_memory_stats/flotr");
         $response->assertOk();
-        $response->assertJson([
+        $response->assertJsonStructure([
             '*' => [
                 'label',
                 'data' => [],
@@ -165,7 +165,7 @@ class MachineControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/module/machine/get_memory_stats/button");
         $response->assertOk();
-        $response->assertJson([
+        $response->assertJsonStructure([
             '*' => [
                 'label',
                 'count',
@@ -185,7 +185,7 @@ class MachineControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/module/machine/hw");
         $response->assertOk();
-        $response->assertJson([
+        $response->assertJsonStructure([
             '*' => [
                 'label' => $machine->model,
                 'count' => 1,
@@ -205,7 +205,7 @@ class MachineControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/module/machine/os");
         $response->assertOk();
-        $response->assertJson([
+        $response->assertJsonStructure([
             '*' => [
                 'label',
                 'count',
@@ -225,7 +225,7 @@ class MachineControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/module/machine/osbuild");
         $response->assertOk();
-        $response->assertJson([
+        $response->assertJsonStructure([
             '*' => [
                 'label',
                 'count',

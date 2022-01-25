@@ -32,6 +32,7 @@ $GLOBALS['alerts'] = array();
  *
  * @param string $msg alert message
  * @param string $type type (danger, warning, success, info)
+ * @deprecated use session()->flash() functionality from Laravel
  **/
 function alert(string $msg, string $type = "info"): void
 {
@@ -53,6 +54,7 @@ function alert(string $msg, string $type = "info"): void
  *
  * @param string $msg message
  * @param string $i18n i18n locale key for translation of error.
+ * @deprecated use session()->flash() functionality from Laravel
  **/
 function error(string $msg, $i18n = ''): void
 {

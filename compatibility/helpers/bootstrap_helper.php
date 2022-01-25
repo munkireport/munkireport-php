@@ -13,8 +13,15 @@ use Illuminate\Support\Facades\Log;
  *  the Request object is constructed.
  *
  * @return bool
+ * @deprecated Please use request()->secure()
  */
 function SslRequest() {
+    Log::channel('deprecations')
+        ->warning('This function will be deprecated in future, please use request()->secure() in your modules.', [
+            'function' => __FUNCTION__,
+            'file' => __FILE__,
+            'line' => __LINE__,
+        ]);
     return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
 }
 

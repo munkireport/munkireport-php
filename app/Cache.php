@@ -1,12 +1,12 @@
 <?php
+namespace App;
 
-namespace munkireport\models;
+use Illuminate\Database\Eloquent\Model;
 
-use munkireport\models\MRModel as Eloquent;
-
-class Cache extends Eloquent
+class Cache extends Model
 {
     protected $table = 'cache';
+    public $timestamps = false;
 
     protected $fillable = [
         'module',

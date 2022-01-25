@@ -30,6 +30,7 @@ class BusinessUnit extends Model
     const PROP_MACHINE_GROUP = 'machine_group';
 
     protected $table = 'business_unit';
+    public $timestamps = false;
 
     protected $fillable = [
         'unitid',
