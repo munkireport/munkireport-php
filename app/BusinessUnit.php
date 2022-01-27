@@ -24,11 +24,22 @@ class BusinessUnit extends Model
     /**
      * Retrieve a list of members of this business unit (managers and users).
      */
-    public function members(): BelongsToMany {
+    public function users(): BelongsToMany {
         return $this->belongsToMany('App\User',
-            'business_unit_users',
+            'business_unit_user',
             'business_unit_id',
             'user_id');
+    }
+
+    /**
+     * Retrieve a list of machine groups associated with this business unit
+     */
+    public function machineGroups(): BelongsToMany {
+        return $this->belongsToMany('App\MachineGroup',
+            'business_unit_machine_group',
+            'business_unit_id',
+            'machine_group_id'
+        );
     }
 
     /**
@@ -48,7 +59,7 @@ class BusinessUnit extends Model
     /**
      * Retrieve users who are basic users in this business unit.
      */
-    public function users(): BelongsToMany {
+    public function basicUsers(): BelongsToMany {
         return $this->members()->wherePivot('role', 'user');
     }
 }

@@ -1,0 +1,18 @@
+query BusinessUnit ($id: ID!) {
+    businessUnit(id: $id) {
+        id
+        name
+        address
+        link
+        users {
+            id
+            role
+            name
+            email
+        }
+        machineGroups {
+            id
+            name
+        }
+    }
+}

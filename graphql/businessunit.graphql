@@ -10,9 +10,23 @@ type BusinessUnit {
     created_at: DateTime!
     updated_at: DateTime!
 
-    members: [User!]!
-    managers: [User!]!
-    archivers: [User!]!
-    users: [User!]!
+    users: [User!] @belongsToMany
+    machineGroups: [MachineGroup!] @belongsToMany
 }
 
+
+input UpdateBusinessUnitRelationshipsInput {
+    id: ID!
+    users: UpdateBusinessUnitUsers
+}
+
+input UpdateBusinessUnitUsers {
+    connect: [BusinessUnitUsersPivot!]
+    disconnect: [ID!]
+}
+
+input BusinessUnitUsersPivot {
+    id: ID!
+    "The role that the user will have for machines located in this business unit."
+    role: String!
+}

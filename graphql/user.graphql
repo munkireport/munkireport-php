@@ -11,5 +11,12 @@ type User {
     source: String
     display_name: String
     locale: String
+
+    businessUnits: [BusinessUnit!] @belongsToMany
+    pivot: UserBusinessUnitPivot
 }
 
+type UserBusinessUnitPivot {
+    "The role that the user will have for machines located in this business unit."
+    role: String
+}
