@@ -1,8 +1,10 @@
 <template>
   <ListDetailView>
     <template v-slot:list>
-      <ListView
+      <BusinessUnitsListView
           :items="businessUnits.data"
+          :loading="$apollo.queries.businessUnits.loading"
+          @create="createBusinessUnit"
       >
         <template v-slot:item="slotProps">
           <router-link
@@ -20,14 +22,21 @@
             <p v-else class="mb-1 font-italic">No link provided.</p>
           </router-link>
         </template>
-      </ListView>
+        <template v-slot:empty>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">There are no business units.</li>
+          </ul>
+        </template>
+      </BusinessUnitsListView>
     </template>
     <template v-slot:detail>
-      <div class="card-header">
-        Business Unit
-      </div>
       <div class="card-body">
-        <BusinessUnit v-if="businessUnit" v-bind="businessUnit" :loading="$apollo.loading"></BusinessUnit>
+        <BusinessUnit
+            v-if="businessUnit"
+            v-bind="businessUnit"
+            :loading="$apollo.loading"
+            @destroy="destroyBusinessUnit"
+        ></BusinessUnit>
       </div>
     </template>
   </ListDetailView>
@@ -37,9 +46,10 @@
 import gql from 'graphql-tag';
 import BusinessUnit from './BusinessUnit';
 import ListDetailView from '../components/ListDetailView';
-import ListView from '../components/ListView';
+import BusinessUnitsListView from './BusinessUnitsListView';
 
 import CREATE_BUSINESS_UNIT from './CreateBusinessUnit.graphql';
+import DESTROY_BUSINESS_UNIT from './DestroyBusinessUnit.graphql';
 import READ_BUSINESS_UNIT from './BusinessUnit.graphql';
 import READ_BUSINESS_UNITS from './BusinessUnits.graphql';
 
@@ -48,7 +58,7 @@ export default {
   components: {
     BusinessUnit,
     ListDetailView,
-    ListView,
+    BusinessUnitsListView,
   },
   data() {
     return {
@@ -58,17 +68,26 @@ export default {
     }
   },
   methods: {
-    createBusinessUnit() {
+    createBusinessUnit({ name }) {
       this.$apollo.mutate({
         mutation: CREATE_BUSINESS_UNIT,
         variables: {
-          name: this.name,
+          name
         },
-        update: (store, { data: { createBusinessUnit } }) => {
-          console.log(store);
-          const { businessUnits } = store.readQuery({
+        update: (cache, { data: { createBusinessUnit } }) => {
+          const { businessUnits } = cache.readQuery({
             query: READ_BUSINESS_UNITS
           });
+
+          const clone = businessUnits.data.slice();
+          clone.push({
+            ...createBusinessUnit
+          });
+
+          cache.writeQuery({
+            query: READ_BUSINESS_UNITS,
+            data: { businessUnits: { ...businessUnits, data: clone } },
+          })
         }
       }).then((data) => {
         console.log(data);
@@ -76,6 +95,28 @@ export default {
         console.error(err);
       });
     },
+    destroyBusinessUnit({ id }) {
+      this.$apollo.mutate({
+        mutation: DESTROY_BUSINESS_UNIT,
+        variables: { id },
+        update: (cache, { data: { destroyBusinessUnit } }) => {
+          const { businessUnits } = cache.readQuery({
+            query: READ_BUSINESS_UNITS
+          });
+
+          const clone = businessUnits.data.filter(bu => bu.id !== destroyBusinessUnit.id);
+
+          cache.writeQuery({
+            query: READ_BUSINESS_UNITS,
+            data: { businessUnits: { ...businessUnits, data: clone } },
+          })
+        }
+      }).then((data) => {
+        console.log(data);
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
   },
   apollo: {
     businessUnit: {

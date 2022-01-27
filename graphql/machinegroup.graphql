@@ -9,7 +9,12 @@ type MachineGroup {
     created_at: DateTime!
     updated_at: DateTime!
 
-    reportData: [ReportData!]
+    reportData: [ReportData!] @hasMany
     machines: [Machine!]
-    businessUnit: BusinessUnit
+    businessUnit: BusinessUnit @belongsToMany
+}
+
+extend type Query @guard {
+    machineGroups: [MachineGroup!]! @paginate(defaultCount: 50)
+    machineGroupsSearch(name: String! @where(operator: "like")): [MachineGroup!]! @all
 }

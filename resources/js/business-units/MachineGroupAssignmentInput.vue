@@ -2,21 +2,20 @@
   <form class="form-row">
     <div class="col">
       <div class="input-group">
-        <label class="sr-only" for="usernameAutocomplete">Username or E-mail</label>
+        <label class="sr-only" for="machineGroupAutocomplete">Machine group name</label>
         <vue-typeahead-bootstrap
-            id="usernameAutocomplete"
+            id="machineGroupAutocomplete"
             class="mr-sm-2"
             v-model="value"
             @hit="$emit('selected', $event)"
             :ie-close-fix="false"
-            :data="usersSearch"
+            :data="machineGroupsSearch"
             :serializer="item => item.name"
-            placeholder="Search name to add"
+            placeholder="Search group to add"
             @input="suggestUser"
         >
           <template slot="suggestion" slot-scope="{ data, htmlText }">
             <span v-html="htmlText"></span>
-            <span class="text-right text-muted" v-text="data.email"></span>
           </template>
         </vue-typeahead-bootstrap>
       </div>
@@ -30,7 +29,7 @@ import VueTypeaheadBootstrap from "vue-typeahead-bootstrap";
 import { debounce } from "lodash";
 
 export default {
-  name: "UserRoleAssignmentInput",
+  name: "MachineGroupAssignmentInput",
   components: {
     'vue-typeahead-bootstrap': VueTypeaheadBootstrap,
   },
@@ -38,13 +37,13 @@ export default {
     return {
       value: '',
       search: '',
-      users: [],
-      selectedUser: null,
-      usersSearch: [],
+      machineGroups: [],
+      selectedMachineGroup: null,
+      machineGroupsSearch: [],
     }
   },
   methods: {
-    suggestUser() {
+    suggestMachineGroup() {
       this.$emit('value', this.value);
 
       debounce(function () {
@@ -53,13 +52,12 @@ export default {
     }
   },
   apollo: {
-    usersSearch: {
+    machineGroupsSearch: {
       query: gql`
-        query UsersSearch ($name: String!) {
-            usersSearch(name: $name) {
+        query MachineGroupsSearch ($name: String!) {
+            machineGroupsSearch(name: $name) {
                 id
                 name
-                email
             }
         }
       `,
