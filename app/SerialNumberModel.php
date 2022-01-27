@@ -2,6 +2,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * The SerialNumberModel class is a base class for all models
@@ -17,27 +19,27 @@ class SerialNumberModel extends Model
     /**
      * Fetch the ReportData model associated with this model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function reportData() {
+    public function reportData(): BelongsTo {
         return $this->belongsTo('App\ReportData', 'serial_number', 'serial_number');
     }
 
     /**
      * Fetch the Machine model associated with this model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function machine() {
+    public function machine(): BelongsTo {
         return $this->belongsTo('App\Machine', 'serial_number', 'serial_number');
     }
 
     /**
      * Fetch events associated with this model.
      *
-     * @return mixed
+     * @return HasMany
      */
-    public function events() {
+    public function events(): HasMany {
         return $this->hasMany('App\Event', 'serial_number', 'serial_number');
     }
 }

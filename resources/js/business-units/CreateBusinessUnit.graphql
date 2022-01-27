@@ -1,0 +1,8 @@
+mutation CreateBusinessUnit($name: String!, $address: String, $link: String) {
+    createBusinessUnit(name: $name, address: $address, link: $link) {
+        id
+        name
+        address
+        link
+    }
+}

@@ -61,31 +61,39 @@ $page = url()->current();
 
     <div class="collapse navbar-collapse bs-navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav mr-auto">
-            @if($dashboard->getCount() === 1)
-                <li {{ Route::is('/') ? 'class="nav-item active"' : 'class="nav-item"' }}>
-                    <a class="nav-link" href="{{ url('/') }}">
+            @if(config('_munkireport.alpha_features.dashboards', false))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/app') }}/#/dashboards/default">
                         <i class="fa fa-th-large"></i>
                         <span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
                     </a>
                 </li>
             @else
-                <li class="nav-item dropdown {{ Route::is('/show/dashboard') ? " active" : "" }}">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dashboardsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-th-large"></i>
-                        <span data-i18n="nav.main.dashboard_plural"></span>
-                        <b class="caret"></b>
-                    </a>
-                    <div class="dashboard dropdown-menu" aria-labelledby="dashboardsMenuLink">
-                    @foreach($dashboard->getDropdownData('show/dashboard', $page) as $item)
-                        <a class="dropdown-item {{ $item->class }}" href="{{ $item->url }}">
-                            <span class="pull-right">{{ strtoupper($item->hotkey) }}</span>
-                            <span class="dropdown-link-text ">{{ $item->display_name }}</span>
+                @if($dashboard->getCount() === 1)
+                    <li {{ Route::is('/') ? 'class="nav-item active"' : 'class="nav-item"' }}>
+                        <a class="nav-link" href="{{ url('/') }}">
+                            <i class="fa fa-th-large"></i>
+                            <span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
                         </a>
-                    @endforeach
-                    </div>
-                </li>
+                    </li>
+                @else
+                    <li class="nav-item dropdown {{ Route::is('/show/dashboard') ? " active" : "" }}">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dashboardsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-th-large"></i>
+                            <span data-i18n="nav.main.dashboard_plural"></span>
+                            <b class="caret"></b>
+                        </a>
+                        <div class="dashboard dropdown-menu" aria-labelledby="dashboardsMenuLink">
+                        @foreach($dashboard->getDropdownData('show/dashboard', $page) as $item)
+                            <a class="dropdown-item {{ $item->class }}" href="{{ $item->url }}">
+                                <span class="pull-right">{{ strtoupper($item->hotkey) }}</span>
+                                <span class="dropdown-link-text ">{{ $item->display_name }}</span>
+                            </a>
+                        @endforeach
+                        </div>
+                    </li>
                 @endif
-
+            @endif
                 <li class="nav-item dropdown {{ Route::is('/show/reports') ? " active" : "" }}">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="reportsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bar-chart-o"></i>

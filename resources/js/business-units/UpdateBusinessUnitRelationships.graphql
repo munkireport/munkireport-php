@@ -1,0 +1,10 @@
+mutation UpdateBusinessUnitRelationships($input: UpdateBusinessUnitRelationshipsInput!) {
+    updateBusinessUnitRelationships(input: $input) {
+        users {
+            id
+            name
+            email
+            role
+        }
+    }
+}

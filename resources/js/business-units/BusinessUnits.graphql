@@ -1,0 +1,13 @@
+query {
+    businessUnits {
+        data {
+            id
+            name
+            address
+            link
+        }
+        paginatorInfo {
+            total
+        }
+    }
+}
