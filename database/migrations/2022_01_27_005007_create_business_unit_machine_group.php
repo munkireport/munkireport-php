@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBusinessUnitUsers extends Migration
+class CreateBusinessUnitMachineGroup extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,23 @@ class CreateBusinessUnitUsers extends Migration
      */
     public function up()
     {
-        Schema::create('business_unit_user', function (Blueprint $table) {
+        Schema::create('business_unit_machine_group', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
 
             $table->unsignedBigInteger('business_unit_id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('role'); // , ['admin', 'manager', 'user', 'archiver', 'nobody']
-            $table->timestamps();
+            $table->unsignedBigInteger('machine_group_id');
 
             $table->foreign('business_unit_id')
                 ->references('id')
                 ->on('business_units')
                 ->onDelete('cascade');
 
-            $table->foreign('user_id')
+            $table->foreign('machine_group_id')
                 ->references('id')
-                ->on('users')
+                ->on('machine_groups')
                 ->onDelete('cascade');
+
         });
     }
 
@@ -40,6 +40,6 @@ class CreateBusinessUnitUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('business_unit_user');
+        Schema::dropIfExists('business_unit_machine_group');
     }
 }

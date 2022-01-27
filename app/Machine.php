@@ -96,6 +96,14 @@ class Machine extends MRModel
         return $this->hasMany('App\Event', 'serial_number', 'serial_number');
     }
 
+    /**
+     * Get a list of comments associated with this machine.
+     * @return HasMany
+     */
+    public function comments(): HasMany {
+        return $this->hasMany('App\Comment', 'serial_number', 'serial_number');
+    }
+
     //// SCOPES
     // Cannot use this while timestamps are disabled.
     // use CreatedSinceScope;

@@ -24,3 +24,19 @@
 - Consider splitting key from group.
 - Consider ADLDAP or SAML claim -> BU membership automatically.
 
+## Planned Features ##
+
+- A user can be part of multiple business units.
+- A root-level business unit will be established to provide non-admin RBAC over all of the business units, like Global Viewers.
+- Machine authentication (via Passphrase) will be disconnected from the machine group.
+  - How are we gonna select a machine group given no information?
+- A SAML attribute claim or OIDC token claim mapping can be provided to assign users to BU's at login time.
+- The UI should provide an easy way to switch into a BU or machine group and back again to see dashboards that focus
+  on only a portion of machines.
+- The selected filter will persist through localStorage so that sign-in/out will preserve filter criteria.
+- Machine groups may have external mapping criteria so that their membership can be managed eg. via Jamf or Intune
+
+## Not Planned ##
+
+- Machine group / BU in listings: not in this scope, in the enhanced query feature.
+

@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+const mixGraphQL = require('./resources/js/laravel-mix-graphql');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -83,13 +83,8 @@ mix.scripts([
 mix.js('resources/js/app.js', 'public/js')
   .extract()
   .sass('resources/sass/app.scss', 'public/css')
-  .vue()
+  .vue().graphql()
   .sourceMaps();
 
 // For routes which still have jQuery, but want to use Vue components
 mix.js('resources/js/mixed-app.js', 'public/js').vue();
-
-// mix.js('resources/js/business-units.js', 'public/js');
-// mix.js('resources/js/profile.js', 'public/js');
-// mix.js('resources/js/users.js', 'public/js');
-

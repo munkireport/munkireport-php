@@ -1,14 +1,22 @@
-require('./bootstrap');
-
 import Vue from 'vue';
+
 import i18next from 'i18next';
 import Fetch from 'i18next-fetch-backend';
 import VueI18Next from '@panter/vue-i18next';
+
 import VueRouter from 'vue-router';
+
 import VueApollo from 'vue-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 
 import routes from './routes';
 
@@ -30,6 +38,8 @@ const apolloClient = new ApolloClient({
 Vue.use(VueI18Next);
 Vue.use(VueApollo);
 Vue.use(VueRouter);
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
@@ -42,6 +52,11 @@ const I18nOptions = {
   backend: {
     loadPath: '/locales/{{lng}}/{{ns}}.json',
     allowMultiLoading: false,
+  },
+  interpolation: {
+    // To satisfy i18n interpolation used in MunkiReport v5
+    // prefix: '__',
+    // suffix: '__',
   }
 };
 

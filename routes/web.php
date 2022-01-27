@@ -90,8 +90,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/manager/delete_machine/{serial_number}', 'ManagerController@delete_machine');
 
+    // SPA Landing site
+    Route::get('/app', 'AppController@index');
+
     if (config('_munkireport.alpha_features.dashboards', false)) {
-        Route::get('/dashboards', 'DashboardsController@index');
+        Route::get('/dashboards/{slug?}', 'DashboardsController@index');
     }
 
     //Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
