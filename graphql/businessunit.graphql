@@ -30,3 +30,15 @@ input BusinessUnitUsersPivot {
     "The role that the user will have for machines located in this business unit."
     role: String!
 }
+
+extend type Query @guard {
+    businessUnits: [BusinessUnit!]! @paginate(defaultCount: 50)
+    businessUnit(id: ID @eq): BusinessUnit @find
+}
+
+extend type Mutation @guard {
+    createBusinessUnit(name: String!, address: String, link: String): BusinessUnit! @create
+    updateBusinessUnit(id: ID!, name: String, address: String, link: String): BusinessUnit @update
+    updateBusinessUnitRelationships(input: UpdateBusinessUnitRelationshipsInput! @spread): BusinessUnit @update
+    destroyBusinessUnit(id: ID!): BusinessUnit @delete
+}

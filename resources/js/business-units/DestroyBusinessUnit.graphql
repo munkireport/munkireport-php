@@ -1,0 +1,5 @@
+mutation DestroyBusinessUnit($id: ID!) {
+    destroyBusinessUnit(id: $id) {
+        id
+    }
+}

@@ -18,10 +18,8 @@
 </template>
 
 <script>
-import ListView from './ListView';
 export default {
-  name: "ListDetailView",
-  components: {ListView}
+  name: "ListDetailView"
 }
 </script>
 
