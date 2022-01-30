@@ -3,6 +3,7 @@
 namespace Compatibility\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
 
 /**
  * The FilterScope provides partial compatibility to models which inherit Compatibility\Capsule\MRModel and use
@@ -22,8 +23,10 @@ trait FilterScope
      * @param \Illuminate\Database\Eloquent\Builder $query Query builder
      * @param string $what empty string or 'groupOnly'
      */
-//    public function scopeFilter(Builder $query, string $what = ''): Builder
-//    {
-//
-//    }
+    public function scopeFilter(Builder $query, string $what = ''): Builder
+    {
+        Log::critical("not implemented filter()");
+        throw new \Exception("filter() scope not implemented");
+        return $query;
+    }
 }

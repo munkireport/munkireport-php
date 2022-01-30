@@ -30,7 +30,7 @@ class InventoryController extends Controller
         try{
             $arr = unserialize($request->get('items'));
         }
-        catch (Exception $e){
+        catch (\Exception $e){
             Log::error($e);
             return response(serialize(array('error' => 'Could not unserialize items')));
         }

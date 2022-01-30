@@ -88,7 +88,7 @@ class MachinePolicy
      */
     public function delete(User $user, Machine $machine)
     {
-        if ($user->is_admin) return true;
+        if ($user->isAdmin()) return true;
 
         $managerOfBusinessUnits = $user->managerOfBusinessUnits()->get('business_units.id');
 

@@ -20,7 +20,6 @@ abstract class View
         if (is_array($vars)) {
             $this->vars=$vars;
         }
-        return $this;
     }
 
     public function __set($key, $var)

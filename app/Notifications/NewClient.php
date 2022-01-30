@@ -27,10 +27,10 @@ class NewClient extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
-    public function via(Notifiable $notifiable): array
+    public function via($notifiable): array
     {
         if ($notifiable instanceof User) {
             $channels = $notifiable->contactMethods()->get('channel')->toArray();
@@ -43,10 +43,10 @@ class NewClient extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
-    public function toArray(Notifiable $notifiable): array
+    public function toArray($notifiable): array
     {
         return [
             //
@@ -56,10 +56,10 @@ class NewClient extends Notification
     /**
      * Get the slack representation of the notification.
      *
-     * @param Notifiable $notifiable
+     * @param mixed $notifiable
      * @return SlackMessage
      */
-    public function toSlack(Notifiable $notifiable): SlackMessage
+    public function toSlack($notifiable): SlackMessage
     {
         return (new SlackMessage)
             ->from(config('_munkireport.notifications.slack.from', 'MunkiReport'), ':ghost:')

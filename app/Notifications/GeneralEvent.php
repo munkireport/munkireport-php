@@ -82,7 +82,7 @@ class GeneralEvent extends Notification
     /**
      * Get the slack representation of the notification.
      *
-     * @param Notifiable $notifiable
+     * @param mixed $notifiable
      * @return SlackMessage
      */
     public function toSlack($notifiable): SlackMessage

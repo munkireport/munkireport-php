@@ -14,7 +14,7 @@ interface LegacyBusinessUnit
     /**
      * Create and save a business unit from the given array (from $_POST).
      *
-     * @param $post_array
+     * @param array $post_array
      * @return mixed
      */
     public function saveUnit($post_array);

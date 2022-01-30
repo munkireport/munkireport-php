@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * which joins to the network table.
  *
  * @package App
+ * @property string $ipv4ip
+ * @property string $ipv6ip
  */
 class Network extends SerialNumberModel
 {

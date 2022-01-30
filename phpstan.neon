@@ -17,3 +17,6 @@ parameters:
         - ./*/*/FileToBeExcluded.php
 
     checkMissingIterableValueType: false
+
+    bootstrapFiles:
+      - compatibility/shims/v5.php

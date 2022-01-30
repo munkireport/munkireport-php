@@ -11,7 +11,13 @@ namespace Compatibility\Kiss;
 class Database
 {
 
-    private $connection, $dbh, $error;
+    private $connection;
+
+    /**
+     * @var \PDO database connection handle
+     */
+    private $dbh;
+    private $error;
 
     public function __construct($connection)
     {
@@ -23,7 +29,7 @@ class Database
      *
      * Set up a database connection
      *
-     * @return this or FALSE on error
+     * @return Database|false or FALSE on error
      */
     public function connect()
     {
@@ -50,11 +56,14 @@ class Database
     private function getDSN()
     {
         extract($this->connection, EXTR_SKIP);
-        
+        if (!isset($driver)) throw new \Exception("No driver provided in connection configuration");
         switch ($driver) {
             case 'sqlite':
+                if (!isset($database)) throw new \Exception("No database specified for driver sqlite");
                 return "sqlite:{$database}";
             case 'mysql':
+                if (!isset($host)) throw new \Exception("No host specified for driver MySQL");
+                if (!isset($database)) throw new \Exception("No database specified for driver MySQL");
                 return isset($port)
                     ? "mysql:host={$host};port={$port};dbname={$database}"
                     : "mysql:host={$host};dbname={$database}";
@@ -98,15 +107,14 @@ class Database
      *
      * Get database handle and connect if necessary
      *
-     * @return $dbh or false
+     * @return \PDO|false
      */
     public function getDBH()
     {
-        if (! $this->dbh) {
-            if (! $this->connect()) {
-                return false;
-            }
+        if (!$this->connect()) {
+            return false;
         }
+
         $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         return $this->dbh;
     }
@@ -141,7 +149,7 @@ class Database
      *
      * Calculate database size
      *
-     * @return boolean true on succes, false on failure
+     * @return float|void database size
      */
     public function size()
     {
@@ -159,7 +167,7 @@ class Database
      *
      * Calculate database size
      *
-     * @return float size in mb
+     * @return float|void size in mb
      */
     public function sizeMySQL()
     {
@@ -180,7 +188,7 @@ class Database
      *
      * Calculate database size
      *
-     * @return boolean true on succes, false on failure
+     * @return float Size of the database
      */
     public function sizeSQLite()
     {
@@ -196,7 +204,7 @@ class Database
      *
      * Retrieve last error message
      *
-     * @return string error message
+     * @return mixed error message or false if an exception was thrown
      */
     public function fetchOne($sql)
     {

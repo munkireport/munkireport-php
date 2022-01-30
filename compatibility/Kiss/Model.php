@@ -6,6 +6,11 @@ use Compatibility\Kiss\Core\Model as KISS_Model;
 //===============================================================
 // Model/ORM
 //===============================================================
+
+/**
+ * @deprecated use Eloquent ORM
+ * @property string $serial_number this property not guaranteed but in practice it will succeed every time
+ */
 class Model extends KISS_Model
 {
     protected $rt = array(); // Array holding types
@@ -44,10 +49,8 @@ class Model extends KISS_Model
         switch ($this->get_driver()) {
             case 'sqlite':
                 return "TRIM($string, '$remove')";
-                break;
             case 'mysql':
                 return "TRIM('$remove' FROM $string)";
-                break;
         }
     }
 
@@ -127,7 +130,7 @@ class Model extends KISS_Model
 
         if ($dbh->exec($sql) === false) {
             $err = $dbh->errorInfo();
-            throw new Exception('database error: '.$err[2]);
+            throw new \Exception('database error: '.$err[2]);
         }
     }
 
@@ -135,7 +138,7 @@ class Model extends KISS_Model
      * Retrieve one considering machine_group membership
      * use this instead of retrieveOne
      *
-     * @return void
+     * @return Model|false
      * @author
      **/
     public function retrieve_record($serial_number, $where = '', $bindings = array())
@@ -159,7 +162,7 @@ class Model extends KISS_Model
      * Delete one considering machine_group membership
      * use this instead of deleteWhere
      *
-     * @return void
+     * @return bool
      * @author
      **/
     public function delete_record($serial_number, $where = '', $bindings = array())
@@ -183,7 +186,7 @@ class Model extends KISS_Model
      * Retrieve many considering machine_group membership
      * use this instead of retrieveMany
      *
-     * @return void
+     * @return array
      * @author
      **/
     public function retrieve_records($serial_number, $where = '', $bindings = array())
@@ -207,9 +210,9 @@ class Model extends KISS_Model
     /**
      * Count records
      *
-     * @param string where
-     * @param mixed bindings
-     * @return void
+     * @param string $wherewhat where
+     * @param mixed $bindings statement parameters
+     * @return int
      * @author abn290
      **/
     public function count($wherewhat = '', $bindings = '')

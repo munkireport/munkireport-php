@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local;
 use munkireport\lib\Modules;
@@ -30,10 +33,10 @@ class InstallController extends Controller
     /**
      * Show all available modules
      *
-     * @param optional string format the output
-     * @author
+     * @param ?string $format string format the output, one of 'config', 'env', 'autopkg', or 'json'. Defaults to newline text
+     * @returns Response|JsonResponse|View
      **/
-    public function dump_modules($format = '')
+    public function dump_modules(?string $format = '')
     {
         $modules = array_keys($this->moduleManager->getModuleList());
 

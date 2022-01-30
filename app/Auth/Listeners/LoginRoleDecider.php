@@ -95,7 +95,7 @@ class LoginRoleDecider
 
             if ($bu) {
                 $businessUnitData['role'] = $bu->property; // manager, user
-                $businessUnitData['roleWhy'] = 'Group "'. $group . '" found in Business Unit '. $bu->unitid;
+                $businessUnitData['roleWhy'] = 'One of group(s) "'. implode(',', $groupsPrefixed) . '" found in Business Unit '. $bu->unitid;
                 $businessUnitData['businessUnitId'] = $bu->unitid;
                 $foundInBusinessUnit = true;
             }

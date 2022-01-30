@@ -5,14 +5,6 @@ use \PDO;
 
 class Tablequery
 {
-
-    private $cfg = array();
-
-    public function __construct($cfg = '')
-    {
-        $this->cfg = $cfg;
-    }
-
     // Clean unsafe strings
     public function dirify($string, $chars = '\w')
     {
@@ -34,7 +26,7 @@ class Tablequery
     /**
      * Retrieve all entries for serial
      *
-     * @param string serial
+     * @param array $cfg an array of query options for 'columns', 'search', etc.
      * @return array
      * @author abn290
      **/
@@ -144,6 +136,7 @@ class Tablequery
             $from
             $where";
 
+        /** @phpstan-ignore-next-line */
         if ($debug) {
             print $sql;
         }
@@ -223,6 +216,7 @@ class Tablequery
                 $from
                 $sWhere";
 
+            /** @phpstan-ignore-next-line */
             if ($debug) {
                 echo "\nFiltered count: $sql";
                 print_r($bindings);
@@ -250,6 +244,7 @@ class Tablequery
         $sLimit
         ";
 
+        /** @phpstan-ignore-next-line */
         if ($debug) {
             echo "\nFiltered: $sql";
         }

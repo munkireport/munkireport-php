@@ -9,7 +9,7 @@ use munkireport\lib\Widgets;
 class Legacy extends Component
 {
     /**
-     * @var {string} Widget name/template name
+     * @var string Widget name/template name
      */
     public $name;
 
@@ -29,7 +29,7 @@ class Legacy extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return string
      */
     public function render(): string
     {

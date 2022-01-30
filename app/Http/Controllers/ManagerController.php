@@ -61,6 +61,7 @@ class ManagerController extends Controller
         // Affected rows counter
         $cnt = 0;
 
+        $table = "(undefined)";
         try {
             // Delete entries
             foreach ($tables as $table) {
@@ -79,7 +80,7 @@ class ManagerController extends Controller
             // Return status
             $status['status'] = 'success';
             $status['rowcount'] = $cnt;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $status['status'] = 'error';
             $status['message'] = sprintf('Delete failed for table %s: %s', $table, $e->getMessage());
         }

@@ -101,8 +101,7 @@ class TagController extends Controller
             $out['status'] = 'error';
         }
 
-        $obj = new View();
-        $obj->view('json', array('msg' => $out));
+        return view('json', ['msg' => $out]);
     }
     
     /**

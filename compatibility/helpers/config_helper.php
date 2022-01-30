@@ -43,7 +43,8 @@ function configAppendArray($configArray, $namespace = '')
 /**
  * Add config file to global config array.
  *
- * @param array $configPath
+ * @param string $configPath
+ * @param string $namespace
  * @deprecated Try to use package file publishing with modules, and then access config via config('module.setting')
  */
 function configAppendFile($configPath, $namespace = '')
@@ -65,8 +66,8 @@ function configAppendFile($configPath, $namespace = '')
  *
  * This used to refer to the $GLOBALS['conf'] variable.
  *
- * @param $cf_item
- * @param string $default
+ * @param string $cf_item The configuration item to fetch
+ * @param mixed $default The default to return if the configuration item was not found. can be any type.
  * @return mixed|string
  * @deprecated Use config('section.name', 'default')
  */

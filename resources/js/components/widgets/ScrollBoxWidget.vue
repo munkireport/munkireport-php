@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Widget from '../Widget';
+import Widget from '../Widget.vue';
 
 export default {
   name: "ScrollBoxWidget",
