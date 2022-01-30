@@ -34,8 +34,8 @@ class Legacy_munkireport
      *
      * Convert to new format
      *
-     * @param type var Description
-     * @return {11:return type}
+     * @param array $report The pass-by-reference report array
+     * @return Legacy_munkireport
      */
     public function parse(&$report)
     {

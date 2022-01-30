@@ -54,14 +54,14 @@ class ModuleCommand extends Command
     /** 
      * Module name
      * 
-     * @var array
+     * @var ?string
      */
     protected $moduleName = null;
 
     /** 
      * Module install path
      * 
-     * @var array
+     * @var ?string
      */
     protected $moduleInstallPath = null;
 
@@ -111,7 +111,7 @@ class ModuleCommand extends Command
         $numberOfFields = $this->askNumberOfFields( $default = 3 );
         $this->moduleTable = $this->askFieldDetails($numberOfFields, $this->moduleName);
 
-        if($this->choice("Do you need to store more than one row per machine?", ["yes", "no"], 1) == "yes"){
+        if($this->choice("Do you need to store more than one row per machine?", ["yes", "no"], "1") == "yes"){
             $this->moduleTable['serial_number']['index'] = 'yes';
         }
 
@@ -119,7 +119,7 @@ class ModuleCommand extends Command
         $headers = ["Column", "Type", "Indexed", "English"];
         $this->table($headers, $this->_toTable($this->moduleTable));
 
-        if ( ! $this->confirm('Do you wish to continue?', 'yes')) {
+        if ( ! $this->confirm('Do you wish to continue?', true)) {
            throw new RuntimeException("Better next time!");
         }
 
@@ -262,7 +262,7 @@ class ModuleCommand extends Command
     {
         $this->call('make:mr_migration', [
             'path' => $this->moduleInstallPath,
-            '--field' => $this->tableToMigrationFields($this->moduleTable),
+            '--field' => $this->tableToMigrationFields(),
             '--quiet' => true,
         ]);
     }
@@ -304,7 +304,7 @@ class ModuleCommand extends Command
             $localesdir.'en.json',
             json_encode(
                 [
-                    'column' => $this->tableToLocales($this->moduleTable),
+                    'column' => $this->tableToLocales(),
                     'listing' => [
                         'title' => $moduleFullName,
                     ],
@@ -312,7 +312,7 @@ class ModuleCommand extends Command
                         'title' => $moduleFullName,
                     ],
                     'title' => $moduleFullName,
-                    'widget' => $this->tableToWidgets($this->moduleTable),
+                    'widget' => $this->tableToWidgets(),
                 ],
                 JSON_PRETTY_PRINT
             )
@@ -420,8 +420,7 @@ class ModuleCommand extends Command
     {
         return $this->choice(
             "Where do you want to generate the module?",
-            $this->module_manager->getModuleSearchPaths(),
-            0
+            $this->module_manager->getModuleSearchPaths()
         );
     }
 
@@ -464,8 +463,8 @@ class ModuleCommand extends Command
         while($number_of_fields > $field_number++){
             $field_locale = $this->ask("What is the (short) English description of field $field_number?", "Field $field_number");
             $field_name = $this->ask("What is the name of field $field_number?", Str::slug($field_locale, '_'));
-            $field_type = $this->choice("What is the type of field $field_number?", $field_types, 0);
-            $field_index = $this->choice("Create index for field $field_number?", ['yes', 'no'], 0);
+            $field_type = $this->choice("What is the type of field $field_number?", $field_types);
+            $field_index = $this->choice("Create index for field $field_number?", ['yes', 'no'], 'no');
             $field_widget = $this->askWidget($field_type, $field_number);
             $table[$field_name] = [
                 'column' => $field_name,
@@ -496,7 +495,7 @@ class ModuleCommand extends Command
             default:
                 return 'no';
         }
-        return $this->choice("Create widget for field $field_number?", $choice, 0);
+        return $this->choice("Create widget for field $field_number?", $choice, 'no');
     }
 
     private function _toTable($table)

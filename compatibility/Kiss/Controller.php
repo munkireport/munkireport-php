@@ -48,8 +48,7 @@ class Controller extends KISS_Controller
      *
      * Create a database connection when user is authorized
      *
-     * @return type
-     * @throws conditon
+     * @return void
      **/
     public function connectDBWhenAuthorized()
     {

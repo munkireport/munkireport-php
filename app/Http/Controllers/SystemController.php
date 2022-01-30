@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
 use munkireport\lib\Dashboard;
-use munkireport\lib\Database;
+use Compatibility\Kiss\Database;
 use munkireport\lib\Modules;
 
 /**

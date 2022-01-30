@@ -10,7 +10,7 @@ class ReportDataProcessor extends Processor implements ProcessorContract
     /**
      * Process data sent by postflight
      *
-     * @param string data
+     * @param string $data data submitted by the client script(s)
      * @author abn290
      **/
     public function run(string $data): void

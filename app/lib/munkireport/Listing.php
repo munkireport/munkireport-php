@@ -22,7 +22,6 @@ class Listing
     {
         $this->listingData = $listingData;
         $this->template = 'listings/default';
-        return $this;
     }
 
     public function render($data = [])

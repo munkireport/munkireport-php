@@ -44,8 +44,7 @@ class ClientsController extends Controller
             return response()->json([$out]);
         } else {
             return response()
-                    ->setStatusCode(403)
-                    ->json(['error' => 'Not authorized for serial number']);
+                    ->json(['error' => 'Not authorized for serial number'], 403);
         }
     }
 
@@ -72,7 +71,7 @@ class ClientsController extends Controller
     /**
      * Detail page of a machine
      *
-     * @param string serial
+     * @param string $sn serial number
      * @author abn290
      **/
     public function detail(string $sn = '')

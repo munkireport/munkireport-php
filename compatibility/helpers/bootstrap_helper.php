@@ -28,8 +28,8 @@ function SslRequest() {
 /**
  * Get session item.
  *
- * @param string session item
- * @param string default value (optional)
+ * @param string $sess_item session item
+ * @param ?string $default default value (optional)
  * @deprecated Use session() helper.
  * @todo Still used in laps module, cannot be fully deprecated.
  * @author AvB

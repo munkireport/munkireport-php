@@ -88,6 +88,7 @@ class MunkiReportMakeMigrationCommand extends Command
     public function validateMigrationName($migrations_dir, $migration_name, $module)
     {
         $initial_migration_found = false;
+        $migration_filename = null;
         foreach(scandir($migrations_dir) as $migration_filename){
           $regex = '/' . $module . '(_init)?\.php/';
           if (preg_match($regex, $migration_filename)){

@@ -9,7 +9,26 @@ class ModuleController extends Controller
 {
     public $module = 'default';
     public $action = 'index';
+
+    /**
+     * @var Modules
+     */
     private $moduleManager;
+
+    /**
+     * @var string The class name from a module to invoke
+     */
+    private $module_classname;
+
+    /**
+     * @var mixed The instance of the module_classname to invoke.
+     */
+    private $module_obj;
+
+    /**
+     * @var array|false|string[] Parameters passed to the module action
+     */
+    private $params;
 
     public function __construct()
     {
@@ -117,13 +136,24 @@ class ModuleController extends Controller
         call_user_func_array(array( $this->module_obj, $this->action ), $this->params);
     }
 
-    //Override this function for your own custom 404 page
+    /**
+     * Render a 404 response and then exit immediately.
+     *
+     * @deprecated Throw a NotFoundException and let laravel render your error.
+     * @param string $msg An error message to display in the body
+     */
     public function requestNotFound($msg = '')
     {
         header("HTTP/1.0 404 Not Found");
         die('<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>'.$msg.'<p>The requested URL was not found on this server.</p><p>Please go <a href="javascript: history.back( 1 )">back</a> and try again.</p><hr /><p>Powered By: <a href="http://kissmvc.com">KISSMVC</a></p></body></html>');
     }
 
+    /**
+     * Render a 404 response and then exit immediately.
+     *
+     * @deprecated abort(403) and let laravel render the error.
+     * @param string $msg An error message to display in the body
+     */
     public function requestForbidden($msg = '')
     {
         header("HTTP/1.0 403 Forbidden");

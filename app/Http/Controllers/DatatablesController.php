@@ -26,7 +26,7 @@ class DatatablesController extends Controller
 
         try {
             // Get model
-            $obj = new Tablequery($cfg);
+            $obj = new Tablequery();
             return response()->json($obj->fetch($cfg));            
         } catch (\Exception $e) {
             return response()->json([

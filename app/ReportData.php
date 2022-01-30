@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use Compatibility\Scopes\FilterScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,11 +12,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use munkireport\models\MRModel;
 use Laravel\Scout\Searchable;
 
+/**
+ * @property int $id
+ * @property string $serial_number
+ * @property string $console_user
+ * @property string $long_username
+ * @property string $remote_ip
+ * @property int $uptime
+ * @property int $machine_group
+ * @property int $reg_timestamp
+ * @property int $timestamp
+ * @property int $uid
+ * @property int $archive_status
+ */
 class ReportData extends MRModel
 {
     use HasFactory;
-
     use Searchable;
+    use FilterScope;
 
     /**
      * @inheritDoc

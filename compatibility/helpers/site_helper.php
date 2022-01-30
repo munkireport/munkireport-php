@@ -141,7 +141,7 @@ function add_mysql_opts(&$conn)
  * @param string $url
  * @param bool $fullurl
  * @param array $queryArray
- * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\UrlGenerator|\Illuminate\Foundation\Application|string
+ * @return string
  * @deprecated Please use the url() helper from the Laravel framework instead.
  */
 function mr_url($url = '', $fullurl = false, $queryArray = [])
@@ -271,8 +271,8 @@ function get_machine_group(string $serial_number = '')
  * Get filter for machine_group membership
  *
  * @return string filter clause
- * @var string how to address the reportdata table - default 'reportdata'
- * @var string optional prefix default 'WHERE'
+ * @param string $reportdata how to address the reportdata table - default 'reportdata'
+ * @param string $prefix optional prefix default 'WHERE'
  * @author
  **/
 function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
@@ -363,7 +363,7 @@ function store_event(
         );
         Notification::send(User::all(), new GeneralEvent($serial, $module, $type, $msg, $data));
     }
-    Event_model::updateOrCreate(
+    \App\Event::updateOrCreate(
         [
             'serial_number' => $serial,
             'module' => $module,
@@ -394,13 +394,13 @@ function delete_event($serial_number, $module = '')
         $where[] = ['module', $module];
     }
 
-    return Event_model::where($where)->delete();
+    return \App\Event::where($where)->delete();
 }
 
 /**
  * Truncate a string to a maximum length
  *
- * @param $string
+ * @param string $string
  * @param int $limit
  * @param string $pad
  * @return string
@@ -468,13 +468,13 @@ function jsonError(string $msg = '', int $status_code = 400, bool $exit = true):
  * @param int $status_code The status code that should be sent in the response body AND header
  * @param bool $exit If true, exit right after emitting response.
  * @param bool $return If true, return response object rather than emitting response (For Laravel Controllers)
- * @return \Illuminate\Http\JsonResponse|object
+ * @return \Illuminate\Http\JsonResponse|object|null
  * @deprecated please use response()->json() instead if possible.
  * @todo Cannot remove this until applications, disk_report, managedinstalls, and power are updated.
  */
-function jsonView($msg = '', int $status_code = 200, bool $exit = false, bool $return = false): ?JsonResponse
+function jsonView($msg = '', int $status_code = 200, bool $exit = false, bool $return = false)
 {
-    $response = response()->json($msg)->setStatusCode($status_code);
+    $response = response()->json($msg, $status_code);
 
     if (is_array($msg) && isset($msg['error']) && $msg['error'] && $status_code == 200) {
         $response = $response->setStatusCode(400);

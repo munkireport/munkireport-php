@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use munkireport\lib\Dashboard;
 use munkireport\lib\Listing;
@@ -76,7 +77,7 @@ class ShowController extends Controller
      *
      * @param string $module Name of the module where the report is defined.
      * @param string $name The name of the report definition
-     * @return \never|void
+     * @return void|Response
      */
     public function report(string $module = '', string $name = '')
     {

@@ -17,6 +17,10 @@ use Illuminate\Database\Eloquent\Model;
  * Property names CAN be duplicate (i.e machine_group can have multiple values)
  *
  * @package App
+ * @property int $id
+ * @property int $unitid
+ * @property string $property
+ * @property string $value
  */
 class BusinessUnit extends Model
 {
@@ -85,7 +89,8 @@ class BusinessUnit extends Model
     public static function memberships(string $userPrincipal, array $groupNames): array {
         $value = [];
         $userMemberships = self::members()
-            ->where('value', $userPrincipal);
+            ->where('value', $userPrincipal)
+            ->get();
 
         foreach ($userMemberships as $membership) {
             $value += $membership->unitid;
@@ -94,7 +99,8 @@ class BusinessUnit extends Model
         $prefixGroup = function($name) { return "@".$name; };
         $groupsPrefixed = array_map($prefixGroup, $groupNames);
         $groupMemberships = self::members()
-            ->whereIn('value', $groupsPrefixed);
+            ->whereIn('value', $groupsPrefixed)
+            ->get();
 
         foreach ($groupMemberships as $membership) {
             $value += $membership->unitid;

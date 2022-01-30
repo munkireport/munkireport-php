@@ -90,7 +90,7 @@ abstract class Model
     /**
      * Prepare statement with error handling
      *
-     * @return PDOStatement PDO statement object
+     * @return \PDOStatement PDO statement object
      * @author AvB
      **/
     public function prepare($sql, $driver_options = array())
@@ -99,7 +99,7 @@ abstract class Model
 
         if (! $stmt = $dbh->prepare($sql, $driver_options)) {
             $err = $dbh->errorInfo();
-            throw new Exception($sql.' failed with the following error: '.$err[2]);
+            throw new \Exception($sql.' failed with the following error: '.$err[2]);
         }
 
         return $stmt;
@@ -108,7 +108,7 @@ abstract class Model
     /**
      * Execute statement with error handling
      *
-     * @param $stmt \PDOStatement
+     * @param \PDOStatement $stmt
      * @author AvB
      **/
     public function execute(&$stmt, $params = array())
@@ -118,7 +118,7 @@ abstract class Model
 
         if (! $result) {
             $err = $stmt->errorInfo();
-            throw new Exception('database error: '.$err[2]);
+            throw new \Exception('database error: '.$err[2]);
         }
 
         return true;

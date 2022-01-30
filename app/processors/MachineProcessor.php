@@ -10,7 +10,7 @@ class MachineProcessor extends Processor implements ProcessorContract
     /**
      * Process data sent by postflight
      *
-     * @param string data
+     * @param string $data data submitted by the client script(s)
      * @author abn290
      **/
     public function run(string $data): void
@@ -42,7 +42,7 @@ class MachineProcessor extends Processor implements ProcessorContract
             $mult = 10000;
             $mylist['os_version'] = 0;
             foreach ($digits as $digit) {
-                $mylist['os_version'] += $digit * $mult;
+                $mylist['os_version'] += intval($digit) * $mult;
                 $mult = $mult / 100;
             }
         }

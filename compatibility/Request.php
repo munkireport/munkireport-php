@@ -2,6 +2,7 @@
 namespace Compatibility;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\HandlerStack;
@@ -89,7 +90,7 @@ class Request
         }
     }
 
-    private function dump_exception($e)
+    private function dump_exception(GuzzleException $e)
     {
         printf("<pre>ERROR: %s</pre>", htmlentities($e->getMessage()));
         printf("<pre>REQUEST:\n%s</pre>", Psr7\str($e->getRequest()));

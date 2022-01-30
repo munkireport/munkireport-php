@@ -21,7 +21,7 @@ class Controller extends BaseController
 
     protected function authorized()
     {
-        Log::warn('Controller->authorized() called. This should be deprecated');
+        Log::warning('Controller->authorized() called. This should be deprecated');
         return true;
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 class Bargraph extends Component
 {
     /**
-     * @var {string} Widget name/template name
+     * @var string Widget name/template name
      */
     public $name;
 

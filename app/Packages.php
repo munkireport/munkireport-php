@@ -17,6 +17,16 @@ use Illuminate\Support\Str;
  */
 class Packages
 {
+    /**
+     * @var Composer Composer instance
+     */
+    private $composer;
+
+    /**
+     * @var BufferIO Buffered I/O required by Composer to read from filesystem
+     */
+    private $io;
+
     public function __construct()
     {
         $io = new BufferIO();
@@ -38,7 +48,7 @@ class Packages
     {
         $mr = $this->composer->getPackage();
 
-        if ($mr === null) {
+        if ($mr == null) {
             Log::alert('composer returned a null package, maybe you have removed composer.json/composer.lock or it is not accessible by the webserver');
             Log::info($this->io->getOutput());
 
@@ -53,7 +63,7 @@ class Packages
             if ($required instanceof Link)
             {
                 $p = $localRepo->findPackage($required->getTarget(), $required->getConstraint());
-                if ($p === null) continue;
+                if ($p == null) continue;
                 $packages[] = $p->getPrettyString();
             }
         }
@@ -73,7 +83,7 @@ class Packages
     {
         $mr = $this->composer->getPackage();
 
-        if ($mr === null) {
+        if ($mr == null) {
             Log::alert('composer returned a null package, maybe you have removed composer.json/composer.lock or it is not accessible by the webserver');
             Log::info($this->io->getOutput());
 

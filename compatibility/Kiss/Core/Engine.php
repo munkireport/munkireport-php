@@ -60,8 +60,6 @@ abstract class Engine
         }
         call_user_func_array(array( $this->controller_obj, $this->action ), $this->params);
 
-        return $this;
-
     }
 
     // Check if action contains valid chars
@@ -122,8 +120,8 @@ abstract class Engine
     /**
      * Set the URI String
      *
-     * @param   string
-     * @return  void
+     * @param string $str
+     * @return void
      */
     public function setUriString($str)
     {

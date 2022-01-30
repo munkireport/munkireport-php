@@ -84,7 +84,7 @@ class AdminController extends Controller
 
             if (! is_array($val)) {
                 if ($val) {
-                    $machine_group->id = '';
+                    //$machine_group->id = '';
                     $machine_group->retrieveOne('groupid=? AND property=?', array($groupid, $property));
                     $machine_group->groupid = $groupid;
                     $machine_group->property = $property;
@@ -124,7 +124,7 @@ class AdminController extends Controller
      * @return JsonResponse
      * @throws \Exception
      */
-    public function remove_machine_group(Request $request, int $groupid): JsonResponse
+    public function remove_machine_group(Request $request, ?int $groupid): JsonResponse
     {
         Gate::authorize('global');
 
@@ -136,7 +136,7 @@ class AdminController extends Controller
             $mg = new Machine_group;
             if ($out['success'] = $mg->deleteWhere('groupid=?', $id)) {
                 // Delete from business unit
-                $out['successs'] = Business_unit::where('property', 'machine_group')
+                $out['successs'] = CompatibleBusinessUnit::where('property', 'machine_group')
                     ->where('value', $id)
                     ->delete();
             }
@@ -152,9 +152,6 @@ class AdminController extends Controller
 
     /**
      * Save Business Unit
-     *
-     * @return void
-     * @author
      **/
     public function save_business_unit(Request $request): JsonResponse
     {
@@ -172,9 +169,6 @@ class AdminController extends Controller
 
     /**
      * remove_business_unit
-     *
-     * @return void
-     * @author
      **/
     public function remove_business_unit(): JsonResponse
     {
@@ -218,9 +212,6 @@ class AdminController extends Controller
      *       "unitid": 1
      *   }
      *
-     *
-     * @return void
-     * @author
      **/
     public function get_bu_data(): JsonResponse
     {

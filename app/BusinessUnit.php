@@ -46,20 +46,20 @@ class BusinessUnit extends Model
      * Retrieve users who are managers of this business unit.
      */
     public function managers(): BelongsToMany {
-        return $this->members()->wherePivot('role', 'manager');
+        return $this->users()->wherePivot('role', 'manager');
     }
 
     /**
      * Retrieve users who are archivers in this business unit.
      */
     public function archivers(): BelongsToMany {
-        return $this->members()->wherePivot('role', 'archiver');
+        return $this->users()->wherePivot('role', 'archiver');
     }
 
     /**
      * Retrieve users who are basic users in this business unit.
      */
     public function basicUsers(): BelongsToMany {
-        return $this->members()->wherePivot('role', 'user');
+        return $this->users()->wherePivot('role', 'user');
     }
 }

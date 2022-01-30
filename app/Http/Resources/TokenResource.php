@@ -4,6 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $last_used_at
+ * @property string $created_at
+ */
 class TokenResource extends JsonResource
 {
     /**
