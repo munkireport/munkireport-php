@@ -22,6 +22,7 @@ class MachineGroup extends Model
     const PROP_KEY = 'key';
 
     protected $table = 'machine_group';
+    public $timestamps = false;
 
     protected $fillable = [
         'groupid',
@@ -32,6 +33,7 @@ class MachineGroup extends Model
     protected $casts = [
         'groupid' => 'integer'
     ];
+
 
     /**
      * Create a machine group by passing the values for the `name` and `key` properties.
