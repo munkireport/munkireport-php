@@ -34,11 +34,11 @@ trait FilterScope
             $query->whereIn('machine_group', $groups);
         }
 
-        if ($what == 'groupOnly') {
+        if ($what != 'groupOnly') {
             if (is_archived_filter_on()) {
-                $this->where('reportdata.archive_status', 0);
+                $query->where('reportdata.archive_status', 0);
             } elseif (is_archived_only_filter_on()) {
-                $this->where('reportdata.archive_status', '!=', 0);
+                $query->where('reportdata.archive_status', '!=', 0);
             }
         }
 

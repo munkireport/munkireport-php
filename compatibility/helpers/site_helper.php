@@ -91,15 +91,15 @@ function error(string $msg, $i18n = ''): void
  */
 function getdbh(): PDO
 {
-    Log::channel('deprecations')
-        ->warning(
-            'This function will be deprecated in future, please use db query builder or eloquent.',
-            [
-                'function' => __FUNCTION__,
-                'file' => __FILE__,
-                'line' => __LINE__,
-            ]
-        );
+//    Log::channel('deprecations')
+//        ->warning(
+//            'This function will be deprecated in future, please use db query builder or eloquent.',
+//            [
+//                'function' => __FUNCTION__,
+//                'file' => __FILE__,
+//                'line' => __LINE__,
+//            ]
+//        );
     return DB::connection()->getPdo();
 }
 

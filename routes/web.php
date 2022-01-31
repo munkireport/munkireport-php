@@ -107,10 +107,5 @@ Route::post('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->w
 Route::middleware(['auth'])->group(function () {
     Route::post('/archiver/update_status/{serial_number}', 'ArchiverController@update_status');
     Route::post('/archiver/bulk_update_status', 'ArchiverController@bulk_update_status');
+    Route::get('/manager/delete_machine/{serial_number?}', 'ManagerController@delete_machine');
 });
-
-Route::middleware(['auth', 'can:delete_machine'])->group(function () {
-    Route::get('/manager/delete_machine/{serial_number?}', 'ManagerController@post');
-});
-
-
