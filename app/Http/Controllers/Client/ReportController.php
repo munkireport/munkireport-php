@@ -104,12 +104,13 @@ class ReportController extends Controller
                 return response(serialize(array('error' => 'Could not unserialize items')));
             }
 
+            // TODO: This model is not found in recent versions of MunkiReport-PHP, shoudl this be deleted?
             // Reset messages for this client
-            if (isset($req_items['msg'])) {
-                $msg_obj = new Messages_model();
-                $msg_obj->reset($request->post('serial'));
-                unset($req_items['msg']);
-            }
+//            if (isset($req_items['msg'])) {
+//                $msg_obj = new Messages_model();
+//                $msg_obj->reset($request->post('serial'));
+//                unset($req_items['msg']);
+//            }
 
             // Get stored hashes from db
             $hashes = MunkiReportHash::select('name', 'hash')
@@ -275,16 +276,15 @@ class ReportController extends Controller
             $request->post('name'))
         );
 
-        echo "Recorded this message: ".$data['msg']."\n";
+        echo "Recorded this message: ".$request->post('msg', 'Unknown')."\n";
     }
 
     /**
-     *
-     * @param string message
-     * @param boolean exit or not
+     * @param string|null $msg message
+     * @param boolean $exit exit or not
      * @author AvB
-     **/
-    public function msg($msg = 'No message', $exit = false)
+     */
+    public function msg(?string $msg = 'No message', ?bool $exit = false): void
     {
         echo('Server '.$msg."\n");
         if ($exit) {
@@ -296,20 +296,32 @@ class ReportController extends Controller
      * Echo serialized array with error
      * and exit
      *
-     * @param string message
+     * @param string $msg message
      * @author AvB
      **/
-    public function error($msg)
+    public function error($msg): void
     {
         echo serialize(array('error' =>$msg));
         exit();
     }
 
+    /**
+     * Add an info level alert to the alerts global.
+     *
+     * @deprecated Use session()->flash()
+     * @param string $msg
+     */
     private function _info($msg)
     {
         $GLOBALS['alerts']['info'][] = $msg;
     }
 
+    /**
+     * Add a warning level alert to the alerts global.
+     *
+     * @deprecated Use session()->flash()
+     * @param string $msg
+     */
     private function _warning($msg)
     {
         $GLOBALS['alerts']['warning'][] = $msg;

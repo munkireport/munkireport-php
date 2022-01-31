@@ -47,7 +47,7 @@ class CheckIn extends Notification
     /**
      * Get the slack representation of the notification.
      *
-     * @param Notifiable $notifiable
+     * @param mixed $notifiable
      * @return SlackMessage
      */
     public function toSlack($notifiable): SlackMessage
@@ -61,7 +61,7 @@ class CheckIn extends Notification
     /**
      * Get the Microsoft Teams representation of the notification.
      *
-     * @param $notifiable
+     * @param mixed $notifiable
      * @return MicrosoftTeamsMessage
      * @throws \NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification
      */

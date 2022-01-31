@@ -55,7 +55,7 @@ class Schema
     // Create a LONGTEXT column
     public function longText($column_name)
     {
-        $sql = 'LONGTEXT';
+        $type = 'LONGTEXT';
         return $this->addColumn($type, $column_name);
     }
 
@@ -85,8 +85,8 @@ class Schema
      *
      * Undocumented function long description
      *
-     * @param type var Description
-     * @return return type
+     * @param string $value var Description
+     * @return string
      */
     public function enquote($value='')
     {
@@ -96,8 +96,8 @@ class Schema
     /**
      * Check if sql is processing a numeric column
      *
-     * @param string type
-     * @return return boolean
+     * @param string $type
+     * @return boolean
      */
     private function isNumeric($type)
     {
@@ -107,9 +107,9 @@ class Schema
     /**
      * Add a column to the query list
      *
-     * @param string type type of the column
-     * @param string column_name name of the column
-     * @return return this
+     * @param string $type type of the column
+     * @param string $column_name name of the column
+     * @return Schema
      */
     private function addColumn($type, $column_name)
     {

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use URL, Config, Str;
-use App\Processors;
+//use App\Processors;
 use Illuminate\Support\ServiceProvider;
 use munkireport\processors\MachineProcessor;
 use munkireport\processors\ReportDataProcessor;
@@ -21,9 +21,9 @@ class AppServiceProvider extends ServiceProvider
             return $app['migrator'];
         });
 
-        $this->app->singleton(Processors::class, function ($app) {
-            return new Processors();
-        });
+//        $this->app->singleton(Processors::class, function ($app) {
+//            return new Processors();
+//        });
     }
 
     /**
@@ -38,9 +38,9 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        $this->callAfterResolving(Processors::Class, function (Processors $processors) {
-            $processors->process('reportdata', ReportDataProcessor::class);
-            $processors->process('machine', MachineProcessor::class);
-        });
+//        $this->callAfterResolving(Processors::Class, function (Processors $processors) {
+//            $processors->process('reportdata', ReportDataProcessor::class);
+//            $processors->process('machine', MachineProcessor::class);
+//        });
     }
 }

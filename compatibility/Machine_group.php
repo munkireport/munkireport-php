@@ -13,6 +13,10 @@ use Compatibility\Kiss\Model;
  *
  * @package munkireport\models
  * @deprecated Will be deprecated by Compatibility\MachineGroup
+ * @property int $id
+ * @property int $groupid
+ * @property string $property
+ * @property string $value
  */
 class Machine_group extends Model
 {
@@ -39,8 +43,6 @@ class Machine_group extends Model
             $this->groupid = $groupid;
             $this->property = $property;
         }
-        
-        return $this;
     }
 
     /**
@@ -59,7 +61,7 @@ class Machine_group extends Model
     /**
      * Select unique group ids
      *
-     * @return void
+     * @return array Array of machine group id's
      * @author
      **/
     public function get_group_ids()
@@ -78,7 +80,7 @@ class Machine_group extends Model
     /**
      * Retrieve all entries for groupid
      *
-     * @param integer groupid
+     * @param integer|string $groupid machine group id
      * @return array
      * @author abn290
      **/

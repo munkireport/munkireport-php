@@ -23,8 +23,6 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected $fillable = [
         'name', 'email', 'password',
@@ -32,8 +30,6 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
 
     /**
      * The attributes that should be hidden for arrays.
-     *
-     * @var array
      */
     protected $hidden = [
         'password', 'remember_token',
@@ -41,8 +37,6 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
 
     /**
      * The attributes that should be cast to native types.
-     *
-     * @var array
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -88,7 +82,7 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
      */
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role == 'admin';
     }
 
     /**
@@ -97,7 +91,7 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
      */
     public function isManager(): bool
     {
-        return $this->role === 'manager';
+        return $this->role == 'manager';
     }
 
     /**
@@ -106,7 +100,7 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
      */
     public function isArchiver(): bool
     {
-        return $this->role === 'archiver';
+        return $this->role == 'archiver';
     }
 
     /**
@@ -130,7 +124,7 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
      */
     public function canAccessMachineGroup($id): bool
     {
-        if ($this->role === 'admin') return true; // Admins always have access to everything
+        if ($this->role == 'admin') return true; // Admins always have access to everything
 
         return in_array($id, $this->machineGroups());
     }

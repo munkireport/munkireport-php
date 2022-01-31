@@ -76,12 +76,9 @@ class CommentController extends Controller
                 $out = $comment;
             }
         }else {
-            $comment = Comment::where($where)
+            $out = Comment::where($where)
 //                ->filter('groupOnly')
-                ->get();
-            if($comment){
-               $out = $comment->toArray();
-            }
+                ->get()->toArray();
         }
 
         return view('json', ['msg' => $out]);

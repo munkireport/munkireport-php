@@ -18,6 +18,11 @@ class Modules
     private $moduleList = [];
 
     /**
+     * @var array The complete list of available widgets (probably superseded by Widgets class)
+     */
+    private $widgetList = [];
+
+    /**
      * @var array A list of paths that may be scanned for v5 modules.
      */
     private $moduleSearchPaths = [];
@@ -356,9 +361,9 @@ class Modules
      *
      * @param string $path
      * @param string $view
-     * @return bool
+     * @return string 'yaml' or 'php'
      */
-    private function getType(string $path, string $view): bool
+    private function getType(string $path, string $view): string
     {
         return is_readable( $path . $view . '.yml') ? 'yaml' : 'php';
     }

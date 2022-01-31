@@ -19,33 +19,33 @@ class BusinessUnitsController extends Controller
         return new BusinessUnits($businessUnits);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+//    /**
+//     * Store a newly created resource in storage.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function store(Request $request)
+//    {
+//        //
+//    }
 
     public function show(BusinessUnit $businessUnit)
     {
         return new BusinessUnitResource($businessUnit);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BusinessUnit  $businessUnit
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, BusinessUnit $businessUnit)
-    {
-
-    }
+//    /**
+//     * Update the specified resource in storage.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @param  \App\BusinessUnit  $businessUnit
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function update(Request $request, BusinessUnit $businessUnit)
+//    {
+//
+//    }
 
     /**
      * Remove the specified resource from storage.

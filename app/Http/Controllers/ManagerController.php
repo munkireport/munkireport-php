@@ -15,13 +15,15 @@ class ManagerController extends Controller
      * The way this happens is not db agnostic at all, and might be prone to error.
      * It is recommended to use foreign key constraints with a cascade delete to avoid using this particular action.
      *
+     * @note Cannot use a Laravel Policy here because it does not consider Eloquent models at all.
+     *
      * @param string $serial_number
      * @return \Illuminate\Http\JsonResponse|void
      * @throws \Exception
      */
     public function delete_machine(string $serial_number = '')
     {
-        Gate::authorize('delete_machine');
+        Gate::authorize('delete_machine', $serial_number);
 
         $status = array('status' => 'undefined', 'rowcount' => 0);
 
@@ -61,6 +63,7 @@ class ManagerController extends Controller
         // Affected rows counter
         $cnt = 0;
 
+        $table = "(undefined)";
         try {
             // Delete entries
             foreach ($tables as $table) {
@@ -79,7 +82,7 @@ class ManagerController extends Controller
             // Return status
             $status['status'] = 'success';
             $status['rowcount'] = $cnt;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $status['status'] = 'error';
             $status['message'] = sprintf('Delete failed for table %s: %s', $table, $e->getMessage());
         }

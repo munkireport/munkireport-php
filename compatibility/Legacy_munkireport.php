@@ -9,6 +9,8 @@ namespace Compatibility;
  * used in 004_munkireport_new migration and munkireport_model
  *
  * Originally munkireport\lib\Legacy_munkireport
+ *
+ * @deprecated no longer supported and no equivalent given
  */
 class Legacy_munkireport
 {
@@ -34,8 +36,8 @@ class Legacy_munkireport
      *
      * Convert to new format
      *
-     * @param type var Description
-     * @return {11:return type}
+     * @param array $report The pass-by-reference report array
+     * @return Legacy_munkireport
      */
     public function parse(&$report)
     {

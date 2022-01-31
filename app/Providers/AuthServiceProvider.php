@@ -34,7 +34,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('delete_machine', function ($user) {
+        Gate::define('delete_machine', function (\App\User $user, string $serial_number) {
+            if ($user->isAdmin()) return true;
+
             $authorizations = config('_munkireport.authorization', []);
             // No archive authorizations defined: it would not be possible to pass this gate.
             if (!isset($authorizations['delete_machine'])) {
@@ -42,14 +44,26 @@ class AuthServiceProvider extends ServiceProvider
                 return false;
             }
 
-            $machineDeleters = $authorizations['delete_machine'];
-            if (in_array($user->role, $machineDeleters)) {
-                Log::debug('delete_machine gate accepted user: ' . $user->email . ', has role');
-                return true;
+            if (!config('_munkireport.enable_business_units', false)) {
+                $machineDeleters = $authorizations['delete_machine'];
+                if (!in_array($user->role, $machineDeleters)) {
+                    Log::debug('delete_machine gate rejected user: ' . $user->email . ', not in any role(s) that have delete_machine, business units NOT enabled');
+                    return false;
+                } else {
+                    Log::debug('delete_machine gate accepted user: ' . $user->email . ', has role, , business units NOT enabled');
+                    return true;
+                }
             } else {
-                Log::debug('delete_machine gate rejected user: ' . $user->email . ', not in any role(s) that have delete_machine');
-                return false;
+                // Consult the session-stored machine group membership for authorization
+                $machineGroups = session()->get('machine_groups', []);
+                $reportData = \App\ReportData::where('serial_number', $serial_number)->get();
+
+                foreach ($reportData as $reportDatum) {
+                    if (in_array($reportDatum->machine_group, $machineGroups)) return true;
+                }
             }
+
+            return false;
         });
 
         Gate::define('global', function ($user) {

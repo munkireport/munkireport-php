@@ -31,7 +31,7 @@ class PackageServiceProvider extends ServiceProvider
         $config = realpath(__DIR__ . '/../../composer.json');
         Log::alert($config);
 
-        $this->app->singleton(Packages::class, function ($app) use ($config) {
+        $this->app->singleton(Packages::class, function ($app) {
             return new Packages;
         });
     }

@@ -66,3 +66,6 @@ class_alias('App\ReportData', '\Reportdata_model');
  * Alias the old, kissmvc style machine_group model in case older modules are using this.
  */
 class_alias('Compatibility\Machine_group', '\munkireport\models\Machine_group');
+
+
+class_alias('App\Event', '\munkireport\models\Event_model');

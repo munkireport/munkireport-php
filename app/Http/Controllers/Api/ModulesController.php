@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 class ModulesController extends Controller
 {
+    private $packages;
+
     public function __construct(Packages $packages)
     {
         $this->packages = $packages;

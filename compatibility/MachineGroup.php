@@ -11,6 +11,10 @@ use Webpatser\Uuid\Uuid;
  * MachineGroup model for v5 compatibility.
  *
  * It is not possible to implement compatibility with the ::all() method of the legacy model
+ *
+ * @property int|string $groupid
+ * @property string $property
+ * @property string $value
  */
 class MachineGroup extends Model
 {
@@ -18,6 +22,7 @@ class MachineGroup extends Model
     const PROP_KEY = 'key';
 
     protected $table = 'machine_group';
+    public $timestamps = false;
 
     protected $fillable = [
         'groupid',
@@ -28,6 +33,7 @@ class MachineGroup extends Model
     protected $casts = [
         'groupid' => 'integer'
     ];
+
 
     /**
      * Create a machine group by passing the values for the `name` and `key` properties.
@@ -106,13 +112,13 @@ class MachineGroup extends Model
     }
 
     //// SCOPES
-    public function get_max_groupid(): int
-    {
-        // TODO: Implement get_max_groupid() method.
-    }
-
-    public function get_group_ids(): array
-    {
-        // TODO: Implement get_group_ids() method.
-    }
+//    public function get_max_groupid(): int
+//    {
+//        // TODO: Implement get_max_groupid() method.
+//    }
+//
+//    public function get_group_ids(): array
+//    {
+//        // TODO: Implement get_group_ids() method.
+//    }
 }

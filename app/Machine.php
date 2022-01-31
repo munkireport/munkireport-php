@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use Compatibility\Scopes\FilterScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +13,36 @@ use App\Scopes\CreatedSinceScope;
 use munkireport\models\MRModel;
 use Laravel\Scout\Searchable;
 
+/**
+ * Machine model represents information about the device that was not captured in reportdata
+ *
+ * @property int $id
+ * @property string $serial_number
+ * @property string $hostname
+ * @property string $machine_model
+ * @property string $machine_desc
+ * @property string $img_url
+ * @property string $cpu
+ * @property string $current_processor_speed
+ * @property string $cpu_arch
+ * @property int $os_version
+ * @property int $physical_memory
+ * @property string $platform_UUID
+ * @property int $number_processors
+ * @property string $SMC_version_system
+ * @property string $boot_rom_version
+ * @property string $bus_speed
+ * @property string $computer_name
+ * @property string $l2_cache
+ * @property string $machine_name
+ * @property string $packages
+ * @property string $buildversion
+ */
 class Machine extends MRModel
 {
     use HasFactory;
-
     use Searchable;
+    use FilterScope;
 
     protected $table = 'machine';
 

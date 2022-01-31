@@ -53,7 +53,7 @@ interface LegacyMachineGroup
     /**
      * Retrieve all entries for groupid
      *
-     * @param integer groupid
+     * @param int|string $groupid
      * @return array
      * @author abn290
      **/

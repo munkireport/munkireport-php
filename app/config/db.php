@@ -10,7 +10,6 @@ switch ($driver) {
         'password' => '',
         'options' => mr_env('CONNECTION_OPTIONS', []),
     ];
-    break;
   case 'mysql':
     return [
       'driver'    => 'mysql',
@@ -33,5 +32,4 @@ switch ($driver) {
     ];
   default:
       throw new \Exception(sprintf("Unknown driver: %s", $driver), 1);
-      break;
 }

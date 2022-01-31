@@ -15,14 +15,9 @@ function machine_model_lookup($serial)
         ]
     ];
 
-    $result = Http::get('https://km.support.apple.com/kb/index', $options);
-
-    if ( ! $result) {
-        return 'model_lookup_failed';
-    }
-
     try {
-        $categorydata = json_decode($result);
+        $response = Http::get('https://km.support.apple.com/kb/index', $options);
+        $categorydata = $response->json();
         if(isset($categorydata->name)){
             return $categorydata->name;
         }

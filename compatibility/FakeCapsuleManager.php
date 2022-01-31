@@ -17,13 +17,6 @@ class FakeCapsuleManager
     use CapsuleManagerTrait;
 
     /**
-     * The database manager instance.
-     *
-     * @var \Illuminate\Database\DatabaseManager
-     */
-//    protected $manager;
-
-    /**
      * Create a new database capsule manager.
      *
      * @param  \Illuminate\Container\Container|null  $container
@@ -158,7 +151,7 @@ class FakeCapsuleManager
     {
 //        $this->container['config']['database.fetch'] = $fetchMode;
 //
-//        return $this;
+        return $this;
     }
 
     /**
