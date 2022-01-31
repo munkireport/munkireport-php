@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Log;
  * The FilterScope provides partial compatibility to models which inherit Compatibility\Capsule\MRModel and use
  * MRQueryBuilder to filter rows which are `archived` or not part of a selected machine group.
  *
+ * It can be removed when no models call $this->filter().
  *
- * It can be removed when no models call $this->filter()
- * @see Compatibility\Capsule\Contracts\MRQueryBuilder
+ * NOTE: if you don't do a join/with('reportdata') on your model, this will be unusable, and the scope doesn't enforce
+ *       this constraint.
+ *
+ * @see \Compatibility\Capsule\Contracts\MRQueryBuilder
+ * @see \Compatibility\Capsule\MRQueryBuilder
  */
 trait FilterScope
 {
@@ -25,8 +29,19 @@ trait FilterScope
      */
     public function scopeFilter(Builder $query, string $what = ''): Builder
     {
-        Log::critical("not implemented filter()");
-        throw new \Exception("filter() scope not implemented");
+        // For this WHERE IN query to work, the query has to be joined to report_data already.
+        if ($groups = get_filtered_groups()) {
+            $query->whereIn('machine_group', $groups);
+        }
+
+        if ($what == 'groupOnly') {
+            if (is_archived_filter_on()) {
+                $this->where('reportdata.archive_status', 0);
+            } elseif (is_archived_only_filter_on()) {
+                $this->where('reportdata.archive_status', '!=', 0);
+            }
+        }
+
         return $query;
     }
 }
