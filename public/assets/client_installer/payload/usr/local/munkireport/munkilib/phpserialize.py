@@ -12,6 +12,7 @@ Modified by: Arjen van Bochoven
 from decimal import Decimal
 import string
 import objc
+import six
 
 
 class PhpSerializationError(ValueError):
@@ -76,7 +77,7 @@ def print_php_class(cls, lvl=0):
         raise ValueError(type(cls))
 
     def _print(s, l=None):
-        print string.ljust("", l or lvl, "\t") + s
+        print(string.ljust("", l or lvl, "\t") + s)
 
     def print_list(lst):
         for item in lst:
@@ -111,12 +112,12 @@ def print_php_class(cls, lvl=0):
 
 def unserialize(s):
     """Unserialize python struct from php serialization format."""
-    if not isinstance(s, basestring) or s == "":
+    if not isinstance(s, six.string_types) or s == "":
         raise ValueError("Unserialize argument must be non-empty string")
 
     try:
         return Unserializator(s).unserialize()
-    except _PhpUnserializationError, e:
+    except _PhpUnserializationError as e:
         char = len(str(s)) - len(e.rest)
         delta = 50
         try:
@@ -126,7 +127,7 @@ def unserialize(s):
                 s[char + 1 : char + delta],
             )
             message = u"%s in %s" % (e.message, sample)
-        except Exception, e:
+        except Exception as e:
             raise
         raise PhpUnserializationError(message)
 
@@ -154,14 +155,14 @@ def serialize(struct, typecast=None):
         return "b:%d;" % int(struct)
 
     # i:<integer>;
-    if struct_type is int or struct_type is long:
+    if struct_type in six.integer_types:
         return "i:%d;" % struct
 
     # s:<string_length>:"<string>";
-    if struct_type is str:
+    if struct_type is bytes:
         return 's:%d:"%s";' % (len(struct), struct)
 
-    if struct_type is unicode:
+    if struct_type is six.text_type:
         return serialize(struct.encode("utf-8"), typecast)
 
     # a:<hash_length>:{<key><value><key2><value2>...<keyN><valueN>}
@@ -198,7 +199,7 @@ class Unserializator(object):
         self._position = 0
         self._str = s
 
-    def await(self, symbol, n=1):
+    def waitfor(self, symbol, n=1):
         # result = self.take(len(symbol))
         result = self._str[self._position : self._position + n]
         self._position += n
@@ -231,10 +232,10 @@ class Unserializator(object):
         t = self.take()
 
         if t == "N":
-            self.await(";")
+            self.waitfor(";")
             return None
 
-        self.await(":")
+        self.waitfor(":")
 
         if t == "i":
             return self.take_while_not(";", int)
@@ -247,9 +248,9 @@ class Unserializator(object):
 
         if t == "s":
             size = self.take_while_not(":", int)
-            self.await('"')
+            self.waitfor('"')
             result = self.take(size)
-            self.await('";', 2)
+            self.waitfor('";', 2)
             return result
 
         if t == "a":
@@ -258,9 +259,9 @@ class Unserializator(object):
 
         if t == "O":
             object_name_size = self.take_while_not(":", int)
-            self.await('"')
+            self.waitfor('"')
             object_name = self.take(object_name_size)
-            self.await('":', 2)
+            self.waitfor('":', 2)
             object_length = self.take_while_not(":", int)
             php_class = PHP_Class(object_name)
             members = self.parse_hash_core(object_length)
@@ -273,7 +274,7 @@ class Unserializator(object):
 
     def parse_hash_core(self, size):
         result = {}
-        self.await("{")
+        self.waitfor("{")
         is_array = True
         for i in range(size):
             k = self.unserialize()
@@ -282,6 +283,6 @@ class Unserializator(object):
             if is_array and k != i:
                 is_array = False
         if is_array:
-            result = result.values()
-        self.await("}")
+            result = list(result.values())
+        self.waitfor("}")
         return result

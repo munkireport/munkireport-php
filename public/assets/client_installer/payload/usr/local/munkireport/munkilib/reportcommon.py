@@ -12,7 +12,10 @@ import pwd
 import sys
 import hashlib
 import platform
-from urllib import urlencode
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
 import re
 import time
 import os
@@ -113,7 +116,7 @@ def curl(url, values):
         # safely kill the connection then re-raise
         connection.cancel()
         raise
-    except Exception, err:  # too general, I know
+    except Exception as err:  # too general, I know
         # Let us out! ... Safely! Unexpectedly quit dialogs are annoying...
         connection.cancel()
         # Re-raise the error as a GurlError
@@ -186,7 +189,10 @@ def get_long_username(username):
         long_name = pwd.getpwnam(username)[4]
     except:
         long_name = ""
-    return long_name.decode("utf-8")
+    if isinstance(long_name, bytes):
+        return long_name.decode("utf-8")
+    else:
+        return long_name
 
 
 def get_uid(username):
@@ -253,7 +259,7 @@ def get_uptime():
         stderr=subprocess.PIPE,
     )
     (output, unused_error) = proc.communicate()
-    sec = int(re.sub(".*sec = (\d+),.*", "\\1", output))
+    sec = int(re.sub(r".*sec = (\d+),.*", "\\1", output.decode('utf-8')))
     up = int(time.time() - sec)
     return up if up > 0 else -1
 
@@ -268,7 +274,7 @@ def set_pref(pref_name, pref_value):
         kCFPreferencesCurrentHost,
     )
     CFPreferencesAppSynchronize(BUNDLE_ID)
-    print "set pref"
+    print("set pref")
     try:
         CFPreferencesSetValue(
             pref_name,
@@ -326,7 +332,7 @@ def process(serial, items):
     # Decode response
     try:
         result = unserialize(server_data)
-    except Exception, e:
+    except Exception as e:
         display_error("Could not unserialize server data: %s" % str(e))
         display_error("Request: %s" % str(values))
         display_error("Response: %s" % str(server_data))
@@ -392,7 +398,7 @@ def runExternalScriptWithTimeout(
     if not allow_insecure:
         try:
             utils.verifyFileOnlyWritableByMunkiAndRoot(script)
-        except utils.VerifyFilePermissionsError, e:
+        except utils.VerifyFilePermissionsError as e:
             msg = (
                 "Skipping execution due to failed file permissions "
                 "verification: %s\n%s" % (script, str(e))
@@ -423,7 +429,7 @@ def runExternalScriptWithTimeout(
         else:
             try:
                 proc.kill()
-            except OSError, e:
+            except OSError as e:
                 if e.errno != 3:
                     raise
             raise utils.RunExternalScriptError("%s timed out" % script)
@@ -462,7 +468,7 @@ def rundir(scriptdir, runtype, abort=False, submitscript=""):
             try:
                 sub = files.pop(files.index(submitscript))
                 files.append(sub)
-            except Exception, e:
+            except Exception as e:
                 display_error("%s not found in %s" % (submitscript, parentdir))
 
         for script in files:
@@ -500,7 +506,7 @@ def rundir(scriptdir, runtype, abort=False, submitscript=""):
 
             except utils.ScriptNotFoundError:
                 pass  # Script has disappeared - pass.
-            except Exception, e:
+            except Exception as e:
                 display_warning("%s: %s" % (script, str(e)))
 
 
@@ -560,7 +566,7 @@ def getOsVersion(only_major_minor=True, as_tuple=False):
         stderr=subprocess.PIPE,
     )
     (output, unused_error) = proc.communicate()
-    output = output.strip()
+    output = output.decode('utf-8').strip()
     os_version_tuple = output.split(".")
     if only_major_minor:
         os_version_tuple = os_version_tuple[0:2]

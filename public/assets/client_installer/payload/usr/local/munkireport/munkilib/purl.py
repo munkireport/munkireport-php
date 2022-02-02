@@ -24,6 +24,8 @@ Modified by Arjen van Bochoven on 2015-09-23
 curl replacement using NSURLConnection and friends
 """
 
+import six
+
 # builtin super doesn't work with Cocoa classes in recent PyObjC releases.
 from objc import super
 
@@ -159,7 +161,7 @@ class Purl(NSObject):
         request.setHTTPMethod_(self.method)
 
         if self.method == "POST":
-            body_unicode = unicode(self.body)
+            body_unicode = six.text_type(self.body)
             body_data = NSData.dataWithBytes_length_(
                 NSString.stringWithString_(body_unicode).UTF8String(),
                 len(body_unicode.encode("utf-8")),
