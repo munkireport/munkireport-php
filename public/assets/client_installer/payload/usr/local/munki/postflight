@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/munki/munki-python
 
 import os
 import subprocess
@@ -22,7 +22,7 @@ def ensure_launchd_loaded():
         '/bin/launchctl',
         'list'
     ]
-    loaded_launchds = subprocess.check_output(cmd)
+    loaded_launchds = subprocess.check_output(cmd).decode('utf-8', 'ignore')
     # load the launchd if it's not loaded and is present on disk
     if LAUNCHD not in loaded_launchds and os.path.exists(LAUNCHD_PATH):
         cmd = [
