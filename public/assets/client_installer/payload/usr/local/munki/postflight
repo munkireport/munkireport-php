@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/munki/munki-python
 
 import os
 import subprocess
