@@ -135,7 +135,7 @@ class Purl(NSObject):
         if options.get("content_type") is not None:
             self.additional_headers["Content-Type"] = options.get("content_type")
         self.body = options.get("body")
-        self.response_data = ""
+        self.response_data = b""
 
         self.log = options.get("logging_function", NSLog)
 
@@ -421,4 +421,4 @@ class Purl(NSObject):
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
-        self.response_data = self.response_data + str(data)
+        self.response_data = self.response_data + bytes(data)
