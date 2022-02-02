@@ -338,16 +338,16 @@ def process(serial, items):
         display_error("Response: %s" % str(server_data))
         return -1
 
-    if result.get("error") != "":
+    if result.get("error", "") != "":
         display_error("Server error: %s" % result["error"])
         return -1
 
-    if result.get("info") != "":
+    if result.get("info", "") != "":
         display_detail("Server info: %s" % result["info"])
 
     # Retrieve hashes that need updating
     total_size = 0
-    for i in items.keys():
+    for i in list(items.keys()):
         if i in result:
             if items[i].get("path"):
                 try:
