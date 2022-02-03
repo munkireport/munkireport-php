@@ -203,7 +203,7 @@ class Unserializator(object):
         self._position = 0
         self._str = s
 
-    def waitfor(self, symbol, n=1):
+    def await_sym(self, symbol, n=1):
         # result = self.take(len(symbol))
         result = self._str[self._position : self._position + n]
         self._position += n
@@ -236,10 +236,10 @@ class Unserializator(object):
         t = self.take()
 
         if t == b"N":
-            self.waitfor(b";")
+            self.await_sym(b";")
             return None
 
-        self.waitfor(b":")
+        self.await_sym(b":")
 
         if t == b"i":
             return self.take_while_not(b";", int)
@@ -252,9 +252,9 @@ class Unserializator(object):
 
         if t == b"s":
             size = self.take_while_not(b":", int)
-            self.waitfor(b'"')
+            self.await_sym(b'"')
             result = self.take(size)
-            self.waitfor(b'";', 2)
+            self.await_sym(b'";', 2)
             return result
 
         if t == b"a":
@@ -263,9 +263,9 @@ class Unserializator(object):
 
         if t == b"O":
             object_name_size = self.take_while_not(b":", int)
-            self.waitfor(b'"')
+            self.await_sym(b'"')
             object_name = self.take(object_name_size)
-            self.waitfor(b'":', 2)
+            self.await_sym(b'":', 2)
             object_length = self.take_while_not(b":", int)
             php_class = PHP_Class(object_name)
             members = self.parse_hash_core(object_length)
@@ -278,7 +278,7 @@ class Unserializator(object):
 
     def parse_hash_core(self, size):
         result = {}
-        self.waitfor(b"{")
+        self.await_sym(b"{")
         is_array = True
         for i in range(size):
             k = self.unserialize()
@@ -288,5 +288,5 @@ class Unserializator(object):
                 is_array = False
         if is_array:
             result = list(result.values())
-        self.waitfor(b"}")
+        self.await_sym(b"}")
         return result
