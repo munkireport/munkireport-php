@@ -8,7 +8,7 @@
 
 		<?php foreach($row as $item => $data):?>
 
-			<?php if(array_key_exists('widget', $data)):?>
+			<?php if(is_array($data['widget']) && array_key_exists('widget', $data)):?>
 
 				<?php $widget->view($this, $data['widget'], $data); ?>
 
