@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#!/usr/local/munkireport/munkireport-python2
-=======
 #!/usr/local/munki/munki-python
->>>>>>> bff115fc (Make munki postflight py3 compatible (#1456))
 
 import os
 import subprocess
