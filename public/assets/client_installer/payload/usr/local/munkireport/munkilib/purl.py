@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/munkireport/munkireport-python2
 # encoding: utf-8
 #
 # Copyright 2009-2014 Greg Neagle.
