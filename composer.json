@@ -14,7 +14,7 @@
         "ext-dom": "*",
         "wikimedia/composer-merge-plugin": "dev-master",
         "guzzlehttp/guzzle": "~6.0",
-        "hautelook/phpass": "^1.1",
+        "bordoni/phpass": "^0.3.5",
         "illuminate/console": "~7.0",
         "illuminate/database": "^7.0",
         "illuminate/filesystem": "~7.0",
