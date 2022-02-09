@@ -1,4 +1,20 @@
+<<<<<<< HEAD
 ### [5.6.6](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (Unreleased)
+=======
+### [5.7.0](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (February 09, 2022) 🐍
+
+Maintenance release to fix the issue of Apple removing python from macOS 12.3.
+
+IMPORTANT CHANGES
+You will need to install MunkiReport-Python2 first on the client or MunkiReport will not run. There's a pre-built Python package available thanks to Per Olofsson: https://github.com/munkireport/MunkiReport-Python/releases/latest
+
+All core modules have been patched to use the new python install, custom or third party modules may need an update if they use python client scripts.
+
+FIXES
+- JQuery is updated to v3.6.0
+- Datatables is updated to v1.10.24
+
+>>>>>>> v5.7.0
 
 ### [5.6.5](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (March 27, 2021) 🍖
 

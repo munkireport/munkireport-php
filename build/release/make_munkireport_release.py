@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/munkireport/munkireport-python2
 #
 # Script to run the munkireport-php GitHub release workflow as outlined here:
 #https://github.com/autopkg/autopkg/wiki/Packaging-AutoPkg-For-Release-on-GitHub
