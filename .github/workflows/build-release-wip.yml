@@ -1,0 +1,137 @@
+# This workflow builds and releases MunkiReport-PHP from the `wip` (development branch).
+# It is used for release testing before performing a tagged release, or for testing the GitHub Actions workflow.
+
+name: build and release wip
+
+on:
+  workflow_dispatch:
+    inputs: {}
+#  push:
+#    branches: ['wip']
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, ldap, mysql
+          coverage: xdebug
+          tools: composer:v2, phpunit, phpstan
+        env:
+          fail-fast: true
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Surface PHP errors/test failures in the GitHub Actions console using matchers.
+      # NOTE: No matcher required for PHPStan
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+      - name: Setup problem matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      # Cache composer
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Normally, this would be composer.lock but we haven't committed that.
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      # Cache npm (javascript)
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+
+      - name: Install Composer dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev
+
+      - name: Adjust directory permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      # I'm not sure if this is strictly required, but it was part of the template for setup-php - m.
+      - name: Clear Config Cache
+        run: php please config:clear
+
+      - name: Install JavaScript Dependencies
+        run: npm install --omit dev
+
+      - name: Build JavaScript
+        run: npm run prod
+
+      - name: Create ZIP archive without tests or js deps
+        run: |
+          zip -r munkireport-php.zip . -x node_modules/\* \*/node_modules/\* .git/\*
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: munkireport-php-with-deps
+          path: munkireport-php.zip
+
+      # Temporary for testing: DRAFT a release
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "munkireport-php.zip"
+          draft: true
+          prerelease: true
+          tag: wip-${{ github.sha }}
+          commit: wip
+          body: |
+            This release contains artifacts that were automatically generated from an unversioned branch of MunkiReport-PHP.
+            There is no guarantee that this version of MunkiReport-PHP will work at all.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  container-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
