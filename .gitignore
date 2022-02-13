@@ -39,3 +39,7 @@ storage/*.index
 programmatic-types.graphql
 schema-directives.graphql
 _lighthouse_ide_helper.php
+
+# Laravel mix / Webpack output
+public/js/*.js
+public/css/*.css
