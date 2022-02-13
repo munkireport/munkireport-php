@@ -1,0 +1,103 @@
+name: test
+
+on:
+  push:
+    branches:
+      - wip
+  pull_request:
+    branches:
+      - wip
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DB_CONNECTION: mysql
+      DB_DATABASE: munkireport
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      BROADCAST_DRIVER: log
+      CACHE_DRIVER: array
+      QUEUE_CONNECTION: sync
+      SESSION_DRIVER: file
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: munkireport
+        ports:
+          - 3306/tcp
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, ldap, mysql
+          coverage: xdebug
+          tools: composer:v2, phpunit, phpstan
+        env:
+          fail-fast: true
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Surface PHP errors/test failures in the GitHub Actions console using matchers.
+      # NOTE: No matcher required for PHPStan
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+      - name: Setup problem matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Start mysql service
+        run: sudo systemctl start mysql
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Normally, this would be composer.lock but we haven't committed that.
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Run PHPStan
+        run: phpstan analyse app compatibility
+        continue-on-error: true
+
+      - name: Adjust directory permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      # SQLite databases are touched in case you want integration tests to use SQLite instead of MySQL/MariaDB
+      - name: Prepare app config for CI
+        run: |
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php please key:generate
+          mkdir -p database
+          touch database/database.sqlite
+          touch app/db/db.sqlite
+
+      # I'm not sure if this is strictly required, but it was part of the template for setup-php - m.
+      - name: Clear Config Cache
+        run: php please config:clear
+
+      - name: Run Database Migrations
+        run: php please migrate -v
+        env:
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+
+      - name: Test with PHPUnit
+        run: vendor/bin/phpunit --coverage-text
+        continue-on-error: true
+        env:
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+
