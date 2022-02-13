@@ -1,4 +1,4 @@
-name: MunkiReport PHP
+name: pull request quality
 
 on:
   push:
