@@ -69,5 +69,6 @@ jobs:
           artifacts: "release.zip"
           draft: true
           prerelease: true
+          tag: wip
           commit: ${{ github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
