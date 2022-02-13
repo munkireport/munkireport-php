@@ -45,9 +45,7 @@
     "vue-params": "^0.9.4",
     "vue-router": "^3.5.3",
     "vue-typeahead-bootstrap": "^2.12.0",
-    "whatwg-fetch": "^3.6.2"
-  },
-  "devDependencies": {
+    "whatwg-fetch": "^3.6.2",
     "axios": "^0.21",
     "graphql-tag": "^2.12.6",
     "laravel-mix": "^6.0.39",
@@ -58,5 +56,8 @@
     "vue-cli-plugin-apollo": "~0.22.2",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14"
+  },
+  "devDependencies": {
+
   }
 }
