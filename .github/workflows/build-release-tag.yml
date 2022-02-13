@@ -1,13 +1,11 @@
-# This workflow builds and releases MunkiReport-PHP from the `wip` (development branch).
-# It is used for release testing before performing a tagged release, or for testing the GitHub Actions workflow.
-
-name: build and release wip
+name: build and release tag
 
 on:
   workflow_dispatch:
     inputs: {}
   push:
-    branches: ['wip']
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -56,12 +54,6 @@ jobs:
       - name: Clear Config Cache
         run: php please config:clear
 
-      - name: Install JavaScript Dependencies
-        run: npm install --omit dev
-
-      - name: Build JavaScript
-        run: npm run prod
-
       - name: Create ZIP archive without tests or js deps
         run: |
           zip -r munkireport-php.zip . -x node_modules/\* \*/node_modules/\* .git/\*
@@ -72,15 +64,9 @@ jobs:
           name: munkireport-php-with-deps
           path: munkireport-php.zip
 
-      # Temporary for testing: DRAFT a release
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "munkireport-php.zip"
           draft: true
           prerelease: true
-          tag: wip
-          commit: wip
-          body: |
-            This release contains artifacts that were automatically generated from an unversioned branch of MunkiReport-PHP.
-            There is no guarantee that this version of MunkiReport-PHP will work at all.
           token: ${{ secrets.GITHUB_TOKEN }}
