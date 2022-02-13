@@ -44,7 +44,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev
 
       - name: Adjust directory permissions
         run: chmod -R 777 storage bootstrap/cache
@@ -53,17 +53,21 @@ jobs:
       - name: Clear Config Cache
         run: php please config:clear
 
-#      - name: Tar files
-#        run: tar -cvf /tmp/munkireport-php.tar .
+      - name: Create ZIP archive without tests or js deps
+        run: |
+          zip -r release.zip . -x node_modules/\* \*/node_modules/\* .git/\*
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: munkireport-php-with-deps
-          path: |
-            .
-            !tests
-            !node_modules
-            !build
+          path: release.zip
 
-
+      # Temporary for testing: DRAFT a release
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "release.zip"
+          draft: true
+          prerelease: true
+          commit: ${{ github.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
