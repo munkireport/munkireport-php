@@ -1,3 +1,6 @@
+# This workflow builds and releases MunkiReport-PHP from the `wip` (development branch).
+# It is used for release testing before performing a tagged release, or for testing the GitHub Actions workflow.
+
 name: build and release wip
 
 on:
@@ -52,6 +55,12 @@ jobs:
       # I'm not sure if this is strictly required, but it was part of the template for setup-php - m.
       - name: Clear Config Cache
         run: php please config:clear
+
+      - name: Install JavaScript Dependencies
+        run: npm install --omit dev
+
+      - name: Build JavaScript
+        run: npm run prod
 
       - name: Create ZIP archive without tests or js deps
         run: |
