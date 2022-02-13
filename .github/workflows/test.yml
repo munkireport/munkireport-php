@@ -9,7 +9,7 @@ on:
       - wip
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     env:
       DB_CONNECTION: mysql
