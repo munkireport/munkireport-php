@@ -1,4 +1,4 @@
-name: build ad-hoc
+name: build and release wip
 
 on:
   workflow_dispatch:
@@ -55,20 +55,23 @@ jobs:
 
       - name: Create ZIP archive without tests or js deps
         run: |
-          zip -r release.zip . -x node_modules/\* \*/node_modules/\* .git/\*
+          zip -r munkireport-php.zip . -x node_modules/\* \*/node_modules/\* .git/\*
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: munkireport-php-with-deps
-          path: release.zip
+          path: munkireport-php.zip
 
       # Temporary for testing: DRAFT a release
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "release.zip"
+          artifacts: "munkireport-php.zip"
           draft: true
           prerelease: true
           tag: wip
-          commit: ${{ github.sha }}
+          commit: wip
+          body: |
+            This release contains artifacts that were automatically generated from an unversioned branch of MunkiReport-PHP.
+            There is no guarantee that this version of MunkiReport-PHP will work at all.
           token: ${{ secrets.GITHUB_TOKEN }}
