@@ -82,23 +82,28 @@ jobs:
       - name: Build JavaScript
         run: npm run prod
 
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - name: Create ZIP archive without tests or js deps
         run: |
-          zip -r munkireport-php.zip . -x node_modules/\* \*/node_modules/\* .git/\*
+          zip -r munkireport-php-${{ steps.date.outputs.date }}.zip . -x node_modules/\* \*/node_modules/\* .git/\*
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: munkireport-php-with-deps
-          path: munkireport-php.zip
+          name: munkireport-php-wip
+          path: munkireport-php-${{ steps.date.outputs.date }}.zip
 
       # Temporary for testing: DRAFT a release
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "munkireport-php.zip"
+          artifacts: "munkireport-php-${{ steps.date.outputs.date }}.zip"
           draft: true
           prerelease: true
-          tag: wip-${{ github.sha }}
+          name: Munkireport Unstable ${{ steps.date.outputs.date }}
+          tag: unstable
           commit: wip
           body: |
             This release contains artifacts that were automatically generated from an unversioned branch of MunkiReport-PHP.
