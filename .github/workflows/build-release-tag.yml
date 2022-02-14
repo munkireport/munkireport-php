@@ -80,6 +80,10 @@ jobs:
       - name: Build JavaScript
         run: npm run prod
 
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - name: Create ZIP archive without tests or js deps
         run: |
           zip -r munkireport-php.zip . -x node_modules/\* \*/node_modules/\* .git/\*
@@ -87,7 +91,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: munkireport-php-with-deps
+          name: munkireport-php
           path: munkireport-php.zip
 
       - uses: ncipollo/release-action@v1
@@ -95,6 +99,8 @@ jobs:
           artifacts: "munkireport-php.zip"
           draft: true
           prerelease: true
+          name: Munkireport ${{ github.ref_name }}
+          bodyFile: build/changelog-template.md
           token: ${{ secrets.GITHUB_TOKEN }}
 
   container-image:
