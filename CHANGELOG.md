@@ -1,3 +1,5 @@
+### [5.7.1](https://github.com/munkireport/munkireport-php/compare/v5.7.0...5.x) (February 17, 2022) 🐍
+
 ### [5.7.0](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (February 09, 2022) 🐍
 
 Maintenance release to fix the issue of Apple removing python from macOS 12.3.

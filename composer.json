@@ -7,7 +7,10 @@
         "squizlabs/php_codesniffer": "^2.5"
     },
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "wikimedia/composer-merge-plugin": false
+        }
     },
     "require": {
         "php": ">=7.3",
@@ -71,7 +74,7 @@
         "munkireport/reportdata": "^3.0",
         "munkireport/sccm_status": "^1.0",
         "munkireport/security": "^3.0",
-        "munkireport/sentinelone": "^2.0",
+        "munkireport/sentinelone": "^6.0",
         "munkireport/sentinelonequarantine": "^2.0",
         "munkireport/smart_stats": "^2.0",
         "munkireport/softwareupdate": "^2.0",
