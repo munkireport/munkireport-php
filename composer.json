@@ -7,7 +7,10 @@
         "squizlabs/php_codesniffer": "^2.5"
     },
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "wikimedia/composer-merge-plugin": false
+        }
     },
     "require": {
         "php": ">=7.3",
