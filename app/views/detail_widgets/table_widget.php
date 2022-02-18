@@ -31,6 +31,12 @@
     </table>
 </div>
 
+<?php if(isset($js)):?>
+<script>
+<?php echo $js?>
+</script>
+<?php endif?>
+
 <?php if(isset($js_link)):?>
   <?php foreach(is_array($js_link) ? $js_link : [$js_link] as $link):?>
   <script src="<?=url($link)?>"></script>
