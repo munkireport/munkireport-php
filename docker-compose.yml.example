@@ -16,7 +16,7 @@ services:
       - PUID=1000
       - PGID=1000
       - CLIENT_PASSPHRASES=
-      - WEBHOST=https://munkireport-sda.domain.com
+      - WEBHOST=https://munkireport.domain.com
       - TZ=Europe/Berlin
     depends_on:
       - db
