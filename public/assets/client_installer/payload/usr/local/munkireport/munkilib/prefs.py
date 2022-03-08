@@ -19,6 +19,7 @@ Created by Greg Neagle on 2016-12-13.
 
 Preferences functions and classes used by the munki tools.
 """
+from __future__ import print_function
 # PyLint cannot properly find names inside Cocoa libraries, so issues bogus
 # No name 'Foo' in module 'Bar' warnings. Disable them.
 # pylint: disable=E0611
@@ -178,4 +179,4 @@ def pref(pref_name):
 
 
 if __name__ == "__main__":
-    print "This is a library of support tools for the Munki Suite."
+    print("This is a library of support tools for the Munki Suite.")

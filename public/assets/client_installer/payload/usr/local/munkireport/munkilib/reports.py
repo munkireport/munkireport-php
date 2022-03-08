@@ -21,6 +21,8 @@ Created by Greg Neagle on 2016-12-14.
 Reporting functions
 """
 
+from __future__ import absolute_import, print_function
+
 import os
 import subprocess
 import sys
@@ -54,21 +56,21 @@ def printreportitem(label, value, indent=0):
     """Prints a report item in an 'attractive' way."""
     indentspace = "    "
     if type(value) == type(None):
-        print indentspace * indent, "%s: !NONE!" % label
+        print(indentspace * indent, "%s: !NONE!" % label)
     elif type(value) == list or type(value).__name__ == "NSCFArray":
         if label:
-            print indentspace * indent, "%s:" % label
+            print(indentspace * indent, "%s:" % label)
         index = 0
         for item in value:
             index += 1
             printreportitem(index, item, indent + 1)
     elif type(value) == dict or type(value).__name__ == "NSCFDictionary":
         if label:
-            print indentspace * indent, "%s:" % label
+            print(indentspace * indent, "%s:" % label)
         for subkey in value.keys():
             printreportitem(subkey, value[subkey], indent + 1)
     else:
-        print indentspace * indent, "%s: %s" % (label, value)
+        print(indentspace * indent, "%s: %s" % (label, value))
 
 
 def printreport(reportdict):
@@ -104,7 +106,7 @@ def _warn(msg):
     So a partial reimplementation.
     """
     warning = "WARNING: %s" % msg
-    print >> sys.stderr, warning.encode("UTF-8")
+    print(warning.encode("UTF-8"), file=sys.stderr)
     munkilog.log(warning)
     # append this warning to our warnings log
     munkilog.log(warning, "warnings.log")
@@ -162,4 +164,4 @@ report = {}
 
 
 if __name__ == "__main__":
-    print "This is a library of support tools for the Munki Suite."
+    print("This is a library of support tools for the Munki Suite.")

@@ -1,4 +1,3 @@
-#!/usr/local/munkireport/munkireport-python2
 # encoding: utf-8
 #
 # Copyright 2009-2014 Greg Neagle.
@@ -24,6 +23,8 @@ Modified by Arjen van Bochoven on 2015-09-23
 
 curl replacement using NSURLConnection and friends
 """
+
+import six
 
 # builtin super doesn't work with Cocoa classes in recent PyObjC releases.
 from objc import super
@@ -134,7 +135,7 @@ class Purl(NSObject):
         if options.get("content_type") is not None:
             self.additional_headers["Content-Type"] = options.get("content_type")
         self.body = options.get("body")
-        self.response_data = ""
+        self.response_data = b""
 
         self.log = options.get("logging_function", NSLog)
 
@@ -160,7 +161,7 @@ class Purl(NSObject):
         request.setHTTPMethod_(self.method)
 
         if self.method == "POST":
-            body_unicode = unicode(self.body)
+            body_unicode = six.text_type(self.body)
             body_data = NSData.dataWithBytes_length_(
                 NSString.stringWithString_(body_unicode).UTF8String(),
                 len(body_unicode.encode("utf-8")),
@@ -420,4 +421,4 @@ class Purl(NSObject):
 
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
-        self.response_data = self.response_data + str(data)
+        self.response_data = self.response_data + bytes(data)
