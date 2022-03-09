@@ -228,6 +228,14 @@ def get_cpuinfo():
     return output.decode("utf-8")
 
 
+def get_cpuarch():
+    try:
+        arch_output = subprocess.check_output(["/usr/bin/arch", "-arm64", "/usr/bin/uname", "-m"], stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError:
+        arch_output = subprocess.check_output(["/usr/bin/uname", "-m"])
+    return arch_output.decode("utf-8").strip()
+
+
 def get_buildversion():
     cmd = ["/usr/bin/sw_vers", "-buildVersion"]
     proc = subprocess.Popen(
