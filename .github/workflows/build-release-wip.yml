@@ -6,8 +6,8 @@ name: build and release wip
 on:
   workflow_dispatch:
     inputs: {}
- push:
-   branches: ['wip']
+  push:
+    branches: ['wip']
 
 env:
   REGISTRY: ghcr.io
