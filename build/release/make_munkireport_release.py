@@ -166,7 +166,7 @@ def main():
          munkireport_root])
     os.chdir(munkireport_root)
     
-    branch = 'wip'
+    branch = '5.x'
     
     run_command(['git', 'checkout', branch])
         
@@ -262,9 +262,9 @@ def main():
          'Bumping to v%s for development.' % next_version])
     if not opts.dry_run:
         run_command(['git', 'push', 'origin', branch])
-        run_command(['git', 'checkout', 'master'])
+        run_command(['git', 'checkout', 'main'])
         run_command(['git', 'merge', tag_name])
-        run_command(['git', 'push', 'origin', 'master'])
+        run_command(['git', 'push', 'origin', 'main'])
     else:
         print ("Ended dry-run mode. Final state of the munkireport-php repo can be "
                "found at: %s" % munkireport_root)
