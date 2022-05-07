@@ -1,4 +1,4 @@
-#!/usr/local/munkireport/python3
+#!/usr/local/munkireport/munkireport-python3
 # encoding: utf-8
 
 from . import display
