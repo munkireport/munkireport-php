@@ -82,7 +82,7 @@
         "munkireport/mdm_status": "^1.6",
         "munkireport/munki_facts": "^1.0",
         "munkireport/munkiinfo": "dev-py3",
-        "munkireport/munkireport": "dev-master",
+        "munkireport/munkireport": "dev-py3",
         "munkireport/munkireportinfo": "^1.0",
         "munkireport/network": "dev-master",
         "munkireport/network_shares": "^1.0",
