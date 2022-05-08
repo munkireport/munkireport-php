@@ -58,7 +58,7 @@
         "munkireport/detectx": "dev-master",
         "munkireport/devtools": "^1.0",
         "munkireport/directory_service": "dev-master",
-        "munkireport/disk_report": "dev-master",
+        "munkireport/disk_report": "dev-py3",
         "munkireport/displays_info": "dev-master",
         "munkireport/event": "dev-master",
         "munkireport/extensions": "dev-master",
