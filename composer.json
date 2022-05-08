@@ -5,21 +5,25 @@
     "license": "MIT",
     "version": "6.0.0",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.5",
         "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.13.0",
+        "haydenpierce/class-finder": "^0.4.2",
+        "laravel/sail": "^1.14",
+        "mll-lab/laravel-graphql-playground": "^2.5",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3",
-        "haydenpierce/class-finder": "^0.4.2",
+        "nunomaduro/larastan": "^1.0",
         "phpstan/phpstan": "^1.3",
-        "mll-lab/laravel-graphql-playground": "^2.5",
-        "nunomaduro/larastan": "^1.0"
+        "phpunit/phpunit": "^9.3.3",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "wikimedia/composer-merge-plugin": true
+        }
     },
     "require": {
         "php": ">=7.3",
@@ -75,7 +79,7 @@
         "munkireport/ibridge": "^1.0",
         "munkireport/installhistory": "^2.0",
         "munkireport/inventory": "dev-master",
-        "munkireport/laps": "^1.4",
+        "munkireport/laps": "dev-master",
         "munkireport/location": "^1.0",
         "munkireport/managedinstalls": "dev-py3",
         "munkireport/mbbr_status": "^1.0",
@@ -100,7 +104,7 @@
         "munkireport/timemachine": "^2.0",
         "munkireport/usage_stats": "^1.0",
         "munkireport/usb": "^1.0",
-        "munkireport/user_sessions": "^1.0",
+        "munkireport/user_sessions": "dev-master",
         "munkireport/warranty": "^4.0",
         "munkireport/wifi": "^1.0",
         "nuwave/lighthouse": "^5.33.0",
