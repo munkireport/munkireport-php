@@ -235,7 +235,7 @@ class MachineController extends Controller
      **/
     public function model_lookup(string $serial_number): JsonResponse
     {
-        require_once(__DIR__ . '/../../helpers/model_lookup_helper.php');
+        require_once(__DIR__ . '/../../../compatibility/helpers/model_lookup_helper.php');
         $out = ['error' => '', 'model' => ''];
         try {
             $machine = Machine::select()
