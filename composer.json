@@ -88,7 +88,6 @@
         "munkireport/munkiinfo": "dev-py3",
         "munkireport/munkireport": "dev-py3",
         "munkireport/munkireportinfo": "^1.0",
-        "munkireport/network": "dev-master",
         "munkireport/network_shares": "^1.0",
         "munkireport/power": "dev-master",
         "munkireport/printer": "^1.0",
