@@ -35,7 +35,6 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            'firewall-only-allowed',
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -45,14 +44,12 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'firewall-only-allowed',
             EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
         'saml' => [
-            'firewall-only-allowed',
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -81,9 +78,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'firewall-only-allowed' => \PragmaRX\Firewall\Middleware\FirewallWhitelist::class,
-        'firewall-block-denied' => \PragmaRX\Firewall\Middleware\FirewallBlacklist::class,
-        'firewall-block-attacks' => \PragmaRX\Firewall\Middleware\BlockAttacks::class,
         'client.passphrase' => \App\Http\Middleware\ClientPassphrase::class,
     ];
 }
