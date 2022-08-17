@@ -1,7 +1,7 @@
 version: '3'
 services:
   munkireport:
-    image: munkireport/munkireport-php:latest
+    image: ghcr.io/munkireport/munkireport-php:5.x
     restart: always
     environment:
       - MODULES=applications, directory_service, disk_report, displays_info, extensions, filevault_status, homebrew, homebrew_info, ibridge, installhistory, inventory, localadmin, managedinstalls, mdm_status, munkiinfo, munkireport, munkireportinfo, network, power, printer, profile, security, softwareupdate, sophos, supported_os, timemachine, usage_stats, user_sessions, warranty, wifi
@@ -16,7 +16,7 @@ services:
       - PUID=1000
       - PGID=1000
       - CLIENT_PASSPHRASES=
-      - WEBHOST=https://munkireport-sda.domain.com
+      - WEBHOST=https://munkireport.domain.com
       - TZ=Europe/Berlin
     depends_on:
       - db
