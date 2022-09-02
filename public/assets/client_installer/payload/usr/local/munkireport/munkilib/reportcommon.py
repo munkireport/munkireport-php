@@ -163,7 +163,7 @@ def get_hardware_info():
     """Uses system profiler to get hardware info for this machine."""
     # Apple Silicon Macs running Python 2 through Rosetta 2 mis-report this data
     # Check if we're on an Apple Silicon Mac and force it to run system_profiler as Apple Silicon
-    if "arm64" in get_cpuarch():
+    if "arm64" in os.uname()[3].lower():
         cmd = ["/usr/bin/arch", "-arm64", "/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
     else:
         cmd = ["/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
@@ -231,15 +231,6 @@ def get_cpuinfo():
     (output, unused_error) = proc.communicate()
     output = output.strip()
     return output.decode("utf-8")
-
-
-def get_cpuarch():
-    try:
-        arch_output = subprocess.check_output(["/usr/bin/arch", "-arm64", "/usr/bin/uname", "-m"], stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError:
-        arch_output = subprocess.check_output(["/usr/bin/uname", "-m"])
-    return arch_output.decode("utf-8").strip()
-
 
 def get_buildversion():
     cmd = ["/usr/bin/sw_vers", "-buildVersion"]
