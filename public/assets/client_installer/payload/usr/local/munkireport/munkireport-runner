@@ -28,7 +28,7 @@ def main():
     hardware_info = reportcommon.get_hardware_info()
     hardware_info['computer_name'] = reportcommon.get_computername()
     hardware_info['cpu'] = reportcommon.get_cpuinfo()
-    hardware_info['cpu_arch'] = reportcommon.get_cpuarch()
+    hardware_info['cpu_arch'] = ''.join(re.findall(r'RELEASE_([iA-Z1-9]+)(_\d+)?', os.uname()[3])[0]).lower()
     hardware_info['hostname'] = os.uname()[1]
     hardware_info['os_version'] = \
         reportcommon.getOsVersion(only_major_minor=False)
