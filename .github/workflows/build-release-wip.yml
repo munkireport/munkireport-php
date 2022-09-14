@@ -6,8 +6,8 @@ name: build and release wip
 on:
   workflow_dispatch:
     inputs: {}
-#  push:
-#    branches: ['wip']
+  push:
+    branches: ['wip']
 
 env:
   REGISTRY: ghcr.io
@@ -16,7 +16,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    if: ${{ false }} # Skip the build for now
     steps:
       - name: Checkout
         uses: actions/checkout@v2

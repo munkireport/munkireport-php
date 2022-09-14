@@ -12,6 +12,7 @@ for tighter integration with the API.
 - YAML based local users are not available in this release.
 - Further introduction of GraphQL API to support a dynamic table query feature.
 - .yaml widgets are converted to use Laravel Blade Components for the default dashboard only.
+- firewall package was removed due to conflicts with the laraval value() helper function
 
 DEPENDENCY UPDATES
 - Laravel 8.x
